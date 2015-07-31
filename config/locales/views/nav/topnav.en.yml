@@ -1,0 +1,27 @@
+---
+en:
+  nav:
+    topnav:
+      account_settings: Account Settings
+      back_to_school: Back To School
+      choosing_a_school: Choosing a School
+      city_home: "%{city} Home"
+      early_learning: Early Learning
+      edit_school_profile: Edit school profile
+      education_community: Education Community
+      emotional_smarts: Emotional Smarts
+      enrollment_information: Enrollment Information
+      events: Events
+      find_a_school: Find a School
+      greatkids: GreatKids!
+      learning_disabilities: Learning Disabilities
+      my_account: My Account
+      my_school_list: My School List
+      not_in_location: "Not in %{location}?"
+      review_your_school: Review Your School
+      sign_in: Sign In
+      sign_out: Sign Out
+      state_home: "%{state} Home"
+      summer_learning: Summer Learning
+      welcome_to_greatkids: Welcome to GreatKids!
+      worksheets_and_activities: Worksheets & Activities

@@ -1,0 +1,27 @@
+---
+es:
+  nav:
+    topnav:
+      account_settings: Configuración de cuenta
+      back_to_school: Regreso a Clases
+      choosing_a_school: Cómo escoger una escuela
+      city_home: "%{city} Inicio"
+      early_learning: Aprendizaje Temprano
+      edit_school_profile: Editar perfil de escuela
+      education_community: Comunidad Educativa
+      emotional_smarts: Emotional Smarts
+      enrollment_information: Información de Inscripción
+      events: Eventos
+      find_a_school: Encuentra una escuela
+      greatkids: GreatKids!
+      learning_disabilities: Dificultades De Aprendizaje
+      my_account: Mi Cuenta
+      my_school_list: Mi Lista de Escuelas
+      not_in_location: "¿No está en %{location}?"
+      review_your_school: Revise su escuela
+      sign_in: Ingresar
+      sign_out: Desconectarse
+      state_home: "%{state} Inicio"
+      summer_learning: Aprendizaje de Verano
+      welcome_to_greatkids: ¡Bienvenido a GreatKids!
+      worksheets_and_activities: Hojas de trabajo y actividades

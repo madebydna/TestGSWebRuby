@@ -25,86 +25,84 @@
                     <ul class="dropdown-menu">
                         <%- if nav.has_topnav? %>
                             <% if nav.city %>
-                                <%= render 'nav/dropdown_link', text: "#{nav.city.gs_capitalize_words} Home", url: city_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: 'Choosing a School', url: city_choosing_schools_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: 'Education Community', url: city_education_community_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: 'Enrollment Information', url: city_enrollment_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: 'Events', url: city_events_url(nav.url_params) %>
+                              <% location = nav.city.gs_capitalize_words %>
+                              <%= render 'nav/dropdown_link', text: t('.city_home', city: nav.city.gs_capitalize_words), url: city_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: t('.choosing_a_school'), url: city_choosing_schools_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: t('.education_community'), url: city_education_community_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: t('.enrollment_information'), url: city_enrollment_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: t('.events'), url: city_events_url(nav.url_params) %>
 
-                                <li>
-                                    <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span><%= nav.city.gs_capitalize_words %></span>?
-                                    <% end %>
-                                </li>
+                              <li>
+                                <%= link_to t('.not_in_location', location: location), home_url, class: 'js-clear-local-cookies-link' %>
+                              </li>
                             <% else %>
-                                <%= render 'nav/dropdown_link', text: "#{States.state_name(nav.state).gs_capitalize_words} Home", url: state_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: "Choosing a School", url: state_choosing_schools_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: "Education Community", url: state_education_community_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: "Enrollment Information", url: state_enrollment_url(nav.url_params) %>
-                                <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: "Events", url: state_events_url(nav.url_params) %>
+                              <% location = States.state_name(nav.state).gs_capitalize_words %>
+                              <%= render 'nav/dropdown_link', text: t('.state_home', state: States.state_name(nav.state).gs_capitalize_words), url: state_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:choosePage], text: t('.choosing_a_school'), url: state_choosing_schools_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:eduPage], text: t('.education_community'), url: state_education_community_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:enrollPage], text: t('.enrollment_information'), url: state_enrollment_url(nav.url_params) %>
+                              <%= render 'nav/dropdown_link', flag: cookies[:eventsPage], text: t('.events'), url: state_events_url(nav.url_params) %>
 
-                                <li>
-                                    <%= link_to home_url, class: 'js-clear-local-cookies-link' do %>Not in
-                                        <span><%= States.state_name(nav.state).gs_capitalize_words %></span>?
-                                    <% end %>
-                                </li>
+                              <li>
+                                <%= link_to t('.not_in_location', location: location), home_url, class: 'js-clear-local-cookies-link' %>
+                              </li>
                             <% end %>
                         <% end %>
                     </ul>
                 </li>
-                <li><%= link_to 'Find a School', home_url, class: "js-gaLoad js-gaClick",
+                <li><%= link_to t('.find_a_school'), home_url, class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav findASchool link',
                                           'ga-load-label'=>'topNav findASchool link' } %>
                 </li>
                 <li>
-                    <%= link_to 'Review Your School',
+                    <%= link_to t('.review_your_school'),
                         ((defined?(@school) && @school.present?) ? school_reviews_path(@school, anchor: 'topic1') : the_scoop_path),
                         :onclick=>"GS.omniture.track_reviews('GlobalNav');", :class=>'js-no_ad' %>
                 </li>
                 <li><a class="dropdown-toggle js-gaLoad js-gaClick"
                        data-toggle="dropdown"
                        data-ga-load-label="topNav Discover dropdown" data-ga-click-label="topNav Discover dropdown"
-                       href="#greatkids">GreatKids! <span class="caret"></span>
+                       href="#greatkids"><%= t('.greatkids') %> <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                       <li class=" ">
-                        <%= link_to 'Welcome to GreatKids!'.html_safe, greatkids_home_url,
+                        <%= link_to t('.welcome_to_greatkids'), greatkids_home_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav gkHome link',
                                           'ga-load-label'=>'topNav gkHome link' } %>
                       </li>
                       <li class=" ">
-                        <%= link_to 'Worksheets &amp; Activities'.html_safe, worksheets_and_activities_url,
+                        <%= link_to t('.worksheets_and_activities'), worksheets_and_activities_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav worksheetsAndActivities link',
                                           'ga-load-label'=>'topNav worksheetsAndActivities link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Emotional Smarts', emotional_smarts_url,
+                        <%= link_to t('.emotional_smarts'), emotional_smarts_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav emotionalSmarts link',
                                           'ga-load-label'=>'topNav emotionalSmarts link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Back To School'.html_safe, back_to_school_url,
+                        <%= link_to t('.back_to_school'), back_to_school_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav backToSchool_url link',
                                           'ga-load-label'=>'topNav backToSchool_url link' } %>
                       </li>
                       <li class=" ">
-                        <%= link_to 'Early Learning'.html_safe, early_learning_url,
+                        <%= link_to t('.early_learning'), early_learning_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav earlyLearning link',
                                           'ga-load-label'=>'topNav earlyLearning link' } %>
                       </li>
                       <li>
-                        <%= link_to 'Learning Disabilities', learning_disabilities_url,
+                        <%= link_to t('.learning_disabilities'), learning_disabilities_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav learningDisabilities link',
                                           'ga-load-label'=>'topNav learningDisabilities link' } %>
                       </li>
                       <li class=" ">
-                        <%= link_to 'Summer Learning'.html_safe, summer_learning_url,
+                        <%= link_to t('.summer_learning'), summer_learning_url,
                                     class: "js-gaLoad js-gaClick",
                                     data:{'ga-click-label'=>'topNav summerLearning link',
                                           'ga-load-label'=>'topNav summerLearning link' } %>
@@ -116,27 +114,27 @@
                     <% if logged_in? %>
                         <a class="dropdown-toggle"
                            data-toggle="dropdown"
-                           href="#back-to-school">My Account <span class="caret"></span>
+                           href="#back-to-school"><%= t('.my_account') %> <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu_top_nav">
                             <% if current_user.provisional_or_approved_osp_user? %>
                                 <li>
-                                    <%= link_to 'Edit school profile', osp_dashboard_url, class: "js-no_ad" %>
+                                    <%= link_to t('.edit_school_profile'), osp_dashboard_url, class: "js-no_ad" %>
                                 </li>
                             <% end %>
                             <li>
-                                <%= link_to 'My School List', my_school_list_url, rel:'nofollow', class: "js-no_ad" %>
+                                <%= link_to t('.my_school_list'), my_school_list_url, rel:'nofollow', class: "js-no_ad" %>
                             </li>
                             <li>
-                                <%= link_to 'Account Settings', my_account_url, class: "js-no_ad" %>
+                                <%= link_to t('.account_settings'), my_account_url, class: "js-no_ad" %>
                             </li>
                             <li>
-                                <%= link_to('Sign Out', logout_url, :method => :delete, class: "js-no_ad") %>
+                                <%= link_to(t('.sign_out'), logout_url, :method => :delete, class: "js-no_ad") %>
                             </li>
                         </ul>
                     <% else %>
-                        <%= link_to('Sign In', signin_url,
+                        <%= link_to(t('.sign_in'), signin_url,
                                     class: 'brand-secondary js-no_ad js-gaLoad js-gaClick',
                                     data:{'ga-click-label'=>'topNav signIn link',
                                           'ga-load-label'=>'topNav signIn link' }) %>
