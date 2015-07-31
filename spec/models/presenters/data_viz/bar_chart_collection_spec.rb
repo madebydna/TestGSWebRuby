@@ -45,8 +45,8 @@ describe BarChartCollection do
         data.merge(breakdown: "All Students", school_value: 100.0, percent_of_population: 10, subtext: '10% of population'),
         data.merge(breakdown: "Asian", school_value: 30.0, percent_of_population: 20, subtext: '20% of population'),
         data.merge(breakdown: "African American", school_value: 80.0, percent_of_population: 5, subtext: '5% of population' ),
-        data.merge(breakdown: "European", school_value: 70.0, percent_of_population: 10, subtext: '10% of population'),
-        data.merge(breakdown: "male", school_value: 40.0, percent_of_population: 15, subtext: '15% of population'),
+        data.merge(breakdown: "European", school_value: 70.0, percent_of_population: 24.85, subtext: '24% of population'),
+        data.merge(breakdown: "male", school_value: 40.0, percent_of_population: 0.15, subtext: '<1% of population'),
         data.merge(breakdown: "female", school_value: 50.0, subtext: 'No data')
       ]
     }

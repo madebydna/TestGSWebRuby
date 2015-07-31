@@ -11,7 +11,11 @@
             data: { width: '100%' }
         %>
       </div>
+      <div class="col-xs-12 col-md-3 legend">
+        <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average_legend')%></span>
+      </div>
     </div>
+    <div><hr></div>
 
     <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
         <% show_hide_collection = i == 0 ? '' : 'dn' %>

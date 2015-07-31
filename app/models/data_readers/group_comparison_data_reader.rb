@@ -125,7 +125,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
             :number_tested_subtext,
             number: enrollment_size.to_i,
             scope: i18n_scope,
-            default: "#{enrollment_size} students tested"
+            default: "#{enrollment_size} students"
           )
         elsif hash[:subtext].nil?
           hash[:subtext] = no_data_text
@@ -156,9 +156,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   def percent_of_population_text(percent)
     I18n.t(
       :percent_of_population_subtext,
-      percent: percent.to_i,
+      percent: (percent<1 && percent>0? '<1' : percent.to_i),
       scope: i18n_scope,
-      default:"#{percent.to_i}% of population"
+      default:"#{percent}% of population"
     )
   end
 

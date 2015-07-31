@@ -80,6 +80,22 @@
   }
 }
 
+.legend{
+
+  @media (min-width: $screen-md-min){
+    float: right !important;
+    text-align: right;
+  }
+
+  @media (max-width: $screen-sm-max){
+    padding-top: 10px;
+  }
+
+
+
+
+}
+
 
 
 

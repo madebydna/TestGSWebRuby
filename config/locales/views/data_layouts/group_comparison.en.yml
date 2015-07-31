@@ -1,0 +1,5 @@
+---
+en:
+  data_layouts:
+    group_comparison:
+      state_average_legend: 'State Avg.'
