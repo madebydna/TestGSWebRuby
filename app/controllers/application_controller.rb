@@ -53,10 +53,10 @@ class ApplicationController < ActionController::Base
     return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
     ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
-      if pool.connections.present? &&
-        ( pool.connections.first.
-         current_database == "_#{@school.state.downcase}" )
-        pool.disconnect!
+      if pool.connected? && pool.connections.present?
+        if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
+          pool.disconnect!
+        end
       end
     end
   end
