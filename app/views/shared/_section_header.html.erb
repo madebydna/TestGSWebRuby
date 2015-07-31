@@ -12,23 +12,23 @@
                 <p class="link-down-compensate"></p>
             </a>
             <div class="fl">
-                <h2 class="mvn"><%= t(title) %></h2>
+                <h2 class="mvn"><%= db_t(title) %></h2>
             </div>
             <% link_text = link_text.present? ? link_text : nil %>
             <%= raw display_section_head_link category_placement, link_text %>
         </div>
         <% if description.present? %>
-            <div class="clearfix tal phm pbm"><p class="mvn"><%= t(description) %></p></div>
+            <div class="clearfix tal phm pbm"><p class="mvn"><%= db_t(description) %></p></div>
         <% end %>
      <% elsif category_placement.depth == 1 %>
         <div class="clearfix mbl mtm mls">
             <div class="fl">
-                <h3 class="mvn"><%= t(title) %></h3>
+                <h3 class="mvn"><%= db_t(title) %></h3>
             </div>
 
         </div>
         <% if description.present? %>
-            <div class="clearfix tal pam"><p class="mvn"><%= t(description) %></p></div>
+            <div class="clearfix tal pam"><p class="mvn"><%= db_t(description) %></p></div>
         <% end %>
      <% end %>
 <% end %>

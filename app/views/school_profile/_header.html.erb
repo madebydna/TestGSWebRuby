@@ -34,7 +34,7 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
                         <% subheader_content = [
                            school_profile_decorator.process_level,
-                           t(school_type_display(@school.type)),
+                           db_t(school_type_display(@school.type)),
                            raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>
 

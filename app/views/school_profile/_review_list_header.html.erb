@@ -19,7 +19,7 @@
           <ul class="dropdown-menu mll js_reviewTopicFilterDropDown" data-topic-selected="allTopics">
             <li><a class="pointer" data-topic-filter="allTopics"><%= t('.all_topics') %></a></li>
             <% topics.each do |topic| %>
-                <li><a class="pointer" data-topic-filter="<%= topic.name %>"><%= t(topic.name) %></a></li>
+                <li><a class="pointer" data-topic-filter="<%= topic.name %>"><%= db_t(topic.name) %></a></li>
             <% end %>
           </ul>
         </div>

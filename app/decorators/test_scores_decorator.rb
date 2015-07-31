@@ -24,7 +24,7 @@ class TestScoresDecorator < Draper::Decorator
       grade_number = grade_number_regex_matches[1]
       I18n.t('decorators.test_scores_decorator.grade', grade_number: grade_number).upcase
     else
-      I18n.t(cached_label, scope: 'decorators.test_scores_decorator', default: cached_label)
+      I18n.db_t(cached_label, scope: 'decorators.test_scores_decorator', default: cached_label)
     end
   end
 
@@ -59,7 +59,7 @@ class TestScoresDecorator < Draper::Decorator
                 :li,
                 class: 'js_test_scores_grades',
                 id: test_button_dom_id(test, breakdown, :All)
-              ) { h.content_tag(:a) { I18n.t(breakdown.to_s, default: breakdown.to_s)} }
+              ) { h.content_tag(:a) { I18n.db_t(breakdown.to_s, default: breakdown.to_s)} }
             )
           end
         end)
@@ -128,7 +128,7 @@ class TestScoresDecorator < Draper::Decorator
               h.raw bar_chart(value).script_tag(div_id)
             end
             div_content << h.content_tag(:h4, class: (index_subject == 0 ? 'ptl' : '')) do
-              I18n.t(subject.to_s.gsub('.', ''), default: subject.to_s).gs_capitalize_first
+              I18n.db_t(subject.to_s.gsub('.', ''), default: subject.to_s).gs_capitalize_first
             end
             # TODO change this to test id
             div_content << h.content_tag(:div, id: div_id, class: 'notranslate ma') do

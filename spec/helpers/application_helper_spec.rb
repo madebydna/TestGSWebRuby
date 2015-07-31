@@ -134,4 +134,27 @@ describe ApplicationHelper do
   #     expect(parsed_json['thumbnail_url']).to eq('www.correctthumbnail.com')
   #   end
   # end
+
+  describe '#db_t' do
+    before do
+      allow(helper).to receive(:t)
+    end
+    it 'should remove periods from key' do
+      key = 'foo.bar'
+      expect(helper).to receive(:t).with('foobar')
+      helper.db_t(key)
+    end
+
+    it 'should pass on options hash' do
+      key = 'foo.bar'
+      expect(helper).to receive(:t).with('foobar', default: 'default')
+      helper.db_t(key, default: 'default')
+    end
+
+    it 'should accept symbols as arguments' do
+      key = :'foo.bar'
+      expect(helper).to receive(:t).with(:foobar)
+      helper.db_t(key)
+    end
+  end
 end
