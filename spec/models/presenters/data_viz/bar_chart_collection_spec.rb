@@ -1,5 +1,30 @@
 require 'spec_helper'
 
+shared_example 'should group the data by gender and everything else' do
+  expect(subject.bar_charts.map(&:title)).to eq(['ethnicity', 'gender'])
+end
+
+shared_example 'should duplicate the all students data point to all groups' do
+  subject.data.values.each do | data_points |
+    all_students_present = data_points.any? { |dp| dp[:breakdown].downcase == 'all students' }
+    expect(all_students_present).to be_truthy
+  end
+end
+
+shared_example 'should sort the groups by percent breakdown descending and all students' do
+  bar_chart_bars = subject.bar_charts.first.bar_chart_bars
+  subtexts = bar_chart_bars.map(&:subtext)
+  parsed_subtext = subtexts[1..-1].sort_by do |subtext|
+    parsed_string = /^\d+/.match(subtext)
+    parsed_string.nil? ? -1 : parsed_string[0].to_i
+  end.reverse!
+  expect(subtexts[1..-1]).to eq(parsed_subtext)
+  #leave out All students thats at the top and make sure the rest are in order
+
+  all_students_label = bar_chart_bars.first.label
+  expect(all_students_label).to eq('All Students')
+end
+
 describe BarChartCollection do
   let(:data) {
     {
@@ -28,12 +53,17 @@ describe BarChartCollection do
     context 'when the group by gender callback is set' do
       subject do
         # The array of bar chart groups
-        BarChartCollection
-          .new(nil, data_points, create_groups_by: :breakdown, group_groups_by: [:gender], default_group: 'ethnicity')
-          .send(:create_bar_charts!)
+        BarChartCollection.new(nil, data_points, {
+          bar_chart_collection_callbacks: [:copy_all_students],
+          group_by: {gender: :breakdown},
+          default_group: 'ethnicity'
+        })
       end
-      it 'should group the data by gender and everything else' do
-        expect(subject.map(&:title)).to eq(['ethnicity', 'gender'])
+
+      include_example 'should group the data by gender and everything else'
+
+      context 'when the copy_all_students callback is set' do
+        include_example 'should duplicate the all students data point to all groups'
       end
     end
 
@@ -41,30 +71,37 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection.new(nil, data_points, {
-                    create_sort_by: :percent_of_population,
-                    sort_groups_by: [:desc, :all_students],
-                    default_group: 'ethnicity',
-                    label_charts_with: :breakdown
-        }).send(:create_bar_charts!)
+          create_sort_by: :percent_of_population,
+          sort_groups_by: [:desc, :all_students],
+          default_group: 'ethnicity',
+          label_charts_with: :breakdown
+        })
       end
-      it 'should sort the groups by percent breakdown descending and all students' do
-        bar_chart_bars = subject.first.bar_chart_bars
-        subtexts = bar_chart_bars.map(&:subtext)
-        parsed_subtext = subtexts[1..-1].sort_by do |subtext|
-          parsed_string = /^\d+/.match(subtext)
-          parsed_string.nil? ? -1 : parsed_string[0].to_i
-        end.reverse!
-        expect(subtexts[1..-1]).to eq(parsed_subtext)
-        #leave out All students thats at the top and make sure the rest are in order
+      include_example 'should sort the groups by percent breakdown descending and all students'
+    end
 
-        all_students_label = bar_chart_bars.first.label
-        expect(all_students_label).to eq('All Students')
+    #test with all configs set
+    context 'when multiple config keys are set including' do
+      config = {
+        bar_chart_collection_callbacks: [:copy_all_students],
+        group_by: {gender: :breakdown},
+        default_group: 'ethnicity',
+        create_sort_by: :percent_of_population,
+        sort_groups_by: [:desc, :all_students],
+        create_charts_by: :breakdown,
+        label_charts_with: :breakdown,
+        breakdown: 'Ethnicity',
+        breakdown_all: 'Enrollment'
+      }
+      context "#{config}" do
+        subject do
+          BarChartCollection.new(nil, data_points, config)
+        end
 
+        include_example 'should group the data by gender and everything else'
+        include_example 'should duplicate the all students data point to all groups'
+        include_example 'should sort the groups by percent breakdown descending and all students'
       end
     end
   end
-
-
-
-
 end

@@ -38,8 +38,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     self.category = category
 
     self.config = {
-      create_groups_by: :breakdown,
-      group_groups_by: [:gender],
+      bar_chart_collection_callbacks: [:copy_all_students],
+      group_by: {gender: :breakdown},
       default_group: 'ethnicity',
       create_sort_by: :percent_of_population,
       sort_groups_by: [:desc, :all_students],
