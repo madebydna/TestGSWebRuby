@@ -6,7 +6,7 @@ class BarChartCollection
 
   attr_accessor :bar_charts, :data, :config, :sub_title, :title, :default_group, :group_by_config, :breakdowns
 
-  DEFAULT_CALLBACKS = [:group_by]
+  DEFAULT_CALLBACKS = [ 'group_by' ]
 
   def initialize(title, data, config = {})
     self.data             = data
@@ -44,7 +44,7 @@ class BarChartCollection
     return default_group unless group_by_config.present?
 
     group_by_config.each do | group, value_to_use |
-      found_group = send("find_group_by_#{group}".to_sym, data[value_to_use])
+      found_group = send("find_group_by_#{group}".to_sym, data[value_to_use.to_sym])
       return found_group if found_group.present?
     end
 

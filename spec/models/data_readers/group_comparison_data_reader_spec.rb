@@ -89,6 +89,7 @@ describe GroupComparisonDataReader do
     o = Object.new
     allow(o).to receive(:keys).and_return(sample_data.keys)
     allow(o).to receive(:key_label_map).and_return(sample_label_map)
+    allow(o).to receive(:parsed_json_config).and_return({}.with_indifferent_access)
     o
   end
 
@@ -96,6 +97,7 @@ describe GroupComparisonDataReader do
   describe '#data_for_category' do
     before do
       allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
+      allow(subject).to receive(:modify_data!)
     end
 
     it 'should create a BarChartCollection for each data type' do
@@ -116,7 +118,15 @@ describe GroupComparisonDataReader do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
         allow(subject).to receive(:get_cache_data).and_return(subtext_data)
         allow(subject).to receive(:category).and_return(fake_category)
-        allow(subject).to receive(:config).and_return({ breakdown: 'Ethnicity', breakdown_all: 'Enrollment' })
+        allow(subject).to receive(:config).and_return({
+          breakdown: 'Ethnicity',
+          breakdown_all: 'Enrollment',
+          group_comparison_callbacks: [
+            'add_ethnicity_callback',
+            'add_enrollment_callback',
+            'add_student_types_callback',
+          ]
+        }.with_indifferent_access)
         subject.send(:get_data!)
       end
 

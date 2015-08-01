@@ -54,10 +54,10 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection.new(nil, data_points, {
-          bar_chart_collection_callbacks: [:copy_all_students],
-          group_by: {gender: :breakdown},
+          bar_chart_collection_callbacks: ['copy_all_students'],
+          group_by: {'gender' => 'breakdown'},
           default_group: 'ethnicity'
-        })
+        }.with_indifferent_access)
       end
 
       include_example 'should group the data by gender and everything else'
@@ -71,11 +71,11 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection.new(nil, data_points, {
-          bar_chart_callbacks: [:move_all_students],
-          sort_by: {desc: :percent_of_population},
+          bar_chart_callbacks: ['move_all_students'],
+          sort_by: {'desc' => 'percent_of_population'},
           default_group: 'ethnicity',
-          label_charts_with: :breakdown
-        })
+          label_charts_with: 'breakdown'
+        }.with_indifferent_access)
       end
       include_example 'should sort the groups by percent breakdown descending and all students'
     end
@@ -83,16 +83,15 @@ describe BarChartCollection do
     #test with all configs set
     context 'when multiple config keys are set including' do
       config = {
-        bar_chart_collection_callbacks: [:copy_all_students],
-        group_by: {gender: :breakdown},
+        bar_chart_collection_callbacks: ['copy_all_students'],
+        group_by: {'gender' => 'breakdown'},
         default_group: 'ethnicity',
-        bar_chart_callbacks: [:move_all_students],
-        sort_by: {desc: :percent_of_population},
-        create_charts_by: :breakdown,
-        label_charts_with: :breakdown,
+        bar_chart_callbacks: ['move_all_students'],
+        sort_by: {'desc' => 'percent_of_population'},
+        label_charts_with: 'breakdown',
         breakdown: 'Ethnicity',
         breakdown_all: 'Enrollment'
-      }
+      }.with_indifferent_access
       context "#{config}" do
         subject do
           BarChartCollection.new(nil, data_points, config)

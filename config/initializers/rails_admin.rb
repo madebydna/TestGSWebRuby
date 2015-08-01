@@ -167,6 +167,12 @@ RailsAdmin.config do |config|
           end
         end
         field :description
+        field :json_config, :text, :code_mirror do
+          def value
+            data = super
+            JSON.pretty_unparse(JSON.parse(data)) if data.present?
+          end
+        end
       end
   #     export do; end
   #     # also see the create, update, modal and nested sections, which override edit in specific cases (resp. when creating, updating, modifying from another model in a popup modal or modifying from another model nested form)

@@ -26,7 +26,7 @@ describe BarChart do
         subject do
           # The array of bar charts
           BarChart
-            .new([eval(data_point.to_s)], nil, label_charts_with: :breakdown)
+            .new([eval(data_point.to_s)], nil, 'label_charts_with' => 'breakdown')
             .send(:create_bar_chart_bars!)
         end
         it "should create #{number_bar_charts} bar charts" do
@@ -39,7 +39,7 @@ describe BarChart do
       subject do
         # The array of bar charts
         BarChart
-          .new([earlier_data_point, valid_data_point], nil, label_charts_with: :year)
+          .new([earlier_data_point, valid_data_point], nil, 'label_charts_with' => 'year')
           .send(:create_bar_chart_bars!)
       end
       it 'should create a bar chart for each group' do

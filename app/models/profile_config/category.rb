@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-  attr_accessible :description, :name, :parent, :source, :layout, :updated_at
+  attr_accessible :description, :name, :parent, :source, :layout, :json_config, :updated_at
   db_magic :connection => :profile_config
 
   has_many :category_placements, -> { order('collection_id desc') }
@@ -52,6 +52,14 @@ class Category < ActiveRecord::Base
 
   def possible_sources
     SchoolProfileDataDecorator.data_readers
+  end
+
+  def parsed_json_config
+    if json_config.present?
+      JSON.parse(json_config).with_indifferent_access if json_config.present?
+    else
+      {}
+    end
   end
 
 end

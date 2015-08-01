@@ -4,7 +4,7 @@ class BarChart
 
   attr_accessor :bar_chart_bars, :data, :config, :title, :sort_by_config
 
-  DEFAULT_CALLBACKS = [:sort_by]
+  DEFAULT_CALLBACKS = [ 'sort_by' ]
 
   def initialize(data, title = nil, config = {})
     # Title is optional because for single chart groups, there is no group title
@@ -44,7 +44,7 @@ class BarChart
   def sort_by_callback
     return unless sort_by_config.present?
 
-    sort_by_config.each { |sort, key_to_use| send("sort_by_#{sort}".to_sym, key_to_use) }
+    sort_by_config.each { |sort, key_to_use| send("sort_by_#{sort}".to_sym, key_to_use.to_sym) }
   end
 
   def sort_by_desc(key)
@@ -57,6 +57,6 @@ class BarChart
   end
 
   def label_for(data_point, config)
-    config[:label_charts_with] ? data_point[config[:label_charts_with]] : nil
+    config[:label_charts_with] ? data_point[config[:label_charts_with].to_sym] : nil
   end
 end

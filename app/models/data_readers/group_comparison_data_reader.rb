@@ -29,6 +29,8 @@
 class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
+  DEFAULT_CALLBACKS = [ 'change_data_type_to_label' ]
+
   attr_accessor :category, :config, :data
 
   # An array of BarChartCollection objects.
@@ -36,18 +38,24 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   # charts themselves.
   def data_for_category(category)
     self.category = category
+    self.config = category.parsed_json_config
 
-    self.config = {
-      bar_chart_collection_callbacks: [:copy_all_students],
-      group_by: {gender: :breakdown},
-      default_group: 'ethnicity',
-      bar_chart_callbacks: [:move_all_students],
-      sort_by: {desc: :percent_of_population},
-      create_charts_by: :breakdown,
-      label_charts_with: :breakdown,
-      breakdown: 'Ethnicity',
-      breakdown_all: 'Enrollment'
-    }
+    # example parsed config. (HashWithIndifferentAccess)
+    # self.config = {
+    #  'bar_chart_collection_callbacks' => ['copy_all_students'],
+    #  'group_by'                       => {'gender '=> 'breakdown'},
+    #  'default_group'                  => 'ethnicity',
+    #  'bar_chart_callbacks'            => ['move_all_students'],
+    #  'sort_by'                        => 'desc' => 'percent_of_population'},
+    #  'label_charts_with'              => 'breakdown',
+    #  'breakdown'                      => 'Ethnicity',
+    #  'breakdown_all'                  => 'Enrollment',
+    #  'group_comparison_callbacks'     => [
+    #     'add_ethnicity_callback',
+    #     'add_enrollment_callback',
+    #     'add_student_types_callback',
+    #   ]
+    # }
 
     get_data!
 
@@ -69,19 +77,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     modify_data!
   end
 
-  #this code exists to modify the data from school cache and make it more friendly for the Bar Charts
-  #However, consider moving this calculation to school cache and precalculate it there.
   def modify_data!
     modify_data_callbacks.each { |callback| send(callback) }
   end
 
   def modify_data_callbacks
-    [
-      :change_data_type_to_label,
-      :add_ethnicity_callback,
-      :add_enrollment_callback,
-      :add_student_types_callback,
-    ]
+    DEFAULT_CALLBACKS + [*config[:group_comparison_callbacks]]
   end
 
   def change_data_type_to_label
@@ -89,7 +90,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def add_ethnicity_callback
-    return data unless config[:breakdown] == 'Ethnicity'
+    return unless config[:breakdown] == 'Ethnicity'
 
     ethnicity_data = get_cache_data('characteristics', :Ethnicity, school)[:Ethnicity]
     ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
@@ -104,14 +105,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
         hash[:subtext] = no_data_text
       end
     end
-
-    data
-  rescue
-    data
   end
 
   def add_enrollment_callback
-    return data unless config[:breakdown_all] == 'Enrollment'
+    return unless config[:breakdown_all] == 'Enrollment'
 
     enrollment_data = get_cache_data('characteristics', :Enrollment, school)[:Enrollment]
     enrollment_size = enrollment_data.first[:school_value]
@@ -130,10 +127,6 @@ class GroupComparisonDataReader < SchoolProfileDataReader
         end
       end
     end
-
-    data
-  rescue
-    data
   end
 
   def add_student_types_callback
@@ -149,10 +142,6 @@ class GroupComparisonDataReader < SchoolProfileDataReader
         hash[:subtext] = no_data_text
       end
     end
-
-    data
-  rescue
-    data
   end
 
   def i18n_scope
