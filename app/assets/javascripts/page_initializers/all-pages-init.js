@@ -20,6 +20,10 @@ $(function() {
 
   GS.util.BackToTop.init();
 
+  // Bootstrap select init call. Transforms some selects into pretty Bootstrap
+  // ones. https://silviomoreto.github.io/bootstrap-select/
+  $('.selectpicker').selectpicker();
+
   // PT-1535 Cleanslating our GA install for now.
   // GS.googleAnalytics.tracking.init(gon.pagename);
 
