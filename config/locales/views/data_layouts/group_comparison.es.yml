@@ -2,4 +2,3 @@
 es:
   data_layouts:
     group_comparison:
-      state_average_legend: 'El promedio del estado'

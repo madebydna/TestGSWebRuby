@@ -10,3 +10,8 @@ es:
       bar_chart:
         gender: 'Género'
         ethnicity: 'Etnicidad'
+
+      bar_chart_collection:
+        state_average_legend: 'El promedio del estado'
+
+

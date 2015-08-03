@@ -10,6 +10,10 @@
                locals: { bar_chart_collection: bar_chart_collection } %>
   <% end %>
 
+
+  <div class="pvm">
+    <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average_legend')%></span>
+  </div>
   <div class='row'>
     <% bar_chart_collection.bar_charts.each_with_index do | bar_chart, i| %>
       <% show_hide_chart = (i > 0 && show_breakdown_dropdown) ? 'dn' : '' %>
