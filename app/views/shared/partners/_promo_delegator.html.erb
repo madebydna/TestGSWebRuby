@@ -1,0 +1,9 @@
+<% collections.each do |collection| %>
+  <% if (promo = collection.config[:promo]) %>
+    <%= render partial: "shared/partners/#{promo[:type]}",
+               locals: {
+                 partner: promo[:name]
+               }
+    %>
+  <% end %>
+<% end %>

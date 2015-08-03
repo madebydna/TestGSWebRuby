@@ -20,10 +20,11 @@
                             show_hide_collection: show_hide_collection} %>
     <% end %>
 
-    <%= render partial: 'shared/partners/send_to_partner',
-      locals: {
-        partner: data[:partner],
-      }
+    <%= render partial: "shared/partners/promo_delegator",
+               locals: {
+                 collections: @school.collections,
+                 partial: current_partial,
+               }
     %>
   </div>
 </div>
