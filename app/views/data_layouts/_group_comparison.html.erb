@@ -4,18 +4,21 @@
     <div class="row">
 
       <div class="col-xs-12 col-md-4">
-        <%=
-          select_tag 'subgroup',
-            options_for_select(bar_chart_collections.map(&:title)),
-            class: 'selectpicker',
-            data: { width: '100%' }
-        %>
+        <% ['btn-group btn-group-justified hidden-xs', 'btn-group-vertical visible-xs full-width'].each do | classes | %>
+            <div class="<%= classes %>" data-toggle="buttons">
+              <% bar_chart_collections.each_with_index do |collection, i| %>
+                  <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown' data-breakdown="<%= collection.title %>">
+                    <input type="radio"/>
+                    <%= collection.title %>
+                  </div>
+              <% end %>
+            </div>
+        <% end %>
       </div>
       <div class="col-xs-12 col-md-3 legend">
         <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average_legend')%></span>
       </div>
     </div>
-    <div><hr></div>
 
     <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
         <% show_hide_collection = i == 0 ? '' : 'dn' %>

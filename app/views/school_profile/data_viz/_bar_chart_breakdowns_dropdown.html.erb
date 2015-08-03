@@ -1,0 +1,18 @@
+<% bar_chart_collection %>
+<% breakdowns = bar_chart_collection.breakdowns %>
+
+<% if breakdowns.count > 1 %>
+  <div class='row'>
+    <div class='ptm clearfix col-xs-12 col-md-4'>
+      <%=
+          select_tag 'breakdown',
+                     options_for_select(breakdowns.map {| title | t(".#{title}")}),
+                     class: 'selectpicker',
+                     data: { width: '100%' }
+      %>
+    </div>
+  </div>
+
+<% else %>
+  <div class="ptm font-size-large"> <%= t('.grouped_by', breakdown: t(".#{breakdowns.first}")).html_safe %> </div>
+<% end %>

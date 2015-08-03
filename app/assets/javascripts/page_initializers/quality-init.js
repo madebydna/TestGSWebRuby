@@ -19,8 +19,8 @@ if(gon.pagename == "Quality"){
         GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
 
         var SubgroupCharts = function () {
-            $('.js-dataVizBarChartContainer').on('click', 'li', function () {
-                var title = $(this).text();
+            $('.js-dataVizBarChartContainer').on('click', '.js-barChartBreakdown', function () {
+                var title = $(this).data('breakdown');
                 var dashedTitle = title.replace(/ /g, "-");
                 var $parent = $(this).closest('.js-dataVizBarChartContainer');
                 $parent.find('.data-viz-bar-chart:not(.js-' + dashedTitle + ')').addClass('dn');
@@ -28,11 +28,12 @@ if(gon.pagename == "Quality"){
             });
         };
 
-        var toggleBreakdownsHandler = function() {
-            $('.js-dataVizBarChartContainer').on('click', '.js-barChartBreakdown', function () {
-                var $self = $(this);
-                var breakdownClass = '.js-' + $self.data('breakdown');
-                var $parent = $self.closest('.js-dataVizBarChart');
+        var dropdownBreakdownsHandler = function() {
+            $('.js-dataVizBarChartContainer').on('click', 'li', function () {
+                var $self = $(this).text();
+                var dashedTitle = $self.replace(/ /g, "-");
+                var breakdownClass = '.js-' + dashedTitle;
+                var $parent = $(this).closest('.js-dataVizBarChart');
 
                 $parent.find('.js-barChart').addClass('dn');
                 $parent.find('.js-barChart' + breakdownClass).removeClass('dn');
@@ -40,7 +41,7 @@ if(gon.pagename == "Quality"){
         };
 
         SubgroupCharts();
-        toggleBreakdownsHandler()
+        dropdownBreakdownsHandler();
 
 
     });
