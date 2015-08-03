@@ -46,7 +46,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     #  'group_by'                       => {'gender '=> 'breakdown'},
     #  'default_group'                  => 'ethnicity',
     #  'bar_chart_callbacks'            => ['move_all_students'],
-    #  'sort_by'                        => 'desc' => 'percent_of_population'},
+    #  'sort_by'                        => {'desc' => 'percent_of_population'},
     #  'label_charts_with'              => 'breakdown',
     #  'breakdown'                      => 'Ethnicity',
     #  'breakdown_all'                  => 'Enrollment',
