@@ -276,4 +276,14 @@ describe UrlHelper do
       end
     end
   end
+  describe '#catalog_path' do
+    ['path', 'path/'].each do |env_path|
+      ['path', '/path'].each do |var_path|
+        it "should handle env path #{env_path} and var path #{var_path}" do
+          ENV_GLOBAL['catalog_server'] = env_path
+          expect(url_helper.catalog_path(var_path)).to eq 'path/path'
+        end
+      end
+    end
+  end
 end

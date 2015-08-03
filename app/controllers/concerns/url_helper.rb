@@ -117,7 +117,7 @@ module UrlHelper
   end
 
   def catalog_path(path = '')
-    "#{ENV_GLOBAL['catalog_server']}#{path}"
+    "#{ENV_GLOBAL['catalog_server']}/#{path}".sub('//','/').sub('//','/')
   end
 
   %w(school school_details school_quality school_reviews school_user ).each do |helper_name|
