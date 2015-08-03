@@ -6,9 +6,11 @@ class Collection < ActiveRecord::Base
   has_one :hub_city_mapping
 
   def config
-    JSON.parse(read_attribute(:config)).with_indifferent_access
-  rescue
-    {}
+    @config ||= begin
+                JSON.parse(read_attribute(:config)).with_indifferent_access
+              rescue
+                {}
+              end
   end
 
   # These methods are deprecated, but still work.
