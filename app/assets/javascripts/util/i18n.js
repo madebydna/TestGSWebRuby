@@ -3,14 +3,17 @@ var GS = GS || {};
 GS.I18n = GS.I18n || (function(defaultTranslationsHash) {
   var translationsHash = defaultTranslationsHash;
 
-  var translate = function(key, locale) {
-    locale = locale || currentLocale();
-    var hashForLocale = translationsHash[locale] || {};
-    return hashForLocale[key];
-  };
-
-  var currentLocale = function() {
-    return GS.uri.Uri.getValueOfQueryParam('lang') || 'en';
+  var translate = function(key, options) {
+    options = options || {};
+    // defaults to empty string if no matching translation and no default provided
+    var defaultValue = options['default'] || '';
+    var translationValue = translationsHash[key];
+    if(translationValue !== undefined) {
+      return translationValue;
+    } else {
+      GS.util.log('Translation for ' + key + ' not found. Defaulting to ' + defaultValue);
+      return defaultValue;
+    }
   };
 
   // used in tests
@@ -20,7 +23,6 @@ GS.I18n = GS.I18n || (function(defaultTranslationsHash) {
 
   return {
     t: translate,
-    currentLocale: currentLocale,
     _setTranslationsHash: setTranslationsHash
   }
 })(gon.translations);

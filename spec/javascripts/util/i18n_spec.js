@@ -1,4 +1,5 @@
 //= require util/uri
+//= require util/util
 //= require util/i18n
 
 describe('GS.I18n', function() {
@@ -10,31 +11,31 @@ describe('GS.I18n', function() {
 
   before(function() {
     GS.I18n._setTranslationsHash({
-      'en': {
-        'foo': 'bar'
-      },
-      'es': {
-        'foo': 'baz'
-      }
+      'foo': 'bar'
     });
   });
 
   afterEach(function() {
-    unstub(GS.I18n.currentLocale);
     unstub(GS.uri.Uri.getHref);
   });
 
   describe('.t', function() {
     it('translates foo', function() {
-      sinon.stub(GS.I18n, 'currentLocale').returns('en');
       var key = 'foo';
       expect(GS.I18n.t(key)).to.eq('bar');
     });
 
-    it('translates foo in spanish', function() {
-      sinon.stub(GS.uri.Uri, 'getHref').returns('www.greatschools.org?lang=es');
-      var key = 'foo';
-      expect(GS.I18n.t(key)).to.eq('baz');
+    it('supports a default value', function() {
+      var key = '%$&#!';
+      var defaultValue = 'bar';
+      expect(
+        GS.I18n.t(
+          key,
+          {
+            'default': defaultValue
+          }
+        )
+      ).to.eq(defaultValue);
     });
   });
 });
