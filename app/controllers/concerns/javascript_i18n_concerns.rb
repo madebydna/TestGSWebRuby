@@ -3,28 +3,35 @@ module JavascriptI18nConcerns
 
   protected
 
-  TRANSLATIONS_TO_ADD_TO_JS = [
-    'data_layouts.test_scores.advanced',
-    'data_layouts.test_scores.proficient',
-    'data_layouts.test_scores.proficient_or_better'
-  ].freeze
-
-  # I18n.available_locales returns locales we don't have translations for, so hard-code this for now
-  LOCALES_TO_USE_FOR_JS_TRANSLATIONS = %w[en es]
-
   def add_configured_translations_to_js
-    TRANSLATIONS_TO_ADD_TO_JS.each do |key|
-      LOCALES_TO_USE_FOR_JS_TRANSLATIONS.each do |locale|
-        value = I18n.t(key, locale: locale) # inefficient way of doing this?
-        add_translation_to_js(key, value, locale)
+    flat_translations_hash = flatten_hash(javascript_translations)
+    flat_translations_hash.each do |key, value|
+      add_translation_to_js(key, value)
+    end
+  end
+
+  def flatten_hash(hash)
+    hash.each_with_object({}) do |(k, v), h|
+      if v.is_a? Hash
+        flatten_hash(v).map do |h_k, h_v|
+          h["#{k}.#{h_k}"] = h_v
+        end
+      else
+        h[k] = v
       end
     end
   end
 
-  def add_translation_to_js(key, value, locale)
+  def javascript_translations
+    # ensure backend initialization for backends that support lazy initialization
+    I18n.backend.send(:init_translations) if I18n.backend.respond_to?(:initialized?) && ! I18n.backend.initialized?
+    translations = I18n.backend.send(:translations)
+    translations.seek(I18n.locale, :javascript) || {}
+  end
+
+  def add_translation_to_js(key, value)
     gon.translations ||= {}
-    gon.translations[locale] ||= {}
-    gon.translations[locale][key] = value
+    gon.translations[key] = value
   end
 
 end

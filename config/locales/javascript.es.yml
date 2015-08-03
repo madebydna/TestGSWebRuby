@@ -1,0 +1,7 @@
+---
+es:
+  javascript:
+    test_scores:
+      advanced: 'Avanzado'
+      proficient: 'Competente'
+      proficient_or_better: 'Competente o mejor'
