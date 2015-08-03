@@ -1,0 +1,6 @@
+---
+es:
+  decorators:
+    esp_enrollment_decorator:
+      contact_school: Contactar con la escuela
+      rolling_deadline: Abierta todo el año

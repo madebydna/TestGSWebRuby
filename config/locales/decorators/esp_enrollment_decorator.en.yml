@@ -1,0 +1,6 @@
+---
+en:
+  decorators:
+    esp_enrollment_decorator:
+      contact_school: Contact school
+      rolling_deadline: Rolling deadline
