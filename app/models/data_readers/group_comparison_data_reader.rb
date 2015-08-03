@@ -59,18 +59,11 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
     get_data!
 
-    bar_chart_collections = data.map do |collection_name, collection_data|
+    data.map do |collection_name, collection_data|
       BarChartCollection.new(collection_name, collection_data, config)
     end
-    if bar_chart_collections.present?
-      {
-        bar_chart_collections: bar_chart_collections,
-      }
-    else
-      {}
-    end
   rescue
-    {}
+    []
   end
 
   protected
