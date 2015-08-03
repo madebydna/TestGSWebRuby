@@ -105,10 +105,8 @@ describe GroupComparisonDataReader do
       subject.data_for_category(fake_category)
     end
 
-    [:partner, :bar_chart_collections].each do |key|
-      it "should return a hash with key #{key}" do
-        expect(subject.data_for_category(fake_category)).to have_key key
-      end
+    it "should return a hash with key :bar_chart_collections" do
+      expect(subject.data_for_category(fake_category)).to have_key :bar_chart_collections
     end
   end
 
