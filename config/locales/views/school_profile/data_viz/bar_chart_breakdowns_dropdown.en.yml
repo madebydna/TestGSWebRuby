@@ -7,11 +7,8 @@ en:
         ethnicity: 'Ethnicity'
         grouped_by: 'Grouped by %{breakdown}'
 
-      bar_chart:
-        gender: 'Gender'
-        ethnicity: 'Ethnicity'
 
-      bar_chart_collection:
-        state_average_legend: 'State Avg.'
+
+
 
         

@@ -7,11 +7,7 @@ es:
         ethnicity: 'Etnicidad'
         grouped_by: 'Agrupados por %{breakdown}'
 
-      bar_chart:
-        gender: 'Género'
-        ethnicity: 'Etnicidad'
 
-      bar_chart_collection:
-        state_average_legend: 'El promedio del estado'
+
 
 
