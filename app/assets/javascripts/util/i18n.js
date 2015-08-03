@@ -1,7 +1,7 @@
 var GS = GS || {};
 
-GS.I18n = GS.I18n || (function(defaultTranslationsHash) {
-  var translationsHash = defaultTranslationsHash;
+GS.I18n = GS.I18n || (function() {
+  var translationsHash;
 
   var translate = function(key, options) {
     options = options || {};
@@ -21,8 +21,19 @@ GS.I18n = GS.I18n || (function(defaultTranslationsHash) {
     translationsHash = hash;
   };
 
-  return {
-    t: translate,
-    _setTranslationsHash: setTranslationsHash
+  // changes state of translationsHash if it is undefined and there are gon translations
+  var getTranslationsHash = function() {
+    translationsHash = translationsHash || gon.translations;
+    return translationsHash;
+  };
+
+  if(window.hasOwnProperty('gon') && gon.hasOwnProperty('translations')) {
+    setTranslationsHash(gon.translations);
   }
-})(gon.translations);
+
+  return {
+    _setTranslationsHash: setTranslationsHash,
+    getTranslationsHash: getTranslationsHash,
+    t: translate
+  }
+})();
