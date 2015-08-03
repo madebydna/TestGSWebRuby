@@ -3,6 +3,9 @@ class SchoolCache < ActiveRecord::Base
   self.table_name = 'school_cache'
   attr_accessible :name, :school_id, :state, :value, :updated
 
+  ETHNICITY = :Ethnicity
+  ENROLLMENT = :Enrollment
+
   KEYS = [:characteristics, :esp_responses, :nearby_schools, :progress_bar, :ratings, :reviews_snapshot, :test_scores]
 
   def self.for_school(name, school_id, state)

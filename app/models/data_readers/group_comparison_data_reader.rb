@@ -90,9 +90,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def add_ethnicity_callback
-    return unless config[:breakdown] == 'Ethnicity'
+    ethnicity_sym = SchoolCache::ETHNICITY
+    return unless config[:breakdown] == ethnicity_sym.to_s
 
-    ethnicity_data = get_cache_data('characteristics', :Ethnicity, school)[:Ethnicity]
+    ethnicity_data = get_cache_data('characteristics', ethnicity_sym, school)[ethnicity_sym]
     ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
       h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
     end
@@ -108,9 +109,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def add_enrollment_callback
-    return unless config[:breakdown_all] == 'Enrollment'
+    enrollment_sym = SchoolCache::ENROLLMENT
+    return unless config[:breakdown_all] == enrollment_sym.to_s
 
-    enrollment_data = get_cache_data('characteristics', :Enrollment, school)[:Enrollment]
+    enrollment_data = get_cache_data('characteristics', enrollment_sym, school)[enrollment_sym]
     enrollment_size = enrollment_data.first[:school_value]
 
     data.values.flatten.each do | hash |
