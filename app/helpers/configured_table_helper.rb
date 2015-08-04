@@ -21,8 +21,9 @@ module ConfiguredTableHelper
 
   def filter_by_breakdowns(breakdowns, data)
     return data if breakdowns == 'all'
-    data.deep_dup.each do |k, values|
-      data[k] = values.select do |value|
+    duped_data = data.deep_dup
+    duped_data.each do |k, values|
+      duped_data[k] = values.select do |value|
         [*breakdowns].any? do |breakdown|
           value[:breakdown].to_s.downcase == breakdown
         end
