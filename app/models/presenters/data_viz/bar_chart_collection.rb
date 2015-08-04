@@ -44,7 +44,7 @@ class BarChartCollection
     return default_group unless group_by_config.present?
 
     group_by_config.each do | group, value_to_use |
-      found_group = send("find_group_by_#{group}".to_sym, data[value_to_use.to_sym])
+      found_group = send("find_group_by_#{group}".to_sym, data[value_to_use.to_sym].to_s)
       return found_group if found_group.present?
     end
 
@@ -59,7 +59,7 @@ class BarChartCollection
   def copy_all_students_callback
     return unless data.present?
     data_points = data.values.flatten
-    all_students = data_points.select { |d| d[:breakdown].downcase == 'all students' }.first
+    all_students = data_points.select { |d| d[:breakdown].to_s.downcase == 'all students' }.first
 
     if all_students.present?
       data.values.each do | group_of_data |

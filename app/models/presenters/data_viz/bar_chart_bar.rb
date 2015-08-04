@@ -11,7 +11,7 @@ class BarChartBar
   end
 
   def display?
-    value.present?
+    value.present? && label.present?
   end
 
   private

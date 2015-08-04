@@ -52,7 +52,7 @@ class BarChart
   end
 
   def move_all_students_callback
-    i = data.find_index { |d| d[:breakdown].downcase == 'all students' }
+    i = data.find_index { |d| d[:breakdown].to_s.downcase == 'all students' }
     data.insert(0, data.delete_at(i)) if i.present?
   end
 

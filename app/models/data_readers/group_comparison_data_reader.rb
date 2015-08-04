@@ -90,16 +90,18 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     return unless config[:breakdown] == ethnicity_sym.to_s
 
     ethnicity_data = get_cache_data('characteristics', ethnicity_sym, school)[ethnicity_sym]
-    ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
-      h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
-    end
+    if ethnicity_data
+      ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
+        h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
+      end
 
-    data.values.flatten.each do | hash |
-      if (ethnicity_percent = ethnicity_map[hash[:original_breakdown]]).present?
-        hash[:subtext] = percent_of_population_text(ethnicity_percent)
-        hash[:percent_of_population] = ethnicity_percent
-      elsif hash[:subtext].nil?
-        hash[:subtext] = no_data_text
+      data.values.flatten.each do | hash |
+        if (ethnicity_percent = ethnicity_map[hash[:original_breakdown]]).present?
+          hash[:subtext] = percent_of_population_text(ethnicity_percent)
+          hash[:percent_of_population] = ethnicity_percent
+        elsif hash[:subtext].nil?
+          hash[:subtext] = no_data_text
+        end
       end
     end
   end
@@ -112,7 +114,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     enrollment_size = enrollment_data.first[:school_value]
 
     data.values.flatten.each do | hash |
-      if hash[:breakdown].downcase == 'all students'
+      if hash[:breakdown].to_s.downcase == 'all students'
         if enrollment_size
           hash[:subtext] = I18n.t(
             :number_tested_subtext,
