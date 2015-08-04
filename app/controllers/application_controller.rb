@@ -52,12 +52,16 @@ class ApplicationController < ActionController::Base
     # regular after_filter. See PT-1616 for more information.
     return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
-    ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
-      if pool.connected? && pool.connections.present?
-        if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
-          pool.disconnect!
+    begin
+      ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
+        if pool.connected? && pool.connections.present?
+          if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
+            pool.disconnect!
+          end
         end
       end
+    rescue => e
+      GSLogger.error(e, :misc, message:'Failed to explicitly close connections')
     end
   end
 
