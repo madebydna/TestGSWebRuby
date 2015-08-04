@@ -21,7 +21,8 @@
         <p class="mbm"><span class="open-sans_sb"><%= t('data_layouts.test_scores.about_the_test') %></span>
           <!--<a  href="javascript:void(0)" class="js_toggle_parent_sib plm">Learn More &raquo;</a>-->
         </p>
-        <div><%= raw decorator.description(value) %></div>
+        <% description = decorator.description(value) %>
+        <div><%= raw(db_t(description)) %></div>
       </div>
     <% end %>
     <% if decorator.source(value) %>
