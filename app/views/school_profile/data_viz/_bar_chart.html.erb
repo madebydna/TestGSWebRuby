@@ -8,8 +8,21 @@
   # You may delete it when you make the real module.
 %>
 <div class="js-barChart js-<%= t(".#{bar_chart.title}") %> <%= show_hide_chart %>">
-  <% bar_chart.bar_chart_bars.each do | bar_chart_bar | %>
-    <%= render partial: 'school_profile/data_viz/bar_chart_bar',
-      locals: { chart: bar_chart_bar } %>
-  <% end %>
+  <div class="col-xs-12 col-md-6">
+    <% bar_chart.bar_chart_bars.each_with_index do |bar_chart_bar, i| %>
+        <% if i <= bar_chart_half_size %>
+            <%= render partial: 'school_profile/data_viz/bar_chart_bar',
+                       locals: {chart: bar_chart_bar} %>
+        <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-xs-12 col-md-6">
+    <% bar_chart.bar_chart_bars.each_with_index do |bar_chart_bar, i| %>
+        <% if i > bar_chart_half_size %>
+            <%= render partial: 'school_profile/data_viz/bar_chart_bar',
+                       locals: {chart: bar_chart_bar} %>
+        <% end %>
+    <% end %>
+  </div>
 </div>
