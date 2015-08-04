@@ -20,7 +20,7 @@ module ConfiguredTableHelper
   end
 
   def filter_by_breakdowns(breakdowns, data)
-    return data if breakdowns == 'all'
+    return data if [*breakdowns].first.to_s == 'all'
     duped_data = data.deep_dup
     duped_data.each do |k, values|
       duped_data[k] = values.select do |value|
