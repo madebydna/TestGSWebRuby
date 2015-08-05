@@ -4,28 +4,20 @@
 # and
 # 123  becomes  '123': 123
 #
-# First optional parameter is number of spaces to indent by
-#
 # Example use (mysqlditto is a custom alias that just connects to mysql on the ditto server with the right credentials)
 # echo "select distinct response_label from localized_profiles.response_values order by
-# response_label asc" | mysqlditto | tail -n +2 | script/strings_to_yml_key_val.rb 4 >> config/locales/models/response_value.en.yml
+# response_label asc" | mysqlditto | tail -n +2 | script/strings_to_yml_key_val.rb > config/locales/models/response_value.en.yml
 
-indent = ARGV[0].to_i
 require 'yaml'
 array = STDIN.to_a.sort.uniq
+
+hash = {}
 array.each do |text|
   text = text.force_encoding('windows-1252').encode('utf-8')
-  text.gsub!(/[\u201c\u201d]/, '"')
-  text.gsub!(/[\u2018\u2019]/, "'")
   text.strip!
-  next if text.to_i.to_s == text || text == 'false' || text == 'true'
-  # note from samson
-  # I tried to use YAML.dump / obj.to_yaml to generate yaml instead of doing this
-  # however, those yaml generating methods don't property escape periods
-  # i18n-tasks library does, but I couldn't isolate the code that was doing that
-  output_string = ''
-  output_string << ' ' * indent
-  s = '\'' + text.gsub('.', '').gsub('"', '\"').gsub(/\n/, '').gsub('\'','\'\'') + '\''
-  output_string << s << ': ' << s
-  puts output_string
+  next if text.to_i.to_s == text || text == 'false' || text == 'true' || text.empty?
+  key = text.gsub('.', '')
+  hash[key] = text
 end
+
+puts YAML.dump('en' => hash)
