@@ -52,7 +52,7 @@ class School < ActiveRecord::Base
     @collections ||= (
       collection_id = self.school_metadata['collection_id']
       if collection_id
-        [ Collection.find(collection_id) ]
+        [ Collection.find_by(id: collection_id) ]
       else
         []
       end
@@ -67,7 +67,7 @@ class School < ActiveRecord::Base
   def hub_city
     collection = self.collection
     if collection
-      hub = HubCityMapping.where(collection_id: collection.id).first
+      hub = HubCityMapping.find_by(collection_id: collection.id)
       hub.city
     else
       city
