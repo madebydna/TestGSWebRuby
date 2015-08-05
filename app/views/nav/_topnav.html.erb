@@ -1,3 +1,5 @@
+<% #encoding: utf-8 %>
+
 <nav class="navbar navbar-default navbar-fixed-top <%= @gs_bootstrap %>" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="limit-width-1200">
@@ -108,6 +110,19 @@
                                           'ga-load-label'=>'topNav summerLearning link' } %>
                       </li>
                     </ul>
+                </li>
+                <li>
+                <%=
+                    target_lang, link_text = * case I18n.locale
+                                               when :en
+                                                 ['es', 'En Español']
+                                               when :es
+                                                 ['en', 'In English']
+                                               else
+                                                 ['es', 'En Español']
+                                               end
+                    link_to(link_text, params.merge(lang: target_lang))
+                %>
                 </li>
 
                 <li>
