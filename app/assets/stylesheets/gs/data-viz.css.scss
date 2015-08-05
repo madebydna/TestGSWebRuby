@@ -1,8 +1,9 @@
 .data-viz-bar-chart {
 
-  $above_average: #40a753;
-  $average:       #ec843e;
-  $below_average: #bf3c29;
+  $no_quality_attribution: #777777;
+  $above_average:          #40a753;
+  $average:                #ec843e;
+  $below_average:          #bf3c29;
 
   .header {
     width: 100%;
@@ -51,9 +52,10 @@
     }
 
     .color-row {
-      height:10px;
+      background-color: $no_quality_attribution;
       border-radius: 2px 0px 0px 2px;
       float: left;
+      height:10px;
       &.above_average { background-color: $above_average; }
       &.average       { background-color: $average; }
       &.below_average { background-color: $below_average; }
