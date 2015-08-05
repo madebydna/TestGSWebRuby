@@ -6,11 +6,17 @@
     <a href="quality#Ratings"
       class="js-gaLoad js-gaClick" data-ga-load-label="ratingsSnapshot greatSchoolsRating link" data-ga-click-label="ratingsSnapshot greatSchoolsRating link">
       <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
-      <span class="iconx72-ratings i-72-ratings-<%= gs_rating %>"></span>
+      <% icon_class = 'iconx72-ratings' %>
+      <% ratings_class = 'i-72-ratings-'  %>
+      <%  if I18n.default_locale != I18n.locale %>
+        <% icon_class = icon_class + '-' + I18n.non_default_locale.to_s %> 
+        <%  ratings_class = ratings_class + I18n.non_default_locale.to_s + '-' %>
+      <% end  %> 
+      <span class="<%= icon_class  %> <%= ratings_class + gs_rating %>"></span>
     </a>
   </div>
 
-<% ratings_array = [] %>
+  <% ratings_array = [] %>
 
 <% state_rating = @school.state_rating %>
 <% if state_rating %>

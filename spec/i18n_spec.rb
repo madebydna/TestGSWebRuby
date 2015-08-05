@@ -44,6 +44,49 @@ describe 'I18n' do
       I18n.db_t(key)
     end
   end
+  
+  it 'has an non_default_locale method' do
+    expect(I18n).to respond_to(:non_default_locale)
+  end
 
+  describe '.non_default_locale' do
+    before do
+      allow(I18n).to receive(:default_locale).and_return(:en)
+    end
+
+    context 'with current locale the default locale' do
+      before do 
+        allow(I18n).to receive(:locale).and_return(:en)
+      end
+      it 'should return empty string' do
+        expect(I18n.non_default_locale).to eq(nil)
+      end
+
+    end
+
+    context 'with current locale not the default locale' do
+
+      context 'with current locale available' do
+        before do 
+          allow(I18n).to receive(:locale).and_return(:es)
+        end
+        it 'should return current local as string' do
+          expect(I18n.non_default_locale).to eq('es')
+        end
+      end
+
+      context 'with current locale not available' do
+        before do 
+          allow(I18n).to receive(:locale).and_return(:xx)
+          allow(I18n).to receive(:locale_available?).with(:xx).and_return(false)
+        end
+        it 'should return current local as string' do
+          expect(I18n.non_default_locale).to eq(nil)
+        end
+      end
+
+    end
+  end
 
 end
+

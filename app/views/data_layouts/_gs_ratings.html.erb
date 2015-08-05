@@ -8,7 +8,13 @@
 <% if rating_hash.present? && rating_hash["overall_rating"].present? %>
   <div class="row mbm pam">
     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
-      <span class="iconx72-ratings i-72-ratings-<%= rating_hash["overall_rating"] %>"></span>
+    <% icon_class = 'iconx72-ratings' %>
+    <% ratings_class = 'i-72-ratings-'  %>
+    <%  if I18n.default_locale != I18n.locale %>
+      <% icon_class = icon_class + '-' + I18n.non_default_locale.to_s %> 
+      <%  ratings_class = ratings_class + I18n.non_default_locale.to_s + '-' %>
+    <% end  %> 
+    <span class="<%= icon_class  %> <%= ratings_class + rating_hash["overall_rating"] %>"></span>
     </div>
     <% label = rating_hash['label'] || 'GreatSchools Rating' %>
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
