@@ -14,6 +14,9 @@ indent = ARGV[0].to_i
 require 'yaml'
 array = STDIN.to_a.sort.uniq
 array.each do |text|
+  text = text.force_encoding('windows-1252').encode('utf-8')
+  text.gsub!(/[\u201c\u201d]/, '"')
+  text.gsub!(/[\u2018\u2019]/, "'")
   text.strip!
   next if text.to_i.to_s == text || text == 'false' || text == 'true'
   # note from samson
