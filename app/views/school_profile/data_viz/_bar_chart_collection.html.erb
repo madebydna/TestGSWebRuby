@@ -1,9 +1,9 @@
-<% show_breakdown_dropdown = bar_chart_collection.breakdowns.present? %>
-<% bar_chart_half_size = (bar_chart_collection.bar_charts.first.bar_chart_bars.size)/ 2 %>
 <%
   # A bar_chart_collection is the first-order grouping described in the
   # group comparison data reader.
 %>
+
+<% show_breakdown_dropdown = bar_chart_collection.breakdowns.present? %>
 
 <div class=" data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(bar_chart_collection.title).gsub(/\s/,'-') %>">
   <% if show_breakdown_dropdown %>
@@ -13,13 +13,13 @@
 
 
   <div class="pvm">
-    <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average_legend')%></span>
+    <span class="i-data-viz-state-avg"></span><span class="vat small"> = <%= t('.state_average_legend')%></span>
   </div>
   <div class='row'>
     <% bar_chart_collection.bar_charts.each_with_index do | bar_chart, i| %>
       <% show_hide_chart = (i > 0 && show_breakdown_dropdown) ? 'dn' : '' %>
       <%= render partial: 'school_profile/data_viz/bar_chart',
-                  locals: { bar_chart: bar_chart, show_hide_chart: show_hide_chart, bar_chart_half_size: bar_chart_half_size } %>
+                  locals: { bar_chart: bar_chart, show_hide_chart: show_hide_chart } %>
     <% end %>
   </div>
 </div>
