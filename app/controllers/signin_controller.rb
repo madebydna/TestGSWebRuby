@@ -227,7 +227,6 @@ class SigninController < ApplicationController
         end
       end
 
-      flash_notice email_verification_url(user)
       EmailVerificationEmail.deliver_to_user(user, email_verification_url(user))
     end
 
