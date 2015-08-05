@@ -1,0 +1,8 @@
+---
+en:
+  helpers:
+    section_helper:
+      details: details
+      quality: quality
+      reviews: reviews
+      see_all_title: See all %{title}

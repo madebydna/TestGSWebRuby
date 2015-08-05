@@ -5,8 +5,8 @@ module SectionHelper
 
     title = category_placement.title
     data_config = category_placement.layout_config_json
-    link_text ||= data_config['link_text']
-    link_text ||= 'See all '+title.capitalize if title.present?
+    link_text ||= I18n.db_t(data_config['link_text']) if data_config['link_text'].present?
+    link_text ||= I18n.t('helpers.section_helper.see_all_title', title: I18n.t(title, scope: 'helpers.section_helper').capitalize) if title.present?
 
     link_page = data_config['link_page'] #admin configuration takes precedence
     link_page ||= category_placement.title

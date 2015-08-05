@@ -14,7 +14,7 @@
             <div class="fl">
                 <h2 class="mvn"><%= db_t(title) %></h2>
             </div>
-            <% link_text = link_text.present? ? link_text : nil %>
+            <% link_text = link_text.presence %>
             <%= raw display_section_head_link category_placement, link_text %>
         </div>
         <% if description.present? %>
