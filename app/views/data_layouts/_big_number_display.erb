@@ -1,13 +1,22 @@
-<% data # A +Hash+ containing data for this table to display %>
-<% category_placement # The +CategoryPlacement+ that this table is for %>
-<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+<%
+  data # A +Hash+ containing data for this table to display
+  category_placement # The +CategoryPlacement+ that this table is for
+  category # The +Category+ belonging to this table's +CategoryPlacement+
+ 
+  data_config = category_placement.table_config
+  data_config = category_placement.table_config
 
-<% data_config = category_placement.table_config %>
-<%= debug data if params[:debug] %>
+  filtered_data = if data_config.config['breakdowns']
+                    filter_by_breakdowns(data_config.config['breakdowns'], data)
+                  else
+                    filter_for_all_students(data)
+                  end
+%>
+<%= debug filtered_data if params[:debug] %>
 
 
 <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do %>
-  <% data = TableData.new data if !data.is_a? TableData %>
+  <% data = TableData.new filtered_data if !data.is_a? TableData %>
   <a name="<%= category.code_name %>"></a>
   <%= render "shared/section_header", category_placement:category_placement %>
   <div class="row limit_1200 phs pbl">
