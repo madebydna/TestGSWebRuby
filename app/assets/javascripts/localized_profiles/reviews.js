@@ -216,12 +216,12 @@ GS.reviews = GS.reviews || function($) {
         } else {
           obj.addClass('active');
         }
-        var people_string = 'people';
+        var people_string = GS.I18n.t('reviews.people');
         if(count == 1){
-          people_string = 'person';
+          people_string = GS.I18n.t('reviews.person');
         }
 
-        var response_str = count + ' ' + people_string + ' found this helpful';
+        var response_str = count + ' ' + people_string + GS.I18n.t('reviews.found_this_helpful');
         if (isNaN(count)) {
           response_str = '';
         }
