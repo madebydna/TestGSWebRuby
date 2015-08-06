@@ -1,5 +1,7 @@
 ---
 en:
+  '"Arts (visual, literary, dance, theater, and/or music)"': '"Arts (visual, literary,
+    dance, theater, and/or music)"'
   2 years old: 2 years old
   3 years old: 3 years old
   4 years old: 4 years old
@@ -271,7 +273,7 @@ en:
   Monitor the playground: Monitor the playground
   Montessori: Montessori
   Multi-aged classrooms: Multi-aged classrooms
-  Multi-purpose room (\"Cafegymatorium\"): Multi-purpose room (\"Cafegymatorium\")
+  Multi-purpose room ("Cafegymatorium"): Multi-purpose room ("Cafegymatorium")
   Multiculturalism / Global: Multiculturalism / Global
   Multiple disabilities: Multiple disabilities
   Music: Music
@@ -305,11 +307,11 @@ en:
   Performing arts: Performing arts
   Phone: Phone
   Photography: Photography
-  ! 'Physics 1: Algebra-Based': ! 'Physics 1: Algebra-Based'
-  ! 'Physics 2: Algebra-Based': ! 'Physics 2: Algebra-Based'
+  'Physics 1: Algebra-Based': 'Physics 1: Algebra-Based'
+  'Physics 2: Algebra-Based': 'Physics 2: Algebra-Based'
   Physics B: Physics B
-  ! 'Physics C: Electricity and Magnetism': ! 'Physics C: Electricity and Magnetism'
-  ! 'Physics C: Mechanics': ! 'Physics C: Mechanics'
+  'Physics C: Electricity and Magnetism': 'Physics C: Electricity and Magnetism'
+  'Physics C: Mechanics': 'Physics C: Mechanics'
   Playground: Playground
   Poetry: Poetry
   Poetry / Creative writing teacher: Poetry / Creative writing teacher
@@ -387,9 +389,9 @@ en:
     can apply for transfer
   Students living outside district can apply for transfer: Students living outside
     district can apply for transfer
-  ! 'Studio Art: 2-D Design': ! 'Studio Art: 2-D Design'
-  ! 'Studio Art: 3-D Design': ! 'Studio Art: 3-D Design'
-  ! 'Studio Art: Drawing': ! 'Studio Art: Drawing'
+  'Studio Art: 2-D Design': 'Studio Art: 2-D Design'
+  'Studio Art: 3-D Design': 'Studio Art: 3-D Design'
+  'Studio Art: Drawing': 'Studio Art: Drawing'
   Summer college prep programs: Summer college prep programs
   Surfing: Surfing
   Swimming: Swimming
@@ -446,6 +448,4 @@ en:
   Yes - for all students: Yes - for all students
   Yes - for students in adjacent districts: Yes - for students in adjacent districts
   Yoga club: Yoga club
-  \"Arts (visual, literary, dance, theater, and/or music)\": \"Arts (visual, literary,
-    dance, theater, and/or music)\"
   label: label

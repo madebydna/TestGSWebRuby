@@ -15,6 +15,7 @@ es:
   Analytic Geometry: Geometría Analítica
   Applied Biology: Biología Aplicada
   Biology I: Biología I
+  Chemistry: Química
   Civics: Civismo
   Communication Arts (DEPRECATED, use id 4): Artes de la Comunicación (en desuso, el uso Identificación 4)
   Coordinate Algebra: Coordinar Álgebra
@@ -31,6 +32,7 @@ es:
   English language arts (DEPRECATED, use id 4): Artes del lenguaje Inglés (DEPRECATED, uso Identificación 4)
   English/Language Arts (DEPRECATED, use id 4): Inglés / Artes del Lenguaje (DEPRECATED, uso Identificación 4)
   Foreign Language: Idioma extranjero
+  French: Francés
   General Mathematics (Grades 6 & 7 Standards): General de Matemáticas (Grados 6 y 7 Normas)
   Geometry: Geometría
   Global History and Geography: Historia Global y Geografía
@@ -40,6 +42,7 @@ es:
   Integrated Math 2: Matemáticas Integradas 2
   Integrated Math 3: Matemáticas Integradas 3
   Integrated/Coordinated Science 1: Integrado / Ciencia Coordinada 1
+  Italian: Italiano
   Language Mechanics: Mecánica del idioma
   Language arts (DEPRECATED, use id 4): Artes del lenguaje (en desuso, el uso Identificación 4)
   Listening: Escuchando
@@ -53,14 +56,18 @@ es:
   Physics: Física
   Practical Living/Vocational Studies: Vida práctica / estudios profesionales
   Pre-Algebra: Pre-Algebra
+  Reading: Leyendo
   Reading Analysis/Interpretation: Análisis de lectura / Interpretación
   Reading Basic Understanding: Lectura de Comprensión Básica
   Reading/Language Arts (DEPRECATED, use id 4): Lectura / lengua y literatura (en desuso, el uso Identificación 4)
   Sequential Mathematics, Course III: Secuencial Matemáticas, Curso III
+  Spanish: Español
   Tech/Engineering: Técnico / Ingeniería
   US History: Historia de Estados Unidos
-  US History and Government: Historia de Estados Unidos y de Gobierno
+  US History and Government: Historia y Gobierno EE.UU.
+  World History: Historia mundial
   World History I: Historia Mundial
   World History II: Historia Mundial II
+  Writing: Escritura
   Writing Conventions: Normas de la escritura
   Writing Effectiveness: Efectividad Escribiendo
