@@ -2,11 +2,11 @@
 en:
   decorators:
     test_scores_decorator:
-      by_group: 'By Group'
-      'Elementary and Middle school': 'Elementary and Middle School'
-      'Elementary school': 'Elementary School'
-      grade: "grade %{grade_number}"
-      'High school': 'High School'
-      'Middle and High school': 'Middle and High School'
-      'Middle school': 'Middle School'
-      School-wide: 'School-wide'
+      Elementary and Middle school: Elementary and Middle School
+      Elementary school: Elementary School
+      High school: High School
+      Middle and High school: Middle and High School
+      Middle school: Middle School
+      School-wide: School-wide
+      by_group: By Group
+      grade: grade %{grade_number}

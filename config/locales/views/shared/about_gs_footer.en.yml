@@ -1,21 +1,21 @@
+---
 en:
   shared:
     about_gs_footer:
-      title: About GreatSchools
-      our_mission: Our mission is to help millions of parents get a great education for their kids. GreatSchools.org is
-                   an independent nonprofit and the leading national source of school information for families.
+      advertise_with_us_link: Advertise with us
       company: Company
+      contact_us_link: Contact us
+      how_we_rate_schools_link: How we rate schools
+      jobs_link: Jobs
+      licensing_link: Licensing
       media: Media
-      policies: Policies
+      media_room_link: Media room
+      our_mission: Our mission is to help millions of parents get a great education for their kids. GreatSchools.org is an independent nonprofit and the leading national source of school information for families.
       our_mission_link: Our mission
       our_people_link: Our people
-      jobs_link: Jobs
-      contact_us_link: Contact us
-      advertise_with_us_link: Advertise with us
       partners_link: Partners
-      media_room_link: Media room
-      licensing_link: Licensing
-      how_we_rate_schools_link: How we rate schools
+      policies: Policies
+      privacy_policy_link: Privacy policy
       school_review_guidelines_link: School review guidelines
       terms_of_use_link: Terms of use
-      privacy_policy_link: Privacy policy
+      title: About GreatSchools

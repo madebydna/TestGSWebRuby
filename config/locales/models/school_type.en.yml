@@ -1,8 +1,8 @@
 ---
 en:
-  'charter': 'charter'
-  'Private': 'Private'
-  'private': 'private'
-  'Public district': 'Public district'
-  'public': 'public'
-  'Public charter': 'Public charter'
+  Private: Private
+  Public charter: Public charter
+  Public district: Public district
+  charter: charter
+  private: private
+  public: public

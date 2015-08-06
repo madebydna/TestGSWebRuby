@@ -1,8 +1,8 @@
 ---
 es:
-  'charter': 'charter'
-  'Private': 'Privada'
-  'private': 'privada'
-  'Public district': 'Pública'
-  'public': 'pública'
-  'Public charter': 'Charter pública'
+  Private: Privada
+  Public charter: Charter pública
+  Public district: Pública
+  charter: charter
+  private: privada
+  public: pública
