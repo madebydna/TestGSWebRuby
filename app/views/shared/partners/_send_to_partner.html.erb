@@ -1,7 +1,7 @@
 <div class="sponsored-by-text">
   <%= t('.in_partnership_with') %>
 </div>
-<div class="<%= is_vertical_promo ? 'send-to-partner-vertical' : 'send-to-partner-horizontal' %>">
+<div class="<%= options[:is_vertical_promo] ? 'send-to-partner-vertical' : 'send-to-partner-horizontal' %>">
   <div class="row">
     <div class="logo">
       <img src="<%= catalog_path(t(".#{promo[:name]}.logo_path")) %>"
