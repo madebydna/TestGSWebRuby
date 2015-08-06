@@ -33,8 +33,8 @@
               <h5><%= t('.rating_breakdown') %></h5>
               <table class="table table-striped">
                 <% rating_hash["rating_breakdowns"].each do |key, value| %>
-                  <tr><td><%= db_t(key) %></td><td><%= db_t(value['rating']) %></td></tr>
-                  <tr><td colspan="2"><%= db_t(value['description']) %></td></tr>
+                  <tr><td><%= db_t(key) %></td><td><%= value['rating'] %></td></tr>
+                  <tr><td colspan="2"><%= value['description'] %></td></tr>
                 <% end %>
               </table>
             <% end %>
