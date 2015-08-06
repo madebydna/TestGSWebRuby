@@ -1,4 +1,6 @@
+<% tool_tip_type = chart.comparison_value ? '.percent_graduated' : '.eligible_for_4yr'%>
+
 <div class="tal">
   <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average') %></span>
-  <%= t('.percent_proficient', percent: chart.comparison_value) %>
+  <span><%=t('.state_avg')%> <%= t(tool_tip_type, percent: chart.comparison_value) %></span>
 </div>
