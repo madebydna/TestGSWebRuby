@@ -1,12 +1,18 @@
-<% category_placement # The +CategoryPlacement+ that is configured to show this bar chart %>
+<%
+  category_placement # The +CategoryPlacement+ that is configured to show this bar chart
+  data_config = category_placement.table_config
 
-<%= debug(data) if params[:debug] %>
+  filtered_data = if data_config.config['breakdowns']
+                    filter_by_breakdowns(data_config.config['breakdowns'], data)
+                  end
+%>
+<%= debug(filtered_data) if params[:debug] %>
 
-<% if data.is_a?(Hash) %>
-  <% data = data.values.inject([], &:+) %>
+<% if filtered_data.is_a?(Hash) %>
+  <% filtered_data = filtered_data.values.inject([], &:+) %>
 <% end %>
 
-<% if data.present? %>
+<% if filtered_data.present? %>
   <% bar_chart_id = "barchart-#{category_placement_anchor category_placement}" %>
 
   <%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
@@ -18,7 +24,7 @@
   <%= render partial: 'about_this_data',
     locals: {
       unique_id: category_placement.id,
-      descriptions: data.map { |hash| hash[:description] }.uniq.compact
+      descriptions: filtered_data.map { |hash| hash[:description] }.uniq.compact
     }
   %>
 
@@ -32,7 +38,7 @@
 
   <%
     bar_chart = BarCharts::BasicBarChart.decorate(
-      data,
+      filtered_data,
       context: {
         config: category_placement.layout_config_json
       }
