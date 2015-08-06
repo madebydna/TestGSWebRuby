@@ -210,7 +210,7 @@ module SchoolProfileDataDecorator
             label = (leaf.root? || parent.root?) ? leaf.title : parent.title
             footnote_year = year.to_s.to_i == 0 ? '' : ", #{year.to_i - 1}-#{year}"
             footnotes_array << {
-              label: label,
+              label: I18n.db_t(label),
               value: "#{footnote[:source]}#{footnote_year}"
             }
           end

@@ -1,10 +1,13 @@
 $partner-promo-solid-color:  #f4f4f4;
 $partner-promo-stroke-color: #dedede;
 
-.send-to-partner {
+.send-to-partner-horizontal {
+  @extend .col-xs-12;
   border: 2px solid $partner-promo-stroke-color;
   text-align: center;
   .cta {
+    @extend .col-xs-12;
+    @extend .col-sm-9;
     background-color: $partner-promo-solid-color;
     padding: 10px 10px 15px;
     .cta-text {
@@ -13,9 +16,35 @@ $partner-promo-stroke-color: #dedede;
     }
   }
   .logo {
+    @extend .col-xs-12;
+    @extend .col-sm-3;
     img {
       max-height: 100px;
       max-width: 220px;
+      padding: 10px;
+      width: 85%;
+    }
+  }
+}
+
+.send-to-partner-vertical {
+  @extend .col-md-4;
+  border: 2px solid $partner-promo-stroke-color;
+  text-align: center;
+  .cta {
+    @extend .col-xs-12;
+    background-color: $partner-promo-solid-color;
+    padding: 20px;
+    .cta-text {
+      font-family: 'opensans-semibold';
+      padding-bottom: 10px;
+    }
+  }
+  .logo {
+    @extend .col-xs-12;
+    img {
+      max-height: 50px;
+      max-width: 20px;
       padding: 10px;
       width: 85%;
     }

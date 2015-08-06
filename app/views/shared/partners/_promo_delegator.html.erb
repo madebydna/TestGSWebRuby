@@ -1,9 +1,12 @@
+<% force_show ||= false %>
+<% options ||= {} %>
 <% collections.each do |collection| %>
   <% if (promo = collection.config[:promo]) %>
-    <% if promo[:profile_modules].include?(partial) %>
+    <% if force_show || promo[:profile_modules].include?(partial) %>
       <%= render partial: "shared/partners/#{promo[:type]}",
                 locals: {
-                  promo: promo
+                  promo: promo,
+                  options: options
                 }
       %>
     <% end %>

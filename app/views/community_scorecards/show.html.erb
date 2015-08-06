@@ -1,4 +1,62 @@
+<div class="gs-bootstrap">
+  <div class="container-fluid">
+    foof
+    foof
+    foof
 
-foof
-foof
-foof
+      <%= render partial: "shared/partners/promo_delegator",
+                 locals: {
+                         collections: [@collection],
+                         partial: current_partial,
+                         force_show: true,
+                         options: {
+                                 is_vertical_promo: true
+                         }
+                 }
+      %>
+    </div>
+</div>
+<%= include_handlebars_templates('community_scorecards/') %>
+
+<div class="btn btn-primary" id="addAnthony">Add anthony</div>
+<div id="table-goes-here"></div>
+
+<script>
+  // BEGIN TEST CODE
+  // This is just to show a few examples
+  Handlebars.registerHelper('isntKeith', function(options) {
+    return options.first != 'keith';
+  });
+  Handlebars.registerHelper('ucfirst', function(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  });
+  Handlebars.registerHelper('list', function(items, options) {
+    var out = "<ul>";
+
+    for(var i=0, l=items.length; i<l; i++) {
+      out = out + "<li>" + options.fn(items[i]) + "</li>";
+    }
+
+    return out + "</ul>";
+  });
+var addAnthony = function() {
+  var anthony = {people: [{ first: 'anthony', last: 'roy' }]};
+  $('#da-table').append(GS.handlebars.partialContent('community_scorecards/table', anthony));
+};
+$(document).ready(function() {
+  var rowData = {
+    people: [
+      {first: 'keith', last: 'mchugh'},
+      {first: 'harrison', last: 'touw'},
+      {first: 'christina', last: 'liu'},
+      {first: 'ines', last: 'baumgartner'},
+    ]
+  };
+  $('#addAnthony').click(function() {
+    addAnthony();
+  });
+
+  $('#table-goes-here').append(GS.handlebars.partialContent('community_scorecards/table',rowData));
+});
+  // END TEST CODE
+</script>

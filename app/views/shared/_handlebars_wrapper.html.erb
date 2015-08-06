@@ -1,0 +1,5 @@
+<% if id && template %>
+  <script id="<%= id %>" class="js-gsHandlebarPartial" type="text/x-handlebars-template">
+    <%= render "handlebars/#{template}" %>
+  </script>
+<% end %>

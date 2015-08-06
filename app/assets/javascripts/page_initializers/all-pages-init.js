@@ -124,4 +124,6 @@ $(function() {
       $(this).attr('class', cssClass);
     }
   }, 'span');
+
+  GS.handlebars.registerPartials();
 });

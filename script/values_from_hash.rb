@@ -17,7 +17,7 @@ end
 
 STDIN.to_a.each do |text|
   begin
-    hash = JSON.parse(text)
+    hash = JSON.parse(text.gsub('\n',''))
   rescue Exception => e
     next
   end

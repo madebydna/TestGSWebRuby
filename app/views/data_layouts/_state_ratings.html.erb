@@ -12,23 +12,23 @@
   <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
     <%= render state_partial(@school.state), page:'quality', rating: rating_hash["overall_rating"] %>
     </div>
-    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10"><h4><%= rating_hash["label"] %></h4>
-      <p><%= rating_hash["description"] %></p>
-      <p><a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+    <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10"><h4><%= db_t(rating_hash["label"]) %></h4>
+    <p><%= db_t(rating_hash["description"]) %></p>
+      <p><a href="javascript:void(0)" class="js_toggle_parent_sib"><%= t('.learn_more_html') %></a></p>
 
       <% if (rating_hash["rating_breakdowns"].present? || rating_hash["methodology_url"].present? )%>
         <div class="dn well bg-white">
           <% if rating_hash["rating_breakdowns"].present? %>
-            <h5>Rating Breakdown</h5>
+            <h5><%= t('.rating_breakdown') %></h5>
             <table class="table table-striped">
               <% rating_hash["rating_breakdowns"].each do |key, value| %>
-                <tr><td><%= key %></td><td><%= value['rating'] %></td></tr>
+                <tr><td><%= db_t(key) %></td><td><%= db_t(value['rating']) %></td></tr>
               <% end %>
             </table>
           <% end %>
           <% if rating_hash["methodology_url"].present? %>
-            <h5>Methodology</h5>
-            <a href="<%= rating_hash["methodology_url"] %>" target="_blank">View more details on official site</a>
+            <h5><%= t('.methodology') %></h5>
+            <a href="<%= rating_hash["methodology_url"] %>" target="_blank"><%= t('.view_more_details') %></a>
           <% end %>
         </div>
       <% end %>
