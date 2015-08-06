@@ -4,7 +4,8 @@
     <% if force_show || promo[:profile_modules].include?(partial) %>
       <%= render partial: "shared/partners/#{promo[:type]}",
                 locals: {
-                  promo: promo
+                  promo: promo,
+                  is_vertical_promo: true
                 }
       %>
     <% end %>
