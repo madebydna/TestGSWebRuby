@@ -3,7 +3,7 @@
   
 <% if descriptions.present? %>
   <div class="pll">
-    <p>About this data: <a href="javascript:void(0)" class="js_toggle_parent_sib">Learn More &raquo;</a></p>
+    <p><%= t('.about_this_data') %><a href="javascript:void(0)" class="js_toggle_parent_sib"><%= t('.learn_more_html') %></a></p>
     <div class="dn well bg-white">
       <ul id="about-this-data-<%= unique_id %>" class="list-unstyled">
         <% descriptions.each do |description| %>
