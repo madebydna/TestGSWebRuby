@@ -105,11 +105,11 @@ $(function() {
 
   $('.js_toggle_parent_sib').on('click', function(){
     $(this).parent().siblings('div:first').slideToggle('fast');
-    if($(this).html() == 'Close'){
-      $(this).html('Learn More &raquo;');
+    if($(this).html() == GS.I18n.t('close')){
+      $(this).html(GS.I18n.t('learn_more_html'));
     }
     else{
-      $(this).html('Close');
+      $(this).html(GS.I18n.t('close'));
     }
   });
 
