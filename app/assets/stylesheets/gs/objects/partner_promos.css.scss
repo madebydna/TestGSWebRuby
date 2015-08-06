@@ -5,7 +5,7 @@ $partner-promo-stroke-color: #dedede;
   @extend .col-xs-12;
   border: 2px solid $partner-promo-stroke-color;
   text-align: center;
-  .cta {
+  .cta { //call to action
     @extend .col-xs-12;
     @extend .col-sm-9;
     background-color: $partner-promo-solid-color;
@@ -31,7 +31,7 @@ $partner-promo-stroke-color: #dedede;
   @extend .col-md-4;
   border: 2px solid $partner-promo-stroke-color;
   text-align: center;
-  .cta {
+  .cta { //call to action
     @extend .col-xs-12;
     background-color: $partner-promo-solid-color;
     padding: 20px;
