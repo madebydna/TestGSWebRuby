@@ -69,7 +69,7 @@
       </div>
     </div>
     <div class="<%= second_column_sizes %> prm ptm">
-      <%= district.boilerplate.html_safe %>
+      <%= district.boilerplate.try(:html_safe) %>
     </div>
     <% if @show_ads %>
       <div class="<%= third_column_sizes %> ptm">
@@ -143,7 +143,7 @@
 
   <div class="phm row">
     <div class="col-xs-12">
-      <%= render partial: 'shared/home/email_signup' %>
+      <%= render partial: 'shared/email_signup' %>
     </div>
   </div>
 
