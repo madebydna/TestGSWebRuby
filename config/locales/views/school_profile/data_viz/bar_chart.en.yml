@@ -1,0 +1,7 @@
+---
+en:
+  school_profile:
+    data_viz:
+      bar_chart:
+       gender: 'Gender'
+       ethnicity: 'Ethnicity'

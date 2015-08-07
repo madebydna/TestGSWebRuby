@@ -88,10 +88,10 @@ GS.visualchart = GS.visualchart || function($) {
         var dataTable = new google.visualization.DataTable();
 
         dataTable.addColumn('string', 'year');
-        dataTable.addColumn('number', 'Proficient');
+        dataTable.addColumn('number', GS.I18n.t('test_scores.proficient'));
         dataTable.addColumn({'type': 'string', 'role': 'annotation'});
         dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
-        dataTable.addColumn('number', 'Advanced');
+        dataTable.addColumn('number', GS.I18n.t('test_scores.advanced'));
         dataTable.addColumn({'type': 'string', 'role': 'annotation'});
         dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
 
@@ -132,7 +132,7 @@ GS.visualchart = GS.visualchart || function($) {
             var dataTable = new google.visualization.DataTable();
             //The 3rd and the 5th columns are used for tool tips.
             dataTable.addColumn('string', 'year');
-            dataTable.addColumn('number', 'Proficient or better');
+            dataTable.addColumn('number', GS.I18n.t('test_scores.proficient_or_better'));
             dataTable.addColumn({'type': 'string', 'role': 'annotation'});
             dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
 

@@ -1,8 +1,0 @@
----
-en:
-  school_profile:
-    data_viz:
-      bar_chart_breakdowns_toggle:
-        gender: 'Gender'
-        ethnicity: 'Ethnicity'
-        grouped_by: 'Grouped by %{breakdown}'

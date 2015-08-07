@@ -1,7 +1,7 @@
 class GSLogger
   WARN  = 'WARN'
   ERROR = 'ERROR'
-  INFO  = 'INFO"'
+  INFO  = 'INFO'
 
   TAGS = Hash.new('MISC').merge({
     osp: 'OSP',

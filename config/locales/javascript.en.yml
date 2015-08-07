@@ -1,0 +1,13 @@
+---
+en:
+  javascript:
+    close: Close
+    learn_more_html: 'Learn More &raquo;'
+    reviews:
+      found_this_helpful: ' found this helpful'
+      people: people
+      person: person
+    test_scores:
+      advanced: 'Advanced'
+      proficient: 'Proficient'
+      proficient_or_better: 'Proficient or better'

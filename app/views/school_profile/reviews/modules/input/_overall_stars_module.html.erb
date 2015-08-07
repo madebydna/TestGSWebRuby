@@ -20,8 +20,9 @@
   <% end %>
 </div>
 <div class="topical-review-question-container right">
-
-  <%= render 'school_profile/reviews/modules/output/overall_rating_summary' %>
+  <% unless  principal  %>
+    <%= render 'school_profile/reviews/modules/output/overall_rating_summary' %>
+  <% end  %> 
 
   <% options = {
           comment_required: true,

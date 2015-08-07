@@ -8,7 +8,7 @@ feature 'configurable dropdown menu', caching: true do
 
   before(:each) do
     clean_dbs *dbs
-    [
+    hubs = [
       { collection_id: 1, city: 'detroit', state: 'MI', active: 1, hasEduPage: 1, hasChoosePage: 1, hasEventsPage: 1, hasEnrollPage: 1, hasPartnerPage: 1 },
       { collection_id: 2, city: 'Oakland', state: 'CA', active: 1, hasEduPage: 0, hasChoosePage: 0, hasEventsPage: 0, hasEnrollPage: 0, hasPartnerPage: 0 },
       {
@@ -28,7 +28,11 @@ feature 'configurable dropdown menu', caching: true do
       { collection_id: 7, city: nil, state: 'OH', active: 1, hasEduPage: 0, hasChoosePage: 0 },
       { collection_id: 8, city: nil, state: 'NC', active: 1, hasEduPage: 1, hasChoosePage: 0 },
       { collection_id: 9, city: nil, state: 'DE', active: 1, hasEduPage: 1, hasChoosePage: 0 }
-    ].each { |attributes| HubCityMapping.new(attributes, without_protection: true).save }
+    ]
+    hubs.each do |hub|
+      HubCityMapping.new(hub, without_protection: true).save
+      Collection.create(id: hub[:collection_id], state: hub[:state], name: 'name', definition: 'definition')
+    end
 
     fixtures = [
       { file: 'bates_academy_profile', state: :mi, collection_id: 1 },

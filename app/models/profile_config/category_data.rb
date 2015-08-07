@@ -103,7 +103,7 @@ class CategoryData < ActiveRecord::Base
   def label
     s = super
     return s if s.blank?
-    I18n.t(s, default: s)
+    I18n.db_t(s, default: s)
   end
 
   def computed_label

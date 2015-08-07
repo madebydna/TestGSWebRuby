@@ -1,0 +1,13 @@
+---
+es:
+  javascript:
+    close: Cerrar
+    learn_more_html: 'Aprender Mas &raquo;'
+    reviews:
+      found_this_helpful:  ' encontraron esta útil'
+      people: personas
+      person: persona
+    test_scores:
+      advanced: 'Avanzado'
+      proficient: 'Competente'
+      proficient_or_better: 'Competente o mejor'

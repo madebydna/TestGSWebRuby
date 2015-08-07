@@ -318,4 +318,14 @@ module ApplicationHelper
     }
     school_types_map[type.to_s.downcase.to_sym]
   end
+
+  def db_t(key, *args)
+    cleansed_key = key.to_s.gsub('.', '')
+    cleansed_key = cleansed_key.to_sym if key.is_a?(Symbol)
+    t(cleansed_key, *args)
+  end
+
+  def current_partial
+    @virtual_path.split("/").last.sub(/^_/, "")
+  end
 end

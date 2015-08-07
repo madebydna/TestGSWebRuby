@@ -1,10 +1,17 @@
-<% data # A +Hash+ containing data for this table to display %>
-<% category_placement # The +CategoryPlacement+ that this table is for %>
-<% category # The +Category+ belonging to this table's +CategoryPlacement+ %>
+<%
+  data # A +Hash+ containing data for this table to display
+  category_placement # The +CategoryPlacement+ that this table is for
+  category # The +Category+ belonging to this table's +CategoryPlacement+
 
-<% data_config = category_placement.table_config %>
-<%= debug data if params[:debug] %>
-<% filtered_data = filter_for_all_students(data) %>
+  data_config = category_placement.table_config
+
+  filtered_data = if data_config.config['breakdowns']
+                    filter_by_breakdowns(data_config.config['breakdowns'], data)
+                  else
+                    filter_for_all_students(data)
+                  end
+%>
+<%= debug filtered_data if params[:debug] %>
 <% table_data = TableData.new filtered_data %>
 
 <% table_data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
@@ -22,7 +29,7 @@
                     <span class="iconx32-college_ready i-32-<%=column['icon_css_class']%> mrm_sm"></span>
                 <% end %>
                 <span class="visible-xs font-size-xs"></span>
-                <span class="font-size-large vab"><%= column['label'] %></span>
+                <span class="font-size-large vab"><%= db_t(column['label']) %></span>
                 </div>
             <% else %>
               <div class="col-sm-2 col-xs-4 phl">
@@ -94,10 +101,4 @@
            }
 %>
 
-<% if @page_config.root_placements_with_data.present? &&
-        @page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
-        (@school.footnotes_for_category category: category).present? %>
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pls pbl clearfix">
-      <div class="fr prm">Source: <a href="#Footnotes">See notes</a></div>
-    </div>
-<% end %>
+<%= render 'school_profile/see_footnotes_link', page_config: @page_config, school: @school, category: category %>

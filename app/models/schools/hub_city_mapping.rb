@@ -4,6 +4,8 @@ class HubCityMapping < ActiveRecord::Base
 
   attr_accessible :collection_id, :city, :state, :active, :hasGuidedSearch
 
+  belongs_to :collection
+
   def has_events_page?
     self.hasEventsPage ? 'y' : nil
   end

@@ -3,7 +3,7 @@
     <% @page_config.root_placements_with_data.each do |placement| %>
       <li>
         <a href="#<%= category_placement_anchor placement %>">
-          <%= category_placement_title placement %>
+          <%= db_t(category_placement_title placement) %>
         </a>
       </li>
     <% end %>

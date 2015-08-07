@@ -30,7 +30,7 @@ module SchoolProfileReviewsDecorator
     end
     h.t('decorators.school_profile_reviews_decorator.review_answer_summary_html',
          count: distribution.first.last,
-         top_response_text: top_response_text
+         top_response_text: h.t(top_response_text)
        )
   end
 
@@ -68,7 +68,7 @@ module SchoolProfileReviewsDecorator
     topic_distribution = topic_keys.merge(topic_distribution)
 
     chart = [
-        [topic.name, 'count']
+      [topic.name, h.t('decorators.school_profile_reviews_decorator.count')]
     ]
 
     topic_distribution.each_with_object(chart) do |(label, number_of_occurrences), chart_array|

@@ -1,0 +1,8 @@
+---
+es:
+  helpers:
+    section_helper:
+      details: detalles
+      quality: reportes 
+      reviews: evaluaciones 
+      see_all_title: 'Ver todo %{title}'

@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   include HubConcerns
   include AdvertisingHelper
   include DataLayerConcerns
+  include JavascriptI18nConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -23,6 +24,7 @@ class ApplicationController < ActionController::Base
   before_action :write_locale_session
   before_action :set_signed_in_gon_value
   before_action :set_locale
+  before_action :add_configured_translations_to_js
 
   after_filter :disconnect_connection_pools
 
@@ -50,12 +52,16 @@ class ApplicationController < ActionController::Base
     # regular after_filter. See PT-1616 for more information.
     return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
-    ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
-      if pool.connections.present? &&
-        ( pool.connections.first.
-         current_database == "_#{@school.state.downcase}" )
-        pool.disconnect!
+    begin
+      ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
+        if pool.connected? && pool.connections.present?
+          if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
+            pool.disconnect!
+          end
+        end
       end
+    rescue => e
+      GSLogger.error(e, :misc, message:'Failed to explicitly close connections')
     end
   end
 
@@ -69,10 +75,7 @@ class ApplicationController < ActionController::Base
   end
 
   def original_url
-    path = request.path
-    if !path.end_with? ".page"
-      path = request.path + '/'
-    end
+    path = request.path + '/'
     path << '?' << request.query_string unless request.query_string.empty?
     "#{request.protocol}#{host}#{path}"
   end

@@ -20,6 +20,10 @@ $(function() {
 
   GS.util.BackToTop.init();
 
+  // Bootstrap select init call. Transforms some selects into pretty Bootstrap
+  // ones. https://silviomoreto.github.io/bootstrap-select/
+  $('.selectpicker').selectpicker();
+
   // PT-1535 Cleanslating our GA install for now.
   // GS.googleAnalytics.tracking.init(gon.pagename);
 
@@ -101,11 +105,11 @@ $(function() {
 
   $('.js_toggle_parent_sib').on('click', function(){
     $(this).parent().siblings('div:first').slideToggle('fast');
-    if($(this).html() == 'Close'){
-      $(this).html('Learn More &raquo;');
+    if($(this).html() == GS.I18n.t('close')){
+      $(this).html(GS.I18n.t('learn_more_html'));
     }
     else{
-      $(this).html('Close');
+      $(this).html(GS.I18n.t('close'));
     }
   });
 
@@ -120,4 +124,6 @@ $(function() {
       $(this).attr('class', cssClass);
     }
   }, 'span');
+
+  GS.handlebars.registerPartials();
 });

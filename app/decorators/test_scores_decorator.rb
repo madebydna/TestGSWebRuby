@@ -17,6 +17,17 @@ class TestScoresDecorator < Draper::Decorator
     test[:All][:test_source]
   end
 
+  def label(grade_hash)
+    cached_label = grade_hash[:label]
+    grade_number_regex_matches = cached_label.match /GRADE ([0-9]+)/
+    if !!grade_number_regex_matches
+      grade_number = grade_number_regex_matches[1]
+      I18n.t('decorators.test_scores_decorator.grade', grade_number: grade_number).upcase
+    else
+      I18n.db_t(cached_label, scope: 'decorators.test_scores_decorator', default: cached_label)
+    end
+  end
+
   def tabs_for_test(test)
     buttons = ''
     grades = self.grades(test)
@@ -28,7 +39,7 @@ class TestScoresDecorator < Draper::Decorator
           id: test_button_dom_id(test, :All, grade),
           class: "btn btn-default js_test_scores_grades#{index_grade == 0 ? ' active' : ''}"
         ) do
-          grade_hash[:label].html_safe
+          label(grade_hash)
         end)
       end
     end
@@ -38,7 +49,7 @@ class TestScoresDecorator < Draper::Decorator
       buttons << h.content_tag(:span, class: 'js_test_groups dropdown pll') do
         h.concat(
           h.button_tag('groups', class: 'btn btn-group btn-default', 'data-toggle' => 'dropdown') do
-            'By Group <b class="caret"></b>'.html_safe
+            "#{h.t('decorators.test_scores_decorator.by_group')} <b class=\"caret\"></b>".html_safe
           end
         )
         h.concat(h.content_tag(:ul, class: 'dropdown-menu mll', style: '') do
@@ -48,7 +59,7 @@ class TestScoresDecorator < Draper::Decorator
                 :li,
                 class: 'js_test_scores_grades',
                 id: test_button_dom_id(test, breakdown, :All)
-              ) { h.content_tag(:a) { breakdown.to_s.html_safe } }
+              ) { h.content_tag(:a) { I18n.db_t(breakdown.to_s, default: breakdown.to_s)} }
             )
           end
         end)
@@ -117,7 +128,7 @@ class TestScoresDecorator < Draper::Decorator
               h.raw bar_chart(value).script_tag(div_id)
             end
             div_content << h.content_tag(:h4, class: (index_subject == 0 ? 'ptl' : '')) do
-              subject.to_s.gs_capitalize_first
+              I18n.db_t(subject.to_s.gsub('.', ''), default: subject.to_s).gs_capitalize_first
             end
             # TODO change this to test id
             div_content << h.content_tag(:div, id: div_id, class: 'notranslate ma') do

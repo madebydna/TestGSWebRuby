@@ -51,7 +51,7 @@ class OspRegistrationController < ApplicationController
     begin
       user.save!
     rescue => error
-      GSLogger.error(:osp, error, vars: params, message: 'Failed to save new user in esp registration controller')
+      GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
       return render 'osp/registration/new'
     end
 
@@ -69,7 +69,7 @@ class OspRegistrationController < ApplicationController
     begin
       user.update_attributes(user_attrs)
     rescue => error
-      GSLogger.error(:osp, error, vars: params, message: 'Failed to save new user in esp registration controller')
+      GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
       return render 'osp/registration/new'
     end
 
@@ -87,7 +87,7 @@ class OspRegistrationController < ApplicationController
     esp_membership.update_attributes(esp_membership_attrs)
     true
   rescue => error
-    GSLogger.error(:osp, error, vars: params, message: 'Failed to save esp membership in esp registration controller')
+    GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save esp membership in esp registration controller')
     false
   end
 

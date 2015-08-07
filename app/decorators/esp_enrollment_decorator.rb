@@ -15,9 +15,9 @@ class EspEnrollmentDecorator
         esp_hash.application_deadline_date
       end
     elsif deadline == 'yearround'
-      'Rolling deadline'
+      I18n.t('decorators.esp_enrollment_decorator.rolling_deadline')
     elsif deadline == 'parents_contact'
-      'Contact school'
+      I18n.t('decorators.esp_enrollment_decorator.contact_school')
     end
   end
   # Calculated for schools that have the same year for students_accepted_year and applications_received_year (from OSP)

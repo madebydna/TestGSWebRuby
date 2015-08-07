@@ -6,16 +6,32 @@ class QueueDaemon
   UPDATE_LIMIT_DEFAULT = 100
   #1 is the highest priority and 5 is the lowest. updates will get processed in order of highest to lowest
   UPDATE_ORDER_DEFAULT = [1,2,3,4,5]
+  DEFAULT_FAIL_MSG = 'Could not find UpdateQueue table'
+  MAX_FAIL_COUNTER = 10
+  FAIL_SLEEP_TIME = 10
 
   def run!
     # This is just for testing
     # UpdateQueue.destroy_all
     # UpdateQueue.seed_sample_data!
 
+    fail_counter = 0
+
     puts 'Starting the update queue daemon.'
     loop do
-      process_unprocessed_updates
-      sleep ENV_GLOBAL['queue_daemon_sleep_time']
+      begin
+        process_unprocessed_updates
+        fail_counter = 0
+        sleep ENV_GLOBAL['queue_daemon_sleep_time']
+      rescue => e
+        fail_counter += 1
+        if fail_counter > MAX_FAIL_COUNTER || e.message != DEFAULT_FAIL_MSG
+          puts "Too many errors, quitting"
+          raise e
+        end
+        puts "Can't connect to database to list updates. Will try again in #{FAIL_SLEEP_TIME} seconds"
+        sleep FAIL_SLEEP_TIME
+      end
     end
   end
 
@@ -23,7 +39,7 @@ class QueueDaemon
     begin
       updates = get_updates
     rescue
-      raise 'Could not find UpdateQueue table'
+      raise DEFAULT_FAIL_MSG
     end
     sig_int = SignalHandler.new('INT')
     updates.each do |scheduled_update|

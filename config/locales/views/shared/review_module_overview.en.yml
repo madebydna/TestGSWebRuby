@@ -1,0 +1,6 @@
+---
+en:
+  shared:
+    review_module_overview:
+      submitted_by_user_type_html: '- submitted by a <span class="cuc_posted-by">
+      %{user_type}</span>'

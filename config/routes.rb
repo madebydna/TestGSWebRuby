@@ -55,6 +55,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
+  get '/gsr/community-scorecard', to: 'community_scorecards#show'
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'

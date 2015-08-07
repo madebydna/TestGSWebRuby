@@ -49,7 +49,14 @@ class School < ActiveRecord::Base
   end
 
   def collections
-    @collections ||= SchoolCollection.for_school(self)
+    @collections ||= (
+      collection_id = self.school_metadata['collection_id']
+      if collection_id
+        [ Collection.find_by(id: collection_id) ]
+      else
+        []
+      end
+    )
   end
 
   # Returns first collection or nil if none
@@ -57,18 +64,11 @@ class School < ActiveRecord::Base
     collections.first
   end
 
-  # Returns first collection name if school belongs to one, otherwise nil
-  def collection_name
-    collection = self.collection
-    if collection
-      collection.name
-    end
-  end
-
   def hub_city
     collection = self.collection
     if collection
-      collection.nickname
+      hub = HubCityMapping.find_by(collection_id: collection.id)
+      hub.city
     else
       city
     end

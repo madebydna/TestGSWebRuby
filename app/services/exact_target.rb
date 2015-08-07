@@ -12,9 +12,9 @@ class ExactTarget
         ENV_GLOBAL['exacttarget_api_secret'],
       ],
       convert_request_keys_to: :camelcase,
-      namespaces: {
-        'xmlns:tns' => 'http://exacttarget.com/wsdl/partnerAPI'
-      }
+      # The following two changes get the request looking more like the sample provided by ExactTarget
+      element_form_default: :unqualified, # do not attempt to qualify elements with namespace
+      namespace_identifier: nil # do not qualify the message body with a namespace
     )
   end
 
@@ -50,15 +50,24 @@ class ExactTarget
   def build_soap_body(key, recipient, attributes = {}, from = nil, priority = 'Medium')
     # convert rest to wsdl:Attributes Name fields
     wsdl_attr = []
-    attributes.each { |k,v| wsdl_attr << {'Name' => k, 'Value' => v} }
+    # Special case verification links to wrap them in a CDATA block. Recommendation by ExactTarget support
+    # The ! after the element name instructs Savon not to escape the value
+    attributes.each do |k,v|
+      if k == :VERIFICATION_LINK
+        wsdl_attr << {'Name' => k, 'Value!' => "<![CDATA[#{v}]]>"}
+      else
+        wsdl_attr << {'Name' => k, 'Value' => v}
+      end
+    end
 
     # create JSON-like hashes that hold values
     soap_body = {
       options: {
-        queue_priority: priority
+        queue_priority: priority,
+        request_type: 'Asynchronous'
       },
       objects: {
-        '@xsi:type' => 'tns:TriggeredSend',
+        '@xsi:type' => 'TriggeredSend',
         triggered_send_definition: {
           customer_key: key
         },
@@ -80,7 +89,9 @@ class ExactTarget
   end
 
   def send_request(type, body)
-    response = client.call(type, message: body)
+    # message_tag: Change name of SOAP message tag to CreateRequest -- THIS IS THE MOST IMPORTANT THING
+    # attributes: add a namespace to the SOAP message tag -- this is to make the request look more like the sample
+    response = client.call(type, message_tag: :CreateRequest, message: body, attributes: {:xmlns => 'http://exacttarget.com/wsdl/partnerAPI'})
   end
 
   def capture_delivery(hash_of_args)

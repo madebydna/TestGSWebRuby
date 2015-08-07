@@ -1,0 +1,12 @@
+---
+es:
+  decorators:
+    test_scores_decorator:
+      Elementary and Middle school: Escuela Primaria y Medio
+      Elementary school: Escuela primaria
+      High school: Escuela secundaria
+      Middle and High school: Escuela Intermedia y Alta
+      Middle school: Escuela secundaria
+      School-wide: En toda la escuela
+      by_group: Por Grupo
+      grade: grado %{grade_number}

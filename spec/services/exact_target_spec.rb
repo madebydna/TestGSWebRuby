@@ -23,6 +23,14 @@ describe ExactTarget do
       expect(body[:objects][:subscribers][:attributes].first['Value']).to eq('test')
     end
 
+    it 'adds cdata to verification link attribute' do
+      et = ExactTarget.new
+      body = et.send(:build_soap_body, 'a_key', 'foo@example.com', {VERIFICATION_LINK: 'test'})
+      expect(body[:objects][:subscribers][:attributes].first['Name']).to eq(:VERIFICATION_LINK)
+      # The ! here instructs Savon not to escape the value
+      expect(body[:objects][:subscribers][:attributes].first['Value!']).to eq('<![CDATA[test]]>')
+    end
+
     it 'adds the correct priority' do
       et = ExactTarget.new
       body = et.send(:build_soap_body, 'a_key', 'foo@example.com', {}, nil, 'High')

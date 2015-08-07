@@ -36,7 +36,7 @@
 
               <%= review.comment %>
               <br /><br />
-              - submitted by a <span class="cuc_posted-by"><%= review.user_type %></span>
+             <%= t('.submitted_by_user_type_html', user_type: review.user_type) %>
             </div>
           </div>
 

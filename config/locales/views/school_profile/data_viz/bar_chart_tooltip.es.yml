@@ -4,4 +4,6 @@ es:
     data_viz:
       bar_chart_tooltip:
         state_average: El promedio del estado
-        percent_proficient: '%{percent}% de habilidad'
+        state_avg: Prom.
+        percent_graduated: '%{percent}% Graduado'
+        eligible_for_4yr: '%{percent}% Graduado y elegible para Universidad'

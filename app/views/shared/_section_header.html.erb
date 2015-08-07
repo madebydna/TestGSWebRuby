@@ -1,3 +1,7 @@
+<% category_placement %>
+<% title = category_placement.title %>
+<% description = category_placement.category.try(:description) %>
+
 <% if category_placement.title.present? %>
     <% if category_placement.depth == 0 %>
         <div class="pam clearfix mbm">
@@ -8,23 +12,23 @@
                 <p class="link-down-compensate"></p>
             </a>
             <div class="fl">
-                <h2 class="mvn"><%= category_placement.title %></h2>
+                <h2 class="mvn"><%= db_t(title) %></h2>
             </div>
-            <% link_text = link_text.present? ? link_text : nil %>
+            <% link_text = link_text.presence %>
             <%= raw display_section_head_link category_placement, link_text %>
         </div>
-        <% if category_placement.category.present?  && category_placement.category.description.present? %>
-            <div class="clearfix tal phm pbm"><p class="mvn"><%= category_placement.category.description %></p></div>
+        <% if description.present? %>
+            <div class="clearfix tal phm pbm"><p class="mvn"><%= db_t(description) %></p></div>
         <% end %>
      <% elsif category_placement.depth == 1 %>
         <div class="clearfix mbl mtm mls">
             <div class="fl">
-                <h3 class="mvn"><%= category_placement.title %></h3>
+                <h3 class="mvn"><%= db_t(title) %></h3>
             </div>
 
         </div>
-        <% if category_placement.category.present?  && category_placement.category.description.present? %>
-            <div class="clearfix tal pam"><p class="mvn"><%= category_placement.category.description %></p></div>
+        <% if description.present? %>
+            <div class="clearfix tal pam"><p class="mvn"><%= db_t(description) %></p></div>
         <% end %>
      <% end %>
 <% end %>

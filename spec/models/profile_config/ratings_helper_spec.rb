@@ -477,6 +477,9 @@ describe RatingsHelper do
 
   describe 'get_sub_rating_descriptions' do
     before do
+     allow(I18n).to receive(:db_t).with('my description').and_return('my description')
+     allow(I18n).to receive(:db_t).with('A footnote.').and_return('A footnote.')
+     allow(I18n).to receive(:db_t).with('A description.').and_return('A description.')
       @school = FactoryGirl.build(:school, state: 'mi')
     end
 

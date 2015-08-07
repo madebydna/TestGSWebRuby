@@ -1,0 +1,11 @@
+<% page_config %>
+<% school %>
+<% category %>
+
+<% if page_config.root_placements_with_data.present? &&
+  page_config.root_placements_with_data.find{ |category_placement| category_placement['title'] == 'Sources' } &&
+  (school.footnotes_for_category category: category).present? %>
+  <div class="col-xs-12 pls pbl clearfix">
+    <div class="fr prm"><%= t('.source') %> <a href="#Footnotes"><%= t('.see_notes') %></a></div>
+  </div>
+<% end %>

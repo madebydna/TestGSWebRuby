@@ -89,13 +89,27 @@ describe GroupComparisonDataReader do
     o = Object.new
     allow(o).to receive(:keys).and_return(sample_data.keys)
     allow(o).to receive(:key_label_map).and_return(sample_label_map)
+    allow(o).to receive(:parsed_json_config).and_return({}.with_indifferent_access)
     o
   end
 
-  it 'should create a BarChartCollection for each data type' do
-    allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-    expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
-    subject.data_for_category(fake_category)
+
+  describe '#data_for_category' do
+    before do
+      allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
+      allow(subject).to receive(:modify_data!)
+    end
+
+    it 'should create a BarChartCollection for each data type' do
+      expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
+      subject.data_for_category(fake_category)
+    end
+
+    it "should return an array of bar chart collections" do
+      subject.data_for_category(fake_category).each do |bar_chart_collection|
+        expect(bar_chart_collection).to be_a BarChartCollection
+      end
+    end
   end
 
   describe '#get_data!' do
@@ -104,7 +118,15 @@ describe GroupComparisonDataReader do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
         allow(subject).to receive(:get_cache_data).and_return(subtext_data)
         allow(subject).to receive(:category).and_return(fake_category)
-        allow(subject).to receive(:config).and_return({ breakdown: 'Ethnicity', breakdown_all: 'Enrollment' })
+        allow(subject).to receive(:config).and_return({
+          breakdown: 'Ethnicity',
+          breakdown_all: 'Enrollment',
+          group_comparison_callbacks: [
+            'add_ethnicity_callback',
+            'add_enrollment_callback',
+            'add_student_types_callback',
+          ]
+        }.with_indifferent_access)
         subject.send(:get_data!)
       end
 

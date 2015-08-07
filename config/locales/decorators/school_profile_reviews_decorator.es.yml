@@ -5,9 +5,7 @@ es:
       comments:
         one: "%{count} comentario"
         other: "%{count} comentarios"
-      see_comments:
-        one: "Ver %{count} comentario"
-        other: "Ver todos %{count} comentarios"
+      count: cuenta
       overall_response:
         one:  "%{count} estrella"
         other:  "%{count} estrellas"
@@ -17,8 +15,11 @@ es:
       reviews:
         one: "%{count} evaluacion"
         other: "%{count} evaluaciones"
+      see_comments:
+        one: "Ver %{count} comentario"
+        other: "Ver todos %{count} comentarios"
+      see_ratings: Ver calificaciones
       see_reviews:
         one: "Ver %{count} evaluacion"
         other: "Ver todas las %{count} evaluaciones"
-      see_ratings: Ver calificaciones
 
