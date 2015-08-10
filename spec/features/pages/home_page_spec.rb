@@ -11,6 +11,12 @@ describe 'Home Page' do
   it { is_expected.to have_email_signup_section }
   it { is_expected.to have_greatkids_articles_section }
   it { is_expected.to have_offers_section }
+  with_subject :offers_section do
+    it { is_expected.to have_for_families_link }
+    it { is_expected.to have_for_schools_link }
+    it { is_expected.to have_write_a_review_link }
+    it { is_expected.to have_search_by_address_link }
+  end
   it { is_expected.to have_quote_section }
   it { is_expected.to have_who_we_are_section }
   it { is_expected.to have_our_supporters_section }
