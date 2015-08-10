@@ -5,7 +5,8 @@ class GSLogger
 
   TAGS = Hash.new('MISC').merge({
     osp: 'OSP',
-    reviews: 'REVIEWS'
+    reviews: 'REVIEWS',
+    i18n: 'I18N'
   })
 
   class << self
