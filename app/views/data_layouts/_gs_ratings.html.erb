@@ -20,10 +20,10 @@
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
       <h4><%= label %></h4>
       <% if rating_hash["disclaimer_private"].present? && @school.private_school? && @school.gs_rating != 'nr' %>
-        <p class="alert alert-warning man mbm"><%= rating_hash["disclaimer_private"].html_safe %></p>
+        <p class="alert alert-warning man mbm"><%= db_t(rating_hash["disclaimer_private"]).html_safe %></p>
       <% end %>
         <% if rating_hash["what_is_not_rated"].present? && !@school.preschool? %>
-            <p class="alert alert-warning man mbm"><%= rating_hash["what_is_not_rated"].html_safe %></p>
+            <p class="alert alert-warning man mbm"><%= db_t(rating_hash["what_is_not_rated"]).html_safe %></p>
         <% end %>
     <p><%= db_t(rating_hash["description"]) %></p>
       <% if rating_hash["rating_breakdowns"].present? || rating_hash["methodology_url"].present? %>
