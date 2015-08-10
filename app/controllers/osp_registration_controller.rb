@@ -19,6 +19,8 @@ class OspRegistrationController < ApplicationController
     else
       render 'osp/registration/new'
     end
+  rescue => error
+    GSLogger.error(:osp, error, vars: params, message: 'OSP New Page failed')
   end
 
   def submit
@@ -28,6 +30,8 @@ class OspRegistrationController < ApplicationController
     else
       save_new_osp_user(@school)
     end
+  rescue => error
+    GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'OSP Submission flow failed')
   end
 
   private
