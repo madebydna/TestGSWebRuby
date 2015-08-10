@@ -243,7 +243,7 @@ module MetaTagsHelper
     # Add collation since we can get UTF-8 chars from the web
     where_clause << "COLLATE 'utf8_general_ci' " if @params_hash['city'].present?
     where_clause << 'and active=1'
-    if City.where(where_clause, @state[:short], @params_hash['city']).first
+    if city = City.where(where_clause, @state[:short], @params_hash['city']).first
       school_type, level_code, page = search_params_for_meta_tags
       parameters = "#{level_code.param}#{school_type.param}"
       url_without_params = canonical_url_without_params(@state[:long], city.name)
