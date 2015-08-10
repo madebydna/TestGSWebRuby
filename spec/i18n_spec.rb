@@ -43,6 +43,21 @@ describe 'I18n' do
       expect(I18n).to receive(:t).with(:foobar)
       I18n.db_t(key)
     end
+
+    context 'when given blank key' do
+      [nil, ''].each do |blank_key|
+        it 'should return default value when one provided' do
+          expect(I18n).to_not receive(:t)
+          result = I18n.db_t(blank_key, default: 'default')
+          expect(result).to eq('default')
+        end
+        it 'should return key if no default provided' do
+          expect(I18n).to_not receive(:t)
+          result = I18n.db_t(blank_key)
+          expect(result).to eq(blank_key)
+        end
+      end
+    end
   end
   
   it 'has an non_default_locale method' do
