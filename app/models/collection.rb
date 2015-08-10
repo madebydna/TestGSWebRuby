@@ -1,16 +1,30 @@
 class Collection < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
-  attr_accessible :id, :state, :name, :definition, :config
+  attr_accessible :id, :name, :definition, :config
 
   has_one :hub_city_mapping
 
+  scope :for_school, ->(state, school_id) do
+    joins("INNER JOIN gs_schooldb.school_collections sc
+           ON collection_id = #{self.table_name}.id")
+      .where('state = ? and school_id = ?', state, school_id)
+  end
+
+  def schools
+    @schools ||= (
+      definition.keys.map do |state|
+        School.on_db(state.to_s.downcase.to_sym).for_collection(id).active.to_a
+      end.flatten
+    )
+  end
+
   def config
-    @config ||= begin
-                JSON.parse(read_attribute(:config)).with_indifferent_access
-              rescue
-                {}
-              end
+    @config ||= read_json_attribute(:config)
+  end
+
+  def definition
+    @config ||= read_json_attribute(:definition)
   end
 
   # These methods are deprecated, but still work.
@@ -33,4 +47,13 @@ class Collection < ActiveRecord::Base
     hash
   end
 
+  protected
+
+  def read_json_attribute(attribute)
+    begin
+      JSON.parse(read_attribute(attribute)).with_indifferent_access
+    rescue
+      {}
+    end
+  end
 end

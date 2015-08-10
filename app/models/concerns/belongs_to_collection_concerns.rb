@@ -17,7 +17,7 @@ module BelongsToCollectionConcerns
 
   def collection
     @collection ||= (
-      Collection.find(self.collection_id) if self.collection_id
+      Collection.find_by(id: self.collection_id) if self.collection_id
     )
   end
 

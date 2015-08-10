@@ -23,6 +23,11 @@ class School < ActiveRecord::Base
   belongs_to :district
 
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
+  scope :for_collection, ->(collection_id) do
+    joins('INNER JOIN gs_schooldb.school_collections sc ON school_id = school.id
+           and sc.state = school.state')
+      .where('collection_id = ?', collection_id)
+  end
 
   scope :active, -> { where(active: true) }
 
@@ -50,12 +55,7 @@ class School < ActiveRecord::Base
 
   def collections
     @collections ||= (
-      collection_id = self.school_metadata['collection_id']
-      if collection_id
-        [ Collection.find_by(id: collection_id) ]
-      else
-        []
-      end
+      Collection.for_school(state, id).to_a
     )
   end
 
@@ -65,7 +65,6 @@ class School < ActiveRecord::Base
   end
 
   def hub_city
-    collection = self.collection
     if collection
       hub = HubCityMapping.find_by(collection_id: collection.id)
       hub.city
