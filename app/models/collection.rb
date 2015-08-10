@@ -4,10 +4,10 @@ class Collection < ActiveRecord::Base
   attr_accessible :id, :name, :definition, :config
 
   has_one :hub_city_mapping
+  has_many :school_collections
 
   scope :for_school, ->(state, school_id) do
-    joins("INNER JOIN gs_schooldb.school_collections sc
-           ON collection_id = #{self.table_name}.id")
+    joins(:school_collections)
       .where('state = ? and school_id = ?', state, school_id)
   end
 

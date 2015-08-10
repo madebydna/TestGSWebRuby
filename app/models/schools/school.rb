@@ -23,11 +23,6 @@ class School < ActiveRecord::Base
   belongs_to :district
 
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
-  scope :for_collection, ->(collection_id) do
-    joins('INNER JOIN gs_schooldb.school_collections sc ON school_id = school.id
-           and sc.state = school.state')
-      .where('collection_id = ?', collection_id)
-  end
 
   scope :active, -> { where(active: true) }
 
@@ -215,7 +210,13 @@ class School < ActiveRecord::Base
     School.on_db(shard).joins("inner join #{prefix}.nearby on school.id = nearby.neighbor and nearby.school = #{id}")
   end
 
-
+  def self.for_collection(collection_id)
+    gs_schooldb = 'gs_schooldb'
+    gs_schooldb << '_test' if Rails.env.test?
+    joins("INNER JOIN #{gs_schooldb}.school_collections sc ON school_id = school.id
+           and sc.state = school.state")
+      .where('collection_id = ?', collection_id)
+  end
 
   def self.for_states_and_ids(states, ids)
     raise ArgumentError, 'States and school IDs provided must be provided' unless states.present? && ids.present?
