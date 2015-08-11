@@ -1,7 +1,13 @@
 require 'spec_helper'
 
+def bar_chart_order
+  ['ethnicity', 'program', 'gender']
+end
 shared_example 'should group the data by the appropriate groups' do |breakdowns|
-  expect(subject.bar_charts.map(&:title)).to eq(['ethnicity'] + [*breakdowns])
+  available_breakdowns = ['ethnicity'] + [*breakdowns]
+  sorted_breakdowns = bar_chart_order
+  expected_breakdowns = sorted_breakdowns & available_breakdowns
+  expect(subject.bar_charts.map(&:title)).to eq(expected_breakdowns)
 end
 
 shared_example 'should duplicate the all students data point to all groups' do
@@ -55,7 +61,7 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection.new(nil, data_points, {
-          bar_chart_collection_callbacks: ['copy_all_students'],
+          bar_chart_collection_callbacks: ['copy_all_students', 'order_bar_charts'],
           group_by: {'gender' => 'breakdown'},
           default_group: 'ethnicity'
         }.with_indifferent_access)
@@ -72,7 +78,7 @@ describe BarChartCollection do
       subject do
         # The array of bar chart groups
         BarChartCollection.new(nil, data_points, {
-          bar_chart_collection_callbacks: ['copy_all_students'],
+          bar_chart_collection_callbacks: ['copy_all_students', 'order_bar_charts'],
           group_by: {'program' => 'breakdown'},
           default_group: 'ethnicity'
         }.with_indifferent_access)
@@ -101,10 +107,11 @@ describe BarChartCollection do
     #test with all configs set
     context 'when multiple config keys are set including' do
       config = {
-        bar_chart_collection_callbacks: ['copy_all_students'],
+        bar_chart_collection_callbacks: ['copy_all_students', 'order_bar_charts'],
         group_by: {'gender' => 'breakdown', 'program' => 'breakdown'},
         default_group: 'ethnicity',
         bar_chart_callbacks: ['move_all_students'],
+        bar_chart_order: bar_chart_order,
         sort_by: {'desc' => 'percent_of_population'},
         label_charts_with: 'breakdown',
         breakdown: 'Ethnicity',

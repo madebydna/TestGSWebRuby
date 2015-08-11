@@ -4,7 +4,8 @@ class BarChartCollection
   # how to segment charts: by subject or by breakdown.
   # data is a hash of data from GroupComparisonDataReader
 
-  attr_accessor :bar_charts, :data, :config, :sub_title, :title, :default_group, :group_by_config, :breakdowns
+  attr_accessor :bar_chart_order, :breakdowns, :config, :data, :default_group,
+    :group_by_config, :sub_title, :title, :bar_charts
 
   DEFAULT_CALLBACKS = [ 'group_by' ]
 
@@ -15,6 +16,7 @@ class BarChartCollection
     self.title            = title
     self.default_group    = config[:default_group]
     self.group_by_config = config[:group_by]
+    self.bar_chart_order = config[:bar_chart_order]
     create_bar_charts!
     self.breakdowns       = bar_charts.map(&:title) if config[:group_by].present?
   end
@@ -72,4 +74,10 @@ class BarChartCollection
     end
   end
 
+  #Order bar charts callback
+  def order_bar_charts_callback
+    return unless data.present? && bar_chart_order.present?
+
+    self.data = Hash[data.sort_by { |k, v| bar_chart_order.index(k) }]
+  end
 end
