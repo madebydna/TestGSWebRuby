@@ -55,6 +55,10 @@ class BarChartCollection
     return 'gender' if Genders.all_as_strings.include?(str.downcase)
   end
 
+  def find_group_by_program(str)
+    return 'program' if StudentTypes.all_as_strings.include?(str.downcase)
+  end
+
   #Duplicate all students callback
   def copy_all_students_callback
     return unless data.present?

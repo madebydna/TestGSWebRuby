@@ -9,4 +9,8 @@ module StudentTypes
       'Not limited English proficient'.to_sym,
     ]
   end
+
+  def self.all_as_strings
+    self.all.map { |st| st.to_s.downcase }
+  end
 end

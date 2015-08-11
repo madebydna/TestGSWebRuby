@@ -4,6 +4,7 @@ es:
     data_viz:
       bar_chart_breakdowns_dropdown:
         gender: 'Género'
+        program: 'Programa'
         ethnicity: 'Etnicidad'
         grouped_by: 'Agrupados por %{breakdown}'
 

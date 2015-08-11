@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-shared_example 'should group the data by gender and everything else' do
-  expect(subject.bar_charts.map(&:title)).to eq(['ethnicity', 'gender'])
+shared_example 'should group the data by the appropriate groups' do |breakdowns|
+  expect(subject.bar_charts.map(&:title)).to eq(['ethnicity'] + [*breakdowns])
 end
 
 shared_example 'should duplicate the all students data point to all groups' do
@@ -47,7 +47,8 @@ describe BarChartCollection do
         data.merge(breakdown: "African American", school_value: 80.0, percent_of_population: 5, subtext: '5% of population' ),
         data.merge(breakdown: "European", school_value: 70.0, percent_of_population: 24.85, subtext: '24% of population'),
         data.merge(breakdown: "male", school_value: 40.0, percent_of_population: 0.15, subtext: '<1% of population'),
-        data.merge(breakdown: "female", school_value: 50.0, subtext: 'No data')
+        data.merge(breakdown: "female", school_value: 50.0, subtext: 'No data'),
+        data.merge(breakdown: 'Economically disadvantaged', school_value: 40.0, percent_of_population: 0.15, subtext: '<1% of population'),
       ]
     }
     context 'when the group by gender callback is set' do
@@ -60,7 +61,24 @@ describe BarChartCollection do
         }.with_indifferent_access)
       end
 
-      include_example 'should group the data by gender and everything else'
+      include_example 'should group the data by the appropriate groups', 'gender'
+
+      context 'when the copy_all_students callback is set' do
+        include_example 'should duplicate the all students data point to all groups'
+      end
+    end
+
+    context 'when the group by program callback is set' do
+      subject do
+        # The array of bar chart groups
+        BarChartCollection.new(nil, data_points, {
+          bar_chart_collection_callbacks: ['copy_all_students'],
+          group_by: {'program' => 'breakdown'},
+          default_group: 'ethnicity'
+        }.with_indifferent_access)
+      end
+
+      include_example 'should group the data by the appropriate groups', 'program'
 
       context 'when the copy_all_students callback is set' do
         include_example 'should duplicate the all students data point to all groups'
@@ -84,7 +102,7 @@ describe BarChartCollection do
     context 'when multiple config keys are set including' do
       config = {
         bar_chart_collection_callbacks: ['copy_all_students'],
-        group_by: {'gender' => 'breakdown'},
+        group_by: {'gender' => 'breakdown', 'program' => 'breakdown'},
         default_group: 'ethnicity',
         bar_chart_callbacks: ['move_all_students'],
         sort_by: {'desc' => 'percent_of_population'},
@@ -97,7 +115,7 @@ describe BarChartCollection do
           BarChartCollection.new(nil, data_points, config)
         end
 
-        include_example 'should group the data by gender and everything else'
+        include_example 'should group the data by the appropriate groups', ['gender', 'program']
         include_example 'should duplicate the all students data point to all groups'
         include_example 'should sort the groups by percent breakdown descending and all students'
       end
