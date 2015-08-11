@@ -37,7 +37,7 @@ class SchoolDataHash
     grad_data = characteristics[data_set]
     breakdown_to_use = sub_group_to_return || 'all students'
 
-    sub_group = grad_data.find { |gd| gd['breakdown'].try(:downcase) == breakdown_to_use }
+    sub_group = [*grad_data].find { |gd| gd['breakdown'].try(:downcase) == breakdown_to_use }
     sub_group.present? ? {value: sub_group['school_value'].to_i, performance_level: sub_group['performance_level']} : {}
   end
 
