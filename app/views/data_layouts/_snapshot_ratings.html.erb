@@ -3,7 +3,7 @@
 <% gs_rating = @school.gs_rating || 'nr' %>
 <div class="row pr" style="height: 300px;">
   <div class="col-xs-12 tac">
-    <a href="quality#Ratings"
+    <a href="<%= school_quality_url(@school)  %>#Ratings"
       class="js-gaLoad js-gaClick" data-ga-load-label="ratingsSnapshot greatSchoolsRating link" data-ga-click-label="ratingsSnapshot greatSchoolsRating link">
       <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
       <% icon_class = 'iconx72-ratings' %>
