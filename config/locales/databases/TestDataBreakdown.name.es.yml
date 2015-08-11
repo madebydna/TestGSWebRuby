@@ -1,7 +1,10 @@
 ---
 es:
+  African American: Afroamericano
   Alaska Native: Nativos de Alaska
+  All: Todos
   Alternate assessment: Evaluación alternativo
+  Asian: Asiático
   Asian Indian: India asiática
   Asian/Pacific Islander: Asiático / Islas del Pacífico
   Bilingual: Bilingüe
@@ -10,8 +13,11 @@ es:
   Combined groups (ethnicity): Grupos combinados (etnia)
   Declined to state: Rehusó a estado
   Economic Status Unknown: Situación Económica Desconocido
+  Economically disadvantaged: Con desventaja económica
   English Language Learner Current: Inglés como segunda lengua actual
   English Language Learner Exited: Inglés como segunda lengua Exited
+  Female: Femenino
+  Filipino: Filipino
   Fluent-English Proficient and English Only: Sólo Fluido-Inglés Competente y Inglés
   Former LEP student - monitoring year 1: El ex estudiante LEP - seguimiento a 1 año
   Former LEP student - monitoring year 2: El ex estudiante LEP - 2 años monitoreo
@@ -19,7 +25,8 @@ es:
   Full Academic Year: Año Completo Académico
   Gender Unknown: Desconocido Género
   General population: Población general
-  General population excluding English language learners and students with disabilities: Población general con exclusión de los estudiantes del idioma inglés y estudiantes con discapacidad
+  General population excluding English language learners and students with disabilities: Población
+    general con exclusión de los estudiantes del idioma inglés y estudiantes con discapacidad
   Gifted: Dotado
   Grade 10: Grado 10
   Grade 11: Grado 11
@@ -27,6 +34,7 @@ es:
   Grade AE: Grado AE
   Grade Unknown: Grado Desconocido
   Guamanian: Guam
+  Hispanic: Hispano
   Homeless: Sin hogar
   Immigrant: Inmigrante
   Japanese: Japonés
@@ -35,11 +43,17 @@ es:
   LEP (less than 10 months): LEP (menos de 10 meses)
   LEP (monitoring): LEP (monitoreo)
   Language Fluency Unknown: Idioma Fluidez Desconocido
-  Language proficiency status - not applicable: Estado de dominio de la lengua - no aplicable
+  Language proficiency status - not applicable: Estado de dominio de la lengua - no
+    aplicable
   Laotian: Laosiano
-  Limited English Proficient Current Plus Former: Dominio Limitado del Inglés actual Ex Plus
+  Limited English Proficient Current Plus Former: Dominio Limitado del Inglés actual
+    Ex Plus
   Limited English Proficient Former: Dominio Limitado del Inglés Antiguo
+  Limited English proficient: Con dominio limitado Inglés
+  Male: Masculino
   Migrant: Emigrante
+  Multiracial: Multirracial
+  Native American: Nativo americano
   Native Hawaiian: Nativo de Hawai
   Native Hawaiian/Pacific Islander: Nativo de Hawai / Islas del Pacífico
   Neither migrant nor immigrant: Ni migrante ni inmigrante
@@ -47,11 +61,14 @@ es:
   Not Full Academic Year: No completa Año Académico
   Not Gifted: No Dotados
   Not Homeless: No sin hogar
+  Not economically disadvantaged: No en desventaja económica
+  Not limited English proficient: No limitado dominio del Inglés
   Not migrant: No migrante
   Not poverty: No es la pobreza
   Other Asian: Otra asiática
   Other Pacific Islander: Otras islas del Pacífico
   Other ethnicity: Otro grupo étnico
+  Pacific Islander: Islas del Pacífico
   Parents Comm/Jr College Graduate: Los padres Comm / Jr Colegio de Graduados
   Parents Education - Declined to State: Los padres Educación - Rehusó al Estado
   Parents Four Year College Graduate: Los padres de cuatro años graduado de la universidad
@@ -65,7 +82,9 @@ es:
   Reduced lunch eligible: Reducido el almuerzo
   Samoan: Samoa
   Special Education with Accomodation: Educación Especial con Alojamiento
-  Students with disabilities and English language learners: Los estudiantes con discapacidades y estudiantes del idioma inglés
+  Students with disabilities: Estudiantes con discapacidad
+  Students with disabilities and English language learners: Los estudiantes con discapacidades
+    y estudiantes del idioma inglés
   Students without disabilities: Los estudiantes sin discapacidad
   Tahitian: Tahitian
   Tested with modifications: Probado con modificaciones
@@ -73,3 +92,4 @@ es:
   Title I program (no services): Programa de Título I (sin servicios)
   Title I program (prior): Programa de Título I (previa)
   Vietnamese: Vietnamita
+  White: Blanco
