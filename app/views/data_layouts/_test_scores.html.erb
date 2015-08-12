@@ -1,4 +1,4 @@
-<% data # A +Hash+ that contains test score data for this layout %>
+<% data ||= {} # A +Hash+ that contains test score data for this layout %>
 <%= debug data if params[:debug] %>
 
 <% if data && data.count != 0 %>
@@ -7,7 +7,10 @@
 
 <% data.each_with_index do |(test,value),index| %>
   <%= render layout:'col', locals: { css_class:'clearfix pam', category_placement: category_placement } do %>
-    <% test_label = value[:All][:test_label] %>
+    <% unless value.present? && value[:All].present? %>
+       <% GSLogger.warn(:school_profiles, nil, vars: value, message: "Test hash missing required :All key") and next %>
+    <% end %>
+    <% test_label = value.seek(:All,:test_label) %>
     <h3><%= db_t(test_label) %></h3><br/>
     <span class=""><%= t('data_layouts.test_scores.showing_results_for_html', test: test) %></span>
     <br/><br/>
