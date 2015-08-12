@@ -1,0 +1,16 @@
+---
+# The labels from this file are collected from the census_data_config_entry
+# table found in each state database
+# To recreate this file run the scritp here:
+# scripts/r281/OM-1407.create_census_data_config_entry.labels.yml_file.for_all_states.sh
+# Not all the labels from the tabels are in this file because some of the labels
+# are translated in TestDataBreakdown and the ethnicity yaml files
+es:
+  African-American: Afroamericano
+  American Indian: Indio americano
+  American Indian/Alaska Native: Los indios americanos / nativos de Alaska
+  Asian or Asian/Pacific Islander: Asiático o Asiático / Islas del Pacífico
+  Black: Negro
+  Hawaiian Native/Pacific Islander: Nativo de Hawai / Islas del Pacífico
+  Native Hawaiian or Pacific Islander: Nativo de Hawai o de las Islas del Pacífico
+  Two or more races: Dos o más razas
