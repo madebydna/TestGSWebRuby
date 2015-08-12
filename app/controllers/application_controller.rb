@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with => :exception_handler
 
   helper :all
-  helper_method :logged_in?, :current_user, :url_for
+  helper_method :logged_in?, :current_user, :url_for, :state_param_safe
 
   # methods for getting request URL / path info
 

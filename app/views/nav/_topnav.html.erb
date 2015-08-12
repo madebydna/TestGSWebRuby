@@ -121,7 +121,7 @@
                                                else
                                                  ['es', 'En Español']
                                                end
-                    link_to(link_text, params.merge(lang: target_lang), class: 'open-sans_i')
+                    link_to(link_text, params.merge(lang: target_lang).merge(state_params(state_param_safe)), class: 'open-sans_i')
                 %>
                 </li>
 
