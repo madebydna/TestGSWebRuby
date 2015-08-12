@@ -73,6 +73,10 @@
       top: -5px;
       line-height: 18px;
     }
+
+    .gs-tooltip + .tooltip > .tooltip-inner {
+      white-space: normal;
+    }
   }
 }
 

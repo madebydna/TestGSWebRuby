@@ -14,10 +14,10 @@
 <% end %>
 
 <% if @homepage_banner_prop == 'true' %>
-  <%= render 'shared/home/search_hero_short'  %>
-  <%= render 'shared/home/sel_banner'  %>
+  <%= render 'search_hero_short' %>
+  <%= render 'sel_banner'  %>
 <% else %>
-  <%= render 'shared/home/search_hero_prototype' %>
+  <%= render 'search_hero' %>
 <% end %>
 
 <% if @show_ads %>
@@ -28,18 +28,18 @@
   </div>
 <% end %>
 
-<%= render 'shared/home/browse_prototype'%>
+<%= render 'browse_by_city' %>
 
-<%= render 'shared/home/email_signup'%>
+<%= render 'shared/email_signup' %>
 
-<%= render 'shared/home/resources_prototype'%>
+<%= render 'greatkids_articles' %>
 
-<%= render 'shared/home/offer_prototype' %>
+<%= render 'offers' %>
 
-<%= render 'shared/home/quote_prototype'%>
+<%= render 'quote' %>
 
-<%= render 'shared/home/who_we_are_prototype'%>
+<%= render 'who_we_are' %>
 
-<%= render 'shared/home/sponsors_prototype'%>
+<%= render 'our_supporters' %>
 
-<%= render 'shared/home_footer'%>
+<%= render 'shared/home_footer' %>

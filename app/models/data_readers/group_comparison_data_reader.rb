@@ -43,7 +43,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     # example parsed config. (HashWithIndifferentAccess)
     # self.config = {
     #  'bar_chart_collection_callbacks' => ['copy_all_students'],
-    #  'group_by'                       => {'gender '=> 'breakdown'},
+    #  'group_by'                       => {'gender'=> 'breakdown', 'program' => 'breakdown'},
     #  'default_group'                  => 'ethnicity',
     #  'bar_chart_callbacks'            => ['move_all_students'],
     #  'sort_by'                        => {'desc' => 'percent_of_population'},
@@ -130,13 +130,14 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def add_student_types_callback
-    genders = get_cache_data('characteristics', Genders.all + StudentTypes.all, school)
-    genders.each do | gender, data |
-      genders[gender] = data.first[:school_value]
+    all_types = Genders.all + StudentTypes.all
+    student_types = get_cache_data('characteristics', all_types, school)
+    student_types.each do | type, data |
+      student_types[type] = data.first[:school_value]
     end
 
     data.values.flatten.each do | hash |
-      if (gender_percent = genders[hash[:breakdown].to_s.to_sym]).present?
+      if (gender_percent = student_types[hash[:breakdown].to_s.to_sym]).present?
         hash[:subtext] = percent_of_population_text(gender_percent)
       elsif hash[:subtext].nil?
         hash[:subtext] = no_data_text

@@ -4,4 +4,5 @@ es:
     data_viz:
       bar_chart:
         gender: 'Género'
+        program: 'Programa'
         ethnicity: 'Etnicidad'

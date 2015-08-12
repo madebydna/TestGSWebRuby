@@ -1,0 +1,5 @@
+es:
+  home:
+    greatkids_articles:
+      countdown_till_school_starts: Cuenta regresiva hasta que empiecen las clases
+      header_html: ¡Explore nuestro nuevo sitio de paternidad, %{greatkids_link}

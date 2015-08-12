@@ -2,6 +2,7 @@
 # access to the view, or be thought of as a view-model / presenter style
 # decorator
 class SchoolCacheDecorator
+  include GradeLevelConcerns
 
   attr_reader :school, :cache_data
 

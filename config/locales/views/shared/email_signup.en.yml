@@ -1,0 +1,6 @@
+en:
+  shared:
+    email_signup:
+      long_header: Get our best articles, worksheets, and more delivered weekly to your inbox
+      short_header: Sign up for email updates
+      signup_button: Sign up

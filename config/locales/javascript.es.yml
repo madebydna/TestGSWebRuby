@@ -7,6 +7,9 @@ es:
       found_this_helpful:  ' encontraron esta útil'
       people: personas
       person: persona
+    search_form:
+      short_placeholder: Ciudad, código postal, la dirección o la escuela
+      long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
     test_scores:
       advanced: 'Avanzado'
       proficient: 'Competente'
