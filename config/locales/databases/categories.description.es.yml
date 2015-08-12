@@ -1,34 +1,99 @@
 ---
 es:
-  ? 5Essentials is a survey measuring what students and teachers think and feel about the school Research shows that schools strong on 3 or more of the 5 essentials are ten times more likely to improve student learning than schools weak on the 5 essentials
-  : 5Essentials es una encuesta que mide lo que los estudiantes y los profesores piensan y sienten acerca de la escuela. La investigación muestra que las escuelas fuertes en 3 o más de los 5 elementos esenciales son diez veces más probabilidades de mejorar el aprendizaje del estudiante que las escuelas débiles en los 5 elementos esenciales.
-  Ratings help families find and compare schools Families should also use other factors when choosing a school: Clasificación de ayudar a las familias a encontrar y comparar escuelas. Las familias también deben utilizar otros factores al elegir una escuela.
-  Schools that are well organized, safe, and supportive are much more likely to be successful: Las escuelas que están bien organizados, seguro y de apoyo son mucho más probable que tenga éxito.
-  ? Scores are based on parent, student, and teacher ratings on a 1-5 scale, with 5 representing an excellent school climate, and 1 representing a school climate most in need of improvement
-  : Las puntuaciones se basan en los padres, el estudiante y el profesor puntuaciones en una escala de 1 a 5, donde 5 representa un excelente clima de la escuela, y 1 que representa un clima escolar con mayor necesidad de mejora.
-  The 5Essentials survey measures what students and teachers think and feel about the school: La encuesta 5Essentials mide lo que los estudiantes y los profesores piensan y sienten acerca de la escuela.
-  ? The Baltimore School Effectiveness Survey contains questions about many aspects of the school environment The survey helps district and school leaders understand what is working well and what needs improvement
-  : La Encuesta de Efectividad Baltimore School contiene preguntas sobre muchos aspectos del ambiente escolar. La encuesta ayuda a los distritos escolares y líderes entienden lo que está funcionando bien y lo que necesita mejorar.
-  The bar charts below tell what percentage of students are performing at or above grade-level: Los gráficos de barras de abajo dicen qué porcentaje de los estudiantes están llevando a cabo en o por encima del nivel de grado.
-  ? These percentages measure students' academic progress over time, specifically how many students are meeting beginning- to end-of-year academic targets
-  : Estos porcentajes medir el progreso académico de los estudiantes a través del tiempo, en concreto el número de estudiantes se reúnen principio- para poner fin de año los objetivos académicos.
-  ? This rating ranges from 1 to 5, with 5 stars representing an excellent school climate, and 1 star representing a school climate most in need of improvement
-  : Esta calificación varía de 1 a 5, con 5 estrellas que representa un excelente clima de la escuela, y 1 estrella que representa un clima escolar que más necesitan mejorar.
-  ? This score measures how engaged parents, students, and teachers feel they are in an active and vibrant partnership to promote student learning
-  : Esta medidas de puntuación de cómo los padres, estudiantes y maestros comprometidos sienten que están en una asociación activa y vibrante a promover el aprendizaje del estudiante.
-  ? This score measures how well parents, students, and teachers feel that the school develops rigorous and meaningful academic goals that encourage students to do their best
-  : Esta medidas de puntuación lo bien que los padres, estudiantes y maestros sienten que la escuela desarrolla metas académicas rigurosas y significativas que alientan a los estudiantes a hacer lo mejor.
-  ? This score measures the percent of employees that agree to strongly agree that this school ensures that teachers work well together, learn from one another, have opportunities for professional development, and feel supported by the administration
-  : Este puntaje mide el porcentaje de empleados que están de acuerdo a totalmente de acuerdo que esta escuela se asegura de que los maestros trabajan bien juntos, aprender unos de otros, tener oportunidades para el desarrollo profesional, y se sienten apoyados por la administración.
-  ? This score measures the percent of parents and employees that agree to strongly agree that this school engages parents and communicates with families to promote student learning
-  : Esta calificación mide el porcentaje de los padres y los empleados que están de acuerdo a muy de acuerdo que esta escuela se involucra a los padres y se comunica con las familias para promover el aprendizaje de los estudiantes.
-  ? This score measures the percent of parents and students that agree to strongly agree that this school sets high academic expectations for its students and expects them to be college-bound
-  : Esto mide el porcentaje de puntuación de los padres y los estudiantes que acuerdan muy de acuerdo que esto establece escolares altas expectativas académicas para sus estudiantes y espera que sean-límite de la universidad.
-  ? This score measures the percent of parents, students, and employees that agree to strongly agree that this school has a well-kept facility and a safe environment conducive to learning
-  : Esta medidas de puntuación el porcentaje de padres, estudiantes y empleados que están de acuerdo a totalmente de acuerdo que esta escuela tiene una instalación bien cuidada y un ambiente seguro propicio para el aprendizaje.
-  ? This score measures the percent of students and employees that agree to strongly agree that this school has a positive learning environment and cultivates an atmosphere of respect
-  : Este puntaje mide el porcentaje de alumnos y empleados que acepten totalmente de acuerdo que esta escuela tiene un ambiente de aprendizaje positivo y cultiva una atmósfera de respeto.
-  ? This score measures whether parents, students, and teachers feel that the school creates a physically and emotionally secure environment in which everyone can focus on student learning
-  : Esta medidas de puntuación si los padres, estudiantes y maestros sienten que la escuela crea un ambiente física y emocionalmente seguro en el que todo el mundo puede centrarse en el aprendizaje del estudiante.
-  ? This score measures whether parents, students, and teachers feel that the school provides information about the school's educational goals and offers appropriate feedback on each student's learning outcome
-  : Esta medidas de puntuación si los padres, estudiantes y maestros sienten que la escuela ofrece información sobre las metas educativas de la escuela y ofrece retroalimentación adecuada sobre los resultados de aprendizaje de cada estudiante.
+  ? 5Essentials is a survey measuring what students and teachers think and feel about
+    the school Research shows that schools strong on 3 or more of the 5 essentials
+    are ten times more likely to improve student learning than schools weak on the
+    5 essentials
+  : 5Essentials es una encuesta que mide lo que los estudiantes y los profesores piensan
+    y sienten acerca de la escuela. La investigación muestra que las escuelas fuertes
+    en 3 o más de los 5 elementos esenciales son diez veces más probabilidades de
+    mejorar el aprendizaje del estudiante que las escuelas débiles en los 5 elementos
+    esenciales.
+  Ratings help families find and compare schools Families should also use other factors when choosing a school: Clasificación
+    de ayudar a las familias a encontrar y comparar escuelas. Las familias también
+    deben utilizar otros factores al elegir una escuela.
+  Schools that are well organized, safe, and supportive are much more likely to be successful: Las
+    escuelas que están bien organizadas, seguras e apoyadas son mucho más probable
+    que tengan éxito.
+  ? Scores are based on parent, student, and teacher ratings on a 1-5 scale, with
+    5 representing an excellent school climate, and 1 representing a school climate
+    most in need of improvement
+  : Las puntuaciones se basan en los padres, el estudiante y el profesor puntuaciones
+    en una escala de 1 a 5, donde 5 representa un excelente clima de la escuela, y
+    1 que representa un clima escolar con mayor necesidad de mejora.
+  The 5Essentials survey measures what students and teachers think and feel about the school: La
+    encuesta 5Essentials mide lo que los estudiantes y los profesores piensan y sienten
+    acerca de la escuela.
+  ? The Baltimore School Effectiveness Survey contains questions about many aspects
+    of the school environment The survey helps district and school leaders understand
+    what is working well and what needs improvement
+  : La Encuesta de Efectividad Baltimore School contiene preguntas sobre muchos aspectos
+    del ambiente escolar. La encuesta ayuda a los distritos escolares y líderes entienden
+    lo que está funcionando bien y lo que necesita mejorar.
+  The bar charts below tell what percentage of students are performing at or above grade-level: Los
+    gráficos de barras de abajo dicen qué porcentaje de los estudiantes están llevando
+    a cabo en o por encima del nivel de grado.
+  ? These percentages measure students' academic progress over time, specifically
+    how many students are meeting beginning- to end-of-year academic targets
+  : Estos porcentajes medir el progreso académico de los estudiantes a través del
+    tiempo, en concreto el número de estudiantes se reúnen principio- para poner fin
+    de año los objetivos académicos.
+  ? This rating ranges from 1 to 5, with 5 stars representing an excellent school
+    climate, and 1 star representing a school climate most in need of improvement
+  : Esta calificación varía de 1 a 5, con 5 estrellas que representa un excelente
+    clima de la escuela, y 1 estrella que representa un clima escolar que más necesitan
+    mejorar.
+  ? This score measures how engaged parents, students, and teachers feel they are
+    in an active and vibrant partnership to promote student learning
+  : Esta medidas de puntuación de cómo los padres, estudiantes y maestros comprometidos
+    sienten que están en una asociación activa y vibrante a promover el aprendizaje
+    del estudiante.
+  ? This score measures how well parents, students, and teachers feel that the school
+    develops rigorous and meaningful academic goals that encourage students to do
+    their best
+  : Esta medidas de puntuación lo bien que los padres, estudiantes y maestros sienten
+    que la escuela desarrolla metas académicas rigurosas y significativas que alientan
+    a los estudiantes a hacer lo mejor.
+  ? This score measures the percent of employees that agree to strongly agree that
+    this school ensures that teachers work well together, learn from one another,
+    have opportunities for professional development, and feel supported by the administration
+  : Este puntaje mide el porcentaje de empleados que están de acuerdo a totalmente
+    de acuerdo que esta escuela se asegura de que los maestros trabajan bien juntos,
+    aprender unos de otros, tener oportunidades para el desarrollo profesional, y
+    se sienten apoyados por la administración.
+  ? This score measures the percent of parents and employees that agree to strongly
+    agree that this school engages parents and communicates with families to promote
+    student learning
+  : Esta calificación mide el porcentaje de los padres y los empleados que están de
+    acuerdo a muy de acuerdo que esta escuela se involucra a los padres y se comunica
+    con las familias para promover el aprendizaje de los estudiantes.
+  ? This score measures the percent of parents and students that agree to strongly
+    agree that this school sets high academic expectations for its students and expects
+    them to be college-bound
+  : Esto mide el porcentaje de puntuación de los padres y los estudiantes que acuerdan
+    muy de acuerdo que esto establece escolares altas expectativas académicas para
+    sus estudiantes y espera que sean-límite de la universidad.
+  ? This score measures the percent of parents, students, and employees that agree
+    to strongly agree that this school has a well-kept facility and a safe environment
+    conducive to learning
+  : Esta medidas de puntuación el porcentaje de padres, estudiantes y empleados que
+    están de acuerdo a totalmente de acuerdo que esta escuela tiene una instalación
+    bien cuidada y un ambiente seguro propicio para el aprendizaje.
+  ? This score measures the percent of students and employees that agree to strongly
+    agree that this school has a positive learning environment and cultivates an atmosphere
+    of respect
+  : Este puntaje mide el porcentaje de alumnos y empleados que acepten totalmente
+    de acuerdo que esta escuela tiene un ambiente de aprendizaje positivo y cultiva
+    una atmósfera de respeto.
+  ? This score measures whether parents, students, and teachers feel that the school
+    creates a physically and emotionally secure environment in which everyone can
+    focus on student learning
+  : Esta medidas de puntuación si los padres, estudiantes y maestros sienten que la
+    escuela crea un ambiente física y emocionalmente seguro en el que todo el mundo
+    puede centrarse en el aprendizaje del estudiante.
+  ? This score measures whether parents, students, and teachers feel that the school
+    provides information about the school's educational goals and offers appropriate
+    feedback on each student's learning outcome
+  : Esta medidas de puntuación si los padres, estudiantes y maestros sienten que la
+    escuela ofrece información sobre las metas educativas de la escuela y ofrece retroalimentación
+    adecuada sobre los resultados de aprendizaje de cada estudiante.

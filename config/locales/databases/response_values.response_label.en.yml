@@ -1,11 +1,10 @@
 ---
 en:
-  '"Arts (visual, literary, dance, theater, and/or music)"': '"Arts (visual, literary,
+  ! '"Arts (visual, literary, dance, theater, and/or music)"': ! '"Arts (visual, literary,
     dance, theater, and/or music)"'
   2 years old: 2 years old
   3 years old: 3 years old
   4 years old: 4 years old
-  AM and PM kindergarten: AM and PM kindergarten
   Academic (homework help and/or standards-based programs): Academic (homework help
     and/or standards-based programs)
   Accelerated credit learning: Accelerated credit learning
@@ -19,6 +18,7 @@ en:
   Agriculture, Food & Natural Resources: Agriculture, Food & Natural Resources
   All boys: All boys
   All girls: All girls
+  AM and PM kindergarten: AM and PM kindergarten
   American Sign Language (ASL): American Sign Language (ASL)
   Amharic: Amharic
   Amnesty International: Amnesty International
@@ -28,8 +28,8 @@ en:
   Arabic: Arabic
   Architecture: Architecture
   Architecture & Construction: Architecture & Construction
-  Art History: Art History
   Art club: Art club
+  Art History: Art History
   Art room: Art room
   Art teacher: Art teacher
   Arts (all): Arts (all)
@@ -61,8 +61,8 @@ en:
   Buses / vans provided for students: Buses / vans provided for students
   Buses / vans shared with other schools: Buses / vans shared with other schools
   Business: Business
-  Business Management & Administration: Business Management & Administration
   Business management: Business management
+  Business Management & Administration: Business Management & Administration
   Cafeteria: Cafeteria
   Calculus AB: Calculus AB
   Calculus BC: Calculus BC
@@ -95,10 +95,10 @@ en:
   Community college courses: Community college courses
   Community service: Community service
   Comparative Government and Politics: Comparative Government and Politics
-  Computer Science A: Computer Science A
   Computer animation: Computer animation
   Computer lab: Computer lab
   Computer programming: Computer programming
+  Computer Science A: Computer Science A
   Computer specialist: Computer specialist
   Construction / Building: Construction / Building
   Contact the school / Multiple deadlines: Contact the school / Multiple deadlines
@@ -114,7 +114,6 @@ en:
   Cub Scouts: Cub Scouts
   Culinary: Culinary
   Cycling: Cycling
-  DECA: DECA
   Dance: Dance
   Dance club: Dance club
   Dance teacher: Dance teacher
@@ -122,6 +121,7 @@ en:
   Deaf-blindness: Deaf-blindness
   Deafness: Deafness
   Debate: Debate
+  DECA: DECA
   Design: Design
   Developmental delay: Developmental delay
   Differentiated learning programs: Differentiated learning programs
@@ -136,10 +136,10 @@ en:
   Drum line: Drum line
   Dual language programs: Dual language programs
   Dutch: Dutch
-  ELL / ESL Coordinator: ELL / ESL Coordinator
   Education & Training: Education & Training
   Educational diagnostician: Educational diagnostician
   Electrical: Electrical
+  ELL / ESL Coordinator: ELL / ESL Coordinator
   Email: Email
   Emotional behavioral disabilities: Emotional behavioral disabilities
   Engineering: Engineering
@@ -166,18 +166,18 @@ en:
   French: French
   French Language and Culture: French Language and Culture
   Future Business Leaders of America (FBLA): Future Business Leaders of America (FBLA)
-  GED: GED
   Game club: Game club
   Garden / Greenhouse: Garden / Greenhouse
   Gardening: Gardening
   Gardening teacher: Gardening teacher
+  GED: GED
   General - school does not emphasize one particular subject: General - school does
     not emphasize one particular subject
   German: German
   German Language and Culture: German Language and Culture
   Gifted / High performing: Gifted / High performing
-  Gifted Specialist: Gifted Specialist
   Gifted and talented programs: Gifted and talented programs
+  Gifted Specialist: Gifted Specialist
   Girl Scouts: Girl Scouts
   Girls on the Run: Girls on the Run
   Golf: Golf
@@ -185,7 +185,6 @@ en:
   Graphics: Graphics
   Gym: Gym
   Gymnastics: Gymnastics
-  HVAC: HVAC
   Habitat for Humanity: Habitat for Humanity
   Half-day: Half-day
   Health Science: Health Science
@@ -199,8 +198,8 @@ en:
   Human Geography: Human Geography
   Human Services: Human Services
   Humanities: Humanities
+  HVAC: HVAC
   Hybrid / Blended learning: Hybrid / Blended learning
-  IT support: IT support
   Ice hockey: Ice hockey
   Improv: Improv
   Inclusive classroom: Inclusive classroom
@@ -221,22 +220,24 @@ en:
     one very comprehensive program for very challenging needs
   : Intensive - school offers a full program for many needs and/or offers at least
     one very comprehensive program for very challenging needs
-  International Baccalaureate (IB): International Baccalaureate (IB)
   International baccalaureate: International baccalaureate
+  International Baccalaureate (IB): International Baccalaureate (IB)
   Internet access: Internet access
   Internships: Internships
+  IT support: IT support
   It's Academic: It's Academic
   Italian: Italian
   Italian Language and Culture: Italian Language and Culture
-  JROTC: JROTC
   Japanese: Japanese
   Japanese Language and Culture: Japanese Language and Culture
   Jazz band: Jazz band
   Join PTO / PTA: Join PTO / PTA
+  JROTC: JROTC
   Kayaking: Kayaking
   Kickball: Kickball
   Kitchen: Kitchen
   Korean: Korean
+  label: label
   Lacrosse: Lacrosse
   Language: Language
   Latin: Latin
@@ -277,9 +278,9 @@ en:
   Multiculturalism / Global: Multiculturalism / Global
   Multiple disabilities: Multiple disabilities
   Music: Music
-  Music Theory: Music Theory
   Music room: Music room
   Music teacher: Music teacher
+  Music Theory: Music Theory
   National Honor Society (NHS): National Honor Society (NHS)
   Natural area: Natural area
   None: None
@@ -296,22 +297,22 @@ en:
   Outdoor / Farm-based: Outdoor / Farm-based
   Outdoor learning lab: Outdoor learning lab
   Outside scholarships: Outside scholarships
-  PE classes: PE classes
-  PE instructor: PE instructor
   Paid public transportation: Paid public transportation
   Painting: Painting
   Parent involvement center: Parent involvement center
   Parenting center: Parenting center
   Part-time study: Part-time study
+  PE classes: PE classes
+  PE instructor: PE instructor
   Performance stage: Performance stage
   Performing arts: Performing arts
   Phone: Phone
   Photography: Photography
-  'Physics 1: Algebra-Based': 'Physics 1: Algebra-Based'
-  'Physics 2: Algebra-Based': 'Physics 2: Algebra-Based'
+  ! 'Physics 1: Algebra-Based': ! 'Physics 1: Algebra-Based'
+  ! 'Physics 2: Algebra-Based': ! 'Physics 2: Algebra-Based'
   Physics B: Physics B
-  'Physics C: Electricity and Magnetism': 'Physics C: Electricity and Magnetism'
-  'Physics C: Mechanics': 'Physics C: Mechanics'
+  ! 'Physics C: Electricity and Magnetism': ! 'Physics C: Electricity and Magnetism'
+  ! 'Physics C: Mechanics': ! 'Physics C: Mechanics'
   Playground: Playground
   Poetry: Poetry
   Poetry / Creative writing teacher: Poetry / Creative writing teacher
@@ -339,25 +340,22 @@ en:
   Rugby: Rugby
   Russian: Russian
   SADD: SADD
-  SAT/ACT prep classes: SAT/ACT prep classes
-  STEM: STEM
-  STEM (Science, Technology, Engineering, and Mathematics): STEM (Science, Technology,
-    Engineering, and Mathematics)
   Sailing: Sailing
+  SAT/ACT prep classes: SAT/ACT prep classes
   School counselor: School counselor
   School psychologist: School psychologist
   School-based aid: School-based aid
   School-sponsored trips to college campuses: School-sponsored trips to college campuses
   Science: Science
-  Science Nature: Science Nature
   Science club: Science club
   Science lab: Science lab
+  Science Nature: Science Nature
   Science, Technology, Engineering & Mathematics: Science, Technology, Engineering
     & Mathematics
   Sculpture: Sculpture
   Security personnel: Security personnel
-  Self-contained ELL classrooms: Self-contained ELL classrooms
   Self-contained classroom: Self-contained classroom
+  Self-contained ELL classrooms: Self-contained ELL classrooms
   Seminar: Seminar
   Serve on school improvement team or governance council: Serve on school improvement
     team or governance council
@@ -371,10 +369,10 @@ en:
   Spanish Language and Culture: Spanish Language and Culture
   Spanish Literature and Culture: Spanish Literature and Culture
   Special Education: Special Education
-  Special Needs: Special Needs
-  Special Olympics: Special Olympics
   Special education coordinator: Special education coordinator
   Special education resource room: Special education resource room
+  Special Needs: Special Needs
+  Special Olympics: Special Olympics
   Specific learning disabilities: Specific learning disabilities
   Speech and language impairments: Speech and language impairments
   Speech therapist(s): Speech therapist(s)
@@ -382,6 +380,9 @@ en:
   Squash: Squash
   Standards-based: Standards-based
   Statistics: Statistics
+  STEM: STEM
+  STEM (Science, Technology, Engineering, and Mathematics): STEM (Science, Technology,
+    Engineering, and Mathematics)
   Step team: Step team
   Student council / government: Student council / government
   Student newspaper: Student newspaper
@@ -389,9 +390,9 @@ en:
     can apply for transfer
   Students living outside district can apply for transfer: Students living outside
     district can apply for transfer
-  'Studio Art: 2-D Design': 'Studio Art: 2-D Design'
-  'Studio Art: 3-D Design': 'Studio Art: 3-D Design'
-  'Studio Art: Drawing': 'Studio Art: Drawing'
+  ! 'Studio Art: 2-D Design': ! 'Studio Art: 2-D Design'
+  ! 'Studio Art: 3-D Design': ! 'Studio Art: 3-D Design'
+  ! 'Studio Art: Drawing': ! 'Studio Art: Drawing'
   Summer college prep programs: Summer college prep programs
   Surfing: Surfing
   Swimming: Swimming
@@ -448,4 +449,3 @@ en:
   Yes - for all students: Yes - for all students
   Yes - for students in adjacent districts: Yes - for students in adjacent districts
   Yoga club: Yoga club
-  label: label
