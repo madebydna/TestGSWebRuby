@@ -1,7 +1,9 @@
+# encoding: utf-8
+
 class SchoolDataService
   @@solr = Solr.new
 
-  DEFAULT_BROWSE_OPTIONS = {rows: 10, query: '*', fq: ['+document_type:school']}
+  DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*', fq: ['+document_type:school']}
 
 
   PARAMETER_TO_SOLR_MAPPING = {
@@ -14,54 +16,61 @@ class SchoolDataService
 
   SORT_VALUE_MAP= {} #TODO fill this in please, bug htouw
 
-  def self.school_data(options_param = {})
-    options = options_param.deep_dup
-    rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
-    remap_sort(options)
-    filters = extract_filters(options)
-    param_options = DEFAULT_BROWSE_OPTIONS.merge(options)
-    param_options[:fq] = DEFAULT_BROWSE_OPTIONS[:fq].clone
-    filters.each {|filter| param_options[:fq] << filter}
+  class << self
 
-    parse_school_results(get_results param_options)
+    def school_data(options_param = {})
+      options = options_param.deep_dup
+      rename_keys(options, PARAMETER_TO_SOLR_MAPPING)
+      remap_sort(options)
+      filters = extract_filters(options)
+      param_options = DEFAULT_SOLR_OPTIONS.merge(options)
+      param_options[:fq] = DEFAULT_SOLR_OPTIONS[:fq].clone
+      filters.each { |filter| param_options[:fq] << filter }
 
-  end
+      parse_school_results(get_results param_options)
 
-  def self.extract_filters(filters)
-    filter_arr = []
-    if filters[:collection].present?
-      filter_arr << "+collection_id:#{filters[:collection]}"
-    end
-    if filters[:grade].present?
-      filter_arr << "+grades:(#{filters[:grade]})"
-    end
-    filter_arr
-  end
-
-  def self.get_results(options)
-    @@solr.get_search_results options
-  end
-
-  def self.rename_keys(hash, key_map)
-    key_map.each do |k, v|
-      hash[v] = hash[k]
-      hash.delete k
-    end
-  end
-
-  def self.remap_value(hash, key, value_map)
-    hash[key] = value_map[hash[key]] if hash.include? key
-  end
-
-  def self.remap_sort(hash)
-    remap_value(hash, :sort, SORT_VALUE_MAP)
-  end
-
-  def self.parse_school_results(solr_results)
-    school_data_struct = Struct.new(:school_id, :state)
-    solr_results['response']['docs'].map do |school_search_result|
-      school_data_struct.new(school_search_result['school_id'], school_search_result['state'])
     end
 
+    def extract_filters(filters)
+      filter_arr = []
+      filter_hash = {
+          collection: "+collection_id:#{filters[:collection]}",
+          grade: "+grades:(#{filters[:grade]})"
+      }
+
+      filter_hash.each do |k, v|
+        if filters[k].present?
+          filter_arr << v
+        end
+      end
+      filter_arr
+    end
+
+    def get_results(options)
+      @@solr.get_search_results options
+    end
+
+    def rename_keys(hash, key_map)
+      key_map.each do |k, v|
+        hash[v] = hash[k]
+        hash.delete k
+      end
+    end
+
+    def remap_value(hash, key, value_map)
+      hash[key] = value_map[hash[key]] if hash.include? key
+    end
+
+    def remap_sort(hash)
+      remap_value(hash, :sort, SORT_VALUE_MAP)
+    end
+
+    def parse_school_results(solr_results)
+      school_data_struct = Struct.new(:school_id, :state)
+      solr_results['response']['docs'].map do |school_search_result|
+        school_data_struct.new(school_search_result['school_id'], school_search_result['state'])
+      end
+
+    end
   end
 end
