@@ -27,7 +27,7 @@
             <tr>
                 <% category_placement.table_config.columns_to_print(table_data).each do |column| %>
                     <% if column['display_type'] == :data_and_header %>
-                        <th><%= column['label'] %></th>
+                        <th><%= db_t(column['label']) %></th>
                     <% else %>
                         <th>&nbsp;</th>
                     <% end %>
