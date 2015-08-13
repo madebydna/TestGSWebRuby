@@ -4,5 +4,9 @@ class CommunityScorecardsController < ApplicationController
 
   def show
     @collection = Collection.find(15)
+    data_types = [:a_through_g, :graduation_rate]
+    @table_fields = [:name, :state, :gs_rating] + data_types
+    gon.scorecard_data_types = data_types
+    gon.pagename = 'GS:CommunityScorecard'
   end
 end

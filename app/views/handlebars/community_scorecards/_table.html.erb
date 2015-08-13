@@ -1,20 +1,15 @@
-<h1>Alpha peeps</h1>
-{{#list people}} {{first}} {{last}} {{/list}}
-
-<h2>The coolest alpha peeps</h2>
 <table id="da-table" class="table table-striped no-more-tables">
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
+      <% @table_fields.each do |n| %>
+        <th><%= n.to_s.humanize %></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
-    {{#each people}}
-      {{#if (isntKeith this)}}
-        {{> community_scorecards/table_row}}
-      {{/if}}
+    {{#each this}}
+      {{> community_scorecards/table_row}}
     {{/each}}
   </tbody>
 </table>

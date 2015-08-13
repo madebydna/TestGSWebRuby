@@ -25,9 +25,10 @@ class SchoolDataHash
   def add_basic_school_info
     data_hash.merge!({
       id: cachified_school.id,
+      name: cachified_school.name,
       state: cachified_school.state,
       level_code: cachified_school.level_code,
-      gs_rating: cachified_school.great_schools_rating,
+      gs_rating: cachified_school.overall_gs_rating,
       grade_level: cachified_school.process_level,
     })
   end

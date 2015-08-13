@@ -19,30 +19,33 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var init = function() {
     this.options = new GS.CommunityScorecards.Options(currentPageData());
+    redrawTable();
 
     // Sample click handler for sorting:
     //
-    // $(selector).on('click', sub-selector, function () {
-    //   var sortField = $(this).data('sortField');
-    //   this.options.sortField = sortField;
-    //   redrawTable();
-    // });
+    $('.drawTable').on('click', function (e) {
+      var sortField = $(e.target).data('sortField');
+      GS.CommunityScorecards.Page.options.set('sortField', sortField);
+      GS.CommunityScorecards.Page.options.set('data_sets', [$(e.target).data('dataSet')]);
+      redrawTable();
+    });
   };
 
   var redrawTable = function() {
-    var params = this.options.to_h();
+    var params = GS.CommunityScorecards.Page.options.to_h();
+    // $(tablePlacement).html('');
     GS.CommunityScorecards.Data.request(params).success(function (data) {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
     });
   };
 
   var appendToTable = function() {
-    var params = this.options.to_h();
+    var params = GS.CommunityScorecards.Page.options.options.to_h();
     params.offset += offsetInterval;
     GS.CommunityScorecards.Data.request(params).success(function (data) {
       $(tableSelector).append(GS.handlebars.partialContent(rowPartial, data));
-      this.options.set('offset', params.offset);
-    }.gs_bind(this));
+      GS.CommunityScorecards.Page.options.options.set('offset', params.offset);
+    });
   };
 
   var currentPageData = function() {
@@ -69,11 +72,13 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       collectionId: 15,
       dataType: 'a through g',
       grade: 6,
-      offset: 0
+      offset: 0,
+      data_sets: gon.scorecard_data_types
     };
   };
 
   return {
-    init: init
+    init: init,
+    pageName: 'GS:CommunityScorecard',
   }
 })();
