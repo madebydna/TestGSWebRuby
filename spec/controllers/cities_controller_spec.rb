@@ -8,30 +8,48 @@ describe CitiesController do
 
   shared_examples_for 'a default cities controller action' do |action|
     context 'without a hub city mapping' do
-      it 'renders an error page' do
-        get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
-        expect(response).to render_template('error/page_not_found')
+      if action == :show
+        it 'redirects to state home' do
+          get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
+          expect(response).to redirect_to(state_url('michigan'))
+        end
+      else # hub sub-pages
+        it 'renders an error page' do
+          get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
+          expect(response).to render_template('error/page_not_found')
+        end
       end
     end
 
-    it 'sets canonical tags' do
-      get action, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
-      expect(assigns[:canonical_url]).to_not be_nil
+    context 'with a hub city mapping' do
+      before do
+        get action, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
+      end
+
+      it 'sets canonical tags' do
+        expect(assigns[:canonical_url]).to_not be_nil
+      end
+
+      it 'sets city in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('City')
+      end
+
+      it 'sets state in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('State')
+      end
+
+      it 'sets collection id in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('Collection ID')
+      end
+
+      it 'sets page_name in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('page_name')
+      end
     end
   end
 
   describe 'GET show' do
-    context 'without a hub city mapping' do
-      it 'renders an error page' do
-        get :show, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
-        expect(response).to redirect_to(state_url('michigan'))
-      end
-    end
-
-    it 'sets canonical tags' do
-      get :show, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
-      expect(assigns[:canonical_url]).to_not be_nil
-    end
+    it_behaves_like 'a default cities controller action', :show
   end
 
   describe '#ad_setTargeting_through_gon' do

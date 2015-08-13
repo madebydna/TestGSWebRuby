@@ -92,6 +92,7 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
+      data_layer_through_gon
       gon.state_abbr = @state[:short]
 
       render 'shared/events'
@@ -117,6 +118,7 @@ class CitiesController < ApplicationController
         'Education Community' => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
+      data_layer_through_gon
       gon.state_abbr = @state[:short]
 
       render 'shared/community'
@@ -142,6 +144,7 @@ class CitiesController < ApplicationController
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
       set_omniture_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
+      data_layer_through_gon
       gon.state_abbr = @state[:short]
 
     end
@@ -166,6 +169,7 @@ class CitiesController < ApplicationController
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
       set_omniture_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
+      data_layer_through_gon
       gon.state_abbr = @state[:short]
 
       render 'shared/choosing_schools'
@@ -194,6 +198,7 @@ class CitiesController < ApplicationController
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
       set_enrollment_omniture_data
+      data_layer_through_gon
       gon.state_abbr = @state[:short]
 
       render 'shared/enrollment'
@@ -220,6 +225,7 @@ class CitiesController < ApplicationController
               'After school and summer programs' =>nil
             }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
+      data_layer_through_gon
       gon.state_abbr = @state[:short]
 
     end
@@ -282,7 +288,7 @@ class CitiesController < ApplicationController
   def page_view_metadata
     @page_view_metadata ||= (
     page_view_metadata = {}
-    page_view_metadata['page_name']   = 'GS:City:Home'
+    page_view_metadata['page_name']   = gon.pagename || 'GS:City:Home'
     page_view_metadata['template']    = 'ros' # use this for page name - configured_page_name
     page_view_metadata['City']        = @city.gs_capitalize_words
     page_view_metadata['State']       = @state[:short].upcase # abbreviation
