@@ -11,6 +11,9 @@
 GS = GS || {};
 GS.CommunityScorecards = GS.CommunityScorecards || {};
 GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
+  var dataUrl = '/gsr/ajax/community-scorecard/get-school-data';
+  var ajaxOptions = { preserveLangue: true };
+
   var tablePlacement = '#community-scorecard-table';
   var tableSelector  = tablePlacement + ' table';
   var tablePartial   = 'community_scorecards/table';
@@ -34,7 +37,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var redrawTable = function() {
     var params = GS.CommunityScorecards.Page.options.to_h();
     // $(tablePlacement).html('');
-    GS.CommunityScorecards.Data.request(params).success(function (data) {
+    GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
     });
   };
@@ -42,7 +45,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var appendToTable = function() {
     var params = GS.CommunityScorecards.Page.options.options.to_h();
     params.offset += offsetInterval;
-    GS.CommunityScorecards.Data.request(params).success(function (data) {
+    GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       $(tableSelector).append(GS.handlebars.partialContent(rowPartial, data));
       GS.CommunityScorecards.Page.options.options.set('offset', params.offset);
     });

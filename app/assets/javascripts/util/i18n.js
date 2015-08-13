@@ -31,9 +31,15 @@ GS.I18n = GS.I18n || (function() {
     setTranslationsHash(gon.translations);
   }
 
+  var preserveLanguageParam = function(url) {
+    var current_url = GS.uri.Uri.getHref();
+    return GS.uri.Uri.copyParam('lang', current_url, dataUrl);
+  };
+
   return {
     _setTranslationsHash: setTranslationsHash,
     getTranslationsHash: getTranslationsHash,
-    t: translate
+    t: translate,
+    preserveLanguageParam: preserveLanguageParam,
   }
 })();
