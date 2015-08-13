@@ -257,7 +257,8 @@ class CitiesController < ApplicationController
 
 
     def set_enrollment_omniture_data
-      if @tab == 'Preschools'
+      # preschool not tracked separately since it is the default state of the page
+      if @tab[:key] == 'preschool'
         page_name = "GS:City:Enrollment"
         page_hier = "Home,CityHome,Enrollment"
       else

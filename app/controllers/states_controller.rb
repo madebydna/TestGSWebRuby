@@ -83,6 +83,7 @@ class StatesController < ApplicationController
                     keywords:    "choose a #{@state[:long].titleize} school, choosing #{@state[:long].titleize} schools,
                                   school choice #{@state[:long].titleize}, #{@state[:long].titleize} school choice tips,
                                   #{@state[:long].titleize} school choice steps"
+      data_layer_through_gon
       render 'shared/choosing_schools'
     end
   end
@@ -110,6 +111,7 @@ class StatesController < ApplicationController
                                   public schools events, #{@state[:long].titleize} school system dates,
                                   #{@state[:long].titleize} public schools dates, #{@state[:long].titleize} school
                                   system calendar, #{@state[:long].titleize} public schools calendar"
+      data_layer_through_gon
       render 'shared/events'
 
     end
@@ -160,6 +162,7 @@ class StatesController < ApplicationController
                                   #{@state[:long].titleize} school enrollment process, #{@state[:long].titleize} school
                                    enrollment deadlines"
 
+      data_layer_through_gon
 
       render 'shared/enrollment'
     end
@@ -184,6 +187,7 @@ class StatesController < ApplicationController
       }
       @canonical_url = state_education_community_url(params[:state])
       gon.state_abbr = @state[:short]
+      data_layer_through_gon
 
       render 'shared/community'
     end
@@ -194,7 +198,7 @@ class StatesController < ApplicationController
     @page_view_metadata ||= (
     page_view_metadata = {}
 
-    page_view_metadata['page_name'] = "GS:State:EducationCommunity"
+    page_view_metadata['page_name'] = gon.pagename || "GS:State:Home"
     page_view_metadata['State']      = @state[:short].upcase # abbreviation
     page_view_metadata['editorial']  = 'FindaSchoo'
     page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
