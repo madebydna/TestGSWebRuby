@@ -1,0 +1,8 @@
+---
+es:
+  controllers:
+    favorite_schools_controller:
+      login_required: Por favor Inicie sesión o registro de su correo electrónico para comenzar el seguimiento de sus escuelas favoritas.
+      school_not_on_list_error: La escuela determinada no estaba en la lista de la escuela
+      school_not_removed_error: Se produjo un problema al retirar la escuela de su lista de la escuela. Por favor, inténtelo de nuevo más tarde.
+      school_removed: Escuela ha sido eliminado de su lista de la escuela
