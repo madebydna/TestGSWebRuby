@@ -3,6 +3,6 @@ en:
   school_profile:
     data_viz:
       bar_chart:
-       gender: 'Gender'
-       program: 'Program'
-       ethnicity: 'Ethnicity'
+        ethnicity: Ethnicity
+        gender: Gender
+        program: Program

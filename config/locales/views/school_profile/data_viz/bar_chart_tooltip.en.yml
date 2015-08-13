@@ -3,7 +3,7 @@ en:
   school_profile:
     data_viz:
       bar_chart_tooltip:
+        eligible_for_4yr: ! '%{percent}% Graduated eligible for 4yr college'
+        percent_graduated: ! '%{percent}% Graduated'
         state_average: State Average
         state_avg: State Avg.
-        percent_graduated: '%{percent}% Graduated'
-        eligible_for_4yr: '%{percent}% Graduated eligible for 4yr college'

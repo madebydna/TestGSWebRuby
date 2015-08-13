@@ -1,10 +1,11 @@
+---
 en:
   shared:
     partners:
       send_to_partner:
-        in_partnership_with: 'IN PARTNERSHIP WITH'
+        in_partnership_with: IN PARTNERSHIP WITH
         innovate_public_schools:
-          call_to_action: 'Want more great public schools in your community?'
-          logo_path: '/catalog/partner_logos/innovate_public_schools.png'
-          link_text: 'Learn more!'
-          link_url: 'http://www.innovateschools.org'
+          call_to_action: Want more great public schools in your community?
+          link_text: Learn more!
+          link_url: http://www.innovateschools.org
+          logo_path: /catalog/partner_logos/innovate_public_schools.png

@@ -2,15 +2,15 @@
 es:
   javascript:
     close: Cerrar
-    learn_more_html: 'Aprender Mas &raquo;'
+    learn_more_html: Aprender Mas &raquo;
     reviews:
-      found_this_helpful:  ' encontraron esta útil'
+      found_this_helpful: ! ' encontraron esta útil'
       people: personas
       person: persona
     search_form:
-      short_placeholder: Ciudad, código postal, la dirección o la escuela
       long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
+      short_placeholder: Ciudad, código postal, la dirección o la escuela
     test_scores:
-      advanced: 'Avanzado'
-      proficient: 'Competente'
-      proficient_or_better: 'Competente o mejor'
+      advanced: Avanzado
+      proficient: Competente
+      proficient_or_better: Competente o mejor
