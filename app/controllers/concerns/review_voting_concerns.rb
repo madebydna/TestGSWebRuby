@@ -12,7 +12,7 @@ module ReviewVotingConcerns
     if errors
       flash_error errors.first
     else
-      flash_notice 'Your review vote has been recorded. Thanks!'
+      flash_notice I18n.t('controllers.concerns.review_voting_concerns.vote_saved')
     end
     redirect_to reviews_page_for_last_school
   end

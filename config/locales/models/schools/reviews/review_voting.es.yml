@@ -1,0 +1,8 @@
+---
+es:
+  models:
+    schools:
+      reviews:
+        review_voting:
+          cannot_vote_on_own_review: Lo sentimos, no podrá votar en su propia opinión.
+          review_not_found: Especificado revisión no se pudo encontrar

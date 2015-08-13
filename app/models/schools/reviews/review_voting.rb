@@ -14,7 +14,7 @@ class ReviewVoting
 
   def validate_not_own_review
     if user.reviews.active.include?(review)
-      @errors << 'Sorry, you may not vote on your own review.'
+      @errors << I18n.t('models.schools.reviews.review_voting.cannot_vote_on_own_review')
       return false
     end
     return true
@@ -40,7 +40,7 @@ class ReviewVoting
       end
       return review_vote, nil
     else
-      return nil, ['Specified review could not be found']
+      return nil, [I18n.t('models.schools.reviews.review_voting.review_not_found')]
     end
   end
 
