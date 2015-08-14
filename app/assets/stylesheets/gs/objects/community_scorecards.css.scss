@@ -1,0 +1,21 @@
+.community-scorecard {
+  td {
+    max-width: 200px;
+  }
+  .school-info {
+    .name {
+      font-family: 'opensans-bold';
+      font-size: 15px; // This will be duplicative once <p> has font-size 15px
+      margin-bottom: 5px;
+    }
+    .grade-type {
+      margin: 0;
+    }
+  }
+  .percent-value {
+    sup {
+      font-size: 70%;
+      top: -0.35em;
+    }
+  }
+}

@@ -2,7 +2,7 @@ class CommunityScorecardData
 
   attr_accessor :school_data_params
 
-  SCHOOL_CACHE_KEYS = ['characteristics', 'ratings']
+  SCHOOL_CACHE_KEYS = 'characteristics'
 
   #Todo replace these with real ids
   DATA_SET_TO_ID_MAP = {
@@ -71,7 +71,8 @@ class CommunityScorecardData
     [
       school_data_struct.new(19, 'ca'),
       school_data_struct.new(1, 'ca'),
-      school_data_struct.new(6397, 'ca')
+      school_data_struct.new(6397, 'ca'),
+      school_data_struct.new(16894, 'ca')
     ]
   end
 

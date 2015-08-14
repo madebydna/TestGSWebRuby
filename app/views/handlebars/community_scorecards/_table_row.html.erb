@@ -1,9 +1,8 @@
+<% partial_dir = 'community_scorecards/' %>
 <tr>
   <% @table_fields.each do |n| %>
-    {{#if <%= n %>.value }}
-    <td>{{<%= n %>.value}}</td>
-    {{else}}
-    <td>{{<%= n %>}}</td>
-    {{/if}}
+    <td>
+      {{> <%= "#{partial_dir}#{n[:partial]} #{n[:data_type]}" %>}}
+    </td>
   <% end %>
 </tr>

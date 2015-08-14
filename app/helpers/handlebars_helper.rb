@@ -21,6 +21,10 @@ module HandlebarsHelper
   end
   alias :include_handlebars_templates :include_handlebars_template
 
+  def t_scope_for(file)
+    file.split("/").last(2).join('.').sub('._', '.').sub('.html.erb', '')
+  end
+
   protected
 
   def templates_for(template_path)

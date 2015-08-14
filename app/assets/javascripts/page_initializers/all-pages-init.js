@@ -126,4 +126,5 @@ $(function() {
   }, 'span');
 
   GS.handlebars.registerPartials();
+  GS.handlebars.registerHelpers();
 });

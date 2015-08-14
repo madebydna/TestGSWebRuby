@@ -37,6 +37,10 @@ p, a {
   font: $font-size-base 'opensans-regular',Arial,Helvetica,sans-serif;
 }
 
+p.small {
+  font-size: 12px;
+}
+
 .invert-colors{
   background-color: $gray-darkest;
   p, a{color:$gray; @extend .small;}

@@ -33,7 +33,7 @@ GS.I18n = GS.I18n || (function() {
 
   var preserveLanguageParam = function(url) {
     var current_url = GS.uri.Uri.getHref();
-    return GS.uri.Uri.copyParam('lang', current_url, dataUrl);
+    return GS.uri.Uri.copyParam('lang', current_url, url);
   };
 
   return {

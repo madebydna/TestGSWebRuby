@@ -1,8 +1,8 @@
 <table id="da-table" class="table table-striped no-more-tables">
   <thead>
     <tr>
-      <% @table_fields.each do |n| %>
-        <th><%= n.to_s.humanize %></th>
+      <% @table_fields.each do |f| %>
+        <th><%= t(".#{f[:data_type]}") %></th>
       <% end %>
     </tr>
   </thead>

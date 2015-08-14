@@ -4,9 +4,13 @@ class CommunityScorecardsController < ApplicationController
 
   def show
     @collection = Collection.find(15)
-    data_types = [:a_through_g, :graduation_rate]
-    @table_fields = [:name, :state, :gs_rating] + data_types
-    gon.scorecard_data_types = data_types
+    @table_fields = [
+      # These data_type keys match with I18n keys to get the labels
+      { data_type: :school_info, partial: :school_info },
+      { data_type: :a_through_g, partial: :percent_value },
+      { data_type: :graduation_rate, partial: :percent_value },
+    ]
+    gon.scorecard_data_types = @table_fields.map { |f| f[:data_type] }
     gon.pagename = 'GS:CommunityScorecard'
   end
 end

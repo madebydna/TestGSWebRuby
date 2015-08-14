@@ -1,0 +1,7 @@
+en:
+  handlebars:
+    community_scorecards:
+      table:
+        a_through_g: Graduates eligible for 4 yr college
+        graduation_rate: Graduation Rate
+        school_info: School

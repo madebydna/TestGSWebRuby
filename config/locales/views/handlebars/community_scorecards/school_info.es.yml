@@ -1,0 +1,8 @@
+es:
+  handlebars:
+    community_scorecards:
+      school_info:
+        grades: Grades
+        charter: Charter
+        private: Privada
+        public: Pública

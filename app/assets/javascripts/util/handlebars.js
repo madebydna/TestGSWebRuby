@@ -18,8 +18,16 @@ GS.handlebars = GS.handlebars || (function() {
     return Handlebars.compile('{{>' + partial + '}}')(context);
   };
 
+  var registerHelpers = function() {
+    Handlebars.registerHelper('t', function(key, options) {
+      return GS.I18n.t('handlebars.' + options.hash.scope + '.' + key);
+    });
+  };
+
   return {
     partialContent: partialContent,
     registerPartials: registerPartials,
+    registerHelpers: registerHelpers,
   };
 })();
+
