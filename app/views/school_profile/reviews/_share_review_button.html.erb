@@ -1,0 +1,9 @@
+<% review %>
+
+<% review_href = school_reviews_url(review.school) %>
+<% mailto_subject = 'Check out this review I found on GreatSchools' %>
+<% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it: #{review_href}" %>
+<% mailto_href = "mailto:?subject=#{mailto_subject}&body=#{mailto_body}" %>
+<div>
+  <a class="js-review-share-via-email" href="<%= mailto_href %>">Email</a>
+</div>
