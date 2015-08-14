@@ -14,9 +14,3 @@ en:
       advanced: Advanced
       proficient: Proficient
       proficient_or_better: Proficient or better
-    handlebars:
-      community_scorecards:
-        school_info:
-          charter: Charter
-          private: Private
-          public: Public

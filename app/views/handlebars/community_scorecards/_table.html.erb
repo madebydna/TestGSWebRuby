@@ -1,14 +1,21 @@
-<table id="da-table" class="table table-striped no-more-tables">
+<table class="table data-table table-striped ">
   <thead>
     <tr>
-      <% @table_fields.each do |f| %>
-        <th><%= t(".#{f[:data_type]}") %></th>
-      <% end %>
+      {{#each header_data}}
+        <th>
+          {{data_type}}
+          {{#if state_average}}
+            <div class="sub-text">
+              ({{state_average}})
+            </div>
+          {{/if}}
+        </th>
+      {{/each}}
     </tr>
   </thead>
 
   <tbody>
-    {{#each this}}
+    {{#each school_data}}
       {{> community_scorecards/table_row}}
     {{/each}}
   </tbody>

@@ -1,0 +1,8 @@
+en:
+  models:
+    schools:
+      community_scorecard_data:
+          a_through_g: Graduates eligible for 4 yr college
+          graduation_rate: Graduation Rate
+          school_info: School
+          state_average: 'state avg %{val}%'

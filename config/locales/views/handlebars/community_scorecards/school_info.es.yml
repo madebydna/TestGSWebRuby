@@ -2,7 +2,7 @@ es:
   handlebars:
     community_scorecards:
       school_info:
-        grades: Grades
+        grades: Grados
         charter: Charter
         private: Privada
         public: Pública

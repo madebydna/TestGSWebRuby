@@ -27,18 +27,27 @@ class SchoolDataHash
       school_info: {
         gradeLevel: cachified_school.process_level,
         name: cachified_school.name,
-        type: cachified_school.type,
+        type: I18n.db_t(cachified_school.type).titleize,
       }
     })
   end
 
-  #use breakdown or original_breakdown?
   def get_characteristics_data(data_set, sub_group = sub_group_to_return)
-    grad_data = characteristics[data_set]
+    data = characteristics[data_set]
     breakdown_to_use = sub_group_to_return || 'all students'
 
-    sub_group = [*grad_data].find { |gd| gd['breakdown'].try(:downcase) == breakdown_to_use }
-    sub_group.present? ? {value: sub_group['school_value'].to_i, performance_level: sub_group['performance_level']} : {}
+    school_value = [*data].find do |value|
+      value['original_breakdown'].try(:downcase) == breakdown_to_use
+    end
+    if school_value.present?
+      {
+        value: school_value['school_value'].to_f.round,
+        performance_level: school_value['performance_level'],
+        state_average: school_value['state_average'].to_f.round
+      }
+    else
+      {}
+    end
   end
 
   def add_graduation_rate

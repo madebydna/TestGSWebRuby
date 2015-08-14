@@ -15,11 +15,36 @@ class CommunityScorecardData
     @school_data_params = school_data_params
   end
 
-  def get_school_data
-    school_data = temp_school_data_service(school_data_service_params)
-    cachified_schools = get_cachified_schools(school_data)
+  def scorecard_data
+    {
+      school_data: school_data,
+      header_data: header_data,
+    }
+  end
 
-    cachified_schools.map { | cs | SchoolDataHash.new(cs, school_data_hash_options).data_hash }
+  def school_data
+    # TODO We need to sort through the school data to get the most recent year
+    # and reject all data that isn't that year.
+    @school_data ||= (
+      school_data = temp_school_data_service(school_data_service_params)
+      cachified_schools = get_cachified_schools(school_data)
+
+      cachified_schools.map { | cs | SchoolDataHash.new(cs, school_data_hash_options).data_hash }
+    )
+  end
+
+  def header_data
+    school_info_header = {data_type: I18n.t(:school_info, scope: t_scope)}
+    school_data.each_with_object([school_info_header]) do |sd, hd|
+      sd.each do |data_type, value_hash|
+        if (state_average = value_hash[:state_average]).present?
+          hd << {
+            data_type: I18n.t(data_type, scope: t_scope),
+            state_average: I18n.t(:state_average, val: state_average, scope: t_scope),
+          }
+        end
+      end
+    end.uniq
   end
 
   #Todo later when solr layer is built, add appropriate whitelisting for solr params here or in school_data_service where necessary
@@ -72,8 +97,12 @@ class CommunityScorecardData
       school_data_struct.new(19, 'ca'),
       school_data_struct.new(1, 'ca'),
       school_data_struct.new(6397, 'ca'),
-      school_data_struct.new(16894, 'ca')
     ]
   end
 
+  protected
+
+  def t_scope
+    'models.schools.community_scorecard_data'
+  end
 end

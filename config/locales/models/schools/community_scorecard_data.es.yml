@@ -1,0 +1,8 @@
+es:
+  models:
+    schools:
+      community_scorecard_data:
+          a_through_g: Graduados eligible para universidad
+          graduation_rate: Tasa de graduados
+          school_info: Escuela
+          state_average: 'Prom. %{val}%'
