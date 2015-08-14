@@ -1,0 +1,48 @@
+// Some changes were done in gs-variables in the Bootstrap directory.
+.table {
+  > thead > tr > th {
+    border-bottom: 1px solid $gray-darkest;
+    font-family: $font-family-sans-serif;
+    font-size: 12px;
+  }
+  // Bring back top border from thead by default
+  > caption + thead,
+  > colgroup + thead,
+  > thead:first-child {
+    > tr:first-child {
+      > th:first-child,
+      > td:first-child {
+        border-left: 1px solid $table-border-color;
+      }
+      > th,
+      > td {
+        border-top: 1px solid $table-border-color;
+        .sub-text {
+          color: $gray-darker;
+        }
+      }
+      > th:last-child,
+      > td:last-child {
+        border-right: 1px solid $table-border-color;
+      }
+    }
+  }
+  // Styles for tables that hold numeric data
+  &.data-table {
+    > thead,
+    > tbody,
+    > tfoot {
+      > tr {
+        > th,
+        > td {
+          text-align: center;
+          vertical-align: middle;
+        }
+        > th:first-child,
+        > td:first-child {
+          text-align: left;
+        }
+      }
+    }
+  }
+}

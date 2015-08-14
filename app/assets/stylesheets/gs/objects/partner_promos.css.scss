@@ -1,14 +1,11 @@
-$partner-promo-solid-color:  #f4f4f4;
-$partner-promo-stroke-color: #dedede;
-
 .send-to-partner-horizontal {
   @extend .col-xs-12;
-  border: 2px solid $partner-promo-stroke-color;
+  border: 2px solid $module-gray-stroke;
   text-align: center;
   .cta { //call to action
     @extend .col-xs-12;
     @extend .col-sm-9;
-    background-color: $partner-promo-solid-color;
+    background-color: $module-gray;
     padding: 10px 10px 15px;
     .cta-text {
       font-family: 'opensans-semibold';
@@ -29,11 +26,11 @@ $partner-promo-stroke-color: #dedede;
 
 .send-to-partner-vertical {
   @extend .col-md-4;
-  border: 2px solid $partner-promo-stroke-color;
+  border: 2px solid $module-gray-stroke;
   text-align: center;
   .cta { //call to action
     @extend .col-xs-12;
-    background-color: $partner-promo-solid-color;
+    background-color: $module-gray;
     padding: 20px;
     .cta-text {
       font-family: 'opensans-semibold';

@@ -1,4 +1,4 @@
-h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: #3d3d3d}
+h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: $gray-darkest}
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { @extend .open-sans_i; }
 
@@ -94,7 +94,7 @@ p.small {
 }
 
 .link-darkgray {
-  color: #3d3d3d;
+  color: $gray-darkest;
 }
 
 .brand-secondary {
@@ -142,7 +142,7 @@ p.small {
 }
 
 .dark-gray-bg {
-  background: #3d3d3d;
+  background: $gray-darkest;
 }
 
 .darker-gray-bg {
@@ -311,9 +311,9 @@ img {
 }
 
 .gk-link {
-  color: #3d3d3d;
+  color: $gray-darkest;
   &:hover {
-    color: #3d3d3d;
+    color: $gray-darkest;
   }
 }
 
