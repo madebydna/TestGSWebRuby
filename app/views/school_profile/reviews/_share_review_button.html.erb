@@ -1,9 +1,21 @@
 <% review %>
 
-<% review_href = school_reviews_url(review.school) %>
+<% review_url = school_reviews_url(review.school) %>
 <% mailto_subject = 'Check out this review I found on GreatSchools' %>
-<% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it: #{review_href}" %>
+<% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it: #{review_url}" %>
 <% mailto_href = "mailto:?subject=#{mailto_subject}&body=#{mailto_body}" %>
 <div>
   <a class="js-review-share-via-email" href="<%= mailto_href %>">Email</a>
 </div>
+
+
+<% twitter_href_params =
+     {
+       url: review_url,
+       via: 'GreatSchools',
+       text: "Check out this review about #{review.school.name}"
+     }
+%>
+<% twitter_href = "https://twitter.com/intent/tweet?#{twitter_href_params.to_param}" %>
+
+<a href="<%= twitter_href %>">Twitter</a>
