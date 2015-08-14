@@ -84,6 +84,27 @@ describe SchoolReviews do
       end
     end
 
+    describe '#promote_review!' do
+      let!(:school_reviews) do
+        school_reviews = SchoolReviews.new do
+          FactoryGirl.build_list(:five_star_review, 5).extend(ReviewScoping).extend(ReviewCalculations)
+        end
+      end
+
+      it 'should handle review id that is not in reviews list' do
+        expect { subject.promote_review!(999999) }.to_not change { subject.map(&:id).to_s }
+      end
+
+      it 'should promote review to top of array' do
+        expect { subject.promote_review!(subject[3].id) }.to change { subject.map(&:id).to_s }
+      end
+
+      it 'other reviews should be sorted the same way' do
+        fourth_item = subject[3]
+        expect { subject.promote_review!(fourth_item.id) }.to_not change { (subject - [fourth_item]).map(&:id).to_s }
+      end
+    end
+
   end
 
 end

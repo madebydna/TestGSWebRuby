@@ -1,6 +1,6 @@
 <% review %>
 
-<% review_url = school_reviews_url(review.school) %>
+<% review_url = school_reviews_url(review.school, review_id: review.id, anchor: "review#{review.id}") %>
 <% mailto_subject = 'Check out this review I found on GreatSchools' %>
 <% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it: #{review_url}" %>
 <% mailto_href = "mailto:?subject=#{mailto_subject}&body=#{mailto_body}" %>

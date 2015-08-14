@@ -34,6 +34,7 @@ class SchoolProfileController < SchoolController
     @school_user = school_user if logged_in?
     set_noindex_meta_tags if @school.demo_school?
     @school_reviews = SchoolProfileReviewsDecorator.decorate(@school.reviews_with_calculations, view_context)
+    @school_reviews.promote_review!(params[:review_id].to_i) if params[:review_id].present?
     create_sized_maps(gon)
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews.number_of_reviews_with_comments

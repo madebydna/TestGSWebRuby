@@ -11,7 +11,7 @@ class SchoolReviews
   include Enumerable
   # Extend Forwardable which defines the def_delagators method. Delegate enumerable methods to underlying reviews array
   extend Forwardable
-  def_delegators :reviews, :each, :each_with_object, :[], :blank?, :present?, :any?, :sum, :count, :select
+  def_delegators :reviews, :each, :each_with_object, :[], :blank?, :present?, :any?, :sum, :count, :select, :-
 
   attr_accessor :review_cache, :reviews_proc
 
@@ -56,6 +56,14 @@ class SchoolReviews
 
   def self.calc_review_data(reviews)
     ReviewCaching.new(reviews).calc_review_data
+  end
+
+  def promote_review!(review_id)
+    index = reviews.index { |review| review.id == review_id }
+    if index
+      reviews.insert(0,reviews.delete_at(index))
+    end
+    return self
   end
 
 end
