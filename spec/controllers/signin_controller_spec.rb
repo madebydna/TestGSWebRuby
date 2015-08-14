@@ -268,7 +268,7 @@ describe SigninController do
       expect(user).to receive(:provisional?).and_return(false)
       expect(user).to receive(:has_password?).and_return(false)
       expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
-      expect(controller).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password error message')
+      expect(I18n).to receive(:t).with('controllers.signin.create.email_without_password_error_html', anything).and_return('account without password error message')
       expect(controller.send :authenticate).to eq([ user, 'account without password error message' ])
     end
 
