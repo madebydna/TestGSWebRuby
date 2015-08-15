@@ -2,8 +2,15 @@
 
 <% review_url = school_reviews_url(review.school, review_id: review.id, anchor: "review#{review.id}") %>
 <% mailto_subject = 'Check out this review I found on GreatSchools' %>
-<% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it: #{review_url}" %>
-<% mailto_href = "mailto:?subject=#{mailto_subject}&body=#{mailto_body}" %>
+<% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it:%0A#{review_url}%0A%0A\"#{review.comment}\"" %>
+<% mailto_params =
+ {
+   subject: mailto_subject,
+   body: mailto_body
+ }
+%>
+<% mailto_query_string = mailto_params.each_with_object([]){ |(k,v), array| array << "#{k}=#{v}" }.join('&') %>
+<% mailto_href = "mailto:?#{mailto_query_string}" %>
 
 <% twitter_href_params =
      {
