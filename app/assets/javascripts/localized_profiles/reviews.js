@@ -125,11 +125,14 @@ GS.reviews = GS.reviews || function($) {
           var reviewSchoolName= $(this).data('review-school-name');
           var reviewComment = $(this).data('review-comment');
           var description = 'Review for ' + reviewSchoolName ;
-          var href = window.location.href + '?review_id=' + reviewId + '#review' + reviewId;
+          var href = GS.uri.Uri.getHref();
+          href = GS.uri.Uri.addQueryParamToUrl('review_id', reviewId, href);
+          href = href + '#review' + reviewId; // TODO: Need method in uri.js to correctly add anchor
+
           FB.ui( {
               method: 'feed',
               name: 'GreatSchools Review',
-              href: href,
+              link: href,
               picture: 'http://www.gscdn.org/assets/nav/GS_logo_2x-new-73cb6f8038067c7c0a138828bfb2e706.png',
               caption: description,
               description: reviewComment

@@ -4,10 +4,6 @@
 <% mailto_subject = 'Check out this review I found on GreatSchools' %>
 <% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it: #{review_url}" %>
 <% mailto_href = "mailto:?subject=#{mailto_subject}&body=#{mailto_body}" %>
-<div>
-  <a class="js-review-share-via-email" href="<%= mailto_href %>">Email</a>
-</div>
-
 
 <% twitter_href_params =
      {
@@ -18,13 +14,25 @@
 %>
 <% twitter_href = "https://twitter.com/intent/tweet?#{twitter_href_params.to_param}" %>
 
-<a href="<%= twitter_href %>">Twitter</a>
-<div>
-  <a class="js_shareFacebook pointer" 
-    data-review-id="<%= review.id %>" 
-    data-review-school-name="<%= review.school.name %>"
-    data-review-comment="<%= review.comment %>"
-    >
-    Facebook
-  </a>
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle mrm phm pvs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="iconx16 i-16-fax mt3"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <p class="tac">Share</p>
+    <li>
+      <a class="js_shareFacebook pointer"
+         data-review-id="<%= review.id %>"
+         data-review-school-name="<%= review.school.name %>"
+         data-review-comment="<%= review.comment %>">
+        On Facebook
+      </a>
+    </li>
+    <li>
+      <a href="<%= twitter_href %>">On Twitter</a>
+    </li>
+    <li>
+      <a href="<%= mailto_href %>">Via Email</a>
+    </li>
+  </ul>
 </div>
