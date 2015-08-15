@@ -19,3 +19,12 @@
 <% twitter_href = "https://twitter.com/intent/tweet?#{twitter_href_params.to_param}" %>
 
 <a href="<%= twitter_href %>">Twitter</a>
+<div>
+  <a class="js_shareFacebook pointer" 
+    data-review-id="<%= review.id %>" 
+    data-review-school-name="<%= review.school.name %>"
+    data-review-comment="<%= review.comment %>"
+    >
+    Facebook
+  </a>
+</div>

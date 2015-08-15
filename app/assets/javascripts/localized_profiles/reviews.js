@@ -12,6 +12,8 @@ GS.reviews = GS.reviews || function($) {
 
         var filterByTopicLink= $(".js_reviewTopicFilterLink");
 
+        var shareReviewFacebookLink = $(".js_shareFacebook");
+
         var getFieldValues = function(){
             var result = {};
             result['offset'] = nextTenButton.data( "offset" );
@@ -117,6 +119,23 @@ GS.reviews = GS.reviews || function($) {
             }
             return retInt;
         };
+
+        shareReviewFacebookLink.on('click', function () {
+          var reviewId = $(this).data('review-id');
+          var reviewSchoolName= $(this).data('review-school-name');
+          var reviewComment = $(this).data('review-comment');
+          var description = 'Review for ' + reviewSchoolName ;
+          var href = window.location.href + '?review_id=' + reviewId + '#review' + reviewId;
+          FB.ui( {
+              method: 'feed',
+              name: 'GreatSchools Review',
+              href: href,
+              picture: 'http://www.gscdn.org/assets/nav/GS_logo_2x-new-73cb6f8038067c7c0a138828bfb2e706.png',
+              caption: description,
+              description: reviewComment
+          }, function(response){});
+        })
+
     };
 
 
