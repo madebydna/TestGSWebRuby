@@ -291,4 +291,31 @@ describe CensusDataReader do
     end
   end
 
+  describe '#data_type_matches_category_data?' do
+    context 'data type contains parenthesis' do
+      let(:category_data) { category_data = FactoryGirl.build(:category_data, response_key: 'foo (bar)') }
+
+      it 'should return true when types match' do
+        expect(subject.data_type_matches_category_data?(category_data, 'foo (bar)')).to be_truthy
+      end
+
+      it 'should return false when types don\'t match' do
+        expect(subject.data_type_matches_category_data?(category_data, 'foo bar')).to be_falsey
+      end
+    end
+
+    context 'when response key is numeric' do
+      let(:category_data) { category_data = FactoryGirl.build(:category_data, response_key: '5') }
+      before do
+        allow(CensusDataType).to receive(:data_type_id_for_data_type_label)
+        allow(CensusDataType).to receive(:data_type_id_for_data_type_label).with('foo').and_return('5')
+      end
+      it 'should return true when types match' do
+        expect(subject.data_type_matches_category_data?(category_data, 'foo')).to be_truthy
+      end
+      it 'should return false when types don\'t match' do
+        expect(subject.data_type_matches_category_data?(category_data, 'bar')).to be_falsey
+      end
+    end
+  end
 end
