@@ -24,9 +24,6 @@ $(function() {
   // ones. https://silviomoreto.github.io/bootstrap-select/
   $('.selectpicker').selectpicker();
 
-  // PT-1535 Cleanslating our GA install for now.
-  // GS.googleAnalytics.tracking.init(gon.pagename);
-
   $.ajaxSetup({ cache: true });
 
   var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
@@ -127,4 +124,7 @@ $(function() {
 
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
+
+  GS.googleAnalytics.tracking.init();
+
 });

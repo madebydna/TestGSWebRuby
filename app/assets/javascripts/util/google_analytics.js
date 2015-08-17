@@ -7,6 +7,9 @@ GS.googleAnalytics.tracking = (function() {
   var gaClickLabel = "gaClickLabel";
   var gaLoadValue = 'gaLoadValue';
   var gaClickValue = 'gaClickValue';
+  var gaClickAction = 'gaClickAction';
+  var gaClickCategory = 'gaClickCategory';
+
   var clickEventType = "click";
   var pageName = '';
 
@@ -15,16 +18,15 @@ GS.googleAnalytics.tracking = (function() {
     //  clickEventType = "touchend";
     //}
     pageName = page;
-    onLoad();
     onClick();
   };
 
-  // category = pagename
-  // action = click, load, video play, etc
-  // label = unique description of action - video name, click identifier, name of button
+  // category = gtm event category
+  // action = gtm event action
+  // label = gtm event label
   // value = this is always a number
   var send = function(category, action, label, value){
-    ga('send', 'event', category, action, label, value);
+    analyticsEvent(category, action, label, value);
   };
 
   /*
@@ -48,7 +50,10 @@ GS.googleAnalytics.tracking = (function() {
   var sendClickEvent = function($obj){
     var label = getLabel($obj, gaClickLabel);
     var value = getValue($obj, gaClickValue);
-    send( getPageName(), clickEventType, label, value);
+    var action = getAction($obj, gaClickAction);
+    var category = getCategory($obj, gaClickCategory);
+    send( category, action, label, value);
+
   };
 
   var sendLoadEvent = function($obj){
@@ -92,6 +97,22 @@ GS.googleAnalytics.tracking = (function() {
     }
     return value;
   };
+
+  var getAction = function ($obj, actionName) {
+      var action = $obj.data(actionName);
+      if (typeof action === 'undefined') {
+          return 'action not defined';  // default
+      }
+      return action;
+  };
+
+  var getCategory = function($obj, categoryName){
+      var category = $obj.data(categoryName);
+      if(typeof category === 'undefined'){
+          return 'category not defined';  // default
+      }
+      return category;
+  }
 
   return {
     init:init,
