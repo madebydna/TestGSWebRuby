@@ -30,6 +30,9 @@ GS.uri.Uri.copyParam = function(param, sourceUrl, targetUrl) {
   var queryString = GS.uri.Uri.getQueryStringFromGivenUrl(sourceUrl);
   var queryData = GS.uri.Uri.getQueryData('?' + queryString);
   var value = queryData[param];
+  if(value === undefined) {
+    return targetUrl;
+  }
   return GS.uri.Uri.addQueryParamToUrl(param, value, targetUrl);
 };
 

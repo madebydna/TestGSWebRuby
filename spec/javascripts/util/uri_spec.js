@@ -171,6 +171,13 @@ describe('GS.uri.Uri', function() {
       var targetUrl = 'www.greatschools.org#anchor';
       expect(GS.uri.Uri.copyParam(param, sourceUrl, targetUrl)).to.eq('www.greatschools.org?foo=bar#anchor');
     });
+
+    it('doesn\'t add a blank param if source url doesn\'t have the param', function() {
+      var param = 'foo';
+      var sourceUrl = 'www.greatschools.org';
+      var targetUrl = 'www.greatschools.org#anchor';
+      expect(GS.uri.Uri.copyParam(param, sourceUrl, targetUrl)).to.eq('www.greatschools.org#anchor');
+    });
   });
 
   describe('.getAnchorFromUrl', function() {
