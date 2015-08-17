@@ -13,9 +13,12 @@ class CommunityScorecardsAjaxController < ApplicationController
 
   def valid_school_data_params
     params.permit(
-      :collection_id,
-      :grade_level_filter,
-      :sub_group_filter,
+      :collectionId,
+      :offset,
+      :gradeLevel,
+      :sortBy,
+      :sortBreakdown,
+      :sortAscOrDesc,
       :lang,
       data_sets: []
     )

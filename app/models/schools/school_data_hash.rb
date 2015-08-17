@@ -5,8 +5,28 @@ class SchoolDataHash
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
   VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
 
+  SUBGROUP_MAP = Hash.new('All students').merge!({
+    white:                             'White',
+    asian:                             'Asian',
+    native_american_or_native_alaskan: 'Native American or Native Alaskan',
+    pacific_islander:                  'Pacific Islander',
+    all_students:                      'All students',
+    multiracial:                       'Multiracial',
+    filipino:                          'Filipino',
+    hispanic:                          'Hispanic',
+    african_american:                  'African American',
+    male:                              'Male',
+    female:                            'Female',
+    not_economically_disadvantaged:    'Not economically disadvantaged',
+    students_with_disabilities:        'Students with disabilities',
+    general_education_students:        'General-Education students',
+    economically_disadvantaged:        'Economically disadvantaged',
+    limited_english_proficient:        'Limited English proficient',
+    not_limited_english_proficient:    'Not limited English proficient'
+  }).with_indifferent_access
+
   def initialize(cachified_school, options)
-    @options, @sub_group_to_return = options, options[:sub_group_to_return]
+    @options, @sub_group_to_return = options, SUBGROUP_MAP[options[:sub_group_to_return]]
     @cachified_school = cachified_school
     @cache = cachified_school.cache_data || {}
     @characteristics = @cache['characteristics'] || {}
@@ -32,12 +52,11 @@ class SchoolDataHash
     })
   end
 
-  def get_characteristics_data(data_set, sub_group = sub_group_to_return)
+  def get_characteristics_data(data_set, breakdown_to_use = sub_group_to_return)
     data = characteristics[data_set]
-    breakdown_to_use = sub_group_to_return || 'all students'
 
     school_value = [*data].find do |value|
-      value['original_breakdown'].try(:downcase) == breakdown_to_use
+      value['original_breakdown'] == breakdown_to_use
     end
     if school_value.present?
       {

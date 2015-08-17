@@ -68,10 +68,11 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     // - lang
     // -- Handled automatically, but is from the URL
     return {
-      breakdown: 'blue',
       collectionId: 15,
-      dataType: 'a through g',
-      grade: 6,
+      gradeLevel: 'h',
+      sortBy: 'graduation_rate',
+      sortBreakdown: 'african_american',
+      sortAscOrDesc: 'desc',
       offset: 0,
       data_sets: gon.scorecard_data_types
     };

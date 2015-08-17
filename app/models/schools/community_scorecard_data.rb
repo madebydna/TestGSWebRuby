@@ -26,7 +26,7 @@ class CommunityScorecardData
     # TODO We need to sort through the school data to get the most recent year
     # and reject all data that isn't that year.
     @school_data ||= (
-      school_data = temp_school_data_service(school_data_service_params)
+      school_data = SchoolDataService.school_data(school_data_service_params)
       cachified_schools = get_cachified_schools(school_data)
 
       cachified_schools.map { | cs | SchoolDataHash.new(cs, school_data_hash_options).data_hash }
@@ -55,7 +55,7 @@ class CommunityScorecardData
   def school_data_hash_options
     @options ||= {
       data_sets:  school_data_params[:data_sets], #['graduation_rate', 'a_through_g'],
-      sub_group_to_return: school_data_params[:sub_group_filter], #asian
+      sub_group_to_return: school_data_params[:sortBreakdown], #asian
     }
   end
 
@@ -88,16 +88,6 @@ class CommunityScorecardData
       ids = sd_array.map(&:school_id)
       h[state] = School.on_db(state).where(id: ids).to_a
     end
-  end
-
-  #fake layer to be replaced by the school data service
-  def temp_school_data_service(fake_params)
-    school_data_struct = Struct.new(:school_id, :state)
-    [
-      school_data_struct.new(19, 'ca'),
-      school_data_struct.new(1, 'ca'),
-      school_data_struct.new(6397, 'ca'),
-    ]
   end
 
   protected
