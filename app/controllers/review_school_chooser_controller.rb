@@ -25,10 +25,10 @@ class ReviewSchoolChooserController < ApplicationController
   end
 
   def review_topic
-    topic_id = params[:topic] ||= '1'
-    ReviewTopic.find(topic_id)
-    rescue ActiveRecord::RecordNotFound
-      return ReviewTopic.find('1')
+    @review_topic ||= (
+      topic_id = params[:topic] ||= 1
+      ReviewTopic.find_by(id: topic_id) || ReviewTopic.find_by(id: 1)
+    )
   end
 
 end

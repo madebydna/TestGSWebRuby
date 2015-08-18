@@ -19,11 +19,11 @@ describe ReviewSchoolChooserController do
       end
       before { allow(controller).to receive(:params).and_return(params) }
       it 'should return a ReviewTopic' do
-        allow(ReviewTopic).to receive(:find).with(2).and_return(teachers_topic)
+        allow(ReviewTopic).to receive(:find_by).with(id: 2).and_return(teachers_topic)
         expect(controller.send(:review_topic)).to be_an_instance_of(ReviewTopic)
       end
       it 'should return the correct parameter' do
-        allow(ReviewTopic).to receive(:find).with(2).and_return(teachers_topic)
+        allow(ReviewTopic).to receive(:find_by).with(id: 2).and_return(teachers_topic)
         expect(controller.send(:review_topic)).to eq(teachers_topic)
       end
     end
@@ -33,7 +33,7 @@ describe ReviewSchoolChooserController do
       end
       before do
         allow(controller).to receive(:params).and_return(params)
-        allow(ReviewTopic).to receive(:find).with('1').and_return(overall_topic)
+        allow(ReviewTopic).to receive(:find_by).with(id: 1).and_return(overall_topic)
       end
       after do
         clean_dbs(:gs_schooldb)
@@ -48,7 +48,7 @@ describe ReviewSchoolChooserController do
     context 'with no topic parameter not matching a topic' do
       let(:params) do
         {
-        topic: "2"
+          topic: 2
         }
       end
       before do
