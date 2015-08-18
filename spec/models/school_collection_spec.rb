@@ -20,6 +20,7 @@ describe SchoolCollection do
 
     it 'should return a hash of the correct structure' do
       allow(SchoolCollection).to receive(:all).and_return(school_collections)
+      SchoolCollection.instance_variable_set(:@school_collection_mapping, nil)
       expect(SchoolCollection.school_collection_mapping).to eq(
         {
           ['ca', 1] => [3, 5],
