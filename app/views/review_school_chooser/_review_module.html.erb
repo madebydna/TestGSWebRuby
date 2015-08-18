@@ -1,0 +1,29 @@
+<% review = SchoolProfileReviewDecorator.decorate(review) %>
+
+<hr />
+
+<div class="row mam cuc_review">
+  <%= div_tag sizes: {xs: 12, sm: 4, md: 3, lg: 3}, class: 'pbm' do %>
+      <div class="open-sans_i rs-review-value">
+        <%= review.topic_markup %>
+        <span class="open-sans_cb">
+            <%= review.answer_markup %>
+        </span>
+      </div>
+      <br/><span class="rs-review-posted"><%= t('.posted') %> <%= review.posted %></span><br/>
+      <%= t('.user_type_html', user_type: review.user_type)  %>
+  <% end %>
+
+  <%= div_tag sizes: {xs: 12, sm: 8, md: 9, lg: 9} do %>
+    <%= review.comment %>
+    <div class="ptm">
+        <%= t('.school_name_html',
+              school_name: link_to(school_reviews_path(review.school),
+              class: 'link-darkgray open-sans_sb') { review.school.name },
+              city: review.school.city,
+              state: review.school.state)
+        %>
+    </div>
+  <% end %>
+</div>
+

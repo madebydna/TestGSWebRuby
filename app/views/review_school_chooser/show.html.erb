@@ -10,4 +10,20 @@
 
 <%= render 'shared/review_school_chooser/hero_image_select' %>
 
+<% if @reviews.present? %>
+  <div class="row limit-width-1200 pbl">
+    <div class="col-xs-12">
+      <div id="js_reviewsListHeader" class="link-down-compensate rs-review-list-header">
+        <hr/>
+        <div class="plm mbl tac">
+          <h2><%= t('.header') %></h2>
+        </div>
+      </div>
+      <div class="js_reviewsList">
+        <%= render partial: 'review_module', collection: @reviews, as: :review %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <%= render partial: 'shared/home_footer' %>

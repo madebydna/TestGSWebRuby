@@ -6,6 +6,7 @@ class ReviewQuestion < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   belongs_to :review_topic, foreign_key: 'review_topic_id', inverse_of: :review_questions
+  has_many :reviews, foreign_key: 'review_question_id', inverse_of: :question
 
   alias_attribute :school_level_code, :school_level
 
