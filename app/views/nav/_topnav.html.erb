@@ -113,15 +113,21 @@
                 </li>
                 <li>
                 <%=
-                    target_lang, link_text = * case I18n.locale
+                    target_lang, link_text, label_text = * case I18n.locale
                                                when :en
-                                                 ['es', 'En Español']
+                                                 ['es', 'En Español', 'spanish']
                                                when :es
-                                                 [nil, 'In English']
+                                                 [nil, 'In English', 'english']
                                                else
-                                                 ['es', 'En Español']
+                                                 ['es', 'En Español', 'spanish']
                                                end
-                    link_to(link_text, params.merge(lang: target_lang).merge(state_params(state_param_safe)), class: 'open-sans_i')
+                    link_to(link_text, 
+                            params.merge(lang: target_lang).merge(state_params(state_param_safe)), 
+                            class: "js-gaClick open-sans-i",
+                            data:{ 'ga-click-category' => 'language selection',
+                                   'ga-click-action' => 'global nav bar',
+                                   'ga-click-label' => label_text }
+                           )
                 %>
                 </li>
 
