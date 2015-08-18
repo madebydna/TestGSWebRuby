@@ -50,7 +50,7 @@ class School < ActiveRecord::Base
 
   def collections
     @collections ||= (
-      Collection.for_school(state, id).to_a
+      Collection.for_school(state, id)
     )
   end
 

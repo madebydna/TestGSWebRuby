@@ -6,11 +6,6 @@ class Collection < ActiveRecord::Base
   has_one :hub_city_mapping
   has_many :school_collections
 
-  scope :for_school, ->(state, school_id) do
-    joins(:school_collections)
-      .where('state = ? and school_id = ?', state, school_id)
-  end
-
   def schools
     @schools ||= (
       definition.keys.map do |state|
@@ -25,6 +20,11 @@ class Collection < ActiveRecord::Base
 
   def definition
     @config ||= read_json_attribute(:definition)
+  end
+
+  def self.for_school(state, school_id)
+    ids = SchoolCollection.school_collection_mapping[[state, school_id]]
+    where(id: ids).to_a
   end
 
   # These methods are deprecated, but still work.
