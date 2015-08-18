@@ -3,8 +3,7 @@
 <% gs_rating = @school.gs_rating || 'nr' %>
 <div class="row pr" style="height: 300px;">
   <div class="col-xs-12 tac">
-    <a href="<%= school_quality_url(@school)  %>#Ratings"
-      class="js-gaLoad js-gaClick" data-ga-load-label="ratingsSnapshot greatSchoolsRating link" data-ga-click-label="ratingsSnapshot greatSchoolsRating link">
+    <a href="<%= school_quality_url(@school) %>#Ratings">
       <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
       <% icon_class = 'iconx72-ratings' %>
       <% ratings_class = 'i-72-ratings-'  %>
@@ -49,12 +48,8 @@
 
 
 <div class="tac pa full-width"  style="bottom: 20px;" >
-    <%= link_to t('.test_scores'), school_quality_url(@school, anchor:"Test_scores"), class:"js-gaLoad js-gaClick",
-                  data:{'ga-load-label'=>'ratingsSnapshot testScores link',
-                        'ga-click-label'=>'ratingsSnapshot testScores link' } %>&nbsp;|&nbsp;
-    <%= link_to t('.ratings'), school_quality_url(@school, anchor:"Ratings"), class:"js-gaLoad js-gaClick",
-                  data:{'ga-load-label'=>'ratingsSnapshot ratings link',
-                        'ga-click-label'=>'ratingsSnapshot ratings link' } %>
+    <%= link_to t('.test_scores'), school_quality_url(@school, anchor:"Test_scores") %>&nbsp;|&nbsp;
+    <%= link_to t('.ratings'), school_quality_url(@school, anchor:"Ratings") %>
 </div>
 
 </div>
