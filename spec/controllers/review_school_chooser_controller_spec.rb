@@ -9,6 +9,9 @@ describe ReviewSchoolChooserController do
   let(:current_user) { FactoryGirl.build(:user) }
   let(:overall_topic) { FactoryGirl.build(:overall_topic, id: 1) }
   let(:teachers_topic) { FactoryGirl.build(:teachers_topic) }
+  after do
+    clean_dbs :gs_schooldb
+  end
 
   describe '#review_topic' do
     context 'with a topic parameter' do
@@ -67,6 +70,22 @@ describe ReviewSchoolChooserController do
     end
 
 
+  end
+
+  describe '#reviews' do
+    after do
+      clean_dbs :gs_schooldb
+    end
+    subject { controller }
+
+    it 'should not return inactive reviews' do
+      overall_topic = FactoryGirl.create(:overall_topic, id: 1)
+      overall_rating_question = FactoryGirl.create(:overall_rating_question, review_topic: overall_topic)
+      reviews = FactoryGirl.create_list(:five_star_review, 3, question: overall_rating_question)
+      reviews[1].deactivate
+      reviews[1].save
+      expect(subject.reviews.map(&:active)).to_not include(false)
+    end
   end
 
 end

@@ -4,7 +4,7 @@ class ReviewSchoolChooserController < ApplicationController
   def show
     write_tags_and_gon
     @topic = review_topic
-@reviews = @topic.first_question.reviews.has_comment.order(created: :desc).limit(20) if params[:show_reviews]
+    @reviews = reviews if params[:show_reviews]
   end
 
   def morgan_stanley
@@ -31,6 +31,10 @@ class ReviewSchoolChooserController < ApplicationController
       topic_id = params[:topic] ||= 1
       ReviewTopic.find_by(id: topic_id) || ReviewTopic.find_by(id: 1)
     )
+  end
+
+  def reviews
+    review_topic.first_question.reviews.active.has_comment.order(created: :desc).limit(20)
   end
 
 end
