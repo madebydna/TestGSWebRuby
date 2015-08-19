@@ -17,6 +17,13 @@ en:
       login_tab: Login
       no_account_label: Don't have an account?
       password_label: Password
+      promos:
+      - header: Weekly newsletter
+        paragraph: Get our best articles, worksheets and more delivered weekly.
+      - header: Follow schools
+        paragraph: Save schools to lists, then get notified when new test scores or reviews are posted.
+      - header: Write reviews
+        paragraph: Help other parents find a great school by sharing your experiences.
       school_profiles_count: school profiles
       signup_button: Sign Up
       signup_tab: Sign Up

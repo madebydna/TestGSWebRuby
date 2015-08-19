@@ -17,6 +17,14 @@ es:
       login_tab: Iniciar sesión
       no_account_label: ¿No tienes una cuenta?
       password_label: Contraseña
+      promos:
+      - header: Boletín semanal
+        paragraph: Recibe nuestras mejores artículos, hojas de trabajo y mucho más entregado semanalmente.
+      - header: Siga las escuelas
+        paragraph: Ahorra escuelas a las listas, a continuación, ser notificado cuando se publiquen nuevos resultados
+                   de las pruebas o exámenes.
+      - header: Escribir comentario
+        paragraph: Ayude a otros padres a encontrar una gran escuela, compartiendo sus experiencias.
       school_profiles_count: perfiles de las escuelas
       signup_button: Contratar
       signup_tab: Contratar
