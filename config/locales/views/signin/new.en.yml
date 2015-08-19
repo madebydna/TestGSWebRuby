@@ -16,6 +16,7 @@ en:
       login_button: Login
       login_tab: Login
       no_account_label: Don't have an account?
+      or: or
       password_label: Password
       promos:
       - header: Weekly newsletter

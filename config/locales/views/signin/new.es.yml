@@ -16,6 +16,7 @@ es:
       login_button: Iniciar sesión
       login_tab: Iniciar sesión
       no_account_label: ¿No tienes una cuenta?
+      or: o
       password_label: Contraseña
       promos:
       - header: Boletín semanal
