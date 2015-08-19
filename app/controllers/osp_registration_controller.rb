@@ -1,10 +1,12 @@
 class OspRegistrationController < ApplicationController
 
+  BLACKLISTED_TOP_LEVEL_DOMAINS = ['pl', 'ru']
+
   before_action :set_city_state
   before_action :set_school
   before_action :set_login_redirect
   before_action :use_gs_bootstrap
-  before_action :validate_esp_membership_params, only: [:submit]
+  before_action :validate_params, only: [:submit]
 
   def new
 
@@ -101,15 +103,26 @@ class OspRegistrationController < ApplicationController
     false
   end
 
-  def validate_esp_membership_params
-    unless valid_esp_membership_params?
+  def validate_params
+    unless valid_params?
       flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
       return render 'osp/registration/new'
     end
   end
 
-  def valid_esp_membership_params?
-    esp_membership_attrs[:web_url].length <= 100
+  def valid_params?
+    valid_school_website? && not_blacklisted_top_level_domain?(params[:email])
+  end
+
+  def valid_school_website?
+    website = params[:school_website]
+    website.length <= 100 && not_blacklisted_top_level_domain?(website)
+  end
+
+  def not_blacklisted_top_level_domain?(url)
+    schemeless_url = url.sub('http://', '').sub('https://', '')
+    top_level_domain = URI.parse("http://#{schemeless_url}").host.rpartition('.').last
+    !BLACKLISTED_TOP_LEVEL_DOMAINS.include?(top_level_domain)
   end
 
   def user_attrs
@@ -122,16 +135,18 @@ class OspRegistrationController < ApplicationController
   end
 
   def esp_membership_attrs
-    {
-      state: @state[:short].upcase,
-      school_id: @school.id,
-      status: 'provisional',
-      active: false,
-      web_url: params[:school_website],
-      job_title: params[:job_title],
-      created: Time.now,
-      updated: Time.now
-    }
+    @esp_membership_attrs ||= (
+      {
+        state: @state[:short].upcase,
+        school_id: @school.id,
+        status: 'provisional',
+        active: false,
+        web_url: params[:school_website],
+        job_title: params[:job_title],
+        created: Time.now,
+        updated: Time.now
+      }
+    )
   end
 
   def osp_email_verification_url(user)

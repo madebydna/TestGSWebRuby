@@ -214,17 +214,23 @@ describe OspRegistrationController do
       end
     end
 
-    context 'with a super long school website' do
-      let(:super_long_school_website_params) do
-        save_new_osp_user_hash.merge(
-          school_website: 'www.hogwarhogwarhogwarhogwarhogwarttttthogwarthogwarthogwarthogwarthogwarthogwarthogwarthogwarthogwartssssssssshogwarts.uk'
-        )
-      end
+    [
+      {school_website: 'www.hogwarhogwarhogwarhogwarhogwarttttthogwarthogwarthogwarthogwarthogwarthogwarthogwarthogwarthogwartssssssssshogwarts.uk'},
+      {school_website: 'www.badguys.ru'},
+      {school_website: 'www.badguys.pl'},
+      {email: 'keith@badguys.ru'},
+      {email: 'keith@badguys.pl'},
+    ].each do |bad_params|
+      context "with bad params: #{bad_params}" do
+        let(:super_long_school_website_params) do
+          save_new_osp_user_hash.merge(bad_params)
+        end
 
-      it 'should redirect back to NEW with a flash' do
-        expect(controller).to receive(:flash_notice)
-        get :submit, super_long_school_website_params
-        expect(response).to render_template('osp/registration/new')
+        it 'should redirect back to NEW with a flash' do
+          expect(controller).to receive(:flash_notice)
+          get :submit, super_long_school_website_params
+          expect(response).to render_template('osp/registration/new')
+        end
       end
     end
   end
