@@ -47,7 +47,7 @@ class SchoolDataHash
       school_info: {
         gradeLevel: cachified_school.process_level,
         name: cachified_school.name,
-        type: I18n.db_t(cachified_school.type).titleize,
+        type: I18n.db_t(cachified_school.type).to_s.titleize,
       }
     })
   end
