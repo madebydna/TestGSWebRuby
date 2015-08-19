@@ -14,23 +14,28 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var dataUrl = '/gsr/ajax/community-scorecard/get-school-data';
   var ajaxOptions = { preserveLanguage: true };
 
-  var tablePlacement = '#community-scorecard-table';
-  var tableSelector  = tablePlacement + ' table';
-  var tablePartial   = 'community_scorecards/table';
-  var rowPartial     = 'community_scorecards/table_row';
-  var offsetInterval = 10;
+  var tablePlacement     = '#community-scorecard-table';
+  var tableSelector      = tablePlacement + ' table';
+  var tableHeaderPartial = 'community_scorecards/table_header';
+  var tablePartial       = 'community_scorecards/table';
+  var rowPartial         = 'community_scorecards/table_row';
+  var offsetInterval     = 10;
 
   var init = function() {
     this.options = new GS.CommunityScorecards.Options(currentPageData());
+    drawTableHeader();
     redrawTable();
 
-    $('.drawTable').on('click', function (e) {
-      var sortField = $(e.target).data('sortField');
-      GS.CommunityScorecards.Page.options.set('sortField', sortField);
-      GS.CommunityScorecards.Page.options.set('data_sets', [$(e.target).data('dataSet')]);
+    $('.js-communityScorecard').on('click', '.selectpicker > li > a > span', function (e) {
+      var sortField = $(e.target).text();
+      GS.CommunityScorecards.Page.options.set('sortBreakdown', sortField);
       redrawTable();
     });
   };
+
+  var drawTableHeader = function() {
+    $(tablePlacement).before(GS.handlebars.partialContent(tableHeaderPartial));
+  }
 
   var redrawTable = function() {
     var params = GS.CommunityScorecards.Page.options.to_h();

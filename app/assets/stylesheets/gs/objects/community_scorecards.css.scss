@@ -18,4 +18,10 @@
       top: -0.35em;
     }
   }
+
+  .table-header {
+    @extend .pam;
+    @extend .bg-medium-gray;
+    @extend .full-width;
+  }
 }

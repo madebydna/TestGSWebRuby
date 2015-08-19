@@ -1,6 +1,6 @@
 <%= include_handlebars_templates('community_scorecards/') %>
 
-<div class="<%= @gs_bootstrap %> community-scorecard">
+<div class="<%= @gs_bootstrap %> community-scorecard js-communityScorecard">
   <div class="container-fluid">
     <h1><%= @collection.name %> Community Scorecard</h1>
     <div class="clearfix">
@@ -16,8 +16,6 @@
     %>
     </div>
     <h2>Community Scorecard</h2>
-    <a  class="drawTable" data-data-set="a_through_g" href="#">Click me to draw ag</a>
-    <a  class="drawTable" data-data-set="graduation_rate" href="#">Click me to draw grad</a>
     <div id="community-scorecard-table"></div>
   </div>
 </div>
