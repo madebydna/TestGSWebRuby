@@ -135,6 +135,13 @@ describe('GS.uri.Uri', function() {
       expect(GS.uri.Uri.addQueryParamToUrl(param, value, url)).to.eq('www.greatschools.org?bar=baz&foo=bar');
     });
 
+    it('correctly adds the first param to a url with no params', function() {
+      var param = 'foo';
+      var value = 'bar';
+      var url = 'www.greatschools.org';
+      expect(GS.uri.Uri.addQueryParamToUrl(param, value, url)).to.eq('www.greatschools.org?foo=bar');
+    });
+
     it('handles URLs with anchors', function() {
       var param = 'foo';
       var value = 'bar';
