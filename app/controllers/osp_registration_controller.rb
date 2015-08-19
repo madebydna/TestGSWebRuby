@@ -127,17 +127,17 @@ class OspRegistrationController < ApplicationController
         redirect: '/official-school-profile/dashboard/',
         s_cid: tracking_code
     )
-    path = verify_email_url(verification_link_params)
+    verify_email_url(verification_link_params)
   end
 
   def sign_up_user_for_subscriptions!(user, school, subscriptions)
     subscriptions ||= []
     if subscriptions.include?('mystat_osp')
-      user.add_subscription!('mystat', school)
-      user.add_subscription!('osp', school)
+      user.safely_add_subscription!('mystat', school)
+      user.safely_add_subscription!('osp', school)
     end
     if subscriptions.include?('osp_partner_promos')
-      user.add_subscription!('osp_partner_promos', school)
+      user.safely_add_subscription!('osp_partner_promos', school)
     end
   end
 end
