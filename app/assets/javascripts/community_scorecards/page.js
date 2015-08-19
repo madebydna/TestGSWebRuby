@@ -31,6 +31,15 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       GS.CommunityScorecards.Page.options.set('sortBreakdown', sortField);
       redrawTable();
     });
+
+    $('.js-communityScorecard').on('click', '.js-drawTable', function (e) {
+      _({ 'sort-asc-or-desc': 'sortAscOrDesc' }).forEach(function(optionsKey, dataKey) {
+        var dataVal = $(e.target).data(dataKey);
+        if(dataVal !== undefined) { GS.CommunityScorecards.Page.options.set(optionsKey, dataVal) };
+      });
+
+      redrawTable();
+    });
   };
 
   var drawTableHeader = function() {
@@ -76,7 +85,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       collectionId: 15,
       gradeLevel: 'h',
       sortBy: 'graduation_rate',
-      sortBreakdown: 'african_american',
+      sortBreakdown: 'white',
       sortAscOrDesc: 'desc',
       offset: 0,
       data_sets: gon.scorecard_data_types

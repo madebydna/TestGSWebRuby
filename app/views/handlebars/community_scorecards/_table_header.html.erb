@@ -1,4 +1,11 @@
 <% #move into css classes %>
 <div class='table-header'>
   <%= select_tag 'All Grade levels', options_for_select(@subgroups_for_header), class: 'selectpicker' %>
+  <div class='pull-right clearfix'>
+    <div class='ptm'>
+    Sort:
+    <a class='js-drawTable pointer prs' data-sort-asc-or-desc='desc'>Highest to Lowest</a>|
+    <a class='js-drawTable pointer pls' data-sort-asc-or-desc='asc'>Lowest to Highest</a>
+    </div>
+  <div>
 </div>

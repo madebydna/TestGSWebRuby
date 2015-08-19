@@ -21,7 +21,7 @@
 
   .table-header {
     @extend .pam;
-    @extend .bg-medium-gray;
     @extend .full-width;
+    background-color: #dedede;
   }
 }
