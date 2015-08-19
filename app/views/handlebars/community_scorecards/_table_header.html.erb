@@ -3,10 +3,10 @@
   <%= select_tag 'All Grade levels', options_for_select(@subgroups_for_header), class: 'selectpicker' %>
   <div class='pull-right'>
     <div class='ptm'>
-    Sort:
-    <span class='js-drawTable js-tableSort prs' data-sort-asc-or-desc='desc'>Highest to Lowest</span>
+    <%= t('.sort') %>:
+    <span class='js-drawTable js-tableSort prs' data-sort-asc-or-desc='desc'><%= t('.highest_to_lowest') %></span>
     |
-    <span class='js-drawTable js-tableSort sort-link pls' data-sort-asc-or-desc='asc'>Lowest to Highest</span>
+    <span class='js-drawTable js-tableSort sort-link pls' data-sort-asc-or-desc='asc'><%= t('.lowest_to_highest') %></span>
     </div>
   <div>
 </div>
