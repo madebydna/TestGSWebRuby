@@ -16,19 +16,32 @@ GS.googleAnalytics.tracking = (function() {
     onClick();
   };
 
-  // category = gtm event category
-  // action = gtm event action
-  // label = gtm event label
-  // value = this is always a number
+///  Usage
+//
+//<a class='js-gaClick'
+//data-ga-click-category='language selection'
+//data-ga-click-action='global nav bar'
+//data-ga-click-label='spanish'
+//data-ga-click-value=''</a>
+
+// any element
+// <div class='pbl js-gaClick'
+//data-ga-click-category='language selection'
+//data-ga-click-label='spanish'
+//data-ga-click-action='global nav bar'>
+//</div>
+
+// using link_to
+//<%= link_to school_url(@school), class: "js-gaClick", data:
+//{ ga-click-category => 'school link',
+//'ga-click-action'=> 'search result',
+//'ga-click-label'=> 'school',
+// 'ga-click-value'=>'90', } do %>/
+//
+
   var send = function(category, action, label, value){
     analyticsEvent(category, action, label, value);
   };
-
-  /*
-  *  need to set up values for category, action and label -- value is a number
-  *  ga('send', 'event', category, action, label, value);
-  *
-  * */
 
   var onClick = function() {
     $(gaClickSelector).on(clickEventType, function(){
@@ -84,24 +97,3 @@ GS.googleAnalytics.tracking = (function() {
 
 })();
 
-///  Usage
-//
-//<a class='js-gaClick'
-//data-ga-click-category='language selection'
-//data-ga-click-action='global nav bar'
-//data-ga-click-label='spanish'
-//data-ga-click-value=''</a>
-
-// any element
-// <div class='pbl js-gaClick'
-//data-ga-click-category='language selection'
-//data-ga-click-label='spanish'
-//data-ga-click-action='global nav bar'>
-//</div>
-
-// using link_to
-//<%= link_to school_url(@school), class: "js-gaClick", data:
-//{ ga-click-category => 'school link',
-//'ga-click-action'=> 'search result',
-//'ga-click-label'=> 'school',
-// 'ga-click-value'=>'90', } do %>/
