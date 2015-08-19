@@ -7,7 +7,8 @@ class GSLogger
     osp: 'OSP',
     reviews: 'REVIEWS',
     i18n: 'I18N',
-    school_profiles: 'SCHOOL_PROFILES'
+    school_profiles: 'SCHOOL_PROFILES',
+    community_scorecard: 'COMMUNITY_SCORECARD',
   })
 
   class << self
