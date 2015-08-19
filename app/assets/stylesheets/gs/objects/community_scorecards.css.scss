@@ -27,6 +27,17 @@
     @extend .full-width;
     background-color: #dedede;
   }
+
+  .sort-link {
+    color: $link-color;
+    @extend .pointer;
+  }
+
+  .sort-link:hover {
+    color: $link-hover-color;
+  }
+
+
   .show-more {
     background-color: #e6ebf5;
     cursor: pointer;
