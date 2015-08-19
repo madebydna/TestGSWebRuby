@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   before_action :set_signed_in_gon_value
   before_action :set_locale
   before_action :add_configured_translations_to_js
+  before_action :add_language_to_gtm_data_layer
 
   after_filter :disconnect_connection_pools
 

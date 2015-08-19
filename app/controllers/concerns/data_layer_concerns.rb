@@ -32,6 +32,10 @@ module DataLayerConcerns
     end
   end
 
+  def add_language_to_gtm_data_layer
+     data_layer_gon_hash['language'] = I18n.locale
+  end
+
   def insert_into_ga_event_cookie(category, action, label=nil, value=nil, non_interactive=false)
     events = read_cookie_value(DATALAYER_COOKIE_NAME,'events') || []
     events += [{category: category, action: action, label: label, value: value, non_interactive: non_interactive}]
