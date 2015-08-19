@@ -60,6 +60,8 @@ class SchoolDataService
       { school_data: [] }
     end
 
+    private
+
     def extract_filters(filters)
       filter_arr = []
       filter_hash = {
@@ -98,6 +100,7 @@ class SchoolDataService
     end
 
     def parse_solr_results(solr_results)
+      # for now we only need 2 fields from solr, will make into a class when appropriate
       school_data_struct = Struct.new(:school_id, :state)
       solr_response = solr_results['response']
       school_data = solr_response['docs'].map do |school_search_result|
