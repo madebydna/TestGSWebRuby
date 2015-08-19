@@ -22,7 +22,11 @@ module HandlebarsHelper
   alias :include_handlebars_templates :include_handlebars_template
 
   def t_scope_for(file)
-    file.split("/").last(2).join('.').sub('._', '.').sub('.html.erb', '')
+    file
+      .partition(TEMPLATES_DIR).last # Path after TEMPLATE_DIR
+      .gsub('/','.')                  # Directories are hierarchies of scope
+      .gsub('._','.')                 # Partials aren't prefixed with underscores
+      .sub('.html.erb','')           # Remove file extension
   end
 
   protected
