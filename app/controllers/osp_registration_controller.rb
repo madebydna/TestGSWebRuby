@@ -1,14 +1,14 @@
 class OspRegistrationController < ApplicationController
 
   before_action :set_city_state
+  before_action :set_school
   before_action :set_login_redirect
   before_action :use_gs_bootstrap
+  before_action :validate_esp_membership_params, only: [:submit]
 
   def new
 
     set_gon_and_metadata!
-
-    @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
 
     if @school.blank?
       render 'osp/registration/no_school_selected'
@@ -35,6 +35,12 @@ class OspRegistrationController < ApplicationController
   end
 
   private
+
+  def set_school
+    if @state.present? && params[:schoolId].present?
+      @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
+    end
+  end
 
   def set_gon_and_metadata!
     page_title = 'School Account - Register | GreatSchools'
@@ -93,6 +99,17 @@ class OspRegistrationController < ApplicationController
   rescue => error
     GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save esp membership in esp registration controller')
     false
+  end
+
+  def validate_esp_membership_params
+    unless valid_esp_membership_params?
+      flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
+      return render 'osp/registration/new'
+    end
+  end
+
+  def valid_esp_membership_params?
+    esp_membership_attrs[:web_url].length <= 100
   end
 
   def user_attrs

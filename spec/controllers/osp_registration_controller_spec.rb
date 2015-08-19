@@ -214,6 +214,19 @@ describe OspRegistrationController do
       end
     end
 
+    context 'with a super long school website' do
+      let(:super_long_school_website_params) do
+        save_new_osp_user_hash.merge(
+          school_website: 'www.hogwarhogwarhogwarhogwarhogwarttttthogwarthogwarthogwarthogwarthogwarthogwarthogwarthogwarthogwartssssssssshogwarts.uk'
+        )
+      end
+
+      it 'should redirect back to NEW with a flash' do
+        expect(controller).to receive(:flash_notice)
+        get :submit, super_long_school_website_params
+        expect(response).to render_template('osp/registration/new')
+      end
+    end
   end
 
   describe '#sign_up_user_for_subscriptions!' do

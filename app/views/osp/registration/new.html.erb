@@ -75,8 +75,13 @@
           </div>
 
           <%= label_tag(:school_website, "Official school website (URL)") %>
-          <input class="form-control" type="text" name="school_website" id="school_website" data-parsley-blockhtmltags
-                 data-parsley-trigger="change" data-parsley-type="url"  data-parsley-type-message="Please enter a valid school website">
+          <input class="form-control" type="text" name="school_website" id="school_website"
+                 data-parsley-blockhtmltags
+                 data-parsley-trigger="change"
+                 data-parsley-type="url"
+                 data-parsley-maxlength="100"
+                 data-parsley-type-message="Please enter a valid school website"
+                 >
 
           <div class="pvl">
             <div class="clearfix">
