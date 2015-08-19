@@ -125,6 +125,4 @@ $(function() {
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
 
-  GS.googleAnalytics.tracking.init();
-
 });
