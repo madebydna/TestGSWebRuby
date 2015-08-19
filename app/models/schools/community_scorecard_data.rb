@@ -19,6 +19,7 @@ class CommunityScorecardData
     {
       school_data: school_data,
       header_data: header_data,
+      more_results: solr_response[:more_results]
     }
   end
 
@@ -26,11 +27,15 @@ class CommunityScorecardData
     # TODO We need to sort through the school data to get the most recent year
     # and reject all data that isn't that year.
     @school_data ||= (
-      school_data = SchoolDataService.school_data(school_data_service_params)
+      school_data = solr_response[:school_data]
       cachified_schools = get_cachified_schools(school_data)
 
       cachified_schools.map { | cs | SchoolDataHash.new(cs, school_data_hash_options).data_hash }
     )
+  end
+
+  def solr_response
+    @solr_response ||= SchoolDataService.school_data(school_data_service_params)
   end
 
   def header_data

@@ -1,6 +1,9 @@
 .community-scorecard {
-  td {
-    max-width: 200px;
+  .table {
+    margin-bottom: 0;
+    td {
+      max-width: 200px;
+    }
   }
   .school-info {
     .name {
@@ -23,5 +26,21 @@
     @extend .pam;
     @extend .full-width;
     background-color: #dedede;
+  }
+  .show-more {
+    background-color: #e6ebf5;
+    cursor: pointer;
+    padding: 10px 0;
+    text-align: center;
+    h4 {
+      color: #4788be;
+    }
+    .caret {
+      border-top:   ($caret-width-base + 2) solid #4788be;
+      border-right: ($caret-width-base + 2) solid transparent;
+      border-left:  ($caret-width-base + 2) solid transparent;
+      margin: 0 15px;
+      padding-bottom: 5px;
+    }
   }
 }

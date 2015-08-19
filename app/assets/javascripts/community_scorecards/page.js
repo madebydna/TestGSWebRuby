@@ -14,12 +14,13 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var dataUrl = '/gsr/ajax/community-scorecard/get-school-data';
   var ajaxOptions = { preserveLanguage: true };
 
-  var tablePlacement     = '#community-scorecard-table';
-  var tableSelector      = tablePlacement + ' table';
+  var tablePlacement = '#community-scorecard-table';
+  var tableBody      = tablePlacement + ' table tbody';
   var tableHeaderPartial = 'community_scorecards/table_header';
-  var tablePartial       = 'community_scorecards/table';
-  var rowPartial         = 'community_scorecards/table_row';
-  var offsetInterval     = 10;
+  var tablePartial   = 'community_scorecards/table';
+  var rowPartial     = 'community_scorecards/table_row';
+  var showMore       = '.js-showMore';
+  var offsetInterval = 10;
 
   var init = function() {
     this.options = new GS.CommunityScorecards.Options(currentPageData());
@@ -35,11 +36,15 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     $('.js-communityScorecard').on('click', '.js-drawTable', function (e) {
       _({ 'sort-asc-or-desc': 'sortAscOrDesc' }).forEach(function(optionsKey, dataKey) {
         var dataVal = $(e.target).data(dataKey);
-        if(dataVal !== undefined) { GS.CommunityScorecards.Page.options.set(optionsKey, dataVal) };
+        if(dataVal !== undefined) {
+          GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
+        };
       });
 
       redrawTable();
     });
+
+    $('.js-communityScorecard').on('click', showMore, appendToTable);
   };
 
   var drawTableHeader = function() {
@@ -54,11 +59,18 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var appendToTable = function() {
-    var params = GS.CommunityScorecards.Page.options.options.to_h();
+    var params = GS.CommunityScorecards.Page.options.to_h();
     params.offset += offsetInterval;
     GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
-      $(tableSelector).append(GS.handlebars.partialContent(rowPartial, data));
-      GS.CommunityScorecards.Page.options.options.set('offset', params.offset);
+      if (data.school_data) {
+        _.each(data.school_data, function(school) {
+          $(tableBody).append(GS.handlebars.partialContent(rowPartial, school));
+        });
+        GS.CommunityScorecards.Page.options.set('offset', params.offset);
+        if (!data.more_results) {
+          $(showMore).addClass('dn');
+        }
+      }
     });
   };
 

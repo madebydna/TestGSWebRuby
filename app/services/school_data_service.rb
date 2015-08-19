@@ -54,8 +54,10 @@ class SchoolDataService
       param_options[:fq] = DEFAULT_SOLR_OPTIONS[:fq].clone
       filters.each { |filter| param_options[:fq] << filter }
 
-      parse_school_results(get_results param_options)
-
+      parse_solr_results(get_results param_options)
+    rescue => error
+      GSLogger.error(:community_scorecard, error, vars: param_options)
+      { school_data: [] }
     end
 
     def extract_filters(filters)
@@ -95,11 +97,22 @@ class SchoolDataService
       SORT_VALUE_MAP[options[:sortBy]] + SORT_BREAKDOWN_MAP[options[:sortBreakdown]]
     end
 
-    def parse_school_results(solr_results)
+    def parse_solr_results(solr_results)
       school_data_struct = Struct.new(:school_id, :state)
-      solr_results['response']['docs'].map do |school_search_result|
-        school_data_struct.new(school_search_result['sd_school_id'], school_search_result['sd_school_database_state'].first)
+      solr_response = solr_results['response']
+      school_data = solr_response['docs'].map do |school_search_result|
+        school_id = school_search_result['sd_school_id']
+        state = school_search_result['sd_school_database_state'].first
+        school_data_struct.new(school_id, state)
       end
+      {
+        school_data: school_data,
+        more_results: more_results?(solr_response)
+      }
+    end
+
+    def more_results?(solr_response)
+      (solr_response['numFound'] - solr_response['start']) > DEFAULT_SOLR_OPTIONS[:rows]
     end
   end
 end
