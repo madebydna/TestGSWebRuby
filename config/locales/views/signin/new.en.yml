@@ -1,0 +1,23 @@
+---
+en:
+  signin:
+    new:
+      articles_count: articles, worksheets, and videos
+      community_reviews_count: community reviews of schools
+      create_account_using_your_email: Create account using your email
+      email_label: Email address
+      facebook_signin_button: Sign in with Facebook
+      facebook_signup_button: Sign Up with Facebook
+      facebook_signup_label: Create an account using Facebook
+      forgot_password_link: Forgot your password?
+      greatschools_terms_of_use: GreatSchools Terms of Use.
+      have_an_account_label: Have an account?
+      header: Find great schools, share your stories and get parenting advice
+      login_button: Login
+      login_tab: Login
+      no_account_label: Don't have an account?
+      password_label: Password
+      school_profiles_count: school profiles
+      signup_button: Sign Up
+      signup_tab: Sign Up
+      terms_of_use_html: I agree to the %{terms_of_use_link}

@@ -1,0 +1,23 @@
+---
+es:
+  signin:
+    new:
+      articles_count: artículos, hojas de trabajo y vídeos
+      community_reviews_count: Críticas de la comunidad de las escuelas
+      create_account_using_your_email: Crear cuenta utilizando su correo electrónico
+      email_label: Dirección de correo electrónico
+      facebook_signin_button: Iniciar sesión usando Facebook
+      facebook_signup_button: Inscríbase en Facebook
+      facebook_signup_label: Crear una cuenta usando Facebook
+      forgot_password_link: ¿Olvidaste tu contraseña?
+      greatschools_terms_of_use: GreatSchools Términos de Uso.
+      have_an_account_label: ¿Tener una cuenta?
+      header: Encuentra grandes escuelas, compartir sus historias y obtener consejos para padres
+      login_button: Iniciar sesión
+      login_tab: Iniciar sesión
+      no_account_label: ¿No tienes una cuenta?
+      password_label: Contraseña
+      school_profiles_count: perfiles de las escuelas
+      signup_button: Contratar
+      signup_tab: Contratar
+      terms_of_use_html: Estoy de acuerdo con la %{terms_of_use_link}
