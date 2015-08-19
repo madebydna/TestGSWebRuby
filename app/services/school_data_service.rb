@@ -3,6 +3,8 @@
 class SchoolDataService
   @@solr = Solr.new
 
+  extend SchoolDataValidator
+
   DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*:*', fq: ['+document_type:school_data']}
 
   PARAMETER_TO_SOLR_MAPPING = {
@@ -42,6 +44,8 @@ class SchoolDataService
     asc: '_sortable_asc asc',
     desc: ' desc',
   }).with_indifferent_access
+
+  DEFAULT_SORT = 'sd_school_id asc'
 
   class << self
 
@@ -92,7 +96,13 @@ class SchoolDataService
     end
 
     def get_sort(hash)
-      hash.include?(:sortBy) ? {sort: extract_sort_type(hash) + SORT_ASC_OR_DESC[hash[:sortAscOrDesc]]} : {}
+      if hash.include?(:sortBy)
+        sort = extract_sort_type(hash)
+        processed_sort = is_valid_school_data_field?(sort) ? (sort + SORT_ASC_OR_DESC[hash[:sortAscOrDesc]]) : DEFAULT_SORT
+        {sort: processed_sort}
+      else
+        {}
+      end
     end
 
     def extract_sort_type(options)

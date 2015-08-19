@@ -4,13 +4,6 @@ class CommunityScorecardData
 
   SCHOOL_CACHE_KEYS = 'characteristics'
 
-  #Todo replace these with real ids
-  DATA_SET_TO_ID_MAP = {
-    graduation_rate: 1,
-    a_through_g: 2
-  }.stringify_keys!
-
-
   def initialize(school_data_params={})
     @school_data_params = school_data_params
   end
