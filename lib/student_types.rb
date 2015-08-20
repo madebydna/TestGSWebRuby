@@ -16,7 +16,9 @@ module StudentTypes
       'Students who are not economically disadvantaged'=> 'Not economically disadvantaged',
       'Students with disabilities' => 'Students with disabilities',
       'Not special education' => 'General-Education students',
-      'Students participating in free or reduced-price lunch program'=> 'Economically disadvantaged',
+      # AT-925, we're not sure what to map to Economically disadvantaged yet.
+      'some datatype' => 'Economically disadvantaged',
+      # 'Students participating in free or reduced-price lunch program'=> 'Economically disadvantaged',
       'English learners' => 'Limited English proficient',
       'Not English learners' => 'Not limited English proficient'
     }
