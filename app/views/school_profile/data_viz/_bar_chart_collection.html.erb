@@ -8,7 +8,11 @@
 <div class=" data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(bar_chart_collection.title).gsub(/\s/,'-') %>">
   <% if show_breakdown_dropdown %>
     <%= render partial: 'school_profile/data_viz/bar_chart_breakdowns_dropdown',
-               locals: { bar_chart_collection: bar_chart_collection } %>
+                locals: {
+                  bar_chart_collection: bar_chart_collection,
+                  bar_chart_collection_index: bar_chart_collection_index,
+                }
+    %>
   <% end %>
 
 

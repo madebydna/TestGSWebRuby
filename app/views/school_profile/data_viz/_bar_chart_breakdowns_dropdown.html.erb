@@ -5,8 +5,12 @@
   <div class='row'>
     <div class='ptm clearfix col-xs-12 col-md-4'>
       <%=
-          select_tag 'breakdown',
-                     options_for_select(breakdowns.map {| title | t(".#{title}")}),
+          select_tag "breakdown#{bar_chart_collection_index}",
+            options_for_select(
+              breakdowns.map do | title |
+                [t(".#{title}"), {data: {title: title }}]
+              end
+            ),
                      class: 'selectpicker',
                      data: { width: '100%' }
       %>

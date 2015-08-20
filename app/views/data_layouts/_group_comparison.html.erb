@@ -28,6 +28,7 @@
         <% show_hide_collection = i == 0 ? '' : 'dn' %>
         <%= render partial: 'school_profile/data_viz/bar_chart_collection',
                    locals: {bar_chart_collection: bar_chart_collection,
+                            bar_chart_collection_index: i,
                             show_hide_collection: show_hide_collection} %>
     <% end %>
 
