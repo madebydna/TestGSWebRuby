@@ -2,9 +2,14 @@
 es:
   ! '"Arts (visual, literary, dance, theater, and/or music)"': ! '"Artes (visuales,
     literarias, de danza, teatro, y / o la música)"'
+  0%-25%: 0%-25%
   2 years old: 2 años de edad
+  26%-50%: 26%-50%
   3 years old: 3 años
   4 years old: 4 años de edad
+  51%-75%: 51%-75%
+  76%-100%: 76%-100%
+  AM and PM kindergarten: AM y PM jardín de infantes
   Academic (homework help and/or standards-based programs): Académico (ayuda y / o
     tareas programas basados ​​en estándares)
   Accelerated credit learning: Aprendizaje acelerado de crédito
@@ -18,7 +23,6 @@ es:
   Agriculture, Food & Natural Resources: Agricultura, Alimentos y Recursos Naturales
   All boys: Todos los niños
   All girls: Todas las niñas
-  AM and PM kindergarten: AM y PM jardín de infantes
   American Sign Language (ASL): Lenguaje de señas americano (ASL)
   Amharic: Amárico
   Amnesty International: Amnistía Internacional
@@ -28,8 +32,8 @@ es:
   Arabic: Árabe
   Architecture: Arquitectura
   Architecture & Construction: Arquitectura y Construcción
-  Art club: Club de Arte
   Art History: Historia del Arte
+  Art club: Club de Arte
   Art room: Salon de arte
   Art teacher: Profesor de arte
   Arts (all): Artes (todo)
@@ -42,6 +46,7 @@ es:
   Auditorium: Auditorio
   Autism: Autismo
   Auto mechanics: Mecánica automotriz
+  Bachelor's degree: 
   Badminton: Bádminton
   Band: Banda
   Baseball: Béisbol
@@ -63,8 +68,8 @@ es:
   Buses / vans shared with other schools: Autobuses / furgonetas compartidas con otras
     escuelas
   Business: Negocios
-  Business management: Administración de Empresas
   Business Management & Administration: Gestión y Administración de Empresas
+  Business management: Administración de Empresas
   Cafeteria: Cafetería
   Calculus AB: Cálculo AB
   Calculus BC: Cálculo BC
@@ -78,6 +83,8 @@ es:
   Cheerleading: Porrista
   Chemistry: Química
   Chess club: Club de Ajedrez
+  Child development associate (CDA) credential: Credencial de Asociado en Desarrollo
+    Infantil (CDA)
   Chinese - Cantonese: Chino - cantonés
   Chinese - Mandarin: Chino mandarin
   Chinese Language and Culture: Lengua y Cultura China
@@ -98,10 +105,10 @@ es:
   Community college courses: Cursos de colegio comunitario
   Community service: Servicio comunitario
   Comparative Government and Politics: Gobierno y Política Comparada
+  Computer Science A: Ciencias de la Computación A
   Computer animation: Animacion digital
   Computer lab: Laboratorio de computación
   Computer programming: Programación
-  Computer Science A: Ciencias de la Computación A
   Computer specialist: Especialista en computacion
   Construction / Building: Construcción / Construcción
   Contact the school / Multiple deadlines: Póngase en contacto con el / Múltiples
@@ -118,6 +125,7 @@ es:
   Cub Scouts: Cub Scouts
   Culinary: Culinario
   Cycling: Ciclismo
+  DECA: DECA
   Dance: Baile
   Dance club: Club de baile
   Dance teacher: Profesor de Danza
@@ -125,7 +133,6 @@ es:
   Deaf-blindness: Sordo-ceguera
   Deafness: Sordera
   Debate: Debate
-  DECA: DECA
   Design: Diseño
   Developmental delay: Retraso en el desarrollo
   Differentiated learning programs: Programas de aprendizaje diferenciados
@@ -140,10 +147,10 @@ es:
   Drum line: Línea de tambor
   Dual language programs: Programas de idioma dual
   Dutch: Holandés
+  ELL / ESL Coordinator: Coordinador ELL / ESL
   Education & Training: Educación y capacitación
   Educational diagnostician: Diagnosticador para la Educación
   Electrical: Eléctrico
-  ELL / ESL Coordinator: Coordinador ELL / ESL
   Email: Correo electronico
   Emotional behavioral disabilities: Discapacidades de comportamiento emocionales
   Engineering: Ingeniería
@@ -171,18 +178,18 @@ es:
   French Language and Culture: Lengua y Cultura francés
   Future Business Leaders of America (FBLA): Futuros Líderes de Negocios de América
     (FBLA)
+  GED: GED
   Game club: Club de Juegos
   Garden / Greenhouse: Jardín / Invernadero
   Gardening: Jardinería
   Gardening teacher: Profesor de Jardinería
-  GED: GED
   General - school does not emphasize one particular subject: General - la escuela
     no enfatiza un tema en particular
   German: Alemán
   German Language and Culture: Lengua y Cultura alemana
   Gifted / High performing: Dotados / Alto rendimiento
-  Gifted and talented programs: Programas dotados y talentosos
   Gifted Specialist: Especialista Dotados
+  Gifted and talented programs: Programas dotados y talentosos
   Girl Scouts: Girl Scouts
   Girls on the Run: Girls on the Run
   Golf: Golf
@@ -190,6 +197,7 @@ es:
   Graphics: Artes gráficas
   Gym: Gimnasio
   Gymnastics: Gimnasia
+  HVAC: HVAC
   Habitat for Humanity: Habitat para la humanidad
   Half-day: Medio día
   Health Science: Ciencia de la salud
@@ -203,10 +211,12 @@ es:
   Human Geography: Geografía Humana
   Human Services: Servicios Humanos
   Humanities: Humanidades
-  HVAC: HVAC
   Hybrid / Blended learning: Híbrido / Aprendizaje combinado
+  IT support: Soporte de TI
   Ice hockey: Hockey sobre hielo
   Improv: Improvisación
+  In-home: En una casa
+  In-school: En una escuela
   Inclusive classroom: Aula inclusiva
   Independent study: Estudio independiente
   Individually guided instruction: Instrucción individual guiada
@@ -226,24 +236,22 @@ es:
     one very comprehensive program for very challenging needs
   : Intensivo - Escuela ofrece un programa completo para muchas necesidades y / o
     ofrece al menos un programa muy completo para las necesidades muy exigentes
-  International baccalaureate: Bachillerato Internacional
   International Baccalaureate (IB): Bachillerato Internacional (IB)
+  International baccalaureate: Bachillerato Internacional
   Internet access: Acceso a Internet
   Internships: Pasantías
-  IT support: Soporte de TI
   It's Academic: Es Académico
   Italian: Italiano
   Italian Language and Culture: Lengua y Cultura Italiana
+  JROTC: JROTC
   Japanese: Japonés
   Japanese Language and Culture: Lengua y Cultura Japonesa
   Jazz band: Banda de jazz
   Join PTO / PTA: Únete PTO / PTA
-  JROTC: JROTC
   Kayaking: Kayak
   Kickball: Kickball
   Kitchen: Cocina
   Korean: Coreano
-  label: etiqueta
   Lacrosse: Lacrosse
   Language: Idioma
   Latin: Latín
@@ -287,9 +295,9 @@ es:
   Multiculturalism / Global: Multiculturalismo / Global
   Multiple disabilities: Múltiples discapacidades
   Music: Música
+  Music Theory: Teoría musical
   Music room: Sala de música
   Music teacher: Profesor de musica
-  Music Theory: Teoría musical
   National Honor Society (NHS): Sociedad Nacional de Honor (NHS)
   Natural area: Espacio natural
   None: Ninguno
@@ -306,13 +314,13 @@ es:
   Outdoor / Farm-based: Naturaleza / a base de Granja
   Outdoor learning lab: Laboratorio de aprendizaje al aire libre
   Outside scholarships: Becas en el exterior
+  PE classes: Clases de educación física
+  PE instructor: PE instructor
   Paid public transportation: Transporte público de pago
   Painting: Cuadro
   Parent involvement center: Centro de participación de los padres
   Parenting center: Centro de crianza de los hijos
   Part-time study: Estudio de medio tiempo
-  PE classes: Clases de educación física
-  PE instructor: PE instructor
   Performance stage: Etapa Rendimiento
   Performing arts: Las artes escénicas
   Phone: Teléfono
@@ -349,23 +357,26 @@ es:
   Rugby: Rugby
   Russian: Ruso
   SADD: SADD
-  Sailing: Navegación
   SAT/ACT prep classes: Clases de preparación para SAT / ACT
+  STEM: STEM
+  STEM (Science, Technology, Engineering, and Mathematics): STEM (Ciencia, Tecnología,
+    Ingeniería y Matemáticas)
+  Sailing: Navegación
   School counselor: Consejero Escolar
   School psychologist: Psicólogo de la escuela
   School-based aid: Ayuda basada en la Escuela
   School-sponsored trips to college campuses: Viajes patrocinados por la escuela a
     los campus universitarios
   Science: Ciencia
+  Science Nature: Ciencia Naturaleza
   Science club: Club de la Ciencia
   Science lab: Laboratorio de ciencia
-  Science Nature: Ciencia Naturaleza
   Science, Technology, Engineering & Mathematics: Ciencia, Tecnología, Ingeniería
     y Matemáticas
   Sculpture: Escultura
   Security personnel: Personal de seguridad
-  Self-contained classroom: Aula autónoma
   Self-contained ELL classrooms: Aulas de ELL autónomas
+  Self-contained classroom: Aula autónoma
   Seminar: Seminario
   Serve on school improvement team or governance council: Servir en el equipo de mejoramiento
     de la escuela o el consejo de gobierno
@@ -379,20 +390,18 @@ es:
   Spanish Language and Culture: Lengua y Cultura Españolas
   Spanish Literature and Culture: Español Literatura y Cultura
   Special Education: Educación especial
-  Special education coordinator: Coordinador de educación especial
-  Special education resource room: Sala de recursos de educación especial
   Special Needs: Necesidades especiales
   Special Olympics: Olimpiadas Especiales
+  Special education coordinator: Coordinador de educación especial
+  Special education resource room: Sala de recursos de educación especial
   Specific learning disabilities: Discapacidades específicas de aprendizaje
   Speech and language impairments: Impedimentos del habla y del lenguaje
   Speech therapist(s): Terapeuta (s) Discurso
   Sports Fields: Canchas deportivas
   Squash: Squash
+  Standalone center: Centro independiente
   Standards-based: Basada en estándares
   Statistics: Estadística
-  STEM: STEM
-  STEM (Science, Technology, Engineering, and Mathematics): STEM (Ciencia, Tecnología,
-    Ingeniería y Matemáticas)
   Step team: Equipo de Paso
   Student council / government: Consejo estudiantil / gobierno
   Student newspaper: Estudiantes periódico
@@ -411,6 +420,7 @@ es:
   Tax credits: Créditos fiscales
   Teacher aide / assistant teacher: Ayudante de profesor / profesor asistente
   Teacher-run: A cargo de los profesores
+  Teaching credential: Credentila enseñanza
   Technical design and production: Diseño técnico y producción
   Technology: Tecnología
   Technology club: Club de Tecnología
@@ -428,7 +438,7 @@ es:
   Tutor: Tutor
   Tutor(s): Tutor(es)
   Tutoring: Tutoría
-  Ultimate Frisbee: ! 'Frisbee '
+  Ultimate Frisbee: Frisbee
   Uniforms: Uniformes
   United States Government and Politics: Gobierno de Estados Unidos y la política
   United States History: Historia de Estados Unidos
@@ -460,3 +470,5 @@ es:
   Yes - for students in adjacent districts: Sí - para los estudiantes en los distritos
     vecinos
   Yoga club: Club de Yoga
+  label: etiqueta
+  response_label: 

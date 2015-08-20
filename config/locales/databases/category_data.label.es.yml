@@ -12,6 +12,8 @@ es:
     de 2 años'
   ! '% Graduates going to a 4 year college': ! '% Alumnos graduados que van a un colegio
     de 4 años'
+  ! '% of early learning staff that holds a credential or certification': ! '% De
+    personal de aprendizaje temprano que posee credenciales o certificación'
   A positive, differentiated instructional focus is the norm among teachers: Un enfoque
     educativo positivo, diferenciada es la norma entre los maestros
   AP classes offered: Clases de AP ofrecidos
@@ -23,6 +25,7 @@ es:
   Academic Press: Academic Press
   Academic award: Recompensa académica
   Academic themes / Areas of focus: Temas académicos / Las áreas de enfoque
+  Accredited: Acreditada
   Adults at school care how students are doing: Los adultos en el cuidado de la escuela
     cómo los estudiantes están haciendo
   Adults provide the academic support needed to do well: Los adultos proporcionan
@@ -67,6 +70,7 @@ es:
   Boys sports: Chicos deportes
   Boys sports (misc): Chicos deportes (misc.)
   Career and Tech programs: Programas de Carrera y Tecnología
+  Certified and/or licensed: Con licensia o certificado
   Child feels safe inside and outside the school: Niño se siente seguro dentro y fuera
     de la escuela
   Child is receiving a high quality education: Niño está recibiendo una educación
@@ -109,6 +113,7 @@ es:
   Educational philosophy and approach to learning: Filosofía y enfoque de aprendizaje
     para la Educación
   Effective Leaders: Los líderes eficaces
+  Eligible for 4-Yr College: ! 'Graduados eligible para universidad '
   Employees: Empleados
   End time: Hora de finalización
   English Instruction: Instrucción Inglés
@@ -121,20 +126,22 @@ es:
   Extra learning resources: Recursos de aprendizaje adicionales
   Extra learning resources (misc): Recursos de aprendizaje adicionales (misc.)
   Feeder pattern: Patrón alimentador
+  Female: Femenino
   Financial aid offered: La ayuda financiera ofrecida
+  Financial aid options: Opciones de ayuda financiera
   Financial aid type (misc): Tipo de ayuda financiera (misc.)
   Food quality: Calidad de los alimentos
   For the year: Para el año
   Girls sports: Deportes de las muchachas
   Girls sports (misc): Deportes de las muchachas (misc.)
-  Graduates eligible for 4 yr college: Graduados eligible para universidad
   Graduate high school: Graduado de escuela secundaria
-  Graduation Rate: Tasa de Graduados
+  Graduates eligible for 4 yr college: Graduados eligible para universidad
   Graduates who enroll in college immediately after high school graduation: Los graduados
     que se matriculan en la universidad inmediatamente después de graduarse de la
     secundaria
   Graduates who need remediation, or help strengthening basic skills: Los graduados
     que necesitan reparación o ayuda fortalecimiento de las competencias básicas
+  Graduation Rate: Tasa de Graduados
   HIB preparation score: Puntuación de preparación HIB
   High expectations are set for all students' academic success: Las altas expectativas
     se establecen para el éxito académico de todos los estudiantes
@@ -152,7 +159,21 @@ es:
   Level of special education programming: Nivel de programación de educación especial
   Live in district - "choicing": Vive en el barrio - "choicing"
   Live outside district - "choicing": Vivo distrito fuera - "choicing"
+  Male: Masculino
   Math Instruction: Instrucción de Matemáticas
+  Math skills development: Desarrollo de habilidades matemáticas
+  Maximum number of 2 year olds per adult: Número máximo de niños 2 años de edad por
+    adulto
+  Maximum number of 3 year olds per adult: Número máximo de niños 3 años de edad por
+    adulto
+  Maximum number of 4 year olds per adult: Número máximo de niños 4 años de edad por
+    adulto
+  Maximum number of infants per adult: Número máximo de bebés por adulto
+  Maximum number of kindergartners per adult: Número máximo de niños de kinder por
+    adulto
+  Maximum number of school-age children per adult: Número máximo de niños en edad
+    escolar por adulto
+  Maximum number of toddlers per adult: Número máximo de niños por adulto
   Media arts: Medios artes
   'NULL': NULO
   Number of principals in the last 5 years: Número de directores en los últimos 5
@@ -182,6 +203,7 @@ es:
   Partner website: Sitio web de partners
   Partnerships with local resources and organizations: Asociaciones con los recursos
     y las organizaciones locales
+  Payment schedule: Calendario de pago
   Peer Support for Academic Work: Apoyo de Pares para el Trabajo Académico
   Percent of graduates enrolled: Porcentaje de graduados matriculados
   Performing & written arts: Realización y escrita artes
@@ -194,11 +216,15 @@ es:
   Program name: Nombre del programa
   Quality Professional Development: Desarrollo Profesional de Calidad
   Quality of Student Discussion: Calidad de Discusión Estudiantil
+  Reading skills development: El desarrollo de habilidades de lectura
   Recommend this school to parents: Recomienda esta escuela a los padres
   Religious / Parochial: Religioso / Parroquial
   Religious affiliation: Afiliación religiosa
+  Required credentials for lead staff: Credenciales necesarias para el personal principal
+  Requirements for attending: Requisitos para asistir
   SAT score: SAT
   Safety around hallways: Seguridad en torno pasillos
+  Schedule: Horario
   School Commitment: Compromiso Escuela
   School colors: Colores de la escuela
   School does a good job of communicating with parents about school activities and student progress: Escuela
@@ -224,10 +250,12 @@ es:
     una parada de metro y autobús cercanas
   Social emotional learning is a personal, school, and district priority: Aprendizaje
     emocional Social es una escuela, y la prioridad del distrito personales
+  Social emotional skills development: El desarrollo de competencias socio-emocionales
   Special education: Educación especial
   Special education program details: Los detalles del programa de educación especial
   Special education programs: Programas de educación especial
-  Specialized programs for specific types of special education students: Los programas especializados para niños con disabilidades 
+  Specialized programs for specific types of special education students: Los programas especializados para niños con disabilidades
+  Speech development: El desarrollo del habla
   Staff details: Detalles del Personal
   Start 9th grade: Iniciar noveno grado
   Start time: Hora de inicio
@@ -331,13 +359,17 @@ es:
   Tuition range (low): Gama de Matrícula (bajo)
   Type: Escribe
   Type of application deadline: Tipo de plazo de solicitud
+  Type of center: Tipo de centro
   Type of school: Tipo de colegio
   Type of voucher: Tipo de bono
   Types of activities: Tipos de actividades
   Types of activities (misc): Tipos de actividades (misc.)
+  Typical day and activities: Típico día y actividades
   Vouchers accepted: Vales aceptadas
   Ways to enroll/attend this school: Maneras para inscribirse / asisten a esta escuela
   Website: Sitio web
+  Weekly cost range (high): Rango de costo semanal (alto)
+  Weekly cost range (low): Rango de costo semanal (bajo)
   What grades can participate?: ¿Qué grados puede participar?
   World Languages: Idiomas
   World languages spoken by staff: Idiomas hablados por el personal

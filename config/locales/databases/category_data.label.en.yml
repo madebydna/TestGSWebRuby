@@ -10,6 +10,8 @@ en:
     programs'
   ! '% Graduates going to a 2 year college': ! '% Graduates going to a 2 year college'
   ! '% Graduates going to a 4 year college': ! '% Graduates going to a 4 year college'
+  ! '% of early learning staff that holds a credential or certification': ! '% of
+    early learning staff that holds a credential or certification'
   A positive, differentiated instructional focus is the norm among teachers: A positive,
     differentiated instructional focus is the norm among teachers
   AP classes offered: AP classes offered
@@ -21,6 +23,7 @@ en:
   Academic Press: Academic Press
   Academic award: Academic award
   Academic themes / Areas of focus: Academic themes / Areas of focus
+  Accredited: Accredited
   Adults at school care how students are doing: Adults at school care how students
     are doing
   Adults provide the academic support needed to do well: Adults provide the academic
@@ -31,6 +34,7 @@ en:
   After school end time: After school end time
   After school program offered: After school program offered
   All subjects: All subjects
+  Ambitious Instruction: Ambitious Instruction
   Application deadline: Application deadline
   Application deadline date: Application deadline date
   Application fee amount: Application fee amount
@@ -41,6 +45,7 @@ en:
   Applications Received: Applications Received
   Approach to addressing and preventing bullying: Approach to addressing and preventing
     bullying
+  Arts & Humanities: Arts & Humanities
   Attending the most selective US colleges (as rated by Barron's Profiles of American Colleges): Attending
     the most selective US colleges (as rated by Barron's Profiles of American Colleges)
   Average ACT score (1-36 scale): Average ACT score (1-36 scale)
@@ -63,13 +68,17 @@ en:
   Boys sports: Boys sports
   Boys sports (misc): Boys sports (misc.)
   Career and Tech programs: Career and Tech programs
+  Certified and/or licensed: Certified and/or licensed
   Child feels safe inside and outside the school: Child feels safe inside and outside
     the school
   Child is receiving a high quality education: Child is receiving a high quality education
+  Climate rating: Climate rating
+  Clubs: Clubs
   Clubs (misc): Clubs (misc.)
   Clubs - dance: Clubs - dance
   Clubs - language: Clubs - language
   Coed/Single-gender: Coed/Single-gender
+  Collaborative Teachers: Collaborative Teachers
   Collective Responsibility: Collective Responsibility
   College name: College name
   College preparation resources: College preparation resources
@@ -92,21 +101,27 @@ en:
   Dates offered (start): Dates offered (start)
   Day or Boarding offered: Day or Boarding offered
   Days offered: Days offered
+  Days open: Days open
   Disorder in hallways is rare: Disorder in hallways is rare
   District: District
+  Dress code: Dress code
   Dropout rate over 4 years: Dropout rate over 4 years
   Early childhood program offered: Early childhood program offered
   Early childhood starting age: Early childhood starting age
   Early release Wednesdays are productive and useful: Early release Wednesdays are
     productive and useful
+  Economics: Economics
   ! 'Education levels: Master''s degree or higher': ! 'Education levels: Master''s
     degree or higher'
   Educational philosophy and approach to learning: Educational philosophy and approach
     to learning
   Effective Leaders: Effective Leaders
+  Eligible for 4-Yr College: Graduates eligible for 4-Yr college
   Employees: Employees
   End time: End time
+  English: English
   English Instruction: English Instruction
+  English Language Arts: English Language Arts
   English Language Learner program details: English Language Learner program details
   English Language Learner programs: English Language Learner programs
   Enough school computers: Enough school computers
@@ -114,27 +129,35 @@ en:
   Extended care / Extended programs: Extended care / Extended programs
   Extra learning resources: Extra learning resources
   Extra learning resources (misc): Extra learning resources (misc.)
+  Facilities: Facilities
   Feeder pattern: Feeder pattern
+  Female: Female
   Financial aid offered: Financial aid offered
+  Financial aid options: Financial aid options
   Financial aid type (misc): Financial aid type (misc.)
   Food quality: Food quality
   For the year: For the year
+  General Elementary: General Elementary
+  Geography: Geography
   Girls sports: Girls sports
   Girls sports (misc): Girls sports (misc.)
-  Graduates eligible for 4 yr college: Graduates eligible for 4 yr college
+  Government: Government
   Graduate high school: Graduate high school
-  Graduation Rate: Graduation Rate
+  Graduates eligible for 4 yr college: Graduates eligible for 4 yr college
   Graduates who enroll in college immediately after high school graduation: Graduates
     who enroll in college immediately after high school graduation
   Graduates who need remediation, or help strengthening basic skills: Graduates who
     need remediation, or help strengthening basic skills
+  Graduation Rate: Graduation Rate
   HIB preparation score: HIB preparation score
   High expectations are set for all students' academic success: High expectations
     are set for all students' academic success
+  History - Social Science Grade 8 Cumulative: History - Social Science Grade 8 Cumulative
   Hours: Hours
   How can parents find out more about fees?: How can parents find out more about fees?
   Human and Social Resources in the Community: Human and Social Resources in the Community
   Instructional / curriculum models used: Instructional / curriculum models used
+  Involved Families: Involved Families
   Is enrollment limited to students who attend the school?: Is enrollment limited
     to students who attend the school?
   Is financial aid available?: Is financial aid available?
@@ -144,8 +167,21 @@ en:
   Level of special education programming: Level of special education programming
   Live in district - "choicing": Live in district - "choicing"
   Live outside district - "choicing": Live outside district - "choicing"
+  Male: Male
+  Math: Math
   Math Instruction: Math Instruction
+  Math skills development: Math skills development
+  Maximum number of 2 year olds per adult: Maximum number of 2 year olds per adult
+  Maximum number of 3 year olds per adult: Maximum number of 3 year olds per adult
+  Maximum number of 4 year olds per adult: Maximum number of 4 year olds per adult
+  Maximum number of infants per adult: Maximum number of infants per adult
+  Maximum number of kindergartners per adult: Maximum number of kindergartners per
+    adult
+  Maximum number of school-age children per adult: Maximum number of school-age children
+    per adult
+  Maximum number of toddlers per adult: Maximum number of toddlers per adult
   Media arts: Media arts
+  Music: Music
   'NULL': 'NULL'
   Number of principals in the last 5 years: Number of principals in the last 5 years
   Open Friday: Open Friday
@@ -173,10 +209,12 @@ en:
   Partner website: Partner website
   Partnerships with local resources and organizations: Partnerships with local resources
     and organizations
+  Payment schedule: Payment schedule
   Peer Support for Academic Work: Peer Support for Academic Work
   Percent of graduates enrolled: Percent of graduates enrolled
   Performing & written arts: Performing & written arts
   Phone number: Phone number
+  Physical environment: Physical environment
   Preschool capacity: Preschool capacity
   Preschool environment: Preschool environment
   Preschool meals offered: Preschool meals offered
@@ -185,11 +223,16 @@ en:
   Program name: Program name
   Quality Professional Development: Quality Professional Development
   Quality of Student Discussion: Quality of Student Discussion
+  Reading skills development: Reading skills development
   Recommend this school to parents: Recommend this school to parents
   Religious / Parochial: Religious / Parochial
   Religious affiliation: Religious affiliation
+  Required credentials for lead staff: Required credentials for lead staff
+  Requirements for attending: Requirements for attending
   SAT score: SAT score
+  Safety: Safety
   Safety around hallways: Safety around hallways
+  Schedule: Schedule
   School Commitment: School Commitment
   School colors: School colors
   School does a good job of communicating with parents about school activities and student progress: School
@@ -208,20 +251,27 @@ en:
   School is welcoming and supportive of parent involvement: School is welcoming and
     supportive of parent involvement
   School leader: School leader
+  School leadership: School leadership
   School mascot: School mascot
   School-run shuttle from nearby metro and bus stops: School-run shuttle from nearby
     metro and bus stops
+  Science: Science
+  Social Studies: Social Studies
   Social emotional learning is a personal, school, and district priority: Social emotional
     learning is a personal, school, and district priority
+  Social emotional skills development: Social emotional skills development
   Special education: Special education
   Special education program details: Special education program details
   Special education programs: Special education programs
   Specialized programs for specific types of special education students: Specialized
     programs for specific types of special education students
+  Speech development: Speech development
+  Staff: Staff
   Staff details: Staff details
   Start 9th grade: Start 9th grade
   Start time: Start time
   Student-Teacher Trust: Student-Teacher Trust
+  Students: Students
   Students "choicing" into this school who live in the district: Students "choicing"
     into this school who live in the district
   Students "choicing" into this school who live outside the district (includes vocational and charter schools): Students
@@ -274,12 +324,15 @@ en:
     to these schools
   Students who complete the 1st year of college (24 credits) on time: Students who
     complete the 1st year of college (24 credits) on time
+  Summer program: Summer program
   Summer program offered: Summer program offered
+  Supportive Environment: Supportive Environment
   Teacher Influence: Teacher Influence
   ! 'Teacher experience: 5 years or more': ! 'Teacher experience: 5 years or more'
   Teacher-Parent Trust: Teacher-Parent Trust
   Teacher-Principal Trust: Teacher-Principal Trust
   Teacher-Teacher Trust: Teacher-Teacher Trust
+  Teachers: Teachers
   Teachers and parents are partners in education: Teachers and parents are partners
     in education
   Teachers ask difficult test questions: Teachers ask difficult test questions
@@ -299,6 +352,7 @@ en:
     (based on ACT)
   Tested students who are college-ready (based on SAT): Tested students who are college-ready
     (based on SAT)
+  This school: This school
   This school's math score: This school's math score
   This school's reading score: This school's reading score
   This school's science score: This school's science score
@@ -312,13 +366,18 @@ en:
   Tuition range (low): Tuition range (low)
   Type: Type
   Type of application deadline: Type of application deadline
+  Type of center: Type of center
   Type of school: Type of school
   Type of voucher: Type of voucher
   Types of activities: Types of activities
   Types of activities (misc): Types of activities (misc.)
+  Typical day and activities: Typical day and activities
+  Visual arts: Visual arts
   Vouchers accepted: Vouchers accepted
   Ways to enroll/attend this school: Ways to enroll/attend this school
   Website: Website
+  Weekly cost range (high): Weekly cost range (high)
+  Weekly cost range (low): Weekly cost range (low)
   What grades can participate?: What grades can participate?
   World Languages: World Languages
   World languages spoken by staff: World languages spoken by staff
@@ -326,3 +385,4 @@ en:
   World languages taught: World languages taught
   World languages taught (misc): World languages taught (misc.)
   Year received: Year received
+  label: label
