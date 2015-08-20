@@ -23,6 +23,7 @@ $(function() {
   // Bootstrap select init call. Transforms some selects into pretty Bootstrap
   // ones. https://silviomoreto.github.io/bootstrap-select/
   $('.selectpicker').selectpicker();
+  GS.selectpicker.updateDataAttributes();
 
   $.ajaxSetup({ cache: true });
 
