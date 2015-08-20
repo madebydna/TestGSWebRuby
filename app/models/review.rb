@@ -3,6 +3,7 @@ class Review < ActiveRecord::Base
   include BehaviorForModelsWithSchoolAssociation
   include Rails.application.routes.url_helpers
   include UrlHelper
+  include UpdateQueueConcerns
 
   db_magic :connection => :gs_schooldb
   self.table_name = 'reviews'
@@ -62,6 +63,9 @@ class Review < ActiveRecord::Base
   before_save :remove_answers_for_principals, unless: '@moderated == true'
   after_save :auto_moderate, unless: '@moderated == true'
   after_save :send_thank_you_email_if_published
+  after_save do
+    log_review_changed(state, school_id, member_id)
+  end
 
   def status
     active? ? :active : :inactive
