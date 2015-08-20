@@ -29,14 +29,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     drawTableHeader();
     redrawTable();
 
-    $(scorecard).on('click', '.selectpicker > li > a > span', function (e) {
-      var sortField = $(e.target).text();
-      GS.CommunityScorecards.Page.options.set('sortBreakdown', sortField);
-      redrawTable();
-    });
-
     $(scorecard).on('click', '.js-drawTable', function (e) {
-      _({ 'sort-asc-or-desc': 'sortAscOrDesc', 'sort-by': 'sortBy', 'highlight-index': 'highlightIndex' }).forEach(function(optionsKey, dataKey) {
+      _({ 'sort-asc-or-desc': 'sortAscOrDesc', 'sort-by': 'sortBy', 'highlight-index': 'highlightIndex', 'sortBreakdown': 'sortBreakdown' }).forEach(function(optionsKey, dataKey) {
         var dataVal = $(e.target).data(dataKey);
         if(dataVal !== undefined) {
           GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)

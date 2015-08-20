@@ -12,8 +12,13 @@ class CommunityScorecardsController < ApplicationController
     ]
 
     #todo move into collection
-    @subgroups_for_header = SchoolDataHash::SUBGROUP_MAP.to_a
-    @subgroups_for_header.each { | subgroup_array | subgroup_array << { class: 'js-drawTable' } }
+    @subgroups_for_header = SchoolDataHash::SUBGROUP_MAP.keys.map do | subgroup |
+      [
+        t("controllers.community_scorecards_controller.#{subgroup}"),
+        subgroup,
+        { class: 'js-drawTable', data: { 'sort-breakdown' => subgroup } }
+      ]
+    end
 
     gon.scorecard_data_types = @table_fields.map { |f| f[:data_type] }
     gon.pagename = 'GS:CommunityScorecard'
