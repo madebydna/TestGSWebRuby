@@ -18,7 +18,7 @@
 <% twitter_href_params =
      {
        url: review_url_twitter,
-       text: "Check out this review about #{review.school.name}"
+       text: "Check out this review from #GreatSchools of #{review.school.name}: "
      }
 %>
 <% twitter_href = "https://twitter.com/intent/tweet?#{twitter_href_params.to_param}" %>
