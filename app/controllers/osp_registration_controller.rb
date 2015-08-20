@@ -3,7 +3,6 @@ class OspRegistrationController < ApplicationController
   BLACKLISTED_TOP_LEVEL_DOMAINS = ['pl', 'ru']
 
   before_action :set_city_state
-  before_action :set_school
   before_action :set_login_redirect
   before_action :use_gs_bootstrap
   before_action :validate_params, only: [:submit]
@@ -11,6 +10,7 @@ class OspRegistrationController < ApplicationController
   def new
 
     set_gon_and_metadata!
+    @school = school
 
     if @school.blank?
       render 'osp/registration/no_school_selected'
@@ -26,11 +26,10 @@ class OspRegistrationController < ApplicationController
   end
 
   def submit
-    @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
     if current_user.present?
-      upgrade_user_to_osp_user(@school)
+      upgrade_user_to_osp_user(school)
     else
-      save_new_osp_user(@school)
+      save_new_osp_user(school)
     end
   rescue => error
     GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'OSP Submission flow failed')
@@ -38,9 +37,9 @@ class OspRegistrationController < ApplicationController
 
   private
 
-  def set_school
+  def school
     if @state.present? && params[:schoolId].present?
-      @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
+      @_school ||= School.find_by_state_and_id(@state[:short], params[:schoolId])
     end
   end
 
@@ -55,7 +54,7 @@ class OspRegistrationController < ApplicationController
   end
 
   def is_delaware_public_or_charter_user?
-    @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
+    @state[:short] == 'de' && (school.type == 'public' || school.type == 'charter')
   end
 
   def save_new_osp_user(school)
@@ -138,7 +137,7 @@ class OspRegistrationController < ApplicationController
     @esp_membership_attrs ||= (
       {
         state: @state[:short].upcase,
-        school_id: @school.id,
+        school_id: school.id,
         status: 'provisional',
         active: false,
         web_url: params[:school_website],
