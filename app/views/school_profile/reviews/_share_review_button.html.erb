@@ -1,8 +1,11 @@
 <% review %>
 
-<% review_url = school_reviews_url(review.school, review_id: review.id, anchor: "review#{review.id}") %>
+<% review_url_twitter = school_reviews_url(review.school, review_id: review.id, utm_source: 'Twitter', utm_medium: 'social', utm_campaign: 'Review_Share', anchor: "review#{review.id}") %>
+<% review_url_email = school_reviews_url(review.school, zreview_id: review.id, utm_source: 'Email_Share', utm_medium: 'email', utm_campaign: 'Review_Share', anchor: "review#{review.id}") %>
+<% review_url_facebook= school_reviews_url(review.school, review_id: review.id, utm_source: 'Facebook', utm_medium: 'social', utm_campaign: 'Review_Share', anchor: "review#{review.id}") %>
+
 <% mailto_subject = 'Check out this review I found on GreatSchools' %>
-<% mailto_body = "Hey, I found this review about #{review.school.name} and thought it was helpful. Hope you like it:%0A#{review_url}%0A%0A\"#{review.comment}\"" %>
+<% mailto_body = "Hey, I found this review about #{url_encode(review.school.name)} and thought it was helpful. Hope you like it:%0A#{url_encode(review_url_email)}%0A%0A\"#{url_encode(review.comment)}\"" %>
 <% mailto_params =
  {
    subject: mailto_subject,
@@ -14,7 +17,7 @@
 
 <% twitter_href_params =
      {
-       url: review_url,
+       url: review_url_twitter,
        text: "Check out this review about #{review.school.name}"
      }
 %>
@@ -35,7 +38,7 @@
          data-ga-click-category='profile interactions - reviews'
          data-ga-click-action='share review'
          data-ga-click-label='Facebook'
-         data-review-id="<%= review.id %>"
+         data-review-url="<%= review_url_facebook %>"
          data-review-school-name="<%= review.school.name %>"
          data-review-comment="<%= review.comment %>"
          data-review-share-image="<%= image_url("share_review.png") %>">

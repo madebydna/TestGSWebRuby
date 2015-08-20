@@ -126,9 +126,8 @@ GS.reviews = GS.reviews || function($) {
           var reviewComment = $(this).data('review-comment');
           var imageUrl = $(this).data('review-share-image');
           var caption = GS.I18n.t('reviews.share_review_caption') + reviewSchoolName;
-          var href = GS.uri.Uri.getHref();
-          href = GS.uri.Uri.addQueryParamToUrl('review_id', reviewId, href);
-          href = href + '#review' + reviewId; // TODO: Need method in uri.js to correctly add anchor
+          var href =  $(this).data('review-url');
+
           FB.ui( {
               method: 'share',
               href: href,
