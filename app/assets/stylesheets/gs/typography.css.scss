@@ -1,6 +1,13 @@
 h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: $gray-darkest}
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { @extend .open-sans_i; }
+h1.lg-roboto {
+  font-size: 30px;
+  font-family: 'RobotoSlab-Light';
+  @media (min-width: $screen-sm-min) {
+    font-size: 50px;
+  }
+}
 
 .subtitle-lg { font-size: 24px}
 .subtitle-md { font-size: 20px}
