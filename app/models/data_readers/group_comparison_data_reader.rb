@@ -130,15 +130,22 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def add_student_types_callback
-    all_types = Genders.all + StudentTypes.all
-    student_types = get_cache_data('characteristics', all_types, school)
-    student_types.each do | type, data |
-      student_types[type] = data.first[:school_value]
+    all_types = Genders.all + StudentTypes.all_datatypes
+    student_types_data = get_cache_data('characteristics', all_types, school)
+    student_types = student_types_data.inject({}) do | h, (type, type_data) |
+      # Student types aren't the same name as their breakdowns so we map the
+      # datatype (used above to get the data) to its breakdown here. See AT-925.
+      breakdown = if (student_type = StudentTypes.datatype_to_breakdown[type.to_s])
+                    student_type.to_sym
+                  else
+                    type
+                  end
+      h.merge(breakdown => type_data.first[:school_value])
     end
 
     data.values.flatten.each do | hash |
-      if (gender_percent = student_types[hash[:breakdown].to_s.to_sym]).present?
-        hash[:subtext] = percent_of_population_text(gender_percent)
+      if (percent = student_types[hash[:breakdown].to_s.to_sym]).present?
+        hash[:subtext] = percent_of_population_text(percent)
       elsif hash[:subtext].nil?
         hash[:subtext] = no_data_text
       end
