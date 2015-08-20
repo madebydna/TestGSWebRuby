@@ -3,6 +3,7 @@
 <div class="<%= @gs_bootstrap %> community-scorecard js-communityScorecard">
   <div class="container-fluid">
     <h1 class="lg-roboto"><%= @collection.name %> Community Snapshot</h1>
+    <%= render partial: "community_scorecards/summary" %>
     <div class="clearfix">
     <%= render partial: "shared/partners/promo_delegator",
                 locals: {

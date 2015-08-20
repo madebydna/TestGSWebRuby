@@ -1,6 +1,15 @@
 $csc-table-blue-border: 1px solid #2880b9 !default;
 
 .community-scorecard {
+  .summary {
+    .datapoint {
+      padding: 10px 0;
+      h4 {
+        margin-bottom: 5px;
+        margin-top: 0;
+      }
+    }
+  }
   .table {
     margin-bottom: 0;
     td {
@@ -21,9 +30,18 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     }
   }
   .percent-value {
+    h3 {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
     sup {
       font-size: 70%;
       top: -0.35em;
+    }
+    .state-average {
+      color: $gray-darker;
+      font-family: 'opensans-regular';
+      font-size: 12px;
     }
   }
 

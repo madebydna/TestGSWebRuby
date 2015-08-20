@@ -14,6 +14,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var dataUrl = '/gsr/ajax/community-scorecard/get-school-data';
   var ajaxOptions = { preserveLanguage: true };
 
+  var scorecard      = '.js-communityScorecard';
   var tablePlacement = '#community-scorecard-table';
   var tableBody      = tablePlacement + ' table tbody';
   var tableHeaderPartial = 'community_scorecards/table_header';
@@ -24,16 +25,17 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var init = function() {
     this.options = new GS.CommunityScorecards.Options(currentPageData());
+    initReadMoreToggleHandler();
     drawTableHeader();
     redrawTable();
 
-    $('.js-communityScorecard').on('click', '.selectpicker > li > a > span', function (e) {
+    $(scorecard).on('click', '.selectpicker > li > a > span', function (e) {
       var sortField = $(e.target).text();
       GS.CommunityScorecards.Page.options.set('sortBreakdown', sortField);
       redrawTable();
     });
 
-    $('.js-communityScorecard').on('click', '.js-drawTable', function (e) {
+    $(scorecard).on('click', '.js-drawTable', function (e) {
       _({ 'sort-asc-or-desc': 'sortAscOrDesc', 'sort-by': 'sortBy', 'highlight-index': 'highlightIndex' }).forEach(function(optionsKey, dataKey) {
         var dataVal = $(e.target).data(dataKey);
         if(dataVal !== undefined) {
@@ -44,7 +46,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       redrawTable();
     });
 
-    $('.js-communityScorecard').on('click', showMore, appendToTable);
+    $(scorecard).on('click', showMore, appendToTable);
   };
 
   var drawTableHeader = function() {
@@ -104,6 +106,15 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       offset: 0,
       data_sets: gon.scorecard_data_types
     };
+  };
+
+  var initReadMoreToggleHandler = function() {
+    var readMoreText = '.js-readMoreText';
+    $(scorecard).on('click', '.js-readMoreLink', function(e) {
+      $(e.target).addClass('dn');
+      $(e.target).removeClass('visible-xs');
+      $('.js-readMoreText').removeClass('hidden-xs');
+    });
   };
 
   return {
