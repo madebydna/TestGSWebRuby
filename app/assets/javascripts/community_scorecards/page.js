@@ -34,7 +34,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     });
 
     $('.js-communityScorecard').on('click', '.js-drawTable', function (e) {
-      _({ 'sort-asc-or-desc': 'sortAscOrDesc' }).forEach(function(optionsKey, dataKey) {
+      _({ 'sort-asc-or-desc': 'sortAscOrDesc', 'sort-by': 'sortBy', 'highlight-index': 'highlightIndex' }).forEach(function(optionsKey, dataKey) {
         var dataVal = $(e.target).data(dataKey);
         if(dataVal !== undefined) {
           GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
@@ -55,6 +55,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     var params = GS.CommunityScorecards.Page.options.to_h();
     GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
+      var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
+      $('.js-CommunityScorecardTable').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
     });
   };
 

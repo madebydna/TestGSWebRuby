@@ -1,3 +1,5 @@
+$csc-table-blue-border: 1px solid #2880b9 !default;
+
 .community-scorecard {
   .table {
     margin-bottom: 0;
@@ -5,6 +7,9 @@
       max-width: 200px;
     }
   }
+  @include csc-table-blue-highlight(2, $csc-table-blue-border);
+  @include csc-table-blue-highlight(3, $csc-table-blue-border);
+
   .school-info {
     .name {
       font-family: 'opensans-bold';

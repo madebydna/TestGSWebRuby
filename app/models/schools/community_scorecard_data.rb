@@ -37,6 +37,7 @@ class CommunityScorecardData
       sd.each do |data_type, value_hash|
         if (state_average = value_hash[:state_average]).present?
           hd << {
+            param: data_type,
             data_type: I18n.t(data_type, scope: t_scope),
             state_average: I18n.t(:state_average, val: state_average, scope: t_scope),
           }

@@ -7,7 +7,7 @@ GS.CommunityScorecards.Options = function(options) {
 GS.CommunityScorecards.Options.prototype = {
 
   validAttributes: [
-    'collectionId', 'gradeLevel', 'offset', 'sortBy', 'sortBreakdown', 'sortAscOrDesc', 'data_sets'
+    'collectionId', 'gradeLevel', 'offset', 'sortBy', 'sortBreakdown', 'sortAscOrDesc', 'data_sets', 'highlightIndex'
   ],
 
   init: function(options) {

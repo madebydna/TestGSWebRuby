@@ -1,8 +1,8 @@
-<table class="table data-table table-striped ">
+<table class="table data-table js-CommunityScorecardTable table-striped ">
   <thead>
     <tr>
       {{#each header_data}}
-        <th>
+      <th class='js-drawTable pointer' data-highlight-index='{{@index}}' data-sort-by='{{param}}'>
           {{data_type}}
           {{#if state_average}}
             <div class="sub-text">
