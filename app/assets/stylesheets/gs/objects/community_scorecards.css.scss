@@ -44,12 +44,12 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 
 
   .show-more {
-    background-color: #e6ebf5;
+    background-color: $light-blue-background;
     cursor: pointer;
     padding: 10px 0;
     text-align: center;
     h4 {
-      color: #4788be;
+      color: $dark-blue-text;
     }
     .caret {
       border-top:   ($caret-width-base + 2) solid #4788be;
