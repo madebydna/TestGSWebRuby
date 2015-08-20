@@ -124,24 +124,21 @@ GS.reviews = GS.reviews || function($) {
           var reviewId = $(this).data('review-id');
           var reviewSchoolName= $(this).data('review-school-name');
           var reviewComment = $(this).data('review-comment');
-          var description = 'Review for ' + reviewSchoolName ;
+          var imageUrl = $(this).data('review-share-image');
+          var caption = GS.I18n.t('reviews.share_review_caption') + reviewSchoolName;
           var href = GS.uri.Uri.getHref();
           href = GS.uri.Uri.addQueryParamToUrl('review_id', reviewId, href);
           href = href + '#review' + reviewId; // TODO: Need method in uri.js to correctly add anchor
-
           FB.ui( {
-              method: 'feed',
-              name: 'GreatSchools Review',
-              link: href,
-              picture: 'http://www.gscdn.org/assets/nav/GS_logo_2x-new-73cb6f8038067c7c0a138828bfb2e706.png',
-              caption: description,
+              method: 'share',
+              href: href,
+              picture: imageUrl,
+              caption: caption,
               description: reviewComment
           }, function(response){});
         })
 
     };
-
-
 
     var reportReviewLink = function(reviewId) {
         return $(".js-report-review-link-" + reviewId);

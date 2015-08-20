@@ -7,6 +7,7 @@ es:
       found_this_helpful: ! ' encontraron esta útil'
       people: personas
       person: persona
+      share_review_caption: 'Opinión de usuarios de la '
     search_form:
       long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
       short_placeholder: Ciudad, código postal, la dirección o la escuela
