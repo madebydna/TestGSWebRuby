@@ -83,5 +83,10 @@ module RebuildSchoolCollections
   end
 end
 
+if ENV['RAILS_ENV'] == 'production'
+  ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['mysql_production_rw'])
+else
+  ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['mysql_dev_rw'])
+end
 RebuildSchoolCollections.add_school_collections!
 RebuildSchoolCollections.remove_school_collections!
