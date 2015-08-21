@@ -29,7 +29,7 @@
     data-ga-click-action='share review'
     data-ga-click-label='Share button'
     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <span class="iconx16 i-16-fax mt3"></span>
+    <span class="iconx16 i-16-share mt3"></span>
   </button>
   <ul class="dropdown-menu">
     <p class="tac">Share</p>
@@ -42,7 +42,7 @@
          data-review-school-name="<%= review.school.name %>"
          data-review-comment="<%= review.comment %>"
          data-review-share-image="<%= image_url("share_review.png") %>">
-        On Facebook
+        <span class="iconx16 i-16-facebook mt3 mrs"></span>On Facebook
       </a>
     </li>
     <li>
@@ -50,7 +50,7 @@
          data-ga-click-category='profile interactions - reviews'
          data-ga-click-action='share review'
          data-ga-click-label='Twitter' >
-         On Twitter
+      <span class="iconx16 i-16-twitter mt3 mrs"></span>On Twitter
        </a>
     </li>
     <li>
@@ -58,6 +58,7 @@
          data-ga-click-category='profile interactions - reviews'
          data-ga-click-action='share review'
          data-ga-click-label='Email' >
+      <span class="iconx16 i-16-envelop mt3 mrs"></span>
         Via Email</a>
     </li>
   </ul>

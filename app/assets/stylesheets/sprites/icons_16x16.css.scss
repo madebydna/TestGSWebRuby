@@ -238,3 +238,28 @@
 .i-16-right-arrow {
   background-position: -560px 0px;
 }
+
+.i-16-facebook {
+  background-position: -576px 0px;
+}
+
+.i-16-twitter {
+  background-position: -592px 0px;
+}
+
+.i-16-share {
+  background-position: -608px 0px;
+}
+
+.btn:hover .i-16-share {
+  background-position: -608px -16px;
+}
+
+.btn:active .i-16-share {
+  background-position: -608px -32px;
+}
+
+.btn-group.open > .btn > .i-16-share {
+  background-position: -608px -16px;
+}
+
