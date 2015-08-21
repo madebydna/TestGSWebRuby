@@ -499,10 +499,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var placeholderMobile = function () {
         if ($(window).width() < 481) {
-            $('.js-mobile-placeholder').html('City, zip, address or school');
+            $('.js-mobile-placeholder').html(GS.I18n.t('search_form.short_placeholder'));
         }
         else {
-            $('.js-mobile-placeholder').html('Enter city, zip code, address or school name');
+            $('.js-mobile-placeholder').html(GS.I18n.t('search_form.long_placeholder'));
         }
     };
 

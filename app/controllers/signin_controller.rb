@@ -48,7 +48,7 @@ class SigninController < ApplicationController
   def create
      if joining?
       user, error = register      # join
-      flash_notice t('actions.account.pending_email_verification') unless error || ajax?
+      flash_notice t('controllers.signin.create.success') unless error || ajax?
     else
       user, error = authenticate  # log in
     end
@@ -72,7 +72,8 @@ class SigninController < ApplicationController
   def handle_registration_and_login_error(error)
     if request.xhr?
       #  If the ajax request from the signup already has an account no error is returned
-      if error == 'Sorry, but the email you chose has already been taken.'
+      # This I18n translation purposefully left under activerecord.errors.models.user.attributes.email.taken
+      if error == I18n.t('activerecord.errors.models.user.attributes.email.taken')
         render json: {}, status: 200
       else
         render json: {error: error}, status: 422
@@ -86,7 +87,7 @@ class SigninController < ApplicationController
   # handle logout
   def destroy
     log_user_out
-    flash_notice t('actions.session.signed_out')
+    flash_notice t('controllers.signin.destroy.success')
     redirect_back(signin_url)
   end
 
@@ -115,7 +116,7 @@ class SigninController < ApplicationController
     access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
     unless access_token
       Rails.logger.debug('Could not log in with Facebook.')
-      flash_error 'Could not log in with Facebook.'
+      flash_error I18n.t('controllers.signin.create.facebook_login_error')
       redirect_to signin_url
       return nil
     end
@@ -147,10 +148,10 @@ class SigninController < ApplicationController
       token = EmailVerificationToken.parse token, time
 
       if token.expired?
-        flash_error 'Email verification link had errors, redirecting.'
+        flash_error I18n.t('controllers.signin.verify_email.error')
         redirect_to join_url
       elsif token.user.nil?
-        flash_error 'Email verification link had errors, redirecting.'
+        flash_error I18n.t('controllers.signin.verify_email.error')
         redirect_to join_url
       else
         user = token.user
@@ -166,13 +167,13 @@ class SigninController < ApplicationController
           log_user_in user
           redirect_to success_redirect
         else
-          flash_error 'Email verification link had errors, redirecting.'
+          flash_error I18n.t('controllers.signin.verify_email.error')
           redirect_to join_url
         end
       end
     rescue => e
       Rails.logger.debug "Failed to parse token: #{e}"
-      flash_error 'Email verification link had errors, redirecting.'
+      flash_error I18n.t('controllers.signin.verify_email.error')
       redirect_to join_url
     end
   end
@@ -192,15 +193,15 @@ class SigninController < ApplicationController
 
     if existing_user
       if existing_user.provisional?
-        error = t('forms.errors.email.provisional')
+        error = I18n.t('controllers.signin.create.provisional_email_error')
       elsif !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-        error = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
+        error = I18n.t('controllers.signin.create.email_without_password_error_html', join_path: join_path).html_safe
       elsif !(existing_user.password_is? params[:password])
-        error = t('forms.errors.password.invalid', join_url: join_url).html_safe
+        error = I18n.t('controllers.signin.create.password_invalid_error_html', join_url: join_url).html_safe
       end
     else
       # no matching user
-      error = t('forms.errors.email.nonexistent')
+      error = I18n.t('controllers.signin.create.user_not_found_error')
     end
 
     return existing_user, error

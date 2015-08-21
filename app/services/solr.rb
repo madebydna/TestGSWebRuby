@@ -92,6 +92,10 @@ class Solr
     return OPTIONAL_TERMS
   end
 
+  def ping
+    @connection.get "admin/ping"
+  end
+
 private
 
   def cache_time

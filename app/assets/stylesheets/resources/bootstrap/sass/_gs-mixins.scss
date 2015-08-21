@@ -4,3 +4,24 @@
 //  margin-right: ($gutter / -2);
   @include clearfix();
 }
+
+@mixin csc-table-blue-highlight($child-number, $border-color) {
+
+  // need to make it this specific to override the default border style on the table class
+  .highlight#{$child-number - 1} thead > tr:first-child > th:nth-child(#{$child-number}) {
+    border-left: $border-color;
+    border-right: $border-color;
+    border-top: $border-color;
+  }
+
+  .highlight#{$child-number - 1} td:nth-child(#{$child-number}) {
+    border-left: $border-color;
+    border-right: $border-color;
+  }
+
+  .highlight#{$child-number - 1} tr:last-child {
+    td:nth-child(#{$child-number}) {
+      border-bottom: $border-color;
+    }
+  }
+}

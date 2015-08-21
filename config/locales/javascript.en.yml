@@ -2,12 +2,16 @@
 en:
   javascript:
     close: Close
-    learn_more_html: 'Learn More &raquo;'
+    learn_more_html: Learn More &raquo;
     reviews:
-      found_this_helpful: ' found this helpful'
+      found_this_helpful: ! ' found this helpful'
       people: people
       person: person
+      share_review_caption: 'User review of ' 
+    search_form:
+      long_placeholder: Enter city, zip code, address or school name
+      short_placeholder: City, zip, address or school
     test_scores:
-      advanced: 'Advanced'
-      proficient: 'Proficient'
-      proficient_or_better: 'Proficient or better'
+      advanced: Advanced
+      proficient: Proficient
+      proficient_or_better: Proficient or better

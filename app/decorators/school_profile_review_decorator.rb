@@ -97,7 +97,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def created
-    review.created.strftime "%B %d, %Y"
+    I18n.l(review.created, format: "%B %d, %Y")
   end
   alias_method :posted, :created
 

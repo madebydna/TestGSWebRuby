@@ -12,6 +12,8 @@ GS.reviews = GS.reviews || function($) {
 
         var filterByTopicLink= $(".js_reviewTopicFilterLink");
 
+        var shareReviewFacebookLink = $(".js_shareFacebook");
+
         var getFieldValues = function(){
             var result = {};
             result['offset'] = nextTenButton.data( "offset" );
@@ -117,9 +119,25 @@ GS.reviews = GS.reviews || function($) {
             }
             return retInt;
         };
+
+        shareReviewFacebookLink.on('click', function () {
+          var reviewId = $(this).data('review-id');
+          var reviewSchoolName= $(this).data('review-school-name');
+          var reviewComment = $(this).data('review-comment');
+          var imageUrl = $(this).data('review-share-image');
+          var caption = GS.I18n.t('reviews.share_review_caption') + reviewSchoolName;
+          var href =  $(this).data('review-url');
+
+          FB.ui( {
+              method: 'share',
+              href: href,
+              picture: imageUrl,
+              caption: caption,
+              description: reviewComment
+          }, function(response){});
+        })
+
     };
-
-
 
     var reportReviewLink = function(reviewId) {
         return $(".js-report-review-link-" + reviewId);

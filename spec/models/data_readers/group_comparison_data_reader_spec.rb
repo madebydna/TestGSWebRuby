@@ -39,7 +39,7 @@ describe GroupComparisonDataReader do
     }
   }
 
-  let(:subtext_data) {
+  let(:ethnicity_subtext_data) {
     {
       Ethnicity: [
         {
@@ -51,6 +51,10 @@ describe GroupComparisonDataReader do
           performance_level: 'above_average',
         },
       ],
+    }
+  }
+  let(:types_subtext_data) {
+    {
       Male: [
         {
           year: 2013,
@@ -61,7 +65,7 @@ describe GroupComparisonDataReader do
           performance_level: 'average',
         }
       ],
-      'Economically disadvantaged'.to_sym => [
+      'Students participating in free or reduced-price lunch program'.to_sym => [
         {
           year: 2013,
           breakdown: 'All students',
@@ -71,6 +75,10 @@ describe GroupComparisonDataReader do
           performance_level: 'below_average',
         }
       ],
+    }
+  }
+  let(:enrollment_subtext_data) {
+    {
       Enrollment: [
         {
           year: 2013,
@@ -116,7 +124,10 @@ describe GroupComparisonDataReader do
     context 'when config has {breakdown: \'Ethnicity\', breakdown_all: \'Enrollment\'} set' do
       before do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-        allow(subject).to receive(:get_cache_data).and_return(subtext_data)
+        allow(subject).to receive(:get_cache_data).with('characteristics', SchoolCache::ETHNICITY, school).and_return(ethnicity_subtext_data)
+        allow(subject).to receive(:get_cache_data).with('characteristics', SchoolCache::ENROLLMENT, school).and_return(enrollment_subtext_data)
+        all_types = Genders.all + StudentTypes.all_datatypes
+        allow(subject).to receive(:get_cache_data).with('characteristics', all_types, school).and_return(types_subtext_data)
         allow(subject).to receive(:category).and_return(fake_category)
         allow(subject).to receive(:config).and_return({
           breakdown: 'Ethnicity',
@@ -139,7 +150,13 @@ describe GroupComparisonDataReader do
 
       it 'should return results with the subtext key set' do
         subject.data.values.first.each do |d|
-          expect(d[:subtext]).to_not be_nil
+          expect(d[:subtext]).to_not eq(
+            I18n.t(
+              :no_data_subtext,
+              scope: :group_comparison_data_reader,
+              default:"No data"
+            )
+          )
         end
       end
 

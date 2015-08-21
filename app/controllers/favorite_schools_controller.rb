@@ -27,7 +27,7 @@ class FavoriteSchoolsController < ApplicationController
       if request.xhr?
         render 'create', status: 422
       else
-        flash_error 'Please log in or register your email to begin tracking your favorite schools.'
+        flash_error I18n.t('controllers.favorite_schools_controller.login_required')
         redirect_to signin_url
       end
     end
@@ -41,12 +41,12 @@ class FavoriteSchoolsController < ApplicationController
     if @favorite_school && @current_user.id == @favorite_school.member_id
       success = !!@favorite_school.destroy
       if success
-        message = 'School has been removed from your school list'
+        message = I18n.t('controllers.favorite_schools_controller.school_removed')
       else
-        message = 'A problem occurred when removing the school from your school list. Please try again later.'
+        message = I18n.t('controllers.favorite_schools_controller.school_not_removed_error')
       end
     else
-      message = 'The given school was not on your school list'
+      message = I18n.t('controllers.favorite_schools_controller.school_not_on_list_error')
     end
 
     @result = {

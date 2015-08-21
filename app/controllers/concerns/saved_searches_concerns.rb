@@ -1,6 +1,6 @@
 module SavedSearchesConcerns
   extend ActiveSupport::Concern
-  ERROR_MESSAGE = 'Currently we are unable to save your search. Please try again later'
+  ERROR_MESSAGE = I18n.t('controllers.concerns.saved_searches_concerns.search_not_saved_error')
 
   def handle_json(saved_search_attrs)
     errors = create_saved_search(saved_search_attrs)
@@ -17,7 +17,7 @@ module SavedSearchesConcerns
       flash_error ERROR_MESSAGE
     else
       cookies[:saved_search] = 'success'
-      flash_notice 'You have successfully saved your search!' if flash.empty?
+      flash_notice I18n.t('controllers.concerns.saved_searches_concerns.search_saved') if flash.empty?
     end
     redirect_path.nil? ? redirect_back_or_default : redirect_back_or_default(redirect_path)
   end

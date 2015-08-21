@@ -1,10 +1,14 @@
 ---
 en:
-  '"Arts (visual, literary, dance, theater, and/or music)"': '"Arts (visual, literary,
+  ! '"Arts (visual, literary, dance, theater, and/or music)"': ! '"Arts (visual, literary,
     dance, theater, and/or music)"'
+  0%-25%: 0%-25%
   2 years old: 2 years old
+  26%-50%: 26%-50%
   3 years old: 3 years old
   4 years old: 4 years old
+  51%-75%: 51%-75%
+  76%-100%: 76%-100%
   AM and PM kindergarten: AM and PM kindergarten
   Academic (homework help and/or standards-based programs): Academic (homework help
     and/or standards-based programs)
@@ -42,6 +46,7 @@ en:
   Auditorium: Auditorium
   Autism: Autism
   Auto mechanics: Auto mechanics
+  Bachelor's degree: Bachelor's degree
   Badminton: Badminton
   Band: Band
   Baseball: Baseball
@@ -76,6 +81,8 @@ en:
   Cheerleading: Cheerleading
   Chemistry: Chemistry
   Chess club: Chess club
+  Child development associate (CDA) credential: Child development associate (CDA)
+    credential
   Chinese - Cantonese: Chinese - Cantonese
   Chinese - Mandarin: Chinese - Mandarin
   Chinese Language and Culture: Chinese Language and Culture
@@ -203,6 +210,8 @@ en:
   IT support: IT support
   Ice hockey: Ice hockey
   Improv: Improv
+  In-home: In-home
+  In-school: In-school
   Inclusive classroom: Inclusive classroom
   Independent study: Independent study
   Individually guided instruction: Individually guided instruction
@@ -307,11 +316,11 @@ en:
   Performing arts: Performing arts
   Phone: Phone
   Photography: Photography
-  'Physics 1: Algebra-Based': 'Physics 1: Algebra-Based'
-  'Physics 2: Algebra-Based': 'Physics 2: Algebra-Based'
+  ! 'Physics 1: Algebra-Based': ! 'Physics 1: Algebra-Based'
+  ! 'Physics 2: Algebra-Based': ! 'Physics 2: Algebra-Based'
   Physics B: Physics B
-  'Physics C: Electricity and Magnetism': 'Physics C: Electricity and Magnetism'
-  'Physics C: Mechanics': 'Physics C: Mechanics'
+  ! 'Physics C: Electricity and Magnetism': ! 'Physics C: Electricity and Magnetism'
+  ! 'Physics C: Mechanics': ! 'Physics C: Mechanics'
   Playground: Playground
   Poetry: Poetry
   Poetry / Creative writing teacher: Poetry / Creative writing teacher
@@ -380,6 +389,7 @@ en:
   Speech therapist(s): Speech therapist(s)
   Sports Fields: Sports Fields
   Squash: Squash
+  Standalone center: Standalone center
   Standards-based: Standards-based
   Statistics: Statistics
   Step team: Step team
@@ -389,9 +399,9 @@ en:
     can apply for transfer
   Students living outside district can apply for transfer: Students living outside
     district can apply for transfer
-  'Studio Art: 2-D Design': 'Studio Art: 2-D Design'
-  'Studio Art: 3-D Design': 'Studio Art: 3-D Design'
-  'Studio Art: Drawing': 'Studio Art: Drawing'
+  ! 'Studio Art: 2-D Design': ! 'Studio Art: 2-D Design'
+  ! 'Studio Art: 3-D Design': ! 'Studio Art: 3-D Design'
+  ! 'Studio Art: Drawing': ! 'Studio Art: Drawing'
   Summer college prep programs: Summer college prep programs
   Surfing: Surfing
   Swimming: Swimming
@@ -400,6 +410,7 @@ en:
   Tax credits: Tax credits
   Teacher aide / assistant teacher: Teacher aide / assistant teacher
   Teacher-run: Teacher-run
+  Teaching credential: Teaching credential
   Technical design and production: Technical design and production
   Technology: Technology
   Technology club: Technology club
@@ -449,3 +460,4 @@ en:
   Yes - for students in adjacent districts: Yes - for students in adjacent districts
   Yoga club: Yoga club
   label: label
+  response_label: response_label

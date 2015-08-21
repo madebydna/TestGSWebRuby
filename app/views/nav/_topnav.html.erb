@@ -1,3 +1,5 @@
+<% #encoding: utf-8 %>
+
 <nav class="navbar navbar-default navbar-fixed-top <%= @gs_bootstrap %>" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="limit-width-1200">
@@ -16,9 +18,7 @@
             <ul class="nav navbar-nav">
                 <li>
                     <%- if nav.has_topnav? %>
-                        <a class="dropdown-toggle js-gaLoad js-gaClick" data-toggle="dropdown"
-                           data-ga-load-label="topNav localStateCity dropdown" data-ga-click-label="topNav localStateCity dropdown"
-                           href="#home">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#home">
                             <%= nav.topnav_title %>  <span class="caret"></span>
                         </a>
                     <% end %>
@@ -50,64 +50,57 @@
                         <% end %>
                     </ul>
                 </li>
-                <li><%= link_to t('.find_a_school'), home_url, class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav findASchool link',
-                                          'ga-load-label'=>'topNav findASchool link' } %>
-                </li>
+                <li><%= link_to t('.find_a_school'), home_url %> </li>
                 <li>
                     <%= link_to t('.review_your_school'),
                         ((defined?(@school) && @school.present?) ? school_reviews_path(@school, anchor: 'topic1') : the_scoop_path),
                         :onclick=>"GS.omniture.track_reviews('GlobalNav');", :class=>'js-no_ad' %>
                 </li>
-                <li><a class="dropdown-toggle js-gaLoad js-gaClick"
-                       data-toggle="dropdown"
-                       data-ga-load-label="topNav Discover dropdown" data-ga-click-label="topNav Discover dropdown"
-                       href="#greatkids"><%= t('.greatkids') %> <span class="caret"></span>
-                    </a>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" href="#greatkids">
+                  <%= t('.greatkids') %> <span class="caret"></span>
+                </a>
                     <ul class="dropdown-menu">
                       <li class=" ">
-                        <%= link_to t('.welcome_to_greatkids'), greatkids_home_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav gkHome link',
-                                          'ga-load-label'=>'topNav gkHome link' } %>
-                      </li>
-                      <li class=" ">
-                        <%= link_to t('.worksheets_and_activities'), worksheets_and_activities_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav worksheetsAndActivities link',
-                                          'ga-load-label'=>'topNav worksheetsAndActivities link' } %>
+                        <%= link_to t('.welcome_to_greatkids'), greatkids_home_url %>
                       </li>
                       <li>
-                        <%= link_to t('.emotional_smarts'), emotional_smarts_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav emotionalSmarts link',
-                                          'ga-load-label'=>'topNav emotionalSmarts link' } %>
+                        <%= link_to t('.worksheets_and_activities'), worksheets_and_activities_url %>
                       </li>
                       <li>
-                        <%= link_to t('.back_to_school'), back_to_school_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav backToSchool_url link',
-                                          'ga-load-label'=>'topNav backToSchool_url link' } %>
-                      </li>
-                      <li class=" ">
-                        <%= link_to t('.early_learning'), early_learning_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav earlyLearning link',
-                                          'ga-load-label'=>'topNav earlyLearning link' } %>
+                        <%= link_to t('.emotional_smarts'), emotional_smarts_url %>
                       </li>
                       <li>
-                        <%= link_to t('.learning_disabilities'), learning_disabilities_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav learningDisabilities link',
-                                          'ga-load-label'=>'topNav learningDisabilities link' } %>
+                        <%= link_to t('.back_to_school'), back_to_school_url %>
                       </li>
                       <li class=" ">
-                        <%= link_to t('.summer_learning'), summer_learning_url,
-                                    class: "js-gaLoad js-gaClick",
-                                    data:{'ga-click-label'=>'topNav summerLearning link',
-                                          'ga-load-label'=>'topNav summerLearning link' } %>
+                        <%= link_to t('.early_learning'), early_learning_url %>
+                      </li>
+                      <li>
+                        <%= link_to t('.learning_disabilities'), learning_disabilities_url %>
+                      </li>
+                      <li class=" ">
+                        <%= link_to t('.summer_learning'), summer_learning_url %>
                       </li>
                     </ul>
+                </li>
+                <li>
+                <%=
+                    target_lang, link_text, label_text = * case I18n.locale
+                                               when :en
+                                                 ['es', 'En Español', 'spanish']
+                                               when :es
+                                                 [nil, 'In English', 'english']
+                                               else
+                                                 ['es', 'En Español', 'spanish']
+                                               end
+                    link_to(link_text, 
+                            params.merge(lang: target_lang).merge(state_params(state_param_safe)), 
+                            class: "js-gaClick open-sans_i",
+                            data:{ 'ga-click-category' => 'language selection',
+                                   'ga-click-action' => 'global nav bar',
+                                   'ga-click-label' => label_text }
+                           )
+                %>
                 </li>
 
                 <li>
@@ -134,10 +127,7 @@
                             </li>
                         </ul>
                     <% else %>
-                        <%= link_to(t('.sign_in'), signin_url,
-                                    class: 'brand-secondary js-no_ad js-gaLoad js-gaClick',
-                                    data:{'ga-click-label'=>'topNav signIn link',
-                                          'ga-load-label'=>'topNav signIn link' }) %>
+                        <%= link_to(t('.sign_in'), signin_url, class: 'brand-secondary js-no_ad') %>
                     <% end %>
                 </li>
             </ul>

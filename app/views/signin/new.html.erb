@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-hdr">
       <%= render "shared/signin_notification_bar" %>
-      <h2 class="ptl tac">Find great schools, share your stories and get parenting advice</h2>
+      <h2 class="ptl tac"><%= t('.header') %></h2>
     </div>
   </div>
   <div class="row limit-width-1200 signin-content">
@@ -16,16 +16,16 @@
             <fieldset>
               <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12 bg-white pal brs">
-                  <p class="<%= 'active' if @active_tab == 'join' %>  tar gray-header">Don't have an account? <a href="#join" data-toggle="tab" id="js_join_tab">Sign Up</a></p>
+                  <p class="<%= 'active' if @active_tab == 'join' %>  tar gray-header"><%= t('.no_account_label') %><a href="#join" data-toggle="tab" id="js_join_tab"> <%= t('.signup_tab') %></a></p>
                   <div class="form-group">
                       <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
-                        Sign in with Facebook
+                        <%= t('.facebook_signin_button') %>
                       </button>
                   </div>
-                  <p>- or -</p>
+                  <p>- <%= t('.or') %> -</p>
                   <div class="form-group">
                     <!-- Email -->
-                    <label class="control-label" for="email">Email</label>
+                    <label class="control-label" for="email"><%= t('.email_label') %></label>
                     <div class="controls">
                       <input type="text" id="email" name="email" placeholder="" class="input-xlarge js-signin-email" style="width:100%"
                                data-parsley-required="true"
@@ -37,7 +37,7 @@
                   </div>
                   <div class="form-group">
                     <!-- Password-->
-                    <label class="control-label" for="password">Password</label>
+                    <label class="control-label" for="password"><%= t('.password_label') %></label>
                     <div class="controls">
                       <input type="password" id="password" name="password" placeholder="" class="input-xlarge" style="width:100%"
                                  data-parsley-required="true"
@@ -49,9 +49,9 @@
                   <div class="form-group">
                     <!-- Button -->
                     <div class="controls pbm">
-                      <button class="btn btn-primary js-signin-form-button">Login</button>
+                      <button class="btn btn-primary js-signin-form-button"><%= t('.login_button') %></button>
                     </div>
-                    <%= link_to 'Forgot your password?', forgot_password_url, class: 'small' %>
+                    <%= link_to t('.forgot_password_link'), forgot_password_url, class: 'small' %>
                   </div>
                 </div>
               </div>
@@ -67,37 +67,31 @@
               <div class="row">
                 <div class="col-xs-4 hidden-xs col-sm-6 hidden-sm col-md-5 col-lg-5">
                   <ul class="promos">
-                    <li>
-                      <h3>Weekly newsletter</h3>
-                      <p>Get our best articles, worksheets and more delivered weekly.</p>
-                    </li>
-                    <li>
-                      <h3>Follow schools</h3>
-                      <p>Save schools to lists, then get notified when new test scores or reviews are posted.</p>
-                    </li>
-                    <li>
-                      <h3>Write reviews</h3>
-                      <p>Help other parents find a great school by sharing your experiences.</p>
-                    </li>
+                    <% t('.promos').each do |list_item| %>
+                      <li>
+                        <h3><%= list_item['header'] %></h3>
+                        <p><%= list_item['paragraph'] %></p>
+                      </li>
+                    <% end %>
                   </ul>
                 </div>
                 <div class="col-sm-2 hidden-sm col-md-1 col-lg-1"></div>
                 <div class="col-sm-12 col-md-6 col-lg-6 bg-white brs pal">
-                  <p class="<%= 'active' if @active_tab == 'login' %> tar gray-header">Have an account? <a href="#login" data-toggle="tab" id="js_login_tab">Login</a></p>
-                    <legend>Create an account using Facebook</legend>
+                  <p class="<%= 'active' if @active_tab == 'login' %> tar gray-header"><%= t('.have_an_account_label') %> <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
+                    <legend><%= t('.facebook_signup_label') %></legend>
 
                     <div class="form-group">
                       <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
-                        Sign Up with Facebook
+                        <%= t('.facebook_signup_button') %>
                       </button>
                     </div>
 
-                    <p>- or -</p>
+                    <p>- <%= t('.or') %> -</p>
 
-                    <legend>Create account using your email</legend>
+                    <legend><%= t('.create_account_using_your_email') %></legend>
                     <div class="form-group">
                         <!-- Email -->
-                        <label class="control-label" for="email">Email address</label>
+                        <label class="control-label" for="email"><%= t('.email_label') %></label>
 
                         <div class="controls">
                             <input type="text" id="join-email" name="email" placeholder=""
@@ -116,17 +110,15 @@
                     <div class="form-group">
                         <div class="controls">
                             <label class="checkbox small">
-                                <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
-                                              'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
-                                              'data-parsley-error-container' => '.js-join-terms-errors' %>
-                                I agree to the <%= link_to 'GreatSchools Terms of Use', terms_of_use_url %>.
-
-                                <% if false # comment out for now %>
-                                By joining GreatSchools, you agree to our <%= link_to 'GreatSchools Terms of Use', terms_of_use_url %>,
-                                <%= link_to 'Community Guidelines',
-                                    terms_of_use_url(state: hub_params[:state], anchor:'#communityStandards') %>,
-                                and <%= link_to 'GreatSchools Privacy Policy', privacy_url(state: hub_params[:state]) %>.
-                                <% end %>
+                              <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
+                                            'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
+                                            'data-parsley-error-container' => '.js-join-terms-errors' %>
+                              <%= t('.terms_of_use_html',
+                                    terms_of_use_link: link_to(
+                                      t('.greatschools_terms_of_use'),
+                                      terms_of_use_url
+                                    )
+                                  ) %>
                             </label>
                             <p class="js-join-terms-errors help-block"></p>
                         </div>
@@ -137,7 +129,7 @@
                     <div class="form-group">
                         <!-- Button -->
                         <div class="controls">
-                            <button class="btn btn-primary">Sign Up</button>
+                            <button class="btn btn-primary"><%= t('.signup_button') %></button>
                         </div>
                     </div>
                 </div>
@@ -151,9 +143,9 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-ftr">
       <ul class="pvl pln tac mtl">
-        <li class="di prl plm"><span class="prs ptm italic">250,000+</span> school profiles</li>
-        <li class="di prl plm"><span class="prs ptm italic">1.3M+</span> community reviews of schools</li>
-        <li class="di plm last"><span class="prs ptm italic">14,000+</span> articles, worksheets and videos</li>
+        <li class="di prl plm"><span class="prs ptm italic">250,000+</span> <%= t('.school_profiles_count') %></li>
+        <li class="di prl plm"><span class="prs ptm italic">1.3M+</span> <%= t('.community_reviews_count') %></li>
+        <li class="di plm last"><span class="prs ptm italic">14,000+</span> <%= t('.articles_count') %></li>
       </ul>
     </div>
   </div>

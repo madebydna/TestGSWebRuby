@@ -4,6 +4,8 @@
 
   filtered_data = if data_config.config['breakdowns']
                     filter_by_breakdowns(data_config.config['breakdowns'], data)
+                  else
+                    data
                   end
 %>
 <%= debug(filtered_data) if params[:debug] %>

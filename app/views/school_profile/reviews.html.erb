@@ -13,7 +13,7 @@
           </div>
         <% end %>
         <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
-        <%= render 'shared/review_no_ratings' %>
+        <%= render 'school_profile/reviews/review_no_ratings' %>
         <%= render 'school_profile/reviews/topical_review_section' %>
       </div>
     <% else %>

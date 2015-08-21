@@ -1,0 +1,7 @@
+en:
+  models:
+    schools:
+      reviews:
+        review_voting:
+          cannot_vote_on_own_review: Sorry, you may not vote on your own review.
+          review_not_found: Specified review could not be found

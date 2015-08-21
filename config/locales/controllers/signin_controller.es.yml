@@ -1,0 +1,15 @@
+---
+es:
+  controllers:
+    signin:
+      create:
+        email_without_password_error_html: Tenemos su dirección de correo electrónico en el archivo, pero todavía necesitamos crear una cuenta gratuita con GreatSchools. <a href="%{join_path}">Únete ahora</a>
+        facebook_login_error: No se pudo iniciar sesión con Facebook.
+        password_invalid_error_html: El email o la contraseña que ha introducido no es válido. Por favor, inténtelo de nuevo o <a href="%{join_url}">crear una cuenta</a> .
+        provisional_email_error: Antes de iniciar la sesión, se debe verificar su dirección de correo electrónico haciendo clic en el enlace del correo electrónico que le enviamos.
+        success: Casi hecho! Ahora sólo lo necesario para verificar su dirección de correo electrónico. Por favor, haz clic en el enlace del correo para activar su cuenta.
+        user_not_found_error: Lo sentimos, no tenemos una cuenta con esa dirección de correo electrónico.
+      destroy:
+        success: Firmado a cabo con éxito.
+      verify_email:
+        error: Email enlace de verificación tuvo errores, redirigiendo.

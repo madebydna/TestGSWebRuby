@@ -530,4 +530,15 @@ describe Review do
       end
     end
   end
+
+  describe '#create' do
+    let(:review) { FactoryGirl.build(:five_star_review) }
+    after do
+      clean_dbs :gs_schooldb
+    end
+    it 'should trigger a cache rebuild' do
+      expect(review).to receive(:log_review_changed).with(review.state, review.school_id, review.member_id)
+      review.save
+    end
+  end
 end

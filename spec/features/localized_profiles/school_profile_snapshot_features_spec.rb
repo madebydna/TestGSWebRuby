@@ -208,6 +208,7 @@ feature 'school profile snapshot module' do
 
     scenario 'District name should link to district home' do
       pending('PT-1213: TODO: Fix rspec')
+      fail
       subject
       click_link 'Alameda City Unified'
       uri = URI.parse(current_url)

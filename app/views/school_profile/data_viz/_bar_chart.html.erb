@@ -6,7 +6,12 @@
 <% bar_chart_array = bar_chart.bar_chart_bars%>
 <% split_bar_chart_array = bar_chart_array.each_slice( (bar_chart_array.size/2.0).round ).to_a%>
 
-<div class="js-barChart js-<%= t(".#{bar_chart.title}") %> <%= show_hide_chart %>">
+<%
+  # TODO Once this chart is using the yaml key as its JS value instead of the
+  # title, please delete bar_chart.*.yml as it's difficult to maintain those
+  # files and bar_chart_dropdown.*.yml and they won't be necessary anymore.
+%>
+<div class="js-barChart js-<%= t(".#{bar_chart.title}").to_s.gsub(' ', '-') %> <%= show_hide_chart %>">
 
   <% split_bar_chart_array.each do |bar_charts| %>
       <div class="col-xs-12 col-md-6">

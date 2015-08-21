@@ -1,0 +1,104 @@
+---
+es:
+  actions:
+    account:
+      created_via_facebook: Grande, hemos terminado de configurar su cuenta! A partir de ahora puede iniciar sesión en el uso de Facebook.
+      email_verified: Su dirección de correo electrónico ha sido verificada. Bienvenido a GreatSchools!
+      facebook_linked: Nos dimos cuenta de que ya tenía una cuenta de GreatSchools, por lo que ahora puede iniciar sesión en el uso de Facebook también!
+      password_changed: Su contraseña ha sido cambiada.
+      pending_email_verification: Casi hecho! Ahora sólo lo necesario para verificar su dirección de correo electrónico. Por favor, haz clic en el enlace del correo para activar su cuenta.
+    forgot_password:
+      email_sent: ¡Excelente! Simplemente haga clic en el enlace en el correo electrónico que le enviamos para %{email} continuar restablecer su contraseña.
+    generic_error: Lo sentimos, por algo salió mal al procesar tu solicitud.
+    my_school_list:
+      school_added: ! '%{school_name} se ha guardado en la lista de la escuela.'
+      school_added_subscribed: ¡Excelente! Te enviaremos actualizaciones oportunas sobre las escuelas que sigues. Usted puede descargar y guardar la lista de su cuenta.
+    official_school_profile:
+      register: ¡Casi Estas allí! Gracias por registrarse como líder escolar. Sólo tenemos que verificar su dirección de correo electrónico. Te hemos enviado un correo electrónico - por favor haga clic en el enlace en ese mensaje para empezar la edición de la información de su escuela!
+    report_review:
+      email_verification_required: Antes de marcar un comentario, usted debe verificar su dirección de correo electrónico haciendo clic en el enlace del correo electrónico que le enviamos. <a href="%{verification_email_url}"> Haga clic aquí </a> para enviar el correo electrónico.
+      login_required: Por favor, ingrese o regístrese para informar de una revisión.
+      reported: Gracias por marcar este review. Nuestros moderadores han sido notificados y investigarán.
+    review:
+      activated: Muchas gracias por tu opinión escuela! Su opinion ayuda a otros padres eligen las escuelas correctas!
+      login_required: ¡Tienes que entrar o registrar su correo electrónico para poder escribir un comentario.
+      pending_email_verification: Gracias - hemos ahorrado su revisión. Podemos publicar una vez que verifique su dirección de correo electrónico; por favor revise su bandeja de entrada un correo electrónico de nosotros.
+      pending_moderation: Tenga en cuenta que puede tardar hasta 48 horas para que su opinión será publicada en nuestro sitio.
+    session:
+      signed_out: Firmado a cabo con éxito.
+    subscription:
+      default:
+        login_required: Por favor Inicie sesión o registro de su correo electrónico para recibir actualizaciones.
+      gsnewsletter:
+        login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de inscribirse en el boletín de GreatSchool
+      mystat:
+        login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de seguir esta escuela.
+      mystat_private:
+        login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de seguir esta escuela.
+  activerecord:
+    errors:
+      models:
+        school_rating:
+          attributes:
+            comments:
+              too_long: Su comentario sólo puede ser de hasta %{count} caracteres.
+              too_short: Utilice al menos %{count} palabras en su comentario.
+            overall:
+              blank: Valoración general no puede estar en blanco
+            who:
+              inclusion: Afiliación tiene un valor no válido.
+          blank: ! '%{attribute} no puede estar en blanco.'
+        user:
+          attributes:
+            email:
+              blank: Por favor introduzca una dirección de correo eléctronico.
+              format: Por favor, introduce una dirección de correo electrónico válida.
+              taken: Lo sentimos, pero la dirección de correo electrónico que usted eligió ya ha sido tomada.
+            plain_text_password:
+              too_long: La contraseña debe tener entre 6 y 14 caracteres.
+              too_short: La contraseña debe tener entre 6 y 14 caracteres.
+  errors:
+    format: ! '%{message}'
+  forms:
+    admin:
+      errors:
+        email:
+          account_without_password: Cuenta con ninguna contraseña.
+          de_activated: La cuenta asociada a esa dirección de correo electrónico se ha desactivado.
+          nonexistent: Lo sentimos, no tenemos una cuenta con esa dirección de correo electrónico.
+          provisional: El usuario es provisional.
+    errors:
+      email:
+        account_without_password: Tenemos su dirección de correo electrónico en el archivo, pero todavía necesitamos crear una cuenta gratuita con GreatSchools. <a href="%{join_path}"> Suscríbete ya </a>
+        blank: Por favor introduzca una dirección de correo eléctronico.
+        de_activated: La cuenta asociada a esa dirección de correo electrónico se ha desactivado. Por favor contáctenos.
+        format: Por favor, introduce una dirección de correo electrónico válida.
+        nonexistent: Lo sentimos, no tenemos una cuenta con esa dirección de correo electrónico.
+        nonexistent_join: No hay ninguna cuenta asociada con esa dirección de correo electrónico. ¿Quieres <a href="%{join_path}"> unen GreatSchools </a>?
+        provisional: Antes de iniciar la sesión, se debe verificar su dirección de correo electrónico haciendo clic en el enlace del correo electrónico que le enviamos.
+        provisional_resend_email: Antes de iniciar la sesión, se debe verificar su dirección de correo electrónico haciendo clic en el enlace del correo electrónico que le enviamos. <a href="%{verification_email_url}"> Haga clic aquí </a> para enviar el correo electrónico.
+      facebook: Lo sentimos, hubo un error de iniciar sesión con Facebook.
+      password:
+        invalid: El email o la contraseña que ha introducido no es válido. Por favor, inténtelo de nuevo o <a href="%{join_url}"> crear una cuenta </a>.
+        invalid_try_facebook: Intenta iniciar sesión con Facebook. GreatSchools no tiene una cuenta que coincide con la contraseña, pero usted podría estar utilizando accidentalmente sus credenciales de Facebook.
+    osp:
+      changes_saved: Los cambios realizados han sido guardados
+      delaware_error: Para acceder a su perfil de la escuela, por favor iniciar sesión en el <a href="https://login.doe.k12.de.us/"> IMS portal </a>, a continuación, haga clic en la aplicación GreatSchools Delaware.
+      provisional_user: Usted tiene una cuenta provisional. Los cambios que realice se publicarán en el sitio después de que su cuenta haya sido aprobada.
+      saving_error: Se produjo un error al guardar los datos. Por favor, intente guardar de nuevo.
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: Viendo %{entry_name} <b> %{first} & nbsp; - & nbsp; %{last} </ b> <b> %{total} </ b> en total
+      one_page:
+        display_entries:
+          one: Viendo <b> 1 </ b> %{entry_name}
+          other: Viendo <b> todos %{count} </ b> %{entry_name}
+          zero: No se han encontrado %{entry_name}
+  views:
+    pagination:
+      first: ! '& Laquo; Primero'
+      last: Última & raquo;
+      next: Y rsaquo;
+      previous: Y lsaquo;
+      truncate: Y hellip;

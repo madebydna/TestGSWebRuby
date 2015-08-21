@@ -14,14 +14,19 @@ es:
   American Literature: Literatura americana
   Analytic Geometry: Geometría Analítica
   Applied Biology: Biología Aplicada
+  Arts & Humanities: Artes y Humanidades
   Biology I: Biología I
   Chemistry: Química
   Civics: Civismo
-  Communication Arts (DEPRECATED, use id 4): Artes de la Comunicación (en desuso, el uso Identificación 4)
+  Communication Arts (DEPRECATED, use id 4): Artes de la Comunicación (en desuso,
+    el uso Identificación 4)
   Coordinate Algebra: Coordinar Álgebra
   Earth Science: Ciencia de la Tierra
+  Economics: Ciencias económicas
+  English: Inglés
   English 2: Inglés 2
-  English I (DEPRECATED, use id 19): Inglés I (DEPRECATED, uso Identificación del 19)
+  English I (DEPRECATED, use id 19): Inglés I (DEPRECATED, uso Identificación del
+    19)
   English I Reading: Inglés I Lectura
   English I Writing: Inglés I Escritura
   English II Reading: Lectura Inglés II
@@ -29,14 +34,24 @@ es:
   English III: Inglés III
   English III Reading: Lectura Inglés III
   English III Writing: Escribir Inglés III
-  English language arts (DEPRECATED, use id 4): Artes del lenguaje Inglés (DEPRECATED, uso Identificación 4)
-  English/Language Arts (DEPRECATED, use id 4): Inglés / Artes del Lenguaje (DEPRECATED, uso Identificación 4)
+  English Language Arts: Artes del Idioma Inglés
+  English language arts (DEPRECATED, use id 4): Artes del lenguaje Inglés (DEPRECATED,
+    uso Identificación 4)
+  English/Language Arts (DEPRECATED, use id 4): Inglés / Artes del Lenguaje (DEPRECATED,
+    uso Identificación 4)
   Foreign Language: Idioma extranjero
   French: Francés
-  General Mathematics (Grades 6 & 7 Standards): General de Matemáticas (Grados 6 y 7 Normas)
+  General Elementary: Primaria general
+  General Mathematics (Grades 6 & 7 Standards): General de Matemáticas (Grados 6 y
+    7 Normas)
+  Geography: Geografía
   Geometry: Geometría
   Global History and Geography: Historia Global y Geografía
-  High School (Summative) Mathematics (Grade 9-11): High School (sumativa) Matemáticas (Grado 9-11)
+  Government: Gobierno
+  High School (Summative) Mathematics (Grade 9-11): High School (sumativa) Matemáticas
+    (Grado 9-11)
+  History - Social Science Grade 8 Cumulative: Historia - Ciencias Sociales Grado
+    8 acumulativa
   Integrated Algebra: Álgebra integrada
   Integrated Math 1: Matemáticas Integradas 1
   Integrated Math 2: Matemáticas Integradas 2
@@ -44,8 +59,10 @@ es:
   Integrated/Coordinated Science 1: Integrado / Ciencia Coordinada 1
   Italian: Italiano
   Language Mechanics: Mecánica del idioma
-  Language arts (DEPRECATED, use id 4): Artes del lenguaje (en desuso, el uso Identificación 4)
+  Language arts (DEPRECATED, use id 4): Artes del lenguaje (en desuso, el uso Identificación
+    4)
   Listening: Escuchando
+  Math: Matemáticas
   Math Concepts: Conceptos de Matemáticas
   Math Problem Solving: Matemáticas Resolución de Problemas
   Math Skills: Habilidades Matemáticas
@@ -59,12 +76,15 @@ es:
   Reading: Leyendo
   Reading Analysis/Interpretation: Análisis de lectura / Interpretación
   Reading Basic Understanding: Lectura de Comprensión Básica
-  Reading/Language Arts (DEPRECATED, use id 4): Lectura / lengua y literatura (en desuso, el uso Identificación 4)
+  Reading/Language Arts (DEPRECATED, use id 4): Lectura / lengua y literatura (en
+    desuso, el uso Identificación 4)
+  Science: Ciencia
   Sequential Mathematics, Course III: Secuencial Matemáticas, Curso III
+  Social Studies: Estudios Sociales
   Spanish: Español
   Tech/Engineering: Técnico / Ingeniería
   US History: Historia de Estados Unidos
-  US History and Government: Historia y Gobierno EE.UU.
+  US History and Government: Historia de Estados Unidos y de Gobierno
   World History: Historia mundial
   World History I: Historia Mundial
   World History II: Historia Mundial II

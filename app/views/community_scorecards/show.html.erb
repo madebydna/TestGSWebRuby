@@ -1,62 +1,27 @@
-<div class=<%= @gs_bootstrap %>
-  <div class="container-fluid">
-    foof
-    foof
-    foof
-
-      <%= render partial: "shared/partners/promo_delegator",
-                 locals: {
-                         collections: [@collection],
-                         partial: current_partial,
-                         force_show: true,
-                         options: {
-                                 is_vertical_promo: true
-                         }
-                 }
-      %>
-    </div>
-</div>
 <%= include_handlebars_templates('community_scorecards/') %>
+<% scope = 'innovate_public_schools' %>
 
-<div class="btn btn-primary" id="addAnthony">Add anthony</div>
-<div id="table-goes-here"></div>
+<div class="<%= @gs_bootstrap %> community-scorecard js-communityScorecard">
+  <div class="container-fluid">
+    <h1 class="lg-roboto"><%= t(".#{scope}.title") %></h1>
+    <%= render partial: "community_scorecards/summary" %>
+    <div class="clearfix">
+    <%= render partial: "shared/partners/promo_delegator",
+                locals: {
+                  collections: [@collection],
+                  partial: current_partial,
+                  force_show: true,
+                  options: {
+                    is_vertical_promo: true
+                  }
+                }
+    %>
+    </div>
+    <h2>Community Scorecard</h2>
+    <div id="community-scorecard-table"></div>
+  </div>
+</div>
 
-<script>
-  // BEGIN TEST CODE
-  // This is just to show a few examples
-  Handlebars.registerHelper('isntKeith', function(options) {
-    return options.first != 'keith';
-  });
-  Handlebars.registerHelper('ucfirst', function(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  });
-  Handlebars.registerHelper('list', function(items, options) {
-    var out = "<ul>";
+<div class='shim-20'></div>
 
-    for(var i=0, l=items.length; i<l; i++) {
-      out = out + "<li>" + options.fn(items[i]) + "</li>";
-    }
-
-    return out + "</ul>";
-  });
-var addAnthony = function() {
-  var anthony = {people: [{ first: 'anthony', last: 'roy' }]};
-  $('#da-table').append(GS.handlebars.partialContent('community_scorecards/table', anthony));
-};
-$(document).ready(function() {
-  var rowData = {
-    people: [
-      {first: 'keith', last: 'mchugh'},
-      {first: 'harrison', last: 'touw'},
-      {first: 'christina', last: 'liu'},
-      {first: 'ines', last: 'baumgartner'},
-    ]
-  };
-  $('#addAnthony').click(function() {
-    addAnthony();
-  });
-
-  $('#table-goes-here').append(GS.handlebars.partialContent('community_scorecards/table',rowData));
-});
-  // END TEST CODE
-</script>
+<%= render 'nav/school_profile_footer' %>

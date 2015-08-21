@@ -1,9 +1,11 @@
+// GS variables to override defaults
+@import "gs-variables";
+
 // Core variables and mixins
 @import "variables";
 @import "mixins";
 
-// GS variables and mixins to override defaults
-@import "gs-variables";
+// GS mixins to override defaults
 @import "gs-mixins";
 
 // Reset

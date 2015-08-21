@@ -10,9 +10,15 @@ class StatusPage
       @app.call(env)
     else
       db_status_local = db_status
-      [ ( db_status_local ? 200 : 500),
+      solr_status_local = solr_status
+
+      db_text = "DB: #{db_status_local ? 'OK' : 'FAILED'}"
+      solr_text = "Solr: #{solr_status_local ? 'OK' : 'FAILED'}"
+      version_text = version_string
+
+      [ ( (db_status_local && solr_status_local) ? 200 : 503),
         {'Content-Type' => 'text/plain'},
-        ["DB: #{db_status_local ? 'OK' : 'FAILED'}\n\n#{version_string}"]
+        [ [db_text, solr_text, version_text].join("\n\n")]
       ]
     end
   end
@@ -39,5 +45,15 @@ class StatusPage
       Rails.logger.error(e.message)
     end
     db_status
+  end
+
+  def solr_status
+    solr_status = false
+    begin
+      solr_status = (Solr.new.ping.response[:status] == 200)
+    rescue Exception => e
+      Rails.logger.error(e.message)
+    end
+    solr_status
   end
 end

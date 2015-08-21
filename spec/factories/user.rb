@@ -74,6 +74,26 @@ FactoryGirl.define do
       end
     end
 
+    trait :with_school_subscriptions do
+      ignore do
+        lists ['mystat']
+        lists_schools [FactoryGirl.build(:school)]
+        number_of_subscriptions 1
+      end
+
+      after(:create) do |user, evaluator|
+        evaluator.lists.each_with_index do |list, i|
+          school = evaluator.lists_schools[i]
+          FactoryGirl.create(:subscription,
+                             list: list,
+                             member_id:user.id,
+                             school_id: school.id,
+                             state: school.state,
+                            )
+        end
+      end
+    end
+
   end
 
 end

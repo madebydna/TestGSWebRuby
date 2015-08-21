@@ -6,32 +6,50 @@ describe CitiesController do
   before(:each) { FactoryGirl.create(:hub_city_mapping) }
   after(:each) { clean_dbs :gs_schooldb, :surveys }
 
-  shared_examples_for 'a default cities controller action' do |action|
+  shared_examples_for 'a default cities controller action' do |action, page_name|
     context 'without a hub city mapping' do
-      it 'renders an error page' do
-        get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
-        expect(response).to render_template('error/page_not_found')
+      if action == :show
+        it 'redirects to state home' do
+          get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
+          expect(response).to redirect_to(state_url('michigan'))
+        end
+      else # hub sub-pages
+        it 'renders a 404 page' do
+          get action, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
+          expect(response).to render_template('error/page_not_found')
+        end
       end
     end
 
-    it 'sets canonical tags' do
-      get action, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
-      expect(assigns[:canonical_url]).to_not be_nil
+    context 'with a hub city mapping' do
+      before do
+        get action, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
+      end
+
+      it 'sets canonical tags' do
+        expect(assigns[:canonical_url]).to_not be_nil
+      end
+
+      it 'sets city in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('City')
+      end
+
+      it 'sets state in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('State')
+      end
+
+      it 'sets collection id in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('Collection ID')
+      end
+
+      it 'sets page_name in data_layer' do
+        expect(controller.gon.get_variable('data_layer_hash')).to include('page_name' => page_name)
+      end
     end
   end
 
   describe 'GET show' do
-    context 'without a hub city mapping' do
-      it 'renders an error page' do
-        get :show, state: 'michigan', city: gs_legacy_url_city_encode('foobarnotacity')
-        expect(response).to redirect_to(state_url('michigan'))
-      end
-    end
-
-    it 'sets canonical tags' do
-      get :show, state: 'michigan', city: gs_legacy_url_city_encode('detroit')
-      expect(assigns[:canonical_url]).to_not be_nil
-    end
+    it_behaves_like 'a default cities controller action', :show, 'GS:City:Home'
   end
 
   describe '#ad_setTargeting_through_gon' do
@@ -68,7 +86,7 @@ describe CitiesController do
   end
 
   describe 'GET events' do
-    it_behaves_like 'a default cities controller action', :events
+    it_behaves_like 'a default cities controller action', :events, 'GS:City:Events'
   end
 
   describe 'GET partner' do
@@ -78,22 +96,22 @@ describe CitiesController do
       FactoryGirl.create(:sponsor_page_acro_name_configs)
     end
 
-    it_behaves_like 'a default cities controller action', :partner
+    it_behaves_like 'a default cities controller action', :partner, 'GS:City:Partner'
   end
 
   describe 'GET community' do
-    it_behaves_like 'a default cities controller action', :community
+    it_behaves_like 'a default cities controller action', :community, 'GS:City:EducationCommunity'
   end
 
   describe 'GET choosing_schools' do
-    it_behaves_like 'a default cities controller action', :choosing_schools
+    it_behaves_like 'a default cities controller action', :choosing_schools, 'GS:City:ChoosingSchools'
   end
 
   describe 'GET enrollment' do
-    it_behaves_like 'a default cities controller action', :enrollment
+    it_behaves_like 'a default cities controller action', :enrollment, 'GS:City:Enrollment'
   end
 
   describe 'GET programs' do
-    it_behaves_like 'a default cities controller action', :programs
+    it_behaves_like 'a default cities controller action', :programs, 'GS:City:Programs'
   end
 end

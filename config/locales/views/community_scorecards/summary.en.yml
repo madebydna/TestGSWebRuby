@@ -1,0 +1,51 @@
+en:
+  community_scorecards:
+    summary:
+      read_more: Read more
+      innovate_public_schools:
+        description_above_fold: This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
+        description_below_fold: Below the fold. This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
+        column_1:
+          title: GRADUATION RATES IN THE BAY AREA
+          datapoint_1:
+            title: Latino students
+            performance_level: above_average
+            value_html: 74<sup>%</sup>
+            state_average: State average 78%
+          datapoint_2:
+            title: White students
+            performance_level: below_average
+            value_html: 57<sup>%</sup>
+            state_average: State average 78%
+          datapoint_3:
+            title: Asian students
+            performance_level: average
+            value_html: 64<sup>%</sup>
+            state_average: State average 78%
+          datapoint_4:
+            title: African-American students
+            performance_level: average
+            value_html: 62<sup>%</sup>
+            state_average: State average 78%
+        column_2:
+          title: ELIGIBILITY FOR A 4-YEAR COLLEGE IN THE BAY AREA
+          datapoint_1:
+            title: Latino students
+            performance_level: below_average
+            value_html: 34<sup>%</sup>
+            state_average: State average 64%
+          datapoint_2:
+            title: White students
+            performance_level: above_average
+            value_html: 87<sup>%</sup>
+            state_average: State average 64%
+          datapoint_3:
+            title: African-American students
+            performance_level: average
+            value_html: 62<sup>%</sup>
+            state_average: State average 64%
+          datapoint_4:
+            title: Asian students
+            performance_level: average
+            value_html: 64<sup>%</sup>
+            state_average: State average 64%

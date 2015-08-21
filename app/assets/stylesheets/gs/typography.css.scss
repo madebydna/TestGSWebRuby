@@ -1,6 +1,13 @@
-h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: #3d3d3d}
+h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: $gray-darkest}
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
 h6, .h6 { @extend .open-sans_i; }
+h1.lg-roboto {
+  font-size: 30px;
+  font-family: 'RobotoSlab-Light';
+  @media (min-width: $screen-sm-min) {
+    font-size: 50px;
+  }
+}
 
 .subtitle-lg { font-size: 24px}
 .subtitle-md { font-size: 20px}
@@ -35,6 +42,10 @@ h6, .h6 { @extend .open-sans_i; }
 
 p, a {
   font: $font-size-base 'opensans-regular',Arial,Helvetica,sans-serif;
+}
+
+p.small {
+  font-size: 12px;
 }
 
 .invert-colors{
@@ -90,7 +101,7 @@ p, a {
 }
 
 .link-darkgray {
-  color: #3d3d3d;
+  color: $gray-darkest;
 }
 
 .brand-secondary {
@@ -138,7 +149,7 @@ p, a {
 }
 
 .dark-gray-bg {
-  background: #3d3d3d;
+  background: $gray-darkest;
 }
 
 .darker-gray-bg {
@@ -307,9 +318,9 @@ img {
 }
 
 .gk-link {
-  color: #3d3d3d;
+  color: $gray-darkest;
   &:hover {
-    color: #3d3d3d;
+    color: $gray-darkest;
   }
 }
 

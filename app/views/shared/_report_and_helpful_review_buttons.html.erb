@@ -1,6 +1,10 @@
 <% review;  %>
 <div class="clearfix pts">
   <% if review.comment.present? %>
+      <div class="pull-left ptm prm">
+        <%= render 'school_profile/reviews/share_review_button', review: review %>
+      </div>
+
       <div class="pull-left ptm">
         <%= render 'school_profile/reviews/review_voting', review: review unless @school_user && @school_user.active_reviews.include?(review) %>
       </div>

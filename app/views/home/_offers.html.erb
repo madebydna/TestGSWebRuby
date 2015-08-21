@@ -1,0 +1,46 @@
+<div class="row rs-offers-section">
+  <div class="col-xs-12">
+    <div class="bg-medium-gray dvp clearfix">
+      <div class="limit-width-1200">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 pal">
+            <div class="tac">
+              <%= link_to('/gk/category/find-a-school-skills/') do %>
+                <%= image_tag(image_path('home/icon_families.png'))%>
+                <h3><%= t('.for_families_heading') %></h3>
+              <% end %>
+              <span><%= t('.for_families_body') %></span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 pal">
+            <div class="tac">
+              <%= link_to(osp_landing_path) do %>
+                <%= image_tag(image_path('home/icon_schools.png'))%>
+                <h3><%= t('.for_schools_heading') %></h3>
+              <% end %>
+              <span><%= t('.for_schools_body') %></span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 pal">
+            <div class="tac">
+              <%= link_to(the_scoop_path) do %>
+                <%= image_tag(image_path('home/icon_review.png'))%>
+                <h3><%= t('.write_a_review_heading') %></h3>
+              <% end %>
+              <span><%= t('.write_a_review_body') %></span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 pal">
+            <div class="tac">
+              <%= link_to(district_boundary_path) do %>
+                <%= image_tag(image_path('home/icon_search.png'))%>
+                <h3><%= t('.search_by_address_heading') %></h3>
+              <% end %>
+              <span><%= t('.search_by_address_body') %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

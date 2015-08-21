@@ -1,0 +1,5 @@
+en:
+  controllers:
+    concerns:
+      review_voting_concerns:
+        vote_saved: Your review vote has been recorded. Thanks!

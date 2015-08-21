@@ -1,5 +1,8 @@
+<% partial_dir = 'community_scorecards/' %>
 <tr>
-  <% [:first, :last].each do |n| %>
-    <td>{{ucfirst <%= n %>}}</td>
+  <% @table_fields.each do |n| %>
+    <td>
+      {{> <%= "#{partial_dir}#{n[:partial]} #{n[:data_type]}" %>}}
+    </td>
   <% end %>
 </tr>

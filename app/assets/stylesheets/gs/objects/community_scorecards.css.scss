@@ -1,0 +1,87 @@
+$csc-table-blue-border: 1px solid #2880b9 !default;
+
+.community-scorecard {
+  .summary {
+    .datapoint {
+      padding: 10px 0;
+      h4 {
+        margin-bottom: 5px;
+        margin-top: 0;
+      }
+    }
+  }
+  .table {
+    margin-bottom: 0;
+    td {
+      max-width: 200px;
+    }
+    th {
+      border-left: 1px solid #dedede;
+    }
+  }
+  @include csc-table-blue-highlight(2, $csc-table-blue-border);
+  @include csc-table-blue-highlight(3, $csc-table-blue-border);
+
+  .school-info {
+    .name {
+      font-family: 'opensans-bold';
+      font-size: 15px; // This will be duplicative once <p> has font-size 15px
+      margin-bottom: 5px;
+    }
+    .grade-type {
+      margin: 0;
+    }
+  }
+  .percent-value {
+    h3 {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    sup {
+      font-size: 70%;
+      top: -0.35em;
+    }
+    .state-average {
+      color: $gray-darker;
+      font-family: 'opensans-regular';
+      font-size: 12px;
+    }
+  }
+
+  .table-header {
+    @extend .pam;
+    @extend .full-width;
+    background-color: #dedede;
+  }
+
+  .sort-link {
+    color: $link-color;
+    @extend .pointer;
+  }
+
+  .sort-link:hover {
+    color: $link-hover-color;
+  }
+
+  .sort-text {
+    @extend .font-size-xs;
+    font-weight: bold;
+  }
+
+  .show-more {
+    background-color: $light-blue-background;
+    cursor: pointer;
+    padding: 10px 0;
+    text-align: center;
+    h4 {
+      color: $dark-blue-text;
+    }
+    .caret {
+      border-top:   ($caret-width-base + 2) solid #4788be;
+      border-right: ($caret-width-base + 2) solid transparent;
+      border-left:  ($caret-width-base + 2) solid transparent;
+      margin: 0 15px;
+      padding-bottom: 5px;
+    }
+  }
+}

@@ -1,20 +1,23 @@
-<h1>Alpha peeps</h1>
-{{#list people}} {{first}} {{last}} {{/list}}
-
-<h2>The coolest alpha peeps</h2>
-<table id="da-table" class="table table-striped no-more-tables">
+<table class="table data-table js-CommunityScorecardTable table-striped ">
   <thead>
     <tr>
-      <th>First name</th>
-      <th>Last name</th>
+      {{#each header_data}}
+      <th class='js-drawTable pointer' data-highlight-index='{{@index}}' data-sort-by='{{param}}'>
+          {{data_type}}
+          {{#if state_average}}
+            <div class="sub-text">
+              ({{state_average}})
+            </div>
+          {{/if}}
+        </th>
+      {{/each}}
     </tr>
   </thead>
 
   <tbody>
-    {{#each people}}
-      {{#if (isntKeith this)}}
-        {{> community_scorecards/table_row}}
-      {{/if}}
+    {{#each school_data}}
+      {{> community_scorecards/table_row}}
     {{/each}}
   </tbody>
 </table>
+{{> community_scorecards/show_more_results}}

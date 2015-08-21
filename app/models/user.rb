@@ -144,6 +144,13 @@ class User < ActiveRecord::Base
     subscription.save!
   end
 
+  def safely_add_subscription!(list, school = nil)
+    unless has_signedup?(list)
+      subscription = new_subscription(list, school)
+      subscription.save!
+    end
+  end
+
   def new_subscription(list, school = nil)
     now = Time.now
 

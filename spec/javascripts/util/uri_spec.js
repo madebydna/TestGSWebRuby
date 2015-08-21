@@ -135,6 +135,13 @@ describe('GS.uri.Uri', function() {
       expect(GS.uri.Uri.addQueryParamToUrl(param, value, url)).to.eq('www.greatschools.org?bar=baz&foo=bar');
     });
 
+    it('correctly adds the first param to a url with no params', function() {
+      var param = 'foo';
+      var value = 'bar';
+      var url = 'www.greatschools.org';
+      expect(GS.uri.Uri.addQueryParamToUrl(param, value, url)).to.eq('www.greatschools.org?foo=bar');
+    });
+
     it('handles URLs with anchors', function() {
       var param = 'foo';
       var value = 'bar';
@@ -170,6 +177,13 @@ describe('GS.uri.Uri', function() {
       var sourceUrl = 'www.greatschools.org?foo=bar';
       var targetUrl = 'www.greatschools.org#anchor';
       expect(GS.uri.Uri.copyParam(param, sourceUrl, targetUrl)).to.eq('www.greatschools.org?foo=bar#anchor');
+    });
+
+    it('doesn\'t add a blank param if source url doesn\'t have the param', function() {
+      var param = 'foo';
+      var sourceUrl = 'www.greatschools.org';
+      var targetUrl = 'www.greatschools.org#anchor';
+      expect(GS.uri.Uri.copyParam(param, sourceUrl, targetUrl)).to.eq('www.greatschools.org#anchor');
     });
   });
 

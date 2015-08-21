@@ -13,7 +13,7 @@ shared_context 'Given school profile page with Facebook module' do |page_name| n
 end
 
 shared_context 'Visit School Profile Overview' do |s = nil|
-  subject do
+  subject(:page_object) do
     visit school_path(s || school)
     SchoolProfileOverviewPage.new
   end

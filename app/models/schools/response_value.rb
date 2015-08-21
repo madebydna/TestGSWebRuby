@@ -14,7 +14,7 @@ class ResponseValue < ActiveRecord::Base
 
   # TODO: add collection support to this method
   def self.lookup_table
-    cached_all_values = Rails.cache.fetch('response_value/all_values', expires_in: 5.minutes) do
+    cached_all_values = Rails.cache.fetch(['response_value/all_values', I18n.locale], expires_in: 5.minutes) do
       hash = {}
       ResponseValue.all.each do |row|
         key = [row.response_key, row.response_value]

@@ -1,0 +1,7 @@
+---
+es:
+  controllers:
+    concerns:
+      saved_searches_concerns:
+        search_not_saved_error: Actualmente no podemos salvar a su búsqueda. Por favor, inténtelo de nuevo más tarde
+        search_saved: Ha guardado correctamente tu búsqueda!

@@ -35,7 +35,7 @@
             <div class="tac pvl">
               <span class="jumbo-text open-sans_cb text_orange"><%= value %><% if format == 'percentage' %>%<% end %></span>
               <br />
-              <%= label %>
+              <%= db_t(label) %>
 
 
           <% columns_to_print[2..-1].each do |column| %>
@@ -46,7 +46,7 @@
                <div class="tac ptl">
                    <span class="jumbo-text-sub open-sans_cb text_purple"><%= value %><% if format == 'percentage' %>%<% end %>
                    </span>
-                   <br /><%= column['label'] %>
+                   <br /><%= db_t(column['label']) %>
 
                </div>
             <% end %>

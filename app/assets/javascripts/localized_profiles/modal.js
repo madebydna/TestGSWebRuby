@@ -10,8 +10,9 @@ GS.modal.manager = GS.modal.intializer || (function ($) {
     var displayModal = function (modalObject, options) {
         options = options || {};
         var modalCssClass = options.modalCssClass || modalObject.getModalCssClass();
-        var query_string = '?modal_css_class=' + modalCssClass;
-        var url = modalObject.url() + query_string;
+        var url = modalObject.url();
+        url = GS.uri.Uri.addQueryParamToUrl('modal_css_class', modalCssClass, url);
+        url = GS.I18n.preserveLanguageParam(url);
         return $.ajax({
             method: 'GET',
             url: url

@@ -15,15 +15,6 @@ $gray:                   lighten(#000, 33.5%) !default; // #555
 $gray-light:             lighten(#000, 60%) !default;   // #999
 $gray-lighter:           lighten(#000, 93.5%) !default; // #eee
 
-////////////MS
-$gray-base-color:        #000;
-$gray-darkest:           lighten($gray-base-color, 24%); // #333
-$gray-darker:            lighten($gray-base-color, 40%); // #666
-$gray-dark:              lighten($gray-base-color, 60%); // #999
-$gray:                   lighten($gray-base-color, 80%); // #ccc
-$gray-light:             lighten($gray-base-color, 90%); // #ebebeb
-$gray-lighter:           lighten($gray-base-color, 95%); // #f4f4f4
-
 // Brand colors
 // -------------------------
 
@@ -34,25 +25,11 @@ $brand-danger:          #d9534f !default;
 $brand-info:            #5bc0de !default;
 
 
-/////////////MS
-$brand-primary:                #26ABE2;
-$brand-primary-darker:         #204362;
-$brand-primary-dark:           #2880b9;
-$brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
-$brand-primary-lighter:       lighten($brand-primary, 47%); // #F5FAFC
-
-$blue-dark:                    #0D6A99;
-$green-light: #69b684 !default;
-
-
 // Scaffolding
 // -------------------------
 
 $body-bg:               #fff !default;
 $text-color:            $gray-dark !default;
-
-//////////////MS
-$text-color:            $gray-darkest;
 
 // Links
 // -------------------------
@@ -67,14 +44,6 @@ $font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !defaul
 $font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
 $font-family-monospace:   Monaco, Menlo, Consolas, "Courier New", monospace !default;
 $font-family-base:        $font-family-sans-serif !default;
-
-
-///////////////MS
-$font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
-$font-family-base:        $font-family-sans-serif;
-$font-family-base-semi:   "opensans-semibold", Arial, "Helvetica Neue", Helvetica, sans-serif;
-$font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica, sans-serif;
-
 
 $font-size-base:          14px !default;
 $font-size-medium:        ceil($font-size-base * 1.142) !default; // ~16px
@@ -99,12 +68,6 @@ $headings-font-family:    $font-family-base !default;
 $headings-font-weight:    400 !default;
 $headings-line-height:    1.1 !default;
 $headings-color:          inherit !default;
-
-/////////////////MS
-$headings-font-family:    $font-family-base-semi;
-$headings-font-weight:    400;
-$headings-line-height:    1.2;
-$headings-color:          $gray-darkest;
 
 // Iconography
 // -------------------------

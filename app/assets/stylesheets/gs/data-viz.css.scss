@@ -1,9 +1,13 @@
-.data-viz-bar-chart {
+$no_quality_attribution: #777777;
+$above_average:          #40a753;
+$average:                #ec843e;
+$below_average:          #bf3c29;
 
-  $no_quality_attribution: #777777;
-  $above_average:          #40a753;
-  $average:                #ec843e;
-  $below_average:          #bf3c29;
+.above_average { color: $above_average; }
+.average       { color: $average; }
+.below_average { color: $below_average; }
+
+.data-viz-bar-chart {
 
   .header {
     width: 100%;
@@ -33,9 +37,6 @@
       font-weight: bold;
       padding-right: 10px;
       float: left;
-      &.above_average { color: $above_average; }
-      &.average       { color: $average; }
-      &.below_average { color: $below_average; }
     }
 
 
@@ -72,6 +73,10 @@
       position: absolute;
       top: -5px;
       line-height: 18px;
+    }
+
+    .gs-tooltip + .tooltip > .tooltip-inner {
+      white-space: normal;
     }
   }
 }

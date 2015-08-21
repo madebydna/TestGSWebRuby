@@ -116,3 +116,13 @@ GS.util.ajaxCallbackSuccess = function(obj, data, params) {
 GS.util.ajaxCallbackError = function(obj, data, params) {
   console.log("Ajax delete error");
 };
+
+GS.util.getJsClasses = function($element) {
+  var klasses = $element.attr('class');
+  if (klasses !== undefined) {
+    var jsClasses =  _.filter(klasses.split(' '), function(klass) {
+      return klass.match(/js-/) !== null
+    });
+  };
+  return jsClasses === undefined ? '' : jsClasses.join(' ');
+};

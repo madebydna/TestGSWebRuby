@@ -1,14 +1,16 @@
 class OspRegistrationController < ApplicationController
 
+  BLACKLISTED_TOP_LEVEL_DOMAINS = ['pl', 'ru']
+
   before_action :set_city_state
   before_action :set_login_redirect
   before_action :use_gs_bootstrap
+  before_action :validate_params, only: [:submit]
 
   def new
 
     set_gon_and_metadata!
-
-    @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
+    @school = school
 
     if @school.blank?
       render 'osp/registration/no_school_selected'
@@ -24,17 +26,22 @@ class OspRegistrationController < ApplicationController
   end
 
   def submit
-    @school = School.find_by_state_and_id(@state[:short], params[:schoolId]) if @state.present? && params[:schoolId].present?
     if current_user.present?
-      upgrade_user_to_osp_user(@school)
+      upgrade_user_to_osp_user(school)
     else
-      save_new_osp_user(@school)
+      save_new_osp_user(school)
     end
   rescue => error
     GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'OSP Submission flow failed')
   end
 
   private
+
+  def school
+    if @state.present? && params[:schoolId].present?
+      @_school ||= School.find_by_state_and_id(@state[:short], params[:schoolId])
+    end
+  end
 
   def set_gon_and_metadata!
     page_title = 'School Account - Register | GreatSchools'
@@ -47,7 +54,7 @@ class OspRegistrationController < ApplicationController
   end
 
   def is_delaware_public_or_charter_user?
-    @state[:short] == 'de' && (@school.type == 'public' || @school.type == 'charter')
+    @state[:short] == 'de' && (school.type == 'public' || school.type == 'charter')
   end
 
   def save_new_osp_user(school)
@@ -95,6 +102,28 @@ class OspRegistrationController < ApplicationController
     false
   end
 
+  def validate_params
+    unless valid_params?
+      flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
+      return render 'osp/registration/new'
+    end
+  end
+
+  def valid_params?
+    valid_school_website? && not_blacklisted_top_level_domain?(params[:email])
+  end
+
+  def valid_school_website?
+    website = params[:school_website]
+    website.length <= 100 && not_blacklisted_top_level_domain?(website)
+  end
+
+  def not_blacklisted_top_level_domain?(url)
+    schemeless_url = url.sub('http://', '').sub('https://', '')
+    top_level_domain = URI.parse("http://#{schemeless_url}").host.rpartition('.').last
+    !BLACKLISTED_TOP_LEVEL_DOMAINS.include?(top_level_domain)
+  end
+
   def user_attrs
     {
       first_name: params[:first_name],
@@ -105,16 +134,18 @@ class OspRegistrationController < ApplicationController
   end
 
   def esp_membership_attrs
-    {
-      state: @state[:short].upcase,
-      school_id: @school.id,
-      status: 'provisional',
-      active: false,
-      web_url: params[:school_website],
-      job_title: params[:job_title],
-      created: Time.now,
-      updated: Time.now
-    }
+    @esp_membership_attrs ||= (
+      {
+        state: @state[:short].upcase,
+        school_id: school.id,
+        status: 'provisional',
+        active: false,
+        web_url: params[:school_website],
+        job_title: params[:job_title],
+        created: Time.now,
+        updated: Time.now
+      }
+    )
   end
 
   def osp_email_verification_url(user)
@@ -127,17 +158,17 @@ class OspRegistrationController < ApplicationController
         redirect: '/official-school-profile/dashboard/',
         s_cid: tracking_code
     )
-    path = verify_email_url(verification_link_params)
+    verify_email_url(verification_link_params)
   end
 
   def sign_up_user_for_subscriptions!(user, school, subscriptions)
     subscriptions ||= []
     if subscriptions.include?('mystat_osp')
-      user.add_subscription!('mystat', school)
-      user.add_subscription!('osp', school)
+      user.safely_add_subscription!('mystat', school)
+      user.safely_add_subscription!('osp', school)
     end
     if subscriptions.include?('osp_partner_promos')
-      user.add_subscription!('osp_partner_promos', school)
+      user.safely_add_subscription!('osp_partner_promos', school)
     end
   end
 end

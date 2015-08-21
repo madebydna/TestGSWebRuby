@@ -1,19 +1,21 @@
 ---
 es:
   AP Classes: Las clases de AP
-  Boys Sports: Deportes masculinos
+  Boys Sports: Deportes para niños
   Category: Categoría
+  Clubs: Clubes
   Country: País
   District average: Promedio del Distrito
-  Enrollment: Inscripción
   Ethnicity: Etnia
-  Girls Sports: Deportes femeninos
+  Facilities: Instalaciones
+  Girls Sports: Deportes para niñas
   Group: Grupo
   Label: Etiqueta
   Languages: Idiomas
   Number: Número
   Percent agree: Porcentaje de acuerdo
-  Percent of classes taught by highly qualified teachers: Porcentaje de clases enseñadas por maestros altamente calificados
+  Percent of classes taught by highly qualified teachers: Porcentaje de clases enseñadas
+    por maestros altamente calificados
   Percent of students: Porcentaje de estudiantes
   Respondent group: Grupo Demandado
   Score: Puntuación
@@ -22,12 +24,14 @@ es:
   Score (out of 5): Puntaje (de 5)
   Score out of 100: Nota sobre los 100
   See more enrollment information: Ver más información de inscripción
+  Staff: Personal
   Stars: Estrellas
   State: Estado
   State average: El promedio del estado
   Students agree: Los estudiantes están de acuerdo
   Sub-category: Sub-categoría
   Subject: Sujeto
+  This school: Esta escuela
   This school's average: Promedio de esta escuela
   ! 'US Average: 481': ! 'EEUU media: 481'
   ! 'US Average: 497': ! 'EEUU media: 497'

@@ -1,0 +1,6 @@
+---
+es:
+  controllers:
+    concerns:
+      review_voting_concerns:
+        vote_saved: Tu opinión voto ha sido registrado. Gracias!

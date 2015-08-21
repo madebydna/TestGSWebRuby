@@ -59,10 +59,7 @@ class CensusDataReader < SchoolProfileDataReader
 
       category.category_datas.each do |cd|
         # Filter by data type
-        data_for_data_type = all_data.select do |data_type, data|
-          data_type = CensusDataType.data_type_id_for_data_type_label(data_type) if cd.response_key.is_a? Numeric
-          cd.response_key == data_type || cd.response_key.to_s.match(/#{data_type}/i)
-        end
+        data_for_data_type = all_data.select { |data_type, _| data_type_matches_category_data?(cd, data_type) }
 
         next if data_for_data_type.values.empty?
 
@@ -98,6 +95,13 @@ class CensusDataReader < SchoolProfileDataReader
       end
 
      results_hash
+    )
+  end
+
+  def data_type_matches_category_data?(category_data, data_type)
+    data_type = CensusDataType.data_type_id_for_data_type_label(data_type) if category_data.response_key.is_a? Numeric
+    category_data.response_key == data_type || (
+      data_type.present? && !!category_data.response_key.to_s.match(/#{Regexp.escape(data_type.to_s)}/i)
     )
   end
 

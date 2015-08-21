@@ -20,11 +20,11 @@ class ApplicationController < ActionController::Base
   before_action :set_cafemom_ip_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
-  before_action :check_for_java_hover_cookie
   before_action :write_locale_session
   before_action :set_signed_in_gon_value
   before_action :set_locale
   before_action :add_configured_translations_to_js
+  before_action :add_language_to_gtm_data_layer
 
   after_filter :disconnect_connection_pools
 
@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   rescue_from Exception, :with => :exception_handler
 
   helper :all
-  helper_method :logged_in?, :current_user, :url_for
+  helper_method :logged_in?, :current_user, :url_for, :state_param_safe
 
   # methods for getting request URL / path info
 
@@ -413,15 +413,6 @@ class ApplicationController < ActionController::Base
     end
     if city_param.present?
       session[:city_locale] = city_param
-    end
-  end
-
-  def check_for_java_hover_cookie
-    java_hover_cookie_name = :site_pref
-    java_hover_cookie_value = cookies[java_hover_cookie_name]
-    if java_hover_cookie_value && java_hover_cookie_value.include?('subscriptionEmailValidated')
-      flash_notice ("Your subscription has been confirmed. Thank you! You'll begin receiving newsletters from us shortly.")
-      delete_cookie(java_hover_cookie_name)
     end
   end
 

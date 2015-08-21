@@ -1,0 +1,8 @@
+<% unless @show_ads %>
+    <div class="well tac mal">
+        <button type="button" data-link-value="<%= school_reviews_path(@school) %>" class="btn btn-primary js-button-link" >
+            <%= t('.cta') %>
+        </button>
+        <p class="ptl"><%= t('.body') %></p>
+    </div>
+<% end %>
