@@ -20,10 +20,10 @@ es:
       password_label: Contraseña
       promos:
       - header: Boletín semanal
-        paragraph: Recibe nuestras mejores artículos, hojas de trabajo y mucho más entregado semanalmente.
+        paragraph: Recibe nuestros mejores artículos, hojas de trabajo y mucho más semanalmente.
       - header: Siga las escuelas
-        paragraph: Ahorra escuelas a las listas, a continuación, ser notificado cuando se publiquen nuevos resultados
-                   de las pruebas o exámenes.
+        paragraph: Guarda escuelas a tu lista y despues seras notificado cuando se publiquen nuevos resultados de las
+                   pruebas de exámenes.
       - header: Escribir comentario
         paragraph: Ayude a otros padres a encontrar una gran escuela, compartiendo sus experiencias.
       school_profiles_count: perfiles de las escuelas
