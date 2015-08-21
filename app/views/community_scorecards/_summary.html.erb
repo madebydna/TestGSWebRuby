@@ -1,117 +1,40 @@
+<% scope = 'innovate_public_schools' %>
 <div class="summary">
   <div class="row">
     <div class="col-xs-12 col-sm-4 pbl">
-      This page highlights opportunity for all.
-      This page highlights opportunity for all.
-      This page highlights opportunity for all.
+      <%= t(".#{scope}.description_above_fold") %>
       <span class="hidden-xs js-readMoreText">
-      This page highlights opportunity for all.
-      This page highlights opportunity for all.
-      This page highlights opportunity for all.
-      This page highlights opportunity for all.
-      This page highlights opportunity for all.
+        <%= t(".#{scope}.description_below_fold") %>
       </span>
       <a class="visible-xs pointer js-readMoreLink">
-        Read more
+        <%= t(".read_more") %>
       </a>
     </div>
+    <% 2.times do |column_index| %>
+      <% column_index += 1 %>
+      <% column_scope = "#{scope}.column_#{column_index}" %>
     <div class="col-xs-12 col-sm-4 pbl">
-      <h4 class="mvn uc">
-        Graduation rates in the bay area
+      <h4 class="mvn">
+        <%= t(".#{column_scope}.title") %>
       </h4>
+      <% 4.times do |datapoint_index| %>
+        <% datapoint_index += 1 %>
+        <% datapoint_scope = "#{column_scope}.datapoint_#{datapoint_index}" %>
       <div class="datapoint">
         <h4>
-          Latino students
+          <%= t(".#{datapoint_scope}.title") %>
         </h4>
         <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
+          <h3 class="<%= t(".#{datapoint_scope}.performance_level") %>">
+            <%= t(".#{datapoint_scope}.value_html") %>
+            <span class="state-average">
+              (<%= t(".#{datapoint_scope}.state_average") %>)
+            </span>
           </h3>
         </div>
       </div>
-      <div class="datapoint">
-        <h4>
-          Asian Students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
-      <div class="datapoint">
-        <h4>
-          African American Students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
-      <div class="datapoint">
-        <h4>
-          White Students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
+    <% end %>
     </div>
-    <div class="col-xs-12 col-sm-4 pbl">
-      <h4 class="mvn uc">
-        Eligibility for a 4-year college in the bay area
-      </h4>
-      <div class="datapoint">
-        <h4>
-          Latino students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
-      <div class="datapoint">
-        <h4>
-          Asian Students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
-      <div class="datapoint">
-        <h4>
-          African American Students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
-      <div class="datapoint">
-        <h4>
-          White Students
-        </h4>
-        <div class="percent-value">
-          <h3 class="above_average">
-            74<sup>%</sup>
-            <span class="state-average">(State Average: 78%)</span>
-          </h3>
-        </div>
-      </div>
-    </div>
+  <% end %>
   </div>
 </div>

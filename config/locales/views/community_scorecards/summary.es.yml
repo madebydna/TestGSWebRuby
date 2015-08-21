@@ -1,0 +1,51 @@
+es:
+  community_scorecards:
+    summary:
+      read_more: Read more spanish
+      innovate_public_schools:
+        description_above_fold: Spanish This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
+        description_below_fold: Spanish Below the fold. This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
+        column_1:
+          title: GRADUATION RATES IN THE BAY AREA spanish
+          datapoint_1:
+            title: Latino students spanish
+            performance_level: above_average
+            value_html: 74<sup>%</sup> spanish
+            state_average: State average 78% spanish
+          datapoint_2:
+            title: White students spanish
+            performance_level: below_average
+            value_html: 57<sup>%</sup> spanish
+            state_average: State average 78% spanish
+          datapoint_3:
+            title: Asian students spanish
+            performance_level: average
+            value_html: 64<sup>%</sup> spanish
+            state_average: State average 78% spanish
+          datapoint_4:
+            title: African-American students spanish
+            performance_level: average
+            value_html: 62<sup>%</sup> spanish
+            state_average: State average 78% spanish
+        column_2:
+          title: ELIGIBILITY FOR A 4-YEAR COLLEGE IN THE BAY AREA spanish
+          datapoint_1:
+            title: Latino students spanish
+            performance_level: below_average
+            value_html: 34<sup>%</sup> spanish
+            state_average: State average 64% spanish
+          datapoint_2:
+            title: White students spanish
+            performance_level: above_average
+            value_html: 87<sup>%</sup> spanish
+            state_average: State average 64% spanish
+          datapoint_3:
+            title: African-American students spanish
+            performance_level: average
+            value_html: 62<sup>%</sup> spanish
+            state_average: State average 64% spanish
+          datapoint_4:
+            title: Asian students spanish
+            performance_level: average
+            value_html: 64<sup>%</sup> spanish
+            state_average: State average 64% spanish
