@@ -21,6 +21,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var tablePartial   = 'community_scorecards/table';
   var rowPartial     = 'community_scorecards/table_row';
   var showMore       = '.js-showMore';
+  var tableSort      = '.js-tableSort';
   var offsetInterval = 10;
 
   var init = function() {
@@ -30,17 +31,30 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     redrawTable();
 
     $(scorecard).on('click', '.js-drawTable', function (e) {
-      _({ 'sort-asc-or-desc': 'sortAscOrDesc', 'sort-by': 'sortBy', 'highlight-index': 'highlightIndex', 'sortBreakdown': 'sortBreakdown' }).forEach(function(optionsKey, dataKey) {
+      var shouldRedrawTable = false;
+      _({
+        'sort-asc-or-desc': 'sortAscOrDesc',
+        'sort-by':          'sortBy',
+        'highlight-index':  'highlightIndex',
+        'sortBreakdown':    'sortBreakdown'
+      }).forEach(function(optionsKey, dataKey) {
         var dataVal = $(e.target).data(dataKey);
         if(dataVal !== undefined) {
-          GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
+          var isValueSet = GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
+          if (isValueSet) shouldRedrawTable = true;
         };
       });
 
-      redrawTable();
+      if (shouldRedrawTable) redrawTable();
     });
 
     $(scorecard).on('click', showMore, appendToTable);
+
+    $(scorecard).on('click', tableSort, function (e) {
+      $(tableSort).addClass('sort-link');
+      $(this).removeClass('sort-link');
+    });
+
   };
 
   var drawTableHeader = function() {
@@ -52,6 +66,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
       var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
+      //when appropriate look into not having a hardcoded list of highlight classes. Regex?
+      //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
       $('.js-CommunityScorecardTable').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
     });
   };

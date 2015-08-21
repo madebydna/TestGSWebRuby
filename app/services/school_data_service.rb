@@ -51,7 +51,7 @@ class SchoolDataService
 
     def school_data(options_params = {})
       options = base_options(options_params, PARAMETER_TO_SOLR_MAPPING)
-      options.merge!(get_sort(options_params))
+      options.merge!(sort_params(options_params))
       filters = extract_filters(options_params)
       param_options = DEFAULT_SOLR_OPTIONS.merge(options)
 
@@ -95,7 +95,7 @@ class SchoolDataService
       hash[key] = value_map[hash[key]] if hash.include? key
     end
 
-    def get_sort(hash)
+    def sort_params(hash)
       if hash.include?(:sortBy)
         sort = extract_sort_type(hash)
         processed_sort = is_valid_school_data_field?(sort) ? (sort + SORT_ASC_OR_DESC[hash[:sortAscOrDesc]]) : DEFAULT_SORT

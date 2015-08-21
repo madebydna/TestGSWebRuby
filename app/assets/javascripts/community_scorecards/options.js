@@ -25,9 +25,11 @@ GS.CommunityScorecards.Options.prototype = {
   },
 
   set: function(key, value) {
-    if(this.isValidValue(value)) {
+    if(this.isValidValue(value) && value !== this.get(key)) {
       this['_' + key] = value;
+      return true;
     }
+    return false;
   },
 
   isValidValue: function(value) {
