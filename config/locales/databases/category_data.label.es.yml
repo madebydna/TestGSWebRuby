@@ -101,6 +101,7 @@ es:
   Dates offered (start): Fechas ofrecidos (inicio)
   Day or Boarding offered: De día o de embarque ofrecido
   Days offered: Días ofrecido
+  Days open: Dias de apertura
   Disorder in hallways is rare: Desorden en los pasillos es rara
   District: Distrito
   Dropout rate over 4 years: Tasa de abandono en 4 años
@@ -378,3 +379,4 @@ es:
   World languages taught: Idiomas enseñan
   World languages taught (misc): Idiomas enseñan (misc.)
   Year received: Año recibida
+  label: label

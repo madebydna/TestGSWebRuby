@@ -1,4 +1,4 @@
-en:
+es:
   controllers:
     osp_registration_controller:
       invalid_esp_params: 'Sorry, but something went wrong with your request.'
