@@ -4,8 +4,8 @@
 <% review_url_email = school_reviews_url(review.school, zreview_id: review.id, utm_source: 'Email_Share', utm_medium: 'email', utm_campaign: 'Review_Share', anchor: "review#{review.id}") %>
 <% review_url_facebook= school_reviews_url(review.school, review_id: review.id, utm_source: 'Facebook', utm_medium: 'social', utm_campaign: 'Review_Share', anchor: "review#{review.id}") %>
 
-<% mailto_subject = 'Check out this review I found on GreatSchools' %>
-<% mailto_body = "Hey, I found this review about #{url_encode(review.school.name)} and thought it was helpful. Hope you like it:%0A#{url_encode(review_url_email)}%0A%0A\"#{url_encode(review.comment)}\"" %>
+<% mailto_subject = "Check out this school review of #{review.school.name} on GreatSchools" %>
+<% mailto_body = "I found this school review on GreatSchools and thought you might find it useful. Here's the review:%0A%0A#{url_encode(review.comment)}%0A%0AYou can see all the reviews for #{review.school.name} at #{url_encode(review_url_email)}" %>
 <% mailto_params =
  {
    subject: mailto_subject,
