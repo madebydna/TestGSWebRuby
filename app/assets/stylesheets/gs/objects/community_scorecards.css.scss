@@ -15,6 +15,9 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     td {
       max-width: 200px;
     }
+    th {
+      border-left: 1px solid #dedede;
+    }
   }
   @include csc-table-blue-highlight(2, $csc-table-blue-border);
   @include csc-table-blue-highlight(3, $csc-table-blue-border);
@@ -60,6 +63,10 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     color: $link-hover-color;
   }
 
+  .sort-text {
+    @extend .font-size-xs;
+    font-weight: bold;
+  }
 
   .show-more {
     background-color: $light-blue-background;
