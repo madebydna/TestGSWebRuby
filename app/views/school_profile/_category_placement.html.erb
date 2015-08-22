@@ -1,7 +1,7 @@
 <% category_placement %>
 
 <% if category_placement.present? %>
-  <% begin %>
+  <% GSLogger.swallow_and_log_errors_unless_development(:school_profile, category_placement.attributes, 'Something went wrong when trying to render category placement') do %>
     <% category_placement = CategoryPlacementPresenter.new(category_placement, @page_config, self) %>
     <% category_placement_markup = category_placement.render %>
 
@@ -14,10 +14,5 @@
         </div>
       <% end %>
     <% end %>
-
-  <% rescue => e %>
-    <%= log_view_error "Something went wrong when trying to render category placement #{category_placement.title}", e %>
-    <% GSLogger.error(:school_profile, e, vars: category_placement.category_placement.attributes, message: 'Something went wrong when trying to render category placement') %>
-    <% raise e if params[:debug] %>
   <% end %>
 <% end %>

@@ -89,5 +89,14 @@ class GSLogger
       end.join(',')
     end
 
+    def swallow_and_log_errors_unless_development(logger_tag = nil, vars = {}, message = nil)
+      begin
+        yield if block_given?
+      rescue => e
+        GSLogger.error(logger_tag, e, vars: vars, message: message)
+        raise e if Rails.env.development?
+      end
+    end
+
   end
 end
