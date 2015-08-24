@@ -1,0 +1,6 @@
+---
+en:
+  search:
+    search_page_search_bar:
+      ! 'nearby_cities_label': ! 'Nearby Cities:'
+      search_button: Search
