@@ -1,0 +1,11 @@
+---
+es:
+  search:
+    filter_toolbar:
+      filters_button: Filtros
+      guided_search_link: Guíame
+      map_button: Mapa
+      more_filters_label: Más Filtros
+      refine_search_dropdown: Afine Su Busqueda
+      refine_search_dropdown_title: Utilice filtros para encontrar escuelas que satisfagan sus necesidades
+      submit_button: Enviar
