@@ -36,7 +36,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
         'sort-asc-or-desc': 'sortAscOrDesc',
         'sort-by':          'sortBy',
         'highlight-index':  'highlightIndex',
-        'sortBreakdown':    'sortBreakdown'
+        'sort-breakdown':    'sortBreakdown'
       }).forEach(function(optionsKey, dataKey) {
         var dataVal = $(e.target).data(dataKey);
         if(dataVal !== undefined) {
