@@ -27,7 +27,6 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var init = function() {
     this.options = new GS.CommunityScorecards.Options(currentPageData());
     initReadMoreToggleHandler();
-    drawTableHeader();
     redrawTable();
 
     $(scorecard).on('click', '.js-drawTable', function (e) {
@@ -57,17 +56,13 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   };
 
-  var drawTableHeader = function() {
-    $(tablePlacement).before(GS.handlebars.partialContent(tableHeaderPartial));
-  }
-
+  //when appropriate look into not having a hardcoded list of highlight classes. Regex?
+  //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
   var redrawTable = function() {
     var params = GS.CommunityScorecards.Page.options.to_h();
     GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
       var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
-      //when appropriate look into not having a hardcoded list of highlight classes. Regex?
-      //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
       $('.js-CommunityScorecardTable').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
     });
   };

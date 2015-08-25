@@ -1,0 +1,6 @@
+en:
+  community_scorecards:
+    table_header:
+      sort: Sort
+      highest_to_lowest: Highest to lowest
+      lowest_to_highest: Lowest to Highest

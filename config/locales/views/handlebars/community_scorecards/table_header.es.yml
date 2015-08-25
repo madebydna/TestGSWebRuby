@@ -1,7 +1,0 @@
-es:
-  handlebars:
-    community_scorecards:
-      table_header:
-        sort: Clase
-        highest_to_lowest: mayor a menor
-        lowest_to_highest: menor a mayor
