@@ -1,17 +1,17 @@
 <div class="limit-width-1200 row phm pbm">
   <div class="col-xs-12">
     <span class="open-sans_sb fl subtitle-md js-numOfSchoolsFound" data-num-of-schools-found="<%= @total_results %>">
-      <%= pluralize(@total_results,'school', 'schools') + ' found' %>
+      <%= t('.number_of_schools_found', count: @total_results) %>
       <% if @by_location %>
-          <% if @radius %>
-              within <%= pluralize(@radius, 'mile', 'miles') %> of <%= @normalized_address %>
-          <% else %>
-              near <%= @normalized_address %>
-          <% end %>
+        <% if @radius %>
+          <%= t('.within_radius', count: @radius, address: @normalized_address) %>
+        <% else %>
+          <%= t('.near_address', address: @normalized_address) %>
+        <% end %>
       <% elsif @district %>
-          in <%= @district.name %>
+        <%= t('.in_district', district: @district.name) %>
       <% elsif @city %>
-          in <%= @city.name + ', ' + @city.state %>
+        <%= t('.in_city_state', city: @city.name, state: @city.state) %>
       <% end %>
     </span>
   </div>

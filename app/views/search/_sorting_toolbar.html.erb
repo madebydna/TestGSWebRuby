@@ -4,13 +4,13 @@
 
       <% #Sorts for Desktop %>
       <div class="ptm">
-        <span>Sort by:</span>
+        <span><%= t('.sort_by_label') %></span>
         <div class="btn-group">
           <% @relevant_sort_types.each do |sort_name| %>
               <% if @active_sort == sort_name %>
-                  <button type="button" class="btn btn-default rs-sortButton active"><%=sort_name.to_s.titleize%></button>
+                  <button type="button" class="btn btn-default rs-sortButton active"><%= t(".#{sort_name.to_s}") %></button>
               <% else %>
-                  <button type="button" class="btn btn-default rs-sortButton" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%=sort_name.to_s.titleize%></button>
+                  <button type="button" class="btn btn-default rs-sortButton" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%= t(".#{sort_name.to_s}") %></button>
               <% end %>
           <% end %>
         </div>
@@ -21,11 +21,11 @@
     <div class="visible-xs pull-left pbl ptm" style="width:150px;">
       <select class="form-control js-searchSortingSelectTag">
         <% sort_types = @relevant_sort_types - [@active_sort] %>
-        <option value="<%= @active_sort %>" selected>Sort by: <%= @active_sort.to_s.titleize %></option>
+        <option value="<%= @active_sort %>" selected><%= t('.sort_by_label') %> <%= t(".#{@active_sort.to_s}") %></option>
         <% sort_types.each do |sort_name| %>
             <% next if sort_name == 'distance' && !search_by_location? %>
             <% next if sort_name == 'relevance' && !search_by_name? %>
-            <option value="<%=sort_name%>"><%=sort_name.to_s.titleize%></option>
+            <option value="<%=sort_name%>"><%= t(".#{sort_name.to_s}") %></option>
         <% end %>
       </select>
     </div>
@@ -34,7 +34,7 @@
     <div class="hidden-xs fr mll">
       <div class="pr">
         <button class="btn btn-lg btn-primary js-savedSearchPopupButton" >
-          <span class="js-savedSearchPopupButtonText">Save Search</span>
+          <span class="js-savedSearchPopupButtonText"><%= t('.save_search_button') %></span>
         </button>
         <%= render 'search/saved_search_popup' %>
       </div>
@@ -45,12 +45,12 @@
       <div class="pr js-compareSchoolsPopupContainer">
         <% #Compare Button For Desktop %>
         <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton" >
-          Compare <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
+          <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
         </button>
         <% #Compare Button For Mobile %>
         <div class="visible-xs shim-2"></div>
         <button class="btn btn-default mtm visible-xs js-compareSchoolsPopupButton">
-          Compare <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
+          <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
         </button>
         <%= render 'search/compare_schools_popup' %>
       </div>

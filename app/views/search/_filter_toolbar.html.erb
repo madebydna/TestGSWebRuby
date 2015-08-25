@@ -1,6 +1,4 @@
 
-<% @show_guided_search = true %>
-
 <div class="visible-xs">
     <div class="btn-group row full-width mln js-mobileFiltersToolbar">
         <button type="button" class="btn btn-primary nav-button nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
@@ -60,12 +58,12 @@
     <div class="fr">
       <span class="js-search-list-view pointer">
       <span  class="iconx16 i-16-blue-list-view vam"></span>
-      List
+      <%= t('.list_link') %>
       </span>
       |
       <span class="js-search-map-view pointer">
       <span  class="iconx16 i-16-grey-map-view vam"></span>
-        Map
+        <%= t('.map_link') %>
       </span>
     </div>
   </div>
