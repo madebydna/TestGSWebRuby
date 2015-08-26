@@ -105,12 +105,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
-                $(this).text('Fewer filters');
+                $(this).text(GS.I18n.t('fewer_filters'));
                 GS.track.sendCustomLink('search_expand_advanced_filters');
             }
             else {
                 advancedFiltersMenu.hide('fast');
-                $(this).text('More filters');
+                $(this).text(GS.I18n.t('more_filters'));
                 GS.track.sendCustomLink('search_collapse_advanced_filters');
             }
         });

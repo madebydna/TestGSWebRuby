@@ -3,6 +3,8 @@ en:
   javascript:
     close: Close
     learn_more_html: Learn More &raquo;
+    fewer_filters: Fewer filters
+    more_filters: More filters
     reviews:
       found_this_helpful: ! ' found this helpful'
       people: people
