@@ -25,7 +25,9 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         $button.on('click', function(){
             var path = getQueryPath();
             var query = buildQuery($form);
-            GS.uri.Uri.goToPage(path + query)
+            var url = path + query;
+            url = GS.I18n.preserveLanguageParam(url);
+            GS.uri.Uri.goToPage(url);
             var custom_link = 'search_submit_filters';
             if ($form.selector.indexOf('Mobile') > -1) {
               custom_link = custom_link + '_mobile';
