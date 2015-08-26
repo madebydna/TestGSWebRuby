@@ -1,23 +1,23 @@
 <div id="js-assigned-school-<%=level.downcase%>" class="pam dn js-schoolSearchResultCompareErrorMessage">
     <div class="visible-xs visible-sm pvs plm font-size-small inverted-text bg-neutral uc brs"
-         style="width: 140px; border-bottom-right-radius: 0;">Assigned school</div>
+         style="width: 140px; border-bottom-right-radius: 0;"><%= t('.label') %></div>
     <div class="row search-result-border emphasis-border prm bg-white">
         <div class="col-xs-12">
             <div class="row">
                 <div class="col-12 clearfix">
                     <div class="fl hidden-xs hidden-sm" style="width:140px;">
-                        <div class="pvs plm font-size-small inverted-text bg-neutral uc">Assigned school</div>
+                        <div class="pvs plm font-size-small inverted-text bg-neutral uc"><%= t('.label') %></div>
                     </div>
                     <div class="mll fl ptm">
-                        <div class="font-size-small gray-darker">It looks like this is your assigned
-                            <%= level %> school, but we recommend double-checking with the
-                            district or school<span class="brand-primary">*</span></div>
+                        <div class="font-size-small gray-darker">
+                          <%= t('.double_check_with_district_or_school', level: level) %><span class="brand-primary">*</span>
+                        </div>
                         <hr class="mvn"/>
                     </div>
                 </div>
                 <div class="col-xs-7 col-sm-5 col-md-6 clearfix">
                     <div class="fl hidden-xs hidden-sm js-photo">
-                        <img class="thumbnail-border" src="<%= image_path('search/no-school-photo.png')%>" alt="No school photo available"/>
+                        <img class="thumbnail-border" src="<%= image_path('search/no-school-photo.png')%>" alt="<%= t('.no_school_photo_alt_text') %>"/>
                     </div>
                     <div class="mll fl">
                         <div class="ptm notranslate">
@@ -32,7 +32,7 @@
                             <div class="fl">
                                 <span class="prm vam js-parent-rating-stars"><%= draw_stars_16 1 %></span>
                                 <a class="font-size-small js-review-count"></a>
-                                <em class="js-no-reviews">No Community Reviews</em>
+                                <em class="js-no-reviews"><%= t('.no_community_reviews') %></em>
                             </div>
                             <div class="phm fl">|</div>
                             <div class="prs fl js-type"></div>
@@ -55,19 +55,20 @@
                             <a class="js-gs-rating-link">
                                 <div class="ma db iconx24-icons i-24-new-ratings-nr js-gs-rating-icon"></div>
                                 <div class="hidden-xs pts"></div>
-                                <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em">GreatSchools<br/>Rating</span>
+                                <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em">
+                                  <%= t('.greatschools_rating_html') %>
+                                </span>
                             </a>
                         </div>
                         <!-- Fit score -->
                         <div class="col-xs-6 col-sm-4 mtl mbs js-fitScore"></div>
                     </div>
                 </div>
-                <!-- TODO: Homes for Sale / Compare-->
                 <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
                   <%= render 'compare_schools_compare_button' %>
                   <a class="btn btn-default clearfix mts db fr js-homes-for-sale" style="width: 150px;" target="_blank">
                       <div class="iconx16 i-16-blue-home fl mrs"></div>
-                      <div class="fl">Homes for sale</div>
+                      <div class="fl"><%= t('.homes_for_sale') %></div>
                   </a>
                 </div>
             </div>
@@ -77,7 +78,7 @@
             <div class="fl">
                 <span class="prm vam js-parent-rating-stars"><%= draw_stars_16 1 %></span>
                 <a class="font-size-small js-review-count"></a>
-                <em class="js-no-reviews">No Community Reviews</em>
+                <em class="js-no-reviews"><%= t('.no_community_reviews') %></em>
             </div>
             <div class="fr js-distance"></div>
         </div>

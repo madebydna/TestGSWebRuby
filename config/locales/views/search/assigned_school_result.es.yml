@@ -1,0 +1,10 @@
+---
+es:
+  search:
+    assigned_school_result:
+      double_check_with_district_or_school: Parece que este es su escuela %{level} asignado, pero recomendamos doble control con el distrito o la escuela
+      greatschools_rating_html: GreatSchools<br/Rating
+      homes_for_sale: Viviendas en venta
+      label: Asignado escuela
+      no_community_reviews: No hay comentarios de la Comunidad
+      no_school_photo_alt_text: No se han escolar disponibles
