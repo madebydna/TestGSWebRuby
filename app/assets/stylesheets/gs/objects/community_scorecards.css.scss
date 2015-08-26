@@ -34,7 +34,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   }
   .percent-value {
     h3 {
-      font-weight: bold;
+      @extend .open-sans_sb;
       margin-bottom: 0;
       margin-top: 0;
     }
@@ -44,8 +44,8 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     }
     .school-value-mobile {
       @extend .mvn;
+      @extend .open-sans_sb;
       font-size: 20px;
-      font-weight: bold;
     }
     .state-average {
       color: $gray-darker;
@@ -65,12 +65,22 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   }
 
   .striped-divs {
-    > div:nth-child(odd) {
+    > div.div-row:nth-child(odd) {
       background-color: #dedede;
     }
-    > div:nth-child(even) {
-      background-color: #f4f4f4;
+
+    > div.div-row:nth-child(even) {
+      background-color: #fff;
     }
+
+    > div.div-row {
+      border-bottom: #dedede solid 1px;
+    }
+
+    > div:nth-last-child(2) {
+      border-bottom: 0px;
+    }
+
     .no-padding {
       padding-left: 0px;
       padding-right: 0px;
