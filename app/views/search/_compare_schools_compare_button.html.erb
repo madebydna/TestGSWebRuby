@@ -9,11 +9,11 @@
     data-schoolrating="<%= s.overall_gs_rating || 'nr' %>"
   >
     <div class="iconx16 i-16-check-bigger-off fl mrs "></div>
-    <div class="fl js-compareSchoolsButtonText">Compare</div>
+    <div class="fl js-compareSchoolsButtonText"><%= t('.compare') %></div>
   </div>
   <div class="js-compareSchoolsText pull-left db dn pts pls">
-    <span class='pointer js-compareSchoolsSubmit brand-primary dn font-size-small'>Compare now</span>
-    <span class='js-compareSchoolsSelectMoreSchoolsText dn font-size-small'>Select more</span>
+    <span class='pointer js-compareSchoolsSubmit brand-primary dn font-size-small'><%= t('.compare_now') %></span>
+    <span class='js-compareSchoolsSelectMoreSchoolsText dn font-size-small'><%= t('.select_more') %></span>
     <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
   </div>
 </div>

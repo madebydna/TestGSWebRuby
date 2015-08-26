@@ -12,7 +12,7 @@
       <span class="pointer font-size-xs ma"><%= decorated_school.fit_score_text %></span>
   <% else %>
         <span class="pointer font-size-xs tac pts db" style="line-height: 1.3em">
-          No&nbsp;&nbsp;&nbsp;<br>matches
+          <%= t('.no_matches_html') %>
           <span class="pointer caret pbm"></span>
         </span>
   <% end %>

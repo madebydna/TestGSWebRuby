@@ -1,0 +1,8 @@
+---
+es:
+  concerns:
+    fit_score_concerns:
+      no_matches: No hay empareja
+      okay_fit: empareja Vale
+      strong_fit: Empareja fuerte
+      weak_fit: Empareja débil

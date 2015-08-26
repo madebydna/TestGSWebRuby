@@ -1,0 +1,5 @@
+---
+es:
+  search:
+    fit_score_icon_and_popup:
+      no_matches_html: 'No hay&nbsp;&nbsp;&nbsp;<br>empareja'
