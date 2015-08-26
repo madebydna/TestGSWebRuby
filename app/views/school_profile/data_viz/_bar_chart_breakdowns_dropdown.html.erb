@@ -9,10 +9,10 @@
             options_for_select(
               breakdowns.map do | title |
                 [t(".#{title}"), class:'js-gaClick',
-                data: {title: title,
-                :'ga-click-category'=> 'profile data - subgroup display',
-                :'ga-click-action'=> 'subgroup selection',
-                :'ga-click-label' => title }]
+                                 data: {title: title,
+                                        :'ga-click-category'=> 'profile data - subgroup display',
+                                        :'ga-click-action'=> 'subgroup selection',
+                                        :'ga-click-label' => title }]
               end
             ),
                      class: 'selectpicker',
