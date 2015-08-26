@@ -18,7 +18,7 @@ class CommunityScorecardsController < ApplicationController
         data_type,
         { class: 'js-drawTable', data: { 'sort-by' => data_type } }
       ]
-    end
+    end.reverse! #reverse to temporarily set default to graduation rate
 
     #todo move into collection
     @subgroups_for_header = SchoolDataHash::SUBGROUP_MAP.keys.map do | subgroup |
