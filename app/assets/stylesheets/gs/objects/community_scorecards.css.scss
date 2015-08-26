@@ -52,6 +52,20 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     @extend .pam;
     @extend .full-width;
     background-color: #dedede;
+
+    &.dark-green {
+      background-color: #07251e
+    }
+  }
+
+  .striped-divs {
+    > div:nth-child(odd) {
+      background-color: #dedede;
+    }
+    .no-padding {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
   }
 
   .sort-link {
@@ -64,7 +78,6 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   }
 
   .sort-text {
-    @extend .font-size-xs;
     font-weight: bold;
   }
 

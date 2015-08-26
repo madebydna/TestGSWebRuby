@@ -1,5 +1,6 @@
 <% #move into css classes %>
-<div class='table-header'>
+<% #Desktop %>
+<div class='table-header hidden-xs'>
   <%= select_tag 'Subgroups', options_for_select(@subgroups_for_header), id: 'subgroup-select', class: 'selectpicker' %>
   <div class='pull-right'>
     <div class='ptm'>
@@ -8,5 +9,26 @@
       |
       <span class='js-drawTable js-tableSort sort-link pls' data-sort-asc-or-desc='asc'><%= t('.lowest_to_highest') %></span>
     </div>
+  </div>
+</div>
+
+<% #Mobile %>
+<div class='row visible-xs'>
+  <div class='table-header col-xs-12'>
+    <%= select_tag 'Subgroups', options_for_select(@subgroups_for_header), id: 'subgroup-select-mobile', class: 'selectpicker', data: {width: '100%'} %>
+    <div class='tac'>
+      <div class='ptm'>
+        <span class='sort-text'><%= t('.sort') %>:</span>
+        <span class='js-drawTable js-tableSort prs' data-sort-asc-or-desc='desc'><%= t('.highest_to_lowest') %></span>
+        |
+        <span class='js-drawTable js-tableSort sort-link pls' data-sort-asc-or-desc='asc'><%= t('.lowest_to_highest') %></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='row visible-xs' >
+  <div class='table-header dark-green col-xs-12'>
+    <%= select_tag 'Subgroups', options_for_select(@data_type_dropdown_for_mobile), id: 'data-type-select-mobile', class: 'selectpicker', data: {width: '100%'} %>
   </div>
 </div>

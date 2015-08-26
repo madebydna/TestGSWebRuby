@@ -14,15 +14,19 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var dataUrl = '/gsr/ajax/community-scorecard/get-school-data';
   var ajaxOptions = { preserveLanguage: true };
 
-  var scorecard      = '.js-communityScorecard';
-  var tablePlacement = '#community-scorecard-table';
-  var tableBody      = tablePlacement + ' table tbody';
+  var scorecard          = '.js-communityScorecard';
+  var tablePlacement     = '#community-scorecard-table';
+  var tableBody          = tablePlacement + ' table tbody';
   var tableHeaderPartial = 'community_scorecards/table_header';
-  var tablePartial   = 'community_scorecards/table';
-  var rowPartial     = 'community_scorecards/table_row';
-  var showMore       = '.js-showMore';
-  var tableSort      = '.js-tableSort';
-  var offsetInterval = 10;
+  var tablePartial       = 'community_scorecards/table';
+  var rowPartial         = 'community_scorecards/table_row';
+  var mobilePlacement    = '#community-scorecard-mobile';
+  var mobilePartial      = 'community_scorecards/mobile';
+  var mobileRowPartial   = 'community_scorecards/mobile_row';
+  var showMoreMobile     = '#js-showMoreMobile'
+  var showMore           = '.js-showMore';
+  var tableSort          = '.js-tableSort';
+  var offsetInterval     = 10;
 
   var init = function() {
     this.options = new GS.CommunityScorecards.Options(currentPageData());
@@ -30,6 +34,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     redrawTable();
 
     $(scorecard).on('click', '.js-drawTable', function (e) {
+      var $target = $(e.target);
       var shouldRedrawTable = false;
       _({
         'sort-asc-or-desc': 'sortAscOrDesc',
@@ -37,7 +42,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
         'highlight-index':  'highlightIndex',
         'sort-breakdown':    'sortBreakdown'
       }).forEach(function(optionsKey, dataKey) {
-        var dataVal = $(e.target).data(dataKey);
+        var dataVal = $target.data(dataKey);
         if(dataVal !== undefined) {
           var isValueSet = GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
           if (isValueSet) shouldRedrawTable = true;
@@ -59,12 +64,30 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   //when appropriate look into not having a hardcoded list of highlight classes. Regex?
   //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
   var redrawTable = function() {
+    GS.CommunityScorecards.Page.options.set('offset', 0);
     var params = GS.CommunityScorecards.Page.options.to_h();
     GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
+      $(mobilePlacement).html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
+
       var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
       $('.js-CommunityScorecardTable').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
     });
+  };
+
+  var dataForMobile = function(data) {
+    _(data.school_data).forEach(schoolDataForMobile);
+    return data;
+  };
+
+  var schoolDataForMobile = function(data) {
+    var dataSet = GS.CommunityScorecards.Page.options.get('sortBy')
+    data.data_for_mobile = {
+      value: data[dataSet]['value'],
+      state_average: data[dataSet]['state_average'],
+      performance_level: data[dataSet]['performance_level']
+    }
+    return data;
   };
 
   var appendToTable = function() {
@@ -74,6 +97,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       if (data.school_data) {
         _.each(data.school_data, function(school) {
           $(tableBody).append(GS.handlebars.partialContent(rowPartial, school));
+          $(showMoreMobile).before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
         });
         GS.CommunityScorecards.Page.options.set('offset', params.offset);
         if (!data.more_results) {

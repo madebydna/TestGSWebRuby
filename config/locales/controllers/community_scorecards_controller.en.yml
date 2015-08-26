@@ -18,3 +18,5 @@ en:
       economically_disadvantaged:        'Economically disadvantaged'
       limited_english_proficient:        'Limited English proficient'
       not_limited_english_proficient:    'Not limited English proficient'
+      a_through_g:                       'Eligible for 4-Yr College'
+      graduation_rate:                   'Graduation Rate'

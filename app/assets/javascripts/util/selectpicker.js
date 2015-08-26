@@ -16,9 +16,12 @@ GS.selectpicker = GS.selectpicker || (function() {
          _($selectpickerOptions).forEach(function(option, index) {
            var newData = $(option).data();
            var $correspondingA = correspondingA($button, index);
+           var $spanChildrenOfCorrespondingA = $correspondingA.find('span');
+           $spanChildrenOfCorrespondingA.addClass(GS.util.getJsClasses($correspondingA));
            _(newData).forEach(function(value, key) {
              var dashCasedKey = key.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();})
              $correspondingA.attr('data-' + dashCasedKey, value);
+             $spanChildrenOfCorrespondingA.attr('data-' + dashCasedKey, value);
            });
          });
        });
