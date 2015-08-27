@@ -126,7 +126,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
 
         $listItem.find('.js-name').html(name).attr('href', url);
         $listItem.find('.js-address').html(address);
-        $listItem.find('.js-type').html(GS.I18n.t(type));
+        $listItem.find('.js-type').html(GS.I18n.t("school_types." + type));
         $listItem.find('.js-grade-range').html(gradeRange);
         $listItem.find('.js-distance').html(distance + ' miles');
         if (parentRating && parentRating > 0 && parentRating < 6) {
