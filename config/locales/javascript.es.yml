@@ -5,6 +5,7 @@ es:
     learn_more_html: Aprender Mas &raquo;
     fewer_filters: Menos filtros
     more_filters: Más filtros
+    ok_fit: Medio
     reviews:
       found_this_helpful: ! ' encontraron esta útil'
       people: personas
@@ -20,7 +21,9 @@ es:
     search_form:
       long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
       short_placeholder: Ciudad, código postal, la dirección o la escuela
+    strong_fit: Fuerte
     test_scores:
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
+    weak_fit: Bajo

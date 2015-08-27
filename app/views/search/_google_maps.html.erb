@@ -1,15 +1,15 @@
 <div class="limit-width-1200 full-width js-mapContainer">
   <div class="hidden">
-    <div class="js-mapPinRatingText">Rating</div>
-    <div class="js-mapPinReviewText">review</div>
-    <div class="js-mapPinReviewsText">reviews</div>
-    <div class="js-mapPinRateThisSchoolText">Rate this school now!</div>
-    <div class="js-mapPinHomesForSaleText">Homes for sale</div>
-    <div class="js-mapPinSchoolTypePrivateText"><%= school_type_display('private') %></div> <!--May required to be
+    <div class="js-mapPinRatingText"><%= t('.rating') %></div>
+    <div class="js-mapPinReviewText"><%= t('.review') %></div>
+    <div class="js-mapPinReviewsText"><%= t('.reviews') %></div>
+    <div class="js-mapPinRateThisSchoolText"><%= t('.rate_this_school') %></div>
+    <div class="js-mapPinHomesForSaleText"><%= t('.homes_for_sale') %></div>
+    <div class="js-mapPinSchoolTypePrivateText"><%= db_t(school_type_display('private')) %></div> <!--May required to be
     dynamic based on school object-->
-    <div class="js-mapPinSchoolTypePublicText"><%= school_type_display('public') %></div>
-    <div class="js-mapPinSchoolTypeCharterText"><%= school_type_display('charter') %></div>
-    <div class="js-mapPinAssignedSchoolText">Assigned school</div>
+    <div class="js-mapPinSchoolTypePublicText"><%= db_t(school_type_display('public')) %></div>
+    <div class="js-mapPinSchoolTypeCharterText"><%= db_t(school_type_display('charter')) %></div>
+    <div class="js-mapPinAssignedSchoolText"><%= t('.assigned_school') %></div>
     <% (1..5).each do |rating| %>
       <div class="js-mapPinCommunityStars-<%=rating%>"><%= draw_stars_16 rating %></div>
     <% end %>

@@ -5,6 +5,7 @@ en:
     learn_more_html: Learn More &raquo;
     fewer_filters: Fewer filters
     more_filters: More filters
+    ok_fit: 'Ok fit'
     reviews:
       found_this_helpful: ! ' found this helpful'
       people: people
@@ -20,7 +21,9 @@ en:
     search_form:
       long_placeholder: Enter city, zip code, address or school name
       short_placeholder: City, zip, address or school
+    strong_fit: 'Strong fit'
     test_scores:
       advanced: Advanced
       proficient: Proficient
       proficient_or_better: Proficient or better
+    weak_fit: Weak fit
