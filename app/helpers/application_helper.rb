@@ -1,9 +1,9 @@
 require './app/models/presenters/topnav'
 require 'open-uri'
 
-
 module ApplicationHelper
   include CookieConcerns
+  include GsI18n
 
   # Hack: Remove /assets/ prefix since it is set that way in hub_config
   # And needs to remain until hubs are off of Java
