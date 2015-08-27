@@ -336,17 +336,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (error_code === 'wrongState') {
                 var longState = GS.states.name(state);
                 var capitalLongState = capitalizeState(longState);
-                var wrongStateText = '<strong>' + 'You&#39re currently comparing schools in&nbsp' + capitalLongState + '</strong>' +
-                    '<a class="pointer js-compareSchoolsSubmit">' + '&nbspcompare schools now&nbsp' +
-                    '</a>' + 'or' +
-                    '<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">' + '&nbspclear schools&nbsp' +
-                    '</a>' + '<strong>' +
-                    'to compare in this location.' + '</strong>';
+                var wrongStateText = GS.I18n.t('wrong_state_error_start_html') + capitalLongState + GS.I18n.t('wrong_state_error_end_html')
                 return wrongStateText;
+
             }
             else if (error_code === 'tooManySchools') {
-                var tooManySchoolsText = '<strong>' + 'You&#39ve already selected 4 schools to compare.&nbsp' + '</strong>' +
-                    '<a class="pointer js-compareSchoolsSubmit">' + '&nbspCompare schools.' + '</a>';
+                var tooManySchoolsText =  GS.I18n.t('too_many_schools_error_html');
                 return tooManySchoolsText;
             }
         };
@@ -540,7 +535,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var displaySaveSearchValidationError = function(errorMessage) {
         var $popup = $('.js-savedSearchPopup');
         $popup.find('.js-savedSearchFormGroup').addClass('has-error');
-        $popup.find('.js-savedSearchErrorMessage').text(errorMessage).show('');
+        $popup.find('.js-savedSearchErrorMessage').text(GS.I18n.t('saved_search_validation_error')).show('');
     };
 
     var displaySaveSearchFailedSaveError = function(errorMessage) {
