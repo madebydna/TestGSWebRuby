@@ -9,7 +9,14 @@ en:
       found_this_helpful: ! ' found this helpful'
       people: people
       person: person
-      share_review_caption: 'User review of ' 
+      share_review_caption: 'User review of '
+    school_types:
+      Private: Private
+      Public charter: Public charter
+      Public district: Public district
+      charter: charter
+      private: private
+      public: public
     search_form:
       long_placeholder: Enter city, zip code, address or school name
       short_placeholder: City, zip, address or school

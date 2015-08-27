@@ -10,6 +10,13 @@ es:
       people: personas
       person: persona
       share_review_caption: 'Opinión de usuarios de la '
+    school_types:
+      Private: Privada
+      Public charter: Charter pública
+      Public district: Distrito pública
+      charter: charter
+      private: privada
+      public: pública
     search_form:
       long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
       short_placeholder: Ciudad, código postal, la dirección o la escuela
