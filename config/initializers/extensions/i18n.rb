@@ -17,4 +17,5 @@ module I18n
   end
 end
 
+I18n.available_locales = [:en, :es]
 I18n.exception_handler = I18n::GSLoggingExceptionHandler.new
