@@ -68,7 +68,8 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
 
   def set_hash_values!(data_sets, hash)
     data_sets.each do | data |
-      hash["school_value_#{data.year}".to_sym] = data.school_value
+      hash["school_value_#{data.year}".to_sym] = data.school_value if data.school_value.present?
+      hash["state_average_#{data.year}".to_sym] = data.state_value if data.state_value.present?
     end
   end
 

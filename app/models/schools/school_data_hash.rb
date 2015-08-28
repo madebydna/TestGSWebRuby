@@ -1,6 +1,6 @@
 class SchoolDataHash
 
-  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return
+  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :school_value, :state_average
 
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
   VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
@@ -27,6 +27,8 @@ class SchoolDataHash
 
   def initialize(cachified_school, options)
     @options, @sub_group_to_return = options, SUBGROUP_MAP[options[:sub_group_to_return]]
+    @school_value = "school_value_#{options[:year]}"
+    @state_average = "state_average_#{options[:year]}"
     @cachified_school = cachified_school
     @cache = cachified_school.cache_data || {}
     @characteristics = @cache['characteristics'] || {}
@@ -55,14 +57,14 @@ class SchoolDataHash
   def get_characteristics_data(data_set, breakdown_to_use = sub_group_to_return)
     data = characteristics[data_set]
 
-    school_value = [*data].find do |value|
+    breakdown = [*data].find do |value|
       value['original_breakdown'] == breakdown_to_use
     end
-    if school_value.present?
+    if breakdown.present?
       {
-        value: school_value['school_value'].to_f.round,
-        performance_level: school_value['performance_level'],
-        state_average: school_value['state_average'].to_f.round
+        value: breakdown[school_value].to_f.round,
+        performance_level: breakdown['performance_level'],
+        state_average: breakdown[state_average].to_f.round
       }
     else
       {}

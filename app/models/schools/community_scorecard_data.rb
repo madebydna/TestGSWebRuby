@@ -55,6 +55,7 @@ class CommunityScorecardData
     @options ||= {
       data_sets:  school_data_params[:data_sets], #['graduation_rate', 'a_through_g'],
       sub_group_to_return: school_data_params[:sortBreakdown], #asian
+      year: 2014 #move this to collection config
     }
   end
 
