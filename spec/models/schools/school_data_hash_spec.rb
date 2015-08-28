@@ -22,8 +22,8 @@ describe SchoolDataHash do
           {
             "year" => 2013,
             "original_breakdown" => "Asian",
-            "school_value" => 98.32,
-            "state_average" => 84.47,
+            "school_value_2013" => 98.32,
+            "state_average_2013" => 84.47,
             "performance_level" => "above_average"
           },
         ],
@@ -31,8 +31,8 @@ describe SchoolDataHash do
           {
             "year" => 2013,
             "original_breakdown" => "Asian",
-            "school_value" => 98.32,
-            "state_average" => 84.47,
+            "school_value_2013" => 98.32,
+            "state_average_2013" => 84.47,
             "performance_level" => "above_average"
           },
         ]
@@ -86,7 +86,8 @@ describe SchoolDataHash do
               SchoolDataHash.new(
                 school,
                 data_sets: data_sets,
-                sub_group_to_return: breakdown
+                sub_group_to_return: breakdown,
+                year: 2013
               ).data_hash
             end
 
