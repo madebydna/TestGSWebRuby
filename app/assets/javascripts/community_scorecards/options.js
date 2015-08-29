@@ -26,6 +26,7 @@ GS.CommunityScorecards.Options.prototype = {
 
   set: function(key, value) {
     if(this.isValidValue(value) && value !== this.get(key)) {
+      insertUrlQueryParamsIntoCurrentUrl(key, value);
       this['_' + key] = value;
       return true;
     }
@@ -47,4 +48,12 @@ GS.CommunityScorecards.Options.prototype = {
     }.gs_bind(this));
   }
 
+};
+
+var insertUrlQueryParamsIntoCurrentUrl = function(key, value){
+      var  data = History.getState()['data'];
+      data[key] = value
+      var queryParams = GS.uri.Uri.getQueryStringFromObject(data)
+      var replaceQueryParams = History.replaceState(data, null, queryParams );
+      return replaceQueryParams;
 };

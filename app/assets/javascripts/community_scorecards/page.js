@@ -127,12 +127,12 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     // - lang
     // -- Handled automatically, but is from the URL
     return {
-      collectionId: 15,
-      gradeLevel: 'h',
-      sortBy: 'graduation_rate',
-      sortBreakdown: 'white',
-      sortAscOrDesc: 'desc',
-      offset: 0,
+      collectionId: gon.default_url_params.collectionId,
+      gradeLevel: gon.default_url_params.gradeLevel,
+      sortBy: gon.default_url_params.sortBy,
+      sortBreakdown: gon.default_url_params.sortBreakdown,
+      sortAscOrDesc: gon.default_url_params.sortAscOrDesc,
+      offset: gon.default_url_params.offset,
       data_sets: gon.scorecard_data_types
     };
   };

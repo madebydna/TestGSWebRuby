@@ -31,6 +31,21 @@ class CommunityScorecardsController < ApplicationController
 
     gon.scorecard_data_types = @table_fields.map { |f| f[:data_type] }
     gon.pagename = 'GS:CommunityScorecard'
+
+    gon.default_url_params = {collectionId: 15,
+                              gradeLevel: 'h',
+                              sortBy: 'graduation_rate',
+                              sortBreakdown: 'white',
+                              sortAscOrDesc: 'desc',
+                              offset: 0,
+    }
+
+    if params == gon.default_url_params
+      gon.default_url_params
+    else
+      permitted_params = params.permit(:sortBy, :gradeLevel, :sortBreakdown, :sortAscOrDesc, :offset, :lang).symbolize_keys
+      gon.default_url_params.merge!(permitted_params)
+    end
   end
 
   def CSC_t(key)
