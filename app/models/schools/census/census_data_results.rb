@@ -15,11 +15,11 @@ class CensusDataResults
                  :delete,
                  :size
 
-  attr_reader :results, :results_with_values
+  attr_reader :results, :all_results
 
   def initialize(results)
     @results = results
-    @results_with_values = {}
+    @all_results = Hash.new([])
   end
 
   # won't filter out year zero
@@ -38,11 +38,11 @@ class CensusDataResults
 
     max_years = {}
     data_types.each do |k,v|
+      # Save all data
+      @all_results[k] = v
+
       # Throw out years where associated values are nil
       data_with_school_values = v.reject { |data_set| data_set.census_data_school_value.nil? }
-
-      # Save all data that have values
-      @results_with_values[k] = data_with_school_values
 
       # Find max of remaining years
       max_year = data_with_school_values.map(&:year).max

@@ -53,10 +53,20 @@ class CommunityScorecardData
 
   def school_data_hash_options
     @options ||= {
-      data_sets:  school_data_params[:data_sets], #['graduation_rate', 'a_through_g'],
+      data_sets_and_years:  data_sets_with_years(school_data_params[:data_sets]), #['graduation_rate' => '2013, 'a_through_g' => '2014'],
       sub_group_to_return: school_data_params[:sortBreakdown], #asian
       year: 2014 #move this to collection config
     }
+  end
+
+  # move into community scorecard json config
+  def data_sets_with_years(data_sets)
+    data_set_to_year = {
+      graduation_rate: '2013',
+      a_through_g:     '2014'
+    }
+
+    data_set_to_year.keep_if { |k,_| data_sets.include? k.to_s }
   end
 
   def get_cachified_schools(school_data)

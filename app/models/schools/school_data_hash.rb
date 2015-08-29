@@ -1,9 +1,8 @@
 class SchoolDataHash
 
-  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :school_value, :state_average
-
+  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :data_sets_and_years
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
-  VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
+  VALID_DATA_SETS = [ :graduation_rate, :a_through_g ]
 
   SUBGROUP_MAP = Hash.new('All students').merge!({
     white:                             'White',
@@ -27,13 +26,13 @@ class SchoolDataHash
 
   def initialize(cachified_school, options)
     @options, @sub_group_to_return = options, SUBGROUP_MAP[options[:sub_group_to_return]]
-    @school_value = "school_value_#{options[:year]}"
-    @state_average = "state_average_#{options[:year]}"
     @cachified_school = cachified_school
     @cache = cachified_school.cache_data || {}
     @characteristics = @cache['characteristics'] || {}
     @data_hash = {}
-    ds = validate_data_sets(options[:data_sets])
+    @data_sets_and_years = options[:data_sets_and_years]
+    ds = validate_data_sets(options[:data_sets_and_years].keys)
+    
 
     ds.each { | ds_callback | send("add_#{ds_callback}") } if cachified_school.present?
   end
@@ -54,7 +53,7 @@ class SchoolDataHash
     })
   end
 
-  def get_characteristics_data(data_set, breakdown_to_use = sub_group_to_return)
+  def get_characteristics_data(data_set, year, breakdown_to_use = sub_group_to_return)
     data = characteristics[data_set]
 
     breakdown = [*data].find do |value|
@@ -62,9 +61,9 @@ class SchoolDataHash
     end
     if breakdown.present?
       {
-        value: breakdown[school_value].to_f.round,
+        value: breakdown["school_value_#{year}"].to_f.round,
         performance_level: breakdown['performance_level'],
-        state_average: breakdown[state_average].to_f.round
+        state_average: breakdown["state_average_#{year}"].to_f.round
       }
     else
       {}
@@ -72,12 +71,12 @@ class SchoolDataHash
   end
 
   def add_graduation_rate
-    val = get_characteristics_data('4-year high school graduation rate')
+    val = get_characteristics_data('4-year high school graduation rate', data_sets_and_years[:graduation_rate] )
     data_hash.merge!({graduation_rate: val})
   end
 
   def add_a_through_g
-    val = get_characteristics_data('Percent of students who meet UC/CSU entrance requirements')
+    val = get_characteristics_data('Percent of students who meet UC/CSU entrance requirements', data_sets_and_years[:a_through_g])
     data_hash.merge!({a_through_g: val})
   end
 
