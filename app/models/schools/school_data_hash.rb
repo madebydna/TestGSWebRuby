@@ -2,7 +2,7 @@ class SchoolDataHash
 
   attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :data_sets_and_years
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
-  VALID_DATA_SETS = [ :graduation_rate, :a_through_g ]
+  VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
 
   SUBGROUP_MAP = Hash.new('All students').merge!({
     white:                             'White',
@@ -31,8 +31,7 @@ class SchoolDataHash
     @characteristics = @cache['characteristics'] || {}
     @data_hash = {}
     @data_sets_and_years = options[:data_sets_and_years]
-    ds = validate_data_sets(options[:data_sets_and_years].keys)
-    
+    ds = validate_data_sets(@data_sets_and_years.try(:keys))
 
     ds.each { | ds_callback | send("add_#{ds_callback}") } if cachified_school.present?
   end

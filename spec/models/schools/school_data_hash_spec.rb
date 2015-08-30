@@ -29,10 +29,10 @@ describe SchoolDataHash do
         ],
         'Percent of students who meet UC/CSU entrance requirements' => [
           {
-            "year" => 2013,
+            "year" => 2014,
             "original_breakdown" => "Asian",
-            "school_value_2013" => 98.32,
-            "state_average_2013" => 84.47,
+            "school_value_2014" => 98.32,
+            "state_average_2014" => 84.47,
             "performance_level" => "above_average"
           },
         ]
@@ -73,11 +73,11 @@ describe SchoolDataHash do
     {'asian' => value_hash, 'fake' => {}}.each do |breakdown, expected_value|
       context "with #{breakdown} set for subgroup" do
         [
-          ['a_through_g'],
-          ['graduation_rate'],
-          ['a_through_g', 'graduation_rate']
-        ].each do |data_sets|
-          context "with #{data_sets.join(' & ')} configured" do
+          {'a_through_g' => 2014},
+          {'graduation_rate' => 2013},
+          {'a_through_g' => 2014, 'graduation_rate' => 2013}
+        ].each do |data_sets_and_years|
+          context "with #{data_sets_and_years} configured" do
             before do
               allow(school).to receive(:cache_data).and_return(characteristics)
             end
@@ -85,9 +85,8 @@ describe SchoolDataHash do
             subject do
               SchoolDataHash.new(
                 school,
-                data_sets: data_sets,
+                data_sets_and_years: data_sets_and_years.with_indifferent_access,
                 sub_group_to_return: breakdown,
-                year: 2013
               ).data_hash
             end
 
@@ -95,7 +94,7 @@ describe SchoolDataHash do
               school_info_assertion
             end
 
-            data_sets.each do |data_set|
+            data_sets_and_years.keys.each do |data_set|
               it "should have #{data_set} data" do
                 expect(subject[data_set.to_sym]).to eq(expected_value)
               end

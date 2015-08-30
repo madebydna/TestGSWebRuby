@@ -48,15 +48,20 @@ class CommunityScorecardData
 
   #Todo later when solr layer is built, add appropriate whitelisting for solr params here or in school_data_service where necessary
   def school_data_service_params
-    school_data_params
+    school_data_params.merge({
+      sortYear: data_set_with_year_map[school_data_params[:sortBy]]
+    })
   end
 
   def school_data_hash_options
     @options ||= {
-      data_sets_and_years:  data_sets_with_years(school_data_params[:data_sets]), #['graduation_rate' => '2013, 'a_through_g' => '2014'],
+      data_sets_and_years: data_set_with_year_map, #['graduation_rate' => '2013, 'a_through_g' => '2014'],
       sub_group_to_return: school_data_params[:sortBreakdown], #asian
-      year: 2014 #move this to collection config
     }
+  end
+
+  def data_set_with_year_map
+    @data_set_with_year_map ||= data_sets_with_years(school_data_params[:data_sets])
   end
 
   # move into community scorecard json config
@@ -64,9 +69,9 @@ class CommunityScorecardData
     data_set_to_year = {
       graduation_rate: '2013',
       a_through_g:     '2014'
-    }
+    }.with_indifferent_access
 
-    data_set_to_year.keep_if { |k,_| data_sets.include? k.to_s }
+    data_set_to_year.keep_if { |k,_| [*data_sets].include? k.to_s }
   end
 
   def get_cachified_schools(school_data)
