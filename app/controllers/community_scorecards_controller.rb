@@ -11,14 +11,8 @@ class CommunityScorecardsController < ApplicationController
       { data_type: :graduation_rate, partial: :percent_value },
     ]
 
-    @data_type_dropdown_for_mobile = @table_fields.each_with_object([]) do |table_field, array|
-      data_type = table_field[:data_type]
-      data_type == :school_info || array << [
-        CSC_t(data_type),
-        data_type,
-        { class: 'js-drawTable', data: { 'sort-by' => data_type } }
-      ]
-    end.reverse! #reverse to temporarily set default to graduation rate
+    set_mobile_dropdown_instance_var!
+
 
     #todo move into collection
     @subgroups_for_header = SchoolDataHash::SUBGROUP_MAP.keys.map do | subgroup |
@@ -46,6 +40,17 @@ class CommunityScorecardsController < ApplicationController
       permitted_params = params.permit(:sortBy, :gradeLevel, :sortBreakdown, :sortAscOrDesc, :offset, :lang).symbolize_keys
       gon.default_url_params.merge!(permitted_params)
     end
+  end
+
+  def set_mobile_dropdown_instance_var!
+    @data_type_dropdown_for_mobile = @table_fields.each_with_object([]) do |table_field, array|
+      data_type = table_field[:data_type]
+      data_type == :school_info || array << [
+        CSC_t(data_type),
+        data_type,
+        { class: 'js-drawTable', data: { 'sort-by' => data_type } }
+      ]
+    end.reverse! #reverse to temporarily set default to graduation rate
   end
 
   def CSC_t(key)

@@ -16,7 +16,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       max-width: 200px;
     }
     th {
-      border-left: 1px solid #dedede;
+      border-left: 1px solid $module-gray-stroke;
     }
   }
   @include csc-table-blue-highlight(2, $csc-table-blue-border);
@@ -57,16 +57,16 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   .table-header {
     @extend .pam;
     @extend .full-width;
-    background-color: #dedede;
+    background-color: $module-gray-stroke;
 
-    &.dark-green {
-      background-color: #333;
+    &.gray-darkset {
+      background-color: $gray-darkest;
     }
   }
 
   .striped-divs {
     > div.div-row:nth-child(odd) {
-      background-color: #dedede;
+      background-color: $module-gray-stroke;
     }
 
     > div.div-row:nth-child(even) {
@@ -74,7 +74,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     }
 
     > div.div-row {
-      border-bottom: #dedede solid 1px;
+      border-bottom: $module-gray-stroke solid 1px;
     }
 
     > div:nth-last-child(2) {
