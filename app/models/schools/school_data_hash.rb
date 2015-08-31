@@ -1,6 +1,6 @@
 class SchoolDataHash
 
-  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :data_sets_and_years
+  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :data_sets_and_years, :link_helper
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
   VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
 
@@ -30,6 +30,7 @@ class SchoolDataHash
     @cache = cachified_school.cache_data || {}
     @characteristics = @cache['characteristics'] || {}
     @data_hash = {}
+    @link_helper = options[:link_helper]
     @data_sets_and_years = options[:data_sets_and_years]
     ds = validate_data_sets(@data_sets_and_years.try(:keys))
 
@@ -48,6 +49,7 @@ class SchoolDataHash
         gradeLevel: cachified_school.process_level,
         name: cachified_school.name,
         type: I18n.db_t(cachified_school.type).to_s.titleize,
+        url: link_helper.school_path(@cachified_school)
       }
     })
   end

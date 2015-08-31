@@ -57,6 +57,7 @@ class CommunityScorecardData
     @options ||= {
       data_sets_and_years: data_set_with_year_map, #['graduation_rate' => '2013, 'a_through_g' => '2014'],
       sub_group_to_return: school_data_params[:sortBreakdown], #asian
+      link_helper:         school_data_params[:link_helper]
     }
   end
 

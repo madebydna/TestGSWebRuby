@@ -24,12 +24,17 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 
   .school-info {
     .name {
-      font-family: 'opensans-bold';
-      font-size: 15px; // This will be duplicative once <p> has font-size 15px
       margin-bottom: 5px;
     }
     .grade-type {
       margin: 0;
+    }
+
+    a {
+      text-decoration: none;
+      color: #1d1d1d;
+      font-family: 'opensans-bold';
+      font-size: 15px;
     }
   }
   .percent-value {
