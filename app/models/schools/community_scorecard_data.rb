@@ -67,8 +67,8 @@ class CommunityScorecardData
   # move into community scorecard json config
   def data_sets_with_years(data_sets)
     data_set_to_year = {
-      graduation_rate: '2013',
-      a_through_g:     '2014'
+      a_through_g:     '2014',
+      graduation_rate: '2013'
     }.with_indifferent_access
 
     data_set_to_year.keep_if { |k,_| [*data_sets].include? k.to_s }
