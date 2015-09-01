@@ -15,11 +15,15 @@ class Collection < ActiveRecord::Base
   end
 
   def config
-    @config ||= read_json_attribute(:config)
+    @_config ||= read_json_attribute(:config)
+  end
+
+  def url_name
+    @_name ||= config[:url_name]
   end
 
   def definition
-    @config ||= read_json_attribute(:definition)
+    @_definition ||= read_json_attribute(:definition)
   end
 
   def self.for_school(state, school_id)
@@ -31,8 +35,7 @@ class Collection < ActiveRecord::Base
   # Collection-specific configuration should be moved to this model's config
   # attribute and hub-specific config should live in the hub_config model.
   def hub_config
-    @hub_config ||= CollectionConfig.key_value_map self.id
-    @hub_config
+    @_hub_config ||= CollectionConfig.key_value_map self.id
   end
 
   def show_ads

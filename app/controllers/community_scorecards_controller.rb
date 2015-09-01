@@ -74,7 +74,7 @@ class CommunityScorecardsController < ApplicationController
   def canonical_path
     community_scorecard_path(
       collection_id: params[:collection_id],
-      collection_name: collection.name,
+      collection_name: collection.url_name,
     )
   end
 end
