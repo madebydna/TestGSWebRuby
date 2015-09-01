@@ -65,4 +65,13 @@ describe CommunityScorecardsController do
       expect(subject.second).to eq(controller.params[:sortBreakdown])
     end
   end
+
+  describe '#redirect_to_canonical_url' do
+    it 'should redirect to /community-scorecards/COLLECTIONID-COLLECTIONNAME' do
+      collection_struct = Struct.new(:name)
+      allow(Collection).to receive(:find_by).and_return(collection_struct.new('real-name'))
+      get :show, collection_id: 1, collection_name: 'fake-name'
+      expect(response).to redirect_to(community_scorecard_path(collection_id: 1, collection_name: 'real-name'))
+    end
+  end
 end

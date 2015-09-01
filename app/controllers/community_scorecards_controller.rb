@@ -1,9 +1,10 @@
 class CommunityScorecardsController < ApplicationController
 
+  before_filter :redirect_to_canonical_url
   before_filter :use_gs_bootstrap
 
   def show
-    @collection = Collection.find(15)
+    @collection = collection
     @table_fields = [
       # These data_type keys match with I18n keys to get the labels
       { data_type: :school_info, partial: :school_info },
@@ -64,5 +65,16 @@ class CommunityScorecardsController < ApplicationController
 
   def permitted_params
     params.permit(:sortBy, :gradeLevel, :sortBreakdown, :sortAscOrDesc, :lang).symbolize_keys
+  end
+
+  def collection
+    @_collection = Collection.find_by(id: params[:collection_id])
+  end
+
+  def canonical_path
+    community_scorecard_path(
+      collection_id: params[:collection_id],
+      collection_name: collection.name,
+    )
   end
 end

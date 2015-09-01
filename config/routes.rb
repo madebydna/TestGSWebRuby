@@ -55,7 +55,6 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/search/suggest/district', as: :search_district_suggest, to: 'search#suggest_district_by_name'
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
-  get '/gsr/community-scorecard', to: 'community_scorecards#show'
   get '/gsr/ajax/community-scorecard/get-school-data', to: 'community_scorecards_ajax#get_school_data'
 
   # todo delete this when java is gone
@@ -208,6 +207,14 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#login_and_redirect_to_change_password'
   get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
   post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
+
+  get '/community-scorecard/:collection_id-:collection_name',
+    to: 'community_scorecards#show',
+    as: :community_scorecard,
+    constraints: {
+      collection_id: /\d+/,
+      collection_name: /.+/,
+    }
 
   constraints(RegularSubdomain) do
     get '/join', :to => 'signin#new_join', :as => :join
