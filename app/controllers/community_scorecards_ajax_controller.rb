@@ -1,5 +1,7 @@
 class CommunityScorecardsAjaxController < ApplicationController
 
+  before_action :set_locale
+
   layout false
 
   def get_school_data

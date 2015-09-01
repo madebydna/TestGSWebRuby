@@ -32,7 +32,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 
     a {
       text-decoration: none;
-      color: #1d1d1d;
+      color: $dark-steel-gray;
       font-family: 'opensans-bold';
       font-size: 15px;
     }
@@ -92,17 +92,19 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     }
   }
 
-  .sort-link {
-    color: $link-color;
-    @extend .pointer;
-  }
-
-  .sort-link:hover {
-    color: $link-hover-color;
-  }
 
   .sort-text {
+    color: $indigo;
     font-weight: bold;
+
+    &.sort-link {
+      @extend .pointer;
+      color: $gray-link-color;
+    }
+
+    &.sort-link:hover {
+      color: $gray-link-hover-color;
+    }
   }
 
   .show-more {

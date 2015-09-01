@@ -49,7 +49,7 @@ class SchoolDataHash
         gradeLevel: cachified_school.process_level,
         name: cachified_school.name,
         type: I18n.db_t(cachified_school.type).to_s.titleize,
-        url: link_helper.school_path(@cachified_school)
+        url: link_helper.school_path(@cachified_school, lang: I18n.locale)
       }
     })
   end
