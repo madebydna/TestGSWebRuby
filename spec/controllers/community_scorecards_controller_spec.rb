@@ -68,7 +68,7 @@ describe CommunityScorecardsController do
 
   describe '#redirect_to_canonical_url' do
     it 'should redirect to /community-scorecards/COLLECTIONID-COLLECTIONNAME' do
-      collection_struct = Struct.new(:name)
+      collection_struct = Struct.new(:url_name)
       allow(Collection).to receive(:find_by).and_return(collection_struct.new('real-name'))
       get :show, collection_id: 1, collection_name: 'fake-name'
       expect(response).to redirect_to(community_scorecard_path(collection_id: 1, collection_name: 'real-name'))
