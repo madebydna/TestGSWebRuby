@@ -6,3 +6,4 @@ es:
           graduation_rate: Tasa de graduados
           school_info: Escuela
           state_average: 'Prom. %{val}%'
+          state_average_not_available: PROMEDIO DEL ESTADO NO DISPONIBLE

@@ -60,14 +60,16 @@ class SchoolDataHash
     breakdown = [*data].find do |value|
       value['original_breakdown'] == breakdown_to_use
     end
+
     if breakdown.present?
       {
+        show_no_data_symbol: breakdown["school_value_#{year}"].nil?,
         value: breakdown["school_value_#{year}"].to_f.round,
         performance_level: breakdown['performance_level'],
         state_average: breakdown["state_average_#{year}"].to_f.round
       }
     else
-      {}
+      { show_no_data_symbol: true }
     end
   end
 

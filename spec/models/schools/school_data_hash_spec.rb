@@ -75,9 +75,10 @@ describe SchoolDataHash do
     value_hash = {
       value: 98,
       state_average: 84,
-      performance_level: "above_average"
+      performance_level: "above_average",
+      show_no_data_symbol: false
     }
-    {'asian' => value_hash, 'fake' => {}}.each do |breakdown, expected_value|
+    {'asian' => value_hash, 'fake' => {show_no_data_symbol: true}}.each do |breakdown, expected_value|
       context "with #{breakdown} set for subgroup" do
         [
           {'a_through_g' => 2014},

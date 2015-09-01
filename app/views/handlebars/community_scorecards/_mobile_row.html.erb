@@ -1,14 +1,16 @@
-<div class='col-xs-12 pvm div-row'>
+<div class='col-xs-12 pvm div-row percent-value'>
   {{> community_scorecards/school_info school_info}}
-  {{#if data_for_mobile.value}}
-    <div class="percent-value">
+  <span class="sub-text state-average">
+    {{#if data_for_mobile.show_no_data_symbol}}
+      <span style="font-size: 20px"> <%= t('.no_data') %></span>
+    {{else}}
       <span class="school-value-mobile {{data_for_mobile.performance_level}}">{{data_for_mobile.value}}<sup>%</sup></span>
+    {{/if}}
 
-      {{#if data_for_mobile.state_average}}
-        <span class="sub-text state-average">
-          <%= t('.state_average') %> {{data_for_mobile.state_average}}%
-        </span>
-      {{/if}}
-    </div>
-  {{/if}}
+    {{#if data_for_mobile.state_average}}
+      <%= t('.state_average') %> {{data_for_mobile.state_average}}%
+    {{else}}
+      <%= t('.state_average_not_available') %>
+    {{/if}}
+  </span>
 </div>

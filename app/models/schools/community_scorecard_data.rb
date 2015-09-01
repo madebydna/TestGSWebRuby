@@ -32,8 +32,7 @@ class CommunityScorecardData
   end
 
   def header_data
-    school_info_header = {data_type: I18n.t(:school_info, scope: t_scope)}
-    school_data.each_with_object([school_info_header]) do |sd, hd|
+    h_data = school_data.each_with_object([]) do |sd, hd|
       sd.each do |data_type, value_hash|
         if (state_average = value_hash[:state_average]).present?
           hd << {
@@ -44,6 +43,24 @@ class CommunityScorecardData
         end
       end
     end.uniq
+
+    validate_header_data(h_data)
+  end
+
+  def validate_header_data(h_data)
+    #ensure data types are there
+    validated_header_data = data_set_with_year_map.keys.map do | data_set |
+      hd = h_data.find { |hd| hd[:param].to_s == data_set.to_s }
+      next hd if hd.present?
+
+      {
+        param: data_set,
+        data_type: I18n.t(data_set, scope: t_scope),
+        state_average: I18n.t(:state_average_not_available, scope: t_scope),
+      }
+    end
+
+    validated_header_data.unshift({data_type: I18n.t(:school_info, scope: t_scope)}) #school info
   end
 
   #Todo later when solr layer is built, add appropriate whitelisting for solr params here or in school_data_service where necessary

@@ -88,7 +88,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     data.data_for_mobile = {
       value: data[dataSet]['value'],
       state_average: data[dataSet]['state_average'],
-      performance_level: data[dataSet]['performance_level']
+      performance_level: data[dataSet]['performance_level'],
+      show_no_data_symbol: data[dataSet]['show_no_data_symbol']
     }
     return data;
   };

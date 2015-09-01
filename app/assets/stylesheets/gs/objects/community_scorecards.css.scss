@@ -10,6 +10,9 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       }
     }
   }
+  .scorecard-title {
+    color: $dirt-green;
+  }
   .table {
     margin-bottom: 0;
     td {
@@ -57,6 +60,10 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       font-family: 'opensans-regular';
       font-size: 12px;
     }
+  }
+  .no_data {
+    border-bottom: #999 2px solid;
+    width: 12px;
   }
 
   .table-header {
