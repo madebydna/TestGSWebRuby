@@ -208,13 +208,14 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
   post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
 
-  get '/community-scorecard/:collection_id-:collection_name',
-    to: 'community_scorecards#show',
-    as: :community_scorecard,
+  scope '/community/:collection_id-:collection_name',
+    as: :community,
     constraints: {
       collection_id: /\d+/,
       collection_name: /.+/,
-    }
+    } do
+      get 'scorecard', to: 'community_scorecards#show', as: :scorecard
+    end
 
   constraints(RegularSubdomain) do
     get '/join', :to => 'signin#new_join', :as => :join
