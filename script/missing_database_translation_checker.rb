@@ -16,6 +16,8 @@ OptionParser.new do |opts|
 end.parse!
 
 
+# Example
+# DATABASE_URL=mysql2://USER:PASSWORD@rodb-qa.greatschools.org/gs_schooldb bundle exec rails runner script/missing_database_translation_checker.rb -f /tmp/missing_database_translation_checker_output.txt
 class MissingDatabaseTranslationChecker
 
   def self.run
