@@ -16,7 +16,9 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var scorecard          = '.js-communityScorecard';
   var tablePlacement     = '#community-scorecard-table';
-  var tableBody          = tablePlacement + ' table tbody';
+  var table              = tablePlacement + ' table';
+  var tableHead          = table + ' thead';
+  var tableBody          = table + ' tbody';
   var tableHeaderPartial = 'community_scorecards/table_header';
   var tablePartial       = 'community_scorecards/table';
   var rowPartial         = 'community_scorecards/table_row';
@@ -29,7 +31,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var offsetInterval     = 10;
 
   var init = function() {
-    this.options = new GS.CommunityScorecards.Options(currentPageData());
+    initPageOptions();
     initReadMoreToggleHandler();
     redrawTable();
 
@@ -55,8 +57,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     $(scorecard).on('click', showMore, appendToTable);
 
     $(scorecard).on('click', tableSort, function (e) {
-      $(tableSort).addClass('sort-link');
-      $(this).removeClass('sort-link');
+      setSortTypeToggleState($(e.target));
     });
 
   };
@@ -70,8 +71,10 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       $(tablePlacement).html(GS.handlebars.partialContent(tablePartial, data));
       $(mobilePlacement).html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
 
+      setSortTypeToggleState(sortToggleFor(GS.CommunityScorecards.Page.options.get('sortAscOrDesc')));
+      calculateHighlightIndex();
       var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
-      $('.js-CommunityScorecardTable').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+      $(table).removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
     });
   };
 
@@ -107,34 +110,21 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     });
   };
 
-  var currentPageData = function() {
-    // Something that reads the URL to get the current status on page load.
-    // This should also deal with default settings.
-    // Potential params
-    // - collection id
-    // -- Stored on page somewhere? Or from URL?
-    // - breakdown
-    // -- Value of breakdown dropdown
-    // - grade
-    // -- Value of grade dropdown
-    // - sort data type
-    // -- When data type is clicked, JS adds a class to it, which
-    //    GS.CommunityScorecards.Data looks for.
-    // - sort type (asc or desc)
-    // -- From value of sort toggle
-    // - offset
-    // -- Data value on see more button
-    // - lang
-    // -- Handled automatically, but is from the URL
-    return {
-      collectionId: gon.default_url_params.collectionId,
-      gradeLevel: gon.default_url_params.gradeLevel,
-      sortBy: gon.default_url_params.sortBy,
-      sortBreakdown: gon.default_url_params.sortBreakdown,
-      sortAscOrDesc: gon.default_url_params.sortAscOrDesc,
-      offset: gon.default_url_params.offset,
-      data_sets: gon.scorecard_data_types
-    };
+  var initPageOptions = function() {
+    pageData = {};
+    _.extend(pageData, gon.community_scorecard_params);
+    GS.CommunityScorecards.Page.options = new GS.CommunityScorecards.Options(pageData);
+  };
+
+  var calculateHighlightIndex = function() {
+    if (! GS.CommunityScorecards.Page.options.get('highlightIndex')) {
+      var sortBy = GS.CommunityScorecards.Page.options.get('sortBy');
+      var $header = $($(tableHead).find('th[data-sort-by="' + sortBy + '"]'));
+      var highlightIndex = $header.data('highlightIndex');
+      if (highlightIndex) {
+        GS.CommunityScorecards.Page.options.set('highlightIndex', highlightIndex);
+      }
+    }
   };
 
   var initReadMoreToggleHandler = function() {
@@ -144,6 +134,15 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       $(e.target).removeClass('visible-xs');
       $('.js-readMoreText').removeClass('hidden-xs');
     });
+  };
+
+  var sortToggleFor = function(sortType) {
+    return $(tableSort + '[data-sort-asc-or-desc="' + sortType + '"]');
+  };
+
+  var setSortTypeToggleState = function($sortToggle) {
+    $(tableSort).addClass('sort-link');
+    $sortToggle.removeClass('sort-link');
   };
 
   return {

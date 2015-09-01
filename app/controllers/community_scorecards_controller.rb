@@ -12,48 +12,57 @@ class CommunityScorecardsController < ApplicationController
     ]
 
     set_mobile_dropdown_instance_var!
+    set_subgroups_for_header!
 
+    gon.pagename = 'GS:CommunityScorecard'
+    gon.community_scorecard_params = default_params.merge(permitted_params)
+  end
 
+  protected
+
+  def set_subgroups_for_header!
     #todo move into collection
-    @subgroups_for_header = SchoolDataHash::SUBGROUP_MAP.keys.map do | subgroup |
+    subgroups = SchoolDataHash::SUBGROUP_MAP.keys.map do | subgroup |
       [
         CSC_t(subgroup),
         subgroup,
         { class: 'js-drawTable', data: { 'sort-breakdown' => subgroup } }
       ]
     end
-
-    gon.scorecard_data_types = @table_fields.map { |f| f[:data_type] }
-    gon.pagename = 'GS:CommunityScorecard'
-
-    gon.default_url_params = {collectionId: 15,
-                              gradeLevel: 'h',
-                              sortBy: 'graduation_rate',
-                              sortBreakdown: 'white',
-                              sortAscOrDesc: 'desc',
-                              offset: 0,
-    }
-
-    if params == gon.default_url_params
-      gon.default_url_params
-    else
-      permitted_params = params.permit(:sortBy, :gradeLevel, :sortBreakdown, :sortAscOrDesc, :offset, :lang).symbolize_keys
-      gon.default_url_params.merge!(permitted_params)
-    end
+    @subgroups_for_header = [subgroups, params[:sortBreakdown]]
   end
 
   def set_mobile_dropdown_instance_var!
-    @data_type_dropdown_for_mobile = @table_fields.each_with_object([]) do |table_field, array|
+    data_types = @table_fields.each_with_object([]) do |table_field, array|
       data_type = table_field[:data_type]
       data_type == :school_info || array << [
         CSC_t(data_type),
         data_type,
         { class: 'js-drawTable', data: { 'sort-by' => data_type } }
       ]
-    end.reverse! #reverse to temporarily set default to graduation rate
+    end
+    @data_type_dropdown_for_mobile = [data_types, params[:sortBy]]
   end
 
   def CSC_t(key)
     t("controllers.community_scorecards_controller.#{key}")
+  end
+
+  def default_params
+    # TODO move into collection
+    {
+      collectionId: 15,
+      gradeLevel: 'h',
+      sortBy: 'graduation_rate',
+      sortBreakdown: 'white',
+      sortAscOrDesc: 'desc',
+      offset: 0,
+    }.merge({
+        data_sets: @table_fields.map { |f| f[:data_type] }
+      })
+  end
+
+  def permitted_params
+    params.permit(:sortBy, :gradeLevel, :sortBreakdown, :sortAscOrDesc, :lang).symbolize_keys
   end
 end

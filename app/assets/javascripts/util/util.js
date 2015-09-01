@@ -126,3 +126,8 @@ GS.util.getJsClasses = function($element) {
   };
   return jsClasses === undefined ? '' : jsClasses.join(' ');
 };
+
+GS.util.isHistoryAPIAvailable = function() {
+  return (typeof(window.History) !== 'undefined' && typeof(window.history.pushState) !== 'undefined');
+};
+
