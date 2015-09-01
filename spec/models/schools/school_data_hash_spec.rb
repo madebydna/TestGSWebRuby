@@ -5,7 +5,8 @@ def school_info_assertion
     {
       gradeLevel: school_level,
       name: school_name,
-      type: school_type.titleize
+      type: school_type.titleize,
+      url: school_url
     }
   )
 end
@@ -14,7 +15,9 @@ describe SchoolDataHash do
   let(:school_name)  { 'Alpha High' }
   let(:school_type)  { 'public'     }
   let(:school_level) { '9-13'       }
+  let(:school_url)   { '/california/alpha-high-city/1-alpha-high'  }
   let(:school) { FactoryGirl.create(:school, name: school_name, type: school_type) }
+  let(:link_helper) { Object.new }
   let(:characteristics) do
     {
       'characteristics' => {
@@ -44,6 +47,10 @@ describe SchoolDataHash do
     allow(school).to receive(:process_level).and_return(school_level)
   end
 
+  before do
+    allow(link_helper).to receive(:school_path).and_return(school_url)
+  end
+
   after do
     clean_models :ca, School
   end
@@ -53,7 +60,7 @@ describe SchoolDataHash do
 
       subject do
         allow(school).to receive(:cache_data).and_return(nil)
-        SchoolDataHash.new(school, {}).data_hash
+        SchoolDataHash.new(school, {link_helper: link_helper}).data_hash
       end
 
       it 'should add the basic school info' do
@@ -87,6 +94,7 @@ describe SchoolDataHash do
                 school,
                 data_sets_and_years: data_sets_and_years.with_indifferent_access,
                 sub_group_to_return: breakdown,
+                link_helper: link_helper
               ).data_hash
             end
 
