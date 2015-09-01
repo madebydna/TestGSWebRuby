@@ -19,7 +19,11 @@ class Collection < ActiveRecord::Base
   end
 
   def url_name
-    @_name ||= config[:url_name]
+    config[:url_name]
+  end
+
+  def scorecard_title
+    config[:scorecard_title]
   end
 
   def definition

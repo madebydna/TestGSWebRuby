@@ -16,6 +16,7 @@ class CommunityScorecardsController < ApplicationController
     set_subgroups_for_header!
 
     gon.pagename = 'GS:CommunityScorecard'
+    set_meta_tags(title: @collection.scorecard_title)
     gon.community_scorecard_params = default_params.merge(permitted_params)
   end
 
