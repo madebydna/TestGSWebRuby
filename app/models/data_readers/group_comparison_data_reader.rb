@@ -58,15 +58,29 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     # }
 
     get_data!
-
-    data.map do |collection_name, collection_data|
-      BarChartCollection.new(collection_name, collection_data, config)
-    end
+    bar_chart_collections
   rescue
     []
   end
 
   protected
+
+  def bar_chart_collections
+    bar_chart_collections = data.map do |collection_name, collection_data|
+      BarChartCollection.new(collection_name, collection_data, config)
+    end
+    if valid_bar_chart_collections?(bar_chart_collections)
+      bar_chart_collections
+    else
+      []
+    end
+  end
+
+  def valid_bar_chart_collections?(bar_chart_collections)
+    bar_chart_collections.any? do |bar_chart_collection|
+      bar_chart_collection.bar_charts.any? { |bc| bc.bar_chart_bars.present? }
+    end
+  end
 
   def get_data!
     self.data = cached_data_for_category(category, 'characteristics', school)
