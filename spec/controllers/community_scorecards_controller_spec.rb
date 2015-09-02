@@ -51,7 +51,7 @@ describe CommunityScorecardsController do
 
       data_types.each do | options_array |
         expect(options_array[0]).to be_a String
-        expect(options_array[1]).to be_a String
+        expect(options_array[1]).to be_a Symbol
         options_hash = options_array[2]
         expect(options_hash).to be_a Hash
         expect(options_hash.keys).to include(:class, :data)
