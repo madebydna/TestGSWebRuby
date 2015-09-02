@@ -3,6 +3,7 @@ en:
   Private: Private
   Public charter: Public charter
   Public district: Public district
-  charter: charter
+  charter: public charter
   private: private
-  public: public
+  public: public district
+

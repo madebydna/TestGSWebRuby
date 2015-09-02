@@ -26,7 +26,7 @@ class CommunityScorecardsController < ApplicationController
 
   def set_subgroups_for_header!
     #todo move into collection
-    subgroups = SchoolDataHash::SUBGROUP_MAP.keys.map do | subgroup |
+    subgroups = subgroups_list.map do | subgroup |
       [
         CSC_t(subgroup),
         subgroup,
@@ -72,6 +72,22 @@ class CommunityScorecardsController < ApplicationController
 
   def collection
     @_collection = Collection.find_by(id: params[:collection_id])
+  end
+
+  def subgroups_list
+    #move to collection config
+    [
+      :all_students,
+      :african_american,
+      :asian,
+      :filipino,
+      :hispanic,
+      :multiracial,
+      :native_american_or_native_alaskan,
+      :pacific_islander,
+      :economically_disadvantaged,
+      :limited_english_proficient
+    ]
   end
 
   def canonical_path
