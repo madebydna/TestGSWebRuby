@@ -30,7 +30,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var tableSort          = '.js-tableSort';
   var offsetInterval     = 10;
 
-  var shouldRedraw = true;
+  var shouldDraw = true;
 
   var init = function() {
     initPageOptions();
@@ -38,27 +38,27 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     redrawTable();
 
     $(scorecard).on('click', '.js-drawTable', function (e) {
-      if (shouldRedraw) {
-        shouldRedraw = false;
+      if (shouldDraw) {
+        shouldDraw = false;
         var $target = $(e.target);
         var isNewOptionSet = setOptions($target);
 
-        isNewOptionSet ? redrawTable() : shouldRedraw = true;
+        isNewOptionSet ? redrawTable() : shouldDraw = true;
       }
     });
 
     $(scorecard).on('click', showMore, function() {
-      if (shouldRedraw) {
-        shouldRedraw = false;
+      if (shouldDraw) {
+        shouldDraw = false;
         appendToTable();
       }
     });
 
     $(scorecard).on('click', tableSort, function (e) {
-      if (shouldRedraw) {
-        shouldRedraw = false;
+      if (shouldDraw) {
+        shouldDraw = false;
         setSortTypeToggleState($(e.target));
-        shouldRedraw = true;
+        shouldDraw = true;
       }
     });
 
@@ -74,8 +74,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     }).forEach(function(optionsKey, dataKey) {
       var dataVal = $target.data(dataKey);
       if(dataVal !== undefined) {
-        var isValueSet = GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
-        if (isValueSet) newOptionsSet = true;
+        if (GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)) newOptionsSet = true;
       };
     });
 
@@ -95,7 +94,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       calculateHighlightIndex();
       var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
       $(table).removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
-      shouldRedraw = true;
+      shouldDraw = true;
     });
   };
 
@@ -129,7 +128,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
           $(showMore).addClass('dn');
         }
       }
-      shouldRedraw = true;
+      shouldDraw = true;
     });
   };
 
