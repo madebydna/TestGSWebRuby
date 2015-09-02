@@ -67,11 +67,16 @@ describe CommunityScorecardsController do
   end
 
   describe '#redirect_to_canonical_url' do
-    it 'should redirect to /community-scorecards/COLLECTIONID-COLLECTIONNAME' do
-      collection_struct = Struct.new(:url_name)
-      allow(Collection).to receive(:find_by).and_return(collection_struct.new('real-name'))
-      get :show, collection_id: 1, collection_name: 'fake-name'
-      expect(response).to redirect_to(community_scorecard_path(collection_id: 1, collection_name: 'real-name'))
+    [{lang: 'es'}, {}].each do |param|
+      context "with params: #{param}" do
+        it 'should redirect to the canonical url' do
+          collection_struct = Struct.new(:url_name)
+          allow(Collection).to receive(:find_by).and_return(collection_struct.new('real-name'))
+          request_params = { collection_id: 1 }.merge(param)
+          get :show, request_params.merge(collection_name: 'fake-name')
+          expect(response).to redirect_to(community_scorecard_path(request_params.merge(collection_name: 'real-name')))
+        end
+      end
     end
   end
 end
