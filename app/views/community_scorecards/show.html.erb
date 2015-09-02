@@ -2,7 +2,9 @@
 
 <div class="<%= @gs_bootstrap %> community-scorecard js-communityScorecard">
   <div class="container-fluid">
+    <div class='shim-20 hidden-xs'></div>
     <h1 class="lg-roboto"><%= t(".#{@t_scope}.title") %></h1>
+    <div class='shim-10 hidden-xs'></div>
     <%= render partial: "community_scorecards/summary" %>
     <div class="clearfix">
     <%= render partial: "shared/partners/promo_delegator",

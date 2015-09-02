@@ -3,6 +3,6 @@ en:
     community_scorecards:
       mobile_row:
         state_average: STATE AVG.
-        state_average_not_available: State AVG. NOT AVAILABLE
+        state_average_not_available: state avg. not available
         no_data: No Data
 

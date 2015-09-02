@@ -14,6 +14,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     color: $dirt-green;
   }
   .table {
+    table-layout: fixed;
     margin-bottom: 0;
     td {
       max-width: 200px;
@@ -60,10 +61,15 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       font-family: 'opensans-regular';
       font-size: 12px;
     }
+    .no-data-mobile {
+      font-size: 20px;
+      padding-right: 10px;
+    }
   }
-  .no_data {
-    border-bottom: #999 2px solid;
+  .no-data {
+    border-bottom: $gray-dark 2px solid;
     width: 12px;
+    @extend .mha;
   }
 
   .table-header {
@@ -78,7 +84,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 
   .striped-divs {
     > div.div-row:nth-child(odd) {
-      background-color: $module-gray-stroke;
+      background-color: $module-gray;
     }
 
     > div.div-row:nth-child(even) {

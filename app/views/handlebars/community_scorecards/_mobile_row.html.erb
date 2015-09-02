@@ -2,7 +2,7 @@
   {{> community_scorecards/school_info school_info}}
   <span class="sub-text state-average">
     {{#if data_for_mobile.show_no_data_symbol}}
-      <span style="font-size: 20px"> <%= t('.no_data') %></span>
+      <span class='no-data-mobile'> <%= t('.no_data') %></span>
     {{else}}
       <span class="school-value-mobile {{data_for_mobile.performance_level}}">{{data_for_mobile.value}}<sup>%</sup></span>
     {{/if}}

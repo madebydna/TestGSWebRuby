@@ -12,6 +12,7 @@
     border-left: $border-color;
     border-right: $border-color;
     border-top: $border-color;
+    background-color: $ocean-blue;
   }
 
   .highlight#{$child-number - 1} td:nth-child(#{$child-number}) {
