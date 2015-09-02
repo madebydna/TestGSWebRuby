@@ -66,11 +66,11 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   protected
 
   def bar_chart_collections
-    bar_chart_collections = data.map do |collection_name, collection_data|
+    collections = data.map do |collection_name, collection_data|
       BarChartCollection.new(collection_name, collection_data, config)
     end
-    if valid_bar_chart_collections?(bar_chart_collections)
-      bar_chart_collections
+    if valid_bar_chart_collections?(collections)
+      collections
     else
       []
     end
