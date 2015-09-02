@@ -4,7 +4,8 @@
   <div class="container-fluid">
     <div class='shim-20 hidden-xs'></div>
     <h1 class="lg-roboto"><%= t(".#{@t_scope}.title") %></h1>
-    <div class='shim-10 hidden-xs'></div>
+    <%= render partial: 'community_scorecards/logo_bar' %>
+    <div class='shim-20 hidden-xs'></div>
     <%= render partial: "community_scorecards/summary" %>
     <%= render partial: "community_scorecards/article" %>
     <div class='shim-10 hidden-xs'></div>
