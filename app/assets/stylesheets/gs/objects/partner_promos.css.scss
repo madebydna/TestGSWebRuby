@@ -1,22 +1,23 @@
-.send-to-partner-horizontal {
-  @extend .col-xs-12;
+.send-to-partner {
   border: 2px solid $module-gray-stroke;
   text-align: center;
   .cta { //call to action
     @extend .col-xs-12;
     @extend .col-sm-9;
-    background-color: $module-gray;
-    padding: 10px 10px 15px;
-    .cta-text {
-      font-family: 'opensans-semibold';
-      padding-bottom: 10px;
+    .cta-body {
+      background-color: $module-gray;
+      padding: 10px 10px 15px;
+      .cta-text {
+        font-family: 'opensans-semibold';
+        padding-bottom: 10px;
+      }
     }
   }
   .logo {
     @extend .col-xs-12;
     @extend .col-sm-3;
     img {
-      max-height: 1000px;
+      max-height: 100px;
       max-width: 220px;
       padding: 10px;
       width: 85%;
@@ -25,25 +26,16 @@
 }
 
 .send-to-partner-vertical {
-  @extend .col-md-4;
-  border: 2px solid $module-gray-stroke;
-  text-align: center;
-  .cta { //call to action
-    @extend .col-xs-12;
-    background-color: $module-gray;
-    padding: 20px;
-    .cta-text {
-      font-family: 'opensans-semibold';
-      padding-bottom: 10px;
+  .send-to-partner{
+    .cta { //call to action
+      @extend .col-xs-12;
+      .cta-body{
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
     }
-  }
-  .logo {
-    @extend .col-xs-12;
-    img {
-      max-height: 380px;
-      max-width: 160px;
-      padding: 10px;
-      width: 85%;
+    .logo {
+      @extend .col-xs-12;
     }
   }
 }
