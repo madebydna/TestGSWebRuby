@@ -160,7 +160,8 @@ describe OspRegistrationController do
       before do
         expect(controller).to receive(:save_new_osp_user).and_call_original
         expect(controller).to receive(:sign_up_user_for_subscriptions!)
-        get :submit, save_new_osp_user_hash
+        # Mix things up and make the optional school_website param blank
+        get :submit, save_new_osp_user_hash.merge(school_website: '')
         @updated_user = User.where(email: 'minerva@hogwarts.uk').first_or_initialize
         @updated_esp_membership = EspMembership.where(member_id: @updated_user.id).first_or_initialize
       end
@@ -175,7 +176,7 @@ describe OspRegistrationController do
         end
       end
 
-      esp_membership_data = {state: 'CA', school_id: 1, job_title: 'headmistress', web_url: 'www.hogwarts.uk',
+      esp_membership_data = {state: 'CA', school_id: 1, job_title: 'headmistress', web_url: '',
                              status: 'provisional', active: false}
       esp_membership_data.each do |column, expected_value|
         it "should update esp_membership #{column}" do
