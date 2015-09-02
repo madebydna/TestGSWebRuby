@@ -33,7 +33,7 @@ class CommunityScorecardsController < ApplicationController
         { class: 'js-drawTable', data: { 'sort-breakdown' => subgroup } }
       ]
     end
-    @subgroups_for_header = [subgroups, params[:sortBreakdown]]
+    @subgroups_for_header = [subgroups, params[:sortBreakdown] || 'hispanic'] #move default to collection
   end
 
   def set_mobile_dropdown_instance_var!
@@ -45,7 +45,7 @@ class CommunityScorecardsController < ApplicationController
         { class: 'js-drawTable', data: { 'sort-by' => data_type } }
       ]
     end
-    @data_type_dropdown_for_mobile = [data_types, params[:sortBy]]
+    @data_type_dropdown_for_mobile = [data_types, params[:sortBy] || 'a_through_g'] #move default to collection
   end
 
   def CSC_t(key)
@@ -57,8 +57,8 @@ class CommunityScorecardsController < ApplicationController
     {
       collectionId: 15,
       gradeLevel: 'h',
-      sortBy: 'graduation_rate',
-      sortBreakdown: 'white',
+      sortBy: 'a_through_g',
+      sortBreakdown: 'hispanic',
       sortAscOrDesc: 'desc',
       offset: 0,
     }.merge({
