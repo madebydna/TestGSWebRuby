@@ -22,10 +22,6 @@ class Collection < ActiveRecord::Base
     config[:url_name]
   end
 
-  def scorecard_title
-    config[:scorecard_title]
-  end
-
   def definition
     @_definition ||= read_json_attribute(:definition)
   end

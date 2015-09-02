@@ -1,5 +1,6 @@
 class CommunityScorecardsController < ApplicationController
 
+  # TODO This breaks for Spanish
   before_filter :redirect_to_canonical_url
   before_filter :use_gs_bootstrap
 
@@ -16,7 +17,8 @@ class CommunityScorecardsController < ApplicationController
     set_subgroups_for_header!
 
     gon.pagename = 'GS:CommunityScorecard'
-    set_meta_tags(title: @collection.scorecard_title)
+    @t_scope = 'innovate_public_schools'
+    set_meta_tags(title: I18n.t("community_scorecards.show.#{@t_scope}.title"))
     gon.community_scorecard_params = default_params.merge(permitted_params)
   end
 
