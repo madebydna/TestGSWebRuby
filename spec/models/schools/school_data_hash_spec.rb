@@ -5,7 +5,7 @@ def school_info_assertion
     {
       gradeLevel: school_level,
       name: school_name,
-      type: school_type.titleize,
+      type: I18n.db_t(school_type).titleize,
       url: school_url
     }
   )
@@ -13,7 +13,7 @@ end
 describe SchoolDataHash do
 
   let(:school_name)  { 'Alpha High' }
-  let(:school_type)  { 'public'     }
+  let(:school_type)  { 'public '     }
   let(:school_level) { '9-13'       }
   let(:school_url)   { '/california/alpha-high-city/1-alpha-high'  }
   let(:school) { FactoryGirl.create(:school, name: school_name, type: school_type) }

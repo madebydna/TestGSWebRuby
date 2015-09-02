@@ -30,37 +30,57 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var tableSort          = '.js-tableSort';
   var offsetInterval     = 10;
 
+  var shouldRedraw = true;
+
   var init = function() {
     initPageOptions();
     initReadMoreToggleHandler();
     redrawTable();
 
     $(scorecard).on('click', '.js-drawTable', function (e) {
-      var $target = $(e.target);
-      var shouldRedrawTable = false;
-      _({
-        'sort-asc-or-desc': 'sortAscOrDesc',
-        'sort-by':          'sortBy',
-        'highlight-index':  'highlightIndex',
-        'sort-breakdown':    'sortBreakdown'
-      }).forEach(function(optionsKey, dataKey) {
-        var dataVal = $target.data(dataKey);
-        if(dataVal !== undefined) {
-          var isValueSet = GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
-          if (isValueSet) shouldRedrawTable = true;
-        };
-      });
+      if (shouldRedraw) {
+        shouldRedraw = false;
+        var $target = $(e.target);
+        var isNewOptionSet = setOptions($target);
 
-      if (shouldRedrawTable) redrawTable();
+        isNewOptionSet ? redrawTable() : shouldRedraw = true;
+      }
     });
 
-    $(scorecard).on('click', showMore, appendToTable);
+    $(scorecard).on('click', showMore, function() {
+      if (shouldRedraw) {
+        shouldRedraw = false;
+        appendToTable();
+      }
+    });
 
     $(scorecard).on('click', tableSort, function (e) {
-      setSortTypeToggleState($(e.target));
+      if (shouldRedraw) {
+        shouldRedraw = false;
+        setSortTypeToggleState($(e.target));
+        shouldRedraw = true;
+      }
     });
 
   };
+
+  var setOptions = function($target) {
+    var newOptionsSet = false;
+    _({
+      'sort-asc-or-desc': 'sortAscOrDesc',
+      'sort-by':          'sortBy',
+      'highlight-index':  'highlightIndex',
+      'sort-breakdown':   'sortBreakdown'
+    }).forEach(function(optionsKey, dataKey) {
+      var dataVal = $target.data(dataKey);
+      if(dataVal !== undefined) {
+        var isValueSet = GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)
+        if (isValueSet) newOptionsSet = true;
+      };
+    });
+
+    return newOptionsSet
+  }
 
   //when appropriate look into not having a hardcoded list of highlight classes. Regex?
   //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
@@ -75,6 +95,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       calculateHighlightIndex();
       var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
       $(table).removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+      shouldRedraw = true;
     });
   };
 
@@ -108,6 +129,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
           $(showMore).addClass('dn');
         }
       }
+      shouldRedraw = true;
     });
   };
 
