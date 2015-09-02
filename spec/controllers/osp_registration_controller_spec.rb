@@ -160,8 +160,7 @@ describe OspRegistrationController do
       before do
         expect(controller).to receive(:save_new_osp_user).and_call_original
         expect(controller).to receive(:sign_up_user_for_subscriptions!)
-        # Mix things up and make the optional school_website param blank
-        get :submit, save_new_osp_user_hash.merge(school_website: '')
+        get :submit, save_new_osp_user_hash
         @updated_user = User.where(email: 'minerva@hogwarts.uk').first_or_initialize
         @updated_esp_membership = EspMembership.where(member_id: @updated_user.id).first_or_initialize
       end
@@ -176,7 +175,7 @@ describe OspRegistrationController do
         end
       end
 
-      esp_membership_data = {state: 'CA', school_id: 1, job_title: 'headmistress', web_url: '',
+      esp_membership_data = {state: 'CA', school_id: 1, job_title: 'headmistress', web_url: 'www.hogwarts.uk',
                              status: 'provisional', active: false}
       esp_membership_data.each do |column, expected_value|
         it "should update esp_membership #{column}" do
@@ -231,6 +230,21 @@ describe OspRegistrationController do
           expect(controller).to receive(:flash_notice)
           get :submit, super_long_school_website_params
           expect(response).to render_template('osp/registration/new')
+        end
+      end
+    end
+
+    [
+      'www.hogwarts.uk',
+      '',
+      'http://\\\\\\/\/\/@#$%$!@#%#^$%&$^#%@$$$^%&^@#@#%@#%!\\\\\\',
+    ].each do |website|
+      context "with website: #{website}" do
+        it 'should save the website correctly' do
+          get :submit, save_new_osp_user_hash.merge(school_website: website)
+          user = User.where(email: 'minerva@hogwarts.uk').first
+          membership = EspMembership.where(member_id: user.id).first
+          expect(membership.web_url).to eq(website)
         end
       end
     end
