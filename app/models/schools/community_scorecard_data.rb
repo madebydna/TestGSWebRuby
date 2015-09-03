@@ -5,6 +5,7 @@ class CommunityScorecardData
   SCHOOL_CACHE_KEYS = 'characteristics'
 
   def initialize(school_data_params={})
+    @collection = Collection.find(school_data_params[:collectionId])
     @school_data_params = school_data_params
   end
 
@@ -84,10 +85,12 @@ class CommunityScorecardData
 
   # move into community scorecard json config
   def data_sets_with_years(data_sets)
-    data_set_to_year = {
-      a_through_g:     '2014',
-      graduation_rate: '2013'
-    }.with_indifferent_access
+    data_sets_and_years = @collection.scorecard_fields.map do |field|
+      unless field[:data_type].to_s == 'school_info'
+        [field[:data_type], field[:year]]
+      end
+    end.compact
+    data_set_to_year = Hash[data_sets_and_years].with_indifferent_access
 
     data_set_to_year.keep_if { |k,_| [*data_sets].include? k.to_s }
   end
