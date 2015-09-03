@@ -3,23 +3,99 @@ require 'spec_helper'
 describe SubscriptionsController do
 
   after do
-    clean_models :gs_schooldb,User, Subscription
+    clean_models :gs_schooldb, User, Subscription 
+    clean_models :ca, School
   end
 
   describe '#attempt_sign_up' do
+    let(:subscription_params){{test: 'param'}}
+    context 'without ajax' do
+      before do
+       allow(controller).to receive(:redirect_back_or_default)
+      end
+      context 'with specific redirect path' do
+        let(:redirect_path) { 'redirect_path' }
+        let(:subject) { controller.send :attempt_sign_up, subscription_params, redirect_path }
+        it 'should create subcription with params' do
+          expect(controller).to receive(:create_subscription).with(subscription_params)
+          subject
+        end
+        it 'should redirect back to specified redirect path' do
+          expect(controller).to receive(:redirect_back_or_default).with(redirect_path)
+          subject
+        end
+      end
 
+      context 'without specific redirect path' do
+        let(:subject) { controller.send :attempt_sign_up, subscription_params }
+        it 'should create subcription with params' do
+          expect(controller).to receive(:create_subscription).with(subscription_params)
+          subject
+        end
+        it 'should redirect back without specific path' do
+          expect(controller).to receive(:redirect_back_or_default).with(no_args)
+          subject
+        end
+      end
+    end
 
-    let(:response) { get :join }
+    context 'with ajax' do
+      before do
+       allow(controller).to receive(:render)
+       allow(controller).to receive(:redirect_back_or_default)
+       allow(controller).to receive(:ajax?).and_return(true)
+      end
+        let(:subject) { controller.send :attempt_sign_up, subscription_params }
+        it 'should create subcription with params' do
+          expect(controller).to receive(:create_subscription).with(subscription_params)
+          subject
+        end
+        it 'should render with error message' do
+          render_response = {:json=>{}, :status=>200}
+          expect(controller).to receive(:render).with(render_response)
+          subject
+        end
 
-    it 'should redirect to join url' do
+    end
+  end
 
-      allow(controller).to receive(:logged_in?).and_return(nil)
-      allow(controller).to receive(:join_url).and_return('cliu.greatschools.org')
-
-      expect(controller).to receive(:save_deferred_action)
-      expect(controller).to receive(:redirect_to).with('cliu.greatschools.org')
-      controller.send :attempt_sign_up, '',''
-
+  describe '#handle_not_logged_in' do
+    before do
+      allow(controller).to receive(:log_in_required_message).and_return('error')
+    end
+    let(:subscription_params){{test: 'param'}}
+    let(:subject) { controller.send :handle_not_logged_in, subscription_params }
+    context 'with not ajax' do
+     before do
+       allow(controller).to receive(:redirect_to)
+       allow(controller).to receive(:ajax?).and_return(false)
+       allow(controller).to receive(:join_url).and_return('join_url')
+     end
+      it 'should saved deferred create_subscription deffered actions with subscription params' do
+        expect(controller).to receive(:save_deferred_action).
+          with(:create_subscription_deferred, subscription_params)
+        subject
+      end
+      it 'should flash error message' do
+        expect(controller).to receive(:flash_error).with('error')
+        subject
+      end
+      it 'should redirect to join_url' do
+        expect(controller).to receive(:redirect_to).with('join_url')
+        subject
+      end
+    end
+    context 'with ajax' do
+     before do
+       allow(controller).to receive(:redirect_to)
+       allow(controller).to receive(:ajax?).and_return(true)
+       allow(controller).to receive(:join_url).and_return('join_url')
+     end
+      it 'should render with error message' do
+        render_response = {:json=>{:error=>"error"}, :status=>422}
+        expect(controller).to receive(:render).with(render_response)
+        subject
+      end
     end
   end
 
@@ -64,6 +140,5 @@ describe SubscriptionsController do
 
     end
   end
-
 
 end
