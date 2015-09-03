@@ -6,6 +6,8 @@ class CommunityScorecardsController < ApplicationController
 
   def show
     @collection = collection
+    # TODO get t_scope and table_fields from collection config
+    @t_scope = 'innovate_public_schools'
     @table_fields = [
       # These data_type keys match with I18n keys to get the labels
       { data_type: :school_info, partial: :school_info },
@@ -15,11 +17,9 @@ class CommunityScorecardsController < ApplicationController
 
     set_mobile_dropdown_instance_var!
     set_subgroups_for_header!
-
-    gon.pagename = 'GS:CommunityScorecard'
-    @t_scope = 'innovate_public_schools'
-    set_meta_tags(title: I18n.t("community_scorecards.show.#{@t_scope}.title"))
     gon.community_scorecard_params = default_params.merge(permitted_params)
+
+    set_tracking_and_meta_info
   end
 
   protected
@@ -95,5 +95,11 @@ class CommunityScorecardsController < ApplicationController
       collection_id: params[:collection_id],
       collection_name: collection.url_name,
     )
+  end
+
+  def set_tracking_and_meta_info
+    data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = 'GS:CommunityScorecard'
+    data_layer_gon_hash[DataLayerConcerns::COLLECTION_ID] = collection.id
+    set_meta_tags(title: I18n.t("community_scorecards.show.#{@t_scope}.title"))
   end
 end

@@ -2,6 +2,8 @@ module DataLayerConcerns
   extend ActiveSupport::Concern
 
   DATALAYER_COOKIE_NAME = :GATracking
+  PAGE_NAME = 'page_name'
+  COLLECTION_ID = 'Collection ID'
 
   protected
 
@@ -28,7 +30,7 @@ module DataLayerConcerns
 
   def add_collection_id_to_gtm_data_layer
     if @hub
-      data_layer_gon_hash['Collection ID'] = @hub.collection_id
+      data_layer_gon_hash[COLLECTION_ID] = @hub.collection_id
     end
   end
 
