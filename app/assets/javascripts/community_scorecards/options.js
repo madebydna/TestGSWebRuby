@@ -7,16 +7,11 @@ GS.CommunityScorecards.Options = function(options) {
 GS.CommunityScorecards.Options.prototype = {
 
   validURLAttributes: ['sortBy', 'sortBreakdown', 'sortAscOrDesc'],
-
-  validAttributes: function() {
-    return _.union(
-      ['collectionId', 'offset', 'highlightIndex', 'data_sets', 'gradeLevel'],
-      this.validURLAttributes
-    );
-  },
+  validNonURLAttributes: ['collectionId', 'offset', 'highlightIndex', 'data_sets', 'gradeLevel'],
 
   init: function(options) {
-    _.each(this.validAttributes(), function(attr) {
+    this.validAttributes = this.validNonURLAttributes.concat(this.validURLAttributes);
+    _.each(this.validAttributes, function(attr) {
       if(attr in options) {
         this.set(attr, options[attr]);
       };
@@ -46,11 +41,11 @@ GS.CommunityScorecards.Options.prototype = {
   },
 
   to_h: function() {
-    return _.object(this.validAttributes(), this.value_map());
+    return _.object(this.validAttributes, this.value_map());
   },
 
   value_map: function () {
-    return _.map(this.validAttributes(), function(attr) {
+    return _.map(this.validAttributes, function(attr) {
       return this.get(attr);
     }.gs_bind(this));
   },
