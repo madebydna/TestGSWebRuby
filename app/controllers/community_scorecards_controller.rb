@@ -39,11 +39,13 @@ class CommunityScorecardsController < ApplicationController
   def set_mobile_dropdown_instance_var!
     data_types = @table_fields.each_with_object([]) do |table_field, array|
       data_type = table_field[:data_type]
-      data_type == :school_info || array << [
-        CSC_t(data_type),
-        data_type,
-        { class: 'js-drawTable', data: { 'sort-by' => data_type } }
-      ]
+      unless data_type == :school_info
+        array << [
+          CSC_t(data_type),
+          data_type,
+          { class: 'js-drawTable', data: { 'sort-by' => data_type } }
+        ]
+      end
     end
     @data_type_dropdown_for_mobile = [data_types, params[:sortBy] || 'a_through_g'] #move default to collection
   end
