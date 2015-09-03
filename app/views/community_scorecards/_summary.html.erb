@@ -1,10 +1,9 @@
-<% scope = 'innovate_public_schools' %>
 <div class="summary">
   <div class="row">
     <div class="col-xs-12 col-sm-4 pbl">
-      <%= t(".#{scope}.description_above_fold") %>
+      <%= t(".#{@t_scope}.description_above_fold") %>
       <span class="hidden-xs js-readMoreText">
-        <%= t(".#{scope}.description_below_fold") %>
+        <%= t(".#{@t_scope}.description_below_fold") %>
       </span>
       <a class="visible-xs pointer js-readMoreLink">
         <%= t(".read_more") %>
@@ -12,7 +11,7 @@
     </div>
     <% 2.times do |column_index| %>
       <% column_index += 1 %>
-      <% column_scope = "#{scope}.column_#{column_index}" %>
+      <% column_scope = "#{@t_scope}.column_#{column_index}" %>
     <div class="col-xs-12 col-sm-4 pbl">
       <h4 class="mvn">
         <%= t(".#{column_scope}.title") %>
