@@ -178,13 +178,15 @@ class User < ActiveRecord::Base
   end
 
   def has_subscription?(list, school = nil)
+    school_id = school.try(:id)
+    school_state = school.try(:state)
     if list == 'greatnews'
       subscriptions.any? do |subscription|
         subscription.list == list
       end
     else
-      subscriptions.any? do |subscription|
-        subscription.list == list && subscription.school_id == school.id && subscription.state == school.state && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
+      subscriptions.any? do |subscription |
+        subscription.list == list && subscription.school_id == school_id && subscription.state == school_state && (subscription.expires.nil? || Time.parse(subscription.expires.to_s).future?)
       end
     end
   end

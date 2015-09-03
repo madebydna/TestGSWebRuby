@@ -12,16 +12,22 @@ module SubscriptionConcerns
       message = params[:message]
       list = params[:list].to_s
 # by default all users are suscribed to the newsletter including those sent
-# directly from specific newsletter linke
+# directly from specific newsletter link
       subscribe_current_user_to_newsletter
 
-      if list.present?
-          subscribe_current_user_to_list(list)
-      elsif school_id.present? && state.present?
+      if subscribe_with_list_specified_and_one_or_no_schools?(list, school_id)
+        if school_id.present? && state.present?
+          school = School.find_by_state_and_id state, school_id
+        else
+          school = nil
+        end
+        subscribe_current_user_to_list(list, school)
+      elsif subscribe_with_no_list_specified_and_with_school?(list, school_id, state)
           school_id, state = split_school_parameters(school_id, state)
           raise_mismatch_schools_and_states_error(school_id, state)
           subscribe_current_user_to_schools(school_id, state)
       end
+
       set_flash_notice(message)
     rescue => e
       flash_error e.message
@@ -32,6 +38,18 @@ module SubscriptionConcerns
     unless current_user.has_subscription?('greatnews')
       current_user.add_subscription!('greatnews')
     end
+  end
+
+  def subscribe_with_list_specified_and_one_or_no_schools?(list, school_id)
+      list.present? && (one_school_id?(school_id) || ! school_id.present?)
+  end
+
+  def one_school_id?(school_id)
+    school_id.split(',').count == 1
+  end
+
+  def subscribe_with_no_list_specified_and_with_school?(list, school_id, state)
+    ! list.present? && school_id.present? && state.present?
   end
 
   def split_school_parameters(school_id, state)
