@@ -46,7 +46,7 @@ es:
   Auditorium: Auditorio
   Autism: Autismo
   Auto mechanics: Mecánica automotriz
-  Bachelor's degree: 
+  Bachelor's degree: Licenciatura
   Badminton: Bádminton
   Band: Banda
   Baseball: Béisbol
@@ -471,4 +471,4 @@ es:
     vecinos
   Yoga club: Club de Yoga
   label: etiqueta
-  response_label: 
+  response_label: response_label

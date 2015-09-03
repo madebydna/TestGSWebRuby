@@ -1,0 +1,11 @@
+---
+es:
+  search:
+    sorting_toolbar:
+      compare_button: Comparar
+      distance: Distancia
+      fit: Apto
+      rating: Clasificación
+      relevance: Pertinencia
+      save_search_button: Guardar búsqueda
+      sort_by_label: ! 'Ordenar por:'

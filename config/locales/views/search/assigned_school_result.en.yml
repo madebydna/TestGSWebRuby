@@ -1,0 +1,10 @@
+---
+en:
+  search:
+    assigned_school_result:
+      double_check_with_district_or_school: It looks like this is your assigned %{level} school, but we recommend double-checking with the district or school
+      greatschools_rating_html: GreatSchools<br/>Rating
+      homes_for_sale: Homes for sale
+      label: Assigned school
+      no_community_reviews: No Community Reviews
+      no_school_photo_alt_text: No school photo available

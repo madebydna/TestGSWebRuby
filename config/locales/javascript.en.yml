@@ -3,15 +3,35 @@ en:
   javascript:
     close: Close
     learn_more_html: Learn More &raquo;
+    fewer_filters: Fewer filters
+    more_filters: More filters
+    ok_fit: 'Ok fit'
     reviews:
       found_this_helpful: ! ' found this helpful'
       people: people
       person: person
-      share_review_caption: 'User review of ' 
+      share_review_caption: 'User review of '
+    school_types:
+      Private: Private
+      Public charter: Public charter
+      Public district: Public district
+      charter: charter
+      private: private
+      public: public
     search_form:
       long_placeholder: Enter city, zip code, address or school name
       short_placeholder: City, zip, address or school
+    saved_search_validation_error: Please name your search
+    strong_fit: 'Strong fit'
     test_scores:
       advanced: Advanced
       proficient: Proficient
       proficient_or_better: Proficient or better
+    too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
+    weak_fit: Weak fit
+    wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
+    wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
+
+
+
+

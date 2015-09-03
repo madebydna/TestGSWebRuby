@@ -1,0 +1,8 @@
+---
+es:
+  concerns:
+    fit_score_concerns:
+      no_matches: No hay resultado
+      okay_fit: Resultado medio
+      strong_fit: Resultado fuerte
+      weak_fit: Resultado bajo

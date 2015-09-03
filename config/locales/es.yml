@@ -97,8 +97,8 @@ es:
           zero: No se han encontrado %{entry_name}
   views:
     pagination:
-      first: ! '& Laquo; Primero'
-      last: Última & raquo;
-      next: Y rsaquo;
-      previous: Y lsaquo;
-      truncate: Y hellip;
+      first: ! '&laquo; Primero'
+      last: Última &raquo;
+      next: ! '&rsaquo;'
+      previous: ! '&lsaquo;'
+      truncate: ! '&hellip;'

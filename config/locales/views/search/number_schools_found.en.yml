@@ -1,0 +1,13 @@
+---
+en:
+  search:
+    number_schools_found:
+      in_city_state: in %{city}, %{state}
+      in_district: in %{district}
+      near_address: near %{address}
+      number_of_schools_found:
+        one: 1 school found
+        other: "%{count} schools found"
+      within_radius:
+        one: within 1 mile of %{address}
+        other: within %{count} miles of %{address}

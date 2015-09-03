@@ -17,18 +17,18 @@
         <div class="gray-search-container-padding">
           <% if has_sponsor %>
               <div class='tac sponsor-bar  mbl'>
-                <div class="small mbn pbn prm di inverted-text"><%= sponsor[:text] %></div>
+                <div class="small mbn pbn prm di inverted-text"><%= db_t(sponsor[:text], default: sponsor[:text]) %></div>
                 <% if @hub.has_partner_page? %>
-                    <%= link_to image_tag(sponsor[:path], alt: 'sponsor logo'), sponsor_path %>
+                    <%= link_to image_tag(sponsor[:path], alt: t('.sponsor_logo')), sponsor_path %>
                 <% else %>
-                    <%= image_tag sponsor[:path], alt: 'sponsor logo' %>
+                    <%= image_tag sponsor[:path], alt: t('.sponsor_logo') %>
                 <% end %>
               </div>
           <% end %>
           <div class="col-md-8 col-sm-10 col-xs-12 ptm pts">
             <div class='oa'>
               <div class="pull-left">
-                <h4 class='mvn pbs brand-secondary'>Find a school in</h4>
+                <h4 class='mvn pbs brand-secondary'><%= t('.find_a_school_in') %></h4>
 
                 <h1 class='jumbo-header mbn mbl mtn inverted-text'><%= collection_nickname %></h1>
               </div>
@@ -37,7 +37,7 @@
               <%= render partial: 'nav/search_form' %>
             </div>
             <a href="/" class="inverted-text fl mbl mtl">
-              Not in <%= collection_nickname %>?
+              <%= t('.not_in_collection', collection: collection_nickname) %>
             </a>
           </div>
           <% unless  browse_links.nil? %>
@@ -47,10 +47,10 @@
         <% if @hub.has_guided_search? %>
             <div class="vam black-guided-search-bar inverted-text fl pvm pa b-none l-none">
                 <span class="hidden-xs font-size-large pl35">
-                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-large">Guide Me</span></a>
+                  <%= t('.find_schools_that_fit_your_needs') %> <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-large"><%= t('.guide_me') %></span></a>
                 </span>
                   <span class="visible-xs font-size-small pl25">
-                  Find schools that fit your needs! <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-small">Guide Me</span></a>
+                  <%= t('.find_schools_that_fit_your_needs') %> <span class="iconx24-icons i-24-guide-me vam"></span> <a href='<%= guided_search_path(@hub) %>'><span class="gs-active-link font-size-small"><%= t('.guide_me') %></span></a>
                 </span>
             </div>
         <% end %>

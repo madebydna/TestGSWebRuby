@@ -25,7 +25,9 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         $button.on('click', function(){
             var path = getQueryPath();
             var query = buildQuery($form);
-            GS.uri.Uri.goToPage(path + query)
+            var url = path + query;
+            url = GS.I18n.preserveLanguageParam(url);
+            GS.uri.Uri.goToPage(url);
             var custom_link = 'search_submit_filters';
             if ($form.selector.indexOf('Mobile') > -1) {
               custom_link = custom_link + '_mobile';
@@ -103,12 +105,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var advancedFiltersMenu = $('.secondaryFiltersColumn');
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
-                $(this).text('Fewer filters');
+                $(this).text(GS.I18n.t('fewer_filters'));
                 GS.track.sendCustomLink('search_expand_advanced_filters');
             }
             else {
                 advancedFiltersMenu.hide('fast');
-                $(this).text('More filters');
+                $(this).text(GS.I18n.t('more_filters'));
                 GS.track.sendCustomLink('search_collapse_advanced_filters');
             }
         });
@@ -334,17 +336,12 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (error_code === 'wrongState') {
                 var longState = GS.states.name(state);
                 var capitalLongState = capitalizeState(longState);
-                var wrongStateText = '<strong>' + 'You&#39re currently comparing schools in&nbsp' + capitalLongState + '</strong>' +
-                    '<a class="pointer js-compareSchoolsSubmit">' + '&nbspcompare schools now&nbsp' +
-                    '</a>' + 'or' +
-                    '<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">' + '&nbspclear schools&nbsp' +
-                    '</a>' + '<strong>' +
-                    'to compare in this location.' + '</strong>';
+                var wrongStateText = GS.I18n.t('wrong_state_error_start_html') + capitalLongState + GS.I18n.t('wrong_state_error_end_html')
                 return wrongStateText;
+
             }
             else if (error_code === 'tooManySchools') {
-                var tooManySchoolsText = '<strong>' + 'You&#39ve already selected 4 schools to compare.&nbsp' + '</strong>' +
-                    '<a class="pointer js-compareSchoolsSubmit">' + '&nbspCompare schools.' + '</a>';
+                var tooManySchoolsText =  GS.I18n.t('too_many_schools_error_html');
                 return tooManySchoolsText;
             }
         };
@@ -538,7 +535,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var displaySaveSearchValidationError = function(errorMessage) {
         var $popup = $('.js-savedSearchPopup');
         $popup.find('.js-savedSearchFormGroup').addClass('has-error');
-        $popup.find('.js-savedSearchErrorMessage').text(errorMessage).show('');
+        $popup.find('.js-savedSearchErrorMessage').text(GS.I18n.t('saved_search_validation_error')).show('');
     };
 
     var displaySaveSearchFailedSaveError = function(errorMessage) {

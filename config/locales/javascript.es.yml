@@ -3,15 +3,31 @@ es:
   javascript:
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
+    fewer_filters: Menos filtros
+    more_filters: Más filtros
+    ok_fit: Medio
     reviews:
       found_this_helpful: ! ' encontraron esta útil'
       people: personas
       person: persona
       share_review_caption: 'Opinión de usuarios de la '
+    school_types:
+      Private: Privada
+      Public charter: Charter pública
+      Public district: Distrito pública
+      charter: charter
+      private: privada
+      public: pública
     search_form:
       long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
       short_placeholder: Ciudad, código postal, la dirección o la escuela
+    saved_search_validation_error: Por favor, nombre su búsqueda
+    strong_fit: Fuerte
     test_scores:
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
+    too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
+    weak_fit: Bajo
+    wrong_state_error_start_html: '<strong>Estás comparando escuelas en '
+    wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'

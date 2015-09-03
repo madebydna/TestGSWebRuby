@@ -91,6 +91,17 @@ describe GroupComparisonDataReader do
       ],
     }
   }
+  let(:empty_data) {
+    {
+      :"4-year high school graduation rate"=> [
+        {
+          year: 2013,
+          source: "TX Education Agency",
+          created: "2014-10-15T13:47:52-07:00"
+        }
+      ]
+    }
+  }
 
   let(:sample_label_map) { Hash[sample_data.map { |k,v| [k.to_s,"#{k} label"] }] }
   let(:fake_category) do
@@ -103,19 +114,32 @@ describe GroupComparisonDataReader do
 
 
   describe '#data_for_category' do
-    before do
-      allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-      allow(subject).to receive(:modify_data!)
+    context 'with valid data' do
+      before do
+        allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
+        allow(subject).to receive(:modify_data!)
+      end
+
+      it 'should create a BarChartCollection for each data type' do
+        expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
+        subject.data_for_category(fake_category)
+      end
+
+      it "should return an array of bar chart collections" do
+        subject.data_for_category(fake_category).each do |bar_chart_collection|
+          expect(bar_chart_collection).to be_a BarChartCollection
+        end
+      end
     end
 
-    it 'should create a BarChartCollection for each data type' do
-      expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
-      subject.data_for_category(fake_category)
-    end
+    context 'with empty data' do
+      before do
+        allow(subject).to receive(:cached_data_for_category).and_return(empty_data)
+        allow(subject).to receive(:modify_data!)
+      end
 
-    it "should return an array of bar chart collections" do
-      subject.data_for_category(fake_category).each do |bar_chart_collection|
-        expect(bar_chart_collection).to be_a BarChartCollection
+      it "should return an empty array" do
+        expect(subject.data_for_category(fake_category)).to eq([])
       end
     end
   end

@@ -1,0 +1,6 @@
+---
+en:
+  search:
+    assigned_school_no_result:
+      could_not_locate_assigned_school: We could not locate an assigned school for your address, contact your local school district for more details.
+      label: Assigned school

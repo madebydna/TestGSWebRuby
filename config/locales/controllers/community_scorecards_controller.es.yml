@@ -18,4 +18,6 @@ es:
       economically_disadvantaged:        'Desventaja económica'
       limited_english_proficient:        'Dominio Limitado del Inglés'
       not_limited_english_proficient:    'No se limita Inglés dominio'
+      a_through_g:                       'Graduados eligible para universidad'
+      graduation_rate:                   'Tasa de graduados'
 

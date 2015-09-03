@@ -15,18 +15,25 @@ GS.selectpicker = GS.selectpicker || (function() {
          var $selectpickerOptions = $selectpickerSelect.children('option');
          _($selectpickerOptions).forEach(function(option, index) {
            var newData = $(option).data();
-           var $correspondingLi = correspondingLi($button, index);
-           $correspondingLi.find('a').data(newData);
+           var $correspondingA = correspondingA($button, index);
+           var $spanChildrenOfCorrespondingA = $correspondingA.find('span');
+           $spanChildrenOfCorrespondingA.addClass(GS.util.getJsClasses($correspondingA));
+           _(newData).forEach(function(value, key) {
+             var dashCasedKey = key.replace(/([A-Z])/g, function($1){return "-"+$1.toLowerCase();})
+             $correspondingA.attr('data-' + dashCasedKey, value);
+             $spanChildrenOfCorrespondingA.attr('data-' + dashCasedKey, value);
+           });
          });
        });
      })
   };
 
-  var correspondingLi = function($selectpickerButton, index) {
+  var correspondingA = function($selectpickerButton, index) {
     return $selectpickerButton
       .siblings('.dropdown-menu')
       .children('ul.selectpicker')
-      .children('li[data-original-index="'+ index +'"]');
+      .children('li[data-original-index="'+ index +'"]')
+      .find('a');
   };
 
   return {

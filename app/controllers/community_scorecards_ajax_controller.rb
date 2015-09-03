@@ -1,9 +1,11 @@
 class CommunityScorecardsAjaxController < ApplicationController
 
+  before_action :set_locale
+
   layout false
 
   def get_school_data
-    return_value = CommunityScorecardData.new(valid_school_data_params).scorecard_data
+    return_value = CommunityScorecardData.new(valid_school_data_params.merge(link_helper: self)).scorecard_data
 
     respond_to do |format|
       format.json { render json: return_value}

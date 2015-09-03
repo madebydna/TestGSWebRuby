@@ -17,7 +17,11 @@ end
 
 STDIN.to_a.each do |text|
   begin
-    hash = JSON.parse(text.gsub('\n',''))
+    # Make legacy JSON blobs actually be valid JSON
+    text.gsub!(/\n/, '')
+    text.gsub!(/\r/, '')
+    text.gsub!(/\s(\w+)\:/) { |str| "\"#{str[1..-2]}\":" }
+    hash = JSON.parse(text)
   rescue Exception => e
     next
   end

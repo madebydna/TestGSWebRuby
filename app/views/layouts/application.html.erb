@@ -25,6 +25,9 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
+  <link rel="alternate" hreflang="en" href="<%= url_for(lang: nil, state: params[:state].try(:gsub,' ','-')) %>" />
+  <link rel="alternate" hreflang="es" href="<%= url_for(lang: 'es', state: params[:state].try(:gsub,' ','-')) %>" />
+
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />
   <% else %>

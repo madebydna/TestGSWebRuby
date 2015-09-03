@@ -1,0 +1,7 @@
+es:
+  handlebars:
+    community_scorecards:
+      mobile_row:
+        state_average: PROM.
+        state_average_not_available: promedio del estado no disponible
+        no_data: Sin Datos

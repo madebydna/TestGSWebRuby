@@ -6,3 +6,4 @@ en:
           graduation_rate: Graduation Rate
           school_info: School
           state_average: 'state avg %{val}%'
+          state_average_not_available: State avg. NOT AVAILABLE

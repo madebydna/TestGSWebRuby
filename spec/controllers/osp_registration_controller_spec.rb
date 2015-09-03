@@ -233,6 +233,21 @@ describe OspRegistrationController do
         end
       end
     end
+
+    [
+      'www.hogwarts.uk',
+      '',
+      'http://\\\\\\/\/\/@#$%$!@#%#^$%&$^#%@$$$^%&^@#@#%@#%!\\\\\\',
+    ].each do |website|
+      context "with website: #{website}" do
+        it 'should save the website correctly' do
+          get :submit, save_new_osp_user_hash.merge(school_website: website)
+          user = User.where(email: 'minerva@hogwarts.uk').first
+          membership = EspMembership.where(member_id: user.id).first
+          expect(membership.web_url).to eq(website)
+        end
+      end
+    end
   end
 
   describe '#sign_up_user_for_subscriptions!' do

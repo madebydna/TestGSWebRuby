@@ -32,8 +32,7 @@ class CommunityScorecardData
   end
 
   def header_data
-    school_info_header = {data_type: I18n.t(:school_info, scope: t_scope)}
-    school_data.each_with_object([school_info_header]) do |sd, hd|
+    h_data = school_data.each_with_object([]) do |sd, hd|
       sd.each do |data_type, value_hash|
         if (state_average = value_hash[:state_average]).present?
           hd << {
@@ -44,18 +43,53 @@ class CommunityScorecardData
         end
       end
     end.uniq
+
+    validate_header_data(h_data)
+  end
+
+  def validate_header_data(h_data)
+    #ensure data types are there
+    validated_header_data = data_set_with_year_map.keys.map do | data_set |
+      hd = h_data.find { |hd| hd[:param].to_s == data_set.to_s }
+      next hd if hd.present?
+
+      {
+        param: data_set,
+        data_type: I18n.t(data_set, scope: t_scope),
+        state_average: I18n.t(:state_average_not_available, scope: t_scope),
+      }
+    end
+
+    validated_header_data.unshift({data_type: I18n.t(:school_info, scope: t_scope)}) #school info
   end
 
   #Todo later when solr layer is built, add appropriate whitelisting for solr params here or in school_data_service where necessary
   def school_data_service_params
-    school_data_params
+    school_data_params.merge({
+      sortYear: data_set_with_year_map[school_data_params[:sortBy]]
+    })
   end
 
   def school_data_hash_options
     @options ||= {
-      data_sets:  school_data_params[:data_sets], #['graduation_rate', 'a_through_g'],
+      data_sets_and_years: data_set_with_year_map, #['graduation_rate' => '2013, 'a_through_g' => '2014'],
       sub_group_to_return: school_data_params[:sortBreakdown], #asian
+      link_helper:         school_data_params[:link_helper]
     }
+  end
+
+  def data_set_with_year_map
+    @data_set_with_year_map ||= data_sets_with_years(school_data_params[:data_sets])
+  end
+
+  # move into community scorecard json config
+  def data_sets_with_years(data_sets)
+    data_set_to_year = {
+      a_through_g:     '2014',
+      graduation_rate: '2013'
+    }.with_indifferent_access
+
+    data_set_to_year.keep_if { |k,_| [*data_sets].include? k.to_s }
   end
 
   def get_cachified_schools(school_data)

@@ -1,0 +1,11 @@
+---
+en:
+  search:
+    search_result:
+      greatschools_rating_html: GreatSchools<br />Rating
+      homes_for_sale: Homes for sale
+      miles: miles
+      no_reviews: No Community Reviews
+      reviews:
+        one: "%{count} review"
+        other: "%{count} reviews"

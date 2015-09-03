@@ -1,0 +1,8 @@
+---
+es:
+  search:
+    saved_search_popup:
+      close: cerrar 
+      error_message: Por favor, nombre su búsqueda
+      placeholder: 'Nombre Su Búsqueda'
+      save: Guardar 

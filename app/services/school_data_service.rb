@@ -96,8 +96,9 @@ class SchoolDataService
     end
 
     def sort_params(hash)
-      if hash.include?(:sortBy)
+      if hash.include?(:sortBy) && hash.include?(:sortYear)
         sort = extract_sort_type(hash)
+        sort << "_#{hash[:sortYear]}"
         processed_sort = is_valid_school_data_field?(sort) ? (sort + SORT_ASC_OR_DESC[hash[:sortAscOrDesc]]) : DEFAULT_SORT
         {sort: processed_sort}
       else

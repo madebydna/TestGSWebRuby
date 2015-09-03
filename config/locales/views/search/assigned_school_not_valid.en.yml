@@ -1,0 +1,6 @@
+---
+en:
+  search:
+    assigned_school_not_valid:
+      label: Assigned school
+      search_using_home_address_to_see_assigned_schools: To see which school is your neighborhood or assigned school, search using your home address

@@ -6,11 +6,11 @@ GS.CommunityScorecards.Options = function(options) {
 
 GS.CommunityScorecards.Options.prototype = {
 
-  validAttributes: [
-    'collectionId', 'gradeLevel', 'offset', 'sortBy', 'sortBreakdown', 'sortAscOrDesc', 'data_sets', 'highlightIndex'
-  ],
+  validURLAttributes: ['sortBy', 'sortBreakdown', 'sortAscOrDesc'],
+  validNonURLAttributes: ['collectionId', 'offset', 'highlightIndex', 'data_sets', 'gradeLevel'],
 
   init: function(options) {
+    this.validAttributes = this.validNonURLAttributes.concat(this.validURLAttributes);
     _.each(this.validAttributes, function(attr) {
       if(attr in options) {
         this.set(attr, options[attr]);
@@ -26,6 +26,9 @@ GS.CommunityScorecards.Options.prototype = {
 
   set: function(key, value) {
     if(this.isValidValue(value) && value !== this.get(key)) {
+      if (GS.util.isHistoryAPIAvailable() && _.contains(this.validURLAttributes, key)) {
+        this.addToURL(key, value);
+      }
       this['_' + key] = value;
       return true;
     }
@@ -45,6 +48,14 @@ GS.CommunityScorecards.Options.prototype = {
     return _.map(this.validAttributes, function(attr) {
       return this.get(attr);
     }.gs_bind(this));
-  }
+  },
+
+  addToURL: function(key, value){
+    var data = History.getState()['data'];
+    _.extend(data, GS.uri.Uri.getQueryData());
+    data[key] = value;
+    var queryParams = GS.uri.Uri.getQueryStringFromObject(data);
+    History.replaceState(data, null, queryParams);
+  },
 
 };

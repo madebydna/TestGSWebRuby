@@ -8,6 +8,7 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
     @query_results ||= (
     reader = CensusDataReader.new(school)
     results = reader.all_raw_data(characteristics_data_types.keys)
+    @all_results = results.all_results #needs to run after all_raw_data
     results.map { |obj| CharacteristicsCaching::QueryResultDecorator.new(school.state, obj) }
     )
   end
@@ -41,7 +42,32 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
         end
       end
     end
+
+    build_historical_data!(characteristic, hash)
+
     hash
+  end
+
+  def build_historical_data!(data, hash)
+    subject_id, breakdown_id, data_type_id = data.send(:subject_id), data.send(:breakdown_id), data.send(:data_type_id)
+
+    historical_data = if subject_id != nil && breakdown_id == nil #test scores historical data
+                        @all_results[data_type_id].select { | data_set | data_set.subject_id == subject_id }
+                      elsif subject_id == nil                     #census historical data
+                        @all_results[data_type_id].select { | data_set | data_set.breakdown_id == breakdown_id }
+                      end
+
+    set_hash_values!(historical_data, hash)
+  rescue => e
+    GSLogger.error(:school_cache, e, message: 'failed in building historical data for school', vars: {school:school.id, state: school.state})
+  end
+
+  def set_hash_values!(data_sets, hash)
+    data_sets.each do | data |
+      next unless (year = data.year).present?
+      hash["school_value_#{year}".to_sym] = data.school_value if data.school_value.present?
+      hash["state_average_#{year}".to_sym] = data.state_value if data.state_value.present?
+    end
   end
 
   def data_keys

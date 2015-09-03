@@ -12,7 +12,7 @@
         <% if state[:short].downcase == 'dc' %>
             <% state_name_long = "Washington DC" %>
         <% end %>
-      <span class='gray-dark'>All cities in <%= state_name_long %>:</span>
+      <span class='gray-dark'><%= t('.all_cities_in', state: state_name_long) %></span>
 
       <ul class='di'>
         <% ('A'..'Z').to_a.each do |letter| %>

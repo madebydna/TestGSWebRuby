@@ -131,13 +131,13 @@ module FitScoreConcerns
 
   def fit_score_text
     if strong_fit?
-      'Strong fit'
+      I18n.t('concerns.fit_score_concerns.strong_fit')
     elsif ok_fit?
-      'Ok fit'
+      I18n.t('concerns.fit_score_concerns.okay_fit')
     elsif weak_fit?
-      'Weak fit'
+      I18n.t('concerns.fit_score_concerns.weak_fit')
     else
-      'No matches'
+      I18n.t('concerns.fit_score_concerns.no_matches')
     end
   end
 

@@ -47,6 +47,9 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     var initializeSignupForm = function () {
         $(SIGNUP_SCHOOL_SELECTOR).on('ajax:success', function (e, data, status, xhr) {
             $(SUBMIT_BUTTON_SELECTOR).hide();
+            if(shouldSignUpForSponsor) {
+              GS.subscription.sponsorsSignUp();
+            }
             $(SAVE_THIS_SCHOOL_FORM_SELECTOR).submit();
         }).on('ajax:error', function (e, xhr, status, error) {
             $(SUBMIT_BUTTON_SELECTOR).show();
@@ -88,6 +91,10 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
         initializeSignupForm();
     };
 
+    var shouldSignUpForSponsor = function () {
+        return $('#sponsors_list').prop('checked');
+    };
+
     var getModalCssClass = function () {
         return MODAL_SELECTOR;
     };
@@ -104,3 +111,19 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     };
 
 })(jQuery);
+
+GS.subscription = GS.subscription || {};
+
+GS.subscription.sponsorsSignUp = function () {
+  $.ajax({
+    type: 'POST',
+    url: "/gsr/user/subscriptions",
+    data: {subscription:
+      {list: "sponsor",
+        message: "You've signed up to receive sponsors updates"
+      }
+    }
+  })
+};
+
+

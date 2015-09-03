@@ -1,7 +1,10 @@
 <div class="sponsored-by-text">
   <%= t('.in_partnership_with') %>
 </div>
-<div class="<%= options[:is_vertical_promo] ? 'send-to-partner-vertical' : 'send-to-partner-horizontal' %>">
+<% if options[:is_vertical_promo] %>
+  <div class="send-to-partner-vertical">
+<% end %>
+<div class="send-to-partner">
   <div class="row">
     <div class="logo">
       <img src="<%= catalog_path(t(".#{promo[:name]}.logo_path")) %>"
@@ -9,15 +12,20 @@
       />
     </div>
     <div class="cta">
-      <div class="cta-text">
-        <%= t(".#{promo[:name]}.call_to_action") %>
+      <div class="cta-body">
+        <div class="cta-text">
+          <%= t(".#{promo[:name]}.call_to_action") %>
+        </div>
+        <a class="btn btn-primary"
+           href="<%= t(".#{promo[:name]}.link_url") %>"
+           target="_blank"
+           >
+           <%= t(".#{promo[:name]}.link_text") %>
+        </a>
       </div>
-      <a class="btn btn-primary"
-         href="<%= t(".#{promo[:name]}.link_url") %>"
-         target="_blank"
-      >
-        <%= t(".#{promo[:name]}.link_text") %>
-      </a>
     </div>
   </div>
 </div>
+<% if options[:is_vertical_promo] %>
+  </div>
+<% end %>

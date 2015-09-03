@@ -119,9 +119,13 @@ class OspRegistrationController < ApplicationController
   end
 
   def not_blacklisted_top_level_domain?(url)
-    schemeless_url = url.sub('http://', '').sub('https://', '')
-    top_level_domain = URI.parse("http://#{schemeless_url}").host.rpartition('.').last
-    !BLACKLISTED_TOP_LEVEL_DOMAINS.include?(top_level_domain)
+    begin
+      schemeless_url = url.sub('http://', '').sub('https://', '')
+      top_level_domain = URI.parse("http://#{schemeless_url}").host.rpartition('.').last
+      !BLACKLISTED_TOP_LEVEL_DOMAINS.include?(top_level_domain)
+    rescue
+      true
+    end
   end
 
   def user_attrs

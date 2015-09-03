@@ -31,7 +31,7 @@
               <div><%= link_to "#{school.name}", school_page_url, style:'line-height: 1.1em', class: 'open-sans_sb mbs font-size-medium rs-schoolName' %></div>
               <div class="hidden-xs font-size-small rs-schoolAddress"><%="#{school.street}, #{school.city}, #{school.state.upcase} #{school.zip}"%></div>
               <div class="clearfix visible-xs font-size-small">
-                <div class="prs fl "><%= school_type_display(school.type) %></div>
+                <div class="prs fl "><%= db_t(school_type_display(school.type)) %></div>
                 <div class="fl"><%= (decorated_school.try(:grade_range) || decorated_school.process_level) %></div>
               </div>
             </div>
@@ -39,13 +39,13 @@
               <div class="fl">
                 <% if !school.community_rating.nil? && !school.review_count.nil? %>
                   <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-                  <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small js-reviewCount' %>
+                  <%=link_to t('.reviews', count: school.review_count), school_reviews_page_url, class: 'font-size-small js-reviewCount' %>
                 <% else %>
-                  <em class="js-reviewCount">No Community Reviews</em>
+                  <em class="js-reviewCount"><%= t('.no_reviews') %></em>
                 <% end %>
               </div>
               <div class="phm fl">|</div>
-              <div class="prs fl"><%= school_type_display(school.type) %></div>
+              <div class="prs fl"><%= db_t(school_type_display(school.type)) %></div>
               <div class="fl"><%= (decorated_school.try(:grade_range) || decorated_school.process_level) %></div>
             </div>
           </div>
@@ -57,7 +57,7 @@
             <!-- Distance -->
             <div class="hidden-xs col-sm-4 mtl mbm font-size-xs">
               <div class="iconx24-icons i-24-new-grey_map_pin ma db vam"></div>
-              <span class="tac db js-distance"><%= distance %> miles</span>
+              <span class="tac db js-distance"><%= distance %> <%= t('.miles') %></span>
             </div>
             <% end%>
             <!-- GS Rating -->
@@ -65,7 +65,7 @@
               <%=link_to school_quality_page_url do%>
               <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
               <div class="hidden-xs pts"></div>
-              <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em">GreatSchools<br />Rating</span>
+              <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em"><%= t('.greatschools_rating_html') %></span>
               <% end %>
             </div>
             <!-- Fit score -->
@@ -83,7 +83,7 @@
             <%= render 'compare_schools_compare_button', school: school %>
             <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', rel: 'nofollow', target: '_blank' do %>
               <div class="iconx16 i-16-blue-home fl mrs"></div>
-              <div class="fl">Homes for sale</div>
+              <div class="fl"><%= t('.homes_for_sale') %></div>
             <% end %>
           </div>
         <% end %>
@@ -94,13 +94,13 @@
       <div class="fl">
       <% if !school.community_rating.nil? && !school.review_count.nil? %>
         <span class="prm vam"><%= draw_stars_16 school.community_rating %></span>
-        <%= link_to pluralize(school.review_count, 'review', 'reviews'), school_reviews_page_url, class: 'font-size-small js-reviewCount' %>
+        <%= link_to t('.reviews', count: school.review_count), school_reviews_page_url, class: 'font-size-small js-reviewCount' %>
       <% else %>
-        <em class="js-reviewCount">No Community Reviews</em>
+        <em class="js-reviewCount"><%= t('.no_reviews') %></em>
       <% end %>
       </div>
       <% if search_by_location? %>
-        <div class="fr js-distance"><%= distance %> miles</div>
+        <div class="fr js-distance"><%= distance %> <%= t('.miles') %></div>
       <% end %>
     </div>
 

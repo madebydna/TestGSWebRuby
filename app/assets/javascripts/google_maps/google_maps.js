@@ -235,7 +235,7 @@ GS.googleMap = GS.googleMap || (function() {
 
               markup += '</div>';//address
               markup += '</div>'; //
-              markup += '<div class="mts col-xs-5 col-sm-4 ">'; //sprites
+              markup += '<div class="mts col-xs-5 col-sm-4 font-size-small ">'; //sprites
               markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
               if (parseInt(point.gsRating) > 0){
                   markup += + point.gsRating;
@@ -246,11 +246,11 @@ GS.googleMap = GS.googleMap || (function() {
 
               if(point.fitScore > 0){
                   if (point.strongFit){
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-strong-fit"></span>Strong fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-strong-fit"></span>' + GS.I18n.t('strong_fit') + '</div>';
                   } else if (point.okFit){
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-ok-fit"></span>OK fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-ok-fit"></span>'+ GS.I18n.t('ok_fit')  + '</div>';
                   } else {
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-weak-fit"></span>Weak fit' + '</div>';
+                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-weak-fit"></span>' + GS.I18n.t('weak_fit') + '</div>';
                   }
               }
               markup += '</div>'; //sprites

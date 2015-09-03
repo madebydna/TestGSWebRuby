@@ -1,32 +1,31 @@
 
-
 <div class="visible-xs">
     <div class="btn-group row full-width mln js-mobileFiltersToolbar">
         <button type="button" class="btn btn-primary nav-button nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
           <span class="iconx16 i-16-white-check-box vam"></span>
-          Filters
+          <%= t('.filters_button') %>
         </button>
         <% if @show_guided_search %>
           <a type="button" class="btn btn-primary col-xs-4 nav-button nav-button-left-border nav-button-font"
             style="color: white;"
             href="<%= guided_search_path(@hub) %>">
             <span class="iconx16 i-16-white-info vam"></span>
-            Guide Me
+            <%= t('.guided_search_link') %>
           </a>
         <%end %>
         <button type="button" class="btn btn-primary nav-button nav-button-left-border nav-button-font <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view">
           <span class="iconx16 i-16-white-map-view vam"></span>
-          <span class="js-toggle-list-map-view-text">Map</span>
+          <span class="js-toggle-list-map-view-text"><%= t('.map_button') %></span>
         </button>
     </div>
 </div>
 <div class="limit-width-1200 pr plm prm">
   <div class="pa ptl pbm hidden-xs">
     <div class="hidden-xs zir-1 js-searchFiltersDropdown toolbar-text open-sans_sb  gs-tooltip pointer js-open-tooltip" data-toggle="tooltip"
-         title="Use filters to find schools that meet your needs"
+         title="<%= t('.refine_search_dropdown_title') %>"
           data-placement="right" data-html="true"
          style="max-width: 125px">
-        Refine Search<span class="caret"></span>
+        <%= t('.refine_search_dropdown') %><span class="caret"></span>
     </div>
 
 
@@ -37,9 +36,9 @@
         </div>
         <div class="clearfix pal">
           <label class="fl">
-            <a class="js-advancedFilters pointer">More Filters</a>
+            <a class="js-advancedFilters pointer"><%= t('.more_filters_label') %></a>
           </label>
-          <button class="btn btn-default fr js-submitSearchFiltersForm" type='submit'>Submit</button>
+          <button class="btn btn-default fr js-submitSearchFiltersForm" type='submit'><%= t('.submit_button') %></button>
         </div>
       </div>
     </div>
@@ -51,7 +50,7 @@
     <div class="pa" style="padding-left:150px">
       <% if @show_guided_search %>
         <div class="iconx16 i-16-blue-info vam pull-left mas "></div>
-        <div class="pull-left"><a class='toolbar-text open-sans_sb' href='<%= guided_search_path(@hub) %>'>Guide Me</a></div>
+        <div class="pull-left"><a class='toolbar-text open-sans_sb' href='<%= guided_search_path(@hub) %>'><%= t('.guided_search_link') %></a></div>
       <% end %>
     </div>
   </div>
@@ -59,12 +58,12 @@
     <div class="fr">
       <span class="js-search-list-view pointer">
       <span  class="iconx16 i-16-blue-list-view vam"></span>
-      List
+      <%= t('.list_link') %>
       </span>
       |
       <span class="js-search-map-view pointer">
       <span  class="iconx16 i-16-grey-map-view vam"></span>
-        Map
+        <%= t('.map_link') %>
       </span>
     </div>
   </div>

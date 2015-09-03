@@ -18,6 +18,11 @@
         <div class="pal">
           <div class="js-signup-success alert alert-success dn"><%= t('.signup_success') %></div>
           <%= t('.body_html') %>
+          <div class="form-group controls">
+          <p> <%= check_box_tag('sponsors_list', 'true', true) %> 
+          <%= t('.sponsors_signup') %>
+          </p>
+          </div>
           <div class="row">
             <div class="col-xs-12 col-sm-8 col-sm-offset-2">
               <div class="form-group controls row">

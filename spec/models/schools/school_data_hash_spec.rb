@@ -5,7 +5,8 @@ def school_info_assertion
     {
       gradeLevel: school_level,
       name: school_name,
-      type: school_type.titleize
+      type: I18n.db_t(school_type).titleize,
+      url: school_url
     }
   )
 end
@@ -14,7 +15,9 @@ describe SchoolDataHash do
   let(:school_name)  { 'Alpha High' }
   let(:school_type)  { 'public'     }
   let(:school_level) { '9-13'       }
+  let(:school_url)   { '/california/alpha-high-city/1-alpha-high'  }
   let(:school) { FactoryGirl.create(:school, name: school_name, type: school_type) }
+  let(:link_helper) { Object.new }
   let(:characteristics) do
     {
       'characteristics' => {
@@ -22,17 +25,17 @@ describe SchoolDataHash do
           {
             "year" => 2013,
             "original_breakdown" => "Asian",
-            "school_value" => 98.32,
-            "state_average" => 84.47,
+            "school_value_2013" => 98.32,
+            "state_average_2013" => 84.47,
             "performance_level" => "above_average"
           },
         ],
         'Percent of students who meet UC/CSU entrance requirements' => [
           {
-            "year" => 2013,
+            "year" => 2014,
             "original_breakdown" => "Asian",
-            "school_value" => 98.32,
-            "state_average" => 84.47,
+            "school_value_2014" => 98.32,
+            "state_average_2014" => 84.47,
             "performance_level" => "above_average"
           },
         ]
@@ -44,6 +47,10 @@ describe SchoolDataHash do
     allow(school).to receive(:process_level).and_return(school_level)
   end
 
+  before do
+    allow(link_helper).to receive(:school_path).and_return(school_url)
+  end
+
   after do
     clean_models :ca, School
   end
@@ -53,7 +60,7 @@ describe SchoolDataHash do
 
       subject do
         allow(school).to receive(:cache_data).and_return(nil)
-        SchoolDataHash.new(school, {}).data_hash
+        SchoolDataHash.new(school, {link_helper: link_helper}).data_hash
       end
 
       it 'should add the basic school info' do
@@ -68,16 +75,17 @@ describe SchoolDataHash do
     value_hash = {
       value: 98,
       state_average: 84,
-      performance_level: "above_average"
+      performance_level: "above_average",
+      show_no_data_symbol: false
     }
-    {'asian' => value_hash, 'fake' => {}}.each do |breakdown, expected_value|
+    {'asian' => value_hash, 'fake' => {show_no_data_symbol: true}}.each do |breakdown, expected_value|
       context "with #{breakdown} set for subgroup" do
         [
-          ['a_through_g'],
-          ['graduation_rate'],
-          ['a_through_g', 'graduation_rate']
-        ].each do |data_sets|
-          context "with #{data_sets.join(' & ')} configured" do
+          {'a_through_g' => 2014},
+          {'graduation_rate' => 2013},
+          {'a_through_g' => 2014, 'graduation_rate' => 2013}
+        ].each do |data_sets_and_years|
+          context "with #{data_sets_and_years} configured" do
             before do
               allow(school).to receive(:cache_data).and_return(characteristics)
             end
@@ -85,8 +93,9 @@ describe SchoolDataHash do
             subject do
               SchoolDataHash.new(
                 school,
-                data_sets: data_sets,
-                sub_group_to_return: breakdown
+                data_sets_and_years: data_sets_and_years.with_indifferent_access,
+                sub_group_to_return: breakdown,
+                link_helper: link_helper
               ).data_hash
             end
 
@@ -94,7 +103,7 @@ describe SchoolDataHash do
               school_info_assertion
             end
 
-            data_sets.each do |data_set|
+            data_sets_and_years.keys.each do |data_set|
               it "should have #{data_set} data" do
                 expect(subject[data_set.to_sym]).to eq(expected_value)
               end

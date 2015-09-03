@@ -182,12 +182,12 @@ class FilterBuilder
         conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
         {
             enrollment: {
-                label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
-                    filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers },
-                    filter2: { label: 'Cleveland scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Cleveland },
-                    filter3: { label: 'Special needs scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Jon_Peterson_Special_Needs},
-                    filter4: { label: 'Autism scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :Autism },
-                    filter5: { label: 'EdChoice scholarship', display_type: :basic_checkbox, name: :voucher_type, value: :EdChoice }
+                label: t('Enrollment'), display_type: :title, name: :enrollment, filters: {
+                    filter1: { label: t('Accepts vouchers (private schools only)'), display_type: :basic_checkbox, name: :enrollment, value: :vouchers },
+                    filter2: { label: t('Cleveland scholarship'), display_type: :basic_checkbox, name: :voucher_type, value: :Cleveland },
+                    filter3: { label: t('Special needs scholarship'), display_type: :basic_checkbox, name: :voucher_type, value: :Jon_Peterson_Special_Needs},
+                    filter4: { label: t('Autism scholarship'), display_type: :basic_checkbox, name: :voucher_type, value: :Autism },
+                    filter5: { label: t('EdChoice scholarship'), display_type: :basic_checkbox, name: :voucher_type, value: :EdChoice }
 
                 }
             }
@@ -202,8 +202,8 @@ class FilterBuilder
       conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
       {
         enrollment: {
-          label: 'Enrollment', display_type: :title, name: :enrollment, filters: {
-            filter1: { label: 'Accepts vouchers (private schools only)', display_type: :basic_checkbox, name: :enrollment, value: :vouchers }
+          label: t('Enrollment'), display_type: :title, name: :enrollment, filters: {
+            filter1: { label: t('Accepts vouchers (private schools only)'), display_type: :basic_checkbox, name: :enrollment, value: :vouchers }
           }
         }
       }
@@ -222,11 +222,11 @@ class FilterBuilder
       options:
       {
         ptq_rating: {
-          label: 'PTQ Rating (Preschool Only)', display_type: :title, name: :ptq_rating, filters: {
-            ptq1: { label: 'Level 1', display_type: :basic_checkbox, name: :ptq_rating, value: :level_1 },
-            ptq2: { label: 'Level 2', display_type: :basic_checkbox, name: :ptq_rating, value: :level_2 },
-            ptq3: { label: 'Level 3', display_type: :basic_checkbox, name: :ptq_rating, value: :level_3 },
-            ptq4: { label: 'Level 4', display_type: :basic_checkbox, name: :ptq_rating, value: :level_4 },
+          label: t('PTQ Rating (Preschool Only)'), display_type: :title, name: :ptq_rating, filters: {
+            ptq1: { label: t('Level 1'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_1 },
+            ptq2: { label: t('Level 2'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_2 },
+            ptq3: { label: t('Level 3'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_3 },
+            ptq4: { label: t('Level 4'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_4 },
           }
         }
       }
@@ -257,23 +257,23 @@ class FilterBuilder
       options:
       {
         cgr: {
-          label: 'College Readiness',
+          label: t('College Readiness'),
           display_type: :title,
           name: :cgr,
           filters: {
-            filter1: { label: '70% or more attend college', display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
+            filter1: { label: t('70% or more attend college'), display_type: :basic_checkbox, name: :cgr, value: '70_TO_100' }
           }
         },
         gstq_rating: {
-            label: 'Great Start to Quality (preschool only)',
+            label: t('Great Start to Quality (preschool only)'),
             display_type: :title,
             name: :gstq_rating,
             filters: {
-              gstq5: { label: '5 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'5' },
-              gstq4: { label: '4 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'4' },
-              gstq3: { label: '3 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'3' },
-              gstq2: { label: '2 stars', display_type: :basic_checkbox, name: :gstq_rating, value: :'2' },
-              gstq1: { label: '1 star', display_type: :basic_checkbox, name: :gstq_rating, value: :'1' }
+              gstq5: { label: t('5 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'5' },
+              gstq4: { label: t('4 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'4' },
+              gstq3: { label: t('3 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'3' },
+              gstq2: { label: t('2 stars'), display_type: :basic_checkbox, name: :gstq_rating, value: :'2' },
+              gstq1: { label: t('1 star'), display_type: :basic_checkbox, name: :gstq_rating, value: :'1' }
             }
         }
       }
@@ -297,7 +297,7 @@ class FilterBuilder
             callback_type: 'insert_after',
             options:
                 {
-                    summer: {label: 'Summer program', display_type: :basic_checkbox, name: :summer_program, value: :yes}
+                    summer: {label: t('Summer program'), display_type: :basic_checkbox, name: :summer_program, value: :yes}
                 }
         }
     ]
@@ -331,7 +331,7 @@ class FilterBuilder
   def default_simple_filters_hash
     {
       grade: {
-        label: 'Grade Level',
+        label: t('Grade Level'),
         display_type: :title,
         name: :grades,
         filters: {
@@ -339,27 +339,27 @@ class FilterBuilder
             display_type: :select_box,
             name: :grades,
             filters: {
-              :default => {label: 'Select Grade', display_type: :select_box_value, name: :grades, value: nil},
-              :p => {label: 'Preschool', display_type: :select_box_value, name: :grades, value: :p},
-              :k => {label: 'Kindergarten', display_type: :select_box_value, name: :grades, value: :k},
-              1 => {label: '1st Grade', display_type: :select_box_value, name: :grades, value: 1},
-              2 => {label: '2nd Grade', display_type: :select_box_value, name: :grades, value: 2},
-              3 => {label: '3rd Grade', display_type: :select_box_value, name: :grades, value: 3},
-              4 => {label: '4th Grade', display_type: :select_box_value, name: :grades, value: 4},
-              5 => {label: '5th Grade', display_type: :select_box_value, name: :grades, value: 5},
-              6 => {label: '6th Grade', display_type: :select_box_value, name: :grades, value: 6},
-              7 => {label: '7th Grade', display_type: :select_box_value, name: :grades, value: 7},
-              8 => {label: '8th Grade', display_type: :select_box_value, name: :grades, value: 8},
-              9 => {label: '9th Grade', display_type: :select_box_value, name: :grades, value: 9},
-              10 => {label: '10th Grade', display_type: :select_box_value, name: :grades, value: 10},
-              11 => {label: '11th Grade', display_type: :select_box_value, name: :grades, value: 11},
-              12 => {label: '12th Grade', display_type: :select_box_value, name: :grades, value: 12},
+              :default => {label: t('Select Grade'), display_type: :select_box_value, name: :grades, value: nil},
+              :p => {label: t('Preschool'), display_type: :select_box_value, name: :grades, value: :p},
+              :k => {label: t('Kindergarten'), display_type: :select_box_value, name: :grades, value: :k},
+              1 => {label: t('1st Grade'), display_type: :select_box_value, name: :grades, value: 1},
+              2 => {label: t('2nd Grade'), display_type: :select_box_value, name: :grades, value: 2},
+              3 => {label: t('3rd Grade'), display_type: :select_box_value, name: :grades, value: 3},
+              4 => {label: t('4th Grade'), display_type: :select_box_value, name: :grades, value: 4},
+              5 => {label: t('5th Grade'), display_type: :select_box_value, name: :grades, value: 5},
+              6 => {label: t('6th Grade'), display_type: :select_box_value, name: :grades, value: 6},
+              7 => {label: t('7th Grade'), display_type: :select_box_value, name: :grades, value: 7},
+              8 => {label: t('8th Grade'), display_type: :select_box_value, name: :grades, value: 8},
+              9 => {label: t('9th Grade'), display_type: :select_box_value, name: :grades, value: 9},
+              10 => {label: t('10th Grade'), display_type: :select_box_value, name: :grades, value: 10},
+              11 => {label: t('11th Grade'), display_type: :select_box_value, name: :grades, value: 11},
+              12 => {label: t('12th Grade'), display_type: :select_box_value, name: :grades, value: 12},
             }
           }
         }
       },
       distance: {
-        label: 'Show schools within',
+        label: t('Show schools within'),
         display_type: :title,
         name: :distance,
         filters: {
@@ -367,40 +367,40 @@ class FilterBuilder
             display_type: :select_box,
             name: :distance,
             filters: {
-              :default => {label: 'Select Miles', display_type: :select_box_value, name: :distance, value: nil},
-              1 => {label: '1 Mile', display_type: :select_box_value, name: :distance, value: 1},
-              2 => {label: '2 Miles', display_type: :select_box_value, name: :distance, value: 2},
-              3 => {label: '3 Miles', display_type: :select_box_value, name: :distance, value: 3},
-              4 => {label: '4 Miles', display_type: :select_box_value, name: :distance, value: 4},
-              5 => {label: '5 Miles', display_type: :select_box_value, name: :distance, value: 5},
-              10 => {label: '10 Miles', display_type: :select_box_value, name: :distance, value: 10},
-              15 => {label: '15 Miles', display_type: :select_box_value, name: :distance, value: 15},
-              20 => {label: '20 Miles', display_type: :select_box_value, name: :distance, value: 20},
-              25 => {label: '25 Miles', display_type: :select_box_value, name: :distance, value: 25},
-              30 => {label: '30 Miles', display_type: :select_box_value, name: :distance, value: 30},
-              60 => {label: '60 Miles', display_type: :select_box_value, name: :distance, value: 60}
+              :default => {label: t('Select Miles'), display_type: :select_box_value, name: :distance, value: nil},
+              1 => {label: t('1 Mile'), display_type: :select_box_value, name: :distance, value: 1},
+              2 => {label: t('2 Miles'), display_type: :select_box_value, name: :distance, value: 2},
+              3 => {label: t('3 Miles'), display_type: :select_box_value, name: :distance, value: 3},
+              4 => {label: t('4 Miles'), display_type: :select_box_value, name: :distance, value: 4},
+              5 => {label: t('5 Miles'), display_type: :select_box_value, name: :distance, value: 5},
+              10 => {label: t('10 Miles'), display_type: :select_box_value, name: :distance, value: 10},
+              15 => {label: t('15 Miles'), display_type: :select_box_value, name: :distance, value: 15},
+              20 => {label: t('20 Miles'), display_type: :select_box_value, name: :distance, value: 20},
+              25 => {label: t('25 Miles'), display_type: :select_box_value, name: :distance, value: 25},
+              30 => {label: t('30 Miles'), display_type: :select_box_value, name: :distance, value: 30},
+              60 => {label: t('60 Miles'), display_type: :select_box_value, name: :distance, value: 60}
             }
           }
         }
       },
       st: {
-        label: 'School Type',
+        label: t('School Type'),
         display_type: :title,
         name: :st,
         filters: {
-          public: {label: 'Public district schools', display_type: :basic_checkbox, name: :st, value: :public},
-          charter: {label: 'Public charter schools', display_type: :basic_checkbox, name: :st, value: :charter},
-          private: {label: 'Private schools', display_type: :basic_checkbox, name: :st, value: :private}
+          public: {label: t('Public district schools'), display_type: :basic_checkbox, name: :st, value: :public},
+          charter: {label: t('Public charter schools'), display_type: :basic_checkbox, name: :st, value: :charter},
+          private: {label: t('Private schools'), display_type: :basic_checkbox, name: :st, value: :private}
         }
       },
       gs_rating: {
-        label: 'GreatSchools Rating',
+        label: t('GreatSchools Rating'),
         display_type: :title,
         name: :gs_rating,
         filters: {
-          above_average: {label: 'Above average (8-10)', display_type: :basic_checkbox, name: :gs_rating, value: :above_average},
-          average: {label: 'Average (4-7)', display_type: :basic_checkbox, name: :gs_rating, value: :average},
-          below_average: {label: 'Below average (1-3)', display_type: :basic_checkbox, name: :gs_rating, value: :below_average}
+          above_average: {label: t('Above average (8-10)'), display_type: :basic_checkbox, name: :gs_rating, value: :above_average},
+          average: {label: t('Average (4-7)'), display_type: :basic_checkbox, name: :gs_rating, value: :average},
+          below_average: {label: t('Below average (1-3)'), display_type: :basic_checkbox, name: :gs_rating, value: :below_average}
         }
       }
     }
@@ -420,51 +420,51 @@ class FilterBuilder
           display_type: :filter_column_secondary,
           filters: {
             transportation: {
-              label: 'Transportation options',
+              label: t('Transportation options'),
               display_type: :title,
               name: :transportation,
               filters: {
-                povided_transit: {label: 'District provided transit', display_type: :basic_checkbox, name: :transportation, value: :provided_transit},
-                public_transit: {label: 'Near public transit', display_type: :basic_checkbox, name: :transportation, value: :public_transit}
+                povided_transit: {label: t('District provided transit'), display_type: :basic_checkbox, name: :transportation, value: :provided_transit},
+                public_transit: {label: t('Near public transit'), display_type: :basic_checkbox, name: :transportation, value: :public_transit}
               }
             },
             extendedHours: {
-              label: 'Extended hours',
+              label: t('Extended hours'),
               display_type: :title,
               name: :extendedHours,
               filters: {
-                before: {label: 'Before school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
-                after: {label: 'After school program', display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
+                before: {label: t('Before school program'), display_type: :basic_checkbox, name: :beforeAfterCare, value: :before},
+                after: {label: t('After school program'), display_type: :basic_checkbox, name: :beforeAfterCare, value: :after}
               }
             },
             dress_code: {
-              label: 'Dress code',
+              label: t('Dress code'),
               display_type: :title,
               name: :dress_code,
               filters: {
-                dress_code: {label: 'Dress code', display_type: :basic_checkbox, name: :dress_code, value: :dress_code},
-                uniform: {label: 'Uniform', display_type: :basic_checkbox, name: :dress_code, value: :uniform},
-                no_dress_code: {label: 'No dress code', display_type: :basic_checkbox, name: :dress_code, value: :no_dress_code}
+                dress_code: {label: t('Dress code'), display_type: :basic_checkbox, name: :dress_code, value: :dress_code},
+                uniform: {label: t('Uniform'), display_type: :basic_checkbox, name: :dress_code, value: :uniform},
+                no_dress_code: {label: t('No dress code'), display_type: :basic_checkbox, name: :dress_code, value: :no_dress_code}
               }
             },
             class_offerings: {
-              label: 'Class Offering',
+              label: t('Class Offering'),
               display_type: :title,
               name: :class_offerings,
               filters: {
-                ap: {label: 'AP courses', display_type: :basic_checkbox, name: :class_offerings, value: :ap},
-                music: {label: 'Music', display_type: :basic_checkbox, name: :class_offerings, value: :music},
-                performance_arts: {label: 'Performance arts', display_type: :basic_checkbox, name: :class_offerings, value: :performance_arts},
-                visual_media_arts: {label: 'Visual/Media arts', display_type: :basic_checkbox, name: :class_offerings, value: :visual_media_arts},
+                ap: {label: t('AP courses'), display_type: :basic_checkbox, name: :class_offerings, value: :ap},
+                music: {label: t('Music'), display_type: :basic_checkbox, name: :class_offerings, value: :music},
+                performance_arts: {label: t('Performance arts'), display_type: :basic_checkbox, name: :class_offerings, value: :performance_arts},
+                visual_media_arts: {label: t('Visual/Media arts'), display_type: :basic_checkbox, name: :class_offerings, value: :visual_media_arts},
                 world_languages: {
-                  label: 'World languages',
+                  label: t('World languages'),
                   name: :world_languages,
                   display_type: :collapsible_box,
                   filters: {
-                    french: {label: 'French', unique_label: 'French (class)', display_type: :basic_checkbox, name: :class_offerings, value: :french},
-                    german: {label: 'German', unique_label: 'German (class)', display_type: :basic_checkbox, name: :class_offerings, value: :german},
-                    spanish: {label: 'Spanish', unique_label: 'Spanish (class)', display_type: :basic_checkbox, name: :class_offerings, value: :spanish},
-                    mandarin: {label: 'Mandarin', unique_label: 'Mandarin (class)', display_type: :basic_checkbox, name: :class_offerings, value: :mandarin}
+                    french: {label: t('French'), unique_label: t('French (class)'), display_type: :basic_checkbox, name: :class_offerings, value: :french},
+                    german: {label: t('German'), unique_label: t('German (class)'), display_type: :basic_checkbox, name: :class_offerings, value: :german},
+                    spanish: {label: t('Spanish'), unique_label: t('Spanish (class)'), display_type: :basic_checkbox, name: :class_offerings, value: :spanish},
+                    mandarin: {label: t('Mandarin'), unique_label: t('Mandarin (class)'), display_type: :basic_checkbox, name: :class_offerings, value: :mandarin}
                   }
                 }
               }
@@ -476,7 +476,7 @@ class FilterBuilder
           name: :group3,
           filters: {
             girls_sports: {
-              label: 'Girls Sports',
+              label: t('Girls Sports'),
               display_type: :title,
               name: :girls_sports,
               filters: {
@@ -484,17 +484,17 @@ class FilterBuilder
                   display_type: :sports_button_group,
                   name: :girls_sports,
                   filters: {
-                    soccer: {label: 'Soccer', unique_label: 'Soccer (girls)', display_type: :sports_button, name: :girls_sports, value: :soccer},
-                    track: {label: 'Track', unique_label: 'Track (girls)', display_type: :sports_button, name: :girls_sports, value: :track},
-                    basketball: {label: 'Basketball', unique_label: 'Basketball (girls)', display_type: :sports_button, name: :girls_sports, value: :basketball},
-                    volleyball: {label: 'Volleyball', unique_label: 'Volleyball (girls)', display_type: :sports_button, name: :girls_sports, value: :volleyball},
-                    cheerleading: {label: 'Cheerleading', unique_label: 'Cheerleading (girls)', display_type: :sports_button, name: :girls_sports, value: :cheerleading}
+                    soccer: {label: t('Soccer'), unique_label: t('Soccer (girls)'), display_type: :sports_button, name: :girls_sports, value: :soccer},
+                    track: {label: t('Track'), unique_label: t('Track (girls)'), display_type: :sports_button, name: :girls_sports, value: :track},
+                    basketball: {label: t('Basketball'), unique_label: t('Basketball (girls)'), display_type: :sports_button, name: :girls_sports, value: :basketball},
+                    volleyball: {label: t('Volleyball'), unique_label: t('Volleyball (girls)'), display_type: :sports_button, name: :girls_sports, value: :volleyball},
+                    cheerleading: {label: t('Cheerleading'), unique_label: t('Cheerleading (girls)'), display_type: :sports_button, name: :girls_sports, value: :cheerleading}
                   }
                 }
               }
             },
             boys_sports: {
-              label: 'Boys Sports',
+              label: t('Boys Sports'),
               display_type: :title,
               name: :boys_sports,
               filters: {
@@ -502,39 +502,39 @@ class FilterBuilder
                   display_type: :sports_button_group,
                   name: :boys_sports,
                   filters: {
-                    soccer: {label: 'Soccer', unique_label: 'Soccer (boys)', display_type: :sports_button, name: :boys_sports, value: :soccer},
-                    track: {label: 'Track', unique_label: 'Track (boys)', display_type: :sports_button, name: :boys_sports, value: :track},
-                    basketball: {label: 'Basketball', unique_label: 'Basketball (boys)', display_type: :sports_button, name: :boys_sports, value: :basketball},
-                    football: {label: 'Football', unique_label: 'Football (boys)', display_type: :sports_button, name: :boys_sports, value: :football},
-                    baseball: {label: 'Baseball', unique_label: 'Baseball (boys)', display_type: :sports_button, name: :boys_sports, value: :baseball}
+                    soccer: {label: t('Soccer'), unique_label: t('Soccer (boys)'), display_type: :sports_button, name: :boys_sports, value: :soccer},
+                    track: {label: t('Track'), unique_label: t('Track (boys)'), display_type: :sports_button, name: :boys_sports, value: :track},
+                    basketball: {label: t('Basketball'), unique_label: t('Basketball (boys)'), display_type: :sports_button, name: :boys_sports, value: :basketball},
+                    football: {label: t('Football'), unique_label: t('Football (boys)'), display_type: :sports_button, name: :boys_sports, value: :football},
+                    baseball: {label: t('Baseball'), unique_label: t('Baseball (boys)'), display_type: :sports_button, name: :boys_sports, value: :baseball}
                   }
                 }
               }
             },
             school_focus: {
-              label: 'School Focus',
+              label: t('School Focus'),
               display_type: :title,
               name: :school_focus,
               filters: {
-                arts: {label: 'Arts focus', display_type: :basic_checkbox, name: :school_focus, value: :arts},
-                career_tech: {label: 'Career & technology', display_type: :basic_checkbox, name: :school_focus, value: :career_tech},
-                college_focus: {label: 'College focus', display_type: :basic_checkbox, name: :school_focus, value: :college_focus},
-                is: {label: 'Independent study', display_type: :basic_checkbox, name: :school_focus, value: :is},
-                ib: {label: 'International Baccalaureate', display_type: :basic_checkbox, name: :school_focus, value: :ib},
-                montessori: {label: 'Montessori', display_type: :basic_checkbox, name: :school_focus, value: :montessori},
-                online: {label: 'Online learning', display_type: :basic_checkbox, name: :school_focus, value: :online},
-                project: {label: 'Project-based learning', display_type: :basic_checkbox, name: :school_focus, value: :project},
-                science_tech: {label: 'Science/Technology (STEM)', display_type: :basic_checkbox, name: :school_focus, value: :science_tech},
-                waldorf: {label: 'Waldorf', display_type: :basic_checkbox, name: :school_focus, value: :waldorf},
+                arts: {label: t('Arts focus'), display_type: :basic_checkbox, name: :school_focus, value: :arts},
+                career_tech: {label: t('Career & technology'), display_type: :basic_checkbox, name: :school_focus, value: :career_tech},
+                college_focus: {label: t('College focus'), display_type: :basic_checkbox, name: :school_focus, value: :college_focus},
+                is: {label: t('Independent study'), display_type: :basic_checkbox, name: :school_focus, value: :is},
+                ib: {label: t('International Baccalaureate'), display_type: :basic_checkbox, name: :school_focus, value: :ib},
+                montessori: {label: t('Montessori'), display_type: :basic_checkbox, name: :school_focus, value: :montessori},
+                online: {label: t('Online learning'), display_type: :basic_checkbox, name: :school_focus, value: :online},
+                project: {label: t('Project-based learning'), display_type: :basic_checkbox, name: :school_focus, value: :project},
+                science_tech: {label: t('Science/Technology (STEM)'), display_type: :basic_checkbox, name: :school_focus, value: :science_tech},
+                waldorf: {label: t('Waldorf'), display_type: :basic_checkbox, name: :school_focus, value: :waldorf},
                 language_immersion: {
-                  label: 'World language immersion',
+                  label: t('World language immersion'),
                   name: :world_language_immersion,
                   display_type: :collapsible_box,
                   filters: {
-                    french: {label: 'French', unique_label: 'French (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :french},
-                    german: {label: 'German', unique_label: 'German (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :german},
-                    spanish: {label: 'Spanish', unique_label: 'Spanish (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :spanish},
-                    mandarin: {label: 'Mandarin', unique_label: 'Mandarin (immersion)', display_type: :basic_checkbox, name: :school_focus, value: :mandarin}
+                    french: {label: t('French'), unique_label: t('French (immersion)'), display_type: :basic_checkbox, name: :school_focus, value: :french},
+                    german: {label: t('German'), unique_label: t('German (immersion)'), display_type: :basic_checkbox, name: :school_focus, value: :german},
+                    spanish: {label: t('Spanish'), unique_label: t('Spanish (immersion)'), display_type: :basic_checkbox, name: :school_focus, value: :spanish},
+                    mandarin: {label: t('Mandarin'), unique_label: t('Mandarin (immersion)'), display_type: :basic_checkbox, name: :school_focus, value: :mandarin}
                   }
                 }
               }
@@ -543,5 +543,9 @@ class FilterBuilder
         }
       }
     }
+  end
+
+  def t(key)
+    I18n.t(key, scope: 'models.search.filter_builder')
   end
 end
