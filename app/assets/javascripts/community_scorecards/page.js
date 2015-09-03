@@ -151,7 +151,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     var $readMoreText = $('.js-readMoreText');
     $scorecard().on('click', '.js-readMoreLink', function(e) {
       $(e.target).addClass('dn').removeClass('visible-xs');
-      $readMoreText.removeClass('hidden-xs');
+      $readMoreText.removeClass();
     });
   };
 
