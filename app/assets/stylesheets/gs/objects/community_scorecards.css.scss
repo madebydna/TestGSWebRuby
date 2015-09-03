@@ -4,12 +4,16 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   .logo-bar {
     border-top: 5px solid $module-gray;
     border-bottom: 5px solid $module-gray;
+    text-align: center;
     padding: 10px 0;
+    div {
+      display: inline-block;
+    }
     .text {
       color: $gray-darker;
-      float: left;
       padding-right: 20px;
       padding-top: 13px;
+      vertical-align: top;
     }
     img {
       max-height: 50px;
