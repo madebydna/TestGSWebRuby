@@ -37,7 +37,9 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     initReadMoreToggleHandler();
     redrawTable();
 
-    $(scorecard).on('click', '.js-drawTable', function (e) {
+    var $scorecard = $(scorecard);
+
+    $scorecard.on('click', '.js-drawTable', function (e) {
       if (shouldDraw) {
         shouldDraw = false;
         var $target = $(e.target);
@@ -47,14 +49,14 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       }
     });
 
-    $(scorecard).on('click', showMore, function() {
+    $scorecard.on('click', showMore, function() {
       if (shouldDraw) {
         shouldDraw = false;
         appendToTable();
       }
     });
 
-    $(scorecard).on('click', tableSort, function (e) {
+    $scorecard.on('click', tableSort, function (e) {
       if (shouldDraw) {
         shouldDraw = false;
         setSortTypeToggleState($(e.target));
