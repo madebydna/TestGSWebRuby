@@ -1,51 +1,51 @@
 es:
   community_scorecards:
     summary:
-      read_more: Read more spanish
+      read_more: Read more
       collection_id_15:
-        description_above_fold: Spanish This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
-        description_below_fold: Spanish Below the fold. This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
+        description_above_fold: How are our local public high schools doing at preparing all students for success?
+        description_below_fold: Across the Bay Area, too many low-income students and students of color have historically been left behind. Check out which schools are changing the odds and find out how your high school is doing!
         column_1:
-          title: GRADUATION RATES IN THE BAY AREA spanish
+          title: GRADUATION RATES IN THE BAY AREA
           datapoint_1:
-            title: Latino students spanish
-            performance_level: above_average
-            value_html: 74<sup>%</sup> spanish
-            state_average: State average 78% spanish
-          datapoint_2:
-            title: White students spanish
+            title: Hispanic students
             performance_level: below_average
-            value_html: 57<sup>%</sup> spanish
-            state_average: State average 78% spanish
+            value_html: 74<sup>%</sup>
+            state_average: State average 76%
+          datapoint_2:
+            title: White students
+            performance_level: above_average
+            value_html: 95<sup>%</sup>
+            state_average: State average 89%
           datapoint_3:
-            title: Asian students spanish
+            title: Asian students
             performance_level: average
-            value_html: 64<sup>%</sup> spanish
-            state_average: State average 78% spanish
+            value_html: 93<sup>%</sup>
+            state_average: State average 92%
           datapoint_4:
-            title: African-American students spanish
-            performance_level: average
-            value_html: 62<sup>%</sup> spanish
-            state_average: State average 78% spanish
+            title: African-American students
+            performance_level: below_average
+            value_html: 69<sup>%</sup>
+            state_average: State average 68%
         column_2:
-          title: ELIGIBILITY FOR A 4-YEAR COLLEGE IN THE BAY AREA spanish
+          title: GRADUATES ELIGIBLE FOR 4-YEAR COLLEGE IN THE BAYAREA
           datapoint_1:
-            title: Latino students spanish
+            title: Hispanic students
             performance_level: below_average
-            value_html: 34<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            value_html: 34<sup>%</sup>
+            state_average: State average 32%
           datapoint_2:
-            title: White students spanish
+            title: White students
             performance_level: above_average
-            value_html: 87<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            value_html: 60<sup>%</sup>
+            state_average: State average 49%
           datapoint_3:
-            title: African-American students spanish
+            title: African-American students
             performance_level: average
-            value_html: 62<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            value_html: 30<sup>%</sup>
+            state_average: State average 31%
           datapoint_4:
-            title: Asian students spanish
-            performance_level: average
-            value_html: 64<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            title: Asian students
+            performance_level: above_average
+            value_html: 75<sup>%</sup>
+            state_average: State average 71%
