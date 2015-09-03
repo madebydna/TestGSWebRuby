@@ -15,9 +15,9 @@ describe CommunityScorecardData do
 
   describe '#school_data' do
     it 'should use SchoolDataHash to get school info' do
-      class FakeKlass; end
-      allow(SchoolDataHash).to receive(:new).and_return(FakeKlass)
-      allow(FakeKlass).to receive(:data_hash)
+      fake_object = Object.new
+      allow(SchoolDataHash).to receive(:new).and_return(fake_object)
+      allow(fake_object).to receive(:data_hash)
       structed_collection = collection_struct.new(scorecard_fields)
       allow(Collection).to receive(:find).and_return(structed_collection)
       allow(subject).to receive(:get_cachified_schools).and_return([1,2,3,4])
