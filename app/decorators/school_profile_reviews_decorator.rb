@@ -72,9 +72,13 @@ module SchoolProfileReviewsDecorator
     ]
 
     topic_distribution.each_with_object(chart) do |(label, number_of_occurrences), chart_array|
+
       if topic.overall?
         label = h.t('decorators.school_profile_reviews_decorator.overall_response', count: label.to_i)
+      elsif
+        label = h.db_t(label)
       end
+
       chart_array << [label, number_of_occurrences]
     end
   end

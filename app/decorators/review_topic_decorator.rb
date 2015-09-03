@@ -25,7 +25,9 @@ class ReviewTopicDecorator < Draper::Decorator
      '6'=> {header: "How is homework at your school?",
                 subheading: "Too much? Too little? Share you opinion."},
      '7'=> {header: "Share your thoughts on teachers.",
-                subheading: "Great schools begin with great teachers.  How are yours?"}
+                subheading: "Great schools begin with great teachers.  How are yours?"},
+     '8'=> {header: "Are you grateful for your school?",
+            subheading: "Share why. Find your school to start."}
     }
     end
 end

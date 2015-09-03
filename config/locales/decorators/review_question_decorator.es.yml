@@ -3,6 +3,7 @@ es:
   decorators:
     review_question_decorator:
       empathy_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla la compasión, el cuidado, y la empatía en los estudiantes? '
+      gratitude_placeholder_text: 'Dime por qué te sientes agradecido a esa persona. ¿Qué es lo que hacen o dicen? ¿Cómo usted o su hijo se beneficia?'
       grit_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla la persistencia, la arena, y la determinación de los estudiantes? '
       homework_placeholder_text: ' acerca de la tarea en esta escuela. '
       honesty_placeholder_text: '. ¿Cómo te sientes esta escuela desarrolla la honestidad, integridad y equidad en los estudiantes? '
