@@ -98,7 +98,9 @@ class CommunityScorecardsController < ApplicationController
   end
 
   def set_tracking_and_meta_info
-    data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = 'GS:CommunityScorecard'
+    page_name = 'GS:CommunityScorecard'
+    gon.pagename = page_name
+    data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = page_name
     data_layer_gon_hash[DataLayerConcerns::COLLECTION_ID] = collection.id
     set_meta_tags(title: I18n.t("community_scorecards.show.#{@t_scope}.title"))
   end
