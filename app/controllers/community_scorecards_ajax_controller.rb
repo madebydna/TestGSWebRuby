@@ -18,6 +18,7 @@ class CommunityScorecardsAjaxController < ApplicationController
       :collectionId,
       :offset,
       :gradeLevel,
+      :schoolType,
       :sortBy,
       :sortBreakdown,
       :sortAscOrDesc,

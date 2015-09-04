@@ -7,11 +7,14 @@ class SchoolDataService
 
   DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*:*', fq: ['+document_type:school_data']}
 
-  PARAMETER_TO_SOLR_MAPPING = {
-    collectionId: 'sd_collection',
-    gradeLevel: 'sd_school_grade_level',
+  BASE_PARAMS = {
     offset: :start,
-    sortBy: :sort,
+  }
+
+  FILTER_MAP = {
+    collectionId: "+sd_collection_id:",
+    gradeLevel: "+sd_school_grade_level:",
+    schoolType: "+sd_school_type:"
   }
 
   #there are underscores at the end because a breakdown will get appended ie, 'white', 'female'
@@ -50,7 +53,7 @@ class SchoolDataService
   class << self
 
     def school_data(options_params = {})
-      options = base_options(options_params, PARAMETER_TO_SOLR_MAPPING)
+      options = base_options(options_params, BASE_PARAMS)
       options.merge!(sort_params(options_params))
       filters = extract_filters(options_params)
       param_options = DEFAULT_SOLR_OPTIONS.merge(options)
@@ -67,18 +70,9 @@ class SchoolDataService
     private
 
     def extract_filters(filters)
-      filter_arr = []
-      filter_hash = {
-          collectionId: "+sd_collection_id:#{filters[:collectionId]}",
-          gradeLevel: "+sd_school_grade_level:(#{filters[:gradeLevel]})"
-      }
-
-      filter_hash.each do |k, v|
-        if filters[k].present?
-          filter_arr << v
-        end
+      FILTER_MAP.each_with_object([]) do | (param_key, solr_key), filter_map |
+        filter_map << "#{solr_key}(#{filters[param_key]})" if filters[param_key].present?
       end
-      filter_arr
     end
 
     def get_results(options)

@@ -53,6 +53,7 @@ class CommunityScorecardsController < ApplicationController
     {
       collectionId: 15,
       gradeLevel: 'h',
+      schoolType: 'public charter',
       sortBy: 'a_through_g',
       sortBreakdown: 'hispanic',
       sortAscOrDesc: 'desc',
