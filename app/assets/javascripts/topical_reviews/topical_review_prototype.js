@@ -271,6 +271,7 @@ GS.topicalReview.questionCarousel = (function () {
 
         $questionCarousel.slick({
             infinite: true,
+            accessibility: false,
             speed: 300,
             slidesToShow: 1,
             adaptiveHeight: true,
