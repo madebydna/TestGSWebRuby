@@ -23,16 +23,15 @@ describe SubscriptionConcerns do
   after(:all) { Object.send :remove_const, :FakeController }
 
   describe '#create_subscription' do
+    let(:school) { FactoryGirl.build(:school) }
     before do 
       allow(controller).to receive(:set_flash_notice)
       allow(controller).to receive(:flash_error)
-      # allow(controller).to receive_message_chain(:flash,:empty?).and_return(false)
+      allow(School).to receive(:find_by_state_and_id).with('CA','1').and_return(school)
     end
 
     context 'with no list parameter' do
-      let(:school) { FactoryGirl.build(:school) }
       before do
-        allow(School).to receive(:find_by_state_and_id).with('CA','1').and_return(school)
         allow(current_user).to receive(:has_subscription?).with('mystat', school).and_return(false)
       end
 
@@ -98,9 +97,27 @@ describe SubscriptionConcerns do
           end
         end
       end
-
-      context 'with list parameters' do
+    end
+    
+    context 'with list parameters' do
+      context 'with a school parameter' do
         let(:subscription_params) do
+          {
+            list: 'mystat',
+            school_id: '1',
+              state: 'CA'
+          }
+        end
+        before do
+          allow(current_user).to receive(:has_subscription?).with('mystat',school).and_return(false)
+        end
+        it 'should subscribe user to list' do
+          expect(current_user).to receive(:add_subscription!).with('mystat', school)
+          subject.create_subscription(subscription_params)
+        end
+      end
+      context 'with no school parameters' do
+        let(:subscription_params) do 
           {
             list: 'sponsor'
           }
@@ -113,7 +130,6 @@ describe SubscriptionConcerns do
           subject.create_subscription(subscription_params)
         end
       end
-
     end
   end 
 

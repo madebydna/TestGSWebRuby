@@ -6,14 +6,8 @@ class CommunityScorecardsController < ApplicationController
 
   def show
     @collection = collection
-    # TODO get t_scope and table_fields from collection config
-    @t_scope = 'innovate_public_schools'
-    @table_fields = [
-      # These data_type keys match with I18n keys to get the labels
-      { data_type: :school_info, partial: :school_info },
-      { data_type: :a_through_g, partial: :percent_value },
-      { data_type: :graduation_rate, partial: :percent_value },
-    ]
+    @t_scope = "collection_id_#{collection.id}"
+    @table_fields = collection.scorecard_fields
 
     set_mobile_dropdown_instance_var!
     set_subgroups_for_header!
@@ -39,7 +33,7 @@ class CommunityScorecardsController < ApplicationController
   def set_mobile_dropdown_instance_var!
     data_types = @table_fields.each_with_object([]) do |table_field, array|
       data_type = table_field[:data_type]
-      unless data_type == :school_info
+      unless data_type.to_s == 'school_info'
         array << [
           CSC_t(data_type),
           data_type,
@@ -59,6 +53,7 @@ class CommunityScorecardsController < ApplicationController
     {
       collectionId: 15,
       gradeLevel: 'h',
+      schoolType: 'public charter',
       sortBy: 'a_through_g',
       sortBreakdown: 'hispanic',
       sortAscOrDesc: 'desc',

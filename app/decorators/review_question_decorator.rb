@@ -14,6 +14,7 @@ class ReviewQuestionDecorator < Draper::Decorator
   private
 
   def placeholder_prefix_text
+    return '' if topic.name == 'Gratitude'
     I18n.t('decorators.review_question_decorator.placeholder_prefix')
   end
 
@@ -29,7 +30,8 @@ class ReviewQuestionDecorator < Draper::Decorator
      'Respect'=> I18n.t('decorators.review_question_decorator.respect_placeholder_text'),
      'Grit'=> I18n.t('decorators.review_question_decorator.grit_placeholder_text'),
      'Homework'=> I18n.t('decorators.review_question_decorator.homework_placeholder_text'),
-     'Teachers'=> I18n.t('decorators.review_question_decorator.teachers_placeholder_text')
+     'Teachers'=> I18n.t('decorators.review_question_decorator.teachers_placeholder_text'),
+     'Gratitude'=> I18n.t('decorators.review_question_decorator.gratitude_placeholder_text')
     }
   end
 end

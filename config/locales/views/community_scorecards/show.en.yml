@@ -1,5 +1,6 @@
 en:
   community_scorecards:
     show:
-      innovate_public_schools:
-        title: San Francisco Bay Area Community Scorecard
+      collection_id_15:
+        title: Spotlight on Bay Area Public Schools
+        table_title: Bay Area Schools

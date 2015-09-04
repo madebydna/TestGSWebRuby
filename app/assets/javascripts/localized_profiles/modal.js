@@ -1,3 +1,5 @@
+var GS = GS || {};
+
 GS.modal = GS.modal || {};
 
 GS.modal.manager = GS.modal.intializer || (function ($) {
@@ -47,7 +49,7 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     var initializeSignupForm = function () {
         $(SIGNUP_SCHOOL_SELECTOR).on('ajax:success', function (e, data, status, xhr) {
             $(SUBMIT_BUTTON_SELECTOR).hide();
-            if(shouldSignUpForSponsor) {
+            if( shouldSignUpForSponsor() ) {
               GS.subscription.sponsorsSignUp();
             }
             $(SAVE_THIS_SCHOOL_FORM_SELECTOR).submit();
@@ -111,19 +113,4 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     };
 
 })(jQuery);
-
-GS.subscription = GS.subscription || {};
-
-GS.subscription.sponsorsSignUp = function () {
-  $.ajax({
-    type: 'POST',
-    url: "/gsr/user/subscriptions",
-    data: {subscription:
-      {list: "sponsor",
-        message: "You've signed up to receive sponsors updates"
-      }
-    }
-  })
-};
-
 

@@ -1,12 +1,9 @@
 <div class="article">
   <h2><%= t('.section_title') %></h2>
-  <div class="section_description">
-    <%= t(".#{@t_scope}.section_description") %>
-  </div>
   <div class="row">
     <div class="col-sm-4 pbm">
       <a href="<%= t(".#{@t_scope}.article_url") %>" target="_blank">
-        <img src="<%= t(".#{@t_scope}.image") %>"/>
+        <img src="<%= image_path(t(".#{@t_scope}.image")) %>"/>
       </a>
     </div>
     <div class="col-sm-4 pbm">

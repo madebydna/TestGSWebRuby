@@ -1,51 +1,51 @@
 es:
   community_scorecards:
     summary:
-      read_more: Read more spanish
-      innovate_public_schools:
-        description_above_fold: Spanish This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
-        description_below_fold: Spanish Below the fold. This page highlights opportunity for all.  This page highlights opportunity for all.  This page highlights opportunity for all.
+      read_more: Leer más
+      collection_id_15:
+        description_above_fold: ¿Cómo es el rendimiento de nuestras preparatorias públicas locales al preparar a todos los estudiantes para el éxito?
+        description_below_fold: Por todo el área de la Bahía, históricamente muchos estudiantes se han quedado atrás académicamente. ¡Vea cuales escuelas están cambiando las probabilidades y descubra cómo su preparatoria se compara!
         column_1:
-          title: GRADUATION RATES IN THE BAY AREA spanish
+          title: TASA DE GRADUADOS EN EL ÁREA DE LA BAHÍA
           datapoint_1:
-            title: Latino students spanish
-            performance_level: above_average
-            value_html: 74<sup>%</sup> spanish
-            state_average: State average 78% spanish
-          datapoint_2:
-            title: White students spanish
+            title: Estudiantes Hispanos
             performance_level: below_average
-            value_html: 57<sup>%</sup> spanish
-            state_average: State average 78% spanish
+            value_html: 74<sup>%</sup>
+            state_average: Prom. 76%
+          datapoint_2:
+            title: Estudiantes Blancos
+            performance_level: above_average
+            value_html: 95<sup>%</sup>
+            state_average: Prom. 89%
           datapoint_3:
-            title: Asian students spanish
+            title: Estudiantes Asiático
             performance_level: average
-            value_html: 64<sup>%</sup> spanish
-            state_average: State average 78% spanish
+            value_html: 93<sup>%</sup>
+            state_average: Prom. 92%
           datapoint_4:
-            title: African-American students spanish
-            performance_level: average
-            value_html: 62<sup>%</sup> spanish
-            state_average: State average 78% spanish
+            title: Estudiantes Afroamericanos
+            performance_level: below_average
+            value_html: 69<sup>%</sup>
+            state_average: Prom. 68%
         column_2:
-          title: ELIGIBILITY FOR A 4-YEAR COLLEGE IN THE BAY AREA spanish
+          title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
           datapoint_1:
-            title: Latino students spanish
+            title: Estudiantes Hispanos
             performance_level: below_average
-            value_html: 34<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            value_html: 34<sup>%</sup>
+            state_average: Prom. 32%
           datapoint_2:
-            title: White students spanish
+            title: Estudiantes Blancos
             performance_level: above_average
-            value_html: 87<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            value_html: 60<sup>%</sup>
+            state_average: Prom. 49%
           datapoint_3:
-            title: African-American students spanish
+            title: Estudiantes Afroamericanos
             performance_level: average
-            value_html: 62<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            value_html: 30<sup>%</sup>
+            state_average: Prom. 31%
           datapoint_4:
-            title: Asian students spanish
-            performance_level: average
-            value_html: 64<sup>%</sup> spanish
-            state_average: State average 64% spanish
+            title: Estudiantes Asiático
+            performance_level: above_average
+            value_html: 75<sup>%</sup>
+            state_average: Prom. 71%

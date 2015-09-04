@@ -31,4 +31,4 @@
 //= require_tree ./page_initializers
 //= require_tree ./page_initializers/admin
 //= require_tree ./ads
-
+//= require subscription
