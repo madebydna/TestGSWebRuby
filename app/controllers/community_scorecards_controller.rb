@@ -33,7 +33,7 @@ class CommunityScorecardsController < ApplicationController
   def set_mobile_dropdown_instance_var!
     data_types = @table_fields.each_with_object([]) do |table_field, array|
       data_type = table_field[:data_type]
-      unless data_type == :school_info
+      unless data_type.to_s == 'school_info'
         array << [
           CSC_t(data_type),
           data_type,

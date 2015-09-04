@@ -4,10 +4,10 @@ describe CommunityScorecardsController do
 
   let(:table_fields) do
     [
-      { data_type: :school_info, partial: :school_info },
-      { data_type: :a_through_g, partial: :percent_value },
-      { data_type: :graduation_rate, partial: :percent_value },
-    ]
+      {"data_type"=>"school_info", "partial"=>"school_info"},
+      {"data_type"=>"a_through_g", "partial"=>"percent_value", "year"=>2014},
+      {"data_type"=>"graduation_rate", "partial"=>"percent_value", "year"=>2013}
+    ].map(&:with_indifferent_access)
   end
 
   describe '#set_mobile_dropdown_instance_var!' do
@@ -23,7 +23,8 @@ describe CommunityScorecardsController do
 
       data_types.each do | options_array |
         expect(options_array[0]).to be_a String
-        expect(options_array[1]).to be_a Symbol
+        expect(options_array[1]).to be_a String
+        expect(options_array[1].to_s).to_not eq('school_info')
         options_hash = options_array[2]
         expect(options_hash).to be_a Hash
         expect(options_hash.keys).to include(:class, :data)
