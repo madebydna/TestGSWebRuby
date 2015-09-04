@@ -1,51 +1,51 @@
 es:
   community_scorecards:
     summary:
-      read_more: Read more
+      read_more: Leer más
       collection_id_15:
-        description_above_fold: How are our local public high schools doing at preparing all students for success?
-        description_below_fold: Across the Bay Area, too many low-income students and students of color have historically been left behind. Check out which schools are changing the odds and find out how your high school is doing!
+        description_above_fold: ¿Cómo esta el rendimiento de nuestras preparatorias públicas locales a preparar a todos los estudiantes para el éxito?
+        description_below_fold: Por todo el area de la Bahía, históricamente muchos estudiantes se han quedado atrás académicamente. ¡Vea cuales escuelas están cambiando las probabilidades y descubra cómo su preparatoria se compara!
         column_1:
           title: GRADUATION RATES IN THE BAY AREA
           datapoint_1:
             title: Hispanic students
             performance_level: below_average
             value_html: 74<sup>%</sup>
-            state_average: State average 76%
+            state_average: Prom. 76%
           datapoint_2:
             title: White students
             performance_level: above_average
             value_html: 95<sup>%</sup>
-            state_average: State average 89%
+            state_average: Prom. 89%
           datapoint_3:
             title: Asian students
             performance_level: average
             value_html: 93<sup>%</sup>
-            state_average: State average 92%
+            state_average: Prom. 92%
           datapoint_4:
             title: African-American students
             performance_level: below_average
             value_html: 69<sup>%</sup>
-            state_average: State average 68%
+            state_average: Prom. 68%
         column_2:
           title: GRADUATES ELIGIBLE FOR 4-YEAR COLLEGE IN THE BAY AREA
           datapoint_1:
             title: Hispanic students
             performance_level: below_average
             value_html: 34<sup>%</sup>
-            state_average: State average 32%
+            state_average: Prom. 32%
           datapoint_2:
             title: White students
             performance_level: above_average
             value_html: 60<sup>%</sup>
-            state_average: State average 49%
+            state_average: Prom. 49%
           datapoint_3:
             title: African-American students
             performance_level: average
             value_html: 30<sup>%</sup>
-            state_average: State average 31%
+            state_average: Prom. 31%
           datapoint_4:
             title: Asian students
             performance_level: above_average
             value_html: 75<sup>%</sup>
-            state_average: State average 71%
+            state_average: Prom. 71%
