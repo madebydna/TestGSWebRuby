@@ -90,16 +90,20 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var drawTableWithData = function(data) {
-    console.log(data);
-    $tablePlacement().html(GS.handlebars.partialContent(tablePartial, data));
-    $mobilePlacement().html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
+    try {
+      $tablePlacement().html(GS.handlebars.partialContent(tablePartial, data));
+      $mobilePlacement().html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
 
-    setSortTypeToggleState(sortToggleFor(pageOptions.get('sortAscOrDesc')));
-    calculateHighlightIndex();
-    var highlightIndex = pageOptions.get('highlightIndex');
-    $scorecard().find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
-    pageOptions.addValuesToURL();
-    shouldDraw = true;
+      setSortTypeToggleState(sortToggleFor(pageOptions.get('sortAscOrDesc')));
+      calculateHighlightIndex();
+      var highlightIndex = pageOptions.get('highlightIndex');
+      $scorecard().find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+      // Please keep this last. The last thing we should do is change the URL.
+      pageOptions.addValuesToURL();
+      shouldDraw = true;
+    } catch(e) {
+      displayFatalErrorMessage();
+    }
   };
 
   var displayFatalErrorMessage = function() {
@@ -127,6 +131,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var appendToTable = function() {
     var params = pageOptions.to_h();
     params.offset += offsetInterval;
+    pageOptions.set('offset', params.offset);
+
     var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
     tableDataRequest
       .success(appendDataToTable)
@@ -134,19 +140,22 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var appendDataToTable = function(data) {
-    if (data.school_data) {
-      var $tableBody = $scorecard().find('tbody');
-      var $mobileShowMore = $scorecard().find('#js-showMoreMobile');
-      _.each(data.school_data, function(school) {
-        $tableBody.append(GS.handlebars.partialContent(rowPartial, school));
-        $mobileShowMore.before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
-      });
-      pageOptions.set('offset', params.offset);
-      if (!data.more_results) {
-        $scorecard().find(showMore).addClass('dn');
+    try {
+      if (data.school_data) {
+        var $tableBody = $scorecard().find('tbody');
+        var $mobileShowMore = $scorecard().find('#js-showMoreMobile');
+        _.each(data.school_data, function(school) {
+          $tableBody.append(GS.handlebars.partialContent(rowPartial, school));
+          $mobileShowMore.before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
+        });
+        if (!data.more_results) {
+          $scorecard().find(showMore).addClass('dn');
+        }
       }
+      shouldDraw = true;
+    } catch(e) {
+      displayFatalErrorMessage();
     }
-    shouldDraw = true;
   };
 
   var initPageOptions = function() {
