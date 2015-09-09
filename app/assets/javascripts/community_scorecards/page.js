@@ -17,6 +17,9 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   // Selectors
   var showMore           = '.js-showMore';
   var tableSort          = '.js-tableSort';
+  var $scorecard;
+  var $tablePlacement;
+  var $mobilePlacement;
   // Partials
   var tableHeaderPartial = 'community_scorecards/table_header';
   var tablePartial       = 'community_scorecards/table';
@@ -34,7 +37,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     initReadMoreToggleHandler();
     redrawTable();
 
-    $scorecard().on('click', '.js-drawTable', function (e) {
+    $scorecard.on('click', '.js-drawTable', function (e) {
       if (shouldDraw) {
         shouldDraw = false;
         var $target = $(e.target);
@@ -44,14 +47,14 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       }
     });
 
-    $scorecard().on('click', showMore, function() {
+    $scorecard.on('click', showMore, function() {
       if (shouldDraw) {
         shouldDraw = false;
         appendToTable();
       }
     });
 
-    $scorecard().on('click', tableSort, function (e) {
+    $scorecard.on('click', tableSort, function (e) {
       if (shouldDraw) {
         shouldDraw = false;
         setSortTypeToggleState($(e.target));
@@ -91,13 +94,13 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var drawTableWithData = function(data) {
     try {
-      $tablePlacement().html(GS.handlebars.partialContent(tablePartial, data));
-      $mobilePlacement().html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
+      $tablePlacement.html(GS.handlebars.partialContent(tablePartial, data));
+      $mobilePlacement.html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
 
       setSortTypeToggleState(sortToggleFor(pageOptions.get('sortAscOrDesc')));
       calculateHighlightIndex();
       var highlightIndex = pageOptions.get('highlightIndex');
-      $scorecard().find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+      $scorecard.find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
       // Please keep this last. The last thing we should do is change the URL.
       pageOptions.addValuesToURL();
       shouldDraw = true;
@@ -108,8 +111,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var displayFatalErrorMessage = function() {
     var message = GS.I18n.t('fatal_error');
-    $tablePlacement().html(message);
-    $mobilePlacement().html(message);
+    $tablePlacement.html(message);
+    $mobilePlacement.html(message);
   };
 
   var dataForMobile = function(data) {
@@ -142,14 +145,14 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var appendDataToTable = function(data) {
     try {
       if (data.school_data) {
-        var $tableBody = $scorecard().find('tbody');
-        var $mobileShowMore = $scorecard().find('#js-showMoreMobile');
+        var $tableBody = $scorecard.find('tbody');
+        var $mobileShowMore = $scorecard.find('#js-showMoreMobile');
         _.each(data.school_data, function(school) {
           $tableBody.append(GS.handlebars.partialContent(rowPartial, school));
           $mobileShowMore.before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
         });
         if (!data.more_results) {
-          $scorecard().find(showMore).addClass('dn');
+          $scorecard.find(showMore).addClass('dn');
         }
       }
       shouldDraw = true;
@@ -167,7 +170,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var calculateHighlightIndex = function() {
     if (! pageOptions.get('highlightIndex')) {
       var sortBy = pageOptions.get('sortBy');
-      var $header = $scorecard().find('thead').find('th[data-sort-by="' + sortBy + '"]');
+      var $header = $scorecard.find('thead').find('th[data-sort-by="' + sortBy + '"]');
       var highlightIndex = $header.data('highlightIndex');
       if (highlightIndex) {
         pageOptions.set('highlightIndex', highlightIndex);
@@ -177,37 +180,25 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var initReadMoreToggleHandler = function() {
     var $readMoreText = $('.js-readMoreText');
-    $scorecard().on('click', '.js-readMoreLink', function(e) {
+    $scorecard.on('click', '.js-readMoreLink', function(e) {
       $(e.target).addClass('dn').removeClass('visible-xs');
       $readMoreText.removeClass();
     });
   };
 
   var sortToggleFor = function(sortType) {
-    return $scorecard().find(tableSort + '[data-sort-asc-or-desc="' + sortType + '"]');
+    return $scorecard.find(tableSort + '[data-sort-asc-or-desc="' + sortType + '"]');
   };
 
   var setSortTypeToggleState = function($sortToggle) {
-    $scorecard().find(tableSort).addClass('sort-link');
+    $scorecard.find(tableSort).addClass('sort-link');
     $sortToggle.removeClass('sort-link');
   };
 
   var initPageSelectors = function() {
-    GS.CommunityScorecards.Page.$scorecard = $('#community-spotlight');
-    GS.CommunityScorecards.Page.$tablePlacement = $('#community-scorecard-table');
-    GS.CommunityScorecards.Page.$mobilePlacement = $('#community-scorecard-mobile');
-  };
-
-  var $scorecard = function() {
-    return GS.CommunityScorecards.Page.$scorecard;
-  };
-
-  var $tablePlacement = function() {
-    return GS.CommunityScorecards.Page.$tablePlacement;
-  };
-
-  var $mobilePlacement = function() {
-    return GS.CommunityScorecards.Page.$mobilePlacement;
+    $scorecard = $('#community-spotlight');
+    $tablePlacement = $('#community-scorecard-table');
+    $mobilePlacement = $('#community-scorecard-mobile');
   };
 
   return {
