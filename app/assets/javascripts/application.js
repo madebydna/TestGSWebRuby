@@ -27,7 +27,7 @@
 //= require_tree ./guided_search
 //= require_tree ./google_maps
 //= require_tree ./account_management
-//= require_tree ./community_spotlights
+//= require_tree ./community_scorecards
 //= require_tree ./page_initializers
 //= require_tree ./page_initializers/admin
 //= require_tree ./ads
