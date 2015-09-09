@@ -103,8 +103,9 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var displayFatalErrorMessage = function() {
-    var message = 'Sorry but something went wrong. Please refresh your browser.';
-    alert(message);
+    var message = GS.I18n.t('fatal_error');
+    $tablePlacement().html(message);
+    $mobilePlacement().html(message);
   };
 
   var dataForMobile = function(data) {
@@ -126,21 +127,26 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var appendToTable = function() {
     var params = pageOptions.to_h();
     params.offset += offsetInterval;
-    GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
-      if (data.school_data) {
-        var $tableBody = $scorecard().find('tbody');
-        var $mobileShowMore = $scorecard().find('#js-showMoreMobile');
-        _.each(data.school_data, function(school) {
-          $tableBody.append(GS.handlebars.partialContent(rowPartial, school));
-          $mobileShowMore.before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
-        });
-        pageOptions.set('offset', params.offset);
-        if (!data.more_results) {
-          $scorecard().find(showMore).addClass('dn');
-        }
+    var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
+    tableDataRequest
+      .success(appendDataToTable)
+      .error(displayFatalErrorMessage);
+  };
+
+  var appendDataToTable = function(data) {
+    if (data.school_data) {
+      var $tableBody = $scorecard().find('tbody');
+      var $mobileShowMore = $scorecard().find('#js-showMoreMobile');
+      _.each(data.school_data, function(school) {
+        $tableBody.append(GS.handlebars.partialContent(rowPartial, school));
+        $mobileShowMore.before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
+      });
+      pageOptions.set('offset', params.offset);
+      if (!data.more_results) {
+        $scorecard().find(showMore).addClass('dn');
       }
-      shouldDraw = true;
-    });
+    }
+    shouldDraw = true;
   };
 
   var initPageOptions = function() {

@@ -3,6 +3,7 @@ en:
   javascript:
     close: Close
     learn_more_html: Learn More &raquo;
+    fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
     more_filters: More filters
     ok_fit: 'Ok fit'

@@ -3,6 +3,7 @@ es:
   javascript:
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
+    fatal_error: Se produjo un error inesperado durante la carga de la página. Por favor, intente actualizar la página.
     fewer_filters: Menos filtros
     more_filters: Más filtros
     ok_fit: Medio
