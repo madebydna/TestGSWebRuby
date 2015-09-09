@@ -1,4 +1,4 @@
-class CommunityScorecardsController < ApplicationController
+class CommunitySpotlightsController < ApplicationController
 
   # TODO This breaks for Spanish
   before_filter :redirect_to_canonical_url
@@ -45,7 +45,7 @@ class CommunityScorecardsController < ApplicationController
   end
 
   def CSC_t(key)
-    t("controllers.community_scorecards_controller.#{key}")
+    t("controllers.community_spotlights_controller.#{key}")
   end
 
   def default_params
@@ -88,17 +88,17 @@ class CommunityScorecardsController < ApplicationController
   end
 
   def canonical_path
-    community_scorecard_path(
+    community_spotlight_path(
       collection_id: params[:collection_id],
       collection_name: collection.url_name,
     )
   end
 
   def set_tracking_and_meta_info
-    page_name = 'GS:CommunityScorecard'
+    page_name = 'GS:CommunitySpotlight'
     gon.pagename = page_name
     data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = page_name
     data_layer_gon_hash[DataLayerConcerns::COLLECTION_ID] = collection.id
-    set_meta_tags(title: I18n.t("community_scorecards.show.#{@t_scope}.title"))
+    set_meta_tags(title: I18n.t("community_spotlights.show.#{@t_scope}.title"))
   end
 end

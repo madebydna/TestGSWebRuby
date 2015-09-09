@@ -214,7 +214,7 @@ LocalizedProfiles::Application.routes.draw do
       collection_id: /\d+/,
       collection_name: /.+/,
     } do
-      get 'spotlight', to: 'community_scorecards#show', as: :scorecard
+      get 'spotlight', to: 'community_spotlights#show', as: :spotlight
     end
 
   constraints(RegularSubdomain) do

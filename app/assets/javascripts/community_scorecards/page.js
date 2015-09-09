@@ -184,7 +184,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var initPageSelectors = function() {
-    GS.CommunityScorecards.Page.$scorecard = $('#community-scorecard');
+    GS.CommunityScorecards.Page.$scorecard = $('#community-spotlight');
     GS.CommunityScorecards.Page.$tablePlacement = $('#community-scorecard-table');
     GS.CommunityScorecards.Page.$mobilePlacement = $('#community-scorecard-mobile');
   };

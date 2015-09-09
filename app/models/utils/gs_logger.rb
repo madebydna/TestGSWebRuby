@@ -8,7 +8,7 @@ class GSLogger
     reviews: 'REVIEWS',
     i18n: 'I18N',
     school_profiles: 'SCHOOL_PROFILES',
-    community_scorecard: 'COMMUNITY_SCORECARD',
+    community_spotlight: 'COMMUNITY_Spotlight',
   })
 
   class << self

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CommunityScorecardsController do
+describe CommunitySpotlightsController do
 
   let(:table_fields) do
     [
@@ -75,7 +75,7 @@ describe CommunityScorecardsController do
           allow(Collection).to receive(:find_by).and_return(collection_struct.new('real-name'))
           request_params = { collection_id: 1 }.merge(param)
           get :show, request_params.merge(collection_name: 'fake-name')
-          expect(response).to redirect_to(community_scorecard_path(request_params.merge(collection_name: 'real-name')))
+          expect(response).to redirect_to(community_spotlight_path(request_params.merge(collection_name: 'real-name')))
         end
       end
     end

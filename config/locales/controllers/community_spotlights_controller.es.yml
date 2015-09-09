@@ -1,6 +1,6 @@
 es:
   controllers:
-    community_scorecards_controller:
+    community_spotlights_controller:
       white:                             'White'
       asian:                             'Asia'
       native_american_or_native_alaskan: 'Nativos americanos o nativos de Alaska'

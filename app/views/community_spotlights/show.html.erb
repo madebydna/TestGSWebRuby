@@ -1,16 +1,16 @@
 <%= include_handlebars_templates('community_scorecards/') %>
 
-<div id="community-scorecard" class="<%= @gs_bootstrap %> community-scorecard">
+<div id="community-spotlight" class="<%= @gs_bootstrap %> community-spotlight">
   <div class="container-fluid">
     <div class='shim-20 hidden-xs'></div>
     <h1 class="lg-roboto"><%= t(".#{@t_scope}.title") %></h1>
-    <%= render partial: 'community_scorecards/logo_bar' %>
+    <%= render partial: 'community_spotlights/logo_bar' %>
     <div class='shim-20'></div>
-    <%= render partial: "community_scorecards/summary" %>
-    <%= render partial: "community_scorecards/article" %>
+    <%= render partial: "community_spotlights/summary" %>
+    <%= render partial: "community_spotlights/article" %>
     <div class='shim-10 hidden-xs'></div>
     <h2><%= t(".#{@t_scope}.table_title") %></h2>
-    <%= render partial: "community_scorecards/table_header" %>
+    <%= render partial: "community_spotlights/table_header" %>
     <% # these elements with ids are used for handlebars templating %>
     <div id="community-scorecard-mobile" class='visible-xs row striped-divs'></div>
     <div id="community-scorecard-table" class='hidden-xs'></div>
