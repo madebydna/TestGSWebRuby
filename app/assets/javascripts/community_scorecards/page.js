@@ -26,6 +26,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   // Defaults
   var offsetInterval     = 10;
   var shouldDraw = true;
+  var pageOptions;
 
   var init = function() {
     initPageSelectors();
@@ -70,7 +71,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     }).forEach(function(optionsKey, dataKey) {
       var dataVal = $target.data(dataKey);
       if(dataVal !== undefined) {
-        if (GS.CommunityScorecards.Page.options.set(optionsKey, dataVal)) newOptionsSet = true;
+        if (pageOptions.set(optionsKey, dataVal)) newOptionsSet = true;
       };
     });
 
@@ -80,18 +81,30 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   //when appropriate look into not having a hardcoded list of highlight classes. Regex?
   //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
   var redrawTable = function() {
-    GS.CommunityScorecards.Page.options.set('offset', 0);
-    var params = GS.CommunityScorecards.Page.options.to_h();
-    GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
-      $tablePlacement().html(GS.handlebars.partialContent(tablePartial, data));
-      $mobilePlacement().html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
+    pageOptions.set('offset', 0);
+    var params = pageOptions.to_h();
+    var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
+    tableDataRequest
+      .success(drawTableWithData)
+      .error(displayFatalErrorMessage);
+  };
 
-      setSortTypeToggleState(sortToggleFor(GS.CommunityScorecards.Page.options.get('sortAscOrDesc')));
-      calculateHighlightIndex();
-      var highlightIndex = GS.CommunityScorecards.Page.options.get('highlightIndex');
-      $scorecard().find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
-      shouldDraw = true;
-    });
+  var drawTableWithData = function(data) {
+    console.log(data);
+    $tablePlacement().html(GS.handlebars.partialContent(tablePartial, data));
+    $mobilePlacement().html(GS.handlebars.partialContent(mobilePartial, dataForMobile(data)));
+
+    setSortTypeToggleState(sortToggleFor(pageOptions.get('sortAscOrDesc')));
+    calculateHighlightIndex();
+    var highlightIndex = pageOptions.get('highlightIndex');
+    $scorecard().find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+    pageOptions.addValuesToURL();
+    shouldDraw = true;
+  };
+
+  var displayFatalErrorMessage = function() {
+    var message = 'Sorry but something went wrong. Please refresh your browser.';
+    alert(message);
   };
 
   var dataForMobile = function(data) {
@@ -100,7 +113,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var schoolDataForMobile = function(data) {
-    var dataSet = GS.CommunityScorecards.Page.options.get('sortBy')
+    var dataSet = pageOptions.get('sortBy')
     data.data_for_mobile = {
       value: data[dataSet]['value'],
       state_average: data[dataSet]['state_average'],
@@ -111,7 +124,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var appendToTable = function() {
-    var params = GS.CommunityScorecards.Page.options.to_h();
+    var params = pageOptions.to_h();
     params.offset += offsetInterval;
     GS.util.ajax.request(dataUrl, params, ajaxOptions).success(function (data) {
       if (data.school_data) {
@@ -121,7 +134,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
           $tableBody.append(GS.handlebars.partialContent(rowPartial, school));
           $mobileShowMore.before(GS.handlebars.partialContent(mobileRowPartial, schoolDataForMobile(school)));
         });
-        GS.CommunityScorecards.Page.options.set('offset', params.offset);
+        pageOptions.set('offset', params.offset);
         if (!data.more_results) {
           $scorecard().find(showMore).addClass('dn');
         }
@@ -133,16 +146,16 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var initPageOptions = function() {
     var pageData = {};
     _.extend(pageData, gon.community_scorecard_params);
-    GS.CommunityScorecards.Page.options = new GS.CommunityScorecards.Options(pageData);
+    pageOptions = new GS.CommunityScorecards.Options(pageData);
   };
 
   var calculateHighlightIndex = function() {
-    if (! GS.CommunityScorecards.Page.options.get('highlightIndex')) {
-      var sortBy = GS.CommunityScorecards.Page.options.get('sortBy');
+    if (! pageOptions.get('highlightIndex')) {
+      var sortBy = pageOptions.get('sortBy');
       var $header = $scorecard().find('thead').find('th[data-sort-by="' + sortBy + '"]');
       var highlightIndex = $header.data('highlightIndex');
       if (highlightIndex) {
-        GS.CommunityScorecards.Page.options.set('highlightIndex', highlightIndex);
+        pageOptions.set('highlightIndex', highlightIndex);
       }
     }
   };

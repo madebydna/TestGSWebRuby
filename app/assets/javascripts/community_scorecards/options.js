@@ -26,9 +26,6 @@ GS.CommunityScorecards.Options.prototype = {
 
   set: function(key, value) {
     if(this.isValidValue(value) && value !== this.get(key)) {
-      if (GS.util.isHistoryAPIAvailable() && _.contains(this.validURLAttributes, key)) {
-        this.addToURL(key, value);
-      }
       this['_' + key] = value;
       return true;
     }
@@ -48,6 +45,14 @@ GS.CommunityScorecards.Options.prototype = {
     return _.map(this.validAttributes, function(attr) {
       return this.get(attr);
     }.gs_bind(this));
+  },
+
+  addValuesToURL: function() {
+    if (GS.util.isHistoryAPIAvailable()) {
+      _(this.validURLAttributes).forEach(function (attribute) {
+        this.addToURL(attribute, this.get(attribute));
+      }.gs_bind(this));
+    }
   },
 
   addToURL: function(key, value){
