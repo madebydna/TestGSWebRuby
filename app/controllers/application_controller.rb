@@ -444,4 +444,12 @@ class ApplicationController < ActionController::Base
       )
     end
   end
+
+  def only_latin1_character_params?
+    params.each do |_, value|
+      # ISO-8859-1 is Latin-1
+      latin_value = value.to_s.clone.force_encoding('ISO-8859-1')
+      return false unless latin_value == value.to_s
+    end
+  end
 end

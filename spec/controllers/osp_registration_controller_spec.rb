@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 require 'controllers/contexts/osp_shared_contexts'
 require 'features/contexts/osp_contexts.rb'
@@ -220,6 +221,7 @@ describe OspRegistrationController do
       {school_website: 'www.badguys.pl'},
       {email: 'keith@badguys.ru'},
       {email: 'keith@badguys.pl'},
+      {school_website: "http://ищукран.рф/online/art/994-polovoy-chlen-golovka/"},
     ].each do |bad_params|
       context "with bad params: #{bad_params}" do
         let(:super_long_school_website_params) do
