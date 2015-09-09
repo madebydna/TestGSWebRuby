@@ -112,7 +112,7 @@ class OspRegistrationController < ApplicationController
   def valid_params?
     valid_school_website? &&
     not_blacklisted_top_level_domain?(params[:email]) &&
-    only_latin1_character_params?
+    only_latin1_characters?(params.values_at([:email, :school_website, :first_name, :last_name]))
   end
 
   def valid_school_website?
