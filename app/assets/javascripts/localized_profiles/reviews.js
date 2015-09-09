@@ -225,7 +225,7 @@ GS.reviews = GS.reviews || function($) {
       }).done(function (data) {
         var redirectUrl = data.redirect_url;
         if (redirectUrl !== undefined && redirectUrl !== '') {
-          window.location = redirectUrl;
+          window.location = GS.I18n.preserveLanguageParam(redirectUrl);
         }
 
         var count = data[reviewId];
