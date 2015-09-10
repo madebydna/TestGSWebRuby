@@ -32,9 +32,9 @@
                 <div class="col-xs-4 tac"><span class="mtm iconx48-snapshot i-48-<%= box[:icon] %>"></span></div>
                 <div class="col-xs-8 tac">
                     <span class="open-sans_sb font-size-block"><%= none_case == false ? box[:subject_count] : 0 %></span><br />
-                    <span class=""><%= db_t(box[:label]) %></span><br />
+                    <span class=""><%= db_t( box[:label], default: box[:label]) %></span><br />
                     <% if none_case == false %>
-                        <div class="black pts" style="line-height: 16px"><span class="open-sans_i" ><%= t('data_layouts.colored_boxes.including') %></span> <%= db_t(box[:subject_random].gs_capitalize_first!) %></div>
+                        <div class="black pts" style="line-height: 16px"><span class="open-sans_i" ><%= t('data_layouts.colored_boxes.including') %></span> <%= db_t(box[:subject_random], default: box[:subject_random]).gs_capitalize_first! %></div>
                     <% end %>
                 </div>
               </div>
