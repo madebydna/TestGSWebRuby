@@ -508,8 +508,33 @@ describe SigninController do
       end
 
       it 'should set a Google Analytics event' do
-        expect(controller).to receive(:insert_into_ga_event_cookie).with 'registration', 'verified email', 'regular'
+        expect(controller).to receive(:insert_into_ga_event_cookie).with 'registration', 'verified email', 'regular', nil, true
         subject
+      end
+
+      context 'and the user is already verified' do
+        before do
+          user.verify!
+        end
+
+        it 'should not set a Google Analytics event' do
+          expect(controller).to_not receive(:insert_into_ga_event_cookie).with 'registration', 'verified email', 'regular', nil, true
+          subject
+        end
+
+        it 'should still publish the user\'s reviews' do
+          expect(user).to receive(:publish_reviews!)
+          subject
+        end
+
+        it 'should redirect to account page if no redirect specified in link' do
+          expect(subject).to redirect_to my_account_url
+        end
+
+        it 'should redirect to url existing on verification link' do
+          valid_params.merge!(redirect: 'google.com')
+          expect(subject).to redirect_to 'google.com'
+        end
       end
     end
 

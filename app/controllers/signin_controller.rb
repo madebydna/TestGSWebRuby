@@ -138,7 +138,6 @@ class SigninController < ApplicationController
   end
 
   def verify_email
-    # TODO: check if already verified?
     # TODO: send an email after verifying or after user no longer provisional?
     token = params[:id]
     time = params[:date]
@@ -155,6 +154,7 @@ class SigninController < ApplicationController
         redirect_to join_url
       else
         user = token.user
+        already_verified = user.email_verified?
         user.verify!
         if user.save
           newly_published_reviews = user.publish_reviews!
@@ -163,7 +163,7 @@ class SigninController < ApplicationController
             set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
           end
           event_label = user.provisional_or_approved_osp_user? ? 'osp' : 'regular'
-          insert_into_ga_event_cookie('registration', 'verified email', event_label)
+          insert_into_ga_event_cookie('registration', 'verified email', event_label, nil, true) unless already_verified
           log_user_in user
           redirect_to success_redirect
         else
