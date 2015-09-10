@@ -5,11 +5,21 @@ class SchoolDataService
 
   extend SchoolDataValidator
 
-  DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*:*', fq: ['+document_type:school_data']}
-
   BASE_PARAMS = {
     offset: :start,
   }
+
+  PROCESS_VALUES_MAP = Hash.new(proc { nil }).merge!({
+    start:        proc { |value| value.present? ? value.try(:to_i) : nil },
+    collectionId: proc { |value| value.present? ? value.try(:to_i) : nil },
+    gradeLevel:   proc { |value| ['h','m','e','p'].include?(value) ? value : nil },
+    schoolType:   proc do |value|
+                    school_type = ['public', 'charter', 'private'] & [*value]
+                    school_type.present? ? school_type.join(' ') : nil
+                  end
+  })
+
+  DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*:*', fq: ['+document_type:school_data']}
 
   FILTER_MAP = {
     collectionId: "+sd_collection_id:",
@@ -71,7 +81,8 @@ class SchoolDataService
 
     def extract_filters(filters)
       FILTER_MAP.each_with_object([]) do | (param_key, solr_key), filter_map |
-        filter_map << "#{solr_key}(#{filters[param_key]})" if filters[param_key].present?
+        validated_value = PROCESS_VALUES_MAP[param_key].call(filters[param_key])
+        filter_map << "#{solr_key}(#{validated_value})" if validated_value.present?
       end
     end
 
@@ -79,9 +90,11 @@ class SchoolDataService
       @@solr.get_search_results options
     end
 
+    #remap keys to solr keys & validate values
     def base_options(hash, key_map)
-      key_map.inject({}) do |h, (k, v)|
-        hash[k].present? ? h.merge(v => hash[k]) : h
+      key_map.inject({}) do |h, (param_key, solr_key)|
+        validated_value = PROCESS_VALUES_MAP[solr_key].call(hash[param_key])
+        validated_value.present? ? h.merge(solr_key => validated_value) : h
       end
     end
 

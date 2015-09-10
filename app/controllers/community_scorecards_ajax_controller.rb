@@ -18,11 +18,11 @@ class CommunityScorecardsAjaxController < ApplicationController
       :collectionId,
       :offset,
       :gradeLevel,
-      :schoolType,
       :sortBy,
       :sortBreakdown,
       :sortAscOrDesc,
       :lang,
+      schoolType: [],
       data_sets: []
     )
   end
