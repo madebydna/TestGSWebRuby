@@ -28,9 +28,7 @@
       });
     }
 
-    $.cookie('GATracking', '{}');
-    document.cookie = 'GATracking=;expires=Thu, 01 Jan 1970 00:00:00 UTC';
-    $.removeCookie('GATracking');
+    $.removeCookie('GATracking', {domain: '.greatschools.org', path: '/'});
     $.removeCookie('GATracking', {path: '/'});
   })();
 </script>
