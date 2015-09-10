@@ -19,7 +19,8 @@ class SchoolDataService
                   end
   })
 
-  DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*:*', fq: ['+document_type:school_data']}
+  DEFAULT_SOLR_OPTIONS = {rows: 10, query: '*:*'}
+  DEFAULT_SOLR_FILTER_QUERY = ['+document_type:school_data']
 
   FILTER_MAP = {
     collectionId: "+sd_collection_id:",
@@ -65,15 +66,12 @@ class SchoolDataService
     def school_data(options_params = {})
       options = base_options(options_params, BASE_PARAMS)
       options.merge!(sort_params(options_params))
-      filters = extract_filters(options_params)
-      param_options = DEFAULT_SOLR_OPTIONS.merge(options)
+      options = DEFAULT_SOLR_OPTIONS.merge(options)
+      options[:fq] = DEFAULT_SOLR_FILTER_QUERY + extract_filters(options_params)
 
-      param_options[:fq] = DEFAULT_SOLR_OPTIONS[:fq].clone
-      filters.each { |filter| param_options[:fq] << filter }
-
-      parse_solr_results(get_results param_options)
+      parse_solr_results(get_results options)
     rescue => error
-      GSLogger.error(:community_scorecard, error, vars: param_options)
+      GSLogger.error(:community_spotlight, error, vars: options)
       { school_data: [] }
     end
 

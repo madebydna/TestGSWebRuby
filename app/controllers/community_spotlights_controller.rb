@@ -50,7 +50,7 @@ class CommunitySpotlightsController < ApplicationController
 
   def default_params
     # TODO move into collection
-    {
+    (collection.scorecard_params || {
       collectionId: 15,
       gradeLevel: 'h',
       schoolType: ['public', 'charter'],
@@ -58,9 +58,9 @@ class CommunitySpotlightsController < ApplicationController
       sortBreakdown: 'hispanic',
       sortAscOrDesc: 'desc',
       offset: 0,
-    }.merge({
-        data_sets: @table_fields.map { |f| f[:data_type] }
-      })
+    }).merge({
+      data_sets: @table_fields.map { |f| f[:data_type] }
+    })
   end
 
   def permitted_params
@@ -68,12 +68,12 @@ class CommunitySpotlightsController < ApplicationController
   end
 
   def collection
-    @_collection = Collection.find_by(id: params[:collection_id])
+    @_collection ||= Collection.find_by(id: params[:collection_id])
   end
 
   def subgroups_list
     #move to collection config
-    [
+    collection.scorecard_subgroups_list || [
       :all_students,
       :african_american,
       :asian,

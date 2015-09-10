@@ -30,6 +30,14 @@ class Collection < ActiveRecord::Base
     config[:scorecard_fields]
   end
 
+  def scorecard_params
+    config[:scorecard_params]
+  end
+
+  def scorecard_subgroups_list
+    config[:scorecard_subgroups_list]
+  end
+
   def definition
     @_definition ||= read_json_attribute(:definition)
   end
