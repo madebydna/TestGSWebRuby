@@ -191,17 +191,10 @@ class MissingDatabaseTranslationChecker
             text = value.dup
             text.gsub!(/\n/, '')
             text.gsub!(/\r/, '')
-            text.gsub!(/[\s](\w+)\:/) { |str| "\"#{str[1..-2]}\":" }
-            text.gsub!(/\{(\w+)\:/) { |str| "{\"#{str[1..-2]}\":" }
-            text.gsub!(/,(\w+)\:/) { |str| ",\"#{str[1..-2]}\":" }
+            text.gsub!(/([\{\[,])\s*(\w+)\s?:/) { "#{$1}\"#{$2}\":" }
             text.gsub!('\\\\', '\\')
             text.gsub!(/,( )+\]/, ']')
-            text.gsub!(/":'/, '":"')
-            text.gsub!(/':"/, '":"')
-            text.gsub!(/',"/, '","')
-            text.gsub!(/',( )+"/, '", "')
-            # text.gsub!(/'|",}/, '"}')
-            text.gsub!(/'}/, '",}')
+            text.gsub!('",}', '"}')
             text.gsub!(/( )+/, ' ')
             hash = JSON.parse(text) rescue nil
             values = []

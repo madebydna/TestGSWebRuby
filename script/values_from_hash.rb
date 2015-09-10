@@ -20,17 +20,10 @@ STDIN.to_a.each do |text|
   text = text.gsub('\n', '').strip
   text.gsub!(/\n/, '')
   text.gsub!(/\r/, '')
-  text.gsub!(/[\s](\w+)\:/) { |str| "\"#{str[1..-2]}\":" }
-  text.gsub!(/\{(\w+)\:/) { |str| "{\"#{str[1..-2]}\":" }
-  text.gsub!(/,(\w+)\:/) { |str| ",\"#{str[1..-2]}\":" }
+  text.gsub!(/([\{\[,])\s*(\w+)\s?:/) { "#{$1}\"#{$2}\":" }
   text.gsub!('\\\\', '\\')
   text.gsub!(/,( )+\]/, ']')
-  text.gsub!(/":'/, '":"')
-  text.gsub!(/':"/, '":"')
-  text.gsub!(/',"/, '","')
-  text.gsub!(/',( )+"/, '", "')
-  # text.gsub!(/'|",}/, '"}')
-  text.gsub!(/'}/, '",}')
+  text.gsub!('",}', '"}')
   text.gsub!(/( )+/, ' ')
 
   if text[0] == '{' && text[-1] == '}'
