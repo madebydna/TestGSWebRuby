@@ -12,8 +12,7 @@ class CommunitySpotlightPage < SitePrism::Page
     elements :columns, '.col-xs-12'
   end
 
-  sections :select_pickers, 'div.bootstrap-select' do
-  end
+  elements :select_pickers, 'div.bootstrap-select'
 
   elements :table_triggers, '.js-drawTable'
 
@@ -27,9 +26,9 @@ class CommunitySpotlightPage < SitePrism::Page
     @_draw_table_triggers ||= begin
       triggers = table_triggers.to_a
       triggers += select_pickers.map do |picker|
-        picker.root_element.click
-        el = picker.find('ul.dropdown-menu').all('a.js-drawTable').to_a
-        picker.root_element.click
+        picker.click
+        el = picker.all('a.js-drawTable').to_a
+        picker.click
         el
       end.flatten
     end

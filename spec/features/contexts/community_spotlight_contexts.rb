@@ -1,4 +1,12 @@
-shared_context 'visit community spotlight with collection, schools, and data' do
+shared_context 'visit community spotlight with no query string' do
+  setup_community_spotlight
+end
+
+shared_context 'visit community spotlight with a query string' do |query_params|
+  setup_community_spotlight(query_params)
+end
+
+def setup_community_spotlight(query_params={})
   let(:school_ids) { [403, 405, 437, 547, 5523, 5580, 11902, 14052, 14144, 16974] }
   let(:school_data_struct) { Struct.new(:school_id, :state) }
   let(:solr_response) {
@@ -34,7 +42,7 @@ shared_context 'visit community spotlight with collection, schools, and data' do
       FactoryGirl.create(:school_characteristic_responses, school_id: id, state: 'ca')
     end
     allow_any_instance_of(CommunityScorecardData).to receive(:solr_response).and_return(solr_response)
-    visit community_spotlight_path(collection_id: collection.id, collection_name: collection.url_name)
+    visit community_spotlight_path(query_params.merge(collection_id: collection.id, collection_name: collection.url_name))
   end
 
   after do
@@ -46,8 +54,12 @@ end
 shared_context 'click .js-drawTable element with' do |attribute, value|
   before do
     triggers = community_spotlight_page.draw_table_triggers
-    this_trigger = triggers.select { |t| t[attribute] == value }.first
-    this_trigger.click
+    target_trigger = triggers.select { |t| t[attribute] == value }.first
+    parent = target_trigger.parent
+    if parent.is_a?(Capybara::Node::Element) && parent[:class].include?('bootstrap-select')
+      target_trigger.parent.click
+    end
+    target_trigger.click
     wait_for_scorecard_to_draw
   end
 end
