@@ -1,13 +1,14 @@
 <% if choose_school and choose_school[:link].length > 0 and not choose_school[:heading].empty? %>
   <div class='row mvl'>
     <div class='col-xs-12 col-sm-12 col-md-6 col-lg-6 plm'>
-      <h2 class='mbm'><%= choose_school[:heading] %></h2>
-      <p class='mbl'><%= choose_school[:content].html_safe %></p>
+      <h2 class='mbm'><%= db_t(choose_school[:heading], default: choose_school[:heading]) %></h3>
+      <p class='mbl'><%= db_t(choose_school[:content], default: choose_school[:content]).html_safe %></p>
       <% choose_school[:link].each_with_index do |link, i| %>
+        <% link_name = db_t(link[:name], default: link[:name])  %>
         <% if link[:newWindow] == 'true' %>
-          <%= link_to(link[:name].html_safe, link[:path], target: '_blank') %>
+          <%= link_to((link_name).html_safe, link[:path], target: '_blank') %>
         <% else %>
-          <%= link_to(link[:name].html_safe, link[:path]) %>
+          <%= link_to((link_name).html_safe, link[:path]) %>
         <% end %>
 
         <% unless choose_school[:link].length == i + 1 %>

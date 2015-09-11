@@ -5,14 +5,14 @@
 <% end %>
 
 <hr />
-<h2 class="plm mbl">Tell Your Story!</h2>
+<h2 class="plm mbl"><%= t('.heading') %></h2>
 <div class="<%= grid_sizing %> pbl">
   <div class=" tac mtl">
     <p class="open-sans_sb">
-          Let others know what you think about your school
+          <%= t('.sub_title') %>
     </p>
     <button type="button" data-link-value="<%= the_scoop_url %>" class="btn btn-primary mtm js-button-link">
-      Write a review
+      <%= t('.write_review') %> 
     </button>
   </div>
 </div>
