@@ -51,7 +51,6 @@ class CommunitySpotlightsController < ApplicationController
   def default_params
     # TODO move into collection
     (collection.scorecard_params || {
-      collectionId: 15,
       gradeLevel: 'h',
       schoolType: ['public', 'charter'],
       sortBy: 'a_through_g',
@@ -59,7 +58,8 @@ class CommunitySpotlightsController < ApplicationController
       sortAscOrDesc: 'desc',
       offset: 0,
     }).merge({
-      data_sets: @table_fields.map { |f| f[:data_type] }
+      data_sets: @table_fields.map { |f| f[:data_type] },
+      collectionId: collection.id,
     })
   end
 
