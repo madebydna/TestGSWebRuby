@@ -28,37 +28,37 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var mobileRowPartial   = 'community_scorecards/mobile_row';
   // Defaults
   var offsetInterval     = 10;
-  var shouldDraw = true;
   var pageOptions;
 
   var init = function() {
+    GS.CommunityScorecards.Page.shouldDraw = true;
     initPageSelectors();
     initPageOptions();
     initReadMoreToggleHandler();
     redrawTable();
 
     $scorecard.on('click', '.js-drawTable', function (e) {
-      if (shouldDraw) {
-        shouldDraw = false;
+      if (GS.CommunityScorecards.Page.shouldDraw) {
+        GS.CommunityScorecards.Page.shouldDraw = false;
         var $target = $(e.target);
         var isNewOptionSet = setOptions($target);
 
-        isNewOptionSet ? redrawTable() : shouldDraw = true;
+        isNewOptionSet ? redrawTable() : GS.CommunityScorecards.Page.shouldDraw = true;
       }
     });
 
     $scorecard.on('click', showMore, function() {
-      if (shouldDraw) {
-        shouldDraw = false;
+      if (GS.CommunityScorecards.Page.shouldDraw) {
+        GS.CommunityScorecards.Page.shouldDraw = false;
         appendToTable();
       }
     });
 
     $scorecard.on('click', tableSort, function (e) {
-      if (shouldDraw) {
-        shouldDraw = false;
+      if (GS.CommunityScorecards.Page.shouldDraw) {
+        GS.CommunityScorecards.Page.shouldDraw = false;
         setSortTypeToggleState($(e.target));
-        shouldDraw = true;
+        GS.CommunityScorecards.Page.shouldDraw = true;
       }
     });
 
@@ -103,7 +103,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       $scorecard.find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
       // Please keep this last. The last thing we should do is change the URL.
       pageOptions.addValuesToURL();
-      shouldDraw = true;
+      GS.CommunityScorecards.Page.shouldDraw = true;
     } catch(e) {
       displayFatalErrorMessage();
     }
@@ -155,7 +155,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
           $scorecard.find(showMore).addClass('dn');
         }
       }
-      shouldDraw = true;
+      GS.CommunityScorecards.Page.shouldDraw = true;
     } catch(e) {
       displayFatalErrorMessage();
     }
