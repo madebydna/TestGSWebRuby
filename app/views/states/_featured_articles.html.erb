@@ -1,6 +1,6 @@
 <% unless articles.nil? %>
   <div class="row mvl">
-    <h2 class='plm'>Featured Articles</h2>
+    <h2 class='plm'><%= t('.heading') %></h2>
       <% articles.each do |article| %>
         <div class="col-xs-12 col-sm-6 col-lg-6 phm">
           <%= image_tag(article[:articleImagePath], alt: "City of #{@city}", class: 'col-md-2 prl pbm') %>
