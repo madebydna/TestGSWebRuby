@@ -40,6 +40,21 @@ describe CommunitySpotlightsController do
   end
 
   describe '#set_subgroups_for_header!' do
+    before do
+      allow(controller).to receive(:subgroups_list).and_return([
+                                                                 :all_students,
+                                                                 :african_american,
+                                                                 :asian,
+                                                                 :filipino,
+                                                                 :hispanic,
+                                                                 :multiracial,
+                                                                 :native_american_or_native_alaskan,
+                                                                 :pacific_islander,
+                                                                 :economically_disadvantaged,
+                                                                 :limited_english_proficient
+                                                               ])
+    end
+
     subject do
       controller.instance_variable_set(:@table_fields, table_fields)
       controller.params[:sortBreakdown] = 'breakdown'
