@@ -14,10 +14,10 @@ GS.window.isLargerThanMobile = function() {
 };
 
 GS.window.pushFooterToBottom = function(containerSelector, footerSelector) {
-  $container = $(containerSelector);
-  window_height = $(window).height();
-  container_top_offset = $container.offset().top;
-  footer_height = $(footerSelector).height();
+  var $container = $(containerSelector);
+  var window_height = $(window).height();
+  var container_top_offset = $container.offset().top;
+  var footer_height = $(footerSelector).height();
 
   $container.height(window_height - container_top_offset - footer_height - 8);
 };

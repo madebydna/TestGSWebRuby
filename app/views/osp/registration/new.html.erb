@@ -13,7 +13,7 @@
         <%= form_tag osp_registration_submit_path, name: 'ospRegisterPage', 'data-parsley-validate' => '' do %>
           <%= hidden_field_tag :tab, "drive" %>
           <input type="hidden" id="state" name="state" value="<%= @state[:short] %>">
-          <input type="hidden" id-="name" name="schoolId" value="<%= @school.id %>">
+          <input type="hidden" id="name" name="schoolId" value="<%= @school.id %>">
 
           <div class="fr">* required field</div>
           <%= label_tag(:email, "Email address *") %>

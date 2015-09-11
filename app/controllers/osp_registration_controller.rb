@@ -13,7 +13,7 @@ class OspRegistrationController < ApplicationController
     @school = school
 
     if @school.blank?
-      render 'osp/registration/no_school_selected'
+      render_no_school_template
     elsif is_delaware_public_or_charter_user?
       render 'osp/registration/delaware'
     elsif @current_user.present? && @current_user.is_active_esp_member?
@@ -26,21 +26,25 @@ class OspRegistrationController < ApplicationController
   end
 
   def submit
+    return render_no_school_template unless (@school = school).present?
     if current_user.present?
-      upgrade_user_to_osp_user(school)
+      upgrade_user_to_osp_user
     else
-      save_new_osp_user(school)
+      save_new_osp_user
     end
   rescue => error
+    flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
     GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'OSP Submission flow failed')
+    render_no_school_template
   end
 
   private
 
   def school
-    if @state.present? && params[:schoolId].present?
-      @_school ||= School.find_by_state_and_id(@state[:short], params[:schoolId])
-    end
+    return @_school if defined? @_school
+    @_school = if @state.present? && params[:schoolId].present?
+                 School.find_by_state_and_id(@state[:short], params[:schoolId])
+               end
   end
 
   def set_gon_and_metadata!
@@ -57,11 +61,12 @@ class OspRegistrationController < ApplicationController
     @state[:short] == 'de' && (school.type == 'public' || school.type == 'charter')
   end
 
-  def save_new_osp_user(school)
+  def save_new_osp_user
     user = User.new(user_attrs.merge({email: params[:email], password: params[:password]}))
     begin
       user.save!
     rescue => error
+      flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
       GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
       return render 'osp/registration/new'
     end
@@ -74,19 +79,20 @@ class OspRegistrationController < ApplicationController
     redirect_to(osp_confirmation_path(:state =>params[:state], :schoolId => params[:schoolId]))
   end
 
-  def upgrade_user_to_osp_user(school)
+  def upgrade_user_to_osp_user
     user = User.where(email: current_user.email).first_or_initialize
 
     begin
       user.update_attributes(user_attrs)
     rescue => error
+      flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
       GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
       return render 'osp/registration/new'
     end
 
     return render 'osp/registration/new' unless save_esp_membership!(user)
 
-    if user.present? && school.present?
+    if user.present?
       #Redirect to osp form
       sign_up_user_for_subscriptions!(user, school, params[:subscriptions])
       redirect_to(osp_page_path(:state =>params[:state], :schoolId => params[:schoolId], :page => 1))
@@ -98,18 +104,27 @@ class OspRegistrationController < ApplicationController
     esp_membership.update_attributes(esp_membership_attrs)
     true
   rescue => error
+    flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
     GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save esp membership in esp registration controller')
     false
   end
 
   def validate_params
     unless valid_params?
-      flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
-      return render 'osp/registration/new'
+      GSLogger.warn(:osp, nil, vars: params.except(:password, :password_verify), message: 'Invalid params for OSP Registration')
+      if school.present?
+        @school = school
+        flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
+        return render 'osp/registration/new'
+      else
+        return render_no_school_template
+      end
     end
   end
 
   def valid_params?
+    school.present? &&
+    valid_password_length &&
     valid_school_website? &&
     not_blacklisted_top_level_domain?(params[:email]) &&
     only_latin1_characters?(params.values_at(:email, :school_website, :first_name, :last_name))
@@ -117,7 +132,14 @@ class OspRegistrationController < ApplicationController
 
   def valid_school_website?
     website = params[:school_website]
+    return true unless website.present?
     website.length <= 100 && not_blacklisted_top_level_domain?(website)
+  end
+
+  def valid_password_length
+    password = params[:password]
+    return true unless password.present?
+    password.length >= 6 && password.length <= 14
   end
 
   def not_blacklisted_top_level_domain?(url)
@@ -152,6 +174,11 @@ class OspRegistrationController < ApplicationController
         updated: Time.now
       }
     )
+  end
+
+  def render_no_school_template
+    gon.pagename = "GS:OSP:NoSchoolSelected"
+    render 'osp/registration/no_school_selected'
   end
 
   def osp_email_verification_url(user)
