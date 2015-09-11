@@ -2,6 +2,6 @@
 es:
   shared:
     upcoming_events:
-      find_out_more: Para aprender más
-      heading: Próximos eventos 
+      find_out_more: Para aprender mas 
       see_all: Ver todo 
+      upcoming_events: Próximos eventos 
