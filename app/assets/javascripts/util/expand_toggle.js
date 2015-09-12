@@ -10,9 +10,9 @@ GS.viewMoreCollapseInit = function(options) {
       $content.slideToggle({
         complete: function() {
           if ($content.css('display') === "block") {
-            $p.text('View Less »');
+            $p.text(GS.I18n.t('view_less'));
           } else if ($content.css('display') === "none") {
-            $p.text('View More »');
+            $p.text(GS.I18n.t('view_more'));
           }
         }
       });
