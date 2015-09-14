@@ -1,12 +1,4 @@
-shared_context 'visit community spotlight with no query string' do
-  setup_community_spotlight
-end
-
-shared_context 'visit community spotlight with a query string' do |query_params|
-  setup_community_spotlight(query_params)
-end
-
-def setup_community_spotlight(query_params={})
+shared_context 'setup community spotlight' do
   let(:school_ids) { [403, 405, 437, 547, 5523, 5580, 11902, 14052, 14144, 16974] }
   let(:school_data_struct) { Struct.new(:school_id, :state) }
   let(:solr_response) {
@@ -23,14 +15,7 @@ def setup_community_spotlight(query_params={})
         { "data_type" => "a_through_g", "partial" => "percent_value", "year" => 2014 },
         { "data_type" => "graduation_rate", "partial" => "percent_value", "year" => 2013 }
       ],
-      scorecard_params: {
-        gradeLevel: 'h',
-        schoolType: ['public', 'charter'],
-        sortBy: 'a_through_g',
-        sortBreakdown: 'hispanic',
-        sortAscOrDesc: 'desc',
-        offset: 0,
-      }
+      scorecard_params: default_params,
     }.to_json
   }
   let!(:collection) { FactoryGirl.create(:collection, config: collection_config) }
