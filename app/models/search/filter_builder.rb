@@ -484,11 +484,11 @@ class FilterBuilder
                   display_type: :sports_button_group,
                   name: :girls_sports,
                   filters: {
-                    soccer: {label: t('Soccer'), unique_label: t('Soccer (girls)'), display_type: :sports_button, name: :girls_sports, value: :soccer},
-                    track: {label: t('Track'), unique_label: t('Track (girls)'), display_type: :sports_button, name: :girls_sports, value: :track},
-                    basketball: {label: t('Basketball'), unique_label: t('Basketball (girls)'), display_type: :sports_button, name: :girls_sports, value: :basketball},
-                    volleyball: {label: t('Volleyball'), unique_label: t('Volleyball (girls)'), display_type: :sports_button, name: :girls_sports, value: :volleyball},
-                    cheerleading: {label: t('Cheerleading'), unique_label: t('Cheerleading (girls)'), display_type: :sports_button, name: :girls_sports, value: :cheerleading}
+                    soccer: {label: t('Soccer'), icon: 'soccer', unique_label: t('Soccer (girls)'), display_type: :sports_button, name: :girls_sports, value: :soccer},
+                    track: {label: t('Track'), icon: 'track', unique_label: t('Track (girls)'), display_type: :sports_button, name: :girls_sports, value: :track},
+                    basketball: {label: t('Basketball'), icon: 'basketball', unique_label: t('Basketball (girls)'), display_type: :sports_button, name: :girls_sports, value: :basketball},
+                    volleyball: {label: t('Volleyball'), icon: 'volleyball', unique_label: t('Volleyball (girls)'), display_type: :sports_button, name: :girls_sports, value: :volleyball},
+                    cheerleading: {label: t('Cheerleading'), icon: 'cheerleading', unique_label: t('Cheerleading (girls)'), display_type: :sports_button, name: :girls_sports, value: :cheerleading}
                   }
                 }
               }
@@ -502,11 +502,11 @@ class FilterBuilder
                   display_type: :sports_button_group,
                   name: :boys_sports,
                   filters: {
-                    soccer: {label: t('Soccer'), unique_label: t('Soccer (boys)'), display_type: :sports_button, name: :boys_sports, value: :soccer},
-                    track: {label: t('Track'), unique_label: t('Track (boys)'), display_type: :sports_button, name: :boys_sports, value: :track},
-                    basketball: {label: t('Basketball'), unique_label: t('Basketball (boys)'), display_type: :sports_button, name: :boys_sports, value: :basketball},
-                    football: {label: t('Football'), unique_label: t('Football (boys)'), display_type: :sports_button, name: :boys_sports, value: :football},
-                    baseball: {label: t('Baseball'), unique_label: t('Baseball (boys)'), display_type: :sports_button, name: :boys_sports, value: :baseball}
+                    soccer: {label: t('Soccer'), icon: 'soccer', unique_label: t('Soccer (boys)'), display_type: :sports_button, name: :boys_sports, value: :soccer},
+                    track: {label: t('Track'), icon: 'track', unique_label: t('Track (boys)'), display_type: :sports_button, name: :boys_sports, value: :track},
+                    basketball: {label: t('Basketball'), icon: 'basketball', unique_label: t('Basketball (boys)'), display_type: :sports_button, name: :boys_sports, value: :basketball},
+                    football: {label: t('Football'), icon: 'football', unique_label: t('Football (boys)'), display_type: :sports_button, name: :boys_sports, value: :football},
+                    baseball: {label: t('Baseball'), icon: 'baseball', unique_label: t('Baseball (boys)'), display_type: :sports_button, name: :boys_sports, value: :baseball}
                   }
                 }
               }
