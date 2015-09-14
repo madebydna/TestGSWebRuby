@@ -14,9 +14,9 @@ describe 'community spotlight page', js: true do
 
   [
     {
-      default_params: {},
+      default_params: {}, # Use base defaults defined in community_spotlight_contexts
       query_params: {},
-      expected_query_params: {
+      expected_query_params: { # This param is only necessary if you specify blank query_params
         'sortBy' => 'a_through_g',
         'sortBreakdown' => 'hispanic',
         'sortAscOrDesc' => 'desc',
@@ -26,7 +26,7 @@ describe 'community spotlight page', js: true do
       expected_highlight_column: 1,
     },
     {
-      default_params: {}, # Use base defaults defined in community_spotlight_contexts
+      default_params: {},
       query_params: {
         sortBreakdown: 'asian', sortBy: 'graduation_rate', sortAscOrDesc: 'asc'
       },

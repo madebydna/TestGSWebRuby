@@ -21,6 +21,7 @@ shared_examples 'community spotlight assertions' do |opts|
   }.merge(opts[:default_params] || {})
   query_params = opts[:query_params] || {}
 
+  expected_query_params = opts[:expected_query_params] || query_params
   expected_subgroup_selection = opts[:expected_subgroup_selection]
   expected_datatype_selection = opts[:expected_datatype_selection]
   expected_highlight_column   = opts[:expected_highlight_column]
@@ -33,7 +34,7 @@ shared_examples 'community spotlight assertions' do |opts|
       with_shared_context 'setup community spotlight' do
         context 'the page before interaction' do
           it 'should have the default query string' do
-            opts[:expected_query_params].each do |key, value|
+            expected_query_params.each do |key, value|
               expect_query_param(key, value)
             end
           end
