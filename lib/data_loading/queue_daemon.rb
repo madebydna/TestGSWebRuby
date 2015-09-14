@@ -19,6 +19,10 @@ class QueueDaemon
     if ENV['RAILS_ENV'] == 'production'
       ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['mysql_production_rw'])
     end
+
+   puts ('Using Data base host '+ActiveRecord::Base.connection.instance_variable_get(:@config)[:host])
+
+
     puts 'Starting the update queue daemon.'
     loop do
       begin
