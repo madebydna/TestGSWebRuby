@@ -487,6 +487,7 @@ class SearchController < ApplicationController
     # so we have to add that logic to the cache key here.
     @filters = filter_builder.filters
     @filter_cache_key = @filters.cache_key + (@by_location ? '-distance' : '-no_distance')
+    @filter_cache_key += "-lang_#{locale.to_s}"
   end
 
   def soft_filters_params_hash
