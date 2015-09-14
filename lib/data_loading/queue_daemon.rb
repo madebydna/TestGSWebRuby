@@ -16,7 +16,9 @@ class QueueDaemon
     # UpdateQueue.seed_sample_data!
 
     fail_counter = 0
-
+    if ENV['RAILS_ENV'] == 'production'
+      ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['mysql_production_rw'])
+    end
     puts 'Starting the update queue daemon.'
     loop do
       begin
