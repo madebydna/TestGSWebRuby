@@ -5,7 +5,7 @@ class BarChartCollection
   # data is a hash of data from GroupComparisonDataReader
 
   attr_accessor :bar_chart_order, :breakdowns, :config, :data, :default_group,
-    :group_by_config, :sub_title, :title, :bar_charts
+    :group_by_config, :sub_title, :title, :bar_charts, :original_data_type
 
   DEFAULT_CALLBACKS = [ 'group_by' ]
 
@@ -17,6 +17,7 @@ class BarChartCollection
     self.default_group    = config[:default_group]
     self.group_by_config = config[:group_by]
     self.bar_chart_order = config[:bar_chart_order]
+    self.original_data_type = config[title]
     create_bar_charts!
     self.breakdowns       = bar_charts.map(&:title) if config[:group_by].present?
   end

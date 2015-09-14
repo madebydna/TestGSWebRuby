@@ -4,14 +4,12 @@
 <div class="gs-bootstrap">
   <div class="container-fluid js-dataVizBarChartContainer group-comparison">
 
-
     <div class="row">
-
       <div class="col-xs-12 col-md-4">
         <% ['btn-group btn-group-justified hidden-xs', 'btn-group-vertical visible-xs full-width'].each do | classes | %>
             <div class="<%= classes %>" data-toggle="buttons">
               <% bar_chart_collections.each_with_index do |collection, i| %>
-                  <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown js-gaClick' data-breakdown="<%= collection.title %>"
+                  <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown js-gaClick' data-title="<%= collection.original_data_type.gsub(/\s/,'-') %>"
                        data-ga-click-category = 'profile data - subgroup display'
                        data-ga-click-action = 'data point toggle'
                   >

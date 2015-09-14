@@ -8,7 +8,7 @@
           select_tag "breakdown#{bar_chart_collection_index}",
             options_for_select(
               breakdowns.map do | title |
-                [t(".#{title}"), class:'js-gaClick',
+                [t(".#{title}"), class:'js-gaClick js-dataVizDropdown',
                                  data: {title: title,
                                         :'ga-click-category'=> 'profile data - subgroup display',
                                         :'ga-click-action'=> 'subgroup selection',
