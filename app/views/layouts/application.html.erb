@@ -36,6 +36,7 @@
   <%= yield :head %>
 </head>
 <body class="open-sans">
+
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
@@ -57,5 +58,6 @@
 
 <div class="visible-xs js-disableInterstitial"></div>
 
+<%= javascript_include_tag "post_load" %>
 </body>
 </html>

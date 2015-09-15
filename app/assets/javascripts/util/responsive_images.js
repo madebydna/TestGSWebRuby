@@ -1,4 +1,4 @@
-GS = GS || {};
+var GS = GS || {};
 GS.util = GS.util || {};
 
 //determine screen size - break points to load different images

@@ -1,4 +1,5 @@
 Rails.application.config.assets.precompile += [
+    'post_load.js',
     'cm_athena_gs_v2.js',
     'dropzone.min.js',
     'dropzone.css',
