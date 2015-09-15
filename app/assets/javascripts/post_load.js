@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require wiselinks
 //= require ./util/dependency_init
+//= require_tree ./ads
 //= require ./localized_profiles/search_results
 //= require_tree ./resources
 //= require_tree ./util
@@ -15,4 +16,3 @@
 //= require_tree ./page_initializers
 //= require_tree ./community_scorecards
 //= require_tree ./page_initializers/admin
-//= require_tree ./ads
