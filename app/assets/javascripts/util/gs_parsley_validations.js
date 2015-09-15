@@ -1,4 +1,4 @@
-GS = GS || {}
+var GS = GS || {}
 GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
     var blockHtmlTags = function(val, _) {
