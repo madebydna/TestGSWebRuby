@@ -10,8 +10,8 @@ GS.util = GS.util || {};
 //add priority?
 //responsive support
 
-$(function() {
-  GS.util.setupImages = function(options) {
+
+GS.util.setupImages = function(options) {
     var mobileImage = options['mobileImage'];
     var desktopImage = options['desktopImage'];
     var domSelector = options['selector'];
@@ -72,4 +72,4 @@ $(function() {
 
     initImages();
   }
-});
+
