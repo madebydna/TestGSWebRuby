@@ -6,6 +6,8 @@ def school_info_assertion
       gradeLevel: school_level,
       name: school_name,
       type: I18n.db_t(school_type).titleize,
+      city: school.city,
+      state: school.state,
       url: school_url
     }
   )
