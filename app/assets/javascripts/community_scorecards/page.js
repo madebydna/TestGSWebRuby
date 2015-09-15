@@ -121,12 +121,14 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var schoolDataForMobile = function(data) {
-    var dataSet = pageOptions.get('sortBy')
-    data.data_for_mobile = {
-      value: data[dataSet]['value'],
-      state_average: data[dataSet]['state_average'],
-      performance_level: data[dataSet]['performance_level'],
-      show_no_data_symbol: data[dataSet]['show_no_data_symbol']
+    var dataSet = pageOptions.get('sortBy');
+    if (typeof dataSet === 'object') {
+      data.data_for_mobile = {
+        value: data[dataSet]['value'],
+        state_average: data[dataSet]['state_average'],
+        performance_level: data[dataSet]['performance_level'],
+        show_no_data_symbol: data[dataSet]['show_no_data_symbol']
+      }
     }
     return data;
   };
