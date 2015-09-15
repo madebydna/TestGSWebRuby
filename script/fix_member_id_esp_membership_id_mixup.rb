@@ -68,7 +68,8 @@ module EspMembershipIdToMemberIdFixer
 
   def fix_affected_members!
     esp_membership_to_member_id.each do |esp_id, member_id|
-      fix_affected_school_media!
+      next unless esp_id && member_id
+      fix_affected_school_media!(esp_id, member_id)
       fix_affected_osp_form_response!(esp_id, member_id)
       States.abbreviations.each do |state|
         fix_affected_esp_response!(esp_id, member_id, state)
