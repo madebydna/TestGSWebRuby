@@ -4,7 +4,6 @@
 //= require ./util/dependency_init
 //= require ./localized_profiles/search_results
 //= require_tree ./resources
-
 //= require_tree ./util
 //= require_tree ./auth
 //= require_tree ./localized_profiles
