@@ -1,10 +1,11 @@
 // This combined file will be loaded after load complete by js.
 //= require jquery_ujs
-
 //= require wiselinks
 //= require ./util/dependency_init
-//= require_tree ./util
+//= require ./localized_profiles/search_results
 //= require_tree ./resources
+
+//= require_tree ./util
 //= require_tree ./auth
 //= require_tree ./localized_profiles
 //= require_tree ./topical_reviews
