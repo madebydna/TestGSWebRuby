@@ -1,0 +1,5 @@
+---
+en:
+  search:
+    pagination_toolbar:
+      pagination_info: Schools %{first} to %{last} of %{total}
