@@ -106,6 +106,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       calculateHighlightIndex();
       var highlightIndex = pageOptions.get('highlightIndex');
       $scorecard.find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+      activateTooltips();
       // Please keep this last. The last thing we should do is change the URL.
       pageOptions.addValuesToURL();
       GS.CommunityScorecards.Page.shouldDraw = true;
@@ -128,12 +129,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var schoolDataForMobile = function(data) {
     var dataSet = pageOptions.get('sortBy');
     if (typeof data[dataSet] === 'object') {
-      data.data_for_mobile = {
-        value: data[dataSet]['value'],
-        state_average: data[dataSet]['state_average'],
-        performance_level: data[dataSet]['performance_level'],
-        show_no_data_symbol: data[dataSet]['show_no_data_symbol']
-      }
+      data.data_for_mobile = data[dataSet];
     }
     return data;
   };
@@ -161,6 +157,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
         if (!data.more_results) {
           $scorecard.find(showMore).addClass('dn');
         }
+        activateTooltips();
       }
       GS.CommunityScorecards.Page.shouldDraw = true;
     } catch(e) {
@@ -206,6 +203,10 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     $scorecard = $('#community-spotlight');
     $tablePlacement = $('#community-scorecard-table');
     $mobilePlacement = $('#community-scorecard-mobile');
+  };
+
+  var activateTooltips = function() {
+    $('.gs-tooltip').tooltip();
   };
 
   return {
