@@ -7,7 +7,7 @@ $(function() {
         GS.googleMap.addToInitDependencyCallbacks(GS.util.wrapFunction(GS.search.schoolSearchForm.init, this, []));
         GS.googleMap.addToInitDependencyCallbacks(GS.util.wrapFunction(GS.search.toggleListMapView.init, this, []));
         GS.ad.interstitial.attachInterstitial();
-      $('[data-toggle="tooltip"]').tooltip({});
+      //$('[data-toggle="tooltip"]').tooltip({});
       GS.search.results.init();
     }
 });
