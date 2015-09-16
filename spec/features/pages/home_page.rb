@@ -2,7 +2,7 @@ class HomePage < SitePrism::Page
   element :search_hero_section, 'h1', text: 'Welcome to GreatSchools'
   element :browse_by_city_section, 'h3', text: 'Browse by city'
   element :email_signup_section, '.js-shared-email-signup'
-  element :greatkids_articles_section, 'h2', text: 'Explore our new parenting site, GreatKids!'
+  element :greatkids_articles_section, 'h2', text: 'Set your child up for success!'
   section :offers_section, '.rs-offers-section' do
     element :for_families_link, 'a', text: 'For families'
     element :for_schools_link, 'a', text: 'For schools'
