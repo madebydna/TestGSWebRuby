@@ -28,6 +28,17 @@ class SchoolDataService
 
   class << self
 
+    # ex options_params
+    # {
+    #   'collectionId'  => '15',
+    #   'offset'        => '0',
+    #   'gradeLevel'    => 'h',
+    #   'sortBy'        => 'a_through_g',
+    #   'sortBreakdown' => 'asian',
+    #   'sortAscOrDesc' => 'asc',
+    #   'schoolType'    => ['public', 'charter'],
+    #   'link_helper'   => controller_object
+    # }
     def school_data(options_params = {})
       options = parse_options(options_params)
       parse_solr_results(get_results options)
