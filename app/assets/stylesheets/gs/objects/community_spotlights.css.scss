@@ -83,19 +83,27 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       font-size: 70%;
       top: -0.35em;
     }
-    .school-value-mobile {
-      @extend .mvn;
-      @extend .open-sans_sb;
-      font-size: 20px;
+  }
+  .state-average {
+    color: $gray-darker;
+    font-family: 'opensans-regular';
+    font-size: 12px;
+  }
+  .mobile {
+    .percent-value {
+      display: inline-block;
+      h3 {
+        display: inline-block;
+        margin-top: 5px;
+      }
     }
-    .state-average {
+    .no-data {
+      border-bottom: none;
       color: $gray-darker;
-      font-family: 'opensans-regular';
-      font-size: 12px;
-    }
-    .no-data-mobile {
+      display: inline;
       font-size: 20px;
       padding-right: 10px;
+      width: auto;
     }
   }
   .no-data {
