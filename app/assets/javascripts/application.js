@@ -23,4 +23,5 @@
 //= require ./resources/fastclick
 //= require ./resources/typeahead-modified.bundle
 //= require_tree ./auth
+//= require_tree ./search
 
