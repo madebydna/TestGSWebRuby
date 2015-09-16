@@ -19,3 +19,4 @@
 //= require ./util/responsive_images
 //= require ./util/tracking
 //= require ./resources/omniture
+//= require ./resources/fastclick
