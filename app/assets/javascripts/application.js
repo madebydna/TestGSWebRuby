@@ -18,5 +18,7 @@
 //= require ./util/expand_toggle
 //= require ./util/responsive_images
 //= require ./util/tracking
+//= require ./util/popup
 //= require ./resources/omniture
 //= require ./resources/fastclick
+
