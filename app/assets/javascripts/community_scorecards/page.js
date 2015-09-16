@@ -84,12 +84,17 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   //when appropriate look into not having a hardcoded list of highlight classes. Regex?
   //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
   var redrawTable = function() {
-    pageOptions.set('offset', 0);
-    var params = pageOptions.to_h();
-    var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
-    tableDataRequest
-      .success(drawTableWithData)
-      .error(displayFatalErrorMessage);
+    if (pageOptions.get('sortBy')) {
+      pageOptions.set('offset', 0);
+      var params = pageOptions.to_h();
+      var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
+      tableDataRequest
+        .success(drawTableWithData)
+        .error(displayFatalErrorMessage);
+    }
+    else {
+      GS.CommunityScorecards.Page.shouldDraw = true;
+    }
   };
 
   var drawTableWithData = function(data) {
@@ -122,7 +127,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
 
   var schoolDataForMobile = function(data) {
     var dataSet = pageOptions.get('sortBy');
-    if (typeof dataSet === 'object') {
+    if (typeof data[dataSet] === 'object') {
       data.data_for_mobile = {
         value: data[dataSet]['value'],
         state_average: data[dataSet]['state_average'],
