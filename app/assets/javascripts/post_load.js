@@ -14,4 +14,4 @@
 //= require account_management
 //= require page_initializers
 //= require community_scorecards
-//= require page_initializers
+
