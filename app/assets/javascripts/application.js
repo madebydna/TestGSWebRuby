@@ -21,5 +21,5 @@
 //= require ./util/popup
 //= require ./resources/omniture
 //= require ./resources/fastclick
-//= require ./localized_profiles/facebook_like_box
+//= require_tree ./auth
 
