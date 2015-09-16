@@ -37,7 +37,7 @@ class GSLogger
       log = (base_log + options).join('||').gsub(/\n|\t|\r/, '')
       log.prepend("\n").concat("\n")
 
-      Rails.logger.error(log)
+      Rails.logger.send(level.downcase, log)
     end
 
     #make sure to keep the order of the logs consistent
