@@ -21,7 +21,7 @@
 //= require ./util/popup
 //= require ./resources/omniture
 //= require ./resources/fastclick
-//= require ./resources/typeahead-modified.bundle
-//= require_tree ./auth
-//= require_tree ./search
+//= require ./resources/typeahead_modified.bundle
+//= require auth
+//= require search
 
