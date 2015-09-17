@@ -15,7 +15,7 @@ en:
           datapoint_2:
             title: White students
             performance_level: above_average
-            value_html: 95<sup>%</sup>
+            value_html: 91<sup>%</sup>
             state_average: State average 89%
           datapoint_3:
             title: Asian students
@@ -25,7 +25,7 @@ en:
           datapoint_4:
             title: African-American students
             performance_level: below_average
-            value_html: 69<sup>%</sup>
+            value_html: 68<sup>%</sup>
             state_average: State average 68%
         column_2:
           title: GRADUATES ELIGIBLE FOR 4-YEAR COLLEGE IN THE BAY AREA
@@ -62,7 +62,7 @@ en:
           datapoint_2:
             title: White students
             performance_level: above_average
-            value_html: 95<sup>%</sup>
+            value_html: 91<sup>%</sup>
             state_average: State average 89%
           datapoint_3:
             title: Asian students
@@ -72,7 +72,7 @@ en:
           datapoint_4:
             title: African-American students
             performance_level: below_average
-            value_html: 69<sup>%</sup>
+            value_html: 68<sup>%</sup>
             state_average: State average 68%
         column_2:
           title: GRADUATES ELIGIBLE FOR 4-YEAR COLLEGE IN THE BAY AREA

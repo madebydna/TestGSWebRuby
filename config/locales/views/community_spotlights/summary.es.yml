@@ -15,7 +15,7 @@ es:
           datapoint_2:
             title: Estudiantes Blancos
             performance_level: above_average
-            value_html: 95<sup>%</sup>
+            value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
             title: Estudiantes Asiático
@@ -25,7 +25,7 @@ es:
           datapoint_4:
             title: Estudiantes Afroamericanos
             performance_level: below_average
-            value_html: 69<sup>%</sup>
+            value_html: 68<sup>%</sup>
             state_average: Prom. 68%
         column_2:
           title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
@@ -62,7 +62,7 @@ es:
           datapoint_2:
             title: Estudiantes Blancos
             performance_level: above_average
-            value_html: 95<sup>%</sup>
+            value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
             title: Estudiantes Asiático
@@ -72,7 +72,7 @@ es:
           datapoint_4:
             title: Estudiantes Afroamericanos
             performance_level: below_average
-            value_html: 69<sup>%</sup>
+            value_html: 68<sup>%</sup>
             state_average: Prom. 68%
         column_2:
           title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
