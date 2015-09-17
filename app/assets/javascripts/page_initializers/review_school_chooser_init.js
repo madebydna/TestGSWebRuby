@@ -1,3 +1,36 @@
+//TODO: Move to final location of topical review javascript
+var buildQueryStringsAnchors = function () {
+  var queryStringAnchor = "";
+  queryStringAnchor += morganStanleyQueryString();
+  queryStringAnchor += topicAnchor();
+  return queryStringAnchor;
+};
+
+var morganStanleyQueryString = function () {
+  var queryString = "";
+  if (gon.morganstanley) {
+    queryString = "?morganstanley=1";
+  }
+  return queryString;
+};
+
+var topicAnchor = function () {
+  var topicAnchor = "";
+  if (gon.topic_id) {
+    topicAnchor += "#topic" + gon.topic_id;
+  }
+  return topicAnchor;
+};
+
+var schoolReviewsCallback = function (event, suggestion, dataset) {
+  var queryStringsAnchors = buildQueryStringsAnchors();
+  var url = suggestion['url'];
+  url = url + 'reviews/';
+  url = url + queryStringsAnchors;
+  url = GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
+  GS.uri.Uri.goToPage(url);
+};
+
 $(function() {
   if (gon.pagename == "Write a school review | GreatSchools") {
     GS.search.autocomplete.selectAutocomplete.init(null, GS.search.autocomplete.display.schoolResultsNoLinkMarkup, schoolReviewsCallback);
@@ -34,36 +67,4 @@ $(function() {
   });
 });
 
-//TODO: Move to final location of topical review javascript
 
-var buildQueryStringsAnchors = function () {
-    var queryStringAnchor = "";
-    queryStringAnchor += morganStanleyQueryString();
-    queryStringAnchor += topicAnchor();
-    return queryStringAnchor;
-};
-
-var morganStanleyQueryString = function () {
-    var queryString = "";
-    if (gon.morganstanley) {
-        queryString = "?morganstanley=1";
-    }
-    return queryString;
-};
-
-var topicAnchor = function () {
-    var topicAnchor = "";
-    if (gon.topic_id) {
-        topicAnchor += "#topic" + gon.topic_id;
-    }
-    return topicAnchor;
-};
-
-var schoolReviewsCallback =  function (event, suggestion, dataset) {
-    var queryStringsAnchors = buildQueryStringsAnchors();
-    var url = suggestion['url'];
-    url = url + 'reviews/';
-    url = url + queryStringsAnchors;
-    url = GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
-    GS.uri.Uri.goToPage(url);
-};

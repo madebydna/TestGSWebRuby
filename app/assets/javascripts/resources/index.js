@@ -4,7 +4,7 @@
 //= require ./galleria-1.3.1
 //= require ./galleria.classic
 //= require ./handlebars-v1.3.0
-//= require ./jquery.cookie
+//  require ./jquery.cookie
 //= require ./jquery.touchSwipe
 //  require ./omniture
 //= require ./parsley
