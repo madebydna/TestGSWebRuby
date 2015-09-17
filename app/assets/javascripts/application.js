@@ -22,5 +22,5 @@
 //= require ./resources/omniture
 //= require ./resources/fastclick
 //= require auth
-//= require ./resources/typeahead_modified.bundle
 //= require search
+//= require ./resources/typeahead_modified.bundle
