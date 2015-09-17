@@ -4,7 +4,7 @@ class ReviewSchoolChooserController < ApplicationController
   def show
     write_tags_and_gon
     @topic = review_topic
-    @reviews = reviews
+    @reviews = reviews if params[:show_reviews]
   end
 
   def morgan_stanley
@@ -34,7 +34,7 @@ class ReviewSchoolChooserController < ApplicationController
   end
 
   def reviews
-    review_topic.first_question.reviews.active.has_comment.order(created: :desc).limit(15)
+    review_topic.first_question.reviews.active.has_comment.order(created: :desc).limit(20)
   end
 
 end
