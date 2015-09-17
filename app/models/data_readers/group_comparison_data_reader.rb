@@ -58,6 +58,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     # }
     get_data!
     bar_chart_collections
+
   rescue
     []
   end
@@ -190,5 +191,13 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       scope: i18n_scope,
       default:"No data"
     )
+  end
+
+  def footnotes_for_category(category)
+    data = cached_data_for_category(category, 'characteristics', school)
+    data_type = data.keys.first
+
+    [{ source: data[data_type].first[:source], year: data[data_type].first[:year]}]
+
   end
 end
