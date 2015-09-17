@@ -11,6 +11,7 @@ class CommunitySpotlightsController < ApplicationController
 
     set_mobile_dropdown_instance_var!
     set_subgroups_for_header!
+    set_grade_levels_for_header!
     gon.community_scorecard_params = default_params.merge(permitted_params)
 
     set_tracking_and_meta_info
@@ -28,6 +29,17 @@ class CommunitySpotlightsController < ApplicationController
       ]
     end
     @subgroups_for_header = [subgroups, params[:sortBreakdown] || 'hispanic'] #move default to collection
+  end
+
+  def set_grade_levels_for_header!
+    grade_levels = ['all_grade_levels', 'elementary', 'middle', 'high'].map do | grade_level |
+      [
+        CSC_t(grade_level),
+        grade_level[0],
+        { class: 'js-drawTable', data: { 'grade-level' => grade_level[0] } }
+      ]
+    end
+    @grade_levels_for_header = [grade_levels, params[:gradeLevel] || 'h'] #move default to collection
   end
 
   def set_mobile_dropdown_instance_var!

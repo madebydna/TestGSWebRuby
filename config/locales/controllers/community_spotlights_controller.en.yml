@@ -20,3 +20,8 @@ en:
       not_limited_english_proficient:    'Not limited English proficient'
       a_through_g:                       'Eligible for 4-Yr College'
       graduation_rate:                   'Graduation Rate'
+      all_grade_levels:                  'All Grade levels'
+      preschool:                         'Preschool'
+      elementary:                        'Elementary'
+      middle:                            'Middle'
+      high:                              'High'

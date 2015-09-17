@@ -70,7 +70,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       'sort-asc-or-desc': 'sortAscOrDesc',
       'sort-by':          'sortBy',
       'highlight-index':  'highlightIndex',
-      'sort-breakdown':   'sortBreakdown'
+      'sort-breakdown':   'sortBreakdown',
+      'grade-level':      'gradeLevel'
     }).forEach(function(optionsKey, dataKey) {
       var dataVal = $target.data(dataKey);
       if(dataVal !== undefined) {

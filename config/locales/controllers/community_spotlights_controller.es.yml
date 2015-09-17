@@ -20,4 +20,9 @@ es:
       not_limited_english_proficient:    'No se limita Inglés dominio'
       a_through_g:                       'Graduados eligible para universidad'
       graduation_rate:                   'Tasa de graduados'
+      all_grade_levels:                  'Todos los grados'
+      preschool:                         'Preescolar'
+      elementary:                        'Escuela primaria'
+      middle:                            'Escuela intermedia'
+      high:                              'Escuela secundaria'
 

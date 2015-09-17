@@ -1,6 +1,8 @@
 <% #Desktop %>
 <div class='table-header hidden-xs'>
-  <%= select_tag 'Subgroups', options_for_select(*@subgroups_for_header), id: 'subgroup-select', class: 'selectpicker' %>
+  <%= select_tag 'Grade Levels', options_for_select(*@grade_levels_for_header), id: 'grade-level-select', class: 'selectpicker', data: {width: '200px'} %>
+  <span class='mhs'></span>
+  <%= select_tag 'Subgroups', options_for_select(*@subgroups_for_header), id: 'subgroup-select', class: 'selectpicker', data: {width: '200px'} %>
   <div class='pull-right'>
     <div class='ptm'>
       <%= render partial: 'sort_links' %>
@@ -8,9 +10,12 @@
   </div>
 </div>
 
+
 <% #Mobile %>
 <div class='row visible-xs'>
   <div class='table-header col-xs-12'>
+    <%= select_tag 'Grade Levels', options_for_select(*@grade_levels_for_header), id: 'grade-level-select-mobile', class: 'selectpicker', data: {width: '100%'} %>
+    <div class='mvm'></div>
     <%= select_tag 'Subgroups', options_for_select(*@subgroups_for_header), id: 'subgroup-select-mobile', class: 'selectpicker', data: {width: '100%'} %>
     <div class='tac'>
       <div class='ptm'>

@@ -6,8 +6,8 @@ GS.CommunityScorecards.Options = function(options) {
 
 GS.CommunityScorecards.Options.prototype = {
 
-  validURLAttributes: ['sortBy', 'sortBreakdown', 'sortAscOrDesc'],
-  validNonURLAttributes: ['collectionId', 'offset', 'highlightIndex', 'data_sets', 'gradeLevel', 'schoolType'],
+  validURLAttributes: ['sortBy', 'sortBreakdown', 'sortAscOrDesc', 'gradeLevel'],
+  validNonURLAttributes: ['collectionId', 'offset', 'highlightIndex', 'data_sets', 'schoolType'],
 
   init: function(options) {
     this.validAttributes = this.validNonURLAttributes.concat(this.validURLAttributes);

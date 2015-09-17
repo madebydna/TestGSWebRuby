@@ -10,7 +10,7 @@ class SchoolDataService
   VALIDATION_CALLBACKS = Hash.new(proc { nil }).merge!({
     start:        proc { |value| value.present? ? value.try(:to_i) : nil },
     collectionId: proc { |value| value.present? ? value.try(:to_i) : nil },
-    gradeLevel:   proc { |value| ['h','m','e','p'].include?(value) ? value : nil },
+    gradeLevel:   proc { |value| ['h','m','e'].include?(value) ? value : nil },
     schoolType:   proc do |value|
                     school_type = ['public', 'charter', 'private'] & [*value]
                     school_type.present? ? school_type.join(' ') : nil
