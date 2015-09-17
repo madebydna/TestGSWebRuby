@@ -10,9 +10,14 @@ module ConstructFromHash
     def self.define_initialize_that_accepts_hash
       old_new = method(:new)
       define_singleton_method(:new) do |*args, &block|
+        # This requires that the existing initialize method accepts zero args
+        # (that it's the default constructor and not overwritten yet)
         obj = old_new.call
         if args.first.is_a?(Hash)
-          args.first.each { |k,v| obj.send("#{k}=", v) }
+          args.first.each do |k,v|
+            setter_method_name = "#{k}="
+            obj.send(setter_method_name, v) if obj.respond_to?(setter_method_name)
+          end
         end
         obj
       end

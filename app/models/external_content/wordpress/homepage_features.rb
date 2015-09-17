@@ -1,4 +1,4 @@
-class HomepageFeature < ExternalContent
+class HomepageFeatures < ExternalContent
   include ConstructFromHash
 
   attr_accessor :status, :type
@@ -7,4 +7,7 @@ class HomepageFeature < ExternalContent
 
   define_initialize_that_accepts_hash
 
+  def features
+    [first_feature, second_feature]
+  end
 end
