@@ -12,7 +12,7 @@
 @import "bootstrap/mixins";
 
 // GS Remove gutters by overriding grid mixins
-@import "bootstrap/mixins/gs-remove-gutters"
+@import "bootstrap/mixins/gs-remove-gutters";
 
 // Reset and dependencies
 @import "bootstrap/normalize";
@@ -26,7 +26,9 @@
 @import "bootstrap/grid";
 @import "bootstrap/tables";
 @import "bootstrap/forms";
-@import "bootstrap/buttons";
+// We maintain our own fork of buttons
+// @import "bootstrap/buttons";
+@import "bootstrap/gs-buttons";
 
 // Components
 @import "bootstrap/component-animations";

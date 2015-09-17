@@ -41,6 +41,8 @@ $half-gutter-width: ($grid-gutter-width / 2);
     margin-right: auto;
     margin-left: auto;
     max-width: $screen-lg;
+    padding-left: 0;
+    padding-right: 0;
     @media (max-width: ($screen-lg + $grid-gutter-width)) {
       padding-left:  $half-gutter-width;
       padding-right: $half-gutter-width;

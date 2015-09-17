@@ -46,17 +46,35 @@ $lighter-black:           #222;
 $module-gray:             #f4f4f4;
 $module-gray-stroke:      #dedede;
 $dark-steel-gray:         #1d1d1d;
-$light-ash-gray:         #777777;
+$light-ash-gray:          #777777;
 $light-blue-background:   #e6ebf5;
 $dark-blue-text:          #4788be;
+$gray-link-color:         $light-ash-gray;
+$gray-link-hover-color:   darken($light-ash-gray, 15%);
 
 
 // Typography
 // -------------------------
+$line-height-base: 1.5;
 $font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-base:        $font-family-sans-serif;
 $font-family-base-bold:   "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+$font-size-base:          14px;
+$font-size-medium:        ceil($font-size-base * 1.142) !default; // ~16px
+$font-size-large:         ceil($font-size-base * 1.285) !default; // ~18px
+$font-size-xs:            ceil($font-size-base * 0.714) !default; // ~10px
+$font-size-small:         ceil($font-size-base * 0.857) !default; // ~12px
+$font-size-block:         ceil($font-size-base * 1.5) !default; // ~21px
+$font-size-xl:            ceil($font-size-base * 1.714) !default; // ~21px
+
+$font-size-h1:            32px;
+$font-size-h2:            32px;
+$font-size-h3:            22px;
+$font-size-h4:            18px;
+$font-size-h5:            16px;
+$font-size-h6:            15px;
 
 $headings-font-family:                    $font-family-base-bold;
 $headings-font-weight:                    400;
@@ -80,12 +98,40 @@ $input-color-placeholder:         $gray-dark;
 
 // Buttons
 // -------------------------
+$btn-font-weight:                normal !default;
 
+$btn-default-color:              #4788be !default;
+$btn-default-bg:                 #FFFFFF !default;
+$btn-default-hover:              #1e608b !default;
+$btn-default-border:             #6797c7 !default;
+$btn-default-active-border:      #195074 !default;
+
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-border:             $brand-primary-dark !default;
+
+$btn-hover:                      #195074 !default;
+
+$btn-toggle-color:               #4788be !default;
+$btn-toggle-bg:                  #fff !default;
+$btn-toggle-border:              #4788be !default;
+$btn-toggle-hover:               #195074 !default;
+$btn-toggle-color-active:        #fff !default;
+$btn-toggle-bg-active:           #35485d !default;
+
+$btn-link-disabled-color:        $gray-light !default;
+$padding-base-vertical:                 8px;
+$padding-base-button-horizontal:        20px;
+$padding-large-button-horizontal:       30px;
+$padding-small-button-horizontal:       15px;
 
 // Components
 // -------------------------
+$table-cell-padding:                 10px;
 $border-light-grey:               1px #cccccc solid;
-
-
-
-
+$navbar-height:                    58px;
+$navbar-default-color:             #777777;
+$navbar-default-bg:                #FFFFFF;
+$navbar-default-link-color:                #777777;
+$navbar-default-link-hover-color:          #000000;
+$navbar-default-border: transparent;
