@@ -1,5 +1,27 @@
 $csc-table-blue-border: 1px solid #2880b9 !default;
 
+@mixin csc-table-blue-highlight($child-number, $border-color) {
+
+  // need to make it this specific to override the default border style on the table class
+  .highlight#{$child-number - 1} thead > tr:first-child > th:nth-child(#{$child-number}) {
+    border-left: $border-color;
+    border-right: $border-color;
+    border-top: $border-color;
+    background-color: $ocean-blue;
+  }
+
+  .highlight#{$child-number - 1} td:nth-child(#{$child-number}) {
+    border-left: $border-color;
+    border-right: $border-color;
+  }
+
+  .highlight#{$child-number - 1} tr:last-child {
+    td:nth-child(#{$child-number}) {
+      border-bottom: $border-color;
+    }
+  }
+}
+
 .community-spotlight {
   .logo-bar {
     border-top: 5px solid $module-gray;

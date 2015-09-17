@@ -11,8 +11,8 @@
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
 
-// GS mixins to override defaults
-@import "bootstrap/gs-mixins";
+// GS Remove gutters by overriding grid mixins
+@import "bootstrap/mixins/gs-remove-gutters"
 
 // Reset and dependencies
 @import "bootstrap/normalize";
