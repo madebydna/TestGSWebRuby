@@ -41,7 +41,7 @@ class SchoolDataService
     # }
     def school_data(options_params = {})
       options = parse_options(options_params)
-      parse_solr_results(get_results options)
+      parse_solr_results(get_results(options), options[:rows])
     rescue => error
       GSLogger.error(:community_spotlight, error, vars: options)
       { school_data: [] }
@@ -80,7 +80,7 @@ class SchoolDataService
       @@solr.get_search_results options
     end
 
-    def parse_solr_results(solr_results)
+    def parse_solr_results(solr_results, num_of_rows = DEFAULT_SOLR_OPTIONS[:rows])
       # for now we only need 2 fields from solr, will make into a class when appropriate
       school_data_struct = Struct.new(:school_id, :state)
       solr_response = solr_results['response']
@@ -91,12 +91,12 @@ class SchoolDataService
       end
       {
         school_data: school_data,
-        more_results: more_results?(solr_response)
+        more_results: more_results?(solr_response, num_of_rows)
       }
     end
 
-    def more_results?(solr_response)
-      (solr_response['numFound'] - solr_response['start']) > DEFAULT_SOLR_OPTIONS[:rows]
+    def more_results?(solr_response, num_of_rows)
+      (solr_response['numFound'] - solr_response['start']) > num_of_rows
     end
   end
 end
