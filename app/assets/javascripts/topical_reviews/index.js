@@ -1,1 +1,1 @@
-//= require topical_review.js
+//= require ./topical_review
