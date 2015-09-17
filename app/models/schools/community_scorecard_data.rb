@@ -78,7 +78,7 @@ class CommunityScorecardData
 
   def data_explanations
     data_set_with_year_map.keys.each_with_object({}) do |data_type, h|
-      h[data_type.to_sym] = I18n.t("#{data_type}_explanation", scope: collection_t_scope)
+      h[data_type.to_sym] = I18n.t("#{data_type}_explanation_html", scope: collection_t_scope)
     end
   end
 

@@ -6,13 +6,13 @@ es:
         state_average_not_available: PROMEDIO DEL ESTADO NO DISPONIBLE
         collection_id_15:
           a_through_g: Graduados eligible para universidad
-          a_through_g_explanation: '"Graduados elegibles para una de universidad 4 años" - es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.'
+          a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
           graduation_rate: Tasa de graduados
-          graduation_rate_explanation: '"Porcentaje de graduación" - es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.'
+          graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           school_info: Escuela
         collection_id_16:
           a_through_g: Graduados eligible para universidad
-          a_through_g_explanation: '"Graduados elegibles para una de universidad 4 años" - es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.'
+          a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
           graduation_rate: Tasa de graduados
-          graduation_rate_explanation: '"Porcentaje de graduación" - es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.'
+          graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           school_info: Escuela

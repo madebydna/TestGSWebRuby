@@ -178,5 +178,8 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 
   .gs-tooltip {
     cursor: default;
+    + .tooltip > .tooltip-inner {
+      text-align: left;
+    }
   }
 }
