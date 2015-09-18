@@ -22,8 +22,8 @@ class Collection < ActiveRecord::Base
     config[:url_name]
   end
 
-  def scorecard_scope
-    config[:scorecard_scope]
+  def has_spotlight?
+    url_name.present?
   end
 
   def scorecard_fields
@@ -40,6 +40,10 @@ class Collection < ActiveRecord::Base
 
   def definition
     @_definition ||= read_json_attribute(:definition)
+  end
+
+  def t_scope
+    "collection_id_#{id}"
   end
 
   def self.for_school(state, school_id)

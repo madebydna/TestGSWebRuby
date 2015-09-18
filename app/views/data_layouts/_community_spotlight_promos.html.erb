@@ -1,0 +1,12 @@
+<%= render 'shared/section_header', category_placement: category_placement %>
+<div class='gs-bootstrap'>
+  <div class='container-fluid container-fix'>
+    <div class='row'>
+      <% data.each do |collection| %>
+        <div class='col-xs-12 col-sm-6'>
+          <%= render 'school_profile/community_spotlight_promo', collection: collection %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
