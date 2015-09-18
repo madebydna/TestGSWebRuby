@@ -9,6 +9,7 @@ class GSLogger
     i18n: 'I18N',
     school_profiles: 'SCHOOL_PROFILES',
     community_spotlight: 'COMMUNITY_SPOTLIGHT',
+    external_content_fetcher: 'EXTERNAL_CONTENT_FETCHER',
   })
 
   class << self
