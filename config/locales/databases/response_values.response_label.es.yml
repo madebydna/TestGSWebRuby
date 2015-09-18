@@ -14,11 +14,13 @@ es:
     tareas programas basados ​​en estándares)
   Accelerated credit learning: Aprendizaje acelerado de crédito
   Acceleration: Aceleración
+  Accepts State Subsidy: Acepta Subsidio Estado
   Access to farm or natural area: El acceso a la finca o área natural
   Accessible via public transportation: Accesible a través de transporte público
   Adult education: Educación Adulta
   Advanced placement (AP) courses: Cursos de Advanced Placement (AP)
   After: Después
+  Afternoon Snack: Bocadillo de la tarde
   Agriculture: Agricultura
   Agriculture, Food & Natural Resources: Agricultura, Alimentos y Recursos Naturales
   All boys: Todos los niños
@@ -57,12 +59,14 @@ es:
   Before: Antes
   Behavioral health specialist: Especialista en salud conductual
   Bell / handbell choir: Campana / campanilla coro
+  Bi-weekly: Quincenal
   Biology: Biología
   Block scheduling: Bloque de programación
   Boarding and day school: Internado y escuela de día
   Boarding school: Internado
   Book / reading club: Libro / club de lectura
   Boy Scouts: Boy Scouts
+  Breakfast: Desayuno
   Buses / vans provided for students: Autobuses / camionetas proporcionadas para los
     estudiantes
   Buses / vans shared with other schools: Autobuses / furgonetas compartidas con otras
@@ -126,6 +130,7 @@ es:
   Culinary: Culinario
   Cycling: Ciclismo
   DECA: DECA
+  Daily: Diariamente
   Dance: Baile
   Dance club: Club de baile
   Dance teacher: Profesor de Danza
@@ -135,6 +140,7 @@ es:
   Debate: Debate
   Design: Diseño
   Developmental delay: Retraso en el desarrollo
+  Dinner: Cena
   Differentiated learning programs: Programas de aprendizaje diferenciados
   Direct instruction: La instrucción directa
   Diving: Buceo
@@ -148,6 +154,7 @@ es:
   Dual language programs: Programas de idioma dual
   Dutch: Holandés
   ELL / ESL Coordinator: Coordinador ELL / ESL
+  Early Head Start: Early Head Start
   Education & Training: Educación y capacitación
   Educational diagnostician: Diagnosticador para la Educación
   Electrical: Eléctrico
@@ -161,6 +168,7 @@ es:
   Environmental Science: Ciencia medioambiental
   Equestrian: Equitación
   European History: Historia Europea
+  Evening Snack: Tarde Merienda
   Extended / longer school day: Prolongado/ Dia escolar extendido
   Faith-based: Basadas en la fe
   Farm: Granja
@@ -176,6 +184,7 @@ es:
   Forensics club: Club Forense
   French: Francés
   French Language and Culture: Lengua y Cultura francés
+  Friday: Viernes
   Future Business Leaders of America (FBLA): Futuros Líderes de Negocios de América
     (FBLA)
   GED: GED
@@ -195,11 +204,13 @@ es:
   Golf: Golf
   Government & Public Administration: Gobierno y Administración Pública
   Graphics: Artes gráficas
+  Great Start Readiness Program: Programa de Preparación para Gran Comienzo
   Gym: Gimnasio
   Gymnastics: Gimnasia
   HVAC: HVAC
   Habitat for Humanity: Habitat para la humanidad
   Half-day: Medio día
+  Head Start: Inicio
   Health Science: Ciencia de la salud
   Hearing impairments: Deficiencias auditivas
   Hebrew: Hebreo
@@ -264,6 +275,7 @@ es:
   Life skills: Habilidades para la vida
   Literary magazine: Revista Literaria
   Live in the attendance zone: Vive en la zona de asistencia
+  Lunch: Almuerzo
   Macroeconomics: Macroeconómica
   Magnet: Imán
   Manufacturing: Fabricación
@@ -288,8 +300,11 @@ es:
   Moderate - school consistently offers a full program for particular special education needs: Moderado
     - escuela ofrece constantemente un programa completo para particulares necesidades
     educativas especiales
+  Monday: Lunes
   Monitor the playground: Monitor de recreo
   Montessori: Montessori
+  Monthly: Mensual
+  Morning Snack: Merienda de la mañana
   Multi-aged classrooms: Aulas multi-edad
   Multi-purpose room ("Cafegymatorium"): Salón de varios usos ("Cafegymatorium")
   Multiculturalism / Global: Multiculturalismo / Global
@@ -348,6 +363,7 @@ es:
   Recycling club: Club de Reciclaje
   Reggio Emilia: Reggio Emilia
   Reggio Emilio: Reggio Emilio
+  Reggio Inspired: Reggio Inspirado
   Religious: Religioso
   Remediation: Remediación
   Research: Investigación
@@ -363,6 +379,9 @@ es:
   STEM (Science, Technology, Engineering, and Mathematics): STEM (Ciencia, Tecnología,
     Ingeniería y Matemáticas)
   Sailing: Navegación
+  Saturday: Sábado
+  Scholarships Offered: Becas ofrecidas
+  School Year: Año escolar
   School counselor: Consejero Escolar
   School psychologist: Psicólogo de la escuela
   School-based aid: Ayuda basada en la Escuela
@@ -375,6 +394,7 @@ es:
   Science, Technology, Engineering & Mathematics: Ciencia, Tecnología, Ingeniería
     y Matemáticas
   Sculpture: Escultura
+  Seasonal: Temporal
   Security personnel: Personal de seguridad
   Self-contained ELL classrooms: Aulas de ELL autónomas
   Self-contained classroom: Aula autónoma
@@ -383,7 +403,9 @@ es:
     de la escuela o el consejo de gobierno
   Service learning: El aprendizaje del servicio
   Sewing / knitting club: Costura / club de tejido
+  Sibling Discount: Descuento del hermano
   Skiing: Esquiar
+  Sliding Fee Scale: Escala de Tarifa
   Soccer: Fútbol
   Social justice: Justicia social
   Softball: Softbol
@@ -414,6 +436,7 @@ es:
   ! 'Studio Art: 3-D Design': ! 'Estudio de Arte: 3-D Diseño'
   ! 'Studio Art: Drawing': ! 'Estudio de Arte: Dibujo'
   Summer college prep programs: Programas de preparación para la universidad de verano
+  Sunday: Domingo
   Surfing: Surf
   Swimming: Natación
   Swimming pool: Piscina
@@ -430,12 +453,14 @@ es:
   Textiles: Textiles
   Theory: Teoría
   Therapeutic: Terapéutico
+  Thursday: Jueves
   Track: Atletismo
   Traditional: Tradicional
   Transportation provided for special education students: El transporte proporcionado
     para los estudiantes de educación especial
   Transportation, Distribution & Logistics: Transporte, Distribución y Logística
   Traumatic brain injury: Lesión cerebral traumática
+  Tuesday: Martes
   Tutor: Tutor
   Tutor(s): Tutor(es)
   Tutoring: Tutoría
@@ -458,12 +483,15 @@ es:
   Volunteer time after school: Tiempo voluntario después de la escuela
   Waldorf: Waldorf
   Water polo: Polo acuatico
+  Wednesday: Miércoles
+  Weekly: Semanalmente
   Welding certification: Certificación de soldadura
   Woodshop: Carpinteria
   World History: Historia mundial
   World languages: Idiomas
   Wrestling: Lucha
   Writing: Escritura
+  Year Round: Todo el año
   Year-round: Todo el año
   Yearbook: Anuario
   'Yes': Sí

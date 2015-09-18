@@ -1,6 +1,6 @@
 ---
 en:
-  ! '"Arts (visual, literary, dance, theater, and/or music)"': ! '"Arts (visual, literary,
+  '"Arts (visual, literary, dance, theater, and/or music)"': '"Arts (visual, literary,
     dance, theater, and/or music)"'
   0%-25%: 0%-25%
   2 years old: 2 years old
@@ -14,11 +14,13 @@ en:
     and/or standards-based programs)
   Accelerated credit learning: Accelerated credit learning
   Acceleration: Acceleration
+  Accepts State Subsidy: Accepts State Subsidy
   Access to farm or natural area: Access to farm or natural area
   Accessible via public transportation: Accessible via public transportation
   Adult education: Adult education
   Advanced placement (AP) courses: Advanced placement (AP) courses
   After: After
+  Afternoon Snack: Afternoon Snack
   Agriculture: Agriculture
   Agriculture, Food & Natural Resources: Agriculture, Food & Natural Resources
   All boys: All boys
@@ -57,12 +59,14 @@ en:
   Before: Before
   Behavioral health specialist: Behavioral health specialist
   Bell / handbell choir: Bell / handbell choir
+  Bi-weekly: Bi-weekly
   Biology: Biology
   Block scheduling: Block scheduling
   Boarding and day school: Boarding and day school
   Boarding school: Boarding school
   Book / reading club: Book / reading club
   Boy Scouts: Boy Scouts
+  Breakfast: Breakfast
   Buses / vans provided for students: Buses / vans provided for students
   Buses / vans shared with other schools: Buses / vans shared with other schools
   Business: Business
@@ -122,6 +126,7 @@ en:
   Culinary: Culinary
   Cycling: Cycling
   DECA: DECA
+  Daily: Daily
   Dance: Dance
   Dance club: Dance club
   Dance teacher: Dance teacher
@@ -132,6 +137,7 @@ en:
   Design: Design
   Developmental delay: Developmental delay
   Differentiated learning programs: Differentiated learning programs
+  Dinner: Dinner
   Direct instruction: Direct instruction
   Diving: Diving
   Double periods: Double periods
@@ -144,6 +150,7 @@ en:
   Dual language programs: Dual language programs
   Dutch: Dutch
   ELL / ESL Coordinator: ELL / ESL Coordinator
+  Early Head Start: Early Head Start
   Education & Training: Education & Training
   Educational diagnostician: Educational diagnostician
   Electrical: Electrical
@@ -157,6 +164,7 @@ en:
   Environmental Science: Environmental Science
   Equestrian: Equestrian
   European History: European History
+  Evening Snack: Evening Snack
   Extended / longer school day: Extended / longer school day
   Faith-based: Faith-based
   Farm: Farm
@@ -172,6 +180,7 @@ en:
   Forensics club: Forensics club
   French: French
   French Language and Culture: French Language and Culture
+  Friday: Friday
   Future Business Leaders of America (FBLA): Future Business Leaders of America (FBLA)
   GED: GED
   Game club: Game club
@@ -190,11 +199,13 @@ en:
   Golf: Golf
   Government & Public Administration: Government & Public Administration
   Graphics: Graphics
+  Great Start Readiness Program: Great Start Readiness Program
   Gym: Gym
   Gymnastics: Gymnastics
   HVAC: HVAC
   Habitat for Humanity: Habitat for Humanity
   Half-day: Half-day
+  Head Start: Head Start
   Health Science: Health Science
   Hearing impairments: Hearing impairments
   Hebrew: Hebrew
@@ -257,6 +268,7 @@ en:
   Life skills: Life skills
   Literary magazine: Literary magazine
   Live in the attendance zone: Live in the attendance zone
+  Lunch: Lunch
   Macroeconomics: Macroeconomics
   Magnet: Magnet
   Manufacturing: Manufacturing
@@ -279,8 +291,11 @@ en:
     - school consistently offers a full program for particular ESL/ELL needs
   Moderate - school consistently offers a full program for particular special education needs: Moderate
     - school consistently offers a full program for particular special education needs
+  Monday: Monday
   Monitor the playground: Monitor the playground
   Montessori: Montessori
+  Monthly: Monthly
+  Morning Snack: Morning Snack
   Multi-aged classrooms: Multi-aged classrooms
   Multi-purpose room ("Cafegymatorium"): Multi-purpose room ("Cafegymatorium")
   Multiculturalism / Global: Multiculturalism / Global
@@ -317,11 +332,11 @@ en:
   Performing arts: Performing arts
   Phone: Phone
   Photography: Photography
-  ! 'Physics 1: Algebra-Based': ! 'Physics 1: Algebra-Based'
-  ! 'Physics 2: Algebra-Based': ! 'Physics 2: Algebra-Based'
+  'Physics 1: Algebra-Based': 'Physics 1: Algebra-Based'
+  'Physics 2: Algebra-Based': 'Physics 2: Algebra-Based'
   Physics B: Physics B
-  ! 'Physics C: Electricity and Magnetism': ! 'Physics C: Electricity and Magnetism'
-  ! 'Physics C: Mechanics': ! 'Physics C: Mechanics'
+  'Physics C: Electricity and Magnetism': 'Physics C: Electricity and Magnetism'
+  'Physics C: Mechanics': 'Physics C: Mechanics'
   Playground: Playground
   Poetry: Poetry
   Poetry / Creative writing teacher: Poetry / Creative writing teacher
@@ -339,6 +354,7 @@ en:
   Recycling club: Recycling club
   Reggio Emilia: Reggio Emilia
   Reggio Emilio: Reggio Emilio
+  Reggio Inspired: Reggio Inspired
   Religious: Religious
   Remediation: Remediation
   Research: Research
@@ -354,6 +370,9 @@ en:
   STEM (Science, Technology, Engineering, and Mathematics): STEM (Science, Technology,
     Engineering, and Mathematics)
   Sailing: Sailing
+  Saturday: Saturday
+  Scholarships Offered: Scholarships Offered
+  School Year: School Year
   School counselor: School counselor
   School psychologist: School psychologist
   School-based aid: School-based aid
@@ -365,6 +384,7 @@ en:
   Science, Technology, Engineering & Mathematics: Science, Technology, Engineering
     & Mathematics
   Sculpture: Sculpture
+  Seasonal: Seasonal
   Security personnel: Security personnel
   Self-contained ELL classrooms: Self-contained ELL classrooms
   Self-contained classroom: Self-contained classroom
@@ -373,7 +393,9 @@ en:
     team or governance council
   Service learning: Service learning
   Sewing / knitting club: Sewing / knitting club
+  Sibling Discount: Sibling Discount
   Skiing: Skiing
+  Sliding Fee Scale: Sliding Fee Scale
   Soccer: Soccer
   Social justice: Social justice
   Softball: Softball
@@ -400,10 +422,11 @@ en:
     can apply for transfer
   Students living outside district can apply for transfer: Students living outside
     district can apply for transfer
-  ! 'Studio Art: 2-D Design': ! 'Studio Art: 2-D Design'
-  ! 'Studio Art: 3-D Design': ! 'Studio Art: 3-D Design'
-  ! 'Studio Art: Drawing': ! 'Studio Art: Drawing'
+  'Studio Art: 2-D Design': 'Studio Art: 2-D Design'
+  'Studio Art: 3-D Design': 'Studio Art: 3-D Design'
+  'Studio Art: Drawing': 'Studio Art: Drawing'
   Summer college prep programs: Summer college prep programs
+  Sunday: Sunday
   Surfing: Surfing
   Swimming: Swimming
   Swimming pool: Swimming pool
@@ -420,12 +443,14 @@ en:
   Textiles: Textiles
   Theory: Theory
   Therapeutic: Therapeutic
+  Thursday: Thursday
   Track: Track
   Traditional: Traditional
   Transportation provided for special education students: Transportation provided
     for special education students
   Transportation, Distribution & Logistics: Transportation, Distribution & Logistics
   Traumatic brain injury: Traumatic brain injury
+  Tuesday: Tuesday
   Tutor: Tutor
   Tutor(s): Tutor(s)
   Tutoring: Tutoring
@@ -448,12 +473,15 @@ en:
   Volunteer time after school: Volunteer time after school
   Waldorf: Waldorf
   Water polo: Water polo
+  Wednesday: Wednesday
+  Weekly: Weekly
   Welding certification: Welding certification
   Woodshop: Woodshop
   World History: World History
   World languages: World languages
   Wrestling: Wrestling
   Writing: Writing
+  Year Round: Year Round
   Year-round: Year-round
   Yearbook: Yearbook
   'Yes': 'Yes'
@@ -461,4 +489,3 @@ en:
   Yes - for students in adjacent districts: Yes - for students in adjacent districts
   Yoga club: Yoga club
   label: label
-  response_label: response_label
