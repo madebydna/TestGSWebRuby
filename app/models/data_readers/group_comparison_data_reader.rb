@@ -195,9 +195,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   def footnotes_for_category(category)
     data = cached_data_for_category(category, 'characteristics', school)
-    data_type = data.keys.first
-
-    [{ source: data[data_type].first[:source], year: data[data_type].first[:year]}]
-
+    data.map do |data_type, data_hashes|
+      data_hash = data_hashes.first
+      { source: data_hash[:source], year: data_hash[:year] }
+    end
   end
 end
