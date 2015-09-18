@@ -27,6 +27,6 @@ es:
       - header: Escribir comentario
         paragraph: Ayude a otros padres a encontrar una gran escuela, compartiendo sus experiencias.
       school_profiles_count: perfiles de las escuelas
-      signup_button: Contratar
-      signup_tab: Contratar
-      terms_of_use_html: Estoy de acuerdo con la %{terms_of_use_link}
+      signup_button: Registrese
+      signup_tab: Registrese
+      terms_of_use_html: Estoy de acuerdo con %{terms_of_use_link}
