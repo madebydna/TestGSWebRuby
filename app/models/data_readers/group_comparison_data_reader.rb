@@ -197,7 +197,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data = cached_data_for_category(category, 'characteristics', school)
     data.map do |data_type, data_hashes|
       data_hash = data_hashes.first
-      { source: data_hash[:source], year: data_hash[:year] }
-    end
+      if data_hash[:source] && data_hash[:year]
+        { source: data_hash[:source], year: data_hash[:year] }
+      end
+    end.compact
   end
 end
