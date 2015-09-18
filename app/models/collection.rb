@@ -9,7 +9,7 @@ class Collection < ActiveRecord::Base
   def schools
     @schools ||= (
       definition.keys.map do |state|
-        School.on_db(state.to_s.downcase.to_sym).for_collection(id).active.to_a
+        School.on_db(state.to_s.downcase.to_sym).for_collection(id).active.order(name: :asc).to_a
       end.flatten
     )
   end
