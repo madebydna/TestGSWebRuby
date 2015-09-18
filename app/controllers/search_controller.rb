@@ -32,7 +32,6 @@ class SearchController < ApplicationController
     } if params_hash['state']
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
-      render 'search_page' unless bail_on_fit?
     elsif params.include?(:city) && params.include?(:district_name)
       self.district_browse
     elsif params.include?(:city)
@@ -66,7 +65,11 @@ class SearchController < ApplicationController
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
     setup_search_gon_variables
-    render 'search_page' unless bail_on_fit?
+    if bail_on_fit?
+      redirect_to path_w_query_string 'sort', nil
+    else
+      render 'search_page'
+    end
   end
 
   def district_browse
@@ -95,7 +98,11 @@ class SearchController < ApplicationController
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
     setup_search_gon_variables
-    render 'search_page' unless bail_on_fit?
+    if bail_on_fit?
+      redirect_to path_w_query_string 'sort', nil
+    else
+      render 'search_page'
+    end
   end
 
   def by_location
@@ -117,6 +124,11 @@ class SearchController < ApplicationController
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
     setup_search_gon_variables
+    if bail_on_fit?
+      redirect_to path_w_query_string 'sort', nil
+    else
+      render 'search_page'
+    end
   end
 
   def by_name
@@ -133,7 +145,11 @@ class SearchController < ApplicationController
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
     setup_search_gon_variables
-    render 'search_page' unless bail_on_fit?
+    if bail_on_fit?
+      redirect_to path_w_query_string 'sort', nil
+    else
+      render 'search_page'
+    end
   end
 
   def setup_search_results!(search_method)
@@ -280,12 +296,7 @@ class SearchController < ApplicationController
   end
 
   def bail_on_fit?
-    if sorting_by_fit? && hide_fit?
-      redirect_to path_w_query_string 'sort', nil
-      true
-    else
-      false
-    end
+    sorting_by_fit? && hide_fit?
   end
 
   def hide_fit?
@@ -476,6 +487,7 @@ class SearchController < ApplicationController
     # so we have to add that logic to the cache key here.
     @filters = filter_builder.filters
     @filter_cache_key = @filters.cache_key + (@by_location ? '-distance' : '-no_distance')
+    @filter_cache_key << "-lang_#{locale.to_s}"
   end
 
   def soft_filters_params_hash

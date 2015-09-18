@@ -1,0 +1,28 @@
+es:
+  controllers:
+    community_spotlights_controller:
+      white:                             'White'
+      asian:                             'Asia'
+      native_american_or_native_alaskan: 'Nativos americanos o nativos de Alaska'
+      pacific_islander:                  'Islas del Pacífico'
+      all_students:                      'Todos los estudiantes'
+      multiracial:                       "Multiétnico"
+      filipino:                          'Filipino'
+      hispanic:                          'Hispano'
+      african_american:                  'Afroamericano'
+      male:                              'Hombre'
+      female:                            'Mujer'
+      not_economically_disadvantaged:    'No en desventaja económica'
+      students_with_disabilities:        'Los estudiantes con discapacidades'
+      general_education_students:        'Estudiantes General de Educación'
+      economically_disadvantaged:        'Desventaja económica'
+      limited_english_proficient:        'Estudiantes de Inglés'
+      not_limited_english_proficient:    'No se limita Inglés dominio'
+      a_through_g:                       'Graduados eligible para universidad'
+      graduation_rate:                   'Tasa de graduados'
+      all_grade_levels:                  'Todos los grados'
+      preschool:                         'Preescolar'
+      elementary:                        'Escuela primaria'
+      middle:                            'Escuela intermedia'
+      high:                              'Escuela secundaria'
+

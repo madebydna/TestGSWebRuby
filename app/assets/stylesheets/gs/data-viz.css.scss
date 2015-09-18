@@ -75,20 +75,5 @@ $below_average:          #bf3c29;
       line-height: 18px;
     }
 
-    .gs-tooltip + .tooltip > .tooltip-inner {
-      white-space: normal;
-    }
   }
 }
-
-.group-comparison{
-  @media (min-width: $screen-lg-min){
-    padding-left: 10px;
-  }
-}
-
-
-
-
-
-

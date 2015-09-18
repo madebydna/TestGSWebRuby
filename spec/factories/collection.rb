@@ -34,7 +34,9 @@ FactoryGirl.define do
     end
 
     name 'a name'
+    definition '{}'
 
+    # TODO Make it so this isn't automatic
     hub_city_mapping do
       params = {
         collection_id: id,

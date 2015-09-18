@@ -1,0 +1,9 @@
+---
+en:
+  school_profile:
+    reviews:
+      share_review_button:
+        email: Via Email
+        facebook: On Facebook
+        share: Share
+        twitter: On Twitter

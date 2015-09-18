@@ -1,0 +1,6 @@
+---
+es:
+  shared:
+    event_announcements:
+      announcement: Anuncio
+      no_data_found: Datos No Encontrados

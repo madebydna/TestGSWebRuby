@@ -8,7 +8,8 @@ class GSLogger
     reviews: 'REVIEWS',
     i18n: 'I18N',
     school_profiles: 'SCHOOL_PROFILES',
-    community_scorecard: 'COMMUNITY_SCORECARD',
+    community_spotlight: 'COMMUNITY_SPOTLIGHT',
+    external_content_fetcher: 'EXTERNAL_CONTENT_FETCHER',
   })
 
   class << self
@@ -37,7 +38,7 @@ class GSLogger
       log = (base_log + options).join('||').gsub(/\n|\t|\r/, '')
       log.prepend("\n").concat("\n")
 
-      Rails.logger.error(log)
+      Rails.logger.send(level.downcase, log)
     end
 
     #make sure to keep the order of the logs consistent

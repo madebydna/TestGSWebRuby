@@ -476,5 +476,36 @@ describe FilterBuilder do
         expect(wi_cache_key).to start_with('simple')
       end
     end
+    it 'should not have any collisions across all distinct filters' do
+      # Map of cache_keys to callback arrays
+      distinct_callbacks = {}
+      filter_builder = FilterBuilder.new('', '', false)
+      # Concat together all the callbacks, state and city
+      callback_arrays = filter_builder.state_callbacks.values
+      # For city I need to go down a level, since city_callbacks is itself a map of state to city name
+      # I have to flatten it one level since .map creates an array, which contains the callback arrays
+      callback_arrays.concat(filter_builder.city_callbacks.values.map {|city_to_callback| city_to_callback.values }.flatten(1))
+      # for areas that get our default advanced filters, they get an empty array as their callback. Remove these.
+      callback_arrays.reject!(&:blank?)
+
+      # For each callback, its cache key must either be a new entry in the distinct_callbacks map OR
+      # it must map to an identical callback
+      callback_arrays.each do |callback_array|
+        cache_callback = callback_array.select {|c| c[:callback_type] == 'cache_key'}.first
+        fake_filter = {cache_key: ''}
+        # Have the FilterBuilder compute the cache key using the logic in build_cache_key_callback
+        filter_builder.build_cache_key_callback(cache_callback[:conditions], cache_callback[:options]).call(fake_filter)
+        cache_key = fake_filter[:cache_key]
+        if distinct_callbacks[cache_key].present?
+          expect(distinct_callbacks[cache_key]).to eq(callback_array)
+        else
+          distinct_callbacks[cache_key] = callback_array
+        end
+
+        # Finally, make sure none of the cache keys conflict with our default filter configurations
+        expect(distinct_callbacks).not_to include(filter_builder.default_simple_filters[:cache_key])
+        expect(distinct_callbacks).not_to include(filter_builder.default_advanced_filters[:cache_key])
+      end
+    end
   end
 end

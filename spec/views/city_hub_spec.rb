@@ -18,7 +18,7 @@ describe 'shared/_event_announcements.html.erb' do
       allow(view).to receive(:announcement) { nil }
       render
 
-      expect(rendered).to have_content('No Data Found - _event_announcements.html.erb')
+      expect(rendered).to have_content('No Data Found')
     end
   end
 end
@@ -42,7 +42,7 @@ describe 'cities/_featured_articles' do
       allow(view).to receive(:articles) { nil }
       render
 
-      expect(rendered).to have_content('No Data Found - cities/_featured_articles.html.erb')
+      expect(rendered).to have_content('No Data Found')
     end
   end
 

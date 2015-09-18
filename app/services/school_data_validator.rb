@@ -16,6 +16,7 @@ module SchoolDataValidator
     'sd_sorted_gs_rating_asc',
 
     # high school graduation rate BEGIN
+    # 2013 BEGIN
     'sd_4_year_high_school_graduation_rate_White_2013',
     'sd_4_year_high_school_graduation_rate_Asian_2013',
     'sd_4_year_high_school_graduation_rate_Native_American_or_Native_Alaskan_2013',
@@ -51,6 +52,45 @@ module SchoolDataValidator
     'sd_4_year_high_school_graduation_rate_Economically_disadvantaged_2013_sortable_asc',
     'sd_4_year_high_school_graduation_rate_Limited_English_proficient_2013_sortable_asc',
     'sd_4_year_high_school_graduation_rate_Not_limited_English_proficient_2013_sortable_asc',
+    # 2013 END
+
+    # 2014 BEGIN
+    'sd_4_year_high_school_graduation_rate_White_2014',
+    'sd_4_year_high_school_graduation_rate_Asian_2014',
+    'sd_4_year_high_school_graduation_rate_Native_American_or_Native_Alaskan_2014',
+    'sd_4_year_high_school_graduation_rate_Pacific_Islander_2014',
+    'sd_4_year_high_school_graduation_rate_All_students_2014',
+    'sd_4_year_high_school_graduation_rate_Multiracial_2014',
+    'sd_4_year_high_school_graduation_rate_Filipino_2014',
+    'sd_4_year_high_school_graduation_rate_Hispanic_2014',
+    'sd_4_year_high_school_graduation_rate_African_American_2014',
+    'sd_4_year_high_school_graduation_rate_Male_2014',
+    'sd_4_year_high_school_graduation_rate_Female_2014',
+    'sd_4_year_high_school_graduation_rate_Not_economically_disadvantaged_2014',
+    'sd_4_year_high_school_graduation_rate_Students_with_disabilities_2014',
+    'sd_4_year_high_school_graduation_rate_General_Education_students_2014',
+    'sd_4_year_high_school_graduation_rate_Economically_disadvantaged_2014',
+    'sd_4_year_high_school_graduation_rate_Limited_English_proficient_2014',
+    'sd_4_year_high_school_graduation_rate_Not_limited_English_proficient_2014',
+
+    'sd_4_year_high_school_graduation_rate_White_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Asian_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Native_American_or_Native_Alaskan_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Pacific_Islander_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_All_students_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Multiracial_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Filipino_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Hispanic_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_African_American_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Male_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Female_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Not_economically_disadvantaged_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Students_with_disabilities_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_General_Education_students_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Economically_disadvantaged_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Limited_English_proficient_2014_sortable_asc',
+    'sd_4_year_high_school_graduation_rate_Not_limited_English_proficient_2014_sortable_asc',
+    # 2013 END
     # high school graduation rate END
 
     #Percent of students who meet UC/CSU entrance requirements BEGIN

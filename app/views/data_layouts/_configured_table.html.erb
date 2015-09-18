@@ -41,7 +41,7 @@
             <% table_data.rows.each do |hash| %>
                 <tr>
                    <% data_config.row_values(columns_to_print, hash) do |label, value| %>
-                      <%= td label, value %>
+                      <%= td db_t(label, default: label), db_t(value, default: value) %>
                    <% end %>
                 </tr>
             <% end %>

@@ -86,6 +86,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/emotional-smarts/', as: :emotional_smarts
     get '/gk/category/learning-disabilities/', as: :learning_disabilities
     get '/parenting.topic?content=1539', as: :health_and_behavior
+    get '/gk/sbac-test-guide/', as: :state_test_guide
     # TODO: see how to fix this route for ruby
     get '/reviews/', as: :the_scoop
     get '/account/', as: :my_account
@@ -214,7 +215,7 @@ LocalizedProfiles::Application.routes.draw do
       collection_id: /\d+/,
       collection_name: /.+/,
     } do
-      get 'spotlight', to: 'community_scorecards#show', as: :scorecard
+      get 'spotlight', to: 'community_spotlights#show', as: :spotlight
     end
 
   constraints(RegularSubdomain) do

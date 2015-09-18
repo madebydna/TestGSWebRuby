@@ -29,7 +29,7 @@
 class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
-  DEFAULT_CALLBACKS = [ 'change_data_type_to_label' ]
+  DEFAULT_CALLBACKS = [ 'preserve_data_type_name', 'change_data_type_to_label' ]
 
   attr_accessor :category, :config, :data
 
@@ -56,9 +56,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     #     'add_student_types_callback',
     #   ]
     # }
-
     get_data!
     bar_chart_collections
+
   rescue
     []
   end
@@ -93,6 +93,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   def modify_data_callbacks
     DEFAULT_CALLBACKS + [*config[:group_comparison_callbacks]]
+  end
+
+  def preserve_data_type_name
+    data.each do |key, _|
+      config[category.key_label_map[key.to_s]] = category.key_label_map(nil, false)[key.to_s]
+    end
   end
 
   def change_data_type_to_label
@@ -185,5 +191,15 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       scope: i18n_scope,
       default:"No data"
     )
+  end
+
+  def footnotes_for_category(category)
+    data = cached_data_for_category(category, 'characteristics', school)
+    data.map do |data_type, data_hashes|
+      data_hash = data_hashes.first
+      if data_hash[:source] && data_hash[:year]
+        { source: data_hash[:source], year: data_hash[:year] }
+      end
+    end.compact
   end
 end

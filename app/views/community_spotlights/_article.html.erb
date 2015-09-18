@@ -1,0 +1,37 @@
+<div class="article">
+  <h2><%= t('.section_title') %></h2>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4 pbm">
+      <a href="<%= t(".#{@t_scope}.article_url") %>" target="_blank">
+        <img src="<%= image_path(t(".#{@t_scope}.image")) %>"/>
+      </a>
+    </div>
+    <div class="col-xs-12 col-sm-4 pbm">
+      <a href="<%= t(".#{@t_scope}.article_url") %>" target="_blank">
+        <h3>
+          <%= t(".#{@t_scope}.article_title") %>
+        </h3>
+      </a>
+      <div>
+        <%= t(".#{@t_scope}.article_intro") %>
+      </div>
+      <div class="read-more">
+        <a href="<%= t(".#{@t_scope}.article_url") %>" target="_blank">
+          <%= t('.read_more') %>
+        </a>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-4 pbm">
+      <%= render partial: "shared/partners/promo_delegator",
+        locals: {
+          collections: [@collection],
+          partial: current_partial,
+          force_show: true,
+          options: {
+            is_vertical_promo: true
+          }
+        }
+      %>
+    </div>
+  </div>
+</div>

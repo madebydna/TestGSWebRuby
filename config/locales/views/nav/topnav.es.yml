@@ -22,6 +22,6 @@ es:
       sign_in: Ingresar
       sign_out: Desconectarse
       state_home: "%{state} Inicio"
-      summer_learning: Aprendizaje de Verano
+      state_test_guide: Prueba de Guía Estado
       welcome_to_greatkids: ¡Bienvenido a GreatKids!
-      worksheets_and_activities: Hojas de trabajo y actividades
+      worksheets_and_activities: Las hojas de trabajo gratis

@@ -1,7 +1,14 @@
 {{#if show_no_data_symbol}}
-  <div class="no-data"></div>
+  <div class="no-data">{{mobileText}}</div>
 {{else}}
-  <div class="percent-value">
+  <div class="percent-value {{#if explanation}}gs-tooltip{{/if}}"
+       {{#if explanation}}
+         data-toggle="tooltip"
+         data-html="true"
+         data-placement="bottom"
+         data-title="<div style='max-width: 300px; overflow: visible'>{{explanation}}</div>"
+       {{/if}}
+  >
     <h3 class="mvn {{performance_level}}">{{value}}<sup>%</sup></h3>
   </div>
 {{/if}}

@@ -9,7 +9,7 @@ class Collection < ActiveRecord::Base
   def schools
     @schools ||= (
       definition.keys.map do |state|
-        School.on_db(state.to_s.downcase.to_sym).for_collection(id).active.to_a
+        School.on_db(state.to_s.downcase.to_sym).for_collection(id).active.order(name: :asc).to_a
       end.flatten
     )
   end
@@ -22,16 +22,28 @@ class Collection < ActiveRecord::Base
     config[:url_name]
   end
 
-  def scorecard_scope
-    config[:scorecard_scope]
+  def has_spotlight?
+    url_name.present?
   end
 
   def scorecard_fields
     config[:scorecard_fields]
   end
 
+  def scorecard_params
+    config[:scorecard_params]
+  end
+
+  def scorecard_subgroups_list
+    config[:scorecard_subgroups_list]
+  end
+
   def definition
     @_definition ||= read_json_attribute(:definition)
+  end
+
+  def t_scope
+    "collection_id_#{id}"
   end
 
   def self.for_school(state, school_id)

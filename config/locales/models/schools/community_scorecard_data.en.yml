@@ -2,8 +2,17 @@ en:
   models:
     schools:
       community_scorecard_data:
+        state_average: 'state avg %{val}%'
+        state_average_not_available: State avg. NOT AVAILABLE
+        collection_id_15:
           a_through_g: Graduates eligible for 4 yr college
+          a_through_g_explanation_html: <strong>Graduates eligible for 4 year college</strong> is the % of graduates who have taken the courses required to be eligible for a California public college - either University of California or California State University.
           graduation_rate: Graduation Rate
+          graduation_rate_explanation_html: <strong>Graduation rate</strong> is the % of students who graduated high school within 4 years.
           school_info: School
-          state_average: 'state avg %{val}%'
-          state_average_not_available: State avg. NOT AVAILABLE
+        collection_id_16:
+          a_through_g: Graduates eligible for 4 yr college
+          a_through_g_explanation_html: <strong>Graduates eligible for 4 year college</strong> is the % of graduates who have taken the courses required to be eligible for a California public college - either University of California or California State University.
+          graduation_rate: Graduation Rate
+          graduation_rate_explanation_html: <strong>Graduation rate</strong> is the % of students who graduated high school within 4 years.
+          school_info: School

@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 describe ApplicationController do
 
@@ -350,6 +351,18 @@ describe ApplicationController do
         allow(request).to receive(:original_url).and_return search_url + '&grades=k&page=2&st=public&sort=fit_desc'
         expect(controller.send(:path_w_query_string, 'sort', nil)).to eq 'http://www.greatschools.org/search.page?distance=15&grades=k&lat=123&locationSearchString=94111&lon=456&page=2&st=public'
       end
+    end
+  end
+
+  describe '#only_latin1_characters?' do
+    it 'should reject non-latin1 characters' do
+      non_latin_characters = 'ищукранрф'
+      expect(controller.send(:only_latin1_characters?, non_latin_characters)).to be false
+    end
+
+    it 'should accept latin1 characters' do
+      latin_characters = 'abcdefghijklmnopqrstuvwxyz1234567890-=`[]\;\'/<>?:"{}|+_)(*&^%$#@!~)"`'
+      expect(controller.send(:only_latin1_characters?, latin_characters)).to be true
     end
   end
 end

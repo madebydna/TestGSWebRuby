@@ -275,8 +275,8 @@ class School < ActiveRecord::Base
 
   def self.for_collection_ordered_by_name(state,collection_id)
     raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?
-    school_ids = SchoolMetadata.school_ids_for_collection_ids(state, collection_id)
-    db_schools = School.on_db(state).active.where(id: school_ids).order(name: :asc).to_a
+    collection = Collection.find(collection_id)
+    collection.schools
   end
 
 

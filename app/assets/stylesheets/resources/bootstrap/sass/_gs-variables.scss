@@ -55,10 +55,10 @@ $dark-blue-text:          #4788be;
 // -------------------------
 $font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-base:        $font-family-sans-serif;
-$font-family-base-semi:   "opensans-semibold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+$font-family-base-bold:   "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica, sans-serif;
 
-$headings-font-family:                    $font-family-base-semi;
+$headings-font-family:                    $font-family-base-bold;
 $headings-font-weight:                    400;
 $headings-line-height:                    1.2;
 $headings-color:                          $text-color;

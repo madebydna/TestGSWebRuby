@@ -3,6 +3,7 @@ en:
   javascript:
     close: Close
     learn_more_html: Learn More &raquo;
+    fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
     more_filters: More filters
     ok_fit: 'Ok fit'
@@ -28,6 +29,8 @@ en:
       proficient: Proficient
       proficient_or_better: Proficient or better
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
+    view_less: View less »
+    view_more: View more »
     weak_fit: Weak fit
     wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'

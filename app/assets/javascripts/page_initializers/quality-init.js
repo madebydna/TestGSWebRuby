@@ -20,19 +20,17 @@ if(gon.pagename == "Quality"){
 
         var SubgroupCharts = function () {
             $('.js-dataVizBarChartContainer').on('click', '.js-barChartBreakdown', function () {
-                var title = $(this).data('breakdown');
-                var dashedTitle = title.replace(/ /g, "-");
+                var title = $(this).data('title');
                 var $parent = $(this).closest('.js-dataVizBarChartContainer');
-                $parent.find('.data-viz-bar-chart:not(.js-' + dashedTitle + ')').addClass('dn');
-                $parent.find('.js-' + dashedTitle).removeClass('dn');
+                $parent.find('.data-viz-bar-chart:not(.js-' + title + ')').addClass('dn');
+                $parent.find('.js-' + title).removeClass('dn');
             });
         };
 
         var dropdownBreakdownsHandler = function() {
-            $('.js-dataVizBarChartContainer').on('click', 'li', function () {
-                var $self = $(this).text();
-                var dashedTitle = $self.replace(/ /g, "-");
-                var breakdownClass = '.js-' + dashedTitle;
+            $('.js-dataVizBarChartContainer').on('click', '.js-dataVizDropdown', function () {
+                var $self = $(this).data('title');
+                var breakdownClass = '.js-' + $self;
                 var $parent = $(this).closest('.js-dataVizBarChart');
 
                 $parent.find('.js-barChart').addClass('dn');

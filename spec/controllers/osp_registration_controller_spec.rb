@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 require 'controllers/contexts/osp_shared_contexts'
 require 'features/contexts/osp_contexts.rb'
@@ -72,7 +73,7 @@ describe OspRegistrationController do
 
   describe '#submit' do
     after do
-      clean_models :gs_schooldb, User, EspMembership
+      clean_models :gs_schooldb, User, EspMembership, Subscription, User
       clean_models :ca, School
     end
 
@@ -220,6 +221,7 @@ describe OspRegistrationController do
       {school_website: 'www.badguys.pl'},
       {email: 'keith@badguys.ru'},
       {email: 'keith@badguys.pl'},
+      {school_website: "http://ищукран.рф/online/art/994-polovoy-chlen-golovka/"},
     ].each do |bad_params|
       context "with bad params: #{bad_params}" do
         let(:super_long_school_website_params) do
@@ -246,6 +248,54 @@ describe OspRegistrationController do
           membership = EspMembership.where(member_id: user.id).first
           expect(membership.web_url).to eq(website)
         end
+      end
+    end
+
+    context 'when submitting user params that will fail mysql validation' do
+      let(:invalid_user_params) do
+        {state: school.state, schoolId: school.id, email: user.email,
+         first_name: 'Albus', last_name: 'Dumbledore',
+         school_website: 'www.hogwarts.uk', job_title: 'headmaster',
+         password: 'thispasswordistoolong', password_verify: 'thispasswordistoolong'
+        }
+      end
+
+      it 'should render new template with a school object' do
+        allow_any_instance_of(OspRegistrationController).to receive(:current_user)
+        post :submit, invalid_user_params
+        expect(controller.instance_variable_get(:@school)).to_not be_nil
+        expect(response).to render_template('osp/registration/new')
+      end
+    end
+
+    let(:invalid_esp_membership_params) do
+      {state: school.state, schoolId: school.id, email: user.email,
+       first_name: 'Albus', last_name: 'Dumbledore',
+       school_website: 'www.thisistoolongthisistoolongthisistoolongthisistoolongthisistoolongthisistoolongthisistoolongthisistoolong.uk', job_title: 'headmaster',
+       password: 'ravenclaw', password_verify: 'ravenclaw'
+      }
+    end
+
+    context 'when submitting esp_membershp params that will fail mysql validation' do
+      it 'should render new template with a school object' do
+        allow_any_instance_of(OspRegistrationController).to receive(:current_user)
+        post :submit, invalid_esp_membership_params
+        expect(controller.instance_variable_get(:@school)).to_not be_nil
+        expect(response).to render_template('osp/registration/new')
+      end
+    end
+
+    context 'when submitting params without a school' do
+      it 'should render the no school selected template' do
+        post :submit
+        expect(response).to render_template('osp/registration/no_school_selected')
+      end
+    end
+
+    context 'when submitting params without a school_website' do
+      it 'should render the new template' do
+        post :submit, invalid_esp_membership_params.reject {|k,v| k == :school_website}
+        expect(response).to render_template('osp/registration/new')
       end
     end
   end

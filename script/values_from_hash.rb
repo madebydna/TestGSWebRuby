@@ -16,18 +16,25 @@ end
 
 
 STDIN.to_a.each do |text|
-  begin
-    # Make legacy JSON blobs actually be valid JSON
-    text.gsub!(/\n/, '')
-    text.gsub!(/\r/, '')
-    text.gsub!(/\s(\w+)\:/) { |str| "\"#{str[1..-2]}\":" }
-    hash = JSON.parse(text)
-  rescue Exception => e
-    next
-  end
+  text = text.force_encoding('windows-1252').encode('utf-8') rescue text
+  text = text.gsub('\n', '').strip
+  text.gsub!(/\n/, '')
+  text.gsub!(/\r/, '')
+  text.gsub!(/([\{\[,])\s*(\w+)\s?:/) { "#{$1}\"#{$2}\":" }
+  text.gsub!('\\\\', '\\')
+  text.gsub!(/,( )+\]/, ']')
+  text.gsub!('",}', '"}')
+  text.gsub!(/( )+/, ' ')
 
-  # flat_hash(hash).values.each do |value|
-  #   puts value
-  # end
-  puts values_from_hash(hash) if hash.is_a?(Hash)
+  if text[0] == '{' && text[-1] == '}'
+    begin
+      # Make legacy JSON blobs actually be valid JSON
+      hash = JSON.parse(text)
+      puts values_from_hash(hash) if hash.is_a?(Hash)
+    rescue Exception => e
+      # puts text
+    end
+  else
+    puts text
+  end
 end

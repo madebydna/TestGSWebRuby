@@ -40,12 +40,16 @@ en:
         Autism scholarship: Autism scholarship
         Average (4-7): Average (4-7)
         Baseball: Baseball
+        Baseball (boys): Baseball (boys)
         Basketball: Basketball
+        Basketball (boys): Basketball (boys)
+        Basketball (girls): Basketball (girls)
         Before school program: Before school program
         Below average (1-3): Below average (1-3)
         Boys Sports: Boys Sports
         Career & technology: Career & technology
         Cheerleading: Cheerleading
+        Cheerleading (girls): Cheerleading (girls)
         Class Offering: Class Offering
         Cleveland scholarship: Cleveland scholarship
         College Readiness: College Readiness
@@ -56,8 +60,13 @@ en:
         Enrollment: Enrollment
         Extended hours: Extended hours
         Football: Football
+        Football (boys): Football (boys)
         French: French
+        French (class): French (class)
+        French (immersion): French (immersion)
         German: German
+        German (class): German (class)
+        German (immersion): German (immersion)
         Girls Sports: Girls Sports
         Grade Level: Grade Level
         Great Start to Quality (preschool only): Great Start to Quality (preschool only)
@@ -70,6 +79,8 @@ en:
         Level 3: Level 3
         Level 4: Level 4
         Mandarin: Mandarin
+        Mandarin (class): Mandarin (class)
+        Mandarin (immersion): Mandarin (immersion)
         Montessori: Montessori
         Music: Music
         Near public transit: Near public transit
@@ -89,14 +100,21 @@ en:
         Select Miles: Select Miles
         Show schools within: Show schools within
         Soccer: Soccer
+        Soccer (boys): Soccer (boys)
+        Soccer (girls): Soccer (girls)
         Spanish: Spanish
+        Spanish (class): Spanish (class)
+        Spanish (immersion): Spanish (immersion)
         Special needs scholarship: Special needs scholarship
         Summer program: Summer program
         Track: Track
+        Track (boys): Track (boys)
+        Track (girls): Track (girls)
         Transportation options: Transportation options
         Uniform: Uniform
         Visual/Media arts: Visual/Media arts
         Volleyball: Volleyball
+        Volleyball (girls): Volleyball (girls)
         Waldorf: Waldorf
         World language immersion: World language immersion
         World languages: World languages

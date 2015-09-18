@@ -2,12 +2,13 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pvm">
       <div class="alert alert-success">
-        <strong class="mrm open-sans_sb">Announcement</strong>
-        <span><%= announcement[:content] %></span>
+        <strong class="mrm open-sans_sb"><%= t('.announcement') %></strong>
+        <span><%= db_t(announcement[:content], default: announcement[:content]) %></span>
+        <% link_name = db_t(announcement[:link][:name], default: announcement[:link][:name]) %>
         <% if announcement[:link][:newWindow] == 'true' %>
-          <%= link_to(announcement[:link][:name], announcement[:link][:path],  target: '_blank', class: 'mls') %>
+          <%= link_to(link_name, announcement[:link][:path],  target: '_blank', class: 'mls') %>
         <% else %>
-          <%= link_to(announcement[:link][:name], announcement[:link][:path], class: 'mls') %>
+          <%= link_to(link_name, announcement[:link][:path], class: 'mls') %>
         <% end %>
       </div>
     </div>
@@ -16,7 +17,7 @@
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pvm">
       <div class="alert alert-success">
-        <h3 class="mbm mtl">No Data Found - _event_announcements.html.erb</h3>
+        <h3 class="mbm mtl"><%= t('.no_data_found') %></h3>
       </div>
     </div>
   </div>

@@ -1,0 +1,6 @@
+---
+es:
+  states:
+    show:
+      browse_cities: Búsqueda todas las ciudades
+      browse_districts: Búsqueda todos los distritos

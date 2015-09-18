@@ -3,98 +3,141 @@ require 'spec_helper'
 describe SubscriptionsController do
 
   after do
-    clean_models :gs_schooldb, User, Subscription 
+    clean_models :gs_schooldb, User, Subscription
     clean_models :ca, School
   end
 
-  describe '#attempt_sign_up' do
+  describe '#create' do
     let(:subscription_params){{test: 'param'}}
-    context 'without ajax' do
+    let(:referrer) {'www.greatschools.org/blah'}
+
+    context 'when logged in' do
       before do
-       allow(controller).to receive(:redirect_back_or_default)
-      end
-      context 'with specific redirect path' do
-        let(:redirect_path) { 'redirect_path' }
-        let(:subject) { controller.send :attempt_sign_up, subscription_params, redirect_path }
-        it 'should create subcription with params' do
-          expect(controller).to receive(:create_subscription).with(subscription_params)
-          subject
-        end
-        it 'should redirect back to specified redirect path' do
-          expect(controller).to receive(:redirect_back_or_default).with(redirect_path)
-          subject
-        end
+        allow(controller).to receive(:logged_in?).and_return(true)
+        allow(controller).to receive(:create_subscription)
+        request.env['HTTP_REFERER'] = referrer
       end
 
-      context 'without specific redirect path' do
-        let(:subject) { controller.send :attempt_sign_up, subscription_params }
+      context 'without ajax' do
+        before { allow(controller).to receive(:ajax?).and_return(false) }
+        it 'should create subcription with params' do
+          expect(controller).to receive(:create_subscription).
+            with(subscription_params)
+          post :create, subscription: subscription_params
+        end
+        it 'should redirect back to referrer' do
+          result = post :create, subscription: subscription_params
+          expect(result).to redirect_to(referrer)
+        end
+      end
+      #
+      context 'with ajax' do
+        before do
+          allow(controller).to receive(:ajax?).and_return(true)
+          allow(controller).to receive(:render)
+        end
         it 'should create subcription with params' do
           expect(controller).to receive(:create_subscription).with(subscription_params)
-          subject
+          post :create,  subscription: subscription_params
         end
-        it 'should redirect back without specific path' do
-          expect(controller).to receive(:redirect_back_or_default).with(no_args)
-          subject
+        it 'render json response with status 200' do
+          render_response = {:json=>{}, :status=>200}
+          expect(controller).to receive(:render).with(render_response)
+          post :create,  subscription: subscription_params
         end
       end
     end
 
-    context 'with ajax' do
+    context 'when logged out' do
       before do
-       allow(controller).to receive(:render)
-       allow(controller).to receive(:redirect_back_or_default)
-       allow(controller).to receive(:ajax?).and_return(true)
+        allow(controller).to receive(:log_in_required_message).and_return('error')
+        allow(controller).to receive(:logged_in?).and_return(false)
+        allow(controller).to receive(:create_subscription)
+        allow(controller).to receive(:join_url).and_return('join_url')
       end
-        let(:subject) { controller.send :attempt_sign_up, subscription_params }
-        it 'should create subcription with params' do
-          expect(controller).to receive(:create_subscription).with(subscription_params)
-          subject
-        end
-        it 'should render with error message' do
-          render_response = {:json=>{}, :status=>200}
-          expect(controller).to receive(:render).with(render_response)
-          subject
-        end
 
+      context 'without ajax' do
+        before { allow(controller).to receive(:ajax?).and_return(false) }
+        it 'should saved_deferred action with create_subscription_deferred and subscription params' do
+          expect(controller).to receive(:save_deferred_action).
+            with(:create_subscription_deferred, subscription_params)
+          post :create,  subscription: subscription_params
+        end
+        it 'should flash error message' do
+          expect(controller).to receive(:flash_error).with('error')
+          post :create,  subscription: subscription_params
+        end
+        it 'should redirect to join_url' do
+          result = post :create, subscription: subscription_params
+          expect(result).to redirect_to('join_url')
+        end
+      end
+
+      context 'with ajax' do
+        before do
+          allow(controller).to receive(:ajax?).and_return(true)
+          allow(controller).to receive(:render)
+        end
+        it 'render json response with error and status 422' do
+          render_response = {:json=>{error: 'error'}, :status=>422}
+          expect(controller).to receive(:render).with(render_response)
+          post :create,  subscription: subscription_params
+        end
+      end
     end
   end
 
-  describe '#handle_not_logged_in' do
+  describe '#subscription_from_link' do
+    subject { post :subscription_from_link, list: 'gsnewsletter' }
     before do
-      allow(controller).to receive(:log_in_required_message).and_return('error')
+      allow(controller).to receive(:home_path).and_return('www.greatschools.org/')
     end
-    let(:subscription_params){{test: 'param'}}
-    let(:subject) { controller.send :handle_not_logged_in, subscription_params }
-    context 'with not ajax' do
-     before do
-       allow(controller).to receive(:redirect_to)
-       allow(controller).to receive(:ajax?).and_return(false)
-       allow(controller).to receive(:join_url).and_return('join_url')
-     end
-      it 'should saved deferred create_subscription deffered actions with subscription params' do
-        expect(controller).to receive(:save_deferred_action).
-          with(:create_subscription_deferred, subscription_params)
-        subject
+    context 'with params gsnewsletter' do
+      let(:subscription_params){
+        {
+          'list' => 'gsnewsletter',
+          'controller' => 'subscriptions',
+          'action' => 'subscription_from_link',
+          'message'=> 'You\'ve signed up to receive GreatSchools\'s newsletter'
+        }
+      }
+      context 'when logged in' do
+        before { allow(controller).to receive(:logged_in?).and_return(true) }
+        it 'should redirect to home_path' do
+          expect(subject).to redirect_to('www.greatschools.org/')
+        end
+        it 'should create subcription with params' do
+          expect(controller).to receive(:create_subscription).with(subscription_params)
+          subject
+        end
       end
-      it 'should flash error message' do
-        expect(controller).to receive(:flash_error).with('error')
-        subject
-      end
-      it 'should redirect to join_url' do
-        expect(controller).to receive(:redirect_to).with('join_url')
-        subject
+
+      context 'when logged out' do
+        before do 
+          allow(controller).to receive(:logged_in?).and_return(false) 
+          allow(controller).to receive(:log_in_required_message).and_return('error')
+          allow(controller).to receive(:join_url).and_return('join_url')
+        end
+        it 'should flash error message' do
+          expect(controller).to receive(:flash_error).with('error')
+          subject
+        end
+        it 'should redirect to join_url' do
+          result = post :create, subscription: subscription_params
+          expect(result).to redirect_to('join_url')
+        end
+        it 'should saved_deferred action with create_subscription_deferred and subscription params' do
+          expect(controller).to receive(:save_deferred_action).
+            with(:create_subscription_deferred, subscription_params)
+          subject
+        end
       end
     end
-    context 'with ajax' do
-     before do
-       allow(controller).to receive(:redirect_to)
-       allow(controller).to receive(:ajax?).and_return(true)
-       allow(controller).to receive(:join_url).and_return('join_url')
-     end
-      it 'should render with error message' do
-        render_response = {:json=>{:error=>"error"}, :status=>422}
-        expect(controller).to receive(:render).with(render_response)
-        subject
+
+    context 'without params gsnewsletter' do
+      subject { post :subscription_from_link }
+      it 'should redirect to home_path' do
+        expect(subject).to redirect_to('www.greatschools.org/')
       end
     end
   end

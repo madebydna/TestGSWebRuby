@@ -5,7 +5,7 @@
 
 <% show_breakdown_dropdown = bar_chart_collection.breakdowns.present? %>
 
-<div class=" data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(bar_chart_collection.title).gsub(/\s/,'-') %>">
+<div class=" data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(bar_chart_collection.original_data_type).gsub(/\s/,'-') %>">
   <% if show_breakdown_dropdown %>
     <%= render partial: 'school_profile/data_viz/bar_chart_breakdowns_dropdown',
                 locals: {
@@ -13,8 +13,6 @@
                   bar_chart_collection_index: bar_chart_collection_index,
                 }
     %>
-  <% end %>
-
 
   <div class="pvm">
     <span class="i-data-viz-state-avg"></span><span class="vat small"> = <%= t('.state_average_legend')%></span>
@@ -28,4 +26,4 @@
   </div>
 </div>
 
-
+<%end%>

@@ -32,7 +32,7 @@
     <span class="iconx16 i-16-share mt3"></span>
   </button>
   <ul class="dropdown-menu share-menu">
-    <p class="tac uc open-sans_sb">Share</p>
+    <p class="tac uc open-sans_sb"><%= t('.share') %></p>
     <li>
       <a class="js_shareFacebook js-gaClick pointer font-size-medium"
          data-ga-click-category='profile interactions - reviews'
@@ -42,7 +42,7 @@
          data-review-school-name="<%= review.school.name %>"
          data-review-comment="<%= review.comment %>"
          data-review-share-image="<%= image_url("share_review.png") %>">
-        <span class="iconx16 i-16-facebook mt3 mrs"></span>On Facebook
+        <span class="iconx16 i-16-facebook mt3 mrs"></span><%= t('.facebook') %>
       </a>
     </li>
     <li>
@@ -50,8 +50,8 @@
          data-ga-click-category='profile interactions - reviews'
          data-ga-click-action='share review'
          data-ga-click-label='Twitter' >
-      <span class="iconx16 i-16-twitter mt3 mrs"></span>On Twitter
-       </a>
+         <span class="iconx16 i-16-twitter mt3 mrs"></span><%= t('.twitter') %>
+     </a>
     </li>
     <li>
     <a class="js-gaClick font-size-medium" href="<%= mailto_href %>"
@@ -59,7 +59,7 @@
          data-ga-click-action='share review'
          data-ga-click-label='Email' >
       <span class="iconx16 i-16-envelop mt3 mrs"></span>
-        Via Email</a>
+        <%= t('.email') %></a>
     </li>
   </ul>
 </div>

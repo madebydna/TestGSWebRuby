@@ -198,7 +198,6 @@ module PdfConcerns
 
     db_schools = []
 
-    # binding.pry;
     if state.present?
       if collection_id.present? && collection_id>0 && is_high_school
         db_schools = School.for_collection_ordered_by_name(state, collection_id)

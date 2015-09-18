@@ -143,7 +143,7 @@ class OspController < ApplicationController
           entity_state: params[:state],
           entity_id: @school.id,
           value: response_value,
-          member_id: esp_membership_id,
+          member_id: current_user.id,
           created: submit_time,
           esp_source: "osp"
       }.stringify_keys!

@@ -12,12 +12,12 @@
       <div class='oh'>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam">
 
-      <h4 class='bottom mtn'>Upcoming events</h4>
+      <h4 class='bottom mtn'><%= t('.upcoming_events') %></h4>
             <% if (params[:city] && params[:state]) %>
-               <%= link_to('See all', city_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_city_encode(params[:city]))) %>
+               <%= link_to(t('.see_all'), city_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_city_encode(params[:city]))) %>
             <% end %>
             <% if (params[:state] && params[:city].nil?) %>
-               <%= link_to('See all', state_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_city_encode(params[:city]))) %>
+               <%= link_to(t('.see_all'), state_events_path(gs_legacy_url_encode(params[:state]), gs_legacy_url_city_encode(params[:city]))) %>
             <% end %>
       </div>
       <% important_events[:max_important_event_to_display].times do |i| %>
@@ -25,13 +25,13 @@
         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 pam upcoming-event">
           <div class="pull-left iconx48-cal i-48-calender-month-<%= event[:date].month %>">
             <div class="tac">
-              <h4 class='mtl'><%= event[:date].day %></h4>
+              <h4 class='mtl'><%= db_t(event[:date].day, default: event[:date].day) %></h4>
             </div>
           </div>
           <div class="pull-left plm">
-            <%= truncate(event[:description], length:30) %>
+            <%= truncate(db_t(event[:description], default: event[:description]), length:30) %>
             <br/>
-            <%= link_to('Find out more', event[:url], target: '_blank') %>
+            <%= link_to(t('.find_out_more'), event[:url], target: '_blank') %>
           </div>
         </div>
       <% end %>

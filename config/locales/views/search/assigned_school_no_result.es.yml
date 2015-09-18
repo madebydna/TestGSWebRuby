@@ -3,4 +3,4 @@ es:
   search:
     assigned_school_no_result:
       could_not_locate_assigned_school: No hemos podido localizar una escuela asignada a su dirección, póngase en contacto con su distrito escolar local para obtener más detalles.
-      label: Asignado escuela
+      label: Escuela asignada

@@ -100,9 +100,9 @@ class CategoryData < ActiveRecord::Base
     key.match(/\A\d+\z/) ? key.to_i : key
   end
 
-  def label
-    s = super
-    return s if s.blank?
+  def label(translate = true)
+    s = super()
+    return s if s.blank? || !translate
     I18n.db_t(s, default: s)
   end
 

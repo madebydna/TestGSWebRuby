@@ -158,7 +158,7 @@ describe Admin::OspController do
               osp_form_response_values = OspFormResponse.all.map { |item| JSON.parse(item.response).values.first }.flatten
               osp_form_response_values.each do |value_hash|
                 expect(value_hash['entity_state']).to eql(state)
-                expect(value_hash['member_id']).to eql(esp_membership.id)
+                expect(value_hash['member_id']).to eql(current_user.id)
                 expect(value_hash['entity_id']).to eql(school_id)
               end
             end

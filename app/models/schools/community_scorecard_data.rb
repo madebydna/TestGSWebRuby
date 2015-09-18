@@ -24,7 +24,10 @@ class CommunityScorecardData
       school_data = solr_response[:school_data]
       cachified_schools = get_cachified_schools(school_data)
 
-      cachified_schools.map { | cs | SchoolDataHash.new(cs, school_data_hash_options).data_hash }
+      cachified_schools.map do | cs |
+        data_hash = SchoolDataHash.new(cs, school_data_hash_options).data_hash
+        add_data_explanations!(data_hash)
+      end
     )
   end
 
@@ -38,7 +41,7 @@ class CommunityScorecardData
         if (state_average = value_hash[:state_average]).present?
           hd << {
             param: data_type,
-            data_type: I18n.t(data_type, scope: t_scope),
+            data_type: I18n.t(data_type, scope: collection_t_scope),
             state_average: I18n.t(:state_average, val: state_average, scope: t_scope),
           }
         end
@@ -56,12 +59,27 @@ class CommunityScorecardData
 
       {
         param: data_set,
-        data_type: I18n.t(data_set, scope: t_scope),
+        data_type: I18n.t(data_set, scope: collection_t_scope),
         state_average: I18n.t(:state_average_not_available, scope: t_scope),
       }
     end
 
-    validated_header_data.unshift({data_type: I18n.t(:school_info, scope: t_scope)}) #school info
+    validated_header_data.unshift({data_type: I18n.t(:school_info, scope: collection_t_scope)}) #school info
+  end
+
+  def add_data_explanations!(data_hash)
+    data_explanations.each do |data_type, explanation|
+      if data_hash[data_type]
+        data_hash[data_type][:explanation] = explanation
+      end
+    end
+    data_hash
+  end
+
+  def data_explanations
+    data_set_with_year_map.keys.each_with_object({}) do |data_type, h|
+      h[data_type.to_sym] = I18n.t("#{data_type}_explanation_html", scope: collection_t_scope)
+    end
   end
 
   #Todo later when solr layer is built, add appropriate whitelisting for solr params here or in school_data_service where necessary
@@ -130,5 +148,9 @@ class CommunityScorecardData
 
   def t_scope
     'models.schools.community_scorecard_data'
+  end
+
+  def collection_t_scope
+    "#{t_scope}.collection_id_#{@collection.id}"
   end
 end

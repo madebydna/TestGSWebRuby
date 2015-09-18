@@ -46,10 +46,22 @@ class MissingDatabaseTranslationChecker
         table: :'gs_schooldb.ethnicity',
         column: :name
       },
-      # {
-      #   table: :'gs_schooldb.hub_config',
-      #   column: :value
-      # }
+      {
+        table: :'gs_schooldb.hub_config',
+        column: :value,
+        filters: [
+          /^true$/,
+          /^false$/,
+          /\.jpg$/,
+          /\.png$/,
+          /\.gs$/,
+          /^https?:/,
+          /^([^a-zA-Z])+$/,
+          /^schools\/\?/,
+          /\#\d+$/,
+          /^\/[a-z\/-]+$/
+        ]
+      },
       {
         table: :'localized_profiles.response_values',
         column: :response_label
@@ -175,9 +187,18 @@ class MissingDatabaseTranslationChecker
       @expanded_column_values ||= (
         column_values.each_with_object([]) do |value, array|
           if value[0] == '{' && value[-1] == '}'
-            hash = JSON.parse(value) rescue nil
+            value = value.force_encoding('windows-1252').encode('utf-8') rescue value
+            text = value.dup
+            text.gsub!(/\n/, '')
+            text.gsub!(/\r/, '')
+            text.gsub!(/([\{\[,])\s*(\w+)\s?:/) { "#{$1}\"#{$2}\":" }
+            text.gsub!('\\\\', '\\')
+            text.gsub!(/,( )+\]/, ']')
+            text.gsub!('",}', '"}')
+            text.gsub!(/( )+/, ' ')
+            hash = JSON.parse(text) rescue nil
             values = []
-            values = values_from_hash(hash) if hash
+            values = values_from_hash(hash).map(&:to_s).map(&:strip).select(&:present?) if hash
             array.concat(values)
           elsif @delimiter
             array.concat(value.split(@delimiter))

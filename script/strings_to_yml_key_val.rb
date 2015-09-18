@@ -13,10 +13,23 @@ array = STDIN.to_a.sort.uniq
 
 hash = {}
 array.each do |text|
-  text = text.force_encoding('windows-1252').encode('utf-8')
+  text = text.force_encoding('windows-1252').encode('utf-8') rescue text
   text.strip!
-  next if text.to_i.to_s == text || text == 'false' || text == 'true' || text.empty?
+  next if text.to_i.to_s == text ||
+    text == 'false' ||
+    text == 'true' ||
+    text.empty? ||
+    text.match(/\.jpg$/) ||
+    text.match(/\.png$/) ||
+    text.match(/\.gs$/) ||
+    text.match(/^https?:/) ||
+    text.match(/^([^a-zA-Z])+$/) ||
+    text.match(/^schools\/\?/) ||
+    text.match(/\#\d+$/) ||
+    text.match(/^\/[a-z\/-]+$/)
+
   key = text.gsub('.', '')
+  key.strip!
   hash[key] = text
 end
 

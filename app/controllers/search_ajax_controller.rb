@@ -13,7 +13,7 @@ class SearchAjaxController < ApplicationController
     id = get_id
     unless state.nil? || id.nil?
       school = School.find_by_state_and_id(state, id)
-      if school.active?
+      if school.present? && school.active?
         school = decorate_school school
         @school = calculate_fit_score(school, state, city)
       end

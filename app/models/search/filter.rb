@@ -1,7 +1,7 @@
 #ToDo Tests Needed
 class Filter
 
-  attr_accessor :label, :unique_label, :name, :value, :display_type, :filters, :sort_order, :has_children, :cache_key
+  attr_accessor :label, :unique_label, :name, :value, :icon, :display_type, :filters, :sort_order, :has_children, :cache_key
 
   def initialize(attributes)
     @label = attributes[:label]
@@ -10,6 +10,7 @@ class Filter
     else
       @unique_label = @label
     end
+    @icon = attributes[:icon] # only required for filters with icons i.e. sports
     @value = attributes[:value] #only required for actual filters
     @display_type = attributes[:display_type] #required
     @filters = attributes[:filters]
