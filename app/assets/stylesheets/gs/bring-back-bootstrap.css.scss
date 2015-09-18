@@ -48,6 +48,19 @@ $half-gutter-width: ($grid-gutter-width / 2);
     @include clearfix();
   }
 
+  // For use on pages that have some gs-bootstrap and some gutter-less bootstrap
+  .container-fix {
+    @media (min-width: $screen-lg-min){
+      padding-left: 10px;
+    }
+    &.container-fluid {
+      @media (max-width: ($screen-lg + $grid-gutter-width)) {
+        padding-left:  10px;
+        padding-right: 10px;
+      }
+    }
+  }
+
   .row {
     @include make-row();
   }
