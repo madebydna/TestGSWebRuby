@@ -115,7 +115,7 @@ top: -0.35em;
 Put this Section's Description here.
 You can use any HTML to write it, but it looks nice with <p> tags.
 -->
-<p></p>
+<p>Using more centered text, more colors where appropriate, and large headlines and tagline text on marketing and hub focused pages</p>
 
 <% end # of description %>
 <%= begin_section_content do %>
@@ -126,9 +126,29 @@ You can use any HTML to write it, but it looks nice with <p> tags.
 <p style="font-size:18px; font-weight: 400; text-align:center;">tagline text mobile</p>
 <br/>
 <p>Other styles used on marketing-heavy and hub-style pages can include regular header styles (h1,h2,h3,h4) that are often centered and using different colors.</p>
-<style>
 
-</style>
+<% end # of content. %>
+<% end # of section. %>
+
+<%
+# ::BEGIN:: code for one section.
+# Please only edit where there is HTML or HTML comments.
+# HTML comments look like this: <!-- Put your description here -->.
+%>
+<%= begin_section_with_title('fonts we use') do %>
+<%= begin_section_description do %>
+<!--
+Put this Section's Description here.
+You can use any HTML to write it, but it looks nice with <p> tags.
+-->
+<p>Trying to limit our variants and different fonts to streamline load times and code base</p>
+
+<% end # of description %>
+<%= begin_section_content do %>
+<p style="font-weight:bold;">Open Sans bold (NOT semibold)</p>
+<p>Open Sans regular</p>
+<p style="font-style:italic;">Open Sans italic</p>
+<p style="font-family:'RobotoSlab-Light';">Roboto slab light</p>
 
 <% end # of content. %>
 <% end # of section. %>
