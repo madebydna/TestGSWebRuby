@@ -33,7 +33,7 @@
 
     <%= render partial: "shared/partners/promo_delegator",
                locals: {
-                 collections: @school.collections,
+                 promos: Collection.promos_for(@school.collections),
                  partial: current_partial,
                }
     %>
