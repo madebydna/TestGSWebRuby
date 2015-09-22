@@ -14,13 +14,12 @@
 //= require jquery.cookie.js
 //= require dataTables/jquery.dataTables
 //= require lodash
+//= require ./resources/typeahead_modified.bundle
+//= require ./resources/omniture
 //= require ./util/util
 //= require ./util/expand_toggle
-//= require ./util/responsive_images
 //= require ./util/tracking
-//= require ./util/popup
-//= require ./resources/omniture
-//= require ./resources/fastclick
+//= require ./util/responsive_images
 //= require auth
-//= require search
-//= require ./resources/typeahead_modified.bundle
+//= require autocomplete
+

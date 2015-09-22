@@ -6,7 +6,10 @@
 //= require ads
 //= require ./localized_profiles/search_results
 //= require resources
+//= require ./resources/fastclick
+//= require ./util/popup
 //= require util
+//= require search
 //= require localized_profiles
 //= require topical_reviews
 //= require guided_search
