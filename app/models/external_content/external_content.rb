@@ -13,17 +13,14 @@ class ExternalContent < ActiveRecord::Base
     # define method to get content
     define_singleton_method("#{content_key}_content") do
       content_object = find_by_content_key("#{content_key}")
-      content_object.content if content_object
+      JSON.parse(content_object.content) rescue nil if content_object
     end
 
     # define method to get a content-key-specific object
     define_singleton_method("#{content_key}") do
-      content = send("#{content_key}_content")
+      hash = send("#{content_key}_content")
       klass = CONTENT_KEY_TO_CLASS_MAPPING[content_key]
-      if content
-        hash = JSON.parse(content) rescue nil
-        klass.new(hash) if hash
-      end
+      klass.new(hash) if hash
     end
   end
 
