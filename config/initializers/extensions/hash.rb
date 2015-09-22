@@ -84,6 +84,16 @@ class Hash
 
     sought_value
   end
+
+  def gs_sort_by_key(recursive = false, &block)
+    self.keys.sort(&block).reduce({}) do |seed, key|
+      seed[key] = self[key]
+      if recursive && seed[key].is_a?(Hash)
+        seed[key] = seed[key].gs_sort_by_key(true, &block)
+      end
+      seed
+    end
+  end
 end
 
 #can use HashWithSetterCallback class below or just mixin this module into your hash
