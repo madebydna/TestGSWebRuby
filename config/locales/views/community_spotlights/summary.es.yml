@@ -96,3 +96,50 @@ es:
             performance_level: average
             value_html: 30<sup>%</sup>
             state_average: Prom. 31%
+      collection_id_17:
+        description_above_fold: ¿Cómo es el rendimiento de nuestras escuelas públicas locales al preparar a todos los estudiantes para el éxito?
+        description_below_fold: Por todo el área de la Bahía, históricamente muchos estudiantes se han quedado atrás académicamente. ¡Vea cuales escuelas están cambiando las probabilidades y descubra cómo su escuela se compara!
+        column_1:
+          title: TASA DE GRADUADOS EN EL ÁREA DE LA BAHÍA
+          datapoint_1:
+            title: Estudiantes Hispanos
+            performance_level: below_average
+            value_html: 74<sup>%</sup>
+            state_average: Prom. 76%
+          datapoint_2:
+            title: Estudiantes Blancos
+            performance_level: above_average
+            value_html: 91<sup>%</sup>
+            state_average: Prom. 89%
+          datapoint_3:
+            title: Estudiantes Asiático
+            performance_level: average
+            value_html: 93<sup>%</sup>
+            state_average: Prom. 92%
+          datapoint_4:
+            title: Estudiantes Afroamericanos
+            performance_level: below_average
+            value_html: 68<sup>%</sup>
+            state_average: Prom. 68%
+        column_2:
+          title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
+          datapoint_1:
+            title: Estudiantes Hispanos
+            performance_level: below_average
+            value_html: 34<sup>%</sup>
+            state_average: Prom. 32%
+          datapoint_2:
+            title: Estudiantes Blancos
+            performance_level: above_average
+            value_html: 60<sup>%</sup>
+            state_average: Prom. 49%
+          datapoint_3:
+            title: Estudiantes Asiático
+            performance_level: above_average
+            value_html: 75<sup>%</sup>
+            state_average: Prom. 71%
+          datapoint_4:
+            title: Estudiantes Afroamericanos
+            performance_level: average
+            value_html: 30<sup>%</sup>
+            state_average: Prom. 31%
