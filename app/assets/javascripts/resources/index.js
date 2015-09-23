@@ -3,7 +3,7 @@
 //  require ./fastclick
 //= require ./galleria-1.3.1
 //= require ./galleria.classic
-//= require ./handlebars-v1.3.0
+//= require ./handlebars-v4.0.2
 //  require ./jquery.cookie
 //= require ./jquery.touchSwipe
 //  require ./omniture

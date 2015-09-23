@@ -13,10 +13,13 @@
 // Place all the styles related to the Pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "resources/bootstrap/sass/gs-variables";
-@import "resources/bootstrap/sass/variables";
-@import "resources/bootstrap/sass/mixins";
-@import "resources/bootstrap/sass/gs-mixins";
+
+// REMOVE ME! We need to figure out @extend usage first though.
+@import "application";
+
+@import "resources/bootstrap/bootstrap/gs-variables";
+@import "resources/bootstrap/bootstrap/variables";
+@import "resources/bootstrap/bootstrap/mixins";
 @import "gs/fonts-opensans";
 @import "gs/fonts-opensans-condbold";
 @import "gs/fonts-amaticsc";

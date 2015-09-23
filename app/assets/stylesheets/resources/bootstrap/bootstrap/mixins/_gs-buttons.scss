@@ -1,0 +1,126 @@
+// Button variants
+// -------------------------
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+@mixin button-variant($color, $background, $border, $background_active, $active_color, $hover_border:"") {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+  border-bottom-width: 3px;
+  border-top: $border;
+  border-right: $border;
+  border-left: $border;
+
+  &:hover,
+  &:focus {
+    color: $active_color;
+    background-color:  #009edc;
+    border-color: $hover_border;
+  }
+  .open & { &.dropdown-toggle {
+      color: $color;
+      background-color: color-button-darken($background);
+      border-color: color-button-darken($border);
+  } }
+  &:active,
+  &.active {
+    background-image: none;
+    border-color: $hover_border;
+  }
+  .open & { &.dropdown-toggle {
+      background-image: none;
+  } }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+      border-color: $border;
+    }
+  }
+}
+@mixin button-default-variant($color, $background, $border, $background_active, $active_color, $hover_border:"", $active_border:"") {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+  border-bottom-width: 3px;
+
+  &:hover,
+  &:focus {
+    color: $active_color;
+    background-color: $background;
+    border-color: $hover_border;
+  }
+  .open & { &.dropdown-toggle {
+      color: $color;
+      background-color: color-button-darken($background);
+      border-color: color-button-darken($border);
+  } }
+  &:active,
+  &.active {
+    background-image: none;
+    background-color: $active_border;
+    color: $background_active;
+    border-color: $active_border;
+  }
+  .open & { &.dropdown-toggle {
+      background-image: none;
+  } }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $background;
+      border-color: $border;
+    }
+  }
+}
+
+@mixin button-toggle-variant($color, $background, $border, $background_active, $active_color, $hover_border:"") {
+  color: $color;
+  background-color: $background;
+  border-color: $border;
+  border-bottom-width: 3px;
+
+  &.btn-checkbox-square {
+    border-bottom-width: 1px;
+    border-color: grey;
+  }
+
+  &:hover
+  {
+    color: $hover_border;
+    background-color: $background;
+    border-color: $hover_border;
+  }
+  .open & { &.dropdown-toggle {
+      color: $color;
+      background-color: color-button-darken($background);
+      border-color: color-button-darken($border);
+  } }
+  &:active,
+  &.active {
+    background-color: $background_active;
+    color: $active_color;
+    border-color: $background_active;
+  }
+  .open & { &.dropdown-toggle {
+      background-image: none;
+  } }
+}
+
+// Button sizes
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  line-height: $line-height;
+  border-radius: $border-radius;
+}
