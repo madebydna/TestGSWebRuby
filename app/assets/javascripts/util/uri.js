@@ -365,3 +365,24 @@ GS.uri.Uri.getQueryStringFromFormElements = function($elements) {
 GS.uri.Uri.changeFormAction = function(action, formObject) {
     $(formObject).attr("action", action);
 };
+
+GS.uri.Uri.initLanguageLinkListener = function() {
+  $('.js-changeLanguage').on('click', function(e) {
+    var label = $(this).data('label');
+    analyticsEvent('language selection', 'global nav bar', label, 'gaClickValue not defined');
+
+    var queryString = getQueryStringWithLang(this);
+    GS.uri.Uri.goToPage(GS.uri.Uri.getPath() + queryString);
+  })
+
+  var getQueryStringWithLang = function(elem) {
+    var language = $(elem).data('language');
+    var queryData = GS.uri.Uri.getQueryData();
+    if (language !== null && language.length > 0) {
+      queryData['lang'] = language;
+    } else {
+      delete queryData.lang;
+    }
+    return GS.uri.Uri.getQueryStringFromObject(queryData);
+  };
+};
