@@ -22,4 +22,6 @@
 //= require ./util/responsive_images
 //= require auth
 //= require autocomplete
+//= require search
+//= require ./page_initializers/header_init
 
