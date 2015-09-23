@@ -42,6 +42,23 @@ $(function() {
     GS.facebook.init();
   });
 
+  if ($('.js-fb-page-plugin')[0]) {
+    jQuery(function () {
+      var opts = {
+        fbPagePluginDiv: jQuery('.js-fb-page-plugin').first(),
+        fbPagePluginFallbackDiv: jQuery('.js-fb-page-plugin-fallback').first(),
+        tooShortCounter: 0,
+        justRightCounter: 0
+      };
+
+      opts.intervalId = window.setInterval(GS.facebook.checkIframeHeight.bind(undefined, opts, jQuery), 50);
+
+      // Stop monitoring after at most 15 seconds. e.g. if Facebook failed to insert the iframe.
+      window.setTimeout(function () {
+        window.clearInterval(opts.intervalId);
+      }, 15000);
+    });
+  }
 
 
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,

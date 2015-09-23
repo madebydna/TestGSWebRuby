@@ -626,8 +626,4 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 })(gon.state_abbr);
 
-if (gon.pagename == "SearchResultsPage") {
-   $(document).ready(function() {
-       GS.search.results.init();
-   });
-}
+

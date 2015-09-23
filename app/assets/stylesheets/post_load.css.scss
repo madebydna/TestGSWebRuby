@@ -1,0 +1,46 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+ */
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "resources/bootstrap/sass/gs-variables";
+@import "resources/bootstrap/sass/variables";
+@import "resources/bootstrap/sass/mixins";
+@import "resources/bootstrap/sass/gs-mixins";
+@import "gs/fonts-opensans";
+@import "gs/fonts-opensans-condbold";
+@import "gs/fonts-amaticsc";
+@import "gs/fonts-robotoslab-light";
+@import "sprites/*";
+@import "gs/tables";
+@import "resources/tables";
+@import "resources/galleria.classic";
+@import "resources/bootstrap/social-buttons";
+@import "resources/bootstrap-select";
+@import "resources/slick";
+@import "gs/objects/rating_background";
+@import "gs/search_compare";
+@import "gs/objects/search_area_layout";
+@import "gs/objects/signin_layout";
+@import "gs/objects/district_city_layout";
+@import "gs/objects/topical_reviews_layout";
+@import "gs/objects/modal_layout";
+@import "gs/objects/community_spotlights";
+@import "gs/objects/share_menu";
+@import "resources/datatables/jquery.datatables";
+@import "gs/style_guide/style_guide";
+@import "gs/objects/osp_landing_page";
+@import "gs/objects/sel_promo_banner";
+@import "gs/bring-back-bootstrap";
+@import "gs/data-viz";
+@import "gs/objects/partner_promos";
