@@ -1,3 +1,4 @@
+GS = GS || {}
 GS.auth = GS.auth || (function(facebook) {
 
     var REGISTRATION_AND_LOGIN_URL = "/register.json";

@@ -1,9 +1,9 @@
 // This combined file will be loaded after load complete by js.
-//= require auth
 // require ./resources/typeahead_modified.bundle
 // require ./resources/handlebars-v4.0.2
 // require ./util/window.sizing
 // require ./util/util
+//= require auth
 //= require autocomplete
 //= require google_maps
 // require ./localized_profiles/facebook_like_box
