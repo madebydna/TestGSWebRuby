@@ -16,6 +16,7 @@
 //= require lodash
 //= require ./resources/typeahead_modified.bundle
 //= require ./resources/omniture
+//= require ./resources/handlebars-v4.0.2
 //= require ./util/window.sizing
 //= require ./util/util
 //= require ./util/expand_toggle
