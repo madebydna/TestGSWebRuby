@@ -13,7 +13,6 @@
 //= require localized_profiles
 //= require topical_reviews
 //= require guided_search
-//= require google_maps
 //= require account_management
 //= require community_scorecards
 //= require page_initializers

@@ -23,5 +23,6 @@
 //= require auth
 //= require autocomplete
 //= require search
+//= require google_maps
 //= require ./page_initializers/header_init
 
