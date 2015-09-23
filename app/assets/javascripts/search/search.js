@@ -507,14 +507,14 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var setupToolTip = function() {
-      console.log("HELLO")
-      //$('.js-open-tooltip').tooltip('show');
+      console.log("HELLO");
+      $('.js-open-tooltip').tooltip('show');
       //$('.js-open-tooltip').tooltip('show', {
       //
       //  position: { my: "center", at: "right" }
       //});
       //$('.js-open-tooltip').tooltip('show');
-      $('[data-toggle="tooltip"]').tooltip("show");
+      //$('[data-toggle="tooltip"]').tooltip("show");
     };
     return {
         init:init,
