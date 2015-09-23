@@ -507,6 +507,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var setupToolTip = function() {
+      console.log("HELLO")
         $('.js-open-tooltip').tooltip('show');
 
     };

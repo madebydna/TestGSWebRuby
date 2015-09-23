@@ -9,11 +9,11 @@
 //= require ./resources/fastclick
 //= require ./util/popup
 //= require util
-//= require search
 //= require localized_profiles
 //= require topical_reviews
 //= require guided_search
 //= require account_management
 //= require community_scorecards
+//= require search
 //= require page_initializers
 
