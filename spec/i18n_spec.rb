@@ -12,10 +12,10 @@ describe 'I18n' do
   end
 
   GsI18n::I18nManager.new.files.each do |i18n_file|
-    describe "#{i18n_file.file}" do
+    describe "#{i18n_file.filename}" do
 
     end
-    it "#{i18n_file.file} should use locale #{i18n_file.filename_locale}" do
+    it "#{i18n_file.filename} should use locale #{i18n_file.filename_locale}" do
       expect(i18n_file.yaml_locale).to eq(i18n_file.filename_locale)
     end
   end
