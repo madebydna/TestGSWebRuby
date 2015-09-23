@@ -54,6 +54,7 @@ class Cacher
   def self.cacher_for(key)
     {
         test_scores:      TestScoresCaching::BreakdownsCacher,
+        performance:      PerformanceCaching::PerformanceCacher,
         characteristics:  CharacteristicsCaching::CharacteristicsCacher,
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,

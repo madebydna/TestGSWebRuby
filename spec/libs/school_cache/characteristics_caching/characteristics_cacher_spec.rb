@@ -65,23 +65,20 @@ describe CharacteristicsCaching::CharacteristicsCacher do
   let(:unconfigured_ethnicity_decorator) { Hashie::Mash.new(unconfigured_ethnicity_result) }
   let(:results_hash) { { 'Planet of origin' => [result_hash] } }
 
-  let(:all_results) do {
-    # data_type_id => [data_sets]
-    1 => [
-      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2010, school_value: 10, state_value: 20}),
-      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2011, school_value: 20, state_value: 20}),
-      Hashie::Mash.new({breakdown_id: 13, subject_id: nil, year: 2012, school_value: 20, state_value: 20}),
-      Hashie::Mash.new({breakdown_id: 14, subject_id: nil, year: 2013, school_value: 20, state_value: 20}),
-      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2000, school_value: nil, state_value: nil}),
-    ],
-    2 => [
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2013, school_value: 50, state_value: 40}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2014, school_value: 70, state_value: 30}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 6, year: 2010, school_value: 70, state_value: 30}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 7, year: 2011, school_value: 70, state_value: 30}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2000, school_value: nil, state_value: nil}),
+  let(:all_results) do
+    [
+      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2010, school_value: 10, state_value: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2011, school_value: 20, state_value: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 13, subject_id: nil, year: 2012, school_value: 20, state_value: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 14, subject_id: nil, year: 2013, school_value: 20, state_value: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2000, school_value: nil, state_value: nil, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2013, school_value: 50, state_value: 40, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2014, school_value: 70, state_value: 30, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 6, year: 2010, school_value: 70, state_value: 30, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 7, year: 2011, school_value: 70, state_value: 30, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2000, school_value: nil, state_value: nil, data_type_id: 2}),
     ]
-  } end
+  end
 
   let(:historical_data_keys) { [ :school_value_2010, :school_value_2011, :state_average_2010, :state_average_2011 ] }
   let(:wrong_historical_data_keys) { [ :school_value_2012, :school_value_2013, :state_average_2012, :state_average_2013 ] }

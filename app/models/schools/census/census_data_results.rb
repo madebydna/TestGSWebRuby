@@ -19,7 +19,7 @@ class CensusDataResults
 
   def initialize(results)
     @results = results
-    @all_results = Hash.new([])
+    @all_results = []
   end
 
   # won't filter out year zero
@@ -39,7 +39,7 @@ class CensusDataResults
     max_years = {}
     data_types.each do |k,v|
       # Save all data
-      @all_results[k] = v
+      @all_results.push(*v)
 
       # Throw out years where associated values are nil
       data_with_school_values = v.reject { |data_set| data_set.census_data_school_value.nil? }

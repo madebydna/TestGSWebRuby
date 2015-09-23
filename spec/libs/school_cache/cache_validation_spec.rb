@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CharacteristicsCaching::Validation do
+describe CacheValidation do
   let(:multi_source_ethnicity_data) {
     {'Ethnicity' =>
          [{year: 2012,
@@ -103,19 +103,19 @@ describe CharacteristicsCaching::Validation do
   end
 
   describe '#validate_format!' do
-    before { cacher.instance_variable_set(:@characteristics, data_with_empty_values) }
+    before { cacher.instance_variable_set(:@cache, data_with_empty_values) }
     it 'should remove key/value pairs that have an empty array as a value' do
       empty_key_value = data_with_empty_values.select {|k,v| v.empty?}
       expect(data_with_empty_values).to include(empty_key_value)
       cacher.validate_format!
-      validated_data = cacher.instance_variable_get(:@characteristics)
+      validated_data = cacher.instance_variable_get(:@cache)
       expect(validated_data).to_not include(empty_key_value)
     end
     it 'should not remove key/value pairs that have values' do
       data_with_key_values = data_with_empty_values.select {|k,v| v.present?}
       expect(data_with_empty_values).to include(data_with_key_values)
       cacher.validate_format!
-      validated_data = cacher.instance_variable_get(:@characteristics)
+      validated_data = cacher.instance_variable_get(:@cache)
       expect(validated_data).to include(data_with_key_values)
     end
   end
