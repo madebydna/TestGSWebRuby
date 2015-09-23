@@ -30,7 +30,7 @@ describe 'School Profile Overview Page' do
   end
 
   with_shared_context 'Given basic school profile page' do
-    with_shared_context 'with Alameda High School' do
+    with_shared_context 'with Alameda High School', js: true do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
 
