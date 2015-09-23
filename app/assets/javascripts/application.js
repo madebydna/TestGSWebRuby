@@ -16,13 +16,14 @@
 //= require lodash
 //= require ./resources/typeahead_modified.bundle
 //= require ./resources/omniture
+//= require ./util/window.sizing
 //= require ./util/util
 //= require ./util/expand_toggle
 //= require ./util/tracking
 //= require ./util/responsive_images
 //= require auth
 //= require autocomplete
-//= require search
+//= require ./search/search
 //= require google_maps
 //= require ./page_initializers/header_init
 

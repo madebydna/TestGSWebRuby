@@ -1,2 +1,2 @@
 //= require ./assigned_schools
-//= require ./search
+// require ./search
