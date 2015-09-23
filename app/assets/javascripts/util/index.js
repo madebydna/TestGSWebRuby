@@ -11,7 +11,7 @@
 //= require ./localStorage
 //= require ./optimizely
 //= require ./photo_upload
-//  require ./popup
+//=  require ./popup
 //  require ./responsive_images
 //= require ./selectpicker
 //= require ./session_check
@@ -21,5 +21,5 @@
 //  require ./tracking
 //= require ./uri
 //= require ./url_params
-//  require ./util
-// require ./window.sizing
+//= require ./util
+//= require ./window.sizing
