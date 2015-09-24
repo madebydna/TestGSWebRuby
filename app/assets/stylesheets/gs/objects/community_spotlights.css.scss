@@ -79,6 +79,8 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   }
   @include csc-table-blue-highlight(2, $csc-table-blue-border);
   @include csc-table-blue-highlight(3, $csc-table-blue-border);
+  @include csc-table-blue-highlight(4, $csc-table-blue-border);
+  @include csc-table-blue-highlight(5, $csc-table-blue-border);
 
   .school-info {
     .name {

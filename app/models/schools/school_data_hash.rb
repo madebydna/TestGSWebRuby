@@ -1,8 +1,8 @@
 class SchoolDataHash
 
-  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :data_sets_and_years, :link_helper
+  attr_accessor :cachified_school, :cache, :characteristics, :performance, :data_hash, :options, :sub_group_to_return, :data_sets_and_years, :link_helper
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
-  VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
+  VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g', 'caaspp_math', 'caaspp_english' ]
 
   SUBGROUP_MAP = Hash.new('All students').merge!({
     white:                             'White',
@@ -29,6 +29,7 @@ class SchoolDataHash
     @cachified_school = cachified_school
     @cache = cachified_school.cache_data || {}
     @characteristics = @cache['characteristics'] || {}
+    @performance = @cache['performance'] || {}
     @data_hash = {}
     @link_helper = options[:link_helper]
     @data_sets_and_years = options[:data_sets_and_years]
@@ -63,6 +64,22 @@ class SchoolDataHash
       value['original_breakdown'] == breakdown_to_use
     end
 
+    get_data(breakdown, year)
+  end
+
+
+  def get_performance_data(data_set, year, subject, breakdown_to_use = sub_group_to_return)
+    data = performance[data_set]
+
+    breakdown = [*data].find do |value|
+      value['original_breakdown'] == breakdown_to_use && value['subject'] == subject
+    end
+
+    get_data(breakdown, year)
+  end
+
+
+  def get_data(breakdown, year)
     if breakdown.present?
       {
         show_no_data_symbol: breakdown["school_value_#{year}"].nil?,
@@ -83,6 +100,16 @@ class SchoolDataHash
   def add_a_through_g
     val = get_characteristics_data('Percent of students who meet UC/CSU entrance requirements', data_sets_and_years[:a_through_g])
     data_hash.merge!({a_through_g: val})
+  end
+
+  def add_caaspp_math
+    val = get_performance_data('California Assessment of Student Performance and Progress (CAASPP)', data_sets_and_years[:caaspp_math], 'Math')
+    data_hash.merge!({caaspp_math: val})
+  end
+
+  def add_caaspp_english
+    val = get_performance_data('California Assessment of Student Performance and Progress (CAASPP)', data_sets_and_years[:caaspp_english], 'English Language Arts')
+    data_hash.merge!({caaspp_english: val})
   end
 
 end
