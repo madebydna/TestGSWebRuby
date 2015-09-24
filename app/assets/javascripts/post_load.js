@@ -16,5 +16,6 @@
 //= require community_scorecards
 //= require dropzone.min
 //= require page_initializers
+//= require modals
 
 
