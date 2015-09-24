@@ -2,7 +2,7 @@ var GS = GS || {};
 
 GS.modal = GS.modal || {};
 
-GS.modal.manager = GS.modal.intializer || (function ($) {
+GS.modal.manager = GS.modal.manager || (function ($) {
     var GLOBAL_MODAL_CONTAINER_SELECTOR = '.js-modal-container';
 
     var insertModalIntoDom = function (modal) {
@@ -36,7 +36,8 @@ GS.modal.manager = GS.modal.intializer || (function ($) {
 })(jQuery);
 
 GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
-    var MODAL_SELECTOR = 'signupModal';
+    var MODAL_CLASS = 'signupModal';
+    var MODAL_SELECTOR = '.' + MODAL_CLASS;
     var SIGNUP_SCHOOL_SELECTOR = '#signup-school-form';
     var FAVORITE_SCHOOL_FORM_SELECTOR = '#new_favorite_school_ajax';
     var SAVE_THIS_SCHOOL_FORM_SELECTOR = '.js-save-this-school-form-ajax';
@@ -46,30 +47,52 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     var ERROR_CONTAINER_SELECTOR = '.js-signup-email-errors';
     var SIGNUP_SUCCESS_MESSAGE_SELECTOR = '.js-signup-success';
 
+    var $getModal = function() {
+      return $(MODAL_SELECTOR);
+    };
+
+    var $getSubmitButton = function() {
+      return $getModal().find(SUBMIT_BUTTON_SELECTOR);
+    };
+
+    var $getSignupSchoolForm = function() {
+      return $(SIGNUP_SCHOOL_SELECTOR);
+    };
+
+    var $getFavoriteSchoolForm = function() {
+      return $(FAVORITE_SCHOOL_FORM_SELECTOR);
+    };
+
+    var $getSaveThisSchoolForm = function() {
+      return $(SAVE_THIS_SCHOOL_FORM_SELECTOR);
+    };
+
     var initializeSignupForm = function () {
-        $(SIGNUP_SCHOOL_SELECTOR).on('ajax:success', function (e, data, status, xhr) {
-            $(SUBMIT_BUTTON_SELECTOR).hide();
+      var $submitButton = $getSubmitButton();
+        $getSignupSchoolForm().on('ajax:success', function (e, data, status, xhr) {
+            $submitButton.hide();
             if( shouldSignUpForSponsor() ) {
               GS.subscription.sponsorsSignUp();
             }
-            $(SAVE_THIS_SCHOOL_FORM_SELECTOR).submit();
+            $getSaveThisSchoolForm().submit();
         }).on('ajax:error', function (e, xhr, status, error) {
-            $(SUBMIT_BUTTON_SELECTOR).show();
+            $submitButton.show();
             showError(xhr.responseJSON);
         });
     };
 
     var initializeSaveSchoolForm = function () {
-        $(SIGNUP_SCHOOL_SELECTOR).parsley();
-        $(FAVORITE_SCHOOL_FORM_SELECTOR).on('ajax:success', function (e, data, status, xhr) {
-            $(SUBMIT_BUTTON_SELECTOR).prop('disabled', true);
-            $(SUBMIT_BUTTON_SELECTOR).show();
+      var $submitButton = $getSubmitButton();
+        $getSignupSchoolForm().parsley();
+        $getFavoriteSchoolForm().on('ajax:success', function (e, data, status, xhr) {
+            $submitButton.prop('disabled', true);
+            $submitButton.show();
             $(SIGNUP_SUCCESS_MESSAGE_SELECTOR).slideToggle();
             setTimeout(function () {
                 hideModal();
             }, SUCCESS_MESSAGE_TIME)
         }).on('ajax:error', function (e, xhr, status, error) {
-            $(SUBMIT_BUTTON_SELECTOR).show();
+            $submitButton.show();
             showError(xhr.responseJSON);
         });
     };
@@ -81,11 +104,11 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     };
 
     var show = function () {
-        $('.' + MODAL_SELECTOR).modal('show');
+        $getModal().modal('show');
     };
 
     var hideModal = function () {
-        $('.' + MODAL_SELECTOR).modal('hide');
+        $getModal().modal('hide');
     };
 
     var initialize = function () {
@@ -98,7 +121,7 @@ GS.modal.signUpForSchool = GS.modal.signUpForSchool || (function ($) {
     };
 
     var getModalCssClass = function () {
-        return MODAL_SELECTOR;
+        return MODAL_CLASS;
     };
 
     var url = function () {
