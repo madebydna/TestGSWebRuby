@@ -2,7 +2,7 @@ class CommunityScorecardData
 
   attr_accessor :school_data_params
 
-  SCHOOL_CACHE_KEYS = 'characteristics'
+  SCHOOL_CACHE_KEYS = ['characteristics', 'performance']
 
   def initialize(school_data_params={})
     @collection = Collection.find(school_data_params[:collectionId])
@@ -114,33 +114,26 @@ class CommunityScorecardData
   end
 
   def get_cachified_schools(school_data)
-    grouped_schools = get_schools_grouped_by_state(school_data)
-
-    query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
-    grouped_schools.each { | state, schools | query.include_schools(state, schools.map(&:id)) }
-    query_results = query.query
-
-    schools = grouped_schools.values.flatten
-    school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+    schools = schools_from_school_data(school_data)
+    school_cache_results = SchoolCache.cached_results_for(schools, SCHOOL_CACHE_KEYS)
     cachified_schools = school_cache_results.decorate_schools(schools)
 
     sort_schools_by_school_data(school_data, cachified_schools)
   end
 
   def sort_schools_by_school_data(school_data, schools)
-    #make hash using state & school_id as key
+    #make hash using state & school id as key
     schools = schools.each_with_object({}) { |s, h| h[[s.state.downcase, s.id]] = s }
 
     #reorder schools to order thats in school_data
-    school_data.map { |sd| schools[[sd.state.downcase, sd.school_id]] }
+    school_data.map { |sd| schools[[sd.state.downcase, sd.id]] }
   end
 
-  def get_schools_grouped_by_state(school_data)
+  def schools_from_school_data(school_data)
     school_data_grouped_by_state = school_data.group_by { |sd| sd.state }
 
-    school_data_grouped_by_state.each_with_object({}) do | (state, sd_array), h | #bulk query for all schools
-      ids = sd_array.map(&:school_id)
-      h[state] = School.on_db(state).where(id: ids).to_a
+    school_data_grouped_by_state.each_with_object([]) do | (state, sd_array), a | #bulk query for all schools
+      a.push(*School.on_db(state).where(id: sd_array.map(&:id)).to_a)
     end
   end
 

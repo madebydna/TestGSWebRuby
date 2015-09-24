@@ -16,9 +16,9 @@ describe SchoolDataHash do
 
   let(:school_name)  { 'Alpha High' }
   let(:school_type)  { 'public'     }
-  let(:school_level) { '9-13'       }
+  let(:school_level) { '9-12'       }
   let(:school_url)   { '/california/alpha-high-city/1-alpha-high'  }
-  let(:school) { FactoryGirl.create(:school, name: school_name, type: school_type) }
+  let(:school) { FactoryGirl.create(:school, name: school_name, type: school_type, level: "9,10,11,12") }
   let(:link_helper) { Object.new }
   let(:characteristics) do
     {
@@ -44,10 +44,7 @@ describe SchoolDataHash do
       }
     }
   end
-
-  before do
-    allow(school).to receive(:process_level).and_return(school_level)
-  end
+  let(:cachified_school) { SchoolCacheDecorator.new(school, characteristics) }
 
   before do
     allow(link_helper).to receive(:school_path).and_return(school_url)
@@ -61,8 +58,7 @@ describe SchoolDataHash do
     context 'with no options' do
 
       subject do
-        allow(school).to receive(:cache_data).and_return(nil)
-        SchoolDataHash.new(school, {link_helper: link_helper}).data_hash
+        SchoolDataHash.new(cachified_school, {link_helper: link_helper}).data_hash
       end
 
       it 'should add the basic school info' do
@@ -88,13 +84,10 @@ describe SchoolDataHash do
           {'a_through_g' => 2014, 'graduation_rate' => 2013}
         ].each do |data_sets_and_years|
           context "with #{data_sets_and_years} configured" do
-            before do
-              allow(school).to receive(:cache_data).and_return(characteristics)
-            end
 
             subject do
               SchoolDataHash.new(
-                school,
+                cachified_school,
                 data_sets_and_years: data_sets_and_years.with_indifferent_access,
                 sub_group_to_return: breakdown,
                 link_helper: link_helper

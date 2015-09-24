@@ -24,12 +24,17 @@ class SchoolDataHash
     not_limited_english_proficient:    'Not limited English proficient'
   }).with_indifferent_access
 
+  DATATYPE_PARAM_MAP = {
+    :graduation_rate => ['4-year high school graduation rate'],
+    :a_through_g => ['Percent of students who meet UC/CSU entrance requirements'],
+    :caaspp_math => ['California Assessment of Student Performance and Progress (CAASPP)', 'Math'],
+    :caaspp_english => ['California Assessment of Student Performance and Progress (CAASPP)', 'English Language Arts'],
+  }
+
   def initialize(cachified_school, options)
     @options, @sub_group_to_return = options, SUBGROUP_MAP[options[:sub_group_to_return]]
     @cachified_school = cachified_school
-    @cache = cachified_school.cache_data || {}
-    @characteristics = @cache['characteristics'] || {}
-    @performance = @cache['performance'] || {}
+    @cache = cachified_school.merged_data || {}
     @data_hash = {}
     @link_helper = options[:link_helper]
     @data_sets_and_years = options[:data_sets_and_years]
@@ -57,29 +62,24 @@ class SchoolDataHash
     })
   end
 
-  def get_characteristics_data(data_set, year, breakdown_to_use = sub_group_to_return)
-    data = characteristics[data_set]
+  def get_data(data_set, year, subject = nil, breakdown_to_use = sub_group_to_return)
+    data = cache[data_set]
 
     breakdown = [*data].find do |value|
-      value['original_breakdown'] == breakdown_to_use
+      if value['original_breakdown'] == breakdown_to_use
+        if subject
+          value['subject'] == subject
+        else
+          true
+        end
+      end
     end
 
-    get_data(breakdown, year)
+    data_hash_for(breakdown, year)
   end
 
 
-  def get_performance_data(data_set, year, subject, breakdown_to_use = sub_group_to_return)
-    data = performance[data_set]
-
-    breakdown = [*data].find do |value|
-      value['original_breakdown'] == breakdown_to_use && value['subject'] == subject
-    end
-
-    get_data(breakdown, year)
-  end
-
-
-  def get_data(breakdown, year)
+  def data_hash_for(breakdown, year)
     if breakdown.present?
       {
         show_no_data_symbol: breakdown["school_value_#{year}"].nil?,
@@ -92,24 +92,11 @@ class SchoolDataHash
     end
   end
 
-  def add_graduation_rate
-    val = get_characteristics_data('4-year high school graduation rate', data_sets_and_years[:graduation_rate] )
-    data_hash.merge!({graduation_rate: val})
+  DATATYPE_PARAM_MAP.each do |key, arr|
+    data_type, subject = arr
+    define_method "add_#{key}" do
+      val = get_data(data_type, data_sets_and_years[key], subject)
+      data_hash.merge!({key => val})
+    end
   end
-
-  def add_a_through_g
-    val = get_characteristics_data('Percent of students who meet UC/CSU entrance requirements', data_sets_and_years[:a_through_g])
-    data_hash.merge!({a_through_g: val})
-  end
-
-  def add_caaspp_math
-    val = get_performance_data('California Assessment of Student Performance and Progress (CAASPP)', data_sets_and_years[:caaspp_math], 'Math')
-    data_hash.merge!({caaspp_math: val})
-  end
-
-  def add_caaspp_english
-    val = get_performance_data('California Assessment of Student Performance and Progress (CAASPP)', data_sets_and_years[:caaspp_english], 'English Language Arts')
-    data_hash.merge!({caaspp_english: val})
-  end
-
 end

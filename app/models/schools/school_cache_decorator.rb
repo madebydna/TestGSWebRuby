@@ -27,4 +27,11 @@ class SchoolCacheDecorator
     @school.zipcode
   end
 
+  def merged_data
+    @_merged_data ||= begin
+      @cache_data.each_with_object({}) do |(_, data), hash|
+        hash.merge!(data)
+      end
+    end
+  end
 end
