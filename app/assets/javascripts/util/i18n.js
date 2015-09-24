@@ -36,10 +36,32 @@ GS.I18n = GS.I18n || (function() {
     return GS.uri.Uri.copyParam('lang', current_url, url);
   };
 
+  var initLanguageLinkListener = function() {
+    $('.js-changeLanguage').on('click', function(e) {
+      var label = $(this).data('label');
+      analyticsEvent('language selection', 'global nav bar', label, 'gaClickValue not defined');
+
+      var queryString = getQueryStringWithLang(this);
+      GS.uri.Uri.goToPage(GS.uri.Uri.getPath() + queryString);
+    })
+
+    var getQueryStringWithLang = function(elem) {
+      var language = $(elem).data('language');
+      var queryData = GS.uri.Uri.getQueryData();
+      if (language !== null && language.length > 0) {
+        queryData['lang'] = language;
+      } else {
+        delete queryData.lang;
+      }
+      return GS.uri.Uri.getQueryStringFromObject(queryData);
+    };
+  };
+
   return {
     _setTranslationsHash: setTranslationsHash,
     getTranslationsHash: getTranslationsHash,
     t: translate,
     preserveLanguageParam: preserveLanguageParam,
+    initLanguageLinkListener: initLanguageLinkListener,
   }
 })();

@@ -142,6 +142,6 @@ $(function() {
 
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
-  GS.uri.Uri.initLanguageLinkListener();
+  GS.I18n.initLanguageLinkListener();
 
 });
