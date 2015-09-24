@@ -21,5 +21,5 @@
 //  require ./tracking
 //= require ./uri
 //= require ./url_params
-//= require ./util
+// require ./util
 //= require ./window.sizing
