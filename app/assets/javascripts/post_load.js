@@ -5,7 +5,6 @@
 // require ./util/util
 //= require auth
 //= require autocomplete
-//= require google_maps
 // require ./localized_profiles/facebook_like_box
 //= require jquery_ujs
 //= require wiselinks
@@ -14,6 +13,7 @@
 // require ./localized_profiles/search_results
 //= require resources
 //= require util
+//= require google_maps
 //= require localized_profiles
 //= require topical_reviews
 //= require guided_search
