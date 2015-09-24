@@ -1,3 +1,4 @@
+GS = GS || {}
 GS.viewMoreCollapseInit = function(options) {
   var toggleSelector = '.js-view-more';
 
