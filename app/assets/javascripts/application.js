@@ -20,4 +20,4 @@
 //= require ./util/tracking
 //= require ./util/responsive_images
 //= require ./localized_profiles/visualcharts
-
+//= require ./page_initializers/header_init
