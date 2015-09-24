@@ -1,5 +1,4 @@
 // This combined file will be loaded after load complete by js.
-
 //= require auth
 //= require autocomplete
 //= require jquery_ujs
