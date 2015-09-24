@@ -12,13 +12,14 @@
 //= require ads
 // require ./localized_profiles/search_results
 //= require resources
+//= require ./localized_profiles/search_results
 //= require util
+//= require search
 //= require google_maps
 //= require localized_profiles
 //= require topical_reviews
 //= require guided_search
 //= require account_management
 //= require community_scorecards
-//= require search
 //= require page_initializers
 
