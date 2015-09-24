@@ -19,4 +19,5 @@
 //= require ./util/expand_toggle
 //= require ./util/tracking
 //= require ./util/responsive_images
+//= require ./localized_profiles/visualcharts
 

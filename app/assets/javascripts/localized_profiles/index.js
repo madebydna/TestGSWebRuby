@@ -12,4 +12,4 @@
 //= require ./school_static_map
 // require ./search_results
 //= require ./test_scores
-//= require ./visualcharts
+// require ./visualcharts
