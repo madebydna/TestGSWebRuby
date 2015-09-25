@@ -11,8 +11,18 @@
 
 }
 
-.btn-group {
+.btn-group,
+.btn-group-vertical {
   display: block;
+  > .btn {
+    // Don't bring the "active" button to the front
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      z-index: 0;
+    }
+  }
 }
 
 .form-control.input-field-md {
