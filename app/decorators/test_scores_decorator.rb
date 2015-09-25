@@ -48,7 +48,7 @@ class TestScoresDecorator < Draper::Decorator
     if breakdowns.present?
       buttons << h.content_tag(:span, class: 'js_test_groups dropdown pll') do
         h.concat(
-          h.button_tag('groups', class: 'btn btn-group btn-default', 'data-toggle' => 'dropdown') do
+          h.button_tag('groups', class: 'btn btn-default', 'data-toggle' => 'dropdown') do
             "#{h.t('decorators.test_scores_decorator.by_group')} <b class=\"caret\"></b>".html_safe
           end
         )
