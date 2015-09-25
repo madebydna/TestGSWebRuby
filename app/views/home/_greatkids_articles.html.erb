@@ -10,8 +10,7 @@
     <div class="row">
       <% feature.posts_with_thumbnails.each do |post| %>
         <% article_hash = {
-          title: post.title,
-          content: post.promo || post.deck || post.excerpt,
+          title: post.promo || post.title,
           image: post.large_tile_image.try(:url),
           link: post.url
         } %>
