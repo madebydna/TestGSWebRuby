@@ -30,7 +30,7 @@ describe SchoolDataHash do
             "school_value_2013" => 98.32,
             "state_average_2013" => 84.47,
             "performance_level" => "above_average"
-          },
+          }.symbolize_keys,
         ],
         'Percent of students who meet UC/CSU entrance requirements' => [
           {
@@ -39,7 +39,7 @@ describe SchoolDataHash do
             "school_value_2014" => 98.32,
             "state_average_2014" => 84.47,
             "performance_level" => "above_average"
-          },
+          }.symbolize_keys,
         ]
       }
     }

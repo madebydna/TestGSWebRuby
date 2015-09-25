@@ -24,7 +24,7 @@ class SchoolCache < ActiveRecord::Base
 
   def self.cached_results_for(schools, keys)
     query = SchoolCacheQuery.new.include_cache_keys(keys)
-    schools.each do |school|
+    [*schools].each do |school|
       query.include_schools(school.state, school.id)
     end
     SchoolCacheResults.new(keys, query.query_and_use_cache_keys)

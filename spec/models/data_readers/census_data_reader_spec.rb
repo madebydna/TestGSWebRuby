@@ -262,20 +262,6 @@ describe CensusDataReader do
       expect(results).to eq({})
     end
 
-    context 'with old style census data type ID response_key' do
-      before do
-        allow(category.category_datas.first).to receive(:response_key).and_return(35) #class size only
-      end
-
-      it 'should return data for only for class size and english, since it matches the configuration.' do
-        allow(category.category_datas.first).to receive(:subject_id).and_return(4)  # only English Language Arts
-        allow(SchoolCache).to receive(:cached_characteristics_data).and_return(all_data)
-
-        results = subject.labels_to_hashes_map(category)
-        expect(results).to eq(results_hash)
-      end
-    end
-
     context 'with new style census data type name response_key' do
       before do
         allow(category.category_datas.first).to receive(:response_key).and_return('Class size'.to_sym) #class size only
@@ -283,7 +269,7 @@ describe CensusDataReader do
 
       it 'should return data for only for class size and english, since it matches the configuration.' do
         allow(category.category_datas.first).to receive(:subject_id).and_return(4)  # only English Language Arts
-        allow(SchoolCache).to receive(:cached_characteristics_data).and_return(all_data)
+        allow(subject).to receive(:all_school_cache_data).and_return(all_data)
 
         results = subject.labels_to_hashes_map(category)
         expect(results).to eq(results_hash)

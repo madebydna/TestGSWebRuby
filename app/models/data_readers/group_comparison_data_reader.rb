@@ -30,6 +30,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
   DEFAULT_CALLBACKS = [ 'preserve_data_type_name', 'change_data_type_to_label' ]
+  SCHOOL_CACHE_KEYS = [ 'characteristics', 'performance' ]
 
   attr_accessor :category, :config, :data
 
@@ -82,8 +83,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  def school_cache_keys
+    SCHOOL_CACHE_KEYS
+  end
+
   def get_data!
-    self.data = cached_data_for_category(category, 'characteristics', school)
+    self.data = cached_data_for_category
     modify_data!
   end
 
@@ -109,7 +114,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     ethnicity_sym = SchoolCache::ETHNICITY
     return unless config[:breakdown] == ethnicity_sym.to_s
 
-    ethnicity_data = get_cache_data('characteristics', ethnicity_sym, school)[ethnicity_sym]
+    ethnicity_data = get_cache_data(ethnicity_sym)[ethnicity_sym]
     if ethnicity_data
       ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
         h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
@@ -130,7 +135,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     enrollment_sym = SchoolCache::ENROLLMENT
     return unless config[:breakdown_all] == enrollment_sym.to_s
 
-    enrollment_data = get_cache_data('characteristics', enrollment_sym, school)[enrollment_sym]
+    enrollment_data = get_cache_data(enrollment_sym)[enrollment_sym]
     enrollment_size = enrollment_data.first[:school_value]
 
     data.values.flatten.each do | hash |
@@ -151,7 +156,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   def add_student_types_callback
     all_types = Genders.all + StudentTypes.all_datatypes
-    student_types_data = get_cache_data('characteristics', all_types, school)
+    student_types_data = get_cache_data(all_types)
     student_types = student_types_data.inject({}) do | h, (type, type_data) |
       # Student types aren't the same name as their breakdowns so we map the
       # datatype (used above to get the data) to its breakdown here. See AT-925.
@@ -194,7 +199,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def footnotes_for_category(category)
-    data = cached_data_for_category(category, 'characteristics', school)
+    data = cached_data_for_category
     data.map do |data_type, data_hashes|
       data_hash = data_hashes.first
       if data_hash[:source] && data_hash[:year]

@@ -12,7 +12,7 @@ class SchoolCacheResults
   end
 
   def decorate_schools(schools)
-    schools.map do |school|
+    [*schools].map do |school|
       decorated = SchoolCacheDecorator.new(school, @school_data[[school.state, school.id]] || {})
       @cache_keys.each do |key|
         if module_for_key(key)

@@ -25,10 +25,10 @@ class SchoolDataHash
   }).with_indifferent_access
 
   DATATYPE_PARAM_MAP = {
-    :graduation_rate => ['4-year high school graduation rate'],
-    :a_through_g => ['Percent of students who meet UC/CSU entrance requirements'],
-    :caaspp_math => ['California Assessment of Student Performance and Progress (CAASPP)', 'Math'],
-    :caaspp_english => ['California Assessment of Student Performance and Progress (CAASPP)', 'English Language Arts'],
+    :graduation_rate => ["4-year high school graduation rate"],
+    :a_through_g => ["Percent of students who meet UC/CSU entrance requirements"],
+    :caaspp_math => ["California Assessment of Student Performance and Progress (CAASPP)", "Math"],
+    :caaspp_english => ["California Assessment of Student Performance and Progress (CAASPP)", "English Language Arts"],
   }
 
   def initialize(cachified_school, options)
@@ -63,12 +63,12 @@ class SchoolDataHash
   end
 
   def get_data(data_set, year, subject = nil, breakdown_to_use = sub_group_to_return)
-    data = cache[data_set]
+    data = cache[data_set.to_sym]
 
     breakdown = [*data].find do |value|
-      if value['original_breakdown'] == breakdown_to_use
+      if value[:original_breakdown] == breakdown_to_use
         if subject
-          value['subject'] == subject
+          value[:subject] == subject
         else
           true
         end
@@ -82,10 +82,10 @@ class SchoolDataHash
   def data_hash_for(breakdown, year)
     if breakdown.present?
       {
-        show_no_data_symbol: breakdown["school_value_#{year}"].nil?,
-        value: breakdown["school_value_#{year}"].to_f.round,
-        performance_level: breakdown['performance_level'],
-        state_average: breakdown["state_average_#{year}"].to_f.round
+        show_no_data_symbol: breakdown["school_value_#{year}".to_sym].nil?,
+        value: breakdown["school_value_#{year}".to_sym].to_f.round,
+        performance_level: breakdown[:performance_level],
+        state_average: breakdown["state_average_#{year}".to_sym].to_f.round
       }
     else
       { show_no_data_symbol: true }
