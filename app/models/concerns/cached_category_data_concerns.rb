@@ -2,16 +2,33 @@ require 'active_support/concern'
 
 module CachedCategoryDataConcerns
   extend ActiveSupport::Concern
+  include CensusLoading::Subjects
 
-  def cached_data_for_category(category = category)
-    category_data_types = category.keys(school.collections).map do |key|
-      key.respond_to?(:to_sym) ? key.to_sym : key
+  def cached_data_for_category(category = category, with_subjects = true)
+    category_data_types = category.category_data(school.collections).map do |cd|
+      if with_subjects
+        { data_type: cd.response_key.to_sym, subject: cd.subject_id }
+      else
+        { data_type: cd.response_key.to_sym }
+      end
     end
     get_cache_data(category_data_types)
   end
 
-  def get_cache_data(desired_keys)
-    all_school_cache_data.select { |k,v| [*desired_keys].include?(k) }.deep_dup
+  def get_cache_data(desired_data_types)
+    Array.wrap(desired_data_types).each_with_object({}) do |data_type_hash, hash|
+      data_type = data_type_hash[:data_type]
+      if (values = all_school_cache_data[data_type])
+        if (subject = data_type_hash[:subject])
+          data = values.select { |v| convert_subject_to_id(v[:subject]) == subject }
+          if data.present?
+            hash[[data_type, subject]] = data
+          end
+        else
+          hash[data_type] = values
+        end
+      end
+    end
   end
 
   def all_school_cache_data

@@ -4,7 +4,6 @@
 # Retrieves CensusData and builds hashes in various formats
 #
 class CensusDataReader < SchoolProfileDataReader
-  include CensusLoading::Subjects
   include CachedCategoryDataConcerns
 
   SCHOOL_CACHE_KEYS = ['characteristics']
@@ -57,7 +56,7 @@ class CensusDataReader < SchoolProfileDataReader
     @labels_to_hashes_map ||= {}
     @labels_to_hashes_map[category.id] ||= (
       # Get data for all data types
-      all_data = cached_data_for_category(category)
+      all_data = cached_data_for_category(category, false)
 
       results_hash = {}
 

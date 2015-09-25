@@ -148,10 +148,10 @@ describe GroupComparisonDataReader do
     context 'when config has {breakdown: \'Ethnicity\', breakdown_all: \'Enrollment\'} set' do
       before do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-        allow(subject).to receive(:get_cache_data).with(SchoolCache::ETHNICITY).and_return(ethnicity_subtext_data)
-        allow(subject).to receive(:get_cache_data).with(SchoolCache::ENROLLMENT).and_return(enrollment_subtext_data)
+        allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ETHNICITY).and_return(ethnicity_subtext_data)
+        allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ENROLLMENT).and_return(enrollment_subtext_data)
         all_types = Genders.all + StudentTypes.all_datatypes
-        allow(subject).to receive(:get_cache_data).with(all_types).and_return(types_subtext_data)
+        allow(subject).to receive(:get_cache_data).with(all_types.map { |t| { data_type: t } }).and_return(types_subtext_data)
         allow(subject).to receive(:category).and_return(fake_category)
         allow(subject).to receive(:config).and_return({
           breakdown: 'Ethnicity',

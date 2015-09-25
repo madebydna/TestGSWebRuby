@@ -30,9 +30,15 @@ class Category < ActiveRecord::Base
     category_data(collections).map(&:response_key)
   end
 
-  def key_label_map(collections = nil, translate = true)
-    category_data(collections).inject({}) do |map, cd|
-      map[cd.response_key] ||= cd.label(translate) if cd.label(translate).present?
+  def key_label_map(translate = true, with_subjects = false)
+    category_data.inject({}) do |map, cd|
+      if cd.label(translate).present?
+        if with_subjects && cd.subject_id
+          map[[cd.response_key, cd.subject_id]] ||= cd.label(translate)
+        else
+          map[cd.response_key] ||= cd.label(translate)
+        end
+      end
       map
     end
   end
