@@ -259,9 +259,7 @@ class OspController < ApplicationController
       @school = School.find_by_state_and_id(@state[:short], params[:schoolId])
       if @school.nil?
         redirect_to my_account_url
-      elsif @school.nil? || (@school.active == 0 && @school.demo_school?)
-        show
-      elsif @school.active == 0
+      elsif @school.active == 0 && !@school.demo_school?
         inactive_school_flash
         redirect_to my_account_url
       else
