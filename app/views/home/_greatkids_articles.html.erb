@@ -18,7 +18,7 @@
           <%= render 'shared/article_module', data: article_hash  %>
         </div>
       <% end %>
-      <% slot_name = index == 0 ? :Choosing_Content : :Parenting_Content %>
+      <% slot_name = (index == 0 ? :Choosing_Content : :Parenting_Content) %>
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
         <div class="pam tac">
           <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: slot_name, view: :desktop  %>
