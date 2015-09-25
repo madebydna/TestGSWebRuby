@@ -8,6 +8,6 @@ class HomepageFeatures < ExternalContent
   define_initialize_that_accepts_hash
 
   def features
-    [first_feature, second_feature]
+    [first_feature, second_feature].compact
   end
 end
