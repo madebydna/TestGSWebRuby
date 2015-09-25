@@ -29,10 +29,16 @@ if(gon.pagename == "Quality"){
 
         var dropdownBreakdownsHandler = function() {
             $('.js-dataVizBarChartContainer').on('click', '.js-dataVizDropdown', function () {
-                var $self = $(this).data('title');
-                var breakdownClass = '.js-' + $self;
-                var $parent = $(this).closest('.js-dataVizBarChart');
+                var $element = $(this);
+                var title    = $element.data('title');
+                var category = $element.data('event-category');
+                var action   = $element.data('event-action');
+                var label    = $element.data('event-label');
 
+                analyticsEvent(category, action, label);
+
+                var $parent  = $element.closest('.js-dataVizBarChart');
+                var breakdownClass = '.js-' + title;
                 $parent.find('.js-barChart').addClass('dn');
                 $parent.find('.js-barChart' + breakdownClass).removeClass('dn');
             });
