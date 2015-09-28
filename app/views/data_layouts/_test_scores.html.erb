@@ -16,7 +16,9 @@
     <br/><br/>
 
     <% decorator = TestScoresDecorator.decorate(data, context: { state: @school.state }) %>
-    <%= raw(decorator.tabs_for_test(test)) %>
+    <div class="clearfix">
+      <%= raw(decorator.tabs_for_test(test)) %>
+    </div>
     <%= raw decorator.render_bar_charts(test) %>
     
     <% if decorator.description(value) %>
