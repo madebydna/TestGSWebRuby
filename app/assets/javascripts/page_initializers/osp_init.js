@@ -7,7 +7,7 @@ $(function() {
         GS.forms.elements.disableTargetElementsIfTriggerActive();
         GS.forms.elements.setConditionalQuestionHandler('.js-conditionalQuestion');
         GS.forms.elements.disableTargetElementsIfTriggerEmpty('.js-conditionalQuestion');
-        GS.forms.elements.initOspPageAutocomplete(".js-ospQuestionsContainer");
+        GS.schoolPicker.initOspPageAutocomplete(".js-ospQuestionsContainer");
         GS.forms.elements.setCustomSubmitHandler('.js-submitTrigger', 'ospPage', '.js-ospNav', function(e, $form) {
             e.preventDefault();
             var pageNumber = $(this).data('page-number');
