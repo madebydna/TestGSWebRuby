@@ -24,3 +24,4 @@
 //= require ./url_params
 // require ./util
 //= require ./window.sizing
+//= require ./notifications

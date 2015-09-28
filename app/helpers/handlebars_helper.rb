@@ -38,7 +38,7 @@ module HandlebarsHelper
   end
 
   def partial_name_for(file)
-    file.sub(TEMPLATES_DIR, '').sub(/\/_/, '/').sub(EXTENSION, '')
+    file.sub(TEMPLATES_DIR, '').sub(/\/_/, '/').sub(/^_/, '').sub(EXTENSION, '')
   end
 
   def files_for(template_path)
@@ -48,8 +48,10 @@ module HandlebarsHelper
   def directory_or_file(template_path)
     if template_path.ends_with?('/')
       "#{template_path}*"
-    else
+    elsif template_path.include?('/')
       template_path.sub('/', '/_')
+    else
+      '_' + template_path
     end
   end
 
