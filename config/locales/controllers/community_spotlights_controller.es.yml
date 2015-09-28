@@ -1,7 +1,7 @@
 es:
   controllers:
     community_spotlights_controller:
-      white:                             'White'
+      white:                             'Blanco'
       asian:                             'Asia'
       native_american_or_native_alaskan: 'Nativos americanos o nativos de Alaska'
       pacific_islander:                  'Islas del Pacífico'
