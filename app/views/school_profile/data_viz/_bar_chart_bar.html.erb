@@ -10,6 +10,7 @@
              <% if chart.comparison_value %>
              data-toggle="tooltip"
              data-html="true"
+             data-placement="bottom"
              data-title='<%= render partial: 'school_profile/data_viz/bar_chart_tooltip',
                                     locals: {chart: chart} %>'
              <% end %>
