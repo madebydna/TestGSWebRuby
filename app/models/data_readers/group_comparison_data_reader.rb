@@ -209,11 +209,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def no_data_text
-    I18n.t(
-      :no_data_subtext,
-      scope: i18n_scope,
-      default:"No data"
-    )
+    '&nbsp;'.html_safe
   end
 
   def footnotes_for_category(category)

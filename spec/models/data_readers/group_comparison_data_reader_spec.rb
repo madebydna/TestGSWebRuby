@@ -174,13 +174,7 @@ describe GroupComparisonDataReader do
 
       it 'should return results with the subtext key set' do
         subject.data.values.first.each do |d|
-          expect(d[:subtext]).to_not eq(
-            I18n.t(
-              :no_data_subtext,
-              scope: :group_comparison_data_reader,
-              default:"No data"
-            )
-          )
+          expect(d[:subtext]).to be_present
         end
       end
 
