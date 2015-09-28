@@ -25,9 +25,9 @@
 
     <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
         <% show_hide_collection = i == 0 ? '' : 'dn' %>
+        <% @bar_chart_collection = bar_chart_collection %>
         <%= render partial: 'school_profile/data_viz/bar_chart_collection',
-                   locals: {bar_chart_collection: bar_chart_collection,
-                            bar_chart_collection_index: i,
+                   locals: {bar_chart_collection_index: i,
                             show_hide_collection: show_hide_collection} %>
     <% end %>
 

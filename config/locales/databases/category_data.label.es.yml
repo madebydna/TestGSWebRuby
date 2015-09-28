@@ -114,8 +114,8 @@ es:
   Educational philosophy and approach to learning: Filosofía y enfoque de aprendizaje
     para la Educación
   Effective Leaders: Los líderes eficaces
-  ELA Test Scores: Puntajes en Inglés
-  Eligible for 4-Yr College: ! 'Graduados eligible para universidad '
+  ela_test_scores: Puntajes en Inglés
+  eligible_for_4yr_college: ! 'Graduados eligible para universidad '
   Employees: Empleados
   End time: Hora de finalización
   English Instruction: Instrucción Inglés
@@ -143,7 +143,7 @@ es:
     secundaria
   Graduates who need remediation, or help strengthening basic skills: Los graduados
     que necesitan reparación o ayuda fortalecimiento de las competencias básicas
-  Graduation Rate: Tasa de Graduados
+  graduation_rate: Tasa de Graduados
   HIB preparation score: Puntuación de preparación HIB
   High expectations are set for all students' academic success: Las altas expectativas
     se establecen para el éxito académico de todos los estudiantes
@@ -166,7 +166,7 @@ es:
   Male: Masculino
   Math Instruction: Instrucción de Matemáticas
   Math skills development: Desarrollo de habilidades matemáticas
-  Math Test Scores: Puntajes en Matemáticas
+  math_test_scores: Puntajes en Matemáticas
   Maximum number of 2 year olds per adult: Número máximo de niños 2 años de edad por
     adulto
   Maximum number of 3 year olds per adult: Número máximo de niños 3 años de edad por
