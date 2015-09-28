@@ -1,5 +1,6 @@
 $(function() {
     if (gon.pagename == "GS:OSP:LandingPage") {
-        GS.schoolPicker.initOspLandingPageAutocomplete(".osp-landing-page");
+        var ospSchoolPicker = GS.schoolPicker.navigateToUrl.builder(GS.schoolPicker.ospLandingPage);
+        GS.schoolPicker.initSchoolpickerAndAutocomplete( ospSchoolPicker.onAutocompleteSchoolSelectCallback, ospSchoolPicker.customSchoolSelectCallback)
     }
 });

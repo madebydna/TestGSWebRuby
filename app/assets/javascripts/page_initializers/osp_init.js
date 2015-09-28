@@ -7,7 +7,6 @@ $(function() {
         GS.forms.elements.disableTargetElementsIfTriggerActive();
         GS.forms.elements.setConditionalQuestionHandler('.js-conditionalQuestion');
         GS.forms.elements.disableTargetElementsIfTriggerEmpty('.js-conditionalQuestion');
-        GS.schoolPicker.initOspPageAutocomplete(".js-ospQuestionsContainer");
         GS.forms.elements.setCustomSubmitHandler('.js-submitTrigger', 'ospPage', '.js-ospNav', function(e, $form) {
             e.preventDefault();
             var pageNumber = $(this).data('page-number');
@@ -19,6 +18,7 @@ $(function() {
             $form.find('input[name=redirectPage]').val(pageNumber);
         });
 
+        GS.schoolPicker.initSchoolpickerAndAutocomplete();
         GS.gsParsleyValidations.init();
         GS.photoUploads.init();
 
