@@ -5,7 +5,7 @@
       <% #Sorts for Desktop %>
       <div class="ptm">
         <span><%= t('.sort_by_label') %></span>
-        <div class="btn-group">
+        <div class="btn-group btn-group-inline">
           <% @relevant_sort_types.each do |sort_name| %>
               <% if @active_sort == sort_name %>
                   <button type="button" class="btn btn-default rs-sortButton active"><%= t(".#{sort_name.to_s}") %></button>

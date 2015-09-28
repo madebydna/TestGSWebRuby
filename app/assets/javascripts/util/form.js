@@ -284,7 +284,9 @@ $(function() {
     };
 
     var sportsToolTip = function(){
-        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+      // TODO This should not be so global. Should only be called on pages that
+      // need this.
+      $('[data-toggle="tooltip"]').tooltip();
     };
 
     $('.js-guidedSearchSportsIconsButton').on('click', function(){
