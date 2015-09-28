@@ -29,7 +29,7 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
   def build_hash_for_data_set(test)
     {
       test.data_type_id => {
-        test.breakdown_name => {
+        test.test_scores_breakdown_name => {
           test_label: test.test_label,
           test_source: test.test_source,
           test_description: test.test_description,

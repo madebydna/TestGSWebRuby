@@ -49,6 +49,17 @@ class TestScoresCaching::QueryResultDecorator
     breakdown.name if breakdown
   end
 
+  def test_scores_breakdown_name
+    breakdown = TestScoresCaching::Base.test_data_breakdowns[breakdown_id]
+    if breakdown
+      if breakdown.name == 'All students'
+        'All'
+      else
+        breakdown.name
+      end
+    end
+  end
+
   def proficiency_band_name
     proficiency_band = TestScoresCaching::Base.proficiency_bands[self['proficiency_band_id']]
     proficiency_band.name if proficiency_band
