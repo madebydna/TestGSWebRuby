@@ -2,11 +2,11 @@ es:
   controllers:
     community_spotlights_controller:
       white:                             'Blanco'
-      asian:                             'Asia'
+      asian:                             'Asiático'
       native_american_or_native_alaskan: 'Nativos americanos o nativos de Alaska'
-      pacific_islander:                  'Islas del Pacífico'
+      pacific_islander:                  'Isleño del Pacífico'
       all_students:                      'Todos los estudiantes'
-      multiracial:                       "Multiétnico"
+      multiracial:                       'Multiétnico'
       filipino:                          'Filipino'
       hispanic:                          'Hispano'
       african_american:                  'Afroamericano'
