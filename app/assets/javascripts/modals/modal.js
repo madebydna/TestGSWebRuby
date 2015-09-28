@@ -9,7 +9,7 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     $(GLOBAL_MODAL_CONTAINER_SELECTOR).append(modal);
   };
 
-  var displayModal = function (modalObject, options) {
+  var getModal = function(modalObject, options) {
     options = options || {};
     var modalCssClass = options.modalCssClass || modalObject.getModalCssClass();
     var url = modalObject.url();
@@ -18,13 +18,24 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     return $.ajax({
       method: 'GET',
       url: url
-    }).done(function (response) {
+    });
+  };
+
+  var displayModal = function (modalObject, options) {
+    var modalDeferred = $.Deferred();
+    getModal(modalObject, options).done(function (response) {
       insertModalIntoDom(response);
       modalObject.initialize();
-      modalObject.show();
-    }).fail(function (response) {
-      // The caller can specify what to do if the model fails.
+      modalObject.show().done(function(data) {
+        modalDeferred.resolveWith(data);
+      }).fail(function(data) {
+        modalDeferred.rejectWith(data);
+      });
+    }).fail(function(data) {
+      modalDeferred.rejectWith(data);
     });
+
+    return modalDeferred.promise();
   };
 
   return {
