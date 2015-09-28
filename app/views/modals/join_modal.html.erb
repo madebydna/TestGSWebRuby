@@ -1,0 +1,14 @@
+<% modal_css_class = params[:modal_css_class] %>
+<div class="modal fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
+  <div class="gs-modal-dialog modal-dialog" >
+    <% @active_tab ||= 'login' %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-hdr">
+        <h2 class="ptl tac"><%= t('.header') %></h2>
+      </div>
+    </div>
+    <div class="">
+      <%= render '/signin/new' %>
+    </div>
+  </div>
+</div>

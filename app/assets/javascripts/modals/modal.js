@@ -27,19 +27,41 @@ GS.modal.manager = GS.modal.manager || (function ($) {
       insertModalIntoDom(response);
       modalObject.initialize();
       modalObject.show().done(function(data) {
-        modalDeferred.resolveWith(data);
+        modalDeferred.resolveWith(this, [data]);
       }).fail(function(data) {
-        modalDeferred.rejectWith(data);
+        modalDeferred.rejectWith(this, [data]);
       });
     }).fail(function(data) {
-      modalDeferred.rejectWith(data);
+      modalDeferred.rejectWith(this, [data]);
     });
 
     return modalDeferred.promise();
   };
 
+  // 'flash': [
+  //            'error': [
+  //                       'a message',
+  //                       'another message'
+  //                     ]
+  var showModalThenMessages = function(modalObject, options) {
+    showModal(modalObject, options).done(function(data) {
+      if (data && data.hasOwnProperty('flash')) {
+        GS.notifications.flash_from_hash(data.flash);
+      }
+    }).fail(function(data) {
+      if (data && data.hasOwnProperty('flash')) {
+        var flash = data.flash;
+        if (!flash.hasOwnProperty('error')) {
+          flash['error'] = ['Something went wrong, please try again soon.'];
+        }
+        GS.notifications.flash_from_hash(flash);
+      }
+    });
+  };
+
   return {
-    showModal: showModal
+    showModal: showModal,
+    showModalThenMessages: showModalThenMessages
   };
 
 })(jQuery);

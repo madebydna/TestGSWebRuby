@@ -4,4 +4,8 @@ class ModalsController < ApplicationController
       render 'signup_and_follow_school_modal', layout: false
   end
 
+  def show
+    render params['modal'], layout: false
+  end
+
 end
