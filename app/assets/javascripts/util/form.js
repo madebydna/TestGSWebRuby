@@ -626,6 +626,71 @@ GS.forms.elements = (function() {
         });
     };
 
+// Schoolpicker for ReviewSchoolChooser
+    var setSchoolSelectedReviewSchoolChooserPageHandler = function() {
+        $(autocompleteContainer).on(change, schoolSelect, function() {
+             $self = $(this);
+             schoolId = $self.find(':selected').data('id');
+            var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
+            var state = $doNotSeeResult.data(dataState);
+            var city = $doNotSeeResult.data(dataCity);
+
+            getSchoolProfileUrl(state,city, schoolId);
+
+        });
+    };
+
+    var schoolReviewsCallback =  function (event, suggestion, dataset) {
+      var url = suggestion['url'];
+      url = url + 'reviews/';
+      goToReviewsPageUrl(url);
+    };
+
+   var goToReviewsPageUrl = function (url) {
+        var queryStringsAnchors = buildQueryStringsAnchors();
+        url = url + queryStringsAnchors;
+        url = GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
+        GS.uri.Uri.goToPage(url)
+   };
+
+   var getSchoolProfileUrl = function(state, city, id) {
+     var url = '/gsr/ajax/get_school_and_forward?state=' + state + '&school_id=' + id + '&city=' + city;
+     goToReviewsPageUrl(url);
+   };
+
+   var initReviewSchoolChooserPageAutocomplete = function(parentContainer) {
+     setStateSelectHandler();
+     setDoNotSeeResultHandlers(showStateSelect);
+     setCitySelectedHandler();
+     setSchoolSelectedReviewSchoolChooserPageHandler();
+
+     GS.search.autocomplete.selectAutocomplete.init(null, GS.search.autocomplete.display.schoolResultsNoLinkMarkup, schoolReviewsCallback);
+   };
+
+
+   var buildQueryStringsAnchors = function () {
+     var queryStringAnchor = "";
+     queryStringAnchor += morganStanleyQueryString();
+     queryStringAnchor += topicAnchor();
+     return queryStringAnchor;
+   };
+
+   var morganStanleyQueryString = function () {
+     var queryString = "";
+     if (gon.morganstanley) {
+       queryString = "?morganstanley=1";
+     }
+     return queryString;
+   };
+
+   var topicAnchor = function () {
+     var topicAnchor = "";
+     if (gon.topic_id) {
+       topicAnchor += "#topic" + gon.topic_id;
+     }
+     return topicAnchor;
+   };
+
     //AUTOCOMPLETE END
 
     var setConditionalQuestionHandler = function(conditionalQuestionContainer) {
@@ -667,6 +732,7 @@ GS.forms.elements = (function() {
         setEditAutocompleteHandler: setEditAutocompleteHandler,
         initOspPageAutocomplete: initOspPageAutocomplete,
         initOspLandingPageAutocomplete: initOspLandingPageAutocomplete,
+        initReviewSchoolChooserPageAutocomplete: initReviewSchoolChooserPageAutocomplete,
         setConditionalQuestionHandler: setConditionalQuestionHandler,
         disableTargetElementsIfTriggerEmpty: disableTargetElementsIfTriggerEmpty
     }

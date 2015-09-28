@@ -2,7 +2,7 @@ module SchoolUserOspConcerns
   extend ActiveSupport::Concern
 
   def esp_memberships
-    return [] if user.nil?
+    return [] if user.nil? || school.nil?
     @esp_memberships ||= user.esp_memberships.for_school(school)
   end
 

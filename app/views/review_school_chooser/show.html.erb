@@ -1,29 +1,66 @@
-<% content_for :javascript_includes do %>
-    <script>
-        $(function() {
-            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('review_school_chooser/reviews_hero_hand.jpg')%>', mobileImage: '<%= image_path('review_school_chooser/reviews_hero_hand_mobile.jpg')%>', classes:'scaling' });
-            GS.track.setOmnitureData();
+<%  decorated_topic = ReviewTopicDecorator.decorate(@topic) %>
+<div class="row bg-white pvl <%= @display_morgan_stanley %>">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="oa tac ">
+      <img height="40px" src="<%= image_path('review_school_chooser/morganstanley.png')%>" alt="Morgan Stanley"><br />
+      Welcome Morgan Stanley employees, thank you for participating in 2015 Global Volunteer Month!</div>
+  </div>
+</div>
+    <% if @display_morgan_stanley %>
+      <input type="hidden" name="morganstanley" value="1">
+    <% end %>
 
-        })
-    </script>
-<% end %>
+<div class="review_school_chooser container-fluid <%= 'gs-bootstrap' if @gs_bootstrap %> ">
+  <header>
+  <div class="row">
+    <div class="limit-width-1200">
+      <h1 class="lg-roboto">
+        <%= decorated_topic.header %>
+      </h1>
+    </div>
+  </div>
+  </header>
 
-<%= render 'shared/review_school_chooser/hero_image_select' %>
-
-<% if @reviews.present? %>
-  <div class="row limit-width-1200 pbl">
-    <div class="col-xs-12">
-      <div id="js_reviewsListHeader" class="link-down-compensate rs-review-list-header">
-        <hr/>
-        <div class="plm mbl tac">
-          <h2><%= t('.header') %></h2>
+  <section class="top">
+  <div class="row">
+    <div class="review-highlight col-xs-12 col-sm-8 col-sm-offset-2 col-offset-md-2 col-offset-lg-2">
+      <p><%= decorated_topic.sample_review_intro.html_safe  %></p>
+      <div class="review row">
+        <div class="visible-sm visible-md visible-lg col-sm-2">
+          <div class="fl iconx48-icons i-48-green-quotes"></div>
         </div>
-      </div>
-      <div class="js_reviewsList">
-        <%= render partial: 'review_module', collection: @reviews, as: :review %>
+        <div class="col-sm-8">
+          <span class="small-quotes">"</span><%= decorated_topic.sample_review  %><span class="small-quotes">"</span>
+        </div>
+        <div class="visible-sm visible-md visible-lg col-sm-2">
+          <div class="fr iconx48-icons i-48-green-quotes-upsidedown"></div>
+        </div>
       </div>
     </div>
   </div>
-<% end %>
+  <div class="review-school-picker-module">
+    <h1>Share your story</h1>
+    <%=  render 'osp/school_picker', linkClass: 'search-link-black'  %>
+  </div>
+  </section>
+
+  <section class="reviews-list container-fluid pbl">
+      <div id="js_reviewsListHeader" class="rs-review-list-header">
+        <div class="plm mbl tac">
+          <h3><%= t('.header') %></h3>
+        </div>
+      </div>
+      <div class="js_reviewsList">
+        <%= render partial: 'review_module', 
+          collection: @reviews, 
+          as: :review, locals: { border_bottom: false} %>
+      </div>
+  </section>
+
+  <div class="review-school-picker-module">
+    <h1>Express Your Gratitude</h1>
+    <%=  render 'osp/school_picker', linkClass: 'search-link-black'  %>
+  </div>
+</div>
 
 <%= render partial: 'shared/home_footer' %>
