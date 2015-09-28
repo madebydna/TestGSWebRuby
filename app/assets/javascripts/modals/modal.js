@@ -21,7 +21,7 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     });
   };
 
-  var displayModal = function (modalObject, options) {
+  var showModal = function (modalObject, options) {
     var modalDeferred = $.Deferred();
     getModal(modalObject, options).done(function (response) {
       insertModalIntoDom(response);
@@ -39,7 +39,7 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   };
 
   return {
-    displayModal: displayModal
+    showModal: showModal
   };
 
 })(jQuery);

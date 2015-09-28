@@ -19,7 +19,7 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
 
     var showSignUpForSchoolModal = function () {
       if ( shouldShowSignUpForSchoolModal() ) {
-        GS.modal.manager.displayModal(GS.modal.signUpForSchool)
+        GS.modal.manager.showModal(GS.modal.signUpForSchool)
         .done(function() {
           setSignUpForSchoolModalCookie();
         })
