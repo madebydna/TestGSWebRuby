@@ -220,7 +220,7 @@ describe CensusDataReader do
 
     let(:results_hash) do
       {
-        "Class size"=>[
+        [:"Class size", nil] =>[
           {
             :year=>2014,
             :source=>"DE Dept. of Education",
