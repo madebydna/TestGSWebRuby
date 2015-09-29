@@ -6,7 +6,7 @@ describe GroupComparisonDataReader do
 
   let(:sample_data) {
     {
-      first_data_type: [
+      [:first_data_type, nil] => [
         {
           year: 2013,
           breakdown: 'Pacific Islander different than ethnicity label',
@@ -16,7 +16,7 @@ describe GroupComparisonDataReader do
           performance_level: 'above_average',
         }
       ],
-      second_data_type: [
+      [:second_data_type, nil] => [
         {
           year: 2013,
           breakdown: 'Male',
@@ -26,7 +26,7 @@ describe GroupComparisonDataReader do
           performance_level: 'average',
         }
       ],
-      third_data_type: [
+      [:third_data_type, nil] => [
         {
           year: 2013,
           breakdown: 'Economically disadvantaged',
@@ -41,7 +41,7 @@ describe GroupComparisonDataReader do
 
   let(:ethnicity_subtext_data) {
     {
-      Ethnicity: [
+      [:Ethnicity, nil] => [
         {
           year: 2013,
           breakdown: 'Pacific Islander',
@@ -55,7 +55,7 @@ describe GroupComparisonDataReader do
   }
   let(:types_subtext_data) {
     {
-      Male: [
+      [:Male, nil] => [
         {
           year: 2013,
           breakdown: 'All students',
@@ -65,7 +65,7 @@ describe GroupComparisonDataReader do
           performance_level: 'average',
         }
       ],
-      'Students participating in free or reduced-price lunch program'.to_sym => [
+      ['Students participating in free or reduced-price lunch program'.to_sym, nil] => [
         {
           year: 2013,
           breakdown: 'All students',
@@ -79,7 +79,7 @@ describe GroupComparisonDataReader do
   }
   let(:enrollment_subtext_data) {
     {
-      Enrollment: [
+      [:Enrollment, nil] => [
         {
           year: 2013,
           breakdown: 'All students',
@@ -93,7 +93,7 @@ describe GroupComparisonDataReader do
   }
   let(:empty_data) {
     {
-      :"4-year high school graduation rate"=> [
+      [:"4-year high school graduation rate", nil] => [
         {
           year: 2013,
           source: "TX Education Agency",
@@ -103,7 +103,7 @@ describe GroupComparisonDataReader do
     }
   }
 
-  let(:sample_label_map) { Hash[sample_data.map { |k,v| [k.to_s,"#{k} label"] }] }
+  let(:sample_label_map) { Hash[sample_data.map { |k,v| [[k.first.to_s, nil],"#{k} label"] }] }
   let(:fake_category) do
     o = Object.new
     allow(o).to receive(:keys).and_return(sample_data.keys)
@@ -180,7 +180,7 @@ describe GroupComparisonDataReader do
 
       it 'should put the labels of the data types as the data keys' do
         subject.data.keys.each do |key|
-          expect(key).to match(/ label/)
+          expect(key.first).to match(/ label/)
         end
       end
 
