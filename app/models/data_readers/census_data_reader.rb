@@ -62,7 +62,7 @@ class CensusDataReader < SchoolProfileDataReader
 
       category.category_datas.each do |cd|
         # Filter by data type
-        data_for_data_type = all_data.select { |data_type, _| data_type_matches_category_data?(cd, data_type) }
+        data_for_data_type = all_data.select { |data_type_arr, _| data_type_matches_category_data?(cd, data_type_arr.first) }
 
         next if data_for_data_type.values.empty?
 

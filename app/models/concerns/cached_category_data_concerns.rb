@@ -25,7 +25,7 @@ module CachedCategoryDataConcerns
             hash[[data_type, subject]] = data
           end
         else
-          hash[data_type] = values
+          hash[[data_type, nil]] = values
         end
       end
     end

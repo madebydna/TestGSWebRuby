@@ -68,7 +68,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   def bar_chart_collections
     collections = data.map do |collection_name, collection_data|
-      collection_name = collection_name.first if collection_name.is_a?(Array)
+      collection_name = collection_name.first
       BarChartCollection.new(collection_name, collection_data, config)
     end
     if valid_bar_chart_collections?(collections)
@@ -102,37 +102,30 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def preserve_data_type_name
+    translated_label_map = category.key_label_map(true, true)
+    untranslated_label_map = category.key_label_map(false, true)
     data.each do |key, _|
       key = label_lookup_value(key)
-      config[category.key_label_map(true, true)[key]] = category.key_label_map(false, true)[key]
+      config[translated_label_map[key]] = untranslated_label_map[key]
     end
   end
 
   def change_data_type_to_label
-    self.data = data.each_with_object({}) do |(key, _), hash|
-      hash_key = if key.is_a?(Array)
-                   label = category.key_label_map(true, true)[label_lookup_value(key)]
-                   [label, key.last]
-                 else
-                   category.key_label_map[key.to_s]
-                 end
-      hash[hash_key] = data[key]
+    data.transform_keys! do |key|
+      label = category.key_label_map(true, true)[label_lookup_value(key)]
+      [label, key.last]
     end
   end
 
   def label_lookup_value(key)
-    if key.is_a?(Array)
-      [key.first.to_s, key.last]
-    else
-      key.to_s
-    end
+    [key.first.to_s, key.last]
   end
 
   def add_ethnicity_callback
     ethnicity_sym = SchoolCache::ETHNICITY
     return unless config[:breakdown] == ethnicity_sym.to_s
 
-    ethnicity_data = get_cache_data(data_type: ethnicity_sym)[ethnicity_sym]
+    ethnicity_data = get_cache_data(data_type: ethnicity_sym)[[ethnicity_sym, nil]]
     if ethnicity_data
       ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
         h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
@@ -153,7 +146,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     enrollment_sym = SchoolCache::ENROLLMENT
     return unless config[:breakdown_all] == enrollment_sym.to_s
 
-    enrollment_data = get_cache_data(data_type: enrollment_sym)[enrollment_sym]
+    enrollment_data = get_cache_data(data_type: enrollment_sym)[[enrollment_sym, nil]]
     enrollment_size = enrollment_data.first[:school_value]
 
     data.values.flatten.each do | hash |
@@ -178,10 +171,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     student_types = student_types_data.inject({}) do | h, (type, type_data) |
       # Student types aren't the same name as their breakdowns so we map the
       # datatype (used above to get the data) to its breakdown here. See AT-925.
-      breakdown = if (student_type = StudentTypes.datatype_to_breakdown[type.to_s])
+      breakdown = if (student_type = StudentTypes.datatype_to_breakdown[type.first.to_s])
                     student_type.to_sym
                   else
-                    type
+                    type.first
                   end
       h.merge(breakdown => type_data.first[:school_value])
     end
@@ -214,7 +207,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   def footnotes_for_category(category)
     data = cached_data_for_category
-    data.map do |data_type, data_hashes|
+    data.map do |_, data_hashes|
       data_hash = data_hashes.first
       if data_hash[:source] && data_hash[:year]
         { source: data_hash[:source], year: data_hash[:year] }
