@@ -11,7 +11,7 @@
 //= require ./localStorage
 //= require ./optimizely
 //= require ./photo_upload
-//=  require ./popup
+//= require ./popup
 //  require ./responsive_images
 //= require ./selectpicker
 //= require ./school_picker

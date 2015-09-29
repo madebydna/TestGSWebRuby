@@ -14,5 +14,7 @@
 //= require guided_search
 //= require account_management
 //= require community_scorecards
+//= require dropzone.min
 //= require page_initializers
+
 

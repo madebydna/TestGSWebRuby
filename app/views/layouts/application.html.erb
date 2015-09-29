@@ -8,7 +8,6 @@
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= yield :javascript_includes %>
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
 
@@ -59,5 +58,6 @@
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "post_load", :async => true %>
 <%= javascript_include_tag "post_load", :async => true %>
+<%= yield :javascript_includes %>
 </body>
 </html>
