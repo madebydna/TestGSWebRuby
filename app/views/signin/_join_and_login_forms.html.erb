@@ -1,0 +1,42 @@
+<% @active_tab ||= 'login' %>
+
+
+  <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
+    <%= render 'signin/login_form' %>
+  </div>
+  <div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
+    <%= render 'signin/join_form' %>
+  </div>
+
+<script type="text/javascript">
+
+  // TODO: move this method elsewhere and write tests
+  var GS_bind_and_sync = function(selector1, selector2) {
+    var $input1 = $(selector1);
+    var $input2 = $(selector2);
+
+    $input1.bind("keyup paste", function() {
+      setTimeout(function() {
+        $input2.val($input1.val());
+      }, 20);
+    });
+    $input2.bind("keyup paste", function() {
+      setTimeout(function() {
+        $input1.val($input2.val());
+      }, 20);
+    });
+  };
+
+  $(function() {
+    GS_bind_and_sync('.js-signin-email', '.js-join-email');
+
+  });
+
+  if (location.hash.substr(1) == "join" || $('.js-join-tab').hasClass('active')) {
+    GS.track.baseOmnitureObject.pageName = JOIN_PAGENAME;
+    GS.track.baseOmnitureObject.hier1 = JOIN_HIER;
+  } else {
+    GS.track.baseOmnitureObject.pageName = SIGNIN_PAGENAME;
+    GS.track.baseOmnitureObject.hier1 = SIGNIN_HIER;
+  }
+</script>

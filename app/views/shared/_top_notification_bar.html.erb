@@ -1,13 +1,11 @@
-<% if @pagename != "signin/new" %>
-    <div id="js-top-notification-bar" class="limit-width-1200" style="display:none;">
-      <%= render "shared/notification_bar" %>
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#js-top-notification-bar").slideDown("slow");
-        });
-    </script>
-<% end %>
+<div id="js-top-notification-bar" class="limit-width-1200" style="display:none;">
+  <%= render "shared/notification_bar" %>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#js-top-notification-bar").slideDown("slow");
+  });
+</script>
 
 <%= include_handlebars_templates('notification_bar_message') %>
 

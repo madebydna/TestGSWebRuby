@@ -3,11 +3,16 @@
 <div class="signin">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-hdr">
-      <% render "shared/signin_notification_bar" %>
       <h2 class="ptl tac"><%= t('.header') %></h2>
     </div>
   </div>
-  <%= render 'new' %>
+  <div class="row limit-width-1200 signin-content">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+      <div class="tab-content well">
+        <%= render 'join_and_login_forms' %>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-ftr">
       <ul class="pvl pln tac mtl">

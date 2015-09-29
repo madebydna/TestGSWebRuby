@@ -4,29 +4,5 @@ es:
     new:
       articles_count: artículos, hojas de trabajo y vídeos
       community_reviews_count: Críticas de la comunidad de las escuelas
-      create_account_using_your_email: Crear cuenta utilizando su correo electrónico
-      email_label: Dirección de correo electrónico
-      facebook_signin_button: Iniciar sesión usando Facebook
-      facebook_signup_button: Inscríbase en Facebook
-      facebook_signup_label: Crear una cuenta usando Facebook
-      forgot_password_link: ¿Olvidaste tu contraseña?
-      greatschools_terms_of_use: GreatSchools Términos de Uso.
-      have_an_account_label: ¿Tener una cuenta?
       header: Encuentra escuelas de calidad y obten buenos consejos
-      login_button: Iniciar sesión
-      login_tab: Iniciar sesión
-      no_account_label: ¿No tienes una cuenta?
-      or: o
-      password_label: Contraseña
-      promos:
-      - header: Boletín semanal
-        paragraph: Recibe nuestros mejores artículos, hojas de trabajo y mucho más semanalmente.
-      - header: Siga las escuelas
-        paragraph: Guarda escuelas a tu lista y despues seras notificado cuando se publiquen nuevos resultados de las
-                   pruebas de exámenes.
-      - header: Escribir comentario
-        paragraph: Ayude a otros padres a encontrar una gran escuela, compartiendo sus experiencias.
       school_profiles_count: perfiles de las escuelas
-      signup_button: Registrese
-      signup_tab: Registrese
-      terms_of_use_html: Estoy de acuerdo con %{terms_of_use_link}
