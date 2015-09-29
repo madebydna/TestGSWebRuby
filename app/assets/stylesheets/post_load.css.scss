@@ -15,16 +15,17 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // REMOVE ME! We need to figure out @extend usage first though.
-@import "application";
-
-@import "resources/bootstrap/bootstrap/gs-variables";
-@import "resources/bootstrap/bootstrap/variables";
-@import "resources/bootstrap/bootstrap/mixins";
+@import "resources/bootstrap/bootstrap";
+@import "sprites/*";
 @import "gs/fonts-opensans";
 @import "gs/fonts-opensans-condbold";
 @import "gs/fonts-amaticsc";
 @import "gs/fonts-robotoslab-light";
-@import "sprites/*";
+@import "gs/spacing";
+@import "gs/typography";
+//@import "resources/bootstrap/bootstrap/gs-variables";
+//@import "resources/bootstrap/bootstrap/variables";
+//@import "resources/bootstrap/bootstrap/mixins";
 @import "gs/tables";
 @import "resources/tables";
 @import "resources/galleria.classic";
@@ -47,3 +48,6 @@
 @import "gs/bring-back-bootstrap";
 @import "gs/data-viz";
 @import "gs/objects/partner_promos";
+@import "gs/nav-guided-search";
+@import "gs/nav-osp";
+

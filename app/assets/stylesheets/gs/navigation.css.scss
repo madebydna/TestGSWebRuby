@@ -152,9 +152,10 @@
 
   li {
     display: inline;
-    @extend .mhm;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    margin: 15px 10px 20px 10px;
+    //@extend .mhm;
+    //margin-top: 15px;
+    //margin-bottom: 20px;
 
     a {
       color: #666;
@@ -207,75 +208,13 @@
   }
 }
 
-// Guided Search CSS for page navigation
 
-
-.nav-tabs{
-  border-bottom: none;
-}
-.nav-tabs > li >p{
-  border-right: $border-light-grey;
-  border-bottom: $border-light-grey;
-}
-.nav-tabs > li.active >p {
-  border-bottom: 7px $brand-primary solid;
-  color: $brand-primary;
-}
-.nav-tabs > li  {
-  width: 20%;
-  margin-right: 0px;
-  border: none;
-}
-.nav-tabs > li >p.tab_last {
-  border-right: none;
-}
-
-.nav-button { //Mobile Filters
-  border-radius: 0px;
-  margin-left: 0px !important;
-}
-
-.nav-button-font {
-  font-size: 11px;
-}
-
-.nav-button-left-border {
-  border-left: thin solid white;
-}
-
-.primary-bg-color {
-  background-color: $brand-primary;
-}
-.bg-white {
-  background-color: $body-bg;
-}
-.border-all-light-grey{
-  border: $border-light-grey;
-}
 
 .pointer {
-  cursor: pointer;
+  cursor: $cursor-pointer;
 }
 
-//OSP nav
-.nav-osp{
 
-  .nav_button {
-    position: relative;
-    background-color: $btn-primary-color;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    &:hover h3 {
-      color: $btn-hover;
-    }
-    &.active {
-      h3 {
-        color : $btn-primary-color;
-      }
-      background-color: $btn-hover;
-    }
-  }
-}
 
 .navbar {
   .gs-logo {

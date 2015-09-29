@@ -132,12 +132,13 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
   .no-data {
     border-bottom: $gray-dark 2px solid;
     width: 12px;
-    @extend .mha;
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .table-header {
-    @extend .pam;
-    @extend .full-width;
+    margin: 10px 10px 10px 10px;
+    width: 100%;
     background-color: $module-gray-stroke;
 
     &.gray-darkset {
@@ -174,7 +175,7 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
     font-weight: bold;
 
     &.sort-link {
-      @extend .pointer;
+      cursor: $cursor-pointer;
       color: $gray-link-color;
     }
 

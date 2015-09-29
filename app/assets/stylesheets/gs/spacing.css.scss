@@ -383,3 +383,10 @@ hr.brand-bar {
     clear: right;
   }
 }
+
+// support for previous bootstrap version
+@media (min-width: $screen-sm-min) {
+  .hidden-xs {
+    display: block;
+  }
+}
