@@ -3,8 +3,6 @@
   <%= javascript_include_tag "cycle/jquery.cycle2.carousel.js" %>
   <script>
     $(function() {
-      GS.viewMoreCollapseInit({'foldHeight': 292 });
-      GS.customCarouselControl.cycle2Carousel.enableMultipleCarouselsNav();
       GS.util.setupImages({ selector: '.js-enrollment-image', desktopImage: '<%= image_path('hubs/enrollment.png')%>', mobileImage: '<%= image_path('hubs/small/enrollment_small.png')%>',breakpoint: 768});
     });
   </script>

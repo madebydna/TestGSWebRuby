@@ -41,8 +41,8 @@
           </a>
           <div class='fl phl' style='width: 80%;'>
             <div class="cycle-slideshow"
-                 data-cycle-slides="> div"
                  data-cycle-timeout="10"
+                 data-cycle-slides="> div"
                  data-index="<%= type == :public ? 0 : 1 %>">
               <% @tips[type][:content].each do |tip| %>
                 <div><%= tip.html_safe %></div>
@@ -57,3 +57,4 @@
     <% end %>
   </div>
 </div>
+

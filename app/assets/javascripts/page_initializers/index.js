@@ -7,6 +7,7 @@
 //= require ./compare_schools_init
 //= require ./details_init
 //= require ./district_home_init
+//= require ./enrollment_init
 //= require ./forgot_password_init
 // require ./header_init
 //= require ./home_init
