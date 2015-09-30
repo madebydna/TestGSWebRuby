@@ -24,7 +24,7 @@ class ReviewTopicDecorator < Draper::Decorator
   end
 
   def sample_review_intro
-    "A #{ student? ? 'student' : 'parent' }  at <a href='#{school_url}'><span class='open-sans_b'>#{sample_review_school}</span></a> in #{sample_review_city_and_state} said:"
+    "A #{ student? ? 'student' : 'parent' }  at <a class='link-darkgray' href='#{school_url}'><span class='open-sans_b'>#{sample_review_school}</span></a> in #{sample_review_city_and_state} said:"
   end
 
   def city
