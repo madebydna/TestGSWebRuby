@@ -258,11 +258,15 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     //ToDo if we do decide to maintain the list, perhaps move this into a service that autogenerates the list
     var matchesAddress = function(query) {
 //        return (matchesNumbersAsOnlyFirstCharacters(query) && !matchesSchoolsList(query) && !matchesDistrictsList(query))
-        return (matchesNumbersAsOnlyFirstCharacters(query));
+        return matchesNumbersAsOnlyFirstCharacters(query) || matchesStateAbbreviationQuery(query);
     };
 
     var matchesNumbersAsOnlyFirstCharacters = function(query) {
         return /^\W*\d+\s/.test(query);
+    };
+
+    var matchesStateAbbreviationQuery = function(query) {
+      return /\w*, \w\w\b/.test(query);
     };
 
     //there are about 300 schools that will accidentally generate a false positive on the address detection regex
@@ -394,7 +398,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         if (typeof collectionId !== 'undefined') {
             queryString.collectionId = collectionId;
         }
-        if (typeof state !== 'undefined') {
+        if (typeof state !== 'undefined' && state !== '') {
             queryString.state = state;
         }
 
