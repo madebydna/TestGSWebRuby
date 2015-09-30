@@ -4,16 +4,16 @@
       <div class='row-text <%= chart.performance_level %>'><%= chart.value %>%</div>
     </div>
 
-    <div class="bar-row">
+    <div class="bar-row gs-tooltip"
+      <% if chart.comparison_value %>
+           data-toggle="tooltip"
+           data-html="true"
+           data-placement="bottom"
+           data-title='<%= render partial: 'school_profile/data_viz/bar_chart_tooltip', locals: {chart: chart} %>'
+      <% end %>
+    >
       <div class="pr clearfix">
-        <div class="color-row <%= chart.performance_level %> gs-tooltip"
-             <% if chart.comparison_value %>
-             data-toggle="tooltip"
-             data-html="true"
-             data-placement="bottom"
-             data-title='<%= render partial: 'school_profile/data_viz/bar_chart_tooltip',
-                                    locals: {chart: chart} %>'
-             <% end %>
+        <div class="color-row <%= chart.performance_level %>"
              style="width:<%= chart.value %>%"></div>
         <div class="grey-row" style="width:<%= chart.grey_value %>%"></div>
         <% if chart.comparison_value %>
