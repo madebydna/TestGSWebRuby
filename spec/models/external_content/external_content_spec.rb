@@ -22,6 +22,24 @@ describe ExternalContent do
 
     it { is_expected.to be_a HomepageFeatures }
     its(:first_feature) { is_expected.to be_present }
+    it 'should have posts' do
+      expect(subject.first_feature.posts).to_not be_empty
+    end
+
+    context 'in spanish' do
+      before do
+        @old_locale = I18n.locale
+        I18n.locale = :es
+      end
+      after do
+        I18n.locale = @old_locale
+      end
+      it { is_expected.to be_a HomepageFeatures}
+      its(:first_feature) { is_expected.to be_present }
+      it 'should have no posts' do
+        expect(subject.first_feature.posts).to be_empty
+      end
+    end
   end
 
   describe '.homepage_features_content' do

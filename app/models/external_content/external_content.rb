@@ -30,6 +30,11 @@ class ExternalContent < ActiveRecord::Base
     define_singleton_method("#{content_key}") do
       content = send("#{content_key}_content")
       klass = CONTENT_KEY_TO_CLASS_MAPPING[content_key]
+      if content[I18n.locale.to_s].present?
+        content = content[I18n.locale.to_s]
+      elsif content[I18n.default_locale.to_s].present?
+        content = content[I18n.default_locale.to_s]
+      end
       unless klass.present?
         GSLogger.error(:external_content_fetcher, nil, {message: "Cannot find class mapping for key #{content_key}"})
       end

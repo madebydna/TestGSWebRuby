@@ -1,7 +1,7 @@
 class HomepageFeatures < ExternalContent
   include ConstructFromHash
 
-  attr_accessor :status, :type
+  attr_accessor :type
   delegating_attr_accessor :first_feature, WpFeature
   delegating_attr_accessor :second_feature, WpFeature
 

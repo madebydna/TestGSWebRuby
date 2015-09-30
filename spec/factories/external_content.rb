@@ -5,6 +5,7 @@ FactoryGirl.define do
     content do
       {
         'status' => 'ok',
+        'en' => {
         'first_feature' => {
           'heading' => 'Set your child up for success!',
           'posts' => [{
@@ -28,6 +29,13 @@ FactoryGirl.define do
               }
             }
           }]
+        }
+        },
+        'es' => {
+            'first_feature' => {
+                'heading' => 'Establezca su hijo para el exito!',
+                'posts' => []
+            }
         }
       }.to_json
     end
