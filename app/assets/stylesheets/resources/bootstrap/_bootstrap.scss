@@ -4,9 +4,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 
-// GS variables to override defaults
-@import "bootstrap/gs-variables";
-
 // Core variables and mixins
 @import "bootstrap/variables";
 @import "bootstrap/mixins";
@@ -26,9 +23,7 @@
 @import "bootstrap/grid";
 @import "bootstrap/tables";
 @import "bootstrap/forms";
-// We maintain our own fork of buttons
-// @import "bootstrap/buttons";
-@import "bootstrap/gs-buttons";
+@import "bootstrap/buttons";
 
 // Components
 @import "bootstrap/component-animations";

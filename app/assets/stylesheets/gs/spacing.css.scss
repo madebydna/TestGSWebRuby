@@ -25,12 +25,6 @@ General comments:
 body { padding-top: 50px }
 .link-down-compensate { padding-top: 50px; margin-top: -50px; }
 
-$spacing-none: 0;
-$spacing-small: 5px;
-$spacing-medium: 10px;
-$spacing-large: 20px;
-$spacing-extra-large: 40px;
-
 .ptn,.pvn,.pan{padding-top: $spacing-none;}
 .pts,.pvs,.pas{padding-top: $spacing-small;}
 .ptm,.pvm,.pam{padding-top: $spacing-medium;}

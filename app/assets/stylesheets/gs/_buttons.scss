@@ -143,19 +143,20 @@
 //for checkboxes
 .btn-checkbox-square {
   @extend .btn-toggle;
-  @extend .vam;
   @extend .iconx24-icons;
   @extend .i-24-checkmark-white;
 
   padding: 8px;
   line-height: 0px;
   text-indent: 100px; //this is usually put on an input element. this is to prevent text from value attr from appearing.
+  vertical-align: middle;
 }
 
 .btn-checkbox {
   @extend .btn-toggle;
-  @extend .mvs;
-  @extend .mrm;
+  margin-bottom: $spacing-small;
+  margin-top: $spacing-small;
+  margin-right: $spacing-medium;
   @extend .pull-left;
 }
 
