@@ -55,6 +55,7 @@ class SearchController < ApplicationController
   #This can pose a problem if city browse is hit via the search method above, thus not activating the before filters
   #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
+    @state_abbreviation = state_abbreviation
     set_login_redirect
     @city_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
@@ -77,6 +78,7 @@ class SearchController < ApplicationController
   end
 
   def district_browse
+    @state_abbreviation = state_abbreviation
     set_login_redirect
     @district_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
@@ -110,6 +112,7 @@ class SearchController < ApplicationController
   end
 
   def by_location
+    @state_abbreviation = state_abbreviation
     set_login_redirect
     city = nil
     @by_location = true
@@ -136,6 +139,7 @@ class SearchController < ApplicationController
   end
 
   def by_name
+    @state_abbreviation = state_abbreviation
     set_login_redirect
     @by_name = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
