@@ -10,22 +10,30 @@
   <% end %>
   <div class="limit-width-1200 bg-white gray-border">
     <div class="pvl pll">
-      <span class="font-size-block">Your search for <span class="open-sans_sb"><%=@search_term%></span> did not return any results in <%=@state[:long].titleize%></span>
+      <span class="font-size-block">
+        <% if @state.is_a?(Hash) && @state[:long] %>
+          <%= t('.no_results_for_state_html', term: @search_term, state: @state[:long].titleize) %>
+        <% else %>
+          <%= t('.no_results_for_html', term: @search_term) %>
+        <% end %>
+      </span>
       <% if @suggested_query.present? %>
         <br><br>
-        <span>Did you mean: </span><a href="<%= @suggested_query[:url]%>"><%= @suggested_query[:term]%></a>
+        <span><%= t('.did_you_mean') %> </span><a href="<%= @suggested_query[:url]%>"><%= @suggested_query[:term]%></a>
       <% end %>
       <br><br>
-      <p class="open-sans_sb font-size-medium">Suggestions:</p>
+      <p class="open-sans_sb font-size-medium"><%= t('.suggestions') %></p>
       <ul>
-        <li>Make sure all words are spelled correctly.</li>
-        <li>Try different or fewer keywords.</li>
-        <li>Try more general keywords.</li>
+        <li><%= t('.spelled_correctly') %></li>
+        <li><%= t('.different_keywords') %></li>
+        <li><%= t('.generalize_keywords') %></li>
         <% state = 'delaware' #ToDo set state to actual state %>
         <% if @show_guided_search %>
-            <li>Try our <div class="iconx16 i-16-blue-info vam "></div>
-              <a class='toolbar-text ' href='<%= state_guided_search_path(state: state) %>'>Guide Me Search &#8594;</a>
-              </li>
+          <li>
+            <%= t('.try_our') %>
+            <div class="iconx16 i-16-blue-info vam "></div>
+            <a class='toolbar-text ' href='<%= state_guided_search_path(state: state) %>'><%= t('.guide_me_search') %> &#8594;</a>
+          </li>
         <% end %>
       </ul>
     </div>

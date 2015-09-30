@@ -1,0 +1,13 @@
+---
+en:
+  search:
+    no_results:
+      no_results_for_state_html: Your search for <strong>%{term}</strong> did not return any results in %{state}.
+      no_results_for_html: Your search for <strong>%{term}</strong> did not return any results.
+      did_you_mean: "Did you mean:"
+      suggestions: "Suggestions:"
+      spelled_correctly: Make sure all words are spelled correctly.
+      different_keywords: Try different or fewer keywords.
+      generalize_keywords: Try more general keywords.
+      try_our: Try our
+      guide_me_search: Guide Me Search
