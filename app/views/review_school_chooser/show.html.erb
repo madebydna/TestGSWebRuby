@@ -1,4 +1,5 @@
 <%  decorated_topic = ReviewTopicDecorator.decorate(@topic) %>
+
 <div class="row bg-white pvl <%= @display_morgan_stanley %>">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div class="oa tac ">
@@ -6,30 +7,35 @@
       Welcome Morgan Stanley employees, thank you for participating in 2015 Global Volunteer Month!</div>
   </div>
 </div>
-    <% if @display_morgan_stanley %>
-      <input type="hidden" name="morganstanley" value="1">
-    <% end %>
+
+<% if @display_morgan_stanley %>
+  <input type="hidden" name="morganstanley" value="1">
+<% end %>
 
 <div class="review_school_chooser <%= @gs_bootstrap %>">
-  <header class="container-fluid">
-    <h1 class="lg-roboto">
-      <%= decorated_topic.header %>
-    </h1>
+  <header>
+    <div class="container-fluid">
+      <h1 class="lg-roboto">
+        <%= decorated_topic.header %>
+      </h1>
+    </div>
   </header>
 
-  <section class="top container-fluid">
-    <div class="row">
-      <div class="review-highlight col-xs-12 col-sm-8 col-sm-offset-2 col-offset-md-2 col-offset-lg-2">
-        <p><%= decorated_topic.sample_review_intro.html_safe  %></p>
-        <div class="review row">
-          <div class="visible-sm visible-md visible-lg col-sm-2">
-            <div class="fl iconx48-icons i-48-green-quotes"></div>
-          </div>
-          <div class="col-sm-8">
-            <span class="small-quotes">"</span><%= decorated_topic.sample_review  %><span class="small-quotes">"</span>
-          </div>
-          <div class="visible-sm visible-md visible-lg col-sm-2">
-            <div class="fr iconx48-icons i-48-green-quotes-upsidedown"></div>
+  <section class="top">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="review-highlight col-xs-12 col-sm-8 col-sm-offset-2 col-offset-md-2 col-offset-lg-2">
+          <p><%= decorated_topic.sample_review_intro.html_safe  %></p>
+          <div class="review row">
+            <div class="visible-sm visible-md visible-lg col-sm-2">
+              <div class="fl iconx48-icons i-48-green-quotes"></div>
+            </div>
+            <div class="col-sm-8">
+              <span class="small-quotes">"</span><%= decorated_topic.sample_review  %><span class="small-quotes">"</span>
+            </div>
+            <div class="visible-sm visible-md visible-lg col-sm-2">
+              <div class="fr iconx48-icons i-48-green-quotes-upsidedown"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,7 +46,8 @@
     </div>
   </section>
 
-  <section class="reviews-list container-fluid pbl">
+  <section class="reviews-list">
+    <div class="container-fluid pbl">
       <div id="js_reviewsListHeader" class="rs-review-list-header">
         <div class="plm mbl tac">
           <h3><%= t('.header') %></h3>
@@ -51,12 +58,12 @@
           collection: @reviews, 
           as: :review, locals: { border_bottom: false} %>
       </div>
+    </div>
+    <div class="review-school-picker-module">
+      <h1>Express your thoughts</h1>
+      <%=  render 'osp/school_picker', linkClass: 'search-link-black'  %>
+    </div>
   </section>
-
-  <div class="review-school-picker-module container-fluid">
-    <h1>Express your thoughts</h1>
-    <%=  render 'osp/school_picker', linkClass: 'search-link-black'  %>
-  </div>
 </div>
 
 <%= render partial: 'shared/home_footer' %>
