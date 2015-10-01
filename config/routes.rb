@@ -38,6 +38,7 @@ LocalizedProfiles::Application.routes.draw do
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
+  get '/community/', to: 'community_landing#show',as: :community_landing
 
   get  '/school/esp/form.page', to: 'osp#show' , as: :osp_page
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
