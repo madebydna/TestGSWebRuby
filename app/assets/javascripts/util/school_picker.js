@@ -248,7 +248,7 @@ GS.schoolPicker = GS.schoolPicker ||  (function() {
 
   // CALLBACK FOR BUILDING SCHOOLS AND CITES FORM LIST
   var buildSchoolsOptions = function (data, $schoolSelect) {
-    var optionLabel = 'school';
+    var optionLabel = GS.I18n.t('school_picker.school');
     addOptionLabel($schoolSelect, optionLabel);
     for(i=0; i < data.length; i++){
       $schoolSelect.append('<option data-id="'+data[i].id+'" data-value="'+data[i].name+'">'+data[i].name+'</option>');
@@ -256,7 +256,7 @@ GS.schoolPicker = GS.schoolPicker ||  (function() {
   };
 
   var buildCitiesOptions = function (data, $citySelect) {
-    var optionLabel = 'city';
+    var optionLabel = GS.I18n.t('school_picker.city');
     addOptionLabel($citySelect, optionLabel);
     for(i=0; i < data.length; i++){
       $citySelect.append('<option data-value="'+data[i]+'">'+data[i]+'</option>');
@@ -265,7 +265,7 @@ GS.schoolPicker = GS.schoolPicker ||  (function() {
 
   var addOptionLabel = function ($selectForm, formOption) {
     var optionString = formOption.toString();
-    var optionLabelMarkup= '<option>' + 'Select ' + optionString  + '</option';
+    var optionLabelMarkup= '<option>' + GS.I18n.t('school_picker.select') + optionString  + '</option';
     $selectForm.append(optionLabelMarkup);
   };
 
