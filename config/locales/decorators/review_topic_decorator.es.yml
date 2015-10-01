@@ -1,0 +1,20 @@
+---
+es:
+  decorators:
+    review_topic_decorator:
+      topic_1_header: Revise su escuela!
+      topic_1_subheading: Las familias quieren conocer su opinión honesta sobre su escuela.
+      topic_2_header: ¿Cómo enseñar a su escuela de la honestidad?
+      topic_2_subheading: Búsqueda de su escuela para compartir sus pensamientos.
+      topic_3_header: ¿Cómo funciona su escuela a construir la empatía?
+      topic_3_subheading: Búsqueda de su escuela para compartir sus pensamientos.
+      topic_4_header: ¿Cómo funciona su escuela de fomentar el respeto?
+      topic_4_subheading: Búsqueda de su escuela para compartir sus pensamientos.
+      topic_5_header: ¿Cómo funciona su escuela a desarrollar persistencia?
+      topic_5_subheading: Búsqueda de su escuela para compartir sus pensamientos.
+      topic_6_header: ¿Cómo es la tarea en su escuela?
+      topic_6_subheading: ¿Demasiado? ¿Demasiado poco? Comparte usted la opinión.
+      topic_7_header: Comparte tus pensamientos en los docentes.
+      topic_7_subheading: Grandes escuelas empiezan con grandes maestros. ¿Cómo son los suyos?
+      topic_8_header: ¿Estás agradecido por su escuela?
+      topic_8_subheading: Comparte qué. Encuentra tu escuela para empezar.

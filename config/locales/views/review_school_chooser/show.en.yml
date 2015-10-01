@@ -2,4 +2,6 @@
 en:
   review_school_chooser:
     show:
-      header: Recent reviews
+      review_lists_header: Recent reviews
+      school_picker_header_1: Share your story
+      school_picker_header_2: Express your thoughts

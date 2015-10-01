@@ -1,0 +1,20 @@
+---
+en:
+  decorators:
+    review_topic_decorator:
+      topic_1_header: Review your school!
+      topic_1_subheading: Families want to hear your honest opinion about your school.
+      topic_2_header: How does your school teach honesty?
+      topic_2_subheading: Search for your school to share your thoughts.
+      topic_3_header: How does your school build empathy?
+      topic_3_subheading: Search for your school to share your thoughts.
+      topic_4_header: How does your school encourage respect?
+      topic_4_subheading: Search for your school to share your thoughts.
+      topic_5_header: How does your school develop persistence?
+      topic_5_subheading: Search for your school to share your thoughts.
+      topic_6_header: How is homework at your school?
+      topic_6_subheading: Too much? Too little? Share you opinion.
+      topic_7_header: Share your thoughts on teachers.
+      topic_7_subheading: Great schools begin with great teachers.  How are yours?
+      topic_8_header: Are you grateful for your school?
+      topic_8_subheading: Share why. Find your school to start.
