@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :set_global_ad_targeting_through_gon
 
   before_action :adapt_flash_messages_from_java
+  before_action :set_uuid_cookie
   before_action :login_from_cookie, :init_omniture
   before_action :add_user_info_to_gtm_data_layer
   before_action :set_optimizely_gon_env_value
@@ -452,5 +453,9 @@ class ApplicationController < ActionController::Base
       return false unless latin_value == value.to_s
     end
     true
+  end
+
+  def set_uuid_cookie
+    write_cookie_value(:gs_aid, SecureRandom.uuid) unless read_cookie_value(:gs_aid).present?
   end
 end

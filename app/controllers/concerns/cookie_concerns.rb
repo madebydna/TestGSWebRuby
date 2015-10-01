@@ -32,6 +32,9 @@ module CookieConcerns
     },
       GATracking: {
       hash: true
+    },
+    uuid: {
+      hash: false
     }
   }
 
