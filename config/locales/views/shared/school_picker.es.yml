@@ -1,0 +1,7 @@
+---
+es:
+  shared:
+    school_picker:
+      do_not_see_school_text: ¿No ves tu escuela?
+      placeholder: Escriba el nombre de la escuela
+      return_to_original_search_text: Regresar a original de la búsqueda
