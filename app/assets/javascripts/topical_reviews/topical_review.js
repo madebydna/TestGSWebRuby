@@ -179,7 +179,7 @@ GS.topicalReview.form = (function () {
 
     var disableSubmitButton = function (topicSubmitted) {
         var disabledButtonHtml = '<button type="submit" submitted class="btn btn-primary disabled fr mtl mbl" data-disable-with="Submitting"> Review submitted! </button>'
-        var submittedQuestion = $('#question-topic' + topicSubmitted);
+        var submittedQuestion = $('#topic' + topicSubmitted);
         submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
         submittedQuestion.find('.js-topicalReviewSubmitContainer').html(disabledButtonHtml);
     };
