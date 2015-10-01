@@ -179,7 +179,7 @@ GS.topicalReview.form = (function () {
 
     var disableSubmitButton = function (topicSubmitted) {
         var disabledButtonHtml = '<button type="submit" submitted class="btn btn-primary disabled fr mtl mbl" data-disable-with="Submitting"> Review submitted! </button>'
-        var submittedQuestion = $('#topic' + topicSubmitted);
+        var submittedQuestion = $('#question-topic' + topicSubmitted);
         submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
         submittedQuestion.find('.js-topicalReviewSubmitContainer').html(disabledButtonHtml);
     };
@@ -314,7 +314,7 @@ GS.topicalReview.questionCarousel = (function () {
     // Go to topic specified by anchor in URL or next unaswered topic (written in dom)
     var goToSlideForPreferredTopic = function() {
         var topicIdFromHtmlDataAttribute = getCarousel().data('gs-first-topic-id');
-        var topicId = topicIdFromHtmlDataAttribute || getTopicIdFromAnchor();
+        var topicId = getTopicIdFromAnchor() || topicIdFromHtmlDataAttribute;
         goToTopic(topicId);
     };
 
