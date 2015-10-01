@@ -69,18 +69,15 @@ GS.schoolPicker = GS.schoolPicker ||  (function() {
     var $self = $(this);
     var schoolName = $self.find(':selected').data('value');
     setSchoolSelectVal(schoolName, $self)
-    setEditAutocompleteHandler($self);
-    setEditAutocompleteHandler($self);
   };
 
 // Default autocomplete school selected callback sets school value in form
   var defaultAutocompleteSchoolSelectCallback = function (event, suggestion, dataset) {
     setSchoolSelectVal(suggestion['school_name'], $(this));
-    setEditAutocompleteHandler($(this));
   };
 
-  var setEditAutocompleteHandler = function(self) {
-    var $autocompleteContainer = getClosestAutocompleteContainer(self);
+  var setEditAutocompleteHandler = function() {
+    var $autocompleteContainer = getAutocompleteContainer();
     $autocompleteContainer.on(click, editAutocompleteVal, function() {
       var $self = $(this);
       var $autocompleteContainer = getClosestAutocompleteContainer($self);
@@ -120,9 +117,11 @@ GS.schoolPicker = GS.schoolPicker ||  (function() {
   var setupEventHandlers = function () {
     getAndSaveState();
     if (STATE) {
+      setEditAutocompleteHandler();
       setDoNotSeeResultHandlers(loadCities);
     } else {
-       setStateSelectHandler();
+      setEditAutocompleteHandler();
+      setStateSelectHandler();
       setDoNotSeeResultHandlers(showStateSelect);
     }
   };
