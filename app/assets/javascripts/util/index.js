@@ -1,3 +1,4 @@
+//= require ./session
 //= require ./advertising
 //= require ./ajax
 //= require ./back_to_top

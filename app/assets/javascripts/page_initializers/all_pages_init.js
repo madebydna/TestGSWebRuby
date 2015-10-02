@@ -60,15 +60,15 @@ $(function() {
     });
   }
 
-
+  GS.subscription.initGreatNewsFormHandlers();
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
   // since it's easier to test
-  $('.js-send-me-updates-button-header').on('click', function () {
-      $('#js-send-me-updates-form-header').submit();
-  });
-
   $('.js-send-me-updates-button-footer').on('click', function () {
-      $('#js-send-me-updates-form-footer').submit();
+    if (GS.session.isSignedIn()) {
+      GS.subscription.greatNewsSignUp();
+    } else {
+      GS.modal.manager.showModalThenMessages(GS.modal.EmailJoinModal).done(GS.subscription.greatNewsSignUp);
+    }
   });
 
   $('.js-save-this-school-button').on('click', function () {
@@ -143,5 +143,6 @@ $(function() {
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
   GS.I18n.initLanguageLinkListener();
+  GS.modal.manager.attachDOMHandlers();
 
 });

@@ -1,4 +1,4 @@
-GS.session = GS.session || function($) {
+GS.session_check = GS.session_check || function($) {
 //    var COOKIE_LIST_DELIMETER = ',';
     var INTRA_COOKIE_DELIMETER = ';';
     var userObj = {
@@ -76,8 +76,8 @@ GS.session = GS.session || function($) {
 }(jQuery);
 
 $(function () {
-    GS.session.initializeSessionHandlers();
-    if(GS.session.getUserEmail() != ''){
-        $("#js_headerAccountMessage").html("Welcome "+GS.session.getUserFirstName());
+    GS.session_check.initializeSessionHandlers();
+    if(GS.session_check.getUserEmail() != ''){
+        $("#js_headerAccountMessage").html("Welcome "+GS.session_check.getUserFirstName());
     }
 });
