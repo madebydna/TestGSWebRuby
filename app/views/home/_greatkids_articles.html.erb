@@ -1,65 +1,31 @@
+<% if @greatkids_content.present? %>
 <div class="limit-width-1200">
-
-  <div class="row mbl">
-    <div class="plm-mobile">
-      <h2><%= t('.set_up_html') %></h2>
+  <% @greatkids_content.features.each_with_index do |feature, index| %>
+    <% if index > 0 %>
+      <hr/>
+    <% end %>
+    <div class="<%= 'pbl' if index > 0 %> plm-mobile">
+      <h2><%= feature.heading %></h2>
     </div>
-
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
-        <% article_hash={title:'Use state tests for insights into your child',
-                         content: 'Let us help you understand what these state test results mean, and it will help you to uncover your child’s strengths and struggles.',
-                         image: 'articles/HP-SBAC.jpg',
-                         link: '/gk/sbac-more-about-this-guide/?utm_source=GS&utm_medium=featured_article1&utm_content=homepage&utm_campaign=SBAC' } %>
-        <%= render 'shared/article_module', data: article_hash  %>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
-        <% article_hash={title:'Build their emotional smarts',
-                         content: 'Research shows kids with emotional intelligence are happier, healthier, and more successful. Check out our new collection of articles, videos, and a feeling words game!',
-                         image: 'articles/greatkids-banner_350x208.jpg',
-                         link: '/gk/articles/new-from-greatkids-our-emotional-smarts-collection/?utm_source=GS&utm_medium=featured_article2&utm_content=homepage&utm_campaign=Emotional_Smarts' } %>
-        <%= render 'shared/article_module', data: article_hash  %>
-      </div>
+    <div class="row">
+      <% feature.posts_with_thumbnails.each do |post| %>
+        <% article_hash = {
+          title: post.promo || post.title,
+          image: post.large_tile_image.try(:url),
+          link: post.url
+        } %>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
+          <%= render 'shared/article_module', data: article_hash  %>
+        </div>
+      <% end %>
+      <% slot_name = (index == 0 ? :Choosing_Content : :Parenting_Content) %>
       <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
         <div class="pam tac">
-            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Choosing_Content, view: :desktop  %>
-            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Choosing_Content, view: :mobile  %>
+          <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: slot_name, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: slot_name, view: :mobile  %>
         </div>
       </div>
     </div>
-  </div>
-
-  <hr>
-
-  <div class="row pbl">
-    <div class="pbl plm-mobile">
-      <h2><%= t('.real_parents') %></h2>
-    </div>
-    <div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
-        <% article_hash={title:'When you feel like a failure as a mother',
-                         content: 'She thought she would be great at this mom thing. But after her son’s meltdowns left her in tears, she learned traditional parenting methods don’t work on every kid.',
-                         image: 'articles/HP-lessons-from-failed-parenting.jpg',
-                         link: '/gk/articles/is-it-me-life-lessons-from-failed-parenting/?utm_source=GS&utm_medium=featured_article3&utm_content=homepage&utm_campaign=Parenting' } %>
-        <%= render 'shared/article_module', data: article_hash  %>
-      </div>
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 mvl">
-        <% article_hash={title:'Getting on the same parenting page',
-                         content: 'Divide and conquer works in warzones … but who wants their home to be a warzone? One family finds the value of presenting a united front, regardless of parenting style.',
-                         image: 'articles/HP-parenting-clash.jpg',
-                         link: '/gk/articles/when-parenting-styles-clash/?utm_source=GS&utm_medium=featured_article4&utm_content=homepage&utm_campaign=Parenting' } %>
-        <%= render 'shared/article_module', data: article_hash  %>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 mvl">
-        <div class="pam tac">
-            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Parenting_Content, view: :desktop  %>
-            <%= render 'layouts/ad_layer', page: ('Homepage').to_sym, slot: :Parenting_Content, view: :mobile  %>
-
-        </div>
-      </div>
-
-
-    </div>
-
-  </div>
+  <% end %>
 </div>
+<% end %>

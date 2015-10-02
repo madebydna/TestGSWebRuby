@@ -6,8 +6,8 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
     @query_results ||= (
       results =
         (
-          TestDataSet.fetch_test_scores(school, 1, breakdown_id: 1) +
-          TestDataSet.fetch_test_scores(school, 1, grade: 'All')
+          TestDataSet.fetch_test_scores(school, breakdown_id: 1) +
+          TestDataSet.fetch_test_scores(school, grade: 'All')
         ).select do |result|
           data_type_id = result.data_type_id
           # skip this if no corresponding test data type
@@ -29,7 +29,7 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
   def build_hash_for_data_set(test)
     {
       test.data_type_id => {
-        test.breakdown_name => {
+        test.test_scores_breakdown_name => {
           test_label: test.test_label,
           test_source: test.test_source,
           test_description: test.test_description,

@@ -1,0 +1,13 @@
+---
+es:
+  search:
+    no_results:
+      no_results_for_state_html: Su búsqueda de <strong>%{term}</strong> no obtuvo resultados en %{state}.
+      no_results_for_html: Su búsqueda de <strong>%{term}</strong> no obtuvo resultados.
+      did_you_mean: "Querías decir:"
+      suggestions: "Sugerencias:"
+      spelled_correctly: Asegúrese de que todas las palabras estén escritas correctamente.
+      different_keywords: Pruebe diferentes o menos palabras.
+      generalize_keywords: Prueba palabras clave más generales.
+      try_our: Pruebe nuestra busqueda de
+      guide_me_search: Guide Me Search

@@ -1,29 +1,65 @@
-<% content_for :javascript_includes do %>
-    <script>
-        $(function() {
-            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('review_school_chooser/reviews_hero_hand.jpg')%>', mobileImage: '<%= image_path('review_school_chooser/reviews_hero_hand_mobile.jpg')%>', classes:'scaling' });
-            GS.track.setOmnitureData();
+<%  decorated_topic = ReviewTopicDecorator.decorate(@topic) %>
 
-        })
-    </script>
-<% end %>
+<div class="row bg-white pvl <%= @display_morgan_stanley %>">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="oa tac ">
+      <img height="40px" src="<%= image_path('review_school_chooser/morganstanley.png')%>" alt="Morgan Stanley"><br />
+      Welcome Morgan Stanley employees, thank you for participating in 2015 Global Volunteer Month!</div>
+  </div>
+</div>
 
-<%= render 'shared/review_school_chooser/hero_image_select' %>
+<div class="review_school_chooser <%= @gs_bootstrap %>">
+  <header>
+    <div class="container-fluid">
+      <h1 class="lg-roboto">
+        <%= decorated_topic.header %>
+      </h1>
+    </div>
+  </header>
 
-<% if @reviews.present? %>
-  <div class="row limit-width-1200 pbl">
-    <div class="col-xs-12">
-      <div id="js_reviewsListHeader" class="link-down-compensate rs-review-list-header">
-        <hr/>
+  <section class="top">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="review-highlight col-xs-12 col-sm-8 col-sm-offset-2 col-offset-md-2 col-offset-lg-2">
+          <p><%= decorated_topic.sample_review_intro.html_safe  %></p>
+          <div class="review row">
+            <div class="visible-sm visible-md visible-lg col-sm-2">
+              <div class="fl iconx48-icons i-48-green-quotes"></div>
+            </div>
+            <div class="col-sm-8">
+              <span class="small-quotes">"</span><%= decorated_topic.sample_review  %><span class="small-quotes">"</span>
+            </div>
+            <div class="visible-sm visible-md visible-lg col-sm-2">
+              <div class="fr iconx48-icons i-48-green-quotes-upsidedown"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="review-school-picker-module">
+      <h1><%= t('.school_picker_header_1') %></h1>
+      <%=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
+    </div>
+  </section>
+
+  <section class="reviews-list">
+    <div class="container-fluid pbl">
+      <div id="js_reviewsListHeader" class="rs-review-list-header">
         <div class="plm mbl tac">
-          <h2><%= t('.header') %></h2>
+          <h3><%= t('.review_lists_header') %></h3>
         </div>
       </div>
       <div class="js_reviewsList">
-        <%= render partial: 'review_module', collection: @reviews, as: :review %>
+        <%= render partial: 'review_module', 
+          collection: @reviews, 
+          as: :review, locals: { border_bottom: false} %>
       </div>
     </div>
-  </div>
-<% end %>
+    <div class="review-school-picker-module">
+      <h1><%= t('.school_picker_header_2') %></h1>
+      <%=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
+    </div>
+  </section>
+</div>
 
 <%= render partial: 'shared/home_footer' %>

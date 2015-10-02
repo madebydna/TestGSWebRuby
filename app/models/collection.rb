@@ -51,6 +51,12 @@ class Collection < ActiveRecord::Base
     where(id: ids).to_a
   end
 
+  def self.promos_for(collections)
+    [*collections].map do |collection|
+      collection.config[:promo]
+    end.compact.uniq
+  end
+
   # These methods are deprecated, but still work.
   # Collection-specific configuration should be moved to this model's config
   # attribute and hub-specific config should live in the hub_config model.

@@ -24,31 +24,18 @@ class TestDataSet < ActiveRecord::Base
     test_data_school_values[0] if test_data_school_values.any?
   end
 
-  def self.fetch_test_scores(school, active, data_set_conditions = {})
-    data_set_conditions = data_set_conditions.merge({
-      active: active,
-      TestDataSchoolValue: {
-        school_id: school.id,
-        active: active
-      }
-    })
-    TestDataSet.on_db(school.shard)
-      .select("*,TestDataSet.id as data_set_id,
-      TestDataStateValue.value_float as state_value_float,
-      TestDataStateValue.value_text as state_value_text,
-      TestDataSchoolValue.value_float as school_value_float,
-      TestDataSchoolValue.value_text as school_value_text,
-      TestDataSchoolValue.number_tested as number_students_tested,
-      TestDataSet.proficiency_band_id as proficiency_band_id,
-      TestDataStateValue.number_tested as state_number_tested ")
-      .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
+  def self.fetch_test_scores(school, data_set_conditions = {})
+    self.base_performance_query(school)
       .where(data_set_conditions)
-      .with_display_target('desktop')
-      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
+      .with_display_targets('desktop')
   end
 
-  scope :with_display_target, ->(display_target) {
-    where('display_target like ?',"%#{display_target}%") }
+  scope :with_display_targets, ->(*display_targets) {
+    where_statements = display_targets.map do |target|
+      "display_target like '%#{target}%'"
+    end
+    where(where_statements.join(' OR '))
+  }
 
   scope :with_no_subject_breakdowns, -> { where(subject_id: 1) }
 
@@ -59,8 +46,31 @@ class TestDataSet < ActiveRecord::Base
     .active
     .includes(:test_data_school_values)
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
-    .with_display_target('ratings')
+    .with_display_targets('ratings')
     .with_no_subject_breakdowns
+  end
+
+  def self.base_performance_query(school)
+    TestDataSet.on_db(school.shard)
+      .select("*,TestDataSet.id as data_set_id,
+      TestDataStateValue.value_float as state_value_float,
+      TestDataStateValue.value_text as state_value_text,
+      TestDataSchoolValue.value_float as school_value_float,
+      TestDataSchoolValue.value_text as school_value_text,
+      TestDataSchoolValue.number_tested as number_students_tested,
+      TestDataSet.proficiency_band_id as proficiency_band_id,
+      TestDataStateValue.number_tested as state_number_tested ")
+      .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
+      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
+      .where(TestDataSchoolValue: { school_id: school.id, active: 1 })
+      .where(TestDataStateValue: { active: 1 })
+      .active
+  end
+
+  def self.fetch_performance_results(school, data_set_conditions = {})
+    self.base_performance_query(school)
+      .where(data_set_conditions)
+      .with_display_targets('desktop', 'ratings')
   end
 
 end

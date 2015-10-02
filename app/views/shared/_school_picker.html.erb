@@ -1,0 +1,28 @@
+<div class="js-autocompleteContainer clearfix">
+  <% #don't see your school      %>
+  <div class="subtitle-sm tac" style="height:35px;">
+    <a class="js-doNotSeeResult dn pointer <%=linkClass%>"
+      data-no-result-text="<%=t('.do_not_see_school_text')%>"
+      data-return-to-search-text="<%= t('.return_to_original_search_text') %>"
+      data-state="<%= params['state'] %>">
+      <%= t('.do_not_see_school_text') %>
+    </a>
+  </div>
+  <% #autocomplete search bar      %>
+  <div class="search-bar-osp js-autocompleteFieldContainer ma picker-border">
+    <div class="full-width">
+      <input type="text"
+             class='typeahead search-text full-width pam'
+             placeholder="<%= t('.placeholder') %>">
+      <label class="dn js-translate-placeholder"><%= t('.placeholder') %></label>
+    </div>
+  </div>
+
+  <% #list of select boxes      %>
+  <div class="js-selectListsContainer dn ma picker-border picker-background" style="max-width: 600px;">
+    <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),
+                   {:prompt => t('.select_state'), class: 'form-control js-stateSelect notranslate'} %>
+    <select class="form-control js-citySelect dn mtm notranslate"></select>
+    <select class="form-control js-schoolSelect mtm dn notranslate"></select>
+  </div>
+</div>

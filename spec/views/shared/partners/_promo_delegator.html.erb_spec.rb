@@ -14,13 +14,11 @@ describe 'shared/partners/_promo_delegator.html.erb' do
     }
   }
   let(:locals) { { promo: promo } }
-  let(:collection_struct) { Struct.new(:config) }
-  let(:collections) { [ collection_struct.new(promo: promo) ] }
 
   describe 'rendering the promos' do
     before do
       allow(view).to receive(:partial).and_return(partial)
-      allow(view).to receive(:collections).and_return(collections)
+      allow(view).to receive(:promos).and_return([promo])
     end
 
     context 'when coming from a configured profile module' do

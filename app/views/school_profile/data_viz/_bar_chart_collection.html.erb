@@ -3,13 +3,13 @@
   # group comparison data reader.
 %>
 
-<% show_breakdown_dropdown = bar_chart_collection.breakdowns.present? %>
+<% show_breakdown_dropdown = @bar_chart_collection.breakdowns.present? %>
 
-<div class=" data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(bar_chart_collection.original_data_type).gsub(/\s/,'-') %>">
+<div class=" data-viz-bar-chart js-dataVizBarChart <%=show_hide_collection%> js-<%=(@bar_chart_collection.original_data_type).gsub(/\s/,'-') %>">
   <% if show_breakdown_dropdown %>
     <%= render partial: 'school_profile/data_viz/bar_chart_breakdowns_dropdown',
                 locals: {
-                  bar_chart_collection: bar_chart_collection,
+                  bar_chart_collection: @bar_chart_collection,
                   bar_chart_collection_index: bar_chart_collection_index,
                 }
     %>
@@ -18,7 +18,7 @@
     <span class="i-data-viz-state-avg"></span><span class="vat small"> = <%= t('.state_average_legend')%></span>
   </div>
   <div class='row'>
-    <% bar_chart_collection.bar_charts.each_with_index do | bar_chart, i| %>
+    <% @bar_chart_collection.bar_charts.each_with_index do | bar_chart, i| %>
       <% show_hide_chart = (i > 0 && show_breakdown_dropdown) ? 'dn' : '' %>
       <%= render partial: 'school_profile/data_viz/bar_chart',
                   locals: { bar_chart: bar_chart, show_hide_chart: show_hide_chart } %>

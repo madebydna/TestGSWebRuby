@@ -426,6 +426,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         };
 
         var init = function() {
+          if (gon.allow_compare)
+            initCompare();
+        };
+
+        var initCompare = function() {
             //schoolslist needs to initialize before popupbox, so popupbox can get the data
             schoolsList = GS.compare.schoolsList;
             popupBox = GS.compare.compareSchoolsPopup;
@@ -626,8 +631,4 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 })(gon.state_abbr);
 
-if (gon.pagename == "SearchResultsPage") {
-   $(document).ready(function() {
-       GS.search.results.init();
-   });
-}
+

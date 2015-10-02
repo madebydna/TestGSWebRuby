@@ -1,6 +1,7 @@
 GS.guidedSearch = GS.guidedSearch || {};
 
 $(function() {
+  GS.forms.updateFormVisualElements();
     var displayNone = 'dn';
     var active = 'active';
     var id_tab_number = '.js-tab-number';

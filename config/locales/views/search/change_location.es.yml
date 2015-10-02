@@ -2,4 +2,5 @@
 es:
   search:
     change_location:
-      change_location_link: Cambiar locación
+      change_state_link: Cambiar estado
+      nationwide: De toda la nación

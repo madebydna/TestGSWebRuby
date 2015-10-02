@@ -15,4 +15,10 @@ class TestDataType < ActiveRecord::Base
     end
   end
 
+  def self.description_description_hash
+    Rails.cache.fetch("TestDataType/description_description_hash", expires_in: 5.minutes) do
+      all.inject({}) { |hash, tdt| hash[tdt.display_name] = tdt.display_name; hash }
+    end
+  end
+
 end

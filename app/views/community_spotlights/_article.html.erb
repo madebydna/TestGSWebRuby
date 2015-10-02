@@ -24,7 +24,7 @@
     <div class="col-xs-12 col-sm-4 pbm">
       <%= render partial: "shared/partners/promo_delegator",
         locals: {
-          collections: [@collection],
+          promos: Collection.promos_for(@collection),
           partial: current_partial,
           force_show: true,
           options: {

@@ -22,6 +22,14 @@ class SchoolCache < ActiveRecord::Base
     school_data
   end
 
+  def self.cached_results_for(schools, keys)
+    query = SchoolCacheQuery.new.include_cache_keys(keys)
+    [*schools].each do |school|
+      query.include_schools(school.state, school.id)
+    end
+    SchoolCacheResults.new(keys, query.query_and_use_cache_keys)
+  end
+
   self::KEYS.each do |key|
     method_name = "cached_#{key}_data"
     define_singleton_method(method_name) do |school|

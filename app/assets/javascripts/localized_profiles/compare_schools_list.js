@@ -143,10 +143,10 @@ GS.compare.schoolsList = GS.compare.schoolsList || (function() {
     };
 
     var setCompareListState = function (schoolsState) {
+      if (schoolsState)
         state = schoolsState.toLocaleLowerCase();
     };
 
-    //
     var init = function(maxNumOfSchools) {
         maxNumberOfSchools = maxNumOfSchools;
         getDataFromCookies();

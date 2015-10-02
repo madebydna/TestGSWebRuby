@@ -1,4 +1,4 @@
-GS = GS || {};
+var GS = GS || {};
 GS.util = GS.util || {};
 
 //determine screen size - break points to load different images
@@ -10,8 +10,8 @@ GS.util = GS.util || {};
 //add priority?
 //responsive support
 
-$(function() {
-  GS.util.setupImages = function(options) {
+$(function () {
+  GS.util.setupImages = function (options) {
     var mobileImage = options['mobileImage'];
     var desktopImage = options['desktopImage'];
     var domSelector = options['selector'];

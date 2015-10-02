@@ -11,6 +11,32 @@
 
 }
 
+label {
+  font-weight: normal;
+}
+
+.btn-group,
+.btn-group-vertical {
+  display: block;
+  > .btn {
+    // Don't bring the "active" button to the front
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      z-index: 0;
+    }
+  }
+}
+
+.btn-group.btn-group-inline {
+  display: inline-block;
+}
+
+.form-control {
+  color: $gray-darker;
+}
+
 .form-control.input-field-md {
   width: 100%;
   height: 39px;

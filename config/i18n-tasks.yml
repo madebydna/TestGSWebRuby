@@ -1,6 +1,8 @@
 <%
   require './lib/i18n_csv_tasks'
+  require './lib/i18n_gs_tasks'
   I18n::Tasks::Commands.send :include, I18nCsvTasks
+  I18n::Tasks::Commands.send :include, I18nGsTasks
 %>
 
 csv:

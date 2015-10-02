@@ -284,7 +284,9 @@ $(function() {
     };
 
     var sportsToolTip = function(){
-        $('[data-toggle="tooltip"]').tooltip({'placement': 'bottom'});
+      // TODO This should not be so global. Should only be called on pages that
+      // need this.
+      $('[data-toggle="tooltip"]').tooltip();
     };
 
     $('.js-guidedSearchSportsIconsButton').on('click', function(){
@@ -326,24 +328,9 @@ GS.forms.elements = (function() {
     var disableTriggerAndTargetParent = ".js-disableTriggerAndTargetParent";
     var responsiveRadioSelector = ".js-responsiveRadio";
     var responsiveRadioGroupSelector = ".js-responsiveRadioGroup";
-    var editAutocompleteVal = '.js-editAutocompleteVal';
-    var selectedAutocompleteVal = '.js-selectedAutocompleteVal';
-    var autocompleteContainer = '.js-autocompleteContainer';
-    var autocompleteFieldContainer = '.js-autocompleteFieldContainer';
-    var doNotSeeResult = '.js-doNotSeeResult';
-    var selectListsContianer = '.js-selectListsContainer';
-    var stateSelect = '.js-stateSelect';
-    var citySelect = '.js-citySelect';
-    var schoolSelect = '.js-schoolSelect';
-    var typeahead = '.typeahead';
     var click = "click";
     var change = "change";
     var keyup = 'keyup';
-    var dataState = 'state';
-    var dataCity = 'city';
-    var dataNoResultText = 'no-result-text';
-    var dataReturnToSearchText = 'return-to-search-text';
-    var dataResponseKey = 'response-key';
 
     var setCheckboxButtonHandler = function(parentListenerSelector) {
         $(parentListenerSelector).on(click, checkboxButtonSelector, function() {
@@ -433,201 +420,6 @@ GS.forms.elements = (function() {
         });
     };
 
-    //AUTOCOMPLETE BEGIN
-    var setEditAutocompleteHandler = function(sectionContainer) {
-        $(sectionContainer).on(click, editAutocompleteVal, function() {
-            var $self = $(this);
-            var $autocompleteContainer = $self.closest(autocompleteContainer);
-            var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
-            var $doNotSeeResults = $autocompleteContainer.find(doNotSeeResult);
-            var doNotShowText = $doNotSeeResults.data(dataNoResultText);
-
-            $doNotSeeResults.text(doNotShowText);
-            $self.closest(selectedAutocompleteVal).addClass('dn')
-            $doNotSeeResults.removeClass('dn');
-            $autocompleteFieldContainer.removeClass('dn');
-            $self.siblings('input').removeAttr('name').removeAttr('value')
-        });
-    };
-
-    var setAutocompleteVal = function(text, $elementToHide) {
-        var $autocompleteContainer = $elementToHide.closest(autocompleteContainer);
-        var $doNotSeeResults = $autocompleteContainer.find(doNotSeeResult);
-        var $val = $autocompleteContainer.find(selectedAutocompleteVal + ':hidden:first');
-        var $input = $val.find('input');
-        var keyName = $input.data(dataResponseKey);
-
-        $elementToHide.addClass('dn')
-        $doNotSeeResults.hide();
-        $input.val(text);
-        $input.attr('name', keyName);
-        $val.find('span').text(text);
-        $val.removeClass('dn');
-    };
-
-    var setDoNotSeeResultHandlers = function(dontSeeResultCallback) {
-        setShowDoNotSeeResultsHandler();
-        setToggleDoNotSeeResultsHandler(dontSeeResultCallback)
-    };
-
-    var setShowDoNotSeeResultsHandler = function() {
-        $(autocompleteContainer).on(keyup, typeahead, function(){
-            var $self = $(this);
-            if ($self.val().length >= 3) {
-                var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
-                $doNotSeeResult.removeClass('dn');
-            }
-        });
-    };
-
-    var setToggleDoNotSeeResultsHandler = function(dontSeeResultCallback) {
-        $(autocompleteContainer).on('click', doNotSeeResult, function(){
-            var $self = $(this);
-            var $autocompleteContainer = $self.closest(autocompleteContainer);
-            var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
-            var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
-
-            if ($self.text().trim() == $self.data(dataNoResultText)) {
-                var state = $self.data(dataState);
-                dontSeeResultCallback.call(this, state, $autocompleteContainer);
-                $self.text($self.data(dataReturnToSearchText));
-            } else {
-                $selectListsContainer.addClass('dn');
-                $autocompleteFieldContainer.removeClass('dn');
-                $self.text($self.data(dataNoResultText));
-            }
-        });
-    };
-
-    var setStateSelectHandler = function() {
-        $(stateSelect).on(change, function() {
-            var $stateSelect = $(this);
-            var $autocompleteContainer = $stateSelect.closest(autocompleteContainer);
-            var state = $stateSelect.val();
-            loadCities(state, $autocompleteContainer);
-        });
-
-    };
-
-    var showStateSelect = function(state, $autocompleteContainer) {
-        var $autocompleteContainer = $(this).closest(autocompleteContainer);
-        var $stateSelect = $autocompleteContainer.find(stateSelect);
-        var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
-        var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
-
-        $autocompleteFieldContainer.addClass('dn')
-        $stateSelect.removeClass('dn');
-        $selectListsContainer.removeClass('dn');
-
-    };
-
-
-    //Call with call or apply on js-dontSeeResult link
-    var loadCities = function(state, $autocompleteContainer) {
-        var $autocompleteFieldContainer = $autocompleteContainer.find(autocompleteFieldContainer);
-        var $selectListsContainer = $autocompleteContainer.find(selectListsContianer);
-        var $citySelect = $autocompleteContainer.find(citySelect);
-        var $doNotSeeResult = $autocompleteContainer.find(doNotSeeResult);
-        $doNotSeeResult.data(dataState, state);
-
-        $.ajax({
-            type: 'GET',
-            url: "/gsr/ajax/get_cities",
-            data: {state: state},
-            async: true
-        }).done(function(data) {
-            $citySelect.find('option').remove();
-            $citySelect.append('<option>'+'Select city'+'</option>');
-            for(i=0; i < data.length; i++){
-                $citySelect.append('<option data-value="'+data[i]+'">'+data[i]+'</option>');
-            }
-            $autocompleteFieldContainer.addClass('dn')
-            $citySelect.removeClass('dn');
-            $selectListsContainer.removeClass('dn');
-        });
-    };
-
-    var setCitySelectedHandler = function() {
-        $(autocompleteContainer).on(change, citySelect, function() {
-            var $self = $(this);
-            var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
-            var $schoolSelect = $self.siblings(schoolSelect + ':first');
-            var state = $doNotSeeResult.data(dataState);
-            var city = $self.find(':selected').data('value');
-            $doNotSeeResult.data(dataCity, city);
-            loadSchools(state, city, $schoolSelect);
-        });
-    };
-
-    var loadSchools = function(state, city, $schoolSelect) {
-        $.ajax({
-            type: 'GET',
-            url: "/gsr/ajax/get_schools",
-            data: {state: state, city: city},
-            async: true
-        }).done(function(data) {
-            $schoolSelect.find('option').remove();
-            $schoolSelect.append('<option>'+'Select school'+'</option>');
-            for(i=0; i < data.length; i++){
-                $schoolSelect.append('<option data-id="'+data[i].id+'" data-value="'+data[i].name+'">'+data[i].name+'</option>');
-            }
-            $schoolSelect.removeClass('dn');
-        });
-    };
-
-    var setSchoolSelectedHandler = function() {
-        $(autocompleteContainer).on(change, schoolSelect, function() {
-            var $self = $(this);
-            var schoolName = $self.find(':selected').data('value');
-            setAutocompleteVal(schoolName, $(this).closest(selectListsContianer))
-        });
-    };
-
-    var setSchoolSelectedOspLandingPageHandler = function() {
-        $(autocompleteContainer).on(change, schoolSelect, function() {
-             $self = $(this);
-             schoolId = $self.find(':selected').data('id');
-            var $doNotSeeResult = $self.closest(autocompleteContainer).find(doNotSeeResult);
-            var state = $doNotSeeResult.data(dataState);
-            var city = $doNotSeeResult.data(dataCity);
-
-            goToRegistrationPage(state, city, schoolId)
-        });
-    };
-
-    var onSchoolSelectedCallback =  function (event, suggestion, dataset) {
-        goToRegistrationPage(suggestion['state'], suggestion['city_name'], suggestion['id'])
-    };
-
-    var goToRegistrationPage = function(state, city, id) {
-        var link = '/official-school-profile/register.page?state=' + state + '&schoolId=' + id + '&city=' + city;
-        GS.uri.Uri.goToPage(link)
-    };
-
-    var initOspLandingPageAutocomplete = function(parentContainer) {
-        setStateSelectHandler();
-        setDoNotSeeResultHandlers(showStateSelect);
-        setCitySelectedHandler();
-        setSchoolSelectedOspLandingPageHandler();
-
-        var markup = GS.search.autocomplete.display.schoolResultsNoLinkMarkup;
-        GS.search.autocomplete.selectAutocomplete.init(gon.state_name, markup, onSchoolSelectedCallback);
-    };
-
-    var initOspPageAutocomplete = function(parentContainer) {
-        setEditAutocompleteHandler(parentContainer);
-        setDoNotSeeResultHandlers(loadCities);
-        setCitySelectedHandler();
-        setSchoolSelectedHandler();
-
-        var markup = GS.search.autocomplete.display.schoolResultsNoLinkMarkup;
-        GS.search.autocomplete.selectAutocomplete.init(gon.state_name, markup, function(event, suggestion, dataset) {
-            setAutocompleteVal(suggestion['school_name'], $(this).closest(autocompleteFieldContainer));
-        });
-    };
-
-    //AUTOCOMPLETE END
-
     var setConditionalQuestionHandler = function(conditionalQuestionContainer) {
         $(conditionalQuestionContainer).on(keyup, disableElementTriggerSelector, function() {
             toggleDisable($(this), conditionalQuestionContainer);
@@ -653,7 +445,7 @@ GS.forms.elements = (function() {
             }
         });
         val === '' ? disableElementAndChildInputs($disableTarget) : enableElementAndChildInputs($disableTarget);
-    }
+    };
 
 
     return {
@@ -664,9 +456,6 @@ GS.forms.elements = (function() {
         disableTargetElementsIfTriggerActive: disableTargetElementsIfTriggerActive,
         setResponsiveRadioHandler: setResponsiveRadioHandler,
         setCustomSubmitHandler: setCustomSubmitHandler,
-        setEditAutocompleteHandler: setEditAutocompleteHandler,
-        initOspPageAutocomplete: initOspPageAutocomplete,
-        initOspLandingPageAutocomplete: initOspLandingPageAutocomplete,
         setConditionalQuestionHandler: setConditionalQuestionHandler,
         disableTargetElementsIfTriggerEmpty: disableTargetElementsIfTriggerEmpty
     }

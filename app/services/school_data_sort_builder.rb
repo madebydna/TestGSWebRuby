@@ -8,7 +8,9 @@ class SchoolDataSortBuilder
 
   SORT_BY_BASE_MAP = Hash.new('').merge!({
     graduation_rate: 'sd_4_year_high_school_graduation_rate',
-    a_through_g: 'sd_Percent_of_students_who_meet_UC_CSU_entrance_requirements'
+    a_through_g: 'sd_Percent_of_students_who_meet_UC_CSU_entrance_requirements',
+    caaspp_math: 'sd_California_Assessment_of_Student_Performance_and_Progress_CAASPP_Math',
+    caaspp_english: 'sd_California_Assessment_of_Student_Performance_and_Progress_CAASPP_English_Language_Arts'
   }).with_indifferent_access
 
   SORT_BREAKDOWN_MAP = Hash.new('').merge!({
@@ -34,6 +36,7 @@ class SchoolDataSortBuilder
   SORT_YEAR_MAP = Hash.new('').merge!({
     2013 => '_2013',
     2014 => '_2014',
+    2015 => '_2015',
   }).with_indifferent_access
 
   SORT_ASC_OR_DESC = Hash.new('_sortable_asc asc').merge!({

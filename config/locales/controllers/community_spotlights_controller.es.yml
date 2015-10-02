@@ -1,12 +1,12 @@
 es:
   controllers:
     community_spotlights_controller:
-      white:                             'White'
-      asian:                             'Asia'
+      white:                             'Blanco'
+      asian:                             'Asiático'
       native_american_or_native_alaskan: 'Nativos americanos o nativos de Alaska'
-      pacific_islander:                  'Islas del Pacífico'
+      pacific_islander:                  'Isleño del Pacífico'
       all_students:                      'Todos los estudiantes'
-      multiracial:                       "Multiétnico"
+      multiracial:                       'Multiétnico'
       filipino:                          'Filipino'
       hispanic:                          'Hispano'
       african_american:                  'Afroamericano'
@@ -20,6 +20,8 @@ es:
       not_limited_english_proficient:    'No se limita Inglés dominio'
       a_through_g:                       'Graduados eligible para universidad'
       graduation_rate:                   'Tasa de graduados'
+      caaspp_math:                       'Dominio de Matemáticas'
+      caaspp_english:                    'Dominio de Inglés'
       all_grade_levels:                  'Todos los grados'
       preschool:                         'Preescolar'
       elementary:                        'Escuela primaria'

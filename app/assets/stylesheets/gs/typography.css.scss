@@ -1,6 +1,6 @@
 h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: $gray-darkest}
 h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
-h6, .h6 { @extend .open-sans_i; }
+h6, .h6 { font-family: 'opensans-italic'; }
 h1.lg-roboto {
   font-size: 30px;
   font-family: 'RobotoSlab-Light';
@@ -52,7 +52,10 @@ p.small {
 
 .invert-colors{
   background-color: $gray-darkest;
-  p, a{color:$gray; @extend .small;}
+  p, a {
+    color: $gray;
+    font-size: floor((100% * $font-size-small / $font-size-base));
+  }
   h1,h2,h3,h4,h5,h6{color:$gray-dark}
   hr {border-color: #444;}
   ul {@extend .list-unstyled;}

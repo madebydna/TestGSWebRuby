@@ -1,8 +1,6 @@
 require 'spec_helper'
-require 'features/selectors/community_spotlight_page'
-require 'features/contexts/community_spotlight_contexts'
-require 'features/examples/url_examples'
 require 'features/examples/community_spotlight_examples'
+require 'features/contexts/collection_configs'
 
 describe 'community spotlight page', js: true do
 
@@ -13,31 +11,8 @@ describe 'community spotlight page', js: true do
   # -- data is updated and schools are in correct order
 
   [
-    {
-      default_params: {}, # Use base defaults defined in community_spotlight_contexts
-      query_params: {},
-      expected_query_params: { # This param is only necessary if you specify blank query_params
-        'sortBy' => 'a_through_g',
-        'sortBreakdown' => 'hispanic',
-        'sortAscOrDesc' => 'desc',
-      },
-      expected_subgroup_selection: 'Hispanic',
-      expected_datatype_selection: 'Eligible for 4-Yr College',
-      expected_highlight_column: 1,
-    },
-    {
-      default_params: {},
-      query_params: {
-        sortBreakdown: 'asian', sortBy: 'graduation_rate', sortAscOrDesc: 'asc'
-      },
-      expected_query_params: {
-        sortBreakdown: 'asian', sortBy: 'graduation_rate', sortAscOrDesc: 'asc'
-      },
-      expected_subgroup_selection: 'Asian',
-      expected_datatype_selection: 'Graduation Rate',
-      expected_highlight_column: 2,
-    },
-  ].each do |opts|
-    include_example 'community spotlight assertions', opts
+    bay_area_collection_config,
+  ].each do |collection_config|
+    include_example 'community spotlight assertions', collection_config
   end
 end

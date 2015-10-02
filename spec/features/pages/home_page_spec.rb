@@ -9,7 +9,7 @@ describe 'Home Page' do
   it { is_expected.to have_search_hero_section }
   it { is_expected.to have_browse_by_city_section }
   it { is_expected.to have_email_signup_section }
-  it { is_expected.to have_greatkids_articles_section }
+  it { is_expected.to_not have_greatkids_articles_section }
   it { is_expected.to have_offers_section }
   with_subject :offers_section do
     it { is_expected.to have_for_families_link }
@@ -34,6 +34,20 @@ describe 'Home Page' do
     end
     it { is_expected.to have_search_hero_section }
     it { is_expected.to have_sel_banner_section }
+  end
+
+  context 'when configured to have greatkids content' do
+    before do
+      Rails.cache.clear
+      FactoryGirl.create(:homepage_features_external_content)
+      visit home_path
+      wait_for_page_to_finish
+    end
+    after do
+      clean_models :gs_schooldb, ExternalContent
+    end
+    it { is_expected.to have_greatkids_articles_section }
+
   end
 
 end

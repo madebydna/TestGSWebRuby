@@ -12,6 +12,10 @@ es:
       people: personas
       person: persona
       share_review_caption: 'Opinión de usuarios de la '
+    school_picker:
+      city: ciudad
+      school: esculea
+      select: 'Seleccione  '
     school_types:
       Private: Privada
       Public charter: Charter pública

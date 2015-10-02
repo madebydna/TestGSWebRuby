@@ -5,7 +5,7 @@
       <% #Sorts for Desktop %>
       <div class="ptm">
         <span><%= t('.sort_by_label') %></span>
-        <div class="btn-group">
+        <div class="btn-group btn-group-inline">
           <% @relevant_sort_types.each do |sort_name| %>
               <% if @active_sort == sort_name %>
                   <button type="button" class="btn btn-default rs-sortButton active"><%= t(".#{sort_name.to_s}") %></button>
@@ -41,19 +41,21 @@
     </div>
 
     <% #Compare %>
-    <div class="fr">
-      <div class="pr js-compareSchoolsPopupContainer">
-        <% #Compare Button For Desktop %>
-        <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton" >
-          <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
-        </button>
-        <% #Compare Button For Mobile %>
-        <div class="visible-xs shim-2"></div>
-        <button class="btn btn-default mtm visible-xs js-compareSchoolsPopupButton">
-          <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
-        </button>
-        <%= render 'search/compare_schools_popup' %>
+    <% if @allow_compare %>
+      <div class="fr">
+        <div class="pr js-compareSchoolsPopupContainer">
+          <% #Compare Button For Desktop %>
+          <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton" >
+            <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
+          </button>
+          <% #Compare Button For Mobile %>
+          <div class="visible-xs shim-2"></div>
+          <button class="btn btn-default mtm visible-xs js-compareSchoolsPopupButton">
+            <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
+          </button>
+          <%= render 'search/compare_schools_popup' %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

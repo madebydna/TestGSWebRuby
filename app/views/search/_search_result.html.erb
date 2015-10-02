@@ -55,13 +55,13 @@
           <div class="row">
             <% if search_by_location? %>
             <!-- Distance -->
-            <div class="hidden-xs col-sm-4 mtl mbm font-size-xs">
+            <div class="hidden-xs col-sm-4 mtl mbm font-size-xs tac">
               <div class="iconx24-icons i-24-new-grey_map_pin ma db vam"></div>
               <span class="tac db js-distance"><%= distance %> <%= t('.miles') %></span>
             </div>
             <% end%>
             <!-- GS Rating -->
-            <div class="col-xs-6 col-sm-4 mvl">
+            <div class="col-xs-6 col-sm-4 mvl tac">
               <%=link_to school_quality_page_url do%>
               <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
               <div class="hidden-xs pts"></div>
@@ -80,7 +80,7 @@
         <% if account_page == false %>
           <!-- Compare and Homes for Sale -->
           <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
-            <%= render 'compare_schools_compare_button', school: school %>
+            <%= render 'compare_schools_compare_button', school: school if @allow_compare %>
             <%= link_to zillow_url(school), class: 'btn btn-default clearfix mts db fr', style: 'width: 150px;', rel: 'nofollow', target: '_blank' do %>
               <div class="iconx16 i-16-blue-home fl mrs"></div>
               <div class="fl"><%= t('.homes_for_sale') %></div>
@@ -106,7 +106,7 @@
 
     <% if account_page == false %>
         <div class="pull-right visible-xs" style="width:150px;">
-          <%= render 'compare_schools_compare_button', school: school %>
+          <%= render 'compare_schools_compare_button', school: school if @allow_compare %>
         </div>
     <% end %>
 

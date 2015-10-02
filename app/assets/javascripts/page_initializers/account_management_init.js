@@ -1,5 +1,6 @@
-if(gon.pagename == "Account management"){
-  $(function () {
+$(function () {
+  if(gon.pagename == "Account management"){
+
     GS.accountManagement.changePassword.init();
     GS.accountManagement.PYOC.init();
     GS.accountManagement.savedSearch.init();
@@ -22,6 +23,5 @@ if(gon.pagename == "Account management"){
         GS.accountManagement.changePassword.showChangePasswordForm();
       }
     }
-
-  });
-}
+  }
+});

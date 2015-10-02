@@ -1,10 +1,17 @@
-<div class="dn tac col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4 plm prm ptm mbm"
+<div class="find-school ma dn tac plm prm ptm"
      id="scoop_state_city_school_select">
   <form name="state_city_school_select_form" id="state_city_school_select_form" action="<%= get_school_and_forward_path %>" method="get">
     <% if @display_morgan_stanley %>
       <input type="hidden" name="morganstanley" value="1">
     <% end %>
     <% if @topic %>
+<div class="row bg-white pvl <%= @display_morgan_stanley %>">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="oa tac ">
+      <img height="40px" src="<%= image_path('review_school_chooser/morganstanley.png')%>" alt="Morgan Stanley"><br />
+      Welcome Morgan Stanley employees, thank you for participating in 2015 Global Volunteer Month!</div>
+  </div>
+</div>
         <input type="hidden" name="topic_id" value="<%= @topic.id %>">
     <% end %>
     <%= select_tag 'state', options_from_collection_for_select(States.abbreviations, :to_s, :upcase),{:id =>

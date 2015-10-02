@@ -33,7 +33,7 @@ class TestScoresDecorator < Draper::Decorator
     grades = self.grades(test)
     return if grades.blank?
 
-    buttons << h.content_tag(:div, class: "btn-group js_grades_div js_bootstrapExtButtonSelect") do
+    buttons << h.content_tag(:div, class: "fl btn-group js_grades_div js_bootstrapExtButtonSelect") do
       grades.each_with_index do |(grade, grade_hash), index_grade|
         h.concat(h.button_tag(
           id: test_button_dom_id(test, :All, grade),
@@ -46,9 +46,9 @@ class TestScoresDecorator < Draper::Decorator
 
     breakdowns = self.breakdowns(test).reject { |breakdown| breakdown == :All }
     if breakdowns.present?
-      buttons << h.content_tag(:span, class: 'js_test_groups dropdown pll') do
+      buttons << h.content_tag(:div, class: 'js_test_groups dropdown fl pll') do
         h.concat(
-          h.button_tag('groups', class: 'btn btn-group btn-default', 'data-toggle' => 'dropdown') do
+          h.button_tag('groups', class: 'btn btn-default', 'data-toggle' => 'dropdown') do
             "#{h.t('decorators.test_scores_decorator.by_group')} <b class=\"caret\"></b>".html_safe
           end
         )

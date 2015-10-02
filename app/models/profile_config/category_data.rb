@@ -130,7 +130,8 @@ class CategoryData < ActiveRecord::Base
 
   KEY_TYPES = {
     esp_response: 'ESP',
-    census_data: 'CDT'
+    census_data: 'CDT',
+    test_data: 'TDT',
   }
 
   def rails_admin_response_keys
@@ -139,6 +140,7 @@ class CategoryData < ActiveRecord::Base
       key_id_hash = {}
       key_id_hash.merge! esp_response_dropdown_values
       key_id_hash.merge! census_data_type_dropdown_values
+      key_id_hash.merge! test_data_type_dropdown_values
       key_id_hash
     end
   end
@@ -168,6 +170,18 @@ class CategoryData < ActiveRecord::Base
 
     census_data_type_hash.gs_transform_values! do |v|
       "census_data:::#{v}"
+    end
+  end
+
+  def test_data_type_dropdown_values
+    key_type_string = KEY_TYPES[:test_data]
+    data_type_hash =
+      TestDataType.description_description_hash.gs_rename_keys do |key|
+        "#{key_type_string}: #{key}"
+      end
+
+    data_type_hash.gs_transform_values! do |v|
+      "test_data:::#{v}"
     end
   end
 

@@ -29,7 +29,11 @@ class SearchController < ApplicationController
     @state = {
         long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
         short: States.abbreviation(params[:state].downcase.gsub(/\-/, ' '))
-    } if params_hash['state']
+    } if params_hash['state'].present?
+    @state_abbreviation = state_abbreviation
+    @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
+
     if params.include?(:lat) && params.include?(:lon)
       self.by_location
     elsif params.include?(:city) && params.include?(:district_name)
@@ -51,16 +55,19 @@ class SearchController < ApplicationController
   #This can pose a problem if city browse is hit via the search method above, thus not activating the before filters
   #Either remove city browse from search method above or move the before filter methods to city browse.
   def city_browse
+    @state_abbreviation = state_abbreviation
+    @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     @city_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
-      search_options.merge!({state: @state[:short], city: @city.name})
+      search_options.merge!({state: state_abbreviation, city: @city.name})
     end
 
-    @search_term = "#{@city.name}, #{@state[:short].upcase}"
-    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
+    @search_term = "#{@city.name}, #{state_abbreviation.upcase}"
+    @nearby_cities = SearchNearbyCities.new.search(lat:@city.lat, lon:@city.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: state_abbreviation)
 
     set_meta_tags search_city_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'CityBrowse', nil, @city.name)
@@ -73,6 +80,9 @@ class SearchController < ApplicationController
   end
 
   def district_browse
+    @state_abbreviation = state_abbreviation
+    @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     @district_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
@@ -80,7 +90,7 @@ class SearchController < ApplicationController
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode
     district_name = district_name.gsub('-', ' ').gsub('_', '-') # replace hyphens with spaces ToDo Move url decoding elsewhere
-    @district = params[:district_name] ? District.on_db(@state[:short].downcase.to_sym).where(name: district_name, active:1).first : nil
+    @district = params[:district_name] ? District.on_db(state_abbreviation.downcase.to_sym).where(name: district_name, active:1).first : nil
 
     if @district.nil?
       redirect_to city_path(@state[:long], @city.name)
@@ -90,10 +100,10 @@ class SearchController < ApplicationController
     @search_term = @district.name
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.district_browse(search_options) }) do |search_options|
-      search_options.merge!({state: @state[:short], district_id: @district.id})
+      search_options.merge!({state: state_abbreviation, district_id: @district.id})
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: @state[:short])
+    @nearby_cities = SearchNearbyCities.new.search(lat:@district.lat, lon:@district.lon, exclude_city:@city.name, count:NUM_NEARBY_CITIES, state: state_abbreviation)
 
     set_meta_tags search_district_browse_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'DistrictBrowse', nil, @district.name)
@@ -106,6 +116,9 @@ class SearchController < ApplicationController
   end
 
   def by_location
+    @state_abbreviation = state_abbreviation
+    @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     city = nil
     @by_location = true
@@ -113,13 +126,13 @@ class SearchController < ApplicationController
       @lat = params_hash['lat']
       @lon = params_hash['lon']
       search_options.merge!({lat: @lat, lon: @lon, radius: radius_param})
-      search_options.merge!({state: @state[:short]}) if @state
+      search_options.merge!({state: state_abbreviation}) if @state
       @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end
 
-    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: @state[:short])
+    @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: state_abbreviation)
 
     set_meta_tags search_by_location_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByLocation', @search_term, city)
@@ -132,15 +145,18 @@ class SearchController < ApplicationController
   end
 
   def by_name
+    @state_abbreviation = state_abbreviation
+    @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     @by_name = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
       @query_string = params_hash['q']
       search_options.merge!({query: @query_string})
-      search_options.merge!({state: @state[:short]}) if @state
+      search_options.merge!({state: state_abbreviation}) if @state
       @search_term=@query_string
     end
-    @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{@state[:short]}"} if @suggested_query
+    @suggested_query = {term: @suggested_query, url: "/search/search.page?q=#{@suggested_query}&state=#{state_abbreviation}"} if @suggested_query
 
     set_meta_tags search_by_name_meta_tag_hash
     set_omniture_data_search_school(@page_number, 'ByName', @search_term, nil)
@@ -252,7 +268,7 @@ class SearchController < ApplicationController
   def suggest_school_by_name
     set_city_state
 
-    state_abbr = @state[:short] if @state && @state[:short].present?
+    state_abbr = state_abbreviation if @state && state_abbreviation.present?
     response_objects = SearchSuggestSchool.new.search(count: 20, state: state_abbr, query: params[:query])
 
     set_cache_headers_for_suggest
@@ -262,7 +278,7 @@ class SearchController < ApplicationController
   def suggest_city_by_name
     set_city_state
 
-    state_abbr = @state[:short] if @state && @state[:short].present?
+    state_abbr = state_abbreviation if @state && state_abbreviation.present?
     response_objects = SearchSuggestCity.new.search(count: 10, state: state_abbr, query: params[:query])
 
     set_cache_headers_for_suggest
@@ -272,7 +288,7 @@ class SearchController < ApplicationController
   def suggest_district_by_name
     set_city_state
 
-    state_abbr = @state[:short] if @state && @state[:short].present?
+    state_abbr = state_abbreviation if @state && state_abbreviation.present?
     response_objects = SearchSuggestDistrict.new.search(count: 10, state: state_abbr, query: params[:query])
 
     set_cache_headers_for_suggest
@@ -405,7 +421,7 @@ class SearchController < ApplicationController
     set_omniture_data_for_user_request
     gon.omniture_sprops['searchTerm'] = search_term if search_term
     gon.omniture_sprops['locale'] = locale if locale
-    gon.omniture_channel = @state[:short].try(:upcase) if @state
+    gon.omniture_channel = state_abbreviation.try(:upcase) if @state
     gon.omniture_evars ||= {}
     gon.omniture_evars['search_page_number'] = page_number if page_number
     gon.omniture_evars['search_page_type'] = search_type if search_type
@@ -424,7 +440,7 @@ class SearchController < ApplicationController
                         params[:city]
                       end
       page_view_metadata['City']        = targeted_city if targeted_city
-      page_view_metadata['State']       = @state[:short].upcase if @state
+      page_view_metadata['State']       = state_abbreviation.upcase if state_abbreviation
       page_view_metadata['county']      = county_object.try(:name) if county_object
       if params[:grades].present?
         level_code = LevelCode.from_grade(params[:grades])
@@ -478,9 +494,9 @@ class SearchController < ApplicationController
                 else
                   ''
                 end
-    filter_builder = FilterBuilder.new(@state[:short], city_name, @by_name)
+    filter_builder = FilterBuilder.new(state_abbreviation, city_name, @by_name)
 
-    session[:soft_filter_config] = {state: @state[:short], city: city_name, force_simple: @by_name}
+    session[:soft_filter_config] = {state: state_abbreviation, city: city_name, force_simple: @by_name}
 
     @filter_display_map = filter_builder.filter_display_map
     # The FilterBuilder doesn't know we conditionally hide the distance filter on the search results page,
@@ -555,7 +571,7 @@ class SearchController < ApplicationController
   def setup_search_gon_variables
     gon.soft_filter_keys = SOFT_FILTER_KEYS
     gon.pagename = "SearchResultsPage"
-    gon.state_abbr = @state[:short]
+    gon.state_abbr = state_abbreviation
     gon.show_ads = @show_ads
     gon.city_name = if @city
                   @city.name
@@ -591,6 +607,18 @@ class SearchController < ApplicationController
 
   def on_by_location_search?
     @by_location == true
+  end
+
+  def state_abbreviation
+    if @state.is_a?(Hash)
+      @state[:short]
+    else
+      @state
+    end
+  end
+
+  def can_compare?
+    !@state.nil? && !@state[:short].nil?
   end
 
 end

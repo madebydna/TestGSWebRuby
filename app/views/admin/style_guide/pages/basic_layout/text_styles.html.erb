@@ -27,15 +27,13 @@
   # Please only edit where there is HTML or HTML comments.
   # HTML comments look like this: <!-- Put your description here -->.
 %>
-<%= begin_section_with_title('THIS TO THE SECTION TITLE') do %>
+<%= begin_section_with_title('Basic header and body text styles') do %>
   <%= begin_section_description do %>
     <!--
       Put this Section's Description here.
       You can use any HTML to write it, but it looks nice with <p> tags.
     -->
     <p>Here is an example description.</p>
-    <p>It has paragraphs! Wow, much context.</p>
-    <p>For this one I'll show you the headers.</p>
 
   <% end # of description %>
   <%= begin_section_content do %>
@@ -44,21 +42,29 @@
       You can use any HTML to write it.
     -->
     <h1 style="font-size:32px; font-weight:bold; color:#333;">Header 1</h1>
+    <h1 style="font-size:26px; font-weight:bold; color:#333;">Mobile Header 1</h1>
+    <br/>
     <h2 style="font-size:32px; font-family: 'Roboto Slab'; font-weight:300;">Header 2</h2>
-    <h3 style="font-size:22px; font-weight:bold;">Header 3</h3>
+    <h2 style="font-size:26px; font-family: 'Roboto Slab'; font-weight:300;">Mobile Header 2</h2>
+    <br/>
+    <h3 style="font-size:24px; font-weight:bold;">Header 3</h3>
+    <h3 style="font-size:21px; font-weight:bold;">Mobile Header 3</h3>
+    <br/>
     <h4 style="font-size:18px; font-weight:bold; text-transform:uppercase; letter-spacing: 1px;">Header 4</h4>
+    <h4 style="font-size:17px; font-weight:bold; text-transform:uppercase; letter-spacing: 1px;">Mobile Header 4</h4>
+    <br/>
     <h5 style="font-size:16px; font-weight:bold; text-transform:none; letter-spacing: 0px;">Header 5</h5>
-    <h6 style="font-size:15px; font-weight:bold;">Header 6</h6>
+    <p style="font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing: 1px; font-style: normal;">Header 6</p>
+    <br/>
     <p.large style="font-size:16px; color:#333;">large text</p>
-    <p style="font-size:15px;">medium text</p>
-    <p.small style="font-size:14px;">small text</p>
+<p.large style="font-size:16px; color:#333; font-style:italic;">large text italicized (used in topical review feed for example)</p>
+    <p style="font-size:15px; color:#333;">medium text</p>
+    <p style="font-size:12px; color:#333;">small text —tooltips, captions, key/legend info</p>
+
+<p style="font-size:10px; font-weight:bold; text-transform:uppercase; letter-spacing: 1px; font-style: normal; color:#777777;">Sponsorship and advertising identifier text</p>
 
   <% end # of content. %>
 <% end # of section. %>
-
-<style>
-
-</style>
 
 
 
@@ -74,22 +80,75 @@
   # Please only edit where there is HTML or HTML comments.
   # HTML comments look like this: <!-- Put your description here -->.
 %>
-<%= begin_section_with_title('Another Section') do %>
+<%= begin_section_with_title('Data Viz styles') do %>
   <%= begin_section_description do %>
     <!--
       Put this Section's Description here.
       You can use any HTML to write it, but it looks nice with <p> tags.
     -->
-    <p>Here is an example description.</p>
-    <p>Looks just like the one above, right?</p>
+<p>First and second level numbers use a superscript %. All data can be colorized (<span style="color:#40a753">good</span>, <span style="color:#bf3c29">bad</span>, <span style="color:#ec843e">okay</span>)</p>
 
   <% end # of description %>
   <%= begin_section_content do %>
-    <!--
-      Put this Section's Content here.
-      You can use any HTML to write it.
-    -->
-    <div class="btn btn-primary">This is our primary button</div>
+<p style="font-size:36px; font-weight:bold;">high level data — 50<sup>%</sup></p>
+    <p style="font-size:20px; font-weight:bold;">second level data, same as h3 — 50<sup>%</sup></p>
+<p.large style="font-size:16px; color:#333; font-weight:bold;">third level data, same as h5 — 50%</p>
+    <p style="font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing: 1px; font-style: normal;">fourth level data (for tooltips etc), same as h6 — 50%</p>
+<style>
+sup {
+font-size: 70%;
+top: -0.35em;
+}
+</style>
 
   <% end # of content. %>
+<% end # of section. %>
+
+<%
+# ::BEGIN:: code for one section.
+# Please only edit where there is HTML or HTML comments.
+# HTML comments look like this: <!-- Put your description here -->.
+%>
+<%= begin_section_with_title('Marketing-type presentation styles') do %>
+<%= begin_section_description do %>
+<!--
+Put this Section's Description here.
+You can use any HTML to write it, but it looks nice with <p> tags.
+-->
+<p>Using more centered text, more colors where appropriate, and large headlines and tagline text on marketing and hub focused pages</p>
+
+<% end # of description %>
+<%= begin_section_content do %>
+<h1 style="font-size: 50px; font-family: 'RobotoSlab-Light'; color:#333; text-align: center;">large headline</h1><p style="text-align:center;">(in different colors depending on page content)</p>
+<h1 style="font-size: 30px; font-family: 'RobotoSlab-Light'; color:#333; text-align: center;">mobile large headline </h1><p style="text-align:center;">(in different colors depending on page content and background color)</p>
+<p style="font-size:21px; font-weight: 400; text-align:center;">tagline text</>
+<p style="text-align:center;">For marketing slogans, and featured review excerpts</p>
+<p style="font-size:18px; font-weight: 400; text-align:center;">tagline text mobile</p>
+<br/>
+<p>Other styles used on marketing-heavy and hub-style pages can include regular header styles (h1,h2,h3,h4) that are often centered and using different colors.</p>
+
+<% end # of content. %>
+<% end # of section. %>
+
+<%
+# ::BEGIN:: code for one section.
+# Please only edit where there is HTML or HTML comments.
+# HTML comments look like this: <!-- Put your description here -->.
+%>
+<%= begin_section_with_title('fonts we use') do %>
+<%= begin_section_description do %>
+<!--
+Put this Section's Description here.
+You can use any HTML to write it, but it looks nice with <p> tags.
+-->
+<p>Trying to limit our variants and different fonts to streamline load times and code base</p>
+
+<% end # of description %>
+<%= begin_section_content do %>
+<p style="font-weight:bold;">Open Sans bold (NOT semibold)</p>
+<p>Open Sans regular</p>
+<p style="font-style:italic;">Open Sans italic</p>
+<p style="font-family:'RobotoSlab-Light';">Roboto slab light</p>
+
+<% end # of content. %>
 <% end # of section. %>

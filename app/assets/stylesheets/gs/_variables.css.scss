@@ -1,0 +1,143 @@
+@import "variables/spacing";
+
+// Grays
+// -------------------------
+$gray-base-color:        #000;
+$gray-darkest:           #333; // This was not calculating to #333
+$gray-darker:            #777; // We want this to be #777
+$gray-dark:              lighten($gray-base-color, 60%); // #999
+$gray:                   lighten($gray-base-color, 80%); // #ccc
+$gray-light:             lighten($gray-base-color, 90%); // #ebebeb
+$gray-lighter:           lighten($gray-base-color, 95%); // #f4f4f4
+
+$text-color:            $gray-darkest;
+
+// Brand colors
+// -------------------------
+$brand-primary:                #26ABE2;
+$brand-primary-darker:         #204362;
+$brand-primary-dark:           #2880b9;
+$brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
+$brand-primary-lighter:        lighten($brand-primary, 47%); // #F5FAFC
+
+$brand-secondary:                 #ffb725;
+$brand-secondary-dark:            #926100;
+$gk-brand-primary:                #f45c20;
+
+// Other Colors
+// -------------------------
+$blue-dark:               #0D6A99;
+$ocean-blue:              #F5FBFD;
+$green-light:             #69b684;
+$medium-green:            #8cbe3b;
+$neutral-color:           #444444;
+$dirt-green:              #07251e;
+$clay-green:              #3f4e4b;
+$wallpaper-green:         #93c83e;
+$absence-gray:            #2b2b2b;
+$emphasis-color:          #E6705C;
+$lighter-green:           #add36e;
+$indigo:                  #195074;
+$blue-green:              #25b798;
+$pale-yellow:             #f7ffe3;
+$bright-yellow:           #fad700;
+$dark-green:              #135c4c;
+$lighter-black:           #222;
+$module-gray:             #f4f4f4;
+$module-gray-stroke:      #dedede;
+$dark-steel-gray:         #1d1d1d;
+$light-ash-gray:          #777777;
+$light-blue-background:   #e6ebf5;
+$dark-blue-text:          #4788be;
+$gray-link-color:         $light-ash-gray;
+$gray-link-hover-color:   darken($light-ash-gray, 15%);
+
+
+// Typography
+// -------------------------
+$line-height-base: 1.5;
+$font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
+$font-family-base:        $font-family-sans-serif;
+$font-family-base-bold:   "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+$font-family-italic:      "opensans-italic", Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+$font-size-base:          14px;
+$font-size-medium:        ceil($font-size-base * 1.142) !default; // ~16px
+$font-size-large:         ceil($font-size-base * 1.285) !default; // ~18px
+$font-size-xs:            ceil($font-size-base * 0.714) !default; // ~10px
+$font-size-small:         ceil($font-size-base * 0.857) !default; // ~12px
+$font-size-block:         ceil($font-size-base * 1.5) !default; // ~21px
+$font-size-xl:            ceil($font-size-base * 1.714) !default; // ~21px
+
+$font-size-h1:            32px;
+$font-size-h2:            32px;
+$font-size-h3:            22px;
+$font-size-h4:            18px;
+$font-size-h5:            16px;
+$font-size-h6:            15px;
+
+$headings-font-family:                    $font-family-base-bold;
+$headings-font-weight:                    400;
+$headings-line-height:                    1.2;
+$headings-color:                          $text-color;
+$headings-font-family-bold:               "opensans-bold", Helvetica, Arial, sans-serif;
+$headings-font-family-italic:             "opensans-italic", Helvetica, Arial, sans-serif;
+$headings-font-family-robotoslab-light:   RobotoSlab-Light,"opensans-bold", Helvetica, Arial;
+$headings-font-weight-bold:               400;
+
+// Tables
+// -------------------------
+$table-bg-accent:    $module-gray;
+$table-border-color: $module-gray-stroke;
+
+
+// Forms
+// -------------------------
+$input-color-placeholder:         $gray-dark;
+
+// Buttons
+// -------------------------
+$btn-font-weight:                normal !default;
+
+$btn-default-color:              #4788be !default;
+$btn-default-bg:                 #FFFFFF !default;
+$btn-default-hover:              #1e608b !default;
+$btn-default-border:             #6797c7 !default;
+$btn-default-active-border:      #195074 !default;
+
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-border:             $brand-primary-dark !default;
+
+$btn-hover:                      #195074 !default;
+
+$btn-toggle-color:               #4788be !default;
+$btn-toggle-bg:                  #fff !default;
+$btn-toggle-border:              #4788be !default;
+$btn-toggle-hover:               #195074 !default;
+$btn-toggle-color-active:        #fff !default;
+$btn-toggle-bg-active:           #35485d !default;
+
+$btn-link-disabled-color:        $gray-light !default;
+$padding-base-vertical:                 8px;
+$padding-base-button-horizontal:        20px;
+$padding-large-button-horizontal:       30px;
+$padding-small-button-horizontal:       15px;
+
+// Components
+// -------------------------
+$table-cell-padding:                 10px;
+$border-light-grey:               1px #cccccc solid;
+$navbar-height:                    58px;
+$navbar-default-color:             #777777;
+$navbar-default-bg:                #FFFFFF;
+$navbar-default-link-color:                #777777;
+$navbar-default-link-hover-color:          #000000;
+$navbar-default-border: transparent;
+$navbar-default-toggle-border-color: transparent;
+$navbar-default-toggle-hover-bg: transparent;
+$navbar-default-toggle-icon-bar-bg: $brand-primary;
+
+$grid-float-breakpoint:     950px;
+
+$cursor-pointer: pointer;

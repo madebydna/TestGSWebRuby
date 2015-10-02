@@ -2,7 +2,7 @@
   <thead>
     <tr>
       {{#each header_data}}
-      <th class='js-drawTable pointer' data-highlight-index='{{@index}}' data-sort-by='{{param}}'>
+      <th class='js-drawTable pointer' {{#unless @index}}style='width: 30%;'{{/unless}} data-highlight-index='{{@index}}' data-sort-by='{{param}}'>
           {{data_type}}
           {{#if state_average}}
             <div class='sub-text js-drawTable' data-highlight-index='{{@index}}' data-sort-by='{{param}}'>

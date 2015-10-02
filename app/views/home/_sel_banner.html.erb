@@ -12,9 +12,11 @@
               <h2><%= t('.heading') %></h2>
               <div class="subtitle-lg text_000"><%= t('.body') %></div>
             </div>
-            <button class="btn btn-lg btn-primary"><%= t('.button_text') %></button>
-            <div class="logo">
-              <%= image_tag (image_path('home/Greatkids_logo.png')), size: "75x31"  %>
+            <div class="clearfix">
+              <button class="fl btn btn-lg btn-primary"><%= t('.button_text') %></button>
+              <div class="fr logo">
+                <%= image_tag (image_path('home/Greatkids_logo.png')), size: "75x31"  %>
+              </div>
             </div>
           </div>
         </div>

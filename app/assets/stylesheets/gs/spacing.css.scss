@@ -25,46 +25,46 @@ General comments:
 body { padding-top: 50px }
 .link-down-compensate { padding-top: 50px; margin-top: -50px; }
 
-.ptn,.pvn,.pan{padding-top: 0}
-.pts,.pvs,.pas{padding-top:5px}
-.ptm,.pvm,.pam{padding-top:10px}
-.ptl,.pvl,.pal{padding-top:20px}
-.prn,.phn,.pan{padding-right: 0}
-.prs,.phs,.pas{padding-right:5px}
-.prm,.phm,.pam{padding-right:10px}
-.prl,.phl,.pal{padding-right:20px}
-.pbn,.pvn,.pan{padding-bottom: 0}
-.pbs,.pvs,.pas{padding-bottom:5px}
-.pbm,.pvm,.pam{padding-bottom:10px}
-.pbl,.pvl,.pal{padding-bottom:20px}
-.pln,.phn,.pan{padding-left: 0}
-.pls,.phs,.pas{padding-left:5px}
-.plm,.phm,.pam{padding-left:10px}
-.pll,.phl,.pal{padding-left:20px}
-.plxl,.phxl,.paxl{padding-left:40px}
-.pbxl,.pvxl,.paxl{padding-bottom:40px}
-.prxl,.phxl,.paxl{padding-right:40px}
-.ptxl,.pvxl,.paxl{padding-top:40px}
-.mtn,.mvn,.man{margin-top: 0}
-.mts,.mvs,.mas{margin-top:5px}
-.mtm,.mvm,.mam{margin-top:10px}
-.mtl,.mvl,.mal{margin-top:20px}
-.mrn,.mhn,.man{margin-right: 0}
-.mrs,.mhs,.mas{margin-right:5px}
-.mrm,.mhm,.mam{margin-right:10px}
-.mrl,.mhl,.mal{margin-right:20px}
-.mbn,.mvn,.man{margin-bottom: 0}
-.mbs,.mvs,.mas{margin-bottom:5px}
-.mbm,.mvm,.mam{margin-bottom:10px}
-.mbl,.mvl,.mal{margin-bottom:20px}
-.mln,.mhn,.man{margin-left: 0}
-.mls,.mhs,.mas{margin-left:5px}
-.mlm,.mhm,.mam{margin-left:10px}
-.mll,.mhl,.mal{margin-left:20px}
-.mlxl,.mhxl,.maxl{margin-left:40px}
-.mbxl,.mvxl,.maxl{margin-bottom:40px}
-.mrxl,.mhxl,.maxl{margin-right:40px}
-.mtxl,.mvxl,.maxl{margin-top:40px}
+.ptn,.pvn,.pan{padding-top: $spacing-none;}
+.pts,.pvs,.pas{padding-top: $spacing-small;}
+.ptm,.pvm,.pam{padding-top: $spacing-medium;}
+.ptl,.pvl,.pal{padding-top: $spacing-large;}
+.prn,.phn,.pan{padding-right: $spacing-none;}
+.prs,.phs,.pas{padding-right: $spacing-small;}
+.prm,.phm,.pam{padding-right: $spacing-medium;}
+.prl,.phl,.pal{padding-right: $spacing-large;}
+.pbn,.pvn,.pan{padding-bottom: $spacing-none;}
+.pbs,.pvs,.pas{padding-bottom: $spacing-small;}
+.pbm,.pvm,.pam{padding-bottom: $spacing-medium;}
+.pbl,.pvl,.pal{padding-bottom: $spacing-large;}
+.pln,.phn,.pan{padding-left: $spacing-none;}
+.pls,.phs,.pas{padding-left: $spacing-small;}
+.plm,.phm,.pam{padding-left: $spacing-medium;}
+.pll,.phl,.pal{padding-left: $spacing-large;}
+.plxl,.phxl,.paxl{padding-left: $spacing-extra-large;}
+.pbxl,.pvxl,.paxl{padding-bottom: $spacing-extra-large;}
+.prxl,.phxl,.paxl{padding-right: $spacing-extra-large;}
+.ptxl,.pvxl,.paxl{padding-top: $spacing-extra-large;}
+.mtn,.mvn,.man{margin-top: $spacing-none;}
+.mts,.mvs,.mas{margin-top: $spacing-small;}
+.mtm,.mvm,.mam{margin-top: $spacing-medium;}
+.mtl,.mvl,.mal{margin-top: $spacing-large;}
+.mrn,.mhn,.man{margin-right: $spacing-none;}
+.mrs,.mhs,.mas{margin-right: $spacing-small;}
+.mrm,.mhm,.mam{margin-right: $spacing-medium;}
+.mrl,.mhl,.mal{margin-right: $spacing-large;}
+.mbn,.mvn,.man{margin-bottom: $spacing-none;}
+.mbs,.mvs,.mas{margin-bottom: $spacing-small;}
+.mbm,.mvm,.mam{margin-bottom: $spacing-medium;}
+.mbl,.mvl,.mal{margin-bottom: $spacing-large;}
+.mln,.mhn,.man{margin-left: $spacing-none;}
+.mls,.mhs,.mas{margin-left: $spacing-small;}
+.mlm,.mhm,.mam{margin-left: $spacing-medium;}
+.mll,.mhl,.mal{margin-left: $spacing-large;}
+.mlxl,.mhxl,.maxl{margin-left: $spacing-extra-large;}
+.mbxl,.mvxl,.maxl{margin-bottom: $spacing-extra-large;}
+.mrxl,.mhxl,.maxl{margin-right: $spacing-extra-large;}
+.mtxl,.mvxl,.maxl{margin-top: $spacing-extra-large;}
 
 
 
@@ -381,5 +381,12 @@ hr.brand-bar {
   .reviews-topic-filter {
     float: right;
     clear: right;
+  }
+}
+
+// support for previous bootstrap version
+@media (min-width: $screen-sm-min) {
+  .hidden-xs {
+    display: block;
   }
 }

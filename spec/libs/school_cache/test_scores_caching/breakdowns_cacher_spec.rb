@@ -20,7 +20,7 @@ describe TestScoresCaching::BreakdownsCacher do
         school_value: '10',
         state_value: '20',
         number_students_tested: 100,
-        breakdown_name: 'a breakdown'
+        test_scores_breakdown_name: 'a breakdown'
       })
     }
 

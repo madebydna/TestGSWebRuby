@@ -1,0 +1,19 @@
+<div class="gs-bootstrap">
+    <div class="container tac">
+      <h1> Thank you for visiting GreatSchools!</h1>
+      <h4>Our previous forums are now closed. We'd be happy to have you as part of our community on social media. Join us on any of the sites below </h4>
+<br/>
+      <br/>
+
+      <p>
+          <%= link_to 'https://www.facebook.com/greatschools', :class=>'mas' do %><%= image_tag (image_path('home/facebook.png')), class: "js-no_ad" %><% end %>
+          <%= link_to 'http://twitter.com/greatschools', :class=>'mas' do %><%= image_tag (image_path('home/twitter.png')), class: "js-no_ad" %><% end %>
+          <%= link_to 'http://pinterest.com/greatschools/', :class=>'mas' do %><%= image_tag (image_path('home/pinterest.png')), class: "js-no_ad" %><% end %>
+          <%= link_to 'https://plus.google.com/104459805636611937872/posts', :class=>'mas' do %><%= image_tag (image_path('home/google_plus.png')), class: "js-no_ad" %><% end %>
+        </p>
+      <br/>
+      <br/>
+    </div>
+
+</div>
+<%= render 'shared/home_footer' %>

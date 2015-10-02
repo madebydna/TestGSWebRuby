@@ -1,8 +1,8 @@
 class SchoolDataHash
 
-  attr_accessor :cachified_school, :cache, :characteristics,:data_hash, :options, :sub_group_to_return, :data_sets_and_years, :link_helper
+  attr_accessor :cachified_school, :cache, :characteristics, :performance, :data_hash, :options, :sub_group_to_return, :data_sets_and_years, :link_helper
   DEFAULT_DATA_SETS = [ 'basic_school_info' ]
-  VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g' ]
+  VALID_DATA_SETS = [ 'graduation_rate', 'a_through_g', 'caaspp_math', 'caaspp_english' ]
 
   SUBGROUP_MAP = Hash.new('All students').merge!({
     white:                             'White',
@@ -24,11 +24,17 @@ class SchoolDataHash
     not_limited_english_proficient:    'Not limited English proficient'
   }).with_indifferent_access
 
+  DATATYPE_PARAM_MAP = {
+    :graduation_rate => ["4-year high school graduation rate"],
+    :a_through_g => ["Percent of students who meet UC/CSU entrance requirements"],
+    :caaspp_math => ["California Assessment of Student Performance and Progress (CAASPP)", "Math"],
+    :caaspp_english => ["California Assessment of Student Performance and Progress (CAASPP)", "English Language Arts"],
+  }
+
   def initialize(cachified_school, options)
     @options, @sub_group_to_return = options, SUBGROUP_MAP[options[:sub_group_to_return]]
     @cachified_school = cachified_school
-    @cache = cachified_school.cache_data || {}
-    @characteristics = @cache['characteristics'] || {}
+    @cache = cachified_school.merged_data || {}
     @data_hash = {}
     @link_helper = options[:link_helper]
     @data_sets_and_years = options[:data_sets_and_years]
@@ -56,33 +62,41 @@ class SchoolDataHash
     })
   end
 
-  def get_characteristics_data(data_set, year, breakdown_to_use = sub_group_to_return)
-    data = characteristics[data_set]
+  def get_data(data_set, year, subject = nil, breakdown_to_use = sub_group_to_return)
+    data = cache[data_set.to_sym]
 
     breakdown = [*data].find do |value|
-      value['original_breakdown'] == breakdown_to_use
+      if value[:original_breakdown] == breakdown_to_use
+        if subject
+          value[:subject] == subject
+        else
+          true
+        end
+      end
     end
 
+    data_hash_for(breakdown, year)
+  end
+
+
+  def data_hash_for(breakdown, year)
     if breakdown.present?
       {
-        show_no_data_symbol: breakdown["school_value_#{year}"].nil?,
-        value: breakdown["school_value_#{year}"].to_f.round,
-        performance_level: breakdown['performance_level'],
-        state_average: breakdown["state_average_#{year}"].to_f.round
+        show_no_data_symbol: breakdown["school_value_#{year}".to_sym].nil?,
+        value: breakdown["school_value_#{year}".to_sym].to_f.round,
+        performance_level: breakdown[:performance_level],
+        state_average: breakdown["state_average_#{year}".to_sym].to_f.round
       }
     else
       { show_no_data_symbol: true }
     end
   end
 
-  def add_graduation_rate
-    val = get_characteristics_data('4-year high school graduation rate', data_sets_and_years[:graduation_rate] )
-    data_hash.merge!({graduation_rate: val})
+  DATATYPE_PARAM_MAP.each do |key, arr|
+    data_type, subject = arr
+    define_method "add_#{key}" do
+      val = get_data(data_type, data_sets_and_years[key], subject)
+      data_hash.merge!({key => val})
+    end
   end
-
-  def add_a_through_g
-    val = get_characteristics_data('Percent of students who meet UC/CSU entrance requirements', data_sets_and_years[:a_through_g])
-    data_hash.merge!({a_through_g: val})
-  end
-
 end

@@ -1,16 +1,20 @@
 
 # FindSchoolController
 class ReviewSchoolChooserController < ApplicationController
+  
+  before_action :use_gs_bootstrap
+
   def show
     write_tags_and_gon
     @topic = review_topic
-    @reviews = reviews if params[:show_reviews]
+    @reviews = reviews
   end
 
   def morgan_stanley
     write_tags_and_gon
     @topic = review_topic
     @display_morgan_stanley = ''
+    @reviews = reviews
     gon.morganstanley = "morganstanley"
     render 'show'
   end
@@ -34,7 +38,7 @@ class ReviewSchoolChooserController < ApplicationController
   end
 
   def reviews
-    review_topic.first_question.reviews.active.has_comment.order(created: :desc).limit(20)
+    review_topic.first_question.reviews.active.has_comment.order(created: :desc).limit(15)
   end
 
 end

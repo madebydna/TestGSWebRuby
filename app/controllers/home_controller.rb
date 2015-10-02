@@ -17,6 +17,8 @@ class HomeController < ApplicationController
     @homepage_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     set_omniture_pagename
     gon.pagename = "Homepage"
+
+    @greatkids_content = greatkids_content
   end
 
   def set_omniture_pagename
@@ -66,6 +68,12 @@ class HomeController < ApplicationController
 
   def data_layer_through_gon
     data_layer_gon_hash.merge!(page_view_metadata)
+  end
+
+  protected
+
+  def greatkids_content
+    @_greatkids_content ||= ExternalContent.try(:homepage_features)
   end
 
 end

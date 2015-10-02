@@ -8,7 +8,6 @@
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= yield :javascript_includes %>
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
 
@@ -36,6 +35,7 @@
   <%= yield :head %>
 </head>
 <body class="open-sans">
+
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
@@ -56,6 +56,8 @@
 <a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top mrm"></span><%= t('.top') %></a>
 
 <div class="visible-xs js-disableInterstitial"></div>
-
+<%= stylesheet_link_tag "post_load", :async => true %>
+<%= javascript_include_tag "post_load", :async => true %>
+<%= yield :javascript_includes %>
 </body>
 </html>

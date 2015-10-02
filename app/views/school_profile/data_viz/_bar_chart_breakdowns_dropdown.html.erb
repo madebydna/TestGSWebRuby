@@ -10,9 +10,9 @@
               breakdowns.map do | title |
                 [t(".#{title}"), class:'js-gaClick js-dataVizDropdown',
                                  data: {title: title,
-                                        :'ga-click-category'=> 'profile data - subgroup display',
-                                        :'ga-click-action'=> 'subgroup selection',
-                                        :'ga-click-label' => title }]
+                                        :'event-category'=> 'profile data - subgroup display',
+                                        :'event-action'=> 'subgroup selection',
+                                        :'event-label' => title }]
               end
             ),
                      class: 'selectpicker',

@@ -12,6 +12,10 @@ en:
       people: people
       person: person
       share_review_caption: 'User review of '
+    school_picker:
+      city: city
+      school: school
+      select: 'Select '
     school_types:
       Private: Private
       Public charter: Public charter

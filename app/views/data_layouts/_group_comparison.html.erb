@@ -5,14 +5,14 @@
   <div class="container-fluid container-fix js-dataVizBarChartContainer">
 
     <div class="row">
-      <div class="col-xs-12 col-md-4">
-        <% ['btn-group btn-group-justified hidden-xs', 'btn-group-vertical visible-xs full-width'].each do | classes | %>
+      <div class="col-sm-12 col-md-4 hidden-xs">
+        <% ['btn-group btn-group-justified'].each do | classes | %>
             <div class="<%= classes %>" data-toggle="buttons">
               <% bar_chart_collections.each_with_index do |collection, i| %>
-                  <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown js-gaClick' data-title="<%= collection.original_data_type.gsub(/\s/,'-') %>"
-                       data-ga-click-category = 'profile data - subgroup display'
-                       data-ga-click-action = 'data point toggle'
-                       data-ga-click-label = '<%= collection.original_data_type %>'
+                  <div class='btn btn-default <%= 'active' if i == 0 %> js-barChartBreakdown' data-title="<%= collection.original_data_type.gsub(/\s/,'-') %>"
+                       data-event-category = 'profile data - subgroup display'
+                       data-event-action = 'data point toggle'
+                       data-event-label = '<%= collection.original_data_type %>'
                   >
                     <input type="radio"/>
                     <%= collection.title %>
@@ -21,19 +21,35 @@
             </div>
         <% end %>
       </div>
+      <div class='col-xs-12 visible-xs'>
+        <%=
+          select_tag "group-comparison-chart",
+            options_for_select(
+              bar_chart_collections.map do | collection |
+                [collection.title, class:'js-barChartBreakdown',
+                 data: {title: collection.original_data_type,
+                        :'event-category'=> 'profile data - subgroup display',
+                        :'event-action'=> 'data point toggle',
+                        :'event-label' => collection.original_data_type }]
+              end
+          ),
+          class: 'selectpicker',
+          data: { width: '100%'}
+        %>
+      </div>
     </div>
 
     <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
         <% show_hide_collection = i == 0 ? '' : 'dn' %>
+        <% @bar_chart_collection = bar_chart_collection %>
         <%= render partial: 'school_profile/data_viz/bar_chart_collection',
-                   locals: {bar_chart_collection: bar_chart_collection,
-                            bar_chart_collection_index: i,
+                   locals: {bar_chart_collection_index: i,
                             show_hide_collection: show_hide_collection} %>
     <% end %>
 
     <%= render partial: "shared/partners/promo_delegator",
                locals: {
-                 collections: @school.collections,
+                 promos: Collection.promos_for(@school.collections),
                  partial: current_partial,
                }
     %>

@@ -1,0 +1,8 @@
+---
+en:
+  shared:
+    school_picker:
+      do_not_see_school_text: 'Don''t see your school?'
+      placeholder: Enter school
+      return_to_original_search_text: Return to original search
+      select_state: Select state

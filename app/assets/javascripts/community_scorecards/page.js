@@ -106,7 +106,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
       setSortTypeToggleState(sortToggleFor(pageOptions.get('sortAscOrDesc')));
       calculateHighlightIndex();
       var highlightIndex = pageOptions.get('highlightIndex');
-      $scorecard.find('table').removeClass('highlight0 highlight1 highlight2').addClass('highlight' + highlightIndex);
+      $scorecard.find('table').removeClass('highlight0 highlight1 highlight2 highlight3 highlight4').addClass('highlight' + highlightIndex);
       activateTooltips();
       // Please keep this last. The last thing we should do is change the URL.
       pageOptions.addValuesToURL();

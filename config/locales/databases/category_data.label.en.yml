@@ -116,7 +116,8 @@ en:
   Educational philosophy and approach to learning: Educational philosophy and approach
     to learning
   Effective Leaders: Effective Leaders
-  Eligible for 4-Yr College: Graduates eligible for 4-Yr college
+  ela_test_scores: ELA Test Scores
+  eligible_for_4yr_college: Graduates eligible for 4-Yr college
   Employees: Employees
   End time: End time
   English: English
@@ -148,7 +149,7 @@ en:
     who enroll in college immediately after high school graduation
   Graduates who need remediation, or help strengthening basic skills: Graduates who
     need remediation, or help strengthening basic skills
-  Graduation Rate: Graduation Rate
+  graduation_rate: Graduation Rate
   HIB preparation score: HIB preparation score
   High expectations are set for all students' academic success: High expectations
     are set for all students' academic success
@@ -172,6 +173,7 @@ en:
   Math: Math
   Math Instruction: Math Instruction
   Math skills development: Math skills development
+  math_test_scores: Math Test Scores
   Maximum number of 2 year olds per adult: Maximum number of 2 year olds per adult
   Maximum number of 3 year olds per adult: Maximum number of 3 year olds per adult
   Maximum number of 4 year olds per adult: Maximum number of 4 year olds per adult

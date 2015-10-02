@@ -1,5 +1,4 @@
 en:
   group_comparison_data_reader:
-    no_data_subtext: 'No data'
     number_tested_subtext: '%{number} students'
     percent_of_population_subtext: '%{percent}% of population'

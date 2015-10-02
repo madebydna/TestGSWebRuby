@@ -59,7 +59,8 @@ class MissingDatabaseTranslationChecker
           /^([^a-zA-Z])+$/,
           /^schools\/\?/,
           /\#\d+$/,
-          /^\/[a-z\/-]+$/
+          /^\/[a-z\/-]+$/,
+          /Parent Portal .{3} doorway to answers/
         ]
       },
       {

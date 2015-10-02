@@ -1,13 +1,9 @@
 <div class="pam">
   <a href="<%= data[:link] %>">
     <div>
-      <%= image_tag(image_path(data[:image]), class:"mobile_img")%>
-
+      <%= image_tag(image_path(data[:image]), class: 'img-responsive')%>
     </div>
 
-    <h4 class=""><%= data[:title] %></h4>
+    <h4><%= raw data[:title] %></h4>
   </a>
-
-  <p><%=raw data[:content] %>
-  </p>
 </div>

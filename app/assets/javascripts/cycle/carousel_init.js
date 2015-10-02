@@ -1,3 +1,4 @@
+GS.hubs = GS.hubs || {};
 GS.hubs.setupResponsiveCarousel = function() {
   var options = {
     fx: "carousel",

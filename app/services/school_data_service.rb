@@ -82,7 +82,7 @@ class SchoolDataService
 
     def parse_solr_results(solr_results, num_of_rows = DEFAULT_SOLR_OPTIONS[:rows])
       # for now we only need 2 fields from solr, will make into a class when appropriate
-      school_data_struct = Struct.new(:school_id, :state)
+      school_data_struct = Struct.new(:id, :state)
       solr_response = solr_results['response']
       school_data = solr_response['docs'].map do |school_search_result|
         school_id = school_search_result['sd_school_id']

@@ -1,7 +1,9 @@
 .topical-review-question-container {
   @extend .col-xs-12;
   @extend .col-md-6;
-  @extend .gray-box-border-tlr;
+  border-top: 1px solid #e6e6e6;
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
   text-align: center;
   &.left {
     min-height: 280px;

@@ -4,15 +4,18 @@
 # Retrieves CensusData and builds hashes in various formats
 #
 class CensusDataReader < SchoolProfileDataReader
-  include CensusLoading::Subjects
   include CachedCategoryDataConcerns
 
-
+  SCHOOL_CACHE_KEYS = ['characteristics']
 
   #############################################################################
   # Methods exposed to SchoolProfileData and meant to be consumable by the view
 
   public
+
+  def school_cache_keys
+    SCHOOL_CACHE_KEYS
+  end
 
   # Returns Hash of data type labels to array of result hashes
   #
@@ -53,13 +56,13 @@ class CensusDataReader < SchoolProfileDataReader
     @labels_to_hashes_map ||= {}
     @labels_to_hashes_map[category.id] ||= (
       # Get data for all data types
-      all_data = cached_data_for_category(category, 'characteristics', school)
+      all_data = cached_data_for_category(category, false)
 
       results_hash = {}
 
       category.category_datas.each do |cd|
         # Filter by data type
-        data_for_data_type = all_data.select { |data_type, _| data_type_matches_category_data?(cd, data_type) }
+        data_for_data_type = all_data.select { |data_type_arr, _| data_type_matches_category_data?(cd, data_type_arr.first) }
 
         next if data_for_data_type.values.empty?
 

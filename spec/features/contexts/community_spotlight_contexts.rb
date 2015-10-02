@@ -1,24 +1,15 @@
-shared_context 'setup community spotlight' do
+shared_context 'setup community spotlight' do |query_params|
   let(:school_ids) { [403, 405, 437, 547, 5523, 5580, 11902, 14052, 14144, 16974] }
-  let(:school_data_struct) { Struct.new(:school_id, :state) }
+  let(:school_data_struct) { Struct.new(:id, :state) }
   let(:solr_response) {
+    # TODO create a hash with a key: value for each datatype-breakdown-grade
     {
       school_data: school_ids.map { |id| school_data_struct.new(id, 'ca') },
       more_results: true
     }
   }
-  let(:collection_config) {
-    {
-      "url_name" => "sf-bay-area",
-      "scorecard_fields" => [
-        { "data_type" => "school_info", "partial" => "school_info" },
-        { "data_type" => "a_through_g", "partial" => "percent_value", "year" => 2014 },
-        { "data_type" => "graduation_rate", "partial" => "percent_value", "year" => 2013 }
-      ],
-      scorecard_params: default_params,
-    }.to_json
-  }
-  let!(:collection) { FactoryGirl.create(:collection, config: collection_config) }
+  let(:config) { collection_config.merge( url_name: 'url-name' ).to_json }
+  let!(:collection) { FactoryGirl.create(:collection, config: config) }
   let(:community_spotlight_page) { CommunitySpotlightPage.new }
 
   before do
@@ -27,12 +18,14 @@ shared_context 'setup community spotlight' do
       FactoryGirl.create(:school_characteristic_responses, school_id: id, state: 'ca')
     end
     allow_any_instance_of(CommunityScorecardData).to receive(:solr_response).and_return(solr_response)
-    visit community_spotlight_path(query_params.merge(collection_id: collection.id, collection_name: collection.url_name))
+    query_params ||= {}
+    path_params = query_params.merge(collection_id: collection.id, collection_name: collection.url_name)
+    visit community_spotlight_path(path_params)
   end
 
   after do
     clean_models :ca, School
-    clean_models :gs_schooldb, SchoolCache, Collection, HubCityMapping
+    clean_models :gs_schooldb, SchoolCache, Collection
   end
 end
 
