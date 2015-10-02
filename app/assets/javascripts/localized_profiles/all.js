@@ -14,6 +14,8 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     var showSignUpForSchoolModalAfterDelay = function () {
       setTimeout(function() { 
         showSignUpForSchoolModal();
+          /* google event trigger */
+          dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
         }, MODAL_DELAY);
     };
 
