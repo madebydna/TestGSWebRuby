@@ -9,24 +9,33 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     $(GLOBAL_MODAL_CONTAINER_SELECTOR).append(modal);
   };
 
-  var getModal = function(modalObject, options) {
-    options = options || {};
-    var modalCssClass = options.modalCssClass || modalObject.getModalCssClass();
-    var url = modalObject.url();
-    url = GS.uri.Uri.addQueryParamToUrl('modal_css_class', modalCssClass, url);
-    url = GS.I18n.preserveLanguageParam(url);
+  var requestModalViaAjax = function(modal) {
     return $.ajax({
       method: 'GET',
-      url: url
+      url: modal.getUrlWithParams()
     });
   };
 
-  var showModal = function (modalObject, options) {
+  var ensureModalInDOM = function(modal) {
+    var deferred = $.Deferred();
+    var modalExistsOnPage = $(modal.getSelector()).length > 0;
+
+    if (modalExistsOnPage) {
+      deferred.resolve();
+    } else {
+      deferred = requestModalViaAjax(modal).done(insertModalIntoDom);
+    }
+    return deferred;
+  };
+
+  var showModal = function(ModalConstructor, options) {
+    options = options || {};
+    var modal = createModal(ModalConstructor, options);
     var modalDeferred = $.Deferred();
-    getModal(modalObject, options).done(function (response) {
-      insertModalIntoDom(response);
-      modalObject.initialize();
-      modalObject.show().done(function(data) {
+
+    ensureModalInDOM(modal).done(function() {
+      modal.initialize();
+      modal.show().done(function(data) {
         modalDeferred.resolveWith(this, [data]);
       }).fail(function(data) {
         modalDeferred.rejectWith(this, [data]);
@@ -38,13 +47,17 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     return modalDeferred.promise();
   };
 
+  var createModal = function(ModalConstructor, options) {
+    return new ModalConstructor(options);
+  };
+
   // 'flash': [
   //            'error': [
   //                       'a message',
   //                       'another message'
   //                     ]
-  var showModalThenMessages = function(modalObject, options) {
-    showModal(modalObject, options).done(function(data) {
+  var showModalThenMessages = function(ModalConstructor, options) {
+    return showModal(ModalConstructor, options).done(function(data) {
       if (data && data.hasOwnProperty('flash')) {
         GS.notifications.flash_from_hash(data.flash);
       }
@@ -59,9 +72,21 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     });
   };
 
+  var attachDOMHandlers = function() {
+    $('.js-show-modal').each(function() {
+      $(this).on('click', function() {
+        var modalName = $(this).data('modal');
+        if (GS.modal.hasOwnProperty(modalName)) {
+          showModalThenMessages(GS.modal[modalName]);
+        }
+      });
+    });
+  };
+
   return {
     showModal: showModal,
-    showModalThenMessages: showModalThenMessages
+    showModalThenMessages: showModalThenMessages,
+    attachDOMHandlers: attachDOMHandlers
   };
 
 })(jQuery);

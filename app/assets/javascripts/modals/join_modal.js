@@ -87,7 +87,7 @@ GS.modal.joinModal = GS.modal.joinModal || (function($) {
     return MODAL_URL;
   };
 
-  var getModalCssClass = function () {
+  var getCssClass = function () {
     return MODAL_CSS_CLASS;
   };
 
@@ -95,7 +95,7 @@ GS.modal.joinModal = GS.modal.joinModal || (function($) {
     initialize: initialize,
     show: show,
     url: url,
-    getModalCssClass: getModalCssClass,
+    getCssClass: getCssClass,
     deferred: deferred
   };
 
