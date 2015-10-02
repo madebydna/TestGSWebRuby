@@ -2,7 +2,7 @@ var GS = GS || {};
 GS.modal = GS.modal || {};
 
 GS.modal.EmailJoinModal = function($, options) {
-  GS.modal.BaseModal.call(this, $);
+  GS.modal.BaseModal.call(this, $, options);
   options = options || {};
 
   this.cssClass = options.cssClass || 'email-join-modal';
@@ -39,7 +39,6 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     if (this.shouldSignUpForSponsor()) {
       var _this = this;
       GS.subscription.sponsorsSignUp().done(function(data) {
-        debugger;
         _this.getDeferred().resolveWith(this, [jqXHR]);
       }).fail(function(data) {
         _this.getDeferred().rejectWith(this, [data]);

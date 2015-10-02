@@ -2,7 +2,7 @@ var GS = GS || {};
 
 GS.modal = GS.modal || {};
 
-GS.modal.BaseModal = function() {
+GS.modal.BaseModal = function($, options) {
   this.cssClass = null;
   this.modalUrl = null;
   this.deferred = $.Deferred();
@@ -37,8 +37,13 @@ _.assign(GS.modal.BaseModal.prototype, {
     return this.deferred;
   },
 
+  sendGoogleAnalyticsPageView: function sendGoogleAnalyticsPageView() {
+    // override within specific hovers
+  },
+
   show: function show() {
     this.$getModal().modal('show');
+    this.sendGoogleAnalyticsPageView();
     return this.deferred.promise();
   },
 

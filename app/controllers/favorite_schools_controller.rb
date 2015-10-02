@@ -18,16 +18,16 @@ class FavoriteSchoolsController < ApplicationController
       add_favorite_school favorite_schools_params
       create_subscription favorite_schools_params
       if request.xhr?
-        render 'create', status: 200
+        render json: {}
       else
         redirect_back_or_default
       end
     else
       save_deferred_action :add_favorite_school_deferred, favorite_schools_params
+      flash_error I18n.t('controllers.favorite_schools_controller.login_required')
       if request.xhr?
-        render 'create', status: 422
+        render json: {}, status: 422
       else
-        flash_error I18n.t('controllers.favorite_schools_controller.login_required')
         redirect_to signin_url
       end
     end

@@ -19,10 +19,17 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
 
     var showSignUpForSchoolModal = function () {
       if ( shouldShowSignUpForSchoolModal() ) {
-        GS.modal.manager.showModal(GS.modal.signUpForSchool)
-        .done(function() {
-          setSignUpForSchoolModalCookie();
-        })
+        if(!GS.session.isSignedIn()) {
+          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+            .done(function() {
+              var state = GS.stateAbbreviationFromUrl();
+              var schoolId = GS.schoolIdFromUrl();
+              GS.subscription.schools(state, schoolId).follow()
+                .done(function() {
+                  setSignUpForSchoolModalCookie();
+                });
+            });
+        }
       }
     };
 

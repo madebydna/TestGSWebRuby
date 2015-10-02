@@ -67,12 +67,19 @@ $(function() {
     if (GS.session.isSignedIn()) {
       GS.subscription.greatNewsSignUp();
     } else {
-      GS.modal.manager.showModalThenMessages(GS.modal.EmailJoinModal).done(GS.subscription.greatNewsSignUp);
+      GS.modal.manager.showModal(GS.modal.EmailJoinModal).done(GS.subscription.greatNewsSignUp);
     }
   });
 
   $('.js-save-this-school-button').on('click', function () {
-      $(this).siblings('.js-save-this-school-form').submit();
+    var state = GS.stateAbbreviationFromUrl();
+    var schoolId = GS.schoolIdFromUrl();
+    if (GS.session.isSignedIn()) {
+      GS.subscription.schools(state, schoolId).follow();
+    } else {
+      GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+        .done(GS.subscription.schools(state, schoolId).follow);
+    }
   });
 
   $('.js-save-all-schools-button').on('click', function () {

@@ -4,6 +4,7 @@ GS.modal = GS.modal || {};
 
 GS.modal.manager = GS.modal.manager || (function ($) {
   var GLOBAL_MODAL_CONTAINER_SELECTOR = '.js-modal-container';
+  var modalsBeingDisplayed = [];
 
   var insertModalIntoDom = function (modal) {
     $(GLOBAL_MODAL_CONTAINER_SELECTOR).append(modal);
@@ -33,22 +34,38 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     var modal = createModal(ModalConstructor, options);
     var modalDeferred = $.Deferred();
 
-    ensureModalInDOM(modal).done(function() {
-      modal.initialize();
-      modal.show().done(function(data) {
-        modalDeferred.resolveWith(this, [data]);
+    if(modalsBeingDisplayed.length == 0) {
+      ensureModalInDOM(modal).done(function() {
+        addModalToStack(modal);
+        modal.initialize();
+        modal.show().done(function(data) {
+          modalDeferred.resolveWith(this, [data]);
+        }).fail(function(data) {
+          modalDeferred.rejectWith(this, [data]);
+        }).always(function() {
+          removeModalFromStack(modal);
+        });
       }).fail(function(data) {
         modalDeferred.rejectWith(this, [data]);
       });
-    }).fail(function(data) {
-      modalDeferred.rejectWith(this, [data]);
-    });
+    } else {
+      modalDeferred.reject();
+    }
 
     return modalDeferred.promise();
   };
 
+  var removeModalFromStack = function(modal) {
+    debugger;
+    modalsBeingDisplayed = _.pull(modalsBeingDisplayed, modal);
+  };
+
+  var addModalToStack = function(modal) {
+    modalsBeingDisplayed.push(modal);
+  };
+
   var createModal = function(ModalConstructor, options) {
-    return new ModalConstructor(options);
+    return new ModalConstructor($, options);
   };
 
   // 'flash': [
