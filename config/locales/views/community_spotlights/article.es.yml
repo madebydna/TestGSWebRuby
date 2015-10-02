@@ -3,20 +3,24 @@ es:
     article:
       section_title: Artículo destacado
       read_more: Leer más
+
+      # SF Bay Area, CA
       collection_id_15:
         image: articles/grad_pic.jpg
         article_title: Sólo el 53% de los Graduados del Área de la Bahía Están Listos para la Universidad
         article_intro: En nuestra economía del siglo 21, la gran mayoría de los trabajos de clase media requiere la educación después de la preparatoria. Sin embargo, en 2014, sólo alrededor de cinco de cada 10 estudiantes en el área de la Bahía se graduaron elegibles para la universidad, y sólo tres de cada 10 estudiantes latinos o afroamericanos.
         article_url: http://wp.me/p6EAqy-YA
 
+      # Redwood city, CA
       collection_id_16:
-        image: articles/grad_pic.jpg
-        article_title: Sólo el 53% de los Graduados del Área de la Bahía Están Listos para la Universidad
-        article_intro: En nuestra economía del siglo 21, la gran mayoría de los trabajos de clase media requiere la educación después de la preparatoria. Sin embargo, en 2014, sólo alrededor de cinco de cada 10 estudiantes en el área de la Bahía se graduaron elegibles para la universidad, y sólo tres de cada 10 estudiantes latinos o afroamericanos.
-        article_url: http://wp.me/p6EAqy-YA
+        image: articles/hispanic_classroom.jpg
+        article_title: Últimos Resultados Escolares de Redwood City Muestran Brecha de Logro para Latinos y Estudiantes de Bajos Ingresos
+        article_intro: "En la economía de hoy, la mayoría de los trabajos requieren una educación universitaria. Sin embargo, la mayoría de los estudiantes latinos y estudiantes de bajos ingresos en Redwood City no están en camino a graduarse de la preparatoria con los requisitos necesarios para la universidad. Los últimos resultados del examen estatal muestran que estos estudiantes están quedando atrás en las escuelas desde la primaria."
+        article_url: http://wp.me/p6EAqy-14z
 
+      # East Palo Alto, CA
       collection_id_17:
-        image: articles/grad_pic.jpg
-        article_title: Sólo el 53% de los Graduados del Área de la Bahía Están Listos para la Universidad
-        article_intro: En nuestra economía del siglo 21, la gran mayoría de los trabajos de clase media requiere la educación después de la preparatoria. Sin embargo, en 2014, sólo alrededor de cinco de cada 10 estudiantes en el área de la Bahía se graduaron elegibles para la universidad, y sólo tres de cada 10 estudiantes latinos o afroamericanos.
-        article_url: http://wp.me/p6EAqy-YA
+        image: articles/classroom.jpg
+        article_title: Más del 80% de Estudiantes de East Palo Alto Están Atrasados en Inglés y Matemáticas
+        article_intro: "En la economía actual, la mayoría de los buenos empleos requieren una educación universitaria. Sin embargo, actualmente en las escuelas de East Palo Alto, que sirven principalmente a los estudiantes de bajos ingresos, sólo un pequeño número de estudiantes están en camino a graduarse listos para la universidad. En 2014-15, sólo el 17% de los estudiantes cumplieron o excedieron los estándares estatales en Inglés y sólo el 12% alcanzaron el nivel necesario en la matemáticas en el Distrito Escolar de Ravenswood, que sirve a estudiantes de East Palo Alto en los grados K-8. Esto muestra una brecha significativa en comparación con los promedios de las escuelas de Silicon Valley: 57% para el Inglés y el 51% para las matemáticas."
+        article_url: http://innovateschools.org/informes-y-datos-escolares/mas-del-80-de-estudiantes-de-east-palo-alto-estan-atrasados-en-ingles-y-matematicas-2/?lang=es

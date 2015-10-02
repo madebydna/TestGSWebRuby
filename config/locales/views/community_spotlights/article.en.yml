@@ -3,20 +3,24 @@ en:
     article:
       section_title: Featured Story
       read_more: Read more
+
+      # SF Bay Area, CA
       collection_id_15:
         image: articles/grad_pic.jpg
         article_title: Only 53% of Bay Area Graduates Are Ready for College
         article_intro: In our 21st century economy, the vast majority of middle-class jobs require education beyond high school. However, in 2015, only about five out of every 10 Bay Area seniors graduated eligible for college, and just three out of every 10 Latino or African American students.
         article_url: http://wp.me/p6EAqy-Yy
 
+      # Redwood city, CA
       collection_id_16:
-        image: articles/grad_pic.jpg
-        article_title: Only 53% of Bay Area Graduates Are Ready for College
-        article_intro: In our 21st century economy, the vast majority of middle-class jobs require education beyond high school. However, in 2015, only about five out of every 10 Bay Area seniors graduated eligible for college, and just three out of every 10 Latino or African American students.
-        article_url: http://wp.me/p6EAqy-Yy
+        image: articles/hispanic_classroom.jpg
+        article_title: Latest Redwood City Test Scores Show Early Gap for Latino, Low-income Students
+        article_intro: "In today’s economy, most good jobs require a college education. However, the majority of Latino and low-income students in Redwood City currently aren’t on track to graduate high school eligible for college. The latest state test scores show that these students are being left behind in school from the earliest grades."
+        article_url: http://wp.me/p6EAqy-14m
 
+      # East Palo Alto, CA
       collection_id_17:
-        image: articles/grad_pic.jpg
-        article_title: Only 53% of Bay Area Graduates Are Ready for College
-        article_intro: In our 21st century economy, the vast majority of middle-class jobs require education beyond high school. However, in 2015, only about five out of every 10 Bay Area seniors graduated eligible for college, and just three out of every 10 Latino or African American students.
-        article_url: http://wp.me/p6EAqy-Yy
+        image: articles/classroom.jpg
+        article_title: Over 80% of East Palo Alto Students Aren’t On Track in English and Math
+        article_intro: "In today’s economy, most good jobs require a college education. However, in East Palo Alto schools, which serve primarily low-income students, only a small number of students are currently on track to graduate ready for college. In 2014-15, only 17% of students met or exceeded standards in English and only 12% met that bar for math in Ravenswood City School District, which serves East Palo Alto students in grades K-8. This shows a significant gap when compared to Silicon Valley schools' averages: 57% for English and 51% for math."
+        article_url: http://innovateschools.org/research-and-data/over-80-of-east-palo-alto-students-arent-on-track-in-english-and-math/
