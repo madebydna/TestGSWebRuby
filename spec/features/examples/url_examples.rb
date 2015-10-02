@@ -4,5 +4,5 @@ end
 
 def expect_query_param(key, value)
   query = Rack::Utils.parse_nested_query(URI.parse(current_url).query).with_indifferent_access
-  expect(query[key]).to eq(value)
+  expect(query[key].to_s).to eq(value.to_s)
 end
