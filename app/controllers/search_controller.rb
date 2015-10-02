@@ -57,6 +57,7 @@ class SearchController < ApplicationController
   def city_browse
     @state_abbreviation = state_abbreviation
     @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     @city_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
@@ -81,6 +82,7 @@ class SearchController < ApplicationController
   def district_browse
     @state_abbreviation = state_abbreviation
     @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     @district_browse = true
     require_city_instance_variable { redirect_to state_path(@state[:long]); return }
@@ -116,6 +118,7 @@ class SearchController < ApplicationController
   def by_location
     @state_abbreviation = state_abbreviation
     @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     city = nil
     @by_location = true
@@ -144,6 +147,7 @@ class SearchController < ApplicationController
   def by_name
     @state_abbreviation = state_abbreviation
     @allow_compare = can_compare?
+    gon.allow_compare = can_compare?
     set_login_redirect
     @by_name = true
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_name(search_options) }) do |search_options, params_hash|
