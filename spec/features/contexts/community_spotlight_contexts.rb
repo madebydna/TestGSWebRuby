@@ -1,4 +1,4 @@
-shared_context 'setup community spotlight' do
+shared_context 'setup community spotlight' do |query_params|
   let(:school_ids) { [403, 405, 437, 547, 5523, 5580, 11902, 14052, 14144, 16974] }
   let(:school_data_struct) { Struct.new(:id, :state) }
   let(:solr_response) {
@@ -18,7 +18,9 @@ shared_context 'setup community spotlight' do
       FactoryGirl.create(:school_characteristic_responses, school_id: id, state: 'ca')
     end
     allow_any_instance_of(CommunityScorecardData).to receive(:solr_response).and_return(solr_response)
-    visit community_spotlight_path(collection_id: collection.id, collection_name: collection.url_name)
+    query_params ||= {}
+    path_params = query_params.merge(collection_id: collection.id, collection_name: collection.url_name)
+    visit community_spotlight_path(path_params)
   end
 
   after do

@@ -14,14 +14,7 @@ shared_examples 'community spotlight assertions' do |collection_config|
   context "with default params: #{scorecard_params}" do
 
     with_shared_context 'setup community spotlight' do
-      context 'the page before interaction' do
-        describe_desktop do
-          desktop_assertions(collection_config, scorecard_params)
-        end
-        describe_mobile do
-          mobile_assertions(collection_config, scorecard_params)
-        end
-      end
+      include_examples 'basic spotlight assertions', collection_config, scorecard_params
       context 'the page with interactions' do
         all_param_values(collection_config).each do |param_hash|
           param_hash.each do |param, value|
@@ -43,6 +36,14 @@ shared_examples 'community spotlight assertions' do |collection_config|
         end
       end
     end
+    all_query_hashes_for(collection_config) do |query_params|
+      context "with query params: #{query_params}" do
+        scurcard_params = scorecard_params.deep_dup.merge(query_params)
+        with_shared_context 'setup community spotlight', query_params do
+          include_examples 'basic spotlight assertions', collection_config, scurcard_params
+        end
+      end
+    end
   end
 end
 
@@ -52,6 +53,15 @@ end
 
 shared_example 'should have dropdown with selected value' do |dropdown_selector, value|
   expect(community_spotlight_page.find(dropdown_selector)[:title]).to eq(value)
+end
+
+shared_examples 'basic spotlight assertions' do |collection_config, scorecard_params|
+  describe_desktop do
+    desktop_assertions(collection_config, scorecard_params)
+  end
+  describe_mobile do
+    mobile_assertions(collection_config, scorecard_params)
+  end
 end
 
 def desktop_assertions(collection_config, scorecard_params)
@@ -97,6 +107,23 @@ end
 
 def expected_query_params(scorecard_params)
   scorecard_params.select { |k, _| QUERY_PARAM_KEYS.include?(k) }
+end
+
+def all_query_hashes_for(collection_config, &block)
+  collection_config[:scorecard_fields].each do |field|
+    data_type = field[:data_type]
+    next if data_type == :school_info
+    collection_config[:scorecard_subgroups_list].each do |breakdown|
+      [:asc, :desc].each do |sort_type|
+        query_params = {
+          sort_by: data_type,
+          sort_breakdown: breakdown,
+          sort_asc_or_desc: sort_type,
+        }
+        yield(query_params)
+      end
+    end
+  end
 end
 
 def all_param_values(collection_config)
