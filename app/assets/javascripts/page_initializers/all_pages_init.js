@@ -83,26 +83,19 @@ $(function() {
   });
 
   $('.js-save-all-schools-button').on('click', function () {
-      var self = $(this);
-      var school_id = '';
-      var state = '';
-      var first = true;
-      var form =  self.siblings('.js-save-all-schools-form');
-      $.each($('.js-save-this-school-form'), function(){
-          if(!first){
-              school_id += ',';
-              state += ',';
-          }
-          first = false;
-          school_id += $(this).children('#favorite_school_school_id').val();
-          state += $(this).children('#favorite_school_state').val();
-      });
-      if (school_id == '') {
-          return false;
-      }
-      form.children('#favorite_school_school_id').val(school_id);
-      form.children('#favorite_school_state').val(state);
-      form.submit();
+    var state = GS.stateAbbreviationFromUrl();
+    var schoolIds =  GS.uri.Uri.getValueOfQueryParam('school_ids').split(',');
+    var states = [];
+    _(schoolIds).each(function () {
+      states.push(state);
+    });
+    if (GS.session.isSignedIn()) {
+      GS.subscription.schools(states, schoolIds).follow();
+    } else {
+      // TODO: replace modal with one designed specifically for Compare
+      GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+    .done(GS.subscription.schools(states, schoolIds).follow);
+    }
   });
 
   $('.js-clear-local-cookies-link').each(function() {

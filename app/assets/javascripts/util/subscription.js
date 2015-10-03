@@ -41,13 +41,12 @@ GS.subscription = GS.subscription || (function() {
     var schools = function(states, schoolIds, options) {
       options = options || {};
       var driver = options.driver || null;
-      if(!states instanceof Array) {
-        states = _.join(states, ',');
+      if(states instanceof Array) {
+        states = _(states).join(',');
       }
-      if(!schoolIds instanceof Array) {
-        schoolIds = _.join(schoolIds, ',');
+      if(schoolIds instanceof Array) {
+        schoolIds = _(schoolIds).join(',');
       }
-
       /*
        favorite_school[school_id]:1,2,3
        favorite_school[state]:CA,CA,CA
