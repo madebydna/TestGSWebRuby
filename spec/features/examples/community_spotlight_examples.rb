@@ -1,3 +1,52 @@
+require 'features/selectors/community_spotlight_page'
+require 'features/contexts/community_spotlight_contexts'
+require 'features/examples/url_examples'
+
+shared_examples 'community spotlight assertions' do |collection_config|
+  SUBGROUP_SELECT_DESKTOP_SELECTOR = "[data-id='subgroup-select']"
+  SUBGROUP_SELECT_MOBILE_SELECTOR  = "[data-id='subgroup-select-mobile']"
+  DATA_TYPE_SELECT_MOBILE_SELECTOR = "[data-id='data-type-select-mobile']"
+  QUERY_PARAM_KEYS = [:sortBy, :sortBreakdown, :sortAscOrDesc]
+
+  let(:collection_config) { collection_config }
+  scorecard_params = collection_config[:scorecard_params]
+
+  context "with default params: #{scorecard_params}" do
+
+    with_shared_context 'setup community spotlight' do
+      include_examples 'basic spotlight assertions', collection_config, scorecard_params
+      context 'the page with interactions' do
+        all_param_values(collection_config).each do |param_hash|
+          param_hash.each do |param, value|
+            scurcard_params = scorecard_params.deep_dup
+            scurcard_params[as_query_param(param).to_sym] = value
+            data_attribute = "data-#{param.to_s.gsub('_', '-')}"
+
+            describe_desktop do
+              with_shared_context 'click .js-drawTable element with', data_attribute, value.to_s do
+                desktop_assertions(collection_config, scurcard_params)
+              end
+            end
+            describe_mobile do
+              with_shared_context 'click .js-drawTable element with', data_attribute, value.to_s do
+                mobile_assertions(collection_config, scurcard_params)
+              end
+            end
+          end
+        end
+      end
+    end
+    all_query_hashes_for(collection_config) do |query_params|
+      context "with query params: #{query_params}" do
+        scurcard_params = scorecard_params.deep_dup.merge(query_params)
+        with_shared_context 'setup community spotlight', query_params do
+          include_examples 'basic spotlight assertions', collection_config, scurcard_params
+        end
+      end
+    end
+  end
+end
+
 shared_example 'should highlight column' do |number|
   expect(community_spotlight_page.desktop_scorecard.table[:class]).to include("highlight#{number}")
 end
@@ -6,73 +55,86 @@ shared_example 'should have dropdown with selected value' do |dropdown_selector,
   expect(community_spotlight_page.find(dropdown_selector)[:title]).to eq(value)
 end
 
-shared_examples 'community spotlight assertions' do |opts|
-  subgroup_select_desktop_selector = "[data-id='subgroup-select']"
-  subgroup_select_mobile_selector  = "[data-id='subgroup-select-mobile']"
-  data_type_select_mobile_selector = "[data-id='data-type-select-mobile']"
+shared_examples 'basic spotlight assertions' do |collection_config, scorecard_params|
+  describe_desktop do
+    desktop_assertions(collection_config, scorecard_params)
+  end
+  describe_mobile do
+    mobile_assertions(collection_config, scorecard_params)
+  end
+end
 
-  default_params = {
-    gradeLevel: 'h',
-    schoolType: ['public', 'charter'],
-    sortBy: 'a_through_g',
-    sortBreakdown: 'hispanic',
-    sortAscOrDesc: 'desc',
-    offset: 0,
-  }.merge(opts[:default_params] || {})
-  query_params = opts[:query_params] || {}
+def desktop_assertions(collection_config, scorecard_params)
+  include_example 'should highlight column', expected_highlight_column(collection_config, scorecard_params)
+  include_example 'should have dropdown with selected value', SUBGROUP_SELECT_DESKTOP_SELECTOR, expected_subgroup_selection(scorecard_params)
+  it 'should have the correct query string' do
+    expected_query_params(scorecard_params).each do |key, value|
+      expect_query_param(as_query_param(key), value) # snake_case => snakeCase
+    end
+  end
+end
 
-  expected_query_params = opts[:expected_query_params] || query_params
-  expected_subgroup_selection = opts[:expected_subgroup_selection]
-  expected_datatype_selection = opts[:expected_datatype_selection]
-  expected_highlight_column   = opts[:expected_highlight_column]
+def as_query_param(key)
+  key.to_s.camelize(:lower)
+end
 
-  context "with default params: #{default_params}" do
-    let(:default_params) { default_params }
+def mobile_assertions(collection_config, scorecard_params)
+  include_example 'should have dropdown with selected value', SUBGROUP_SELECT_MOBILE_SELECTOR, expected_subgroup_selection(scorecard_params)
+  include_example 'should have dropdown with selected value', DATA_TYPE_SELECT_MOBILE_SELECTOR, expected_datatype_selection(scorecard_params)
+end
 
-    context "with query params: #{query_params}" do
-      let(:query_params) { query_params }
-      with_shared_context 'setup community spotlight' do
-        context 'the page before interaction' do
-          it 'should have the default query string' do
-            expected_query_params.each do |key, value|
-              expect_query_param(key, value)
-            end
-          end
-          describe_desktop do
-            include_example 'should highlight column', expected_highlight_column
-            include_example 'should have dropdown with selected value', subgroup_select_desktop_selector, expected_subgroup_selection
-          end
-          describe_mobile do
-            include_example 'should have dropdown with selected value', subgroup_select_mobile_selector, expected_subgroup_selection
-            include_example 'should have dropdown with selected value', data_type_select_mobile_selector, expected_datatype_selection
-          end
-        end
-        context 'the page with interactions' do
-          describe_desktop do
-            with_shared_context 'click .js-drawTable element with', 'data-sort-by', 'graduation_rate' do
-              include_example 'should have query parameter', 'sortBy', 'graduation_rate'
-              include_example 'should highlight column', 2
-            end
-            with_shared_context 'click .js-drawTable element with', 'data-sort-breakdown', 'all_students' do
-              include_example 'should have dropdown with selected value', subgroup_select_desktop_selector, 'All students'
-            end
-          end
-          describe_mobile do
-            with_shared_context 'click .js-drawTable element with', 'data-sort-by', 'graduation_rate' do
-              include_example 'should have query parameter', 'sortBy', 'graduation_rate'
-              include_example 'should have dropdown with selected value', data_type_select_mobile_selector, 'Graduation Rate'
-            end
-            with_shared_context 'click .js-drawTable element with', 'data-sort-breakdown', 'all_students' do
-              include_example 'should have dropdown with selected value', subgroup_select_mobile_selector, 'All students'
-            end
-          end
-          describe_mobile_and_desktop do
-            with_shared_context 'click .js-drawTable element with', 'data-sort-asc-or-desc', 'asc' do
-              include_example 'should have query parameter', 'sortAscOrDesc', 'asc'
-            end
-          end
-        end
+def highlight_column_for(collection_config, data_type)
+  collection_config[:scorecard_fields].index do |f|
+    f[:data_type] == data_type
+  end
+end
+
+def expected_subgroup_selection(scorecard_params)
+  CSC_translation_of(scorecard_params[:sortBreakdown])
+end
+
+def expected_datatype_selection(scorecard_params)
+  CSC_translation_of(scorecard_params[:sortBy])
+end
+
+def expected_highlight_column(collection_config, scorecard_params)
+  highlight_column_for(collection_config, scorecard_params[:sortBy])
+end
+
+def CSC_translation_of(value)
+  I18n.t(value, scope: 'controllers.community_spotlights_controller')
+end
+
+def expected_query_params(scorecard_params)
+  scorecard_params.select { |k, _| QUERY_PARAM_KEYS.include?(k) }
+end
+
+def all_query_hashes_for(collection_config, &block)
+  collection_config[:scorecard_fields].each do |field|
+    data_type = field[:data_type]
+    next if data_type == :school_info
+    collection_config[:scorecard_subgroups_list].each do |breakdown|
+      [:asc, :desc].each do |sort_type|
+        query_params = {
+          sort_by: data_type,
+          sort_breakdown: breakdown,
+          sort_asc_or_desc: sort_type,
+        }
+        yield(query_params)
       end
     end
   end
+end
+
+def all_param_values(collection_config)
+  all_param_values = collection_config[:scorecard_fields].map do |field|
+    data_type = field[:data_type]
+    unless data_type == :school_info
+      { sort_by: data_type }
+    end
+  end.compact
+  all_param_values += collection_config[:scorecard_subgroups_list].map do |sub|
+    { sort_breakdown: sub }
+  end
+  all_param_values += [:asc, :desc].map { |sort| { sort_asc_or_desc: sort } }
 end
