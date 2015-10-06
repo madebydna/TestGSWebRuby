@@ -73,7 +73,10 @@ $(function() {
 
   $('.js-save-this-school-button').on('click', function () {
     var state = GS.stateAbbreviationFromUrl();
-    var schoolId = GS.schoolIdFromUrl();
+    $self = $(this);
+    // save this school button on profiles gets id from url
+    // save this school button on compare search gets school id from link value
+    var schoolId = GS.schoolIdFromUrl() || $self.data('link-value');
     if (GS.session.isSignedIn()) {
       GS.subscription.schools(state, schoolId).follow();
     } else {
@@ -93,7 +96,7 @@ $(function() {
       GS.subscription.schools(states, schoolIds).follow();
     } else {
       // TODO: replace modal with one designed specifically for Compare
-      GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+      GS.modal.manager.showModal(GS.modal.EmailJoinForCompareSchoolsModal)
     .done(GS.subscription.schools(states, schoolIds).follow);
     }
   });

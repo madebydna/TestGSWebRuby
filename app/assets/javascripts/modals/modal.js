@@ -56,7 +56,6 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   };
 
   var removeModalFromStack = function(modal) {
-    debugger;
     modalsBeingDisplayed = _.pull(modalsBeingDisplayed, modal);
   };
 
