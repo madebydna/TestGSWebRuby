@@ -4,17 +4,26 @@ class DisplayRange < ActiveRecord::Base
 
   attr_accessible :state, :data_type, :data_type_id, :year, :ranges
 
-  DEFAULT = 'default'
+  ALL = 'all'
 
-  def self.for(data_type, data_type_id, state, value)
-    return nil unless value.present?
+  def self.for(opts = {}) #data_type, data_type_id, state, year, school_value
+    return nil unless opts[:value].present?
 
-    range = cached_ranges[[data_type, data_type_id, state.downcase]].presence || cached_ranges[[data_type, data_type_id, DEFAULT]]
+    range = get_range(opts)
 
-    range.present? ? get_range_value(range, value) : nil
+    range.present? ? get_range_value(range, opts[:value]) : nil
   rescue => e
     Rails.logger.error("#{e}. Could not generate range value")
     nil
+  end
+
+  def self.get_range(opts)
+    data_type, data_type_id, state, year = opts[:data_type], opts[:data_type_id], opts[:state].try(:downcase), opts[:year].to_i
+
+    cached_ranges[[data_type, data_type_id, state, year]].presence   ||
+    cached_ranges[[data_type, data_type_id, ALL, year]].presence     ||
+    cached_ranges[[data_type, data_type_id, state, ALL]].presence    ||
+    cached_ranges[[data_type, data_type_id, ALL, ALL]].presence
   end
 
   def self.cached_ranges
@@ -31,12 +40,11 @@ class DisplayRange < ActiveRecord::Base
   end
 
   def self.display_ranges
-    #where clause to only grab current and past years
+  #where clause to only grab current and past years
     all
-      .order(year: :desc)
       .to_a
       .delete_if { |dr| dr.year.to_i > Time.now.year }
-      .group_by { |dr| [dr.data_type, dr.data_type_id, (dr.state.try(:downcase) || DEFAULT)] }
+      .group_by { |dr| [dr.data_type, dr.data_type_id, (dr.state.try(:downcase) || ALL), (dr.year.to_i || ALL)] }
   end
 
   #ex range arg = {'below average cap' => 32, 'average' => 60, 'above avg' => 101}. val arg = 20
