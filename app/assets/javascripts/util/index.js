@@ -7,7 +7,7 @@
 //= require ./form
 //= require ./gs_parsley_validations
 //= require ./handlebars
-//= require ./i18n
+// require ./i18n
 //= require ./localStorage
 //= require ./optimizely
 //= require ./photo_upload
@@ -20,7 +20,7 @@
 //= require ./states
 //= require ./subscription
 //  require ./tracking
-//= require ./uri
+// require ./uri
 //= require ./url_params
 // require ./util
 //= require ./window.sizing
