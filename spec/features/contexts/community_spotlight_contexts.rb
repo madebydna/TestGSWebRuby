@@ -43,9 +43,15 @@ shared_context 'click .js-drawTable element with' do |attribute, value|
 end
 
 def wait_for_scorecard_to_draw
-  loop do
-    if page.evaluate_script('GS.CommunityScorecards.Page.shouldDraw')
-      break
+  begin
+    timeout(5) do # 5 second timeout
+      loop do
+        if page.evaluate_script('GS.CommunityScorecards.Page.shouldDraw')
+          break
+        end
+      end
     end
+  rescue Timeout::Error
+    raise "Too long passed waiting for the scorecard to finish drawing."
   end
 end
