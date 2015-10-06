@@ -16,7 +16,7 @@ module PhotoUploadConcerns
 
   #Can delete if approved user or if you own the photo
   def can_delete_image?(school_media)
-    @is_approved_user || school_media.member_id == @esp_membership_id
+    @is_approved_user || school_media.member_id == current_user.id
   end
 
   def create_image!(file)
