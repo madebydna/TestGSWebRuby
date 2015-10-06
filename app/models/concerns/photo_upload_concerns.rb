@@ -33,7 +33,7 @@ module PhotoUploadConcerns
     SchoolMedia.create({
       school_id:      @school.id,
       state:          @school.state,
-      member_id:      @esp_membership_id,
+      member_id:      current_user.id,
       status:         status,
       orig_file_name: filename,
       date_created:   time,
