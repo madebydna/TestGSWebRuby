@@ -2,13 +2,17 @@ var GS = GS || {};
 GS.modal = GS.modal || {};
 
 GS.modal.EmailJoinModal = function($, options) {
+  // Call BaseModal's constructor first, using this modal as the context
   GS.modal.BaseModal.call(this, $, options);
   options = options || {};
 
+  // set properties specific to this modal
   this.cssClass = options.cssClass || 'email-join-modal';
   this.modalUrl = '/gsr/modals/email_join_modal';
 };
 
+// Assign EmailJoinModal's prototype to a new object that inherits BaseModal's prototype.
+// Make sure to set EmailJoinModal's prototype's constructor property
 GS.modal.EmailJoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
   'constructor': GS.modal.BaseModal
 });

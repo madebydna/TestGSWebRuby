@@ -2,13 +2,15 @@ var GS = GS || {};
 
 GS.modal = GS.modal || {};
 
+// BaseModal constructor function
 GS.modal.BaseModal = function($, options) {
+  // all modals will have these properties, and some should be overwritten within each modal's constructor function
   this.cssClass = null;
   this.modalUrl = null;
   this.deferred = $.Deferred();
 };
 
-// Add some functions to BaseModal prototype
+// Add some functions to BaseModal prototype. All modals should share these functions
 _.assign(GS.modal.BaseModal.prototype, {
   getCssClass: function getCssClass() {
     return this.cssClass;
@@ -26,6 +28,7 @@ _.assign(GS.modal.BaseModal.prototype, {
     return this.modalUrl;
   },
 
+  // Take the modal's specific URL and tack on lang param and modal's css class
   getUrlWithParams: function getUrlWIthParams() {
     var url = this.getModalUrl();
     url = GS.uri.Uri.addQueryParamToUrl('modal_css_class', this.getCssClass(), url);

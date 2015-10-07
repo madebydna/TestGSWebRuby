@@ -10,6 +10,7 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     $(GLOBAL_MODAL_CONTAINER_SELECTOR).append(modal);
   };
 
+  // Using the modal's specific URL, retrieve modal HTML. Return the Ajax call's promise
   var requestModalViaAjax = function(modal) {
     return $.ajax({
       method: 'GET',
@@ -17,6 +18,9 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     });
   };
 
+  // If modal HTML not already present within DOM, retrieve it and place into DOM
+  // The act of retrieving the modal returns a promise, so just return that.
+  // If we already have modal just return a resolved promise
   var ensureModalInDOM = function(modal) {
     var deferred = $.Deferred();
     var modalExistsOnPage = $(modal.getSelector()).length > 0;
@@ -29,6 +33,18 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     return deferred;
   };
 
+  // Show a modal. Takes a specific modal constructor function.
+  // Instantiate a new modal object and make sure it's in the DOM
+  // Because some modals can be triggered by JS setTimeout(), we need to prevent multiple modals from being shown
+  // There is a notion of modal "stack". In the future of one modal triggers another, we could conceivably allow
+  // multiple modals in the stack, and only show the top modal in the stack.
+  //
+  // This function creates/returns its own promise. That is because the resolving/rejecting of this promise is based on
+  // The promise that is returned when we retrieve the modal, and the one that is returned when we show the modal
+  //
+  // If retrieving modal resolves and showing modal resolves, then resolve
+  // If retrieving modal resolves and showing modal rejects, then reject
+  // If retrieving modal rejects then reject. (do not try to show modal)
   var showModal = function(ModalConstructor, options) {
     options = options || {};
     var modal = createModal(ModalConstructor, options);
@@ -67,6 +83,8 @@ GS.modal.manager = GS.modal.manager || (function ($) {
     return new ModalConstructor($, options);
   };
 
+  // With show a modal, and upon that finishing, will immediately show "flash" messages returned from Rails
+  //
   // 'flash': [
   //            'error': [
   //                       'a message',
