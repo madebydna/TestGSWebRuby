@@ -84,7 +84,7 @@ class SchoolDataHash
       {
         show_no_data_symbol: breakdown["school_value_#{year}".to_sym].nil?,
         value: breakdown["school_value_#{year}".to_sym].to_f.round,
-        performance_level: breakdown[:performance_level],
+        performance_level: breakdown["performance_level_#{year}"],
         state_average: breakdown["state_average_#{year}".to_sym].to_f.round
       }
     else
