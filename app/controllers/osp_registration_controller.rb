@@ -62,6 +62,8 @@ class OspRegistrationController < ApplicationController
   end
 
   def save_new_osp_user
+    return render 'osp/registration/new' if User.where(email: params[:email]).present?
+
     user = User.new(user_attrs.merge({email: params[:email], password: params[:password]}))
     begin
       user.save!
