@@ -70,7 +70,8 @@ module CacheFormat
     data_sets.each do | data |
       next unless (year = data.year).present?
       hash["school_value_#{year}".to_sym] = data.school_value if data.school_value.present?
-      hash["state_average_#{year}".to_sym] = data.state_value if data.state_value.present?
+      hash["state_average_#{year}".to_sym] = data.state_average if data.state_average.present?
+      hash["performance_level_#{year}".to_sym] = data.performance_level if data.performance_level.present?
     end
   end
 end
