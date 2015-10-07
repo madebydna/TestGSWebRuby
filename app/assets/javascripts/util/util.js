@@ -64,3 +64,10 @@ GS.util.isHistoryAPIAvailable = function() {
   return (typeof(window.History) !== 'undefined' && typeof(window.history.pushState) !== 'undefined');
 };
 
+GS.util.manuallySendAnalyticsEvent = function($element) {
+  var category = $element.data('event-category');
+  var action   = $element.data('event-action');
+  var label    = $element.data('event-label');
+
+  analyticsEvent(category, action, label);
+};
