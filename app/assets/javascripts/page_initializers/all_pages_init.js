@@ -71,22 +71,6 @@ $(function() {
     }
   });
 
-  $('.js-save-all-schools-button').on('click', function () {
-    var state = GS.stateAbbreviationFromUrl();
-    var schoolIds =  GS.uri.Uri.getValueOfQueryParam('school_ids').split(',');
-    var states = [];
-    _(schoolIds).each(function () {
-      states.push(state);
-    });
-    if (GS.session.isSignedIn()) {
-      GS.subscription.schools(states, schoolIds).follow();
-    } else {
-      // TODO: replace modal with one designed specifically for Compare
-      GS.modal.manager.showModal(GS.modal.EmailJoinForCompareSchoolsModal)
-    .done(GS.subscription.schools(states, schoolIds).follow);
-    }
-  });
-
   $('.js-clear-local-cookies-link').each(function() {
     $(this).click(GS.hubs.clearLocalUserCookies);
   });
