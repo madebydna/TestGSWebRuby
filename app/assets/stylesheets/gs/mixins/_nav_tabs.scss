@@ -1,0 +1,58 @@
+@mixin gs-nav-tabs-active-border($color) {
+  background-color: $nav-tabs-active-link-hover-bg;
+  border-bottom: 5px solid $color;
+  color: $color;
+}
+
+@mixin gs-nav-tabs($active-color, $inactive-color, $border-bottom-color) {
+  // The backgrounds are all transparent so that the caller of this mixin can
+  // set their own background color.
+  background-color: transparent;
+  border-bottom: 1px solid $border-bottom-color;
+
+  // Styles taken from Bootstrap's .nav
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+
+  > li {
+    float: left;
+    // Make the list-items overlay the bottom border
+    margin-bottom: -1px;
+
+    // Actual tabs (as links)
+    > a {
+      border-radius: 0;
+      border: none;
+      color: $inactive-color;
+      font-family: $font-family-base-bold;
+      font-size: $font-size-small;
+      line-height: $line-height-base;
+      margin: 10px 20px 0 20px;
+      padding: 0 5px 10px 5px;
+      &:hover {
+        @include gs-nav-tabs-active-border($active-color);
+        background-color: transparent;
+      }
+    }
+    @media (min-width: $screen-sm-min) {
+      > a {
+        font-size: $font-size-large;
+        text-transform: uppercase;
+      }
+    }
+
+    // Active state, and its :hover to override normal :hover
+    &.active > a {
+      &,
+      &:active,
+      &:hover,
+      &:focus {
+        @include gs-nav-tabs-active-border($active-color);
+        background-color: transparent;
+        color: $active-color;
+        cursor: default;
+      }
+    }
+  }
+}
