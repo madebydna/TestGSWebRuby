@@ -1,0 +1,6 @@
+---
+es:
+  zillow:
+    module:
+      for_sale: En venta
+      for_rent: En renta

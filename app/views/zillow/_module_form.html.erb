@@ -1,0 +1,44 @@
+<%
+    any_price = t('.any_price');
+    prices = case type
+             when :sale
+               [
+                 any_price,
+                 '0 - $100,000',
+                 '100,000 - 200,000',
+                 '200,000 - 300,000',
+                 '300,000 - 500,000',
+                 '500,000 - 1,000,000',
+                 '1,000,000+',
+               ]
+             when :rent
+               [
+                 any_price,
+                 '0 - 500',
+                 '500 - 1000',
+                 '1000 - 1500',
+                 '1500 - 2000',
+                 '2000 - 3000',
+                 '3000+',
+               ]
+             end
+    beds = [0, 1, 2, 3, 4].map { |count| t('.beds', count: count) }
+%>
+<form>
+  <div class="col-xs-12 col-sm-4 form-group">
+    <input
+       class="form-control"
+       type="text"
+       placeholder="<%= t('.enter_location') %>"
+       />
+  </div>
+  <div class="col-xs-6 col-sm-3 col-lg-2 form-group">
+    <%= select_tag 'prices', options_for_select(prices), class: 'selectpicker', data: {width: '100%'} %>
+  </div>
+  <div class="col-xs-6 col-sm-3 col-lg-2 form-group">
+    <%= select_tag 'beds', options_for_select(beds), class: 'selectpicker', data: {width: '100%'} %>
+  </div>
+  <div class="col-xs-6 col-xs-offset-3 col-sm-offset-0 col-sm-2 col-lg-offset-2 form-group">
+    <div class="btn btn-block btn-primary"><%= t('.search') %></div>
+  </div>
+</form>

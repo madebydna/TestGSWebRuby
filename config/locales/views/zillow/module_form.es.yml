@@ -1,0 +1,10 @@
+---
+es:
+  zillow:
+    module_form:
+      any_price: Cualquier precio
+      enter_location: Indicar ubicación
+      search: Buscar
+      beds:
+        one: "%{count} recamara"
+        other: "%{count} recamaras"

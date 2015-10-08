@@ -1,0 +1,26 @@
+<div class="gs-zillow-module">
+  <ul class="nav tabs">
+    <li class="active">
+      <a href="#sale" data-toggle="tab">
+        <%= t('.for_sale') %>
+      </a>
+    </li>
+    <li>
+      <a href="#rent" data-toggle="tab">
+        <%= t('.for_rent') %>
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="sale">
+      <div class="row">
+        <%= render 'zillow/module_form', type: :sale %>
+      </div>
+    </div>
+    <div class="tab-pane" id="rent">
+      <div class="row">
+        <%= render 'zillow/module_form', type: :rent %>
+      </div>
+    </div>
+  </div>
+</div>
