@@ -8,6 +8,7 @@ GS.modal.BaseModal = function($, options) {
   this.cssClass = null;
   this.modalUrl = null;
   this.deferred = $.Deferred();
+  this.$modalContainer = GS.modal.manager.getModalContainer(); // would probably be better to pass modalContainer into constructor
 };
 
 // Add some functions to BaseModal prototype. All modals should share these functions
@@ -16,12 +17,12 @@ _.assign(GS.modal.BaseModal.prototype, {
     return this.cssClass;
   },
 
-  getSelector: function getSelector() {
-    return '.' + this.getCssClass();
+  $getModalContainer: function $getModalContainer() {
+    return this.$modalContainer;
   },
 
   $getModal: function $getModal() {
-    return $(this.getSelector());
+    return this.$getModalContainer().find('.' + this.getCssClass());
   },
 
   getModalUrl: function getModalUrl() {

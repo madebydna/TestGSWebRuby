@@ -6,8 +6,12 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   var GLOBAL_MODAL_CONTAINER_SELECTOR = '.js-modal-container';
   var modalsBeingDisplayed = [];
 
+  var getModalContainer = function() {
+    return $(GLOBAL_MODAL_CONTAINER_SELECTOR);
+  };
+
   var insertModalIntoDom = function (modal) {
-    $(GLOBAL_MODAL_CONTAINER_SELECTOR).append(modal);
+    getModalContainer().append(modal);
   };
 
   // Using the modal's specific URL, retrieve modal HTML. Return the Ajax call's promise
@@ -23,7 +27,7 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   // If we already have modal just return a resolved promise
   var ensureModalInDOM = function(modal) {
     var deferred = $.Deferred();
-    var modalExistsOnPage = $(modal.getSelector()).length > 0;
+    var modalExistsOnPage = modal.$getModal().length > 0;
 
     if (modalExistsOnPage) {
       deferred.resolve();
@@ -120,7 +124,8 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   return {
     showModal: showModal,
     showModalThenMessages: showModalThenMessages,
-    attachDOMHandlers: attachDOMHandlers
+    attachDOMHandlers: attachDOMHandlers,
+    getModalContainer: getModalContainer
   };
 
 })(jQuery);

@@ -13,7 +13,7 @@ describe('GS.modal.manager', function() {
       ModalConstructor.prototype = {
         show: function() { return modalShowDeferredObject; },
         initialize: function() {},
-        getSelector: function() { return []; },
+        $getModal: function() { return []; },
         getUrlWithParams: function() {}
       };
       sinon.stub(jQuery, 'ajax', function () {
