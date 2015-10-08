@@ -35,9 +35,26 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       }
     };
 
+    var initializeSaveThisSchoolButton = function() {
+      $('.js-save-this-school-button').on('click', function () {
+        var state = GS.stateAbbreviationFromUrl();
+        $self = $(this);
+        // save this school button on profiles gets id from url
+        // save this school button on compare search gets school id from link value
+        var schoolId = GS.schoolIdFromUrl() || $self.data('link-value');
+        if (GS.session.isSignedIn()) {
+          GS.subscription.schools(state, schoolId).follow();
+        } else {
+          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+            .done(GS.subscription.schools(state, schoolId).follow);
+        }
+      });
+    };
+
     return {
       showSignUpForSchoolModal: showSignUpForSchoolModal,
-      showSignUpForSchoolModalAfterDelay: showSignUpForSchoolModalAfterDelay
+      showSignUpForSchoolModalAfterDelay: showSignUpForSchoolModalAfterDelay,
+      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton
     };
 
   })(jQuery);
