@@ -47,8 +47,9 @@ shared_examples 'community spotlight assertions' do |collection_config|
   end
 end
 
-shared_example 'should highlight column' do |number|
-  expect(community_spotlight_page.desktop_scorecard.table[:class]).to include("highlight#{number}")
+shared_example 'should highlight column' do |data_type|
+  index = highlight_column_for(data_type)
+  expect(community_spotlight_page.desktop_scorecard.table[:class]).to include("highlight#{index}")
 end
 
 shared_example 'should have dropdown with selected value' do |dropdown_selector, value|
@@ -65,7 +66,7 @@ shared_examples 'basic spotlight assertions' do |collection_config, scorecard_pa
 end
 
 def desktop_assertions(collection_config, scorecard_params)
-  include_example 'should highlight column', expected_highlight_column(collection_config, scorecard_params)
+  include_example 'should highlight column', scorecard_params[:sortBy]
   include_example 'should have dropdown with selected value', SUBGROUP_SELECT_DESKTOP_SELECTOR, expected_subgroup_selection(scorecard_params)
   it 'should have the correct query string' do
     expected_query_params(scorecard_params).each do |key, value|
@@ -83,9 +84,9 @@ def mobile_assertions(collection_config, scorecard_params)
   include_example 'should have dropdown with selected value', DATA_TYPE_SELECT_MOBILE_SELECTOR, expected_datatype_selection(scorecard_params)
 end
 
-def highlight_column_for(collection_config, data_type)
-  collection_config[:scorecard_fields].index do |f|
-    f[:data_type] == data_type
+def highlight_column_for(data_type)
+  community_spotlight_page.desktop_scorecard.table_headers.index do |header|
+    header['data-sort-by'] == data_type
   end
 end
 
@@ -95,10 +96,6 @@ end
 
 def expected_datatype_selection(scorecard_params)
   CSC_translation_of(scorecard_params[:sortBy])
-end
-
-def expected_highlight_column(collection_config, scorecard_params)
-  highlight_column_for(collection_config, scorecard_params[:sortBy])
 end
 
 def CSC_translation_of(value)
@@ -127,14 +124,14 @@ def all_query_hashes_for(collection_config, &block)
 end
 
 def all_param_values(collection_config)
-  all_param_values = collection_config[:scorecard_fields].map do |field|
+  param_values = collection_config[:scorecard_fields].map do |field|
     data_type = field[:data_type]
     unless data_type == :school_info
       { sort_by: data_type }
     end
   end.compact
-  all_param_values += collection_config[:scorecard_subgroups_list].map do |sub|
+  param_values += collection_config[:scorecard_subgroups_list].map do |sub|
     { sort_breakdown: sub }
   end
-  all_param_values += [:asc, :desc].map { |sort| { sort_asc_or_desc: sort } }
+  param_values += [:asc, :desc].map { |sort| { sort_asc_or_desc: sort } }
 end

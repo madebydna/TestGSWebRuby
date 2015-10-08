@@ -81,6 +81,12 @@ class CharacteristicsCaching::QueryResultDecorator
   end
 
   def performance_level
-    DisplayRange.for('census', data_type_id, state, school_value)
+    DisplayRange.for({
+      data_type:    'census',
+      data_type_id: data_type_id,
+      state:        state,
+      year:         year,
+      value:        school_value
+    })
   end
 end

@@ -16,7 +16,13 @@ class PerformanceCaching::QueryResultDecorator < TestScoresCaching::QueryResultD
   end
 
   def performance_level
-    DisplayRange.for('test', data_type_id, state, school_value)
+    DisplayRange.for({
+      data_type:    'test',
+      data_type_id: data_type_id,
+      state:        state,
+      year:         year,
+      value:        school_value
+    })
   end
 
   alias :breakdown :breakdown_name

@@ -19,9 +19,9 @@ module EspMembershipIdToMemberIdFixer
   def esp_membership_to_member_id
     @_esp_membership_to_member_id ||= begin
       queries = [
-        { table: 'gs_schooldb.osp_form_responses', date_field: 'updated', member_field: 'esp_membership_id' },
+        # { table: 'gs_schooldb.osp_form_responses', date_field: 'updated', member_field: 'esp_membership_id' },
         { table: 'gs_schooldb.school_media', date_field: 'date_created', member_field: 'member_id' },
-        { table: 'esp_response', date_field: 'created', member_field: 'member_id', sharded: true },
+        # { table: 'esp_response', date_field: 'created', member_field: 'member_id', sharded: true },
       ].each_with_object([]) do |osp_table, qs|
         if osp_table[:sharded]
           States.abbreviations.each do |state|
@@ -70,10 +70,10 @@ module EspMembershipIdToMemberIdFixer
     esp_membership_to_member_id.each do |esp_id, member_id|
       next unless esp_id && member_id
       fix_affected_school_media!(esp_id, member_id)
-      fix_affected_osp_form_response!(esp_id, member_id)
-      States.abbreviations.each do |state|
-        fix_affected_esp_response!(esp_id, member_id, state)
-      end
+      # fix_affected_osp_form_response!(esp_id, member_id)
+      # States.abbreviations.each do |state|
+      #   fix_affected_esp_response!(esp_id, member_id, state)
+      # end
     end
   end
 
