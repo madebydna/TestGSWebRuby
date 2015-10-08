@@ -62,10 +62,15 @@
   } }
   &:active,
   &.active {
-    background-image: none;
-    background-color: $active_border;
-    color: $background_active;
-    border-color: $active_border;
+    &:active,
+    &:hover,
+    &:focus,
+    & {
+      background-image: none;
+      background-color: $active_border;
+      color: $background_active;
+      border-color: $active_border;
+    }
   }
   .open & { &.dropdown-toggle {
       background-image: none;
