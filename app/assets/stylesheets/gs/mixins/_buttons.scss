@@ -43,11 +43,11 @@
     }
   }
 }
-@mixin button-default-variant($color, $background, $border, $background_active, $active_color, $hover_border:"", $active_border:"") {
+@mixin button-default-variant($color, $background, $border, $background_active, $active_color, $hover_border:"", $active_border:"", $border-bottom-width: 3px) {
   color: $color;
   background-color: $background;
   border-color: $border;
-  border-bottom-width: 3px;
+  border-bottom-width: $border-bottom-width;
 
   &:hover,
   &:focus {
