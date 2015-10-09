@@ -72,4 +72,22 @@ describe('url_params', function() {
             expect(GS.schoolIdFromUrl()).to.eq(6907);
         });
     });
+    describe('school name from URL', function() {
+        it('should be undefined when no school name in URL', function() {
+            expect(GS.schoolNameFromUrl()).to.eq(undefined);
+        });
+
+        it('should get the school name from the path', function() {
+            sinon.stub(GS.uri.Uri, 'getPath').returns('/california/alameda/1-alameda-high-school');
+            expect(GS.schoolNameFromUrl()).to.eq('alameda high school');
+        });
+
+        it('should get the school name from the path for preK', function() {
+            sinon.stub(GS.uri.Uri, 'getPath').returns('/michigan/detroit/preschools/YMCA-Child-Care-Center-Upa/6907/reviews/');
+            console.log(GS.schoolNameFromUrl());
+            expect(GS.schoolNameFromUrl()).to.eq('YMCA Child Care Center Upa');
+        });
+
+    });
+
 });

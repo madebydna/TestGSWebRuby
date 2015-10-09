@@ -5,6 +5,7 @@
     "use strict";
     var stateParam = 'state';
     var schoolIdParam = 'schoolId';
+    var schoolName
 
     var spacesToHyphens = function(str) {
         return str.replace(/ /g, '-');
@@ -58,6 +59,29 @@
         return isNaN(schoolId) ? undefined : schoolId;
     };
 
+    var schoolNameFromUrlPath = function () {
+        var schoolName;
+        var schoolPathRegex = /\d+-(.+)/;
+//        Regex to grab preschool Name
+        var schoolPathRegexPreK = /preschools\/(.+?)\//;
+        var preschool = false;
+        schoolName = _(GS.uri.Uri.getPath().split('/')).map(function (pathComponent) {
+            if (pathComponent === 'preschools') {
+                preschool = true;
+            }
+            var match = null;
+            match = schoolPathRegex.exec(pathComponent);
+            return (match === null) ? null : match[1];
+        }).compact().first();
+        if (preschool) {
+
+            var match = schoolPathRegexPreK.exec(GS.uri.Uri.getPath());
+            schoolName = (match === null) ? null : match[1];
+
+        }
+        return schoolName === undefined ? undefined : schoolName.replace(/-/g,' ');
+    };
+
     var schoolIdFromUrl = function() {
         var schoolId = GS.uri.Uri.getFromQueryString(schoolIdParam);
 
@@ -70,7 +94,8 @@
         return isNaN(schoolId) ? undefined : schoolId;
     };
 
+
     GS.stateAbbreviationFromUrl = stateAbbreviationFromUrl;
     GS.schoolIdFromUrl = schoolIdFromUrl;
-
+    GS.schoolNameFromUrl = schoolNameFromUrlPath;
 })(GS, _);

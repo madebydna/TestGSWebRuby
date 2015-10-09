@@ -43,7 +43,14 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
         // save this school button on compare search gets school id from link value
         var schoolId = GS.schoolIdFromUrl() || $self.data('link-value');
         if (GS.session.isSignedIn()) {
-          GS.subscription.schools(state, schoolId).follow();
+            GS.subscription.schools(state, schoolId).follow(false).done(function(){
+                if (GS.schoolNameFromUrl() === undefined) {
+                    GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_school_name'));
+                } else {
+                    GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message') + ' ' + GS.schoolNameFromUrl());
+
+                }
+          });
         } else {
           GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
             .done(GS.subscription.schools(state, schoolId).follow);

@@ -66,14 +66,17 @@ GS.subscription = GS.subscription || (function() {
         return $.post(url, data);
       };
 
-      var follow = function() {
+      var follow = function(showMessages) {
+          if  (showMessages === undefined) {
+              showMessages = true;
+          }
         return makeFollowSchoolAjaxRequest()
           .always(function(jqXHR) {
             var data = jqXHR;
             if(jqXHR.hasOwnProperty('responseJSON')) {
               data = jqXHR.responseJSON;
             }
-            if (data.hasOwnProperty('flash')) {
+            if (showMessages && data.hasOwnProperty('flash')) {
               GS.notifications.flash_from_hash(data.flash);
             }
           }

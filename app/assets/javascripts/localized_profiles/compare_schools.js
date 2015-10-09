@@ -289,7 +289,10 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
           states.push(state);
         });
         if (GS.session.isSignedIn()) {
-          GS.subscription.schools(states, schoolIds).follow();
+          GS.subscription.schools(states, schoolIds).follow(false).done(function(){
+                  GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_on_compare_follow_all'));
+
+          });
         } else {
           // TODO: replace modal with one designed specifically for Compare
           GS.modal.manager.showModal(GS.modal.EmailJoinForCompareSchoolsModal)
@@ -311,6 +314,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         setDisabledOnSaveAll();
         GS.compare.schoolsList.init(4);
         initializeSaveAllSchoolsButton();
+        GS.schoolProfiles.initializeSaveThisSchoolButton();
     };
 
 
