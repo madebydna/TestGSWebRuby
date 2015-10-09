@@ -12,7 +12,7 @@ en:
     generic_error: We're sorry, something went wrong processing your request.
     my_school_list:
       school_added: ! '%{school_name} has been saved to your school list.'
-      school_added_subscribed: Great! We’ll send you timely updates about the schools you follow. You can download and save your list from your account.
+      school_added_subscribed: All set! You are signed up for our newsletter and updates on %{school_name}
     official_school_profile:
       register: You're almost there! Thank you for registering as a school leader. We just need to verify your email address. We've sent you an email - please click on the link in that message to get started editing your school's information!
     report_review:
@@ -102,3 +102,8 @@ en:
       next: ! '&rsaquo;'
       previous: ! '&lsaquo;'
       truncate: ! '&hellip;'
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "

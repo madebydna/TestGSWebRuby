@@ -54,7 +54,8 @@ GS.subscription = GS.subscription || (function() {
        */
       var makeFollowSchoolAjaxRequest = function() {
         var url = '/gsr/user/favorites/';
-        var data = {
+        url = GS.I18n.preserveLanguageParam(url);
+          var data = {
           'favorite_school': {
             'school_id': schoolIds,
             'state': states

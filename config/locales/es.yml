@@ -12,7 +12,7 @@ es:
     generic_error: Lo sentimos, por algo salió mal al procesar tu solicitud.
     my_school_list:
       school_added: ! '%{school_name} se ha guardado en la lista de la escuela.'
-      school_added_subscribed: ¡Excelente! Te enviaremos actualizaciones oportunas sobre las escuelas que sigues. Usted puede descargar y guardar la lista de su cuenta.
+      school_added_subscribed: ¡Todo listo! Usted está suscrito a nuestro boletín de noticias y actualizaciones sobre %{school_name}
     official_school_profile:
       register: ¡Casi Estas allí! Gracias por registrarse como líder escolar. Sólo tenemos que verificar su dirección de correo electrónico. Te hemos enviado un correo electrónico - por favor haga clic en el enlace en ese mensaje para empezar la edición de la información de su escuela!
     report_review:
@@ -102,3 +102,8 @@ es:
       next: ! '&rsaquo;'
       previous: ! '&lsaquo;'
       truncate: ! '&hellip;'
+  support:
+    array:
+      words_connector: " o "
+      two_words_connector: " y "
+      last_word_connector: " o al menos "
