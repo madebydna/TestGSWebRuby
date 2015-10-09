@@ -4,9 +4,9 @@
         <%= f.hidden_field :list, :value => school.private_school? ? 'mystat_private' : 'mystat' %>
         <%= f.hidden_field :school_id, :value => school.id %>
         <%= f.hidden_field :state, :value => school.state %>
-        <%= f.hidden_field :message, :value => "You've signed up to receive updates on #{school.name}" %>
+        <%= f.hidden_field :message, :value => "Good news! You’re signed up to receive our newsletter and updates on #{school.name}" %>
     <% else %>
-        <%= f.hidden_field :message, :value => "You've signed up to receive updates." %>
+        <%= f.hidden_field :message, :value => "Good news! You’re signed up to receive our newsletter and updates." %>
     <% end %>
         <%= f.hidden_field :driver, :value => driver %>
   <% end %>
