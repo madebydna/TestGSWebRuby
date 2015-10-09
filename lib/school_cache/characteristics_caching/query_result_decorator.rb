@@ -85,6 +85,7 @@ class CharacteristicsCaching::QueryResultDecorator
       data_type:    'census',
       data_type_id: data_type_id,
       state:        state,
+      subject_id:   subject_id,
       year:         year,
       value:        school_value
     })
