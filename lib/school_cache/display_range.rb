@@ -44,7 +44,7 @@ class DisplayRange < ActiveRecord::Base
     all
       .to_a
       .delete_if { |dr| dr.year.to_i > Time.now.year }
-      .group_by { |dr| [dr.data_type, dr.data_type_id, (dr.state.try(:downcase) || ALL), (dr.year.to_i || ALL)] }
+      .group_by { |dr| [dr.data_type, dr.data_type_id, (dr.state.try(:downcase) || ALL), (dr.year.to_i == 0 ? ALL : dr.year.to_i)] }
   end
 
   #ex range arg = {'below average cap' => 32, 'average' => 60, 'above avg' => 101}. val arg = 20

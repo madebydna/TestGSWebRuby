@@ -77,7 +77,8 @@ GS.visualchart = GS.visualchart || function($) {
         }
     };
 
-    var drawBarChartTestScoresStacked = function (barChartData, divId, chartname) {
+
+      var drawBarChartTestScoresStacked = function (barChartData, divId, chartname) {
       var func = function () {
         var domNode = document.getElementById(divId);
         // If the dom node that the chart wants to fill is not on the page, just early exit

@@ -8,14 +8,14 @@ $gray-darker:            #777; // We want this to be #777
 $gray-dark:              lighten($gray-base-color, 60%); // #999
 $gray:                   lighten($gray-base-color, 80%); // #ccc
 $gray-light:             lighten($gray-base-color, 90%); // #ebebeb
-$gray-lighter:           lighten($gray-base-color, 95%); // #f4f4f4
+$gray-lighter:           #f4f4f4;
 
 $text-color:            $gray-darkest;
 
 // Brand colors
 // -------------------------
 $brand-primary:                #26ABE2;
-$brand-primary-darker:         #204362;
+$brand-primary-darker:         #4788be;
 $brand-primary-dark:           #2880b9;
 $brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
 $brand-primary-lighter:        lighten($brand-primary, 47%); // #F5FAFC
@@ -43,12 +43,11 @@ $pale-yellow:             #f7ffe3;
 $bright-yellow:           #fad700;
 $dark-green:              #135c4c;
 $lighter-black:           #222;
-$module-gray:             #f4f4f4;
+$module-gray:             $gray-lighter;
 $module-gray-stroke:      #dedede;
 $dark-steel-gray:         #1d1d1d;
 $light-ash-gray:          #777777;
 $light-blue-background:   #e6ebf5;
-$dark-blue-text:          #4788be;
 $gray-link-color:         $light-ash-gray;
 $gray-link-hover-color:   darken($light-ash-gray, 15%);
 

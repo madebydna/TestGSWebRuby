@@ -67,16 +67,16 @@ describe CharacteristicsCaching::CharacteristicsCacher do
 
   let(:all_results) do
     [
-      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2010, school_value: 10, state_value: 20, data_type_id: 1}),
-      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2011, school_value: 20, state_value: 20, data_type_id: 1}),
-      Hashie::Mash.new({breakdown_id: 13, subject_id: nil, year: 2012, school_value: 20, state_value: 20, data_type_id: 1}),
-      Hashie::Mash.new({breakdown_id: 14, subject_id: nil, year: 2013, school_value: 20, state_value: 20, data_type_id: 1}),
-      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2000, school_value: nil, state_value: nil, data_type_id: 1}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2013, school_value: 50, state_value: 40, data_type_id: 2}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2014, school_value: 70, state_value: 30, data_type_id: 2}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 6, year: 2010, school_value: 70, state_value: 30, data_type_id: 2}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 7, year: 2011, school_value: 70, state_value: 30, data_type_id: 2}),
-      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2000, school_value: nil, state_value: nil, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2010, school_value: 10, state_average: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2011, school_value: 20, state_average: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 13, subject_id: nil, year: 2012, school_value: 20, state_average: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 14, subject_id: nil, year: 2013, school_value: 20, state_average: 20, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: 12, subject_id: nil, year: 2000, school_value: nil, state_average: nil, data_type_id: 1}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2013, school_value: 50, state_average: 40, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2014, school_value: 70, state_average: 30, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 6, year: 2010, school_value: 70, state_average: 30, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 7, year: 2011, school_value: 70, state_average: 30, data_type_id: 2}),
+      Hashie::Mash.new({breakdown_id: nil, subject_id: 5, year: 2000, school_value: nil, state_average: nil, data_type_id: 2}),
     ]
   end
 

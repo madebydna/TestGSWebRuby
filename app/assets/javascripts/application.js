@@ -19,5 +19,7 @@
 //= require ./util/expand_toggle
 //= require ./util/tracking
 //= require ./util/responsive_images
+//= require ./util/uri
+//= require ./util/i18n
 //= require ./localized_profiles/visualcharts
 //= require ./page_initializers/header_init

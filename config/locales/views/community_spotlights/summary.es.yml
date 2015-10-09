@@ -31,7 +31,7 @@ es:
           title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
           datapoint_1:
             title: Estudiantes Hispanos
-            performance_level: below_average
+            performance_level: average
             value_html: 34<sup>%</sup>
             state_average: Prom. 32%
           datapoint_2:
@@ -78,7 +78,7 @@ es:
           title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
           datapoint_1:
             title: Estudiantes Hispanos
-            performance_level: below_average
+            performance_level: average
             value_html: 34<sup>%</sup>
             state_average: Prom. 32%
           datapoint_2:
@@ -125,7 +125,7 @@ es:
           title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
           datapoint_1:
             title: Estudiantes Hispanos
-            performance_level: below_average
+            performance_level: average
             value_html: 34<sup>%</sup>
             state_average: Prom. 32%
           datapoint_2:
