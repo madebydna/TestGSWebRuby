@@ -4,12 +4,7 @@ GS.auth = GS.auth || (function() {
     // There were previous methods in this file for logging out via JS.
     // If you need them for reference, look at git history
 
-    var JOIN_AND_SIGNIN_URL = "/gsr/session/facebook_auth";
-
-    // Server handles both join and signin
-    var postAjaxSignin = function(data) {
-      return $.post(JOIN_AND_SIGNIN_URL, data);
-    };
+    var GS_FACEBOOK_AUTH_URL = "/gsr/session/facebook_auth";
 
     var convertFacebookSigninDataToGSSigninData = function(facebookData) {
       return {
@@ -24,13 +19,10 @@ GS.auth = GS.auth || (function() {
     };
 
     var signin = function(data) {
-      return postAjaxSignin(data);
     };
 
     var signinUsingFacebookData = function(facebookData) {
-      return postAjaxSignin(
-        convertFacebookSigninDataToGSSigninData(facebookData)
-      );
+      return $.post(GS_FACEBOOK_AUTH_URL, convertFacebookSigninDataToGSSigninData(facebookData));
     };
 
     return {
