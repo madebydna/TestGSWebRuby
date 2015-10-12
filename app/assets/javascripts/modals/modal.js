@@ -4,14 +4,22 @@ GS.modal = GS.modal || {};
 
 GS.modal.manager = GS.modal.manager || (function ($) {
   var GLOBAL_MODAL_CONTAINER_SELECTOR = '.js-modal-container';
+  var GLOBAL_MODAL_SELECTOR = '.js-gsModal';
   var modalsBeingDisplayed = [];
 
   var getModalContainer = function() {
     return $(GLOBAL_MODAL_CONTAINER_SELECTOR);
   };
 
+  var getModalNode = function(modal) {
+    return $($.parseHTML(modal)).closest(GLOBAL_MODAL_SELECTOR);
+  };
+
   var insertModalIntoDom = function (modal) {
-    getModalContainer().append(modal);
+//  ajax request is an extra title and html element with modal this appends only
+//  the modal into the dom
+    var modalNode = getModalNode(modal);
+    getModalContainer().append(modalNode);
   };
 
   // Using the modal's specific URL, retrieve modal HTML. Return the Ajax call's promise
@@ -129,6 +137,4 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   };
 
 })(jQuery);
-
-
 
