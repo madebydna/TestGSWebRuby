@@ -77,7 +77,7 @@ $(function() {
                if (GS.session.isSignedIn()) {
                    GS.subscription.schools(state, schoolId).follow(false).done(function(){
                        if (GS.schoolNameFromUrl() === undefined) {
-                           GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_schools'));
+                           GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_school_name'));
                        } else {
                            GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message') + ' ' + GS.schoolNameFromUrl());
 

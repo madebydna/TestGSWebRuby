@@ -5,6 +5,10 @@ en:
     learn_more_html: Learn More &raquo;
     fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
+    follow_schools:
+      signed_in_message: Good news! You’re signed up to receive our newsletter and updates on
+      signed_in_message_with_no_school_name: Good news! You’re signed up to receive our newsletter and updates for this school.
+      signed_in_message_on_compare_follow_all: Good news! You’re signed up to receive our newsletter and updates for these schools.
     more_filters: More filters
     ok_fit: 'Ok fit'
     reviews:
@@ -36,10 +40,6 @@ en:
     view_less: View less »
     view_more: View more »
     weak_fit: Weak fit
-    follow_schools:
-           signed_in_message: Good news! You’re signed up to receive our newsletter and updates on
-           signed_in_message_with_no_school_name: Good news! You’re signed up to receive our newsletter and updates for this school.
-           signed_in_message_on_compare_follow_all: Good news! You’re signed up to receive our newsletter and updates for these schools.
     wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
 

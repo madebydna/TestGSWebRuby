@@ -6,7 +6,7 @@
         <%= f.hidden_field :state, :value => school.state %>
         <%= f.hidden_field :message, :value => "Good news! You’re signed up to receive our newsletter and updates on #{school.name}" %>
     <% else %>
-        <%= f.hidden_field :message, :value => "Good news! You’re signed up to receive our newsletter and updates." %>
+        <%= f.hidden_field :message, :value => "Good news! You’re signed up to receive our weekly newsletter." %>
     <% end %>
         <%= f.hidden_field :driver, :value => driver %>
   <% end %>
