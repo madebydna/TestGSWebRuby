@@ -21,12 +21,19 @@
           <label class="control-label" for="email"><%= t('.email_label') %></label>
 
           <div class="controls">
-            <input type="text" id="email" name="email" placeholder="" class="input-xlarge js-signin-email" style="width:100%"
-                   data-parsley-required="true"
-                   data-parsley-type="email"
-                   data-parsley-required-message="Please enter an email address."
-                   data-parsley-error-container=".js-signin-email-errors">
-
+              <%= email_field_tag(
+                    :email,
+                    nil,
+                    {
+                      id: "email",
+                      placeholder: "",
+                      class: 'full-width input-xlarge js-signin-email',
+                      'data-parsley-required' => "true",
+                      'data-parsley-type' => "email",
+                      'data-parsley-required-message' => "Please enter an email address.",
+                      'data-parsley-error-container' => ".js-signin-email-errors"
+                    }
+                  ) %>
             <p class="js-signin-email-errors help-block"></p>
           </div>
         </div>
