@@ -4,3 +4,5 @@ en:
     search_page_search_bar:
       ! 'nearby_cities_label': ! 'Nearby Cities:'
       search_button: Search
+      find_greatest_schools: Find the greatest schools for you!
+      guide_me: Guide Me

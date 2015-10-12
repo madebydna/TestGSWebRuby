@@ -1,0 +1,114 @@
+.search-page {
+  .search-page-search-bar {
+    background-color: $dirt-green;
+    color: $gray;
+    .search-bar {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .breadcrumbs > a {
+      color: $gray;
+    }
+    .btn-block {
+      font-size: $font-size-large;
+      height: $input-height-base;
+      line-height: $line-height-large;
+    }
+    @media (max-width: $screen-sm-min) {
+      .iconx24-icons {
+        display: inline-block !important; // Has to be important because of visible-xs
+      }
+      .state-dropdown {
+        padding-right: 0;
+        .btn-dropdown {
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          border: white;
+        }
+      }
+      .form-control {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border: white;
+      }
+    }
+  }
+  .number-schools-found {
+    text-align: center;
+    padding-top: $spacing-medium;
+
+    h1 { display: inline; }
+    .save-search { display: inline; }
+
+    @media (min-width: $screen-sm-min) {
+      text-align: left;
+      padding-top: $grid-gutter-width;
+    }
+  }
+  .save-search-popup {
+    z-index: 2;
+    width: 450px;
+    border: #cccccc solid 1px;
+  }
+  .desktop-list-map-toggle {
+    @include base-font-styles();
+    display: inline;
+  }
+  .filter-toolbar-desktop {
+    padding-top: $spacing-medium;
+    .filter-panel {
+      padding: $spacing-medium;
+      position: absolute;
+      z-index: 1;
+    }
+  }
+  .filter-toolbar-mobile {
+    padding-top: $spacing-medium;
+    .btn {
+      border-radius: 0;
+      font-size: 11px;
+      &:nth-child(n+1) {
+        border-left: thin solid white;
+      }
+    }
+  }
+  .sorting-toolbar {
+    display: inline;
+    strong {
+      display: inline;
+    }
+  }
+  .compare-schools-popup {
+    display: inline;
+    position: relative;
+
+    .popup-link {
+      font-family: $font-family-base-bold;
+      font-size: $font-size-large;
+      padding-right: $spacing-large;
+    }
+
+    .panel {
+      left:-188px; //left is to prevent panel from going off screen.
+      margin-top: $spacing-medium;
+      position: absolute;
+      width: 350px;
+      z-index: 1;
+
+      .compare-schools-popup-school {
+        border-radius: 4px;
+        border: 1.5px solid #d3d3d3;
+        position: relative;
+
+        .remove-school {
+          position: absolute;
+          right: -7px;
+          top: -7px;
+        }
+        .compare-schools-popup-school-header {
+          height: 45px;
+        }
+      }
+    }
+  }
+}

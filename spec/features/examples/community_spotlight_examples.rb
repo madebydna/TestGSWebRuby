@@ -1,6 +1,7 @@
 require 'features/selectors/community_spotlight_page'
 require 'features/contexts/community_spotlight_contexts'
 require 'features/examples/url_examples'
+require 'features/examples/page_examples'
 
 shared_examples 'community spotlight assertions' do |collection_config|
   SUBGROUP_SELECT_DESKTOP_SELECTOR = "[data-id='subgroup-select']"
@@ -52,10 +53,6 @@ shared_example 'should highlight column' do |data_type|
   expect(community_spotlight_page.desktop_scorecard.table[:class]).to include("highlight#{index}")
 end
 
-shared_example 'should have dropdown with selected value' do |dropdown_selector, value|
-  expect(community_spotlight_page.find(dropdown_selector)[:title]).to eq(value)
-end
-
 shared_examples 'basic spotlight assertions' do |collection_config, scorecard_params|
   describe_desktop do
     desktop_assertions(collection_config, scorecard_params)
@@ -67,7 +64,7 @@ end
 
 def desktop_assertions(collection_config, scorecard_params)
   include_example 'should highlight column', scorecard_params[:sortBy]
-  include_example 'should have dropdown with selected value', SUBGROUP_SELECT_DESKTOP_SELECTOR, expected_subgroup_selection(scorecard_params)
+  include_example 'should have selectpicker with selected value', SUBGROUP_SELECT_DESKTOP_SELECTOR, expected_subgroup_selection(scorecard_params)
   it 'should have the correct query string' do
     expected_query_params(scorecard_params).each do |key, value|
       expect_query_param(as_query_param(key), value) # snake_case => snakeCase
@@ -80,8 +77,8 @@ def as_query_param(key)
 end
 
 def mobile_assertions(collection_config, scorecard_params)
-  include_example 'should have dropdown with selected value', SUBGROUP_SELECT_MOBILE_SELECTOR, expected_subgroup_selection(scorecard_params)
-  include_example 'should have dropdown with selected value', DATA_TYPE_SELECT_MOBILE_SELECTOR, expected_datatype_selection(scorecard_params)
+  include_example 'should have selectpicker with selected value', SUBGROUP_SELECT_MOBILE_SELECTOR, expected_subgroup_selection(scorecard_params)
+  include_example 'should have selectpicker with selected value', DATA_TYPE_SELECT_MOBILE_SELECTOR, expected_datatype_selection(scorecard_params)
 end
 
 def highlight_column_for(data_type)

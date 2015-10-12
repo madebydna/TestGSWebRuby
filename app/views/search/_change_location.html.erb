@@ -1,10 +1,44 @@
-<div class="row mbs">
-  <span class="col-xs-4 col-sm-12 open-sans_sb js-currentLocationText rs-current_location_text" style="line-height: 1.4;">
-    <%= States.abbr_to_label(choose_state) || t('.nationwide') %>
-  </span>
-  <a href="#" class="col-xs-6 col-sm-12 dropdown-toggle rs-change_location" data-toggle="dropdown">
-    <%= t('.change_state_link') %>
-    <span class="caret"></span>
-  </a>
-  <%= render 'shared/all_states_dropdown', extra_ul_classes: 'search-state-picker rs-search_state_picker', extra_li_classes: 'js-changeSearchState' %>
+<% state_labels = States.labels_hash.to_a %>
+<% state_labels = [['', t('.nationwide')]] + state_labels if @by_name && !@state %>
+<% selected_name = States.labels_hash[choose_state] || t('.nationwide') %>
+<% selected_abbreviation = choose_state.to_s %>
+<div class="hidden-xs hidden-sm">
+  <%=
+    select_tag 'change-location-desktop',
+      options_for_select(
+        state_labels.map do | abbreviation, name |
+          [
+            name,
+            class: 'js-changeSearchState',
+            data: {
+              abbreviation: abbreviation.upcase,
+            }
+          ]
+        end,
+        selected_name
+    ),
+    class: 'selectpicker',
+    data: { width: '100%' }
+  %>
+</div>
+<div class="visible-xs visible-sm">
+  <%=
+    select_tag 'change-location-mobile',
+      options_for_select(
+        state_labels.map do | abbreviation, name |
+          title = abbreviation.present? ? abbreviation.upcase : t('.us')
+          selected_abbreviation = title if selected_abbreviation.downcase == abbreviation.downcase
+          [
+            title,
+            class: 'js-changeSearchState',
+            data: {
+              abbreviation: abbreviation.upcase,
+            }
+          ]
+        end,
+        selected_abbreviation
+    ),
+    class: 'selectpicker',
+    data: { width: '100%' }
+  %>
 </div>

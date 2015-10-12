@@ -65,6 +65,7 @@
 // Dropdown is just like btn-default, but regular bottom border
 .btn-dropdown {
   @include button-default-variant($btn-default-color, $btn-default-bg, $btn-default-color, $btn-default-bg, $btn-default-hover, $btn-default-hover, $btn-default-active-border, $border-bottom-width: 1px);
+  height: $input-height-base;
 }
 
 .btn-toggle {

@@ -1,12 +1,10 @@
 ---
 en:
   search:
-    filter_toolbar:
+    filter_toolbar_desktop:
       filters_button: Filters
       guided_search_link: Guide Me
-      list_link: List
       map_button: Map
-      map_link: Map
       more_filters_label: More Filters
       refine_search_dropdown: Refine Search
       refine_search_dropdown_title: Use filters to find schools that meet your needs

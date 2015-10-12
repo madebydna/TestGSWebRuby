@@ -2,10 +2,8 @@
 en:
   search:
     sorting_toolbar:
-      compare_button: Compare
       distance: Distance
       fit: Fit
       rating: Rating
       relevance: Relevance
-      save_search_button: Save Search
       sort_by_label: "Sort by:"

@@ -1,17 +1,20 @@
-<div class="pa js-searchFiltersMenuMobile search-filters-menu-mobile visible-xs">
-  <div class="ptm panel panel-default mbn" style="width: 248px;">
-    <% #ToDo Delete close button %>
-    <!--<div>-->
-      <!--<a class="prl pull-right js-searchFiltersCloseWindow">close</a>-->
-    <!--</div>-->
-    <div class="clearfix js-searchFiltersFormParentMobile">
-      <%= @renderedFilters %>
-    </div>
-    <div class="clearfix pal">
-      <label class="fl">
-        <a class="js-advancedFilters">More Filters</a>
-      </label>
-      <button class="btn btn-default fr js-submitSearchFiltersFormMobile" type='submit'>Submit</button>
-    </div>
+<div class="visible-xs filter-toolbar-mobile gs-bootstrap">
+  <div class="btn-group clearfix js-mobileFiltersToolbar">
+    <button type="button" class="btn btn-primary <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-searchFiltersDropdownMobile">
+      <span class="iconx16 i-16-white-check-box vam"></span>
+      <%= t('.filters_button') %>
+    </button>
+    <% if @show_guided_search %>
+      <a type="button" class="btn btn-primary col-xs-4"
+                       style="color: white;"
+                       href="<%= guided_search_path(@hub) %>">
+                       <span class="iconx16 i-16-white-info vam"></span>
+                       <%= t('.guided_search_link') %>
+      </a>
+    <%end %>
+    <button type="button" class="btn btn-primary <%= @show_guided_search ? 'col-xs-4' : 'col-xs-6' %> js-search-toggle-map-view">
+      <span class="iconx16 i-16-white-map-view vam"></span>
+      <span class="js-toggle-list-map-view-text"><%= t('.map_button') %></span>
+    </button>
   </div>
 </div>

@@ -1,0 +1,35 @@
+<div class="filter-toolbar-desktop hidden-xs gs-bootstrap">
+  <div class="container-fluid">
+    <div class="clearfix">
+      <div class="pr di">
+        <div class="btn btn-primary btn-lg js-searchFiltersDropdown">
+          <%= t('.refine_search_dropdown') %>
+        </div>
+
+        <div class="dn filter-panel js-searchFiltersMenu">
+          <div class="ptm panel panel-default mbn">
+            <div class="clearfix js-searchFiltersFormParent">
+              <%= @renderedFilters %>
+            </div>
+            <div class="clearfix pal">
+              <label class="fl">
+                <a class="js-advancedFilters pointer"><%= t('.more_filters_label') %></a>
+              </label>
+              <button class="btn btn-default fr js-submitSearchFiltersForm" type='submit'>
+                <%= t('.submit_button') %>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="fr di">
+        <div class="fl pts">
+          <%= render 'compare_schools_popup' %>
+        </div>
+        <div class="hidden-xs fr">
+          <%= render 'sorting_toolbar' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,28 @@
-<div class="header-bg-color">
-  <div class="ptl hidden-xs"></div>
-  <div class="row ma limit-width-1200">
-    <div class="row ptm">
-      <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
-        <div class="col-sm-2 col-md-2 col-lg-2 plm">
-          <%= render 'search/change_location', choose_state: @state_abbreviation   %>
+<div class="search-page-search-bar gs-bootstrap">
+  <div class="container-fluid">
+    <div class="hidden-xs clearfix">
+      <% if @state && @state[:long] && @city %>
+        <div class="fl breadcrumbs ptl">
+          <%= link_to States.abbr_to_label(@state[:short]), state_path(state_params(@state[:long])) %>
+          <span class="caret caret-right"></span>
+          <%= link_to @city.name, city_path(city_params(@state[:long], @city.name)) %>
         </div>
-        <div class="col-xs-9 col-sm-8 col-md-8 col-lg-8 plm prm mbm">
+      <% end %>
+      <% if @show_guided_search %>
+        <div class="fr ptl">
+          <span><%= t('.find_greatest_schools') %></span>
+          <span class="iconx24-icons i-24-guide-me vam mas"></span>
+          <%= link_to t('.guide_me'), guided_search_path(@hub) %>
+        </div>
+      <%end %>
+    </div>
+    <div class="row ptl">
+      <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
+        <div class="col-xs-3 col-sm-offset-2 col-sm-2 state-dropdown">
+          <%= render 'change_location', choose_state: @state_abbreviation   %>
+        </div>
+        <div class="search-bar col-xs-6 col-sm-5 form-group">
+          <span class="dn js-mobile-placeholder js-translate-placeholder"></span>
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term %>"
@@ -14,31 +30,32 @@
                   <% if @state_abbreviation %>
                     data-state="<%= @state_abbreviation %>"
                   <% end %>
-                  id="js-schoolResultsSearch"
-                  class='typeahead search-text full-width pam'
-                  placeholder="">
+                    id="js-schoolResultsSearch"
+                    class='typeahead form-control'
+                    placeholder="" />
 
-          <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
         </div>
 
-        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 phm mbm">
-          <button type='submit' class=" pull-right btn btn-lg btn-primary"><%= t('.search_button') %></button>
-        </div>
-
-        <div class="visible-xs col-xs-3 phm mbm">
-          <button type='submit' class=" pull-right btn btn-primary" style="height: 46px;"><span class="iconx24-icons i-24-search-white"></span></button>
+        <div class="col-xs-3 col-sm-2">
+          <button type='submit' class="btn btn-block btn-primary">
+            <span class="hidden-xs"><%= t('.search_button') %></span>
+            <span class="visible-xs iconx24-icons i-24-search-white"></span>
+          </button>
         </div>
       </form>
     </div>
-
     <% if @nearby_cities && @nearby_cities.size > 0 %>
-        <div class="row phm ptm pbl hidden-xs">
-          <div class="fl mrl"><%= t('.nearby_cities_label') %></div>
+      <div class="row hidden-xs pbl">
+        <div class="col-sm-offset-2 col-sm-10">
+          <span class="fl mrl"><%= t('.nearby_cities_label') %></span>
           <% @nearby_cities.each_index do |x|
             city = @nearby_cities[x] %>
-              <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity"><%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %></div>
-          <% end %>
+          <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity">
+            <%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %>
+          </div>
+        <% end %>
         </div>
+      </div>
     <% end %>
   </div>
 </div>
