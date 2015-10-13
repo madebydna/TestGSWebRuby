@@ -58,7 +58,7 @@
     padding-bottom: $spacing-medium;
     padding-top: $spacing-medium;
     .filter-panel {
-      padding: $spacing-medium;
+      padding: $spacing-medium 0;
       position: absolute;
       z-index: 1;
     }
