@@ -1,4 +1,8 @@
 .search-page {
+  .search-filters-menu-mobile {
+    left: -300px;
+    z-index: 10;
+  }
   .search-page-search-bar {
     background-color: $dirt-green;
     color: $gray;
