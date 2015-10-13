@@ -1,85 +1,71 @@
-<%= form_tag authenticate_user_path, method: :post, remote: true,
-             id: '',
-             class: 'js-join-form',
-             'data-parsley-namespace'=>"data-parsley-" do %>
+<fieldset>
+  <%= form_tag authenticate_user_path, method: :post, remote: true,
+    id: '',
+    class: 'js-join-form',
+    'data-parsley-namespace'=>"data-parsley-" do %>
 
-  <%= token_tag form_authenticity_token %>
-  <fieldset>
-    <div class="row">
-      <div class="col-xs-4 hidden-xs col-sm-6 hidden-sm col-md-5 col-lg-5">
-        <ul class="promos">
-          <% t('.promos').each do |list_item| %>
-              <li>
-                <h3><%= list_item['header'] %></h3>
-                <p><%= list_item['paragraph'] %></p>
-              </li>
-          <% end %>
-        </ul>
-      </div>
-      <div class="col-sm-2 hidden-sm col-md-1 col-lg-1"></div>
-      <div class="col-sm-12 col-md-6 col-lg-6 bg-white brs pal">
-        <p class="<%= 'active' if @active_tab == 'login' %> tar gray-header"><%= t('.have_an_account_label') %> <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
-        <legend><%= t('.facebook_signup_label') %></legend>
+    <p class="<%= 'active' if @active_tab == 'login' %> tar gray-header"><%= t('.have_an_account_label') %> <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
+    <legend><%= t('.facebook_signup_label') %></legend>
 
-        <div class="form-group">
-          <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
-            <%= t('.facebook_signup_button') %>
-          </button>
-        </div>
-
-        <p>- <%= t('.or') %> -</p>
-
-        <legend><%= t('.create_account_using_your_email') %></legend>
-        <div class="form-group">
-          <!-- Email -->
-          <label class="control-label" for="email"><%= t('.email_label') %></label>
-
-          <div class="controls">
-              <%= email_field_tag(
-                    :email,
-                    nil,
-                    {
-                      id: "join-email",
-                      placeholder: "",
-                      class: 'full-width input-xlarge js-join-email',
-                      'data-parsley-required' => "true",
-                      'data-parsley-type' => "email",
-                      'data-parsley-required-message' => "Please enter an email address.",
-                      'data-parsley-error-container' => ".js-join-email-errors",
-                      'data-parsley-remote' => "/gsr/validations/email_available",
-                      'data-parsley-remote-message' => "Sorry, that email address is already taken."
-                    }
-                  ) %>
-            <p class="js-join-email-errors help-block"></p>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <div class="controls">
-            <label class="checkbox small">
-              <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
-                            'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
-                            'data-parsley-error-container' => '.js-join-terms-errors' %>
-              <%= t('.terms_of_use_html',
-                    terms_of_use_link: link_to(
-                            t('.greatschools_terms_of_use'),
-                            terms_of_use_url
-                    )
-                  ) %>
-            </label>
-            <p class="js-join-terms-errors help-block"></p>
-          </div>
-        </div>
-
-        <br/>
-
-        <div class="form-group">
-          <!-- Button -->
-          <div class="controls">
-            <button class="btn btn-primary js-join-login-submit-button"><%= t('.signup_button') %></button>
-          </div>
-        </div>
-      </div>
+    <div class="form-group">
+      <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
+        <%= t('.facebook_signup_button') %>
+      </button>
     </div>
-  </fieldset>
-<% end %>
+
+    <p>- <%= t('.or') %> -</p>
+
+    <legend><%= t('.create_account_using_your_email') %></legend>
+    <div class="form-group">
+      <!-- Email -->
+      <label class="control-label" for="email"><%= t('.email_label') %></label>
+
+      <div class="controls">
+        <%= email_field_tag(
+          :email,
+          nil,
+          {
+            id: "join-email",
+            placeholder: "",
+            class: 'form-control js-join-email',
+            'data-parsley-required' => "true",
+            'data-parsley-type' => "email",
+            'data-parsley-required-message' => "Please enter an email address.",
+            'data-parsley-error-container' => ".js-join-email-errors",
+            'data-parsley-remote' => "/gsr/validations/email_available",
+            'data-parsley-remote-message' => "Sorry, that email address is already taken."
+          }
+        ) %>
+      <p class="js-join-email-errors help-block"></p>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="controls">
+      <label class="checkbox small">
+        <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
+          'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
+          'data-parsley-error-container' => '.js-join-terms-errors' %>
+        <%= t('.terms_of_use_html',
+                  terms_of_use_link: link_to(
+                    t('.greatschools_terms_of_use'),
+                    terms_of_use_url
+            )
+                 ) %>
+             </label>
+             <p class="js-join-terms-errors help-block"></p>
+           </div>
+         </div>
+
+         <br/>
+
+         <div class="form-group">
+           <!-- Button -->
+           <div class="controls">
+             <button class="btn btn-primary js-join-login-submit-button"><%= t('.signup_button') %></button>
+           </div>
+         </div>
+       </fieldset>
+     <% end %>
+   </div>
+

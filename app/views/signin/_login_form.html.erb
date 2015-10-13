@@ -27,7 +27,7 @@
                     {
                       id: "email",
                       placeholder: "",
-                      class: 'full-width input-xlarge js-signin-email',
+                      class: 'form-control input-xlarge js-signin-email',
                       'data-parsley-required' => "true",
                       'data-parsley-type' => "email",
                       'data-parsley-required-message' => "Please enter an email address.",
@@ -42,7 +42,7 @@
           <label class="control-label" for="password"><%= t('.password_label') %></label>
 
           <div class="controls">
-            <input type="password" id="password" name="password" placeholder="" class="input-xlarge" style="width:100%"
+            <input type="password" id="password" name="password" placeholder="" class="form-control" 
                    data-parsley-required="true"
                    data-parsley-error-container=".js-signin-password-errors">
 
