@@ -15,7 +15,8 @@
       <%= render partial: 'pagination_toolbar' %>
       <%= render partial: 'shared/maponics_disclaimer' %>
     <% else %>
-      <%= render 'filter_toolbar' %>
+      <%= render 'filter_toolbar_mobile' %>
+      <%= render 'filter_toolbar_desktop' %>
       <%= render 'no_results' %>
     <% end %>
   </div>

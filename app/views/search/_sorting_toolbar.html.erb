@@ -1,4 +1,4 @@
-<% if @relevant_sort_types.size > 1 %>
+<% if @schools.present? && @relevant_sort_types.size > 1 %>
   <div class="sorting-toolbar js-sortingToolbar">
     <strong><%= t('.sort_by_label') %></strong>
     <%=
