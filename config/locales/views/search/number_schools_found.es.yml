@@ -11,3 +11,5 @@ es:
       within_radius:
         one: a 1 milla de %{address}
         other: a %{count} milla de %{address}
+      list_link: Lista
+      map_link: Mapa
