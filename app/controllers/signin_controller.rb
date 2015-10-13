@@ -71,13 +71,7 @@ class SigninController < ApplicationController
 
   def handle_registration_and_login_error(error)
     if request.xhr?
-      #  If the ajax request from the signup already has an account no error is returned
-      # This I18n translation purposefully left under activerecord.errors.models.user.attributes.email.taken
-      if error == I18n.t('activerecord.errors.models.user.attributes.email.taken')
-        render json: {}, status: 200
-      else
-        render json: {error: error}, status: 422
-      end
+      render json: {error: error}, status: 422
     else
       flash_error error
       redirect_to signin_url

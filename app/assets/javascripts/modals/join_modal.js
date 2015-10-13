@@ -15,6 +15,73 @@ GS.modal.JoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 
 _.assign(GS.modal.JoinModal.prototype, {
 
-  initialize: function initialize() {
-  }
+    $getJoinSubmitButton: function $getJoinSubmitButton() {
+        return this.$getJoinForm().find('button');
+    },
+
+    $getSigninSubmitButton: function $getSigninSubmitButton() {
+        return this.$getSigninForm().find('button');
+    },
+
+    $getJoinForm: function $getJoinForm() {
+        return this.$getModal().find('.js-join-form');
+    },
+
+    $getSigninForm: function $getSigninForm() {
+        return this.$getModal().find('.js-signin-form');
+    },
+
+    preventInteractions: function preventInteractions() {
+        this.$getJoinSubmitButton().prop('disabled', true);
+        this.$getSigninSubmitButton().prop('disabled', true);
+    },
+
+    allowInteractions: function allowInteractions() {
+        this.$getJoinSubmitButton().prop('disabled', false);
+        this.$getSigninSubmitButton().prop('disabled', false);
+    },
+
+    submitSuccessHandler: function submitSuccessHandler(event, data, _, jqXHR) {
+        this.getDeferred().resolveWith(this, [data]);
+        this.allowInteractions();
+    },
+
+     submitSignInFailHandler: function submitSignInFailHandler(event, jqXHR, options, data) {
+        var defaultMessage = 'There was an error signing into your account.';
+        var inLineErrorMessage = this.getInLineErrorMessage(defaultMessage, jqXHR);
+        jQuery('.js-signin-email-errors').html(inLineErrorMessage);
+        this.allowInteractions();
+    },
+
+    submitJoinFailHandler: function submitJoinFailHandler(event, jqXHR, options, data) {
+        var defaultMessage = 'There was an error registering this account.';
+        var inLineErrorMessage = this.getInLineErrorMessage(defaultMessage, jqXHR);
+        jQuery('.js-join-email-errors').html(inLineErrorMessage);
+        this.allowInteractions();
+    },
+
+    getInLineErrorMessage: function getInLineErrorMessage(defaultMessage, jqXHR) {
+        var inLineErrorMessage = defaultMessage;
+        if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.error) {
+            inLineErrorMessage = jqXHR.responseJSON.error;
+        }
+        return inLineErrorMessage;
+    },
+      
+    initializeForm: function initializeForm() {
+        this.$getJoinForm().
+            on('submit', this.preventInteractions.gs_bind(this)).
+            on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
+            on('ajax:error', this.submitJoinFailHandler.gs_bind(this));
+        this.$getSigninForm().
+            on('submit', this.preventInteractions.gs_bind(this)).
+            on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
+            on('ajax:error', this.submitSignInFailHandler.gs_bind(this));
+    },
+
+    initialize: function initialize() {
+        this.initializeShowHideBehavior();
+        this.initializeForm();
+    }
 });
+
