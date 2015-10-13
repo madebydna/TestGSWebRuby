@@ -222,9 +222,7 @@ class SigninController < ApplicationController
     error = nil
 
     if existing_user
-      if existing_user.provisional?
-        error = I18n.t('controllers.signin.create.provisional_email_error')
-      elsif !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+      if !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
         error = I18n.t('controllers.signin.create.email_without_password_error_html', join_path: join_path).html_safe
       elsif !(existing_user.password_is? params[:password])
         error = I18n.t('controllers.signin.create.password_invalid_error_html', join_url: join_url).html_safe

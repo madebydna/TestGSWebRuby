@@ -255,38 +255,32 @@ describe SigninController do
 
   describe '#authenticate' do
     let(:user) { instance_double(User) }
+    before do
+      allow(controller).to receive(:params).and_return({ email: 'blah@example.com' })
+      allow(user).to receive(:has_password?).and_return(true)
+      allow(user).to receive(:password_is?).and_return(true)
+    end
 
-    it 'should return an existing provisional user and error message to verify email if the email is provisional' do
+    it 'should authenticate even if the email is provisional' do
       expect(User).to receive(:with_email).and_return(user)
-      allow(user).to receive(:provisional?).and_return(true)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
-      expect(controller.send :authenticate).to eq([ user, 'Before logging in, you must verify your email by clicking the link in the email we sent you.' ])
+      expect(controller.send :authenticate).to eq([ user, nil ])
     end
 
     it 'should return an existing user and error message to sign up for an account if the account has no password' do
       expect(User).to receive(:with_email).and_return(user)
-      expect(user).to receive(:provisional?).and_return(false)
       expect(user).to receive(:has_password?).and_return(false)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
       expect(I18n).to receive(:t).with('controllers.signin.create.email_without_password_error_html', anything).and_return('account without password error message')
       expect(controller.send :authenticate).to eq([ user, 'account without password error message' ])
     end
 
     it 'should return an existing user and error message if the passwords do not match' do
       expect(User).to receive(:with_email).and_return(user)
-      expect(user).to receive(:provisional?).and_return(false)
-      expect(user).to receive(:has_password?).and_return(true)
       expect(user).to receive(:password_is?).and_return(false)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
       expect(controller.send :authenticate).to eq([ user, "The email or password you entered is invalid. Please try again or <a href=\"http://localhost/join/\">create an account</a>." ])
     end
 
     it 'should return an existing user if one exists and it matches given password and no error message.' do
       expect(User).to receive(:with_email).and_return(user)
-      expect(user).to receive(:provisional?).and_return(false)
-      expect(user).to receive(:has_password?).and_return(true)
-      expect(user).to receive(:password_is?).and_return(true)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
       expect(controller.send :authenticate).to eq([ user, nil ])
     end
   end
