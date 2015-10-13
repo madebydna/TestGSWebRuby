@@ -24,39 +24,11 @@ end
 
 #Change Location Shared Examples
 shared_examples_for 'should have Change Location link in search bar' do
-
-  include_example 'should have the change location anchor tag element'
-
-  describe_mobile_and_desktop do
-    include_example 'should have a change location link that is visible'
-    include_example 'should show list of states when the change location link is clicked'
-
-    context 'when the user clicks the link and changes the state' do
-      include_example 'should change the text saying what state they\'re currently in'
-    end
-  end
+  include_example 'should have the change location element'
 end
 
-shared_example 'should have the change location anchor tag element' do
-  expect(subject).to have_css('.rs-change_location')
-end
-
-shared_example 'should have a change location link that is visible' do
-  expect(subject).to have_selector('.rs-change_location', visible: true)
-end
-
-shared_example 'should show list of states when the change location link is clicked' do
-  expect(subject).to have_selector('.rs-search_state_picker', visible: false)
-  click_link 'Change location'
-  expect(subject).to have_selector('.rs-search_state_picker', visible: true)
-end
-
-shared_example 'should change the text saying what state they\'re currently in' do
-  text = subject.find(:css, '.rs-current_location_text').text
-  click_link 'Change location'
-  first('.rs-search_state_picker > li > a').click
-  text2 = subject.find(:css, '.rs-current_location_text').text
-  expect(text).not_to eq(text2)
+shared_example 'should have the change location element' do
+  expect(subject).to have_selector('select#change-location-desktop')
 end
 
 shared_example 'should be on compare page' do
@@ -65,10 +37,7 @@ end
 
 
 #By Location examples
-shared_example 'should contain distance sort button' do
-  expect(subject.has_selector?('button', text: 'Distance', visible: true)).to be_truthy
-end
-
 shared_example 'should contain distance sort select option' do
-  expect(subject.has_selector?('option[value=distance]', visible: true)).to be_truthy
+  subject.find('[data-id="search-page-sort"]').click
+  expect(subject).to have_selector('[data-sort-type="distance"]')
 end
