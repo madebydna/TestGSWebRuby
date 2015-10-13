@@ -62,14 +62,16 @@ GS.subscription = GS.subscription || (function() {
        favorite_school[state]:CA,CA,CA
        favorite_school[driver]:Header
        */
-      var makeFollowSchoolAjaxRequest = function() {
+      var makeFollowSchoolAjaxRequest = function(options) {
         var url = '/gsr/user/favorites/';
         url = GS.I18n.preserveLanguageParam(url);
-          var data = {
-          'favorite_school': {
-            'school_id': schoolIds,
-            'state': states
-          }
+        var data = {
+          'favorite_school': _.merge(
+            {
+              'school_id': schoolIds,
+              'state': states
+            }, _.pick(options, 'email')
+          )
         };
         if (driver) {
           data.favorite_school.driver = driver;
@@ -77,18 +79,16 @@ GS.subscription = GS.subscription || (function() {
         return $.post(url, data);
       };
 
-      var follow = function(showMessages) {
+      var follow = function(options) {
+        options = options || {};
+        var showMessages = options.showMessages;
           if  (showMessages === undefined) {
               showMessages = true;
           }
-        return makeFollowSchoolAjaxRequest()
+        return makeFollowSchoolAjaxRequest(options)
           .always(function(jqXHR) {
-            var data = jqXHR;
-            if(jqXHR.hasOwnProperty('responseJSON')) {
-              data = jqXHR.responseJSON;
-            }
-            if (showMessages && data.hasOwnProperty('flash')) {
-              GS.notifications.flash_from_hash(data.flash);
+            if(showMessages) {
+              showFlashMessages(jqXHR);
             }
           }
         );

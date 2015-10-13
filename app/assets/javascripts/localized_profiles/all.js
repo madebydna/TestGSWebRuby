@@ -23,10 +23,10 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       if ( shouldShowSignUpForSchoolModal() ) {
         if(!GS.session.isSignedIn()) {
           GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
-            .done(function() {
+            .done(function(data) {
               var state = GS.stateAbbreviationFromUrl();
               var schoolId = GS.schoolIdFromUrl();
-              GS.subscription.schools(state, schoolId).follow()
+              GS.subscription.schools(state, schoolId).follow(data)
                 .done(function() {
                   setSignUpForSchoolModalCookie();
                 });
@@ -43,7 +43,7 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
         // save this school button on compare search gets school id from link value
         var schoolId = GS.schoolIdFromUrl() || $self.data('link-value');
         if (GS.session.isSignedIn()) {
-            GS.subscription.schools(state, schoolId).follow(false).done(function(){
+            GS.subscription.schools(state, schoolId).follow({showMessages: false}).done(function(){
                 if (GS.schoolNameFromUrl() === undefined) {
                     GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_school_name'));
                 } else {

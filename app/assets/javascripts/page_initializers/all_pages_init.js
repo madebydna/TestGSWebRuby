@@ -74,7 +74,7 @@ $(function() {
                var state = GS.stateAbbreviationFromUrl();
                var schoolId = GS.schoolIdFromUrl();
                if (GS.session.isSignedIn()) {
-                   GS.subscription.schools(state, schoolId).follow(false).done(function(){
+                   GS.subscription.schools(state, schoolId).follow({showMessages: false}).done(function(){
                        if (GS.schoolNameFromUrl() === undefined) {
                            GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_school_name'));
                        } else {

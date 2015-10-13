@@ -7,6 +7,8 @@ module FavoriteSchoolsConcerns
     begin
       school_id = params[:school_id].to_s
       state = params[:state].to_s
+      user = User.find_by_email(params[:email]) if params[:email]
+      user ||= current_user
 
       if school_id.present? && state.present?
         school_id = school_id.split(/,/)
@@ -29,8 +31,8 @@ module FavoriteSchoolsConcerns
           raise(ArgumentError, "Could not find school for state #{state} and id #{school_id}")
         end
         school_names.push(school.name)
-        unless current_user.favorited_school? school
-          current_user.add_favorite_school! school
+        unless user.favorited_school? school
+          user.add_favorite_school! school
           set_omniture_events_in_cookie(['review_updates_mss_end_event'])
           set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'AddToSchoolList'})
         end

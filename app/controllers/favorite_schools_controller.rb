@@ -14,7 +14,7 @@ class FavoriteSchoolsController < ApplicationController
     set_omniture_events_in_cookie(['review_updates_mss_start_event'])
     set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'AddToSchoolList'})
 
-    if logged_in?
+    if logged_in? || params.seek(:favorite_school, :email).present?
       add_favorite_school favorite_schools_params
       create_subscription favorite_schools_params
       if request.xhr?
