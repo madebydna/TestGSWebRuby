@@ -172,7 +172,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
-  get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
+  get '/gsr/validations/validate_user_can_log_in', :to => 'user#validate_user_can_log_in'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
