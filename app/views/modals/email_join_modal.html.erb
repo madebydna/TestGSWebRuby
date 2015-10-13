@@ -1,7 +1,7 @@
 <% modal_css_class = params[:modal_css_class] %>
 <div class="modal fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
   <div class="gs-modal-dialog modal-dialog" >
-    <%= form_tag authenticate_user_path, method: :post, remote: true,
+    <%= form_tag register_email_path, method: :post, remote: true,
                  id: 'signup-school-form',
                  'data-parsley-namespace'=>"data-parsley-" do %>
       <%= token_tag form_authenticity_token %>

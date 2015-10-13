@@ -2,39 +2,49 @@ var GS = GS || {};
 
 GS.subscription = GS.subscription || (function() {
 
-    var sponsorsSignUp = function() {
+    var postSubscriptionViaAjax = function(subscriptionParams) {
       return $.ajax({
         type: 'POST',
         url: "/gsr/user/subscriptions",
-        data: {subscription:
-        {list: "sponsor",
+        data: {
+          subscription: subscriptionParams
+        }
+      });
+    };
+
+    var sponsorsSignUp = function(options) {
+      var subscriptionParams = _.merge(
+        {
+          list: 'sponsor',
           message: "You've signed up to receive sponsors updates"
-        }
-        }
-      })
+        },
+        _.pick(options, 'email')
+      );
+
+      return postSubscriptionViaAjax(subscriptionParams);
     };
 
-    var $getNewsSignUpForm = function() {
-      var selector = '#js-send-me-updates-form-footer';
-      return $(selector);
+    var greatNewsSignUp = function(options) {
+      options = options || {};
+      var subscriptionParams = _.merge(
+        {
+          list: 'greatnews'
+        },
+        _.pick(options, 'email')
+      );
+
+      return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
     };
 
-    var greatNewsSignUp = function() {
-      $getNewsSignUpForm().submit();
-    };
-
-    var initGreatNewsFormHandlers = function() {
-      function flashMessages(event, jqXHR, options, data) {
-        if (jqXHR.hasOwnProperty('flash')) {
-          GS.notifications.flash_from_hash(jqXHR.flash);
-        }
+    var showFlashMessages = function(jqXHR) {
+      var data = jqXHR;
+      if(jqXHR.hasOwnProperty('responseJSON')) {
+        data = jqXHR.responseJSON;
       }
-
-      $getNewsSignUpForm()
-        .on('ajax:success', flashMessages)
-        .on('ajax:error', flashMessages);
+      if (data.hasOwnProperty('flash')) {
+        GS.notifications.flash_from_hash(data.flash);
+      }
     };
-
 
     // usage:
     // GS.subscription.schools('CA', 1, {driver: 'Header'}).follow(); # driver means traffic driver (for analytics)
@@ -92,7 +102,6 @@ GS.subscription = GS.subscription || (function() {
     return {
       sponsorsSignUp: sponsorsSignUp,
       greatNewsSignUp: greatNewsSignUp,
-      initGreatNewsFormHandlers: initGreatNewsFormHandlers,
       schools: schools
     }
 

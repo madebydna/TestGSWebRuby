@@ -40,17 +40,28 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
   },
 
   submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
+    var _this = this;
     if (this.shouldSignUpForSponsor()) {
-      var _this = this;
-      GS.subscription.sponsorsSignUp().done(function(data) {
-        _this.getDeferred().resolveWith(this, [jqXHR]);
+      GS.subscription.sponsorsSignUp(this.getModalData()).done(function(data) {
+        _this.getDeferred().resolve(_.merge(jqXHR, _this.getModalData()));
       }).fail(function(data) {
-        _this.getDeferred().rejectWith(this, [data]);
+        _this.getDeferred().reject(_.merge(data, _this.getModalData()));
       });
     } else {
-      this.getDeferred().resolveWith(this, [jqXHR]);
+      this.getDeferred().resolve(_.merge(jqXHR, _this.getModalData()));
     }
     this.allowInteractions();
+  },
+
+  getEmail: function getEmail() {
+    return this.$getJoinForm().find('input[name=email]').val();
+  },
+
+  // returns data from this modal. Will be passed along when modal's promise is resolved/rejected
+  getModalData: function getModalData() {
+    return {
+      email: this.getEmail()
+    }
   },
 
   submitFailHandler: function submitFailHandler(event, jqXHR, options, data) {

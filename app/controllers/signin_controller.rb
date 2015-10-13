@@ -69,6 +69,24 @@ class SigninController < ApplicationController
     end
   end
 
+  def register_email_unless_exists
+    user, error = nil, nil
+    unless User.exists?(email: params['email'])
+      user, error = register
+      log_user_in(user)
+    end
+    respond_to do |format|
+      format.json do
+        if error
+          flash_error(error)
+          render json: {}, status: 422
+        else
+          render json: { isNewUser: user.present? }, status: 200
+        end
+      end
+    end
+  end
+
   def handle_registration_and_login_error(error)
     if request.xhr?
       render json: {error: error}, status: 422

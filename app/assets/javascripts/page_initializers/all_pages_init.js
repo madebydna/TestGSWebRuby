@@ -60,7 +60,6 @@ $(function() {
     });
   }
 
-  GS.subscription.initGreatNewsFormHandlers();
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
   // since it's easier to test
        $('.js-send-me-updates-button-footer').on('click', function () {

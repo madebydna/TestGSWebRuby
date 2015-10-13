@@ -189,6 +189,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
+  match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
