@@ -13,6 +13,7 @@ class SearchController < ApplicationController
   before_action :set_hub, only: [:city_browse, :district_browse]
   before_action :add_collection_id_to_gtm_data_layer, only: [:city_browse, :district_browse]
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
+  before_action :use_gs_bootstrap
 
   layout 'application'
 
