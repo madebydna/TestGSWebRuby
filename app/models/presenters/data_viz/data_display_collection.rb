@@ -1,11 +1,11 @@
-class BarChartCollection
+class DataDisplayCollection
 
   # config defines things like title, sub-title, and
   # how to segment charts: by subject or by breakdown.
   # data is a hash of data from GroupComparisonDataReader
 
   attr_accessor :bar_chart_order, :breakdowns, :config, :data, :default_group,
-    :group_by_config, :sub_title, :title, :bar_charts, :original_data_type
+    :group_by_config, :sub_title, :title, :displays, :original_data_type
 
   DEFAULT_CALLBACKS = [ 'group_by' ]
 
@@ -18,17 +18,17 @@ class BarChartCollection
     self.group_by_config = config[:group_by]
     self.bar_chart_order = config[:bar_chart_order]
     self.original_data_type = config[title]
-    create_bar_charts!
-    self.breakdowns       = bar_charts.map(&:title) if config[:group_by].present?
+    create_displays!
+    self.breakdowns       = displays.map(&:title) if config[:group_by].present?
   end
 
   private
 
-  def create_bar_charts!
+  def create_displays!
     run_config_callbacks!
 
-    self.bar_charts = data.map do |name, group_data|
-      BarChart.new(group_data, name, config) #we assume if there is no title its an ethnicity
+    self.displays = data.map do |name, group_data|
+      DataDisplay.new(group_data, name, config) #we assume if there is no title its an ethnicity
     end
   end
 

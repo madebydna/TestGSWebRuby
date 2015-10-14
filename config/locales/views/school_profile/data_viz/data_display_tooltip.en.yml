@@ -2,7 +2,7 @@
 en:
   school_profile:
     data_viz:
-      bar_chart_tooltip:
+      data_display_tooltip:
         eligible_for_4yr_college: ! '%{percent}% Graduated eligible for 4yr college'
         graduation_rate: ! '%{percent}% Graduated'
         math_test_scores: ! '%{percent}% met or exceeded standards'

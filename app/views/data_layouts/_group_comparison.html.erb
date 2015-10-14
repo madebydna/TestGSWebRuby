@@ -1,4 +1,4 @@
-<% bar_chart_collections = data %>
+<% data_display_collections = data %>
 <%= render "shared/section_header", category_placement:category_placement %>
 
 <div class="gs-bootstrap">
@@ -9,7 +9,7 @@
         <%=
           select_tag "group-comparison-chart",
             options_for_select(
-              bar_chart_collections.map do | collection |
+              data_display_collections.map do | collection |
                 [
                   collection.title,
                   class: 'js-dataDisplayCollectionToggle',
@@ -27,25 +27,24 @@
         %>
       </div>
 
-    <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
+    <% data_display_collections.each_with_index do |data_display_collection, i| %>
       <% show_hide_collection = i == 0 ? '' : 'dn' %>
-      <div class="js-dataDisplayCollection js-<%= bar_chart_collection.original_data_type %> <%= show_hide_collection %>">
-        <%= render partial: 'school_profile/data_viz/bar_chart_breakdowns_dropdown',
+      <div class="js-dataDisplayCollection js-<%= data_display_collection.original_data_type %> <%= show_hide_collection %>">
+        <%= render partial: 'school_profile/data_viz/data_display_toggle',
           locals: {
-            bar_chart_collection: bar_chart_collection,
-            bar_chart_collection_index: i,
+            data_display_collection: data_display_collection,
+            collection_index: i,
           }
         %>
       </div>
     <% end %>
     </div>
 
-    <% bar_chart_collections.each_with_index do |bar_chart_collection, i| %>
+    <% data_display_collections.each_with_index do |data_display_collection, i| %>
       <% show_hide_collection = i == 0 ? '' : 'dn' %>
-      <% @bar_chart_collection = bar_chart_collection %>
-      <%= render partial: 'school_profile/data_viz/bar_chart_collection',
-        locals: {bar_chart_collection_index: i,
-                 show_hide_collection: show_hide_collection} %>
+      <% @data_display_collection = data_display_collection %>
+      <%= render partial: 'school_profile/data_viz/data_display_collection',
+        locals: { show_hide_collection: show_hide_collection } %>
     <% end %>
 
     <%= render partial: "shared/partners/promo_delegator",

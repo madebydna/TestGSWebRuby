@@ -1,8 +1,8 @@
-class BarChart
+class DataDisplay
   # Class that holds a collection of graphs related by subject or breakdown.
   # Header and array of chart data.
 
-  attr_accessor :bar_chart_bars, :data, :config, :title, :sort_by_config
+  attr_accessor :data_points, :data, :config, :title, :sort_by_config
 
   DEFAULT_CALLBACKS = [ 'sort_by' ]
 
@@ -13,16 +13,16 @@ class BarChart
     self.title = title
     self.sort_by_config = config[:sort_by]
 
-    create_bar_chart_bars!
+    create_data_points!
   end
 
   private
 
-  def create_bar_chart_bars!
+  def create_data_points!
     run_config_callbacks!
 
-    self.bar_chart_bars = data.map do |data_point|
-      bar_chart_bar = BarChartBar.new(
+    self.data_points = data.map do |data_point|
+      data_point = DataDisplayPoint.new(
         {
           label: label_for(data_point, config),
           value: data_point[:school_value],
@@ -31,7 +31,7 @@ class BarChart
           subtext: data_point[:subtext]
         }
       )
-      bar_chart_bar.display? ? bar_chart_bar : nil
+      data_point.display? ? data_point : nil
     end.compact
   end
 

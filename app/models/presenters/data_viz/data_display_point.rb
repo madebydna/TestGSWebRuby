@@ -1,4 +1,4 @@
-class BarChartBar
+class DataDisplayPoint
 
   attr_accessor :config, :label, :value, :comparison_value, :performance_level, :grey_value, :subtext
 

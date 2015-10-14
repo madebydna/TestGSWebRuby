@@ -31,7 +31,7 @@ shared_example 'should sort the groups by percent breakdown descending and all s
   expect(all_students_label).to eq('All Students')
 end
 
-describe BarChartCollection do
+describe DataDisplayCollection do
   let(:data) {
     {
       year: 2013,
@@ -60,7 +60,7 @@ describe BarChartCollection do
     context 'when the group by gender callback is set' do
       subject do
         # The array of bar chart groups
-        BarChartCollection.new(nil, data_points, {
+        DataDisplayCollection.new(nil, data_points, {
           bar_chart_collection_callbacks: ['copy_all_students', 'order_bar_charts'],
           group_by: {'gender' => 'breakdown'},
           default_group: 'ethnicity'
@@ -77,7 +77,7 @@ describe BarChartCollection do
     context 'when the group by program callback is set' do
       subject do
         # The array of bar chart groups
-        BarChartCollection.new(nil, data_points, {
+        DataDisplayCollection.new(nil, data_points, {
           bar_chart_collection_callbacks: ['copy_all_students', 'order_bar_charts'],
           group_by: {'program' => 'breakdown'},
           default_group: 'ethnicity'
@@ -94,7 +94,7 @@ describe BarChartCollection do
     context 'when the sort by descending by percent breakdown and all students callbacks are set' do
       subject do
         # The array of bar chart groups
-        BarChartCollection.new(nil, data_points, {
+        DataDisplayCollection.new(nil, data_points, {
           bar_chart_callbacks: ['move_all_students'],
           sort_by: {'desc' => 'percent_of_population'},
           default_group: 'ethnicity',
@@ -119,7 +119,7 @@ describe BarChartCollection do
       }.with_indifferent_access
       context "#{config}" do
         subject do
-          BarChartCollection.new(nil, data_points, config)
+          DataDisplayCollection.new(nil, data_points, config)
         end
 
         include_example 'should group the data by the appropriate groups', ['gender', 'program']

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe BarChartBar do
+describe DataDisplayPoint do
 
-  subject {BarChartBar}
+  subject {DataDisplayPoint}
   let(:base_config) {
     {
       label: 'Label',

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe BarChart do
+describe DataDisplay do
 
   let(:valid_data_point) {
     {
@@ -25,7 +25,7 @@ describe BarChart do
       context "with a #{data_point}" do
         subject do
           # The array of bar charts
-          BarChart
+          DataDisplay
             .new([eval(data_point.to_s)], nil, {'label_charts_with' => 'year'}.with_indifferent_access)
             .send(:create_bar_chart_bars!)
         end
@@ -38,7 +38,7 @@ describe BarChart do
     context 'with something to group by' do
       subject do
         # The array of bar charts
-        BarChart
+        DataDisplay
           .new([earlier_data_point, valid_data_point], nil, {'label_charts_with' => 'year'}.with_indifferent_access)
           .send(:create_bar_chart_bars!)
       end

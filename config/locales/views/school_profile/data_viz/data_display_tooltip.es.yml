@@ -2,7 +2,7 @@
 es:
   school_profile:
     data_viz:
-      bar_chart_tooltip:
+      data_display_tooltip:
         eligible_for_4yr_college: ! '%{percent}% Graduado y elegible para Universidad'
         graduation_rate: ! '%{percent}% Graduado'
         math_test_scores: ! '%{percent}% cumplieron o excedieron los estándares'

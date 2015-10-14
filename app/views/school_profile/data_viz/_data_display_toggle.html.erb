@@ -1,10 +1,10 @@
-<% bar_chart_collection %>
-<% breakdowns = bar_chart_collection.breakdowns %>
+<% data_display_collection %>
+<% breakdowns = data_display_collection.breakdowns %>
 
 <% if breakdowns.count > 1 %>
   <div class='col-xs-12 col-md-4'>
     <%=
-        select_tag "breakdown#{bar_chart_collection_index}",
+        select_tag "breakdown#{collection_index}",
           options_for_select(
             breakdowns.map do | title |
               [
@@ -12,7 +12,7 @@
                 class: 'js-dataDisplayToggle',
                 data: {
                   title: title,
-                  collection: bar_chart_collection.original_data_type,
+                  collection: data_display_collection.original_data_type,
                   :'event-category'=> 'profile data - subgroup display',
                   :'event-action'=> 'subgroup selection',
                   :'event-label' => title
