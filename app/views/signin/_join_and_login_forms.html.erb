@@ -1,8 +1,7 @@
 <% @active_tab ||= 'login' %>
 
-
   <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
-    <%= render 'signin/login_form' %>
+    <%= render 'signin/login_form', ajax: false %>
   </div>
   <div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
     <%= render 'signin/join_tab' %>

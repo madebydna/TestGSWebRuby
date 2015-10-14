@@ -1,5 +1,6 @@
+<% ajax %>
 <fieldset>
-  <%= form_tag authenticate_user_path, method: :post, remote: true,
+  <%= form_tag authenticate_user_path, method: :post, remote: ajax,
     id: '',
     class: 'js-join-form',
     'data-parsley-namespace'=>"data-parsley-" do %>

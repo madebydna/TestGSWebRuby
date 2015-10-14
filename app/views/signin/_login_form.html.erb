@@ -1,4 +1,5 @@
-<%= form_tag authenticate_user_path, method: :post, remote: true,
+<% ajax %>
+<%= form_tag authenticate_user_path, method: :post, remote: ajax,
              id: '',
              class: 'form-horizontal js-signin-form',
              'data-parsley-namespace' => "data-parsley-" do %>
