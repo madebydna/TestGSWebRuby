@@ -17,7 +17,7 @@
 
     <p>- <%= t('.or') %> -</p>
 
-    <legend><%= t('.create_account_using_your_email') %></legend>
+    <legend><%= t('.signin_intro_text') %></legend>
     <div class="form-group">
       <!-- Email -->
       <label class="control-label" for="email"><%= t('.email_label') %></label>
@@ -35,7 +35,7 @@
             'data-parsley-required-message' => "Please enter an email address.",
             'data-parsley-error-container' => ".js-join-email-errors",
             'data-parsley-remote' => "/gsr/validations/email_available",
-            'data-parsley-remote-message' => "Sorry, that email address is already taken."
+            'data-parsley-remote-message' => "This address already exists in our system. Log in?"
           }
         ) %>
       <p class="js-join-email-errors help-block"></p>

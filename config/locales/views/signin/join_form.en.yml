@@ -2,12 +2,12 @@
 en:
   signin:
     join_form:
-      create_account_using_your_email: Create account using your email
+      signin_intro_text: Sign up using your email
       email_label: Email address
       facebook_signup_button: Sign Up with Facebook
       facebook_signup_label: Create an account using Facebook
       greatschools_terms_of_use: GreatSchools Terms of Use.
-      have_an_account_label: Have an account?
+      have_an_account_label: Already have an account?
       login_tab: Login
       or: or
       password_label: Password

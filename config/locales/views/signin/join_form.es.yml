@@ -2,7 +2,7 @@
 es:
   signin:
     join_form:
-      create_account_using_your_email: Crear cuenta utilizando su correo electrónico
+      signin_intro_text: Inscríbete usando su correo electrónico
       email_label: Dirección de correo electrónico
       facebook_signup_button: Inscríbase en Facebook
       facebook_signup_label: Crear una cuenta usando Facebook
