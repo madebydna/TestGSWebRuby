@@ -14,6 +14,8 @@ describe DisplayRange do
       ['census', 1, nil, 'ca', 2015, 30.5, 'census', 1, nil, 'ca', 2015, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
       ['census', 1, nil, 'ca', 2015, 25,   'census', 1, nil, 'ca', 2015, {'above_average_cap'=>101,'below_average_cap'=>30,'average_cap'=>60}.to_json, 'below_average'],
       ['census', 1, nil, 'ca', 2015, 25,   'census', 1, nil, 'ca', nil,  {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'below_average'],
+      ['census', 1, nil, 'ca', 2015, 59.5,   'census', 1, nil, 'ca', nil,  {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
+      ['census', 1, nil, 'ca', 2015, 60.3,   'census', 1, nil, 'ca', nil,  {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
       ['census', 1, nil, 'ca', 2015, 30.5, 'census', 1, nil, 'ca', 2014, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, nil],
       ['census', 1, nil, 'ca', nil,  25,   'census', 1, nil, 'ca', 2015, {'above_average_cap'=>101,'below_average_cap'=>30,'average_cap'=>60}.to_json, nil],
 
@@ -39,6 +41,11 @@ describe DisplayRange do
       ['test', 1, 1, 'ca', 2015, 25,   'test', 1, 1, 'ca', nil, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'below_average'],
       ['test', 1, 1, 'ca', 2015, 25,   'test', 1, 1, nil, 2015, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'below_average'],
       ['test', 1, 1, 'ca', 2015, 25,   'test', 1, 1, nil, nil, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'below_average'],
+      # We round before calculating the bucket so these two should get the same.
+      # This is because we display rounded values and so we don't want to have,
+      # for example, two 60's with different colors.
+      ['test', 1, 1, 'ca', 2015, 59.5,   'test', 1, 1, nil, nil, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
+      ['test', 1, 1, 'ca', 2015, 60.3,   'test', 1, 1, nil, nil, {'below_average_cap'=>30,'average_cap'=>60,'above_average_cap'=>101}.to_json, 'average'],
     ].each do | data_type, data_type_id, subject_id, state, year, school_value, range_data_type, range_data_type_id, range_subject_id, range_state, range_year, range, return_value |
 
       context "when passing in {data_type: #{data_type}, data_type_id: #{data_type_id}, subject_id: #{subject_id || 'nil'}, state: #{state}, year: #{year || 'nil'}, value: #{school_value}}" do
