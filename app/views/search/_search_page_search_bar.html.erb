@@ -1,6 +1,6 @@
 <div class="search-page-search-bar">
   <div class="container-fluid">
-    <div class="hidden-xs clearfix">
+    <div class="hidden-xs clearfix upper-search">
       <% if @state && @state[:long] && @city %>
         <div class="fl breadcrumbs ptl">
           <%= link_to States.abbr_to_label(@state[:short]), state_path(state_params(@state[:long])) %>
@@ -16,9 +16,9 @@
         </div>
       <%end %>
     </div>
-    <div class="row ptl">
+    <div class="row ptl centered-row">
       <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
-        <div class="col-xs-3 col-sm-offset-2 col-sm-2 state-dropdown">
+        <div class="col-xs-3 col-sm-2 state-dropdown">
           <%= render 'change_location', choose_state: @state_abbreviation   %>
         </div>
         <div class="search-bar col-xs-6 col-sm-5 form-group">
@@ -45,16 +45,14 @@
       </form>
     </div>
     <% if @nearby_cities && @nearby_cities.size > 0 %>
-      <div class="row hidden-xs pbl">
-        <div class="col-sm-offset-2 col-sm-10">
-          <span class="fl mrl"><%= t('.nearby_cities_label') %></span>
-          <% @nearby_cities.each_index do |x|
-            city = @nearby_cities[x] %>
-          <div class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> fl mrl notranslate js-nearbyCity">
+      <div class="hidden-xs pbl tac">
+        <span class="mrl"><%= t('.nearby_cities_label') %></span>
+        <% @nearby_cities.each_index do |x|
+          city = @nearby_cities[x] %>
+          <span class="<%= x > 3 ? 'hidden-sm' : ''%> <%= x > 5 ? 'hidden-md' : ''%> mrl notranslate js-nearbyCity">
             <%= link_to city.name, search_city_browse_path(city.state_name_url, city.name_url.downcase) %>
-          </div>
+          </span>
         <% end %>
-        </div>
       </div>
     <% end %>
   </div>

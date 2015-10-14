@@ -4,6 +4,14 @@ require_relative 'search_spec_helper'
 describe 'Sorting search results', js: true do
   include SearchSpecHelper
 
+  SORT_PREFIX = "Sort by: "
+
+  def active_sort_assertion(sorts, active_sort)
+    if sorts.present?
+      expect(page.find(sort_dropdown)[:title]).to eq("#{SORT_PREFIX}#{active_sort}")
+    end
+  end
+
   let(:sort_option) {'a[data-sort-type]'}
   let(:sort_dropdown) { '[data-id="search-page-sort"]' }
 
@@ -18,9 +26,10 @@ describe 'Sorting search results', js: true do
 
         sorts = []
         if has_fit
-          sorts = ['Rating', 'Fit']
+          sorts = ['Rating', 'Fit'].map { |s| "#{SORT_PREFIX}#{s}"}
         end
         sorts_text = "#{sorts.join(' ')}"
+        default_sort = 'Rating'
 
         before do
           set_up_city_browse('de','dover', query_string)
@@ -31,9 +40,7 @@ describe 'Sorting search results', js: true do
 
         it "should display #{sorts_text}" do
           expect(page.all(sort_option).map{ |b| b.text }.uniq).to eq(sorts)
-          if sorts.present?
-            expect(page.find(sort_dropdown)[:title]).to eq('Rating')
-          end
+          active_sort_assertion(sorts, default_sort)
         end
       end
 
@@ -41,7 +48,7 @@ describe 'Sorting search results', js: true do
 
         sorts = []
         if has_fit
-          sorts = ['Rating', 'Fit']
+          sorts = ['Rating', 'Fit'].map { |s| "#{SORT_PREFIX}#{s}"}
         end
         sorts_text = "#{sorts.join(' ')}"
 
@@ -57,9 +64,7 @@ describe 'Sorting search results', js: true do
 
         it "should display #{sorts_text}" do
           expect(page.all(sort_option).map{ |b| b.text }.uniq).to eq(sorts)
-          if sorts.present?
-            expect(page.find(sort_dropdown)[:title]).to eq(active_sort)
-          end
+          active_sort_assertion(sorts, active_sort)
         end
       end
 
@@ -69,6 +74,7 @@ describe 'Sorting search results', js: true do
         if has_fit
           sorts += ['Fit']
         end
+        sorts = sorts.map { |s| "#{SORT_PREFIX}#{s}"}
         sorts_text = "#{sorts.join(' ')}"
 
         before do
@@ -83,14 +89,14 @@ describe 'Sorting search results', js: true do
 
         it "should display #{sorts_text}" do
           expect(page.all(sort_option).map{ |b| b.text }.uniq).to eq(sorts)
-          expect(page.find(sort_dropdown)[:title]).to eq(active_sort)
+          active_sort_assertion(sorts, active_sort)
         end
       end
 
       context "by name search with #{fit} and #{rating_sort}" do
 
         # By name search never has fit
-        sorts = %w(Relevance Rating)
+        sorts = %w(Relevance Rating).map { |s| "#{SORT_PREFIX}#{s}"}
         sorts_text = "#{sorts.join(' ')}"
 
         before do
@@ -105,7 +111,7 @@ describe 'Sorting search results', js: true do
 
         it "should display #{sorts_text}" do
           expect(page.all(sort_option).map{ |b| b.text }.uniq).to eq(sorts)
-          expect(page.find(sort_dropdown)[:title]).to eq(active_sort)
+          active_sort_assertion(sorts, active_sort)
         end
       end
     end

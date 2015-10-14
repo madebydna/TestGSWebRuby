@@ -9,8 +9,8 @@
 
     <% if @schools.present? %>
       <%= render 'filter_toolbar_mobile' %>
-      <%= render 'search/google_maps', schools: @map_schools %>
       <%= render 'filter_toolbar_desktop' %>
+      <%= render 'search/google_maps', schools: @map_schools %>
       <%= render partial: 'search/search_results', schools: @schools%>
       <%= render partial: 'pagination_toolbar' %>
       <%= render partial: 'shared/maponics_disclaimer' %>

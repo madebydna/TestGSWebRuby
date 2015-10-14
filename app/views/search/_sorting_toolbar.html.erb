@@ -1,19 +1,20 @@
 <% if @schools.present? && @relevant_sort_types.size > 1 %>
   <div class="sorting-toolbar js-sortingToolbar">
-    <strong><%= t('.sort_by_label') %></strong>
+    <% active_sort_label = t(".#{@active_sort}") %>
     <%=
       select_tag 'search-page-sort',
         options_for_select(
           @relevant_sort_types.map do | sort_type |
+            sort_label = t(".#{sort_type}")
             [
-              t(".#{sort_type}"),
+              t('.sort_by_label', sort: sort_label),
               class: 'js-searchChangeSort',
               data: {
                 :'sort-type' => sort_type,
               }
-          ]
+            ]
           end,
-          t(".#{@active_sort}")
+          t('.sort_by_label', sort: active_sort_label)
       ),
       class: 'selectpicker'
     %>

@@ -10,13 +10,23 @@
       padding-left: 0;
       padding-right: 0;
     }
-    .breadcrumbs > a {
-      color: $gray;
+    .upper-search {
+      height: 40px;
+      &, a {
+        font-size: $font-size-small;
+      }
+      .breadcrumbs > a {
+        color: $gray;
+      }
     }
     .btn-block {
       font-size: $font-size-large;
       height: $input-height-base;
       line-height: $line-height-large;
+    }
+    .btn-dropdown {
+      height: $input-height-base;
+      margin-bottom: 3px;
     }
     @media (max-width: $screen-sm-min) {
       .iconx24-icons {
@@ -36,17 +46,33 @@
         border: white;
       }
     }
+    @media (min-width: $screen-sm-min) {
+      .centered-row {
+        text-align: center;
+
+        [class*='col-'] {
+          float: none;
+          display: inline-block;
+        }
+      }
+    }
   }
   .number-schools-found {
     text-align: center;
     padding-top: $spacing-medium;
 
-    h1 { display: inline; }
+    h1 {
+      display: inline;
+      font-size: $font-size-medium;
+    }
     .save-search { display: inline; }
 
     @media (min-width: $screen-sm-min) {
       text-align: left;
       padding-top: $grid-gutter-width;
+      h1 {
+        font-size: $font-size-block;
+      }
     }
   }
   .save-search-popup {

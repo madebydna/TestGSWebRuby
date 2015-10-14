@@ -6,4 +6,4 @@ es:
       fit: Apto
       rating: Clasificación
       relevance: Pertinencia
-      sort_by_label: ! 'Ordenar por:'
+      sort_by_label: ! 'Ordenar por: %{sort}'
