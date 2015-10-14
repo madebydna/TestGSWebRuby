@@ -105,9 +105,11 @@
   }
   .sorting-toolbar {
     display: inline;
-    padding-left: $spacing-large;
     strong {
       display: inline;
+    }
+    @media (min-width: $screen-sm-min) {
+      padding-left: $spacing-large;
     }
   }
   .compare-schools-popup {
