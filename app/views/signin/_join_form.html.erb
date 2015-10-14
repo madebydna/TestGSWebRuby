@@ -6,8 +6,6 @@
     'data-parsley-namespace'=>"data-parsley-" do %>
 
     <p class="<%= 'active' if @active_tab == 'login' %> tar gray-header"><%= t('.have_an_account_label') %> <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
-    <legend><%= t('.facebook_signup_label') %></legend>
-
     <div class="form-group">
       <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-facebook-signin js-button-link full-width">
         <%= t('.facebook_signup_button') %>
@@ -44,17 +42,18 @@
 
   <div class="form-group">
     <div class="controls">
-      <label class="checkbox small">
-        <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
+      <label>
+        <%= check_box 'terms', 'terms', class:'fl', 'data-parsley-required' => 'true',
           'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
           'data-parsley-error-container' => '.js-join-terms-errors' %>
-        <%= t('.terms_of_use_html',
+        <div class="pll"> <%= t('.terms_of_use_html',
                   terms_of_use_link: link_to(
                     t('.greatschools_terms_of_use'),
                     terms_of_use_url
             )
                  ) %>
-             </label>
+        </div>
+      </label>
              <p class="js-join-terms-errors help-block"></p>
            </div>
          </div>
