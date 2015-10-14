@@ -14,12 +14,12 @@ es:
             state_average: Prom. 76%
           datapoint_2:
             title: Estudiantes Blancos
-            performance_level: above_average
+            performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
             title: Estudiantes Asiático
-            performance_level: average
+            performance_level: above_average
             value_html: 93<sup>%</sup>
             state_average: Prom. 92%
           datapoint_4:
@@ -61,12 +61,12 @@ es:
             state_average: Prom. 76%
           datapoint_2:
             title: Estudiantes Blancos
-            performance_level: above_average
+            performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
             title: Estudiantes Asiático
-            performance_level: average
+            performance_level: above_average
             value_html: 93<sup>%</sup>
             state_average: Prom. 92%
           datapoint_4:
@@ -108,12 +108,12 @@ es:
             state_average: Prom. 76%
           datapoint_2:
             title: Estudiantes Blancos
-            performance_level: above_average
+            performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
             title: Estudiantes Asiático
-            performance_level: average
+            performance_level: above_average
             value_html: 93<sup>%</sup>
             state_average: Prom. 92%
           datapoint_4:
