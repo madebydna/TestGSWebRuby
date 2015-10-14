@@ -1,0 +1,6 @@
+---
+es:
+  modals:
+    submit_review_modal:
+      header: 'Envíe su opinión'
+      subheading: 'Gracias por ayudar a otras familias compartiendo sus experiencias ti. Antes de que podamos enviar su opinión, tendrá que iniciar sesión o crear una cuenta.'

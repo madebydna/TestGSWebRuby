@@ -20,9 +20,9 @@ es:
       login_required: Por favor, ingrese o regístrese para informar de una revisión.
       reported: Gracias por marcar este review. Nuestros moderadores han sido notificados y investigarán.
     review:
-      activated: Muchas gracias por tu opinión escuela! Su opinion ayuda a otros padres eligen las escuelas correctas!
+      activated: ¡Todo listo! Hemos enviado tu opinión . Gracias por ayudar a otras familias compartiendo sus experiencias ti.
       login_required: ¡Tienes que entrar o registrar su correo electrónico para poder escribir un comentario.
-      pending_email_verification: Gracias - hemos ahorrado su revisión. Podemos publicar una vez que verifique su dirección de correo electrónico; por favor revise su bandeja de entrada un correo electrónico de nosotros.
+      pending_email_verification: Gracias Un paso más - por favor haga clic en el enlace de verificación que le hemos enviado un correo electrónico, y le envíe su opinión.
       pending_moderation: Tenga en cuenta que puede tardar hasta 48 horas para que su opinión será publicada en nuestro sitio.
     session:
       signed_out: Firmado a cabo con éxito.

@@ -20,9 +20,9 @@ en:
       login_required: Please sign in or register to report a review.
       reported: Thank you for flagging this review. Our moderators have been notified and will investigate.
     review:
-      activated: Thanks for your school review! Your feedback helps other parents choose the right schools!
+      activated: All set! We have submitted your review. Thank you for helping other families by sharing your experiences. 
       login_required: You need to log in or register your email in order to post a review.
-      pending_email_verification: Thank you - we've saved your review. We can publish it once you verify your email address; please check your inbox for an email from us.
+      pending_email_verification: "Thank you! One more step - please click on the verification link we’ve emailed you, and we’ll submit your review."
       pending_moderation: Please note that it can take up to 48 hours for your review to be posted to our site.
     session:
       signed_out: Signed out successfully.

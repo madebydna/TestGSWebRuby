@@ -139,13 +139,13 @@ GS.topicalReview.form = (function () {
         return $roleQuestion.length > 0;
     };
     var init = function () {
-
         $('.new_review').on('ajax:before', function (event, xhr, status, error) {
         }).on('ajax:success', function (event, xhr, status, error) {
             var topicSubmitted = $(this).parents('.js-topicalReviewContainer').data('review-topic');
             var redirect_url = xhr.redirect_url;
             if (redirect_url !== undefined && redirect_url !== '') {
-                window.location = redirect_url;
+              GS.modal.manager.showModalThenMessages(GS.modal.SubmitReviewModal).done(
+               function() { document.location.reload(true) } );
             }
             var reviewContainer = $(this).parents('.js-topicalReviewContainer');
             $(reviewContainer).addClass('js-reviewComplete');

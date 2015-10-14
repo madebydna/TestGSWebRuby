@@ -228,7 +228,7 @@ shared_examples_for 'a controller that can save a review' do
     end
   end
 
-  describe '#save_review_and_redirect' do
+  describe '#save_review' do
     before { pending('TODO: remove these specs') }
     let(:review_params) {
       {
@@ -256,7 +256,7 @@ shared_examples_for 'a controller that can save a review' do
         expect(controller).to receive :set_omniture_events_in_cookie
         expect(controller).to receive :set_omniture_sprops_in_cookie
         expect(controller).to receive(:redirect_to).with '/reviewspage'
-        controller.send :save_review_and_redirect, review_params
+        controller.send :save_review, review_params
       end
 
       ['u', 'pu', 'h', 'ph', 'd', 'pd'].each do |status|
@@ -265,7 +265,7 @@ shared_examples_for 'a controller that can save a review' do
           expect(controller).to receive(:flash_notice)
             .with I18n.t('actions.review.pending_moderation')
           expect(controller).to receive(:redirect_to).with '/reviewspage'
-          controller.send :save_review_and_redirect, review_params
+          controller.send :save_review, review_params
         end
       end
 
@@ -274,7 +274,7 @@ shared_examples_for 'a controller that can save a review' do
         expect(controller).to receive(:flash_notice)
           .with I18n.t('actions.review.activated')
         expect(controller).to receive(:redirect_to).with '/reviewspage'
-        controller.send :save_review_and_redirect, review_params
+        controller.send :save_review, review_params
       end
     end
 
@@ -287,7 +287,7 @@ shared_examples_for 'a controller that can save a review' do
       it 'should flash an error message' do
         expect(controller).to receive(:flash_error).with('error message')
         expect(controller).to receive(:redirect_to).with '/reviewform'
-        controller.send :save_review_and_redirect, review_params
+        controller.send :save_review, review_params
       end
     end
   end

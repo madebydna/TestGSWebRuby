@@ -136,7 +136,7 @@ describe ReviewControllerConcerns::ReviewParams do
   end
 
 
-  describe '#save_review_and_redirect' do
+  describe '#save_review' do
     let(:controller) { (Class.new { include ReviewControllerConcerns }).new }
     let(:review_params) { double }
     let(:review) { FactoryGirl.build(:review) }
@@ -146,11 +146,12 @@ describe ReviewControllerConcerns::ReviewParams do
       allow(controller).to receive(:set_omniture_events_in_cookie)
       allow(controller).to receive(:set_omniture_sprops_in_cookie)
       allow(controller).to receive(:flash_notice)
+      allow(controller).to receive(:flash_success)
       allow(controller).to receive(:reviews_page_for_last_school) { '/reviewspage' }
 
       allow(controller).to receive(:build_review_params).and_return(review_params)
     end
-    subject { controller.send :save_review_and_redirect, review_params }
+    subject { controller.send :save_review, review_params }
 
     context 'when review saved successfully' do
       before(:each) do
@@ -161,7 +162,6 @@ describe ReviewControllerConcerns::ReviewParams do
         allow(review).to receive(:active?).and_return(true)
         expect(controller).to receive :set_omniture_events_in_cookie
         expect(controller).to receive :set_omniture_sprops_in_cookie
-        expect(controller).to receive(:redirect_to).with '/reviewspage'
         subject
       end
 
@@ -171,7 +171,6 @@ describe ReviewControllerConcerns::ReviewParams do
           allow(controller).to receive(:current_user).and_return(current_user)
           allow(current_user).to receive(:provisional?).and_return(false)
           expect(controller).to receive(:flash_notice).with I18n.t('actions.review.pending_moderation')
-          expect(controller).to receive(:redirect_to).with '/reviewspage'
           subject
         end
 
@@ -179,8 +178,7 @@ describe ReviewControllerConcerns::ReviewParams do
           allow(review).to receive(:active?).and_return(true)
           allow(controller).to receive(:current_user).and_return(current_user)
           allow(current_user).to receive(:provisional?).and_return(false)
-          expect(controller).to receive(:flash_notice).with I18n.t('actions.review.activated')
-          expect(controller).to receive(:redirect_to).with '/reviewspage'
+          expect(controller).to receive(:flash_success).with I18n.t('actions.review.activated')
           subject
         end
       end
@@ -192,7 +190,6 @@ describe ReviewControllerConcerns::ReviewParams do
           allow(controller).to receive(:current_user).and_return(current_user)
           allow(current_user).to receive(:provisional?).and_return(true)
           expect(controller).to receive(:flash_notice).with I18n.t('actions.review.pending_email_verification')
-          expect(controller).to receive(:redirect_to).with '/reviewspage'
           subject
         end
       end
@@ -205,7 +202,6 @@ describe ReviewControllerConcerns::ReviewParams do
 
       it 'should flash an error message' do
         expect(controller).to receive(:flash_error).with('error message')
-        expect(controller).to receive(:redirect_to).with '/reviewspage'
         subject
       end
     end
