@@ -46,6 +46,17 @@ _.assign(GS.modal.JoinModal.prototype, {
         this.allowInteractions();
     },
 
+    facebookSignInSuccessHandler: function facebookSignInSuccessHandler(data) {
+        this.getDeferred().resolveWith(this, [data]);
+        this.allowInteractions();
+    },
+
+    facebookSignInFailHandler: function facebookSignInSuccessHandle(data) {
+        var defaultMessage = 'Oops there was an error signing into your facebook account.';
+        jQuery('.js-facebook-signin-errors').html(defaultMessage);
+        this.allowInteractions();
+    },
+
      submitSignInFailHandler: function submitSignInFailHandler(event, jqXHR, options, data) {
         var defaultMessage = 'There was an error signing into your account.';
         var inLineErrorMessage = this.getInLineErrorMessage(defaultMessage, jqXHR);
@@ -54,7 +65,7 @@ _.assign(GS.modal.JoinModal.prototype, {
     },
 
     submitJoinFailHandler: function submitJoinFailHandler(event, jqXHR, options, data) {
-        var defaultMessage = 'There was an error registering this account.';
+        var defaultMessage = 'There were was an error registering your account.';
         var inLineErrorMessage = this.getInLineErrorMessage(defaultMessage, jqXHR);
         jQuery('.js-join-email-errors').html(inLineErrorMessage);
         this.allowInteractions();
@@ -67,7 +78,15 @@ _.assign(GS.modal.JoinModal.prototype, {
         }
         return inLineErrorMessage;
     },
-      
+
+    initializeFacebookSignIn: function initializeFacebookSignIn() {
+     var _this = this;
+     this.$getModal().on('click', '.js-facebook-signin', function (){
+       GS.facebook.signinToFacebookThenGreatSchools().done(_this.facebookSignInSuccessHandler.gs_bind(_this)).
+       fail(_this.facebookSignInFailHandler.gs_bind(_this))
+     });
+    },
+
     initializeForm: function initializeForm() {
         this.$getJoinForm().
             on('submit', this.preventInteractions.gs_bind(this)).
@@ -78,10 +97,11 @@ _.assign(GS.modal.JoinModal.prototype, {
             on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
             on('ajax:error', this.submitSignInFailHandler.gs_bind(this));
     },
-
+    
     initialize: function initialize() {
         this.initializeShowHideBehavior();
         this.initializeForm();
+        this.initializeFacebookSignIn();
     }
 });
 

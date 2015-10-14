@@ -8,9 +8,10 @@
     <legend><%= t('.facebook_signup_label') %></legend>
 
     <div class="form-group">
-      <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
+      <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-facebook-signin js-button-link full-width">
         <%= t('.facebook_signup_button') %>
       </button>
+    <p class="js-facebook-signin-errors help-block"></p>
     </div>
 
     <p>- <%= t('.or') %> -</p>

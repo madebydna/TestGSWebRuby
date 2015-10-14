@@ -10,9 +10,10 @@
           <a href="#join" data-toggle="tab" id="js_join_tab"> <%= t('.signup_tab') %></a></p>
 
         <div class="form-group">
-          <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
+          <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-facebook-signin js-button-link full-width">
             <%= t('.facebook_signin_button') %>
           </button>
+        <p class="js-facebook-signin-errors help-block"></p>
         </div>
         <p>- <%= t('.or') %> -</p>
 
