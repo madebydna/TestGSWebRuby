@@ -22,8 +22,9 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     var showSignUpForSchoolModal = function () {
       if ( shouldShowSignUpForSchoolModal() ) {
         if(!GS.session.isSignedIn()) {
-          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
-            .done(function(data) {
+          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal, {
+            placeWhereModalTriggered: 'profile after delay'
+          }).done(function(data) {
               var state = GS.stateAbbreviationFromUrl();
               var schoolId = GS.schoolIdFromUrl();
               GS.subscription.schools(state, schoolId).follow(data)
@@ -52,7 +53,9 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
                 }
           });
         } else {
-          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal, {
+            placeWhereModalTriggered: 'profile header'
+          })
             .done(GS.subscription.schools(state, schoolId).follow);
         }
       });

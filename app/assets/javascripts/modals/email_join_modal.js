@@ -9,6 +9,51 @@ GS.modal.EmailJoinModal = function($, options) {
   // set properties specific to this modal
   this.cssClass = options.cssClass || 'email-join-modal';
   this.modalUrl = '/gsr/modals/email_join_modal';
+
+  this.eventTrackingConfig = {
+    //'place where modal triggered': {
+    //  'modal event type': {
+    //    'eventCategory': 'A GA Category',
+    //    'eventAction': 'An GA Action',
+    //    'eventLabel': 'A GA Label'
+    //  },
+    //}
+    'homepage': {
+      'show': {
+        'eventCategory': 'Registration',
+        'eventAction': 'Email Hover',
+        'eventLabel': 'GS Homepage Newsletter'
+      }
+    },
+    'global footer': {
+      'show': {
+        'eventCategory': 'Registration',
+        'eventAction': 'Email Hover',
+        'eventLabel': 'GS Footer Newsletter'
+      }
+    },
+    'profile footer': {
+      'show': {
+        'eventCategory': 'Registration',
+        'eventAction': 'Email Hover',
+        'eventLabel': 'GS Profile Footer Newsletter/MSS'
+      }
+    },
+    'profile header': {
+      'show': {
+        'eventCategory': 'Registration',
+        'eventAction': 'Email Hover',
+        'eventLabel': 'GS Profile Header Newsletter/MSS'
+      }
+    },
+    'profile after delay': {
+      'show': {
+        'eventCategory': 'User Interruption',
+        'eventAction': 'Hover',
+        'eventLabel': 'GS Profile Newsletter/MSS'
+      }
+    }
+  };
 };
 
 // Assign EmailJoinModal's prototype to a new object that inherits BaseModal's prototype.
@@ -18,6 +63,11 @@ GS.modal.EmailJoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 });
 
 _.assign(GS.modal.EmailJoinModal.prototype, {
+
+  // called from BaseModal.trackEvent(modalEventType)
+  getEventTrackingData: function getEventTrackingData(modalEventType) {
+    return this.eventTrackingConfig[this.getPlaceWhereModalTriggered()][modalEventType];
+  },
 
   $getSubmitButton: function $getSubmitButton() {
     return this.$getJoinForm().find('button');

@@ -5,10 +5,12 @@ GS.modal = GS.modal || {};
 // BaseModal constructor function
 GS.modal.BaseModal = function($, options) {
   // all modals will have these properties, and some should be overwritten within each modal's constructor function
+  options = options || {};
   this.cssClass = null;
   this.modalUrl = null;
   this.deferred = $.Deferred();
   this.$modalContainer = GS.modal.manager.getModalContainer(); // would probably be better to pass modalContainer into constructor
+  this.placeWhereModalTriggered = options.placeWhereModalTriggered;
 };
 
 // Add some functions to BaseModal prototype. All modals should share these functions
@@ -41,13 +43,27 @@ _.assign(GS.modal.BaseModal.prototype, {
     return this.deferred;
   },
 
-  sendGoogleAnalyticsPageView: function sendGoogleAnalyticsPageView() {
-    // override within specific hovers
+  getPlaceWhereModalTriggered: function getPlaceWhereModalTriggered() {
+    return this.placeWhereModalTriggered;
+  },
+
+  // Override this function to return a hash of event data for a single GA event
+  getEventTrackingData: function getEventTrackingData(modalEventType) {},
+
+  trackEvent: function trackEvent(modalEventType) {
+    var eventTrackingData = this.getEventTrackingData(modalEventType);
+    if (eventTrackingData !== undefined) {
+      dataLayer.push(
+        _.merge({
+          'event': 'analyticsEvent'
+        }, eventTrackingData)
+      );
+    }
   },
 
   show: function show() {
     this.$getModal().modal('show');
-    this.sendGoogleAnalyticsPageView();
+    this.trackEvent('show');
     return this.deferred.promise();
   },
 
