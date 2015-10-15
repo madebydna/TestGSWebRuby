@@ -9,8 +9,37 @@ describe CommunitySpotlightsController do
       {"data_type"=>"graduation_rate", "partial"=>"percent_value", "year"=>2013}
     ].map(&:with_indifferent_access)
   end
+  let(:collection_config) {
+    {
+      scorecard_params: {
+        gradeLevel: 'h',
+        schoolType: ['public', 'charter'],
+        sortBy: 'a_through_g',
+        sortBreakdown: 'hispanic',
+        sortAscOrDesc: 'desc',
+        offset: 0,
+      },
+      scorecard_subgroups_list: [
+        :all_students,
+        :african_american,
+        :asian,
+        :filipino,
+        :hispanic,
+        :multiracial,
+        :native_american_or_native_alaskan,
+        :pacific_islander,
+        :economically_disadvantaged,
+        :limited_english_proficient
+      ]
+    }.to_json
+  }
+  let(:collection) { FactoryGirl.build(:collection, config: collection_config) }
 
   describe '#set_mobile_dropdown_instance_var!' do
+    before do
+      allow(Collection).to receive(:find_by).and_return(collection)
+    end
+
     subject do
       controller.instance_variable_set(:@table_fields, table_fields)
       controller.params[:sortBy] = 'datatype'
@@ -41,18 +70,7 @@ describe CommunitySpotlightsController do
 
   describe '#set_subgroups_for_header!' do
     before do
-      allow(controller).to receive(:subgroups_list).and_return([
-                                                                 :all_students,
-                                                                 :african_american,
-                                                                 :asian,
-                                                                 :filipino,
-                                                                 :hispanic,
-                                                                 :multiracial,
-                                                                 :native_american_or_native_alaskan,
-                                                                 :pacific_islander,
-                                                                 :economically_disadvantaged,
-                                                                 :limited_english_proficient
-                                                               ])
+      allow(Collection).to receive(:find_by).and_return(collection)
     end
 
     subject do
@@ -67,7 +85,7 @@ describe CommunitySpotlightsController do
 
       data_types.each do | options_array |
         expect(options_array[0]).to be_a String
-        expect(options_array[1]).to be_a Symbol
+        expect(options_array[1]).to be_a String
         options_hash = options_array[2]
         expect(options_hash).to be_a Hash
         expect(options_hash.keys).to include(:class, :data)
