@@ -3,4 +3,5 @@ es:
   shared:
     send_me_updates_form:
       newsletter_message: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín semanal .
+      newsletter_and_updates_message: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín y actualizaciones sobre %{name}.
 
