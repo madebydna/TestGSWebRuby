@@ -105,6 +105,33 @@ describe SchoolReviews do
       end
     end
 
+    describe '#add_number_of_votes_method_to_each' do
+      let!(:school_reviews) do
+        school_reviews = SchoolReviews.new do
+          FactoryGirl.build_list(:five_star_review, 2).extend(ReviewScoping).extend(ReviewCalculations)
+        end
+      end
+      before do
+        allow(ReviewVote).to receive(:vote_count_by_id) do
+          {
+            school_reviews[0].id => 5,
+            school_reviews[1].id => 10
+          }
+        end
+      end
+      it 'should add number_of_votes_method to reviews' do
+        expect do
+          school_reviews.add_number_of_votes_method_to_each
+        end.to change { school_reviews[0].respond_to?(:number_of_votes) }.from(false).to(true)
+      end
+      it 'should add number_of_votes method to reviews that returns correct value' do
+        school_reviews.add_number_of_votes_method_to_each
+        expect(school_reviews[0].number_of_votes).to eq(5)
+        expect(school_reviews[1].number_of_votes).to eq(10)
+        expect(school_reviews[0].number_of_votes).to eq(5)
+        expect(school_reviews[1].number_of_votes).to eq(10)
+      end
+    end
   end
 
 end

@@ -58,6 +58,13 @@ class SchoolReviews
     ReviewCaching.new(reviews).calc_review_data
   end
 
+  def add_number_of_votes_method_to_each
+    review_count_hash = ReviewVote.vote_count_by_id(reviews.map(&:id))
+    reviews.each do |review|
+      review.define_singleton_method(:number_of_votes) { review_count_hash[review.id] || 0 }
+    end
+  end
+
   def promote_review!(review_id)
     index = reviews.index { |review| review.id == review_id }
     if index

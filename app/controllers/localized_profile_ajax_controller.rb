@@ -8,8 +8,9 @@ class LocalizedProfileAjaxController < ApplicationController
   def reviews_pagination
     @school_user = school_user if logged_in?
     @topic_scoped = topic_scoped?
-    @filtered_school_reviews = SchoolProfileReviewsDecorator.decorate(
-                                                        SchoolReviews.new {filtered_reviews}, view_context)
+    school_reviews = SchoolReviews.new { filtered_reviews }
+    school_reviews.add_number_of_votes_method_to_each
+    @filtered_school_reviews = SchoolProfileReviewsDecorator.decorate(school_reviews , view_context)
     @paginated_reviews = paginate_reviews
   end
 
