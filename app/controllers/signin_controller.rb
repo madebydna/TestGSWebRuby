@@ -65,7 +65,7 @@ class SigninController < ApplicationController
         redirect_to (post_registration_redirect_url)
       end
     else
-      render json: {}
+      render json: {}, status: 200
     end
   end
 

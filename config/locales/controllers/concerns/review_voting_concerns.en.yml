@@ -2,4 +2,5 @@ en:
   controllers:
     concerns:
       review_voting_concerns:
-        vote_saved: Your review vote has been recorded. Thanks!
+        vote_saved: All set! We have marked this review as helpful. Thank you for helping other families by sharing your thoughts.
+        vote_saved_for_provisional_user: Thank you! One more step - please click on the verification link we’ve emailed you, and we’ll mark this review as helpful.
