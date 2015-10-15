@@ -55,7 +55,7 @@ describe DisplayRange do
               FactoryGirl.build(:display_range, data_type: range_data_type, data_type_id: range_data_type_id, subject_id: range_subject_id, state: range_state, year: range_year)
             ] }
           end
-          before { allow(DisplayRange).to receive(:display_ranges).and_return(display_ranges) }
+          before { allow(DisplayRange).to receive(:grouped_display_ranges).and_return(display_ranges) }
 
           it "should return #{return_value || 'nil'}" do
             v = DisplayRange.for({
@@ -82,7 +82,7 @@ describe DisplayRange do
     end
   end
 
-  describe '#display_ranges' do
+  describe '#grouped_display_ranges' do
     context 'with several display_ranges in the database' do
 
       before do
@@ -101,20 +101,20 @@ describe DisplayRange do
   
       it 'should group them by data_type/data_type_id/subject_id/state/year key' do
         dr = DisplayRange.where(data_type_id: 3).first
-        dr_map = DisplayRange.display_ranges
+        dr_map = DisplayRange.grouped_display_ranges
         dr_in_map = dr_map[['census', dr.data_type_id, 'all', dr.state, dr.year]].first
         expect(dr).to eql(dr_in_map)
       end
 
       it 'should group them by data_type/data_type_id/subject_id/all key if there is no state' do
         dr = DisplayRange.where(data_type_id: 1).first
-        dr_map = DisplayRange.display_ranges
+        dr_map = DisplayRange.grouped_display_ranges
         dr_in_map = dr_map[['census', dr.data_type_id, 'all',  'all', dr.year]].first
         expect(dr).to eql(dr_in_map)
       end
 
       it 'should not return ranges that have years in the future' do
-        dr_map = DisplayRange.display_ranges
+        dr_map = DisplayRange.grouped_display_ranges
         dr_in_map = dr_map[['census', 4, 'all', 'ca', (Time.now.year + 1)]]
         expect(dr_in_map).to eql(nil)
       end
