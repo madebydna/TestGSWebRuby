@@ -18,39 +18,11 @@ GS.modal.EmailJoinModal = function($, options) {
     //    'eventLabel': 'A GA Label'
     //  },
     //}
-    'homepage': {
+    'default': {
       'show': {
         'eventCategory': 'Registration',
         'eventAction': 'Email Hover',
-        'eventLabel': 'GS Homepage Newsletter'
-      }
-    },
-    'global footer': {
-      'show': {
-        'eventCategory': 'Registration',
-        'eventAction': 'Email Hover',
-        'eventLabel': 'GS Footer Newsletter'
-      }
-    },
-    'profile footer': {
-      'show': {
-        'eventCategory': 'Registration',
-        'eventAction': 'Email Hover',
-        'eventLabel': 'GS Profile Footer Newsletter/MSS'
-      }
-    },
-    'profile header': {
-      'show': {
-        'eventCategory': 'Registration',
-        'eventAction': 'Email Hover',
-        'eventLabel': 'GS Profile Header Newsletter/MSS'
-      }
-    },
-    'profile after delay': {
-      'show': {
-        'eventCategory': 'User Interruption',
-        'eventAction': 'Hover',
-        'eventLabel': 'GS Profile Newsletter/MSS'
+        'eventLabel': 'GS Weekly Newsletter'
       }
     }
   };
@@ -63,11 +35,6 @@ GS.modal.EmailJoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 });
 
 _.assign(GS.modal.EmailJoinModal.prototype, {
-
-  // called from BaseModal.trackEvent(modalEventType)
-  getEventTrackingData: function getEventTrackingData(modalEventType) {
-    return this.eventTrackingConfig[this.getPlaceWhereModalTriggered()][modalEventType];
-  },
 
   $getSubmitButton: function $getSubmitButton() {
     return this.$getJoinForm().find('button');

@@ -294,9 +294,8 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
 
           });
         } else {
-          GS.modal.manager.showModal(GS.modal.EmailJoinForCompareSchoolsModal, {
-            placeWhereModalTriggered: 'compare'
-          }).done(GS.subscription.schools(states, schoolIds).follow);
+          GS.modal.manager.showModal(GS.modal.EmailJoinForCompareSchoolsModal)
+            .done(GS.subscription.schools(states, schoolIds).follow);
         }
       });
     };

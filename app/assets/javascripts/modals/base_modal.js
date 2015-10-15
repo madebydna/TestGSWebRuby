@@ -11,6 +11,7 @@ GS.modal.BaseModal = function($, options) {
   this.deferred = $.Deferred();
   this.$modalContainer = GS.modal.manager.getModalContainer(); // would probably be better to pass modalContainer into constructor
   this.placeWhereModalTriggered = options.placeWhereModalTriggered;
+  this.eventTrackingConfig = {};
 };
 
 // Add some functions to BaseModal prototype. All modals should share these functions
@@ -47,17 +48,30 @@ _.assign(GS.modal.BaseModal.prototype, {
     return this.placeWhereModalTriggered;
   },
 
-  // Override this function to return a hash of event data for a single GA event
-  getEventTrackingData: function getEventTrackingData(modalEventType) {},
+  // This can be overridden. Should return a hash of event data for a single GA event
+  getEventTrackingData: function getEventTrackingData(modalEventType) {
+    var placeWhereModalTriggered = this.getPlaceWhereModalTriggered() || 'default';
+    if(
+      this.hasOwnProperty('eventTrackingConfig')
+      && this.eventTrackingConfig.hasOwnProperty(placeWhereModalTriggered)
+      && this.eventTrackingConfig[placeWhereModalTriggered].hasOwnProperty(modalEventType)
+    ) {
+      return this.eventTrackingConfig[placeWhereModalTriggered][modalEventType];
+    }
+  },
 
   trackEvent: function trackEvent(modalEventType) {
-    var eventTrackingData = this.getEventTrackingData(modalEventType);
-    if (eventTrackingData !== undefined) {
-      dataLayer.push(
-        _.merge({
-          'event': 'analyticsEvent'
-        }, eventTrackingData)
-      );
+    try {
+      var eventTrackingData = this.getEventTrackingData(modalEventType);
+      if (eventTrackingData !== undefined) {
+        dataLayer.push(
+          _.merge({
+            'event': 'analyticsEvent'
+          }, eventTrackingData)
+        );
+      }
+    } catch (e) {
+      GS.util.log(e);
     }
   },
 

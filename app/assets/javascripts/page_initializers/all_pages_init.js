@@ -68,9 +68,7 @@ $(function() {
                if (GS.session.isSignedIn()) {
                    GS.subscription.greatNewsSignUp();
                } else {
-                   GS.modal.manager.showModal(GS.modal.EmailJoinModal, {
-                     placeWhereModalTriggered: 'global footer'
-                   }).done(GS.subscription.greatNewsSignUp);
+                   GS.modal.manager.showModal(GS.modal.EmailJoinModal).done(GS.subscription.greatNewsSignUp);
                }
            } else {
                var state = GS.stateAbbreviationFromUrl();
@@ -85,9 +83,8 @@ $(function() {
                        }
                    });
                } else {
-                   GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal, {
-                     placeWhereModalTriggered: 'profile footer'
-                   }).done(GS.subscription.schools(state, schoolId).follow);
+                   GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+                     .done(GS.subscription.schools(state, schoolId).follow);
                }
 
            }

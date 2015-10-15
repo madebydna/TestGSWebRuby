@@ -52,9 +52,7 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
                 }
           });
         } else {
-          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal, {
-            placeWhereModalTriggered: 'profile header'
-          })
+          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
             .done(GS.subscription.schools(state, schoolId).follow);
         }
       });
