@@ -30,7 +30,7 @@ GS.dataViz.initToggleHandlers = function() {
     $dataDisplayCollection.find(titleSelector).removeClass('dn');
   });
 
-  $(window).bind("load", function() {
+  $(window).on("load", function() {
     $groupComparisonShowOnLoad.removeClass('dn');
   });
 };
