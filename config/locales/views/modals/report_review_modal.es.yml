@@ -1,0 +1,6 @@
+---
+es:
+  modals:
+    report_review_modal:
+      header: 'Reportar este comentario'
+      subheading: 'Antes de que pueda reportar este comentario, tendrá que iniciar sesión o crear una cuenta.'

@@ -58,7 +58,7 @@ class DisplayRange < ActiveRecord::Base
 
   #ex range arg = {'below average cap' => 32, 'average' => 60, 'above avg' => 101}. val arg = 20
   def self.get_range_value(range, value)
-    value = value.to_f
+    value = value.to_f.round
     range.sort_by{|k,v| v}.each do |text, cap|
       return text.chomp('_cap') if value <= cap.to_f
     end

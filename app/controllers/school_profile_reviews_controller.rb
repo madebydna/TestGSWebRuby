@@ -8,6 +8,7 @@ class SchoolProfileReviewsController < SchoolProfileController
   layout 'application'
 
   def reviews
+    @school_reviews.add_number_of_votes_method_to_each
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
     set_omniture_data(gon.omniture_pagename)

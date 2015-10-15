@@ -201,7 +201,7 @@ class SigninController < ApplicationController
           executed_deferred_action
           flash_notice(t('actions.account.created_via_facebook')) if is_new_user
         end
-        render json: {is_new_user: is_new_user}, status: 200
+        render json: {is_new_user: is_new_user}, status: 200 unless already_redirecting?
       end
     rescue => e
       flash_error t('actions.generic_error')

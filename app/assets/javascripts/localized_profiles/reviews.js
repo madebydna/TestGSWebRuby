@@ -71,9 +71,24 @@ GS.reviews = GS.reviews || function($) {
         });
 
         $("body").on("click", ".js_reviewHelpfulButton", function(){
+          var _this = $(this)
+          _this.prop("disabled", true);
+          var isActive = _this.hasClass('active');
+
           var review_id = $(this).data( "review_id" );
           if($.isNumeric(review_id)){
-            postReviewVoteOrUnvote(review_id, $(this));
+            if (GS.session.isSignedIn())  {
+              postReviewVoteOrUnvote(review_id, isActive, $(this));
+            } else {
+              GS.modal.manager.showModal(GS.modal.ReviewVoteModal).
+                done( function () { postReviewVoteOrUnvote(review_id, isActive, $(_this)).
+                  done( function () {
+                    // handle the flash notifications
+                  });
+              }).fail(function () {
+                _this.prop("disabled",false);
+              });
+            }
           }
         });
 
@@ -186,6 +201,19 @@ GS.reviews = GS.reviews || function($) {
             }
         } );
 
+        new_form.on('click','.js-report-review-submit', function(event) {
+            event.preventDefault();
+            var form = $(this).parents('form');
+            if (! GS.session.isSignedIn()) {
+              GS.modal.manager.showModal(GS.modal.ReportReviewModal).
+                done(function () {
+                  form.submit();
+                });
+            } else {
+              form.submit();
+            }
+        });
+
         new_form.find('.js-report-review-form-cancel').on('click', function() {
             reportReviewLink(reviewId).show();
             reportReviewCloseLink(reviewId).hide();
@@ -203,9 +231,7 @@ GS.reviews = GS.reviews || function($) {
         }
     };
 
-    var postReviewVoteOrUnvote = function(reviewId, obj) {
-      obj.prop("disabled", true);
-      var isActive = obj.hasClass('active');
+    var postReviewVoteOrUnvote = function(reviewId, isActive, obj) {
       var shouldUnvote = !isActive;
 
       url = '';
@@ -215,7 +241,7 @@ GS.reviews = GS.reviews || function($) {
         url = "/gsr/reviews/" + reviewId + "/unvote";
       }
 
-      jQuery.ajax({
+    return jQuery.ajax({
         type: 'POST',
         url: url,
         data: {

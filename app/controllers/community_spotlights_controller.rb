@@ -20,7 +20,6 @@ class CommunitySpotlightsController < ApplicationController
   protected
 
   def set_subgroups_for_header!
-    #todo move into collection
     subgroups = subgroups_list.map do | subgroup |
       [
         CSC_t(subgroup),
@@ -28,7 +27,8 @@ class CommunitySpotlightsController < ApplicationController
         { class: 'js-drawTable', data: { 'sort-breakdown' => subgroup } }
       ]
     end
-    @subgroups_for_header = [subgroups, params[:sortBreakdown] || 'hispanic'] #move default to collection
+    config_value = default_params[:sortBreakdown]
+    @subgroups_for_header = [subgroups, params[:sortBreakdown] || config_value]
   end
 
   def set_grade_levels_for_header!
@@ -39,7 +39,8 @@ class CommunitySpotlightsController < ApplicationController
         { class: 'js-drawTable', data: { 'grade-level' => grade_level[0] } }
       ]
     end
-    @grade_levels_for_header = [grade_levels, params[:gradeLevel] || 'h'] #move default to collection
+    config_value = default_params[:gradeLevel]
+    @grade_levels_for_header = [grade_levels, params[:gradeLevel] || config_value]
   end
 
   def set_mobile_dropdown_instance_var!
@@ -53,7 +54,8 @@ class CommunitySpotlightsController < ApplicationController
         ]
       end
     end
-    @data_type_dropdown_for_mobile = [data_types, params[:sortBy] || 'a_through_g'] #move default to collection
+    config_value = default_params[:sortBy]
+    @data_type_dropdown_for_mobile = [data_types, params[:sortBy] || config_value]
   end
 
   def CSC_t(key)
@@ -61,18 +63,10 @@ class CommunitySpotlightsController < ApplicationController
   end
 
   def default_params
-    # TODO move into collection
-    (collection.scorecard_params || {
-      gradeLevel: 'h',
-      schoolType: ['public', 'charter'],
-      sortBy: 'a_through_g',
-      sortBreakdown: 'hispanic',
-      sortAscOrDesc: 'desc',
-      offset: 0,
-    }).merge({
+    collection.scorecard_params.merge(
       data_sets: @table_fields.map { |f| f[:data_type] },
       collectionId: collection.id,
-    })
+    )
   end
 
   def permitted_params
@@ -84,19 +78,7 @@ class CommunitySpotlightsController < ApplicationController
   end
 
   def subgroups_list
-    #move to collection config
-    collection.scorecard_subgroups_list || [
-      :all_students,
-      :african_american,
-      :asian,
-      :filipino,
-      :hispanic,
-      :multiracial,
-      :native_american_or_native_alaskan,
-      :pacific_islander,
-      :economically_disadvantaged,
-      :limited_english_proficient
-    ]
+    collection.scorecard_subgroups_list
   end
 
   def canonical_path

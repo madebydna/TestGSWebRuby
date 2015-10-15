@@ -24,7 +24,7 @@ class ReviewsController < ApplicationController
       end
       if current_user.provisional?
         verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => current_user.email)
-        flash_error t('actions.report_review.email_verification_required', verification_email_url: verification_email_url).html_safe
+        flash_notice t('actions.report_review.email_verification_required')
         redirect_back
         return
       end

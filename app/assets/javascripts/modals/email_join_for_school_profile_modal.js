@@ -7,6 +7,23 @@ GS.modal.EmailJoinForSchoolProfileModal = function($, options) {
 
   this.cssClass = options.cssClass || 'email-join-for-school-profile-modal';
   this.modalUrl = '/gsr/modals/signup_and_follow_school_modal';
+
+  this.eventTrackingConfig = {
+    'default': {
+      'show': {
+        'eventCategory': 'Registration',
+        'eventAction': 'Email Hover',
+        'eventLabel': 'GS Newsletter/MSS'
+      }
+    },
+    'profile after delay': {
+      'show': {
+        'eventCategory': 'User Interruption',
+        'eventAction': 'Hover',
+        'eventLabel': 'GS Profile Newsletter/MSS'
+      }
+    }
+  };
 };
 
 GS.modal.EmailJoinForSchoolProfileModal.prototype = _.create(GS.modal.EmailJoinModal.prototype, {

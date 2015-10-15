@@ -25,13 +25,12 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
           GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal, {
             placeWhereModalTriggered: 'profile after delay'
           }).done(function(data) {
-              var state = GS.stateAbbreviationFromUrl();
-              var schoolId = GS.schoolIdFromUrl();
-              GS.subscription.schools(state, schoolId).follow(data)
-                .done(function() {
-                  setSignUpForSchoolModalCookie();
-                });
-            });
+            var state = GS.stateAbbreviationFromUrl();
+            var schoolId = GS.schoolIdFromUrl();
+            GS.subscription.schools(state, schoolId).follow(data);
+          }).always(function() {
+            setSignUpForSchoolModalCookie();
+          });
         }
       }
     };
@@ -53,9 +52,7 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
                 }
           });
         } else {
-          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal, {
-            placeWhereModalTriggered: 'profile header'
-          })
+          GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
             .done(GS.subscription.schools(state, schoolId).follow);
         }
       });

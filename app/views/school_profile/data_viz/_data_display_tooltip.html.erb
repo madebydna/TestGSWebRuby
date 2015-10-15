@@ -1,0 +1,6 @@
+<% tooltip_type = ".#{@data_display_collection.original_data_type}" %>
+
+<div class="tal">
+  <span class="i-data-viz-state-avg"></span><span class="vat"> = <%= t('.state_average') %></span>
+  <div><%=t('.state_avg')%> <%= t(tooltip_type, percent: data_point.comparison_value) %></div>
+</div>

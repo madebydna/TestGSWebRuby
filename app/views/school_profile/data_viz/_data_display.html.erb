@@ -1,0 +1,28 @@
+<%
+  # A data_display is the second-order grouping described in the group
+  # comparison data reader.
+%>
+
+<%
+  data_display_array = data_display.data_points
+  split_data_display_array = if data_display_array.present?
+                            data_display_array.each_slice( (data_display_array.size/2.0).round ).to_a
+                          else
+                            []
+                          end
+%>
+
+<div class="js-dataDisplay js-<%=data_display.title %> <%= show_hide_chart %>">
+
+  <% split_data_display_array.each do |data_points| %>
+      <div class="col-xs-12 col-md-6">
+        <% data_points.each do |data_point| %>
+
+            <%= render partial: 'school_profile/data_viz/data_display_point',
+                       locals: {data_point: data_point} %>
+        <% end %>
+      </div>
+  <% end %>
+
+
+</div>

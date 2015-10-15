@@ -24,9 +24,8 @@
       height: $input-height-base;
       line-height: $line-height-large;
     }
-    .btn-dropdown {
-      height: $input-height-base;
-      margin-bottom: 3px;
+    .state-dropdown, .submit-button {
+      vertical-align: top;
     }
     @media (max-width: $screen-sm-min) {
       .iconx24-icons {

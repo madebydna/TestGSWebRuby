@@ -7,9 +7,10 @@ def nightly_states
 end
 
 def usage
-  abort "\n\nUSAGE: rails runner script/populate_school_cache_table (all | [state]:[cache_keys]:[school_ids])
+  abort "\n\nUSAGE: rails runner script/populate_school_cache_table (all | [state]:[cache_keys]:[school_where])
 
 Ex: rails runner script/populate_school_cache_table al:test_scores de:all:9,18,23
+Ex: rails runner script/populate_school_cache_table al:test_scores de:all:\"id IN (9,18,23) or level_code like '%h%'\"
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
 end
@@ -29,7 +30,7 @@ def parse_arguments
   else
     args = []
     ARGV.each_with_index do |arg, i|
-      state,cache_keys,school_ids = arg.split(':')
+      state,cache_keys,schools_where = arg.split(':')
       return false unless all_states.include?(state) || state == 'all'
       state = state == 'all' ? all_states : [state]
       cache_keys ||= 'none_given'
@@ -38,16 +39,15 @@ def parse_arguments
       cache_keys.each do |cache_key|
         return false unless all_cache_keys.include?(cache_key)
       end
-      if school_ids
-        school_ids = school_ids.split(',')
-        school_ids.each do |school_id|
-          return false unless school_id.numeric?
+      if schools_where
+        if !schools_where.include?(' ')
+          schools_where = { id: schools_where.split(',') }
         end
       end
       args[i] = {}
       args[i][:states] = state
       args[i][:cache_keys] = cache_keys
-      args[i][:school_ids] = school_ids if school_ids.present?
+      args[i][:schools_where] = schools_where if schools_where.present?
     end
     args
   end
@@ -55,18 +55,18 @@ end
 
 parsed_arguments = parse_arguments
 
-usage unless parsed_arguments
+usage unless parsed_arguments.present?
 
 parsed_arguments.each do |args|
   states = args[:states]
   cache_keys = args[:cache_keys]
-  school_ids = args[:school_ids]
+  schools_where = args[:schools_where]
   states.each do |state|
     # Remove the next line to have all mean all states again
     next if ARGV[0] == 'all' && !nightly_states.include?(state)
     cache_keys.each do |cache_key|
-      if school_ids
-        School.on_db(state.downcase.to_sym).where(id: school_ids).each do |school|
+      if schools_where
+        School.on_db(state.downcase.to_sym).where(schools_where).each do |school|
           Cacher.create_cache(school, cache_key)
         end
       else
@@ -77,15 +77,3 @@ parsed_arguments.each do |args|
     end
   end
 end
-
-=begin
-to do:
-1. hashes of what data team wants -
-2. separate json conversion from fetch
-3. Make this a stand alone script
-
-if data team changes schema, it shouldn't matter
-
-- data team decides what's a rating
-- rails code reads what they want and gets ratings from db
-=end

@@ -16,9 +16,9 @@ en:
     official_school_profile:
       register: You're almost there! Thank you for registering as a school leader. We just need to verify your email address. We've sent you an email - please click on the link in that message to get started editing your school's information!
     report_review:
-      email_verification_required: Before flagging a review, you must verify your email by clicking the link in the email we sent you. <a href="%{verification_email_url}">Click here</a> to resend the email.
+      email_verification_required: Thank you! One more step - please click on the verification link we’ve emailed you, and this review will be reported.
       login_required: Please sign in or register to report a review.
-      reported: Thank you for flagging this review. Our moderators have been notified and will investigate.
+      reported: Thank you. You have reported this review. 
     review:
       activated: All set! We have submitted your review. Thank you for helping other families by sharing your experiences. 
       login_required: You need to log in or register your email in order to post a review.

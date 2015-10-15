@@ -1,0 +1,6 @@
+---
+en:
+  modals:
+    report_review_modal:
+      header: 'Report this review.'
+      subheading: 'Before you can report this review, you’ll need to log in or create an account.'

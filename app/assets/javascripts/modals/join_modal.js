@@ -7,6 +7,16 @@ GS.modal.JoinModal = function($, options) {
 
   this.cssClass = options.cssClass || 'join-modal';
   this.modalUrl = '/gsr/modals/join_modal';
+
+  this.eventTrackingConfig = {
+    'default': {
+      'show': {
+        'eventCategory': 'Registration',
+        'eventAction': 'Sign-in Hover',
+        'eventLabel': 'GS Sign-in/Join'
+      }
+    }
+  };
 };
 
 GS.modal.JoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
