@@ -1,0 +1,6 @@
+---
+es:
+  modals:
+    review_vote_modal:
+      header: 'Marque este comentario como "útil".'
+      subheading: 'Gracias por ayudar a otras familias compartiendo sus pensamientos. Antes de que podamos marcar como útil esta opinión, tendrás que entrar o crear una cuenta.'
