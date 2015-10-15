@@ -501,7 +501,26 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     var attemptSaveSearch = function() {
         var params = savedSearchParams();
         if (saveSearchValid(params) === true) {
-            saveSearch(params);
+            if (GS.session.isSignedIn()) {
+                saveSearch(params).done(
+                    function(data){
+                        if (data.hasOwnProperty('flash')) {
+                            GS.notifications.flash_from_hash(data['flash']);
+                        }
+                    }
+                );
+
+            } else {
+                GS.modal.manager.showModal(GS.modal.SaveSearchModal).done(
+                    function(){
+                        saveSearch(params).done(
+                            function(){
+
+                             GS.notifications.notice(GS.I18n.t('save_search_message'));
+                        });
+                });
+
+            }
         }
     };
 
@@ -520,13 +539,11 @@ GS.search.results = GS.search.results || (function(state_abbr) {
 
         $deferred.done(function(response) {
             var error = response['error'];
-            var redirect = response['redirect'];
+
 
             if (typeof error === 'string' && error !== '' ) {
                 displaySaveSearchFailedSaveError(error);   //error
-            } else if (redirect != undefined) {
-                GS.uri.Uri.goToPage(redirect);    //redirect
-            } else {
+            }  else {
                 disableSavedSearch();             //success
                 changeSavedSearchText();
             }
@@ -535,6 +552,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         $deferred.fail(function(response){
             displaySaveSearchFailedSaveError('Currently we are unable to save your search. Please try again later'); //error
         });
+        return $deferred.promise();
     };
 
     var displaySaveSearchValidationError = function(errorMessage) {

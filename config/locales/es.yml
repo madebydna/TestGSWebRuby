@@ -24,6 +24,8 @@ es:
       login_required: ¡Tienes que entrar o registrar su correo electrónico para poder escribir un comentario.
       pending_email_verification: Gracias Un paso más - por favor haga clic en el enlace de verificación que le hemos enviado un correo electrónico, y le envíe su opinión.
       pending_moderation: Tenga en cuenta que puede tardar hasta 48 horas para que su opinión será publicada en nuestro sitio.
+    save_search:
+      success: Éxito ! Has salvado esta búsqueda de la escuela.
     session:
       signed_out: Firmado a cabo con éxito.
     subscription:
