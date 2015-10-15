@@ -19,7 +19,7 @@ en:
             state_average: State average 89%
           datapoint_3:
             title: Asian students
-            performance_level: above_average
+            performance_level: average
             value_html: 93<sup>%</sup>
             state_average: State average 92%
           datapoint_4:
@@ -66,7 +66,7 @@ en:
             state_average: State average 89%
           datapoint_3:
             title: Asian students
-            performance_level: above_average
+            performance_level: average
             value_html: 93<sup>%</sup>
             state_average: State average 92%
           datapoint_4:
@@ -113,7 +113,7 @@ en:
             state_average: State average 89%
           datapoint_3:
             title: Asian students
-            performance_level: above_average
+            performance_level: average
             value_html: 93<sup>%</sup>
             state_average: State average 92%
           datapoint_4:
