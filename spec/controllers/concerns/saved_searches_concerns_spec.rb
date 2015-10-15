@@ -66,6 +66,9 @@ describe SavedSearchesConcerns do
     it 'should render a json response when save is successful' do
       allow(controller).to receive(:create_saved_search)
       allow(controller).to receive(:render)
+      allow(controller).to receive(:t).and_return('')
+      allow(controller).to receive(:flash_notice)
+
       expect(controller).to receive(:render).with( { json: {} } )
       controller.handle_json(saved_search_params)
     end
