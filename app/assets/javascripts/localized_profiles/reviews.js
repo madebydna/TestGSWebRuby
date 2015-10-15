@@ -186,6 +186,19 @@ GS.reviews = GS.reviews || function($) {
             }
         } );
 
+        new_form.on('click','.js-report-review-submit', function(event) {
+            event.preventDefault();
+            var form = $(this).parents('form');
+            if (! GS.session.isSignedIn()) {
+              GS.modal.manager.showModal(GS.modal.ReportReviewModal).
+                done(function () {
+                  form.submit();
+                });
+            } else {
+              form.submit();
+            }
+        });
+
         new_form.find('.js-report-review-form-cancel').on('click', function() {
             reportReviewLink(reviewId).show();
             reportReviewCloseLink(reviewId).hide();

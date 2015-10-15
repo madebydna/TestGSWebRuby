@@ -16,9 +16,9 @@ es:
     official_school_profile:
       register: ¡Casi Estas allí! Gracias por registrarse como líder escolar. Sólo tenemos que verificar su dirección de correo electrónico. Te hemos enviado un correo electrónico - por favor haga clic en el enlace en ese mensaje para empezar la edición de la información de su escuela!
     report_review:
-      email_verification_required: Antes de marcar un comentario, usted debe verificar su dirección de correo electrónico haciendo clic en el enlace del correo electrónico que le enviamos. <a href="%{verification_email_url}"> Haga clic aquí </a> para enviar el correo electrónico.
+      email_verification_required: ¡Gracias! Un paso más - haga clic en el enlace de verificación que le hemos enviado un correo electrónico, y esta revisión se informó.
       login_required: Por favor, ingrese o regístrese para informar de una revisión.
-      reported: Gracias por marcar este review. Nuestros moderadores han sido notificados y investigarán.
+      reported: Gracias. Señalado opinión.
     review:
       activated: ¡Todo listo! Hemos enviado tu opinión . Gracias por ayudar a otras familias compartiendo sus experiencias ti.
       login_required: ¡Tienes que entrar o registrar su correo electrónico para poder escribir un comentario.

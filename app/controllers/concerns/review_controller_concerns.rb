@@ -126,7 +126,7 @@ module ReviewControllerConcerns
           review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
           review_flag.user = current_user
           if review_flag.save
-            flash_notice t('actions.report_review.reported')
+            flash_success t('actions.report_review.reported')
           else
             GSLogger.error(:reviews, nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
             flash_error t('actions.generic_error')
