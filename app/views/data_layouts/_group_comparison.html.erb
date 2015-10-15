@@ -1,8 +1,10 @@
 <% data_display_collections = data %>
-<%= render "shared/section_header", category_placement:category_placement %>
+<div class='js-groupComparisonShowOnLoad dn'>
+  <%= render "shared/section_header", category_placement:category_placement %>
+</div>
 
 <div class="gs-bootstrap">
-  <div class="container-fluid container-fix js-groupComparisonContainer">
+  <div class="container-fluid container-fix js-groupComparisonContainer js-groupComparisonShowOnLoad dn">
 
     <div class="row">
       <div class='col-xs-12 col-md-4'>
@@ -53,8 +55,8 @@
         partial: current_partial,
       }
     %>
+    <%= render 'school_profile/see_footnotes_link', page_config: @page_config, school: @school, category: category %>
   </div>
 </div>
 
-<%= render 'school_profile/see_footnotes_link', page_config: @page_config, school: @school, category: category %>
 
