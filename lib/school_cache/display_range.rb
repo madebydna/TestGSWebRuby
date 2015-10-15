@@ -39,16 +39,17 @@ class DisplayRange < ActiveRecord::Base
 
   # ex {['census', 287, 4, 'ce', 2015] => {'below average cap' => 32, 'average' => 60, 'above avg' => 101}}
   def self.display_ranges_map
-    display_ranges.inject({}) do | h, (key, drs) |
+    grouped_display_ranges.inject({}) do | h, (key, drs) |
       h.merge({key => JSON.parse(drs.first.ranges)})
     end
   end
 
-  def self.display_ranges
-  #where clause to only grab current and past years
+  # This will group display ranges by [data_type, data_type_id, (subject_id || ALL), (state || ALL), (year || ALL)]
+  # it will use that array as the key in the group_by.
+  def self.grouped_display_ranges
     all
       .to_a
-      .delete_if { |dr| dr.year.to_i > Time.now.year }
+      .delete_if { |dr| dr.year.to_i > Time.now.year } #where clause to only grab current and past years
       .group_by { |dr| [ dr.data_type,
                          dr.data_type_id,
                          (dr.subject_id.to_i == 0 ? ALL : dr.subject_id.to_i),

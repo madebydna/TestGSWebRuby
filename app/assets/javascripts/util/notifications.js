@@ -77,12 +77,19 @@ GS.notifications = GS.notifications || (function($) {
     }
   };
 
+  var flashMessagesInAjaxResponse = function(response) {
+    if (response && response.hasOwnProperty('flash')) {
+      return flash_from_hash(response.flash);
+    }
+  };
+
   return {
     error: error,
     notice: notice,
     success: success,
     warning: warning,
     flash_message: flash_message,
-    flash_from_hash: flash_from_hash
+    flash_from_hash: flash_from_hash,
+    flashMessagesInAjaxResponse: flashMessagesInAjaxResponse
   };
 })(jQuery);

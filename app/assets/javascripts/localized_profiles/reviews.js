@@ -71,20 +71,20 @@ GS.reviews = GS.reviews || function($) {
         });
 
         $("body").on("click", ".js_reviewHelpfulButton", function(){
-          var _this = $(this)
+          var _this = $(this);
           _this.prop("disabled", true);
           var isActive = _this.hasClass('active');
 
           var review_id = $(this).data( "review_id" );
           if($.isNumeric(review_id)){
             if (GS.session.isSignedIn())  {
-              postReviewVoteOrUnvote(review_id, isActive, $(this));
+              postReviewVoteOrUnvote(review_id, isActive, $(this)).
+                done(GS.notifications.flashMessagesInAjaxResponse);
             } else {
               GS.modal.manager.showModal(GS.modal.ReviewVoteModal).
-                done( function () { postReviewVoteOrUnvote(review_id, isActive, $(_this)).
-                  done( function () {
-                    // handle the flash notifications
-                  });
+                done( function() {
+                  postReviewVoteOrUnvote(review_id, isActive, _this).
+                    done(GS.notifications.flashMessagesInAjaxResponse);
               }).fail(function () {
                 _this.prop("disabled",false);
               });
@@ -241,7 +241,7 @@ GS.reviews = GS.reviews || function($) {
         url = "/gsr/reviews/" + reviewId + "/unvote";
       }
 
-    return jQuery.ajax({
+      return jQuery.ajax({
         type: 'POST',
         url: url,
         data: {
