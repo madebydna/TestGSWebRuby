@@ -1,7 +1,7 @@
 module UserValidationConcerns
   extend ActiveSupport::Concern
 
-  def validate_user(&block)
+  def validate_user_can_reset_password(&block)
     user = nil
     error_msg = email_param_error
     return [user, error_msg] if error_msg
@@ -10,10 +10,6 @@ module UserValidationConcerns
 
     if user.nil?
       error_key = 'nonexistent_join'
-    elsif ! user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-      error_key = 'account_without_password'
-    elsif user.provisional?
-      error_key = 'provisional_resend_email'
     elsif user.has_inactive_profile?
       error_key = 'de_activated'
     end

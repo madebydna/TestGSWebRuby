@@ -45,7 +45,7 @@ describe UserValidationConcerns do
 
         it "should use the \'#{I18n.t('forms.errors.email.de_activated')}\' error message" do
           allow(controller).to receive(:default_error_messages).and_return(error_messages_hash)
-          expect(controller.validate_user).to eq([user, I18n.t('forms.errors.email.de_activated')])
+          expect(controller.validate_user_can_reset_password).to eq([user, I18n.t('forms.errors.email.de_activated')])
         end
       end
 
@@ -54,7 +54,7 @@ describe UserValidationConcerns do
 
         it "should use the return the user and no error" do
           allow(controller).to receive(:default_error_messages).and_return(error_messages_hash)
-          expect(controller.validate_user).to eq([user, nil])
+          expect(controller.validate_user_can_reset_password).to eq([user, nil])
         end
       end
     end
@@ -63,14 +63,14 @@ describe UserValidationConcerns do
       allow(controller).to receive(:params).and_return({email: 'invalid email'})
       allow(controller).to receive(:t).with('forms.errors.email.format').and_return('Invalid email.')
 
-      expect(controller.validate_user).to eq([nil,'Invalid email.' ])
+      expect(controller.validate_user_can_reset_password).to eq([nil,'Invalid email.' ])
     end
 
     it 'should not validate if email is empty.' do
       allow(controller).to receive(:params).and_return({})
       allow(controller).to receive(:t).with('forms.errors.email.blank').and_return('Empty email.')
 
-      expect(controller.validate_user).to eq([nil, 'Empty email.'])
+      expect(controller.validate_user_can_reset_password).to eq([nil, 'Empty email.'])
     end
 
     it 'should not validate if we are not able to retrieve a user.' do
@@ -79,25 +79,25 @@ describe UserValidationConcerns do
       allow(controller).to receive(:default_error_messages).and_return(error_messages_hash)
 
 
-      expect(controller.validate_user).to eq([nil, 'No user.'])
+      expect(controller.validate_user_can_reset_password).to eq([nil, 'No user.'])
     end
 
-    it 'should not validate if the user is provisional.' do
+    it 'should validate even if the user is provisional.' do
       user = FactoryGirl.create(:new_user)
       allow(controller).to receive(:params).and_return({email: user.email})
       allow(User).to receive(:find_by_email).and_return(user)
       allow(controller).to receive(:default_error_messages).with(user).and_return(error_messages_hash)
 
-      expect(controller.validate_user).to eq([user, 'provisional resend error message'])
+      expect(controller.validate_user_can_reset_password).to eq([user, nil])
     end
 
-    it 'should not validate if the user has no password.' do
+    it 'should validate even if the user has no password.' do
       user = FactoryGirl.build(:email_only, password: nil)
       allow(controller).to receive(:params).and_return({email: user.email})
       allow(User).to receive(:find_by_email).and_return(user)
       allow(controller).to receive(:default_error_messages).with(user).and_return(error_messages_hash)
 
-      expect(controller.validate_user).to eq([user, 'No password error message'])
+      expect(controller.validate_user_can_reset_password).to eq([user, nil])
     end
 
     it 'should validate the user.' do
@@ -106,7 +106,7 @@ describe UserValidationConcerns do
       allow(User).to receive(:find_by_email).and_return(user)
       allow(controller).to receive(:default_error_messages).with(user).and_return(error_messages_hash)
 
-      expect(controller.validate_user).to eq([user, nil])
+      expect(controller.validate_user_can_reset_password).to eq([user, nil])
     end
 
   end
