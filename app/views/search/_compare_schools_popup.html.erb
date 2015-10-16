@@ -1,7 +1,7 @@
 <% if @schools.present? && @allow_compare %>
   <div class="compare-schools-popup js-compareSchoolsPopupContainer">
-    <% #Compare Button For Desktop %>
-    <a class="popup-link pointer js-compareSchoolsPopupButton" >
+    <div class="hidden-xs">
+    <a class="popup-link js-compareSchoolsPopupButton" >
       <%= t('.compare_button') %>
       <span class="notranslate">
         (<span class="js-compareSchoolsCount">0</span>/4)
@@ -13,7 +13,6 @@
 
       <% #School Partials %>
       <% if max_num_of_compare_schools > 1 %>
-          <div class="container-fluid">
         <% (max_num_of_compare_schools / 2.0).ceil.times do %>
           <div class="row ptm">
             <% 2.times do  %>
@@ -21,7 +20,6 @@
             <% end %>
           </div>
         <% end %>
-          </div>
       <% end %>
 
       <% #Submit button %>
@@ -30,5 +28,12 @@
       </div>
 
     </div>
+    </div>
+    <a class="visible-xs popup-link js-compareSchoolsSubmit">
+      <%= t('.compare_button') %>
+      <span class="notranslate">
+        (<span class="js-compareSchoolsCount">0</span>/4)
+      </span>
+    </a>
   </div>
 <% end %>

@@ -147,7 +147,6 @@ GS.compare.compareSchoolsPopup = GS.compare.compareSchoolsPopup || (function () 
         var numOfSchools = schoolsList.numberOfSchoolsInList();
         var $schoolCountElement = $(schoolCountHtmlClass);
         $schoolCountElement.text(numOfSchools);
-        numOfSchools >= minNumberOfSchools ? $schoolCountElement.addClass('brand-primary') : $schoolCountElement.removeClass('brand-primary')
     };
 
     var setCompareSchoolsRemoveSchoolHandler = function(removeSchoolHandlerFunction) {
