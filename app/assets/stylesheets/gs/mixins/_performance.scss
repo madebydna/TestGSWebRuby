@@ -1,0 +1,31 @@
+@mixin gs-rating($size) {
+  border-radius: 50%;
+  color: white !important;
+  font-family: $font-family-base-bold;
+  font-size: ($size / 2);
+  height: $size;
+  line-height: $size;
+  text-align: center;
+  width: $size;
+  @include performance-background();
+}
+
+@mixin performance-color {
+  color: $no_quality_attribution;
+  .above_average  { color: $above_average; }
+  .average        { color: $average;       }
+  .below_average  { color: $below_average; }
+  &.above_average { color: $above_average; }
+  &.average       { color: $average;       }
+  &.below_average { color: $below_average; }
+}
+
+@mixin performance-background {
+  background-color: $no_quality_attribution;
+  .above_average  { background-color: $above_average; }
+  .average        { background-color: $average;       }
+  .below_average  { background-color: $below_average; }
+  &.above_average { background-color: $above_average; }
+  &.average       { background-color: $average;       }
+  &.below_average { background-color: $below_average; }
+}

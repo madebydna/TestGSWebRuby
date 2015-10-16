@@ -23,6 +23,8 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 }
 
 .community-spotlight {
+  @include performance-color();
+
   .logo-bar {
     border-top: 5px solid $module-gray;
     border-bottom: 5px solid $module-gray;
