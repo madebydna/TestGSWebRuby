@@ -1,0 +1,5 @@
+en:
+  forgot_password:
+    show:
+      enter_your_email_address_heading: Please enter your email address to get started.
+      reset_password_heading: Need to reset your password? No problem.

@@ -1,0 +1,5 @@
+es:
+  forgot_password:
+    show:
+      enter_your_email_address_heading: Introduzca su dirección de correo electrónico para comenzar.
+      reset_password_heading: Necesidad de restablecer su contraseña? No hay problema.
