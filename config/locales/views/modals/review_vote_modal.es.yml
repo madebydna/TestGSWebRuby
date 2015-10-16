@@ -2,5 +2,5 @@
 es:
   modals:
     review_vote_modal:
-      header: 'Marcar como "favorable".'
-      subheading: 'Gracias por ayudar a otras familias compartiendo sus pensamientos. Antes de que podamos marcar como útil esta opinión, tendrás que entrar o crear una cuenta.'
+      header: 'Marcar como "favorable"'
+      subheading: 'Gracias por compartir tus pensamientos. Para marcar esta crítica útil, por favor conectarse o crear una cuenta.'
