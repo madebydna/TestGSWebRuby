@@ -57,6 +57,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     #   ]
     # }
     get_data!
+    configure_data_type_partials!
     data_display_collections
 
   rescue
@@ -118,6 +119,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   def label_lookup_value(key)
     [key.first.to_s, key.last]
+  end
+
+  def configure_data_type_partials!
+    config[:partials] = category.category_data.each_with_object({}) do |cd, h|
+      h[cd.label] = cd.display_type || :bar_chart
+    end
   end
 
   def add_ethnicity_callback

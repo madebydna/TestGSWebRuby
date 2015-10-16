@@ -1,0 +1,19 @@
+<div class="col-xs-12 col-sm-6 col-md-4">
+  <div class="data-display-point rating">
+    <div>
+      <div class="gs-rating-md <%= data_point.performance_level %>">
+        <%= data_point.value %>
+      </div>
+    </div>
+    <div class="text">
+      <div class="header">
+        <div class="row-text"><%= db_t(data_point.label) %></div>
+      </div>
+      <% if data_point.subtext.present? %>
+        <div class="subtext">
+          <div><%= data_point.subtext %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

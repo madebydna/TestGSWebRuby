@@ -5,21 +5,23 @@ class DataDisplayCollection
   # data is a hash of data from GroupComparisonDataReader
 
   attr_accessor :bar_chart_order, :breakdowns, :config, :data, :default_group,
-    :group_by_config, :sub_title, :title, :displays, :original_data_type
+    :group_by_config, :sub_title, :title, :displays, :original_data_type,
+    :partial
 
   DEFAULT_CALLBACKS = [ 'group_by' ]
 
   def initialize(title, data, config = {})
-    self.data             = data
-    self.config          = config
-    self.sub_title        = config[:sub_title]
-    self.title            = title
-    self.default_group    = config[:default_group]
-    self.group_by_config = config[:group_by]
-    self.bar_chart_order = config[:bar_chart_order]
+    self.data               = data
+    self.config             = config
+    self.sub_title          = config[:sub_title]
+    self.title              = title
+    self.default_group      = config[:default_group]
+    self.group_by_config    = config[:group_by]
+    self.bar_chart_order    = config[:bar_chart_order]
     self.original_data_type = config[title]
+    self.partial            = config[:partials][title]
     create_displays!
-    self.breakdowns       = displays.map(&:title) if config[:group_by].present?
+    self.breakdowns         = displays.map(&:title) if config[:group_by].present?
   end
 
   private
