@@ -514,11 +514,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
                 GS.modal.manager.showModal(GS.modal.SaveSearchModal).done(
                     function(){
                         saveSearch(params).done(
-                            function(){
-
-                             GS.notifications.notice(GS.I18n.t('save_search_message'));
-                        });
-                });
+                            function(data){
+                                if (data.hasOwnProperty('flash')) {
+                                    GS.notifications.flash_from_hash(data['flash']);
+                                }
+                            });
+                }
+                );
 
             }
         }
