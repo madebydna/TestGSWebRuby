@@ -51,7 +51,7 @@ module UserValidationConcerns
     verification_email_url = user.present? ? url_for(:controller => '/user', :action => 'send_verification_email', :email => user.email) : ''
     {
       'nonexistent_join' => t('forms.errors.email.nonexistent_join', join_path: join_path).html_safe,
-      'account_without_password' => t('forms.errors.email.account_without_password', join_path: join_path).html_safe,
+      'account_without_password' => t('forms.errors.email.account_without_password', forgot_password_path: forgot_password_path).html_safe,
       'provisional_resend_email' => (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe,
       'de_activated' => t('forms.errors.email.de_activated').html_safe
     }

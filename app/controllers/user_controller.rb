@@ -45,7 +45,7 @@ class UserController < ApplicationController
     user = User.find_by_email(email) if email.present?
 
     if user && !user.has_password?
-      result = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
+      result = t('forms.errors.email.account_without_password', forgot_password_path: forgot_password_path).html_safe
     end
 
     render json: {'error_msg' => result}

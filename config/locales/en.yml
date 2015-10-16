@@ -71,7 +71,7 @@ en:
           provisional: User is provisional.
     errors:
       email:
-        account_without_password: We have your email address on file, but you still need to create a free account with GreatSchools. <a href="%{join_path}">Join now</a>
+        account_without_password: We have your email address on file, but you need to reset your password. <a href="%{forgot_password_path}">Click here to get started</a>
         blank: Please enter an email address.
         de_activated: The account associated with that email address has been disabled. Please contact us.
         format: Please enter a valid email address.
