@@ -206,6 +206,8 @@ module AuthenticationConcerns
       user_id = hash[MD5_HASH_LENGTH..-1]
       user = User.find(user_id)
       if user && user.auth_token == hash
+        user.verify_email!
+        user.save
         log_user_in(user)
       end
     rescue

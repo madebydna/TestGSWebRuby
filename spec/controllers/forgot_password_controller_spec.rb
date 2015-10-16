@@ -53,13 +53,31 @@ describe ForgotPasswordController do
       controller.send :login_and_redirect_to_change_password
     end
 
+    it 'should verify the user\'s email if the hash is valid.' do
+      user = FactoryGirl.create(:new_user)
+      allow(controller).to receive(:params).and_return({id: user.auth_token})
+      allow(controller).to receive(:logged_in?) { true }
+      allow(controller).to receive(:redirect_to).with(manage_account_url(:anchor => 'change-password'))
+      controller.send :login_and_redirect_to_change_password
+      user.reload
+      expect(user).to_not be_provisional
+    end
+
     it 'should not allow reset password if the hash is not valid.' do
       allow(controller).to receive(:params).and_return({id: 'Sometoken'})
 
       expect(controller).to receive(:redirect_to).with(signin_url)
       controller.send :login_and_redirect_to_change_password
     end
+  end
 
+  describe '#login_from_hash' do
+    it 'should verify the user\'s email' do
+      user = FactoryGirl.build(:new_user)
+      expect(User).to receive(:find).and_return(user)
+      expect(user).to receive(:verify_email!)
+      controller.send(:login_from_hash, user.auth_token)
+    end
   end
 
 end
