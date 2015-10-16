@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
   end
 
   def safely_add_subscription!(list, school = nil)
-    unless has_signedup?(list)
+    unless has_subscription?(list, school)
       subscription = new_subscription(list, school)
       subscription.save!
     end
@@ -184,8 +184,8 @@ class User < ActiveRecord::Base
   end
 
   def has_subscription?(list, school = nil)
-    school_id = school.try(:id)
-    school_state = school.try(:state)
+    school_id = school.try(:id) || 0
+    school_state = school.try(:state) || 'CA'
     if list == 'greatnews'
       subscriptions.any? do |subscription|
         subscription.list == list
