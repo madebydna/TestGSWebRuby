@@ -72,10 +72,10 @@
                 </div>
                 <div class="hidden-xs col-sm-3 col-md-2 tar pvl">
                   <%= render 'compare_schools_compare_button' %>
-                  <%= link_to zillow_url(school), class: 'btn btn-default zillow-button clearfix mts db js-homes-for-sale', rel: 'nofollow', target: '_blank' do %>
-                    <div class="iconx16 i-16-blue-home fl mrs"></div>
-                    <div class="fl"><%= t('.homes_for_sale') %></div>
-                  <% end %>
+                  <a class="btn btn-default zillow-button clearfix mts db js-homes-for-sale" target="_blank">
+                      <div class="iconx16 i-16-blue-home fl mrs"></div>
+                      <div class="fl"><%= t('.homes_for_sale') %></div>
+                  </a>
                 </div>
             </div>
         </div>
