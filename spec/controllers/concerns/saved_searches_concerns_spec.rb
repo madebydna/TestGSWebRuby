@@ -67,7 +67,7 @@ describe SavedSearchesConcerns do
       allow(controller).to receive(:create_saved_search)
       allow(controller).to receive(:render)
       allow(controller).to receive(:t).and_return('')
-      allow(controller).to receive(:flash_notice)
+      allow(controller).to receive(:flash_message)
 
       expect(controller).to receive(:render).with( { json: {} } )
       controller.handle_json(saved_search_params)
