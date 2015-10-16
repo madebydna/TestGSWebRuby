@@ -38,6 +38,7 @@ class TestDataSet < ActiveRecord::Base
   }
 
   scope :with_no_subject_breakdowns, -> { where(subject_id: 1) }
+  scope :all_students, -> { where(breakdown_id: 1) }
 
   scope :active, -> { where(active: 1) }
 
@@ -48,6 +49,7 @@ class TestDataSet < ActiveRecord::Base
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
     .with_display_targets('ratings')
     .with_no_subject_breakdowns
+    .all_students
   end
 
   def self.base_performance_query(school)
