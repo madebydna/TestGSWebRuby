@@ -1,7 +1,7 @@
 module UserValidationConcerns
   extend ActiveSupport::Concern
 
-  def validate_user(&block)
+  def validate_user_can_reset_password(&block)
     user = nil
     error_msg = email_param_error
     return [user, error_msg] if error_msg
@@ -10,10 +10,6 @@ module UserValidationConcerns
 
     if user.nil?
       error_key = 'nonexistent_join'
-    elsif ! user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-      error_key = 'account_without_password'
-    elsif user.provisional?
-      error_key = 'provisional_resend_email'
     elsif user.has_inactive_profile?
       error_key = 'de_activated'
     end
@@ -55,7 +51,7 @@ module UserValidationConcerns
     verification_email_url = user.present? ? url_for(:controller => '/user', :action => 'send_verification_email', :email => user.email) : ''
     {
       'nonexistent_join' => t('forms.errors.email.nonexistent_join', join_path: join_path).html_safe,
-      'account_without_password' => t('forms.errors.email.account_without_password', join_path: join_path).html_safe,
+      'account_without_password' => t('forms.errors.email.account_without_password', forgot_password_path: forgot_password_path).html_safe,
       'provisional_resend_email' => (t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url)).html_safe,
       'de_activated' => t('forms.errors.email.de_activated').html_safe
     }

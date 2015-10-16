@@ -83,7 +83,7 @@ if(gon.pagename == 'signin/new'){
         $('#email').on('blur', function() {
             $.ajax({
             type: 'GET',
-            url: "/gsr/validations/email_provisional",
+            url: "/gsr/validations/validate_user_can_log_in",
             data: {email: $('.js-signin-form #email').val()},
             dataType: 'json',
             async: true

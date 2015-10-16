@@ -35,6 +35,12 @@ class User < ActiveRecord::Base
   SECRET = 23088
   PROVISIONAL_PREFIX = 'provisional:'
 
+  def self.new_facebook_user(attributes)
+    user = self.new
+    user.assign_attributes(attributes.reverse_merge(how: 'facebook', password: generate_password))
+    user
+  end
+
   def self.with_email(email)
     where(email: email).first
   end
@@ -145,7 +151,7 @@ class User < ActiveRecord::Base
   end
 
   def safely_add_subscription!(list, school = nil)
-    unless has_signedup?(list)
+    unless has_subscription?(list, school)
       subscription = new_subscription(list, school)
       subscription.save!
     end
@@ -178,8 +184,8 @@ class User < ActiveRecord::Base
   end
 
   def has_subscription?(list, school = nil)
-    school_id = school.try(:id)
-    school_state = school.try(:state)
+    school_id = school.try(:id) || 0
+    school_state = school.try(:state) || 'CA'
     if list == 'greatnews'
       subscriptions.any? do |subscription|
         subscription.list == list

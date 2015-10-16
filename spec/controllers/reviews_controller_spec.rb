@@ -75,7 +75,7 @@ describe ReviewsController do
       expect(review).to receive(:build_review_flag).with(@comment, ReviewFlag::USER_REPORTED) .and_return(
                                  double(save: true, :'user=' => true)
                                )
-      expect(controller).to receive(:flash_notice)
+      expect(controller).to receive(:flash_success)
                               .with I18n.t('actions.report_review.reported')
       controller.send :flag_review_and_redirect,
                       review_id: @review_id,

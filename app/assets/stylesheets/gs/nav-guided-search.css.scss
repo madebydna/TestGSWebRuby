@@ -1,51 +1,39 @@
 // Guided Search CSS for page navigation
 
-.nav-tabs {
-  border-bottom: none;
-}
+.guided-search {
+  .nav-tabs {
+    border-bottom: none;
+  }
 
-.nav-tabs > li > p {
-  border-right: $border-light-grey;
-  border-bottom: $border-light-grey;
-}
+  .nav-tabs > li > p {
+    border-right: $border-light-grey;
+    border-bottom: $border-light-grey;
+  }
 
-.nav-tabs > li.active > p {
-  border-bottom: 7px $brand-primary solid;
-  color: $brand-primary;
-}
+  .nav-tabs > li.active > p {
+    border-bottom: 7px $brand-primary solid;
+    color: $brand-primary;
+  }
 
-.nav-tabs > li {
-  width: 20%;
-  margin-right: 0px;
-  border: none;
-}
+  .nav-tabs > li {
+    width: 20%;
+    margin-right: 0px;
+    border: none;
+  }
 
-.nav-tabs > li > p.tab_last {
-  border-right: none;
-}
+  .nav-tabs > li > p.tab_last {
+    border-right: none;
+  }
 
-.nav-button {
-  //Mobile Filters
-  border-radius: 0px;
-  margin-left: 0px !important;
-}
+  .primary-bg-color {
+    background-color: $brand-primary;
+  }
 
-.nav-button-font {
-  font-size: 11px;
-}
+  .bg-white {
+    background-color: $body-bg;
+  }
 
-.nav-button-left-border {
-  border-left: thin solid white;
-}
-
-.primary-bg-color {
-  background-color: $brand-primary;
-}
-
-.bg-white {
-  background-color: $body-bg;
-}
-
-.border-all-light-grey {
-  border: $border-light-grey;
+  .border-all-light-grey {
+    border: $border-light-grey;
+  }
 }

@@ -64,7 +64,7 @@ module DeferredActionConcerns
   def save_review_deferred(params)
     return false if !logged_in?
 
-    save_review_and_redirect params
+    save_review params
 
     true
   end

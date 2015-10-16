@@ -85,12 +85,12 @@ module ReviewControllerConcerns
     ReviewParams.new(params, current_user)
   end
 
-  def save_review_and_redirect(params)
+  def save_review(params)
     review, error = build_review_params(params).save_new_review
 
     if error.nil?
       if review.active?
-        flash_notice t('actions.review.activated')
+        flash_success t('actions.review.activated')
         #set omniture events and props after the review has been published.
         set_omniture_events_in_cookie(['review_updates_mss_end_event'])
         set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
@@ -102,10 +102,8 @@ module ReviewControllerConcerns
           flash_notice t('actions.review.pending_moderation')
         end
       end
-      redirect_to reviews_page_for_last_school
     else
       flash_error error
-      redirect_to reviews_page_for_last_school
     end
   end
 
@@ -128,7 +126,7 @@ module ReviewControllerConcerns
           review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
           review_flag.user = current_user
           if review_flag.save
-            flash_notice t('actions.report_review.reported')
+            flash_success t('actions.report_review.reported')
           else
             GSLogger.error(:reviews, nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
             flash_error t('actions.generic_error')

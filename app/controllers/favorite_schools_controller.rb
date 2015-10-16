@@ -14,20 +14,20 @@ class FavoriteSchoolsController < ApplicationController
     set_omniture_events_in_cookie(['review_updates_mss_start_event'])
     set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'AddToSchoolList'})
 
-    if logged_in?
+    if logged_in? || params.seek(:favorite_school, :email).present?
       add_favorite_school favorite_schools_params
       create_subscription favorite_schools_params
       if request.xhr?
-        render 'create', status: 200
+        render json: {}
       else
         redirect_back_or_default
       end
     else
       save_deferred_action :add_favorite_school_deferred, favorite_schools_params
+      flash_error I18n.t('controllers.favorite_schools_controller.login_required')
       if request.xhr?
-        render 'create', status: 422
+        render json: {}, status: 422
       else
-        flash_error I18n.t('controllers.favorite_schools_controller.login_required')
         redirect_to signin_url
       end
     end

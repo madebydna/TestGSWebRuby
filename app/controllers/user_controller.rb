@@ -38,23 +38,17 @@ class UserController < ApplicationController
     end
   end
 
-  def email_provisional_validation
+  def validate_user_can_log_in
     result = ''
     email = params[:email]
 
     user = User.find_by_email(email) if email.present?
 
-    if user
-      if user.provisional?
-        verification_email_url = url_for(:controller => 'user', :action => 'send_verification_email', :email => user.email)
-        result = t('forms.errors.email.provisional_resend_email', verification_email_url: verification_email_url).html_safe
-      elsif !user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-        result = t('forms.errors.email.account_without_password', join_path: join_path).html_safe
-      end
+    if user && !user.has_password?
+      result = t('forms.errors.email.account_without_password', forgot_password_path: forgot_password_path).html_safe
     end
 
     render json: {'error_msg' => result}
-
   end
 
   def send_verification_email

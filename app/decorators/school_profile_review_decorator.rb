@@ -78,7 +78,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def helpful_reviews_text
     @helpful_reviews_text ||= (
-      number_of_votes = review.votes.active.size
+      number_of_votes = review.try(:number_of_votes) || 0
       text = ''
       if number_of_votes > 0
         text << t('decorators.school_profile_review_decorator.persons', count: number_of_votes)

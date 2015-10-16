@@ -280,6 +280,26 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         elemMapCanvas.show('fast', GS.googleMap.initAndShowMap);
     };
 
+    var initializeSaveAllSchoolsButton = function() {
+      $('.js-save-all-schools-button').on('click', function () {
+        var state = GS.stateAbbreviationFromUrl();
+        var schoolIds =  GS.uri.Uri.getValueOfQueryParam('school_ids').split(',');
+        var states = [];
+        _(schoolIds).each(function () {
+          states.push(state);
+        });
+        if (GS.session.isSignedIn()) {
+          GS.subscription.schools(states, schoolIds).follow({showMessages: false}).done(function(){
+                  GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_on_compare_follow_all'));
+
+          });
+        } else {
+          GS.modal.manager.showModal(GS.modal.EmailJoinForCompareSchoolsModal)
+            .done(GS.subscription.schools(states, schoolIds).follow);
+        }
+      });
+    };
+
     var init = function() {
         adjustSchoolResultsHeights();
         setAccordianHandlerForCategories();
@@ -292,6 +312,8 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
         GS.popup.setPopupHandler();
         setDisabledOnSaveAll();
         GS.compare.schoolsList.init(4);
+        initializeSaveAllSchoolsButton();
+        GS.schoolProfiles.initializeSaveThisSchoolButton();
     };
 
 

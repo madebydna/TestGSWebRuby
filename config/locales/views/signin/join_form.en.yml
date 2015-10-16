@@ -1,0 +1,22 @@
+---
+en:
+  signin:
+    join_form:
+      signin_intro_text: Sign up using your email
+      email_label: Email address
+      facebook_signup_button: Sign Up with Facebook
+      facebook_signup_label: Create an account using Facebook
+      greatschools_terms_of_use: GreatSchools Terms of Use.
+      have_an_account_label: Already have an account?
+      login_tab: Login
+      or: or
+      password_label: Password
+      promos:
+      - header: Weekly newsletter
+        paragraph: Get our best articles, worksheets and more delivered weekly.
+      - header: Follow schools
+        paragraph: Save schools to lists, then get notified when new test scores or reviews are posted.
+      - header: Write reviews
+        paragraph: Help other parents find a great school by sharing your experiences.
+      signup_button: Sign Up
+      terms_of_use_html: I agree to the %{terms_of_use_link}

@@ -14,7 +14,7 @@ describe ForgotPasswordController do
 
     it 'should flash error and redirect if there are validation errors.' do
       error_message = 'some error'
-      allow(controller).to receive(:validate_user).and_return([nil,error_message])
+      allow(controller).to receive(:validate_user_can_reset_password).and_return([nil,error_message])
 
       expect(controller).to receive(:redirect_to).with forgot_password_url
       expect(controller).to receive(:flash_error).with error_message
@@ -22,7 +22,7 @@ describe ForgotPasswordController do
     end
 
     it 'should redirect if there are no validation errors and no user.' do
-      allow(controller).to receive(:validate_user).and_return([nil,''])
+      allow(controller).to receive(:validate_user_can_reset_password).and_return([nil,''])
 
       expect(controller).to receive(:redirect_to).with signin_url
       controller.send :send_reset_password_email
@@ -30,7 +30,7 @@ describe ForgotPasswordController do
 
     it 'should send email and redirect if there are no validation errors and a valid forgetful user.' do
       user = FactoryGirl.build(:new_user)
-      allow(controller).to receive(:validate_user).and_return([user,''])
+      allow(controller).to receive(:validate_user_can_reset_password).and_return([user,''])
 
       expect(ResetPasswordEmail).to receive(:deliver_to_user).with user,reset_password_url
       allow(controller).to receive(:t).with('actions.forgot_password.email_sent', anything).and_return('Email sent')
@@ -53,13 +53,31 @@ describe ForgotPasswordController do
       controller.send :login_and_redirect_to_change_password
     end
 
+    it 'should verify the user\'s email if the hash is valid.' do
+      user = FactoryGirl.create(:new_user)
+      allow(controller).to receive(:params).and_return({id: user.auth_token})
+      allow(controller).to receive(:logged_in?) { true }
+      allow(controller).to receive(:redirect_to).with(manage_account_url(:anchor => 'change-password'))
+      controller.send :login_and_redirect_to_change_password
+      user.reload
+      expect(user).to_not be_provisional
+    end
+
     it 'should not allow reset password if the hash is not valid.' do
       allow(controller).to receive(:params).and_return({id: 'Sometoken'})
 
       expect(controller).to receive(:redirect_to).with(signin_url)
       controller.send :login_and_redirect_to_change_password
     end
+  end
 
+  describe '#login_from_hash' do
+    it 'should verify the user\'s email' do
+      user = FactoryGirl.build(:new_user)
+      expect(User).to receive(:find).and_return(user)
+      expect(user).to receive(:verify_email!)
+      controller.send(:login_from_hash, user.auth_token)
+    end
   end
 
 end

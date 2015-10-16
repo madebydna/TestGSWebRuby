@@ -11,3 +11,5 @@ en:
       within_radius:
         one: within 1 mile of %{address}
         other: within %{count} miles of %{address}
+      list_link: List
+      map_link: Map

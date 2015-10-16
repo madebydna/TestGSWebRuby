@@ -21,8 +21,9 @@ describe 'Search Page' do
     describe 'page specific elements' do
       include_context 'Visit By Location Search', *['100 North Dupont Road', 'Wilmington', 19807, 'DE', 39.752831, -75.588326]
       with_shared_context 'Sorting toolbar' do
-        describe_desktop { include_example 'should contain distance sort button' }
-        describe_mobile { include_example 'should contain distance sort select option'}
+        describe_mobile_and_desktop do
+          include_example 'should contain distance sort select option'
+        end
       end
     end
   end

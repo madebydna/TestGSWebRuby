@@ -17,6 +17,12 @@ class ReviewVotesController < ApplicationController
       json_message = ReviewVote.vote_count_by_id(review_from_param.id)
     end
 
+    if current_user.provisional?
+      flash_notice I18n.t('controllers.concerns.review_voting_concerns.vote_saved_for_provisional_user')
+    else
+      flash_notice I18n.t('controllers.concerns.review_voting_concerns.vote_saved')
+    end
+
     respond_to do |format|
       format.json { render json: json_message, status: status }
     end

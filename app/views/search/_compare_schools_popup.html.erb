@@ -1,22 +1,39 @@
-<% max_num_of_compare_schools  = 4 %>
-<div class="panel pa dn mtm js-compareSchoolsPopup compare-schools-popup" data-max-num-of-compare-schools="<%= max_num_of_compare_schools %>">
+<% if @schools.present? && @allow_compare %>
+  <div class="compare-schools-popup js-compareSchoolsPopupContainer">
+    <div class="hidden-xs">
+    <a class="popup-link js-compareSchoolsPopupButton" >
+      <%= t('.compare_button') %>
+      <span class="notranslate">
+        (<span class="js-compareSchoolsCount">0</span>/4)
+      </span>
+    </a>
 
-  <% #School Partials %>
-  <% if max_num_of_compare_schools > 1 %>
-    <% (max_num_of_compare_schools / 2.0).ceil.times do %>
-      <div class="row mas">
-        <% 2.times do  %>
-          <%= render 'compare_schools_popup_school' %>
+    <% max_num_of_compare_schools  = 4 %>
+    <div class="panel panel-default dn js-compareSchoolsPopup" data-max-num-of-compare-schools="<%= max_num_of_compare_schools %>">
+
+      <% #School Partials %>
+      <% if max_num_of_compare_schools > 1 %>
+        <% (max_num_of_compare_schools / 2.0).ceil.times do %>
+          <div class="row ptm">
+            <% 2.times do  %>
+              <%= render 'compare_schools_popup_school' %>
+            <% end %>
+          </div>
         <% end %>
+      <% end %>
+
+      <% #Submit button %>
+      <div class="btn btn-primary db mha mbl mtm js-compareSchoolsSubmit" style="width: 150px">
+        <%= t('.compare_schools') %>
       </div>
-    <% end %>
-  <% end %>
 
-  <% #Submit button %>
-  <div class="full-width">
-    <div class="btn btn-primary db mha mbl mtm js-compareSchoolsSubmit" style="width: 150px">
-      <%= t('.compare_schools') %>
     </div>
+    </div>
+    <a class="visible-xs popup-link js-compareSchoolsSubmit">
+      <%= t('.compare_button') %>
+      <span class="notranslate">
+        (<span class="js-compareSchoolsCount">0</span>/4)
+      </span>
+    </a>
   </div>
-
-</div>
+<% end %>

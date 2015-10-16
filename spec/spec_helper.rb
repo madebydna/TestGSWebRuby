@@ -105,7 +105,12 @@ def when_I(name, *args, &block)
   js_arg = process_args(args)
   describe *[name, js_arg].compact do
     before do
-      page_object.send(name.to_s.gsub(' ', '_'), *args)
+      method = name.to_s.gsub(' ', '_')
+      if page_object.respond_to?(method)
+        page_object.send(method, *args)
+      elsif subject.respond_to?(method)
+        subject.send(method, *args)
+      end
     end
     instance_exec &block
   end

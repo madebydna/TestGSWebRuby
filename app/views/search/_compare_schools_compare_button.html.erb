@@ -1,8 +1,7 @@
 <% s = defined?(school) ? school : Struct.new(:state,:name,:id,:overall_gs_rating).new('',nil,nil,nil) %>
-<div class="dib" style="width:150px;">
-  <div class="btn btn-default clearfix mbm db pull-left js-compareSchoolButton"
+<div class="clearfix">
+  <div class="btn btn-default full-width clearfix mbm db fl js-compareSchoolButton"
     id='js-compareSchool<%= "#{s.id}" %>'
-    style="width:150px"
     data-schoolname="<%= s.name %>"
     data-schoolstate="<%= s.state.downcase %>"
     data-schoolid="<%= s.id %>"
@@ -11,7 +10,7 @@
     <div class="iconx16 i-16-check-bigger-off fl mrs "></div>
     <div class="fl js-compareSchoolsButtonText"><%= t('.compare') %></div>
   </div>
-  <div class="js-compareSchoolsText pull-left db dn pts pls">
+  <div class="js-compareSchoolsText fl db dn pts pls">
     <span class='pointer js-compareSchoolsSubmit brand-primary dn font-size-small'><%= t('.compare_now') %></span>
     <span class='js-compareSchoolsSelectMoreSchoolsText dn font-size-small'><%= t('.select_more') %></span>
     <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>

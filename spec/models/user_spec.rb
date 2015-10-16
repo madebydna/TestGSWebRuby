@@ -408,6 +408,35 @@ describe User do
     end
   end
 
+  describe '#safely_add_subscription!' do
+    after do
+      clean_dbs :gs_schooldb, :ca
+    end
+    let(:user) { FactoryGirl.create(:verified_user) }
+    [
+      [ 'osp_partner_promos', nil, nil ],
+      [ 'mystat', 'CA', 1000 ],
+      [ 'mystat_private', 'CA', 1000 ],
+      [ 'osp', nil, nil ],
+    ].each do |opts|
+      list = opts.first
+      it "should try to create only one list with: #{opts.to_s}" do
+        subscription_school = FactoryGirl.create(:school, state: opts[1], id: opts[2]) if opts[1] && opts[2]
+        expect_any_instance_of(Subscription).to receive(:save!).once.and_call_original
+        2.times { user.safely_add_subscription!(list, subscription_school) }
+      end
+    end
+
+    it "should allow the same list for multiple schools" do
+      schools = FactoryGirl.create_list(:school, 2)
+      expect do
+        schools.each do |school|
+          user.safely_add_subscription!('mystat', school)
+        end
+      end.to change { user.subscriptions.size }.from(0).to(2)
+    end
+  end
+
 
 
 end

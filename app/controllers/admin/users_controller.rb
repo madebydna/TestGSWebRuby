@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
   include UserValidationConcerns
 
   def generate_reset_password_link
-    user, err_msg = validate_user(&error_message_hash)
+    user, err_msg = validate_user_can_reset_password(&error_message_hash)
 
     if err_msg.present?
       flash_error err_msg

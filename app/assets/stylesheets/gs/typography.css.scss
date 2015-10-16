@@ -43,7 +43,7 @@ strong { font-family: $font-family-base-bold; }
 }
 
 p, a {
-  font: $font-size-base 'opensans-regular',Arial,Helvetica,sans-serif;
+  @include base-font-styles();
 }
 
 p.small {
@@ -115,6 +115,9 @@ p.small {
 
 .brand-primary {
   color:$brand-primary;
+}
+.brand-primary-dark {
+  color:$brand-primary-dark;
 }
 
 .gk-brand-primary {

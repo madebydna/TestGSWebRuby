@@ -120,14 +120,14 @@ describe GroupComparisonDataReader do
         allow(subject).to receive(:modify_data!)
       end
 
-      it 'should create a BarChartCollection for each data type' do
-        expect(BarChartCollection).to receive(:new).exactly(sample_data.keys.size).times
+      it 'should create a DataDisplayCollection for each data type' do
+        expect(DataDisplayCollection).to receive(:new).exactly(sample_data.keys.size).times
         subject.data_for_category(fake_category)
       end
 
-      it "should return an array of bar chart collections" do
-        subject.data_for_category(fake_category).each do |bar_chart_collection|
-          expect(bar_chart_collection).to be_a BarChartCollection
+      it "should return an array of data display collections" do
+        subject.data_for_category(fake_category).each do |data_display_collection|
+          expect(data_display_collection).to be_a DataDisplayCollection
         end
       end
     end

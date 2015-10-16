@@ -22,11 +22,7 @@ GS.facebook = GS.facebook || (function ($) {
 
     // If the user ever logged in, they're probably logged in. But, their session could have expired
     var mightBeLoggedIn = function () {
-        return successfulLoginDeferred.isResolved();
-    };
-
-    var trackFacebookButtonClicked = function() {
-
+      return successfulLoginDeferred.isResolved();
     };
 
     /**
@@ -37,34 +33,34 @@ GS.facebook = GS.facebook || (function ($) {
      *      notConnected: callback that's called if user is not connected
      */
     var status = function (options) {
-        FB.getLoginStatus(function (response) {
-            if (response.status === 'connected') {
-                if (options && options.connected) {
-                    options.connected();
-                }
-                // connected
-            } else if (response.status === 'not_authorized') {
-                // not_authorized
-                if (options && options.notConnected) {
-                    options.notConnected();
-                }
-            } else {
-                if (options && options.notConnected) {
-                    options.notConnected();
-                }
-                // not_logged_in
-            }
-        });
+      FB.getLoginStatus(function (response) {
+        if (response.status === 'connected') {
+          if (options && options.connected) {
+            options.connected();
+          }
+          // connected
+        } else if (response.status === 'not_authorized') {
+          // not_authorized
+          if (options && options.notConnected) {
+            options.notConnected();
+          }
+        } else {
+          if (options && options.notConnected) {
+            options.notConnected();
+          }
+          // not_logged_in
+        }
+      });
     };
 
     var getLoginDeferred = function () {
-        return successfulLoginDeferred.promise();
+      return successfulLoginDeferred.promise();
     };
-    var getFirstLoginDeferred = function() {
-        return firstSuccessfulLoginDeferred.promise();
+    var getFirstLoginDeferred = function () {
+      return firstSuccessfulLoginDeferred.promise();
     };
     var getStatusOnLoadDeferred = function () {
-        return statusOnLoadDeferred.promise();
+      return statusOnLoadDeferred.promise();
     };
 
     // Meant to be fired right after FB JS has downloaded / executed
@@ -72,35 +68,35 @@ GS.facebook = GS.facebook || (function ($) {
     // Sets up default behavior for login deferreds
     var init = function () {
 
-        $(function () {
+      $(function () {
 
-            // Call status() right away, and if user is logged in, resolve loginDeferred and statusOnLoadDeferred
-            status({
-                connected: function () {
-                    statusOnLoadDeferred.resolve();
-                    successfulLoginDeferred.resolve();
-                },
-                notConnected: function () {
-                    statusOnLoadDeferred.reject();
-                }
-            });
+        // Call status() right away, and if user is logged in, resolve loginDeferred and statusOnLoadDeferred
+        status({
+          connected: function () {
+            statusOnLoadDeferred.resolve();
+            successfulLoginDeferred.resolve();
+          },
+          notConnected: function () {
+            statusOnLoadDeferred.reject();
+          }
         });
+      });
     };
 
-    var logout = function() {
-        var deferred = $.Deferred();
+    var logout = function () {
+      var deferred = $.Deferred();
 
-        FB.getLoginStatus(function(response){
-            if (response.status === "connected") {
-                FB.logout(function (response) {
-                    deferred.resolve();
-                });
-            } else {
-                deferred.resolve();
-            }
-        });
+      FB.getLoginStatus(function (response) {
+        if (response.status === "connected") {
+          FB.logout(function (response) {
+            deferred.resolve();
+          });
+        } else {
+          deferred.resolve();
+        }
+      });
 
-        return deferred.promise()
+      return deferred.promise()
     };
 
     // should log user into FB and GS (backend creates GS account if none exists)
@@ -108,54 +104,50 @@ GS.facebook = GS.facebook || (function ($) {
     // resolves deferreds and updates login flags
     var login = function () {
 
-        // any time a login call completes successfully, resolve the single loginDeferred for this module.
-        var loginAttemptDeferred = $.Deferred().done(function() {
-            successfulLoginDeferred.resolve();
-            firstSuccessfulLoginDeferred.resolve();
-        });
+      // any time a login call completes successfully, resolve the single loginDeferred for this module.
+      var loginAttemptDeferred = $.Deferred().done(function () {
+        successfulLoginDeferred.resolve();
+        firstSuccessfulLoginDeferred.resolve();
+      });
 
-        FB.login(function (response) {
-            if (response.authResponse) {
-                FB.api('/me', function (facebookData) {
-                    if (!facebookData || facebookData.error) {
-                        // problem occurred
-                        loginAttemptDeferred.reject();
-                    } else {
-                        var obj = {
-                            email: facebookData.email,
-                            firstName: facebookData.first_name,
-                            lastName: facebookData.last_name,
-                            how: "facebook",
-                            facebookId: facebookData.id,
-                            terms: true,
-                            fbSignedRequest: response.authResponse.signedRequest
-                        };
-
-                        // Handle GS reg/login
-                        GS.auth.registerOrLogin(obj).done(function () {
-                            loginAttemptDeferred.resolve(facebookData);
-                        }).fail(function() {
-                            loginAttemptDeferred.reject();
-                        });
-                    }
-                });
+      FB.login(function (response) {
+        if (response.authResponse) {
+          FB.api('/me', function (facebookData) {
+            if (!facebookData || facebookData.error) {
+              // problem occurred
+              loginAttemptDeferred.reject();
             } else {
-                loginAttemptDeferred.reject();
+              facebookData.authResponse = response.authResponse;
+              loginAttemptDeferred.resolve(facebookData);
             }
-        }, {
-            scope: facebookPermissions,
-            response_type: "token"
+          });
+        } else {
+          loginAttemptDeferred.reject();
+        }
+      }, {
+        scope: facebookPermissions,
+        response_type: "token"
+      });
+
+      return loginAttemptDeferred;
+    };
+
+    var signinToFacebookThenGreatSchools = function() {
+      var deferred = $.Deferred();
+      login().done(function(facebookData) {
+        GS.auth.signinUsingFacebookData(facebookData).done(function(data) {
+          deferred.resolve(data);
+        }).fail(function(data) {
+          deferred.reject(data);
         });
-
-        trackFacebookButtonClicked();
-
-        return loginAttemptDeferred;
+      });
+      return deferred.promise();
     };
 
     var debugStatus = function() {
-        FB.getLoginStatus(function(response){
-           console.log(response);
-        });
+      FB.getLoginStatus(function(response){
+         console.log(response);
+      });
     };
 
     return {
@@ -167,7 +159,8 @@ GS.facebook = GS.facebook || (function ($) {
         getFirstLoginDeferred: getFirstLoginDeferred,
         getStatusOnLoadDeferred: getStatusOnLoadDeferred,
         mightBeLoggedIn: mightBeLoggedIn,
-        logout: logout
+        logout: logout,
+        signinToFacebookThenGreatSchools: signinToFacebookThenGreatSchools
     };
 
 })($);

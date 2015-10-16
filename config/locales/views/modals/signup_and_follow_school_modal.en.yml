@@ -1,14 +1,5 @@
 ---
-  en:
-    modals:
-      signup_and_follow_school_modal:
-        body_html: <p>Get notified about test scores, reviews or profile updates.​ We'll only email you when there's
-                   something new!</p>
-                   <p class="open-sans_sb">Plus, the GreatSchools Newsletter!</p>
-                   <p>Our best articles, free worksheets and more delivered weekly.</p>
-        header: Get email updates on this school.
-        signup_button: Sign up
-        signup_success: Thanks! You're now signed up.
-        sponsors_signup: Please send me parenting information and special promotions from GreatSchools' carefully chosen partners.
-        terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
-        greatschools_terms_of_use: GreatSchools Terms of Use.
+en:
+  modals:
+    signup_and_follow_school_modal:
+      header: Get email updates on this school.

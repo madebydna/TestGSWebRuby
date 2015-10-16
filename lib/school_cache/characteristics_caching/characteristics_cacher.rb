@@ -7,7 +7,9 @@ class CharacteristicsCaching::CharacteristicsCacher < CharacteristicsCaching::Ba
     @query_results ||= (
     reader = CensusDataReader.new(school)
     results = reader.all_raw_data(characteristics_data_types.keys)
-    @all_results = results.all_results #needs to run after all_raw_data
+    @all_results = results.all_results.map do |obj| #needs to run after all_raw_data
+      CharacteristicsCaching::QueryResultDecorator.new(school.state, obj)
+    end
     results.map do |obj|
       if should_cache_data?(obj)
         CharacteristicsCaching::QueryResultDecorator.new(school.state, obj)

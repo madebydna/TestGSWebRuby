@@ -61,9 +61,8 @@ class TestDataSet < ActiveRecord::Base
       TestDataSet.proficiency_band_id as proficiency_band_id,
       TestDataStateValue.number_tested as state_number_tested ")
       .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
-      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
+      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
       .where(TestDataSchoolValue: { school_id: school.id, active: 1 })
-      .where(TestDataStateValue: { active: 1 })
       .active
   end
 

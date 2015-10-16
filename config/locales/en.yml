@@ -12,18 +12,20 @@ en:
     generic_error: We're sorry, something went wrong processing your request.
     my_school_list:
       school_added: ! '%{school_name} has been saved to your school list.'
-      school_added_subscribed: Great! We’ll send you timely updates about the schools you follow. You can download and save your list from your account.
+      school_added_subscribed: All set! You are signed up for our newsletter and updates on %{school_name}
     official_school_profile:
       register: You're almost there! Thank you for registering as a school leader. We just need to verify your email address. We've sent you an email - please click on the link in that message to get started editing your school's information!
     report_review:
-      email_verification_required: Before flagging a review, you must verify your email by clicking the link in the email we sent you. <a href="%{verification_email_url}">Click here</a> to resend the email.
+      email_verification_required: Thank you! One more step - please click on the verification link we’ve emailed you, and this review will be reported.
       login_required: Please sign in or register to report a review.
-      reported: Thank you for flagging this review. Our moderators have been notified and will investigate.
+      reported: Thank you. You have reported this review. 
     review:
-      activated: Thanks for your school review! Your feedback helps other parents choose the right schools!
+      activated: All set! We have submitted your review. Thank you for helping other families by sharing your experiences. 
       login_required: You need to log in or register your email in order to post a review.
-      pending_email_verification: Thank you - we've saved your review. We can publish it once you verify your email address; please check your inbox for an email from us.
+      pending_email_verification: "Thank you! One more step - please click on the verification link we’ve emailed you, and we’ll submit your review."
       pending_moderation: Please note that it can take up to 48 hours for your review to be posted to our site.
+    save_search:
+      success: Success! You've saved this school search.
     session:
       signed_out: Signed out successfully.
     subscription:
@@ -69,7 +71,7 @@ en:
           provisional: User is provisional.
     errors:
       email:
-        account_without_password: We have your email address on file, but you still need to create a free account with GreatSchools. <a href="%{join_path}">Join now</a>
+        account_without_password: We have your email address on file, but you need to reset your password. <a href="%{forgot_password_path}">Click here to get started</a>
         blank: Please enter an email address.
         de_activated: The account associated with that email address has been disabled. Please contact us.
         format: Please enter a valid email address.
@@ -102,3 +104,8 @@ en:
       next: ! '&rsaquo;'
       previous: ! '&lsaquo;'
       truncate: ! '&hellip;'
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " and "
+      last_word_connector: ", and "

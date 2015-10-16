@@ -255,38 +255,32 @@ describe SigninController do
 
   describe '#authenticate' do
     let(:user) { instance_double(User) }
+    before do
+      allow(controller).to receive(:params).and_return({ email: 'blah@example.com' })
+      allow(user).to receive(:has_password?).and_return(true)
+      allow(user).to receive(:password_is?).and_return(true)
+    end
 
-    it 'should return an existing provisional user and error message to verify email if the email is provisional' do
+    it 'should authenticate even if the email is provisional' do
       expect(User).to receive(:with_email).and_return(user)
-      allow(user).to receive(:provisional?).and_return(true)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
-      expect(controller.send :authenticate).to eq([ user, 'Before logging in, you must verify your email by clicking the link in the email we sent you.' ])
+      expect(controller.send :authenticate).to eq([ user, nil ])
     end
 
     it 'should return an existing user and error message to sign up for an account if the account has no password' do
       expect(User).to receive(:with_email).and_return(user)
-      expect(user).to receive(:provisional?).and_return(false)
       expect(user).to receive(:has_password?).and_return(false)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' })
       expect(I18n).to receive(:t).with('controllers.signin.create.email_without_password_error_html', anything).and_return('account without password error message')
       expect(controller.send :authenticate).to eq([ user, 'account without password error message' ])
     end
 
     it 'should return an existing user and error message if the passwords do not match' do
       expect(User).to receive(:with_email).and_return(user)
-      expect(user).to receive(:provisional?).and_return(false)
-      expect(user).to receive(:has_password?).and_return(true)
       expect(user).to receive(:password_is?).and_return(false)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
       expect(controller.send :authenticate).to eq([ user, "The email or password you entered is invalid. Please try again or <a href=\"http://localhost/join/\">create an account</a>." ])
     end
 
     it 'should return an existing user if one exists and it matches given password and no error message.' do
       expect(User).to receive(:with_email).and_return(user)
-      expect(user).to receive(:provisional?).and_return(false)
-      expect(user).to receive(:has_password?).and_return(true)
-      expect(user).to receive(:password_is?).and_return(true)
-      expect(controller).to receive(:params).and_return({ email: 'blah@example.com' }).twice
       expect(controller.send :authenticate).to eq([ user, nil ])
     end
   end
@@ -564,5 +558,90 @@ describe SigninController do
       it_should_behave_like 'something went wrong'
     end
 
+  end
+
+  describe SigninController::FacebookSignedRequestSigninCommand do
+    let(:user) { double('user') }
+    let(:params) do
+      {
+          'email' => 'example@greatschools.org',
+          'facebook_signed_request' => 123
+      }
+    end
+    subject(:command) do
+      command = SigninController::FacebookSignedRequestSigninCommand.new_from_request_params(params)
+    end
+
+    context 'when signed request is not valid' do
+      before do
+        allow(MiniFB).to receive(:verify_signed_request).
+                              with(ENV_GLOBAL['facebook_app_secret'], params['facebook_signed_request']).
+                              and_return(false)
+      end
+      it 'raises an exception' do
+        expect { SigninController::FacebookSignedRequestSigninCommand.new_from_request_params(params) }.to raise_error
+      end
+    end
+
+    describe '#find_or_create_user' do
+      context 'when user exists' do
+        before do
+          expect(MiniFB).to receive(:verify_signed_request).
+                                with(ENV_GLOBAL['facebook_app_secret'], params['facebook_signed_request']).
+                                and_return(true)
+          allow(command).to receive(:existing_user).and_return(user)
+        end
+        it 'should return the user' do
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(result_user).to eq(user)
+        end
+        it 'should report that user was preexisting' do
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(is_new_user).to be_falsey
+        end
+        it 'should not return an error' do
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(error).to be_nil
+        end
+      end
+      context 'when user does not exist' do
+        let(:user) { User.new }
+        before do
+          expect(MiniFB).to receive(:verify_signed_request).
+                                with(ENV_GLOBAL['facebook_app_secret'], params['facebook_signed_request']).
+                                and_return(true)
+          allow(user).to receive(:save) { true }
+          expect(User).to receive(:new).and_return(user)
+        end
+        it 'should set the correct email address' do
+          allow(command).to receive(:existing_user).and_return(nil)
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(result_user.email).to eq(params['email'])
+        end
+        it 'should return a new user' do
+          allow(command).to receive(:existing_user).and_return(nil)
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(result_user).to eq(user)
+        end
+        it 'should report that user was preexisting' do
+          allow(command).to receive(:existing_user).and_return(nil)
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(is_new_user).to be_truthy
+        end
+        it 'should not return an error' do
+          allow(command).to receive(:existing_user).and_return(nil)
+          result_user, error, is_new_user = command.find_or_create_user
+          expect(error).to be_nil
+        end
+        %w[first_name last_name facebook_id].each do |attribute|
+          it "should set #{attribute} if provided" do
+            params[attribute] = 'Foo'
+            allow(command).to receive(:existing_user).and_return(nil)
+            result_user, error, is_new_user = command.find_or_create_user
+            expect(result_user.send(attribute)).to eq('Foo')
+          end
+        end
+      end
+    end
   end
 end

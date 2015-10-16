@@ -1,61 +1,22 @@
-<div class="limit-width-1200 js-sortingToolbar row phm pbl">
-  <div class="col-xs-12 clearfix">
-    <div class="hidden-xs fl">
-
-      <% #Sorts for Desktop %>
-      <div class="ptm">
-        <span><%= t('.sort_by_label') %></span>
-        <div class="btn-group btn-group-inline">
-          <% @relevant_sort_types.each do |sort_name| %>
-              <% if @active_sort == sort_name %>
-                  <button type="button" class="btn btn-default rs-sortButton active"><%= t(".#{sort_name.to_s}") %></button>
-              <% else %>
-                  <button type="button" class="btn btn-default rs-sortButton" onclick="GS.search.results.sortBy('<%=sort_name%>')"><%= t(".#{sort_name.to_s}") %></button>
-              <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-    <% #Sorts For Mobile %>
-    <div class="visible-xs pull-left pbl ptm" style="width:150px;">
-      <select class="form-control js-searchSortingSelectTag">
-        <% sort_types = @relevant_sort_types - [@active_sort] %>
-        <option value="<%= @active_sort %>" selected><%= t('.sort_by_label') %> <%= t(".#{@active_sort.to_s}") %></option>
-        <% sort_types.each do |sort_name| %>
-            <% next if sort_name == 'distance' && !search_by_location? %>
-            <% next if sort_name == 'relevance' && !search_by_name? %>
-            <option value="<%=sort_name%>"><%= t(".#{sort_name.to_s}") %></option>
-        <% end %>
-      </select>
-    </div>
-
-    <% #Save Search For Desktop %>
-    <div class="hidden-xs fr mll">
-      <div class="pr">
-        <button class="btn btn-lg btn-primary js-savedSearchPopupButton" >
-          <span class="js-savedSearchPopupButtonText"><%= t('.save_search_button') %></span>
-        </button>
-        <%= render 'search/saved_search_popup' %>
-      </div>
-    </div>
-
-    <% #Compare %>
-    <% if @allow_compare %>
-      <div class="fr">
-        <div class="pr js-compareSchoolsPopupContainer">
-          <% #Compare Button For Desktop %>
-          <button class="btn btn-lg btn-default hidden-xs js-compareSchoolsPopupButton" >
-            <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
-          </button>
-          <% #Compare Button For Mobile %>
-          <div class="visible-xs shim-2"></div>
-          <button class="btn btn-default mtm visible-xs js-compareSchoolsPopupButton">
-            <%= t('.compare_button') %> <span class="notranslate">(<span class="js-compareSchoolsCount">0</span>/4)</span>
-          </button>
-          <%= render 'search/compare_schools_popup' %>
-        </div>
-      </div>
-    <% end %>
+<% if @schools.present? && @relevant_sort_types.size > 1 %>
+  <div class="sorting-toolbar js-sortingToolbar">
+    <% active_sort_label = t(".#{@active_sort}") %>
+    <%=
+      select_tag 'search-page-sort',
+        options_for_select(
+          @relevant_sort_types.map do | sort_type |
+            sort_label = t(".#{sort_type}")
+            [
+              t('.sort_by_label', sort: sort_label),
+              class: 'js-searchChangeSort',
+              data: {
+                :'sort-type' => sort_type,
+              }
+            ]
+          end,
+          t('.sort_by_label', sort: active_sort_label)
+      ),
+      class: 'selectpicker'
+    %>
   </div>
-</div>
+<% end %>

@@ -1,0 +1,186 @@
+.search-page {
+  .search-filters-menu-mobile {
+    left: -300px;
+    z-index: 10;
+  }
+  .search-page-search-bar {
+    background-color: $dirt-green;
+    color: $gray;
+    .search-bar {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .upper-search {
+      height: 40px;
+      &, a {
+        font-size: $font-size-small;
+      }
+      .breadcrumbs > a {
+        color: $gray;
+      }
+    }
+    .btn-block {
+      font-size: $font-size-large;
+      height: $input-height-base;
+      line-height: $line-height-large;
+    }
+    .state-dropdown, .submit-button {
+      vertical-align: top;
+    }
+    @media (max-width: $screen-sm-min) {
+      .iconx24-icons {
+        display: inline-block !important; // Has to be important because of visible-xs
+      }
+      .state-dropdown {
+        padding-right: 0;
+        .btn-dropdown {
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          border: white;
+        }
+      }
+      .form-control {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+        border: white;
+      }
+    }
+    @media (min-width: $screen-sm-min) {
+      .centered-row {
+        text-align: center;
+
+        [class*='col-'] {
+          float: none;
+          display: inline-block;
+        }
+      }
+    }
+  }
+  .number-schools-found {
+    text-align: center;
+    padding-top: $spacing-medium;
+
+    h1 {
+      display: inline;
+      font-size: $font-size-medium;
+    }
+    .save-search { display: inline; }
+
+    @media (min-width: $screen-sm-min) {
+      text-align: left;
+      padding-top: $grid-gutter-width;
+      h1 {
+        font-size: $font-size-block;
+      }
+    }
+  }
+  .save-search-popup {
+    z-index: 2;
+    width: 450px;
+    border: #cccccc solid 1px;
+  }
+  .desktop-list-map-toggle {
+    @include base-font-styles();
+    display: inline;
+  }
+  .filter-toolbar-desktop {
+    padding-bottom: $spacing-medium;
+    padding-top: $spacing-medium;
+    .filters-container {
+      display: inline;
+      float: left;
+    }
+    .filter-panel {
+      padding: $spacing-medium 0;
+      position: absolute;
+      z-index: 1;
+    }
+    .sort-compare-container {
+      text-align: center;
+      @media (min-width: $screen-sm-min) {
+        float: right;
+        display: inline;
+        text-align: right;
+      }
+    }
+  }
+  .filter-toolbar-mobile {
+    padding-top: $spacing-medium;
+    .btn {
+      border-radius: 0;
+      font-size: 11px;
+      &:nth-child(n+1) {
+        border-left: thin solid white;
+      }
+    }
+  }
+  .sorting-toolbar {
+    display: inline;
+    strong {
+      display: inline;
+    }
+    @media (min-width: $screen-sm-min) {
+      float: right;
+      padding-left: $spacing-large;
+    }
+  }
+  .compare-schools-popup {
+    display: inline;
+    position: relative;
+
+    .popup-link {
+      cursor: pointer;
+      font-family: $font-family-base-bold;
+      font-size: $font-size-large;
+      padding-top: $spacing-medium;
+    }
+
+    .panel {
+      left:-188px; //left is to prevent panel from going off screen.
+      margin-top: $spacing-medium;
+      padding-left: $spacing-medium;
+      padding-right: $spacing-medium;
+      position: absolute;
+      width: 350px;
+      z-index: 1;
+
+      .compare-schools-popup-school {
+        border-radius: 4px;
+        border: 1.5px solid #d3d3d3;
+        position: relative;
+
+        .remove-school {
+          cursor: pointer;
+          position: absolute;
+          right: -7px;
+          top: -7px;
+        }
+        .compare-schools-popup-school-header {
+          height: 45px;
+        }
+      }
+    }
+  }
+  @media (min-width: $screen-sm-min) {
+    .compare-schools-popup {
+      float: left;
+      text-align: right;
+      padding-top: $spacing-small;
+      .popup-link {
+        padding-right: $spacing-large;
+        padding-top: 0;
+      }
+    }
+  }
+  .search-result-border {
+    .school-info {
+      padding-right: 0;
+    }
+    .icons {
+      padding-left: 0;
+    }
+    .zillow-button {
+      padding-right: 0;
+    }
+  }
+}

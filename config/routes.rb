@@ -172,7 +172,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
-  get '/gsr/validations/email_provisional', :to => 'user#email_provisional_validation'
+  get '/gsr/validations/validate_user_can_log_in', :to => 'user#validate_user_can_log_in'
   get '/gsr/user/send_verification_email', :to => 'user#send_verification_email'
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
@@ -186,11 +186,14 @@ LocalizedProfiles::Application.routes.draw do
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
 
   get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
+  get '/gsr/modals/:modal', to: 'modals#show', as: :modal
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
+  match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
   match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
+  match '/gsr/session/facebook_auth' => 'signin#facebook_auth', :as => :facebook_auth, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 

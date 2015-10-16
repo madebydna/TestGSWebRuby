@@ -139,24 +139,27 @@ GS.topicalReview.form = (function () {
         return $roleQuestion.length > 0;
     };
     var init = function () {
-
         $('.new_review').on('ajax:before', function (event, xhr, status, error) {
         }).on('ajax:success', function (event, xhr, status, error) {
             var topicSubmitted = $(this).parents('.js-topicalReviewContainer').data('review-topic');
             var redirect_url = xhr.redirect_url;
+              disableSubmitButton(topicSubmitted, 'Submitting');
             if (redirect_url !== undefined && redirect_url !== '') {
-                window.location = redirect_url;
-            }
-            var reviewContainer = $(this).parents('.js-topicalReviewContainer');
-            $(reviewContainer).addClass('js-reviewComplete');
-            if (isRoleQuestionOnPage()) {
-                GS.topicalReview.questionCarousel.hide();
-                displayRoleQuestion();
-            }
-            else {
+              GS.modal.manager.showModalThenMessages(GS.modal.SubmitReviewModal).
+                done( function() { document.location.reload(true) } ).
+                fail( function () { enableSubmitButton(topicSubmitted); });
+            } else {
+              var reviewContainer = $(this).parents('.js-topicalReviewContainer');
+              $(reviewContainer).addClass('js-reviewComplete');
+              if (isRoleQuestionOnPage()) {
+                  GS.topicalReview.questionCarousel.hide();
+                  displayRoleQuestion();
+              }
+              else {
+                disableSubmitButton(topicSubmitted, 'Review submitted!');
                 GS.topicalReview.questionCarousel.goToNextSlide();
+              }
             }
-            disableSubmitButton(topicSubmitted);
 
         }).on('ajax:error', function (event, xhr, status, error) {
                 var errorMessage = "There was an error saving your review.";
@@ -177,11 +180,18 @@ GS.topicalReview.form = (function () {
             });
         };
 
-    var disableSubmitButton = function (topicSubmitted) {
-        var disabledButtonHtml = '<button type="submit" submitted class="btn btn-primary disabled fr mtl mbl" data-disable-with="Submitting"> Review submitted! </button>'
+    var disableSubmitButton = function (topicSubmitted, text) {
+        var disabledButtonHtml = '<button type="submit" submitted class="btn btn-primary disabled fr mtl mbl" data-disable-with="Submitting"> ' +  text + ' </button>'
         var submittedQuestion = $('#question-topic' + topicSubmitted);
         submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
         submittedQuestion.find('.js-topicalReviewSubmitContainer').html(disabledButtonHtml);
+    };
+
+    var enableSubmitButton = function (topicSubmitted) {
+        var enabledButtonHtml = '<button type="submit" submitted class="btn btn-primary fr mtl mbl" data-disable-with="Submitting"> Submit </button>'
+        var submittedQuestion = $('#question-topic' + topicSubmitted);
+        submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
+        submittedQuestion.find('.js-topicalReviewSubmitContainer').html(enabledButtonHtml);
     };
 
     return {

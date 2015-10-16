@@ -2,8 +2,8 @@ class LocalizedProfileSigninPage < LocalizedProfilePage
 
   element :'signin form', '.js-signin-form'
   element :'join tab', '.js-join-tab'
-  element :'login button', '.js-signin-form-button'
-  element :'signin button', '.js-signin-form-button'
+  element :'login button', '.js-signin-form .js-join-login-submit-button'
+  element :'signin button', '.js-signin-form .js-join-login-submit-button'
   element :'email field', '.js-signin-email'
 
   element :'email required error', '.js-signin-email-errors .required'

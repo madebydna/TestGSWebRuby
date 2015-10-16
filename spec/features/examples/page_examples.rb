@@ -68,3 +68,7 @@ end
 shared_example 'should be on the correct page' do
   expect(subject).to be_displayed
 end
+
+shared_example 'should have selectpicker with selected value' do |dropdown_selector, value|
+  expect(page.find(dropdown_selector)[:title]).to eq(value)
+end

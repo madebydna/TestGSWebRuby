@@ -5,6 +5,10 @@ es:
     learn_more_html: Aprender Mas &raquo;
     fatal_error: Se produjo un error inesperado durante la carga de la página. Por favor, intente actualizar la página.
     fewer_filters: Menos filtros
+    follow_schools:
+           signed_in_message: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín y actualizaciones sobre
+           signed_in_message_with_no_school_name: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín de noticias y actualizaciones para esta escuela .
+           signed_in_message_on_compare_follow_all: ¡Buenas noticias! Usted está registrado para recibir nuestro boletín de noticias y actualizaciones para estas escuelas .
     more_filters: Más filtros
     ok_fit: Medio
     reviews:

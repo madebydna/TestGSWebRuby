@@ -12,21 +12,21 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
         var addActiveToggleStateFor = function (toggleType) {
             if (toggleType == 'list') {
                 $(elemListViewToggle).find('span').addClass(listViewHighlighted).removeClass(listViewNormal);
-                $(elemListViewToggle).addClass('brand-primary');
+                $(elemListViewToggle).addClass('brand-primary-dark');
             }
             else if (toggleType == 'map') {
                 $(elemMapViewToggle).find('span').addClass(mapViewHighlighted).removeClass(mapViewNormal);
-                $(elemMapViewToggle).addClass('brand-primary');
+                $(elemMapViewToggle).addClass('brand-primary-dark');
             }
         };
         var removeActiveToggleStateFor = function (toggleType) {
             if (toggleType == 'list') {
                 $(elemListViewToggle).find('span').addClass(listViewNormal).removeClass(listViewHighlighted);
-                $(elemListViewToggle).removeClass('brand-primary');
+                $(elemListViewToggle).removeClass('brand-primary-dark');
             }
             else if (toggleType == 'map') {
                 $(elemMapViewToggle).find('span').addClass(mapViewNormal).removeClass(mapViewHighlighted);
-                $(elemMapViewToggle).removeClass('brand-primary');
+                $(elemMapViewToggle).removeClass('brand-primary-dark');
             }
         };
 

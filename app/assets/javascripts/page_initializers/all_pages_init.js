@@ -22,7 +22,7 @@ $(function() {
 
   // Bootstrap select init call. Transforms some selects into pretty Bootstrap
   // ones. https://silviomoreto.github.io/bootstrap-select/
-  $('.selectpicker').selectpicker();
+  $('.selectpicker').selectpicker({ style: 'btn-dropdown' });
   GS.selectpicker.updateDataAttributes();
 
   $.ajaxSetup({ cache: true });
@@ -60,43 +60,37 @@ $(function() {
     });
   }
 
-
   // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
   // since it's easier to test
-  $('.js-send-me-updates-button-header').on('click', function () {
-      $('#js-send-me-updates-form-header').submit();
-  });
+       $('.js-send-me-updates-button-footer').on('click', function () {
+           if (GS.schoolNameFromUrl() === undefined) {
 
-  $('.js-send-me-updates-button-footer').on('click', function () {
-      $('#js-send-me-updates-form-footer').submit();
-  });
+               if (GS.session.isSignedIn()) {
+                   GS.subscription.greatNewsSignUp();
+               } else {
+                   GS.modal.manager.showModal(GS.modal.EmailJoinModal).done(GS.subscription.greatNewsSignUp);
+               }
+           } else {
+               var state = GS.stateAbbreviationFromUrl();
+               var schoolId = GS.schoolIdFromUrl();
+               if (GS.session.isSignedIn()) {
+                   GS.subscription.schools(state, schoolId).follow({showMessages: false}).done(function(){
+                       if (GS.schoolNameFromUrl() === undefined) {
+                           GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_school_name'));
+                       } else {
+                           GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message') + ' ' + GS.schoolNameFromUrl());
 
-  $('.js-save-this-school-button').on('click', function () {
-      $(this).siblings('.js-save-this-school-form').submit();
-  });
+                       }
+                   });
+               } else {
+                   GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
+                     .done(GS.subscription.schools(state, schoolId).follow);
+               }
 
-  $('.js-save-all-schools-button').on('click', function () {
-      var self = $(this);
-      var school_id = '';
-      var state = '';
-      var first = true;
-      var form =  self.siblings('.js-save-all-schools-form');
-      $.each($('.js-save-this-school-form'), function(){
-          if(!first){
-              school_id += ',';
-              state += ',';
-          }
-          first = false;
-          school_id += $(this).children('#favorite_school_school_id').val();
-          state += $(this).children('#favorite_school_state').val();
-      });
-      if (school_id == '') {
-          return false;
-      }
-      form.children('#favorite_school_school_id').val(school_id);
-      form.children('#favorite_school_state').val(state);
-      form.submit();
-  });
+           }
+
+       });
+
 
   $('.js-clear-local-cookies-link').each(function() {
     $(this).click(GS.hubs.clearLocalUserCookies);
@@ -143,5 +137,6 @@ $(function() {
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
   GS.I18n.initLanguageLinkListener();
+  GS.modal.manager.attachDOMHandlers();
 
 });

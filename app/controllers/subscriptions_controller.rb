@@ -7,10 +7,10 @@ class SubscriptionsController < ApplicationController
   def create
     subscription_params = params['subscription']
     set_omniture_cookies(subscription_params)
-    if logged_in?
+    if params.seek(:subscription,:email).present? || logged_in?
       attempt_sign_up(subscription_params)
     elsif
-      handle_not_logged_in(subscription_params) 
+      handle_not_logged_in(subscription_params)
     end
   end
 

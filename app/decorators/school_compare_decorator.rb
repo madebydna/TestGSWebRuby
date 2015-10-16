@@ -24,8 +24,8 @@ class SchoolCompareDecorator < Draper::Decorator
     h.zillow_url(school_cache)
   end
 
-  def follow_this_school
-    h.render 'shared/add_to_my_school_list_form', school: school_cache, driver: 'Compare'
+  def school_id
+    school_cache.school.id
   end
 
 end

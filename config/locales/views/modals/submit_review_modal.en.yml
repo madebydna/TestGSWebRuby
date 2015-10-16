@@ -1,0 +1,6 @@
+---
+en:
+  modals:
+    submit_review_modal:
+      header: 'Submit your review!'
+      subheading: 'Thanks for sharing your experiences. To submit your review, please log in or create an account.'

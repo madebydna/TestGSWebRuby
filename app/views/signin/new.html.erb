@@ -3,140 +3,13 @@
 <div class="signin">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-hdr">
-      <%= render "shared/signin_notification_bar" %>
       <h2 class="ptl tac"><%= t('.header') %></h2>
     </div>
   </div>
   <div class="row limit-width-1200 signin-content">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
       <div class="tab-content well">
-        <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
-          <form class="form-horizontal js-signin-form" action='<%= authenticate_user_path %>' method="post" data-parsley-namespace="data-parsley-">
-            <%= token_tag form_authenticity_token %>
-            <fieldset>
-              <div class="row">
-                <div class="col-sm-12 col-md-12 col-lg-12 bg-white pal brs">
-                  <p class="<%= 'active' if @active_tab == 'join' %>  tar gray-header"><%= t('.no_account_label') %><a href="#join" data-toggle="tab" id="js_join_tab"> <%= t('.signup_tab') %></a></p>
-                  <div class="form-group">
-                      <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
-                        <%= t('.facebook_signin_button') %>
-                      </button>
-                  </div>
-                  <p>- <%= t('.or') %> -</p>
-                  <div class="form-group">
-                    <!-- Email -->
-                    <label class="control-label" for="email"><%= t('.email_label') %></label>
-                    <div class="controls">
-                      <input type="text" id="email" name="email" placeholder="" class="input-xlarge js-signin-email" style="width:100%"
-                               data-parsley-required="true"
-                               data-parsley-type="email"
-                               data-parsley-required-message="Please enter an email address."
-                               data-parsley-error-container=".js-signin-email-errors">
-                      <p class="js-signin-email-errors help-block"></p>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <!-- Password-->
-                    <label class="control-label" for="password"><%= t('.password_label') %></label>
-                    <div class="controls">
-                      <input type="password" id="password" name="password" placeholder="" class="input-xlarge" style="width:100%"
-                                 data-parsley-required="true"
-                                 data-parsley-error-container=".js-signin-password-errors">
-                      <p class="js-signin-password-errors help-block"></p>
-                    </div>
-                  </div>
-                  <br/>
-                  <div class="form-group">
-                    <!-- Button -->
-                    <div class="controls pbm">
-                      <button class="btn btn-primary js-signin-form-button"><%= t('.login_button') %></button>
-                    </div>
-                    <%= link_to t('.forgot_password_link'), forgot_password_url, class: 'small' %>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-        <div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
-          <form class="js-join-form" class="form-horizontal" action='<%= authenticate_user_path %>' method="post"
-                data-parsley-namespace="data-parsley-"
-          >
-            <%= token_tag form_authenticity_token %>
-            <fieldset>
-              <div class="row">
-                <div class="col-xs-4 hidden-xs col-sm-6 hidden-sm col-md-5 col-lg-5">
-                  <ul class="promos">
-                    <% t('.promos').each do |list_item| %>
-                      <li>
-                        <h3><%= list_item['header'] %></h3>
-                        <p><%= list_item['paragraph'] %></p>
-                      </li>
-                    <% end %>
-                  </ul>
-                </div>
-                <div class="col-sm-2 hidden-sm col-md-1 col-lg-1"></div>
-                <div class="col-sm-12 col-md-6 col-lg-6 bg-white brs pal">
-                  <p class="<%= 'active' if @active_tab == 'login' %> tar gray-header"><%= t('.have_an_account_label') %> <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
-                    <legend><%= t('.facebook_signup_label') %></legend>
-
-                    <div class="form-group">
-                      <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-button-link full-width">
-                        <%= t('.facebook_signup_button') %>
-                      </button>
-                    </div>
-
-                    <p>- <%= t('.or') %> -</p>
-
-                    <legend><%= t('.create_account_using_your_email') %></legend>
-                    <div class="form-group">
-                        <!-- Email -->
-                        <label class="control-label" for="email"><%= t('.email_label') %></label>
-
-                        <div class="controls">
-                            <input type="text" id="join-email" name="email" placeholder=""
-                                   class="input-xlarge js-join-email" style="width:100%"
-                                   data-parsley-required="true"
-                                   data-parsley-type="email"
-                                   data-parsley-required-message="Please enter an email address."
-                                   data-parsley-error-container=".js-join-email-errors"
-                                   data-parsley-remote="/gsr/validations/email_available"
-                                   data-parsley-remote-message="Sorry, that email address is already taken."
-                            >
-                            <p class="js-join-email-errors help-block"></p>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="controls">
-                          <label class="checkbox small pll">
-                              <%= check_box 'terms', 'terms', 'data-parsley-required' => 'true',
-                                            'data-parsley-error-message' => 'You must agree to the terms of use to create an account.',
-                                            'data-parsley-error-container' => '.js-join-terms-errors' %>
-                              <%= t('.terms_of_use_html',
-                                    terms_of_use_link: link_to(
-                                      t('.greatschools_terms_of_use'),
-                                      terms_of_use_url
-                                    )
-                                  ) %>
-                            </label>
-                            <p class="js-join-terms-errors help-block"></p>
-                        </div>
-                    </div>
-
-                    <br/>
-
-                    <div class="form-group">
-                        <!-- Button -->
-                        <div class="controls">
-                            <button class="btn btn-primary"><%= t('.signup_button') %></button>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </fieldset>
-          </form>
-        </div>
+        <%= render 'join_and_login_forms' %>
       </div>
     </div>
   </div>
@@ -153,35 +26,3 @@
 
 <%= render 'nav/short_footer' %>
 
-<script type="text/javascript">
-
-    // TODO: move this method elsewhere and write tests
-    var GS_bind_and_sync = function(selector1, selector2) {
-        var $input1 = $(selector1);
-        var $input2 = $(selector2);
-
-        $input1.bind("keyup paste", function() {
-            setTimeout(function() {
-                $input2.val($input1.val());
-            }, 20);
-        });
-        $input2.bind("keyup paste", function() {
-            setTimeout(function() {
-                $input1.val($input2.val());
-            }, 20);
-        });
-    };
-
-    $(function() {
-        GS_bind_and_sync('.js-signin-email', '.js-join-email');
-
-    });
-
-    if (location.hash.substr(1) == "join" || $('.js-join-tab').hasClass('active')) {
-        GS.track.baseOmnitureObject.pageName = JOIN_PAGENAME;
-        GS.track.baseOmnitureObject.hier1 = JOIN_HIER;
-    } else {
-        GS.track.baseOmnitureObject.pageName = SIGNIN_PAGENAME;
-        GS.track.baseOmnitureObject.hier1 = SIGNIN_HIER;
-    }
-</script>

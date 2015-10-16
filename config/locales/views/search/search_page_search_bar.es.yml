@@ -4,3 +4,5 @@ es:
     search_page_search_bar:
       ! 'nearby_cities_label': ! 'Ciudades Cercanas:'
       search_button: Buscar
+      find_greatest_schools: ¡Encuentre las mejores escuelas para usted!
+      guide_me: Guíame

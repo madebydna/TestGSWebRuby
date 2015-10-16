@@ -9,7 +9,7 @@ class ForgotPasswordController < ApplicationController
   end
 
   def send_reset_password_email
-    user, err_msg = validate_user
+    user, err_msg = validate_user_can_reset_password
 
     if err_msg.present?
       flash_error err_msg

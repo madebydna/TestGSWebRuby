@@ -1,18 +1,20 @@
-<div class="limit-width-1200 row phm pbm">
-  <div class="col-xs-12">
-    <span class="open-sans_sb fl subtitle-md js-numOfSchoolsFound" data-num-of-schools-found="<%= @total_results %>">
-      <%= t('.number_of_schools_found', count: @total_results) %>
-      <% if @by_location %>
-        <% if @radius %>
-          <%= t('.within_radius', count: @radius, address: @normalized_address) %>
-        <% else %>
-          <%= t('.near_address', address: @normalized_address) %>
+<div class="number-schools-found">
+  <div class="container-fluid">
+    <div class="pr clearfix">
+      <h1 class="js-numOfSchoolsFound" data-num-of-schools-found="<%= @total_results %>">
+        <%= t('.number_of_schools_found', count: @total_results) %>
+        <% if @district %>
+          <%= t('.in_district', district: @district.name) %>
+        <% elsif @city %>
+          <%= t('.in_city_state', city: @city.name, state: @city.state) %>
         <% end %>
-      <% elsif @district %>
-        <%= t('.in_district', district: @district.name) %>
-      <% elsif @city %>
-        <%= t('.in_city_state', city: @city.name, state: @city.state) %>
-      <% end %>
-    </span>
+
+        <%= render 'save_search' %>
+
+        <div class="fr">
+          <%= render 'desktop_list_map_toggle' %>
+        </div>
+      </h1>
+    </div>
   </div>
 </div>

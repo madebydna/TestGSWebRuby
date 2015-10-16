@@ -14,7 +14,7 @@ es:
             state_average: Prom. 76%
           datapoint_2:
             title: Estudiantes Blancos
-            performance_level: above_average
+            performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
@@ -61,7 +61,7 @@ es:
             state_average: Prom. 76%
           datapoint_2:
             title: Estudiantes Blancos
-            performance_level: above_average
+            performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
@@ -108,7 +108,7 @@ es:
             state_average: Prom. 76%
           datapoint_2:
             title: Estudiantes Blancos
-            performance_level: above_average
+            performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:

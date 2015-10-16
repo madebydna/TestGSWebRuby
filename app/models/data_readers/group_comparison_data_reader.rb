@@ -1,30 +1,29 @@
 # The Group Comparison data reader.
-# Right now this is just set up to work with bar charts.
-# Bar charts are organized into group_collections and groups.
+# Data display points are organized into collections and displays.
 #
-# BarChartCollection is the first-order grouping of charts.
+# DataDisplayCollection is the first-order grouping of charts.
 # - It has things like the name that goes on the button and knows how to
-#   segment the data into the smaller BarChart's
-# BarChart is the second-order grouping of charts.
-# - It has a title and knows how to create the BarChartBars underneath it.
+#   segment the data into the smaller DataDisplay's
+# DataDisplay is the second-order grouping of charts.
+# - It has a title and knows how to create the DataDisplayPoints underneath it.
 # - It also knows why its charts are related. For instance, this will often
 #   be a collection of results for one student breakdown over multiple years.
 #
 # EXAMPLES:
 # 1. Student group comparison.
-#  - Each BarChartCollection is for a data type and creates
-#    BarCharts for each student breakdown, like ethnicity.
-#  - Each BarChart is therefore for a student breakdown. In this
+#  - Each DataDisplayCollection is for a data type and creates
+#    DataDisplays for each student breakdown, like ethnicity.
+#  - Each DataDisplay is therefore for a student breakdown. In this
 #    example, let's pretend we aren't showing data over time, so we aren't
-#    segmenting the groups further. Thus, each BarChart has only one
-#    BarChartBar in it.
+#    segmenting the groups further. Thus, each DataDisplay has only one
+#    DataDisplayPoint in it.
 # 2. Test scores by subject.
-#  - Each BarChartCollection is for a subject (the whole thing is test
+#  - Each DataDisplayCollection is for a subject (the whole thing is test
 #    results for a single test, or more technically, TestDataType). We're
-#    again segments by breakdown, so this creates BarCharts for each
+#    again segments by breakdown, so this creates DataDisplays for each
 #    breakdown.
-#  - Each BarChart is for a breakdown and we're also looking at data by
-#    year so each BarChart creates BarChartBars within it for each year.
+#  - Each DataDisplay is for a breakdown and we're also looking at data by
+#    year so each DataDisplay creates DataDisplayPoints within it for each year.
 
 class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
@@ -34,7 +33,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   attr_accessor :category, :config, :data
 
-  # An array of BarChartCollection objects.
+  # An array of DataDisplayCollection objects.
   # Each of these has inner objects of groups of charts and then the
   # charts themselves.
   def data_for_category(category)
@@ -58,7 +57,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     #   ]
     # }
     get_data!
-    bar_chart_collections
+    data_display_collections
 
   rescue
     []
@@ -66,21 +65,21 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   protected
 
-  def bar_chart_collections
+  def data_display_collections
     collections = data.map do |collection_name, collection_data|
       collection_name = collection_name.first
-      BarChartCollection.new(collection_name, collection_data, config)
+      DataDisplayCollection.new(collection_name, collection_data, config)
     end
-    if valid_bar_chart_collections?(collections)
+    if valid_data_display_collections?(collections)
       collections
     else
       []
     end
   end
 
-  def valid_bar_chart_collections?(bar_chart_collections)
-    bar_chart_collections.any? do |bar_chart_collection|
-      bar_chart_collection.bar_charts.any? { |bc| bc.bar_chart_bars.present? }
+  def valid_data_display_collections?(data_display_collections)
+    data_display_collections.any? do |data_display_collection|
+      data_display_collection.displays.any? { |bc| bc.data_points.present? }
     end
   end
 

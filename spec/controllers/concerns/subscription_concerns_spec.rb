@@ -13,7 +13,7 @@ describe SubscriptionConcerns do
   before(:each) do
     FakeController.send(:public, *FakeController.protected_instance_methods)
     allow(controller).to receive(:current_user).and_return(current_user)
-    allow(current_user).to receive(:has_subscription?).with('greatnews').and_return(true)
+    #allow(current_user).to receive(:has_subscription?).with('greatnews').and_return(true)
     allow(controller).to receive(:set_omniture_events_in_cookie)
     allow(controller).to receive(:set_omniture_sprops_in_cookie)
   end
@@ -25,14 +25,14 @@ describe SubscriptionConcerns do
   describe '#create_subscription' do
     let(:school) { FactoryGirl.build(:school) }
     before do 
-      allow(controller).to receive(:set_flash_notice)
+      allow(controller).to receive(:flash_notice)
       allow(controller).to receive(:flash_error)
       allow(School).to receive(:find_by_state_and_id).with('CA','1').and_return(school)
     end
 
     context 'with no list parameter' do
       before do
-        allow(current_user).to receive(:has_subscription?).with('mystat', school).and_return(false)
+        # allow(current_user).to receive(:has_subscription?).with('mystat', school).and_return(false)
       end
 
       context 'with one school in parameters' do
@@ -43,7 +43,8 @@ describe SubscriptionConcerns do
           }
         end
         it 'should suscribe user to one school' do
-          expect(current_user).to receive(:add_subscription!).with('mystat',school)
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school)
+          expect(current_user).to receive(:safely_add_subscription!).with('mystat',school)
           subject.create_subscription(subscription_params)
         end
       end
@@ -62,14 +63,17 @@ describe SubscriptionConcerns do
           before do
             allow(School).to receive(:find_by_state_and_id).with('CA','2').and_return(school2)
             allow(School).to receive(:find_by_state_and_id).with('CA','3').and_return(school3)
-            allow(current_user).to receive(:has_subscription?).with('mystat', school2).and_return(false)
-            allow(current_user).to receive(:has_subscription?).with('mystat', school3).and_return(false)
+            # allow(current_user).to receive(:has_subscription?).with('mystat', school2).and_return(false)
+            # allow(current_user).to receive(:has_subscription?).with('mystat', school3).and_return(false)
           end
 
           it 'should subscribe user to three schools' do
-            expect(current_user).to receive(:add_subscription!).with('mystat',school)
-            expect(current_user).to receive(:add_subscription!).with('mystat',school2)
-            expect(current_user).to receive(:add_subscription!).with('mystat',school3)
+            expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school)
+            expect(current_user).to receive(:safely_add_subscription!).with('mystat',school)
+            expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school2)
+            expect(current_user).to receive(:safely_add_subscription!).with('mystat',school2)
+            expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school3)
+            expect(current_user).to receive(:safely_add_subscription!).with('mystat',school3)
             subject.create_subscription(subscription_params)
           end
         end
@@ -86,8 +90,8 @@ describe SubscriptionConcerns do
           before do
             allow(School).to receive(:find_by_state_and_id).with('CA','2').and_return(school2)
             allow(School).to receive(:find_by_state_and_id).with('CA','3').and_return(school3)
-            allow(current_user).to receive(:has_subscription?).with('mystat', school2).and_return(false)
-            allow(current_user).to receive(:has_subscription?).with('mystat', school3).and_return(false)
+            # allow(current_user).to receive(:has_subscription?).with('mystat', school2).and_return(false)
+            # allow(current_user).to receive(:has_subscription?).with('mystat', school3).and_return(false)
           end
 
           it 'should raise Argument error' do
@@ -109,10 +113,11 @@ describe SubscriptionConcerns do
           }
         end
         before do
-          allow(current_user).to receive(:has_subscription?).with('mystat',school).and_return(false)
+          # allow(current_user).to receive(:has_subscription?).with('mystat',school).and_return(false)
         end
         it 'should subscribe user to list' do
-          expect(current_user).to receive(:add_subscription!).with('mystat', school)
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews',school)
+          expect(current_user).to receive(:safely_add_subscription!).with('mystat', school)
           subject.create_subscription(subscription_params)
         end
       end
@@ -123,10 +128,11 @@ describe SubscriptionConcerns do
           }
         end
         before do
-          allow(current_user).to receive(:has_subscription?).with('sponsor', nil).and_return(false)
+          # allow(current_user).to receive(:has_subscription?).with('sponsor', nil).and_return(false)
         end
         it 'should subscribe user to list' do
-          expect(current_user).to receive(:add_subscription!).with('sponsor', nil)
+          expect(current_user).to receive(:safely_add_subscription!).with('greatnews', nil)
+          expect(current_user).to receive(:safely_add_subscription!).with('sponsor', nil)
           subject.create_subscription(subscription_params)
         end
       end
@@ -136,18 +142,20 @@ describe SubscriptionConcerns do
   describe '#set_flash_notice' do
     context 'flash is empty' do
       let(:flash) { double('empty?'=>true) }
-      before { allow(controller).to receive(:flash).and_return(flash) }
-        it 'should return message' do
-          message = 'blah'
-          expect(controller).to receive(:flash_notice).with(message)
-          subject.set_flash_notice(message)
-        end
-        it 'should return default if message is nil' do
-          expect(controller).to receive(:flash_notice).with("You've signed up to receive updates")
-          subject.set_flash_notice(nil)
-          # expect(controller.set_flash_notice(nil)).to eq("You've signed up to receive updates")
-        end
+      before do
+        allow(controller).to receive(:subscribe_actions).and_return([])
+        allow(controller).to receive(:flash).and_return(flash)
+      end
+      it 'should return message' do
+        message = 'blah'
+        expect(controller).to receive(:flash_notice).with(message)
+        subject.create_subscription(message: message)
+      end
+      it 'should return default if message is nil' do
+        expect(controller).to receive(:flash_notice).with("You've signed up to receive updates")
+        subject.create_subscription(message: nil)
       end
     end
   end
+end
 

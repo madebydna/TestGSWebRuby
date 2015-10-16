@@ -7,7 +7,7 @@ $below_average:          #bf3c29;
 .average       { color: $average; }
 .below_average { color: $below_average; }
 
-.data-viz-bar-chart {
+.data-viz {
 
   .header {
     width: 100%;
@@ -29,7 +29,7 @@ $below_average:          #bf3c29;
     vertical-align: top;
   }
 
-  .bar-chart-rows {
+  .data-display-point {
     padding: 10px 0;
 
     .row-text {

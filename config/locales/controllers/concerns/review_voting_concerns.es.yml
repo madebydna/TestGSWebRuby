@@ -3,4 +3,5 @@ es:
   controllers:
     concerns:
       review_voting_concerns:
-        vote_saved: Tu opinión voto ha sido registrado. Gracias!
+        vote_saved: ¡Todo listo! Hemos marcado esta revisión útil. Gracias por ayudar a otras familias compartiendo sus pensamientos.
+        vote_saved_for_provisional_user: ¡Gracias! Un paso más - haga clic en el enlace de verificación que le hemos enviado un correo electrónico, y vamos a marcar este comentario como útil.

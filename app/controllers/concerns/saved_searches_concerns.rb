@@ -7,6 +7,7 @@ module SavedSearchesConcerns
     if errors.present?
       render json: { error: ERROR_MESSAGE }
     else
+      flash_message :success,t('actions.save_search.success')
       render json: { }
     end
   end
@@ -18,6 +19,7 @@ module SavedSearchesConcerns
     else
       cookies[:saved_search] = 'success'
       flash_notice I18n.t('controllers.concerns.saved_searches_concerns.search_saved') if flash.empty?
+
     end
     redirect_path.nil? ? redirect_back_or_default : redirect_back_or_default(redirect_path)
   end

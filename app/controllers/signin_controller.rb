@@ -48,7 +48,7 @@ class SigninController < ApplicationController
   def create
      if joining?
       user, error = register      # join
-      flash_notice t('controllers.signin.create.success') unless error || ajax?
+      flash_notice t('controllers.signin.create.success') unless error
     else
       user, error = authenticate  # log in
     end
@@ -65,19 +65,31 @@ class SigninController < ApplicationController
         redirect_to (post_registration_redirect_url)
       end
     else
-      render json: {}
+      render json: {}, status: 200
+    end
+  end
+
+  def register_email_unless_exists
+    user, error = nil, nil
+    unless User.exists?(email: params['email'])
+      user, error = register
+      log_user_in(user)
+    end
+    respond_to do |format|
+      format.json do
+        if error
+          flash_error(error)
+          render json: {}, status: 422
+        else
+          render json: { isNewUser: user.present? }, status: 200
+        end
+      end
     end
   end
 
   def handle_registration_and_login_error(error)
     if request.xhr?
-      #  If the ajax request from the signup already has an account no error is returned
-      # This I18n translation purposefully left under activerecord.errors.models.user.attributes.email.taken
-      if error == I18n.t('activerecord.errors.models.user.attributes.email.taken')
-        render json: {}, status: 200
-      else
-        render json: {error: error}, status: 422
-      end
+      render json: {error: error}, status: 422
     else
       flash_error error
       redirect_to signin_url
@@ -178,6 +190,25 @@ class SigninController < ApplicationController
     end
   end
 
+  def facebook_auth
+    begin
+      authentication_command = FacebookSignedRequestSigninCommand.new_from_request_params(params)
+      authentication_command.join_or_signin do |user, error, is_new_user|
+        if error
+          flash_error(error)
+        else
+          log_user_in(user)
+          executed_deferred_action
+          flash_notice(t('actions.account.created_via_facebook')) if is_new_user
+        end
+        render json: {is_new_user: is_new_user}, status: 200 unless already_redirecting?
+      end
+    rescue => e
+      flash_error t('actions.generic_error')
+      render json: {}, status: 422
+    end
+  end
+
   protected
 
   # rather than invoke different controller actions for login / join, determine intent by presence of certain params
@@ -192,9 +223,7 @@ class SigninController < ApplicationController
     error = nil
 
     if existing_user
-      if existing_user.provisional?
-        error = I18n.t('controllers.signin.create.provisional_email_error')
-      elsif !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
+      if !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
         error = I18n.t('controllers.signin.create.email_without_password_error_html', join_path: join_path).html_safe
       elsif !(existing_user.password_is? params[:password])
         error = I18n.t('controllers.signin.create.password_invalid_error_html', join_url: join_url).html_safe
@@ -245,6 +274,71 @@ class SigninController < ApplicationController
 
   def ajax?
     request.xhr?
+  end
+
+  # handles authentication from a signed request, passed via JS API
+  class FacebookSignedRequestSigninCommand
+    attr_accessor :app_secret, :signed_request, :email, :params
+
+    def self.new_from_request_params(params)
+      params = params.dup
+      facebook_signed_request = params.delete('facebook_signed_request')
+      email = params.delete('email')
+      self.new(facebook_signed_request, email, params)
+    end
+
+    def initialize(signed_request, email, params = {})
+      self.app_secret = ENV_GLOBAL['facebook_app_secret']
+      self.signed_request = signed_request
+      self.email = email
+      self.params = params
+      raise 'Facebook signed request invalid' unless valid_request?
+    end
+
+    def valid_request?
+      @_valid_request ||= MiniFB.verify_signed_request(app_secret, signed_request)
+    end
+
+    def find_or_create_user
+      if existing_user
+        return existing_user, nil, false
+      else
+        user, error = create_user
+        return user, error, true
+      end
+    end
+
+    def join_or_signin(&block)
+      user, error, is_new_user = find_or_create_user
+      block.call(user, error, is_new_user)
+    end
+
+    def existing_user?
+      existing_user != nil
+    end
+
+    def existing_user
+      return @_existing_user if defined? @_existing_user
+      @_existing_user = User.find_by_email(email)
+    end
+
+    def user_attributes_from_params
+      attributes = {}
+      attributes[:facebook_id] = params['facebook_id'] if params['facebook_id']
+      attributes[:first_name] = params['first_name'] if params['first_name']
+      attributes[:last_name] = params['last_name'] if params['last_name']
+      attributes
+    end
+
+    def create_user
+      user = User.new_facebook_user(user_attributes_from_params)
+      user.email = email
+      unless user.save
+        return nil, user.errors.messages.first[1].first
+      end
+      return user, nil
+    end
+
   end
 
 end

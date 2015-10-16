@@ -1,0 +1,6 @@
+---
+es:
+  modals:
+    review_vote_modal:
+      header: 'Marcar como "favorable"'
+      subheading: 'Gracias por compartir tus pensamientos. Para marcar esta crítica útil, por favor conectarse o crear una cuenta.'
