@@ -2,7 +2,23 @@
   <div class="container-fluid">
     <div class="pr clearfix">
       <h1 class="js-numOfSchoolsFound" data-num-of-schools-found="<%= @total_results %>">
-        <%= t('.number_of_schools_found', count: @total_results) %>
+        <%=
+          level_code = LevelCode.full_from_grade(@params_hash['grades'])
+          level_code = t(".#{level_code}", count: @total_results) if level_code.present?
+          school_type = @params_hash['st'] if [*@params_hash['st']].count == 1 && ['private','public','charter'].include?([*@params_hash['st']].first)
+          school_type = t(".#{school_type}", count: @total_results) if school_type.present?
+
+          if level_code.present? && school_type.present?
+            t('.number_of_schools_found_with_level_code_and_school_type', count: @total_results, level_code: level_code, school_type: school_type)
+          elsif level_code.present?
+            t('.number_of_schools_found_with_level_code', count: @total_results, level_code: level_code)
+          elsif school_type.present?
+            t('.number_of_schools_found_with_school_type', count: @total_results, school_type: school_type)
+          else
+            t('.number_of_schools_found', count: @total_results)
+          end
+        %>
+
         <% if @district %>
           <%= t('.in_district', district: @district.name) %>
         <% elsif @city %>
