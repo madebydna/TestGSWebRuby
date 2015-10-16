@@ -7,7 +7,7 @@ module SavedSearchesConcerns
     if errors.present?
       render json: { error: ERROR_MESSAGE }
     else
-      flash_notice t('actions.save_search.success')
+      flash_message :success,t('actions.save_search.success')
       render json: { }
     end
   end
