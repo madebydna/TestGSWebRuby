@@ -209,8 +209,9 @@ module MetaTagsHelper
       prev_url = (url = "#{parameters}#{page.prev}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.prev.nil?
       next_url = (url = "#{parameters}#{page.next}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.next.nil?
     end
+    city_type_level_code_test = "#{@city.name} #{school_type.text}#{level_code.text}#{level_code.school}"
     {
-      title: "#{@city.name} #{school_type.text}#{level_code.text}#{level_code.school}- #{@city.name}, #{@city.state} | GreatSchools",
+      title: "#{city_type_level_code_test.chop}#{pagination_text}- #{@city.name}, #{@city.state} | GreatSchools",
       description: "View and map all #{@city.name}, #{@city.state} schools. Plus, compare or save schools",
       canonical: canonical_url,
       prev: (prev_url ||= nil),
@@ -229,7 +230,7 @@ module MetaTagsHelper
       next_url = (url = "#{parameters}#{page.next}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.next.nil?
     end
     {
-      title: "#{school_type.text}#{level_code.text}#{level_code.school}in #{@district.name} - #{@city.name}, #{@city.state} | GreatSchools",
+      title: "#{school_type.text}#{level_code.text}#{level_code.school}in #{@district.name}#{pagination_text(false)} - #{@city.name}, #{@city.state} | GreatSchools",
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{@district.name}, #{@city.state}",
       keywords: "#{@district.name} Schools, #{@city.name} School District, #{@city.name} #{@state[:long]} School District, School District #{@city.name}, #{@district.name} Public Schools, #{@district.name} Charter Schools",
       canonical: (canonical_url),
@@ -251,7 +252,7 @@ module MetaTagsHelper
       canonical_url = (url = "#{parameters}#{page.current}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params
     end
     {
-        title: 'GreatSchools.org Search',
+        title: "GreatSchools.org Search#{pagination_text(false)}",
         canonical: (canonical_url ||= state_url(@state[:long].gsub(' ', '-'))).downcase
     }
   end
@@ -270,8 +271,18 @@ module MetaTagsHelper
       canonical_url = home_url
     end
     {
-        title: "GreatSchools.org Search: #{@params_hash['q']}",
+        title: "GreatSchools.org Search: #{@params_hash['q']}#{pagination_text(false)}",
         canonical: canonical_url.downcase
     }
+  end
+
+  def pagination_text(with_space = true)
+    if @total_results < 1 || @results_offset > @total_results
+      nil
+    else
+      first = @results_offset + 1
+      last = [@results_offset + @page_size, @total_results].min
+      with_space ? ", #{first}-#{last} " : ", #{first}-#{last}"
+    end
   end
 end
