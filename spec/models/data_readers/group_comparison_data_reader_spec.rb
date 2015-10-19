@@ -118,6 +118,7 @@ describe GroupComparisonDataReader do
       before do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
         allow(subject).to receive(:modify_data!)
+        allow(subject).to receive(:configure_data_type_partials!)
       end
 
       it 'should create a DataDisplayCollection for each data type' do
