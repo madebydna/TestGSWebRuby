@@ -1,7 +1,7 @@
 @mixin gs-rating($size, $with-subtext: false) {
   @if ($size == $gs-rating-size-large) {
     $gs-rating-font-size: 32px;
-    padding-top: 10px;
+    padding-top: 7px;
   } @else {
     $gs-rating-font-size: ($size / 2);
   }
@@ -16,7 +16,7 @@
   @if ($with-subtext) {
     .subtext {
       font-size: 10px;
-      margin-top: -9px;
+      margin-top: -5px;
     }
   } @else {
     line-height: $size;

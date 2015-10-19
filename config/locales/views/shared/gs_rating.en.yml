@@ -2,4 +2,4 @@ en:
   shared:
     gs_rating:
       out_of_10: out of 10
-      no_rating_html: no rating
+      no_rating: no rating
