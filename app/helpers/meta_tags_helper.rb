@@ -209,9 +209,9 @@ module MetaTagsHelper
       prev_url = (url = "#{parameters}#{page.prev}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.prev.nil?
       next_url = (url = "#{parameters}#{page.next}".presence) ? "#{url_without_params}?#{url[1..-1]}" : url_without_params unless page.next.nil?
     end
-    city_type_level_code_test = "#{@city.name} #{school_type.text}#{level_code.text}#{level_code.school}"
+    city_type_level_code_text = "#{@city.name} #{school_type.text}#{level_code.text}#{level_code.school}"
     {
-      title: "#{city_type_level_code_test.chop}#{pagination_text}- #{@city.name}, #{@city.state} | GreatSchools",
+      title: "#{city_type_level_code_text.chop}#{pagination_text}- #{@city.name}, #{@city.state} | GreatSchools",
       description: "View and map all #{@city.name}, #{@city.state} schools. Plus, compare or save schools",
       canonical: canonical_url,
       prev: (prev_url ||= nil),
