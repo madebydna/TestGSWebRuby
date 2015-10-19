@@ -19,7 +19,7 @@ class DataDisplayCollection
     self.group_by_config    = config[:group_by]
     self.bar_chart_order    = config[:bar_chart_order]
     self.original_data_type = config[title]
-    self.partial            = config[:partials][title]
+    self.partial            = config[:partials][title] if config[:partials]
     create_displays!
     self.breakdowns         = displays.map(&:title) if config[:group_by].present?
   end
