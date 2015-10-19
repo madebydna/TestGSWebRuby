@@ -1,3 +1,7 @@
 .gs-rating-md {
-  @include gs-rating(50px);
+  @include gs-rating($size: 50px);
+}
+
+.gs-rating-lg {
+  @include gs-rating($size: 72px, $with-subtext: true);
 }

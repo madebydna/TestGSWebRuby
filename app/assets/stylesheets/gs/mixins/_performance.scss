@@ -1,13 +1,19 @@
-@mixin gs-rating($size) {
+@mixin gs-rating($size, $with-subtext: false) {
+  @include performance-background();
   border-radius: 50%;
   color: white !important;
-  font-family: $font-family-base-bold;
-  font-size: ($size / 2);
+  font: ($size / 2) $font-family-base-bold;
   height: $size;
-  line-height: $size;
   text-align: center;
   width: $size;
-  @include performance-background();
+  @if ($with-subtext) {
+    .subtext {
+      font-size: ($size / 6);
+      margin-top: ($size / -10);
+    }
+  } @else {
+    line-height: $size;
+  }
 }
 
 @mixin performance-color {

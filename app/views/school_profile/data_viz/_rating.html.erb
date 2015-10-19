@@ -1,9 +1,11 @@
 <div class="col-xs-12 col-sm-6 col-md-4">
   <div class="data-display-point rating">
     <div>
-      <div class="gs-rating-md <%= data_point.performance_level %>">
-        <%= data_point.value %>
-      </div>
+      <%= render 'shared/gs_rating',
+        value: data_point.value,
+        size: 'md',
+        rating_level: data_point.performance_level
+      %>
     </div>
     <div class="text">
       <div class="header">

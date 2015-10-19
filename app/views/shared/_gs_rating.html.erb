@@ -1,0 +1,12 @@
+<% size %>
+<% value ||= 'NR' %>
+<% subtext ||= false %>
+<% rating_class = "gs-rating-#{size}" %>
+<% rating_level ||= DisplayRange.for_rating(value) %>
+
+<div class="<%= "#{rating_class} #{rating_level}" %>">
+  <div><%= value %></div>
+  <% if subtext %>
+    <div class="subtext"><%= t('.out_of_10') %></div>
+  <% end %>
+</div>
