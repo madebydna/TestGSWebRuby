@@ -1,15 +1,22 @@
 @mixin gs-rating($size, $with-subtext: false) {
+  @if ($size == $gs-rating-size-large) {
+    $gs-rating-font-size: 32px;
+    padding-top: 10px;
+  } @else {
+    $gs-rating-font-size: ($size / 2);
+  }
+
   @include performance-background();
   border-radius: 50%;
   color: white !important;
-  font: ($size / 2) $font-family-base-bold;
+  font: $gs-rating-font-size $font-family-base-bold;
   height: $size;
   text-align: center;
   width: $size;
   @if ($with-subtext) {
     .subtext {
-      font-size: ($size / 6);
-      margin-top: ($size / -10);
+      font-size: 10px;
+      margin-top: -9px;
     }
   } @else {
     line-height: $size;

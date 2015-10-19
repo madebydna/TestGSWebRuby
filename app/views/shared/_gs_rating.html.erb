@@ -1,12 +1,20 @@
 <% size %>
 <% value ||= 'NR' %>
+<% value = value.to_s.upcase %>
+<% not_rated = value == 'NR' %>
 <% subtext ||= false %>
 <% rating_class = "gs-rating-#{size}" %>
-<% rating_level ||= DisplayRange.for_rating(value) %>
+<% rating_level ||= DisplayRange.for_rating(value) unless not_rated %>
 
 <div class="<%= "#{rating_class} #{rating_level}" %>">
-  <div><%= value %></div>
+  <div class="">
+    <%= value %>
+  </div>
   <% if subtext %>
-    <div class="subtext"><%= t('.out_of_10') %></div>
+    <% if not_rated %>
+      <div class="subtext"><%= t('.no_rating_html') %></div>
+    <% else %>
+      <div class="subtext"><%= t('.out_of_10') %></div>
+    <% end %>
   <% end %>
 </div>
