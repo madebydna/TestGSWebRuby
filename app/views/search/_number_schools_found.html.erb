@@ -3,7 +3,8 @@
     <div class="pr clearfix">
       <h1 class="js-numOfSchoolsFound" data-num-of-schools-found="<%= @total_results %>">
         <%=
-          level_code = LevelCode.full_from_grade(@params_hash['grades'])
+          level_code = LevelCode.full_from_grade(@params_hash['grades']) ||
+            {'p' => 'Preschool', 'e' => 'Elementary', 'm' => 'Middle', 'h' => 'High'}[@params_hash['gradeLevels']]
           level_code = t(".#{level_code}", count: @total_results) if level_code.present?
           school_type = @params_hash['st'] if [*@params_hash['st']].count == 1 && ['private','public','charter'].include?([*@params_hash['st']].first)
           school_type = t(".#{school_type}", count: @total_results) if school_type.present?
