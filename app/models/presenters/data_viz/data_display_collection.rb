@@ -4,7 +4,7 @@ class DataDisplayCollection
   # how to segment charts: by subject or by breakdown.
   # data is a hash of data from GroupComparisonDataReader
 
-  attr_accessor :bar_chart_order, :breakdowns, :config, :data, :default_group,
+  attr_accessor :data_display_order, :breakdowns, :config, :data, :default_group,
     :group_by_config, :sub_title, :title, :displays, :original_data_type,
     :partial
 
@@ -17,9 +17,9 @@ class DataDisplayCollection
     self.title              = title
     self.default_group      = config[:default_group]
     self.group_by_config    = config[:group_by]
-    self.bar_chart_order    = config[:bar_chart_order]
+    self.data_display_order = config[:data_display_order]
     self.original_data_type = config[title]
-    self.partial            = config[:partials][title] if config[:partials]
+    self.partial            = config[:partial]
     create_displays!
     self.breakdowns         = displays.map(&:title) if config[:group_by].present?
   end
@@ -35,7 +35,7 @@ class DataDisplayCollection
   end
 
   def run_config_callbacks!
-    callbacks = DEFAULT_CALLBACKS + [*config[:bar_chart_collection_callbacks]]
+    callbacks = DEFAULT_CALLBACKS + [*config[:collection_callbacks]]
 
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
@@ -78,9 +78,9 @@ class DataDisplayCollection
   end
 
   #Order bar charts callback
-  def order_bar_charts_callback
-    return unless data.present? && bar_chart_order.present?
+  def order_data_displays_callback
+    return unless data.present? && data_display_order.present?
 
-    self.data = Hash[data.sort_by { |k, v| bar_chart_order.index(k) }]
+    self.data = Hash[data.sort_by { |k, v| data_display_order.index(k) }]
   end
 end

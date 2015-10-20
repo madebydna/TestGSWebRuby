@@ -36,7 +36,7 @@ class DataDisplay
   end
 
   def run_config_callbacks!
-    callbacks = DEFAULT_CALLBACKS + [*config[:bar_chart_callbacks]]
+    callbacks = DEFAULT_CALLBACKS + [*config[:data_display_callbacks]]
 
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
@@ -58,5 +58,15 @@ class DataDisplay
 
   def label_for(data_point, config)
     config[:label_charts_with] ? data_point[config[:label_charts_with].to_sym] : nil
+  end
+
+  def descend_columns_callback
+    number_of_rows = (data.size / 2).round
+    first_half, second_half = data.each_slice(number_of_rows).to_a
+    new_data_array = (0..number_of_rows).each_with_object([]) do |i, arr|
+      arr << first_half[i] if first_half[i]
+      arr << second_half[i] if second_half[i]
+    end
+    self.data = new_data_array
   end
 end

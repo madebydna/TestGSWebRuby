@@ -69,7 +69,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   def data_display_collections
     collections = data.map do |collection_name, collection_data|
       collection_name = collection_name.first
-      DataDisplayCollection.new(collection_name, collection_data, config)
+      collection_config = config_for_collection(collection_name)
+      DataDisplayCollection.new(collection_name, collection_data, collection_config)
     end
     if valid_data_display_collections?(collections)
       collections
@@ -82,6 +83,17 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data_display_collections.any? do |data_display_collection|
       data_display_collection.displays.any? { |bc| bc.data_points.present? }
     end
+  end
+
+  def config_for_collection(collection_name)
+    collection_partial = config[:partials][collection_name].to_s
+    config.each_with_object({}.with_indifferent_access) do |(key, value), h|
+      config_partial = key.split(':').first
+      if config_partial == collection_partial || config_partial == 'all'
+        config_key = key.sub("#{config_partial}:", '')
+        h[config_key] = value
+      end
+    end.merge( partial: collection_partial )
   end
 
   def school_cache_keys
@@ -106,7 +118,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     untranslated_label_map = category.key_label_map(false, true)
     data.each do |key, _|
       key = label_lookup_value(key)
-      config[translated_label_map[key]] = untranslated_label_map[key]
+      config["all:#{translated_label_map[key]}"] = untranslated_label_map[key]
     end
   end
 
@@ -188,6 +200,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data.values.flatten.each do | hash |
       if (percent = student_types[hash[:breakdown].to_s.to_sym]).present?
         hash[:subtext] = percent_of_population_text(percent)
+        hash[:percent_of_population] = percent
       elsif hash[:subtext].nil?
         hash[:subtext] = no_data_text
       end
@@ -201,7 +214,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   def percent_of_population_text(percent)
     I18n.t(
       :percent_of_population_subtext,
-      percent: (percent<1 && percent>0? '<1' : percent.to_i),
+      percent: (percent < 1 && percent > 0 ? '<1' : percent.to_i),
       scope: i18n_scope,
       default:"#{percent}% of population"
     )
