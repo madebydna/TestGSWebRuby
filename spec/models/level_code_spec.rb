@@ -35,9 +35,11 @@ describe LevelCode do
 
   describe '.full_from_grade' do
     it 'should return nil if a string is not recieved' do
-
+      expect(LevelCode.full_from_grade(nil)).to eql(nil)
+      expect(LevelCode.full_from_grade(Hash.new)).to eql(nil)
+      expect(LevelCode.full_from_grade(Proc)).to eql(nil)
+      expect(LevelCode.full_from_grade(:hello)).to eql(nil)
     end
-
 
     {
       'PK' => 'Preschool',
