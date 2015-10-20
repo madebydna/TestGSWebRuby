@@ -40,20 +40,40 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     self.category = category
     self.config = category.parsed_json_config
 
-    # example parsed config. (HashWithIndifferentAccess)
-    # self.config = {
-    #  'bar_chart_collection_callbacks' => ['copy_all_students'],
-    #  'group_by'                       => {'gender'=> 'breakdown', 'program' => 'breakdown'},
-    #  'default_group'                  => 'ethnicity',
-    #  'bar_chart_callbacks'            => ['move_all_students'],
-    #  'sort_by'                        => {'desc' => 'percent_of_population'},
-    #  'label_charts_with'              => 'breakdown',
-    #  'breakdown'                      => 'Ethnicity',
-    #  'breakdown_all'                  => 'Enrollment',
-    #  'group_comparison_callbacks'     => [
-    #     'add_ethnicity_callback',
-    #     'add_enrollment_callback',
-    #     'add_student_types_callback',
+    # example JSON config. Gets turned into a HashWithIndifferentAccess.
+    # The format of the keys is partial:config_key.
+    # {
+    #   "all:collection_callbacks": [
+    #     "copy_all_students",
+    #     "order_data_displays"
+    #   ],
+    #   "all:order": [
+    #     "ethnicity",
+    #     "program",
+    #     "gender"
+    #   ],
+    #   "all:group_by": {
+    #     "gender": "breakdown",
+    #     "program": "breakdown"
+    #   },
+    #   "all:default_group": "ethnicity",
+    #   "bar_chart:data_display_callbacks": [
+    #     "move_all_students",
+    #     "descend_columns"
+    #   ],
+    #   "rating:data_display_callbacks": [
+    #     "move_all_students"
+    #   ],
+    #   "all:sort_by": {
+    #     "desc": "percent_of_population"
+    #   },
+    #   "all:label_charts_with": "breakdown",
+    #   "breakdown": "Ethnicity",
+    #   "breakdown_all": "Enrollment",
+    #   "group_comparison_callbacks": [
+    #     "add_ethnicity_callback",
+    #     "add_enrollment_callback",
+    #     "add_student_types_callback"
     #   ]
     # }
     get_data!
