@@ -62,7 +62,11 @@ class DataDisplay
 
   def descend_columns_callback
     number_of_rows = (data.size / 2).round
-    first_half, second_half = data.each_slice(number_of_rows).to_a
+    first_half = data
+    second_half = []
+    if number_of_rows > 1
+      first_half, second_half = data.each_slice(number_of_rows).to_a
+    end
     new_data_array = (0..number_of_rows).each_with_object([]) do |i, arr|
       arr << first_half[i] if first_half[i]
       arr << second_half[i] if second_half[i]
