@@ -25,9 +25,9 @@ describe DataDisplay do
       context "with a #{data_point}" do
         subject do
           # The array of data displays
-          DataDisplay
+          data_display = DataDisplay
             .new([eval(data_point.to_s)], nil, {'label_charts_with' => 'year'}.with_indifferent_access)
-            .send(:create_data_points!)
+            .data_points
         end
         it "should create #{number_data_points} data displays" do
           expect(subject.size).to eq(number_data_points)
@@ -39,7 +39,7 @@ describe DataDisplay do
       subject do
         DataDisplay
           .new([earlier_data_point, valid_data_point], nil, {'label_charts_with' => 'year'}.with_indifferent_access)
-          .send(:create_data_points!)
+          .data_points
       end
       it 'should create a DataDisplay for each group' do
         expect(subject.size).to eq(2)

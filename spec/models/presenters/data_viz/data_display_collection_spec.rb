@@ -93,7 +93,7 @@ describe DataDisplayCollection do
     context 'when the sort by descending by percent breakdown and all students callbacks are set' do
       subject do
         DataDisplayCollection.new(nil, data_points, {
-          data_display_callbacks: ['move_all_students'],
+          data_display_before_callbacks: ['move_all_students'],
           sort_by: {'desc' => 'percent_of_population'},
           default_group: 'ethnicity',
           label_charts_with: 'breakdown'
@@ -108,7 +108,7 @@ describe DataDisplayCollection do
         collection_callbacks: ['copy_all_students', 'order_data_displays'],
         group_by: {'gender' => 'breakdown', 'program' => 'breakdown'},
         default_group: 'ethnicity',
-        data_display_callbacks: ['move_all_students'],
+        data_display_before_callbacks: ['move_all_students'],
         data_display_order: data_display_order,
         sort_by: {'desc' => 'percent_of_population'},
         label_charts_with: 'breakdown',
