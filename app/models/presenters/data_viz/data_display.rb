@@ -4,7 +4,8 @@ class DataDisplay
 
   attr_accessor :data_points, :data, :config, :title, :sort_by_config
 
-  DEFAULT_CALLBACKS = [ 'sort_by' ]
+  DEFAULT_BEFORE_CALLBACKS = [ 'sort_by' ]
+  DEFAULT_AFTER_CALLBACKS  = []
 
   def initialize(data, title = nil, config = {})
     # Title is optional because for single chart groups, there is no group title
@@ -19,7 +20,7 @@ class DataDisplay
   private
 
   def create_data_points!
-    run_config_callbacks!
+    run_before_callbacks!
 
     self.data_points = data.map do |data_point|
       data_point = DataDisplayPoint.new(
@@ -33,10 +34,18 @@ class DataDisplay
       )
       data_point.display? ? data_point : nil
     end.compact
+
+    run_after_callbacks!
   end
 
-  def run_config_callbacks!
-    callbacks = DEFAULT_CALLBACKS + [*config[:data_display_callbacks]]
+  def run_before_callbacks!
+    callbacks = DEFAULT_BEFORE_CALLBACKS + [*config[:data_display_before_callbacks]]
+
+    [*callbacks].each { |c| send("#{c}_callback".to_sym) }
+  end
+
+  def run_after_callbacks!
+    callbacks = DEFAULT_AFTER_CALLBACKS + [*config[:data_display_after_callbacks]]
 
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
@@ -61,16 +70,16 @@ class DataDisplay
   end
 
   def descend_columns_callback
-    number_of_rows = (data.size / 2).round
-    first_half = data
+    number_of_rows = (data_points.size / 2).round
+    first_half = data_points
     second_half = []
     if number_of_rows > 1
-      first_half, second_half = data.each_slice(number_of_rows).to_a
+      first_half, second_half = data_points.each_slice(number_of_rows).to_a
     end
     new_data_array = (0..number_of_rows).each_with_object([]) do |i, arr|
       arr << first_half[i] if first_half[i]
       arr << second_half[i] if second_half[i]
     end
-    self.data = new_data_array
+    self.data_points = new_data_array
   end
 end
