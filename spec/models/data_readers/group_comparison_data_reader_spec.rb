@@ -39,6 +39,41 @@ describe GroupComparisonDataReader do
     }
   }
 
+  let(:all_students_test_data) {
+    {
+      [:first_data_type, nil] => [
+        {
+          year: 2013,
+          breakdown: 'All students',
+          original_breakdown: 'All students',
+          school_value: 100.0,
+          state_average: 78.35,
+          performance_level: 'above_average',
+        }
+      ],
+      [:second_data_type, nil] => [
+        {
+          year: 2013,
+          breakdown: 'Male',
+          original_breakdown: 'Male',
+          school_value: 90.0,
+          state_average: 98.35,
+          performance_level: 'average',
+        }
+      ],
+      [:third_data_type, nil] => [
+        {
+          year: 2013,
+          breakdown: 'Economically disadvantaged',
+          original_breakdown: 'Economically disadvantaged',
+          school_value: 10.0,
+          state_average: 8.35,
+          performance_level: 'below_average',
+        }
+      ],
+    }
+  }
+
   let(:ethnicity_subtext_data) {
     {
       [:Ethnicity, nil] => [
@@ -119,7 +154,7 @@ describe GroupComparisonDataReader do
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
         allow(subject).to receive(:modify_data!)
         allow(subject).to receive(:configure_data_type_partials!)
-        allow(subject).to receive(:config_for_collection)
+        allow(subject).to receive(:config_for_collection).and_return({})
       end
 
       it 'should create a DataDisplayCollection for each data type' do
@@ -131,6 +166,26 @@ describe GroupComparisonDataReader do
         subject.data_for_category(fake_category).each do |data_display_collection|
           expect(data_display_collection).to be_a DataDisplayCollection
         end
+      end
+    end
+
+    context 'with only all students data for a data type' do
+      before do
+        allow(subject).to receive(:cached_data_for_category).and_return(all_students_test_data)
+        allow(subject).to receive(:modify_data!)
+        allow(subject).to receive(:configure_data_type_partials!)
+        allow(subject).to receive(:config_for_collection).and_return({})
+        allow(subject).to receive(:valid_data_display_collections?).and_return(true)
+      end
+
+      it 'should create a DataDisplayCollection for each data type' do
+        expect(DataDisplayCollection).to receive(:new).exactly(sample_data.keys.size).times
+        subject.data_for_category(fake_category)
+      end
+
+      it 'should remove the all students collection' do
+        collections = subject.data_for_category(fake_category)
+        expect(collections.map(&:title)).to eq([:second_data_type, :third_data_type])
       end
     end
 

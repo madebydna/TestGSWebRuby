@@ -92,6 +92,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       collection_config = config_for_collection(collection_name)
       DataDisplayCollection.new(collection_name, collection_data, collection_config)
     end
+    collections.keep_if { |c| c.display? }
     if valid_data_display_collections?(collections)
       collections
     else

@@ -8,7 +8,7 @@ class DataDisplayCollection
     :group_by_config, :sub_title, :title, :displays, :original_data_type,
     :partial
 
-  DEFAULT_CALLBACKS = [ 'group_by' ]
+  DEFAULT_CALLBACKS = [ 'group_by', 'remove_only_all_students' ]
 
   def initialize(title, data, config = {})
     self.data               = data
@@ -22,6 +22,10 @@ class DataDisplayCollection
     self.partial            = config[:partial]
     create_displays!
     self.breakdowns         = displays.map(&:title) if config[:group_by].present?
+  end
+
+  def display?
+    displays.present?
   end
 
   private
@@ -82,5 +86,12 @@ class DataDisplayCollection
     return unless data.present? && data_display_order.present?
 
     self.data = Hash[data.sort_by { |k, v| data_display_order.index(k) }]
+  end
+
+  # Remove groups that would only have all students
+  def remove_only_all_students_callback
+    data.delete_if do |_, values|
+      values.map { |v| v[:breakdown].try(:downcase) }.compact.uniq == ['all students']
+    end
   end
 end
