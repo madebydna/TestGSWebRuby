@@ -54,6 +54,12 @@ class School < ActiveRecord::Base
     )
   end
 
+  def collection_ids
+    @_collection_ids ||= (
+      collections.map(&:id)
+    )
+  end
+
   # Returns first collection or nil if none
   def collection
     collections.first

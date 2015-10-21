@@ -1,5 +1,11 @@
 <% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
 
+<%
+  collections_to_hide = [*category_placement.layout_config_json['hide_module_for_collections']]
+  should_hide_partial = (@school.collection_ids & collections_to_hide).present?
+%>
+
+<% unless should_hide_partial %>
 <% begin %>
   <% children = @page_config.category_placement_children_with_data category_placement %>
   <% if children.any? && category_placement.title.present? %>
@@ -88,4 +94,5 @@
 <% rescue => e %>
   <%= log_view_error "Something went wrong while trying to display #{category_placement.title}", e %>
   <% raise e if params[:debug] %>
+<% end %>
 <% end %>

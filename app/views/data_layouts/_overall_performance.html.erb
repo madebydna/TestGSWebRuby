@@ -1,0 +1,15 @@
+<% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
+
+<%
+  collections_to_show = [*category_placement.layout_config_json['show_module_for_collections']]
+  should_show_partial = (@school.collection_ids & collections_to_show).present?
+%>
+
+<% if should_show_partial %>
+  <div>
+  blah
+  blah
+  blah
+  ...
+  </div>
+<% end %>
