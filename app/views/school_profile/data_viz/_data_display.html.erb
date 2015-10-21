@@ -5,7 +5,7 @@
 
 <div class="js-dataDisplay js-<%=data_display.title %> <%= show_hide_chart %>">
   <% data_display.data_points.each do |data_point| %>
-    <%= render partial: "school_profile/data_viz/#{@data_display_collection.partial}",
+    <%= render partial: "school_profile/data_viz/#{@data_display_collection.partial}/display",
                locals: {data_point: data_point} %>
   <% end %>
 </div>
