@@ -10,75 +10,136 @@ class HttpArchiveAnalyzer
   CONFIG = {
     all: {},
     javascript: {
-      patterns: /\.js$/
+      content_types: ['application/javascript', 'text/javascript', 'application/x-javascript']
     },
     css: {
-      patterns: /\.css$/
+      content_types: 'text/css'
     },
     first_party_js: {
-      patterns:   /^(http|https):\/\/www\.gscdn\.org.+\.js$/,
+      hosts: 'www.gscdn.org',
       parent: :javascript
     },
     first_party_and_gpt_js: {
-      patterns: [ /^(http|https):\/\/www\.gscdn\.org.+\.js$/, /\/gpt.js$/ ],
+      hosts: ['www.gscdn.org', 'www.googletagservices.com'],
       parent: :javascript
     },
     third_party_js: {
       parent: :javascript
     },
     first_party_css: {
-      patterns: /^(http|https):\/\/www\.gscdn\.org.+\.css$/,
+      hosts: 'www.gscdn.org',
       parent: :css
     },
     third_party_css: {
       parent: :css
+    },
+    fonts: {
+      content_types: ['application/x-font-woff', 'font/woff2']
+    },
+    images: {
+      content_types: /^image/,
+    },
+    first_party_images: {
+      hosts: 'www.gscdn.org',
+      parent: :images
+    },
+    third_party_images: {
+      parent: :images
+    },
+    html: {
+      content_types: 'text/html'
+    },
+    other_content: {
     }
   }.freeze
 
-  METRICS = [:bytesOut, :download_ms].freeze
+  METRICS = [:bytesOut, :download_ms, :time].freeze
   COLUMN_WIDTH = 100
 
   attr_accessor :file, :data
 
   CONFIG.keys.each do |name|
-    patterns = *CONFIG.fetch(name, {}).fetch(:patterns, [])
-    parent = CONFIG.fetch(name, {}).fetch(:parent, :all)
+    config = CONFIG.fetch(name, {})
+    parent = config.fetch(:parent, :all)
 
-    if patterns.size > 0
-      define_method("#{name}_requests") do
-        requests = send("#{parent}_requests")
-        requests.select { |r| patterns.any? { |pattern| pattern.match(r['_full_url']) } }
-      end
+    define_method("#{name}_requests") do
+      urls= *config.fetch(:urls, [])
+      content_types = *config.fetch(:content_types, [])
+      hosts = *config.fetch(:hosts, [])
+      requests = send("#{parent}_requests")
+      r = requests.select do |r|
+        (urls.size == 0 || urls.any? { |pattern| pattern.match(r['_full_url']) }) &&
+        (content_types.size == 0 || content_types.any? { |pattern| pattern.match(r['_contentType']) if r['_contentType'] }) &&
+        (hosts.size == 0 || hosts.any? { |pattern| pattern.match(r['_host']) })
+      end.extend(MethodsForArrayOfRequests)
     end
 
     METRICS.each do |metric|
       define_method("#{name}_#{metric}") do
-        send("#{name}_requests").inject(0) { |total, request| total += request["_#{metric}"].to_f }
+        send("#{name}_requests").sum(metric)
       end
 
-      define_method("#{name}_#{metric}_report") do |show_detail|
-        value = send("#{name}_#{metric}")
-        parent_value = parent ? send("#{parent}_#{metric}") : 1
-        report_row = proc do |name, parent, value, parent_value|
-          puts name.to_s.ljust(40, ' ') + ' | ' + "#{metric} #{value}".ljust(20, ' ') + ' | ' + "Percentage of #{parent}: #{(value.to_f / parent_value.to_f * 100).round(2)}"
-        end
-        report_row.call(name, parent, value, parent_value)
-        if show_detail
-          send("#{name}_requests").each do |request|
-            report_row.call(request['_url'][-40..-1], name, request['_' + metric.to_s], value)
+      define_method("#{name}_#{metric}_report") do |detail_for_attribute = nil|
+        requests = send("#{name}_requests")
+        value = send("#{name}_#{metric}").to_f
+        parent_value = parent ? send("#{parent}_#{metric}").to_f : 1
+        report_row(name, parent, requests.sum(metric), parent_value)
+        if detail_for_attribute
+          requests_by_attribute = requests.group_by_attribute(detail_for_attribute)
+          requests_by_attribute.extend(MethodsForHashOfRequests)
+          requests_by_attribute = requests_by_attribute.sort_by_metric(metric)
+          requests_by_attribute.each do |attribute, requests|
+            report_row(attribute, name, requests.sum(metric), value)
           end
-          puts '=' * COLUMN_WIDTH
+          puts
         end
       end
     end
   end
 
+  def report_row(label, parent_label, value, parent_value)
+    percent_of_parent = (value.to_f / parent_value.to_f * 100).round(2)
+    columns = [
+      label[0..59].to_s.ljust(60, ' '),
+      value.to_s.ljust(10, ' '),
+      "% of #{parent_label}: #{percent_of_parent}"
+    ]
+    puts columns.join(' | ')
+  end
+
   def third_party_js_requests
-    javascript_requests - first_party_js_requests
+    (javascript_requests - first_party_js_requests).extend(MethodsForArrayOfRequests)
   end
 
   def third_party_css_requests
-    css_requests - first_party_css_requests
+    (css_requests - first_party_css_requests).extend(MethodsForArrayOfRequests)
+  end
+
+  def third_party_image_requests
+    (image_requests - first_party_image_requests).extend(MethodsForArrayOfRequests)
+  end
+
+  def group_by_host_and_content_category
+    all_requests.group_by do |request|
+      [request['_host'], content_category(request['_contentType'])]
+    end
+  end
+
+  def content_category(content_type)
+    case content_type
+      when 'application/javascript', 'text/javascript', 'application/x-javascript'
+        'javascript'
+      when 'image/png', 'image/gif', 'image/jpeg', 'image/x-icon'
+        'images'
+      when 'test/css'
+        'css'
+      when 'text/html'
+        'html'
+      when 'application/x-font-woff', 'font/woff2'
+        'fonts'
+      else
+        'other_content'
+    end
   end
 
   def initialize(filename)
@@ -87,19 +148,71 @@ class HttpArchiveAnalyzer
   end
 
   METRICS.each do |metric|
-    define_method("#{metric}_report") do |show_detail|
+    define_method("#{metric}_report") do |detail_for_attribute = nil|
       puts "Metric: #{metric}"
       puts '-' * COLUMN_WIDTH
-      [:all, :javascript, :first_party_js, :third_party_js, :css, :first_party_css, :third_party_css].each do |item|
-        send("#{item}_#{metric}_report", show_detail)
+      [
+        :all,
+        :javascript,
+        :first_party_js,
+        :third_party_js,
+        :css,
+        :first_party_css,
+        :third_party_css,
+        :images,
+        :first_party_images,
+        :third_party_images,
+        :fonts,
+        :html
+      ].each do |item|
+        send("#{item}_#{metric}_report", detail_for_attribute)
       end
       nil
     end
   end
 
   def all_requests
-    data['log']['entries']
+    data['log']['entries'].map { |r| r.extend(MethodsForRequest) }.extend(MethodsForArrayOfRequests)
   end
+
+  module MethodsForArrayOfRequests
+    def average(metric)
+      sum(metric) / size.to_f
+    end
+    def sum(metric)
+      inject(0.0) do|total, r|
+        total += (r.send(metric).to_f || 0).to_f
+      end
+    end
+    def group_by_attribute(attribute)
+      hash = group_by do |request|
+        request["_#{attribute}"] || request[attribute]
+      end
+      hash.each do |attribute, values|
+        values.extend(MethodsForArrayOfRequests)
+      end
+      hash
+    end
+  end
+
+  module MethodsForHashOfRequests
+    def sort_by_metric(metric, descending = true)
+      array = sort_by do |attribute, requests|
+        requests.inject(0.0) { |total, r| total += r.send(metric).to_f }
+      end
+      if descending
+        array.reverse!
+      end
+      Hash[array]
+    end
+  end
+
+  module MethodsForRequest
+    def method_missing(method, *args)
+      send(:fetch, method.to_s, nil) || send(:fetch, "_#{method}", nil)
+    end
+  end
+
 end
 
 if ARGV && ARGV[0] && ARGV[1]
