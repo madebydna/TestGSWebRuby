@@ -8,6 +8,8 @@ Rails.application.config.assets.precompile += [
     'bootstrap-datepicker3.css',
     'jquery.timepicker.css',
     'jquery.timepicker.min.js',
+    'galleria-1.3.1.js',
+    'galleria.classic.js',
     'main.css', #for style-guide
     'main.js', #for style-guide
     'picturefill.min.js' #for style-guide
