@@ -1,12 +1,12 @@
 .sel-promo-banner {
   // Banner background
   background-color: white;
-  background-image: asset_data_url('home/sel_banner_bg.png');
+  background-image: image_url('home/sel_banner_bg.png');
   background-repeat: repeat;
 
   // Heart image
   .sel-banner-heart {
-    background-image: asset_data_url('home/sel_banner_heart.png');
+    background-image:  image_url('home/sel_banner_heart.png');
     background-size: cover;
 
     background-position: left;
