@@ -5,7 +5,6 @@
 //  require ./jquery.cookie
 //= require ./jquery.touchSwipe
 //  require ./omniture
-//= require ./parsley
 //= require ./parsley.remote
 //= require ./slick
 //= require ./typeahead_modified.bundle
