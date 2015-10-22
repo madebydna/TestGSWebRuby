@@ -26,12 +26,12 @@
    property_type = type == :sale ? 'fs' : 'fr'
 
    zillow_base_url = 'http://www.zillow.com/search/WidgetHomeSearch.htm'
-   extra_params = []
-   extra_params << 'ga_utm_source=Great_Schools'
-   extra_params << 'ga_utm_medium=referral'
-   extra_params << 'ga_utm_content=map+'
-   extra_params << 'ga_utm_campaign=partner_widgets+'
-   zillow_url = zillow_base_url + '?' + extra_params.join('&')
+   extra_params = {}
+   extra_params['ga_utm_source'] = 'Great_Schools'
+   extra_params['ga_utm_medium'] = 'referral'
+   extra_params['ga_utm_content'] = 'map+'
+   extra_params['ga_utm_campaign'] = 'partner_widgets+'
+   zillow_url = zillow_base_url + '?' + extra_params.map{|arr| arr.join('=')}.join('&')
 %>
 <form action="<%= zillow_url %>" target="_blank" class="js-zillowNearbyHomesForm">
   <input type="hidden" name="propertyType" value="<%= property_type %>"/>
