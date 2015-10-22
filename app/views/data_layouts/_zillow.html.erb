@@ -2,8 +2,8 @@
 
 <div id="js-zillow ">
   <%= render layout: 'school_profile/col', locals:{ css_class:'', category_placement: category_placement} do %>
-  <%= render "shared/section_header", category_placement: category_placement %>
-  <%= render 'data_layouts/zillow_content', data: data %>
+    <%= render "shared/section_header", category_placement: category_placement %>
+    <%= render 'zillow/module' %>
   <% end %>
 </div>
 
