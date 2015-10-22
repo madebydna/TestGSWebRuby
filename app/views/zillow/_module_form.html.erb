@@ -1,39 +1,42 @@
 <%
-    any_price = t('.any_price')
-    prices = case type
-             when :sale
-               [
-                 [any_price, ''],
-                 ['0 - $100,000', '0'],
-                 ['100,000 - 200,000', '100000'],
-                 ['200,000 - 300,000', '200000'],
-                 ['300,000 - 500,000', '300000'],
-                 ['500,000 - 1,000,000', '500000'],
-                 ['1,000,000+', '1000000'],
-               ]
-             when :rent
-               [
-                 [any_price, ''],
-                 ['0 - 500', '0'],
-                 ['500 - 1000', '500'],
-                 ['1000 - 1500', '1000'],
-                 ['1500 - 2000', '1500'],
-                 ['2000 - 3000', '2000'],
-                 ['3000+', '3000'],
-               ]
-             end
-    beds = [0, 1, 2, 3, 4].map { |count| [t('.beds', count: count), "#{count}-"] }
+   any_price = t('.any_price')
+   prices = case type
+              when :sale
+                [
+                    [any_price, ''],
+                    ['0 - $100,000', '0'],
+                    ['100,000 - 200,000', '100000'],
+                    ['200,000 - 300,000', '200000'],
+                    ['300,000 - 500,000', '300000'],
+                    ['500,000 - 1,000,000', '500000'],
+                    ['1,000,000+', '1000000'],
+                ]
+              else
+                [
+                    [any_price, ''],
+                    ['0 - 500', '0'],
+                    ['500 - 1000', '500'],
+                    ['1000 - 1500', '1000'],
+                    ['1500 - 2000', '1500'],
+                    ['2000 - 3000', '2000'],
+                    ['3000+', '3000'],
+                ]
+            end
+   beds = [0, 1, 2, 3, 4].map { |count| [t('.beds', count: count), "#{count}-"] }
+   property_type = type == :sale ? 'fs' : 'fr'
+
+   zillow_base_url = 'http://www.zillow.com/search/WidgetHomeSearch.htm'
+   extra_params = []
+   extra_params << 'ga_utm_source=Great_Schools'
+   extra_params << 'ga_utm_medium=referral'
+   extra_params << 'ga_utm_content=map+'
+   extra_params << 'ga_utm_campaign=partner_widgets+'
+   zillow_url = zillow_base_url + '?' + extra_params.join('&')
 %>
-<form action="http://www.zillow.com/search/WidgetHomeSearch.htm?ga_utm_source=Great_Schools&ga_utm_medium=referral&ga_utm_content=map+&ga_utm_campaign=partner_widgets+"
-      target="_blank" class="js-zillowNearbyHomesForm">
+<form action="<%= zillow_url %>" target="_blank" class="js-zillowNearbyHomesForm">
+  <input type="hidden" name="propertyType" value="<%= property_type %>"/>
   <div class="col-xs-12 col-sm-4 form-group">
-    <input type="hidden" name="propertyType" value="<%= type == :sale ? 'fs' : 'fr' %>"/>
-    <input
-        name="searchbox"
-        class="form-control"
-        type="text"
-        placeholder="<%= t('.enter_location') %>"
-       />
+    <input name="searchbox" class="form-control" type="text" placeholder="<%= t('.enter_location') %>"/>
   </div>
   <div class="col-xs-6 col-sm-3 col-lg-2 form-group">
     <%= select_tag 'minPrice', options_for_select(prices), class: 'selectpicker js-zillowMinPrice', data: {width: '100%'} %>
