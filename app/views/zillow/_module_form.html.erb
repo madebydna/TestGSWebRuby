@@ -1,44 +1,48 @@
 <%
-    any_price = t('.any_price');
+    any_price = t('.any_price')
     prices = case type
              when :sale
                [
-                 any_price,
-                 '0 - $100,000',
-                 '100,000 - 200,000',
-                 '200,000 - 300,000',
-                 '300,000 - 500,000',
-                 '500,000 - 1,000,000',
-                 '1,000,000+',
+                 [any_price, ''],
+                 ['0 - $100,000', '0'],
+                 ['100,000 - 200,000', '100000'],
+                 ['200,000 - 300,000', '200000'],
+                 ['300,000 - 500,000', '300000'],
+                 ['500,000 - 1,000,000', '500000'],
+                 ['1,000,000+', '1000000'],
                ]
              when :rent
                [
-                 any_price,
-                 '0 - 500',
-                 '500 - 1000',
-                 '1000 - 1500',
-                 '1500 - 2000',
-                 '2000 - 3000',
-                 '3000+',
+                 [any_price, ''],
+                 ['0 - 500', '0'],
+                 ['500 - 1000', '500'],
+                 ['1000 - 1500', '1000'],
+                 ['1500 - 2000', '1500'],
+                 ['2000 - 3000', '2000'],
+                 ['3000+', '3000'],
                ]
              end
-    beds = [0, 1, 2, 3, 4].map { |count| t('.beds', count: count) }
+    beds = [0, 1, 2, 3, 4].map { |count| [t('.beds', count: count), "#{count}-"] }
 %>
-<form>
+<form action="http://www.zillow.com/search/WidgetHomeSearch.htm?ga_utm_source=Great_Schools&ga_utm_medium=referral&ga_utm_content=map+&ga_utm_campaign=partner_widgets+"
+      target="_blank" class="js-zillowNearbyHomesForm">
   <div class="col-xs-12 col-sm-4 form-group">
+    <input type="hidden" name="propertyType" value="<%= type == :sale ? 'fs' : 'fr' %>"/>
     <input
-       class="form-control"
-       type="text"
-       placeholder="<%= t('.enter_location') %>"
+        name="searchbox"
+        class="form-control"
+        type="text"
+        placeholder="<%= t('.enter_location') %>"
        />
   </div>
   <div class="col-xs-6 col-sm-3 col-lg-2 form-group">
-    <%= select_tag 'prices', options_for_select(prices), class: 'selectpicker', data: {width: '100%'} %>
+    <%= select_tag 'minPrice', options_for_select(prices), class: 'selectpicker js-zillowMinPrice', data: {width: '100%'} %>
   </div>
+  <input type="hidden" name="maxPrice" value="" class="js-zillowMaxPrice"/>
   <div class="col-xs-6 col-sm-3 col-lg-2 form-group">
-    <%= select_tag 'beds', options_for_select(beds), class: 'selectpicker', data: {width: '100%'} %>
+    <%= select_tag 'bed', options_for_select(beds), class: 'selectpicker', data: {width: '100%'} %>
   </div>
   <div class="col-xs-6 col-xs-offset-3 col-sm-offset-0 col-sm-2 col-lg-offset-2 form-group">
-    <div class="btn btn-block btn-primary"><%= t('.search') %></div>
+    <input type="submit" class="btn btn-block btn-primary" value="<%=t('.search')%>"/>
   </div>
 </form>
