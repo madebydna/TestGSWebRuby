@@ -1,7 +1,7 @@
 <%= link_to(school_hash_to_url_for_profile(school)) do %>
     <div class="row gray-border mvm mhs link-darkgray">
       <div class="pvs pvm phm clearfix col-xs-12 col-lg-12">
-        <%= render 'performance/gs_rating', value: school.great_schools_rating, size: 'sm', subtext: false, css_class: 'mhm fl' %>
+        <%= render 'performance/gs_rating', value: school.great_schools_rating, size: 'sm', css_class: 'mhm fl' %>
         <div class="fl col-xs-9 col-sm-8 col-lg-9">
           <div class="open-sans_cb mbs"><%= school['name'] %></div>
           <div class="mbn">
