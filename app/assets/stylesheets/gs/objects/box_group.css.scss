@@ -1,0 +1,47 @@
+// A box group is like Bootstrap's btn-group, but without buttons!
+// It wraps nicely and handles overlapping borders.
+// The box-group-inline style makes it so that the display always has at least
+// two boxes in a row.
+
+// NOTE: This style currently only supports up to four boxes.
+
+.box-group {
+  $box-group-border-size: 2px !default;
+  $box-group-border: $box-group-border-size solid $module-gray-stroke;
+
+  @include clearfix;
+  & {
+    .box {
+      border: $box-group-border;
+      float: left;
+      width: 100%;
+
+      &:not(:first-child) { border-top: none; }
+
+      @media (min-width: $screen-sm-min) {
+        width: (100% / 3);
+        &:not(:first-child) { border-top: $box-group-border; }
+        &:not(:first-child) { border-left: none; }
+      }
+    }
+  }
+
+  &.box-group-inline {
+    $box-group-inline-min-per-row: 2 !default;
+    $min-per-row-plus-1: $box-group-inline-min-per-row + 1;
+    .box {
+      width: 50%;
+
+      &:not(:first-child) { border-top: $box-group-border; }
+      &:nth-child(2n) { border-left: none; }
+      &:nth-child(n + #{$min-per-row-plus-1}) { border-top: none; }
+
+      @media (min-width: $screen-sm-min) {
+        width: 25%;
+        &:nth-child(n + #{$min-per-row-plus-1}) {
+          border-top: $box-group-border;
+        }
+      }
+    }
+  }
+}
