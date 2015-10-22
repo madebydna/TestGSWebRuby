@@ -7,7 +7,9 @@ GS.modal.EmailJoinForSchoolProfileModal = function($, options) {
 
   this.cssClass = options.cssClass || 'email-join-for-school-profile-modal';
   this.modalUrl = '/gsr/modals/signup_and_follow_school_modal';
-
+  this.deferred.always(function(){
+        $.cookie('profileModal', 'true', {expires: 1, path: '/' });
+    });
   this.eventTrackingConfig = {
     'default': {
       'show': {
