@@ -26,3 +26,4 @@
 // require ./util
 //= require ./window.sizing
 //= require ./notifications
+//= require ./gs_rating

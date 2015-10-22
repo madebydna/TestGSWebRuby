@@ -3,10 +3,11 @@
 <% value = value.to_s.upcase %>
 <% not_rated = value == 'NR' %>
 <% subtext ||= false %>
+<% css_class ||= '' %>
 <% rating_class = "gs-rating-#{size}" %>
 <% rating_level ||= DisplayRange.for_rating(value) unless not_rated %>
 
-<div class="<%= "#{rating_class} #{rating_level}" %>">
+<div class="<%= "#{rating_class} #{rating_level} #{css_class}" %>">
   <div class="">
     <%= value %>
   </div>
