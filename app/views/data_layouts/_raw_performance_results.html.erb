@@ -1,24 +1,12 @@
+<% box_group_type = data.size % 2 == 0 ? 'box-group-inline' : '' %>
 <div class="raw-performance-results">
-  <div class="box-group box-group-inline">
-    <% 4.times do %>
+  <div class="box-group <%= box_group_type %>">
+    <% data.each do |data_point| %>
       <div class="box performance-box">
-        <span>Math proficiency</span>
-        <div class="dib state-average">(state avg 59%)</div>
+        <span><%= data_point.label %></span>
+        <div class="dib state-average">(<%= t('.state_average', val: data_point.comparison_value) %>)</div>
         <div class="pvl">
-          <%= render 'performance/percent_value', value: 26, performance_level: 'average' %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <br>
-  <br>
-  <div class="box-group">
-    <% 3.times do %>
-      <div class="box performance-box">
-        <span>Math proficiency</span>
-        <div class="dib state-average">(state avg 59%)</div>
-        <div class="pvl">
-          <%= render 'performance/percent_value', value: 42, performance_level: 'above_average' %>
+          <%= render 'performance/percent_value', value: data_point.value, performance_level: data_point.performance_level %>
         </div>
       </div>
     <% end %>
