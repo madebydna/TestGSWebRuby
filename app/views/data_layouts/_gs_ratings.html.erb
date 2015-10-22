@@ -9,7 +9,7 @@
 <% if rating_hash.present? && rating_hash["overall_rating"].present? %>
   <div class="row mbm pam">
     <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
-      <%= render 'shared/gs_rating', value: rating_hash['overall_rating'], size: 'lg', subtext: true %>
+      <%= render 'performance/gs_rating', value: rating_hash['overall_rating'], size: 'lg', subtext: true %>
     </div>
     <% label = rating_hash['label'] || t('.greatschools_rating') %>
     <div class="col-xs-12 col-sm-9 col-md-10 col-lg-10">
