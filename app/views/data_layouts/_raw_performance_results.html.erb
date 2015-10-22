@@ -1,29 +1,26 @@
 <div class="raw-performance-results">
   <div class="box-group box-group-inline">
-    <div class="box">
-      <h2>EVEN</h2>
-    </div>
-    <div class="box">
-      <h2>EVEN</h2>
-    </div>
-    <div class="box">
-      <h2>EVEN</h2>
-    </div>
-    <div class="box">
-      <h2>EVEN</h2>
-    </div>
+    <% 4.times do %>
+      <div class="box performance-box">
+        <span>Math proficiency</span>
+        <div class="dib state-average">(state avg 59%)</div>
+        <div class="pvl">
+          <%= render 'performance/percent_value', value: 26, performance_level: 'average' %>
+        </div>
+      </div>
+    <% end %>
   </div>
   <br>
   <br>
   <div class="box-group">
-    <div class="box">
-      <h2>ODD</h2>
-    </div>
-    <div class="box">
-      <h2>ODD</h2>
-    </div>
-    <div class="box">
-      <h2>ODD</h2>
-    </div>
+    <% 3.times do %>
+      <div class="box performance-box">
+        <span>Math proficiency</span>
+        <div class="dib state-average">(state avg 59%)</div>
+        <div class="pvl">
+          <%= render 'performance/percent_value', value: 42, performance_level: 'above_average' %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

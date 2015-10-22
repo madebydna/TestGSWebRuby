@@ -23,7 +23,6 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
 }
 
 .community-spotlight {
-  @include performance-color();
 
   .logo-bar {
     border-top: 5px solid $module-gray;
@@ -99,21 +98,6 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       font-size: 15px;
     }
   }
-  .percent-value {
-    h3 {
-      margin-bottom: 0;
-      margin-top: 0;
-    }
-    sup {
-      font-size: 70%;
-      top: -0.35em;
-    }
-  }
-  .state-average {
-    color: $gray-darker;
-    font-family: 'opensans-regular';
-    font-size: 12px;
-  }
   .mobile {
     .percent-value {
       display: inline-block;
@@ -130,12 +114,6 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
       padding-right: 10px;
       width: auto;
     }
-  }
-  .no-data {
-    border-bottom: $gray-dark 2px solid;
-    width: 12px;
-    margin-right: auto;
-    margin-left: auto;
   }
 
   .table-header {
