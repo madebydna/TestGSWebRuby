@@ -17,10 +17,13 @@
 .performance-box {
   padding: $spacing-small;
   text-align: center;
+  .description {
+    font-size: $font-size-p-small;
+  }
   .value {
     padding: $spacing-large 0;
     h3 {
-      font-size: $font-size-h1;
+      font: $font-data-high-level;
     }
   }
 }
