@@ -26,17 +26,16 @@
         </div>
       <% end %>
     </div>
+    <script type="text/javascript">
+      $.getScript("<%= asset_path('galleria-1.3.1.js') %>").
+        done(function () {
+          $.getScript("<%= asset_path('galleria.classic.js') %>").
+            done(function() {
+              $(document).ready(function() { Galleria.run('#galleria');});
+            });
+        });
+    </script>
   <% end %>
-  <script>
-    $.getScript("<%= asset_path('galleria-1.3.1.js') %>").
-      done(function () {
-        $.getScript("<%= asset_path('galleria.classic.js') %>").
-          done(function() {
-            $(document).ready(function() { Galleria.run('#galleria');});
-           });
-      });
-  </script>
-
 <% else %>
   <%= render "shared/section_header", category_placement:category_placement %>
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
