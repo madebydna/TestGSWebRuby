@@ -134,26 +134,6 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     DEFAULT_CALLBACKS + [*config[:group_comparison_callbacks]]
   end
 
-  def preserve_data_type_name
-    translated_label_map = category.key_label_map(true, true)
-    untranslated_label_map = category.key_label_map(false, true)
-    data.each do |key, _|
-      key = label_lookup_value(key)
-      config["all:#{translated_label_map[key]}"] = untranslated_label_map[key]
-    end
-  end
-
-  def change_data_type_to_label
-    data.transform_keys! do |key|
-      label = category.key_label_map(true, true)[label_lookup_value(key)]
-      [label, key.last]
-    end
-  end
-
-  def label_lookup_value(key)
-    [key.first.to_s, key.last]
-  end
-
   def configure_data_type_partials!
     config[:partials] = category.category_data.each_with_object({}) do |cd, h|
       h[cd.label] = cd.display_type || :bar_chart

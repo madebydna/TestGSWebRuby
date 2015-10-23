@@ -39,4 +39,24 @@ module CachedCategoryDataConcerns
     end
   end
 
+  def preserve_data_type_name(opts)
+    prefix = opts[:prefix] || 'all:'
+    translated_label_map = category.key_label_map(true, true)
+    untranslated_label_map = category.key_label_map(false, true)
+    data.each do |key, _|
+      key = label_lookup_value(key)
+      config["#{prefix}#{translated_label_map[key]}"] = untranslated_label_map[key]
+    end
+  end
+
+  def change_data_type_to_label
+    data.transform_keys! do |key|
+      label = category.key_label_map(true, true)[label_lookup_value(key)]
+      [label, key.last]
+    end
+  end
+
+  def label_lookup_value(key)
+    [key.first.to_s, key.last]
+  end
 end
