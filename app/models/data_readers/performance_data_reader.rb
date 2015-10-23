@@ -30,19 +30,12 @@ class PerformanceDataReader < SchoolProfileDataReader
 
   def get_data!
     self.data = cached_data_for_category
-
-    data.transform_keys! do |key|
-      label = category.key_label_map(true, true)[label_lookup_value(key)]
-      [label, key.last]
-    end
+    preserve_data_type_name(prefix: '')
+    change_data_type_to_label
   end
 
   def school_cache_keys
     SCHOOL_CACHE_KEYS
-  end
-
-  def label_lookup_value(key)
-    [key.first.to_s, key.last]
   end
 
   def breakdown_data_for(label)
@@ -61,7 +54,8 @@ class PerformanceDataReader < SchoolProfileDataReader
             value: value[:school_value],
             comparison_value: value[:state_average],
             performance_level: value[:performance_level],
-            subtext: value[:subtext]
+            subtext: value[:subtext],
+            link_to: config[:link_mappings].try(:[], config[label]),
           }
         )
         data_point.display? ? data_point : nil

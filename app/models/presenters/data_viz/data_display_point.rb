@@ -1,6 +1,6 @@
 class DataDisplayPoint
 
-  attr_accessor :config, :label, :value, :comparison_value, :performance_level, :grey_value, :subtext
+  attr_accessor :config, :label, :value, :comparison_value, :performance_level, :grey_value, :subtext, :link_to
 
   FULL_WIDTH = 100
   SEPERATOR_WIDTH = 0.5
@@ -21,6 +21,7 @@ class DataDisplayPoint
     self.comparison_value = config[:comparison_value].to_f.round if config[:comparison_value]
     self.performance_level = config[:performance_level]
     self.subtext = config[:subtext]
+    self.link_to = config[:link_to]
     set_value_fields!
   end
 

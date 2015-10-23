@@ -1,8 +1,9 @@
 <% box_group_type = data.size % 2 == 0 ? 'box-group-inline' : '' %>
+<% school_url = school_path(@school) %>
 <div class="raw-performance-results col-xs-12">
   <div class="box-group <%= box_group_type %>">
     <% data.each do |data_point| %>
-      <div class="box performance-box">
+      <a class="box performance-box" href="<%= "#{school_url}#{data_point.link_to}" %>">
         <div class="description js-syncHeight">
           <div class="dib"><%= data_point.label %></div>
           <div class="dib state-average">(<%= t('.state_average', val: data_point.comparison_value) %>)</div>
@@ -10,7 +11,7 @@
         <div class="value">
           <%= render 'performance/percent_value', value: data_point.value, performance_level: data_point.performance_level %>
         </div>
-      </div>
+      </a>
     <% end %>
   </div>
 </div>

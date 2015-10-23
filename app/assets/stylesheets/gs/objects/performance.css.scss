@@ -15,8 +15,14 @@
 }
 
 .performance-box {
+  color: $text-color;
   padding: $spacing-small;
   text-align: center;
+  &:hover {
+    color: $text-color;
+    background-color: $module-gray;
+    text-decoration: none;
+  }
   .description {
     font-size: $font-size-p-small;
   }
