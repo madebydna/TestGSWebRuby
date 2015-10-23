@@ -4,7 +4,19 @@ GS.notifications = GS.notifications || (function($) {
     return $('#js-top-notification-bar');
   };
 
+  var closeNotificationMessage = function(wait){
+      $getNotificationContainer.children().each(function () {
+          var _this = $(this);
+              setTimeout(function () {
+                  if (_this.hasClass("alert")) {
+                      _this.alert('close');
+                  }
+              }, wait);
+      });
+  }
+
   var error = function(message) {
+
     $getNotificationContainer().append(
       GS.handlebars.partialContent(
         'notification_bar_message',{
@@ -13,6 +25,7 @@ GS.notifications = GS.notifications || (function($) {
         }
       )
     );
+    closeNotificationMessage(10000);
   };
 
   var notice = function(message) {
@@ -24,6 +37,7 @@ GS.notifications = GS.notifications || (function($) {
         }
       )
     );
+    closeNotificationMessage(10000);
   };
 
   var success = function(message) {
@@ -35,6 +49,7 @@ GS.notifications = GS.notifications || (function($) {
         }
       )
     );
+    closeNotificationMessage(10000);
   };
 
   var warning = function(message) {
@@ -46,6 +61,7 @@ GS.notifications = GS.notifications || (function($) {
         }
       )
     );
+    closeNotificationMessage(10000);
   };
 
   var flash_message = function(type, message) {
