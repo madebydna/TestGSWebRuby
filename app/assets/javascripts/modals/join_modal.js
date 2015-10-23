@@ -120,6 +120,7 @@ _.assign(GS.modal.JoinModal.prototype, {
     },
 
     initializeEventHandlersForTabs: function initializeEventHandlersForTabs() {
+      // See description of why this is needed here: https://jira.greatschools.org/browse/JT-106
       this.$getModal().on('click', '.parsley-errors-list a[href="#login"]', this.showSigninTab.gs_bind(this));
     },
 
