@@ -110,11 +110,25 @@ _.assign(GS.modal.JoinModal.prototype, {
             on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
             on('ajax:error', this.submitSignInFailHandler.gs_bind(this));
     },
-    
+
+    showJoinTab: function showJoinTab() {
+      this.$getModal().find('a[href="#join"]').first().tab('show');
+    },
+
+    showSigninTab: function showJoinTab() {
+      this.$getModal().find('a[href="#login"]').first().tab('show');
+    },
+
+    initializeEventHandlersForTabs: function initializeEventHandlersForTabs() {
+      this.$getModal().on('click', '.parsley-errors-list a[href="#login"]', this.showSigninTab.gs_bind(this));
+    },
+
     initialize: function initialize() {
-        this.initializeShowHideBehavior();
-        this.initializeForm();
-        this.initializeFacebookSignIn();
+      this.initializeShowHideBehavior();
+      this.initializeForm();
+      this.initializeFacebookSignIn();
+      this.initializeEventHandlersForTabs();
     }
+
 });
 
