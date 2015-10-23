@@ -128,7 +128,8 @@ describe DataDisplayCollection do
 
     context 'with only all students data' do
       subject do
-        DataDisplayCollection.new(nil, [data_points.first], {
+        all_students_data = data_points.select {|d| d[:breakdown] == 'All Students'}
+        DataDisplayCollection.new(nil, all_students_data, {
           group_by: {'gender' => 'breakdown'},
           default_group: 'ethnicity'
         }.with_indifferent_access)
