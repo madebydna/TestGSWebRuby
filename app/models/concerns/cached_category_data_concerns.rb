@@ -39,7 +39,7 @@ module CachedCategoryDataConcerns
     end
   end
 
-  def preserve_data_type_name(opts)
+  def preserve_data_type_name(opts = {})
     prefix = opts[:prefix] || 'all:'
     translated_label_map = category.key_label_map(true, true)
     untranslated_label_map = category.key_label_map(false, true)
