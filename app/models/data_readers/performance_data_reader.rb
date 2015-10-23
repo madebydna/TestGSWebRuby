@@ -5,10 +5,20 @@ class PerformanceDataReader < SchoolProfileDataReader
   # characteristics, but that's just how the data is organized right now...
   SCHOOL_CACHE_KEYS = [ 'characteristics', 'performance' ]
 
+  #164 test score rating
+  #165 student growth rating
+  #166 college readiness rating
+  #174 + low income breakdown  great schools rating
+  {
+    'breakdown_mappings' => {
+      'Low-income student rating' => 'Economically disadvantaged'
+    }
+  }
   attr_accessor :category, :config, :data
 
   def data_for_category(category)
     self.category = category
+    self.config = category.parsed_json_config
 
     get_data!
     data_display_points
@@ -35,14 +45,16 @@ class PerformanceDataReader < SchoolProfileDataReader
     [key.first.to_s, key.last]
   end
 
-  def all_students_data
-    Proc.new { |d| d[:breakdown].try(:downcase) == 'all students' }
+  def breakdown_data_for(label)
+    breakdown = config[:breakdown_mappings].try(:[], label) || 'all students'
+    Proc.new { |d| d[:breakdown].try(:downcase) == breakdown }
   end
 
   def data_display_points
     data.each_with_object([]) do |(label_array, values), data_points|
       label = label_array.first
-      data_points << values.select(&all_students_data).map do |value|
+      breakdown_data = breakdown_data_for(label)
+      data_points << values.select(&breakdown_data).map do |value|
         data_point = DataDisplayPoint.new(
           {
             label: label,

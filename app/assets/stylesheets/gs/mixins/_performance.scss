@@ -42,3 +42,27 @@
   &.average       { background-color: $average;       }
   &.below_average { background-color: $below_average; }
 }
+
+@mixin performance-color-border {
+  border-color: $no_quality_attribution;
+  .above_average  { border-color: $above_average; }
+  .average        { border-color: $average;       }
+  .below_average  { border-color: $below_average; }
+  &.above_average { border-color: $above_average; }
+  &.average       { border-color: $average;       }
+  &.below_average { border-color: $below_average; }
+}
+
+@mixin gs-rating-white($size) {
+  $gs-rating-font-size: ($size / 2);
+
+  @include performance-color();
+  @include performance-color-border();
+  border: 2px solid;
+  border-radius: 50%;
+  font: $gs-rating-font-size $font-family-base-bold;
+  height: $size;
+  text-align: center;
+  line-height: ($size - 2 * 2);
+  width: $size;
+}

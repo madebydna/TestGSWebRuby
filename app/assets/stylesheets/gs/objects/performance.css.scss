@@ -10,6 +10,10 @@
   @include gs-rating($size: $gs-rating-size-large, $with-subtext: true);
 }
 
+.gs-rating-white-sm {
+  @include gs-rating-white($size: 24px);
+}
+
 .performance-box {
   padding: $spacing-small;
   text-align: center;
@@ -44,3 +48,4 @@
     margin-left: auto;
   }
 }
+
