@@ -4,8 +4,7 @@
     padding: 10px 0;
 
     &.rating {
-      display: -webkit-flex;
-      display: flex;
+      @include display-flex;
       .text {
         padding-left: $spacing-large;
       }
