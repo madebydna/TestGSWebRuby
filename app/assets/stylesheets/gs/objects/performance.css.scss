@@ -13,8 +13,11 @@
 .performance-box {
   padding: $spacing-small;
   text-align: center;
-  h3 {
-    font-size: $font-size-h1;
+  .value {
+    padding: $spacing-large 0;
+    h3 {
+      font-size: $font-size-h1;
+    }
   }
 }
 

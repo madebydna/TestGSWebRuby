@@ -11,6 +11,9 @@
   $box-group-media-query: "(min-width: #{$screen-sm-min})";
 
   @include clearfix;
+  @include display-flex;
+  @include flex-wrap;
+
   & {
     .box {
       border: $box-group-border;
@@ -44,8 +47,5 @@
         }
       }
     }
-  }
-  @media #{$box-group-media-query} {
-    @include display-flex;
   }
 }

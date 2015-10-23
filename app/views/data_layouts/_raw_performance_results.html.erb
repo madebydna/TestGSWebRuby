@@ -3,9 +3,11 @@
   <div class="box-group <%= box_group_type %>">
     <% data.each do |data_point| %>
       <div class="box performance-box">
-        <span><%= data_point.label %></span>
-        <div class="dib state-average">(<%= t('.state_average', val: data_point.comparison_value) %>)</div>
-        <div class="pvl">
+        <div class="description js-syncHeight">
+          <div class="dib"><%= data_point.label %></div>
+          <div class="dib state-average">(<%= t('.state_average', val: data_point.comparison_value) %>)</div>
+        </div>
+        <div class="value">
           <%= render 'performance/percent_value', value: data_point.value, performance_level: data_point.performance_level %>
         </div>
       </div>
