@@ -18,7 +18,7 @@
   color: $text-color;
   padding: $spacing-small;
   text-align: center;
-  &:hover {
+  &:hover, &:active, &:focus {
     color: $text-color;
     background-color: $module-gray;
     text-decoration: none;
