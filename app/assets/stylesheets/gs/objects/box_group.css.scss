@@ -13,6 +13,7 @@
   @include clearfix;
   @include display-flex;
   @include flex-wrap;
+  display: block;
 
   & {
     .box {
