@@ -1,4 +1,3 @@
-@import "variables/typography";
 @import "variables/spacing";
 @import "variables/performance";
 
@@ -53,6 +52,8 @@ $light-blue-background:   #e6ebf5;
 $gray-link-color:         $light-ash-gray;
 $gray-link-hover-color:   darken($light-ash-gray, 15%);
 
+// Has to be after colors
+@import "variables/typography";
 
 // Tables
 // -------------------------
