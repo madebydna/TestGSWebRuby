@@ -5,13 +5,7 @@ module CachedCategoryDataConcerns
   include CensusLoading::Subjects
 
   def cached_data_for_category(category = category, with_subjects = true)
-    category_data_types = category.category_data(school.collections).map do |cd|
-      if with_subjects
-        { data_type: cd.response_key.to_sym, subject: cd.subject_id }
-      else
-        { data_type: cd.response_key.to_sym }
-      end
-    end
+    category_data_types = category_data_key_map(category, with_subjects).values.uniq
     get_cache_data(category_data_types)
   end
 
@@ -58,5 +52,20 @@ module CachedCategoryDataConcerns
 
   def label_lookup_value(key)
     [key.first.to_s, key.last]
+  end
+
+  def category_data(category = category)
+    category.category_data(school.collections)
+  end
+
+  def category_data_key_map(category = category, with_subjects = true)
+    category_data(category).inject({}) do |cd_key_map, cd|
+      key = if with_subjects
+              { data_type: cd.response_key.to_sym, subject: cd.subject_id }
+            else
+              { data_type: cd.response_key.to_sym }
+            end
+      cd_key_map.merge({ cd => key })
+    end
   end
 end

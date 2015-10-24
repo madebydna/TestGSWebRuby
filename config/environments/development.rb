@@ -85,5 +85,5 @@ LocalizedProfiles::Application.configure do
   config.hub_config_cache_time = 10
 
   # Raise error when an I18n translation is missing
-  config.action_view.raise_on_missing_translations = true
+  # config.action_view.raise_on_missing_translations = true
 end

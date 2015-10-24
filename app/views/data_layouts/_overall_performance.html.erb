@@ -12,11 +12,9 @@
       <div class="gs-bootstrap container-fluid container-fix">
         <div class="row">
           <div class="col-xs-12 col-sm-8">
-            <div class="row">
-              <% children.each do |cp|  %>
-                <%= render partial: 'category_placement', locals: {category_placement: cp} %>
-              <% end %>
-            </div>
+            <% children.each do |cp|  %>
+              <%= render partial: 'category_placement', locals: {category_placement: cp} %>
+            <% end %>
           </div>
           <div class="col-xs-12 col-sm-4">
             Ad goes here

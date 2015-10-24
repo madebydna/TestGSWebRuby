@@ -9,18 +9,19 @@ class PerformanceDataReader < SchoolProfileDataReader
   #165 student growth rating
   #166 college readiness rating
   #174 + low income breakdown  great schools rating
-  {
-    'breakdown_mappings' => {
-      'Low-income student rating' => 'Economically disadvantaged'
-    }
-  }
-  attr_accessor :category, :config, :data
+  # {
+  #   'breakdown_mappings' => {
+  #     'Low-income student rating' => 'Economically disadvantaged'
+  #   }
+  # }
+  attr_accessor :category, :category_data_school_cache_map, :config, :data
 
   def data_for_category(category)
     self.category = category
     self.config = category.parsed_json_config
 
     get_data!
+    transform_data_keys!
     data_display_points
   rescue
     []
@@ -29,9 +30,21 @@ class PerformanceDataReader < SchoolProfileDataReader
   protected
 
   def get_data!
+    #data and category_data_school_cache_map need same args
     self.data = cached_data_for_category
     preserve_data_type_name(prefix: '')
-    change_data_type_to_label
+    self.category_data_school_cache_map = category_data_key_map.each_with_object({}) do |(cd, key_map), map|
+      map[cd] = key_map.values #ex key_map = { data_type: 'Great Schools Rating', subject: nil }
+    end
+  end
+
+  def transform_data_keys!
+    self.data = category_data.each_with_object({}) do | cd, new_data |
+                  data_key = category_data_school_cache_map[cd]
+                  if (value_hash = data[data_key]).present?
+                    new_data.merge!({[cd.label(false), cd.label, data_key.last] => value_hash.deep_dup})
+                  end
+                end
   end
 
   def school_cache_keys
@@ -40,14 +53,14 @@ class PerformanceDataReader < SchoolProfileDataReader
 
   def breakdown_data_for(label)
     breakdown = config[:breakdown_mappings].try(:[], label) || 'all students'
-    Proc.new { |d| d[:breakdown].try(:downcase) == breakdown }
+    Proc.new { |d| d[:breakdown].try(:downcase) == breakdown.try(:downcase) }
   end
 
   def data_display_points
     data.each_with_object([]) do |(label_array, values), data_points|
-      label = label_array.first
-      breakdown_data = breakdown_data_for(label)
-      data_points << values.select(&breakdown_data).map do |value|
+      label, original_label = label_array[0], label_array[1]
+      breakdown_match = breakdown_data_for(original_label)
+      data_points << values.select(&breakdown_match).map do |value|
         data_point = DataDisplayPoint.new(
           {
             label: label,
