@@ -65,7 +65,7 @@ class SigninController < ApplicationController
         redirect_to (post_registration_redirect_url)
       end
     else
-      render json: {}, status: 200
+      render json: { is_new_user: joining? }, status: 200
     end
   end
 

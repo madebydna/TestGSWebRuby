@@ -138,61 +138,84 @@ GS.topicalReview.form = (function () {
         var $roleQuestion = $('.js-roleQuestion');
         return $roleQuestion.length > 0;
     };
+
+    var reviewFormSubmitHandler = function() {
+      var $form = $(this);
+      var $submitButton = $form.find('button');
+
+      var showError = function(errorMessage) {
+        errorMessage = errorMessage || "There was an error saving your review.";
+        var errorMessageContainer = $(this).find('.js-topicalReviewErrorMessage');
+        errorMessageContainer.html(errorMessage);
+      };
+
+      var preventFormSubmit = function() {
+        $submitButton.prop('disabled', true);
+        $submitButton.data('enable-with', $submitButton.text());
+        $submitButton.html($submitButton.data('disable-with'));
+      };
+
+      var allowFormSubmit = function() {
+        $submitButton.prop('disabled', false);
+        $submitButton.data('disable-with', $submitButton.text());
+        $submitButton.html($submitButton.data('enable-with'));
+      };
+
+      var reviewErrorHandler = function(responseJSON) {
+        GS.util.log(responseJSON);
+        var errorMessage = null;
+        if (responseJSON) {
+          if (responseJSON.length > 1) {
+            errorMessage = responseJSON.join(' ');
+          } else {
+            errorMessage = responseJSON[0];
+          }
+        }
+        showError(errorMessage);
+      };
+
+      var reviewSuccessHandlerForExistingUsers = function(data) {
+        window.location.reload(true);
+      };
+
+      var reviewSuccessHandlerForNewUsers = function() {
+        var reviewContainer = $(this).parents('.js-topicalReviewContainer');
+        $(reviewContainer).addClass('js-reviewComplete');
+        GS.topicalReview.questionCarousel.hide();
+        displayRoleQuestion();
+      };
+
+      var reviewSuccessHandler = reviewSuccessHandlerForNewUsers;
+
+      var postReviewViaAjax = function() {
+        var url = $form.attr('action');
+        return $.post(url, $form.serialize())
+          .done(reviewSuccessHandler)
+          .fail(reviewErrorHandler)
+          .always(function() {
+            allowFormSubmit();
+          });
+      };
+
+      preventFormSubmit();
+
+      if (GS.session.isSignedIn()) {
+        postReviewViaAjax();
+      } else {
+        GS.modal.manager.showModalThenMessages(GS.modal.SubmitReviewModal).done(function(data) {
+          var isNewUser = data['is_new_user'];
+          if (!isNewUser) {
+            reviewErrorHandler = reviewSuccessHandlerForExistingUsers;
+          }
+          postReviewViaAjax();
+        });
+      }
+    };
+
     var init = function () {
-        $('.new_review').on('ajax:before', function (event, xhr, status, error) {
-        }).on('ajax:success', function (event, xhr, status, error) {
-            var topicSubmitted = $(this).parents('.js-topicalReviewContainer').data('review-topic');
-            var redirect_url = xhr.redirect_url;
-              disableSubmitButton(topicSubmitted, 'Submitting');
-            if (redirect_url !== undefined && redirect_url !== '') {
-              GS.modal.manager.showModalThenMessages(GS.modal.SubmitReviewModal).
-                done( function() { document.location.reload(true) } ).
-                fail( function () { enableSubmitButton(topicSubmitted); });
-            } else {
-              var reviewContainer = $(this).parents('.js-topicalReviewContainer');
-              $(reviewContainer).addClass('js-reviewComplete');
-              if (isRoleQuestionOnPage()) {
-                  GS.topicalReview.questionCarousel.hide();
-                  displayRoleQuestion();
-              }
-              else {
-                disableSubmitButton(topicSubmitted, 'Review submitted!');
-                GS.topicalReview.questionCarousel.goToNextSlide();
-              }
-            }
-
-        }).on('ajax:error', function (event, xhr, status, error) {
-                var errorMessage = "There was an error saving your review.";
-                var errorMessageContainer = $(this).find('.js-topicalReviewErrorMessage');
-                var responseJSON = xhr.responseJSON;
-                if (xhr.responseJSON) {
-                    if (responseJSON.length > 1) {
-                        errorMessage = responseJSON.join(' ');
-                    }
-                    else {
-                        errorMessage = responseJSON[0];
-                    }
-                }
-                console.log(xhr);
-                console.log(xhr.responseJSON);
-                console.log(xhr.responseText);
-                errorMessageContainer.html(errorMessage);
-            });
-        };
-
-    var disableSubmitButton = function (topicSubmitted, text) {
-        var disabledButtonHtml = '<button type="submit" submitted class="btn btn-primary disabled fr mtl mbl" data-disable-with="Submitting"> ' +  text + ' </button>'
-        var submittedQuestion = $('#question-topic' + topicSubmitted);
-        submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
-        submittedQuestion.find('.js-topicalReviewSubmitContainer').html(disabledButtonHtml);
+      $('.new_review').on('submit', reviewFormSubmitHandler);
     };
 
-    var enableSubmitButton = function (topicSubmitted) {
-        var enabledButtonHtml = '<button type="submit" submitted class="btn btn-primary fr mtl mbl" data-disable-with="Submitting"> Submit </button>'
-        var submittedQuestion = $('#question-topic' + topicSubmitted);
-        submittedQuestion.find('.js-topicalReviewSubmitContainer').html('');
-        submittedQuestion.find('.js-topicalReviewSubmitContainer').html(enabledButtonHtml);
-    };
 
     return {
         init: init
@@ -219,7 +242,7 @@ GS.topicalReview.manageReview = (function () {
 })();
 
 
-GS.topicalReview.memberForm = (function () {
+GS.topicalReview.schoolUserForm = (function () {
     var showCarousel= function () {
         GS.topicalReview.questionCarousel.show();
     };
@@ -228,10 +251,7 @@ GS.topicalReview.memberForm = (function () {
     var init = function () {
 
         $('.new_school_user').on('ajax:success', function (event, xhr, status, error) {
-            var userType =  $('#new_school_user input:checked').val()
-            if (userType == 'principal') {
-                window.location.reload();
-            }
+            window.location.reload();
             $('.js-roleQuestion').remove();
             var wasInitialized = GS.topicalReview.questionCarousel.isInitialized();
             showCarousel();
@@ -239,7 +259,7 @@ GS.topicalReview.memberForm = (function () {
                 GS.topicalReview.questionCarousel.goToNextSlide();
             }
         }).on('ajax:error', function (event, xhr, status, error) {
-            console.log('error with role');
+            GS.util.log('error with role');
         });
     };
 
@@ -407,7 +427,7 @@ $(function () {
 
     GS.topicalReview.form.init();
 
-    GS.topicalReview.memberForm.init();
+    GS.topicalReview.schoolUserForm.init();
 
     GS.topicalReview.manageReview.init();
 

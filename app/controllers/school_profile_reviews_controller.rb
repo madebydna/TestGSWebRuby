@@ -15,6 +15,7 @@ class SchoolProfileReviewsController < SchoolProfileController
     @canonical_url = school_url(@school)
     @reviews_page_size = 10
     @first_topic_id_to_show = first_topic_id_to_show
+    @show_role_question = show_role_question?
   end
 
   # Must be called after the init_page before_action, since that sets the @school_user instance variable
@@ -24,6 +25,10 @@ class SchoolProfileReviewsController < SchoolProfileController
     else
       ReviewTopic.find_id_by_name(ReviewTopic::OVERALL)
     end
+  end
+
+  def show_role_question?
+    current_user && school_user.reviews.present? && school_user.unknown?
   end
 
   def create
@@ -37,6 +42,9 @@ class SchoolProfileReviewsController < SchoolProfileController
         json_message = errors
       else
         status = :created
+        json_message = {
+            user_type: school_user.user_type
+        }
       end
     else
       save_deferred_action :save_review_deferred, review_params
