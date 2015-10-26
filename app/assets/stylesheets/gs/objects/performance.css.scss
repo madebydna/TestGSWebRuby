@@ -60,6 +60,7 @@
 
 .overall-gs-rating {
   @include display-flex;
+  padding-bottom: $spacing-medium;
   .rating-circle {
     padding-right: $spacing-medium;
   }
