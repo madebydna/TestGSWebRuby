@@ -58,6 +58,7 @@ module CachedCategoryDataConcerns
     category.category_data(school.collections)
   end
 
+  #ex return value [{ data_type: 'GreatSchools Rating', subject: nil }, {data_type: 'Test score rating', subject: nil}]
   def category_data_key_map(category = category, with_subjects = true)
     category_data(category).inject({}) do |cd_key_map, cd|
       key = if with_subjects
@@ -68,4 +69,39 @@ module CachedCategoryDataConcerns
       cd_key_map.merge({ cd => key })
     end
   end
+
+  #ex return value { category_data_object => [:'GreatSchools Rating', nil] }
+  def get_category_data_school_cache_map(category = category, with_subjects = true)
+    category_data_key_map.each_with_object({}) do |(cd, key_map), map|
+      map[cd] = key_map.values
+    end
+  end
+
+  #changes data to something like:
+  #{ ["GreatSchools Rating", "GreatSchools Rating", nil]=>
+  #    [{breakdown: 'all_students'...}, {breakdown: 'asian'...}, {breakdown: 'white'...}],
+  #  ["SomeOtherSchoolCacheKey", "SomeOtherSchoolCacheKey", nil]=>
+  #    [{breakdown: 'all_students'...}, {breakdown: 'asian'...}, {breakdown: 'white'...}],
+  #}
+  #the key is an array [school_cache_key, translated_school_cache_key, subject_id]
+  def transform_data_keys!(c_data = category_data)
+    self.data = c_data.each_with_object({}) do | cd, new_data |
+                  data_key = category_data_school_cache_map[cd]
+                  if (value_hash = data[data_key]).present?
+                    new_data.merge!({[cd.label(false), cd.label, data_key.last] => value_hash.deep_dup})
+                  end
+                end
+  end
+
+  #defaults to matching for all students
+  def breakdown_data_for(label)
+    breakdown = config[:breakdown_mappings].try(:[], label) || 'all students'
+    Proc.new { |d| d[:breakdown].try(:downcase) == breakdown.try(:downcase) }
+  end
+
+  def select_breakdown_with_label(values, label, &block)
+    breakdown_matcher = breakdown_data_for(label)
+    values.select(&breakdown_matcher).map(&block)
+  end
+
 end
