@@ -58,3 +58,13 @@
   }
 }
 
+.overall-gs-rating {
+  @include display-flex;
+  .rating-circle {
+    padding-right: $spacing-medium;
+  }
+  h2 {
+    display: inline-block;
+    margin: auto 0;
+  }
+}

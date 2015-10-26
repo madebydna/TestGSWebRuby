@@ -1,6 +1,6 @@
 <% rating = data.first %>
-<div class="pbl">
-  <div class="dib prm">
+<div class="overall-gs-rating">
+  <div class="rating-circle">
     <%= render 'performance/gs_rating',
       value: rating.value,
       performance_level: rating.performance_level,
@@ -8,7 +8,5 @@
       subtext: true
     %>
   </div>
-  <div class="dib vat">
-    <h2><%= rating.label %></h2>
-  </div>
+  <h2><%= rating.label %></h2>
 </div>
