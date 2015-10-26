@@ -51,6 +51,7 @@ $light-ash-gray:          #777777;
 $light-blue-background:   #e6ebf5;
 $gray-link-color:         $light-ash-gray;
 $gray-link-hover-color:   darken($light-ash-gray, 15%);
+$white:                   #FFFFFF;
 
 // Has to be after colors
 @import "variables/typography";
