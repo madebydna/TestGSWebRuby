@@ -11,7 +11,7 @@
 }
 
 .gs-rating-white-sm {
-  @include gs-rating-white($size: 24px);
+  @include gs-rating-white($size: 32px);
 }
 
 .performance-box {
@@ -68,4 +68,15 @@
     display: inline-block;
     margin: auto 0;
   }
+}
+
+.sub-rating-icon {
+  float:        left;
+  margin-right: 5px;
+}
+
+.sub-rating-text {
+  font-size:   16px;
+  line-height: 28px;
+  @extend      .open-sans_b;
 }

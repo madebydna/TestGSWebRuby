@@ -1,13 +1,13 @@
 <% if data.present? %>
-  <div class='mvs'>SCORES ARE FROM 1 TO 10</div>
-  <div class='mvs'>
+  <div class='mbm'>SCORES ARE FROM 1 TO 10</div>
+  <div class='mbl'>
     <div class='row'>
       <% [*data].each do |d| %>
-        <div class="col-xs-12 col-sm-4">
-          <div class="gs-rating-white-sm pull-left mrm <%= d.performance_level %>">
-              <div><%= d.value %></div>
+        <div class="col-xs-12 col-md-6 col-lg-4 mbm">
+          <div class="gs-rating-white-sm sub-rating-icon <%= d.performance_level %>">
+            <div><%= d.value %></div>
           </div>
-          <div class="pull-left"><%= d.label %></div>
+          <span class="sub-rating-text"><%= d.label %></span>
         </div>
       <% end %>
     </div>
