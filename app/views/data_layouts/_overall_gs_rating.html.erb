@@ -1,0 +1,14 @@
+<% rating = data.first %>
+<div class="pbl">
+  <div class="dib prm">
+    <%= render 'performance/gs_rating',
+      value: rating.value,
+      performance_level: rating.performance_level,
+      size: 'lg',
+      subtext: true
+    %>
+  </div>
+  <div class="dib vat">
+    <h2><%= rating.label %></h2>
+  </div>
+</div>

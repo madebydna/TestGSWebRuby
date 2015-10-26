@@ -58,7 +58,7 @@ class PerformanceDataReader < SchoolProfileDataReader
 
   def data_display_points
     data.each_with_object([]) do |(label_array, values), data_points|
-      label, original_label = label_array[0], label_array[1]
+      original_label, label = label_array[0], label_array[1]
       breakdown_match = breakdown_data_for(original_label)
       data_points << values.select(&breakdown_match).map do |value|
         data_point = DataDisplayPoint.new(
