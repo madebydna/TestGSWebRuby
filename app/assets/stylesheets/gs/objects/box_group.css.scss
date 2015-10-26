@@ -6,9 +6,9 @@
 // NOTE: This style currently only supports up to four boxes.
 
 .box-group {
-  $box-group-border-size: 2px !default;
+  $box-group-border-size: 1px !default;
   $box-group-border: $box-group-border-size solid $module-gray-stroke;
-  $box-group-media-query: "(min-width: #{$screen-sm-min})";
+  $box-group-media-query: "(min-width: #{$screen-md-min})";
 
   @include clearfix;
   @include display-flex;

@@ -16,7 +16,7 @@
 
 .performance-box {
   color: $text-color;
-  padding: $spacing-small;
+  padding: $spacing-medium;
   text-align: center;
   &:hover, &:active, &:focus {
     color: $text-color;
@@ -24,10 +24,10 @@
     text-decoration: none;
   }
   .description {
-    font-size: $font-size-p-small;
+    font-size: $font-size-base;
   }
   .value {
-    padding: $spacing-medium 0;
+    padding-top: $spacing-small;
     h3 {
       font: $font-data-high-level;
     }
@@ -37,7 +37,7 @@
 .state-average {
   color: $gray-darker;
   font-family: 'opensans-regular';
-  font-size: 12px;
+  font-size: $font-size-p-small;
 }
 
 .percent-value {
