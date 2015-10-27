@@ -11,15 +11,13 @@
 }
 
 
-@media (min-width: $screen-sm-min) {
 
-  .zillow-logo {
-    padding: $spacing-small;
+.zillow-logo {
+  padding: $spacing-small;
 
-    p { font-size: $font-size-small; }
-  }
-
+  p { font-size: $font-size-small; }
 }
+
 
 @media (max-width: $screen-sm-min) {
 
