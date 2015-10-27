@@ -18,7 +18,7 @@ class PerformanceDataReader < SchoolProfileDataReader
     self.config = category.parsed_json_config
 
     get_data!
-    transform_data_keys!
+    self.data = transform_data_keys
     data_display_points
   rescue
     []

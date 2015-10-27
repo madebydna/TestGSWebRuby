@@ -1,0 +1,4 @@
+es:
+  data_layouts:
+    sub_ratings:
+      score_range: Calificaciónes son en base del 1 al 10

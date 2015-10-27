@@ -25,32 +25,23 @@
 
 @mixin performance-color {
   color: $no_quality_attribution;
-  .above_average  { color: $above_average; }
-  .average        { color: $average;       }
-  .below_average  { color: $below_average; }
-  &.above_average { color: $above_average; }
-  &.average       { color: $average;       }
-  &.below_average { color: $below_average; }
+  .above_average, &.above_average  { color: $above_average; }
+  .average, &.average              { color: $average;       }
+  .below_average, &.below_average  { color: $below_average; }
 }
 
 @mixin performance-background {
   background-color: $no_quality_attribution;
-  .above_average  { background-color: $above_average; }
-  .average        { background-color: $average;       }
-  .below_average  { background-color: $below_average; }
-  &.above_average { background-color: $above_average; }
-  &.average       { background-color: $average;       }
-  &.below_average { background-color: $below_average; }
+  .above_average, &.above_average  { background-color: $above_average; }
+  .average, &.average              { background-color: $average;       }
+  .below_average, &.below_average  { background-color: $below_average; }
 }
 
 @mixin performance-color-border {
   border-color: $no_quality_attribution;
-  .above_average  { border-color: $above_average; }
-  .average        { border-color: $average;       }
-  .below_average  { border-color: $below_average; }
-  &.above_average { border-color: $above_average; }
-  &.average       { border-color: $average;       }
-  &.below_average { border-color: $below_average; }
+  .above_average, &.above_average  { border-color: $above_average; }
+  .average, &.average              { border-color: $average;       }
+  .below_average, &.below_average  { border-color: $below_average; }
 }
 
 @mixin gs-rating-white($size) {

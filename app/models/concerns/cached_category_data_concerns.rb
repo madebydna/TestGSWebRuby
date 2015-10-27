@@ -58,7 +58,7 @@ module CachedCategoryDataConcerns
     category.category_data(school.collections)
   end
 
-  #ex return value [{ data_type: 'GreatSchools Rating', subject: nil }, {data_type: 'Test score rating', subject: nil}]
+  #ex return value {category_data_object => { data_type: 'GreatSchools Rating', subject: nil }, another_category_data_object => {data_type: 'Test score rating', subject: nil}
   def category_data_key_map(category = category, with_subjects = true)
     category_data(category).inject({}) do |cd_key_map, cd|
       key = if with_subjects
@@ -84,13 +84,13 @@ module CachedCategoryDataConcerns
   #    [{breakdown: 'all_students'...}, {breakdown: 'asian'...}, {breakdown: 'white'...}],
   #}
   #the key is an array [school_cache_key, translated_school_cache_key, subject_id]
-  def transform_data_keys!(c_data = category_data)
-    self.data = c_data.each_with_object({}) do | cd, new_data |
-                  data_key = category_data_school_cache_map[cd]
-                  if (value_hash = data[data_key]).present?
-                    new_data.merge!({[cd.label(false), cd.label, data_key.last] => value_hash.deep_dup})
-                  end
-                end
+  def transform_data_keys(c_data = category_data)
+    c_data.each_with_object({}) do | cd, new_data |
+      data_key = category_data_school_cache_map[cd]
+      if (value_hash = data[data_key]).present?
+        new_data.merge!({[cd.label(false), cd.label, data_key.last] => value_hash.deep_dup})
+      end
+    end
   end
 
   #defaults to matching for all students
