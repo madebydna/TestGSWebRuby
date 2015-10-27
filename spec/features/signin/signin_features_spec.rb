@@ -33,7 +33,7 @@ feature "Signin features" do
       it 'Lets the user sign in again' do
         subject
         click_link 'Sign Out'
-        expect(subject).to have_content 'Sign in'
+        expect(subject).to have_content 'Log in'
       end
     end
 
