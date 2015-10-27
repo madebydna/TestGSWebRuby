@@ -1,0 +1,8 @@
+<div class="partner-logo">
+  <div class="text">
+    <%= t(".in_partnership_with") %>
+  </div>
+  <a href="<%= t(".#{promo[:name]}.link_url") %>" target="_blank">
+    <img src="<%= catalog_path(t(".#{promo[:name]}.logo_path")) %>"/>
+  </a>
+</div>
