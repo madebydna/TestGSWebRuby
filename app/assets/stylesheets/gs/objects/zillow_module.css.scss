@@ -9,3 +9,26 @@
     padding-bottom: 0;
   }
 }
+
+
+@media (min-width: $screen-sm-min) {
+
+  .zillow-logo {
+    padding: $spacing-small;
+
+    p { font-size: $font-size-small; }
+  }
+
+}
+
+@media (max-width: $screen-sm-min) {
+
+  .zillow-logo  {
+    padding: 2px;
+
+    p { font-size: $font-size-xs; }
+  }
+}
+
+
+
