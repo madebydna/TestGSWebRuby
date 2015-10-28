@@ -68,18 +68,4 @@ class DataDisplay
   def label_for(data_point, config)
     config[:label_charts_with] ? data_point[config[:label_charts_with].to_sym] : nil
   end
-
-  def descend_columns_callback
-    number_of_rows = (data_points.size / 2).round
-    first_half = data_points
-    second_half = []
-    if number_of_rows > 1
-      first_half, second_half = data_points.each_slice(number_of_rows).to_a
-    end
-    new_data_array = (0..number_of_rows).each_with_object([]) do |i, arr|
-      arr << first_half[i] if first_half[i]
-      arr << second_half[i] if second_half[i]
-    end
-    self.data_points = new_data_array
-  end
 end

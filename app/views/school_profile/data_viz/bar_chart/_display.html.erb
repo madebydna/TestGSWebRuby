@@ -1,32 +1,8 @@
+<% # This partial accepts an array of data points %>
+<% data_points = data_point %>
 <div class="col-xs-12 col-md-6">
-  <div class="data-display-point">
-    <div class='header'>
-      <div class='row-text'><%= db_t(data_point.label) %></div>
-      <div class='row-text value <%= data_point.performance_level %>'><%= data_point.value %>%</div>
-    </div>
-
-    <div class="bar-row gs-tooltip"
-      <% if data_point.comparison_value %>
-           data-toggle="tooltip"
-           data-html="true"
-           data-placement="bottom"
-           data-title='<%= render partial: 'school_profile/data_viz/data_display_tooltip', locals: {data_point: data_point} %>'
-      <% end %>
-    >
-      <div class="pr clearfix">
-        <div class="color-row <%= data_point.performance_level %>"
-             style="width:<%= data_point.value %>%"></div>
-        <div class="grey-row" style="width:<%= data_point.grey_value %>%"></div>
-        <% if data_point.comparison_value %>
-            <div class="i-data-viz-state-avg state-avg-marker" style="left:<%= data_point.comparison_value %>%"></div>
-        <% end %>
-      </div>
-    </div>
-
-    <% if data_point.subtext.present? %>
-        <div class='subtext'>
-          <div><%= data_point.subtext %></div>
-        </div>
-    <% end %>
-  </div>
+  <% data_points.each do |data_point| %>
+    <%= render partial: "school_profile/data_viz/bar_chart/bar",
+      locals: {data_point: data_point} %>
+  <% end %>
 </div>

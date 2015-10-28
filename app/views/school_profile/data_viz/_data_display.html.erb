@@ -3,9 +3,16 @@
   # comparison data reader.
 %>
 
+<%
+  data_points = data_display.data_points
+  if @data_display_collection.partial == 'bar_chart' && data_points.present?
+    data_points = data_points.each_slice( (data_points.size/2.0).round ).to_a
+  end
+%>
+
 <div class="js-dataDisplay js-<%=data_display.title %> <%= show_hide_chart %>">
   <div class="flex-wrap">
-    <% data_display.data_points.each do |data_point| %>
+    <% data_points.each do |data_point| %>
       <%= render partial: "school_profile/data_viz/#{@data_display_collection.partial}/display",
                 locals: {data_point: data_point} %>
     <% end %>
