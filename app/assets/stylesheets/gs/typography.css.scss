@@ -215,6 +215,9 @@ p.small {
 
 .tdn { text-decoration: none; }
 
+.t-hover-underline:hover {
+  text-decoration: underline;
+}
 
 .mrm_sm {margin-right: 10px;}
 .mrl_lg {margin-right: 0px;}
