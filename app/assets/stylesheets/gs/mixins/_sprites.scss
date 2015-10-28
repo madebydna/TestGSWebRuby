@@ -1,0 +1,7 @@
+@mixin sprite-file($height, $width, $url) {
+  display: inline-block;
+  background-image: asset_data_url($url);
+  width: $width+px;
+  height: $height+px;
+}
+
