@@ -11,7 +11,7 @@
 }
 
 .gs-rating-white-sm {
-  @include gs-rating-white($size: 32px);
+  @include border-circle($size: 32px);
 }
 
 .performance-box {
@@ -67,6 +67,9 @@
   h2 {
     display: inline-block;
     margin: auto 0;
+    .tooltip-activator {
+      vertical-align: 5px;
+    }
   }
 }
 
@@ -79,4 +82,11 @@
   font-size:   16px;
   line-height: 28px;
   @extend      .open-sans_b;
+}
+
+.tooltip-activator {
+  @include border-circle($size: 16px, $color: $brand-primary-dark, $border-size: 1px);
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: 4px;
 }

@@ -8,5 +8,8 @@
       subtext: true
     %>
   </div>
-  <h2><%= rating.label %></h2>
+  <h2>
+    <%= rating.label %>
+    <%= render 'school_profile/data_viz/tooltip_activator', text: rating.label %>
+  </h2>
 </div>

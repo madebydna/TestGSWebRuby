@@ -44,16 +44,20 @@
   .below_average, &.below_average  { border-color: $below_average; }
 }
 
-@mixin gs-rating-white($size) {
+@mixin border-circle($size, $color: '', $border-size: 3px) {
   $gs-rating-font-size: ($size / 2);
 
   @include performance-color();
   @include performance-color-border();
-  border: 2px solid;
+  @if ($color) {
+    border-color: $color;
+    color: $color;
+  }
+  border: $border-size solid;
   border-radius: 50%;
   font: $gs-rating-font-size $font-family-base-bold;
   height: $size;
   text-align: center;
-  line-height: ($size - 2 * 2);
+  line-height: ($size - 2 * $border-size);
   width: $size;
 }
