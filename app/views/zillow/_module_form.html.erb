@@ -34,7 +34,7 @@
    extra_params['cbpartner'] = 'Great+Schools'
    zillow_url = zillow_base_url + '?' + extra_params.map{|arr| arr.join('=')}.join('&')
 %>
-<form action="<%= zillow_url %>" target="_blank" class="js-zillowNearbyHomesForm">
+<form method="post" action="<%= zillow_url %>" target="_blank" class="js-zillowNearbyHomesForm">
   <input type="hidden" name="propertyType" value="<%= property_type %>"/>
   <div class="col-xs-12 col-sm-4 form-group">
     <input name="searchbox" class="form-control" type="text" placeholder="<%= t('.enter_location') %>"/>
