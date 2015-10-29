@@ -5,7 +5,7 @@ GS.notifications = GS.notifications || (function($) {
   };
 
   var closeNotificationMessage = function(wait){
-      $('#js-top-notification-bar').children().each(function () {
+      $getNotificationContainer().children().each(function () {
           var $this = $(this);
               setTimeout(function () {
                   if ($this.hasClass("alert")) {
@@ -106,6 +106,11 @@ GS.notifications = GS.notifications || (function($) {
     warning: warning,
     flash_message: flash_message,
     flash_from_hash: flash_from_hash,
-    flashMessagesInAjaxResponse: flashMessagesInAjaxResponse
+    flashMessagesInAjaxResponse: flashMessagesInAjaxResponse,
+    closeNotificationMessage: closeNotificationMessage
   };
 })(jQuery);
+jQuery(document).ready(function() {
+    GS.notifications.closeNotificationMessage(10000);
+});
+
