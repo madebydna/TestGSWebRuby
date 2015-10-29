@@ -5,7 +5,7 @@ GS.notifications = GS.notifications || (function($) {
   };
 
   var closeNotificationMessage = function(wait){
-      $getNotificationContainer.children().each(function () {
+      $('#js-top-notification-bar').children().each(function () {
           var _this = $(this);
               setTimeout(function () {
                   if (_this.hasClass("alert")) {
