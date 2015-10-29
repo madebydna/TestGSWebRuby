@@ -1,18 +1,18 @@
-<div class="gs-zillow-module">
+<div class="gs-zillow-module gs-bootstrap">
   <ul class="nav tabs">
     <li class="active">
-      <a href="#sale" data-toggle="tab">
-        <%= t('.for_sale') %>
-      </a>
+    <a href="#sale" data-toggle="tab">
+      <%= t('.for_sale') %>
+    </a>
     </li>
     <li>
-      <a href="#rent" data-toggle="tab">
-        <%= t('.for_rent') %>
-      </a>
+    <a href="#rent" data-toggle="tab">
+      <%= t('.for_rent') %>
+    </a>
     </li>
     <li class="zillow-logo pull-right">
-      <p class="gray-dark tac mbn">Powered by</p>
-      <img src="<%= image_url('zillow_logo_sm.png') %>"</img>
+    <p class="gray-dark tac mbn"><%= t('.powered_by') %></p>
+    <img src="<%= image_url('zillow_logo_sm.png') %>"</img>
     </li>
   </ul>
   <div class="tab-content">
