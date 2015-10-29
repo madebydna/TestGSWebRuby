@@ -6,10 +6,10 @@ GS.notifications = GS.notifications || (function($) {
 
   var closeNotificationMessage = function(wait){
       $('#js-top-notification-bar').children().each(function () {
-          var _this = $(this);
+          var $this = $(this);
               setTimeout(function () {
-                  if (_this.hasClass("alert")) {
-                      _this.alert('close');
+                  if ($this.hasClass("alert")) {
+                      $this.alert('close');
                   }
               }, wait);
       });
