@@ -9,7 +9,7 @@
     %>
   </div>
   <h2>
-    <%= rating.label %>
+    <%= rating.label.sub(' ', ' <br class="visible-xs visible-sm"/>').html_safe %>
     <%= render 'school_profile/data_viz/tooltip_activator', text: rating.label %>
   </h2>
 </div>
