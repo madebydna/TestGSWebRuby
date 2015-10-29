@@ -18,3 +18,14 @@
   @extend .gs-tooltip;
   + .tooltip > .tooltip-inner { white-space: pre; }
 }
+
+// The question mark circle
+.tooltip-activator {
+  @include border-circle($size: 20px, $color: $brand-primary-dark, $border-size: 1px);
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: 4px;
+  &:focus {
+    outline: 0;
+  }
+}

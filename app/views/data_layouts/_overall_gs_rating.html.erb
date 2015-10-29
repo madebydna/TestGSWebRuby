@@ -10,6 +10,7 @@
   </div>
   <h2>
     <%= rating.label.sub(' ', ' <br class="visible-xs visible-sm"/>').html_safe %>
-    <%= render 'school_profile/data_viz/tooltip_activator', text: rating.label %>
+    <%= render 'school_profile/data_viz/tooltip_activator',
+      text: rating.description, trigger: 'focus' %>
   </h2>
 </div>

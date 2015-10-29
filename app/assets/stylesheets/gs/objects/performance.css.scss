@@ -83,10 +83,3 @@
   line-height: 28px;
   @extend      .open-sans_b;
 }
-
-.tooltip-activator {
-  @include border-circle($size: 16px, $color: $brand-primary-dark, $border-size: 1px);
-  cursor: pointer;
-  display: inline-block;
-  vertical-align: 4px;
-}

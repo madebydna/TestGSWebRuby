@@ -1,9 +1,14 @@
+<% # If you're looking for an on-click tooltip, I suggest using trigger: 'focus' %>
 <% if text %>
   <div class="tooltip-activator gs-tooltip"
         data-toggle="tooltip"
         data-html="true"
+        <% # See http://getbootstrap.com/javascript/#tooltips for all triggers %>
+        data-trigger="<%= trigger || 'hover focus' %>"
         data-placement="bottom"
         data-title='<%= text %>'
+        <% # Makes this element focus-able on desktop %>
+        tabindex="0"
     >
     ?
   </div>

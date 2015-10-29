@@ -48,11 +48,19 @@ class PerformanceDataReader < SchoolProfileDataReader
             comparison_value: value[:state_average],
             performance_level: value[:performance_level],
             subtext: value[:subtext],
+            description: description_for(original_label),
             link_to: config[:link_mappings].try(:[], config[label]),
           }
         )
         data_point.display? ? data_point : nil
       end.compact
     end.flatten
+  end
+end
+
+def description_for(data_type)
+  if data_type.present?
+    normalized_data_type = data_type.gsub(' ', '_').underscore
+    I18n.t("models.data_readers.performance_data_reader.#{normalized_data_type}_html")
   end
 end
