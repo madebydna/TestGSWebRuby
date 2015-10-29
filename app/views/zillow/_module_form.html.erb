@@ -31,10 +31,9 @@
    extra_params['ga_utm_medium'] = 'referral'
    extra_params['ga_utm_content'] = 'map'
    extra_params['ga_utm_campaign'] = 'overview-module'
-   extra_params['cbpartner'] = 'Great+Schools'
-   zillow_url = zillow_base_url + '?' + extra_params.map{|arr| arr.join('=')}.join('&')
+   extra_params['cbpartner'] = 'Great Schools'
 %>
-<form method="post" action="<%= zillow_url %>" target="_blank" class="js-zillowNearbyHomesForm">
+<form action="<%= zillow_base_url %>" target="_blank" class="js-zillowNearbyHomesForm">
   <input type="hidden" name="propertyType" value="<%= property_type %>"/>
   <div class="col-xs-12 col-sm-4 form-group">
     <input name="searchbox" class="form-control" type="text" placeholder="<%= t('.enter_location') %>"/>
@@ -46,6 +45,9 @@
   <div class="col-xs-6 col-sm-3 col-lg-2 form-group">
     <%= select_tag 'bed', options_for_select(beds), class: 'selectpicker', data: {width: '100%'} %>
   </div>
+  <% extra_params.each do |k, v| %>
+    <%= hidden_field_tag(k, v) %>
+  <% end %>
   <div class="col-xs-6 col-xs-offset-3 col-sm-offset-0 col-sm-2 col-lg-offset-2 form-group">
     <input type="submit" class="btn btn-block btn-primary" value="<%=t('.search')%>"/>
   </div>
