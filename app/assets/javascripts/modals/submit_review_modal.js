@@ -5,7 +5,7 @@ GS.modal.SubmitReviewModal= function($, options) {
   GS.modal.JoinModal.call(this, $, options);
   options = options || {};
 
-  this.cssClass = options.cssClass || 'submit-review-modal';
+  this.cssClass = options.cssClass || 'js-submit-review-modal';
   this.modalUrl = '/gsr/modals/submit_review_modal';
 };
 

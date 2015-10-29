@@ -7,7 +7,7 @@ GS.modal.EmailJoinModal = function($, options) {
   options = options || {};
 
   // set properties specific to this modal
-  this.cssClass = options.cssClass || 'email-join-modal';
+  this.cssClass = options.cssClass || 'js-email-join-modal';
   this.modalUrl = '/gsr/modals/email_join_modal';
 
   this.eventTrackingConfig = {

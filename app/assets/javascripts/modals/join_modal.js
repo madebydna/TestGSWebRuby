@@ -5,7 +5,7 @@ GS.modal.JoinModal = function($, options) {
   GS.modal.BaseModal.call(this, $, options);
   options = options || {};
 
-  this.cssClass = options.cssClass || 'join-modal';
+  this.cssClass = options.cssClass || 'js-join-modal';
   this.modalUrl = '/gsr/modals/join_modal';
 
   this.eventTrackingConfig = {
