@@ -1,13 +1,17 @@
 require 'net/http'
 require 'uri'
 
+# TODO: (From CR-534) Since ExternalContentFetcher is being instantiated, and since it requires a key and URL, I feel
+#   like it should take key and url_s as constructor attributes and stored as state on the object, and can raise an
+#   error at the time the object is created. That would also allow some of the methods to access the uri without
+#   having it be passed around.
 class ExternalContentFetcher
   def fetch!(key, url_s)
     return error("ExternalContentFetcher requires a key and URL. Was provided key='#{key}', url='#{url_s}'") unless key.present? && url_s.present?
     begin
       uri = URI.parse(URI.encode(url_s))
-    rescue
-      return error("Provided invalid URI: #{url_s}")
+    rescue => e
+      return error("Provided invalid URI: #{url_s}", e)
     end
     return error("Provided invalid URI: #{url_s}") unless uri_valid?(uri)
 
@@ -27,7 +31,7 @@ class ExternalContentFetcher
         external_content.update_attributes!(
           content: body,
           updated: Time.now
-      )
+        )
       true
     rescue => e
       error(nil, e, {key: key, body: body})
@@ -44,7 +48,7 @@ class ExternalContentFetcher
     begin
       response = make_request(uri)
     rescue => e
-      error(nil, e)
+      error('Error making request', e, {url: uri})
     end
     if response.present? && response.body.present? && response.code == '200'
       response.body
