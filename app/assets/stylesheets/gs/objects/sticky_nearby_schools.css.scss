@@ -12,13 +12,31 @@
     .current-school {
       background-color: $dirt-green;
       color: white;
+      float: left;
       height: 100%;
       width: 50%;
     }
     .nearby-schools {
+      @include clearfix;
       background-color: $gray;
-      width: 100%;
+      float: left;
       height: 100%;
+      width: 100%;
+      div {
+        height: 100%;
+      }
+      > div {
+        float: left;
+      }
+      .close-nearby-schools {
+        width: 10%;
+      }
+      .carousel {
+        width: 80%;
+      }
+      .next {
+        width: 10%;
+      }
     }
 
     @include for-sm-and-up {
