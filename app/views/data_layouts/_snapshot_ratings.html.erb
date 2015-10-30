@@ -5,13 +5,9 @@
   <div class="col-xs-12 tac">
     <a href="<%= school_quality_url(@school) %>#Ratings">
       <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
-      <% icon_class = 'iconx72-ratings' %>
-      <% ratings_class = 'i-72-ratings-'  %>
-      <%  if I18n.default_locale != I18n.locale %>
-        <% icon_class = icon_class + '-' + I18n.non_default_locale.to_s %> 
-        <%  ratings_class = ratings_class + I18n.non_default_locale.to_s + '-' %>
-      <% end  %> 
-      <span class="<%= icon_class  %> <%= ratings_class + gs_rating %>"></span>
+      <div class="dib">
+        <%= render 'performance/gs_rating', value: gs_rating, size: 'lg', subtext: true %>
+      </div>
     </a>
   </div>
 

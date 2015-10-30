@@ -5,7 +5,7 @@ GS.modal.SaveSearchModal= function($, options) {
     GS.modal.JoinModal.call(this, $, options);
     options = options || {};
 
-    this.cssClass = options.cssClass || 'save-search-modal';
+    this.cssClass = options.cssClass || 'js-save-search-modal';
     this.modalUrl = '/gsr/modals/save_search_modal';
 };
 

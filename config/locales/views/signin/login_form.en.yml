@@ -3,11 +3,11 @@ en:
   signin:
     login_form:
       email_label: Email address
-      facebook_signin_button: Sign in with Facebook
+      facebook_signin_button: Log in with Facebook
       forgot_password_link: Forgot your password?
       have_an_account_label: Have an account?
-      login_button: Login
+      login_button: Log in
       no_account_label: Don't have an account?
       or: or
       password_label: Password
-      signup_tab: Sign Up
+      signup_tab: Sign up

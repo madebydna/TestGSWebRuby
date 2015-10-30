@@ -1,0 +1,63 @@
+@mixin gs-rating($size, $with-subtext: false) {
+  @if ($size == $gs-rating-size-large) {
+    $gs-rating-font-size: 32px;
+    padding-top: 7px;
+  } @else {
+    $gs-rating-font-size: ($size / 2);
+  }
+
+  @include performance-background();
+  border-radius: 50%;
+  color: white !important;
+  font: $gs-rating-font-size $font-family-base-bold;
+  height: $size;
+  text-align: center;
+  width: $size;
+  @if ($with-subtext) {
+    .subtext {
+      font-size: 10px;
+      margin-top: -5px;
+    }
+  } @else {
+    line-height: $size;
+  }
+}
+
+@mixin performance-color {
+  color: $no_quality_attribution;
+  .above_average, &.above_average  { color: $above_average; }
+  .average, &.average              { color: $average;       }
+  .below_average, &.below_average  { color: $below_average; }
+}
+
+@mixin performance-background {
+  background-color: $no_quality_attribution;
+  .above_average, &.above_average  { background-color: $above_average; }
+  .average, &.average              { background-color: $average;       }
+  .below_average, &.below_average  { background-color: $below_average; }
+}
+
+@mixin performance-color-border {
+  border-color: $no_quality_attribution;
+  .above_average, &.above_average  { border-color: $above_average; }
+  .average, &.average              { border-color: $average;       }
+  .below_average, &.below_average  { border-color: $below_average; }
+}
+
+@mixin border-circle($size, $color: '', $border-size: 3px) {
+  $gs-rating-font-size: ($size / 2);
+
+  @include performance-color();
+  @include performance-color-border();
+  @if ($color) {
+    border-color: $color;
+    color: $color;
+  }
+  border: $border-size solid;
+  border-radius: 50%;
+  font: $gs-rating-font-size $font-family-base-bold;
+  height: $size;
+  text-align: center;
+  line-height: ($size - 2 * $border-size);
+  width: $size;
+}

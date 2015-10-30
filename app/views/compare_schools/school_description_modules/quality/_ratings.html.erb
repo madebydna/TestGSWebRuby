@@ -20,7 +20,11 @@
     <% ratings_types.each do |label| %>
         <tr>
           <td><%= truncate_with_popup(label, length: 26) %></td>
-          <% value = label == 'GreatSchools rating' ? @school.great_schools_rating_icon : datapoints[label] %>
+          <% if label == 'GreatSchools rating' %>
+            <% value = render 'performance/gs_rating', value: @school.great_schools_rating, size: 'sm', css_class: 'ma' %>
+          <% else %>
+            <% value = datapoints[label] %>
+          <% end %>
           <td class="tac open-sans_sb" style="width: 40px"><%= value %></td>
         </tr>
     <% end %>

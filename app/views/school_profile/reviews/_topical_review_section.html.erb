@@ -1,4 +1,11 @@
 <% @first_topic_id_to_show %>
+<% if @show_role_question
+  display_review_questions = false
+  display_role_question = true 
+else 
+  display_review_questions = true
+  display_role_question = false 
+end %>
 
 <hr/>
 <div class="js-topicalReviewQuestionsContainer">
@@ -12,27 +19,7 @@
 
   <div class="row">
     <div class="col-xs-12 <%= 'col-sm-8' if @show_ads %>">
-      <% # if not logged in there will be no @school member only show review questions   %>
-      <% if @school_user %>
-          <% # if logged in and user has a role only show questions    %>
-          <% if !@school_user.unknown?
-               display_review_questions = true %>
-              <% # if logged in and has unknown role    %>
-          <% else %>
-              <% # if user answered questions render and display role question & hide review questions    %>
-              <% if @school_user.reviews.present? %>
-                  <%= render 'school_profile/reviews/modules/member_role_question_module', display: true %>
-                  <% display_review_questions = false %>
-                  <% # if logged in and has not answered questions, render and hide role question & display review questions    %>
-              <% else %>
-                  <%= render 'school_profile/reviews/modules/member_role_question_module', display: false %>
-                  <% display_review_questions = true %>
-              <% end %>
-          <% end %>
-      <% else %>
-          <% display_review_questions = true %>
-      <% end %>
-
+    <%= render 'school_profile/reviews/modules/member_role_question_module', display: display_role_question %>
       <%= render 'school_profile/reviews/modules/question_navigation' %>
       <div id="topicalReviewQuestionCarousel" class="link-down-compensate js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %> mbl">
         <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">

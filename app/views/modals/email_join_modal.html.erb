@@ -25,25 +25,25 @@
           <div class="row">
             <div class="col-xs-12 col-sm-8 col-sm-offset-2">
               <div class="form-group controls row">
-                <div class="col-xs-8 col-sm-9">
+                <div class="input-group">
                   <%= email_field_tag(
-                        :email,
-                        nil,
-                        {
-                          id: "signup-email",
-                          placeholder: "",
-                          class: 'full-width js-signup-email parsley-error pam',
-                          'data-parsley-required' => "true",
-                          'data-parsley-type' => "email",
-                          'data-parsley-required-message' => "Please enter an email address.",
-                          'data-parsley-error-container' => ".js-signup-email-errors"
-                        }
-                      ) %>
-                </div>
-                <div class="col-xs-4 col-sm-3">
-                  <button class="btn btn-primary js-modal-submit-button modal-signup-button" type="submit" data-disable-with="Signing up">
-                    <%= t('.signup_button') %>
-                  </button>
+                    :email,
+                    nil,
+                    {
+                      id: "signup-email",
+                      placeholder: "",
+                      class: 'form-control js-signup-email parsley-error pam', 
+                      data: { 'parsley-required' => "true",
+                      'parsley-type' => "email",
+                      'parsley-required-message' => "Please enter an email address.",
+                      'parsley-error-container' => ".js-signup-email-errors" }
+                    }
+                  ) %>
+                  <span class="input-group-btn">
+                    <button class="btn btn-primary js-modal-submit-button modal-signup-button" type="submit" data-disable-with="Signing up">
+                      <%= t('.signup_button') %>
+                    </button>
+                  </span>
                 </div>
               </div>
             </div>
@@ -52,9 +52,9 @@
             <%= t('.terms_of_use_html',
                   terms_of_use_link: link_to(
                     t('.greatschools_terms_of_use'),
-                    terms_of_use_url
-                  )
-                ) %>
+                    terms_of_use_url )
+                )
+            %>
           </p>
         </div>
       </div>

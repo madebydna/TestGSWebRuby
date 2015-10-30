@@ -59,24 +59,28 @@ GS.modal.manager = GS.modal.manager || (function ($) {
   // If retrieving modal rejects then reject. (do not try to show modal)
   var showModal = function(ModalConstructor, options) {
     options = options || {};
-    var modal = createModal(ModalConstructor, options);
     var modalDeferred = $.Deferred();
+    try {
+      var modal = createModal(ModalConstructor, options);
 
-    if(modalsBeingDisplayed.length == 0) {
-      ensureModalInDOM(modal).done(function() {
-        addModalToStack(modal);
-        modal.initialize();
-        modal.show().done(function(data) {
-          modalDeferred.resolveWith(this, [data]);
-        }).fail(function(data) {
+      if (modalsBeingDisplayed.length == 0) {
+        ensureModalInDOM(modal).done(function () {
+          addModalToStack(modal);
+          modal.initialize();
+          modal.show().done(function (data) {
+            modalDeferred.resolveWith(this, [data]);
+          }).fail(function (data) {
+            modalDeferred.rejectWith(this, [data]);
+          }).always(function () {
+            removeModalFromStack(modal);
+          });
+        }).fail(function (data) {
           modalDeferred.rejectWith(this, [data]);
-        }).always(function() {
-          removeModalFromStack(modal);
         });
-      }).fail(function(data) {
-        modalDeferred.rejectWith(this, [data]);
-      });
-    } else {
+      } else {
+        modalDeferred.reject();
+      }
+    } catch (e) {
       modalDeferred.reject();
     }
 

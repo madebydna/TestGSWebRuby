@@ -115,7 +115,7 @@ GS.facebook = GS.facebook || (function ($) {
           FB.api('/me', function (facebookData) {
             if (!facebookData || facebookData.error) {
               // problem occurred
-              loginAttemptDeferred.reject();
+              loginAttemptDeferred.reject(facebookData.error.message);
             } else {
               facebookData.authResponse = response.authResponse;
               loginAttemptDeferred.resolve(facebookData);
@@ -140,6 +140,8 @@ GS.facebook = GS.facebook || (function ($) {
         }).fail(function(data) {
           deferred.reject(data);
         });
+      }).fail(function(data) {
+          deferred.reject(data);
       });
       return deferred.promise();
     };

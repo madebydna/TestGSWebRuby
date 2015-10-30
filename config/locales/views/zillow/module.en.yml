@@ -1,0 +1,8 @@
+---
+en:
+  zillow:
+    module:
+      for_sale: For sale
+      for_rent: For rent
+      enter_location: Enter location
+      search: Search

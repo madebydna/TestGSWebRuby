@@ -390,3 +390,8 @@ hr.brand-bar {
     display: block;
   }
 }
+
+.flex-wrap {
+  @include display-flex;
+  @include flex-wrap;
+}

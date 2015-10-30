@@ -1,42 +1,28 @@
-$no_quality_attribution: #777777;
-$above_average:          #40a753;
-$average:                #ec843e;
-$below_average:          #bf3c29;
-
-.above_average { color: $above_average; }
-.average       { color: $average; }
-.below_average { color: $below_average; }
-
 .data-viz {
-
-  .header {
-    width: 100%;
-    @include clearfix();
-  }
-
-  .title-text {
-    font-size: 22px;
-    font-weight: bold;
-    padding-right: 10px;
-    float: left;
-  }
-
-  .tal {
-    text-align: left;
-  }
-
-  .vat {
-    vertical-align: top;
-  }
 
   .data-display-point {
     padding: 10px 0;
 
-    .row-text {
+    &.rating {
+      @include display-flex;
+      .text {
+        padding-left: $spacing-large;
+      }
+    }
+
+    .header {
+      font-family: $font-family-base-bold;
       font-size: 16px;
-      font-weight: bold;
-      padding-right: 10px;
-      float: left;
+      width: 100%;
+      @include clearfix();
+
+      .row-text {
+        &.value {
+          @include performance-color();
+        }
+        padding-right: 10px;
+        float: left;
+      }
     }
 
 
@@ -53,13 +39,11 @@ $below_average:          #bf3c29;
     }
 
     .color-row {
+      @include performance-background();
       background-color: $no_quality_attribution;
       border-radius: 2px 0px 0px 2px;
       float: left;
       height:10px;
-      &.above_average { background-color: $above_average; }
-      &.average       { background-color: $average; }
-      &.below_average { background-color: $below_average; }
     }
 
     .grey-row {

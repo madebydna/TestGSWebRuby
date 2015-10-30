@@ -17,6 +17,10 @@ class DisplayRange < ActiveRecord::Base
     nil
   end
 
+  def self.for_rating(value)
+    self.for(value: value, data_type: 'test', data_type_id: 174)
+  end
+
   def self.get_range(data)
     data_type, data_type_id, subject_id, state, year = data[:data_type], data[:data_type_id], data[:subject_id].to_i, data[:state].try(:downcase), data[:year].to_i
 

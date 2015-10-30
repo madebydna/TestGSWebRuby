@@ -1,0 +1,32 @@
+.gs-zillow-module {
+  border: 1px solid $module-gray-stroke;
+  .tabs {
+    @include gs-nav-tabs($brand-primary-darker, $gray-dark, $brand-primary-darker);
+  }
+  .tab-content {
+    background-color: $module-gray;
+    padding: ($grid-gutter-width / 2);
+    padding-bottom: 0;
+  }
+}
+
+
+
+.zillow-logo {
+  padding: $spacing-small;
+
+  p { font-size: $font-size-small; }
+}
+
+
+@media (max-width: $screen-sm-min) {
+
+  .zillow-logo  {
+    padding: 2px;
+
+    p { font-size: $font-size-xs; }
+  }
+}
+
+
+

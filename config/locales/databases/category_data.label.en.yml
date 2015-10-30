@@ -67,6 +67,8 @@ en:
     programs offered
   Boys sports: Boys sports
   Boys sports (misc): Boys sports (misc.)
+  caaspp_english: English Proficiency
+  caaspp_math: Math Proficiency
   Career and Tech programs: Career and Tech programs
   Certified and/or licensed: Certified and/or licensed
   Child feels safe inside and outside the school: Child feels safe inside and outside
@@ -83,6 +85,7 @@ en:
   College name: College name
   College preparation resources: College preparation resources
   College preparation resources (misc): College preparation resources (misc.)
+  College Readiness: College Readiness
   College-going students who enroll for a second year: College-going students who
     enroll for a second year
   Colleges students typically attend after graduation: Colleges students typically
@@ -125,6 +128,7 @@ en:
   English Language Arts: English Language Arts
   English Language Learner program details: English Language Learner program details
   English Language Learner programs: English Language Learner programs
+  English language learners: English language learners
   Enough school computers: Enough school computers
   Enter college: Enter college
   Extended care / Extended programs: Extended care / Extended programs
@@ -150,6 +154,7 @@ en:
   Graduates who need remediation, or help strengthening basic skills: Graduates who
     need remediation, or help strengthening basic skills
   graduation_rate: Graduation Rate
+  GreatSchools Rating: GreatSchools Rating
   HIB preparation score: HIB preparation score
   High expectations are set for all students' academic success: High expectations
     are set for all students' academic success
@@ -169,6 +174,7 @@ en:
   Level of special education programming: Level of special education programming
   Live in district - "choicing": Live in district - "choicing"
   Live outside district - "choicing": Live outside district - "choicing"
+  Low-Income Students: Low-Income Students
   Male: Male
   Math: Math
   Math Instruction: Math Instruction
@@ -274,6 +280,7 @@ en:
   Staff details: Staff details
   Start 9th grade: Start 9th grade
   Start time: Start time
+  Student Growth: Student Growth
   Student-Teacher Trust: Student-Teacher Trust
   Students: Students
   Students "choicing" into this school who live in the district: Students "choicing"
@@ -331,6 +338,8 @@ en:
   Summer program: Summer program
   Summer program offered: Summer program offered
   Supportive Environment: Supportive Environment
+  Test Scores: Test Scores
+  test_score_rating: Test Score Rating
   Teacher Influence: Teacher Influence
   ! 'Teacher experience: 5 years or more': ! 'Teacher experience: 5 years or more'
   Teacher-Parent Trust: Teacher-Parent Trust

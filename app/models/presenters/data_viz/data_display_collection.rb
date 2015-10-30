@@ -4,22 +4,28 @@ class DataDisplayCollection
   # how to segment charts: by subject or by breakdown.
   # data is a hash of data from GroupComparisonDataReader
 
-  attr_accessor :bar_chart_order, :breakdowns, :config, :data, :default_group,
-    :group_by_config, :sub_title, :title, :displays, :original_data_type
+  attr_accessor :data_display_order, :breakdowns, :config, :data, :default_group,
+    :group_by_config, :sub_title, :title, :displays, :original_data_type,
+    :partial
 
-  DEFAULT_CALLBACKS = [ 'group_by' ]
+  DEFAULT_CALLBACKS = [ 'group_by', 'remove_only_all_students' ]
 
   def initialize(title, data, config = {})
-    self.data             = data
-    self.config          = config
-    self.sub_title        = config[:sub_title]
-    self.title            = title
-    self.default_group    = config[:default_group]
-    self.group_by_config = config[:group_by]
-    self.bar_chart_order = config[:bar_chart_order]
+    self.data               = data
+    self.config             = config
+    self.sub_title          = config[:sub_title]
+    self.title              = title
+    self.default_group      = config[:default_group]
+    self.group_by_config    = config[:group_by]
+    self.data_display_order = config[:data_display_order]
     self.original_data_type = config[title]
+    self.partial            = config[:partial]
     create_displays!
-    self.breakdowns       = displays.map(&:title) if config[:group_by].present?
+    self.breakdowns         = displays.map(&:title) if config[:group_by].present?
+  end
+
+  def display?
+    displays.present?
   end
 
   private
@@ -33,7 +39,7 @@ class DataDisplayCollection
   end
 
   def run_config_callbacks!
-    callbacks = DEFAULT_CALLBACKS + [*config[:bar_chart_collection_callbacks]]
+    callbacks = DEFAULT_CALLBACKS + [*config[:collection_callbacks]]
 
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
@@ -76,9 +82,16 @@ class DataDisplayCollection
   end
 
   #Order bar charts callback
-  def order_bar_charts_callback
-    return unless data.present? && bar_chart_order.present?
+  def order_data_displays_callback
+    return unless data.present? && data_display_order.present?
 
-    self.data = Hash[data.sort_by { |k, v| bar_chart_order.index(k) }]
+    self.data = Hash[data.sort_by { |k, v| data_display_order.index(k) }]
+  end
+
+  # Remove groups that would only have all students
+  def remove_only_all_students_callback
+    data.delete_if do |_, values|
+      values.map { |v| v[:breakdown].try(:downcase) }.compact.uniq == ['all students']
+    end
   end
 end

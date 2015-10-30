@@ -1,0 +1,16 @@
+<% rating = data.first %>
+<div class="overall-gs-rating">
+  <div class="rating-circle">
+    <%= render 'performance/gs_rating',
+      value: rating.value,
+      performance_level: rating.performance_level,
+      size: 'lg',
+      subtext: true
+    %>
+  </div>
+  <h2>
+    <%= rating.label.sub(' ', ' <br class="visible-xs visible-sm"/>').html_safe %>
+    <%= render 'school_profile/data_viz/tooltip_activator',
+      text: rating.description, trigger: 'focus' %>
+  </h2>
+</div>

@@ -47,4 +47,9 @@ class LevelCode
     LevelCode.new(level_code) if level_code
   end
 
+  def self.full_from_grade(grade)
+    grade_levels = from_grade(grade.to_s) if grade.try(:to_s).is_a? String
+    grade_levels.levels.first.long_name if grade_levels
+  end
+
 end

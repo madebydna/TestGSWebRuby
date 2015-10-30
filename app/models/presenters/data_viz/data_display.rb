@@ -4,7 +4,8 @@ class DataDisplay
 
   attr_accessor :data_points, :data, :config, :title, :sort_by_config
 
-  DEFAULT_CALLBACKS = [ 'sort_by' ]
+  DEFAULT_BEFORE_CALLBACKS = [ 'sort_by' ]
+  DEFAULT_AFTER_CALLBACKS  = []
 
   def initialize(data, title = nil, config = {})
     # Title is optional because for single chart groups, there is no group title
@@ -19,7 +20,7 @@ class DataDisplay
   private
 
   def create_data_points!
-    run_config_callbacks!
+    run_before_callbacks!
 
     self.data_points = data.map do |data_point|
       data_point = DataDisplayPoint.new(
@@ -33,10 +34,18 @@ class DataDisplay
       )
       data_point.display? ? data_point : nil
     end.compact
+
+    run_after_callbacks!
   end
 
-  def run_config_callbacks!
-    callbacks = DEFAULT_CALLBACKS + [*config[:bar_chart_callbacks]]
+  def run_before_callbacks!
+    callbacks = DEFAULT_BEFORE_CALLBACKS + [*config[:data_display_before_callbacks]]
+
+    [*callbacks].each { |c| send("#{c}_callback".to_sym) }
+  end
+
+  def run_after_callbacks!
+    callbacks = DEFAULT_AFTER_CALLBACKS + [*config[:data_display_after_callbacks]]
 
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end

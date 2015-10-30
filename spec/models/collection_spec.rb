@@ -23,7 +23,7 @@ describe Collection do
       let(:collections) { [collection] }
       context 'with a promo' do
         subject do
-          config = { promo: base_promo }
+          config = { promos: [base_promo] }
           allow(collection).to receive(:config).and_return(config)
           Collection.promos_for(collections)
         end
@@ -46,7 +46,7 @@ describe Collection do
       let(:collections) { FactoryGirl.build_list(:collection, 3) }
       context 'with the same promo' do
         subject do
-          config = { promo: base_promo }
+          config = { promos: [base_promo] }
           allow_any_instance_of(Collection).to receive(:config).and_return(config)
           Collection.promos_for(collections)
         end
@@ -57,7 +57,7 @@ describe Collection do
       context 'with different promos' do
         subject do
           collections.each_with_index do |collection, i|
-            config = { promo: base_promo.merge(index: i) }
+            config = { promos: [base_promo.merge(index: i)] }
             allow(collection).to receive(:config).and_return(config)
           end
           Collection.promos_for(collections)

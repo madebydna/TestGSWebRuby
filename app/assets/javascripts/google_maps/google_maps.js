@@ -236,13 +236,9 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '</div>';//address
               markup += '</div>'; //
               markup += '<div class="mts col-xs-5 col-sm-4 font-size-small ">'; //sprites
-              markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
-              if (parseInt(point.gsRating) > 0){
-                  markup += + point.gsRating;
-              } else {
-                  markup += 'nr';
-              }
-              markup += '"></span class="notranslate">' + mapPinRatingText() +  '</div>';
+              //markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
+              markup += '<div class="pbs"><div class="fl vam mrs gs-rating-sm ' + GS.rating.getRatingPerformanceLevel(point.gsRating) + '">';
+              markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
 
               if(point.fitScore > 0){
                   if (point.strongFit){

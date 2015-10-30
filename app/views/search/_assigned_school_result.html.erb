@@ -59,9 +59,9 @@
                         <!-- GS Rating -->
                         <div class="col-xs-6 col-sm-4 mvl">
                             <a class="js-gs-rating-link">
-                                <div class="ma db iconx24-icons i-24-new-ratings-nr js-gs-rating-icon"></div>
-                                <div class="hidden-xs pts"></div>
-                                <span class="tac ptm font-size-xs db link-darkgray" style="line-height: 1.3em">
+                                <%= render 'performance/gs_rating', size: 'sm', css_class: 'ma js-gs-rating-icon' %>
+                                <div class="pts"></div>
+                                <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em">
                                   <%= t('.greatschools_rating_html') %>
                                 </span>
                             </a>

@@ -69,6 +69,8 @@ es:
     lingüística ofrecidos
   Boys sports: Chicos deportes
   Boys sports (misc): Chicos deportes (misc.)
+  caaspp_english: Dominio de Inglés
+  caaspp_math: Dominio de Matemáticas
   Career and Tech programs: Programas de Carrera y Tecnología
   Certified and/or licensed: Con licensia o certificado
   Child feels safe inside and outside the school: Niño se siente seguro dentro y fuera
@@ -83,6 +85,7 @@ es:
   College name: Nombre del Colegio
   College preparation resources: Recursos de preparación de la universidad
   College preparation resources (misc): Recursos de preparación College (misc.)
+  College Readiness: Preparación universitaria
   College-going students who enroll for a second year: Los estudiantes universitarios
     en curso que se inscriben para un segundo año
   Colleges students typically attend after graduation: Colegios estudiantes típicamente
@@ -122,6 +125,7 @@ es:
   English Language Learner program details: Aprendices del Idioma Inglés detalles
     del programa
   English Language Learner programs: Programas de Aprendices del Idioma Inglés
+  English language learners: Los estudiantes del idioma Inglés
   Enough school computers: Computadoras de la escuela Suficientes
   Enter college: Introduzca la universidad
   Extended care / Extended programs: Cuidado extendido / programas ampliados
@@ -144,6 +148,7 @@ es:
   Graduates who need remediation, or help strengthening basic skills: Los graduados
     que necesitan reparación o ayuda fortalecimiento de las competencias básicas
   graduation_rate: Tasa de Graduados
+  GreatSchools Rating: GreatSchools Clasificación
   HIB preparation score: Puntuación de preparación HIB
   High expectations are set for all students' academic success: Las altas expectativas
     se establecen para el éxito académico de todos los estudiantes
@@ -163,6 +168,7 @@ es:
   Level of special education programming: Nivel de programación de educación especial
   Live in district - "choicing": Vive en el barrio - "choicing"
   Live outside district - "choicing": Vivo distrito fuera - "choicing"
+  Low-Income Students: Estudiantes de bajos ingresos
   Male: Masculino
   Math Instruction: Instrucción de Matemáticas
   Math skills development: Desarrollo de habilidades matemáticas
@@ -265,6 +271,7 @@ es:
   Staff details: Detalles del Personal
   Start 9th grade: Iniciar noveno grado
   Start time: Hora de inicio
+  Student Growth: Crecimiento estudiantil
   Student-Teacher Trust: Student-Teacher Trust
   Students "choicing" into this school who live in the district: Estudiantes "choicing"
     en esta escuela que viven en el distrito
@@ -326,6 +333,8 @@ es:
   Students who complete the 1st year of college (24 credits) on time: Los estudiantes
     que completen el primero año de universidad (24 créditos) en el tiempo
   Summer program offered: Programa de verano ofrecido
+  Test Scores: Resultados de exámenes
+  test_score_rating: Calificación de examenes
   Teacher Influence: Influencia del profesor
   ! 'Teacher experience: 5 years or more': ! 'Experiencia Profesor: 5 años o más'
   Teacher-Parent Trust: Fideicomiso Maestro-Padres

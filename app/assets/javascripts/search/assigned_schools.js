@@ -149,8 +149,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             $listItem.find('.js-no-reviews').show();
         }
         if (gsRating && gsRating > 0 && gsRating < 11) {
-            var gsRatingLink = $listItem.find('.js-gs-rating-link');
-            gsRatingLink.attr('href', qualityUrl).find('.iconx24-icons').removeClass('i-24-new-ratings-nr').addClass('i-24-new-ratings-' + gsRating);
+          updateRatingIconInListItem($listItem, gsRating, school);
         }
 
         var compareButton = $listItem.find('.js-compareSchoolButton');
@@ -206,6 +205,17 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     var syncAttributesFromExistingResult = function($existingSearchResult, $listItem) {
         syncDistance($existingSearchResult, $listItem);
         syncReviewCount($existingSearchResult, $listItem);
+    };
+
+    // finds GS rating within a list item, and changes its class to show correct rating
+    var updateRatingIconInListItem = function($listItem, newGSRating, school) {
+      if (newGSRating && newGSRating > 0 && newGSRating < 11) {
+        var qualityUrl = school.url + 'quality/';
+        var gsRatingLink = $listItem.find('.js-gs-rating-link');
+        var $ratingIcon = gsRatingLink.attr('href', qualityUrl).find('.js-gs-rating-icon');
+        $ratingIcon.addClass(GS.rating.getRatingPerformanceLevel(newGSRating));
+        $ratingIcon.find('div').html(newGSRating);
+      }
     };
 
     var syncDistance = function($existingSearchResult, $listItem) {

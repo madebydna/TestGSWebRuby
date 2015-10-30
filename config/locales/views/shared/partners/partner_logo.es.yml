@@ -1,0 +1,8 @@
+es:
+  shared:
+    partners:
+      partner_logo:
+        in_partnership_with: EN COLABORACIÓN CON
+        innovate_public_schools:
+          link_url: http://innovateschools.org/greatschools/?lang=es
+          logo_path: /catalog/partner_logos/innovate_public_schools.png

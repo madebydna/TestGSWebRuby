@@ -104,5 +104,7 @@ _.assign(GS.modal.BaseModal.prototype, {
   initializeShowHideBehavior: function initializeShowHideBehavior() {
     this.$getModal().on('hidden.bs.modal', this.rejectIfPending.gs_bind(this));
     this.deferred.always(this.hide.gs_bind(this));
-  }
+  },
+
+  initialize: function initialize() {}
 });

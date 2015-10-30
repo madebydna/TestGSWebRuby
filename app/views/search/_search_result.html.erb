@@ -64,9 +64,9 @@
             <!-- GS Rating -->
             <div class="col-xs-6 col-sm-4 mvl tac">
               <%=link_to school_quality_page_url do%>
-              <div class="ma db iconx24-icons i-24-new-ratings-<%=(school.overall_gs_rating || 'nr' )%>"></div>
-              <div class="hidden-xs pts"></div>
-              <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em"><%= t('.greatschools_rating_html') %></span>
+              <%= render 'performance/gs_rating', value: school.overall_gs_rating, size: 'sm', css_class: 'ma' %>
+              <div class="pts"></div>
+              <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em;"><%= t('.greatschools_rating_html') %></span>
               <% end %>
             </div>
             <!-- Fit score -->

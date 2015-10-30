@@ -1,0 +1,10 @@
+---
+en:
+  zillow:
+    module_form:
+      any_price: Any price
+      enter_location: Enter location
+      search: Search
+      beds:
+        one: "%{count} bed"
+        other: "%{count} beds"

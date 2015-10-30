@@ -53,8 +53,8 @@ class Collection < ActiveRecord::Base
 
   def self.promos_for(collections)
     [*collections].map do |collection|
-      collection.config[:promo]
-    end.compact.uniq
+      collection.config[:promos]
+    end.compact.uniq.flatten
   end
 
   # These methods are deprecated, but still work.

@@ -1,0 +1,7 @@
+en:
+  models:
+    data_readers:
+      performance_data_reader:
+        great_schools_rating_html: 'The GreatSchools rating includes the following measures of school quality: math test scores, English language arts test scores, and science test scores. <a href="http://www.greatschools.org/about/ratings.page">Methodology details</a>'
+        test_scores_html: 'The Test Score rating includes the following measures of school quality: math test scores, English language arts test scores, and science test scores.'
+        low_income_students_html: 'The Low-Income Student rating includes only the results of students identified as economically disadvantaged for the following measures of school quality: math test scores, English language arts test scores, and science test scores.'

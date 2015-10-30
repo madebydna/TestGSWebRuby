@@ -47,7 +47,7 @@ p, a {
 }
 
 p.small {
-  font-size: 12px;
+  font-size: $font-size-p-small;
 }
 
 .invert-colors{
@@ -60,6 +60,13 @@ p.small {
   hr {border-color: #444;}
   ul {@extend .list-unstyled;}
   .contact-content {color: #FFFFFF; font-size: 16px;}
+  .donate {
+    color: $gray;
+    a {
+      color: $brand-primary;
+      font-size: inherit;
+    }
+  }
   &.bg-darker {background-color: #2b2b2b}
 }
 
@@ -215,6 +222,9 @@ p.small {
 
 .tdn { text-decoration: none; }
 
+.t-hover-underline:hover {
+  text-decoration: underline;
+}
 
 .mrm_sm {margin-right: 10px;}
 .mrl_lg {margin-right: 0px;}

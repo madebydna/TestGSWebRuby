@@ -1,7 +1,7 @@
 <% force_show ||= false %>
 <% options ||= {} %>
 <% promos.each do |promo| %>
-  <% if force_show || promo[:profile_modules].include?(partial) %>
+  <% if promo[:profile_modules].include?(partial) || force_show %>
     <%= render partial: "shared/partners/#{promo[:type]}",
               locals: {
                 promo: promo,

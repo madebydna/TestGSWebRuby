@@ -61,6 +61,14 @@ $half-gutter-width: ($grid-gutter-width / 2);
         padding-right: 10px;
       }
     }
+    .row {
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+    [class^=col-] {
+      padding-left:  10px;
+      padding-right: 10px;
+    }
   }
 
   .row {

@@ -1,0 +1,8 @@
+<% # This partial accepts an array of data points %>
+<% data_points = data_point %>
+<div class="col-xs-12 col-md-6">
+  <% data_points.each do |data_point| %>
+    <%= render partial: "school_profile/data_viz/bar_chart/bar",
+      locals: {data_point: data_point} %>
+  <% end %>
+</div>

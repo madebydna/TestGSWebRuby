@@ -1,7 +1,8 @@
 module ConfiguredTableHelper
 
   def td(label, value)
-    output = "<td data-title=\"#{label}\">"
+    style = value.include?('http://schoolgrades.org') ? 'word-break:break-all;': ''
+    output = "<td style='#{style}' data-title=\"#{label}\">"
 
     if value.is_a? Array
       value.each do |val|

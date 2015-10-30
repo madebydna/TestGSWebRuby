@@ -1,0 +1,24 @@
+<% size %>
+<% value ||= 'NR' %>
+<% value = value.to_s.upcase %>
+<% not_rated = value == 'NR' %>
+<% subtext ||= false %>
+<% css_class ||= '' %>
+<% rating_class = "gs-rating-#{size}" %>
+<% rating_level ||= DisplayRange.for_rating(value) unless not_rated %>
+
+<div class="<%= "#{rating_class} #{rating_level} #{css_class}" %>">
+  <%# adding div with display inline block to keep the text in the rating icon from being underlined %> 
+  <div class="dib">
+    <div class="">
+      <%= value %>
+    </div>
+    <% if subtext %>
+      <% if not_rated %>
+        <div class="subtext"><%= t('.no_rating') %></div>
+      <% else %>
+        <div class="subtext"><%= t('.out_of_10') %></div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

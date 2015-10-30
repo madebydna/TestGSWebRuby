@@ -104,7 +104,7 @@ class CensusDataReader < SchoolProfileDataReader
   def data_type_matches_category_data?(category_data, data_type)
     data_type = CensusDataType.data_type_id_for_data_type_label(data_type) if category_data.response_key.is_a? Numeric
     category_data.response_key == data_type || (
-      data_type.present? && !!category_data.response_key.to_s.match(/#{Regexp.escape(data_type.to_s)}/i)
+      data_type.present? && !!category_data.response_key.to_s.match(/^#{Regexp.escape(data_type.to_s)}/i)
     )
   end
 

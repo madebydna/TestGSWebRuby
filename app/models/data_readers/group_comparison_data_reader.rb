@@ -40,23 +40,44 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     self.category = category
     self.config = category.parsed_json_config
 
-    # example parsed config. (HashWithIndifferentAccess)
-    # self.config = {
-    #  'bar_chart_collection_callbacks' => ['copy_all_students'],
-    #  'group_by'                       => {'gender'=> 'breakdown', 'program' => 'breakdown'},
-    #  'default_group'                  => 'ethnicity',
-    #  'bar_chart_callbacks'            => ['move_all_students'],
-    #  'sort_by'                        => {'desc' => 'percent_of_population'},
-    #  'label_charts_with'              => 'breakdown',
-    #  'breakdown'                      => 'Ethnicity',
-    #  'breakdown_all'                  => 'Enrollment',
-    #  'group_comparison_callbacks'     => [
-    #     'add_ethnicity_callback',
-    #     'add_enrollment_callback',
-    #     'add_student_types_callback',
+    # example JSON config. Gets turned into a HashWithIndifferentAccess.
+    # The format of the keys is partial:config_key.
+    # {
+    #   "all:collection_callbacks": [
+    #     "copy_all_students",
+    #     "order_data_displays"
+    #   ],
+    #   "all:order": [
+    #     "ethnicity",
+    #     "program",
+    #     "gender"
+    #   ],
+    #   "all:group_by": {
+    #     "gender": "breakdown",
+    #     "program": "breakdown"
+    #   },
+    #   "all:default_group": "ethnicity",
+    #   "bar_chart:data_display_callbacks": [
+    #     "move_all_students",
+    #     "descend_columns"
+    #   ],
+    #   "rating:data_display_callbacks": [
+    #     "move_all_students"
+    #   ],
+    #   "all:sort_by": {
+    #     "desc": "percent_of_population"
+    #   },
+    #   "all:label_charts_with": "breakdown",
+    #   "breakdown": "Ethnicity",
+    #   "breakdown_all": "Enrollment",
+    #   "group_comparison_callbacks": [
+    #     "add_ethnicity_callback",
+    #     "add_enrollment_callback",
+    #     "add_student_types_callback"
     #   ]
     # }
     get_data!
+    configure_data_type_partials!
     data_display_collections
 
   rescue
@@ -68,8 +89,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   def data_display_collections
     collections = data.map do |collection_name, collection_data|
       collection_name = collection_name.first
-      DataDisplayCollection.new(collection_name, collection_data, config)
+      collection_config = config_for_collection(collection_name)
+      DataDisplayCollection.new(collection_name, collection_data, collection_config)
     end
+    collections.keep_if { |c| c.display? }
     if valid_data_display_collections?(collections)
       collections
     else
@@ -81,6 +104,17 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data_display_collections.any? do |data_display_collection|
       data_display_collection.displays.any? { |bc| bc.data_points.present? }
     end
+  end
+
+  def config_for_collection(collection_name)
+    collection_partial = config[:partials][collection_name].to_s
+    config.each_with_object({}.with_indifferent_access) do |(key, value), h|
+      config_partial = key.split(':').first
+      if config_partial == collection_partial || config_partial == 'all'
+        config_key = key.sub("#{config_partial}:", '')
+        h[config_key] = value
+      end
+    end.merge( partial: collection_partial )
   end
 
   def school_cache_keys
@@ -100,24 +134,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     DEFAULT_CALLBACKS + [*config[:group_comparison_callbacks]]
   end
 
-  def preserve_data_type_name
-    translated_label_map = category.key_label_map(true, true)
-    untranslated_label_map = category.key_label_map(false, true)
-    data.each do |key, _|
-      key = label_lookup_value(key)
-      config[translated_label_map[key]] = untranslated_label_map[key]
+  def configure_data_type_partials!
+    config[:partials] = category.category_data.each_with_object({}) do |cd, h|
+      h[cd.label] = cd.display_type || :bar_chart
     end
-  end
-
-  def change_data_type_to_label
-    data.transform_keys! do |key|
-      label = category.key_label_map(true, true)[label_lookup_value(key)]
-      [label, key.last]
-    end
-  end
-
-  def label_lookup_value(key)
-    [key.first.to_s, key.last]
   end
 
   def add_ethnicity_callback
@@ -181,6 +201,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data.values.flatten.each do | hash |
       if (percent = student_types[hash[:breakdown].to_s.to_sym]).present?
         hash[:subtext] = percent_of_population_text(percent)
+        hash[:percent_of_population] = percent
       elsif hash[:subtext].nil?
         hash[:subtext] = no_data_text
       end
@@ -194,7 +215,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   def percent_of_population_text(percent)
     I18n.t(
       :percent_of_population_subtext,
-      percent: (percent<1 && percent>0? '<1' : percent.to_i),
+      percent: (percent < 1 && percent > 0 ? '<1' : percent.to_i),
       scope: i18n_scope,
       default:"#{percent}% of population"
     )

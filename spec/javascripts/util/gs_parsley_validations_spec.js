@@ -1,5 +1,5 @@
 //= require util/dependency_init
-//= require resources/parsley
+//= require resources/parsley.remote
 //= require util/gs_parsley_validations
 
 

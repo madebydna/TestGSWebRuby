@@ -1,0 +1,85 @@
+.gs-rating-sm {
+  @include gs-rating($size: $gs-rating-size-small);
+}
+
+.gs-rating-md {
+  @include gs-rating($size: $gs-rating-size-medium);
+}
+
+.gs-rating-lg {
+  @include gs-rating($size: $gs-rating-size-large, $with-subtext: true);
+}
+
+.gs-rating-white-sm {
+  @include border-circle($size: 32px);
+}
+
+.performance-box {
+  color: $text-color;
+  padding: $spacing-medium;
+  text-align: center;
+  &:hover, &:active, &:focus {
+    color: $text-color;
+    background-color: $module-gray;
+    text-decoration: none;
+  }
+  .description {
+    font-size: $font-size-base;
+  }
+  .value {
+    padding-top: $spacing-small;
+    h3 {
+      font: $font-data-high-level;
+    }
+  }
+}
+
+.state-average {
+  color: $gray-darker;
+  font-family: 'opensans-regular';
+  font-size: $font-size-p-small;
+}
+
+.percent-value {
+  @include performance-color();
+  h3 {
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+  sup {
+    font-size: 70%;
+    top: -0.35em;
+  }
+  .no-data {
+    border-bottom: $gray-dark 2px solid;
+    width: 12px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+.overall-gs-rating {
+  @include display-flex;
+  padding-bottom: $spacing-medium;
+  .rating-circle {
+    padding-right: $spacing-medium;
+  }
+  h2 {
+    display: inline-block;
+    margin: auto 0;
+    .tooltip-activator {
+      vertical-align: 5px;
+    }
+  }
+}
+
+.sub-rating-icon {
+  float:        left;
+  margin-right: 5px;
+}
+
+.sub-rating-text {
+  font-size:   16px;
+  line-height: 28px;
+  @extend      .open-sans_b;
+}
