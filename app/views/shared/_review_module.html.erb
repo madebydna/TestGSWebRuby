@@ -1,5 +1,5 @@
 <% review = SchoolProfileReviewDecorator.decorate(review) %>
-<div id="review<%= review.id %>" class="link-down-compensate"></div>
+<div id="review<%= review.id %>"></div>
 <% include_rich_snippets ||= false %>
 <% if @school.show_ads %>
   <% ad_placement_array = [2, 5, 8] %>

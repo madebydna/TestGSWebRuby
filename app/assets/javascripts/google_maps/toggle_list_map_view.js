@@ -32,7 +32,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
 
         var moveScreenToFilters = function () {
             $('html, body').animate({
-                scrollTop: $(".js-mobileFiltersToolbar").offset().top - GS.window.sizing.navBarHeight
+                scrollTop: $(".js-mobileFiltersToolbar").offset().top
             }, 700);
         };
 
@@ -56,7 +56,7 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
 
         var mapHeightForMobile = function () {
             toolbarHeight = $(".js-mapContainer").offset().top - $(".js-mobileFiltersToolbar").offset().top - 10; //10 for padding
-            return $(window).height() - toolbarHeight - GS.window.sizing.navBarHeight;
+            return $(window).height() - toolbarHeight;
         };
 
         var switchListMapViewTextForMobile = function (oldText, newText) {

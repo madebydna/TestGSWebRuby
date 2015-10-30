@@ -8,8 +8,6 @@ GS.window.sizing.width = function(){
 
 GS.window.sizing.maxMobileWidth = 767;
 
-GS.window.sizing.navBarHeight = 60;
-
 GS.window.isLargerThanMobile = function() {
   return $(document).width() > GS.window.sizing.maxMobileWidth;
 };

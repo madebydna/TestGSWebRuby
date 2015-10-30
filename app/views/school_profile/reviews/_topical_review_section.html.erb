@@ -21,7 +21,7 @@ end %>
     <div class="col-xs-12 <%= 'col-sm-8' if @show_ads %>">
     <%= render 'school_profile/reviews/modules/member_role_question_module', display: display_role_question %>
       <%= render 'school_profile/reviews/modules/question_navigation' %>
-      <div id="topicalReviewQuestionCarousel" class="link-down-compensate js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %> mbl">
+      <div id="topicalReviewQuestionCarousel" class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %> mbl">
         <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
           <%= render partial: "school_profile/reviews/modules/topical_review_question_module",
                      collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
