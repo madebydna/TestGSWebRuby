@@ -185,6 +185,12 @@ GS.topicalReview.form = (function () {
         displayRoleQuestion();
       };
 
+      var reviewSuccessHandlerForExistingSignedInUsers = function() {
+        var reviewContainer = $(this).parents('.js-topicalReviewContainer');
+        $(reviewContainer).addClass('js-reviewComplete');
+        GS.topicalReview.questionCarousel.goToNextSlide();
+      };
+
       var reviewSuccessHandler = reviewSuccessHandlerForNewUsers;
 
       var postReviewViaAjax = function() {
@@ -200,12 +206,13 @@ GS.topicalReview.form = (function () {
       preventFormSubmit();
 
       if (GS.session.isSignedIn()) {
+        reviewSuccessHandler = reviewSuccessHandlerForExistingSignedInUsers;
         postReviewViaAjax();
       } else {
         GS.modal.manager.showModalThenMessages(GS.modal.SubmitReviewModal).done(function(data) {
           var isNewUser = data['is_new_user'];
           if (!isNewUser) {
-            reviewErrorHandler = reviewSuccessHandlerForExistingUsers;
+            reviewSuccessHandler = reviewSuccessHandlerForExistingUsers;
           }
           postReviewViaAjax();
         });
