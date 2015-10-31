@@ -13,7 +13,7 @@ describe 'State Page' do
     after(:each) { clean_dbs :gs_schooldb }
 
     it 'has the navigation element' do
-      expect(page).to have_selector '.navbar-fixed-top'
+      expect(page).to have_selector '.navbar-static'
     end
 
     it 'has the search hero' do
