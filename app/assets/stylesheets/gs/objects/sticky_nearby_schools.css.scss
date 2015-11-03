@@ -9,13 +9,29 @@
     @include clearfix;
     height: 60px;
 
+    .school {
+        padding: 20px 10px 10px 8px;
+      .school-rating {
+        float: left;
+      }
+      .school-name {
+        width: calc(100% - (#{$gs-rating-size-small} + 10px));
+      }
+    }
+
     .current-school {
       background-color: $dirt-green;
       color: white;
       float: left;
       height: 100%;
       width: 50%;
+      .school-name {
+        float: left;
+        margin-left: 10px;
+        text-align: left;
+      }
     }
+
     .nearby-schools {
       @include clearfix;
       background-color: $gray;
@@ -28,24 +44,18 @@
       .close-nearby-schools {
         width: 10%;
       }
+      .nearby-school {
+        @include clearfix;
+        @include text-color-links;
+        .school-name {
+          @include text-overflow-ellipses;
+          float: left;
+          // font: $font-size-h5 $font-family-base-bold;
+          // line-height: $gs-rating-size-small;
+        }
+      }
       .carousel {
         width: 80%;
-        .school {
-          @include clearfix;
-          @include text-color-links;
-          margin: $spacing-large;
-          .school-rating {
-            float: left;
-            width: $gs-rating-size-small + 5px;
-          }
-          .school-name {
-            @include text-overflow-ellipses;
-            float: left;
-            font: $font-size-h5 $font-family-base-bold;
-            line-height: $gs-rating-size-small;
-            width: calc(100% - (#{$gs-rating-size-small} + 10px));
-          }
-        }
       }
       .next {
         width: 10%;
@@ -54,32 +64,47 @@
 
     @include for-sm-and-up {
       height: 70px;
+
+      .school {
+        padding: 12px 10px 10px 8px;
+        .school-name {
+          font: $font-size-h4 $font-family-base-bold;
+          line-height: $gs-rating-size-medium;
+        }
+        .school-rating {
+          margin-top: 12px;
+        }
+      }
+
       .nearby-schools {
         width: 50%;
       }
     }
     @include for-md-and-up {
       height: 80px;
-      .nearby-schools {
-        .carousel {
-          .school {
-            .school-rating {
-              width: $gs-rating-size-medium + 5px;
-              .gs-rating-sm {
-                @include gs-rating($size: $gs-rating-size-medium);
-              }
-            }
-            .school-name {
-              font: $font-size-h3 $font-family-base-bold;
-              line-height: $gs-rating-size-medium;
-              width: calc(100% - (#{$gs-rating-size-medium} + 10px));
-            }
+
+      .school {
+        .school-name {
+          font: $font-size-h3 $font-family-base-bold;
+          line-height: $gs-rating-size-medium;
+          width: calc(100% - (#{$gs-rating-size-medium} + 16px));
+        }
+        .school-rating {
+          width: $gs-rating-size-medium + 5px;
+          margin-top: 0px;
+          .gs-rating-sm {
+            @include gs-rating($size: $gs-rating-size-medium);
           }
         }
       }
+
     }
+
     @include for-lg-and-up {
       max-width: $screen-lg;
+      .school {
+        padding: $spacing-large;
+      }
       .current-school {
         border-top-left-radius: 5px;
       }
