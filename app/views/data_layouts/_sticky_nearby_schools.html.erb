@@ -1,3 +1,4 @@
+<<<<<<< 3c74623499c5a5ad756643d4a4cbd4210e81a560
 <% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
 
 <%
@@ -18,10 +19,22 @@
           </div>
           <div class="carousel">
             <div class="js-nearbySchoolsCarousel">
-              <div>nearby school</div>
-              <div>nearby schoo</div>
-              <div>nearby scho</div>
-              <div>nearby sch</div>
+              <% data.each do |school| %>
+                <div class="school">
+                  <%= link_to(school_hash_to_url_for_profile(school)) do %>
+                    <div class="school-rating">
+                      <%=
+                        render 'performance/gs_rating',
+                          value: school['gs_rating'],
+                          size: 'sm'
+                        %>
+                  </div>
+                  <div class="school-name">
+                    <%= school['name'] %>
+                  </div>
+                <% end %>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="js-next pointer next">

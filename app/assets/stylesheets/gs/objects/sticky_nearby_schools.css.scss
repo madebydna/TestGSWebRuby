@@ -22,9 +22,6 @@
       float: left;
       height: 100%;
       width: 100%;
-      div {
-        height: 100%;
-      }
       > div {
         float: left;
       }
@@ -33,6 +30,22 @@
       }
       .carousel {
         width: 80%;
+        .school {
+          @include clearfix;
+          @include text-color-links;
+          margin: $spacing-large;
+          .school-rating {
+            float: left;
+            width: $gs-rating-size-small + 5px;
+          }
+          .school-name {
+            @include text-overflow-ellipses;
+            float: left;
+            font: $font-size-h5 $font-family-base-bold;
+            line-height: $gs-rating-size-small;
+            width: calc(100% - (#{$gs-rating-size-small} + 10px));
+          }
+        }
       }
       .next {
         width: 10%;
@@ -47,11 +60,26 @@
     }
     @include for-md-and-up {
       height: 80px;
+      .nearby-schools {
+        .carousel {
+          .school {
+            .school-rating {
+              width: $gs-rating-size-medium + 5px;
+              .gs-rating-sm {
+                @include gs-rating($size: $gs-rating-size-medium);
+              }
+            }
+            .school-name {
+              font: $font-size-h3 $font-family-base-bold;
+              line-height: $gs-rating-size-medium;
+              width: calc(100% - (#{$gs-rating-size-medium} + 10px));
+            }
+          }
+        }
+      }
     }
     @include for-lg-and-up {
-      margin-left: auto;
-      margin-right: auto;
-      max-width: $screen-lg + $grid-gutter-width;
+      max-width: $screen-lg;
       .current-school {
         border-top-left-radius: 5px;
       }
