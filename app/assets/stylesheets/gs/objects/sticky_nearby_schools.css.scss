@@ -10,8 +10,8 @@
     height: 60px;
 
     .school {
-        padding: 20px 10px 10px 8px;
       .school-rating {
+        width: $gs-rating-size-small + 10px;
         float: left;
       }
       .school-name {
@@ -24,10 +24,10 @@
       color: white;
       float: left;
       height: 100%;
+      padding: 20px 10px 10px 8px;
       width: 50%;
       .school-name {
         float: left;
-        margin-left: 10px;
         text-align: left;
       }
     }
@@ -37,11 +37,28 @@
       background-color: $gray;
       float: left;
       height: 100%;
+      padding: 20px 10px 10px 8px;
       width: 100%;
       > div {
         float: left;
       }
       .close-nearby-schools {
+        color: $gray-darker;
+        cursor: pointer;
+        font-size: $font-size-small;
+        text-align: left;
+      }
+      .next {
+        color: $link-color;
+        cursor: pointer;
+        font-size: $font-size-small;
+        text-align: right;
+        .next-inner {
+          height: 100%;
+        }
+      }
+      .close-nearby-schools, .next {
+        padding-top: $spacing-small;
         width: 10%;
       }
       .nearby-school {
@@ -50,23 +67,20 @@
         .school-name {
           @include text-overflow-ellipses;
           float: left;
-          // font: $font-size-h5 $font-family-base-bold;
-          // line-height: $gs-rating-size-small;
         }
       }
       .carousel {
         width: 80%;
-      }
-      .next {
-        width: 10%;
       }
     }
 
     @include for-sm-and-up {
       height: 70px;
 
-      .school {
+      .current-school, .nearby-schools {
         padding: 12px 10px 10px 8px;
+      }
+      .school {
         .school-name {
           font: $font-size-h4 $font-family-base-bold;
           line-height: $gs-rating-size-medium;
@@ -79,18 +93,24 @@
       .nearby-schools {
         width: 50%;
       }
+      .close-nearby-schools, .next {
+        width: 15%;
+      }
+      .carousel {
+        width: 70%;
+      }
     }
     @include for-md-and-up {
       height: 80px;
 
       .school {
         .school-name {
-          font: $font-size-h3 $font-family-base-bold;
+          font: $font-size-h4 $font-family-base-bold;
           line-height: $gs-rating-size-medium;
-          width: calc(100% - (#{$gs-rating-size-medium} + 16px));
+          width: calc(100% - (#{$gs-rating-size-medium} + 15px));
         }
         .school-rating {
-          width: $gs-rating-size-medium + 5px;
+          width: $gs-rating-size-medium + 10px;
           margin-top: 0px;
           .gs-rating-sm {
             @include gs-rating($size: $gs-rating-size-medium);
@@ -102,7 +122,7 @@
 
     @include for-lg-and-up {
       max-width: $screen-lg;
-      .school {
+      .current-school, .nearby-schools {
         padding: $spacing-large;
       }
       .current-school {
