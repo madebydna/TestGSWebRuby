@@ -37,7 +37,8 @@
       background-color: $gray;
       float: left;
       height: 100%;
-      padding: 20px 10px 10px 8px;
+      padding-left: 10px;
+      padding-right: 10px;
       width: 100%;
       > div {
         float: left;
@@ -58,7 +59,7 @@
         }
       }
       .close-nearby-schools, .next {
-        padding-top: $spacing-small;
+        padding-top: $spacing-medium;
         width: 10%;
       }
       .nearby-school {
@@ -67,9 +68,11 @@
         .school-name {
           @include text-overflow-ellipses;
           float: left;
+          font: $font-size-base $font-family-base-bold;
         }
       }
       .carousel {
+        padding-top: 15px;
         width: 80%;
       }
     }
