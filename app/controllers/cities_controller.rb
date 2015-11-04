@@ -16,6 +16,11 @@ class CitiesController < ApplicationController
   def show
     @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
+    @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
+        @city.titleize => nil
+    }
+
     if @hub.nil?  || hub_matching_current_url[:city].nil?
       city_home
     else
@@ -87,6 +92,7 @@ class CitiesController < ApplicationController
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @events = CollectionConfig.important_events(@collection_id)
       @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]) ,
         'Events' =>nil
       }
@@ -114,6 +120,7 @@ class CitiesController < ApplicationController
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
       @partners = CollectionConfig.ed_community_partners(collection_configs)
       @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
         'Education Community' => nil
       }
@@ -136,6 +143,7 @@ class CitiesController < ApplicationController
       @partner = CollectionConfig.partner(collection_configs)
       @events = CollectionConfig.city_hub_important_events(collection_configs)
       @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
         'Partner' => nil
       }
@@ -164,6 +172,7 @@ class CitiesController < ApplicationController
       @step3_links = CollectionConfig.choosing_page_links(collection_configs)
       @step3_search_links = CollectionConfig.choosing_page_search_links(collection_configs)
       @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
         'Choosing a School' => nil
       }
@@ -192,6 +201,7 @@ class CitiesController < ApplicationController
       @key_dates = CollectionConfig.key_dates(collection_configs, @tab[:key])
 
       @breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
         'Enrollment Information' => nil
       }
@@ -221,8 +231,9 @@ class CitiesController < ApplicationController
       @articles = CollectionConfig.programs_articles(collection_configs)
       @canonical_url = city_programs_url(params[:state], params[:city])
       @breadcrumbs = {
+              @state[:long].titleize => state_path(params[:state]),
               @city.titleize => city_path(params[:state], params[:city]) ,
-              'After school and summer programs' =>nil
+              'Programs' =>nil
             }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
       data_layer_through_gon
