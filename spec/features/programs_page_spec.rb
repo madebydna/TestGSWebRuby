@@ -51,7 +51,7 @@ describe 'Programs Page' do
     end
 
     it 'shows breadcrumbs' do
-      expect(page).to have_css("span[itemtype='http://data-vocabulary.org/Breadcrumb']", count: 2)
+      expect(page).to have_css("span[itemtype='http://data-vocabulary.org/Breadcrumb']")
     end
 
     it 'renders the articles module' do
