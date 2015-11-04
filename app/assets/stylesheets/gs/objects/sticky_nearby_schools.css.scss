@@ -15,6 +15,7 @@
         float: left;
       }
       .school-name {
+        font: $font-size-base $font-family-base-bold;
         width: calc(100% - (#{$gs-rating-size-small} + 10px));
       }
     }
@@ -68,7 +69,6 @@
         .school-name {
           @include text-overflow-ellipses;
           float: left;
-          font: $font-size-base $font-family-base-bold;
         }
       }
       .carousel {
@@ -95,17 +95,22 @@
 
       .nearby-schools {
         width: 50%;
-      }
-      .close-nearby-schools, .next {
-        width: 15%;
-      }
-      .carousel {
-        width: 70%;
+        .carousel {
+          padding-top: 0;
+          width: 70%;
+        }
+        .close-nearby-schools, .next {
+          padding-top: $spacing-small;
+          width: 15%;
+        }
       }
     }
     @include for-md-and-up {
       height: 80px;
 
+      .current-school, .nearby-schools {
+        padding: $spacing-large;
+      }
       .school {
         .school-name {
           font: $font-size-h4 $font-family-base-bold;
@@ -120,14 +125,18 @@
           }
         }
       }
-
+      .nearby-schools {
+        .carousel {
+          width: 80%;
+        }
+        .close-nearby-schools, .next {
+          width: 10%;
+        }
+      }
     }
 
     @include for-lg-and-up {
       max-width: $screen-lg;
-      .current-school, .nearby-schools {
-        padding: $spacing-large;
-      }
       .current-school {
         border-top-left-radius: 5px;
       }
