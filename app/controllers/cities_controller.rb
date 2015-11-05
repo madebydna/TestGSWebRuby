@@ -94,7 +94,7 @@ class CitiesController < ApplicationController
       @breadcrumbs = {
         @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]) ,
-        'Events' =>nil
+        t('events', scope: 'controllers.cities_controller') =>nil
       }
       @canonical_url = city_events_url(@state[:long], @city)
       set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
@@ -122,7 +122,7 @@ class CitiesController < ApplicationController
       @breadcrumbs = {
         @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
-        'Education Community' => nil
+        t('education_community', scope: 'controllers.cities_controller') => nil
       }
       @canonical_url = city_education_community_url(params[:state], params[:city])
       data_layer_through_gon
@@ -145,7 +145,7 @@ class CitiesController < ApplicationController
       @breadcrumbs = {
         @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
-        'Partner' => nil
+        t('partner', scope: 'controllers.cities_controller') => nil
       }
       @canonical_url = city_education_community_partner_url(params[:state], params[:city])
       set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
@@ -174,7 +174,7 @@ class CitiesController < ApplicationController
       @breadcrumbs = {
         @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
-        'Choosing a School' => nil
+        t('choosing_a_school', scope: 'controllers.cities_controller') => nil
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
       set_omniture_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
@@ -203,7 +203,7 @@ class CitiesController < ApplicationController
       @breadcrumbs = {
         @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city]),
-        'Enrollment Information' => nil
+        t('enrollment_information', scope: 'controllers.cities_controller') => nil
       }
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
@@ -233,7 +233,7 @@ class CitiesController < ApplicationController
       @breadcrumbs = {
               @state[:long].titleize => state_path(params[:state]),
               @city.titleize => city_path(params[:state], params[:city]) ,
-              'Programs' =>nil
+              t('programs', scope: 'controllers.cities_controller') =>nil
             }
       set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
       data_layer_through_gon
