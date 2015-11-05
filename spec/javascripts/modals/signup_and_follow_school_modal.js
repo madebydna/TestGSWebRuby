@@ -1,7 +1,7 @@
 //= require jquery
 //= require modals/base_modal
 //= require modals/email_join_modal
-//= require modals/email_join_for_school_profile_modal
+//= require modals/signup_and_follow_school_modal
 
 describe('GS.modal.SignupAndFollowSchoolModal', function() {
   describe('.getCssClass', function() {
