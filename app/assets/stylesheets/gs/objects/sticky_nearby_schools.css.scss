@@ -7,6 +7,9 @@
 
   .sticky-container {
     @include clearfix;
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
+    -moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
+    -webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
     height: 60px;
 
     .school {
@@ -22,9 +25,6 @@
     }
 
     .current-school {
-      box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
-      -moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
-      -webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
       background-color: $dirt-green;
       color: white;
       float: left;
@@ -34,9 +34,6 @@
     }
 
     .nearby-schools {
-      box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
-      -moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
-      -webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
       @include clearfix;
       background-color: $module-gray-stroke;
       float: left;
@@ -135,13 +132,9 @@
     }
 
     @include for-lg-and-up {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
       max-width: $screen-lg;
-      .current-school {
-        border-top-left-radius: 5px;
-      }
-      .nearby-schools {
-        border-top-right-radius: 5px;
-      }
     }
   }
 }
