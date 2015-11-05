@@ -67,6 +67,19 @@
   @include button-default-variant($btn-default-color, $btn-default-bg, $btn-default-color, $btn-default-bg, $btn-default-hover, $btn-default-hover, $btn-default-active-border, $border-bottom-width: 1px);
   height: $input-height-base;
 }
+.btn-outline {
+  @include button-default-variant(
+    $color: $brand-primary,
+    $background: transparent,
+    $border: $brand-primary,
+    $background_active: transparent,
+    $active_color: $brand-primary-dark,
+    $hover_border: $brand-primary-dark,
+    $active_border: $brand-primary-dark,
+    $border-bottom-width: 1px
+  );
+  border-radius: 0 !important;
+}
 
 .btn-toggle {
   @include button-toggle-variant($btn-toggle-color, $btn-toggle-bg, $btn-toggle-border, $btn-toggle-bg-active, $btn-toggle-color-active, $btn-toggle-hover)
