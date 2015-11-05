@@ -9,8 +9,8 @@
 }
 
 @mixin text-color-links {
+  color: $text-color;
   a {
     color: $text-color;
-    text-decoration: none;
   }
 }
