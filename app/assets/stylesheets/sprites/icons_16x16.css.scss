@@ -263,3 +263,13 @@
   background-position: -608px -16px;
 }
 
+.i-16-check {
+  background-position: -624px 0px;
+}
+.btn {
+  &:hover, &:active, &:focus {
+    .i-16-check {
+      background-position: -624px -16px;
+    }
+  }
+}

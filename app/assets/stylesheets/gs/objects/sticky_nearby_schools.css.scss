@@ -32,7 +32,7 @@
       width: 50%;
       .school {
         @include text-overflow-ellipses;
-        width: 70%;
+        width: 65%;
         padding-top: $spacing-small;
       }
     }

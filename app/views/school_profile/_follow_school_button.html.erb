@@ -1,6 +1,7 @@
 <% css_classes ||= '' %>
 <div class="js-followThisSchool btn btn-outline <%= css_classes %>">
   <% if current_user && current_user.favorited_school?(@school) %>
+    <span class="iconx16 i-16-check vam"></span>
     <%= t('.following') %>
   <% else %>
     <%= t('.follow') %>
