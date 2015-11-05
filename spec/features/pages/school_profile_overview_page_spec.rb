@@ -55,6 +55,7 @@ describe 'School Profile Overview Page' do
         its('third_breadcrumb') { is_expected.to have_link('Schools', href: "http://localhost:3001/california/alameda/schools/") }
         its('fourth_breadcrumb.title') { is_expected.to have_text('Alameda High School') }
         its('fourth_breadcrumb') { is_expected.to have_link('Alameda High School', subject.current_url) }
+        its('fourth_breadcrumb') { is_expected.to have_breadcrumb_link }
       end
     end
 

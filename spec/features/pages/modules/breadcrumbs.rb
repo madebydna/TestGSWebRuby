@@ -1,7 +1,7 @@
 module Breadcrumbs
   class BreadcrumbsSection < SitePrism::Section
     element :title, 'span[itemprop="title"]'
-    element :link, 'a'
+    element :breadcrumb_link, 'a[itemprop="url"]'
   end
 
   def self.included(page_class)
