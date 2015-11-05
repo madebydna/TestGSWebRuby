@@ -9,14 +9,17 @@
   <% begin %>
     <div class="sticky-nearby-schools gs-bootstrap">
       <div class="sticky-container">
-        <div class="current-school school hidden-xs">
-          <div class='school-rating'>
-            <%= render 'performance/gs_rating',
-              value: @school.cache_results.gs_rating,
-              size: 'sm'
-            %>
+        <div class="current-school clearfix hidden-xs">
+          <div class="school fl">
+            <div class='school-rating'>
+              <%= render 'performance/gs_rating',
+                value: @school.cache_results.gs_rating,
+                size: 'sm'
+              %>
+            </div>
+            <div class='school-name'><%= @school.name %></div>
           </div>
-          <div class='school-name'><%= @school.name %></div>
+          <div class="btn btn-sm btn-outline fr">Follow</div>
         </div>
         <div class="nearby-schools">
           <div class="title">

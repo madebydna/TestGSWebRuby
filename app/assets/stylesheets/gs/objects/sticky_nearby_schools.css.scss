@@ -20,7 +20,6 @@
       .school-name {
         display: inline;
         font: $font-size-small $font-family-base-bold;
-        width: calc(100% - (#{$gs-rating-size-small} + 10px));
       }
     }
 
@@ -29,8 +28,13 @@
       color: white;
       float: left;
       height: 100%;
-      padding: 25px 10px 10px 10px;
+      padding: 20px 10px 10px 10px;
       width: 50%;
+      .school {
+        @include text-overflow-ellipses;
+        width: 70%;
+        padding-top: $spacing-small;
+      }
     }
 
     .nearby-schools {
@@ -72,8 +76,8 @@
         @include text-color-links;
         @include text-overflow-ellipses;
         text-align: center;
-        .school-rating {
-          display: inline-block;
+        .school-name {
+          width: calc(100% - (#{$gs-rating-size-small} + 10px));
         }
       }
       .carousel {
@@ -100,7 +104,16 @@
       height: 80px;
 
       .current-school {
-        padding: 25px $spacing-large;
+        padding: $spacing-large;
+        .btn-sm {
+          @include button-size(
+            $padding-large-vertical,
+            $padding-large-button-horizontal,
+            $font-size-large,
+            $line-height-large,
+            $border-radius-base
+          );
+        }
       }
       .school {
         .school-rating {
