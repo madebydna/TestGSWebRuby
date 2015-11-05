@@ -84,7 +84,7 @@ shared_context 'Visit by name search using parameters state=de and q=magnolia' d
 end
 
 shared_context 'Visit dover delaware city browse' do
-  include_context 'Visit City Browse Search', *['de', 'dover']
+  include_context 'Visit City Browse Search', *['de', 'Dover']
 end
 
 shared_context 'Sorting toolbar' do
