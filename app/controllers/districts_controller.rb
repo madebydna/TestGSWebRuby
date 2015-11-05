@@ -34,17 +34,20 @@ class DistrictsController < ApplicationController
   private
 
   def set_breadcrums
-    if ( params[:state].present? &&  params[:city].present?)
+    if ( @state.present? &&  @city.present?)
     @breadcrumbs = {
-        params[:state].gs_capitalize_words => state_url(params[:state]),
-        params[:city].gs_capitalize_words => city_url(city_params(params[:state], params[:city]))
+        @state[:long].titleize => state_path(params[:state]),
+        @city.titleize => city_path(params[:state], params[:city])
     }
     end
   end
 
+
+
   def require_district
-    @district = District.find_by_state_and_name(state_param, district_param)
+    @district = District.find_by_state_and_name(state_param_safe, district_param)
     return redirect_to city_url if @district.nil?
+
   end
 
   def redirect_to_canonical_url
