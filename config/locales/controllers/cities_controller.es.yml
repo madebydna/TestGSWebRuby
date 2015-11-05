@@ -3,7 +3,7 @@ es:
     cities_controller:
       events: Eventos
       education_community: Comunidad Educativa
-      partner: Compañero
+      partner: Socio
       choosing_a_school: Cómo escoger una escuela
       enrollment_information: Información de Inscripción
       programs: Programas
