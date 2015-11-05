@@ -44,6 +44,18 @@ describe 'School Profile Overview Page' do
           its(:header) { is_expected.to have_in_spanish_link }
         end
       end
+
+      describe 'breadcrumbs' do
+        it { is_expected.to have_breadcrumbs }
+        its('first_breadcrumb.title') { is_expected.to have_text('California') }
+        its('first_breadcrumb') { is_expected.to have_link('California', href: "http://localhost:3001/california/") }
+        its('second_breadcrumb.title') { is_expected.to have_text('Alameda') }
+        its('second_breadcrumb') { is_expected.to have_link('Alameda', href: "http://localhost:3001/california/alameda/") }
+        its('third_breadcrumb.title') { is_expected.to have_text('Schools') }
+        its('third_breadcrumb') { is_expected.to have_link('Schools', href: "http://localhost:3001/california/alameda/schools/") }
+        its('fourth_breadcrumb.title') { is_expected.to have_text('Alameda High School') }
+        its('fourth_breadcrumb') { is_expected.to have_link('Alameda High School', subject.current_url) }
+      end
     end
 
     with_shared_context 'with an inactive school' do

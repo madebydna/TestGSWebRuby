@@ -188,6 +188,7 @@ class SchoolProfileController < SchoolController
     @breadcrumbs = {
       school.state_breadcrumb_text => state_url(state_params(school.state)),
       school.city_breadcrumb_text => city_url(city_params(school.state, school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end

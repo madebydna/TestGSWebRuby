@@ -28,9 +28,11 @@
             <div class="fl header-title-width" >
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 tal pbm notranslate">
+                      <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
                         <%= link_to school_url(@school) do %>
-                            <h1 class="mtn pts"><%= @school.name %></h1>
+                          <h1 class="mtn pts"><span itemprop="title"><%= @school.name %></span></h1>
                         <% end %>
+                      </span>
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
