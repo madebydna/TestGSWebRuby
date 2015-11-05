@@ -2,6 +2,7 @@ if(gon.pagename == "Reviews"){
 
     $(function () {
         GS.schoolProfiles.initializeSaveThisSchoolButton();
+        GS.schoolProfiles.initializeFollowThisSchool();
         GS.reviews.initializeReviewHandlers();
     });
     GS.ad.addToAdSlotDefinitionArray(GS.reviewsAd.reviewContent, this, []);

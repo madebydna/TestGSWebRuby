@@ -28,3 +28,4 @@
 //= require ./notifications
 //= require ./gs_rating
 //= require ./sync_heights
+//= require ./send_updates

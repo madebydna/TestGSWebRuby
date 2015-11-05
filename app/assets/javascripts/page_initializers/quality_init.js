@@ -2,6 +2,7 @@ if(gon.pagename == "Quality"){
 
     $(function () {
         GS.schoolProfiles.initializeSaveThisSchoolButton();
+        GS.schoolProfiles.initializeFollowThisSchool();
         GS.testScores.initializeHandlers();
 
         //Show the first grade in every test
