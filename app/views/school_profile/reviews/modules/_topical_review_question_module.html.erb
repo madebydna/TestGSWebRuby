@@ -16,7 +16,7 @@ data-review-topic="<%= question.review_topic.id %>">
   <% end %>
 
   <div class="js-reviewFormContainer <%= submitted_review ? 'dn' : '' %> ">
-    <%= form_for Review.new, remote: true, url: school_reviews_path(@school),
+    <%= form_for Review.new, url: school_reviews_path(@school),
                  html: {'data-parsley-validate' => '',
                         'data-parsley-excluded' => 'input[type=button],
                         input[type=submit], input[type=reset]'} do |f| %>

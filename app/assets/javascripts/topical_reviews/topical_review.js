@@ -139,7 +139,8 @@ GS.topicalReview.form = (function () {
         return $roleQuestion.length > 0;
     };
 
-    var reviewFormSubmitHandler = function() {
+    var reviewFormSubmitHandler = function(e) {
+      e.preventDefault();
       var $form = $(this);
       var $submitButton = $form.find('button');
 
@@ -172,6 +173,7 @@ GS.topicalReview.form = (function () {
           }
         }
         showError(errorMessage);
+        allowFormSubmit();
       };
 
       var reviewSuccessHandlerForExistingUsers = function(data) {
@@ -197,10 +199,7 @@ GS.topicalReview.form = (function () {
         var url = $form.attr('action');
         return $.post(url, $form.serialize())
           .done(reviewSuccessHandler)
-          .fail(reviewErrorHandler)
-          .always(function() {
-            allowFormSubmit();
-          });
+          .fail(reviewErrorHandler);
       };
 
       preventFormSubmit();
