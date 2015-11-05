@@ -17,6 +17,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   // Selectors
   var showMore           = '.js-showMore';
   var tableSort          = '.js-tableSort';
+  var spinnyWheelTarget  = '.js-spinnyWheelTarget';
   var $scorecard;
   var $tablePlacement;
   var $mobilePlacement;
@@ -29,12 +30,15 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   // Defaults
   var offsetInterval     = 10;
   var pageOptions;
+  // spinnyWheel object
+  var spinnyWheel = '';
 
   var init = function() {
     GS.CommunityScorecards.Page.shouldDraw = true;
     initPageSelectors();
     initPageOptions();
     initReadMoreToggleHandler();
+    initSpinnyWheel();
     redrawTable();
 
     $scorecard.on('click', '.js-drawTable', function (e) {
@@ -86,12 +90,14 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   //https://github.com/ronen/jquery.classMatch/blob/master/jquery.classMatch.js
   var redrawTable = function() {
     if (pageOptions.get('sortBy')) {
+      spinnyWheel.start();
       pageOptions.set('offset', 0);
       var params = pageOptions.to_h();
       var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
       tableDataRequest
         .success(drawTableWithData)
-        .error(displayFatalErrorMessage);
+        .error(displayFatalErrorMessage)
+        .always(spinnyWheel.stop);
     }
     else {
       GS.CommunityScorecards.Page.shouldDraw = true;
@@ -136,6 +142,7 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   };
 
   var appendToTable = function() {
+    spinnyWheel.start();
     var params = pageOptions.to_h();
     params.offset += offsetInterval;
     pageOptions.set('offset', params.offset);
@@ -143,7 +150,8 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     var tableDataRequest = GS.util.ajax.request(dataUrl, params, ajaxOptions);
     tableDataRequest
       .success(appendDataToTable)
-      .error(displayFatalErrorMessage);
+      .error(displayFatalErrorMessage)
+      .always(spinnyWheel.stop);
   };
 
   var appendDataToTable = function(data) {
@@ -171,6 +179,10 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     _.extend(pageData, gon.community_scorecard_params);
     pageOptions = new GS.CommunityScorecards.Options(pageData);
   };
+
+  var initSpinnyWheel = function() {
+    spinnyWheel = new GS.util.SpinnyWheel(spinnyWheelTarget);
+  }
 
   var calculateHighlightIndex = function() {
     if (! pageOptions.get('highlightIndex')) {

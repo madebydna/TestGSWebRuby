@@ -1,0 +1,14 @@
+.spinny-wheel-container {
+  position: relative;
+};
+
+.spinny-wheel {
+  height: 100%;
+  width: 100%;
+  z-index: 1000;
+  position: absolute;
+  top: 0;
+  background-image: image_url('spinny_wheel.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+}
