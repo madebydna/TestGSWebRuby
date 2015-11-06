@@ -3,6 +3,7 @@
 <%
   collections_to_show = [*category_placement.layout_config_json['show_module_for_collections']]
   should_show_partial = (@school.collection_ids & collections_to_show).present?
+  school_profile_decorator = SchoolProfileDecorator.decorate(@school)
 %>
 
 <% if should_show_partial %>
@@ -52,6 +53,11 @@
                   </div>
                 </div>
               <% end %>
+              <div>
+                <div class="pts tac">
+                  <%= t('.more_quality_schools_html', link: school_profile_decorator.school_zip_location_search_url) %>
+                </div>
+              </div>
             </div>
           </div>
           <div class="js-next next">
