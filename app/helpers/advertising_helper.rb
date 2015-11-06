@@ -21,7 +21,11 @@ module AdvertisingHelper
     end
 
     def format_ad_setTargeting(value)
-      value.to_s.delete(' ').slice(0,10)
+      if value.is_a? Array
+        value
+      else
+        value.to_s.delete(' ').slice(0,10)
+      end
     end
   end
 end

@@ -16,8 +16,8 @@
               <%= render partial: 'category_placement', locals: {category_placement: cp} %>
             <% end %>
           </div>
-          <div class="col-xs-12 col-sm-4">
-            Ad goes here
+          <div class="col-xs-12 col-sm-4 ptl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Snapshot, view: :desktop, visible_for: ''  %>
           </div>
         </div>
       </div>

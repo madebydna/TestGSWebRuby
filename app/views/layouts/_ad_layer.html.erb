@@ -14,6 +14,7 @@
     <% id_counter = "" %>
 <% end %>
 <% slot = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>
+<% slot_name = @ad_definition.get_name(page, slot) %>
 <% width = @ad_definition.get_width(page, slot, view) %>
 <% height = @ad_definition.get_height(page, slot, view) %>
 <% dimensions = @ad_definition.get_dimensions(page, slot, view) %>
@@ -21,8 +22,8 @@
 <% if view == :mobile %>
     <% insert_mobile = 'Mobile_' %>
 <% end %>
-<% slotdef = "Responsive_#{insert_mobile}#{page}_#{slot}_#{width}x#{height}" %>
-<% iddef = "#{page}#{slot}#{insert_mobile}Ad#{id_counter}" %>
+<% slotdef = "Responsive_#{insert_mobile}#{page}_#{slot_name}_#{width}x#{height}" %>
+<% iddef = "#{page}#{slot_name}#{insert_mobile}Ad#{id_counter}" %>
 <div class="js-<%= iddef %>-wrapper">
   <div class="<%= visible_for %>">
       <div class="gs_ad_slot ma" id="<%= iddef %>" data-ad-size="<%= dimensions %>" style="width: <%= width %>px"  data-dfp="<%= slotdef %>"></div>

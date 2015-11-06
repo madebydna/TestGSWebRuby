@@ -94,6 +94,21 @@ describe DataLayerConcerns do
         expect(subject['Collection ID']).to be_nil
       end
     end
+
+    context 'with a school set' do
+      it 'should call collection_ids on school' do
+        school = FactoryGirl.build(:school)
+        controller.instance_variable_set(:@school, school)
+        expect(school).to receive(:collection_ids)
+        controller.send(:add_collection_id_to_gtm_data_layer)
+      end
+      it 'should set collection id to the data layer hash' do
+        school = FactoryGirl.build(:school)
+        controller.instance_variable_set(:@school, school)
+        controller.send(:add_collection_id_to_gtm_data_layer)
+        expect(subject['Collection ID']).to be_an_instance_of Array
+      end
+    end
   end
 
   describe '#insert_into_ga_event_cookie' do
