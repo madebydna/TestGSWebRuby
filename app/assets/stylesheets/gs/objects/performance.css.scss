@@ -83,3 +83,9 @@
   line-height: 28px;
   @extend      .open-sans_b;
 }
+
+.performance-level-color-legend {
+  @include performance-color;
+  color: $text-color;
+  display: inline;
+}

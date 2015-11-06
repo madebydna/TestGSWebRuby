@@ -1,0 +1,9 @@
+es:
+  performance:
+    performance_level_color_legend:
+      red: Rojo
+      orange: Naranja
+      green: Verde
+      bottom_30: Abajo 30% de las escuelas del estado
+      middle_40: Medio 40% de las escuelas del estado
+      top_30: Arriba 30% de las escuelas del estado
