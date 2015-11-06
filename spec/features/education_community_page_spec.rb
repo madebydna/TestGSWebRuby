@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative '../features/pages/city_home_page'
+require_relative '../features/examples/page_examples'
+require_relative '../features/contexts/state_home_contexts'
 
 describe 'Education Community Page' do
   after(:each) { clean_dbs :gs_schooldb }
@@ -10,6 +13,15 @@ describe 'Education Community Page' do
     FactoryGirl.create(:important_events_collection_config)
     CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').first_or_create
     visit '/michigan/detroit/education-community'
+  end
+  describe 'breadcrumbs' do
+    subject { CityHomePage.new }
+
+    it { is_expected.to have_breadcrumbs }
+    its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
+    its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
+    its('second_breadcrumb.title') { is_expected.to have_text('Detroit') }
+    its('second_breadcrumb') { is_expected.to have_link('Detroit', href: "/michigan/detroit/") }
   end
 
   describe 'search bar' do

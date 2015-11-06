@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative '../features/pages/city_home_page'
+require_relative '../features/examples/page_examples'
+require_relative '../features/contexts/state_home_contexts'
 
 describe 'Events Page' do
   let(:events_page_url) { 'http://localhost:3000/michigan/detroit/events' }
@@ -31,5 +34,15 @@ describe 'Events Page' do
   it 'shows all upcoming events' do
     expect(page).to have_css '.iconx48-cal', count: 3
     expect(page).to have_link 'Find out more', count: 3
+  end
+
+  describe 'breadcrumbs' do
+    subject { CityHomePage.new }
+
+    it { is_expected.to have_breadcrumbs }
+    its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
+    its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
+    its('second_breadcrumb.title') { is_expected.to have_text('Detroit') }
+    its('second_breadcrumb') { is_expected.to have_link('Detroit', href: "/michigan/detroit/") }
   end
 end
