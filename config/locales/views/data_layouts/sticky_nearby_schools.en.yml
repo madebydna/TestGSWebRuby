@@ -1,4 +1,4 @@
 en:
   data_layouts:
     sticky_nearby_schools:
-      more_quality_schools_html: <a href="%{link}">Find more</a> quality schools in this district!
+      more_quality_schools_html: <a href="%{link}">Find more</a> quality schools nearby!
