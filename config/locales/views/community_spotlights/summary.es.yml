@@ -28,7 +28,7 @@ es:
             value_html: 68<sup>%</sup>
             state_average: Prom. 68%
         column_2:
-          title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
+          title: GRADUADOS DEL ÁREA DE LA BAHíA ELEGIBLES PARA UC/CSU
           datapoint_1:
             title: Estudiantes Hispanos
             performance_level: average
@@ -75,7 +75,7 @@ es:
             value_html: 68<sup>%</sup>
             state_average: Prom. 68%
         column_2:
-          title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
+          title: GRADUADOS DEL ÁREA DE LA BAHíA ELEGIBLES PARA UC/CSU
           datapoint_1:
             title: Estudiantes Hispanos
             performance_level: average
@@ -122,7 +122,7 @@ es:
             value_html: 68<sup>%</sup>
             state_average: Prom. 68%
         column_2:
-          title: GRADUADOS ELIGIBLE PARA UNIVERSIDAD EN EL ÁREA DE LA BAHÍA
+          title: GRADUADOS DEL ÁREA DE LA BAHíA ELEGIBLES PARA UC/CSU
           datapoint_1:
             title: Estudiantes Hispanos
             performance_level: average
