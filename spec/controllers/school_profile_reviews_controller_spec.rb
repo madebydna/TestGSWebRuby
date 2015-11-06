@@ -15,7 +15,7 @@ describe SchoolProfileReviewsController do
 
   describe 'GET reviews' do
     before do
-      stub_const('SchoolProfileReviewsController::MAX_NUMBER_OF_REVIEWS_FOR_REL_CANONICAL', 3)
+      stub_const('SchoolProfileReviewsController::MAX_NUMBER_OF_REVIEWS_FOR_OVERVIEW_REL_CANONICAL', 3)
       allow(controller).to receive(:find_school).and_return(school)
       allow(PageConfig).to receive(:new).and_return(page_config)
       allow(page_config).to receive(:name).and_return('reviews')
@@ -48,11 +48,11 @@ describe SchoolProfileReviewsController do
       expect(assigns[:canonical_url]).to eq(school_url(school))
     end
 
-    it 'should not set canonical url to profile page when more than min reviews' do
+    it 'should set canonical url to reviews page when more than max reviews for rel canonical' do
       school_reviews = double('SchoolReviews', number_of_reviews_with_comments: 4).as_null_object
       expect(SchoolReviews).to receive(:new).and_return(school_reviews)
       get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq(nil)
+      expect(assigns[:canonical_url]).to eq(school_reviews_url(school))
     end 
 
   end

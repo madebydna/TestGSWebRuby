@@ -12,4 +12,5 @@ class SchoolProfileOverviewController < SchoolProfileController
     @canonical_url = school_url(@school)
   end
 
+
 end

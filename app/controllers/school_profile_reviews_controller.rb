@@ -5,7 +5,7 @@ class SchoolProfileReviewsController < SchoolProfileController
   include DeferredActionConcerns
   include ReviewControllerConcerns
 
-  MAX_NUMBER_OF_REVIEWS_FOR_REL_CANONICAL = 3
+  MAX_NUMBER_OF_REVIEWS_FOR_OVERVIEW_REL_CANONICAL = 3
 
   layout 'application'
 
@@ -14,7 +14,7 @@ class SchoolProfileReviewsController < SchoolProfileController
     #Set the pagename before setting other omniture props.
     gon.omniture_pagename = 'GS:SchoolProfiles:Reviews'
     set_omniture_data(gon.omniture_pagename)
-    @canonical_url = school_url(@school) if should_rel_canonical_to_overview?
+    @canonical_url = canonical_url
     @reviews_page_size = 10
     @first_topic_id_to_show = first_topic_id_to_show
     @show_role_question = show_role_question?
@@ -61,8 +61,12 @@ class SchoolProfileReviewsController < SchoolProfileController
 
 private
 
-  def should_rel_canonical_to_overview?
-    @school_reviews.number_of_reviews_with_comments <= MAX_NUMBER_OF_REVIEWS_FOR_REL_CANONICAL
+  def canonical_url
+    rel_canonical_to_overview? ? school_url(@school) : school_reviews_url(@school)
+  end
+
+  def rel_canonical_to_overview?
+    @school_reviews.number_of_reviews_with_comments <= MAX_NUMBER_OF_REVIEWS_FOR_OVERVIEW_REL_CANONICAL
   end
 
   def review_params
