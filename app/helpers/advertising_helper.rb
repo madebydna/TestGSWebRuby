@@ -22,7 +22,7 @@ module AdvertisingHelper
 
     def format_ad_setTargeting(value)
       if value.is_a? Array
-        value
+        value.map! { |v| v.to_s.slice(0,10) }
       else
         value.to_s.delete(' ').slice(0,10)
       end
