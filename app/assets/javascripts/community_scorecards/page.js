@@ -17,7 +17,6 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   // Selectors
   var showMore           = '.js-showMore';
   var tableSort          = '.js-tableSort';
-  var spinnyWheelTarget  = '.js-spinnyWheelTarget';
   var $scorecard;
   var $tablePlacement;
   var $mobilePlacement;
@@ -31,14 +30,14 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
   var offsetInterval     = 10;
   var pageOptions;
   // spinnyWheel object
-  var spinnyWheel = '';
+  var spinnyWheelTarget  = '.js-spinnyWheelTarget';
+  var spinnyWheel = new GS.util.SpinnyWheel(spinnyWheelTarget);
 
   var init = function() {
     GS.CommunityScorecards.Page.shouldDraw = true;
     initPageSelectors();
     initPageOptions();
     initReadMoreToggleHandler();
-    initSpinnyWheel();
     redrawTable();
 
     $scorecard.on('click', '.js-drawTable', function (e) {
@@ -179,10 +178,6 @@ GS.CommunityScorecards.Page = GS.CommunityScorecards.Page || (function() {
     _.extend(pageData, gon.community_scorecard_params);
     pageOptions = new GS.CommunityScorecards.Options(pageData);
   };
-
-  var initSpinnyWheel = function() {
-    spinnyWheel = new GS.util.SpinnyWheel(spinnyWheelTarget);
-  }
 
   var calculateHighlightIndex = function() {
     if (! pageOptions.get('highlightIndex')) {
