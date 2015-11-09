@@ -40,7 +40,7 @@ class PerformanceDataReader < SchoolProfileDataReader
   def data_display_points
     data.each_with_object([]) do |(label_array, values), data_points|
       original_label, label = label_array[0], label_array[1]
-      data_points << select_breakdown_with_label(values, original_label) do |value|
+      data_points << select_breakdown_with_label(values, original_label).map do |value|
         data_point = DataDisplayPoint.new(
           {
             label: label,

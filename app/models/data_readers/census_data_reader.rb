@@ -8,6 +8,8 @@ class CensusDataReader < SchoolProfileDataReader
 
   SCHOOL_CACHE_KEYS = ['characteristics']
 
+  attr_accessor :category
+
   #############################################################################
   # Methods exposed to SchoolProfileData and meant to be consumable by the view
 
@@ -55,8 +57,9 @@ class CensusDataReader < SchoolProfileDataReader
   def labels_to_hashes_map(category)
     @labels_to_hashes_map ||= {}
     @labels_to_hashes_map[category.id] ||= (
+      self.category = category
       # Get data for all data types
-      all_data = cached_data_for_category(category, false)
+      all_data = cached_data_for_category(false)
 
       results_hash = {}
 
