@@ -23,7 +23,7 @@ class DistrictsController < ApplicationController
     @params_hash = parse_array_query_string(request.query_string)
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
 
-    set_breadcrums
+    @breadcrumbs = district_home_breadcrumbs
     ad_setTargeting_through_gon
     data_layer_through_gon
     prepare_map
@@ -33,9 +33,9 @@ class DistrictsController < ApplicationController
 
   private
 
-  def set_breadcrums
+  def district_home_breadcrumbs
     if ( @state.present? &&  @city.present?)
-    @breadcrumbs = {
+    breadcrumbs = {
         @state[:long].titleize => state_path(params[:state]),
         @city.titleize => city_path(params[:state], params[:city])
     }
