@@ -15,7 +15,7 @@ describe SchoolProfileReviewsController do
 
   describe 'GET reviews' do
     before do
-      stub_const('SchoolProfileReviewsController::MAX_NUMBER_OF_REVIEWS_FOR_OVERVIEW_REL_CANONICAL', 3)
+      stub_const('SchoolProfileReviewsController::NUMBER_OF_REVIEWS_ON_OVERVIEW', 3)
       allow(controller).to receive(:find_school).and_return(school)
       allow(PageConfig).to receive(:new).and_return(page_config)
       allow(page_config).to receive(:name).and_return('reviews')

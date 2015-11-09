@@ -5,8 +5,6 @@ class SchoolProfileReviewsController < SchoolProfileController
   include DeferredActionConcerns
   include ReviewControllerConcerns
 
-  MAX_NUMBER_OF_REVIEWS_FOR_OVERVIEW_REL_CANONICAL = 3
-
   layout 'application'
 
   def reviews
@@ -61,12 +59,17 @@ class SchoolProfileReviewsController < SchoolProfileController
 
 private
 
-  def canonical_url
+# Based on SEO consultant's advice, reviews tab will rel canonical to overview
+# tab as when the overview is diaplaying all the textual reviews.
+# The review tab will rel canonical to itself when there is at least one 
+# review that is not shown on overview
+
+def canonical_url
     rel_canonical_to_overview? ? school_url(@school) : school_reviews_url(@school)
   end
 
   def rel_canonical_to_overview?
-    @school_reviews.number_of_reviews_with_comments <= MAX_NUMBER_OF_REVIEWS_FOR_OVERVIEW_REL_CANONICAL
+    @school_reviews.number_of_reviews_with_comments <= NUMBER_OF_REVIEWS_ON_OVERVIEW
   end
 
   def review_params

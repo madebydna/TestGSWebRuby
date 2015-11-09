@@ -22,6 +22,8 @@ class SchoolProfileController < SchoolController
 
   layout 'application'
 
+  NUMBER_OF_REVIEWS_ON_OVERVIEW = 3
+
   protected
 
   def set_omniture_data(page_name)
