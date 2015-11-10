@@ -36,9 +36,13 @@
                     </div>
 
                     <div class="col-xs-12 col-sm-12 col-md-12 clearfix ptm">
-                        <% subheader_content = [
+                            <% school_type_link = link_to(school_profile_decorator.school_type_url) do %>
+                                  <span class="mls"><%= db_t(school_type_display(@school.type))
+                            %></span>
+                               <% end %>
+                            <% subheader_content = [
                            school_profile_decorator.process_level,
-                           db_t(school_type_display(@school.type)),
+                           school_type_link,
                            raw('<span class="notranslate">'+@school.city.gs_capitalize_first + ', ' + @school.state.upcase+'</span>'),
                         ].compact  %>
 

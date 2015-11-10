@@ -24,6 +24,19 @@ class SchoolProfileDecorator < Draper::Decorator
     school_metadata[:overallRating].presence
   end
 
+  def school_type_url
+    if school.type == 'public' && school.district.present?
+      district_params = h.district_params_from_district(school.district)
+      district_params[:district_name] = district_params[:district]
+      district_params.delete(:district)
+      url = h.search_district_browse_url(district_params)
+    else
+      city_params = h.city_params(school.state, school.city)
+      city_params.merge!('st' =>school.type)
+      url = h.search_city_browse_url(city_params)
+    end
+  end
+
   def google_formatted_street_address
     address = "#{street},#{city},#{state}+#{zipcode}"
     # We may want to look into CGI.escape() to prevent the chained gsubs
