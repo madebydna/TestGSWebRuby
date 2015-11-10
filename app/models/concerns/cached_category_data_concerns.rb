@@ -50,6 +50,10 @@ module CachedCategoryDataConcerns
     end
   end
 
+  def transform_data_keys!
+    self.data = transform_data_keys
+  end
+
   def select_breakdown_with_label(values, label, &block)
     breakdown = config[:breakdown_mappings].try(:[], label) || 'all students'
     breakdown_matcher = Proc.new do |d|
@@ -58,49 +62,35 @@ module CachedCategoryDataConcerns
     values.select(&breakdown_matcher)
   end
 
-  #ex return value { category_data_object => [:'GreatSchools Rating', nil] }
-  def get_category_data_school_cache_map
-    category_data_key_map.each_with_object({}) do |(cd, key_map), map|
-      map[cd] = key_map.values
-    end
-  end
-
   protected
 
   def all_school_cache_data
     @_all_school_cache_data ||= begin
-      school_cache_results = SchoolCache.cached_results_for(school, school_cache_keys)
+      school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_KEYS)
       decorated_school = school_cache_results.decorate_schools(school).first
       decorated_school.merged_data.symbolize_keys
     end
   end
 
-  def preserve_data_type_name(opts = {})
-    prefix = opts[:prefix] || 'all:'
-    translated_label_map = category.key_label_map(true, true)
-    untranslated_label_map = category.key_label_map(false, true)
-    data.each do |key, _|
-      key = label_lookup_value(key)
-      config["#{prefix}#{translated_label_map[key]}"] = untranslated_label_map[key]
+  # Example return value:
+  # { category_data_object => [:'GreatSchools Rating', nil] }
+  def category_data_school_cache_map
+    category_data_key_map.each_with_object({}) do |(cd, key_map), map|
+      map[cd] = key_map.values
     end
   end
 
-  def change_data_type_to_label
-    data.transform_keys! do |key|
-      label = category.key_label_map(true, true)[label_lookup_value(key)]
-      [label, key.last]
-    end
-  end
-
-  def label_lookup_value(key)
-    [key.first.to_s, key.last]
-  end
-
-  def category_data
-    category.category_data(school.collections)
-  end
-
-  #ex return value {category_data_object => { data_type: 'GreatSchools Rating', subject: nil }, another_category_data_object => {data_type: 'Test score rating', subject: nil}
+  # Example return value:
+  # {
+  #   category_data_object => {
+  #     data_type: 'GreatSchools Rating',
+  #     subject: nil
+  #   },
+  #   another_category_data_object => {
+  #     data_type: 'Test score rating',
+  #     subject: nil
+  #   }
+  # }
   def category_data_key_map(with_subjects = true)
     category.category_data.inject({}) do |cd_key_map, cd|
       key = if with_subjects

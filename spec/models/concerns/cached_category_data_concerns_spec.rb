@@ -88,8 +88,6 @@ describe CachedCategoryDataConcerns do
           ]
         }
         allow(category).to receive(:category_data).and_return([category_data])
-        category_data_school_cache_map = subject.get_category_data_school_cache_map
-        allow(subject).to receive(:category_data_school_cache_map).and_return(category_data_school_cache_map)
         allow(subject).to receive(:data).and_return(cache_data)
         allow(I18n).to receive(:db_t).with(label, default: label).and_return(translated_label)
 

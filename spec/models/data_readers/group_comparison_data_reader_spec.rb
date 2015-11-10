@@ -4,6 +4,25 @@ describe GroupComparisonDataReader do
 
   subject { GroupComparisonDataReader.new(nil) }
 
+  let(:category_data) do
+    [
+      FactoryGirl.build(
+        :category_data,
+        response_key: 'first_data_type',
+        label: 'first_data_type'
+      ),
+      FactoryGirl.build(
+        :category_data,
+        response_key: 'second_data_type',
+        label: 'second_data_type'
+      ),
+      FactoryGirl.build(
+        :category_data,
+        response_key: 'third_data_type',
+        label: 'third_data_type'
+      ),
+    ]
+  end
   let(:sample_data) {
     {
       [:first_data_type, nil] => [
@@ -151,6 +170,8 @@ describe GroupComparisonDataReader do
   describe '#data_for_category' do
     context 'with valid data' do
       before do
+        allow(subject).to receive(:category).and_return(fake_category)
+        allow(fake_category).to receive(:category_data).and_return(category_data)
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
         allow(subject).to receive(:modify_data!)
         allow(subject).to receive(:configure_data_type_partials!)
@@ -171,8 +192,9 @@ describe GroupComparisonDataReader do
 
     context 'with only all students data for a data type' do
       before do
+        allow(subject).to receive(:category).and_return(fake_category)
+        allow(fake_category).to receive(:category_data).and_return(category_data)
         allow(subject).to receive(:cached_data_for_category).and_return(all_students_test_data)
-        allow(subject).to receive(:modify_data!)
         allow(subject).to receive(:configure_data_type_partials!)
         allow(subject).to receive(:config_for_collection).and_return({})
         allow(subject).to receive(:valid_data_display_collections?).and_return(true)
@@ -185,12 +207,14 @@ describe GroupComparisonDataReader do
 
       it 'should remove the all students collection' do
         collections = subject.data_for_category(fake_category)
-        expect(collections.map(&:title)).to eq([:second_data_type, :third_data_type])
+        expect(collections.map(&:title)).to eq(['second_data_type', 'third_data_type'])
       end
     end
 
     context 'with empty data' do
       before do
+        allow(subject).to receive(:category).and_return(fake_category)
+        allow(fake_category).to receive(:category_data).and_return(category_data)
         allow(subject).to receive(:cached_data_for_category).and_return(empty_data)
         allow(subject).to receive(:modify_data!)
       end
@@ -204,6 +228,8 @@ describe GroupComparisonDataReader do
   describe '#get_data!' do
     context 'when config has {breakdown: \'Ethnicity\', breakdown_all: \'Enrollment\'} set' do
       before do
+        allow(subject).to receive(:category).and_return(fake_category)
+        allow(fake_category).to receive(:category_data).and_return(category_data)
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
         allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ETHNICITY).and_return(ethnicity_subtext_data)
         allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ENROLLMENT).and_return(enrollment_subtext_data)
@@ -232,12 +258,6 @@ describe GroupComparisonDataReader do
       it 'should return results with the subtext key set' do
         subject.data.values.first.each do |d|
           expect(d[:subtext]).to be_present
-        end
-      end
-
-      it 'should put the labels of the data types as the data keys' do
-        subject.data.keys.each do |key|
-          expect(key.first).to match(/ label/)
         end
       end
 

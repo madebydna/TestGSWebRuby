@@ -28,7 +28,7 @@
 class GroupComparisonDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
-  DEFAULT_CALLBACKS = [ 'preserve_data_type_name', 'change_data_type_to_label' ]
+  DEFAULT_CALLBACKS = [ 'transform_data_keys!' ]
   SCHOOL_CACHE_KEYS = [ 'characteristics', 'performance' ]
 
   attr_accessor :category, :config, :data
@@ -87,8 +87,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   protected
 
   def data_display_collections
-    collections = data.map do |collection_name, collection_data|
-      collection_name = collection_name.first
+    collections = data.map do |label_array, collection_data|
+      original_label, collection_name = label_array[0], label_array[1]
+      config["all:#{collection_name}"] = original_label
       collection_config = config_for_collection(collection_name)
       DataDisplayCollection.new(collection_name, collection_data, collection_config)
     end
@@ -115,10 +116,6 @@ class GroupComparisonDataReader < SchoolProfileDataReader
         h[config_key] = value
       end
     end.merge( partial: collection_partial )
-  end
-
-  def school_cache_keys
-    SCHOOL_CACHE_KEYS
   end
 
   def get_data!
