@@ -22,7 +22,7 @@ class SchoolProfileController < SchoolController
 
   layout 'application'
 
-  NUMBER_OF_REVIEWS_ON_OVERVIEW = 3
+  NUMBER_OF_REVIEWS_ON_OVERVIEW = 4
 
   protected
 
@@ -44,6 +44,7 @@ class SchoolProfileController < SchoolController
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @ad_definition = Advertising.new
     @ad_page_name = ad_page_name
+    @number_of_reviews_on_overview = NUMBER_OF_REVIEWS_ON_OVERVIEW
     set_last_modified_date
   end
 

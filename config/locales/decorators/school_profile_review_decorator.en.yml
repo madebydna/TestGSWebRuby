@@ -5,6 +5,7 @@ en:
       community_member: community member
       found_helpful: ' found this helpful'
       no_rating: no rating
+      overall: 'Overall'
       persons:
         one: '%{count} person'
         other: '%{count} people'

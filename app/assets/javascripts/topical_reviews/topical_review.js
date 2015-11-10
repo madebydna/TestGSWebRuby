@@ -295,7 +295,12 @@ GS.topicalReview.questionCarousel = (function () {
     };
 
     var getTopicIdFromAnchor = function () {
+      var hashValue = GS.uri.Uri.getHashValue();
+      if (hashValue.substr(0,5) == 'topic') {
         return GS.uri.Uri.getHashValue().slice(5);
+      } else {
+        return false;
+      }
     };
 
     var init = function () {

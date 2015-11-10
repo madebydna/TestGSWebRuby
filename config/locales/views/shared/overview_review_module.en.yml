@@ -1,0 +1,9 @@
+---
+en:
+  shared:
+   overview_review_module:
+      no_content_message: This review submitted without content.
+      posted: Submitted by a
+      school_leader: SCHOOL LEADER
+      school_leader_message: Message to families
+      user_type_html: 'Submitted by a %{user_type}'

@@ -1,16 +1,8 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
-
-<% if @school_reviews.number_of_reviews_with_comments > 0 %>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12"  style="z-index: 1;">
-      <%= render "shared/section_header",
-                 category_placement:category_placement,
-                 link_text: @school_reviews.see_all_reviews_phrase,
-                 link_to:'reviews' %>
-
-      <div class="js_reviewsList">
-        <%= render '/shared/review_module_overview', reviews: @school_reviews.having_comments %>
-      </div>
-    </div>
-  </div>
-<% end %>
+<div class="row">
+  <%= render '/shared/review_module_overview_three_column',
+    reviews: @school_reviews
+  %>
+<% # render '/shared/review_module_overview_two_column_container', 
+  #category_placement: category_placement %>
+</div>

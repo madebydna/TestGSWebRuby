@@ -1,0 +1,21 @@
+<% review = SchoolProfileReviewDecorator.decorate(review) unless review.is_a?(SchoolProfileReviewDecorator) %>
+<div>
+  <div class="open-sans_i font-size-medium mbs">
+    <%= review.topic_markup_with_overall %>
+    <span class="open-sans_cb">
+      <%= review.answer_markup %>
+    </span>
+  </div>
+  <div class="font-size-small mbs gray-darker">
+    <%= t('.user_type_html', user_type: review.user_type)  %> &#183;
+    <span class="rs-review-posted"><%= review.posted %></span>
+  </div>
+  <div class="mvs">
+    <%= review.truncated_comment(250) %>
+    <%=  link_to('more', school_reviews_url(review.school, 
+                                            review_id: review.id, 
+                                            anchor: "review#{review.id}")
+                ) if review.comment.length > 250 %>
+  </div>
+  <hr class="gray-stoke">
+</div>
