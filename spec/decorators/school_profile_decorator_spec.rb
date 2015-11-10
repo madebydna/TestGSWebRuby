@@ -28,15 +28,16 @@ describe SchoolProfileDecorator do
   end
 
   describe "#type_url" do
-    subject do
-      SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, zipcode: 90406,district_id:1))
+    context "with a public school" do
+      subject do
+        SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, zipcode: 90406,district_id:1))
+     end
+      it "should return district browse for public schools" do
+        type_url = 'http://localhost/california/alameda/alameda-city-unified/schools/'
+        expect(subject.school_type_url).to eq(type_url)
+      end
     end
-    it "should return district browse for public schools" do
-      type_url = 'http://localhost/california/alameda/alameda-city-unified/schools/'
-      expect(subject.school_type_url).to eq(type_url)
-    end
-  end
-  describe "#type_url" do
+    context "with private schools" do
     subject do
       SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, zipcode: 90406,district_id:1,type:'private'))
     end
@@ -44,14 +45,20 @@ describe SchoolProfileDecorator do
       type_url = 'http://localhost/california/alameda/schools/?st=private'
       expect(subject.school_type_url).to eq(type_url)
     end
-  end
-  describe "#type_url" do
-    subject do
-      SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, zipcode: 90406,district_id:1,type:'charter'))
     end
-    it "should return city browse for charter schools" do
-      type_url = 'http://localhost/california/alameda/schools/?st=charter'
-      expect(subject.school_type_url).to eq(type_url)
+    context "with charter schools"do
+      subject do
+        SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, zipcode: 90406,district_id:1,type:'charter'))
+      end
+      it "should return city browse for charter schools" do
+        type_url = 'http://localhost/california/alameda/schools/?st=charter'
+        expect(subject.school_type_url).to eq(type_url)
+      end
     end
+
   end
+
+
+
+
 end
