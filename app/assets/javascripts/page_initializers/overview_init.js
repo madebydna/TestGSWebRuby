@@ -6,5 +6,6 @@ if(gon.pagename == "Overview"){
 
   GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
   GS.syncHeight.syncHeights();
+  GS.nearbySchools.initialize();
 
 };

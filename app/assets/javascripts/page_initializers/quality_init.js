@@ -20,5 +20,6 @@ if(gon.pagename == "Quality"){
 
         GS.schoolProfiles.showSignUpForSchoolModalAfterDelay();
         GS.dataViz.initToggleHandlers();
+        GS.nearbySchools.initialize();
     });
 }
