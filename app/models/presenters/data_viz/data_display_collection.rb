@@ -1,31 +1,42 @@
 class DataDisplayCollection
 
-  # config defines things like title, sub-title, and
-  # how to segment charts: by subject or by breakdown.
-  # data is a hash of data from GroupComparisonDataReader
-
-  attr_accessor :data_display_order, :breakdowns, :config, :data, :default_group,
-    :group_by_config, :sub_title, :title, :displays, :original_data_type,
-    :partial
+  attr_accessor :breakdowns, :config, :data, :title, :displays,
+    :original_data_type, :partial
 
   DEFAULT_CALLBACKS = [ 'group_by', 'remove_only_all_students' ]
 
   def initialize(title, data, config = {})
-    self.data               = data
-    self.config             = config
-    self.sub_title          = config[:sub_title]
     self.title              = title
-    self.default_group      = config[:default_group]
-    self.group_by_config    = config[:group_by]
-    self.data_display_order = config[:data_display_order]
+    self.data               = data
+
+    # Config options handle things like grouping and sorting data, or which
+    # partial to use. The current options are:
+    # - collection_callbacks: The set of callback methods in this class to use
+    #                         to transform the data.
+    # - group_by: Maps 'groups' (e.g. ethnicity, gender) to what values in the
+    #             data point hashes should be used to get a data point's group.
+    #             A DataDisplay class is created for each group.
+    # - data_display_order: The order in which to display DataDisplays.
+    self.config             = config
+
+    # The original_data_type is the untranslated label from the config. It is
+    # used when we need to have a lookup for things like JS or translations.
     self.original_data_type = config[title]
+
+    # DataDisplayCollections currently support one data display partial at a
+    # time. This will be used by the view to render the DataDisplayPoints in
+    # this collection with the correct display partial.
     self.partial            = config[:partial]
+
     create_displays!
-    self.breakdowns         = displays.map(&:title) if config[:group_by].present?
   end
 
   def display?
     displays.present?
+  end
+
+  def breakdowns
+    displays.map(&:title) if config[:group_by].present?
   end
 
   private
@@ -50,14 +61,13 @@ class DataDisplayCollection
   end
 
   def find_group(data)
-    return default_group unless group_by_config.present?
-
-    group_by_config.each do | group, value_to_use |
-      found_group = send("find_group_by_#{group}".to_sym, data[value_to_use.to_sym].to_s)
-      return found_group if found_group.present?
+    if config[:group_by].present?
+      config[:group_by].each do | group, value_to_use |
+        found_group = send("find_group_by_#{group}".to_sym, data[value_to_use.to_sym].to_s)
+        return found_group if found_group.present?
+      end
     end
-
-    default_group
+    config[:default_group]
   end
 
   def find_group_by_gender(str)
@@ -83,6 +93,7 @@ class DataDisplayCollection
 
   #Order bar charts callback
   def order_data_displays_callback
+    data_display_order = config[:data_display_order]
     return unless data.present? && data_display_order.present?
 
     self.data = Hash[data.sort_by { |k, v| data_display_order.index(k) }]
