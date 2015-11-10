@@ -69,7 +69,7 @@ module CachedCategoryDataConcerns
       school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_KEYS)
       decorated_school = school_cache_results.decorate_schools(school).first
       decorated_school.merged_data.symbolize_keys
-    end
+    end.deep_clone
   end
 
   # Example return value:

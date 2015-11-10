@@ -86,6 +86,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
 
   protected
 
+  # Maps all data point hashes to a data display collection. The array of these
+  # is what is passed to the view.
   def data_display_collections
     collections = data.map do |label_array, collection_data|
       original_label, collection_name = label_array[0], label_array[1]
@@ -107,6 +109,11 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  # Collections can have different configurations based on what display
+  # partial it is using. This method returns only the parts of the config hash
+  # relevant to a collection and strips out the partial's prefix. See the main
+  # method of this data reader for the config's format, including data display
+  # partial prefixes.
   def config_for_collection(collection_name)
     collection_partial = config[:partials][collection_name].to_s
     config.each_with_object({}.with_indifferent_access) do |(key, value), h|
@@ -137,6 +144,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  # Gets school level ethnicity percentages from school cache and adds them to
+  # each data point hash as :percent_of_population and :subext keys.
   def add_ethnicity_callback
     ethnicity_sym = SchoolCache::ETHNICITY
     return unless config[:breakdown] == ethnicity_sym.to_s
@@ -146,18 +155,39 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       ethnicity_map = ethnicity_data.inject({}) do | h, ethnicity |
         h.merge(ethnicity[:original_breakdown] => ethnicity[:school_value])
       end
+      add_percents_of_population!(ethnicity_map)
+    end
+  end
 
-      data.values.flatten.each do | hash |
-        if (ethnicity_percent = ethnicity_map[hash[:original_breakdown]]).present?
-          hash[:subtext] = percent_of_population_text(ethnicity_percent)
-          hash[:percent_of_population] = ethnicity_percent
-        elsif hash[:subtext].nil?
-          hash[:subtext] = no_data_text
-        end
+  # Gets school level student types percentages from school cache and adds them
+  # to each data point hash as :percent_of_population and :subext keys.
+  # A student type is something like % English Learners or % Male.
+  def add_student_types_callback
+    all_types = Genders.all + StudentTypes.all_datatypes
+    student_types_data = get_cache_data(all_types.map { |t| { data_type: t } })
+    student_types = student_types_data.inject({}) do | h, (type, type_data) |
+      # Student types aren't necessarily the same name as their breakdowns so we
+      # map the datatype (used above to get the data) to its breakdown here.
+      breakdown = StudentTypes.datatype_to_breakdown(type.first.to_s)
+      h.merge(breakdown => type_data.first[:school_value])
+    end
+    add_percents_of_population!(student_types)
+  end
+
+  def add_percents_of_population!(percents_of_population)
+    data.values.flatten.each do | hash |
+      percent = percents_of_population[hash[:original_breakdown]]
+      if percent.present?
+        hash[:subtext] = percent_of_population_text(percent)
+        hash[:percent_of_population] = percent
+      elsif hash[:subtext].nil?
+        hash[:subtext] = no_data_text
       end
     end
   end
 
+  # Gets school level student enrollment from school cache and adds some text
+  # about it to the all students data point hash as a :subext key.
   def add_enrollment_callback
     enrollment_sym = SchoolCache::ENROLLMENT
     return unless config[:breakdown_all] == enrollment_sym.to_s
@@ -168,39 +198,10 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     data.values.flatten.each do | hash |
       if hash[:breakdown].to_s.downcase == 'all students'
         if enrollment_size
-          hash[:subtext] = I18n.t(
-            :number_tested_subtext,
-            number: enrollment_size.to_i,
-            scope: i18n_scope,
-            default: "#{enrollment_size} students"
-          )
+          hash[:subtext] = number_students_text(enrollment_size.to_i)
         elsif hash[:subtext].nil?
           hash[:subtext] = no_data_text
         end
-      end
-    end
-  end
-
-  def add_student_types_callback
-    all_types = Genders.all + StudentTypes.all_datatypes
-    student_types_data = get_cache_data(all_types.map { |t| { data_type: t } })
-    student_types = student_types_data.inject({}) do | h, (type, type_data) |
-      # Student types aren't the same name as their breakdowns so we map the
-      # datatype (used above to get the data) to its breakdown here. See AT-925.
-      breakdown = if (student_type = StudentTypes.datatype_to_breakdown[type.first.to_s])
-                    student_type.to_sym
-                  else
-                    type.first
-                  end
-      h.merge(breakdown => type_data.first[:school_value])
-    end
-
-    data.values.flatten.each do | hash |
-      if (percent = student_types[hash[:breakdown].to_s.to_sym]).present?
-        hash[:subtext] = percent_of_population_text(percent)
-        hash[:percent_of_population] = percent
-      elsif hash[:subtext].nil?
-        hash[:subtext] = no_data_text
       end
     end
   end
@@ -215,6 +216,15 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       percent: (percent < 1 && percent > 0 ? '<1' : percent.to_i),
       scope: i18n_scope,
       default:"#{percent}% of population"
+    )
+  end
+
+  def number_students_text(enrollment)
+    I18n.t(
+      :number_tested_subtext,
+      number: enrollment,
+      scope: i18n_scope,
+      default: "#{enrollment} students"
     )
   end
 

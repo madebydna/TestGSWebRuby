@@ -109,7 +109,7 @@ describe GroupComparisonDataReader do
   }
   let(:types_subtext_data) {
     {
-      [:Male, nil] => [
+      ['Male', nil] => [
         {
           year: 2013,
           breakdown: 'All students',
