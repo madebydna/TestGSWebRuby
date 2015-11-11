@@ -25,8 +25,32 @@ describe 'School Profile Overview Page' do
   include_context 'Visit School Profile Overview'
 
   after do
-    clean_dbs :gs_schooldb
+    clean_dbs :gs_schooldb, :ca
+    clean_dbs :profile_config
     clean_models School
+  end
+
+  with_shared_context 'Given school profile page with GS Rating Snapshot module' do
+    with_shared_context 'with Alameda High School', js: true do
+      context 'when configured to get GS rating from school cache' do
+        before do
+          # FactoryGirl.create(:cached_gs_rating, school_id: school.id, state: school.state)
+          # Create an instance of SchoolProfileConfiguration that
+          # says "data_type_id": 174 instead of "use_gs_rating": "true"
+          # See JT-126
+        end
+      end
+      context 'when configured to get GS rating from school metadata' do
+        before do
+          FactoryGirl.create(:school_metadata_gs_rating_configuration)
+          FactoryGirl.create(:school_metadata, school_id: school.id, meta_key: 'overallRating', meta_value: 10)
+        end
+        describe 'gs rating' do
+          it { is_expected.to have_large_gs_rating }
+          its("large_gs_rating.rating_value") { is_expected.to eq('10') }
+        end
+      end
+    end
   end
 
   with_shared_context 'Given basic school profile page' do
