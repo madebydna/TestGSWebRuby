@@ -49,6 +49,7 @@ class SchoolProfilePageFactory
         page: page,
         layout: 'snapshot_ratings'
     )
+    return self
   end
 
 end
