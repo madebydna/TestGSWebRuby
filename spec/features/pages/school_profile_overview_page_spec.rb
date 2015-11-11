@@ -34,10 +34,17 @@ describe 'School Profile Overview Page' do
     with_shared_context 'with Alameda High School', js: true do
       context 'when configured to get GS rating from school cache' do
         before do
-          # FactoryGirl.create(:cached_gs_rating, school_id: school.id, state: school.state)
-          # Create an instance of SchoolProfileConfiguration that
-          # says "data_type_id": 174 instead of "use_gs_rating": "true"
-          # See JT-126
+          FactoryGirl.create(:school_cache_gs_rating_configuration)
+          FactoryGirl.create(:cached_gs_rating, school_id: school.id, state: school.state)
+        end
+        describe 'gs rating' do
+          it { is_expected.to have_large_gs_rating }
+          its("large_gs_rating.rating_value") { is_expected.to eq('5') } # 5 is hardcoded in factory for now
+          when_I :click_on_gs_rating do
+            it 'should go to the quality page' do
+              expect(SchoolProfileOverviewPage.new).to be_displayed
+            end
+          end
         end
       end
       context 'when configured to get GS rating from school metadata' do

@@ -18,16 +18,16 @@ FactoryGirl.define do
   factory :cached_gs_rating, class: SchoolCache do
     name 'ratings'
     sequence(:school_id) { |n| n }
-    state 'ca'
+    state 'CA'
     value ([
       {
         'data_type_id' => 174,
         'year' => 2014,
         'school_value_text' => nil,
-        'school_value_float' => 3.0,
+        'school_value_float' => 5,
         'name' => 'GreatSchools rating'
       }
-    ])
+    ].to_json)
     updated Time.now
   end
 

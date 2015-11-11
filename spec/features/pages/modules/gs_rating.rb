@@ -8,6 +8,10 @@ module GSRating
     def rating_value
       rating_divs.first.first('div').text
     end
+
+    def click_on_gs_rating
+      rating_divs.first.click
+    end
   end
 
   def self.included(page_class)
