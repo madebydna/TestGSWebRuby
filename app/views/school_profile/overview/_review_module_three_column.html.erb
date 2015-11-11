@@ -12,10 +12,9 @@
       <%= render 'school_profile/overview/review_school_callout', school: @school  %>
     </div>
   <% else  %>
-      <div>
-        <%= render 'data_layouts/review_bar_charts' %>
-      </div>
-    <div class="col-xs-12 col-sm-4"></div>
+    <div class="col-xs-12 col-sm-4">
+      <%= render 'data_layouts/review_bar_charts' %>
+    </div>
     <div class="col-xs-12 col-sm-4">
       <%= render 'school_profile/overview/recent_comments', reviews: reviews_with_comments if reviews_with_comments.count > 0 %>
       <% if reviews_with_comments.count < @max_number_of_reviews_on_overview %>

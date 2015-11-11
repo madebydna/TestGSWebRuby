@@ -1,29 +1,4 @@
 <style>
-    /* Mixings &  Variables */
-    .clearfix,
-    .clearfix:before,
-    .clearfix:after {
-        display: block;
-        content: " ";
-        clear: both;
-        zoom: 1;
-    }
-    /* Resets */
-    * {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-    }
-    body {
-        background: #EDF2F6;
-        font-family: Arial;
-        color: #444;
-    }
-    .wrap {
-        margin: 0 auto;
-        padding: 50px;
-        max-width: 1200px;
-    }
     /* Bar Graph Class */
     .barGraph {
         position: relative;
@@ -41,7 +16,6 @@
     }
     .graph-barBack {
         border-radius: 2px;
-        background: #DAE4EB;
         margin-bottom: 10px;
         display: block;
     }
@@ -94,69 +68,12 @@
         left: -40px;
         z-index: 9999;
     }
-    /* Bubble Chart */
 
-    /* Lines for Charts */
-    .lines-vert {
-        border-right: 1px dashed rgba(113, 125, 149, 0.4);
-        position: absolute;
-        height: 100%;
-        width: 1px;
-    }
-    .lines-vert:nth-of-type(5) {
-        left: 20%;
-    }
-    .lines-vert:nth-of-type(6) {
-        left: 40%;
-    }
-    .lines-vert:nth-of-type(7) {
-        left: 60%;
-    }
-    .lines-vert:nth-of-type(8) {
-        left: 80%;
-    }
-    /* Line Graph */
-    .lineChart {
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-        border-radius: 3px;
-        border: 2px solid rgba(113, 125, 149, 0.45);
-        position: relative;
-        overflow: hidden;
-        width: 100%;
-        height: 300px;
-    }
-    .lineChart svg {
-        position: absolute;
-        z-index: 999;
-    }
-    .lineChart circle {
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-        position: relative;
-        cursor: pointer;
-        stroke: #59bac0;
-        stroke-width: 3;
-        fill: #59bac0;
-    }
-    .lineChart circle:hover {
-        stroke-width: 8;
-    }
-    .lineChart line {
-        stroke: #717d95;
-        stroke-width: 4;
-    }
-    .trend line {
-        stroke: rgba(204, 51, 51, 0.8);
-    }
+
 
 </style>
 <div class="wrap">
-  <h2>Horizontal Bar Chart</h2>
+  <h2>Am I a Good Protoype Horizontal Bar Chart</h2>
   <div class="barGraph">
     <ul class="graph">
       <span class="graph-barBack">
