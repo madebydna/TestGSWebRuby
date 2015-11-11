@@ -7,11 +7,14 @@
   %>
 
 <div class="gs-bootstrap row">
-  <% if no_reviews_to_display %> 
+  <% if no_reviews_to_display %>
     <div class="col-xs-12 col-sm-8">
       <%= render 'school_profile/overview/review_school_callout', school: @school  %>
     </div>
   <% else  %>
+      <div>
+        <%= render 'data_layouts/review_bar_charts' %>
+      </div>
     <div class="col-xs-12 col-sm-4"></div>
     <div class="col-xs-12 col-sm-4">
       <%= render 'school_profile/overview/recent_comments', reviews: reviews_with_comments if reviews_with_comments.count > 0 %>
