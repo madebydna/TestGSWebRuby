@@ -21,7 +21,6 @@ GS.util.deleteAjaxCall = function(obj, hash) {
   var $self = obj;
   hash = hash || {};
   var link_value = hash.href || $self.attr("href");
-  link_value = encodeURI(link_value);
   var callback = hash.callback || $self.data('callback') || GS.util.ajaxCallbackSuccess;
   var callback_error = hash.callback_error || $self.data('callback_error') || GS.util.ajaxCallbackError;
   var params_local = hash.params_local || $self.data('params-local');
