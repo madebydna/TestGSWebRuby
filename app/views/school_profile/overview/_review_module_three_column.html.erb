@@ -1,0 +1,25 @@
+<% 
+    overall_reviews = @school_reviews.five_star_rating_reviews
+    reviews_with_comments = @school_reviews.having_comments.to(@max_number_of_reviews_on_overview - 1)
+   # With no overall reviews and no reviews with comments module should display
+   # review callout for two thirds of the module
+    no_reviews_to_display = overall_reviews.size == 0 && reviews_with_comments.size == 0
+  %>
+
+<div class="gs-bootstrap row">
+  <% if no_reviews_to_display %> 
+    <div class="col-xs-12 col-sm-8">
+      <%= render 'school_profile/overview/review_school_callout', school: @school  %>
+    </div>
+  <% else  %>
+    <div class="col-xs-12 col-sm-4"></div>
+    <div class="col-xs-12 col-sm-4">
+      <%= render 'school_profile/overview/recent_comments', reviews: reviews_with_comments if reviews_with_comments.count > 0 %>
+      <% if reviews_with_comments.count < @max_number_of_reviews_on_overview %>
+        <%= render 'school_profile/overview/review_school_callout', school: @school  %>
+      <% end  %>
+    </div>
+  <% end  %>
+  <div class="col-xs-12 col-sm-4">
+  </div>
+</div>

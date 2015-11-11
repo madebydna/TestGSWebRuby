@@ -1,9 +1,0 @@
-<h3><%= t('.title') %></h3> 
-<hr class="gray-stoke mts">
-<% reviews.each do |review| %>
-  <%= render 'shared/overview_review_module', review: review %>
-<% end %>
-<%= link_to('See all reviews', school_reviews_url(@school, 
-                                                  anchor:'js_reviewsListHeader'
-                                                 )) if @school_reviews.having_comments.count > @number_of_reviews_on_overview
-                                               %>

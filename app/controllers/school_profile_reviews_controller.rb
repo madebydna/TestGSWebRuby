@@ -69,7 +69,7 @@ def canonical_url
   end
 
   def rel_canonical_to_overview?
-    @school_reviews.number_of_reviews_with_comments <= NUMBER_OF_REVIEWS_ON_OVERVIEW
+    @school_reviews.number_of_reviews_with_comments <= MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW
   end
 
   def review_params

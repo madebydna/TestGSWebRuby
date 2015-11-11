@@ -1,9 +1,0 @@
----
-es:
-  shared:
-    overview_review_module:
-      no_content_message: Esta opinión ha presentado sin contenido.
-      posted: Enviado por un
-      school_leader: LÍDER DE LA ESCUELA
-      school_leader_message: Mensaje a las familias
-      user_type_html: Enviado por un %{user_type}
