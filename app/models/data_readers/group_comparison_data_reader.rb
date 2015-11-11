@@ -91,11 +91,9 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   def data_display_collections
     collections = data.map do |label_array, collection_data|
       original_label, collection_name = label_array[0], label_array[1]
-      config["all:#{collection_name}"] = original_label
-      collection_config = config_for_collection(collection_name)
+      collection_config = config_for_collection(collection_name, original_label)
       DataDisplayCollection.new(collection_name, collection_data, collection_config)
     end
-    collections.keep_if { |c| c.display? }
     if valid_data_display_collections?(collections)
       collections
     else
@@ -104,6 +102,7 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def valid_data_display_collections?(data_display_collections)
+    collections.keep_if { |c| c.display? }
     data_display_collections.any? do |data_display_collection|
       data_display_collection.displays.any? { |bc| bc.data_points.present? }
     end
@@ -114,7 +113,37 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   # relevant to a collection and strips out the partial's prefix. See the main
   # method of this data reader for the config's format, including data display
   # partial prefixes.
-  def config_for_collection(collection_name)
+  #
+  # The return value is a hash of config values. This does not modify self.config.
+  #
+  # For example, for a bar_chart collection, this changes this config:
+  # {
+  #   "all:default_group": "ethnicity",
+  #   "bar_chart:data_display_callbacks": [
+  #     "move_all_students",
+  #     "bar_chart_specific_callback"
+  #   ],
+  #   "rating:data_display_callbacks": [
+  #     "move_all_students",
+  #     "rating_specific_callback"
+  #   ],
+  #   "all:sort_by": {
+  #     "desc": "percent_of_population"
+  #   },
+  # }
+  # into this config:
+  # {
+  #   "default_group": "ethnicity",
+  #   "data_display_callbacks": [
+  #     "move_all_students",
+  #     "bar_chart_specific_callback"
+  #   ],
+  #   "sort_by": {
+  #     "desc": "percent_of_population"
+  #   },
+  # }
+  def config_for_collection(collection_name, original_label)
+    config["all:#{collection_name}"] = original_label
     collection_partial = config[:partials][collection_name].to_s
     config.each_with_object({}.with_indifferent_access) do |(key, value), h|
       config_partial = key.split(':').first
@@ -143,6 +172,18 @@ class GroupComparisonDataReader < SchoolProfileDataReader
       h[cd.label] = cd.display_type || :bar_chart
     end
   end
+
+  def footnotes_for_category(category)
+    data = cached_data_for_category
+    data.map do |_, data_hashes|
+      data_hash = data_hashes.first
+      if data_hash[:source] && data_hash[:year]
+        { source: data_hash[:source], year: data_hash[:year] }
+      end
+    end.compact
+  end
+
+  ############################# CALLBACK METHODS ###############################
 
   # Gets school level ethnicity percentages from school cache and adds them to
   # each data point hash as :percent_of_population and :subext keys.
@@ -206,6 +247,8 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  ############################# CALLBACK HELPERS ###############################
+
   def i18n_scope
     self.class.name.underscore
   end
@@ -232,13 +275,5 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     '&nbsp;'.html_safe
   end
 
-  def footnotes_for_category(category)
-    data = cached_data_for_category
-    data.map do |_, data_hashes|
-      data_hash = data_hashes.first
-      if data_hash[:source] && data_hash[:year]
-        { source: data_hash[:source], year: data_hash[:year] }
-      end
-    end.compact
-  end
+  ########################## END CALLBACK SECTION ##############################
 end
