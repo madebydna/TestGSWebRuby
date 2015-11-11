@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../contexts/school_profile_contexts'
 require_relative '../examples/page_examples'
 require_relative '../pages/school_profile_overview_page'
+require_relative '../pages/school_profile_quality_page'
 
 shared_context 'with an inactive school' do
   let!(:school) { FactoryGirl.create(:alameda_high_school, active: false) }
@@ -38,11 +39,14 @@ describe 'School Profile Overview Page' do
           FactoryGirl.create(:cached_gs_rating, school_id: school.id, state: school.state)
         end
         describe 'gs rating' do
+          before do
+            FactoryGirl.create(:page, name: 'Quality')
+          end
           it { is_expected.to have_large_gs_rating }
           its("large_gs_rating.rating_value") { is_expected.to eq('5') } # 5 is hardcoded in factory for now
-          when_I :click_on_gs_rating do
+          when_I :click_on_large_gs_rating do
             it 'should go to the quality page' do
-              expect(SchoolProfileOverviewPage.new).to be_displayed
+              expect(SchoolProfileQualityPage.new).to be_displayed
             end
           end
         end

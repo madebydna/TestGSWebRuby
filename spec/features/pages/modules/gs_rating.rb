@@ -9,9 +9,6 @@ module GSRating
       rating_divs.first.first('div').text
     end
 
-    def click_on_gs_rating
-      rating_divs.first.click
-    end
   end
 
   def self.included(page_class)
@@ -20,6 +17,10 @@ module GSRating
       sections :small_gs_rating, GSRatingSection, '.gs-rating-sm'
       sections :medium_gs_rating, GSRatingSection, '.gs-rating-md'
       section :large_gs_rating, GSRatingSection, 'div.gs-rating-lg'
+
+      def click_on_large_gs_rating
+        large_gs_rating.rating_divs.first.click
+      end
     end
   end
 end
