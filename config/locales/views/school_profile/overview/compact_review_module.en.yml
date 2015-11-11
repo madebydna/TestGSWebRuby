@@ -2,6 +2,6 @@
 en:
   school_profile:
     overview:
-      review_module:
+      compact_review_module:
         more: more
         user_type_html: 'Submitted by a %{user_type}'

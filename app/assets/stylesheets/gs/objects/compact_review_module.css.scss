@@ -1,4 +1,4 @@
-.three_column_review_module {
+.compact-review-module {
 
   .header {
     font-size: $font-size-medium;
@@ -9,6 +9,11 @@
     font-size: $font-size-small;
     margin-bottom: $spacing-small;
     color: $gray-darker;
+  }
+
+  .comment {
+    margin-top: $spacing-small;
+    margin-bottom: $spacing-small;
   }
 
   hr {
