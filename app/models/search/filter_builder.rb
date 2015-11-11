@@ -64,7 +64,7 @@ class FilterBuilder
             in: add_vouchers_callbacks,
             de: [],
             ga: [],
-            ok: [],
+            ok: add_special_education_options_callbacks,
             oh: add_vouchers_callbacks_oh
         }
     ).stringify_keys!
@@ -300,6 +300,41 @@ class FilterBuilder
                     summer: {label: t('Summer program'), display_type: :basic_checkbox, name: :summer_program, value: :yes}
                 }
         }
+    ]
+  end
+
+  def add_special_education_options_callbacks
+    [
+      {
+        callback_type: 'cache_key',
+        options: {
+          value: 'special_education_options',
+          version: 1
+        }
+      },
+      {
+        conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
+        {
+          spec_ed: {
+            label: t('Special education'), display_type: :title, name: :spec_ed, filters: {
+              autism: { label: t('Autism'), display_type: :basic_checkbox, name: :spec_ed, value: :autism },
+              deaf_blindness: { label: t('Deaf-blindness'), display_type: :basic_checkbox, name: :spec_ed, value: :deaf_blindness },
+              deafness: { label: t('Deafness'), display_type: :basic_checkbox, name: :spec_ed, value: :deafness },
+              developmental_delay: { label: t('Developmental delay'), display_type: :basic_checkbox, name: :spec_ed, value: :developmental_delay },
+              emotional: { label: t('Emotional disturbance'), display_type: :basic_checkbox, name: :spec_ed, value: :emotional },
+              hearing_impairments: { label: t('Hearing impairment'), display_type: :basic_checkbox, name: :spec_ed, value: :hearing_impairments },
+              cognitive: { label: t('Intellectual disability'), display_type: :basic_checkbox, name: :spec_ed, value: :cognitive },
+              multiple: { label: t('Multiple disabilities'), display_type: :basic_checkbox, name: :spec_ed, value: :multiple },
+              orthopedic: { label: t('Orthopedic impairment'), display_type: :basic_checkbox, name: :spec_ed, value: :orthopedic },
+              ld: { label: t('Specific learning disability'), display_type: :basic_checkbox, name: :spec_ed, value: :ld },
+              speech: { label: t('Speech or language impairment'), display_type: :basic_checkbox, name: :spec_ed, value: :speech },
+              brain_injury: { label: t('Traumatic brain injury'), display_type: :basic_checkbox, name: :spec_ed, value: :brain_injury },
+              blindness: { label: t('Visual impairment, including blindness'), display_type: :basic_checkbox, name: :spec_ed, value: :blindness },
+              other: { label: t('Other health impairment'), display_type: :basic_checkbox, name: :spec_ed, value: :other },
+            }
+          }
+        }
+      }
     ]
   end
 

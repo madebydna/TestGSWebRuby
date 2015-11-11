@@ -53,7 +53,23 @@ module FitScoreConcerns
     }.stringify_keys!,
     summer_program: {
         yes: :summer_program
-    }.stringify_keys!
+    }.stringify_keys!,
+    spec_ed: {
+      autism: :special_ed_programs,
+      blindness: :special_ed_programs,
+      brain_injury: :special_ed_programs,
+      cognitive: :special_ed_programs,
+      deaf_blindness: :special_ed_programs,
+      deafness: :special_ed_programs,
+      developmental_delay: :special_ed_programs,
+      emotional: :special_ed_programs,
+      hearing_impairments: :special_ed_programs,
+      ld: :special_ed_programs,
+      multiple: :special_ed_programs,
+      orthopedic: :special_ed_programs,
+      other: :special_ed_programs,
+      speech: :special_ed_programs,
+    }.stringify_keys!,
   }.stringify_keys!)
 
   # Rollup values
