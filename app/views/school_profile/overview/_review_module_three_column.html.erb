@@ -7,7 +7,7 @@
   # review callout for two thirds of the module
   no_reviews_to_display = overall_reviews.size == 0 && reviews_with_comments.size == 0
     %>
-  <div id="reviews-section" class="gs-bootstrap">
+  <div id="reviews-section" class="gs-bootstrap dn">
     <div class="container-fluid">
       <div class="row">
         <% if no_reviews_to_display %>
@@ -31,15 +31,15 @@
             <h2><%= t('.reviews_header', count: ratings_count) %></h2>
             <button class="btn btn-primary js-button-link" data-link-value="<%= school_reviews_url(@school, anchor: "topic1") %>">
               <%= t('.review_this_school') %>
-            </button> 
-            <% if overall_reviews.count > 0  %> 
+            </button>
+            <% if overall_reviews.count > 0  %>
               <div class="dib tac mtl mbm">
                 <%= draw_stars_48 average_score %>
                 <div class="open-sans_sb mvm uc"><%= t('.community_rating') %></div>
               </div>
               <div class="mtm mbl">
                 <p class="open-sans_i font-size-medium gray-darker"><%= overall_reviews.first.question.question  %></p>
-                <%= render 'school_profile/data_viz/simple_bar_chart/display', 
+                <%= render 'school_profile/data_viz/simple_bar_chart/display',
                   bar_chart_data: overall_reviews.score_distribution_with_percentage
                 %>
               </div>
@@ -55,8 +55,7 @@
           </div>
         <% end  %>
         <div class="col-xs-12 col-sm-4 ptl">
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :desktop  %>
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :mobile %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews_Test, ad_size_name: 'box', defer_render: true, visible_for: ' ' %>
         </div>
       </div>
     </div>

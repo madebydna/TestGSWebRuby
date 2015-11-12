@@ -2,6 +2,17 @@
   <% show_ad_text = true %>
 <% end %>
 
+<% unless defined?(ad_size_name) %>
+  <% ad_size_name = '' %>
+<% end %>
+
+<% unless defined?(defer_render) %>
+  <% defer_render = false %>
+<% end %>
+
+<% unless defined?(view) %>
+  <% view = :desktop %>
+<% end %>
 
 <% unless defined? visible_for %>
      <!--set defaults-->
@@ -26,7 +37,7 @@
 <% iddef = "#{page}#{slot_name}#{insert_mobile}Ad#{id_counter}" %>
 <div class="js-<%= iddef %>-wrapper">
   <div class="<%= visible_for %>">
-      <div class="gs_ad_slot ma" id="<%= iddef %>" data-ad-size="<%= dimensions %>" style="width: <%= width %>px"  data-dfp="<%= slotdef %>"></div>
+      <div class="gs_ad_slot ma" id="<%= iddef %>" data-ad-size="<%= dimensions %>" style="width: <%= width %>px"  data-dfp="<%= slotdef %>" data-ad-setting="<%= ad_size_name %>" <%= "data-ad-defer-render" if defer_render %>></div>
   </div>
   <% partial_params = {visible_for: visible_for}%>
   <% if show_ad_text %>
