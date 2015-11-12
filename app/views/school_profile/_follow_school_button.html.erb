@@ -1,4 +1,7 @@
 <% css_classes ||= '' %>
+<% ga_category ||= '' %>
+<% ga_action   ||= '' %>
+<% ga_label    ||= '' %>
 <div class="js-followThisSchool btn btn-outline <%= css_classes %> <%= 'js-gaClick' if ga_category.present? %>"
   <% if ga_category.present? %>
     data-ga-click-category='<%= ga_category %>'
