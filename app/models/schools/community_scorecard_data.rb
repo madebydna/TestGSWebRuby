@@ -18,8 +18,6 @@ class CommunityScorecardData
   end
 
   def school_data
-    # TODO We need to sort through the school data to get the most recent year
-    # and reject all data that isn't that year.
     @school_data ||= (
       school_data = solr_response[:school_data]
       cachified_schools = get_cachified_schools(school_data)
@@ -82,7 +80,6 @@ class CommunityScorecardData
     end
   end
 
-  #Todo later when solr layer is built, add appropriate whitelisting for solr params here or in school_data_service where necessary
   def school_data_service_params
     school_data_params.merge({
       sortYear: data_set_with_year_map[school_data_params[:sortBy]]
@@ -91,17 +88,17 @@ class CommunityScorecardData
 
   def school_data_hash_options
     @options ||= {
-      data_sets_and_years: data_set_with_year_map, #['graduation_rate' => '2013, 'a_through_g' => '2014'],
+      data_sets_and_years: data_set_with_year_map,
       sub_group_to_return: school_data_params[:sortBreakdown], #asian
       link_helper:         school_data_params[:link_helper]
     }
   end
 
+  # For example: ['graduation_rate' => '2013, 'a_through_g' => '2014'],
   def data_set_with_year_map
     @data_set_with_year_map ||= data_sets_with_years(school_data_params[:data_sets])
   end
 
-  # move into community scorecard json config
   def data_sets_with_years(data_sets)
     data_sets_and_years = @collection.scorecard_fields.map do |field|
       unless field[:data_type].to_s == 'school_info'
