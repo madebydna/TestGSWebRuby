@@ -79,8 +79,8 @@ describe DataLayerConcerns do
         controller.send(:add_collection_id_to_gtm_data_layer)
       end
 
-      it 'should add collection_id to gon' do
-        expect(subject['collection_id']).to eq(hub.collection_id)
+      it 'should add collection_ids to gon' do
+        expect(subject['collection_ids']).to eq(hub.collection_id)
       end
     end
 
@@ -90,8 +90,8 @@ describe DataLayerConcerns do
         controller.send(:add_collection_id_to_gtm_data_layer)
       end
 
-      it 'should not add collection_id to gon' do
-        expect(subject['collection_id']).to be_nil
+      it 'should not add collection_ids to gon' do
+        expect(subject['collection_ids']).to be_nil
       end
     end
 
@@ -102,11 +102,11 @@ describe DataLayerConcerns do
         expect(school).to receive(:collection_ids)
         controller.send(:add_collection_id_to_gtm_data_layer)
       end
-      it 'should set collection id to the data layer hash' do
+      it 'should set collection_ids to the data layer hash' do
         school = FactoryGirl.build(:school)
         controller.instance_variable_set(:@school, school)
         controller.send(:add_collection_id_to_gtm_data_layer)
-        expect(subject['collection_id']).to be_an_instance_of Array
+        expect(subject['collection_ids']).to be_an_instance_of Array
       end
     end
   end
