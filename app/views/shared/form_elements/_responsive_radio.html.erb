@@ -17,7 +17,7 @@
         <% active = value.to_s.downcase == active_value %>
         <div class="btn btn-toggle js-responsiveRadio <%= 'active' if active %>" data-value="<%= value %>" >
           <%= text %>
-          <input type="radio" <%= "name=#{key} value=#{value}" %> <%= 'checked' if active %>/>
+          <input type="radio" name="<%=key%>" value="<%= value %>" <%= 'checked' if active %>/>
         </div>
       <% end %>
 
