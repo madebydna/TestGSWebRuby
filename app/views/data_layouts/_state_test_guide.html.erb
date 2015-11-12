@@ -1,0 +1,16 @@
+<% 
+  states_with_test_guide = %w(WA OR DE CT WV VT HI SD ID MT NV NH MI ND)
+  level_codes_targeted = %w(e m)
+  display_link = states_with_test_guide.include?(@school.state) && 
+    @school.public_or_charter? && 
+      @school.includes_level_code?(level_codes_targeted)
+  %>
+
+<% if display_link  %>
+  <div class="external-link-callout">
+    <%= t('.state_test_guide_text_html') %>
+    <a class="open-sans_b" target="_blank" href="<%= state_test_guide_url %>">
+       <%= t('.state_test_guide_text_link') %>
+    </a> 
+  </div>
+<% end  %>
