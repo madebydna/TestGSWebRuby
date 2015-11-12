@@ -413,7 +413,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
       $('.js-slideToggle').on('click', function(e) {
         var target = $(this).data('target');
         if (target) {
+          var $caret = $(this).children('.caret');
           var $target = $(target);
+          $caret.toggleClass('caret-left');
           $($target).slideToggle();
         }
       });

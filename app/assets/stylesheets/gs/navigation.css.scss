@@ -254,4 +254,10 @@
     border-top: 4px solid transparent;
     border-bottom: 4px solid transparent;
   }
+  &.caret-left {
+    border-right: 4px solid;
+    border-left: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
 }
