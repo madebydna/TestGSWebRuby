@@ -3,7 +3,7 @@ module DataLayerConcerns
 
   DATALAYER_COOKIE_NAME = :GATracking
   PAGE_NAME = 'page_name'
-  COLLECTION_ID = 'Collection ID'
+  COLLECTION_ID = 'collection_id'
 
   protected
 

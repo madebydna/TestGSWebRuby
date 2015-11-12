@@ -162,7 +162,7 @@ class SchoolProfileController < SchoolController
     page_view_metadata['zipcode']     = @school.zipcode
     page_view_metadata['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
     page_view_metadata['template']    = "SchoolProf"
-    page_view_metadata['Collection ID']  = @school.collection_ids
+    page_view_metadata['collection_id']  = @school.collection_ids
 
     page_view_metadata
 
