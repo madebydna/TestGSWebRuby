@@ -22,6 +22,8 @@
       <% end  %>
     </div>
   <% end  %>
-  <div class="col-xs-12 col-sm-4">
+  <div class="col-xs-12 col-sm-4 ptl">
+    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :desktop  %>
+    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :mobile %>
   </div>
 </div>
