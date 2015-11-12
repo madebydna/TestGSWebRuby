@@ -38,6 +38,7 @@ class PerformanceDataReader < SchoolProfileDataReader
         data_point = DataDisplayPoint.new(
           {
             label: label,
+            original_label: value[:original_breakdown],
             value: value[:school_value],
             comparison_value: value[:state_average],
             performance_level: value[:performance_level],
