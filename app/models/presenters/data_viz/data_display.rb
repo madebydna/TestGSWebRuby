@@ -25,6 +25,10 @@ class DataDisplay
     create_data_points!
   end
 
+  def display?
+    data_points.present?
+  end
+
   private
 
   def create_data_points!

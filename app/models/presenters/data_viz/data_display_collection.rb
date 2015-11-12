@@ -32,7 +32,7 @@ class DataDisplayCollection
   end
 
   def display?
-    displays.present?
+    displays.any? { |d| d.display? }
   end
 
   def breakdowns

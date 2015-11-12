@@ -89,23 +89,16 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   # Maps all data point hashes to a data display collection. The array of these
   # is what is passed to the view.
   def data_display_collections
-    collections = data.map do |label_array, collection_data|
+    data_display_collections = data.map do |label_array, collection_data|
       original_label, collection_name = label_array[0], label_array[1]
       collection_config = config_for_collection(collection_name, original_label)
       DataDisplayCollection.new(collection_name, collection_data, collection_config)
     end
-    if valid_data_display_collections?(collections)
-      collections
-    else
-      []
-    end
+    valid_collections(data_display_collections)
   end
 
-  def valid_data_display_collections?(data_display_collections)
-    collections.keep_if { |c| c.display? }
-    data_display_collections.any? do |data_display_collection|
-      data_display_collection.displays.any? { |bc| bc.data_points.present? }
-    end
+  def valid_collections(data_display_collections)
+    data_display_collections.keep_if { |collection| collection.display? }
   end
 
   # Collections can have different configurations based on what display
