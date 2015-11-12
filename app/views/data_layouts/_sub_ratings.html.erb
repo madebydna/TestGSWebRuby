@@ -8,7 +8,12 @@
         </div>
         <span class="sub-rating-text"><%= d.label %></span>
         <%= render 'school_profile/data_viz/tooltip_activator',
-          text: d.description, trigger: 'focus' %>
+          text: d.description,
+          trigger: 'focus' ,
+          ga_category: 'Profile data - quality snapshot',
+          ga_action: 'Open Tooltip',
+          ga_label: d.label
+        %>
       </div>
     <% end %>
   </div>

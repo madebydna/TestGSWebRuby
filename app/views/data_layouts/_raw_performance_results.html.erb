@@ -3,7 +3,12 @@
   <div class="box-group <%= box_group_type %>">
     <% data.each do |data_point| %>
       <% link_to_page, link_to_anchor = data_point.link_to.split('/#') %>
-      <a class="box performance-box" href="<%= "#{try("school_#{link_to_page}_path", @school, anchor: link_to_anchor)}" %>">
+      <a class="box performance-box js-gaClick"
+         href="<%= "#{try("school_#{link_to_page}_path", @school, anchor: link_to_anchor)}" %>"
+         data-ga-click-category='Profile data - quality snapshot'
+         data-ga-click-action='Data point click'
+         data-ga-click-label='<%= data_point.label %>'
+      >
         <div class="description js-syncHeight">
           <div class="dib"><%= data_point.label %></div>
           <div class="dib state-average">(<%= t('.state_average', val: data_point.comparison_value) %>)</div>
