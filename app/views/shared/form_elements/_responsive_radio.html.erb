@@ -11,7 +11,10 @@
 
       <% #rendering each radio button %>
       <% text_value_pair.each do |text, value| %>
-        <% active = value == active_value %>
+        <% # The value must be downcased because there are OSP displayed question answers   %> 
+        <% # with values that are capitalized.  If you change this downcase you will need to %> 
+        <% # update the osp display question values in the database %>
+        <% active = value.to_s.downcase == active_value %>
         <div class="btn btn-toggle js-responsiveRadio <%= 'active' if active %>" data-value="<%= value %>" >
           <%= text %>
           <input type="radio" <%= "name=#{key} value=#{value}" %> <%= 'checked' if active %>/>
