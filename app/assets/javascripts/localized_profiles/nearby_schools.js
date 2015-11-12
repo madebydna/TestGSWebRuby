@@ -11,6 +11,7 @@ GS.nearbySchools = (function() {
   var label                          = undefined;
   var value                          = undefined;
   var nonInteractive                 = true;
+  var stateAndSchool                 = gon.state + gon.school_id;
 
   var initialize = function() {
     initializeShowModuleListener();
@@ -21,6 +22,7 @@ GS.nearbySchools = (function() {
       $(document).on('scroll', function() {
         $(this).off('scroll');
         analyticsEvent(category, action, label, value, nonInteractive);
+        clearHideSchoolsCookie();
         $(NEARBY_SCHOOLS_MODULE_SELECTOR).slideDown(function() {
           addSpaceToBody();
         });
@@ -54,11 +56,15 @@ GS.nearbySchools = (function() {
   };
 
   var shouldHideNearbySchools = function() {
-    return $.cookie('hideNearbySchools') === 'true'
+    return $.cookie('hideNearbySchoolsFor') === stateAndSchool
   };
 
   var setHideNearbySchoolsCookie = function() {
-    $.cookie('hideNearbySchools', 'true', {expires: 1, path: '/' });
+    $.cookie('hideNearbySchoolsFor', stateAndSchool, {expires: 1, path: '/' });
+  };
+
+  var clearHideSchoolsCookie = function() {
+    $.removeCookie('hideNearbySchoolsFor', { path: '/' });
   };
 
   return {

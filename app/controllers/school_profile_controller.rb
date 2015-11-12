@@ -18,6 +18,7 @@ class SchoolProfileController < SchoolController
   before_action :add_collection_id_to_gtm_data_layer, only: [:overview, :quality, :details, :reviews]
   before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
   before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
+  before_action :set_state_school_id_gon_var
   # after_filter :set_last_modified_date
 
   layout 'application'
@@ -221,6 +222,11 @@ class SchoolProfileController < SchoolController
       member.user = current_user
     end
     member
+  end
+
+  def set_state_school_id_gon_var
+    gon.state = @school.state
+    gon.school_id = @school.id
   end
 
 end

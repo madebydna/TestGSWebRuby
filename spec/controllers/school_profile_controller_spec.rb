@@ -207,5 +207,19 @@ describe SchoolProfileController do
     end
   end
 
+  describe '#set_state_school_id_gon_var' do
+    it 'should set state and school_id to gon' do
+      controller.instance_variable_set(:@school, school.extend(SchoolProfileDataDecorator) )
+      controller.send(:set_state_school_id_gon_var)
+      gon = controller.gon
+      expect(gon.state).to eql(school.state)
+      expect(gon.school_id).to eql(school.id)
+    end
 
+    it 'should have the callback as a before action' do
+      all_callbacks = controller._process_action_callbacks
+      callback = all_callbacks.select { |s| s.instance_variable_get(:@key) == :set_state_school_id_gon_var }
+      expect(callback.present?).to be_truthy
+    end
+  end
 end
