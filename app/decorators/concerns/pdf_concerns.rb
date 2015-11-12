@@ -324,7 +324,8 @@ module PdfConcerns
 
   def which_icon
     icon_path = 'app/assets/images/pyoc/map_icons/'
-    ZIPCODE_TO_ICON_MAPPING[zipcode].present? ? icon_path + ZIPCODE_TO_ICON_MAPPING[zipcode] : 'N/A'
+    zip = zipcode.to_s.strip
+    ZIPCODE_TO_ICON_MAPPING[zip].present? ? icon_path + ZIPCODE_TO_ICON_MAPPING[zip] : 'N/A'
   end
 
   def which_footer(collection_id, is_spanish)
