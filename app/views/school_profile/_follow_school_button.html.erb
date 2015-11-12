@@ -1,5 +1,15 @@
 <% css_classes ||= '' %>
-<div class="js-followThisSchool btn btn-outline <%= css_classes %>">
+<div class="js-followThisSchool btn btn-outline <%= css_classes %> <%= 'js-gaClick' if ga_category.present? %>"
+  <% if ga_category.present? %>
+    data-ga-click-category='<%= ga_category %>'
+  <% end %>
+  <% if ga_action.present? %>
+    data-ga-click-action='<%= ga_action %>'
+  <% end %>
+  <% if ga_label.present? %>
+    data-ga-click-label='<%= ga_label %>'
+  <% end %>
+>
   <% if current_user && current_user.favorited_school?(@school) %>
     <span class="iconx16 i-16-check vam"></span>
     <%= t('.following') %>

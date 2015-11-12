@@ -20,13 +20,22 @@
             </div>
             <div class='school-name'><%= @school.name %></div>
           </div>
-          <%= render 'school_profile/follow_school_button', css_classes: 'btn-sm fr' %>
+          <%= render 'school_profile/follow_school_button',
+            css_classes: 'btn-sm fr',
+            ga_category: 'Profile - Sticky nearby schools',
+            ga_action: 'Click follow',
+            ga_label: 'For profile event show which school'
+          %>
         </div>
         <div class="nearby-schools">
           <div class="title">
             TOP RATED NEARBY SCHOOLS
           </div>
-          <div class="js-nearbySchoolsHide close-nearby-schools">
+          <div class="js-nearbySchoolsHide js-gaClick close-nearby-schools"
+            data-ga-click-category='Profile - Sticky nearby schools'
+            data-ga-click-action='Close module'
+            data-ga-click-label='For profile event show which school'
+          >
             <span class="iconx16 i-16-plain-x mls vam"></span>
             <br/>
             Close
@@ -38,7 +47,13 @@
                    # Be warned! Classes may have styles overwritten! %>
                 <div>
                   <div class="nearby-school school">
-                    <%= link_to(school_hash_to_url_for_profile(school)) do %>
+                    <%= link_to(school_hash_to_url_for_profile(school),
+                                class: 'js-gaClick',
+                                data: {
+                                  :'ga-click-category' => 'Profile - Sticky nearby schools',
+                                  :'ga-click-action' => 'Click profile',
+                                  :'ga-click-label' => 'For profile event show which school'
+                                }) do %>
                       <div class="school-rating">
                         <%=
                           render 'performance/gs_rating',
@@ -60,7 +75,11 @@
               </div>
             </div>
           </div>
-          <div class="js-next next">
+          <div class="js-next js-gaClick next"
+            data-ga-click-category='Profile - Sticky nearby schools'
+            data-ga-click-action='Click next'
+            data-ga-click-label='For profile event show which school'
+          >
             <span class="iconx16 i-16-right-arrow mls vam"></span>
             <br/>
             Next
