@@ -147,6 +147,13 @@ module SearchSpecHelper
   def open_full_filter_dialog
     open_filter_dialog
     find(:css, '.js-advancedFilters').click
+
+    # Unfortunately, this doesn't work. But since it's unclear why it doesn't
+    # work, I'm leaving it here for future reference. The goal is to open up all
+    # the collapsed filter groups.
+    page.all(:css, '.js-collapsedTitle').each do |title|
+      title.click
+    end
   end
 
   def checkbox_accordian(filter_type)

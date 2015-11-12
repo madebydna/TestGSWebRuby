@@ -316,7 +316,7 @@ class FilterBuilder
         conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
         {
           spec_ed: {
-            label: t('Special education'), display_type: :title, name: :spec_ed, filters: {
+            label: t('Special education'), display_type: :collapsed_title, name: :spec_ed, filters: {
               autism: { label: t('Autism'), display_type: :basic_checkbox, name: :spec_ed, value: :autism },
               deaf_blindness: { label: t('Deaf-blindness'), display_type: :basic_checkbox, name: :spec_ed, value: :deaf_blindness },
               deafness: { label: t('Deafness'), display_type: :basic_checkbox, name: :spec_ed, value: :deafness },
@@ -512,7 +512,7 @@ class FilterBuilder
           filters: {
             girls_sports: {
               label: t('Girls Sports'),
-              display_type: :title,
+              display_type: :collapsed_title,
               name: :girls_sports,
               filters: {
                 sports_icons: {
@@ -530,7 +530,7 @@ class FilterBuilder
             },
             boys_sports: {
               label: t('Boys Sports'),
-              display_type: :title,
+              display_type: :collapsed_title,
               name: :boys_sports,
               filters: {
                 sports_icons: {
