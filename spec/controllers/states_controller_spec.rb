@@ -27,7 +27,7 @@ shared_examples_for 'a default state controller action' do |action, page_name|
     end
 
     it 'sets collection id in data_layer' do
-      expect(controller.gon.get_variable('data_layer_hash')).to include('Collection ID')
+      expect(controller.gon.get_variable('data_layer_hash')).to include('collection_ids')
     end
 
     it 'sets page_name in data_layer' do

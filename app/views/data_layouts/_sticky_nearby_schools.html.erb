@@ -1,0 +1,92 @@
+<% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
+
+<%
+  collections_to_show = [*category_placement.layout_config_json['show_module_for_collections']]
+  should_show_partial = (@school.collection_ids & collections_to_show).present?
+  school_profile_decorator = SchoolProfileDecorator.decorate(@school)
+%>
+
+<% if should_show_partial %>
+  <% begin %>
+    <div class="sticky-nearby-schools js-nearbySchoolsModule gs-bootstrap dn">
+      <div class="sticky-container">
+        <div class="current-school clearfix hidden-xs">
+          <div class="school fl">
+            <div class='school-rating'>
+              <%= render 'performance/gs_rating',
+                value: @school.cache_results.gs_rating,
+                size: 'sm'
+              %>
+            </div>
+            <div class='school-name'><%= @school.name %></div>
+          </div>
+          <%= render 'school_profile/follow_school_button',
+            css_classes: 'btn-sm fr',
+            ga_category: 'Profile - Sticky nearby schools',
+            ga_action: 'Click follow',
+            ga_label: "#{@school.state}:#{@school.id}"
+          %>
+        </div>
+        <div class="nearby-schools">
+          <div class="title">
+            TOP RATED NEARBY SCHOOLS
+          </div>
+          <div class="js-nearbySchoolsHide js-gaClick close-nearby-schools"
+            data-ga-click-category='Profile - Sticky nearby schools'
+            data-ga-click-action='Close module'
+          >
+            <span class="iconx16 i-16-plain-x mls vam"></span>
+            <br/>
+            Close
+          </div>
+          <div class="carousel">
+            <div class="js-nearbySchoolsCarousel">
+              <% data.each do |school| %>
+                <% # Slick will apply styles to the following div.
+                   # Be warned! Classes may have styles overwritten! %>
+                <div>
+                  <div class="nearby-school school">
+                    <%= link_to(school_hash_to_url_for_profile(school),
+                                class: 'js-gaClick',
+                                data: {
+                                  :'ga-click-category' => 'Profile - Sticky nearby schools',
+                                  :'ga-click-action' => 'Click profile',
+                                  :'ga-click-label' => "#{school['state']}:#{school['id']}"
+                                }) do %>
+                      <div class="school-rating">
+                        <%=
+                          render 'performance/gs_rating',
+                            value: school['gs_rating'],
+                            size: 'sm'
+                          %>
+                      </div>
+                      <div class="school-name">
+                        <%= school['name'] %>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+              <div>
+                <div class="pts tac">
+                  <%= t('.more_quality_schools_html', link: school_profile_decorator.school_zip_location_search_url) %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="js-next js-gaClick next"
+            data-ga-click-category='Profile - Sticky nearby schools'
+            data-ga-click-action='Click next'
+          >
+            <span class="iconx16 i-16-right-arrow mls vam"></span>
+            <br/>
+            Next
+          </div>
+        </div>
+      </div>
+    </div>
+  <% rescue => e %>
+    <%= log_view_error "Something went wrong while trying to display #{category_placement.title}", e %>
+    <% raise e if params[:debug] %>
+  <% end %>
+<% end %>

@@ -7,7 +7,7 @@
 
 <div
 id='<%= "question-topic#{question.topic.id}" %>'
-class="link-down-compensate bg-light-gray gray-box-border-v row limit-width-1200 js-topicalReviewContainer dn"
+class="bg-light-gray gray-box-border-v row limit-width-1200 js-topicalReviewContainer dn"
 data-review-topic="<%= question.review_topic.id %>">
   <% if submitted_review %>
       <%= render "school_profile/reviews/modules/output/submitted_review_module", question: question,

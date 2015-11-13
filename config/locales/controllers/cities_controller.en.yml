@@ -1,0 +1,9 @@
+en:
+  controllers:
+    cities_controller:
+      events: Events
+      education_community: Education Community
+      partner: Partner
+      choosing_a_school: Choosing a School
+      enrollment_information: Enrollment Information
+      programs: Programs

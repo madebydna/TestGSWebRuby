@@ -15,6 +15,7 @@
         <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
         <%= render 'school_profile/reviews/review_no_ratings' %>
         <%= render 'school_profile/reviews/topical_review_section' %>
+        <%= render 'school_profile/reviews/total_reviews_count' %>
       </div>
     <% else %>
         <div class="col-xs-12 ptl"  style="z-index: 1;">
@@ -24,6 +25,8 @@
             <% end %>
           <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
           <%= render 'school_profile/reviews/topical_review_section' %>
+          <%= render 'school_profile/reviews/total_reviews_count' %>
+
           <% if @show_ads %>
               <div class="row">
                 <div class="col-xs-12">
@@ -58,6 +61,11 @@
     <% end %>
 </div>
 
+<div class="gs-bootstrap">
+  <div class="limit-width-1200">
+    <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
+  </div>
+</div>
 <%= render 'data_layouts/nearby_schools' %>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 

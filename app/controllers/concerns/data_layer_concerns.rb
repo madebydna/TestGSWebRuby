@@ -3,7 +3,7 @@ module DataLayerConcerns
 
   DATALAYER_COOKIE_NAME = :GATracking
   PAGE_NAME = 'page_name'
-  COLLECTION_ID = 'Collection ID'
+  COLLECTION_ID = 'collection_ids'
 
   protected
 
@@ -29,7 +29,9 @@ module DataLayerConcerns
   end
 
   def add_collection_id_to_gtm_data_layer
-    if @hub
+    if @school
+      data_layer_gon_hash[COLLECTION_ID] = @school.collection_ids
+    elsif @hub
       data_layer_gon_hash[COLLECTION_ID] = @hub.collection_id
     end
   end

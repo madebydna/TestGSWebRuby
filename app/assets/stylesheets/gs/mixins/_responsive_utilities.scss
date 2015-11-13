@@ -1,0 +1,17 @@
+@mixin for-sm-and-up {
+  @media (min-width: $screen-sm-min) {
+    @content;
+  }
+}
+
+@mixin for-md-and-up {
+  @media (min-width: $screen-md-min) {
+    @content;
+  }
+}
+
+@mixin for-lg-and-up {
+  @media (min-width: $screen-lg-min) {
+    @content;
+  }
+}

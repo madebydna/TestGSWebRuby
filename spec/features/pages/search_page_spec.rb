@@ -13,6 +13,14 @@ describe 'Search Page' do
         with_shared_context 'when looking at search results school addresses' do
           include_example 'should contain the expected text', *['Dover, DE']
         end
+
+        describe 'breadcrumbs' do
+          it { is_expected.to have_breadcrumbs }
+          its('first_breadcrumb.title') { is_expected.to have_text('Delaware') }
+          its('first_breadcrumb') { is_expected.to have_link('Delaware', href: "/delaware/") }
+          its('second_breadcrumb.title') { is_expected.to have_text('Dover') }
+          its('second_breadcrumb') { is_expected.to have_link('Dover', href: "/delaware/dover/") }
+        end
       end
     end
   end

@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative '../features/pages/city_home_page'
+require_relative '../features/examples/page_examples'
+require_relative '../features/contexts/state_home_contexts'
 
 describe 'City Hub Page' do
   let(:city_page_url) { '/michigan/detroit' }
@@ -72,6 +75,14 @@ describe 'City Hub Page' do
         expect(uri.path).to eq signin_path
       end
     end
+  end
+
+  describe 'breadcrumbs' do
+    subject { CityHomePage.new }
+
+    it { is_expected.to have_breadcrumbs }
+    its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
+    its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
   end
 
   # describe 'sign up for email updates button' do

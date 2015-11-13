@@ -3,7 +3,7 @@
 //= require modals/email_join_modal
 //= require modals/email_join_for_compare_schools_modal
 
-describe('GS.modal.EmailJoinForSchoolProfileModal', function() {
+describe('GS.modal.EmailJoinForCompareSchoolsModal', function() {
   describe('.getCssClass', function() {
     it('it returns signup_and_follow_schools class', function() {
       var cssClass = 'email-join-for-compare-schools';

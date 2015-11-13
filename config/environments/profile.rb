@@ -60,7 +60,8 @@ LocalizedProfiles::Application.configure do
   config.quiet_assets = true
 
   # Don't cache in dev environment
-  config.cache_store = :null_store
+  # config.cache_store = :null_store
+  config.cache_store = :memory_store, { size: 128.megabytes }
 
   def local_ip
     orig, Socket.do_not_reverse_lookup = Socket.do_not_reverse_lookup, true  # turn off reverse DNS resolution temporarily

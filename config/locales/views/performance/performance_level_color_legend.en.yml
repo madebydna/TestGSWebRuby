@@ -1,0 +1,9 @@
+en:
+  performance:
+    performance_level_color_legend:
+      red: Red
+      orange: Orange
+      green: Green
+      bottom_30: Bottom 30% of schools in the state
+      middle_40: Middle 40% of schools in the state
+      top_30: Top 30% of schools in the state

@@ -1,0 +1,16 @@
+<% total_active_reviews_count = @school_reviews.number_of_active_reviews  %>
+
+<div class="tac font-size-xl open-sans_b mvl">
+  <% if total_active_reviews_count > 0  %>
+    <%= t('.total_reviews_text_prefix') %> 
+    <%= link_to t('.total_reviews_link', count: total_active_reviews_count),
+      {anchor: 'js_reviewsListHeader'},
+      {class: 'open-sans_b font-size-xl'} 
+    %>
+    <%= t('.total_reviews_text_suffix') %> 
+<% else  %>
+  <%= t('.no_reviews_text') %> 
+  <%= link_to t('.no_reviews_link'), {anchor: 'topicalReviewQuestionCarousel'}, {class: 'open-sans_b font-size-xl'} 
+%>
+  <% end  %>
+</div>

@@ -18,9 +18,12 @@ class SchoolProfileController < SchoolController
   before_action :add_collection_id_to_gtm_data_layer, only: [:overview, :quality, :details, :reviews]
   before_action :enable_ads, only: [:overview, :quality, :details, :reviews]
   before_action :set_breadcrumbs, only: [:overview, :quality, :details, :reviews]
+  before_action :set_state_school_id_gon_var
   # after_filter :set_last_modified_date
 
   layout 'application'
+
+  MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW = 4
 
   protected
 
@@ -42,6 +45,7 @@ class SchoolProfileController < SchoolController
     @sweepstakes_enabled = PropertyConfig.sweepstakes?
     @ad_definition = Advertising.new
     @ad_page_name = ad_page_name
+    @max_number_of_reviews_on_overview = MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW
     set_last_modified_date
   end
 
@@ -159,6 +163,7 @@ class SchoolProfileController < SchoolController
     page_view_metadata['zipcode']     = @school.zipcode
     page_view_metadata['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
     page_view_metadata['template']    = "SchoolProf"
+    page_view_metadata['collection_ids']  = @school.collection_ids
 
     page_view_metadata
 
@@ -188,6 +193,7 @@ class SchoolProfileController < SchoolController
     @breadcrumbs = {
       school.state_breadcrumb_text => state_url(state_params(school.state)),
       school.city_breadcrumb_text => city_url(city_params(school.state, school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end
@@ -216,6 +222,11 @@ class SchoolProfileController < SchoolController
       member.user = current_user
     end
     member
+  end
+
+  def set_state_school_id_gon_var
+    gon.state = @school.state
+    gon.school_id = @school.id
   end
 
 end

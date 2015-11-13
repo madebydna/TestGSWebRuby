@@ -13,3 +13,4 @@
 // require ./search_results
 //= require ./test_scores
 // require ./visualcharts
+//= require ./nearby_schools

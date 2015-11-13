@@ -5,7 +5,6 @@ GS.dataViz = GS.dataViz || {};
 GS.dataViz.initToggleHandlers = function() {
   var $groupComparisonContainer = $('.js-groupComparisonContainer');
   var $dataDisplayCollections = $('.js-dataDisplayCollection');
-  var $groupComparisonShowOnLoad = $('.js-groupComparisonShowOnLoad');
 
   $groupComparisonContainer.on('click', '.js-dataDisplayCollectionToggle', function () {
     var $element      = $(this);
@@ -28,9 +27,5 @@ GS.dataViz.initToggleHandlers = function() {
     GS.util.manuallySendAnalyticsEvent($element);
     $dataDisplayCollection.find('.js-dataDisplay').addClass('dn');
     $dataDisplayCollection.find(titleSelector).removeClass('dn');
-  });
-
-  $(window).on("load", function() {
-    $groupComparisonShowOnLoad.removeClass('dn');
   });
 };

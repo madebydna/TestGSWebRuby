@@ -10,25 +10,29 @@
 
   <div class="hidden-xs fr prl mtl col-sm-12">
     <div class="pll">
-      <button class="btn btn-default js-button-link" data-link-value="<%= school_reviews_path(@school, anchor: 'topic1') %>" data-link-use-new-window='true'>
-        Post a message
-      </button>
-    </div>
-  </div>
-  <div class="visible-xs tac mtm col-xs-12">
-    <%= link_to 'Post a message', school_reviews_path(@school, anchor: 'topic1'), target: '_blank' %>
-  </div>
-
-  <div class="hidden-xs fr prl mtl col-sm-12">
-    <div class="pll">
       <button class="btn btn-default js-button-link" data-link-value="<%= school_path(@school) %>" data-link-use-new-window='true'>
         Go to school profile
       </button>
     </div>
   </div>
-  <div class="visible-xs tac mvm col-xs-12">
+  <div class="visible-xs tac mtm col-xs-12">
     <%= link_to 'Go to school profile', school_path(@school), target: '_blank' %>
   </div>
+
+  <div class="hidden-xs fr prl mtl col-sm-12">
+    <div class="pll">
+      <div>
+        <span class="open-sans_b">Tell parents your point of view. </span>
+        Share your school’s take on a variety of review topics.
+        <%= link_to 'Begin writing here.', school_reviews_path(@school, anchor: 'topic1'), target: '_blank' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="visible-xs tac mvm col-xs-12">
+    <%= link_to 'Write administrator reviews', school_reviews_path(@school, anchor: 'topic1'), target: '_blank' %>
+  </div>
+
   <div class="hidden-xs fr prl mtl col-sm-12">
     <div class="pll">
       <%= link_to 'Need help?', 'https://greatschools.zendesk.com/hc/en-us', target: '_blank' %>

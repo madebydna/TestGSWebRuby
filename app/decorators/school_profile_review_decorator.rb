@@ -32,6 +32,11 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     h.content_tag(:span, "#{t(topic_label)}:", class: 'pbs') unless review.question.overall?
   end
 
+  def topic_markup_with_overall
+    return h.content_tag(:span, "#{t(topic_label)}:", class: 'pbs') unless review.question.overall?
+    return h.content_tag(:span, "#{t('decorators.school_profile_review_decorator.overall')}:", class: 'pbs')
+  end
+
   def topic_name
     h.db_t(review.question.review_topic.name)
   end

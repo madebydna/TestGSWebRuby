@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative '../features/pages/city_home_page'
+require_relative '../features/examples/page_examples'
+require_relative '../features/contexts/state_home_contexts'
 
 shared_examples_for 'it displays static and dynamic content' do |opts|
   let(:title) { opts[:title] }
@@ -28,6 +31,15 @@ describe 'Choosing Page' do
     end
 
     it_behaves_like 'it displays static and dynamic content', { title: 'Choosing a school in Detroit, MI' }
+    describe 'breadcrumbs' do
+      subject { CityHomePage.new }
+
+      it { is_expected.to have_breadcrumbs }
+      its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
+      its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
+      its('second_breadcrumb.title') { is_expected.to have_text('Detroit') }
+      its('second_breadcrumb') { is_expected.to have_link('Detroit', href: "/michigan/detroit/") }
+    end
   end
 
   context 'on a state choosing page' do

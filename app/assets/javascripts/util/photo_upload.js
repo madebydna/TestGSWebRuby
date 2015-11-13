@@ -50,9 +50,9 @@ GS.photoUploads = GS.photoUploads || (function() {
 
         //not using jquery ajax data attribute because java is not passing those through on DELETE method
         hash.href = GS.uri.Uri.putParamObjectIntoQueryString('/gsr/ajax/esp/delete_image?fileId=' + file.id, {
-            fileName: file.name,
-            schoolId: gon.school_id.toString(),
-            state:    gon.state_name
+            fileName: encodeURIComponent(file.name),
+            schoolId: encodeURIComponent(gon.school_id.toString()),
+            state:    encodeURIComponent(gon.state_name)
         })
         hash.params_local = { dropzone: this };
         GS.util.deleteAjaxCall({}, hash);

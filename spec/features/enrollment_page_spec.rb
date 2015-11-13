@@ -1,4 +1,7 @@
 require 'spec_helper'
+require_relative '../features/pages/city_home_page'
+require_relative '../features/examples/page_examples'
+require_relative '../features/contexts/state_home_contexts'
 
 def setup(collection_id, nickname)
   FactoryGirl.create(:important_events_collection_config, collection_id: collection_id)
@@ -33,6 +36,15 @@ describe 'Enrollment Page' do
       expect(page).to have_text('Find the great schools in Michigan')
       expect(page).to have_selector('.js-city-list')
     end
+    describe 'breadcrumbs' do
+      subject { CityHomePage.new }
+
+      it { is_expected.to have_breadcrumbs }
+      its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
+      its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
+      its('second_breadcrumb.title') { is_expected.to have_text('Detroit') }
+      its('second_breadcrumb') { is_expected.to have_link('Detroit', href: "/michigan/detroit/") }
+    end
   end
 
   context 'on a state enrollment page' do
@@ -57,5 +69,7 @@ describe 'Enrollment Page' do
       expect(page).to have_text('Find the great schools in Indiana')
       expect(page).to have_selector('.js-city-list')
     end
+
   end
+
 end

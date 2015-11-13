@@ -21,5 +21,6 @@
 //= require ./util/responsive_images
 //= require ./util/uri
 //= require ./util/i18n
+//= require ./util/spinny_wheel
 //= require ./localized_profiles/visualcharts
 //= require ./page_initializers/header_init

@@ -1,62 +1,61 @@
 <% data_display_collections = data %>
-<div class='js-groupComparisonShowOnLoad dn'>
-  <%= render "shared/section_header", category_placement:category_placement %>
+<%= render "shared/section_header", category_placement:category_placement %>
 
-  <div class="gs-bootstrap">
-    <div class="container-fluid container-fix js-groupComparisonContainer">
+<div class="gs-bootstrap">
+  <div class="container-fluid container-fix js-groupComparisonContainer">
+    <div class="pbl">
+      <%= render 'performance/performance_level_color_legend' %>
+    </div>
 
-      <div class="row">
-        <div class='col-xs-12 col-md-4'>
-          <%=
-            select_tag "group-comparison-chart",
-              options_for_select(
-                data_display_collections.map do | collection |
-                  [
-                    collection.title,
-                    class: 'js-dataDisplayCollectionToggle',
-                    data: {
-                      title: collection.original_data_type,
-                      :'event-category'=> 'profile data - subgroup display',
-                      :'event-action'=> 'data point toggle',
-                      :'event-label' => collection.original_data_type
-                    }
-                  ]
-                end
-            ),
-            class: 'selectpicker',
-            data: { width: '100%'}
-          %>
-        </div>
-
-      <% data_display_collections.each_with_index do |data_display_collection, i| %>
-        <% show_hide_collection = i == 0 ? '' : 'dn' %>
-        <div class="js-dataDisplayCollection js-<%= data_display_collection.original_data_type %> <%= show_hide_collection %>">
-          <%= render partial: 'school_profile/data_viz/data_display_toggle',
-            locals: {
-              data_display_collection: data_display_collection,
-              collection_index: i,
-            }
-          %>
-        </div>
-      <% end %>
+    <div class="row">
+      <div class='col-xs-12 col-md-4'>
+        <%=
+          select_tag "group-comparison-chart",
+            options_for_select(
+              data_display_collections.map do | collection |
+                [
+                  collection.title,
+                  class: 'js-dataDisplayCollectionToggle',
+                  data: {
+                    title: collection.original_data_type,
+                    :'event-category'=> 'profile data - subgroup display',
+                    :'event-action'=> 'data point toggle',
+                    :'event-label' => collection.original_data_type
+                  }
+                ]
+              end
+          ),
+          class: 'selectpicker',
+          data: { width: '100%'}
+        %>
       </div>
 
-      <% data_display_collections.each_with_index do |data_display_collection, i| %>
-        <% show_hide_collection = i == 0 ? '' : 'dn' %>
-        <% @data_display_collection = data_display_collection %>
-        <%= render partial: 'school_profile/data_viz/data_display_collection',
-          locals: { show_hide_collection: show_hide_collection } %>
-      <% end %>
-
-      <%= render partial: "shared/partners/promo_delegator",
-        locals: {
-          promos: Collection.promos_for(@school.collections),
-          partial: current_partial,
-        }
-      %>
-      <%= render 'school_profile/see_footnotes_link', page_config: @page_config, school: @school, category: category %>
+    <% data_display_collections.each_with_index do |data_display_collection, i| %>
+      <% show_hide_collection = i == 0 ? '' : 'dn' %>
+      <div class="js-dataDisplayCollection js-<%= data_display_collection.original_data_type %> <%= show_hide_collection %>">
+        <%= render partial: 'school_profile/data_viz/data_display_toggle',
+          locals: {
+            data_display_collection: data_display_collection,
+            collection_index: i,
+          }
+        %>
+      </div>
+    <% end %>
     </div>
+
+    <% data_display_collections.each_with_index do |data_display_collection, i| %>
+      <% show_hide_collection = i == 0 ? '' : 'dn' %>
+      <% @data_display_collection = data_display_collection %>
+      <%= render partial: 'school_profile/data_viz/data_display_collection',
+        locals: { show_hide_collection: show_hide_collection } %>
+    <% end %>
+
+    <%= render partial: "shared/partners/promo_delegator",
+      locals: {
+        promos: Collection.promos_for(@school.collections),
+        partial: current_partial,
+      }
+    %>
+    <%= render 'school_profile/see_footnotes_link', page_config: @page_config, school: @school, category: category %>
   </div>
 </div>
-
-

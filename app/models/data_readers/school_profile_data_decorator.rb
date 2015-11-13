@@ -34,6 +34,9 @@ module SchoolProfileDataDecorator
     if (base.instance_variable_get :@performance_data_reader).nil?
       base.instance_variable_set :@performance_data_reader, PerformanceDataReader.new(base)
     end
+    if (base.instance_variable_get :@nearby_schools_data_reader).nil?
+      base.instance_variable_set :@nearby_schools_data_reader, NearbySchoolsDataReader.new(base)
+    end
   end
 
   def page=(page)
@@ -57,6 +60,7 @@ module SchoolProfileDataDecorator
       rating_data: @rating_data,
       snapshot: @snapshot_data_reader,
       performance: @performance_data_reader,
+      nearby_schools: @nearby_schools_data_reader,
       test_scores: @test_scores_data_reader
     }
   end
@@ -74,6 +78,7 @@ module SchoolProfileDataDecorator
       rating_data
       snapshot
       performance
+      nearby_schools
       test_scores
       census_data_points
       footnotes
@@ -197,6 +202,11 @@ module SchoolProfileDataDecorator
   def performance(options = {})
     category = options[:category]
     @performance_data_reader.data_for_category category
+  end
+
+  def nearby_schools(options = {})
+    category = options[:category]
+    @nearby_schools_data_reader.data_for_category category
   end
 
   def test_scores(options = {})

@@ -37,6 +37,7 @@ en:
         Accepts vouchers (private schools only): Accepts vouchers (private schools only)
         After school program: After school program
         Arts focus: Arts focus
+        Autism: Autism
         Autism scholarship: Autism scholarship
         Average (4-7): Average (4-7)
         Baseball: Baseball
@@ -54,9 +55,13 @@ en:
         Cleveland scholarship: Cleveland scholarship
         College Readiness: College Readiness
         College focus: College focus
+        Deaf-blindness: Deaf-blindness
+        Deafness: Deafness
+        Developmental delay: Developmental delay
         District provided transit: District provided transit
         Dress code: Dress code
         EdChoice scholarship: EdChoice scholarship
+        Emotional disturbance: Emotional disturbance
         Enrollment: Enrollment
         Extended hours: Extended hours
         Football: Football
@@ -71,7 +76,9 @@ en:
         Grade Level: Grade Level
         Great Start to Quality (preschool only): Great Start to Quality (preschool only)
         GreatSchools Rating: GreatSchools Rating
+        Hearing impairment: Hearing impairment
         Independent study: Independent study
+        Intellectual disability: Intellectual disability
         International Baccalaureate: International Baccalaureate
         Kindergarten: Kindergarten
         Level 1: Level 1
@@ -82,10 +89,13 @@ en:
         Mandarin (class): Mandarin (class)
         Mandarin (immersion): Mandarin (immersion)
         Montessori: Montessori
+        Multiple disabilities: Multiple disabilities
         Music: Music
         Near public transit: Near public transit
         No dress code: No dress code
         Online learning: Online learning
+        Orthopedic impairment: Orthopedic impairment
+        Other health impairment: Other health impairment
         PTQ Rating (Preschool Only): PTQ Rating (Preschool Only)
         Performance arts: Performance arts
         Preschool: Preschool
@@ -105,13 +115,18 @@ en:
         Spanish: Spanish
         Spanish (class): Spanish (class)
         Spanish (immersion): Spanish (immersion)
+        Special education: Special education
         Special needs scholarship: Special needs scholarship
+        Specific learning disability: Specific learning disability
+        Speech or language impairment: Speech or language impairment
         Summer program: Summer program
         Track: Track
         Track (boys): Track (boys)
         Track (girls): Track (girls)
         Transportation options: Transportation options
+        Traumatic brain injury: Traumatic brain injury
         Uniform: Uniform
+        Visual impairment, including blindness: Visual impairment, including blindess
         Visual/Media arts: Visual/Media arts
         Volleyball: Volleyball
         Volleyball (girls): Volleyball (girls)

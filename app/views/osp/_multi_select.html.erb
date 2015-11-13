@@ -22,7 +22,7 @@
 
   <div class="col-xs-12">
     <% display_text_and_value_map.each_pair do |text, value| %>
-      <% is_active = preexisting_esp_values.include?(value) ? true : nil %>
+      <% is_active = preexisting_esp_values.include?(value.to_s.downcase) ? true : nil %>
       <%= render partial: 'shared/form_elements/checkbox_button', locals: {
         key: "#{q_id}-#{response_key}[]",
         text: text,

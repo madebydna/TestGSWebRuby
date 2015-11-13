@@ -2,10 +2,13 @@
   <div class="container-fluid">
     <div class="hidden-xs clearfix upper-search">
       <% if @state && @state[:long] && @city %>
-        <div class="fl breadcrumbs ptl">
-          <%= link_to States.abbr_to_label(@state[:short]), state_path(state_params(@state[:long])) %>
-          <span class="caret caret-right"></span>
-          <%= link_to @city.name, city_path(city_params(@state[:long], @city.name)) %>
+        <div class="fl breadcrumbs ptm">
+        <%= render 'shared/breadcrumbs',
+          breadcrumbs: {
+            States.abbr_to_label(@state[:short]) => state_path(state_params(@state[:long])),
+            @city.name => city_path(city_params(@state[:long], @city.name))
+          }
+        %>
         </div>
       <% end %>
       <% if @show_guided_search %>

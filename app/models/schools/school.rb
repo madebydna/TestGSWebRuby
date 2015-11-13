@@ -280,7 +280,7 @@ class School < ActiveRecord::Base
 
 
   def self.for_collection_ordered_by_name(state,collection_id)
-    raise ArgumentError, 'States and Collection IDs provided must be provided' unless state.present? && collection_id.present?
+    raise ArgumentError, 'state and collection_id provided must be provided' unless state.present? && collection_id.present?
     collection = Collection.find(collection_id)
     collection.schools
   end

@@ -3,3 +3,4 @@ en:
   controllers:
     school_profile_controller:
       school_profile: School Profile
+      schools: Schools

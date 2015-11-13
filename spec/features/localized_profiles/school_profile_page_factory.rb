@@ -26,4 +26,40 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_snapshot_module
+    snapshot_category = FactoryGirl.create(:category, name: 'Snapshot', source: 'snapshot')
+
+    snapshot_category_data = FactoryGirl.create(:category_data, category: snapshot_category, response_key: 'enrollment', source: 'census_data_points', label: 'Students enrolled')
+
+    snapshot_category_placement = FactoryGirl.create(
+      :category_placement,
+      category: snapshot_category,
+      title: 'Snapshot',
+      page: page,
+      layout: 'snapshot'
+    )
+
+    return self
+  end
+
+  def with_gs_rating_snapshot_module
+    FactoryGirl.create(
+        :category_placement,
+        title: 'Ratings snapshot',
+        page: page,
+        layout: 'snapshot_ratings'
+    )
+    return self
+  end
+
+  def with_reviews_snapshot_module
+    FactoryGirl.create(
+      :category_placement,
+      title: 'Ratings snapshot',
+      page: page,
+      layout: 'snapshot_reviews'
+    )
+    return self
+  end
+
 end

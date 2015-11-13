@@ -16,6 +16,7 @@ describe 'City Home Page' do
 
   it { is_expected.to have_email_signup_section }
 
+
   context 'when I click the "sign up for email updates" button', js: true do
     before { page_object.email_signup_section.submit_button.click }
     after { clean_dbs :gs_schooldb }
@@ -62,5 +63,11 @@ describe 'City Home Page' do
   describe 'City rating on page' do
     # TODO: Set up city_rating
     #it { is_expected.to have_city_rating}
+  end
+
+  describe 'breadcrumbs' do
+    it { is_expected.to have_breadcrumbs }
+    its('first_breadcrumb.title') { is_expected.to have_text('Minnesota') }
+    its('first_breadcrumb') { is_expected.to have_link('Minnesota', href: "/minnesota/") }
   end
 end

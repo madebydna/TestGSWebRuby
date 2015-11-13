@@ -22,6 +22,8 @@ class DistrictsController < ApplicationController
     @top_schools = top_schools(@district, 4)
     @params_hash = parse_array_query_string(request.query_string)
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
+
+    @breadcrumbs = district_home_breadcrumbs
     ad_setTargeting_through_gon
     data_layer_through_gon
     prepare_map
@@ -31,9 +33,21 @@ class DistrictsController < ApplicationController
 
   private
 
+  def district_home_breadcrumbs
+    if ( @state.present? &&  @city.present?)
+    breadcrumbs = {
+        @state[:long].titleize => state_path(params[:state]),
+        @city.titleize => city_path(params[:state], params[:city])
+    }
+    end
+  end
+
+
+
   def require_district
-    @district = District.find_by_state_and_name(state_param, district_param)
+    @district = District.find_by_state_and_name(state_param_safe, district_param)
     return redirect_to city_url if @district.nil?
+
   end
 
   def redirect_to_canonical_url

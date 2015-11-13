@@ -1,0 +1,17 @@
+<% toggle_class = filter.name.present? ? "toggle-#{filter.name}" : '' %>
+
+<div>
+  <div class="ptm pointer js-slideToggle js-collapsedTitle" data-target=".<%= toggle_class %>">
+    <span class="font-size-small"><%=filter.label%></span>
+    <span class="caret caret-left"></span>
+  </div>
+  <div class="hbs mts mbs"></div>
+
+  <%
+    # Not adding the 'dn' for testing because Rspec can't handle opening this
+    # for some reason. See search_spec_helper for our best try at fixing this.
+  %>
+  <div class="<%= toggle_class %> <%= 'dn' unless Rails.env.test? %>">
+    <%= yield %>
+  </div>
+</div>

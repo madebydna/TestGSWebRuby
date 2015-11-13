@@ -10,10 +10,13 @@
     <%= render partial: "community_spotlights/article" %>
     <div class='shim-10 hidden-xs'></div>
     <h2><%= t(".#{@t_scope}.table_title") %></h2>
+    <div class="pbl">
+      <%= render 'performance/performance_level_color_legend' %>
+    </div>
     <%= render partial: "community_spotlights/table_header" %>
     <% # these elements with ids are used for handlebars templating %>
-    <div id="community-scorecard-mobile" class='visible-xs row striped-divs'></div>
-    <div id="community-scorecard-table" class='hidden-xs'></div>
+    <div id="community-scorecard-mobile" class='visible-xs row striped-divs js-spinnyWheelTarget'></div>
+    <div id="community-scorecard-table" class='hidden-xs js-spinnyWheelTarget'></div>
   </div>
 </div>
 

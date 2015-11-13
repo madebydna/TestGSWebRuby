@@ -66,16 +66,16 @@ shared_example 'should have go to school profile button' do
   subject.find_button('Go to school profile', exact: true)
   end
 
-shared_example 'should have post a message button' do
-  subject.find_button('Post a message', exact: true)
-end
-
 shared_example 'should have go to school profile link' do
   subject.find_link('Go to school profile', exact: true)
   end
 
-shared_example 'should have post a message link' do
-  subject.find_link('Post a message', exact: true)
+shared_example 'should have begin writing here link' do
+  subject.find_link('Begin writing here.', exact: true)
+  end
+
+shared_example 'should have write administratro reviews link' do
+  subject.find_link('Write administrator reviews', exact: true)
   end
 
 shared_example 'should have need help link' do

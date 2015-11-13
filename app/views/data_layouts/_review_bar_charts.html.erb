@@ -1,0 +1,120 @@
+<style>
+    /* Bar Graph Class */
+    .barGraph {
+        position: relative;
+        width: 100%;
+        height: auto;
+        margin-bottom: 50px;
+    }
+    .graph {
+        position: relative;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: calc(96%);
+        left: 4%;
+    }
+    .graph-barBack {
+        border-radius: 2px;
+        margin-bottom: 10px;
+        display: block;
+    }
+    .graph-bar {
+        background-color: #59bac0;
+        -webkit-transition: all 1s ease-out;
+        -moz-transition: all 1s ease-out;
+        -o-transition: all 1s ease-out;
+        transition: all 1s ease-out;
+        border-radius: 2px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 9999;
+        display: block;
+        height: 20px;
+        width: 0%;
+    }
+    .graph-bar:hover {
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
+        background: #428D92;
+    }
+    .graph-bar:last-child {
+        margin-bottom: 0;
+    }
+    .graph-bar:after {
+        position: absolute;
+        content: attr(data-value);
+        display: none;
+        font-size: 12px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        line-height: 20px;
+        height: 20px;
+        padding: 0 10px;
+        margin-left: 5px;
+        left: 100%;
+        top: 0;
+    }
+    .graph-bar:hover:after {
+        display: block;
+    }
+    .graph-legend {
+        position: absolute;
+        margin-right: 10px;
+        left: -40px;
+        z-index: 9999;
+    }
+
+
+
+</style>
+<div class="wrap">
+  <h2>Am I a Good Protoype Horizontal Bar Chart</h2>
+  <div class="barGraph">
+    <ul class="graph">
+      <span class="graph-barBack">
+        <li class="graph-bar" data-value="28.5">
+          <span class="graph-legend">5 STARS</span>
+        </li>
+      </span>
+
+      <span class="graph-barBack">
+        <li class="graph-bar" data-value="85">
+          <span class="graph-legend">4 STARS</span>
+        </li>
+      </span>
+
+      <span class="graph-barBack">
+        <li class="graph-bar" data-value="70">
+          <span class="graph-legend">3 STARS</span>
+        </li>
+      </span>
+
+      <span class="graph-barBack">
+        <li class="graph-bar" data-value="50">
+          <span class="graph-legend">2 STARS</span>
+        </li>
+      </span>
+
+      <span class="graph-barBack">
+        <li class="graph-bar" data-value="68">
+          <span class="graph-legend">1 STAR</span>
+        </li>
+        </span>
+    </ul>
+  </div>
+
+
+</div>
+<script>
+    $(document).ready(function() {
+        $('.graph-bar').each(function() {
+            var dataWidth = $(this).data('value');
+            $(this).css("width", dataWidth + "%");
+        });
+    });
+</script>

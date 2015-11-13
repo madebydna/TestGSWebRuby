@@ -291,6 +291,10 @@ describe FitScoreConcerns do
         expect_matches_true filter_key:'enrollment', filter_value:'vouchers',
                             model_key: :students_vouchers, model_value: %w(yes)
       end
+      describe 'for spec_ed equals' do
+        expect_matches_true filter_key:'spec_ed', filter_value:'autism',
+                            model_key: :special_ed_programs, model_value: %w(autism)
+      end
     end
 
     describe 'returns :no' do
@@ -362,6 +366,10 @@ describe FitScoreConcerns do
           allow(model).to receive(:type).and_return('private')
         end
         expect_matches_nil filter_key:'enrollment', filter_value:'vouchers', model_key: :students_vouchers
+      end
+      describe 'for spec_ed equals' do
+        expect_matches_nil filter_key: 'spec_ed', filter_value:'autism',
+                            model_key: :special_ed_programs
       end
     end
 

@@ -231,4 +231,35 @@ feature 'Search filters submission', js: true do
       end
     end
   end
+
+  context 'Oklahoma filters' do
+    filters = { 'spec_ed[]' => :'autism' }
+    [filters].each do |filter_name_value|
+      filter_name_value.each do |name, value|
+        context "clicking the #{name} filter" do
+          let(:checkbox_xpath) { filters_checkbox_xpath(name, value) }
+
+          before do
+            set_up_city_browse('ok', 'Oklahoma City')
+            open_full_filter_dialog
+            checkbox = page.all(:xpath, checkbox_xpath).last
+            checkbox.click
+            submit_filters
+            open_full_filter_dialog
+            page
+          end
+
+          it 'should still be clicked after page load' do
+            checkbox = page.all(:xpath, checkbox_xpath).last
+            expect(checkbox[:class]).to include('i-16-blue-check-box')
+          end
+
+          it 'should alter the url' do
+            param = encode_square_brackets("#{name}=#{value}")
+            expect(current_url).to include(param)
+          end
+        end
+      end
+    end
+  end
 end

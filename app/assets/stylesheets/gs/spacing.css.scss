@@ -22,9 +22,6 @@ General comments:
 .
 */
 
-body { padding-top: 50px }
-.link-down-compensate { padding-top: 50px; margin-top: -50px; }
-
 .ptn,.pvn,.pan{padding-top: $spacing-none;}
 .pts,.pvs,.pas{padding-top: $spacing-small;}
 .ptm,.pvm,.pam{padding-top: $spacing-medium;}
@@ -223,7 +220,7 @@ body { padding-top: 50px }
 
 .back-to-top {
   position: fixed;
-  bottom: 2em;
+  bottom: 6em;
   right: 0px;
   text-decoration: none;
   color: #ffffff;

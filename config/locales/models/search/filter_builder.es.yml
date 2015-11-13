@@ -37,6 +37,7 @@ es:
         Accepts vouchers (private schools only): Acepta vales (escuelas privadas solamente)
         After school program: Despues del programa escolar
         Arts focus: Artes centran
+        Autism: Austimo
         Autism scholarship: Beca Autismo
         Average (4-7): Media (4-7)
         Baseball: Béisbol
@@ -54,9 +55,13 @@ es:
         Cleveland scholarship: Beca Cleveland
         College Readiness: Preparación Universitaria
         College focus: Enfoque de la universidad
+        Deaf-blindness: Sordo-ceguera
+        Deafness: Sordera
+        Developmental delay: Retraso en el desarrollo
         District provided transit: Distrito proporcionó tránsito
         Dress code: Código de vestimenta
         EdChoice scholarship: Beca EdChoice
+        Emotional disturbance: Trastorno emocional
         Enrollment: Matriculación
         Extended hours: Horario extendido
         Football: Fútbol
@@ -71,7 +76,9 @@ es:
         Grade Level: Nivel de grado
         Great Start to Quality (preschool only): Gran inicio de la Calidad (preescolar solamente)
         GreatSchools Rating: GreatSchools Clasificación
+        Hearing impairment: Deficiencia auditiva
         Independent study: Estudio independiente
+        Intellectual disability: Discapacidad intelectual
         International Baccalaureate: Bachillerato Internacional
         Kindergarten: Jardín de infancia
         Level 1: Nivel 1
@@ -82,10 +89,13 @@ es:
         Mandarin (class): Mandarín (clase)
         Mandarin (immersion): Mandarín (inmersión)
         Montessori: Montessori
+        Multiple disabilities: Discapacidades múltiples
         Music: Música
         Near public transit: Cerca de transporte público
         No dress code: Sin código de vestimenta
         Online learning: El aprendizaje en línea
+        Orthopedic impairment: Discapacidad ortopédica
+        Other health impairment: Otro impedimento de salud
         PTQ Rating (Preschool Only): PTQ Valoración (Sólo Preescolar)
         Performance arts: Artes escénicas
         Preschool: Preescolar
@@ -105,13 +115,18 @@ es:
         Spanish: Español
         Spanish (class): Español (clase)
         Spanish (immersion): Español (inmersión)
+        Special education: Educación especial
         Special needs scholarship: Becas necesidades especiales
+        Specific learning disability: Discapacidad específica de aprendizaje
+        Speech or language impairment: Impedimento en el habla o lenguaje
         Summer program: Programa de verano
         Track: Track
         Track (boys): Track (niños)
         Track (girls): Track (niñas)
         Transportation options: Las opciones de transporte
+        Traumatic brain injury: Lesiones cerebrales traumáticas
         Uniform: Uniforme
+        Visual impairment, including blindness: Deficiencia visual, incluyendo ceguera
         Visual/Media arts: Artes visuales / Medios
         Volleyball: Voleibol
         Volleyball (girls): Voleibol (niñas)

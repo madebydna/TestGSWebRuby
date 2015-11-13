@@ -1,11 +1,12 @@
-<% unless filter.name == :distance && !search_by_location? %>
-<div class="">
-  <div class="ptm">
-    <span class="font-size-small"><%=filter.label%></span><span class="val"></span><br>
+<% toggle_class = filter.name.present? ? "toggle-#{filter.name}" : '' %>
+
+<div>
+  <div class="ptm pointer js-slideToggle" data-target=".<%= toggle_class %>">
+    <span class="font-size-small"><%=filter.label%></span>
+    <span class="caret"></span>
   </div>
   <div class="hbs mts mbs"></div>
-  <div>
+  <div class="<%= toggle_class %>">
     <%= yield %>
   </div>
 </div>
-<%end%>

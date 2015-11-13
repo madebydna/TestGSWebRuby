@@ -1,0 +1,28 @@
+.compact-review-module {
+
+  .header {
+    font-size: $font-size-medium;
+    margin-bottom: $spacing-small;
+  }
+
+  .sub-text {
+    font-size: $font-size-small;
+    margin-bottom: $spacing-small;
+    color: $gray-darker;
+  }
+
+  .comment {
+    margin-top: $spacing-small;
+    margin-bottom: $spacing-small;
+  }
+
+  hr {
+    border-bottom: 1px solid $module-gray-stroke;
+  }
+
+}
+
+hr.gray-stoke {
+  border-bottom: 1px solid $module-gray-stroke;
+}
+

@@ -11,6 +11,11 @@
   <h2>
     <%= rating.label.sub(' ', ' <br class="visible-xs visible-sm"/>').html_safe %>
     <%= render 'school_profile/data_viz/tooltip_activator',
-      text: rating.description, trigger: 'focus' %>
+      text: rating.description,
+      trigger: 'focus' ,
+      ga_category: 'Profile data - quality snapshot',
+      ga_action: 'Open Tooltip',
+      ga_label: 'GS rating'
+    %>
   </h2>
 </div>

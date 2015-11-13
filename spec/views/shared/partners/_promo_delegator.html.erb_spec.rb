@@ -6,6 +6,7 @@ describe 'shared/partners/_promo_delegator.html.erb' do
     allow(view).to receive(:catalog_path).and_return('')
   end
 
+  subject { 'shared/partners/promo_delegator' }
   let(:promo) {
     {
       type: 'send_to_partner',
@@ -13,19 +14,16 @@ describe 'shared/partners/_promo_delegator.html.erb' do
       name: 'some_partner',
     }
   }
-  let(:locals) { { promo: promo } }
 
   describe 'rendering the promos' do
-    before do
-      allow(view).to receive(:partial).and_return(partial)
-      allow(view).to receive(:promos).and_return([promo])
-    end
+    let(:locals) { { partial: partial, promos: promos } }
+    let(:promos) { [promo] }
 
     context 'when coming from a configured profile module' do
       let(:partial) { 'configured_module' }
 
       it 'should render the promo' do
-        render
+        render partial: subject, locals: locals
         expect(view).to render_template(partial: '_send_to_partner')
       end
     end
@@ -34,7 +32,7 @@ describe 'shared/partners/_promo_delegator.html.erb' do
       let(:partial) { 'unconfigured_module' }
 
       it 'should not render the promo' do
-        render
+        render partial: subject, locals: locals
         expect(view).to_not render_template(partial: '_send_to_partner')
       end
     end

@@ -67,8 +67,8 @@
     &:focus,
     & {
       background-image: none;
-      background-color: $active_border;
-      color: $background_active;
+      background-color: $background_active;
+      color: $active_color;
       border-color: $active_border;
     }
   }

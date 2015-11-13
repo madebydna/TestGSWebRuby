@@ -1,0 +1,16 @@
+.external-link-callout {
+  text-align: left;
+  padding: $spacing-medium; 
+  display: inline-block;
+  border-radius: 10px;
+  background-color: #f0ffc8;
+
+  a {
+    color: $gray-base-color;
+    text-decoration: underline;
+  }
+
+  a:hover {
+    color: #195074;
+  }
+}

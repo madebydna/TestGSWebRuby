@@ -2,19 +2,31 @@ class DataDisplay
   # Class that holds a collection of graphs related by subject or breakdown.
   # Header and array of chart data.
 
-  attr_accessor :data_points, :data, :config, :title, :sort_by_config
+  attr_accessor :data_points, :data, :config, :title
 
   DEFAULT_BEFORE_CALLBACKS = [ 'sort_by' ]
   DEFAULT_AFTER_CALLBACKS  = []
 
   def initialize(data, title = nil, config = {})
-    # Title is optional because for single chart groups, there is no group title
     self.data = data
+
+    # Config options handle things like sorting and labeling data.
+    # The current options are:
+    # - sort_by: The field in each data point hash to use to sort data by.
+    # - label_charts_with: The field in each data point hash to pass to
+    #                      DataDisplayPoint as the label field.
+    # - data_display_before_callbacks: The set of callback methods in this class
+    #                                  to use to transform the data.
     self.config = config
+
+    # Title is optional because for single chart groups, there is no group title
     self.title = title
-    self.sort_by_config = config[:sort_by]
 
     create_data_points!
+  end
+
+  def display?
+    data_points.present?
   end
 
   private
@@ -38,6 +50,10 @@ class DataDisplay
     run_after_callbacks!
   end
 
+  def label_for(data_point, config)
+    config[:label_charts_with] ? data_point[config[:label_charts_with].to_sym] : nil
+  end
+
   def run_before_callbacks!
     callbacks = DEFAULT_BEFORE_CALLBACKS + [*config[:data_display_before_callbacks]]
 
@@ -50,22 +66,21 @@ class DataDisplay
     [*callbacks].each { |c| send("#{c}_callback".to_sym) }
   end
 
+  # Sorts data by evaluating a configured key to use for each data point hash.
   def sort_by_callback
-    return unless sort_by_config.present?
+    return unless config[:sort_by].present?
 
-    sort_by_config.each { |sort, key_to_use| send("sort_by_#{sort}".to_sym, key_to_use.to_sym) }
+    config[:sort_by].each { |sort, key_to_use| send("sort_by_#{sort}".to_sym, key_to_use.to_sym) }
   end
 
+  # Used by sort_by_callback
   def sort_by_desc(key)
     self.data = data.sort_by{|d| d[key].nil? ? -1 : d[key].to_f}.reverse!
   end
 
+  # Moves the data point with breakdown all students first if there is one.
   def move_all_students_callback
     i = data.find_index { |d| d[:breakdown].to_s.downcase == 'all students' }
     data.insert(0, data.delete_at(i)) if i.present?
-  end
-
-  def label_for(data_point, config)
-    config[:label_charts_with] ? data_point[config[:label_charts_with].to_sym] : nil
   end
 end

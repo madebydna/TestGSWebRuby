@@ -40,9 +40,7 @@ class SchoolCacheQuery
   end
 
   def query_and_use_cache_keys
-    SchoolCache.where(matching_schools_clause).to_a.select do |school_cache|
-      @cache_keys.include?(school_cache.name)
-    end
+    SchoolCache.where(matching_schools_clause).where(name: @cache_keys)
   end
 
 end

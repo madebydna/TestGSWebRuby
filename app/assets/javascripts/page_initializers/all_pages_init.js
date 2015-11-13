@@ -60,36 +60,15 @@ $(function() {
     });
   }
 
-  // even though this code is simple, I'd rather it be an actual module, i.e. GS.sendMeUpdates,
-  // since it's easier to test
-       $('.js-send-me-updates-button-footer').on('click', function () {
-           if (GS.schoolNameFromUrl() === undefined) {
-
-               if (GS.session.isSignedIn()) {
-                   GS.subscription.greatNewsSignUp();
-               } else {
-                   GS.modal.manager.showModal(GS.modal.EmailJoinModal).done(GS.subscription.greatNewsSignUp);
-               }
-           } else {
-               var state = GS.stateAbbreviationFromUrl();
-               var schoolId = GS.schoolIdFromUrl();
-               if (GS.session.isSignedIn()) {
-                   GS.subscription.schools(state, schoolId).follow({showMessages: false}).done(function(){
-                       if (GS.schoolNameFromUrl() === undefined) {
-                           GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message_with_no_school_name'));
-                       } else {
-                           GS.notifications.notice(GS.I18n.t('follow_schools.signed_in_message') + ' ' + GS.schoolNameFromUrl());
-
-                       }
-                   });
-               } else {
-                   GS.modal.manager.showModal(GS.modal.EmailJoinForSchoolProfileModal)
-                     .done(GS.subscription.schools(state, schoolId).follow);
-               }
-
-           }
-
-       });
+  $('.js-send-me-updates-button-footer').on('click', function () {
+    if (GS.schoolNameFromUrl() === undefined) {
+      signupAndGetNewsletter();
+    } else {
+      var state = GS.stateAbbreviationFromUrl();
+      var schoolId = GS.schoolIdFromUrl();
+      GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+    }
+  });
 
 
   $('.js-clear-local-cookies-link').each(function() {

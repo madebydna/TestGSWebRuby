@@ -27,7 +27,7 @@ feature 'School profile overview page' do
         clean_models :dc, School
       end
       scenario 'State and city breadcrumbs says "/ District of Columbia / Washington, D.C."' do
-        expect(subject).to have_content 'District of Columbia / Washington, D.C. / School Profile'
+        expect(subject).to have_content 'District of Columbia / Washington, D.C. / Schools / School Profile'
       end
     end
 
@@ -36,7 +36,7 @@ feature 'School profile overview page' do
         FactoryGirl.create(:south_san_francisco_high_school)
       end
       scenario 'State and city breadcrumbs says "/ California / San Francisco"' do
-        expect(subject).to have_content 'California / San Francisco / School Profile'
+        expect(subject).to have_content 'California / San Francisco / Schools / School Profile'
       end
     end
   end

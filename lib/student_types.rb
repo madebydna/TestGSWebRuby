@@ -4,14 +4,24 @@ module StudentTypes
   end
 
   def self.all_as_strings
-    self.datatype_to_breakdown.values.map(&:downcase)
+    self.datatype_breakdown_map.values.map(&:downcase)
   end
 
   def self.all_datatypes
-    self.datatype_to_breakdown.keys.map(&:to_sym)
+    self.datatype_breakdown_map.keys.map(&:to_sym)
   end
 
-  def self.datatype_to_breakdown
+  def self.datatype_to_breakdown(datatype)
+    if (student_type = self.datatype_breakdown_map[datatype])
+      student_type
+    else
+      datatype
+    end
+  end
+
+  # Student types aren't necessarily the same name as their breakdowns so we map
+  # the datatype (used above to get the data) to its breakdown here.
+  def self.datatype_breakdown_map
     {
       'Students who are not economically disadvantaged'=> 'Not economically disadvantaged',
       'Students with disabilities' => 'Students with disabilities',

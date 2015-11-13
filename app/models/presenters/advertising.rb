@@ -16,6 +16,12 @@ class Advertising
             dimensions:[300,250]
         }
       },
+      Overall_Performance: {
+        name: "Snapshot",
+        desktop:{
+            dimensions:[300,250]
+        }
+      },
       Reviews: {
         name: "Reviews",
         desktop:{
@@ -539,6 +545,10 @@ class Advertising
             }
         },
     }
+
+    def get_name(page, slot)
+      @ad_slots.seek(page, slot, :name)
+    end
 
     def get_width(page, slot, view)
       ret_value = 0
