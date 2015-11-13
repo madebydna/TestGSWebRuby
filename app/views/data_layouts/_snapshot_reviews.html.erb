@@ -44,7 +44,7 @@
       <% reviews_count_text =  t('.reviews', count: reviews_count) %>
       <%= link_to reviews_count_text, school_reviews_url(@school) %>
     <% else %>
-      <button type="button" class="btn btn-primary mtm js-button-link"> 
+      <button type="button" class="btn btn-primary mtm js-button-link" data-link-value="<%= school_reviews_url(@school) %>">
         <%= t('.write_review') %>
       </button>
     <% end %>

@@ -2,6 +2,7 @@ require 'spec_helper'
 require_relative '../contexts/school_profile_contexts'
 require_relative '../examples/page_examples'
 require_relative '../pages/school_profile_overview_page'
+require_relative '../pages/school_profile_reviews_page'
 require_relative '../pages/school_profile_quality_page'
 
 shared_context 'with an inactive school' do
@@ -59,6 +60,19 @@ describe 'School Profile Overview Page' do
         describe 'gs rating' do
           it { is_expected.to have_large_gs_rating }
           its("large_gs_rating.rating_value") { is_expected.to eq('10') }
+        end
+      end
+    end
+  end
+
+  with_shared_context 'Given school profile page with Reviews Snapshot module' do
+    with_shared_context 'with Alameda High School', js: true do
+      when_I :click_on_write_a_review_button do
+        before do
+          FactoryGirl.create(:page, name: 'Reviews')
+        end
+        it 'should go to the reviews page' do
+          expect(SchoolProfileReviewsPage.new).to be_displayed
         end
       end
     end

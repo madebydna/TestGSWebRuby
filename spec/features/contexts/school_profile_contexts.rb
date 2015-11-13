@@ -26,6 +26,13 @@ shared_context 'Given school profile page with GS Rating Snapshot module' do |pa
   end
 end
 
+shared_context 'Given school profile page with Reviews Snapshot module' do |page_name| nil
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+      with_reviews_snapshot_module
+  end
+end
+
 shared_context 'Visit School Profile Overview' do |s = nil|
   subject(:page_object) do
     visit school_path(s || school)

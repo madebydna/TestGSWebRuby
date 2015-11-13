@@ -52,4 +52,14 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_reviews_snapshot_module
+    FactoryGirl.create(
+      :category_placement,
+      title: 'Ratings snapshot',
+      page: page,
+      layout: 'snapshot_reviews'
+    )
+    return self
+  end
+
 end

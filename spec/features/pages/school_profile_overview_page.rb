@@ -10,4 +10,9 @@ class SchoolProfileOverviewPage < SitePrism::Page
 
   element :profile_navigation, '#navigation2'
   section :header, HeaderSection, '.navbar-static'
+  element :write_a_review_button, 'button', text: 'Write a review'
+
+  def click_on_write_a_review_button
+    write_a_review_button.click
+  end
 end
