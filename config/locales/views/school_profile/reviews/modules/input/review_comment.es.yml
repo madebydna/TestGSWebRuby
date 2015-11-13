@@ -5,7 +5,7 @@ es:
       modules:
         input:
           review_comment:
-            left_in_review: queda en su opinión
+            left_in_review: caracteres restantes.
             max_length_error_message: "Lo sentimos, tenemos un límite de 2.500
             caracteres por comentarios.  Por favor, acortar su comentario para
             poder guardar."
@@ -17,4 +17,3 @@ es:
             submit: Enviar
             submit_statement: Enviar declaración
             submitted: Enviado
-            you_have: Has

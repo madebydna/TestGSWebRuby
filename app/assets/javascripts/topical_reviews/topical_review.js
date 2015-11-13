@@ -388,6 +388,7 @@ GS.topicalReview.characterCount = (function () {
     var TOPICAL_REVIEW_CONTAINER = '.js-topicalReviewContainer';
     var CHARACTER_MESSAGE_DISPLAY = '.js-reviewCharacterDisplay';
     var CHARACTER_COUNT_DISPLAY = '.js-reviewCharacterCount'
+    var START_CHARACTER_COUNT = 1900;
     var MAX_CHARACTERS = 2400;
 
     var init = function (textField) {
@@ -396,8 +397,9 @@ GS.topicalReview.characterCount = (function () {
         var characterCountDisplay = $(reviewContainer).find(CHARACTER_COUNT_DISPLAY);
         var characterCount = textField.value.length;
         var maxCharacters = MAX_CHARACTERS;
+        var startCharacterCount = START_CHARACTER_COUNT;
         var remainingCharacters = maxCharacters - characterCount;
-        if (characterCount > 0) {
+        if (characterCount > startCharacterCount) {
             $(characterDisplay).show();
             $(characterCountDisplay).text(remainingCharacters);
         }

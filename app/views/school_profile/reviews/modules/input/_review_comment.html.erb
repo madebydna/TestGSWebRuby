@@ -26,7 +26,7 @@
   <%= f.text_area :comment, text_area_options %>
   <div class="row tal">
     <div class="col-xs-8">
-      <div class="help-block js-reviewCharacterDisplay mtn mbn dn"><%= t('.you_have') %> <span class="js-reviewCharacterCount"></span> <%= t('.left_in_review') %></div>
+      <div class="help-block js-reviewCharacterDisplay mtn mbn dn"><span class="js-reviewCharacterCount"></span> <%= t('.left_in_review') %></div>
       <% #parsley error id places error message for the specific question_id %>
 
       <div class= "js-topicalReviewErrorMessage parsley-type" id="<%= parsley_error_id %>"></div>
