@@ -10,9 +10,15 @@
       <%= t('.our_mission') %>
     </p>
 
-    <div class="donate">
+    <div class="donate hidden-xs">
       <%= t('.support_greatschools') %> <%= link_to(t('.donate_now'), 'https://greatschools.networkforgood.com/', target: "_blank") %>
     </div>
+    <div class="donate visible-xs col-xs-12">
+      <%= t('.support_greatschools') %>
+      <div class = "col-xs-12">
+      <%= link_to(t('.donate_now'), 'https://greatschools.networkforgood.com/', target: "_blank") %>
+      </div>
+      </div>
   </div>
 
   <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
