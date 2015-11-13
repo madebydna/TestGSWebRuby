@@ -24,7 +24,7 @@
             css_classes: 'btn-sm fr',
             ga_category: 'Profile - Sticky nearby schools',
             ga_action: 'Click follow',
-            ga_label: 'For profile event show which school'
+            ga_label: "#{@school.state}:#{@school.id}"
           %>
         </div>
         <div class="nearby-schools">
@@ -34,7 +34,6 @@
           <div class="js-nearbySchoolsHide js-gaClick close-nearby-schools"
             data-ga-click-category='Profile - Sticky nearby schools'
             data-ga-click-action='Close module'
-            data-ga-click-label='For profile event show which school'
           >
             <span class="iconx16 i-16-plain-x mls vam"></span>
             <br/>
@@ -52,7 +51,7 @@
                                 data: {
                                   :'ga-click-category' => 'Profile - Sticky nearby schools',
                                   :'ga-click-action' => 'Click profile',
-                                  :'ga-click-label' => 'For profile event show which school'
+                                  :'ga-click-label' => "#{school['state']}:#{school['id']}"
                                 }) do %>
                       <div class="school-rating">
                         <%=
@@ -78,7 +77,6 @@
           <div class="js-next js-gaClick next"
             data-ga-click-category='Profile - Sticky nearby schools'
             data-ga-click-action='Click next'
-            data-ga-click-label='For profile event show which school'
           >
             <span class="iconx16 i-16-right-arrow mls vam"></span>
             <br/>
