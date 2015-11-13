@@ -24,6 +24,8 @@
             <% end %>
           <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
           <%= render 'school_profile/reviews/topical_review_section' %>
+          <%= render 'school_profile/reviews/total_reviews_count' %>
+
           <% if @show_ads %>
               <div class="row">
                 <div class="col-xs-12">
