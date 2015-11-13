@@ -29,40 +29,35 @@ class CommunityScorecardData
     )
   end
 
+  def header_data
+    data_sets.map do | data_set |
+      data_type = data_set[:data_type]
+      {
+        param: data_type,
+        data_type: I18n.t(data_type, scope: collection_t_scope),
+      }.merge(state_average_header(data_set, data_type))
+    end
+  end
+
+  protected
+
   def solr_response
     @solr_response ||= SchoolDataService.school_data(school_data_service_params)
   end
 
-  def header_data
-    h_data = school_data.each_with_object([]) do |sd, hd|
-      sd.each do |data_type, value_hash|
-        if (state_average = value_hash[:state_average]).present?
-          hd << {
-            param: data_type,
-            data_type: I18n.t(data_type, scope: collection_t_scope),
-            state_average: I18n.t(:state_average, val: state_average, scope: t_scope),
-          }
-        end
-      end
-    end.uniq
-
-    validate_header_data(h_data)
-  end
-
-  def validate_header_data(h_data)
-    #ensure data types are there
-    validated_header_data = data_set_with_year_map.keys.map do | data_set |
-      hd = h_data.find { |hd| hd[:param].to_s == data_set.to_s }
-      next hd if hd.present?
-
+  def state_average_header(data_set, data_type)
+    state_average = data_set[:state_average].try(:[], breakdown_param)
+    if state_average
       {
-        param: data_set,
-        data_type: I18n.t(data_set, scope: collection_t_scope),
-        state_average: I18n.t(:state_average_not_available, scope: t_scope),
+        state_average: I18n.t(:state_average, val: state_average, scope: t_scope)
       }
+    elsif data_type.to_s != 'school_info'
+      {
+        state_average: I18n.t(:state_average_not_available, scope: t_scope)
+      }
+    else
+      {}
     end
-
-    validated_header_data.unshift({data_type: I18n.t(:school_info, scope: collection_t_scope)}) #school info
   end
 
   def add_data_explanations!(data_hash)
@@ -89,25 +84,31 @@ class CommunityScorecardData
   def school_data_hash_options
     @options ||= {
       data_sets_and_years: data_set_with_year_map,
-      sub_group_to_return: school_data_params[:sortBreakdown], #asian
+      sub_group_to_return: school_data_params[:sortBreakdown],
       link_helper:         school_data_params[:link_helper]
     }
   end
 
   # For example: ['graduation_rate' => '2013, 'a_through_g' => '2014'],
   def data_set_with_year_map
-    @data_set_with_year_map ||= data_sets_with_years(school_data_params[:data_sets])
+    @data_set_with_year_map ||= data_sets_with_years
   end
 
-  def data_sets_with_years(data_sets)
-    data_sets_and_years = @collection.scorecard_fields.map do |field|
+  def data_sets
+    @_data_sets ||= begin
+      @collection.scorecard_fields.select do |field|
+        school_data_params[:data_sets].include?(field[:data_type])
+      end
+    end.deep_dup
+  end
+
+  def data_sets_with_years
+    data_sets_and_years = data_sets.map do |field|
       unless field[:data_type].to_s == 'school_info'
         [field[:data_type], field[:year]]
       end
     end.compact
-    data_set_to_year = Hash[data_sets_and_years].with_indifferent_access
-
-    data_set_to_year.keep_if { |k,_| [*data_sets].include? k.to_s }
+    Hash[data_sets_and_years].with_indifferent_access
   end
 
   def get_cachified_schools(school_data)
@@ -134,7 +135,9 @@ class CommunityScorecardData
     end
   end
 
-  protected
+  def breakdown_param
+    school_data_params[:sortBreakdown]
+  end
 
   def t_scope
     'models.schools.community_scorecard_data'
