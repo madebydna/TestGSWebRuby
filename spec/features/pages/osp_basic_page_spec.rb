@@ -38,7 +38,7 @@ describe 'OSP Basic Page' do
 
       include_example 'should have a save edits button', 2
       include_example 'should have go to school profile button'
-      include_example 'should have post a message button'
+      include_example 'should have begin writing here link'
     end
 
     describe_mobile do
@@ -51,7 +51,7 @@ describe 'OSP Basic Page' do
       include_example 'should have a save edits button', 1
       include_example 'should have save edits link'
       include_example 'should have go to school profile link'
-      include_example 'should have post a message link'
+      include_example 'should have write administratro reviews link'
     end
   end
 
