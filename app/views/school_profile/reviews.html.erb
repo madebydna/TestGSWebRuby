@@ -15,6 +15,7 @@
         <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
         <%= render 'school_profile/reviews/review_no_ratings' %>
         <%= render 'school_profile/reviews/topical_review_section' %>
+        <%= render 'school_profile/reviews/total_reviews_count' %>
       </div>
     <% else %>
         <div class="col-xs-12 ptl"  style="z-index: 1;">
