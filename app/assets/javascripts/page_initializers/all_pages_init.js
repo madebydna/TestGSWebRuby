@@ -77,8 +77,6 @@ $(function() {
 
   $('.js-button-link').on('click', function() {
 
-
-
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value').replace('#%23', '#');
     if(use_new_window == true) {
@@ -89,7 +87,9 @@ $(function() {
 
   });
 
-
+  if (GS.I18n.currentLocale()) {
+     window.ParsleyValidator.setLocale(GS.I18n.currentLocale()); 
+  }
 
   $('.js_toggle_parent_sib').on('click', function(){
     $(this).parent().siblings('div:first').slideToggle('fast');

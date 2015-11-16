@@ -6,6 +6,7 @@
 //= require ./jquery.touchSwipe
 //  require ./omniture
 //= require ./parsley.remote
+//= require ./parsley.es
 //= require ./slick
 //= require ./typeahead_modified.bundle
 //= require ./velocity.min
