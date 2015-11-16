@@ -88,7 +88,11 @@ $(function() {
   });
 
   if (GS.I18n.currentLocale()) {
-     window.ParsleyValidator.setLocale(GS.I18n.currentLocale()); 
+    var currentLocale = GS.I18n.currentLocale();
+//  Only set locale in parsley if locale exists
+    if (window.ParsleyConfig.i18n.hasOwnProperty(currentLocale)) {
+      window.ParsleyValidator.setLocale(currentLocale); 
+    }
   }
 
   $('.js_toggle_parent_sib').on('click', function(){
