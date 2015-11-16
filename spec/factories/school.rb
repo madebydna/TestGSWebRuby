@@ -34,6 +34,14 @@ FactoryGirl.define do
         type 'public'
       end
 
+      factory :cristo_rey_new_york_high_school do
+        name 'Cristo Rey New York High School'
+        city 'New York'
+        state 'NY'
+        level_code 'h'
+        type 'public'
+      end
+
       factory :bay_farm_elementary_school do
         name 'Bay Farm Elementary School'
         city 'Alameda'
