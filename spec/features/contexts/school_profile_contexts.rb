@@ -59,3 +59,15 @@ shared_context 'with Alameda High School' do
     clean_models School
   end
 end
+
+shared_context 'with Cristo Rey New York High School' do
+  let!(:school) do 
+    new_york_school = FactoryGirl.build(:cristo_rey_new_york_high_school) 
+    School.on_db(:ny) { new_york_school.save}
+    new_york_school
+  end
+  after do
+    clean_models School
+    clean_dbs(:ny)
+  end
+end
