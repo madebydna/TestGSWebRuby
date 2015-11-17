@@ -1,53 +1,12 @@
 class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
-  include ApplicationHelper
   CACHE_KEY = 'nearby_schools'
   SCHOOL_COUNT = 5
 
-
-  def query_results
-    @query_results ||= (
-      school.schools_by_distance SCHOOL_COUNT
-    )
-  end
-
   def build_hash_for_cache
-    @review_results_obj = {}
-    @decorator_results_obj = {}
-    rval = []
-    query_results.each do |school_obj|
-      rval << build_nearby_school_hash(school_obj)
-    end
-    rval
-  end
-
-  def build_nearby_school_hash(school_obj)
     {
-        id: school_obj.id,
-        name: school_obj.name,
-        city: school_obj.city,
-        state: school_obj.state,
-        gs_rating: school_obj.great_schools_rating.present? ? school_obj.great_schools_rating : 'nr',
-        type: school_type(school_obj),
-        level: school_decorator_obj(school_obj),
-        school_media: school_media(school_obj)
+      NearbySchoolsCaching::Lists::ClosestSchools::NAME =>
+      NearbySchoolsCaching::Lists::ClosestSchools.results(school, limit: SCHOOL_COUNT)
     }
-  end
-
-  def school_type(school_obj)
-    school_type_display(school_obj.type)
-  end
-
-  def school_media(school_obj)
-    (SchoolProfileDecorator.decorate(school_obj)).uploaded_photo(70)
-  end
-
-  def school_decorator_obj(school_obj)
-    begin
-      @decorator_results_obj[school_obj] ||=
-        (SchoolProfileDecorator.decorate(school_obj)).process_level
-    rescue StandardError => e
-      puts e
-    end
   end
 
   def self.listens_to?(data_type)
