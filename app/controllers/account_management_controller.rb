@@ -56,6 +56,10 @@ class AccountManagementController < ApplicationController
                 :robots => "noindex"
   end
 
+  def reset_password
+    
+  end
+
   protected
 
   def set_saved_searches_instance_variables
