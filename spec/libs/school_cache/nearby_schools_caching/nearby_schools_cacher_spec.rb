@@ -5,14 +5,15 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
   let(:nearby_schools_cacher) do
     NearbySchoolsCaching::NearbySchoolsCacher.new(school)
   end
+  methodologies = [
+    NearbySchoolsCaching::Methodologies::ClosestSchools
+  ]
 
   describe '#build_hash_for_cache' do
 
-    [
-      NearbySchoolsCaching::Lists::ClosestSchools
-    ].each do |list|
-      context "for #{list}" do
-        let(:list) { list }
+    methodologies.each do |methodology|
+      context "for #{methodology}" do
+        let(:methodology) { methodology }
 
         let(:school) { FactoryGirl.build(:alameda_high_school) }
         let(:level) { '9-12' }
@@ -29,7 +30,7 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
         end
         let(:expected) do
           {
-            list::NAME => [
+            methodology::NAME => [
               {
                 id: 1,
                 name: "Alameda High School",
@@ -56,8 +57,22 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
         end
 
         it 'should build the correct structure' do
-          allow(list).to receive(:schools).and_return(schools)
+          allow(methodology).to receive(:schools).and_return(schools)
           expect(nearby_schools_cacher.build_hash_for_cache).to eq(expected)
+        end
+      end
+    end
+  end
+
+  describe 'methodologies' do
+    methodologies.each do |methodology|
+      context "#{methodology}" do
+        it 'should implement #school' do
+          begin
+            methodology.schools(nil, {})
+          rescue Exception => e
+            expect(e.class).to_not eq(NotImplementedError)
+          end
         end
       end
     end

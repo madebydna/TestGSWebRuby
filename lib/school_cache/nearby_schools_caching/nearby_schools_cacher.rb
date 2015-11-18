@@ -4,8 +4,8 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
 
   def build_hash_for_cache
     {
-      NearbySchoolsCaching::Lists::ClosestSchools::NAME =>
-      NearbySchoolsCaching::Lists::ClosestSchools.results(school, limit: SCHOOL_COUNT)
+      NearbySchoolsCaching::Methodologies::ClosestSchools::NAME =>
+      NearbySchoolsCaching::Methodologies::ClosestSchools.results(school, limit: SCHOOL_COUNT)
     }
   end
 

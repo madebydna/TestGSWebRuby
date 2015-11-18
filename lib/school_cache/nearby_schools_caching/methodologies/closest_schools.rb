@@ -1,4 +1,4 @@
-class NearbySchoolsCaching::Lists::ClosestSchools < NearbySchoolsCaching::Lists
+class NearbySchoolsCaching::Methodologies::ClosestSchools < NearbySchoolsCaching::Methodologies
   NAME = 'closest_schools'.freeze
 
   class << self
