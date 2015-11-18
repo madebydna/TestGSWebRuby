@@ -64,38 +64,59 @@ class UserController < ApplicationController
     redirect_to signin_url
   end
 
+  class ResetPasswordParams
+    include ActiveModel::Validations
+
+    attr_accessor :password
+    attr_accessor :password_confirmation
+
+    def initialize(password, password_confirmation)
+      self.password = password
+      self.password_confirmation = password_confirmation
+    end
+
+    validates_length_of :password, in: 6..14, message: I18n.t('models.reset_password_params.password_too_short')
+    validates_confirmation_of :password, message: I18n.t('models.reset_password_params.password_mismatch')
+  end
+
+  def reset_password_params
+    @_reset_password_params ||= ResetPasswordParams.new(params[:new_password], params[:confirm_password])
+  end
+
   def change_password
-    response = { success: false }
-
-    if params[:new_password] != params[:confirm_password]
-      response[:message] = 'The passwords do not match'
-      respond_to do |format|
-        format.json { render json: response}
-        format.html { redirect_to my_account_path }
-      end
-      return
+    unless reset_password_params.valid?
+      return reset_password_response(reset_password_params.errors.full_messages)
     end
 
-    begin
-      @current_user.updating_password = true        
-      @current_user.password = params[:new_password]
-      success = @current_user.save
-      if success
-        response[:message] = t('actions.account.password_changed')
-      else
-        response[:message] = @current_user.errors.full_messages.first
-      end
-      response[:success] = success
-    rescue => e
-      response = {
-        success: false,
-        message: e.message
-      }
+    @current_user.updating_password = true
+    @current_user.password = reset_password_params.password
+
+    if @current_user.save
+      return reset_password_response
+    else
+      return reset_password_response(@current_user.errors.full_messages)
     end
+  end
+
+  def reset_password_response(error_messages = [])
+    error_messages = Array.wrap(error_messages)
+    success_redirect = my_account_path
+    error_redirect = reset_password_page_path
+    redirect_uri = error_messages.present? ? error_redirect : success_redirect
+    success_message = t('actions.account.password_changed')
 
     respond_to do |format|
-      format.json { render json: response}
-      format.html { redirect_to my_account_path }
+      format.json do
+        message = error_messages.present? ? error_messages.first : success_message
+        render json: {
+          success: error_messages.blank?,
+          message: message
+        }
+      end
+      format.html do
+        error_messages.present? ? flash_error(error_messages) : flash_notice(success_message)
+        redirect_to redirect_uri
+      end
     end
   end
 
