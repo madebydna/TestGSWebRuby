@@ -1,6 +1,7 @@
 require 'spec_helper'
 require_relative 'reset_password_page'
 require_relative 'join_page'
+require_relative 'account_page'
 require 'support/shared_contexts_for_signed_in_users'
 
 describe 'Reset password page' do
@@ -16,6 +17,15 @@ describe 'Reset password page' do
       end
       it { is_expected.to be_displayed }
       it { is_expected.to have_heading }
+      it { is_expected.to have_reset_password_form }
+
+      when_I :fill_in_a_password do
+        when_I :click_the_submit_button do
+          it 'should display the account page' do
+            expect(AccountPage.new).to be_displayed
+          end
+        end
+      end
     end
   end
 

@@ -69,7 +69,10 @@ class UserController < ApplicationController
 
     if params[:new_password] != params[:confirm_password]
       response[:message] = 'The passwords do not match'
-      render json: response
+      respond_to do |format|
+        format.json { render json: response}
+        format.html { redirect_to my_account_path }
+      end
       return
     end
 
@@ -92,6 +95,7 @@ class UserController < ApplicationController
 
     respond_to do |format|
       format.json { render json: response}
+      format.html { redirect_to my_account_path }
     end
   end
 
