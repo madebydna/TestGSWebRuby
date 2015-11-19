@@ -1,11 +1,12 @@
 require_relative 'modules/flash_messages'
 
 class ResetPasswordPage < SitePrism::Page
-  include FlashMessages
 
   set_url_matcher /account\/reset-password/
 
   element :heading, 'h2'
+  element :passwords_not_match_error, '.parsley-errors-list', text: "This value should be the same."
+  element :invalid_password_length_error, '.parsley-errors-list', text: "This value length is invalid. It should be between 6 and 14 characters long."
   section :reset_password_form, 'form.rs-reset-password-form' do
     element :password_box, 'input[name="new_password"]'
     element :confirm_password_box, 'input[name="confirm_password"]'

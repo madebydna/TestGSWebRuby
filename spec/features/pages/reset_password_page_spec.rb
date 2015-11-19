@@ -32,8 +32,8 @@ describe 'Reset password page' do
           it 'should display the reset password page' do
             expect(ResetPasswordPage.new).to be_displayed
           end
-          it 'should show a flash error: The passwords do not match', js: true do
-            expect(subject).to have_flash_error(I18n.t('models.reset_password_params.password_mismatch'))
+          it 'should show a parsley values not the same error', js: true do
+            expect(subject).to have_passwords_not_match_error
           end
         end
       end
@@ -43,8 +43,8 @@ describe 'Reset password page' do
           it 'should display the reset password page' do
             expect(ResetPasswordPage.new).to be_displayed
           end
-          it 'should show flash error: Your password must be between 6 and 14 characters.', js: true do
-            expect(subject).to have_flash_error(I18n.t('models.reset_password_params.password_too_short'))
+          it 'should show parsley length invalid error', js: true do
+            expect(subject).to have_invalid_password_length_error
           end
         end
       end
