@@ -3,7 +3,7 @@
     render partial: 'school_profile/nearby_school_display',
       locals: {
         title: t('.title'),
-        schools: @school.cache_results.nearby_schools[NearbySchoolsCaching::Lists::ClosestSchools::NAME]
+        schools: @school.cache_results.nearby_schools[NearbySchoolsCaching::Methodologies::ClosestSchools::NAME]
       }
   %>
 <% rescue => e %>
