@@ -83,6 +83,15 @@ class UserController < ApplicationController
     @_reset_password_params ||= ResetPasswordParams.new(params[:new_password], params[:confirm_password])
   end
 
+  # This route handles a user's "reset password" post, when they submit a form with their new password
+  #
+  # We must ensure they are logged in before the password is changed.
+  # Currently, they will be logged in already, by the route that handles the link that the user
+  # clicks in their email. But, we could roll that action in with this one to remove an unncessary redirect.
+  #
+  # We must validate that the password/confirm password are valid and match.
+  # Redirect/reload same page if there's an error, otherwise when their password has been changed we redirect them to
+  # the account management page
   def change_password
     unless reset_password_params.valid?
       return reset_password_response(reset_password_params.errors.full_messages)

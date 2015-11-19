@@ -15,7 +15,6 @@ LocalizedProfiles::Application.routes.draw do
   # get '/gsr/search_prototype', as: :search_prototype, to: 'home#search_prototype'
 
   get '/account', as: :manage_account, to: 'account_management#show'
-  get '/account/reset-password', as: :reset_password_page, to: 'account_management#reset_password'
 
   # change to /reviews/?topic=1
   get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
@@ -82,7 +81,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
-    # get '/community/forgotPassword.page', as: :forgot_password
     get '/back-to-school/', as: :back_to_school
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
@@ -156,7 +154,14 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :review_notes, only: [:create]
 
+    # Passwords:
+    # This route allows a moderator to generate a URL. The page is refreshed and said URL is displayed on page
+    # When a GET request is made to the URL, a "forgot password" email (with another link) will be emailed to the user
+    # so they can get to the "reset password" form
+    # Thought from SS: I wonder why we do this, rather than immediately sending the "forgot password" email to the user
     get  '/reset_password', to: 'users#generate_reset_password_link' , as: :generate_reset_password_link
+
+
     get  '/users/search'
 
     resources :held_school
@@ -182,7 +187,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
   get '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
   get '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
-  post '/gsr/user/change-password', to: 'user#change_password', as: :change_password
+
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
@@ -211,9 +216,29 @@ LocalizedProfiles::Application.routes.draw do
     return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
   }
 
+  # Passwords:
+
+  # This route should get executed when a user clicks a link in a "forgot password" email
+  # The hash that is present as a query param on the link will allow us to authenticate the user
+  # Once the user is authenticated, send them to a form where they can change their password
   get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#login_and_redirect_to_change_password'
+
+  # When this route is requested, we will deliver a form to the user, where they will provide their email address
+  # so that we can send them a "forgot password" link
   get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
+
+  # When this route is requested, the user is telling us that they have forgotten their password,
+  # and need a "forgot password" email. We'll send them an email with a link, and that link will allow us to
+  # authenticate them so they can go ahead and change their password
   post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
+
+  # This route handles a user's "reset password" post. When they submit a form with their new password, it posts here
+  post '/gsr/user/change-password', to: 'user#change_password', as: :change_password
+
+  # When this route is requested, we should deliver a page with a form that allows the user to type in and confirm
+  # a new password. The user must be logged in before they can see this form
+  get '/account/reset-password', as: :reset_password_page, to: 'account_management#reset_password'
+
 
   scope '/community/:collection_id-:collection_name',
     as: :community,

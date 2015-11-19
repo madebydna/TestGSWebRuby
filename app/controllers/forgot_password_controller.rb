@@ -8,6 +8,9 @@ class ForgotPasswordController < ApplicationController
     set_forgot_password_meta_tags
   end
 
+  # This action should get executed when a user clicks on a link, telling us that they have forgotten their password,
+  # and need a "forgot password" email. We'll send them an email with a link, and that link will allow us to
+  # authenticate them so they can go ahead and change their password
   def send_reset_password_email
     user, err_msg = validate_user_can_reset_password
 
@@ -22,6 +25,9 @@ class ForgotPasswordController < ApplicationController
     redirect_to signin_url
   end
 
+  # This action should get executed when a user clicks a link in a "forgot password" email
+  # The hash that is present as a query param on the link will allow us to authenticate the user
+  # Once the user is authenticated, send them to a form where they can change their password
   def login_and_redirect_to_change_password
     hash = params[:id]
     if hash.present?
