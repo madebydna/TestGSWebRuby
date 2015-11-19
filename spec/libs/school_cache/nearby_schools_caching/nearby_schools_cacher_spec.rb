@@ -15,7 +15,8 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
   describe '#build_hash_for_cache' do
     let(:expected_result) do
       {
-        NearbySchoolsCaching::Methodologies::ClosestSchools::NAME => [],
+        closest_schools: [],
+        closest_top_then_top_nearby_schools: [],
       }
     end
     before do
