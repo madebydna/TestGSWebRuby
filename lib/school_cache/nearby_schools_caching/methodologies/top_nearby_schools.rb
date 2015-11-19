@@ -4,7 +4,7 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
   DISTANCE_FIELD = 'distance'.freeze
 
   class << self
-    include NearbySchoolsCaching::Helpers::RatingsHelper
+    include NearbySchoolsCaching::Helpers::RatingsQueriesHelper
 
     # Within the given radius, order schools by the average of the configured
     # ratings types. The results are orderd by rating average desc, distance

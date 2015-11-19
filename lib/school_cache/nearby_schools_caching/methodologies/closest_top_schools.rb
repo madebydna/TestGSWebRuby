@@ -4,7 +4,7 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
   DISTANCE_FIELD = 'distance'.freeze
 
   class << self
-    include NearbySchoolsCaching::Helpers::RatingsHelper
+    include NearbySchoolsCaching::Helpers::RatingsQueriesHelper
 
     # For the given ratings, find the closest school with an average rating of
     # at least the configured minimum.

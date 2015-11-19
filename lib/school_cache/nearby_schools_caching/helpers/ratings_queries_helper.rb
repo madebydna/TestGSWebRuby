@@ -1,4 +1,4 @@
-module NearbySchoolsCaching::Helpers::RatingsHelper
+module NearbySchoolsCaching::Helpers::RatingsQueriesHelper
   COUNT_FIELD = 'count'.freeze
 
   # The average is done by adding all of the ratings fields together by the
