@@ -43,8 +43,7 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
        #{number_of_ratings_select_statement(ratings)},
        #{distance_from_school(school)} as #{DISTANCE_FIELD}
        FROM school
-       WHERE #{basic_nearby_schools_conditions(school)}
-       #{level_code_filter(school)}"
+       WHERE #{basic_nearby_schools_conditions(school)}"
     end
   end
 end

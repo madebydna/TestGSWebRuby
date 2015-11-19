@@ -11,10 +11,7 @@ class NearbySchoolsCaching::Methodologies::ClosestSchools < NearbySchoolsCaching
         SELECT #{basic_nearby_schools_fields},
         #{distance_from_school(school)} as distance
         FROM school
-        WHERE #{basic_nearby_schools_conditions(school)} AND
-        lat is not null AND
-        lon is not null AND
-        #{level_code_filter(school)}
+        WHERE #{basic_nearby_schools_conditions(school)}
         ORDER BY distance LIMIT #{limit}
       "
       School.on_db(school.shard).find_by_sql(query)

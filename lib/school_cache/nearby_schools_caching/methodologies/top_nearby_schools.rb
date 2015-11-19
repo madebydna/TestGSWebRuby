@@ -46,7 +46,6 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
        #{distance_from_school(school)} as #{DISTANCE_FIELD}
        FROM school
        WHERE #{basic_nearby_schools_conditions(school)}
-       #{level_code_filter(school)}
        AND #{distance_from_school(school)} <= #{radius}"
     end
   end

@@ -25,7 +25,11 @@ class NearbySchoolsCaching::Methodologies
     end
 
     def basic_nearby_schools_conditions(school)
-      "active = 1 AND id != #{school.id}"
+      "active = 1 AND
+       id != #{school.id} AND
+       lat is not null AND
+       lon is not null
+       #{level_code_filter(school)}"
     end
 
     # The Haversine formula: https://en.wikipedia.org/wiki/Haversine_formula
