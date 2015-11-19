@@ -8,7 +8,8 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
   end
   methodologies = [
     NearbySchoolsCaching::Methodologies::ClosestSchools,
-    NearbySchoolsCaching::Methodologies::TopNearbySchools
+    NearbySchoolsCaching::Methodologies::TopNearbySchools,
+    NearbySchoolsCaching::Methodologies::ClosestTopSchools
   ]
 
   describe '#build_hash_for_cache' do
@@ -30,7 +31,7 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
   describe 'methodologies' do
     methodologies.each do |methodology|
       context "#{methodology}" do
-        it 'should implement #school' do
+        it 'should implement #schools' do
           begin
             methodology.schools(nil, {})
           rescue Exception => e
