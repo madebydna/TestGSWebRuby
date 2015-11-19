@@ -30,13 +30,16 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
       minimum: 8, # minimum rating
       ratings: ratings,
     }
+    closest_top_schools = methodologies::ClosestTopSchools.results(school, closest_top_opts)
+    school_ids_to_exclude = closest_top_schools.map { |s| s[:id] }.join(',')
     top_nearby_opts = {
       limit: 4,
       radius: 2, # miles
       ratings: ratings,
+      school_ids_to_exclude: school_ids_to_exclude,
     }
     (
-      methodologies::ClosestTopSchools.results(school, closest_top_opts) +
+      closest_top_schools +
       methodologies::TopNearbySchools.results(school, top_nearby_opts)
     )
   end

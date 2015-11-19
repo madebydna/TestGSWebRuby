@@ -20,7 +20,8 @@ describe NearbySchoolsCaching::Methodologies::TopNearbySchools do
       ratings: [
         { data_type_id: 174, breakdown_id: 1 },
         { data_type_id: 174, breakdown_id: 8 },
-      ]
+      ],
+      school_ids_to_exclude: '5',
     }
   end
 
@@ -67,9 +68,11 @@ describe NearbySchoolsCaching::Methodologies::TopNearbySchools do
         ],
         level_code: 'h',
       },
-      # Close school with low average rating
+      # Close school with low average rating but excluded by
+      # school_ids_to_exclude param
       {
         id: 5,
+        exclude: true,
         state: 'CA',
         lat: 32.1,
         lon: 144.1,

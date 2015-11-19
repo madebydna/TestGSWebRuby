@@ -12,6 +12,7 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
     def schools(school, opts)
       limit   = opts[:limit] || 5 # number of schools to return
       radius  = opts[:radius] || 2 # miles
+      school_ids_to_exclude = opts[:school_ids_to_exclude] || ''
 
       # opts[:ratings] defines which ratings to use. If multiple ratings are
       # given, then the metric is the average of the two.
@@ -23,29 +24,30 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
       # ]
       ratings = opts[:ratings]
 
-      top_nearby_schools_query = query(school, ratings, radius, limit)
+      top_nearby_schools_query = query(school, ratings, radius, school_ids_to_exclude, limit)
       School.on_db(school.shard).find_by_sql(top_nearby_schools_query)
     end
 
     protected
 
     # Sample query at the bottom of this file
-    def query(school, ratings, radius, limit)
+    def query(school, ratings, radius, school_ids_to_exclude, limit)
       "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD}
-       FROM (#{inner_query(school, ratings, radius)}) as inner_table
+       FROM (#{inner_query(school, ratings, radius, school_ids_to_exclude)}) as inner_table
        ORDER BY #{rating_average_select(ratings)} DESC, #{DISTANCE_FIELD} ASC
        LIMIT #{limit}"
     end
 
     # This inner query does some initial calculations like converting null
     # ratings to 0s and counting up how many of the desired ratings we want.
-    def inner_query(school, ratings, radius)
+    def inner_query(school, ratings, radius, school_ids_to_exclude)
       "SELECT #{basic_nearby_schools_fields},
        #{ratings_select_statements(ratings)},
        #{number_of_ratings_select_statement(ratings)},
        #{distance_from_school(school)} as #{DISTANCE_FIELD}
        FROM school
        WHERE #{basic_nearby_schools_conditions(school)}
+       AND id NOT IN (#{school_ids_to_exclude})
        AND #{distance_from_school(school)} <= #{radius}"
     end
   end
