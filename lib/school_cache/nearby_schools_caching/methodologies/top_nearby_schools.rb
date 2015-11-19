@@ -29,7 +29,7 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
 
     protected
 
-    # TODO Add commented out query at the bottom of this file
+    # Sample query at the bottom of this file
     def query(school, ratings, radius, limit)
       "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD}
        FROM (#{inner_query(school, ratings, radius)}) as inner_table
@@ -50,3 +50,70 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
     end
   end
 end
+# Sample query:
+# SELECT *, (
+#  (data_type_id174breakdown_id1 + data_type_id174breakdown_id8) / count
+#  ) as average
+#   FROM (SELECT school.id,
+#   school.street,
+#   school.city,
+#   school.state,
+#   school.name,
+#   school.level,
+#   school.type,
+#   school.level_code,
+#   IFNULL((
+#     SELECT value_float
+#     FROM TestDataSchoolValue
+#     JOIN TestDataSet tds on tds.id = data_set_id
+#     WHERE (display_target like '%ratings%' AND school_id = school.id)
+#     AND (data_type_id = '174' AND breakdown_id = '1' )
+#    ), 0) as data_type_id174breakdown_id1,
+#   IFNULL((
+#     SELECT value_float
+#     FROM TestDataSchoolValue
+#     JOIN TestDataSet tds on tds.id = data_set_id
+#     WHERE (display_target like '%ratings%' AND school_id = school.id)
+#     AND (data_type_id = '174' AND breakdown_id = '8' )
+#    ), 0) as data_type_id174breakdown_id8,
+#   (
+#    SELECT count(*)
+#    FROM TestDataSchoolValue
+#    JOIN TestDataSet tds on tds.id = data_set_id
+#    WHERE (display_target like '%ratings%' AND school_id = school.id)
+#    AND (
+#      (data_type_id = '174' AND breakdown_id = '1' ) OR
+#      (data_type_id = '174' AND breakdown_id = '8' )
+#    )
+#   ) as count,
+#   (
+#     3959 *
+#     acos(
+#       cos(radians(37.889832)) *
+#       cos( radians( `lat` ) ) *
+#       cos(radians(`lon`) - radians(-122.295151)) +
+#       sin(radians(37.889832)) *
+#       sin( radians(`lat`) )
+#     )
+#   ) as distance
+#   FROM school
+#   WHERE active = 1 AND
+#   id != 21 AND
+#   lat is not null AND
+#   lon is not null
+#   AND (level_code LIKE '%e%')
+#   AND (
+#     3959 *
+#     acos(
+#       cos(radians(37.889832)) *
+#       cos( radians( `lat` ) ) *
+#       cos(radians(`lon`) - radians(-122.295151)) +
+#       sin(radians(37.889832)) *
+#       sin( radians(`lat`) )
+#     )
+#   ) <= 2
+#  ) as inner_table
+#  ORDER BY (
+#    (data_type_id174breakdown_id1 + data_type_id174breakdown_id8) / count
+#  ) DESC, distance ASC
+#  LIMIT 4

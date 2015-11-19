@@ -18,3 +18,29 @@ class NearbySchoolsCaching::Methodologies::ClosestSchools < NearbySchoolsCaching
     end
   end
 end
+# Sample query:
+# SELECT school.id,
+#   school.street,
+#   school.city,
+#   school.state,
+#   school.name,
+#   school.level,
+#   school.type,
+#   school.level_code,
+#   (
+#     3959 *
+#     acos(
+#       cos(radians(37.889832)) *
+#       cos( radians( `lat` ) ) *
+#       cos(radians(`lon`) - radians(-122.295151)) +
+#       sin(radians(37.889832)) *
+#       sin( radians(`lat`) )
+#     )
+#   ) as distance
+#   FROM school
+#   WHERE active = 1 AND
+#     id != 21 AND
+#     lat is not null AND
+#     lon is not null
+#     AND (level_code LIKE '%e%')
+#   ORDER BY distance LIMIT 5
