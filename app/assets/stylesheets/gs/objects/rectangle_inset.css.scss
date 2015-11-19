@@ -1,0 +1,106 @@
+// this is styling for a rectangle inset as seen on this page /gsr/login/
+
+.rectangle-inset {
+  background-color: $dirt-green;
+
+  header {
+    padding-top: $spacing-large;
+    text-align: center;
+    background-color: $wallpaper-green;
+    background-image: image-url('signin/wallpaper.png');
+    color: $dirt-green;
+    min-height: 240px;
+
+    h2 {
+      font-size: 40px;
+      max-width: 610px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media only screen and (max-width: 767px) {
+      min-height: 210px;
+      h2 {
+        font-size: 32px;
+        max-width: 500px;
+        margin-top: 16px;
+      }
+    }
+
+    @media only screen and (max-width: 599px) {
+      min-height: 180px;
+      h2 {
+        font-size: 20px;
+        max-width: 320px;
+      }
+    }
+  }
+
+  footer {
+    text-align: center;
+    background-color: $absence-gray;
+    border: 1px solid $clay-green;
+    border-left: none;
+    border-right: none;
+    min-height: 120px;
+    ul {
+      margin-top: $spacing-large;
+      padding: $spacing-large 0;
+      li {
+        color: white;
+        border-right: 2px solid gray;
+        display: inline;
+        padding-right: $spacing-large;
+        padding-left: $spacing-medium;
+
+        @media only screen and (max-width: 767px) {
+          display: block;
+          padding: 0;
+          border-right: none;
+        }
+
+        span {
+          padding-right: $spacing-small;
+          padding-top: $spacing-medium;
+          color: $brand-secondary;
+        }
+      }
+      li:last-child {
+        border-right: none;
+      }
+    }
+  }
+
+  .well {
+    border: 10px solid $dirt-green;
+    background-color: $well-bg;
+  }
+
+  ul {
+    list-style-type: none;
+  }
+
+}
+
+@mixin inset-container($max-width) {
+  max-width: $max-width;
+  margin: auto;
+  position: relative;
+  top: -80px;
+  clear: both;
+  @include for-sm-and-up {
+    margin: 0 16.6%;
+  }
+  @include for-lg-and-up {
+    margin: auto;
+  }
+}
+
+.join-and-sign-inset {
+  @include inset-container(800px)
+}
+
+.password-reset-inset {
+  @include inset-container(600px)
+}
+

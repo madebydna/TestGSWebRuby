@@ -5,7 +5,7 @@ class ResetPasswordPage < SitePrism::Page
 
   set_url_matcher /account\/reset-password/
 
-  element :heading, 'h1'
+  element :heading, 'h2'
   section :reset_password_form, 'form.rs-reset-password-form' do
     element :password_box, 'input[name="new_password"]'
     element :confirm_password_box, 'input[name="confirm_password"]'

@@ -1,27 +1,21 @@
 <% @active_tab ||= 'login' %>
 
-<div class="signin">
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-hdr">
-      <h2 class="ptl tac"><%= t('.header') %></h2>
+<div class="rectangle-inset gs-bootstrap">
+  <header>
+    <h2><%= t('.header') %></h2>
+  </header>
+  <div class="join-and-sign-inset">
+    <div class="tab-content well">
+      <%= render 'join_and_login_forms' %>
     </div>
   </div>
-  <div class="row limit-width-1200 signin-content">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-      <div class="tab-content well">
-        <%= render 'join_and_login_forms' %>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 signin-ftr">
-      <ul class="pvl pln tac mtl">
-        <li class="di prl plm"><span class="prs ptm italic">250,000+</span> <%= t('.school_profiles_count') %></li>
-        <li class="di prl plm"><span class="prs ptm italic">1.3M+</span> <%= t('.community_reviews_count') %></li>
-        <li class="di plm last"><span class="prs ptm italic">14,000+</span> <%= t('.articles_count') %></li>
-      </ul>
-    </div>
-  </div>
+  <footer>
+    <ul>
+      <li><span>250,000+</span> <%= t('.school_profiles_count') %></li>
+      <li><span>1.3M+</span> <%= t('.community_reviews_count') %></li>
+      <li><span>14,000+</span> <%= t('.articles_count') %></li>
+    </ul>
+  </footer>
 </div>
 
 <%= render 'nav/short_footer' %>
