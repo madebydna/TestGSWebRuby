@@ -1,0 +1,17 @@
+<h2 class="lg-roboto tac"><%= t(".#{@t_scope}.title") %></h2>
+<p><%= t(".#{@t_scope}.paragraph") %></p>
+<div class='pvm'>
+  <%= link_to 'Redwood City', '', class: 'innovate-links open-sans_sb' %>
+  <span class='link-dividers hidden-xs-inline'>|</span>
+  <%= link_to 'East Palo Alto', '', class: 'innovate-links open-sans_sb' %>
+  <span class='link-dividers hidden-xs-inline'>|</span>
+  <%= link_to 'San Jose', '', class: 'innovate-links open-sans_sb' %>
+</div>
+
+
+<% #logo %>
+<div class='shim-20'></div>
+<%= render partial: 'shared/partners/send_to_partner', locals: {
+  options: { is_vertical_promo: false },
+  promo:   { name: :innovate_public_schools}
+}%>

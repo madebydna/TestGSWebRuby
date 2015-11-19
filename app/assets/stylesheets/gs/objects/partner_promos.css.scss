@@ -17,7 +17,7 @@
     @extend .col-xs-12;
     @extend .col-sm-3;
     img {
-      max-height: 100px;
+      max-height: 92px;
       max-width: 220px;
       padding: 10px;
       width: 85%;
@@ -58,3 +58,27 @@
     text-align: left;
   }
 }
+
+.partner-logo-fixed-size {
+  .partner-text {
+    font-size: 11px;
+  }
+
+  img {
+    max-height: 100px;
+    max-width: 220px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    width: 85%;
+  }
+
+  @media (min-width: $screen-xs-min) {
+    float: left;
+  }
+
+  @media (max-width: $screen-xs-min) {
+    text-align: center;
+  }
+}
+

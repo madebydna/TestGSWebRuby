@@ -50,12 +50,6 @@ $csc-table-blue-border: 1px solid #2880b9 !default;
         margin-top: 0;
       }
     }
-    .hidden-xs-inline {
-      @media (min-width: $screen-sm-min) {
-        display: inline !important;
-      }
-      @extend .hidden-xs;
-    }
   }
   .article {
     img {

@@ -220,6 +220,7 @@ LocalizedProfiles::Application.routes.draw do
       collection_name: /.+/,
     } do
       get 'spotlight', to: 'community_spotlights#show', as: :spotlight
+      get '', to: 'community#home', as: :home
     end
 
   constraints(RegularSubdomain) do

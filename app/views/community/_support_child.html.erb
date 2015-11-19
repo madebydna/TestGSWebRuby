@@ -1,0 +1,27 @@
+<% #Support your childs success %>
+<h2 class="lg-roboto tac"><%= t(".#{@t_scope}.title") %></h2>
+<div class='shim-10'></div>
+<div class='row'>
+  <% [*1..3].each do |i|%>
+    <div class='col-xs-12 col-sm-6 col-md-4 pbl'>
+      <div class="article-image">
+        <a href="<%= t(".#{@t_scope}.article_link_#{i}") %>" target="_blank">
+          <%= image_tag t(".#{@t_scope}.article_image_#{i}") %>
+        </a>
+      </div>
+      <a href="<%= t(".#{@t_scope}.article_link_#{i}") %>" target="_blank">
+        <p class='open-sans_sb article-title'>
+        <%= 'This school has achieved the highest improvement in Absentee rate in the district'%>
+        </p>
+      </a>
+      <div>
+        <a href="<%= t(".#{@t_scope}.article_link_#{i}") %>" target="_blank">
+          <%= t(".read_more") %>
+        </a>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% #tips %>
+<p class='tac pvl'><%= t(".#{@t_scope}.tips") %></p>
