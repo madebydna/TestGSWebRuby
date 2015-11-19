@@ -29,16 +29,16 @@ class ForgotPasswordController < ApplicationController
   # The hash that is present as a query param on the link will allow us to authenticate the user
   # Once the user is authenticated, send them to a form where they can change their password
   def login_and_redirect_to_change_password
-    hash = params[:id]
-    if hash.present?
-      login_from_hash(hash)
-      if logged_in?
-        redirect_to reset_password_page_url
-      else
-        log.error("Error while allowing reset password for hash: #{hash}")
-        redirect_to signin_url
-      end
+    token = params[:id]
+    if token.present?
+      login_from_hash(token)
+      redirect_to reset_password_page_url and return if logged_in?
     end
+
+    # If we get here, something went wrong. Token was missing or invalid
+    Rails.logger.error("Error while allowing reset password for hash: #{hash}")
+    flash_error t('controllers.forgot_password_controller.token_invalid')
+    redirect_to signin_url
   end
 
   def set_forgot_password_meta_tags

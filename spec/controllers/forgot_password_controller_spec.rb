@@ -42,32 +42,61 @@ describe ForgotPasswordController do
   end
 
   describe '#login_and_redirect_to_change_password' do
-
-    it 'should allow reset password if the hash is valid.' do
-      user = FactoryGirl.create(:verified_user)
-      allow(controller).to receive(:params).and_return({id: user.auth_token})
-
-      expect(controller).to receive(:login_from_hash).with(user.auth_token)
-      allow(controller).to receive(:logged_in?) { true }
-      expect(controller).to receive(:redirect_to).with(reset_password_page_url)
-      controller.send :login_and_redirect_to_change_password
+    before do
+      allow(controller).to receive(:redirect_to)
     end
 
-    it 'should verify the user\'s email if the hash is valid.' do
-      user = FactoryGirl.create(:new_user)
-      allow(controller).to receive(:params).and_return({id: user.auth_token})
-      allow(controller).to receive(:logged_in?) { true }
-      allow(controller).to receive(:redirect_to).with(reset_password_page_url)
-      controller.send :login_and_redirect_to_change_password
-      user.reload
-      expect(user).to_not be_provisional
-    end
+    context 'given an unverified user' do
+      let(:user) { FactoryGirl.create(:new_user) }
+      let(:valid_token) { user.auth_token }
+      let(:invalid_token) { 'foo' }
 
-    it 'should not allow reset password if the hash is not valid.' do
-      allow(controller).to receive(:params).and_return({id: 'Sometoken'})
+      context 'given a valid token' do
+        before { allow(controller).to receive(:params).and_return(id: valid_token) }
 
-      expect(controller).to receive(:redirect_to).with(signin_url)
-      controller.send :login_and_redirect_to_change_password
+        it 'should verify the user\'s email' do
+          allow(controller).to receive(:redirect_to).with(reset_password_page_url)
+          controller.send :login_and_redirect_to_change_password
+          user.reload
+          expect(user).to_not be_provisional
+        end
+
+        it 'should redirect to the reset password page' do
+          expect(controller).to receive(:redirect_to).with(reset_password_page_url)
+          controller.send :login_and_redirect_to_change_password
+        end
+
+        it 'should log the user in' do
+          expect(controller).to receive(:login_from_hash).with(user.auth_token).and_call_original
+          controller.send :login_and_redirect_to_change_password
+          expect(controller).to be_logged_in
+        end
+      end
+
+      context 'given an invalid token' do
+        before { allow(controller).to receive(:params).and_return(id: invalid_token) }
+
+        it 'should not verify the user\'s email' do
+          controller.send :login_and_redirect_to_change_password
+          user.reload
+          expect(user).to be_provisional
+        end
+
+        it 'should redirect to signin page' do
+          expect(controller).to receive(:redirect_to).with(signin_url)
+          controller.send :login_and_redirect_to_change_password
+        end
+
+        it 'should not log the user in' do
+          controller.send :login_and_redirect_to_change_password
+          expect(controller).to_not be_logged_in
+        end
+
+        it 'should flash an error message' do
+          expect(controller).to receive(:flash_error).with(I18n.t('controllers.forgot_password_controller.token_invalid'))
+          controller.send :login_and_redirect_to_change_password
+        end
+      end
     end
   end
 
