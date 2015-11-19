@@ -12,5 +12,4 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
   def self.listens_to?(data_type)
     :school_location == data_type
   end
-
 end
