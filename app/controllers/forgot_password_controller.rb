@@ -33,7 +33,7 @@ class ForgotPasswordController < ApplicationController
     if hash.present?
       login_from_hash(hash)
       if logged_in?
-        redirect_to manage_account_url(:anchor => 'change-password')
+        redirect_to reset_password_url
       else
         log.error("Error while allowing reset password for hash: #{hash}")
         redirect_to signin_url
