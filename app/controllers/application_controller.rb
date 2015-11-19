@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
   before_action :login_from_cookie, :init_omniture
   before_action :add_user_info_to_gtm_data_layer
   before_action :set_optimizely_gon_env_value
-  before_action :set_cafemom_ip_value
   before_action :add_ab_test_to_gon
   before_action :track_ab_version_in_omniture
   before_action :write_locale_session
@@ -252,12 +251,6 @@ class ApplicationController < ActionController::Base
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
   end
 
-  def set_cafemom_ip_value
-    # TODO share code with application_helper::remote_ip?
-    # HTTP_X_CLUSTER_CLIENT_IP is set to "Undefined" when not behind stingray
-    gon.CF_ATHENA = request.env['X_FORWARDED_FOR'] || request.env['HTTP_X_FORWARDED_FOR'] || request.env['HTTP_X_CLUSTER_CLIENT_IP']
-    gon.CF_ATHENA = request.remote_ip if gon.CF_ATHENA == nil || gon.CF_ATHENA == 'Undefined'
-  end
 
   # get Page name in PageConfig, based on current controller action
   def configured_page_name
