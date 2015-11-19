@@ -49,7 +49,7 @@ describe ForgotPasswordController do
 
       expect(controller).to receive(:login_from_hash).with(user.auth_token)
       allow(controller).to receive(:logged_in?) { true }
-      expect(controller).to receive(:redirect_to).with(reset_password_url)
+      expect(controller).to receive(:redirect_to).with(reset_password_page_url)
       controller.send :login_and_redirect_to_change_password
     end
 
@@ -57,7 +57,7 @@ describe ForgotPasswordController do
       user = FactoryGirl.create(:new_user)
       allow(controller).to receive(:params).and_return({id: user.auth_token})
       allow(controller).to receive(:logged_in?) { true }
-      allow(controller).to receive(:redirect_to).with(reset_password_url)
+      allow(controller).to receive(:redirect_to).with(reset_password_page_url)
       controller.send :login_and_redirect_to_change_password
       user.reload
       expect(user).to_not be_provisional
