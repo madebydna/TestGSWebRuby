@@ -62,7 +62,7 @@ $(function() {
 
   $('.js-send-me-updates-button-footer').on('click', function () {
     if (GS.schoolNameFromUrl() === undefined) {
-      signupAndGetNewsletter();
+        GS.sendUpdates.signupAndGetNewsletter();
     } else {
       var state = GS.stateAbbreviationFromUrl();
       var schoolId = GS.schoolIdFromUrl();
