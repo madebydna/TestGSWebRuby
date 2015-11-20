@@ -2,3 +2,5 @@ en:
   data_layouts:
     sticky_nearby_schools:
       more_quality_schools_html: <a href="%{link}">Find more</a> quality schools nearby!
+      top_nearby_schools: BEST NEARBY
+      closest_top_schools: CLOSEST HIGH PERFORMING SCHOOL (%{distance} MILES)
