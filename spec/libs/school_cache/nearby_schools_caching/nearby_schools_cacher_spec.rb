@@ -2,62 +2,42 @@ require 'spec_helper'
 
 describe NearbySchoolsCaching::NearbySchoolsCacher do
   let(:decorator) { NearbySchoolsCaching::QueryResultDecorator }
+  let(:school) { FactoryGirl.build(:alameda_high_school) }
   let(:nearby_schools_cacher) do
     NearbySchoolsCaching::NearbySchoolsCacher.new(school)
   end
+  methodologies = [
+    NearbySchoolsCaching::Methodologies::ClosestSchools,
+    NearbySchoolsCaching::Methodologies::TopNearbySchools,
+    NearbySchoolsCaching::Methodologies::ClosestTopSchools
+  ]
 
   describe '#build_hash_for_cache' do
+    let(:expected_result) do
+      {
+        closest_schools: [],
+        closest_top_then_top_nearby_schools: [],
+      }
+    end
+    before do
+      methodologies.each do |methodology|
+        allow(methodology).to receive(:results).and_return([])
+      end
+    end
+    it 'should build the correct structure' do
+      expect(nearby_schools_cacher.build_hash_for_cache).to eq(expected_result)
+    end
+  end
 
-    [
-      NearbySchoolsCaching::Lists::ClosestSchools
-    ].each do |list|
-      context "for #{list}" do
-        let(:list) { list }
-
-        let(:school) { FactoryGirl.build(:alameda_high_school) }
-        let(:level) { '9-12' }
-        let(:image_hash) { 'Iamveryprettyimage' }
-        let(:schools) do
-          school_1 = FactoryGirl.build(:alameda_high_school, id: 1)
-          allow(school_1).to receive(:great_schools_rating).and_return('8')
-
-          school_2 = FactoryGirl.build(:bay_farm_elementary_school, id: 2)
-          allow(school_2).to receive(:great_schools_rating)
-          allow_any_instance_of(decorator).to receive(:school_media).and_return(image_hash)
-          allow_any_instance_of(decorator).to receive(:process_level).and_return(level)
-          [school_1, school_2]
-        end
-        let(:expected) do
-          {
-            list::NAME => [
-              {
-                id: 1,
-                name: "Alameda High School",
-                city: "Alameda",
-                state: "CA",
-                gs_rating: "8",
-                type: "Public district",
-                level: level,
-                school_media: image_hash,
-              },
-
-              {
-                id: 2,
-                name: "Bay Farm Elementary School",
-                city: "Alameda",
-                state: "CA",
-                gs_rating: "nr",
-                type: "Public district",
-                level: level,
-                school_media: image_hash,
-              }
-            ]
-          }
-        end
-
-        it 'should build the correct structure' do
-          allow(list).to receive(:schools).and_return(schools)
-          expect(nearby_schools_cacher.build_hash_for_cache).to eq(expected)
+  describe 'methodologies' do
+    methodologies.each do |methodology|
+      context "#{methodology}" do
+        it 'should implement #schools' do
+          begin
+            methodology.schools(nil, {})
+          rescue Exception => e
+            expect(e.class).to_not eq(NotImplementedError)
+          end
         end
       end
     end

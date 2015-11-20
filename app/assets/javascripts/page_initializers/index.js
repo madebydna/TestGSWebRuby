@@ -4,6 +4,7 @@
 //= require ./city_home_init
 //= require ./city_hub_init
 //= require ./community_spotlights_init
+//= require ./community_init
 //= require ./compare_schools_init
 //= require ./details_init
 //= require ./district_home_init

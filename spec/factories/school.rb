@@ -106,6 +106,34 @@ FactoryGirl.define do
         type 'private'
       end
 
+      factory :school_with_rating do
+        ignore do
+          ratings []
+        end
+
+        after(:create) do |school, evaluator|
+          evaluator.ratings.each do |rating|
+            data_set_attrs = {
+              display_target: 'ratings'
+            }.merge(rating.except(:value_float))
+            data_set = TestDataSet
+              .on_db(school.shard)
+              .where(data_set_attrs)
+              .first_or_initialize
+            data_set.save!
+
+            school_value_attrs = {
+              active: 1,
+              school_id: school.id,
+              data_set_id: data_set.id,
+              value_float: rating[:value_float]
+            }
+            school_value = TestDataSchoolValue.on_db(school.shard).where(school_value_attrs).first_or_initialize
+            school_value.save!
+          end
+        end
+      end
+
       trait :with_hub_city_mapping do
         ignore do
           collection_id 1

@@ -20,7 +20,7 @@ class PageConfig
   end
 
   def root_placements_with_data
-    root_placements.select { |cp| category_placement_has_data? cp }
+    @_root_placements_with_data ||= root_placements.select { |cp| category_placement_has_data? cp }
   end
 
   def root_placements_with_profile_data
@@ -28,11 +28,13 @@ class PageConfig
   end
 
   def category_placement_children_with_data(parent)
-    parent.children.select { |cp| category_placement_has_data? cp }
+    @_category_placement_children_with_data ||= {}
+    @_category_placement_children_with_data[parent.cache_key] ||= parent.children.select { |cp| category_placement_has_data? cp }
   end
 
   def category_placement_children_with_profile_data(parent)
-    parent.children.select { |cp| category_placement_has_profile_data? cp }
+    @_category_placement_children_with_profile_data ||= {}
+    @_category_placement_children_with_profile_data[parent.cache_key] ||= parent.children.select { |cp| category_placement_has_profile_data? cp }
   end
 
   def category_placement_has_data?(cp)

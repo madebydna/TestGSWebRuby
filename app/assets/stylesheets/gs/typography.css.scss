@@ -163,6 +163,10 @@ p.small {
   background-color: $blue-dark;
 }
 
+.dirt-green-bg {
+  background-color: $dirt-green;
+}
+
 .dark-gray-bg {
   background: $gray-darkest;
 }
@@ -274,6 +278,13 @@ p.small {
 
 @media (min-width: 1200px) {
   .mrl_large {margin-right: 15px}
+}
+
+.hidden-xs-inline {
+  @media (min-width: $screen-sm-min) {
+    display: inline !important;
+  }
+  @extend .hidden-xs;
 }
 
 
