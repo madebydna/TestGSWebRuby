@@ -32,9 +32,10 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
 
     # Sample query at the bottom of this file
     def query(school, ratings, radius, school_ids_to_exclude, limit)
-      "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD}
+      "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD},
+       '#{NAME}' as methodology
        FROM (#{inner_query(school, ratings, radius, school_ids_to_exclude)}) as inner_table
-       ORDER BY #{rating_average_select(ratings)} DESC, #{DISTANCE_FIELD} ASC
+       ORDER BY #{AVERAGE_FIELD} DESC, #{DISTANCE_FIELD} ASC
        LIMIT #{limit}"
     end
 

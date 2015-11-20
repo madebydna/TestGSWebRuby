@@ -8,7 +8,7 @@ class NearbySchoolsCaching::Methodologies::ClosestSchools < NearbySchoolsCaching
     def schools(school, opts)
       limit = opts[:limit] || 5
       query = "
-        SELECT #{basic_nearby_schools_fields},
+        SELECT #{basic_nearby_schools_fields}, '#{NAME}' as methodology,
         #{distance_from_school(school)} as distance
         FROM school
         WHERE #{basic_nearby_schools_conditions(school)}

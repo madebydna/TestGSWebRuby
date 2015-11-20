@@ -30,7 +30,8 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
 
     # Sample query at the bottom of this file
     def query(school, ratings, minimum, limit)
-      "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD}
+      "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD},
+       '#{NAME}' as methodology
        FROM (#{inner_query(school, ratings)}) as inner_table
        WHERE #{rating_average_select(ratings)} >= #{minimum}
        ORDER BY #{DISTANCE_FIELD} ASC

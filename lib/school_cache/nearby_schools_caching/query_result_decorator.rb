@@ -9,9 +9,11 @@ class NearbySchoolsCaching::QueryResultDecorator < Draper::Decorator
   def to_h
     {
               city: city,
+          distance: try(:distance),
          gs_rating: gs_rating,
                 id: id,
              level: process_level,
+       methodology: methodology,
               name: name,
       school_media: school_media,
              state: state,
