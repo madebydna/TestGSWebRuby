@@ -86,6 +86,14 @@ module SchoolProfileDataDecorator
     ]
   end
 
+  def category_source_key(category, source=category.source)
+    "#{category.id}#{source}"
+  end
+
+  def category_key(category)
+    category.present? ? "#{category.id}" : 'nil'
+  end
+
   def data_for_category(options = {})
     category = options[:category]
     raise(ArgumentError, ':category must be provided') if category.nil?
@@ -99,15 +107,15 @@ module SchoolProfileDataDecorator
     source = options[:source]
     raise(ArgumentError, ':category and :source must both be provided') if category.nil? || source.nil?
 
-
     @data ||= {}
-    data_key = category.nil? ? source : "#{category.id}#{source}"
-    return @data[data_key] if @data.has_key? data_key
-
-    if source.present? && SchoolProfileDataDecorator.data_readers.include?(source)
-      result = self.send source, options
-      @data[data_key] = result
-    end
+    data_key = category_source_key(category, source)
+    @data[data_key] ||= (
+      if source.present? && SchoolProfileDataDecorator.data_readers.include?(source)
+        self.send source, options
+      else
+        nil
+      end
+    )
   end
 
   def footnotes_for_category(options)
@@ -116,8 +124,9 @@ module SchoolProfileDataDecorator
 
     source = category.source
     if source
-      reader = data_reader_config[source.to_sym]
-      return reader.send :footnotes_for_category, category if reader.respond_to? :footnotes_for_category
+      _memoize(:footnotes_for_category, category_source_key(category)) do
+        data_reader_config[source.to_sym].try :footnotes_for_category, category
+      end
     end
   end
 
@@ -148,76 +157,82 @@ module SchoolProfileDataDecorator
     hash
   end
 
+  def _memoize(key, sub_key = 'nil')
+    @__memoize ||= Hash.new({})
+    @__memoize[key][sub_key] ||= yield
+  end
+
   ##############################################################################
   # Methods exposed as "data readers" to rails admin UI start here
 
   def census_data(options = {})
     category = options[:category]
-    @census_data_reader.labels_to_hashes_map category
+    _memoize(:census_data, category_key(category)) { @census_data_reader.labels_to_hashes_map category }
   end
 
-  def census_data_points(options = {})
-    @census_data_reader.data_type_descriptions_to_school_values_map
+  def census_data_points(_ = {})
+    _memoize(:census_data_points) { @census_data_reader.data_type_descriptions_to_school_values_map }
   end
 
   def cta_prek_only(options = {})
     category = options[:category]
-    @cta_prek_only_data_reader.data_for_category category
+    _memoize(:cta_prek_only, category_key(category)) { @cta_prek_only_data_reader.data_for_category category }
   end
 
   def details(options = {})
     category = options[:category]
-    @details_data_reader.data_for_category category
+    _memoize(:details, category_key(category)) { @details_data_reader.data_for_category category }
   end
 
   def esp_data_points(options = {})
     category = options[:category]
-    @esp_data_points_data_reader.data_for_category category
+    _memoize(:esp_data_points, category_key(category)) { @esp_data_points_data_reader.data_for_category category }
   end
 
   def esp_response(options = {})
     category = options[:category]
-    @esp_data_reader.data_for_category category
+    _memoize(:esp_response, category_key(category)) { @esp_data_reader.data_for_category(category) }
   end
 
   def group_comparison_data(options = {})
     category = options[:category]
-    @group_comparison_data_reader.data_for_category category
+    _memoize(:group_comparison_data, category_key(category)) { @group_comparison_data_reader.data_for_category category }
   end
 
   def community_spotlights(options = {})
     category = options[:category]
-    @community_spotlights_data_reader.data_for_category category
+    _memoize(:community_spotlights, category_key(category)) { @community_spotlights_data_reader.data_for_category category }
   end
 
-  def rating_data(options = {})
+  def rating_data(_ = {})
     @rating_data ||= @rating_data_reader.data
   end
 
   def snapshot(options = {})
     category = options[:category]
-    @snapshot_data_reader.data_for_category category
+    _memoize(:snapshot, category_key(category)) { @snapshot_data_reader.data_for_category category }
   end
 
   def performance(options = {})
     category = options[:category]
-    @performance_data_reader.data_for_category category
+    _memoize(:performance, category_key(category)) { @performance_data_reader.data_for_category category }
   end
 
   def nearby_schools(options = {})
     category = options[:category]
-    @nearby_schools_data_reader.data_for_category category
+    _memoize(:nearby_schools, category_key(category)) { @nearby_schools_data_reader.data_for_category category }
   end
 
-  def test_scores(options = {})
-    category = options[:category]
-    @test_scores_data_reader.data
+  def test_scores(_ = {})
+    _memoize(:test_scores) { @test_scores_data_reader.data }
   end
 
   def enrollment(options = {})
     category = options[:category]
-    hash = @esp_data_reader.responses_for_category category
-    hash.gs_transform_values! { |array| array.first }
+    _memoize(:enrollment, category_key(category)) do
+      hash = @esp_data_reader.responses_for_category category
+      hash.gs_transform_values! { |array| array.first }
+    end
   end
 
   def footnotes(options = {})
