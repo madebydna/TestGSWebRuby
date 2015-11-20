@@ -171,7 +171,7 @@ describe UserController do
       end
 
       it 'should make sure the password and confirmed password match' do
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'bar', format: :json
+        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo123', confirm_password: 'bar123', format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_falsey
         expect(json_response['message']).to include('do not match')
