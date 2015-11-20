@@ -38,7 +38,7 @@ class ForgotPasswordController < ApplicationController
     # If we get here, something went wrong. Token was missing or invalid
     Rails.logger.error("Error while allowing reset password for hash: #{hash}")
     flash_error t('controllers.forgot_password_controller.token_invalid')
-    redirect_to signin_url
+    redirect_to home_url
   end
 
   def set_forgot_password_meta_tags

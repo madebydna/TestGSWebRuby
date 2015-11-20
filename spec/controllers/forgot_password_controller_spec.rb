@@ -82,8 +82,8 @@ describe ForgotPasswordController do
           expect(user).to be_provisional
         end
 
-        it 'should redirect to signin page' do
-          expect(controller).to receive(:redirect_to).with(signin_url)
+        it 'should redirect to home page' do
+          expect(controller).to receive(:redirect_to).with(home_url)
           controller.send :login_and_redirect_to_change_password
         end
 
