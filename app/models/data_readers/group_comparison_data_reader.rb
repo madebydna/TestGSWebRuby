@@ -240,6 +240,17 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  # General education is supposed to be the converse of special education, but
+  # it's confusing to parents. This callback removes data points for that
+  # breakdown.
+  def remove_general_eduation_callback
+    data.each do | key, _ |
+      data[key].delete_if do |data_point|
+        data_point[:original_breakdown] == StudentTypes.general_education_breakdown_label
+      end
+    end
+  end
+
   ############################# CALLBACK HELPERS ###############################
 
   def i18n_scope
