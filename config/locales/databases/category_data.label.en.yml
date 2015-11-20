@@ -67,7 +67,7 @@ en:
     programs offered
   Boys sports: Boys sports
   Boys sports (misc): Boys sports (misc.)
-  caaspp_english: English Proficiency
+  caaspp_english: ELA proficiency
   caaspp_math: Math Proficiency
   Career and Tech programs: Career and Tech programs
   Certified and/or licensed: Certified and/or licensed
@@ -120,7 +120,7 @@ en:
     to learning
   Effective Leaders: Effective Leaders
   ela_test_scores: ELA Test Scores
-  eligible_for_4yr_college: Graduates eligible for 4-Yr college
+  eligible_for_4yr_college: Graduates eligible for UC/CSU
   Employees: Employees
   End time: End time
   English: English
@@ -155,7 +155,7 @@ en:
   Graduates who need remediation, or help strengthening basic skills: Graduates who
     need remediation, or help strengthening basic skills
   graduation_rate: Graduation Rate
-  GreatSchools Rating: GreatSchools Rating
+  GreatSchools Rating: GreatSchools rating
   HIB preparation score: HIB preparation score
   High expectations are set for all students' academic success: High expectations
     are set for all students' academic success
@@ -175,7 +175,6 @@ en:
   Level of special education programming: Level of special education programming
   Live in district - "choicing": Live in district - "choicing"
   Live outside district - "choicing": Live outside district - "choicing"
-  Low-Income Students: Low-Income Students
   Male: Male
   Math: Math
   Math Instruction: Math Instruction
@@ -340,6 +339,7 @@ en:
   Summer program offered: Summer program offered
   Supportive Environment: Supportive Environment
   Test Scores: Test Scores
+  Test scores for low-income students: Test scores for low-income students
   test_score_rating: Test Score Rating
   Teacher Influence: Teacher Influence
   ! 'Teacher experience: 5 years or more': ! 'Teacher experience: 5 years or more'

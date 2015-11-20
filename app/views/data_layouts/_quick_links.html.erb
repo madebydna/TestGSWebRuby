@@ -1,10 +1,11 @@
 <% ga_hash = { :'ga-click-category' => 'Profile data - quality snapshot', :'ga-click-action' => 'Quicklinks click' } %>
 <div class='mtm'>
-  <div><span class='open-sans_b'><%= t('.report_card') %></span>
+  <div class='pbm'><span class='open-sans_b'><%= t('.report_card') %></span>
     <%= link_to t('.test_scores'), school_quality_path(@school, anchor: 'Test_scores'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Test scores'}) %>,
-    <%= link_to t('.college_readiness'), school_quality_path(@school, anchor: 'College_readiness'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'College readiness'}) %>
+    <%= link_to t('.college_readiness'), school_quality_path(@school, anchor: 'College_readiness'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'College readiness'}) %>,
+    <%= link_to t('.student_group_comparison'), school_quality_path(@school, anchor: 'Student_Group_Comparison'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Student group comparison'}) %>
   </div>
-  <div><span class='open-sans_b'><%= t('.school_details') %></span>
+  <div class='pbm'><span class='open-sans_b'><%= t('.school_details') %></span>
     <%= link_to t('.student_demographics'), school_details_path(@school, anchor: 'Students'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Student demographics'}) %>,
     <%= link_to t('.programs'), school_details_path(@school, anchor: 'Programs'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Programs'}) %>,
     <%= link_to t('.classes'), school_details_path(@school), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Classes'}) %>,

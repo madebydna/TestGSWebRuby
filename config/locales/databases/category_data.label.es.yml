@@ -118,7 +118,7 @@ es:
     para la Educación
   Effective Leaders: Los líderes eficaces
   ela_test_scores: Puntajes en Inglés
-  eligible_for_4yr_college: ! 'Graduados eligible para universidad '
+  eligible_for_4yr_college: ! 'Graduados eligible para UC/CSU'
   Employees: Empleados
   End time: Hora de finalización
   English Instruction: Instrucción Inglés
@@ -149,7 +149,7 @@ es:
   Graduates who need remediation, or help strengthening basic skills: Los graduados
     que necesitan reparación o ayuda fortalecimiento de las competencias básicas
   graduation_rate: Tasa de Graduados
-  GreatSchools Rating: GreatSchools Clasificación
+  GreatSchools Rating: Calificación de GreatSchools
   HIB preparation score: Puntuación de preparación HIB
   High expectations are set for all students' academic success: Las altas expectativas
     se establecen para el éxito académico de todos los estudiantes
@@ -169,7 +169,6 @@ es:
   Level of special education programming: Nivel de programación de educación especial
   Live in district - "choicing": Vive en el barrio - "choicing"
   Live outside district - "choicing": Vivo distrito fuera - "choicing"
-  Low-Income Students: Estudiantes de bajos ingresos
   Male: Masculino
   Math Instruction: Instrucción de Matemáticas
   Math skills development: Desarrollo de habilidades matemáticas
@@ -335,6 +334,7 @@ es:
     que completen el primero año de universidad (24 créditos) en el tiempo
   Summer program offered: Programa de verano ofrecido
   Test Scores: Resultados de exámenes
+  Test scores for low-income students: Resultados de los examenes de estudiantes de bajos ingresos
   test_score_rating: Calificación de examenes
   Teacher Influence: Influencia del profesor
   ! 'Teacher experience: 5 years or more': ! 'Experiencia Profesor: 5 años o más'
