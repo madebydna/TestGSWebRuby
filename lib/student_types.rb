@@ -19,13 +19,17 @@ module StudentTypes
     end
   end
 
+  def self.general_education_breakdown_label
+    'General-Education students'
+  end
+
   # Student types aren't necessarily the same name as their breakdowns so we map
   # the datatype (used above to get the data) to its breakdown here.
   def self.datatype_breakdown_map
     {
       'Students who are not economically disadvantaged'=> 'Not economically disadvantaged',
       'Students with disabilities' => 'Students with disabilities',
-      'Not special education' => 'General-Education students',
+      'Not special education' => general_education_breakdown_label,
       'Students participating in free or reduced-price lunch program'=> 'Economically disadvantaged',
       'English learners' => 'Limited English proficient',
       'Not English learners' => 'Not limited English proficient'
