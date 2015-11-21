@@ -164,7 +164,7 @@ LocalizedProfiles::Application.routes.draw do
 
     resources :data_load_schedules, path: '/data-planning'
   end
-
+  post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
   post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
   post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
@@ -358,4 +358,6 @@ LocalizedProfiles::Application.routes.draw do
 
   # route not found catch-all
   match '*path' => 'error#page_not_found', via: [:get, :post]
+
+
 end
