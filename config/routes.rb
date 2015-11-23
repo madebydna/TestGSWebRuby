@@ -233,11 +233,10 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
 
   # This route handles a user's "reset password" post. When they submit a form with their new password, it posts here
-  put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
-
+  put '/account/password', to: 'password#update', as: :password
   # When this route is requested, we should deliver a page with a form that allows the user to type in and confirm
   # a new password. The user must be logged in before they can see this form
-  get '/account/reset-password', as: :reset_password_page, to: 'account_management#reset_password'
+  get '/account/password', to: 'password#show'
 
 
   scope '/community/:collection_id-:collection_name',

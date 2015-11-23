@@ -55,14 +55,14 @@ describe ForgotPasswordController do
         before { allow(controller).to receive(:params).and_return(id: valid_token) }
 
         it 'should verify the user\'s email' do
-          allow(controller).to receive(:redirect_to).with(reset_password_page_url)
+          allow(controller).to receive(:redirect_to).with(password_url)
           controller.send :login_and_redirect_to_change_password
           user.reload
           expect(user).to_not be_provisional
         end
 
         it 'should redirect to the reset password page' do
-          expect(controller).to receive(:redirect_to).with(reset_password_page_url)
+          expect(controller).to receive(:redirect_to).with(password_url)
           controller.send :login_and_redirect_to_change_password
         end
 

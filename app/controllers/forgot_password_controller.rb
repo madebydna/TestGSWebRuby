@@ -32,7 +32,7 @@ class ForgotPasswordController < ApplicationController
     token = params[:id]
     if token.present?
       login_from_hash(token)
-      redirect_to reset_password_page_url and return if logged_in?
+      redirect_to password_url and return if logged_in?
     end
 
     # If we get here, something went wrong. Token was missing or invalid
