@@ -225,12 +225,11 @@ LocalizedProfiles::Application.routes.draw do
 
   # When this route is requested, we will deliver a form to the user, where they will provide their email address
   # so that we can send them a "forgot password" link
-  get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
-
+  get '/account/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
   # When this route is requested, the user is telling us that they have forgotten their password,
   # and need a "forgot password" email. We'll send them an email with a link, and that link will allow us to
   # authenticate them so they can go ahead and change their password
-  post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
+  post '/account/forgot-password', :to => 'forgot_password#send_reset_password_email'
 
   # This route handles a user's "reset password" post. When they submit a form with their new password, it posts here
   put '/account/password', to: 'password#update', as: :password
