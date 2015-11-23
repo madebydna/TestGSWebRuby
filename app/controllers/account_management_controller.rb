@@ -57,7 +57,7 @@ class AccountManagementController < ApplicationController
   end
 
   def reset_password
-    
+    set_meta_tags title: 'New Password | GreatSchools', robots: 'noindex'
   end
 
   protected
