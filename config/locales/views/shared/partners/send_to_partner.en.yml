@@ -9,3 +9,8 @@ en:
           link_text: Learn more!
           link_url: http://innovateschools.org/greatschools/
           logo_path: /catalog/partner_logos/innovate_public_schools.png
+        excellent_schools_detroit:
+          call_to_action: Want to know more about the quality of Detroit's early learning programs?
+          link_text: Learn more!
+          link_url: http://scorecard.excellentschoolsdetroit.org/
+          logo_path: /catalog/partner_logos/excellent_schools_detroit.png
