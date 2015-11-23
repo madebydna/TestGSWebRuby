@@ -200,20 +200,23 @@ module PdfConcerns
   COLLECTION_ID_TO_FOOTER_MAPPING = {
       1 => 'Detroit School Guide 2015-2016',
       2 => 'Milwaukee School Guide 2015-2016',
-      3 => 'Indianapolis School Guide 2015-2016'
+      3 => 'Indianapolis School Guide 2015-2016',
+      12 => 'Oklahoma City School Guide 2016-2017',
 
   }
 
   COLLECTION_ID_TO_FOOTER_MAPPING_SPANISH = {
       1 => 'Listado de Escuelas de Detroit 2015-2016',
       2 => 'Listado de Escuelas de Milwaukee 2015-2016',
-      3 => 'Listado de Escuelas de Indianapolis 2015-2016'
+      3 => 'Listado de Escuelas de Indianapolis 2015-2016',
+      12 => 'Listado de Escuelas de Oklahoma City 2016-2017',
   }
 
   COLLECTION_ID_LANDING_PAGE_MAPPING = {
       1 => 'www.greatschoolsdetroit.org',
       2 => 'www.greatschoolsmilwaukee.org',
-      3 => 'www.greatschools.org/indianapolis'
+      3 => 'www.greatschools.org/indianapolis',
+      12 => 'www.greatschoolsoklahomacity.org',
   }
 
   # Map_icon_to_school_name_mapping = {'no_map_icon' => []}
