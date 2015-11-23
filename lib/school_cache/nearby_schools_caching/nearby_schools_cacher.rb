@@ -7,7 +7,8 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
   # concatentation of multiple methodologies' #restuls.
   DEFAULT_LIST = :closest_schools
   STATE_LISTS = Hash.new([]).merge({
-    ca: [:closest_top_then_top_nearby_schools],
+    # For now, we won't be launching this list. See AT-1160
+    # ca: [:closest_top_then_top_nearby_schools],
   })
 
   def build_hash_for_cache
