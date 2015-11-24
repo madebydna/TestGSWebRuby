@@ -88,6 +88,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/learning-disabilities/', as: :learning_disabilities
     get '/parenting.topic?content=1539', as: :health_and_behavior
     get '/gk/sbac-test-guide/', as: :state_test_guide
+    get '/gk/common-core-test-guide/', as: :common_core_test_guide
     # TODO: see how to fix this route for ruby
     get '/reviews/', as: :the_scoop
     get '/account/', as: :my_account
