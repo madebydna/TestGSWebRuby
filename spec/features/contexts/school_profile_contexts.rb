@@ -40,6 +40,21 @@ shared_context 'Visit School Profile Overview' do |s = nil|
   end
 end
 
+shared_context 'Visit School Profile Quality' do |s = nil|
+  subject(:page_object) do
+    visit school_quality_path(s || school)
+    SchoolProfileQualityPage.new
+  end
+end
+
+
+shared_context 'Visit School Profile Details' do |s = nil|
+  subject(:page_object) do
+    visit school_details_path(s || school)
+    SchoolProfileDetailsPage.new
+  end
+end
+
 shared_context 'Visit School Profile Reviews' do |s = nil|
   let(:page_object) do
     visit school_reviews_path(s || school)
