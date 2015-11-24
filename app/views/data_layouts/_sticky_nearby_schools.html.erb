@@ -43,7 +43,8 @@
                    # Be warned! Classes may have styles overwritten! %>
                 <div>
                   <div class="title">
-                    <%= t(".#{school['methodology']}", distance: school['distance'].to_i) %>
+                    <% distance = school['distance'].round(1) %>
+                    <%= t(".#{school['methodology']}", distance: distance, count: distance) %>
                   </div>
                   <div class="nearby-school school">
                     <%= link_to(school_hash_to_url_for_profile(school),

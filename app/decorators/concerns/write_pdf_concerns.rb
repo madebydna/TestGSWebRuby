@@ -141,9 +141,9 @@ module WritePdfConcerns
   def draw_logo_and_url_on_footer(collection_id)
     fill_color BLACK
     text_box which_footer(collection_id, is_spanish),
-             :at => [58, -7],
+             :at => [8, -7],
              # :width => is_spanish ? 150 : 115,
-             :width => 190,
+             :width => 250,
              :height => 10,
              :size => FONT_SIZE_9,
              :align => :right

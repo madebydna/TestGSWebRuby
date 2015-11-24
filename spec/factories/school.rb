@@ -108,6 +108,11 @@ FactoryGirl.define do
 
       factory :school_with_rating do
         ignore do
+          # Elements of this array should be in this format:
+          # { data_type_id: 174, breakdown_id: 1, value_float: 10 },
+          # { data_type_id: 174, breakdown_id: 8, value_float: 9  },
+          # Note that value_float is a required field and that any
+          # TestDataSet attributes can be used.
           ratings []
         end
 

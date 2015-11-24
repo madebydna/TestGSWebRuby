@@ -4,13 +4,14 @@ en:
       report_card: 'Report Card Quicklinks:'
       school_details: 'School Details Quicklinks:'
       reviews: 'Reviews Quicklinks:'
-      test_scores: Test Scores
-      college_readiness: College Readiness
-      student_demographics: Student Demographics
+      test_scores: Test scores
+      college_readiness: College readiness
+      student_group_comparison: Scores by student groups
+      student_demographics: Student demographics
       programs: Programs
       classes: Classes
       extracurriculars: Extracurriculars
       teachers: Teachers
-      parent_reviews: Parent Reviews
-      student_reviews: Student Reviews
-      write_a_review: Write a Review
+      parent_reviews: Parent reviews
+      student_reviews: Student reviews
+      write_a_review: Write a review
