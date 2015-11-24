@@ -41,7 +41,13 @@
       <%=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
     </div>
   </section>
-
+  <% if @topic.id == 8 %>
+    <section class="mtl">
+      <%= render '/shared/partners/partner_logo', 
+        promo: {name: 'greater_good_science_center'}
+      %> 
+    </section>
+<% end  %> 
   <section class="reviews-list">
     <div class="container-fluid pbl">
       <div id="js_reviewsListHeader" class="rs-review-list-header">

@@ -31,6 +31,12 @@ FactoryGirl.define do
       name 'Homework'
       label 'Amount of homework'
     end
+
+    factory :gratitude_topic do
+      name 'Gratitude'
+      label 'Grateful to'
+    end
+
   end
 
 end
