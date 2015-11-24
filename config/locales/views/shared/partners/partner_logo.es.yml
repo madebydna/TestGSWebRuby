@@ -2,9 +2,6 @@ es:
   shared:
     partners:
       partner_logo:
-        greater_good_science_center:
-          link_url: http://greatergood.berkeley.edu/
-          logo_path: /assets/greater_good_logo.png
         in_partnership_with: EN COLABORACIÓN CON
         innovate_public_schools:
           link_url: http://innovateschools.org/greatschools/?lang=es
