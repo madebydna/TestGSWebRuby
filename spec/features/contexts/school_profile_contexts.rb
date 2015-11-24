@@ -53,8 +53,22 @@ shared_context 'Visit School Profile Reviews' do |s = nil|
   end
 end
 
+shared_context 'Given school profile page with school test guide module' do |page_name| nil
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+      with_state_test_guide_module
+  end
+end
+
 shared_context 'with Alameda High School' do
   let!(:school) { FactoryGirl.create(:alameda_high_school) }
+  after do
+    clean_models School
+  end
+end
+
+shared_context 'with elementary school in CA' do
+  let!(:school) { FactoryGirl.create(:bay_farm_elementary_school) }
   after do
     clean_models School
   end

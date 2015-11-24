@@ -125,5 +125,17 @@ describe 'School Profile Overview Page' do
     end
   end
 
+  with_shared_context 'Given school profile page with school test guide module' do
+   with_shared_context 'with elementary school in CA' do
+      include_example 'should be on the correct page'
+      it { is_expected.to have_link('SBAC score report',href:'http://localhost:3001/gk/sbac-test-guide/') }
+   end
+   with_shared_context 'with Cristo Rey New York High School' do
+      include_example 'should be on the correct page'
+      it { is_expected.to_not have_link('SBAC score report',href:'http://localhost:3001/gk/sbac-test-guide/') }
+   end
+
+  end
+
 end
 
