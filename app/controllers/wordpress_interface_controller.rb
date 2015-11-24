@@ -29,16 +29,16 @@ class WordpressInterfaceController < ApplicationController
     end
 
     # find or create user
-    user_id = member_creation(wp_params['email'], 'wp_newsletter')
+    user_id = create_member(wp_params['email'], 'wp_newsletter')
 
     # remove duplicates
     grades = wp_params['grade'].uniq
     # grade association to user is in the student table
-    student_creation(user_id, grades, state)
+    create_students(user_id, grades, state)
 
     # sign up for these lists
     lists = ['greatnews', 'greatkidsnews']
-    subscribe_to_lists(user_id, lists, state)
+    create_subscriptions(user_id, lists, state)
 
     # found_user.id
     return {'member_id' => user_id}
@@ -59,7 +59,7 @@ class WordpressInterfaceController < ApplicationController
     state_abbreviation
   end
 
-  def subscribe_to_lists(user_id, list_arr, state)
+  def create_subscriptions(user_id, list_arr, state)
     list_arr.each do |list_name|
       s = Subscription.find_by_member_id_and_list(user_id, list_name)
       if (s.blank?)
@@ -70,7 +70,7 @@ class WordpressInterfaceController < ApplicationController
           s.state = state
         end
         unless s.save!
-          GSLogger.error(:messaging, nil, message: 'WP Newsletter subscription failed to save', vars: {
+          GSLogger.error(:gk_action, nil, message: 'WP Newsletter subscription failed to save', vars: {
                                        user_id: user_id,
                                        list_name: list_name,
                                        state: state
@@ -80,7 +80,7 @@ class WordpressInterfaceController < ApplicationController
     end
   end
 
-  def student_creation(user_id, grades, state)
+  def create_students(user_id, grades, state)
     # add grades to this user in student table
     if grades.present?
       grades.each do |grade|
@@ -94,7 +94,7 @@ class WordpressInterfaceController < ApplicationController
               student.state = state
             end
             unless student.save!
-              GSLogger.error(:messaging, nil, message: 'WP Newsletter student failed to save', vars: {
+              GSLogger.error(:gk_action, nil, message: 'WP Newsletter student failed to save', vars: {
                                            user_id: user_id,
                                            grade: grade,
                                            state: state
@@ -107,7 +107,7 @@ class WordpressInterfaceController < ApplicationController
     end
   end
 
-  def member_creation(email, how)
+  def create_member(email, how)
     user = User.find_by_email(email)
     if (user.blank?)
       user = User.new
@@ -115,7 +115,7 @@ class WordpressInterfaceController < ApplicationController
       user.password = User.generate_password
       user.how = how
       unless user.save!
-        GSLogger.error(:messaging, nil, message: 'WP Newsletter user failed to save', vars: {
+        GSLogger.error(:gk_action, nil, message: 'WP Newsletter user failed to save', vars: {
                                      email: email,
                                      how: how
                                  })
