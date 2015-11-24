@@ -116,6 +116,11 @@ describe 'School Profile Overview Page' do
       # include_example 'should be on the correct page'
     end
 
+    with_shared_context 'with Cristo Rey New York High School' do
+      include_example 'should be on the correct page'
+      expect_it_to_have_element(:profile_navigation)
+    end
+
     with_shared_context 'with a demo school' do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
@@ -123,6 +128,8 @@ describe 'School Profile Overview Page' do
       include_example 'should have the nofollow meta tag'
       include_example 'should have the noarchive meta tag'
     end
+
+
   end
 
   with_shared_context 'Given school profile page with school test guide module' do
