@@ -1,4 +1,5 @@
-class PasswordController < ActionController::Base
+class PasswordController < ApplicationController
+  before_action :login_required
 
   def show
     set_meta_tags title: 'New Password | GreatSchools', robots: 'noindex'

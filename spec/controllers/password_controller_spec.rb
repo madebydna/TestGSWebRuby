@@ -7,7 +7,7 @@ describe PasswordController do
     end
 
     it 'should force the user to be logged in' do
-      xhr :post, :change_password
+      xhr :post, :update
       expect(response.body).to match "window.location='#{signin_url}'"
     end
 
@@ -24,14 +24,14 @@ describe PasswordController do
       end
 
       it 'should make sure the password and confirmed password match' do
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo123', confirm_password: 'bar123', format: :json
+        xhr :post, :update, current_password: 'abcdefg', new_password: 'foo123', confirm_password: 'bar123', format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_falsey
         expect(json_response['message']).to include('do not match')
       end
 
       it 'should notify the user if an error occurs' do
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'foo', format: :json
+        xhr :post, :update, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'foo', format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_falsey
         expect(json_response['message']).to match(/6 and 14/)
@@ -39,7 +39,7 @@ describe PasswordController do
 
       it 'should change the user\'s password' do
         new_password = '123456'
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: new_password, confirm_password: new_password, format: :json
+        xhr :post, :update, current_password: 'abcdefg', new_password: new_password, confirm_password: new_password, format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_truthy
         expect(user.password_is?(new_password)).to be_truthy

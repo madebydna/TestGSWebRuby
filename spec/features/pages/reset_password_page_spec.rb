@@ -13,7 +13,7 @@ describe 'Reset password page' do
   with_shared_context 'signed in verified user' do
     context 'visit the reset password page' do
       before do
-        visit '/account/reset-password/'
+        visit '/account/password/'
       end
       it { is_expected.to be_displayed }
       it { is_expected.to have_heading }
@@ -53,7 +53,7 @@ describe 'Reset password page' do
 
   context 'not signed in' do
     before do
-      visit '/account/reset-password/'
+      visit '/account/password/'
     end
     it { is_expected.to_not be_displayed }
     it 'should display the join page' do

@@ -1,6 +1,5 @@
 class UserController < ApplicationController
 
-  before_action :login_required, only: [:change_password]
   skip_before_action :write_locale_session
 
 
