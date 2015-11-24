@@ -58,7 +58,7 @@ feature "Join Page" do
       end
 
       feature 'visiting the verification link' do
-        let(:verification_link) { @email[:attributes][:VERIFICATION_LINK].match(/(http.+)(\">.+)/)[1] }
+        let(:verification_link) { @email[:attributes][:VERIFICATION_LINK] }
         let(:user) { User.with_email 'ssprouse+testing@greatschools.org' }
         let(:review) {
           FactoryGirl.create(:review,
