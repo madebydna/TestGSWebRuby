@@ -150,6 +150,8 @@ class SigninController < ApplicationController
     end
   end
 
+  # This code needs to be refactored along with the authenticate_token action to be more dry and consistent, and
+  # better named. JIRA: JT-385
   def verify_email
     # TODO: send an email after verifying or after user no longer provisional?
     token = params[:id]
