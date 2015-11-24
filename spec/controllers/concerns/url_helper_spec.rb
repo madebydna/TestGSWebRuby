@@ -286,4 +286,44 @@ describe UrlHelper do
       end
     end
   end
+
+  describe '#create_reset_password_url' do
+    # Ran out of time trying to make this more elegant
+    let(:fake_controller) do
+      Class.new do
+        def url_options
+          {
+            host: 'localhost',
+            trailing_slash: false
+          }
+        end
+      end.send(:include, UrlHelper).send(:include, Rails.application.routes.url_helpers)
+    end
+    let(:url_helper) do
+      fake_controller.new
+    end
+
+    let(:user) { FactoryGirl.build(:new_user) }
+    let(:parsed_url) { URI::parse(url_helper.create_reset_password_url(user)) }
+    subject { parsed_url }
+
+    describe 'params' do
+      subject { Rack::Utils.parse_nested_query(parsed_url.query) }
+      it 'should generate a URL with correct s_cid param' do
+        expect(subject['s_cid']).to eq('eml_passwordreset')
+      end
+      it 'should add the appropriate token to the url' do
+        expect(subject['token']).to eq(CGI.escape(user.auth_token))
+      end
+      context 'with a caller-specified s_cid' do
+        let(:parsed_url) { URI::parse(url_helper.create_reset_password_url(user, s_cid: 'baz')) }
+        subject { Rack::Utils.parse_query(parsed_url.query) }
+        it 'should use the overridden s_cid param' do
+          expect(subject['s_cid']).to eq('baz')
+        end
+      end
+    end
+
+    its(:path) { is_expected.to eq('/gsr/authenticate-token') }
+  end
 end

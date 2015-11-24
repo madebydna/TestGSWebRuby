@@ -218,10 +218,9 @@ LocalizedProfiles::Application.routes.draw do
 
   # Passwords:
 
-  # This route should get executed when a user clicks a link in a "forgot password" email
-  # The hash that is present as a query param on the link will allow us to authenticate the user
-  # Once the user is authenticated, send them to a form where they can change their password
-  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#login_and_redirect_to_change_password'
+  # Authenticates the user using a hash, and then redirects
+  # Example usage: send user here when they click a link in a "forgot password" email
+  get '/gsr/authenticate-token', :as => :authenticate_token, :to => 'signin#authenticate_token_and_redirect'
 
   # When this route is requested, we will deliver a form to the user, where they will provide their email address
   # so that we can send them a "forgot password" link

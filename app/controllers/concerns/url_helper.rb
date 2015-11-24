@@ -203,6 +203,21 @@ module UrlHelper
     uri.to_s
   end
 
+  def create_authenticate_token_url(user, redirect, params = {})
+    params = params.reverse_merge({
+      token: CGI.escape(user.auth_token),
+      redirect: redirect
+    })
+    authenticate_token_url(params)
+  end
+
+  def create_reset_password_url(user, params = {})
+    params = params.reverse_merge({
+      s_cid: 'eml_passwordreset'
+    })
+    create_authenticate_token_url(user, password_url, params)
+  end
+
   #
   # Removes the given query parameters from a path or URL
   # @param  s [String] a full URL or URL path

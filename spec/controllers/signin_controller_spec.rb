@@ -644,4 +644,64 @@ describe SigninController do
       end
     end
   end
+
+  describe '#authenticate_token_and_redirect' do
+    before do
+      allow(controller).to receive(:redirect_to)
+    end
+
+    context 'given an unverified user' do
+      let(:user) { FactoryGirl.create(:new_user) }
+      let(:valid_token) { user.auth_token }
+      let(:invalid_token) { 'foo' }
+      let(:redirect) { '/foo' }
+
+      context 'given a valid token' do
+        before { allow(controller).to receive(:params).and_return(token: valid_token, redirect: redirect) }
+
+        it 'should verify the user\'s email' do
+          allow(controller).to receive(:redirect_to).with(password_url)
+          controller.send :authenticate_token_and_redirect
+          user.reload
+          expect(user).to_not be_provisional
+        end
+
+        it 'should redirect to the requested page' do
+          expect(controller).to receive(:redirect_to).with(redirect)
+          controller.send :authenticate_token_and_redirect
+        end
+
+        it 'should log the user in' do
+          expect(controller).to receive(:login_from_hash).with(user.auth_token).and_call_original
+          controller.send :authenticate_token_and_redirect
+          expect(controller).to be_logged_in
+        end
+      end
+
+      context 'given an invalid token' do
+        before { allow(controller).to receive(:params).and_return(token: invalid_token, redirect: redirect) }
+
+        it 'should not verify the user\'s email' do
+          controller.send :authenticate_token_and_redirect
+          user.reload
+          expect(user).to be_provisional
+        end
+
+        it 'should redirect to home page' do
+          expect(controller).to receive(:redirect_to).with(home_url)
+          controller.send :authenticate_token_and_redirect
+        end
+
+        it 'should not log the user in' do
+          controller.send :authenticate_token_and_redirect
+          expect(controller).to_not be_logged_in
+        end
+
+        it 'should flash an error message' do
+          expect(controller).to receive(:flash_error).with(I18n.t('controllers.forgot_password_controller.token_invalid'))
+          controller.send :authenticate_token_and_redirect
+        end
+      end
+    end
+  end
 end

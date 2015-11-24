@@ -1,6 +1,7 @@
 class SigninController < ApplicationController
   include DeferredActionConcerns
   include DataLayerConcerns
+  include AuthenticationConcerns
 
   protect_from_forgery
 
@@ -207,6 +208,21 @@ class SigninController < ApplicationController
       flash_error t('actions.generic_error')
       render json: {}, status: 422
     end
+  end
+
+  def authenticate_token_and_redirect
+    token = params[:token]
+    token = CGI.unescape(token) if token
+    redirect = params[:redirect] || my_account_path
+    if token.present?
+      login_from_hash(token)
+      redirect_to redirect and return if logged_in?
+    end
+
+    # If we get here, something went wrong. Token was missing or invalid
+    Rails.logger.error("Error authenticating token: #{token}")
+    flash_error t('controllers.forgot_password_controller.token_invalid')
+    redirect_to home_url
   end
 
   protected
