@@ -31,10 +31,8 @@ class WordpressInterfaceController < ApplicationController
     # find or create user
     user_id = create_member(wp_params['email'], 'wp_newsletter')
 
-    # remove duplicates
-    grades = wp_params['grade'].uniq
     # grade association to user is in the student table
-    create_students(user_id, grades, state)
+    create_students(user_id, wp_params['grade'], state)
 
     # sign up for these lists
     lists = ['greatnews', 'greatkidsnews']
@@ -83,7 +81,9 @@ class WordpressInterfaceController < ApplicationController
   def create_students(user_id, grades, state)
     # add grades to this user in student table
     if grades.present?
-      grades.each do |grade|
+      # remove duplicates
+      grades_uniq = grades.uniq
+      grades_uniq.each do |grade|
         if grade.present? && SUPPORTED_GRADES.include?(grade)
           student = StudentGradeLevel.where("member_id = ? AND grade = ?", user_id, grade)
           if (student.blank?)
