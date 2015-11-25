@@ -61,8 +61,8 @@ describe 'School Profile Reviews Page' do
         end
 
         describe 'when not signed in' do
-          with_shared_context 'click third star' do
-            with_shared_context 'submit response with comment without bad words' do
+          when_I :click_third_star do
+            when_I :write_a_nice_comment do
               it 'should be redirected to the join page' do
                 expect(page.current_path).to eq(join_path)
               end

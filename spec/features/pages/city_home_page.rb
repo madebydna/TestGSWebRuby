@@ -1,4 +1,4 @@
-require_relative './modules/email_join_modal'
+require_relative './modules/join_modals'
 require_relative './modules/flash_messages'
 require_relative './modules/breadcrumbs'
 

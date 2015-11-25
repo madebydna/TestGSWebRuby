@@ -145,8 +145,8 @@ end
 
 shared_context 'select parent role' do
   before do
-    pending ('fails randomly')
-    fail
+    # pending ('fails randomly')
+    # fail
     first('input').click
     first(:button, 'Submit').click
     wait_for_ajax
@@ -157,8 +157,8 @@ end
 
 shared_context 'submit response with comment without bad words' do
   before do
-    pending ('fails randomly')
-    fail
+    # pending ('fails randomly')
+    # fail
     comment = 'lorem ' * 15
     subject.visible_review_question.review_comment.fill_in('review[comment]',with: comment)
     question_submit = subject.visible_review_question.submit_button

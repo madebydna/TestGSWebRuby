@@ -16,6 +16,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     elements :stars, '.js-topicalReviewStarContainer'
     elements :radio_buttons, "input[type='radio']"
     element :call_to_action_text, 'span', text: 'Have your say!'
+
   end
 
   class ReviewQuestionHidden < SitePrism::Section
@@ -152,6 +153,22 @@ class SchoolProfileReviewsPage < SitePrism::Page
     wait_for_ajax
     first_review.unvote_review_button.click
     wait_for_ajax
+  end
+
+  def click_third_star
+    visible_review_question.stars[2].click
+  end
+
+  def write_a_nice_comment(comment = 'lorem ' * 15)
+    visible_review_question.review_comment.fill_in('review[comment]', with: comment)
+  end
+
+  def write_a_nasty_comment
+    write_a_nice_comment('shit ' * 15)
+  end
+
+  def submit_my_response
+    visible_review_question.submit_button.click
   end
 end
 
