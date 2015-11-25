@@ -39,14 +39,7 @@ describe 'School Profile Reviews Page' do
         with_shared_context 'signed in verified user with role for school' do
           with_shared_context 'click third star' do
             include_example 'should show the review comment section'
-            with_shared_context 'submit response with comment without bad words' do
-              include_example 'should show next question'
-              include_example 'should show a radio_button question'
-              # include_example 'should have call to action text'
-              include_example 'should not show the review comment form'
-            end
-
-            with_shared_context 'submit response with bad word' do
+            when_I :submit_a_comment do
               include_example 'should show next question'
               include_example 'should show a radio_button question'
               include_example 'should not show the review comment form'
@@ -56,7 +49,7 @@ describe 'School Profile Reviews Page' do
 
         describe 'when not signed in' do
           when_I :click_third_star do
-            when_I :write_a_nice_comment do
+            when_I :submit_a_comment do
               with_shared_context 'with signing into a verified account without role for school' do
                 include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
                 include_example 'should show role question'
@@ -81,25 +74,20 @@ describe 'School Profile Reviews Page' do
               end
             end
 
-            with_shared_context 'submit response with bad word' do
-              with_shared_context 'with signing into a verified account' do
-                include_example 'should contain the expected text', *['Please note that it can take up to 48 hours for your review to be posted to our site.']
-              end
-            end
           end
         end
         with_shared_context 'with signed in as principal for school' do
-        include_example 'should not show the overall star question'
-        include_example 'should show the overall star principal question'
-        include_example 'should not show stars'
-        include_example 'should show the review comment section'
-        include_example 'should show submit button with principal text'
-        with_shared_context 'submit response with comment without bad words' do
+          include_example 'should not show the overall star question'
+          include_example 'should show the overall star principal question'
+          include_example 'should not show stars'
           include_example 'should show the review comment section'
           include_example 'should show submit button with principal text'
-          include_example 'should show next principal question'
-          include_example 'should not show radio buttons'
-        end
+          when_I :submit_a_comment do
+            include_example 'should show the review comment section'
+            include_example 'should show submit button with principal text'
+            include_example 'should show next principal question'
+            include_example 'should not show radio buttons'
+          end
         end
       end
       with_shared_context 'a radio button question' do
@@ -108,6 +96,10 @@ describe 'School Profile Reviews Page' do
           include_example 'should not show the review comment form'
           with_shared_context 'select first radio button option' do
             include_example 'should show the review comment section'
+            when_I :submit_a_comment do
+              before { pending 'Legitimate bug'; fail; }
+              include_example 'should show role question'
+            end
           end
         end
       end

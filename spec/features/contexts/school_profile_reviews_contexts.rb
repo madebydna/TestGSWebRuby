@@ -46,6 +46,8 @@ end
 
 shared_context 'with signing into a verified account' do
   before do
+    pending ('Replace this context with when_I sign up via modal for signin into verified account.')
+    fail
     click_link('Login')
     user = FactoryGirl.create(:verified_user)
     log_in_user(user)
@@ -149,38 +151,11 @@ end
 
 shared_context 'select parent role' do
   before do
-    # pending ('fails randomly')
-    # fail
     first('input').click
     first(:button, 'Submit').click
     wait_for_ajax
     wait_for_page_to_finish
     subject.wait_for_active_topic_2_question_aria
-  end
-end
-
-shared_context 'submit response with comment without bad words' do
-  before do
-    # pending ('fails randomly')
-    # fail
-    comment = 'lorem ' * 15
-    subject.visible_review_question.review_comment.fill_in('review[comment]',with: comment)
-    question_submit = subject.visible_review_question.submit_button
-    question_submit.click
-    wait_for_ajax
-  end
-end
-
-shared_context 'submit response with bad word' do
-  before do
-    pending ('fails randomly')
-    fail
-    AlertWord.create!( word: 'test_really_bad_word', really_bad: true )
-    comment = 'lorem ' * 15 + 'test_really_bad_word'
-    subject.visible_review_question.review_comment.fill_in('review[comment]',with: comment)
-    question_submit = subject.visible_review_question.submit_button
-    question_submit.click
-    wait_for_ajax
   end
 end
 

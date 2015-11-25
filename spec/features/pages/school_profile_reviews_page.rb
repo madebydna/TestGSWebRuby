@@ -159,16 +159,17 @@ class SchoolProfileReviewsPage < SitePrism::Page
     visible_review_question.stars[2].click
   end
 
-  def write_a_nice_comment(comment = 'lorem ' * 15)
-    visible_review_question.review_comment.fill_in('review[comment]', with: comment)
-  end
-
-  def write_a_nasty_comment
-    write_a_nice_comment('shit ' * 15)
+  def write_a_comment(comment = 'lorem ' * 15)
+    visible_review_question.review_comment.set(comment)
   end
 
   def submit_my_response
     visible_review_question.submit_button.click
+  end
+
+  def submit_a_comment
+    write_a_comment
+    submit_my_response
   end
 end
 
