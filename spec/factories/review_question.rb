@@ -21,7 +21,7 @@ FactoryGirl.define do
 
     factory :teacher_question do
       association :review_topic, factory: :teachers_topic, strategy: :build
-      question 'How effective are this school\'s teachers at making students successful?'
+      question 'How effective do you feel the teachers are at this school?'
       principal_question 'Please share how your school develops effective teachers.'
       responses 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'
       layout 'radio_button'

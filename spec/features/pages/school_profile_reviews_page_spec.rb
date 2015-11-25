@@ -105,7 +105,7 @@ describe 'School Profile Reviews Page' do
         with_shared_context 'submit response with comment without bad words' do
           include_example 'should show the review comment section'
           include_example 'should show submit button with principal text'
-          include_example 'should show next question'
+          include_example 'should show next principal question'
           include_example 'should not show radio buttons'
         end
         end

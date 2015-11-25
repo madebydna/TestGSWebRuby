@@ -70,6 +70,10 @@ shared_example 'should show next question' do
   expect(subject.visible_review_question.question.text).to eq(teacher_question.question)
 end
 
+shared_example 'should show next principal question' do
+  expect(subject.visible_review_question.question.text).to eq(teacher_question.principal_question)
+end
+
 shared_example 'should have call to action text' do
   expect(subject.visible_review_question).to have_call_to_action_text
 end
