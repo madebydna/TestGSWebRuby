@@ -9,6 +9,9 @@ es:
       have_an_account_label: ¿Tener una cuenta?
       login_tab: Iniciar sesión
       or: o
+      parsley_remote_message_html: "Parece que usted ya tiene una cuenta. <a href='#login' data-toggle='tab'>Iniciar sesión</a>."
+      parsley_required_message: "Por favor introduzca una dirección de correo eléctronico."
+      parsley_terms_message: Usted debe aceptar los términos de uso para crear una cuenta.
       password_label: Contraseña
       promos:
       - header: Boletín semanal
