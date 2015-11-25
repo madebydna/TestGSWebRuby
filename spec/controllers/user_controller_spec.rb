@@ -171,23 +171,25 @@ describe UserController do
       end
 
       it 'should make sure the password and confirmed password match' do
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'bar'
+        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo123', confirm_password: 'bar123', format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_falsey
         expect(json_response['message']).to include('do not match')
       end
 
       it 'should notify the user if an error occurs' do
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'foo'
+        xhr :post, :change_password, current_password: 'abcdefg', new_password: 'foo', confirm_password: 'foo', format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_falsey
         expect(json_response['message']).to match(/6 and 14/)
       end
 
       it 'should change the user\'s password' do
-        xhr :post, :change_password, current_password: 'abcdefg', new_password: '123456', confirm_password: '123456'
+        new_password = '123456'
+        xhr :post, :change_password, current_password: 'abcdefg', new_password: new_password, confirm_password: new_password, format: :json
         json_response = JSON.parse(response.body)
         expect(json_response['success']).to be_truthy
+        expect(user.password_is?(new_password)).to be_truthy
       end
     end
   end

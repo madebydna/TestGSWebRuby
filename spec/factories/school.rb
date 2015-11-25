@@ -42,6 +42,14 @@ FactoryGirl.define do
         type 'public'
       end
 
+      factory :cesar_chavez_academy_denver do
+        name 'Cesar Chavez Academy Denver'
+        city 'Denver'
+        state 'CO'
+        level_code 'e,m'
+        type 'charter'
+      end
+
       factory :bay_farm_elementary_school do
         name 'Bay Farm Elementary School'
         city 'Alameda'
@@ -104,6 +112,39 @@ FactoryGirl.define do
         state 'CA'
         level_code 'h'
         type 'private'
+      end
+
+      factory :school_with_rating do
+        ignore do
+          # Elements of this array should be in this format:
+          # { data_type_id: 174, breakdown_id: 1, value_float: 10 },
+          # { data_type_id: 174, breakdown_id: 8, value_float: 9  },
+          # Note that value_float is a required field and that any
+          # TestDataSet attributes can be used.
+          ratings []
+        end
+
+        after(:create) do |school, evaluator|
+          evaluator.ratings.each do |rating|
+            data_set_attrs = {
+              display_target: 'ratings'
+            }.merge(rating.except(:value_float))
+            data_set = TestDataSet
+              .on_db(school.shard)
+              .where(data_set_attrs)
+              .first_or_initialize
+            data_set.save!
+
+            school_value_attrs = {
+              active: 1,
+              school_id: school.id,
+              data_set_id: data_set.id,
+              value_float: rating[:value_float]
+            }
+            school_value = TestDataSchoolValue.on_db(school.shard).where(school_value_attrs).first_or_initialize
+            school_value.save!
+          end
+        end
       end
 
       trait :with_hub_city_mapping do

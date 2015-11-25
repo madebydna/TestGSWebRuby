@@ -2,6 +2,10 @@
   @include gs-rating($size: $gs-rating-size-small);
 }
 
+.gs-rating-smallish {
+  @include gs-rating($size: $gs-rating-size-smallish);
+}
+
 .gs-rating-md {
   @include gs-rating($size: $gs-rating-size-medium);
 }

@@ -62,7 +62,7 @@ $(function() {
 
   $('.js-send-me-updates-button-footer').on('click', function () {
     if (GS.schoolNameFromUrl() === undefined) {
-      signupAndGetNewsletter();
+        GS.sendUpdates.signupAndGetNewsletter();
     } else {
       var state = GS.stateAbbreviationFromUrl();
       var schoolId = GS.schoolIdFromUrl();
@@ -77,8 +77,6 @@ $(function() {
 
   $('.js-button-link').on('click', function() {
 
-
-
     var use_new_window = $(this).data('link-use-new-window');
     var url = $(this).data('link-value').replace('#%23', '#');
     if(use_new_window == true) {
@@ -89,7 +87,13 @@ $(function() {
 
   });
 
-
+  if (GS.I18n.currentLocale()) {
+    var currentLocale = GS.I18n.currentLocale();
+//  Only set locale in parsley if locale exists
+    if (window.ParsleyConfig.i18n.hasOwnProperty(currentLocale)) {
+      window.ParsleyValidator.setLocale(currentLocale); 
+    }
+  }
 
   $('.js_toggle_parent_sib').on('click', function(){
     $(this).parent().siblings('div:first').slideToggle('fast');

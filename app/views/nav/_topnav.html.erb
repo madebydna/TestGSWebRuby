@@ -76,20 +76,13 @@
                         <%= link_to t('.learning_disabilities'), learning_disabilities_url %>
                       </li>
                       <li class=" ">
-                        <%= link_to t('.state_test_guide'), state_test_guide_url %>
+                        <%= link_to t('.state_test_guide'), common_core_test_guide_url  %>
                       </li>
                     </ul>
                 </li>
                 <li>
                 <%=
-                    target_lang, link_text, label_text = * case I18n.locale
-                                               when :en
-                                                 ['es', 'En Español', 'spanish']
-                                               when :es
-                                                 [nil, 'In English', 'english']
-                                               else
-                                                 ['es', 'En Español', 'spanish']
-                                               end
+                    target_lang, link_text, label_text = *translation_view_array
                     content_tag(:a, link_text,
                                 class: "js-changeLanguage open-sans_i pointer",
                                 data:{ 'label'             => label_text,

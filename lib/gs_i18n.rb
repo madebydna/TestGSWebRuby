@@ -1,3 +1,4 @@
+# encoding: utf-8
 module GsI18n
   def db_t(key, *args)
     default = args.first[:default] if args.first.is_a?(Hash) && args.first[:default]
@@ -8,6 +9,17 @@ module GsI18n
     cleansed_key = key.to_s.gsub('.', '').strip
     cleansed_key = cleansed_key.to_sym if key.is_a?(Symbol)
     self.t(cleansed_key, *args)
+  end
+
+  def translation_view_array
+    case I18n.locale
+    when :en
+      ['es', 'En Español', 'spanish']
+    when :es
+      [nil, 'In English', 'english']
+    else
+      ['es', 'En Español', 'spanish']
+    end
   end
 
   class I18nManager

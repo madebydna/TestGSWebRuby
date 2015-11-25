@@ -1,0 +1,30 @@
+<% #Blue Bar %>
+<% spotlight_path_args = {
+     collection_id: @collection_id,
+     sortBy: 'caaspp_english',
+     sortAscOrDesc: 'desc',
+     gradeLevel: 'a'
+   }
+%>
+<div class='dirt-green-bg pvl clearfix'>
+  <div class='tac'>
+    <span class='top-schools'><%= t(".#{@t_scope}.top_schools") %></span>
+
+    <% spotlight_path_link = community_spotlight_path(spotlight_path_args.merge(sortBreakdown: 'economically_disadvantaged')) %>
+    <%= link_to t(".#{@t_scope}.low_income"), spotlight_path_link, class: 'breakdown-links' %>
+    <span class='link-dividers hidden-xs-inline'>|</span>
+
+    <% spotlight_path_link = community_spotlight_path(spotlight_path_args.merge(sortBreakdown: 'african_american')) %>
+    <%= link_to t(".#{@t_scope}.african_americans"), spotlight_path_link, class: 'breakdown-links' %>
+    <span class='link-dividers hidden-xs-inline'>|</span>
+
+    <% spotlight_path_link = community_spotlight_path(spotlight_path_args.merge(sortBreakdown: 'hispanic')) %>
+    <%= link_to t(".#{@t_scope}.latinos"), spotlight_path_link, class: 'breakdown-links' %>
+
+  </div>
+
+  <% #search bar %>
+  <div class="search-bar-home ma ptl clearfix">
+    <%= render partial: 'nav/search_form' %>
+  </div>
+</div>

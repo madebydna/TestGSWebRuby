@@ -6,7 +6,7 @@ GS.nearbySchools = (function() {
   var NEARBY_SCHOOLS_HIDE_SELECTOR   = '.js-nearbySchoolsHide';
   var WHITE_SPACE_DIV_SELECTOR       = '.js-whiteSpaceDiv';
   var WHITE_SPACE_DIV                = "<div class='js-whiteSpaceDiv invert-colors'></div>";
-  var category                       = 'Nearby schools sticky';
+  var category                       = 'Profile - Sticky nearby schools';
   var action                         = 'Show module';
   var label                          = undefined;
   var value                          = undefined;

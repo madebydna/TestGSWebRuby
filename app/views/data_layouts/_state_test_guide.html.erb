@@ -1,16 +1,21 @@
 <% 
-  states_with_test_guide = %w(WA OR DE CT WV VT HI SD ID MT NV NH MI ND CA ME MO WI)
+  states_with_sbac_test_guide = %w(WA OR DE CT WV VT HI SD ID MT NV NH MI ND CA ME MO WI)
+  states_with_parcc_test_guide = %w(CO NM AR LA MS IL OH DC MD NJ RI MA)
   level_codes_targeted = %w(e m)
-  display_link = states_with_test_guide.include?(@school.state) && 
+  sbac_state = states_with_sbac_test_guide.include?(@school.state)
+  parcc_state = states_with_parcc_test_guide.include?(@school.state)
+
+  display_link = (sbac_state || parcc_state) &&
     @school.public_or_charter? && 
       @school.includes_level_code?(level_codes_targeted)
-  %>
+%>
 
 <% if display_link  %>
-  <div class="external-link-callout">
+  <div class="external-link-callout mtl">
     <%= t('.state_test_guide_text_html') %>
-    <a class="open-sans_b" target="_blank" href="<%= state_test_guide_url %>">
-       <%= t('.state_test_guide_text_link') %>
+    <a class="open-sans_b" target="_blank" href="<%= common_core_test_guide_url %>">
+      <%# If link is displayed and is not sbac state will display parcc link text %>
+       <%= sbac_state ? t('.sbac_state_test_guide_text_link') : t('.parcc_state_test_guide_text_link') %>
     </a> 
   </div>
 <% end  %>

@@ -69,6 +69,7 @@
       }
       .close-nearby-schools, .next {
         font-size: 9px;
+        padding-top: 10px;
         width: 10%;
       }
       .nearby-school {
@@ -83,6 +84,10 @@
       .carousel {
         width: 80%;
       }
+      .more-quality-schools {
+        margin-top: 15px;
+        text-align: center;
+      }
     }
 
     @include for-sm-and-up {
@@ -94,7 +99,11 @@
           width: 70%;
         }
         .close-nearby-schools, .next {
+          padding-top: 18px;
           width: 15%;
+        }
+        .more-quality-schools {
+          margin-top: 20px;
         }
       }
     }
@@ -138,8 +147,11 @@
         }
         .close-nearby-schools, .next {
           font-size: 10px;
-          padding-top: $spacing-small;
+          padding-top: 25px;
           width: 10%;
+        }
+        .more-quality-schools {
+          margin-top: 25px;
         }
       }
     }

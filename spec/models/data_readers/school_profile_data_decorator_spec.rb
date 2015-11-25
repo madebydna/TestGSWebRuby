@@ -1,6 +1,87 @@
 require 'spec_helper'
 
 describe SchoolProfileDataDecorator do
+
+  describe '#data_for_category_and_source' do
+    subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }
+    let(:category1) { double('category', :id => 1, :source => 'census_data') }
+    let(:category2) { double('category', :id => 2, :source => 'census_data') }
+    let(:data1) { :data1 }
+    let(:data2) { :data2 }
+
+    it 'should be memoized' do
+      params1 = {category: category1, source: category1.source}
+      params2 = {category: category2, source: category2.source}
+      allow(subject).to receive(:census_data).with(params1).once.and_return(data1)
+      allow(subject).to receive(:census_data).with(params2).once.and_return(data2)
+      expect(subject.data_for_category_and_source(params1)).to eq(data1)
+      expect(subject.data_for_category_and_source(params1)).to eq(data1)
+      expect(subject.data_for_category_and_source(params2)).to eq(data2)
+      expect(subject.data_for_category_and_source(params2)).to eq(data2)
+      expect(subject.data_for_category_and_source(params1)).to eq(data1)
+    end
+  end
+
+  describe 'data readers' do
+    subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }
+    let(:category1) { double('category', :id => 1) }
+    let(:category2) { double('category', :id => 2) }
+    # Note the data format was picked because of the enrollment method, which expects hashes with arrays as values.
+    # Probably I should have broken that out to a separate spec and kept this simple.
+    let(:data1) { {id: [:data1]} }
+    let(:data2) { {id: [:data2]} }
+
+    describe 'that rely on category' do
+      describe 'should be memoized by category' do
+        [
+            [:census_data, :@census_data_reader, :labels_to_hashes_map],
+            [:cta_prek_only, :@cta_prek_only_data_reader, :data_for_category],
+            [:details, :@details_data_reader, :data_for_category],
+            [:esp_data_points, :@esp_data_points_data_reader, :data_for_category],
+            [:esp_response, :@esp_data_reader, :data_for_category],
+            [:group_comparison_data, :@group_comparison_data_reader, :data_for_category],
+            [:community_spotlights, :@community_spotlights_data_reader, :data_for_category],
+            [:snapshot, :@snapshot_data_reader, :data_for_category],
+            [:performance, :@performance_data_reader, :data_for_category],
+            [:nearby_schools, :@nearby_schools_data_reader, :data_for_category],
+            [:enrollment, :@esp_data_reader, :responses_for_category],
+        ].each do |method, reader_class, reader_action|
+          it "##{method.to_s}" do
+            reader = double(reader_class)
+            subject.instance_variable_set(reader_class, reader)
+            allow(reader).to receive(reader_action).with(category1).once.and_return(data1)
+            allow(reader).to receive(reader_action).with(category2).once.and_return(data2)
+            expect(subject.send(method, {category:category1})).to eq(data1)
+            expect(subject.send(method, {category:category1})).to eq(data1)
+            expect(subject.send(method, {category:category2})).to eq(data2)
+            expect(subject.send(method, {category:category2})).to eq(data2)
+            expect(subject.send(method, {category:category1})).to eq(data1)
+          end
+        end
+      end
+    end
+    describe 'that do not rely on category' do
+      describe 'should be memoized' do
+        [
+            [:census_data_points, :@census_data_reader, :data_type_descriptions_to_school_values_map],
+            [:test_scores, :@test_scores_data_reader, :data],
+            [:rating_data, :@rating_data_reader, :data],
+        ].each do |method, reader_class, reader_action|
+          it "##{method.to_s}" do
+            reader = double(reader_class)
+            subject.instance_variable_set(reader_class, reader)
+            allow(reader).to receive(reader_action).once.and_return(data1)
+            expect(subject.send(method, {category:category1})).to eq(data1)
+            expect(subject.send(method, {category:category1})).to eq(data1)
+            expect(subject.send(method, {category:category2})).to eq(data1)
+            expect(subject.send(method, {category:category2})).to eq(data1)
+            expect(subject.send(method, {category:category1})).to eq(data1)
+          end
+        end
+      end
+    end
+  end
+
   describe '#footnotes' do
     let(:page) { FactoryGirl.build(:page) }
     subject(:school) { FactoryGirl.build(:school).extend SchoolProfileDataDecorator }

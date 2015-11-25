@@ -285,36 +285,6 @@ class School < ActiveRecord::Base
     collection.schools
   end
 
-
-  # The three following methods return the nearby schools currently using levelcode to filter.
-  # So if school is a high school then it will return high schools
-  # if multiple level schools then will return set  of schools based on distance first then level
-  # So if a elementary and middle school will return the closest elementary or middle schools, the return set could
-  # be all middle schools or elementary schools.
-
-  def schools_by_distance(school_count)
-    query = "SELECT `id`, street,`city`, `state`, `name`, `level`, `type`, `level_code`, "
-    query << location_near_formula(lat, lon)
-    query << "`distance` FROM `school` where active=1 && lat is not null && lon is not null && id !=#{id} "
-    query << level_code_filter
-    query << " ORDER BY `distance` LIMIT #{school_count}"
-    School.on_db(shard).find_by_sql(query)
-  end
-
-  def location_near_formula(lat, lon)
-    miles_center_of_earth = 3959
-    "( #{miles_center_of_earth} * acos(cos(radians(#{lat})) * cos( radians( `lat` ) ) * cos(radians(`lon`) - radians(#{lon}) ) + sin(radians(#{lat})) * sin( radians(`lat`) ) ) )"
-  end
-
-  def level_code_filter
-    return '' if level_code_array.blank?
-    arr_query_str = []
-    level_code_array.each do |one_level_code|
-      arr_query_str << "level_code LIKE '%#{one_level_code}%'"
-    end
-    arr_query_str.present? ? ' && (' << arr_query_str.join(" || ") << ') ' : ''
-  end
-
   def demo_school?
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
   end

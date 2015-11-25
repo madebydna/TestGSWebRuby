@@ -6,7 +6,7 @@ class EmailVerificationEmailNoPassword < AbstractExactTargetMailer
 
   def self.deliver_to_user(user, email_verification_url)
     exact_target_email_attributes = {
-      VERIFICATION_LINK: "<a href=\"#{email_verification_url}\">#{email_verification_url}</a>"
+      VERIFICATION_LINK: email_verification_url
     }
 
     deliver(user.email, exact_target_email_attributes)

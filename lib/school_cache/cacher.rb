@@ -91,16 +91,16 @@ class Cacher
         begin
           cacher_class.new(school).cache
         rescue => error
-          Rails.logger.error "ERROR: populating school cache #{cacher_class} for school id: #{school.id} in state: #{school.state}." +
-                                 "\nException : #{error.message}."
+          error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
+          GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
         end
       end
     else
       begin
         ratings_cache_for_school(school)
       rescue => error
-        Rails.logger.error "ERROR: populating school cache ratings for school id: #{school.id} in state: #{school.state}." +
-                               "\nException : #{error.message}."
+        error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
+        GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
       end
     end
   end
@@ -115,8 +115,8 @@ class Cacher
         ratings_cache_for_school(school)
       end
     rescue => error
-      Rails.logger.error "ERROR: populating school cache for school id: #{school.id} in state: #{school.state}." +
-                             "\nException : #{error.message}."
+      error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
+      GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
     end
   end
 

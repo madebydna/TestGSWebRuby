@@ -5,7 +5,7 @@ en:
       created_via_facebook: Great, we've finished setting up your account! From now on you can log in using Facebook.
       email_verified: Your email address has been verified. Welcome to GreatSchools!
       facebook_linked: We noticed you already had a GreatSchools account, so now you can log in using Facebook as well!
-      password_changed: Your password has been changed.
+      password_changed: Your password has been updated.
       pending_email_verification: Almost done! Now you just need you to verify your email address. Please click on the link in the email to activate your account.
     forgot_password:
       email_sent: Great! Just click on the link in the email we sent to %{email} to continue resetting your password.
@@ -50,6 +50,12 @@ en:
             who:
               inclusion: Affiliation has invalid value.
           blank: ! '%{attribute} can''t be blank.'
+        change_password_params:
+          attributes:
+            password:
+              too_long: Your password must be between 6 and 14 characters.
+              too_short: Your password must be between 6 and 14 characters.
+              confirmation: sldfjlskjdf.
         user:
           attributes:
             email:

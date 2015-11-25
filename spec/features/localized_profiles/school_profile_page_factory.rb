@@ -62,4 +62,16 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_state_test_guide_module
+    state_test_guide_section = FactoryGirl.create(
+      :category_placement,
+      title: 'State Test Guide',
+      page: page,
+      layout: 'state_test_guide'
+    )
+
+    return self
+  end
+
+
 end

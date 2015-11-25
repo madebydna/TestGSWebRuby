@@ -17,6 +17,7 @@ describe('GS.I18n', function() {
 
   afterEach(function() {
     unstub(GS.uri.Uri.getHref);
+    unstub(GS.uri.Uri.getValueOfQueryParam);
   });
 
   describe('.t', function() {
@@ -38,4 +39,17 @@ describe('GS.I18n', function() {
       ).to.eq(defaultValue);
     });
   });
+
+  describe('.currentLocale', function() {
+    it('returns current en locale when no locale is set', function() {
+      sinon.stub(GS.uri.Uri, 'getValueOfQueryParam').returns(null);
+      expect(GS.I18n.currentLocale()).to.eq('en');
+    });
+
+    it('returns current locale when locale is set', function() {
+      sinon.stub(GS.uri.Uri, 'getValueOfQueryParam').returns('es');
+      expect(GS.I18n.currentLocale()).to.eq('es');
+    });
+  });
+
 });

@@ -3,6 +3,7 @@ en:
   signin:
     login_form:
       email_label: Email address
+      email_required_error: Please enter an email address.
       facebook_signin_button: Log in with Facebook
       forgot_password_link: Forgot your password?
       have_an_account_label: Have an account?

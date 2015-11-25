@@ -5,7 +5,7 @@ es:
       created_via_facebook: Grande, hemos terminado de configurar su cuenta! A partir de ahora puede iniciar sesión en el uso de Facebook.
       email_verified: Su dirección de correo electrónico ha sido verificada. Bienvenido a GreatSchools!
       facebook_linked: Nos dimos cuenta de que ya tenía una cuenta de GreatSchools, por lo que ahora puede iniciar sesión en el uso de Facebook también!
-      password_changed: Su contraseña ha sido cambiada.
+      password_changed: Su contraseña se ha actualizado.
       pending_email_verification: Casi hecho! Ahora sólo necesita verificar su dirección de correo electrónico. Por favor, haz clic en el enlace del correo para activar su cuenta.
     forgot_password:
       email_sent: ¡Excelente! Simplemente haga clic en el enlace en el correo electrónico que le enviamos para %{email} continuar restablecer su contraseña.

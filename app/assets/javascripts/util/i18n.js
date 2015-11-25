@@ -2,6 +2,7 @@ var GS = GS || {};
 
 GS.I18n = GS.I18n || (function() {
   var translationsHash;
+  var defaultLocale = 'en';
 
   var translate = function(key, options) {
     options = options || {};
@@ -57,10 +58,16 @@ GS.I18n = GS.I18n || (function() {
     };
   };
 
+  var currentLocale = function() {
+    var locale = GS.uri.Uri.getValueOfQueryParam('lang');
+    return locale || defaultLocale;
+  };
+
   return {
     _setTranslationsHash: setTranslationsHash,
     getTranslationsHash: getTranslationsHash,
     t: translate,
+    currentLocale: currentLocale,
     preserveLanguageParam: preserveLanguageParam,
     initLanguageLinkListener: initLanguageLinkListener,
   }

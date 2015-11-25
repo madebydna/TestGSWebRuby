@@ -28,9 +28,6 @@
           %>
         </div>
         <div class="nearby-schools">
-          <div class="title">
-            TOP RATED NEARBY SCHOOLS
-          </div>
           <div class="js-nearbySchoolsHide js-gaClick close-nearby-schools"
             data-ga-click-category='Profile - Sticky nearby schools'
             data-ga-click-action='Close module'
@@ -45,6 +42,10 @@
                 <% # Slick will apply styles to the following div.
                    # Be warned! Classes may have styles overwritten! %>
                 <div>
+                  <div class="title">
+                    <% distance = school['distance'].round(1) %>
+                    <%= t(".#{school['methodology']}", distance: distance, count: distance) %>
+                  </div>
                   <div class="nearby-school school">
                     <%= link_to(school_hash_to_url_for_profile(school),
                                 class: 'js-gaClick',
@@ -68,7 +69,7 @@
                 </div>
               <% end %>
               <div>
-                <div class="pts tac">
+                <div class="more-quality-schools">
                   <%= t('.more_quality_schools_html', link: school_profile_decorator.school_zip_location_search_url) %>
                 </div>
               </div>
