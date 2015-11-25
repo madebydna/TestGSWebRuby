@@ -32,7 +32,7 @@ end
 
 shared_context 'with signing up for a new account' do
   before do
-    pending ('Need to update tests with new modals')
+    pending ('Replace this context with when_I sign up via modal for new account. Keep all assertions.')
     fail
     fill_in(:email, with: 'test@greatschools.org')
     check('terms[terms]')
@@ -61,6 +61,8 @@ end
 
 shared_context 'with signing into a verified account without role for school' do
   before do
+    pending ('update sign in with modal with verified account without role for school')
+    fail
     click_link('Login')
     user = FactoryGirl.create(:verified_user)
     log_in_user(user)
@@ -82,6 +84,8 @@ shared_context 'with signing into a verified account with role for school' do
     FactoryGirl.create(:parent_school_user, school: school, user: user)
   end
   before do
+    pending ('update with signing into verified account through modal')
+    fail
     click_link('Login')
     # user = FactoryGirl.create(:verified_user)
     log_in_user(user)

@@ -5,9 +5,6 @@ require_relative '../pages/school_profile_reviews_page'
 require 'support/shared_contexts_for_signed_in_users'
 
 
-shared_example 'should be redirected to the reviews page' do
-  expect(SchoolProfileReviewsPage.new).to be_displayed
-end
 
 shared_example 'should show the review module' do
   expect(subject).to have_review_module

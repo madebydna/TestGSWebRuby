@@ -57,12 +57,7 @@ describe 'School Profile Reviews Page' do
         describe 'when not signed in' do
           when_I :click_third_star do
             when_I :write_a_nice_comment do
-              it 'should be redirected to the join page' do
-                expect(page.current_path).to eq(join_path)
-              end
-
               with_shared_context 'with signing into a verified account without role for school' do
-                include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
                 include_example 'should show role question'
                 with_shared_context 'select parent role' do
@@ -71,14 +66,12 @@ describe 'School Profile Reviews Page' do
               end
 
               with_shared_context 'with signing into a verified account with role for school' do
-                include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
                 include_example 'should not show role question'
                 include_example 'should show a radio_button question'
               end
 
               with_shared_context 'with signing up for a new account' do
-                include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *["Thank you - we've saved your review. We can publish it once you verify your email address; please check your inbox for an email from us."]
                 with_shared_context 'Visit School Profile Reviews' do
                   with_shared_context 'select parent role' do
@@ -90,7 +83,6 @@ describe 'School Profile Reviews Page' do
 
             with_shared_context 'submit response with bad word' do
               with_shared_context 'with signing into a verified account' do
-                include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Please note that it can take up to 48 hours for your review to be posted to our site.']
               end
             end
@@ -218,13 +210,7 @@ describe 'School Profile Reviews Page' do
         with_subject :first_review do
           it { is_expected.to have_vote_for_review_button }
           when_I :vote_on_the_first_review do
-            it 'should be redirected to the join page' do
-              pending('Not redirecting because of join/sign in modal')
-              fail
-              expect(page.current_path).to eq(join_path)
-            end
             with_shared_context 'with signing up for a new account' do
-              include_example 'should be redirected to the reviews page'
               with_subject :first_review do
                 it { is_expected.to have_number_of_votes }
                 its(:number_of_votes_text) { is_expected.to match /1 person/ }
@@ -246,13 +232,7 @@ describe 'School Profile Reviews Page' do
           it { is_expected.to have_vote_for_review_button }
           it { is_expected.to_not have_unvote_review_button }
           when_I :vote_on_the_first_review do
-            it 'should be redirected to the join page' do
-              pending('Not redirecting because of join/sign in modal')
-              fail
-              expect(page.current_path).to eq(join_path)
-            end
             with_shared_context 'with signing up for a new account' do
-              include_example 'should be redirected to the reviews page'
               with_subject :first_review do
                 it { is_expected.to have_number_of_votes }
                 it { is_expected.to have_unvote_review_button }
