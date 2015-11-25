@@ -40,9 +40,6 @@ describe 'School Profile Reviews Page' do
           with_shared_context 'click third star' do
             include_example 'should show the review comment section'
             with_shared_context 'submit response with comment without bad words' do
-              include_example 'should save review with expected value', '3'
-              include_example 'should save overall review with comment without bad words'
-              include_example 'should save review that is active'
               include_example 'should show next question'
               include_example 'should show a radio_button question'
               # include_example 'should have call to action text'
@@ -50,9 +47,6 @@ describe 'School Profile Reviews Page' do
             end
 
             with_shared_context 'submit response with bad word' do
-              include_example 'should save review with expected value', '3'
-              include_example 'should save overall review with comment with bad words'
-              include_example 'should save review that is not active'
               include_example 'should show next question'
               include_example 'should show a radio_button question'
               include_example 'should not show the review comment form'
@@ -70,22 +64,15 @@ describe 'School Profile Reviews Page' do
               with_shared_context 'with signing into a verified account without role for school' do
                 include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
-                # include_example 'should save review with expected value', '3'
-                include_example 'should save overall review with comment without bad words'
-                include_example 'should save review that is active'
                 include_example 'should show role question'
                 with_shared_context 'select parent role' do
                   include_example 'should show a radio_button question'
-                  include_example 'should save SchoolUser with parent user type'
                 end
               end
 
               with_shared_context 'with signing into a verified account with role for school' do
                 include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Thanks for your school review! Your feedback helps other parents choose the right schools!']
-                # include_example 'should save review with expected value', '3'
-                include_example 'should save overall review with comment without bad words'
-                include_example 'should save review that is active'
                 include_example 'should not show role question'
                 include_example 'should show a radio_button question'
               end
@@ -93,13 +80,9 @@ describe 'School Profile Reviews Page' do
               with_shared_context 'with signing up for a new account' do
                 include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *["Thank you - we've saved your review. We can publish it once you verify your email address; please check your inbox for an email from us."]
-                include_example 'should save review with expected value', '3'
-                include_example 'should save overall review with comment without bad words'
-                include_example 'should save review that is not active'
                 with_shared_context 'Visit School Profile Reviews' do
                   with_shared_context 'select parent role' do
                   include_example 'should show a radio_button question'
-                  include_example 'should save SchoolUser with parent user type'
                   end
                 end
               end
@@ -109,9 +92,6 @@ describe 'School Profile Reviews Page' do
               with_shared_context 'with signing into a verified account' do
                 include_example 'should be redirected to the reviews page'
                 include_example 'should contain the expected text', *['Please note that it can take up to 48 hours for your review to be posted to our site.']
-                include_example 'should save review with expected value', '3'
-                include_example 'should save overall review with comment with bad words'
-                include_example 'should save review that is not active'
               end
             end
           end
@@ -123,9 +103,7 @@ describe 'School Profile Reviews Page' do
         include_example 'should show the review comment section'
         include_example 'should show submit button with principal text'
         with_shared_context 'submit response with comment without bad words' do
-          include_example 'should save overall review with comment without bad words'
           include_example 'should show the review comment section'
-          # include_example 'should save review that is active'
           include_example 'should show submit button with principal text'
           include_example 'should show next question'
           include_example 'should not show radio buttons'
@@ -138,10 +116,6 @@ describe 'School Profile Reviews Page' do
           include_example 'should not show the review comment form'
           with_shared_context 'select first radio button option' do
             include_example 'should show the review comment section'
-            with_shared_context 'submit response with comment without bad words' do
-              include_example 'should save overall review with comment without bad words'
-              include_example 'should save review with expected value', "Very ineffective"
-            end
           end
         end
       end
@@ -206,20 +180,9 @@ describe 'School Profile Reviews Page' do
             with_subject :first_review do
               on_subject :click_on_flag_review_link do
                 it { is_expected.to have_flag_review_form }
-
-                on_subject :submit_review_flag_comment, 'I hate this review' do
-                  it 'should be saved to the database' do
-                    wait_for_page_to_finish
-                    flag = ReviewFlag.last
-                    expect(flag).to be_present
-                    expect(flag.comment).to eq('I hate this review')
-                    expect(flag.review_id).to eq(two_active_reviews.first.id)
-                  end
-                end
               end
             end
           end
-
 
           with_subject :review_dates do
             it { is_expected.to be_in_descending_order }
