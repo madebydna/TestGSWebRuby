@@ -1,7 +1,7 @@
 require 'spec_helper'
 require_relative '../contexts/school_profile_contexts'
 require_relative '../examples/page_examples'
-require_relative '../pages/school_profile_quality_page'
+require_relative '../pages/school_profile_details_page'
 
 
 
@@ -22,10 +22,10 @@ describe 'School Profile Details Page' do
   end
 
   include_context 'Visit School Profile Details'
-  # with_shared_context 'with Cristo Rey New York High School' do
-  #   include_example 'should be on the correct page'
-  #   expect_it_to_have_element(:profile_navigation)
-  # end
+  with_shared_context 'with Cristo Rey New York High School' do
+    include_example 'should be on the correct page'
+    expect_it_to_have_element(:profile_navigation)
+  end
 
   after do
     clean_dbs :gs_schooldb, :ny
