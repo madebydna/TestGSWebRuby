@@ -25,10 +25,10 @@ class NearbySchoolsCaching::Methodologies
     end
 
     def basic_nearby_schools_conditions(school)
-      "active = 1 AND
-       id != #{school.id} AND
-       lat is not null AND
-       lon is not null
+      "school.active = 1 AND
+       school.id != #{school.id} AND
+       school.lat is not null AND
+       school.lon is not null
        #{level_code_filter(school)}"
     end
 
@@ -55,7 +55,7 @@ class NearbySchoolsCaching::Methodologies
       return '' if school.level_code_array.blank?
       arr_query_str = []
       school.level_code_array.each do |one_level_code|
-        arr_query_str << "level_code LIKE '%#{one_level_code}%'"
+        arr_query_str << "school.level_code LIKE '%#{one_level_code}%'"
       end
       arr_query_str.present? ? 'AND (' << arr_query_str.join(" || ") << ')' : ''
     end
