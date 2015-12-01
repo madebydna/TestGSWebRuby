@@ -4,6 +4,40 @@ class SchoolProfileReviewsPage < SitePrism::Page
   class ReviewsSection < SitePrism::Section
     elements :questions, 'form'
     elements :review_questions, '.js-topicalReviewContainer'
+    sections :slides, '.slick-slide:not(.slick-cloned)' do
+      element :container, '.js-reviewFormContainer'
+
+      element :question, '.bg-yellow'
+      elements :responses, '.js-checkboxContainer'
+      element :review_comment, '.js-topicalReviewComment'
+      element :submit_button, 'button'
+      element :review_form, 'form'
+      element :overall_summary, '.js-overallRatingSummary'
+      elements :stars, '.js-topicalReviewStarContainer'
+      elements :radio_buttons, "input[type='radio']"
+      element :call_to_action_text, 'span', text: 'Have your say!'
+
+      def active?
+        container.parent[:class].include?('slick-active')
+      end
+    end
+
+    {
+      first: 0,
+      second: 1,
+      third: 2,
+      fourth: 3,
+      fifth: 4
+    }.each do |ordinal, index|
+      define_method "#{ordinal}_slide" do
+        slides[index]
+      end
+    end
+
+    def active_slide
+      slides.find(&:active?)
+    end
+
   end
 
   class ReviewQuestionVisible < SitePrism::Section
@@ -26,13 +60,10 @@ class SchoolProfileReviewsPage < SitePrism::Page
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/reviews\/(#.+)?$/
 
   element :profile_navigation, '#navigation2'
-  section :review_module, ReviewsSection, '.js-topicalReviewQuestionsContainer'
+  section :review_module, ReviewsSection, '#topicalReviewQuestionCarousel'
   section :visible_review_question, ReviewQuestionVisible, ".js-topicalReviewContainer.slick-active"
   element :principal_review, 'h2', text: 'School Official Point of View'
-  element :active_topic_1_question, :xpath, "//div[@id='topic1'][contains(concat(' ',@class, ' '),'slick-active')]"
-  element :active_topic_1_question_aria, :xpath, "//div[@id='topic1'][@aria-hidden='false']"
-  element :active_topic_2_question, :xpath, "//div[@id='topic2'][contains(concat(' ',@class, ' '),'slick-active')]"
-  element :active_topic_2_question_aria, :xpath, "//div[@id='topic2'][@aria-hidden='false']"
+
   section :role_question, '.js-roleQuestion' do
     element :parent_option, 'input[value="parent"]'
     element :submit_button, 'button', text: 'Submit'
@@ -170,6 +201,10 @@ class SchoolProfileReviewsPage < SitePrism::Page
   def submit_a_comment
     write_a_comment
     submit_my_response
+  end
+
+  def active_slide
+    review_module.active_slide
   end
 end
 
