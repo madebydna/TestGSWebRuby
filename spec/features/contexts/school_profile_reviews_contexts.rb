@@ -137,7 +137,7 @@ end
 
 shared_context 'click third star' do
   before do
-    response_option = subject.visible_review_question.stars[2]
+    response_option = subject.active_slide.stars[2]
     response_option.click
   end
 end

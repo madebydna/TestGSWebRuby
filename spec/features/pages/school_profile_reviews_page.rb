@@ -9,8 +9,8 @@ class SchoolProfileReviewsPage < SitePrism::Page
 
       element :question, '.bg-yellow'
       elements :responses, '.js-checkboxContainer'
-      element :review_comment, '.js-topicalReviewComment'
-      element :submit_button, 'button'
+      element :review_comment, '.js-topicalReviewComment', visible: false
+      element :submit_button, 'button', visible: false
       element :review_form, 'form'
       element :overall_summary, '.js-overallRatingSummary'
       elements :stars, '.js-topicalReviewStarContainer'
@@ -187,15 +187,16 @@ class SchoolProfileReviewsPage < SitePrism::Page
   end
 
   def click_third_star
-    visible_review_question.stars[2].click
+    active_slide.stars[2].click
   end
 
   def write_a_comment(comment = 'lorem ' * 15)
-    visible_review_question.review_comment.set(comment)
+    active_slide.wait_for_review_comment
+    active_slide.review_comment.set(comment)
   end
 
   def submit_my_response
-    visible_review_question.submit_button.click
+    active_slide.submit_button.click
   end
 
   def submit_a_comment

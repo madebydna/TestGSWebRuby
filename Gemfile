@@ -123,6 +123,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'capybara-screenshot'
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
   #gem 'awesome_print', :require => 'ap'
 
