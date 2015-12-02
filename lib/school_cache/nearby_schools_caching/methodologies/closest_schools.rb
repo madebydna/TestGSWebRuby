@@ -6,6 +6,7 @@ class NearbySchoolsCaching::Methodologies::ClosestSchools < NearbySchoolsCaching
     # The closest schools that serve similar grade levels. The list is returned
     # in distance order, smallest to largest.
     def schools(school, opts)
+      return [] unless school.lat.present? && school.lon.present?
       limit = opts[:limit] || 5
       query = "
         SELECT #{basic_nearby_schools_fields}, '#{NAME}' as methodology,

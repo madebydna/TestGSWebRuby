@@ -1,9 +1,9 @@
 require 'spec_helper'
 require_relative 'methodologies_examples'
 
-describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
+describe NearbySchoolsCaching::Methodologies::ClosestSchools do
 
-  subject { NearbySchoolsCaching::Methodologies::ClosestTopSchools }
+  subject { NearbySchoolsCaching::Methodologies::ClosestSchools }
 
   let(:main_school) do
     FactoryGirl.create(:alameda_high_school,
@@ -15,14 +15,7 @@ describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
                       )
   end
   let(:opts) do
-    {
-      limit: 3,
-      minimum: 8,
-      ratings: [
-        { data_type_id: 174, breakdown_id: 1 },
-        { data_type_id: 174, breakdown_id: 8 },
-      ]
-    }
+    { limit: 3 }
   end
 
   # This config IS this test. Add schools here with various attributes you'd
@@ -38,96 +31,62 @@ describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
       {
         id: 2,
         state: 'CA',
-        lat: 32.1,
-        lon: 144.1,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 8, value_float: 9 },
-        ],
+        lat: 32,
+        lon: 144,
         level_code: 'h',
       },
-      # Same rating as above school but further away
       {
         id: 3,
+        exclude: true,
         state: 'CA',
         lat: 32.6,
         lon: 144.6,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 1, value_float: 9 },
-        ],
         level_code: 'h',
       },
-      # Highly rated school, but the wrong level_code
       {
         id: 4,
         exclude: true,
         state: 'CA',
         lat: 39,
         lon: 149,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 1, value_float: 10 },
-          { data_type_id: 174, breakdown_id: 8, value_float: 8  },
-        ],
         level_code: 'e,m',
       },
-      # Highest rated school, but further away
       {
         id: 5,
         state: 'CA',
+        exclude: true,
         lat: 39,
         lon: 149,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 1, value_float: 10 },
-          { data_type_id: 174, breakdown_id: 8, value_float: 9  },
-        ],
         level_code: 'm,h',
       },
-      # This school makes the cut (almost identical to the one above it) but is
-      # excluded because of the limit param
       {
         id: 6,
         exclude: true,
         state: 'CA',
         lat: 39.0001,
         lon: 149.0001,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 1, value_float: 10 },
-          { data_type_id: 174, breakdown_id: 8, value_float: 9  },
-        ],
         level_code: 'h',
       },
-      # Close school with high average, but cut because has a 7 for a rating
       {
         id: 7,
         exclude: true,
         state: 'CA',
-        lat: 32.1,
-        lon: 144.1,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 1, value_float: 10 },
-          { data_type_id: 174, breakdown_id: 8, value_float: 7 },
-        ],
+        lat: 33.1,
+        lon: 145.1,
         level_code: 'h',
       },
-      # School with no ratings should not be in list
       {
         id: 8,
-        exclude: true,
         state: 'CA',
-        lat: 32,
-        lon: 144,
+        lat: 32.1,
+        lon: 144.1,
         level_code: 'h',
       },
-      # This super close but low rated school should not be in the list
       {
         id: 9,
-        exclude: true,
         state: 'CA',
-        lat: 32,
-        lon: 144,
-        ratings: [
-          { data_type_id: 174, breakdown_id: 1, value_float: 1 },
-          { data_type_id: 174, breakdown_id: 8, value_float: 1 },
-        ],
+        lat: 32.2,
+        lon: 144.2,
         level_code: 'h',
       },
     ]

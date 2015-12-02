@@ -10,6 +10,7 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
     # For all of the given ratings, find the closest schools with a rating of
     # at least the configured minimum.
     def schools(school, opts)
+      return [] unless school.lat.present? && school.lon.present?
       limit   = opts[:limit] || 1 # number of schools to return
       minimum  = opts[:minimum] || 8 # Minimum average rating to consider
 
