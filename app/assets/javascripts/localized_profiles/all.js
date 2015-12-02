@@ -1,7 +1,6 @@
 var GS = GS || {};
 
 GS.schoolProfiles = GS.schoolProfiles || (function($) {
-    var MODAL_DELAY = 15000;
 
     var shouldShowSignUpForSchoolModal = function() {
      return $.cookie('profileModal') != 'true' && !GS.session.isSignedIn();
@@ -11,12 +10,14 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       $.cookie('profileModal', 'true', {expires: 1, path: '/' });
     };
 
-    var showSignUpForSchoolModalAfterDelay = function () {
-      setTimeout(function() { 
-        showSignUpForSchoolModal();
-          /* google event trigger */
-          dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
-        }, MODAL_DELAY);
+    var showSignUpForSchoolModalAfterDelay = function (CUSTOM_MODAL_DELAY) {
+        var MODAL_DELAY = 15000;
+        var DELAY = CUSTOM_MODAL_DELAY !== undefined ? CUSTOM_MODAL_DELAY : MODAL_DELAY;
+        setTimeout(function () {
+            showSignUpForSchoolModal();
+            /* google event trigger */
+            dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
+        }, DELAY);
     };
 
     var showSignUpForSchoolModal = function () {
