@@ -11,14 +11,19 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     };
 
     var showSignUpForSchoolModalAfterDelay = function (CUSTOM_MODAL_DELAY) {
-        var MODAL_DELAY = 15000;
-        var DELAY = CUSTOM_MODAL_DELAY !== undefined ? CUSTOM_MODAL_DELAY : MODAL_DELAY;
-        setTimeout(function () {
+        var DEFAULT_MODAL_DELAY = 15000;
+        var DELAY = CUSTOM_MODAL_DELAY !== undefined ? CUSTOM_MODAL_DELAY : DEFAULT_MODAL_DELAY;
+        console.log(DELAY);
+        GS.schoolProfiles.hover_time_out = setTimeout(
+            GS.schoolProfiles.have_handle = function () {
             showSignUpForSchoolModal();
             /* google event trigger */
             dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
-        }, DELAY);
+            },
+         DELAY);
     };
+
+
 
     var showSignUpForSchoolModal = function () {
       if ( shouldShowSignUpForSchoolModal() ) {
@@ -62,4 +67,11 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     };
 
   })(jQuery);
-
+//window.onload = function() {
+//    console.log('I m a test for optimizely');
+//    if (GS.schoolProfiles.have_handle != undefined) {
+//        clearTimeout(GS.schoolProfiles.hover_time_out);
+//        GS.schoolProfiles.showSignUpForSchoolModalAfterDelay(60000);
+//
+//    }
+//}
