@@ -26,7 +26,7 @@ class SchoolProfileOverviewPage < SitePrism::Page
     end
 
     def show
-      page.evaluate_script('$("#reviews-section").removeClass("dn");')
+      page.execute_script('$("#reviews-section").removeClass("dn");')
     end
   end
 
