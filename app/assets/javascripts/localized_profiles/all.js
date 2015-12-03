@@ -13,7 +13,6 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     var showSignUpForSchoolModalAfterDelay = function (CUSTOM_MODAL_DELAY) {
         var DEFAULT_MODAL_DELAY = 15000;
         var DELAY = CUSTOM_MODAL_DELAY !== undefined ? CUSTOM_MODAL_DELAY : DEFAULT_MODAL_DELAY;
-        console.log(DELAY);
         GS.schoolProfiles.hover_time_out = setTimeout(
             GS.schoolProfiles.have_handle = function () {
             showSignUpForSchoolModal();
