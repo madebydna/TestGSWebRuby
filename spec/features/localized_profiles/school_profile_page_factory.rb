@@ -73,5 +73,16 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_reviews_section_on_overview
+    FactoryGirl.create(
+      :category_placement,
+      title: 'Reviews',
+      page: page,
+      layout: 'reviews_overview'
+    )
+
+    return self
+  end
+
 
 end

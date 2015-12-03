@@ -22,6 +22,14 @@ def expect_it_to_have_element(element)
   instance_exec(&proc)
 end
 
+def create_reviews(count, school)
+  FactoryGirl.create_list(
+    :five_star_review,
+    count,
+    school_id: school.id,
+    state: school.state
+  )
+end
 
 describe 'School Profile Overview Page' do
   include_context 'Visit School Profile Overview'
@@ -145,6 +153,37 @@ describe 'School Profile Overview Page' do
       include_example 'should be on the correct page'
       it { is_expected.to have_link('PARCC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
    end
+  end
+
+  describe 'reviews section' do
+    include_context 'Given school profile page with reviews section on overview'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_reviews_section }
+
+    with_subject :reviews_section do
+      it { is_expected.to have_ad_slot }
+      context 'with no reviews' do
+        it { is_expected.to_not have_bar_chart }
+        it { is_expected.to_not have_reviews }
+        it { is_expected.to have_callout_text }
+        it { is_expected.to have_callout_button }
+      end
+      context 'with less than max # of reviews on overview' do
+        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW - 1, school) }
+        it { is_expected.to have_bar_chart }
+        it { is_expected.to have_reviews }
+        it { is_expected.to have_callout_text }
+        it { is_expected.to have_callout_button }
+      end
+      context 'with max # of reviews on overview' do
+        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW, school) }
+        it { is_expected.to have_bar_chart }
+        it { is_expected.to have_reviews }
+        it { is_expected.to_not have_callout_text }
+        it { is_expected.to_not have_callout_button }
+      end
+    end
   end
 
 end
