@@ -6,7 +6,7 @@ es:
       apply: Aplica ya
       back_to_compare: Volver
       before_care: Cuidado antes de clases
-      contact_info: Más Informacion
+      contact_info: Más Info
       details: Detalles
       follow_school: Siga esta escuela
       'no': 'No'
@@ -14,5 +14,8 @@ es:
       rate_and_review: Opina y califica
       report_card: Estadistícas
       reviews: Opiniones
+      students:
+        one: "%{count} estudiante"
+        other: "%{count} estudiantes"
       students_enrolled: Estudiantes suscritos
       'yes': Sí

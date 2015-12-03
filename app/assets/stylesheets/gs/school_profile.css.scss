@@ -1,0 +1,41 @@
+// Styles relevant to school profiles
+
+.profile-dark-header {
+  .header {
+    background-color: $dirt-green;
+    color: $gray-dark;
+    margin-bottom: 2px;
+    padding-bottom: $spacing-large;
+    h1 {
+      color: white;
+      margin-top: 0;
+    }
+    .hvs {
+      border-color: $gray-dark;
+    }
+    .static-map {
+      border: 3px solid white;
+      border-radius: 3px;
+    }
+    .overflow-ellipses {
+      @include text-overflow-ellipses;
+    }
+  }
+  .navigation {
+    background-color: $brand-primary;
+    letter-spacing: 0.75px;
+    .tabs {
+      @include gs-nav-tabs($brand-primary-darkest, white, transparent);
+      > li {
+        margin-right: 5px;
+        @include for-sm-and-up {
+          margin-right: 30px;
+        }
+        > a {
+          margin-top: 15px;
+          padding-bottom: 15px;
+        }
+      }
+    }
+  }
+}

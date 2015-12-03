@@ -38,7 +38,7 @@ class SchoolProfileController < SchoolController
     set_noindex_meta_tags if @school.demo_school?
     @school_reviews = SchoolProfileReviewsDecorator.decorate(@school.reviews_with_calculations, view_context)
     @school_reviews.promote_review!(params[:review_id].to_i) if params[:review_id].present?
-    create_sized_maps(gon)
+    @static_google_maps = static_google_maps
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews.number_of_reviews_with_comments
     @cookiedough = SessionCacheCookie.new cookies[:SESSION_CACHE]
@@ -229,4 +229,25 @@ class SchoolProfileController < SchoolController
     gon.school_id = @school.id
   end
 
+  def static_google_maps
+    @_static_google_maps ||= begin
+      sizes = {
+          'sm'     => [280, 150],
+          'md'     => [400, 150],
+          'lg'     => [500, 150],
+          'header' => [120, 120],
+      }
+
+      google_apis_path = GoogleSignedImages::STATIC_MAP_URL
+      address = GoogleSignedImages.google_formatted_street_address(@school)
+      sizes.inject({}) do |sized_maps, element|
+        label = element[0]
+        size = element[1]
+        sized_maps[label] = GoogleSignedImages.sign_url(
+          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false"
+        )
+        sized_maps
+      end
+    end
+  end
 end

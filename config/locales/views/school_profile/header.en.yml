@@ -14,5 +14,8 @@ en:
       rate_and_review: Rate & Review
       report_card: Report card
       reviews: Reviews
+      students:
+        one: "%{count} student"
+        other: "%{count} students"
       students_enrolled: Students enrolled
       'yes': 'Yes'

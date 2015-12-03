@@ -48,7 +48,8 @@ class DistrictHomeDecorator < Draper::Decorator
     end
   end
 
-  def district_home_link(text = name)
+  def district_home_link(truncate = false)
+    text = truncate ? name.truncate(truncate) : name
     district_params = h.district_params_from_district(district)
     url = h.city_district_url(district_params)
     if url.present?
