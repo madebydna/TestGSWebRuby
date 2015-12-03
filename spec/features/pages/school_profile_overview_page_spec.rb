@@ -168,6 +168,13 @@ describe 'School Profile Overview Page' do
         it { is_expected.to_not have_reviews }
         it { is_expected.to have_callout_text }
         it { is_expected.to have_callout_button }
+        on_subject :show, js:true do
+          when_I :close_all_modals do
+            when_I :click_on_callout_button do
+              it { expect(SchoolProfileReviewsPage.new).to be_displayed }
+            end
+          end
+        end
       end
       context 'with less than max # of reviews on overview' do
         before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW - 1, school) }

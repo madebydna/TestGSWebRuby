@@ -4,8 +4,13 @@ class SchoolProfilePageFactory
   attr_reader :page
 
   def initialize(page_name = 'Overview')
+    page_names = %w[Overview Reviews Quality Details]
     page_name ||= 'Overview'
     @page = FactoryGirl.create(:page, name: page_name)
+    # Create rows for the other pages as well
+    (page_names - Array.wrap(page_name)).each do |page_name|
+      FactoryGirl.create(:page, name: page_name)
+    end
   end
 
   def with_facebook_like_box_module
