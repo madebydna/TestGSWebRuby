@@ -8,6 +8,7 @@ require 'support/shared_contexts_for_signed_in_users'
 
 describe 'School Profile Reviews Page' do
   before do
+    pending 'AT-1165 new header set as default for now.'
     # pending('TODO: Figure out why tests fail intermittently')
     # fail
   end
