@@ -526,8 +526,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var  closeFilters = function () {
-        $('.js-alert-close').click(function () {
-            $('.js-searchFiltersMenu').fadeOut('fast');
+        $('.js-close').click(function () {
+            $(this).parent().fadeOut('fast');
         });
     }
 
