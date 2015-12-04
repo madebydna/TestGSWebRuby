@@ -365,32 +365,17 @@ class FilterBuilder
 
   def default_simple_filters_hash
     {
-      grade: {
+
+      gradeLevels: {
         label: t('Grade Level'),
         display_type: :title,
-        name: :grades,
+        name: :gradeLevels,
         filters: {
-          select_box: {
-            display_type: :select_box,
-            name: :grades,
-            filters: {
-              :default => {label: t('Select Grade'), display_type: :select_box_value, name: :grades, value: nil},
-              :p => {label: t('Preschool'), display_type: :select_box_value, name: :grades, value: :p},
-              :k => {label: t('Kindergarten'), display_type: :select_box_value, name: :grades, value: :k},
-              1 => {label: t('1st Grade'), display_type: :select_box_value, name: :grades, value: 1},
-              2 => {label: t('2nd Grade'), display_type: :select_box_value, name: :grades, value: 2},
-              3 => {label: t('3rd Grade'), display_type: :select_box_value, name: :grades, value: 3},
-              4 => {label: t('4th Grade'), display_type: :select_box_value, name: :grades, value: 4},
-              5 => {label: t('5th Grade'), display_type: :select_box_value, name: :grades, value: 5},
-              6 => {label: t('6th Grade'), display_type: :select_box_value, name: :grades, value: 6},
-              7 => {label: t('7th Grade'), display_type: :select_box_value, name: :grades, value: 7},
-              8 => {label: t('8th Grade'), display_type: :select_box_value, name: :grades, value: 8},
-              9 => {label: t('9th Grade'), display_type: :select_box_value, name: :grades, value: 9},
-              10 => {label: t('10th Grade'), display_type: :select_box_value, name: :grades, value: 10},
-              11 => {label: t('11th Grade'), display_type: :select_box_value, name: :grades, value: 11},
-              12 => {label: t('12th Grade'), display_type: :select_box_value, name: :grades, value: 12},
-            }
-          }
+            p: {label: t('Preschool'), display_type: :basic_checkbox, name: :gradeLevels, value: :p},
+            e: {label: t('Elementary'), display_type: :basic_checkbox, name: :gradeLevels, value: :e},
+            m: {label: t('Middle'), display_type: :basic_checkbox, name: :gradeLevels, value: :m},
+            h: {label: t('High'), display_type: :basic_checkbox, name: :gradeLevels, value: :h},
+
         }
       },
       distance: {
