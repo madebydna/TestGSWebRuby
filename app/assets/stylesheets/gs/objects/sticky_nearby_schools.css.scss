@@ -39,6 +39,7 @@
 
     .nearby-schools {
       @include clearfix;
+      position: relative;
       background-color: $module-gray-stroke;
       float: left;
       height: 100%;
@@ -54,22 +55,17 @@
         padding-bottom: 5px;
         text-align: center;
       }
-      .close-nearby-schools {
-        color: $gray-darker;
-        cursor: pointer;
+      .next {
+        text-align: right;
+      }
+      .prev {
         text-align: left;
       }
-      .next {
+      .next, .prev {
         color: $link-color;
         cursor: pointer;
-        text-align: right;
-        .next-inner {
-          height: 100%;
-        }
-      }
-      .close-nearby-schools, .next {
         font-size: 9px;
-        padding-top: 10px;
+        padding-top: 22px;
         width: 10%;
       }
       .nearby-school {
@@ -88,6 +84,27 @@
         margin-top: 15px;
         text-align: center;
       }
+
+      .close-nearby-schools {
+        &.shadow {
+          box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
+          -moz-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
+          -webkit-box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, .25);
+          z-index: -1;
+        }
+        height: 21px;
+        width: 37px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        position: absolute;
+        background-color: $module-gray-stroke;
+        bottom: 60px;
+        right: 0px;
+        padding-right: 4px;
+        color: $gray-darker;
+        cursor: pointer;
+      }
+
     }
 
     @include for-sm-and-up {
@@ -98,12 +115,15 @@
         .carousel {
           width: 70%;
         }
-        .close-nearby-schools, .next {
-          padding-top: 18px;
+        .next, .prev {
+          padding-top: 22px;
           width: 15%;
         }
         .more-quality-schools {
           margin-top: 20px;
+        }
+        .close-nearby-schools {
+          bottom: 70px;
         }
       }
     }
@@ -145,20 +165,23 @@
         .title {
           font-size: 10px;
         }
-        .close-nearby-schools, .next {
+        .next, .prev {
           font-size: 10px;
-          padding-top: 25px;
+          padding-top: 30px;
           width: 10%;
         }
         .more-quality-schools {
           margin-top: 25px;
+        }
+        .close-nearby-schools {
+          bottom: 80px;
         }
       }
     }
 
     @include for-lg-and-up {
       border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-right-radius: 8px;
       max-width: $screen-lg;
     }
   }

@@ -35,7 +35,7 @@ GS.nearbySchools = (function() {
   var initializeCarousel = function() {
     var $nearbySchoolsContainer = $(NEARBY_SCHOOLS_SELECTOR);
     $nearbySchoolsContainer.slick({
-      prevArrow: false,
+      prevArrow: '.js-prev',
       nextArrow: '.js-next',
     });
   };
