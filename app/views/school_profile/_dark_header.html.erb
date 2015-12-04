@@ -21,8 +21,9 @@
         link_to(db_t(school_type_display(school.type)), school.school_type_url),
         district.district_home_link(truncate_length),
         t('students',
-          count: school.cache_results.students_enrolled,
-          scope: t_scope)
+          scope: t_scope,
+          count: school.cache_results.students_enrolled
+         )
       ],
       [
         school.full_address.truncate(truncate_length),
@@ -36,8 +37,9 @@
       ],
       [
         t('students',
-          count: school.cache_results.students_enrolled,
-          scope: t_scope),
+          scope: t_scope,
+          count: school.cache_results.students_enrolled
+         ),
         # On mobile, district name is truncated via CSS
         district.district_home_link
       ]
