@@ -16,10 +16,10 @@
           </div>
         <% else  %>
           <div class="col-xs-12 col-sm-4">
-            <h2 class=""><%= t('.reviews_header', count: ratings_count) %></h2>
+            <h2><%= t('.reviews_header', count: ratings_count) %></h2>
             <div class="dib tac mtl mbm">
               <%= draw_stars_48 average_score %>
-              <div class="open-sans_sb mvm"><%= t('.community_rating').upcase %></div>
+              <div class="open-sans_sb mvm uc"><%= t('.community_rating') %></div>
             </div>
             <div class="mtm mbl">
               <%= render 'school_profile/data_viz/simple_bar_chart/display' %>

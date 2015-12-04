@@ -2,5 +2,5 @@ es:
   models:
     review_answer:
       stars_label:
-        one: ' estrella'
-        other: ' estrellas'
+        one: '%{count} estrella'
+        other: '%{count} estrellas'
