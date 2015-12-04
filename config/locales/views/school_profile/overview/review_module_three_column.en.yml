@@ -4,6 +4,11 @@ en:
     overview:
       review_module_three_column:
         community_rating: Community rating
+        homework: The amount of homework
+        other_topics_header: Other review topics
+        review_this_school: Review this school
         reviews_header:
-          one:  '%{count} review'
-          other:  '%{count} reviews'
+          one: ! '%{count} review'
+          other: ! '%{count} reviews'
+        student_respect: "Developing student's respect"
+        teacher_effectiveness: Teacher effectiveness
