@@ -652,7 +652,7 @@ describe SigninController do
 
     context 'given an unverified user' do
       let(:user) { FactoryGirl.create(:new_user) }
-      let(:valid_token) { user.auth_token }
+      let(:valid_token) { CGI.escape(user.auth_token) }
       let(:invalid_token) { 'foo' }
       let(:redirect) { '/foo' }
 
