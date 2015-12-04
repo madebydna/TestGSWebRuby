@@ -4,11 +4,10 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
 
   # Lists must map exactly to methods in this class. These methods
   # should return the result of a methodology's #results method or the
-  # concatentation of multiple methodologies' #restuls.
+  # concatentation of multiple methodologies' #results.
   DEFAULT_LIST = :closest_schools
   STATE_LISTS = Hash.new([]).merge({
-    # For now, we won't be launching this list. See AT-1160
-    # ca: [:closest_top_then_top_nearby_schools],
+    ca: [:closest_top_then_top_nearby_schools],
   })
 
   def build_hash_for_cache

@@ -53,4 +53,23 @@ module ReviewCalculations
     @count_having_rating ||= having_numeric_answer.count
   end
 
+  def score_distribution_with_percentage
+    # score distribution is only for reviews from the same topic question
+    return nil if map(&:topic).map(&:name).uniq.count > 1
+
+    response_hash = first.question.response_label_array.each_with_object({}) do |(response_label), hash|
+      hash[response_label] = {count: 0, percentage: '0', label: response_label } 
+    end
+    group_by_labels = group_by(&:answer_label)
+    group_by_labels.delete(nil)
+    score_distribution = ( 
+     group_by_labels.each_with_object(response_hash) do |(answer_label, answers), hash|
+        answers_count = answers.size
+        percentage = (answers_count / count.to_f * 100).round(0).to_s
+        hash[answer_label] =  {count: answers_count, percentage: percentage, label: answer_label }
+      end
+    )
+    score_distribution.values.reverse
+  end
+
 end

@@ -23,8 +23,7 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
       let(:expected_result) do
         {
           closest_schools: [],
-          # TODO AT-1160 should uncomment this when we launch CA's new list
-          # closest_top_then_top_nearby_schools: [],
+          closest_top_then_top_nearby_schools: [],
         }
       end
 

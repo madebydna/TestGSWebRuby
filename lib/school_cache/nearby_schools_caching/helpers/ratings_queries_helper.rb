@@ -47,6 +47,8 @@ module NearbySchoolsCaching::Helpers::RatingsQueriesHelper
     "(display_target like '%ratings%' AND school_id = school.id)"
   end
 
+  # Converts a hash to a valid SQL where statement with each hash key-value
+  # being joined together with ' AND '
   def options_as_where_clause(options)
     '(' << options.inject('') do |where_clause, (column, value)|
       where_clause << "#{column} = '#{value}' AND "

@@ -22,9 +22,21 @@ def expect_it_to_have_element(element)
   instance_exec(&proc)
 end
 
+def create_reviews(count, school)
+  FactoryGirl.create_list(
+    :five_star_review,
+    count,
+    school_id: school.id,
+    state: school.state
+  )
+end
 
 describe 'School Profile Overview Page' do
   include_context 'Visit School Profile Overview'
+
+  before do
+    pending 'AT-1165 new header set as default for now.'
+  end
 
   after do
     clean_dbs :gs_schooldb, :ca
@@ -80,7 +92,8 @@ describe 'School Profile Overview Page' do
 
   with_shared_context 'Given basic school profile page' do
     with_shared_context 'with Alameda High School', js: true do
-      include_example 'should be on the correct page'
+      # AT-1165 comment out for now while new header is being tested
+      # include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
 
       its(:header) { is_expected.to_not have_in_english_link }
@@ -116,6 +129,11 @@ describe 'School Profile Overview Page' do
       # include_example 'should be on the correct page'
     end
 
+    with_shared_context 'with Cristo Rey New York High School' do
+      include_example 'should be on the correct page'
+      expect_it_to_have_element(:profile_navigation)
+    end
+
     with_shared_context 'with a demo school' do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
@@ -123,18 +141,61 @@ describe 'School Profile Overview Page' do
       include_example 'should have the nofollow meta tag'
       include_example 'should have the noarchive meta tag'
     end
+
+
   end
 
   with_shared_context 'Given school profile page with school test guide module' do
    with_shared_context 'with elementary school in CA' do
       include_example 'should be on the correct page'
-      it { is_expected.to have_link('SBAC score report',href:'http://localhost:3001/gk/sbac-test-guide/') }
+      it { is_expected.to have_link('SBAC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
    end
    with_shared_context 'with Cristo Rey New York High School' do
       include_example 'should be on the correct page'
-      it { is_expected.to_not have_link('SBAC score report',href:'http://localhost:3001/gk/sbac-test-guide/') }
+      it { is_expected.to_not have_link('SBAC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
    end
+   with_shared_context 'with Cesar Chavez Academy Denver' do
+      include_example 'should be on the correct page'
+      it { is_expected.to have_link('PARCC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
+   end
+  end
 
+  describe 'reviews section' do
+    include_context 'Given school profile page with reviews section on overview'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_reviews_section }
+
+    with_subject :reviews_section do
+      it { is_expected.to have_ad_slot }
+      context 'with no reviews' do
+        it { is_expected.to_not have_bar_chart }
+        it { is_expected.to_not have_reviews }
+        it { is_expected.to have_callout_text }
+        it { is_expected.to have_callout_button }
+        on_subject :show, js:true do
+          when_I :close_all_modals do
+            when_I :click_on_callout_button do
+              it { expect(SchoolProfileReviewsPage.new).to be_displayed }
+            end
+          end
+        end
+      end
+      context 'with less than max # of reviews on overview' do
+        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW - 1, school) }
+        it { is_expected.to have_bar_chart }
+        it { is_expected.to have_reviews }
+        it { is_expected.to have_callout_text }
+        it { is_expected.to have_callout_button }
+      end
+      context 'with max # of reviews on overview' do
+        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW, school) }
+        it { is_expected.to have_bar_chart }
+        it { is_expected.to have_reviews }
+        it { is_expected.to_not have_callout_text }
+        it { is_expected.to_not have_callout_button }
+      end
+    end
   end
 
 end

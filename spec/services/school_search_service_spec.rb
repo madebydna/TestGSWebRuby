@@ -233,8 +233,7 @@ describe 'School Search Service' do
       rating_desc: 'overall_gs_rating desc',
       distance_asc: 'distance asc',
       distance_desc: 'distance desc',
-      name_asc: 'school_name asc',
-      name_desc: 'school_name desc'
+      school_name_asc: 'school_sortable_name asc'
     }
     @cases.each do | key, value |
       it "should replace #{key} with #{value}" do

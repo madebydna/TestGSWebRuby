@@ -1,0 +1,18 @@
+<% data_points = [
+  {count: 5, percentage: '100',label: '5 stars' },
+  {count: 4, percentage: '80', label: '4 stars' },
+  {count: 5, percentage: '100', label: '3 stars' },
+  {count: 2, percentage: '40', label: '2 stars' },
+  {count: 1, percentage: '20', label: '1 stars' },
+]
+%>
+
+<% overall_topic_reviews = @school_reviews.five_star_rating_reviews  %>
+<% if overall_topic_reviews  %>
+  <div class="horizontal-bar-chart">
+    <% overall_topic_reviews.score_distribution_with_percentage.each do |data_point| %>
+      <%= render partial: "school_profile/overview/bar",
+        locals: {data_point: data_point } %>
+    <% end %>
+  </div>
+<% end  %>

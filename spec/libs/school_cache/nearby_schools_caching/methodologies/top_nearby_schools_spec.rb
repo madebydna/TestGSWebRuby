@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative 'methodologies_examples'
 
 describe NearbySchoolsCaching::Methodologies::TopNearbySchools do
 
@@ -124,4 +125,6 @@ describe NearbySchoolsCaching::Methodologies::TopNearbySchools do
     end
     expect(schools.map(&:id)).to eq(expected_ids)
   end
+
+  include_example 'methodologies that use lat lons'
 end

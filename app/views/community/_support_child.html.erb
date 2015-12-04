@@ -10,8 +10,8 @@
         </a>
       </div>
       <a href="<%= t(".#{@t_scope}.article_link_#{i}") %>" target="_blank">
-        <p class='open-sans_sb article-title'>
-        <%= 'This school has achieved the highest improvement in Absentee rate in the district'%>
+        <p class=' article-title'>
+        <%= t(".#{@t_scope}.article_description_#{i}_html") %>
         </p>
       </a>
       <div>
@@ -22,6 +22,3 @@
     </div>
   <% end %>
 </div>
-
-<% #tips %>
-<p class='tac pvl'><%= t(".#{@t_scope}.tips") %></p>

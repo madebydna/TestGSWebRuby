@@ -1,0 +1,172 @@
+<% school = SchoolProfileDecorator.decorate(@school) %>
+<% district = DistrictHomeDecorator.decorate(school.district) %>
+
+<% t_scope = 'school_profile.header' %>
+
+<% contact_info_anchor = school_url(school, anchor: 'Contact_this_school') %>
+<% contact_info_link = link_to(contact_info_anchor) do %>
+  <span class="iconx16 i-16-blue-map-view"></span>
+  <%= t('contact_info', scope: t_scope) %>
+<% end %>
+<% apply_now_url = school.school_metadata.apply_now_url %>
+
+<% truncate_length = 50 %>
+
+<%
+  # Each sub-array is a row. Each element of a sub array is separated by a pipe
+  subheader_content = {
+    desktop: [
+      [
+        school.process_level,
+        link_to(db_t(school_type_display(school.type)), school.school_type_url),
+        district.district_home_link(truncate_length),
+        t('students',
+          scope: t_scope,
+          count: school.cache_results.students_enrolled
+         )
+      ],
+      [
+        school.full_address.truncate(truncate_length),
+        contact_info_link
+      ]
+    ],
+    mobile: [
+      [
+        school.process_level,
+        link_to(db_t(school_type_display(school.type)), school.school_type_url)
+      ],
+      [
+        t('students',
+          scope: t_scope,
+          count: school.cache_results.students_enrolled
+         ),
+        # On mobile, district name is truncated via CSS
+        district.district_home_link
+      ]
+    ]
+  }
+%>
+
+<%
+  nav_entries = [
+    {
+      name: :overview,
+      link: school_path(school),
+      text: t('overview', scope: t_scope)
+    },
+    {
+      name: :reviews,
+      link: school_reviews_path(school),
+      text: t('reviews', scope: t_scope)
+    },
+    {
+      name: :quality,
+      link: school_quality_path(school),
+      text: t('report_card', scope: t_scope)
+    },
+    {
+      name: :details,
+      link: school_details_path(school),
+      text: t('details', scope: t_scope)
+    },
+  ]
+%>
+
+<div class="profile-dark-header gs-bootstrap">
+  <div class="header">
+    <div class="container-fluid">
+      <div class="pbm">
+        <a class="dn js-backToCompare">
+          &laquo; <%= t('back_to_compare', scope: t_scope) %>
+        </a>
+      </div>
+      <div class="pbm">
+        <%= render 'shared/breadcrumbs',
+          breadcrumbs: @breadcrumbs,
+          top_margin: 'mtn'
+        %>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8">
+          <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+            <%= link_to school_url(school), itemprop: 'url' do %>
+              <h1 class="notranslate">
+                <span itemprop="title">
+                  <%= school.name %>
+                </span>
+              </h1>
+            <% end %>
+          </span>
+          <% subheader_content.each do |view, rows| %>
+            <% visibility = view == :desktop ? 'hidden-xs' : 'visible-xs' %>
+            <div class="<%= visibility %>">
+              <% rows.each do |row| %>
+                <div class="overflow-ellipses">
+                  <%= row.join('<span class="phm">|</span>').html_safe %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="row visible-xs mtl">
+            <div class="col-xs-4">
+              <%= link_to t('contact_info', scope: t_scope),
+                  contact_info_anchor,
+                  class: 'btn btn-primary btn-block'
+              %>
+            </div>
+            <% if apply_now_url.present? %>
+              <div class="col-xs-4">
+                <a class="btn btn-primary btn-block"
+                   href="<%= apply_now_url %>"
+                   target="_blank"
+                   >
+                   <%= t('apply', scope: t_scope) %>
+                </a>
+              </div>
+            <% end %>
+            <div class="col-xs-4">
+              <%= render 'school_profile/follow_school_button',
+                css_classes: 'btn-block'
+              %>
+            </div>
+          </div>
+        </div>
+        <div class="hidden-xs col-sm-2">
+          <% if apply_now_url.present? %>
+            <div class="mbl">
+              <a class="btn btn-primary btn-block"
+                 href="<%= apply_now_url %>"
+                 target="_blank"
+                 >
+                 <%= t('apply', scope: t_scope) %>
+              </a>
+            </div>
+          <% end %>
+          <%= render 'school_profile/follow_school_button',
+            css_classes: 'btn-block'
+          %>
+        </div>
+        <div class="hidden-xs hidden-sm col-md-2">
+          <%= link_to image_tag(@static_google_maps['header'],
+                                class: 'static-map',
+                                alt: "Map of #{school.name} address."
+                               ),
+                      contact_info_anchor
+          %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="navigation">
+    <div class="container-fluid">
+      <ul class="nav tabs">
+        <% nav_entries.each do |nav| %>
+          <% css_class = nav[:name] == page_name ? 'active' : '' %>
+          <li class="<%= css_class %>">
+            <%= link_to nav[:text], nav[:link] %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

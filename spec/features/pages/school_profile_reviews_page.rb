@@ -22,7 +22,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     elements :review_comment, '.js-topicalReviewComment'
   end
 
-  set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/reviews\/$/
+  set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/reviews\/(#.+)?$/
 
   element :profile_navigation, '#navigation2'
   section :review_module, ReviewsSection, '.js-topicalReviewQuestionsContainer'

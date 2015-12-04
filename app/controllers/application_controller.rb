@@ -306,26 +306,6 @@ class ApplicationController < ActionController::Base
     gon.omniture_channel = @state[:short].try(:upcase) if @state.present?
   end
 
-  def create_sized_maps(gon)
-    google_apis_path = GoogleSignedImages::STATIC_MAP_URL
-    address = GoogleSignedImages.google_formatted_street_address(@school)
-
-    sizes = {
-        'sm' => [280, 150],
-        'md' => [400, 150],
-        'lg' => [500, 150]
-    }
-
-    gon.contact_map ||= sizes.inject({}) do |sized_maps, element|
-      label = element[0]
-      size = element[1]
-      sized_maps[label] = GoogleSignedImages.sign_url(
-        "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false"
-      )
-      sized_maps
-    end
-  end
-
   def set_community_tab(collection_configs)
     @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
     case request.path

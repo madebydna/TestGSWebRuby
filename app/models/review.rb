@@ -264,6 +264,10 @@ class Review < ActiveRecord::Base
     answers.first.value if answers.first
   end
 
+  def answer_label
+    answers.first.label if answers.first
+  end
+
   def answer_as_int
     answer.to_i.to_s == answer.to_s ? answer.to_i : nil
   end
@@ -283,6 +287,7 @@ class Review < ActiveRecord::Base
   def remove_answers_for_principals
     if school_user_or_default.principal?
       answers.each { |answer| answer.destroy }
+
     end
   end
 

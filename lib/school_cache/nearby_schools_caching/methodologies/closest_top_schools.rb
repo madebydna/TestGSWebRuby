@@ -2,18 +2,19 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
   NAME = 'closest_top_schools'.freeze
   AVERAGE_FIELD = 'average'.freeze
   DISTANCE_FIELD = 'distance'.freeze
+  COUNT_FIELD = NearbySchoolsCaching::Helpers::RatingsQueriesHelper::COUNT_FIELD
 
   class << self
     include NearbySchoolsCaching::Helpers::RatingsQueriesHelper
 
-    # For the given ratings, find the closest school with an average rating of
+    # For all of the given ratings, find the closest schools with a rating of
     # at least the configured minimum.
     def schools(school, opts)
+      return [] unless school.lat.present? && school.lon.present?
       limit   = opts[:limit] || 1 # number of schools to return
       minimum  = opts[:minimum] || 8 # Minimum average rating to consider
 
-      # opts[:ratings] defines which ratings to use. If multiple ratings are
-      # given, then the metric is the average of the two.
+      # opts[:ratings] defines which ratings to use.
       #
       # Ex:
       # [
@@ -30,10 +31,9 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
 
     # Sample query at the bottom of this file
     def query(school, ratings, minimum, limit)
-      "SELECT *, #{rating_average_select(ratings)} as #{AVERAGE_FIELD},
-       '#{NAME}' as methodology
+      "SELECT *, '#{NAME}' as methodology
        FROM (#{inner_query(school, ratings)}) as inner_table
-       WHERE #{rating_average_select(ratings)} >= #{minimum}
+       WHERE #{only_schools_with_ratings_meeting_the_minimum(ratings, minimum)}
        ORDER BY #{DISTANCE_FIELD} ASC
        LIMIT #{limit}"
     end
@@ -46,12 +46,18 @@ class NearbySchoolsCaching::Methodologies::ClosestTopSchools < NearbySchoolsCach
        FROM school
        WHERE #{basic_nearby_schools_conditions(school)}"
     end
+
+    def only_schools_with_ratings_meeting_the_minimum(ratings, minimum)
+      clause = ratings.map do |r|
+        field_name = options_as_unique_name(r)
+        "(#{field_name} >= #{minimum} OR #{field_name} = 0)"
+      end
+      "(#{clause.join(' AND ')}) AND #{COUNT_FIELD} > 0"
+    end
   end
 end
-# SELECT *, (
-#  (data_type_id174breakdown_id1 + data_type_id174breakdown_id8) / count
-#  ) as average
-#   FROM (SELECT school.id,
+# SELECT *, 'closest_top_schools' as methodology
+#  FROM (SELECT school.id,
 #   school.street,
 #   school.city,
 #   school.state,
@@ -65,43 +71,36 @@ end
 #     JOIN TestDataSet tds on tds.id = data_set_id
 #     WHERE (display_target like '%ratings%' AND school_id = school.id)
 #     AND (data_type_id = '174' AND breakdown_id = '1' )
-#    ), 0) as data_type_id174breakdown_id1,
-#   IFNULL((
+#   ), 0) as data_type_id174breakdown_id1,IFNULL((
 #     SELECT value_float
 #     FROM TestDataSchoolValue
 #     JOIN TestDataSet tds on tds.id = data_set_id
 #     WHERE (display_target like '%ratings%' AND school_id = school.id)
-#     AND (data_type_id = '174' AND breakdown_id = '8' )
-#    ), 0) as data_type_id174breakdown_id8,
+#     AND (data_type_id = '174' AND breakdown_id = '9' )
+#   ), 0) as data_type_id174breakdown_id8,
 #   (
 #    SELECT count(*)
 #    FROM TestDataSchoolValue
 #    JOIN TestDataSet tds on tds.id = data_set_id
 #    WHERE (display_target like '%ratings%' AND school_id = school.id)
-#    AND (
-#      (data_type_id = '174' AND breakdown_id = '1' ) OR
-#      (data_type_id = '174' AND breakdown_id = '8' )
-#    )
+#    AND ((data_type_id = '174' AND breakdown_id = '1' ) OR (data_type_id = '174' AND breakdown_id = '9' ))
 #   ) as count,
 #   (
 #     3959 *
 #     acos(
-#       cos(radians(37.889832)) *
-#       cos( radians( `lat` ) ) *
-#       cos(radians(`lon`) - radians(-122.295151)) +
-#       sin(radians(37.889832)) *
-#       sin( radians(`lat`) )
+#      cos(radians(34.119644)) *
+#      cos( radians( `lat` ) ) *
+#      cos(radians(`lon`) - radians(-118.463676)) +
+#      sin(radians(34.119644)) *
+#      sin( radians(`lat`) )
 #     )
-#   ) as distance
-#   FROM school
-#   WHERE active = 1 AND
-#     id != 21 AND
-#     lat is not null AND
-#     lon is not null
-#     AND (level_code LIKE '%e%')
-#  ) as inner_table
-#  WHERE (
-#    (data_type_id174breakdown_id1 + data_type_id174breakdown_id8) / count
-#  ) >= 8
-#  ORDER BY distance ASC
-#  LIMIT 1
+#  ) as distance
+#  FROM school
+#  WHERE school.active = 1 AND
+#  school.id != 2354 AND
+#  school.lat is not null AND
+#  school.lon is not null
+#  AND (school.level_code LIKE '%e%')) as inner_table
+# WHERE ((data_type_id174breakdown_id1 >= 8 OR data_type_id174breakdown_id1 = 0) AND (data_type_id174breakdown_id8 >= 8 OR data_type_id174breakdown_id8 = 0)) AND count > 0
+# ORDER BY distance ASC
+# LIMIT 1

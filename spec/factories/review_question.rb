@@ -50,5 +50,13 @@ FactoryGirl.define do
       responses 'Too much,Just the right amount,Not enough,Don\'t know'
       layout 'radio_button'
     end
+
+    factory :gratitude_question do
+      association :review_topic, factory: :gratitude_topic, strategy: :build
+      question 'Is there someone at this school who you want to say "thanks" to?'
+      principal_question 'Is there someone, or a group of people, at your school to whom you\'d like to say "thanks"?'
+      responses 'School leader,Teacher,Staff member,Parent,Student'
+      layout 'radio_button'
+    end
   end
 end

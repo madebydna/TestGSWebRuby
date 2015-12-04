@@ -2,6 +2,7 @@
 es:
   review_school_chooser:
     show:
+      in_partnership_with: EN COLABORACIÓN CON
       review_lists_header: Opiniones reciente
       school_picker_header_1: Comparta su historia
       school_picker_header_2: Expresa tus pensamientos

@@ -41,7 +41,18 @@
       <%=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
     </div>
   </section>
-
+  <% if @topic.id == 8 %>
+    <section class="mtl">
+      <div class="partner-logo">
+        <div class="text">
+          <%= t(".in_partnership_with") %>
+        </div>
+        <a href="http://greatergood.berkeley.edu/" target="_blank">
+          <img src="<%= image_path('greater_good_logo.png') %>"/>
+        </a>
+      </div>
+    </section>
+<% end  %> 
   <section class="reviews-list">
     <div class="container-fluid pbl">
       <div id="js_reviewsListHeader" class="rs-review-list-header">

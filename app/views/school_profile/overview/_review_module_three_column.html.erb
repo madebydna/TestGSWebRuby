@@ -6,14 +6,14 @@
     no_reviews_to_display = overall_reviews.size == 0 && reviews_with_comments.size == 0
   %>
 
-<div class="gs-bootstrap row">
+<div id="reviews-section" class="gs-bootstrap row">
   <% if no_reviews_to_display %>
     <div class="col-xs-12 col-sm-8">
       <%= render 'school_profile/overview/review_school_callout', school: @school  %>
     </div>
   <% else  %>
     <div class="col-xs-12 col-sm-4">
-      <%= render 'data_layouts/review_bar_charts' %>
+      <%= render 'school_profile/overview/reviews_overview_bar_chart' %>
     </div>
     <div class="col-xs-12 col-sm-4">
       <%= render 'school_profile/overview/recent_comments', reviews: reviews_with_comments if reviews_with_comments.count > 0 %>

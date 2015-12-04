@@ -3,14 +3,13 @@ en:
     support_child:
       read_more: read more
       collection_id_15:
-        title: Support Your Child to Success
-        tips: 'Get tips on how to support your child to college - text and email sign-up.'
-        article_image_1: articles/hispanic_classroom.jpg
-        article_link_1: ''
-        article_description_1: This school has achieved the highest improvement in Absentee rate in the district
+        article_description_1_html: <strong>Don’t miss these requirements to get into college</strong></br>California public universities — UCs and CSUs — expect students to have taken some specific classes; be sure to know what those are.
+        article_description_2_html: <strong>Only 53% of Bay Area Graduates Are Ready for College</strong></br>In our 21st century economy, the vast majority of middle-class jobs require education beyond high school. However, in 2015, only about five out of every 10 Bay Area seniors graduated eligible for college, and just three out of every 10 Latino or African American students.
+        article_description_3_html: <strong>Powerful parents transform schools</strong></br>Parents aren't just sitting on the sidelines anymore. They're actively involved in schools and it's paying off in surprising ways.
+        article_image_1: articles/grad_pic.jpg
         article_image_2: articles/hispanic_classroom.jpg
-        article_link_2: ''
-        article_description_2: This school has achieved the highest improvement in Absentee rate in the district
-        article_image_3: articles/hispanic_classroom.jpg
-        article_link_3: ''
-        article_description_3: This school has achieved the highest improvement in Absentee rate in the district
+        article_image_3: articles/best-advocate.jpg
+        article_link_1: http://www.greatschools.org/gk/articles/dont-miss-these-requirements-to-get-into-college/
+        article_link_2: http://wp.me/p6EAqy-Yy
+        article_link_3: http://www.greatschools.org/gk/articles/powerful-parents-transform-schools/
+        title: Support Your Child to Success

@@ -1,7 +1,7 @@
 // Wrapper class that brings back Bootstrap's grid system as vanilla.
 // Essentially this adds back in gutters - the spaces between columns.
 
-$grid-gutter-width: 30px;
+$grid-gutter-width: 20px;
 $half-gutter-width: ($grid-gutter-width / 2);
 
 @mixin gs-make-grid-columns() {
@@ -18,8 +18,14 @@ $half-gutter-width: ($grid-gutter-width / 2);
       // Prevent columns from collapsing when empty
       min-height: 1px;
       // Inner gutter via padding
-      padding-left:  $half-gutter-width;
-      padding-right: $half-gutter-width;
+      // On mobile we make this space smaller than vanilla Bootstrap
+      padding-left:  $half-gutter-width / 2;
+      padding-right: $half-gutter-width / 2;
+      @include for-sm-and-up {
+        // Inner gutter via padding
+        padding-left:  $half-gutter-width;
+        padding-right: $half-gutter-width;
+      }
     }
   }
 }
@@ -41,50 +47,23 @@ $half-gutter-width: ($grid-gutter-width / 2);
     margin-right: auto;
     margin-left: auto;
     max-width: $screen-lg;
-    padding-left: 0;
-    padding-right: 0;
-    @media (max-width: ($screen-lg + $grid-gutter-width)) {
-      padding-left:  $half-gutter-width;
-      padding-right: $half-gutter-width;
-    }
+    padding-left:  $half-gutter-width;
+    padding-right: $half-gutter-width;
     @include clearfix();
   }
 
-  // For use on pages that have some gs-bootstrap and some gutter-less bootstrap
-  .container-fix {
-    @media (min-width: $screen-lg-min){
-      padding-left: 10px;
-    }
-    &.container-fluid {
-      @media (max-width: ($screen-lg + $grid-gutter-width)) {
-        padding-left:  10px;
-        padding-right: 10px;
-      }
-    }
-    .row {
-      margin-left: -10px;
-      margin-right: -10px;
-    }
-    [class^=col-] {
-      padding-left:  10px;
-      padding-right: 10px;
-    }
-  }
-
   .row {
-    @include make-row();
+    // Using the half-width here because the padding on our mobile columns is
+    // a quarter of the gutter size
+    @include make-row($half-gutter-width);
+    @include for-sm-and-up {
+      @include make-row();
+    }
   }
 
   .form-horizontal {
     .form-group {
       @include make-row();
-    }
-  }
-
-  &.navbar .gs-logo {
-    padding: 10px 0 10px 0;
-    @media (max-width: ($screen-lg + $grid-gutter-width)) {
-      padding-left:  $half-gutter-width;
     }
   }
 }

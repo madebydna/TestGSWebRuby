@@ -16,7 +16,7 @@ class SchoolSearchService
       distance_asc: 'distance asc', # todo not relevant for browse
       distance_desc: 'distance desc', # todo not relevant for browse
       name_asc: 'school_name asc',
-      name_desc: 'school_name desc',
+      school_name_asc: 'school_sortable_name asc',
       fit_asc: 'overall_gs_rating desc',
       fit_desc: 'overall_gs_rating desc'
   }

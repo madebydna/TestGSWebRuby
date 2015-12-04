@@ -13,6 +13,10 @@ class SchoolProfileDecorator < Draper::Decorator
     school.type.gs_capitalize_first
   end
 
+  def full_address
+    "#{street} #{city}, #{state} #{zipcode}"
+  end
+
   def city_state
     [city, state].join(', ')
   end
@@ -78,4 +82,19 @@ class SchoolProfileDecorator < Draper::Decorator
     h.search_path(query_params)
   end
 
+  def school_boundary_hash
+    if district.present?
+      { districtId: district, level: single_level_code, schoolId: id, state: state }
+    else
+      { level: single_level_code, schoolId: id, state: state }
+    end
+  end
+
+  def single_level_code
+    level_value = 'h'
+    level_value = 'm' if level_code_array.include? 'm'
+    level_value = 'e' if level_code_array.include? 'e'
+    level_value = 'p' if level_code_array.include? 'p'
+    level_value
+  end
 end

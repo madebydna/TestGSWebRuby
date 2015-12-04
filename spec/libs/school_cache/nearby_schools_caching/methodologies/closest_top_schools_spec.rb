@@ -1,4 +1,5 @@
 require 'spec_helper'
+require_relative 'methodologies_examples'
 
 describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
 
@@ -94,7 +95,7 @@ describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
         ],
         level_code: 'h',
       },
-      # Close school but average is too low despite by having a 10
+      # Close school with high average, but cut because has a 7 for a rating
       {
         id: 7,
         exclude: true,
@@ -103,7 +104,7 @@ describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
         lon: 144.1,
         ratings: [
           { data_type_id: 174, breakdown_id: 1, value_float: 10 },
-          { data_type_id: 174, breakdown_id: 8, value_float: 1 },
+          { data_type_id: 174, breakdown_id: 8, value_float: 7 },
         ],
         level_code: 'h',
       },
@@ -148,4 +149,6 @@ describe NearbySchoolsCaching::Methodologies::ClosestTopSchools do
     end
     expect(schools.map(&:id)).to eq(expected_ids)
   end
+
+  include_example 'methodologies that use lat lons'
 end

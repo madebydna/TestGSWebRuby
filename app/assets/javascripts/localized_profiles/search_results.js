@@ -234,6 +234,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             case 'rating': return 'rating_desc';
             case 'distance': return 'distance_asc';
             case 'fit': return 'fit_desc';
+            case 'school_name': return 'school_name_asc';
         }
 //        if (new RegExp(sortType).test(previousSort)) {
 //            return /asc/.test(previousSort) ? sortType + '_desc' : sortType + '_asc';

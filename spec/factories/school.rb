@@ -42,6 +42,14 @@ FactoryGirl.define do
         type 'public'
       end
 
+      factory :cesar_chavez_academy_denver do
+        name 'Cesar Chavez Academy Denver'
+        city 'Denver'
+        state 'CO'
+        level_code 'e,m'
+        type 'charter'
+      end
+
       factory :bay_farm_elementary_school do
         name 'Bay Farm Elementary School'
         city 'Alameda'

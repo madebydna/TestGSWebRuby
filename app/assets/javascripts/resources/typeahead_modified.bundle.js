@@ -1482,16 +1482,17 @@
                 this.dropdown.close();
             },
             _onEnterKeyed: function onEnterKeyed(type, $e) {
-                var cursorDatum, topSuggestionDatum;
-                cursorDatum = this.dropdown.getDatumForCursor();
-                topSuggestionDatum = this.dropdown.getDatumForTopSuggestion();
-                if (cursorDatum) {
-                    this._select(cursorDatum);
-                    $e.preventDefault();
-                } else if (this.autoselect && topSuggestionDatum) {
-                    this._select(topSuggestionDatum);
-                    $e.preventDefault();
-                }
+                    var cursorDatum, topSuggestionDatum;
+                    cursorDatum = this.dropdown.getDatumForCursor();
+                    topSuggestionDatum = this.dropdown.getDatumForTopSuggestion();
+                    if (cursorDatum && cursorDatum['raw'] !=undefined && cursorDatum['raw']['url'] !=undefined) {
+                        this._select(cursorDatum);
+                        window.location.href = cursorDatum['raw']['url'];
+                        $e.preventDefault();
+                    } else if (this.autoselect && topSuggestionDatum) {
+                        this._select(topSuggestionDatum);
+                        $e.preventDefault();
+                    }
             },
             _onTabKeyed: function onTabKeyed(type, $e) {
                 var datum;

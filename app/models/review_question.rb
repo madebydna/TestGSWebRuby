@@ -27,6 +27,13 @@ class ReviewQuestion < ActiveRecord::Base
     end
   end
 
+  def response_label_array
+    return response_array unless topic.overall?
+    response_array.map do |response| 
+      I18n.t('models.review_answer.stars_label', count: response.to_i)
+    end
+  end
+
   def level_code_array
     self.school_level_code.split(',')
   end

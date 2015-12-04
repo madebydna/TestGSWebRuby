@@ -1,0 +1,9 @@
+<div class="bar-row">
+  <div class="open-sans_b bar-label"><%= data_point[:label].upcase %> </div>
+  <div class="bar-container" style="width:<%= data_point[:percentage] %>%">
+    <div class="bar">
+      <div class="bar-data-point open-sans_b font-size-small"><%= data_point[:count]  %></div>
+    </div>
+  </div>
+</div>
+

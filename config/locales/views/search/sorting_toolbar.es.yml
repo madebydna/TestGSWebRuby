@@ -6,4 +6,5 @@ es:
       fit: Apto
       rating: Clasificación
       relevance: Pertinencia
+      school_name: Nombre de escuela
       sort_by_label: ! 'Ordenar por: %{sort}'
