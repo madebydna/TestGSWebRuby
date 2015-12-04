@@ -408,9 +408,9 @@ class FilterBuilder
         display_type: :title,
         name: :st,
         filters: {
-          public: {label: t('Public district schools'), display_type: :basic_checkbox, name: :st, value: :public},
-          charter: {label: t('Public charter schools'), display_type: :basic_checkbox, name: :st, value: :charter},
-          private: {label: t('Private schools'), display_type: :basic_checkbox, name: :st, value: :private}
+          public: {label: t('Public district'), display_type: :basic_checkbox, name: :st, value: :public},
+          charter: {label: t('Public charter'), display_type: :basic_checkbox, name: :st, value: :charter},
+          private: {label: t('Private'), display_type: :basic_checkbox, name: :st, value: :private}
         }
       },
       gs_rating: {
