@@ -26,7 +26,7 @@ describe 'Sorting search results', js: true do
 
         sorts = []
         if has_fit
-          sorts = ['Rating', 'Fit'].map { |s| "#{SORT_PREFIX}#{s}"}
+          sorts = ['Rating', 'School name', 'Fit'].map { |s| "#{SORT_PREFIX}#{s}"}
         end
         sorts_text = "#{sorts.join(' ')}"
         default_sort = 'Rating'
@@ -48,7 +48,7 @@ describe 'Sorting search results', js: true do
 
         sorts = []
         if has_fit
-          sorts = ['Rating', 'Fit'].map { |s| "#{SORT_PREFIX}#{s}"}
+          sorts = ['Rating', 'School name', 'Fit'].map { |s| "#{SORT_PREFIX}#{s}"}
         end
         sorts_text = "#{sorts.join(' ')}"
 
@@ -70,7 +70,7 @@ describe 'Sorting search results', js: true do
 
       context "by location search with #{fit} and #{rating_sort}" do
 
-        sorts = %w(Distance Rating)
+        sorts = ['Distance', 'Rating', 'School name']
         if has_fit
           sorts += ['Fit']
         end
@@ -96,7 +96,7 @@ describe 'Sorting search results', js: true do
       context "by name search with #{fit} and #{rating_sort}" do
 
         # By name search never has fit
-        sorts = %w(Relevance Rating).map { |s| "#{SORT_PREFIX}#{s}"}
+        sorts = ['Relevance', 'Rating', 'School name'].map { |s| "#{SORT_PREFIX}#{s}"}
         sorts_text = "#{sorts.join(' ')}"
 
         before do
