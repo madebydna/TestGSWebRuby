@@ -107,9 +107,10 @@
           <% end %>
           <div class="row visible-xs mtl">
             <div class="col-xs-4">
-              <div class="btn btn-primary btn-block">
-                <%= t('contact_info', scope: t_scope) %>
-              </div>
+              <%= link_to t('contact_info', scope: t_scope),
+                  contact_info_anchor,
+                  class: 'btn btn-primary btn-block'
+              %>
             </div>
             <% if apply_now_url.present? %>
               <div class="col-xs-4">
