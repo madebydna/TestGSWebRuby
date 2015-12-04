@@ -4,8 +4,11 @@ class WordpressInterfaceController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:call_from_wordpress]
 
   # These arrays are for white listing
-  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_friend', 'message_signup']
+  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+  TEST_TYPE = ['parcc', 'sbac']
+  NEWSLETTER_HOW = 'wp_newsletter'
+  LINK_URL_STARTS_WITH = 'http://www.greatschools.org/gk/common-core-test-guide/'
 
   def call_from_wordpress
     wp_action = params[:wp_action]
@@ -29,7 +32,7 @@ class WordpressInterfaceController < ApplicationController
     end
 
     # find or create user
-    user_id = create_member(wp_params['email'], 'wp_newsletter')
+    user_id = create_member(wp_params['email'], NEWSLETTER_HOW)
 
     # grade association to user is in the student table
     create_students(user_id, wp_params['grade'], state)
@@ -42,11 +45,30 @@ class WordpressInterfaceController < ApplicationController
     return {'member_id' => user_id}
   end
 
-  def email_friend
+  def email_testguide(wp_params)
+    if (wp_params['state'].present?)
+      state = state_abbreviate (wp_params['state'])
+    end
+    if SUPPORTED_GRADES.include?(wp_params['grade'])
+      grade = wp_params['grade']
+    end
+    if TEST_TYPE.include?(wp_params['test_type'])
+      test_type = wp_params['test_type']
+    end
 
+    if wp_params['link_url'].start_with? LINK_URL_STARTS_WITH
+      link_url = wp_params['link_url']
+    end
+
+    EmailTestGuide.deliver_to_user(wp_params['email_to'],
+                                   wp_params['email_from'],
+                                   state,
+                                   grade,
+                                   link_url,
+                                   test_type)
   end
 
-  def message_signup
+  def message_signup(wp_params)
 
   end
 
