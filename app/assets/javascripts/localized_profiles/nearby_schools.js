@@ -14,7 +14,7 @@ GS.nearbySchools = (function() {
   var stateAndSchool                 = gon.state + gon.school_id;
 
   var initialize = function() {
-    // initializeShowModuleListener();
+    initializeShowModuleListener();
   };
 
   var initializeShowModuleListener = function() {
