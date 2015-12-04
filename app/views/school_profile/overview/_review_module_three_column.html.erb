@@ -6,7 +6,7 @@
     no_reviews_to_display = overall_reviews.size == 0 && reviews_with_comments.size == 0
   %>
 
-<div id="reviews-section" class="gs-bootstrap row dn">
+<div id="reviews-section" class="gs-bootstrap row">
   <% if no_reviews_to_display %>
     <div class="col-xs-12 col-sm-8">
       <%= render 'school_profile/overview/review_school_callout', school: @school  %>
