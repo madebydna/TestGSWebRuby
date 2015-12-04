@@ -8,10 +8,10 @@
 %>
 
 <% overall_topic_reviews = @school_reviews.five_star_rating_reviews  %>
-<% if overall_topic_reviews  %>
+<% if overall_topic_reviews %>
   <div class="horizontal-bar-chart">
     <% overall_topic_reviews.score_distribution_with_percentage.each do |data_point| %>
-      <%= render partial: "school_profile/overview/bar",
+      <%= render partial: "school_profile/data_viz/simple_bar_chart/bar",
         locals: {data_point: data_point } %>
     <% end %>
   </div>
