@@ -94,6 +94,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         GS.search.schoolSearchForm.placeholderMobile();
         GS.search.schoolSearchForm.checkGooglePlaceholderTranslate(); // all
         setUpCollapsibleTitle();
+
+        GS.search.schoolSearchForm.closeFilters();
     };
 
     var setupTabs = function() {
@@ -523,6 +525,12 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         }
     };
 
+    var  closeFilters = function () {
+        $('.js-close').click(function () {
+            $(this).parent().fadeOut('fast');
+        });
+    }
+
     var setupToolTip = function() {
       $('.js-open-tooltip').tooltip('show');
     };
@@ -541,6 +549,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
         updateFilterState: updateFilterState,
-        setupToolTip: setupToolTip
+        setupToolTip: setupToolTip,
+        closeFilters: closeFilters
     };
 })();

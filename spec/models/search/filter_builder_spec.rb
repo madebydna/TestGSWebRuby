@@ -82,7 +82,7 @@ describe FilterBuilder do
       let (:group1_filters) {filters_hash[:filters][:group1][:filters]}
 
       context 'should contain simple filters' do
-        {grade: 'grade', distance: 'distance', st: 'school type'}.each do |k,v|
+        {gradeLevels: 'gradeLevels', distance: 'distance', st: 'school type'}.each do |k,v|
           it "like #{v}" do
             expect(group1_filters).to have_key k
           end
@@ -174,7 +174,7 @@ describe FilterBuilder do
       let (:group1_filters) {filters_hash[:filters][:group1][:filters]}
 
       context 'should contain simple filters' do
-        {grade: 'grade', distance: 'distance', st: 'school type', gs_rating: 'gs_rating'}.each do |k,v|
+        {gradeLevels: 'gradeLevels', distance: 'distance', st: 'school type', gs_rating: 'gs_rating'}.each do |k,v|
           it "like #{v}" do
             expect(group1_filters).to have_key k
           end
@@ -205,16 +205,16 @@ describe FilterBuilder do
       context "in #{state}" do
         let (:filters) { FilterBuilder.new(state, nil, false).filters }
         [ { panel: 1,
-            contains: [:grades, :distance, :st, :gs_rating],
+            contains: [:gradeLevels, :distance, :st, :gs_rating],
             does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus, :transportation, :extendedHours]
           },
           {panel: 2,
            contains: [:transportation, :extendedHours, :dress_code, :class_offerings],
-           does_not_contain: [:grades, :distance, :st, :gs_rating, :school_focus, :enrollment, :boys_sports, :girls_sports]
+           does_not_contain: [:gradeLevels, :distance, :st, :gs_rating, :school_focus, :enrollment, :boys_sports, :girls_sports]
           },
           {panel: 3,
            contains: [:boys_sports, :girls_sports, :school_focus],
-           does_not_contain: [:enrollment, :grades, :distance, :st, :gs_rating, :transportation, :extendedHours, :dress_code, :class_offerings]
+           does_not_contain: [:enrollment, :gradeLevels, :distance, :st, :gs_rating, :transportation, :extendedHours, :dress_code, :class_offerings]
           }].each_with_index do |filter_map, index|
           assert_filter_structure(filter_map, index)
         end
@@ -228,7 +228,7 @@ describe FilterBuilder do
     context 'in Ohio' do
       let (:filters) { FilterBuilder.new('OH', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:ptq_rating]
         },
         { panel: 2,
@@ -248,7 +248,7 @@ describe FilterBuilder do
     context 'in Oklahoma' do
       let(:filters) { FilterBuilder.new('OK', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:ptq_rating]
         },
         { panel: 2,
@@ -265,7 +265,7 @@ describe FilterBuilder do
     context 'in Indiana' do
       let (:filters) { FilterBuilder.new('IN', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -282,7 +282,7 @@ describe FilterBuilder do
     context 'in Indianapolis, IN' do
       let (:filters) { FilterBuilder.new('IN', 'Indianapolis', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating, :ptq_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating, :ptq_rating],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -299,7 +299,7 @@ describe FilterBuilder do
     context 'in Michigan' do
       let (:filters) { FilterBuilder.new('MI', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:cgr, :transportation, :extendedHours]
         }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
@@ -311,7 +311,7 @@ describe FilterBuilder do
     context 'in Detroit, MI' do
       let (:filters) { FilterBuilder.new('MI', 'Detroit', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating, :cgr, :gstq_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating, :cgr, :gstq_rating],
           does_not_contain: []
         },
         { panel: 2,
@@ -328,16 +328,16 @@ describe FilterBuilder do
     context 'in Oklahoma City, OK' do
       let (:filters) { FilterBuilder.new('OK', 'Oklahoma City', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
         },
         {panel: 2,
          contains: [:transportation, :extendedHours, :dress_code, :class_offerings],
-         does_not_contain: [:grades, :distance, :gs_rating, :st, :school_focus, :enrollment]
+         does_not_contain: [:gradeLevels, :distance, :gs_rating, :st, :school_focus, :enrollment]
         },
         {panel: 3,
          contains: [:boys_sports, :girls_sports, :school_focus],
-         does_not_contain: [:enrollment, :grades, :distance, :gs_rating, :st, :transportation, :extendedHours, :dress_code, :class_offerings]
+         does_not_contain: [:enrollment, :gradeLevels, :distance, :gs_rating, :st, :transportation, :extendedHours, :dress_code, :class_offerings]
         }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
@@ -345,7 +345,7 @@ describe FilterBuilder do
     context 'in Wisconsin' do
       let (:filters) { FilterBuilder.new('WI', nil, false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :gs_rating, :st],
+          contains: [:gradeLevels, :distance, :gs_rating, :st],
           does_not_contain: [:cgr]
         }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
@@ -357,7 +357,7 @@ describe FilterBuilder do
     context 'in Milwaukee, WI' do
       let (:filters) { FilterBuilder.new('WI', 'Milwaukee', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -374,7 +374,7 @@ describe FilterBuilder do
     context 'in Washington, DC' do
       let (:filters) { FilterBuilder.new('DC', 'Washington', false).filters }
       [ { panel: 1,
-          contains: [:grades, :distance, :st, :gs_rating],
+          contains: [:gradeLevels, :distance, :st, :gs_rating],
           does_not_contain: [:cgr]
         },
         { panel: 2,
@@ -392,16 +392,16 @@ describe FilterBuilder do
       context "in #{city}, CA" do
         let(:filters) { FilterBuilder.new('CA', city, false).filters }
         [ { panel: 1,
-            contains: [:grades, :distance, :st, :gs_rating],
+            contains: [:gradeLevels, :distance, :st, :gs_rating],
             does_not_contain: [:cgr, :dress_code, :class_offerings, :boys_sports, :girls_sports, :school_focus]
           },
           {panel: 2,
            contains: [:transportation, :extendedHours, :dress_code, :class_offerings],
-           does_not_contain: [:grades, :distance, :st, :gs_rating, :school_focus, :enrollment]
+           does_not_contain: [:gradeLevels, :distance, :st, :gs_rating, :school_focus, :enrollment]
           },
           {panel: 3,
            contains: [:boys_sports, :girls_sports, :school_focus],
-           does_not_contain: [:enrollment, :grades, :distance, :st, :gs_rating, :transportation, :extendedHours, :dress_code, :class_offerings]
+           does_not_contain: [:enrollment, :gradeLevels, :distance, :st, :gs_rating, :transportation, :extendedHours, :dress_code, :class_offerings]
           }].each_with_index do |filter_map, index|
           assert_filter_structure(filter_map, index)
         end

@@ -14,7 +14,7 @@ GS.nearbySchools = (function() {
   var stateAndSchool                 = gon.state + gon.school_id;
 
   var initialize = function() {
-    // initializeShowModuleListener();
+    initializeShowModuleListener();
   };
 
   var initializeShowModuleListener = function() {
@@ -35,7 +35,7 @@ GS.nearbySchools = (function() {
   var initializeCarousel = function() {
     var $nearbySchoolsContainer = $(NEARBY_SCHOOLS_SELECTOR);
     $nearbySchoolsContainer.slick({
-      prevArrow: false,
+      prevArrow: '.js-prev',
       nextArrow: '.js-next',
     });
   };
