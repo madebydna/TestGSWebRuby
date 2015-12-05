@@ -60,3 +60,18 @@
       </div>
     </div>
   </div>
+
+  <% if params[:simulate_reviews_ab_test] == 'true' %>
+    <script>
+      $(function() {
+        $('#old-reviews-section').hide();
+          $('#reviews-section').show({
+            complete: function() {
+              googletag.cmd.push(function () {
+                GS.ad.showAd('School_OverviewReviews_TestAd');
+              });
+            }
+          });
+      })
+    </script>
+  <% end %>
