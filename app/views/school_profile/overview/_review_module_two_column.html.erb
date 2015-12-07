@@ -5,7 +5,7 @@
     <div class="row">
       <div class="col-xs-12 col-sm-5 col-md-4 col-lg-4">
         <div class="pvl">
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :desktop  %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :desktop, defer_render: true  %>
         </div>
       </div>
 
@@ -57,6 +57,6 @@
 
 <% if @show_ads %>
   <div class="visible-xs plm pvl mbl">
-    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :mobile  %>
+    <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews, view: :mobile, defer_render: true  %>
   </div>
 <% end %>
