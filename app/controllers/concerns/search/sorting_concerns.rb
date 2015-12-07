@@ -8,6 +8,8 @@ module SortingConcerns
 
   def active_sort_name(sort)
     if sort
+      # This effectively removes the last word in "sort", where words are delimited by underscores.
+      # e.g., remove the "_asc" suffix from school_name_asc
       sort.to_s.split('_')[0..-2].join('_').to_sym
     else
       # By name sorting is just solr's default, aka. there is no sort
