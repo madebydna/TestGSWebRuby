@@ -28,9 +28,15 @@
       <% else %>
         <% db_hash = {:districtId => @school.district, :level => level_value, :schoolId => @school.id, :state => @school.state} %>
       <% end %>
-      <%= link_to(
-         image_tag('pixel.gif', class: 'contact-map-image js-contact_map_image pbm', alt: "Map of "+@school.name+" address."),
-         district_boundary_path(db_hash)) %>
+      <a href="<%= district_boundary_path(db_hash) %>">
+        <div>
+          <%= t('data_layouts.school_contact_info.see_attendance_zone') %>
+        </div>
+        <%= image_tag('pixel.gif',
+                      class: 'contact-map-image js-contact_map_image pbm',
+                      alt: "Map of "+@school.name+" address."
+                    ) %>
+      </a>
     </div>
     <% if @show_ads %>
       <div class="pbl mbl">
