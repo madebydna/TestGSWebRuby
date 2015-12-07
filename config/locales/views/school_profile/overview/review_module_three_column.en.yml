@@ -10,5 +10,5 @@ en:
         reviews_header:
           one: ! '%{count} review'
           other: ! '%{count} reviews'
-        student_respect: "Developing student's respect"
+        student_respect: "Developing students' respect"
         teacher_effectiveness: Teacher effectiveness

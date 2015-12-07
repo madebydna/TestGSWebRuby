@@ -8,12 +8,13 @@
   no_reviews_to_display = overall_reviews.size == 0 && reviews_with_comments.size == 0
     %>
   <div id="reviews-section" class="gs-bootstrap">
+    <hr />
     <div class="container-fluid">
       <div class="row">
         <% if no_reviews_to_display %>
           <div class="col-xs-12 col-sm-8">
             <div class="col-xs-12 col-sm-offset-1 col-sm-10">
-              <div class="mvm">
+              <div class="mbm mtl">
                <%= render 'school_profile/overview/review_school_callout', school: @school  %>
               </div>
               <div class="mvm tac">
@@ -32,7 +33,7 @@
             <button class="btn btn-primary js-button-link" data-link-value="<%= school_reviews_url(@school, anchor: "topic1") %>">
               <%= t('.review_this_school') %>
             </button> 
-            <% if overall_reviews.count > 0  %> 
+            <% if overall_reviews.having_answers.count > 0  %> 
               <div class="dib tac mtl mbm">
                 <%= draw_stars_48 average_score %>
                 <div class="open-sans_sb mvm uc"><%= t('.community_rating') %></div>
