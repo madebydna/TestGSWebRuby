@@ -26,6 +26,7 @@ GS.visualchart = GS.visualchart || function($) {
     };
 
     var colors = ['#69b684','#6cbfb5','#fcc769','#e7715d','#ef975b','#c4d66b','#836d93','#e4b4d4','#3c97d3','#db688c','#67499d','#aa5e5b'];
+    var colorsGreyScale = ['#555', '#b4b4b4'];
 
     var drawPieChart = function(dataIn, divId, selectHandler, options, chartname) {
         var func = function() {
@@ -104,7 +105,7 @@ GS.visualchart = GS.visualchart || function($) {
           height: GS.window.sizing.barChartHeight(chartname),
           legend: { position: GS.window.sizing.barChartLegend(chartname) },
           tooltip: { isHtml: true },
-          colors: colors,
+          colors: colorsGreyScale,
           hAxis: { maxValue: '100', minValue:'0' },
           chartArea: { left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%" },
           isStacked:true
@@ -145,7 +146,7 @@ GS.visualchart = GS.visualchart || function($) {
                 height: GS.window.sizing.barChartHeight(chartname),
                 legend: {position: GS.window.sizing.barChartLegend(chartname)},
                 tooltip: { isHtml: true },
-                colors: colors,
+                colors: colorsGreyScale,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {left:'50',top:'20', width: GS.window.sizing.barChartAreaWidth(chartname), height:"60%"}
             };
@@ -189,7 +190,7 @@ GS.visualchart = GS.visualchart || function($) {
                 height: GS.window.sizing.barChartHeight(chartname),
                 legend: {position: GS.window.sizing.barChartLegend(chartname)},
                 tooltip: { isHtml: true },
-                colors: colors,
+                colors: colorsGreyScale,
                 hAxis: {maxValue: '100', minValue:'0'},
                 chartArea: {
                   left: GS.window.sizing.barChartLabelWidth(chartname),
