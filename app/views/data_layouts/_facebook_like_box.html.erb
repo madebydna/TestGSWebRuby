@@ -1,4 +1,5 @@
-<% facebook_url = @school.cache_results.values_for(EspKeys::FACEBOOK_URL).first || @school.metadata.facebook_url %>
+<% decorated_school = SchoolProfileDecorator.new(@school) %>
+<% facebook_url = decorated_school.facebook_url %>
 <% if facebook_url %>
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
   <div class="row">

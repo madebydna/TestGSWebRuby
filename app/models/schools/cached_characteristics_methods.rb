@@ -57,8 +57,9 @@ module CachedCharacteristicsMethods
     end
   end
 
-
-
+  def school_leader
+    census_value('Head official name')
+  end
 
   def ethnicity_data
     characteristics['Ethnicity'] || []

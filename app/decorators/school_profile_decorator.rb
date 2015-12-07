@@ -97,4 +97,8 @@ class SchoolProfileDecorator < Draper::Decorator
     level_value = 'p' if level_code_array.include? 'p'
     level_value
   end
+
+ def facebook_url
+   cache_results.values_for(EspKeys::FACEBOOK_URL).first || metadata.facebook_url
+ end
 end
