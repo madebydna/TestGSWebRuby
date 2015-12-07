@@ -1,5 +1,5 @@
 <% school = SchoolProfileDecorator.decorate(@school) %>
-<% district = DistrictHomeDecorator.decorate(school.district) %>
+<% district = DistrictHomeDecorator.decorate(school.district) if school.district %>
 
 <% t_scope = 'school_profile.header' %>
 
@@ -19,30 +19,30 @@
       [
         school.process_level,
         link_to(db_t(school_type_display(school.type)), school.school_type_url),
-        district.district_home_link(truncate_length),
+        (district.district_home_link(truncate_length) if district),
         t('students',
           scope: t_scope,
           count: school.cache_results.students_enrolled
          )
-      ],
+      ].compact,
       [
         school.full_address.truncate(truncate_length),
         contact_info_link
-      ]
+      ].compact
     ],
     mobile: [
       [
         school.process_level,
         link_to(db_t(school_type_display(school.type)), school.school_type_url)
-      ],
+      ].compact,
       [
         t('students',
           scope: t_scope,
           count: school.cache_results.students_enrolled
          ),
         # On mobile, district name is truncated via CSS
-        district.district_home_link
-      ]
+        (district.district_home_link if district)
+      ].compact
     ]
   }
 %>
