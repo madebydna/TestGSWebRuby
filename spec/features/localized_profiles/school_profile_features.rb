@@ -7,9 +7,6 @@ shared_examples 'school profile page' do
     visit school_path(school)
     page
   end
-  before do
-    pending 'AT-1165 new header set as default for now.'
-  end
   after do
     clean_models School
   end

@@ -6,9 +6,6 @@ feature 'School profile overview page' do
   let(:school) do
     FactoryGirl.create(:alameda_high_school)
   end
-  before do
-    pending 'AT-1165 new header set as default for now.'
-  end
   subject do
     visit school_path(school)
     page

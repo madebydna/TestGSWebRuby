@@ -18,7 +18,6 @@ end
 describe 'School Profile Details Page' do
 
   before do
-    pending 'AT-1165 new header set as default for now.'
     FactoryGirl.create(:page, name: 'Details')
   end
 

@@ -34,10 +34,6 @@ end
 describe 'School Profile Overview Page' do
   include_context 'Visit School Profile Overview'
 
-  before do
-    pending 'AT-1165 new header set as default for now.'
-  end
-
   after do
     clean_dbs :gs_schooldb, :ca
     clean_dbs :profile_config
@@ -92,8 +88,7 @@ describe 'School Profile Overview Page' do
 
   with_shared_context 'Given basic school profile page' do
     with_shared_context 'with Alameda High School', js: true do
-      # AT-1165 comment out for now while new header is being tested
-      # include_example 'should be on the correct page'
+      include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
 
       its(:header) { is_expected.to_not have_in_english_link }
