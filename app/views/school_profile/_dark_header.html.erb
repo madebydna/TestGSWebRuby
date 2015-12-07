@@ -9,6 +9,7 @@
   <%= t('contact_info', scope: t_scope) %>
 <% end %>
 <% apply_now_url = school.school_metadata.apply_now_url %>
+<% enrollment = school.cache_results.students_enrolled(allow_nil: true) %>
 
 <% truncate_length = 50 %>
 
@@ -20,10 +21,7 @@
         school.process_level,
         link_to(db_t(school_type_display(school.type)), school.school_type_url),
         (district.district_home_link(truncate_length) if district),
-        t('students',
-          scope: t_scope,
-          count: school.cache_results.students_enrolled
-         )
+        (t('students', scope: t_scope, count: enrollment) if enrollment)
       ].compact,
       [
         school.full_address.truncate(truncate_length),
@@ -36,10 +34,7 @@
         link_to(db_t(school_type_display(school.type)), school.school_type_url)
       ].compact,
       [
-        t('students',
-          scope: t_scope,
-          count: school.cache_results.students_enrolled
-         ),
+        (t('students', scope: t_scope, count: enrollment) if enrollment),
         # On mobile, district name is truncated via CSS
         (district.district_home_link if district)
       ].compact
