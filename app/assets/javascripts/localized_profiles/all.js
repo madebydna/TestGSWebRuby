@@ -58,11 +58,58 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       });
     };
 
+    var showReviewsSectionAdOnlyOnce = function() {
+      if (showReviewsSectionAdOnlyOnce.adShown !== true) {
+        var $oldReviewsSection = $('#old-reviews-section');
+        var $newReviewsSection = $('#reviews-section');
+        var oldReviewsSectionIsVisible = $oldReviewsSection.is(':visible');
+        var newReviewsSectionIsVisible = $newReviewsSection.is(':visible');
+        var mobileAdIsVisible = $('#School_OverviewReviewsMobile_Ad').is(':visible');
+        var desktopAdIsVisible = $('#School_OverviewReviewsAd').is(':visible');
+
+        if (oldReviewsSectionIsVisible && mobileAdIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviewsMobile_Ad');
+        } else if (oldReviewsSectionIsVisible && desktopAdIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviewsAd');
+        } else if (newReviewsSectionIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviews_TestAd');
+        } else {
+          // don't do anything
+        }
+      }
+    };
+
+    var showReviewsSectionOnOverview = function(oldOrNew) {
+      var $reviewsSectionToShow;
+      var $reviewsSectionToHide;
+      if (oldOrNew === 'new') {
+        $reviewsSectionToShow = $('#reviews-section');
+        $reviewsSectionToHide = $('#old-reviews-section');
+      } else {
+        $reviewsSectionToShow = $('#old-reviews-section');
+        $reviewsSectionToHide = $('#reviews-section');
+      }
+
+      $reviewsSectionToHide.hide();
+      $reviewsSectionToShow.show({
+        complete: function() {
+          googletag.cmd.push(function () {
+            GS.schoolProfiles.showReviewsSectionAdOnlyOnce();
+          });
+        }
+      });
+    };
+
     return {
       showSignUpForSchoolModal: showSignUpForSchoolModal,
       showSignUpForSchoolModalAfterDelay: showSignUpForSchoolModalAfterDelay,
       initializeFollowThisSchool: initializeFollowThisSchool,
-      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton
+      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton,
+      showReviewsSectionOnOverview: showReviewsSectionOnOverview,
+      showReviewsSectionAdOnlyOnce: showReviewsSectionAdOnlyOnce
     };
 
   })(jQuery);
