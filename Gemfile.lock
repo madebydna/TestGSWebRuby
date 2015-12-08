@@ -524,7 +524,7 @@ DEPENDENCIES
   bootstrap-wysihtml5-rails
   capybara
   capybara-mechanize
-  capybara-screenshot
+  capybara-screenshot (~> 1.0.11)
   capybara-webkit
   childprocess
   codemirror-rails
