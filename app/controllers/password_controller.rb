@@ -42,7 +42,7 @@ class PasswordController < ApplicationController
       self.password_confirmation = password_confirmation
     end
 
-    validates_length_of :password, in: 6..14, message: I18n.t('models.reset_password_params.password_too_short')
+    validates_length_of :password, in: 6..14, message: I18n.t('models.reset_password_params.password_too_short', min: 6, max: 14)
     validates_confirmation_of :password, message: I18n.t('models.reset_password_params.password_mismatch')
   end
 
@@ -52,9 +52,6 @@ class PasswordController < ApplicationController
 
   def reset_password_response(error_messages = [])
     error_messages = Array.wrap(error_messages)
-    success_redirect = my_account_path
-    error_redirect = password_path
-    redirect_uri = error_messages.present? ? error_redirect : success_redirect
     success_message = t('actions.account.password_changed')
 
     respond_to do |format|
@@ -67,7 +64,7 @@ class PasswordController < ApplicationController
       end
       format.html do
         error_messages.present? ? flash_error(error_messages) : flash_notice(success_message)
-        redirect_to redirect_uri
+        redirect_to (error_messages.present? ? password_path : my_account_path)
       end
     end
   end
