@@ -62,17 +62,18 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       if (showReviewsSectionAdOnlyOnce.adShown !== true) {
         var $oldReviewsSection = $('#old-reviews-section');
         var $newReviewsSection = $('#reviews-section');
-        if ($oldReviewsSection.is(':visible')) {
-          if ($('#School_OverviewReviewsMobile_Ad').is(':visible')) {
-            showReviewsSectionAdOnlyOnce.adShown = true;
-            GS.ad.showAd('School_OverviewReviewsMobile_Ad');
-          } else if ($('#School_OverviewReviewsAd').is(':visible')) {
-            showReviewsSectionAdOnlyOnce.adShown = true;
-            GS.ad.showAd('School_OverviewReviewsAd');
-          } else {
-            // don't do anything
-          }
-        } else if ($newReviewsSection.is(':visible')) {
+        var oldReviewsSectionIsVisible = $oldReviewsSection.is(':visible');
+        var newReviewsSectionIsVisible = $newReviewsSection.is(':visible');
+        var mobileAdIsVisible = $('#School_OverviewReviewsMobile_Ad').is(':visible');
+        var desktopAdIsVisible = $('#School_OverviewReviewsAd').is(':visible');
+
+        if (oldReviewsSectionIsVisible && mobileAdIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviewsMobile_Ad');
+        } else if (oldReviewsSectionIsVisible && desktopAdIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviewsAd');
+        } else if (newReviewsSectionIsVisible) {
           showReviewsSectionAdOnlyOnce.adShown = true;
           GS.ad.showAd('School_OverviewReviews_TestAd');
         } else {
