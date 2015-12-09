@@ -1,6 +1,8 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
+  extend UrlHelper
+
   # TODO: Refactor these actions
   before_action :redirect_tab_urls, only: [:overview]
   before_action :require_state, :require_school
@@ -240,11 +242,14 @@ class SchoolProfileController < SchoolController
 
       google_apis_path = GoogleSignedImages::STATIC_MAP_URL
       address = GoogleSignedImages.google_formatted_street_address(@school)
+      school_rating = @school.gs_rating
+      map_pin_url = ActionController::Base.helpers.asset_url("icons/google_map_pins/map_icon_#{school_rating}.png")
+
       sizes.inject({}) do |sized_maps, element|
         label = element[0]
         size = element[1]
         sized_maps[label] = GoogleSignedImages.sign_url(
-          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false"
+          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{address}&sensor=false&markers=icons:#{map_pin_url}"
         )
         sized_maps
       end
