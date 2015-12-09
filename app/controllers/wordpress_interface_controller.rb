@@ -6,9 +6,18 @@ class WordpressInterfaceController < ApplicationController
   # These arrays are for white listing
   SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-  TEST_TYPE = ['parcc', 'sbac']
+  TEST_TYPE = ['PARCC', 'SBAC']
   NEWSLETTER_HOW = 'wp_newsletter'
-  LINK_URL_STARTS_WITH = 'http://www.greatschools.org/gk/common-core-test-guide/'
+  NEWSLETTER_HOW_TG = 'wp_newsletter_test_guide'
+  LINK_URL_STARTS_WITH = [
+      'http://www.greatschools.org/gk/common-core-test-guide/',
+      'http://qa.greatschools.org/gk/common-core-test-guide/',
+      'http://dev.greatschools.org/gk/common-core-test-guide/',
+      'http://dev-wp.greatschools.org/gk/common-core-test-guide/',
+      'http://localhost/gk/common-core-test-guide/',
+      'http://localhost:3000/gk/common-core-test-guide/',
+      'http://localhost:8888/gk/common-core-test-guide/'
+  ]
 
   def call_from_wordpress
     wp_action = params[:wp_action]
@@ -49,23 +58,38 @@ class WordpressInterfaceController < ApplicationController
     if (wp_params['state'].present?)
       state = state_abbreviate (wp_params['state'])
     end
-    if SUPPORTED_GRADES.include?(wp_params['grade'])
+
+    # if SUPPORTED_GRADES.include?(wp_params['grade'])
       grade = wp_params['grade']
-    end
+    # end
+
     if TEST_TYPE.include?(wp_params['test_type'])
       test_type = wp_params['test_type']
     end
 
-    if wp_params['link_url'].start_with? LINK_URL_STARTS_WITH
-      link_url = wp_params['link_url']
+    if wp_params['subscribe_to_news_letter'].present?
+      # find or create user
+      user_id = create_member(wp_params['email_from'], NEWSLETTER_HOW_TG)
+
+      # sign up for these lists
+      lists = ['greatnews', 'greatkidsnews']
+      create_subscriptions(user_id, lists, state)
     end
 
-    EmailTestGuide.deliver_to_user(wp_params['email_to'],
+    # need to bail if bogus url ----
+    # if LINK_URL_STARTS_WITH.any? { |host_string| wp_params['link_url'].start_with?(host_string) }
+      link_url = wp_params['link_url']
+    # end
+
+    return_value = EmailTestGuide.deliver_to_user(wp_params['email_to'],
                                    wp_params['email_from'],
+                                                  wp_params['name_from'],
                                    state,
                                    grade,
                                    link_url,
                                    test_type)
+
+    {'return_value' => return_value}
   end
 
   def message_signup(wp_params)
