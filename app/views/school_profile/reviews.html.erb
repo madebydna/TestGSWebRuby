@@ -1,7 +1,8 @@
 <%= render 'shared/qualaroo' %>
-
+<div class="mbl">
 <%= render 'school_profile/header', school: @school, page_name: :reviews %>
 <%= render 'school_profile/dark_header', school: @school, page_name: :reviews %>
+ </div>
 <div class="row limit-width-1200">
     <% if @school_reviews.blank? %>
       <div class="col-xs-12 mtl"  style="z-index: 1;">

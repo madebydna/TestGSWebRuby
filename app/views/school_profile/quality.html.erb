@@ -1,7 +1,8 @@
 <%= render 'shared/qualaroo' %>
-
+<div class="mbl">
 <%= render 'school_profile/header', school: @school, page_name: :quality %>
 <%= render 'school_profile/dark_header', school: @school, page_name: :quality %>
+</div>
 
 <div class="row limit-width-1200">
     <% root_placements = @page_config.root_placements_with_data %>
