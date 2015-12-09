@@ -101,4 +101,50 @@ describe School do
     end
   end
 
+  describe '#nearby_schools_for_list' do
+    let(:school) { FactoryGirl.build(:school) }
+    CacheResultsStruct = Struct.new(:nearby_schools)
+    context 'when the cache is present and a hash' do
+      let(:cache_results) do
+        CacheResultsStruct.new(legit_list: [:school1, :school2])
+      end
+      before do
+        allow(school).to receive(:cache_results).and_return(cache_results)
+      end
+      context 'when the list provided is a key of the hash' do
+        let(:list) { :legit_list }
+        it 'should return the correct value' do
+          expect(school.nearby_schools_for_list(list)).to eq([:school1, :school2])
+        end
+      end
+      context 'when the list provided is not a key of the hash' do
+        let(:list) { :not_legit_list }
+        it 'should return an empty array' do
+          expect(school.nearby_schools_for_list(list)).to eq([])
+        end
+      end
+    end
+    context 'when the cache is present and not a hash' do
+      let(:cache_results) do
+        CacheResultsStruct.new([:school1, :school2])
+      end
+      before do
+        allow(school).to receive(:cache_results).and_return(cache_results)
+      end
+      let(:list) { :not_legit_list }
+      it 'should return an empty array' do
+        expect(school.nearby_schools_for_list(list)).to eq([])
+      end
+    end
+    context 'when the cache is not present' do
+      before do
+        allow(school).to receive(:cache_results).and_return(nil)
+      end
+      let(:list) { :not_legit_list }
+      it 'should return an empty array' do
+        expect(school.nearby_schools_for_list(list)).to eq([])
+      end
+    end
+  end
+
 end

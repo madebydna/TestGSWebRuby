@@ -196,9 +196,6 @@ class School < ActiveRecord::Base
     HeldSchool.exists?(state: state, school_id: id)
   end
 
-  def nearby_schools
-    super.on_db(shard)
-  end
   def neighbors
     super.on_db(shard)
   end
@@ -278,6 +275,13 @@ class School < ActiveRecord::Base
     )
   end
 
+  def nearby_schools_for_list(list_name)
+    if cache_results.present? && cache_results.nearby_schools.is_a?(Hash)
+      cache_results.nearby_schools[list_name] || []
+    else
+      []
+    end
+  end
 
   def self.for_collection_ordered_by_name(state,collection_id)
     raise ArgumentError, 'state and collection_id provided must be provided' unless state.present? && collection_id.present?
