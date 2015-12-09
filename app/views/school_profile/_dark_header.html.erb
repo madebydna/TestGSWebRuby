@@ -4,10 +4,11 @@
 <% t_scope = 'school_profile.header' %>
 
 <% contact_info_anchor = school_url(school, anchor: 'Contact_this_school') %>
-<% contact_info_link = link_to(contact_info_anchor) do %>
-  <span class="iconx16 i-16-blue-map-view"></span>
-  <%= t('contact_info', scope: t_scope) %>
-<% end %>
+<% contact_info_link = raw(
+     '<span class="iconx16 i-16-blue-map-view"></span>' <<
+     link_to(t('contact_info', scope: t_scope), contact_info_anchor)
+   )
+%>
 <% apply_now_url = school.school_metadata.apply_now_url %>
 <% enrollment = school.cache_results.students_enrolled(allow_nil: true) %>
 
@@ -84,19 +85,19 @@
       <div class="row">
         <div class="col-xs-12 col-sm-10 col-md-8">
           <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
-            <%= link_to school_url(school), itemprop: 'url' do %>
-              <h1 class="notranslate">
+            <h1 class="notranslate pbm">
+              <%= link_to school_url(school), itemprop: 'url' do %>
                 <span itemprop="title">
                   <%= school.name %>
                 </span>
-              </h1>
-            <% end %>
+              <% end %>
+            </h1>
           </span>
           <% subheader_content.each do |view, rows| %>
             <% visibility = view == :desktop ? 'hidden-xs' : 'visible-xs' %>
             <div class="<%= visibility %>">
               <% rows.each do |row| %>
-                <div class="overflow-ellipses">
+                <div class="overflow-ellipses pbs">
                   <%= row.join('<span class="phm">|</span>').html_safe %>
                 </div>
               <% end %>
