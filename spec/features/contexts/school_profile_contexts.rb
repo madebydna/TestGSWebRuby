@@ -119,3 +119,11 @@ shared_context 'with Cesar Chavez Academy Denver' do
     clean_dbs(:co)
   end
 end
+shared_context 'Given school profile page with Contact this school section' do |page_name|
+  nil
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_contact_this_school_section
+  end
+end
+

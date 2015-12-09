@@ -193,5 +193,20 @@ describe 'School Profile Overview Page' do
     end
   end
 
+  describe 'Contact this school' do
+    before do
+      FactoryGirl.create(:page, name: 'Overview')
+    end
+    include_context 'Given school profile page with Contact this school section'
+    # include_context 'Visit School Profile Overview'
+    include_context 'with Alameda High School'
+
+    it { subject
+         save_and_open_page
+         is_expected.to have_contact_this_school_section }
+
+
+  end
+
 end
 

@@ -30,6 +30,10 @@ class SchoolProfileOverviewPage < SitePrism::Page
     end
   end
 
+  section :contact_this_school_section, 'h2', text:'Contact this school'  do
+
+  end
+
   def click_on_write_a_review_button
     write_a_review_button.click
   end
