@@ -69,12 +69,24 @@ class SchoolProfilePageFactory
 
 
   def with_contact_this_school_section
-    FactoryGirl.create(
+    contact_section = FactoryGirl.create(
         :category_placement,
         title: 'Contact this school',
         page: page,
-        layout: 'school_contact_info'
+        layout: 'section'
     )
+
+    FactoryGirl.create(
+        :category_placement,
+        title: 'School contact info module',
+        page: page,
+        layout: 'school_contact_info',
+        parent: contact_section
+    )
+
+
+
+    return self
     return self
   end
   def with_state_test_guide_module

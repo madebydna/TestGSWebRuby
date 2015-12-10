@@ -194,17 +194,16 @@ describe 'School Profile Overview Page' do
   end
 
   describe 'Contact this school' do
-    before do
-      FactoryGirl.create(:page, name: 'Overview')
-    end
     include_context 'Given school profile page with Contact this school section'
-    # include_context 'Visit School Profile Overview'
     include_context 'with Alameda High School'
 
-    it { subject
-         save_and_open_page
-         is_expected.to have_contact_this_school_section }
 
+    it { is_expected.to have_contact_this_school_section }
+    it 'should not have Oakland' do
+      require 'pry'; binding.pry;
+      expect(subject.contact_this_school_section).to have_text("Oakland")
+    end
+    its(:contact_this_school_section) { is_expected.to have_text("Oakland") }
 
   end
 
@@ -216,6 +215,7 @@ describe 'School Profile Overview Page' do
     with_subject :media_gallery do
       # it { is_expected.to have_placeholder_image }
     end
+
   end
 
 end

@@ -31,6 +31,7 @@ class SchoolProfileOverviewPage < SitePrism::Page
   end
 
   section :contact_this_school_section, 'h2', text:'Contact this school'  do
+    # element :text_test, 'span', text: 'sdaf , CA'
 
   end
 

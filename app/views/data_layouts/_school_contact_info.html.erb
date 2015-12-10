@@ -1,4 +1,3 @@
-<h1>i am here </h1>
 <% if @school %>
   <% decorated_school = SchoolProfileDecorator.new(@school) %>
   <%= render layout:'col', locals: { css_class:'phs', category_placement: category_placement } do %>
