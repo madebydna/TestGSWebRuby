@@ -116,6 +116,10 @@ class MissingDatabaseTranslationChecker
         table: :'gs_schooldb.TestDataType',
         column: :display_name
       },
+      {
+        table: :'gs_schooldb.test_description',
+        column: :description
+      }
     ]
     @missing_translation_messages = []
   end
