@@ -23,7 +23,7 @@ module NearbySchoolsCaching::Helpers::RatingsQueriesHelper
     "IFNULL((
           SELECT value_float
           FROM TestDataSchoolValue
-          JOIN TestDataSet tds on tds.id = data_set_id
+          JOIN TestDataSet on TestDataSet.id = data_set_id
           WHERE #{basic_ratings_conditions}
           AND #{options_as_where_clause(rating)}
         ), 0) as #{options_as_unique_name(rating)}"
@@ -35,7 +35,7 @@ module NearbySchoolsCaching::Helpers::RatingsQueriesHelper
     "(
         SELECT count(*)
         FROM TestDataSchoolValue
-        JOIN TestDataSet tds on tds.id = data_set_id
+        JOIN TestDataSet on TestDataSet.id = data_set_id
         WHERE #{basic_ratings_conditions}
         AND (#{ratings.map { |r| options_as_where_clause(r) }.join(' OR ')})
       ) as #{COUNT_FIELD}"
@@ -44,7 +44,12 @@ module NearbySchoolsCaching::Helpers::RatingsQueriesHelper
   # Grab each school's ratings that are deemed the most up-to-date.
   # display_target is how we set ratings to be used.
   def basic_ratings_conditions
-    "(display_target like '%ratings%' AND school_id = school.id)"
+    "(
+      display_target like '%ratings%'
+      AND school_id = school.id AND
+      TestDataSchoolValue.active = 1 AND
+      TestDataSet.active = 1
+    )"
   end
 
   # Converts a hash to a valid SQL where statement with each hash key-value
