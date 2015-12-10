@@ -193,6 +193,19 @@ describe 'School Profile Overview Page' do
     end
   end
 
+  describe 'Contact this school' do
+    include_context 'Given school profile page with Contact this school section'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_contact_this_school_header }
+    it { is_expected.to have_contact_this_school_content }
+    it { is_expected.to have_contact_this_school_map_section }
+    its(:contact_this_school_content) { is_expected.to have_text(school.city+', '+school.state) }
+    its(:contact_this_school_content) { is_expected.to have_link('Nearby homes for sale') }
+    its(:contact_this_school_map_section) { is_expected.to have_school_map }
+
+  end
+
   describe 'media gallery' do
     include_context 'Given school profile page with media gallery on overview'
     include_context 'with Alameda High School'
@@ -201,6 +214,7 @@ describe 'School Profile Overview Page' do
     with_subject :media_gallery do
       # it { is_expected.to have_placeholder_image }
     end
+
   end
 
 end
