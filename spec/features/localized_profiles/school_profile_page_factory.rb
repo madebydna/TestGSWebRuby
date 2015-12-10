@@ -89,5 +89,16 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_media_gallery
+    FactoryGirl.create(
+      :category_placement,
+      title: 'Media Gallery',
+      page: page,
+      layout: 'lightbox_overview'
+    )
+
+    return self
+  end
+
 
 end

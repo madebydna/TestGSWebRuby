@@ -30,6 +30,10 @@ class SchoolProfileOverviewPage < SitePrism::Page
     end
   end
 
+  section :media_gallery, 'h2', text: 'Media Gallery' do
+    element :placeholder_image, 'img[alt="Media missing"]'
+  end
+
   def click_on_write_a_review_button
     write_a_review_button.click
   end

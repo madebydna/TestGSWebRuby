@@ -193,5 +193,15 @@ describe 'School Profile Overview Page' do
     end
   end
 
+  describe 'media gallery' do
+    include_context 'Given school profile page with media gallery on overview'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_media_gallery }
+    with_subject :media_gallery do
+      # it { is_expected.to have_placeholder_image }
+    end
+  end
+
 end
 
