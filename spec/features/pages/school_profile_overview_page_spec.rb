@@ -197,13 +197,12 @@ describe 'School Profile Overview Page' do
     include_context 'Given school profile page with Contact this school section'
     include_context 'with Alameda High School'
 
-
-    it { is_expected.to have_contact_this_school_section }
-    it 'should not have Oakland' do
-      require 'pry'; binding.pry;
-      expect(subject.contact_this_school_section).to have_text("Oakland")
-    end
-    its(:contact_this_school_section) { is_expected.to have_text("Oakland") }
+    it { is_expected.to have_contact_this_school_header }
+    it { is_expected.to have_contact_this_school_content }
+    it { is_expected.to have_contact_this_school_map_section }
+    its(:contact_this_school_content) { is_expected.to have_text(school.city+', '+school.state) }
+    its(:contact_this_school_content) { is_expected.to have_link('Nearby homes for sale') }
+    its(:contact_this_school_map_section) { is_expected.to have_school_map }
 
   end
 

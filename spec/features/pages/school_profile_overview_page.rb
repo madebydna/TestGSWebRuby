@@ -30,9 +30,13 @@ class SchoolProfileOverviewPage < SitePrism::Page
     end
   end
 
-  section :contact_this_school_section, 'h2', text:'Contact this school'  do
-    # element :text_test, 'span', text: 'sdaf , CA'
+  element :contact_this_school_header, 'h2', text:'Contact this school'
 
+  element :contact_this_school_content, 'div.contact-content'
+
+
+  section :contact_this_school_map_section, 'div.contact-content:first-of-type + div' do
+    element :school_map, 'img.contact-map-image'
   end
 
   section :media_gallery, 'h2', text: 'Media Gallery' do
