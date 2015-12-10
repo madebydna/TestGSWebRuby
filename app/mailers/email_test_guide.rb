@@ -12,12 +12,6 @@ class EmailTestGuide < AbstractExactTargetMailer
         state_test_guide_grade: grade,
         state_test_guide_link: link_url,
         state_test_guide_type: test_type
-        # EMAIL_FROM: email_from,
-        # NAME_FROM: name_from,
-        # STATE: state,
-        # GRADE: grade,
-        # LINK_URL: link_url,
-        # TEST_TYPE: test_type
     }
 
     deliver(email_to, exact_target_email_attributes)
