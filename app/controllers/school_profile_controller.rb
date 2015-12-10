@@ -249,7 +249,7 @@ class SchoolProfileController < SchoolController
         label = element[0]
         size = element[1]
         sized_maps[label] = GoogleSignedImages.sign_url(
-          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=icon:#{map_pin_url}%7C#{address}&sensor=false"
+          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=icon:#{map_pin_url}|#{address}&sensor=false"
         )
         sized_maps
       end
