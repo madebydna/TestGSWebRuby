@@ -313,7 +313,12 @@ describe UrlHelper do
         expect(subject['s_cid']).to eq('eml_passwordreset')
       end
       it 'should add the appropriate token to the url' do
-        expect(subject['token']).to eq(CGI.escape(user.auth_token))
+        hash, date = user.email_verification_token
+        expect(subject['id']).to eq(CGI.escape(hash))
+      end
+      it 'should add the appropriate date to the url' do
+        hash, date = user.email_verification_token
+        expect(subject['date']).to eq(date)
       end
       context 'with a caller-specified s_cid' do
         let(:parsed_url) { URI::parse(url_helper.create_reset_password_url(user, s_cid: 'baz')) }

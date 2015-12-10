@@ -201,21 +201,4 @@ module AuthenticationConcerns
     false
   end
 
-  def login_from_hash(hash)
-    begin
-      user_id = hash[MD5_HASH_LENGTH..-1]
-      user = User.find(user_id)
-      if user && user.auth_token == hash
-        user.verify_email!
-        user.save
-        log_user_in(user)
-      end
-    rescue
-      if logged_in?
-        log_user_out
-      end
-      log.error("Error while attempting to log in user with hash: #{hash}")
-    end
-  end
-
 end

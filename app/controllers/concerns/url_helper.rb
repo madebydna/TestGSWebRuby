@@ -161,7 +161,7 @@ module UrlHelper
     post_registration_redirect.query_values ||= { redirect: password_url }
     hash, date = user.email_verification_token
     verification_link_params.merge!(
-      id: hash,
+      id: CGI.escape(hash),
       date: date,
       redirect: post_registration_redirect.to_s,
       s_cid: tracking_code
@@ -204,8 +204,10 @@ module UrlHelper
   end
 
   def create_authenticate_token_url(user, redirect, params = {})
+    hash, date = user.email_verification_token
     params = params.reverse_merge({
-      token: CGI.escape(user.auth_token),
+      id: CGI.escape(hash),
+      date: date,
       redirect: redirect
     })
     authenticate_token_url(params)

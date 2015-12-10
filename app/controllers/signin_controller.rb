@@ -150,45 +150,22 @@ class SigninController < ApplicationController
     end
   end
 
-  # This code needs to be refactored along with the authenticate_token action to be more dry and consistent, and
-  # better named. JIRA: JT-385
   def verify_email
-    # TODO: send an email after verifying or after user no longer provisional?
     token = params[:id]
+    token = CGI.unescape(token) if token
     time = params[:date]
     success_redirect = params[:redirect] || my_account_url
+    error_message = I18n.t('controllers.signin.verify_email.error')
 
-    begin
-      token = EmailVerificationToken.parse token, time
-
-      if token.expired?
-        flash_error I18n.t('controllers.signin.verify_email.error')
-        redirect_to join_url
-      elsif token.user.nil?
-        flash_error I18n.t('controllers.signin.verify_email.error')
-        redirect_to join_url
-      else
-        user = token.user
-        already_verified = user.email_verified?
-        user.verify!
-        if user.save
-          newly_published_reviews = user.publish_reviews!
-          if newly_published_reviews.any?
-            set_omniture_events_in_cookie(['review_updates_mss_end_event'])
-            set_omniture_sprops_in_cookie({'custom_completion_sprop' => 'PublishReview'})
-          end
-          event_label = user.provisional_or_approved_osp_user? ? 'osp' : 'regular'
-          insert_into_ga_event_cookie('registration', 'verified email', event_label, nil, true) unless already_verified
-          log_user_in user
-          redirect_to success_redirect
-        else
-          flash_error I18n.t('controllers.signin.verify_email.error')
-          redirect_to join_url
-        end
-      end
-    rescue => e
-      Rails.logger.debug "Failed to parse token: #{e}"
-      flash_error I18n.t('controllers.signin.verify_email.error')
+    user_authenticator_and_verifier = UserAuthenticatorAndVerifier.new(token, time)
+    if user_authenticator_and_verifier.authenticated?
+      user_authenticator_and_verifier.verify_and_publish_reviews!
+      user = user_authenticator_and_verifier.user
+      log_user_in user
+      set_verify_email_google_event(user) unless  user_authenticator_and_verifier.already_verified?
+      redirect_to success_redirect
+    else
+      flash_error error_message
       redirect_to join_url
     end
   end
@@ -213,18 +190,22 @@ class SigninController < ApplicationController
   end
 
   def authenticate_token_and_redirect
-    token = params[:token]
+    token = params[:id]
     token = CGI.unescape(token) if token
-    redirect = params[:redirect] || my_account_path
-    if token.present?
-      login_from_hash(token)
-      redirect_to redirect and return if logged_in?
-    end
+    time = params[:date]
+    success_redirect = params[:redirect] || my_account_path
+    error_message = I18n.t('controllers.forgot_password_controller.token_invalid')
 
-    # If we get here, something went wrong. Token was missing or invalid
-    Rails.logger.error("Error authenticating token: #{token}")
-    flash_error t('controllers.forgot_password_controller.token_invalid')
-    redirect_to home_url
+    user_authenticator_and_verifier = UserAuthenticatorAndVerifier.new(token, time)
+    if user_authenticator_and_verifier.authenticated?
+      user_authenticator_and_verifier.verify_and_publish_reviews!
+      user = user_authenticator_and_verifier.user
+      log_user_in user
+      redirect_to success_redirect
+    else
+      flash_error error_message
+      redirect_to home_url
+    end
   end
 
   protected
@@ -357,6 +338,55 @@ class SigninController < ApplicationController
       return user, nil
     end
 
+  end
+
+  def set_verify_email_google_event(user)
+    event_label = user.provisional_or_approved_osp_user? ? 'osp' : 'regular'
+    insert_into_ga_event_cookie('registration', 'verified email', event_label, nil, true) 
+  end
+
+  class UserAuthenticatorAndVerifier
+
+    def initialize(token, time)
+      @token = token
+      @time = time
+      @already_verified = false
+    end
+
+    def user
+      parse_email_verification_token.user
+    end
+
+    def parse_email_verification_token
+      @_parse_email_verification_token ||= (
+      EmailVerificationToken.parse @token, @time
+      )
+    end
+
+    def already_verified?
+      @already_verified
+    end
+
+    def token_valid?
+      begin
+        token = parse_email_verification_token
+        return !(token.expired? || token.user.nil?) 
+      rescue => e
+        # GS.logger.error :misc, nil, {message: e}
+        return false
+      end
+    end
+
+    def authenticated?
+      return token_valid? && user.valid?
+    end
+
+    def verify_and_publish_reviews!
+      @already_verified = user.email_verified?
+      user.verify!
+      user.save
+      user.publish_reviews!
+    end
   end
 
 end

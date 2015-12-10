@@ -41,13 +41,4 @@ describe ForgotPasswordController do
 
   end
 
-  describe '#login_from_hash' do
-    it 'should verify the user\'s email' do
-      user = FactoryGirl.build(:new_user)
-      expect(User).to receive(:find).and_return(user)
-      expect(user).to receive(:verify_email!)
-      controller.send(:login_from_hash, user.auth_token)
-    end
-  end
-
 end
