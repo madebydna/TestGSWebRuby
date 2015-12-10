@@ -54,6 +54,12 @@ shared_context 'Visit School Profile Quality' do |s = nil|
   end
 end
 
+shared_context 'Given school profile page with media gallery on overview' do |page_name = nil|
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+      with_media_gallery
+  end
+end
 
 shared_context 'Visit School Profile Details' do |s = nil|
   subject(:page_object) do

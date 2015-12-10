@@ -1,13 +1,13 @@
-<% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
+<% begin %>
+  <%
+    # `list` is hardcoded for now, but could eventually be based on a config
+    # value, for instance a collection config or a category placement config.
+    list = 'closest_top_then_top_nearby_schools'
+    data = @school.nearby_schools_for_list(list)
+  %>
 
-<%
-  collections_to_show = [*category_placement.layout_config_json['show_module_for_collections']]
-  should_show_partial = (@school.collection_ids & collections_to_show).present?
-  school_profile_decorator = SchoolProfileDecorator.decorate(@school)
-%>
-
-<% if should_show_partial %>
-  <% begin %>
+  <% if data.present? %>
+    <% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
     <div class="sticky-nearby-schools js-nearbySchoolsModule gs-bootstrap dn">
       <div class="sticky-container">
         <div class="current-school clearfix hidden-xs">
@@ -89,8 +89,11 @@
         </div>
       </div>
     </div>
-  <% rescue => e %>
-    <%= log_view_error "Something went wrong while trying to display #{category_placement.title}", e %>
-    <% raise e if params[:debug] %>
+    <script>
+      gon.showNearbySchoolsSticky = true;
+    </script>
   <% end %>
+<% rescue => e %>
+  <%= log_view_error "Something went wrong while trying to display #{current_partial}", e %>
+  <% raise e if params[:debug] %>
 <% end %>

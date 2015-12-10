@@ -6,9 +6,10 @@ class WordpressInterfaceController < ApplicationController
   # These arrays are for white listing
   SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-  TEST_TYPE = ['parcc', 'sbac']
+  TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
   NEWSLETTER_HOW = 'wp_newsletter'
-  LINK_URL_STARTS_WITH = 'http://www.greatschools.org/gk/common-core-test-guide/'
+  NEWSLETTER_HOW_TG = 'wp_newsletter_test_guide'
+
 
   def call_from_wordpress
     wp_action = params[:wp_action]
@@ -45,38 +46,72 @@ class WordpressInterfaceController < ApplicationController
     return {'member_id' => user_id}
   end
 
+  # Sends an email with the test guide to a friend
   def email_testguide(wp_params)
     if (wp_params['state'].present?)
-      state = state_abbreviate (wp_params['state'])
+      state = state_remove_dash(wp_params['state']).split.map(&:capitalize).join(' ')
+      state_abb = state_abbreviate (wp_params['state'])
+      state = "District of Columbia" if state_abb == 'DC'
     end
-    if SUPPORTED_GRADES.include?(wp_params['grade'])
-      grade = wp_params['grade']
-    end
+
+    grade = wp_params['grade']
+
     if TEST_TYPE.include?(wp_params['test_type'])
       test_type = wp_params['test_type']
     end
 
-    if wp_params['link_url'].start_with? LINK_URL_STARTS_WITH
+    if wp_params['subscribe_to_news_letter'].present?
+      # find or create user
+      user_id = create_member(wp_params['email_from'], NEWSLETTER_HOW_TG)
+
+      # sign up for these lists
+      lists = ['greatnews', 'greatkidsnews']
+      create_subscriptions(user_id, lists, state_abb)
+    end
+
+    # need to bail if bogus url ----
+    if validate_url_test_guide(wp_params['link_url'])
       link_url = wp_params['link_url']
     end
 
-    EmailTestGuide.deliver_to_user(wp_params['email_to'],
+    return_value = EmailTestGuide.deliver_to_user(wp_params['email_to'],
                                    wp_params['email_from'],
+                                                  wp_params['name_from'],
                                    state,
                                    grade,
                                    link_url,
                                    test_type)
+
+    {'return_value' => return_value}
   end
 
   def message_signup(wp_params)
 
   end
 
+  def validate_url_test_guide(url)
+    if /^http:\/\/.[A-Za-z0-9_\-.]+\.greatschools.org\/gk\/common-core-test-guide\//i.match(url) ||
+        /^http:\/\/localhost[0-9:]*\/gk\/common-core-test-guide\//i.match(url) ||
+        /^http:\/\/greatschools.org\/gk\/common-core-test-guide\//i.match(url)
+      return true
+    end
+    false
+  end
+
   def state_abbreviate (state)
-    state.gsub '-', ' ' if state.length > 2
-    state_abbreviation = States.abbreviation(state)
+    state_no_dash = state_remove_dash(state)
+    state_abbreviation = States.abbreviation(state_no_dash)
     state_abbreviation.upcase! if state_abbreviation.present?
     state_abbreviation
+  end
+
+  def state_remove_dash(state)
+    if state.length > 2
+      state.gsub('-', ' ')
+    else
+      state
+    end
+
   end
 
   def create_subscriptions(user_id, list_arr, state)

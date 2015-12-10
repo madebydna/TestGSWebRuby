@@ -6,13 +6,13 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
   # should return the result of a methodology's #results method or the
   # concatentation of multiple methodologies' #results.
   DEFAULT_LIST = :closest_schools
-  STATE_LISTS = Hash.new([]).merge({
-    ca: [:closest_top_then_top_nearby_schools],
+  COLLECTION_LISTS = Hash.new([]).merge({
+    14 => [:closest_top_then_top_nearby_schools],
   })
 
   def build_hash_for_cache
     # Using shard because it is a lowercase symbol
-    hash_structure_for_state(school.shard)
+    hash_structure_for_collections(school.collection_ids)
   end
 
   def self.listens_to?(data_type)
@@ -21,14 +21,16 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
 
   protected
 
-  def hash_structure_for_state(state)
-    lists_for_state(state).each_with_object({}) do |list, h|
+  def hash_structure_for_collections(collection_ids)
+    lists_for_collections(collection_ids).each_with_object({}) do |list, h|
       h[list] = send(list)
     end
   end
 
-  def lists_for_state(state)
-    [DEFAULT_LIST] | STATE_LISTS[state]
+  # Returns an array of all the unique lists attached to the given
+  # collection_ids
+  def lists_for_collections(collection_ids)
+    [DEFAULT_LIST] | collection_ids.map { |id| COLLECTION_LISTS[id] }.flatten
   end
 
   def closest_schools

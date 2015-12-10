@@ -1,8 +1,8 @@
 <%= render 'shared/qualaroo' %>
-
+<div class="mbl">
 <%= render 'school_profile/header', school: @school, page_name: :details %>
 <%= render 'school_profile/dark_header', school: @school, page_name: :details %>
-
+</div>
 <div class="row limit-width-1200">
 
     <% root_placements = @page_config.root_placements_with_data %>
@@ -46,6 +46,7 @@
             </div>
         </div>
     <% end %>
+    <%= render 'data_layouts/sticky_nearby_schools' %>
 </div>
 <%= render 'data_layouts/nearby_schools' %>
 
