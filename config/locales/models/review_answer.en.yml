@@ -1,0 +1,6 @@
+en:
+  models:
+    review_answer:
+      stars_label:
+        one: '%{count} star'
+        other: '%{count} stars'

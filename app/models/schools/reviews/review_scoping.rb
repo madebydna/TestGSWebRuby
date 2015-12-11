@@ -62,6 +62,15 @@ module ReviewScoping
     five_star_rating_reviews.principal_reviews.first
   end
 
+  def having_answers
+    @having_answers ||= (
+      array = select(&:answer)
+      array.extend ReviewScoping
+      array.extend ReviewCalculations
+      array.freeze
+    )
+  end
+
   def having_comments
     @having_comments ||= (
       array = select(&:has_comment?)

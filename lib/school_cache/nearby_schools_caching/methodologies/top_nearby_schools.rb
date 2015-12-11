@@ -10,6 +10,7 @@ class NearbySchoolsCaching::Methodologies::TopNearbySchools < NearbySchoolsCachi
     # ratings types. The results are orderd by rating average desc, distance
     # asc, so in a tie, the closer school wins.
     def schools(school, opts)
+      return [] unless school.lat.present? && school.lon.present?
       limit   = opts[:limit] || 5 # number of schools to return
       radius  = opts[:radius] || 2 # miles
       school_ids_to_exclude = opts[:school_ids_to_exclude] || ''

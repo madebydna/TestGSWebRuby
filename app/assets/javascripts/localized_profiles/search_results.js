@@ -234,6 +234,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             case 'rating': return 'rating_desc';
             case 'distance': return 'distance_asc';
             case 'fit': return 'fit_desc';
+            case 'school_name': return 'school_name_asc';
         }
 //        if (new RegExp(sortType).test(previousSort)) {
 //            return /asc/.test(previousSort) ? sortType + '_desc' : sortType + '_asc';
@@ -457,7 +458,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
     };
 
     var setSavedSearchOpenPopupHandler = function() {
-        $(".js-savedSearchPopupLink").on('click', function() {
+        var savedSearchPopupLink = $('.js-savedSearchPopupLink');
+        savedSearchPopupLink.on('click', function() {
             var $popup = $('.js-savedSearchPopup');
             if ($popup.css('display') == 'none') {
                 GS.popup.closeOtherPopups();
@@ -465,6 +467,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             } else {
                 $popup.hide();
             }
+            return false;
         });
 
         var closeHandler = function () {
@@ -473,12 +476,13 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         GS.popup.registerCloseHandler(closeHandler);
         $('html').on('click', closeHandler);
         GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopup'));
-        GS.popup.stopClickAndTouchstartEventPropogation($('.js-savedSearchPopupLink'));
+        GS.popup.stopClickAndTouchstartEventPropogation(savedSearchPopupLink);
     };
 
     var setSavedSearchSubmitHandler = function() {
         $('.js-savedSearchSubmitButton').on('click', function() {
             attemptSaveSearch();
+            return false;
         })
     };
 

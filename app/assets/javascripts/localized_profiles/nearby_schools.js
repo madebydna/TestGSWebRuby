@@ -18,7 +18,7 @@ GS.nearbySchools = (function() {
   };
 
   var initializeShowModuleListener = function() {
-    if (!shouldHideNearbySchools()) {
+    if (shouldShowNearbySchools()) {
       $(document).on('scroll', function() {
         $(this).off('scroll');
         analyticsEvent(category, action, label, value, nonInteractive);
@@ -35,7 +35,7 @@ GS.nearbySchools = (function() {
   var initializeCarousel = function() {
     var $nearbySchoolsContainer = $(NEARBY_SCHOOLS_SELECTOR);
     $nearbySchoolsContainer.slick({
-      prevArrow: false,
+      prevArrow: '.js-prev',
       nextArrow: '.js-next',
     });
   };
@@ -55,8 +55,14 @@ GS.nearbySchools = (function() {
     $(WHITE_SPACE_DIV_SELECTOR).css({height: nearbySchoolsModuleHeight});
   };
 
-  var shouldHideNearbySchools = function() {
-    return $.cookie('hideNearbySchoolsFor') === stateAndSchool
+  // True if the gon variable that asserts that the module is on the
+  // page (i.e. the current school has data for the module) is set and we are
+  // not cookied to hide the module for school.
+  var shouldShowNearbySchools = function() {
+    // This gon variable is set in the HTML partial. If it is not set, we'll
+    // default it to false, since that means the partial is not on the page.
+    var moduleOnPage = gon.showNearbySchoolsSticky || false;
+    return moduleOnPage && $.cookie('hideNearbySchoolsFor') !== stateAndSchool;
   };
 
   var setHideNearbySchoolsCookie = function() {

@@ -202,6 +202,8 @@ LocalizedProfiles::Application.routes.draw do
   match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
   match '/gsr/session/facebook_auth' => 'signin#facebook_auth', :as => :facebook_auth, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
+  # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
+  # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
@@ -218,26 +220,23 @@ LocalizedProfiles::Application.routes.draw do
 
   # Passwords:
 
-  # This route should get executed when a user clicks a link in a "forgot password" email
-  # The hash that is present as a query param on the link will allow us to authenticate the user
-  # Once the user is authenticated, send them to a form where they can change their password
-  get '/gsr/reset-password',:as => :reset_password, :to => 'forgot_password#login_and_redirect_to_change_password'
+  # Authenticates the user using a hash, and then redirects
+  # Example usage: send user here when they click a link in a "forgot password" email
+  get '/gsr/authenticate-token', :as => :authenticate_token, :to => 'signin#authenticate_token_and_redirect'
 
   # When this route is requested, we will deliver a form to the user, where they will provide their email address
   # so that we can send them a "forgot password" link
-  get '/gsr/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
-
+  get '/account/forgot-password', :to => 'forgot_password#show', :as => 'forgot_password'
   # When this route is requested, the user is telling us that they have forgotten their password,
   # and need a "forgot password" email. We'll send them an email with a link, and that link will allow us to
   # authenticate them so they can go ahead and change their password
-  post '/gsr/forgot-password/send_reset_email', :to => 'forgot_password#send_reset_password_email', :as => 'send_reset_password_email'
+  post '/account/forgot-password', :to => 'forgot_password#send_reset_password_email'
 
   # This route handles a user's "reset password" post. When they submit a form with their new password, it posts here
-  put '/gsr/user/change-password', to: 'user#change_password', as: :change_password
-
+  put '/account/password', to: 'password#update', as: :password
   # When this route is requested, we should deliver a page with a form that allows the user to type in and confirm
   # a new password. The user must be logged in before they can see this form
-  get '/account/reset-password', as: :reset_password_page, to: 'account_management#reset_password'
+  get '/account/password', to: 'password#show'
 
 
   scope '/community/:collection_id-:collection_name',

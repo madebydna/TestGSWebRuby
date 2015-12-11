@@ -122,6 +122,10 @@ group :development do
   gem 'pry-debugger'
 end
 
+group :test do
+  gem 'capybara-screenshot', '~> 1.0.11'
+end
+
 group :development, :test do
   # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
   #gem 'awesome_print', :require => 'ap'

@@ -466,24 +466,13 @@ describe SigninController do
         subject
       end
 
-      context 'and the user can\'t be saved' do
-        before { allow(user).to receive(:save).and_return false }
+      context 'and the user is not valid' do
+        before { allow(user).to receive(:valid?).and_return false }
         it_should_behave_like 'something went wrong'
       end
 
       it 'should publish the user\'s reviews' do
         expect(user).to receive(:publish_reviews!)
-        subject
-      end
-
-      it 'should track user review submission conversion in omniture' do
-        expect(user).to receive(:publish_reviews!).and_return([SchoolRating.new])
-        expect(controller).to receive(:set_omniture_events_in_cookie).
-          with(['review_updates_mss_end_event'])
-        expect(controller).to receive(:set_omniture_sprops_in_cookie).
-          with({"ab_version"=>nil})
-        expect(controller).to receive(:set_omniture_sprops_in_cookie).
-          with({'custom_completion_sprop' => 'PublishReview'})
         subject
       end
 
@@ -640,6 +629,72 @@ describe SigninController do
             result_user, error, is_new_user = command.find_or_create_user
             expect(result_user.send(attribute)).to eq('Foo')
           end
+        end
+      end
+    end
+  end
+
+  describe '#authenticate_token_and_redirect' do
+    before do
+      allow(controller).to receive(:redirect_to)
+    end
+
+    after { clean_dbs(:gs_schooldb) }
+
+    context 'given an unverified user' do
+      let(:token) { EmailVerificationToken.new(user: user) }
+      let(:expired_token) {
+        EmailVerificationToken.new(user: user, time: 1000.years.ago)
+      }
+      let(:user) { FactoryGirl.create(:new_user) }
+      let(:valid_token) { token.generate }
+      let(:valid_time) { token.time_as_string }
+      let(:invalid_token) { 'foo' }
+      let(:redirect) { '/foo' }
+
+      context 'given a valid token' do
+        before { allow(controller).to receive(:params).and_return(id: valid_token, date: valid_time, redirect: redirect) }
+
+        it 'should verify the user\'s email' do
+          allow(controller).to receive(:redirect_to).with(password_url)
+          controller.send :authenticate_token_and_redirect
+          user.reload
+          expect(user).to_not be_provisional
+        end
+
+        it 'should redirect to the requested page' do
+          expect(controller).to receive(:redirect_to).with(redirect)
+          controller.send :authenticate_token_and_redirect
+        end
+
+        it 'should log the user in' do
+          controller.send :authenticate_token_and_redirect
+          expect(controller).to be_logged_in
+        end
+      end
+
+      context 'given an invalid token' do
+        before { allow(controller).to receive(:params).and_return(id: invalid_token, date: valid_time, redirect: redirect) }
+
+        it 'should not verify the user\'s email' do
+          controller.send :authenticate_token_and_redirect
+          user.reload
+          expect(user).to be_provisional
+        end
+
+        it 'should redirect to home page' do
+          expect(controller).to receive(:redirect_to).with(home_url)
+          controller.send :authenticate_token_and_redirect
+        end
+
+        it 'should not log the user in' do
+          controller.send :authenticate_token_and_redirect
+          expect(controller).to_not be_logged_in
+        end
+
+        it 'should flash an error message' do
+          expect(controller).to receive(:flash_error).with(I18n.t('controllers.forgot_password_controller.token_invalid'))
+          controller.send :authenticate_token_and_redirect
         end
       end
     end

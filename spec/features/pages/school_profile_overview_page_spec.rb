@@ -22,6 +22,14 @@ def expect_it_to_have_element(element)
   instance_exec(&proc)
 end
 
+def create_reviews(count, school)
+  FactoryGirl.create_list(
+    :five_star_review,
+    count,
+    school_id: school.id,
+    state: school.state
+  )
+end
 
 describe 'School Profile Overview Page' do
   include_context 'Visit School Profile Overview'
@@ -33,7 +41,7 @@ describe 'School Profile Overview Page' do
   end
 
   with_shared_context 'Given school profile page with GS Rating Snapshot module' do
-    with_shared_context 'with Alameda High School', js: true do
+    with_shared_context 'with Alameda High School' do
       context 'when configured to get GS rating from school cache' do
         before do
           FactoryGirl.create(:school_cache_gs_rating_configuration)
@@ -45,7 +53,7 @@ describe 'School Profile Overview Page' do
           end
           it { is_expected.to have_large_gs_rating }
           its("large_gs_rating.rating_value") { is_expected.to eq('5') } # 5 is hardcoded in factory for now
-          when_I :click_on_large_gs_rating do
+          when_I :click_on_large_gs_rating , js:true do
             it 'should go to the quality page' do
               expect(SchoolProfileQualityPage.new).to be_displayed
             end
@@ -79,13 +87,13 @@ describe 'School Profile Overview Page' do
   end
 
   with_shared_context 'Given basic school profile page' do
-    with_shared_context 'with Alameda High School', js: true do
+    with_shared_context 'with Alameda High School' do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
 
       its(:header) { is_expected.to_not have_in_english_link }
       its(:header) { is_expected.to have_in_spanish_link }
-      context 'switch to spanish' do
+      context 'switch to spanish', js: true do
         before { page_object.header.switch_to_spanish }
         its(:header) { is_expected.to have_in_english_link }
         context 'switch to english' do
@@ -145,6 +153,68 @@ describe 'School Profile Overview Page' do
       include_example 'should be on the correct page'
       it { is_expected.to have_link('PARCC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
    end
+  end
+
+  describe 'reviews section' do
+    include_context 'Given school profile page with reviews section on overview'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_reviews_section }
+
+    with_subject :reviews_section do
+      it { is_expected.to have_ad_slot }
+      context 'with no reviews' do
+        it { is_expected.to_not have_bar_chart }
+        it { is_expected.to_not have_reviews }
+        it { is_expected.to have_callout_text }
+        it { is_expected.to have_callout_button }
+        on_subject :show, js:true do
+          when_I :close_all_modals do
+            when_I :click_on_callout_button do
+              it { expect(SchoolProfileReviewsPage.new).to be_displayed }
+            end
+          end
+        end
+      end
+      context 'with less than max # of reviews on overview' do
+        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW - 1, school) }
+        it { is_expected.to have_bar_chart }
+        it { is_expected.to have_reviews }
+        it { is_expected.to have_callout_text }
+        it { is_expected.to have_callout_button }
+      end
+      context 'with max # of reviews on overview' do
+        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW, school) }
+        it { is_expected.to have_bar_chart }
+        it { is_expected.to have_reviews }
+        it { is_expected.to_not have_callout_text }
+        it { is_expected.to_not have_callout_button }
+      end
+    end
+  end
+
+  describe 'Contact this school' do
+    include_context 'Given school profile page with Contact this school section'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_contact_this_school_header }
+    it { is_expected.to have_contact_this_school_content }
+    it { is_expected.to have_contact_this_school_map_section }
+    its(:contact_this_school_content) { is_expected.to have_text(school.city+', '+school.state) }
+    its(:contact_this_school_content) { is_expected.to have_link('Nearby homes for sale') }
+    its(:contact_this_school_map_section) { is_expected.to have_school_map }
+
+  end
+
+  describe 'media gallery' do
+    include_context 'Given school profile page with media gallery on overview'
+    include_context 'with Alameda High School'
+
+    it { is_expected.to have_media_gallery }
+    with_subject :media_gallery do
+      # it { is_expected.to have_placeholder_image }
+    end
+
   end
 
 end

@@ -158,10 +158,10 @@ module UrlHelper
     post_registration_redirect = Addressable::URI.parse(
       post_registration_confirmation_url
     )
-    post_registration_redirect.query_values ||= { redirect: reset_password_page_url }
+    post_registration_redirect.query_values ||= { redirect: password_url }
     hash, date = user.email_verification_token
     verification_link_params.merge!(
-      id: hash,
+      id: CGI.escape(hash),
       date: date,
       redirect: post_registration_redirect.to_s,
       s_cid: tracking_code
@@ -201,6 +201,23 @@ module UrlHelper
     end
 
     uri.to_s
+  end
+
+  def create_authenticate_token_url(user, redirect, params = {})
+    hash, date = user.email_verification_token
+    params = params.reverse_merge({
+      id: CGI.escape(hash),
+      date: date,
+      redirect: redirect
+    })
+    authenticate_token_url(params)
+  end
+
+  def create_reset_password_url(user, params = {})
+    params = params.reverse_merge({
+      s_cid: 'eml_passwordreset'
+    })
+    create_authenticate_token_url(user, password_url, params)
   end
 
   #

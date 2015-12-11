@@ -14,3 +14,8 @@ en:
           link_text: Learn more!
           link_url: http://scorecard.excellentschoolsdetroit.org/
           logo_path: /catalog/partner_logos/excellent_schools_detroit.png
+        child_care_answers:
+          call_to_action: Want to know more about the quality of Indianapolis's early learning programs?
+          link_text: Learn more!
+          link_url: http://www.childcareanswers.com/cca/index.php
+          logo_path: /catalog/partner_logos/child_care_answers.jpg

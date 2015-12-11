@@ -3,6 +3,7 @@ ENV['coverage'] = 'true'
 
 require 'rubygems'
 
+require 'capybara-screenshot/rspec'
 require 'simplecov'
 if ENV['JENKINS_URL'] # on ci server
   require 'simplecov-rcov'
@@ -478,17 +479,20 @@ RSpec.configure do |config|
   config.before(:each) { Rails.cache.clear }
   config.after(:each) do
     Rails.cache.clear
+    Gon.clear
     disconnect_all_connection_pools
   end
 
   # config.raise_errors_for_deprecations!
 
   config.before(:each, js: true) do
-    page.driver.block_unknown_urls
+    page.driver.try(:block_unknown_urls)
   end
 
     # use capybara-webkit
-  Capybara.javascript_driver = :webkit
+  unless ENV['SELENIUM']
+    Capybara.javascript_driver = :webkit
+  end
 
   require 'socket'
   ip_address = '127.0.0.1'

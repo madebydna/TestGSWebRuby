@@ -3,12 +3,14 @@ module SortingConcerns
 
   protected
 
-  SORT_TYPES = ['rating_desc', 'fit_desc', 'distance_asc']
+  SORT_TYPES = ['rating_desc', 'fit_desc', 'distance_asc', 'school_name_asc']
   DEFAULT_SORT = :rating_desc
 
   def active_sort_name(sort)
     if sort
-      sort.to_s.split('_').first.to_sym
+      # This effectively removes the last word in "sort", where words are delimited by underscores.
+      # e.g., remove the "_asc" suffix from school_name_asc
+      sort.to_s.split('_')[0..-2].join('_').to_sym
     else
       # By name sorting is just solr's default, aka. there is no sort
       # For display, we call this relevance
@@ -18,11 +20,11 @@ module SortingConcerns
 
   def sort_types(hide_fit)
     sorts = if search_by_location?
-              [:distance, :rating]
+              [:distance, :rating, :school_name]
             elsif search_by_name?
-              [:relevance, :rating]
+              [:relevance, :rating, :school_name]
             else
-              [:rating]
+              [:rating, :school_name]
             end
 
     (filtering_search? && !hide_fit) ? sorts + [:fit] : sorts
@@ -44,7 +46,8 @@ module SortingConcerns
         {
             rating_desc: :rating_desc,
             fit_desc: :fit_desc,
-            distance_asc: :distance_asc
+            distance_asc: :distance_asc,
+            school_name_asc: :school_name_asc
         }.stringify_keys
     )
     sort_types[params_hash['sort']]

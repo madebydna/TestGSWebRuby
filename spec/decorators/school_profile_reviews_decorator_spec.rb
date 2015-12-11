@@ -161,7 +161,7 @@ describe SchoolProfileReviewsDecorator, type: :view do
     end
     it 'should do something' do
       allow(subject).to receive_message_chain(:first_topic, :first_question).and_return (question1)
-      expect(subject.question_text).to eq("How effective are this school's teachers at making students successful?")
+      expect(subject.question_text).to eq("How effective do you feel the teachers are at this school?")
     end
   end
 end

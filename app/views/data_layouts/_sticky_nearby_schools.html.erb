@@ -1,13 +1,13 @@
-<% category_placement # The +CategoryPlacement+ that is configured to use this group layout %>
+<% begin %>
+  <%
+    # `list` is hardcoded for now, but could eventually be based on a config
+    # value, for instance a collection config or a category placement config.
+    list = 'closest_top_then_top_nearby_schools'
+    data = @school.nearby_schools_for_list(list)
+  %>
 
-<%
-  collections_to_show = [*category_placement.layout_config_json['show_module_for_collections']]
-  should_show_partial = (@school.collection_ids & collections_to_show).present?
-  school_profile_decorator = SchoolProfileDecorator.decorate(@school)
-%>
-
-<% if should_show_partial %>
-  <% begin %>
+  <% if data.present? %>
+    <% school_profile_decorator = SchoolProfileDecorator.decorate(@school) %>
     <div class="sticky-nearby-schools js-nearbySchoolsModule gs-bootstrap dn">
       <div class="sticky-container">
         <div class="current-school clearfix hidden-xs">
@@ -28,13 +28,18 @@
           %>
         </div>
         <div class="nearby-schools">
+          <div class="close-nearby-schools shadow" ></div>
           <div class="js-nearbySchoolsHide js-gaClick close-nearby-schools"
             data-ga-click-category='Profile - Sticky nearby schools'
             data-ga-click-action='Close module'
           >
-            <span class="iconx16 i-16-plain-x mls vam"></span>
-            <br/>
-            Close
+            <span class="iconx16 i-16-plain-x mlm vam"></span>
+          </div>
+          <div class="js-prev js-gaClick prev"
+            data-ga-click-category='Profile - Sticky nearby schools'
+            data-ga-click-action='Click prev'
+          >
+            <span class="iconx16 i-16-left-arrow vam"></span>
           </div>
           <div class="carousel">
             <div class="js-nearbySchoolsCarousel">
@@ -80,14 +85,15 @@
             data-ga-click-action='Click next'
           >
             <span class="iconx16 i-16-right-arrow mls vam"></span>
-            <br/>
-            Next
           </div>
         </div>
       </div>
     </div>
-  <% rescue => e %>
-    <%= log_view_error "Something went wrong while trying to display #{category_placement.title}", e %>
-    <% raise e if params[:debug] %>
+    <script>
+      gon.showNearbySchoolsSticky = true;
+    </script>
   <% end %>
+<% rescue => e %>
+  <%= log_view_error "Something went wrong while trying to display #{current_partial}", e %>
+  <% raise e if params[:debug] %>
 <% end %>

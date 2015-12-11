@@ -7,8 +7,9 @@ module CachedCharacteristicsMethods
     cache_data['characteristics'] || {}
   end
 
-  def students_enrolled
-    characteristcs_value_by_name('Enrollment', grade: nil, number_value: true)
+  def students_enrolled(opts = {})
+    opts.reverse_merge!(grade: nil, number_value: true)
+    characteristcs_value_by_name('Enrollment', opts)
   end
 
   def characteristcs_value_by_name(name, options={})
@@ -28,7 +29,7 @@ module CachedCharacteristicsMethods
         end
       end
     end
-    NO_DATA_SYMBOL
+    NO_DATA_SYMBOL unless options[:allow_nil]
   end
 
   def census_value(name, options={})
@@ -56,8 +57,9 @@ module CachedCharacteristicsMethods
     end
   end
 
-
-
+  def school_leader
+    census_value('Head official name')
+  end
 
   def ethnicity_data
     characteristics['Ethnicity'] || []

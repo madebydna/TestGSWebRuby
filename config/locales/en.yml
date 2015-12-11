@@ -50,12 +50,6 @@ en:
             who:
               inclusion: Affiliation has invalid value.
           blank: ! '%{attribute} can''t be blank.'
-        change_password_params:
-          attributes:
-            password:
-              too_long: Your password must be between 6 and 14 characters.
-              too_short: Your password must be between 6 and 14 characters.
-              confirmation: sldfjlskjdf.
         user:
           attributes:
             email:

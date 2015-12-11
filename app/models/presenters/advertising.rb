@@ -31,6 +31,15 @@ class Advertising
           dimensions:[300,250]
         }
       },
+      Reviews_Test: {
+        name: "Reviews_Test",
+        desktop:{
+          dimensions:[[300,600],[300,250]]
+        },
+        mobile:{
+          dimensions:[300,250]
+        }
+      },
       Media_Gallery: {
         name: "Media_Gallery",
         desktop:{

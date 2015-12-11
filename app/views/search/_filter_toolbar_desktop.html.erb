@@ -1,3 +1,4 @@
+
 <div class="filter-toolbar-desktop">
   <div class="container-fluid">
     <div class="clearfix">
@@ -7,6 +8,8 @@
         </div>
 
         <div class="dn filter-panel js-searchFiltersMenu">
+          <div class="close mas js-close">&times;</div>
+
           <div class="ptm panel panel-default mbn">
             <div class="clearfix js-searchFiltersFormParent">
               <%= @renderedFilters %>
@@ -18,10 +21,12 @@
               <button class="btn btn-default fr js-submitSearchFiltersForm" type='submit'>
                 <%= t('.submit_button') %>
               </button>
+
             </div>
           </div>
         </div>
       </div>
+
       <div class="sort-compare-container">
         <%= render 'sorting_toolbar' %>
         <%= render 'compare_schools_popup' %>

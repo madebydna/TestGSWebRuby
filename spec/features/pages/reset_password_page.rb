@@ -2,7 +2,7 @@ require_relative 'modules/flash_messages'
 
 class ResetPasswordPage < SitePrism::Page
 
-  set_url_matcher /account\/reset-password/
+  set_url_matcher /account\/password/
 
   element :heading, 'h2'
   element :passwords_not_match_error, '.parsley-errors-list', text: "This value should be the same."

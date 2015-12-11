@@ -2,6 +2,7 @@
   border: 1px solid $module-gray-stroke;
   .tabs {
     @include gs-nav-tabs($brand-primary-darker, $gray-dark, $brand-primary-darker);
+    padding-left: 20px;
   }
   .tab-content {
     background-color: $module-gray;

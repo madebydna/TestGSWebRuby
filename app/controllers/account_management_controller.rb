@@ -56,10 +56,6 @@ class AccountManagementController < ApplicationController
                 :robots => "noindex"
   end
 
-  def reset_password
-    set_meta_tags title: 'New Password | GreatSchools', robots: 'noindex'
-  end
-
   protected
 
   def set_saved_searches_instance_variables

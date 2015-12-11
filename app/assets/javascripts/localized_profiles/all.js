@@ -1,7 +1,6 @@
 var GS = GS || {};
 
 GS.schoolProfiles = GS.schoolProfiles || (function($) {
-    var MODAL_DELAY = 15000;
 
     var shouldShowSignUpForSchoolModal = function() {
      return $.cookie('profileModal') != 'true' && !GS.session.isSignedIn();
@@ -11,13 +10,19 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       $.cookie('profileModal', 'true', {expires: 1, path: '/' });
     };
 
-    var showSignUpForSchoolModalAfterDelay = function () {
-      setTimeout(function() { 
-        showSignUpForSchoolModal();
-          /* google event trigger */
-          dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
-        }, MODAL_DELAY);
+    var showSignUpForSchoolModalAfterDelay = function (custom_modal_delay) {
+        var DEFAULT_MODAL_DELAY = 15000;
+        var hover_delay = custom_modal_delay !== undefined ? custom_modal_delay : DEFAULT_MODAL_DELAY;
+        GS.schoolProfiles.hover_time_out = setTimeout(
+            GS.schoolProfiles.hover_handle = function () {
+            showSignUpForSchoolModal();
+            /* google event trigger */
+            dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
+            },
+            hover_delay);
     };
+
+
 
     var showSignUpForSchoolModal = function () {
       if ( shouldShowSignUpForSchoolModal() ) {
@@ -53,12 +58,58 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       });
     };
 
+    var showReviewsSectionAdOnlyOnce = function() {
+      if (showReviewsSectionAdOnlyOnce.adShown !== true) {
+        var $oldReviewsSection = $('#old-reviews-section');
+        var $newReviewsSection = $('#reviews-section');
+        var oldReviewsSectionIsVisible = $oldReviewsSection.is(':visible');
+        var newReviewsSectionIsVisible = $newReviewsSection.is(':visible');
+        var mobileAdIsVisible = $('#School_OverviewReviewsMobile_Ad').is(':visible');
+        var desktopAdIsVisible = $('#School_OverviewReviewsAd').is(':visible');
+
+        if (oldReviewsSectionIsVisible && mobileAdIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviewsMobile_Ad');
+        } else if (oldReviewsSectionIsVisible && desktopAdIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviewsAd');
+        } else if (newReviewsSectionIsVisible) {
+          showReviewsSectionAdOnlyOnce.adShown = true;
+          GS.ad.showAd('School_OverviewReviews_TestAd');
+        } else {
+          // don't do anything
+        }
+      }
+    };
+
+    var showReviewsSectionOnOverview = function(oldOrNew) {
+      var $reviewsSectionToShow;
+      var $reviewsSectionToHide;
+      if (oldOrNew === 'new') {
+        $reviewsSectionToShow = $('#reviews-section');
+        $reviewsSectionToHide = $('#old-reviews-section');
+      } else {
+        $reviewsSectionToShow = $('#old-reviews-section');
+        $reviewsSectionToHide = $('#reviews-section');
+      }
+
+      $reviewsSectionToHide.hide();
+      $reviewsSectionToShow.show({
+        complete: function() {
+          googletag.cmd.push(function () {
+            GS.schoolProfiles.showReviewsSectionAdOnlyOnce();
+          });
+        }
+      });
+    };
+
     return {
       showSignUpForSchoolModal: showSignUpForSchoolModal,
       showSignUpForSchoolModalAfterDelay: showSignUpForSchoolModalAfterDelay,
       initializeFollowThisSchool: initializeFollowThisSchool,
-      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton
+      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton,
+      showReviewsSectionOnOverview: showReviewsSectionOnOverview,
+      showReviewsSectionAdOnlyOnce: showReviewsSectionAdOnlyOnce
     };
 
   })(jQuery);
-

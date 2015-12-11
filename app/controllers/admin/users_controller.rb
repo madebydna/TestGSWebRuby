@@ -7,9 +7,7 @@ class Admin::UsersController < ApplicationController
     if err_msg.present?
       flash_error err_msg
     elsif user
-      @reset_password_link = reset_password_url+
-        '?id='+CGI.escape(user.auth_token)+
-        '&s_cid=eml_passwordreset'
+      @reset_password_link = create_reset_password_url(user)
       render 'admin/users/search'
       return
     end

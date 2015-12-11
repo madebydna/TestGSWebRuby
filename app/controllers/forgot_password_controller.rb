@@ -19,26 +19,13 @@ class ForgotPasswordController < ApplicationController
       redirect_to forgot_password_url
       return
     elsif user
-      ResetPasswordEmail.deliver_to_user(user,reset_password_url)
+      ResetPasswordEmail.deliver_to_user(
+        user,
+        create_reset_password_url(user)
+      )
       flash_notice t('actions.forgot_password.email_sent', email: user.email).html_safe
     end
     redirect_to signin_url
-  end
-
-  # This action should get executed when a user clicks a link in a "forgot password" email
-  # The hash that is present as a query param on the link will allow us to authenticate the user
-  # Once the user is authenticated, send them to a form where they can change their password
-  def login_and_redirect_to_change_password
-    token = params[:id]
-    if token.present?
-      login_from_hash(token)
-      redirect_to reset_password_page_url and return if logged_in?
-    end
-
-    # If we get here, something went wrong. Token was missing or invalid
-    Rails.logger.error("Error while allowing reset password for hash: #{hash}")
-    flash_error t('controllers.forgot_password_controller.token_invalid')
-    redirect_to home_url
   end
 
   def set_forgot_password_meta_tags

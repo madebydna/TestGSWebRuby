@@ -15,17 +15,19 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
       end
     end
 
-    context 'for a school in CA' do
-      let(:school) { FactoryGirl.build(:alameda_high_school, state: 'CA') }
+    context 'for a school in collection 14' do
+      let(:school) { FactoryGirl.build(:alameda_high_school) }
       let(:nearby_schools_cacher) do
         NearbySchoolsCaching::NearbySchoolsCacher.new(school)
       end
       let(:expected_result) do
         {
           closest_schools: [],
-          # TODO AT-1160 should uncomment this when we launch CA's new list
-          # closest_top_then_top_nearby_schools: [],
+          closest_top_then_top_nearby_schools: [],
         }
+      end
+      before do
+        allow(school).to receive(:collection_ids).and_return([14])
       end
 
       it 'should build the correct lists' do

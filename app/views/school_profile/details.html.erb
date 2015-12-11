@@ -1,9 +1,8 @@
 <%= render 'shared/qualaroo' %>
-
-<%= render 'school_profile/header', school: @school %>
-<%= render 'school_profile/profile_nav', school: @school, page_name: :details %>
-<%= render 'school_profile/profile_nav_w_dropdowns', school: @school, page_name: :details %>
-
+<div class="mbl">
+<%= render 'school_profile/header', school: @school, page_name: :details %>
+<%= render 'school_profile/dark_header', school: @school, page_name: :details %>
+</div>
 <div class="row limit-width-1200">
 
     <% root_placements = @page_config.root_placements_with_data %>
@@ -18,11 +17,11 @@
             <% end %>
             <div class="mvl well">
                 <% if @school.preschool? %>
-                    <p>Thank you for looking into the details of this school.</p>
-                    <p>However, we do not have further information for this school at this time. We strive to acquire additional school data whenever available.</p>
+                    <p><%= t('.preschool_data_missing_line_1') %></p>
+                    <p><%= t('.preschool_data_missing_line_2') %></p>
                 <% else %>
-                    <p>Does this school offer arts programs or sports? Share what you know and help other families. <%= link_to "Get started &raquo;".html_safe, osp_form_url(school_id: @school.id.to_s,state: @school.state) %></p>
-                    <p>Are you a school official? Help your school stand out on GreatSchools by updating your school's information, adding program highlights and more, for free! <%= link_to "Get started &raquo;".html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %></p>
+                    <p><%= t('.data_missing_line_1') %> <%= link_to "#{t('.get_started')} &raquo;".html_safe, osp_form_url(school_id: @school.id.to_s,state: @school.state) %></p>
+                    <p><%= t('.data_missing_line_2') %> <%= link_to "#{t('.get_started')} &raquo;".html_safe, osp_register_url(city: @school.city, school_id: @school.id.to_s, state: @school.state) %></p>
                 <% end %>
             </div>
             <% if root_placements.present? %>
@@ -47,6 +46,7 @@
             </div>
         </div>
     <% end %>
+    <%= render 'data_layouts/sticky_nearby_schools' %>
 </div>
 <%= render 'data_layouts/nearby_schools' %>
 
