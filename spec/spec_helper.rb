@@ -479,6 +479,7 @@ RSpec.configure do |config|
   config.before(:each) { Rails.cache.clear }
   config.after(:each) do
     Rails.cache.clear
+    Gon.clear
     disconnect_all_connection_pools
   end
 
