@@ -1,0 +1,58 @@
+.cc-promo-banner {
+  // Banner background
+  background-color: #2a5577;
+  background-image: image_url('home/cc_banner_bg.jpg');
+  background-repeat: no-repeat;
+  background-position: 85% 45%;
+
+  @media only screen and (max-width: 1024px) {
+    background: none;
+    background-color: #2a5577;
+  }
+
+  // Banner text
+  .banner-text-container {
+    padding: 10px 0;
+    @media (min-width: $screen-sm-min) {
+      padding-left: 20px;
+      margin: 20px 0 35px;
+    }
+    .banner-text {
+      div {
+        padding: 25px 0 30px;
+      }
+      h2 {
+        color: #25b89a;
+        font-size: 32px;
+        margin: 0;
+        text-shadow: 1px 1px #333;
+        font-family: "opensans-bold", Helvetica, Arial;
+      }
+      @media (min-width: $screen-sm-min) {
+        h2 {
+          font-size: 40px;
+        }
+      }
+    }
+    .logo {
+      float: left;
+      padding: 10px 30px 0 0;
+      margin-left: 20px;
+      @media only screen and (max-width: 1024px) {
+        float: right;
+        margin-left: 0;
+      }
+    }
+  }
+
+  // Fake GK button
+  button {
+    background-color: #343434;
+    border-color: #131f28;
+    border-bottom-width: 3px;
+    &:hover, &:active {
+      background-color: #495056;
+      border-color: #383838;
+    }
+  }
+}

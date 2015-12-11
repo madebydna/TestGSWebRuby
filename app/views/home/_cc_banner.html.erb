@@ -1,0 +1,22 @@
+<%= link_to common_core_test_guide_url(), class: 'cc-promo-banner' do %>
+    <div class="cc-promo-banner">
+      <div class="limit-width-1200 phl">
+        <div class="row">
+          <div class="col-xs-12 col-sm-8">
+            <div class="banner-text-container">
+              <div class="banner-text">
+                <h2><%= t('.heading') %></h2>
+                <div class="subtitle-lg text_fff"><%= t('.body') %></div>
+              </div>
+              <div class="clearfix">
+                <button class="fl btn btn-lg btn-primary"><%= t('.button_text') %></button>
+                <div class="fl logo">
+                  <%= image_tag (image_path('home/GreatKids_logo_white.png')), size: "75x31"  %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<% end %>
