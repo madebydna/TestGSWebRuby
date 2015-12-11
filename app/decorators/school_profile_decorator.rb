@@ -83,11 +83,9 @@ class SchoolProfileDecorator < Draper::Decorator
   end
 
   def school_boundary_hash
-    if district.present?
-      { districtId: district, level: single_level_code, schoolId: id, state: state }
-    else
-      { level: single_level_code, schoolId: id, state: state }
-    end
+    boundary_hash = { level: single_level_code, schoolId: id, state: state }
+    boundary_hash.merge(districtId: district) if district.present?
+    boundary_hash
   end
 
   def single_level_code

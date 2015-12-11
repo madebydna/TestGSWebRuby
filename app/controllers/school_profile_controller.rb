@@ -245,9 +245,7 @@ class SchoolProfileController < SchoolController
       school_rating = @school.gs_rating
       map_pin_url = view_context.image_url("icons/google_map_pins/map_icon_#{school_rating}.png")
 
-      sizes.inject({}) do |sized_maps, element|
-        label = element[0]
-        size = element[1]
+      sizes.inject({}) do |sized_maps, (label, size)|
         sized_maps[label] = GoogleSignedImages.sign_url(
           "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=icon:#{map_pin_url}|#{address}&sensor=false"
         )
