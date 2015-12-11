@@ -41,7 +41,7 @@ describe 'School Profile Overview Page' do
   end
 
   with_shared_context 'Given school profile page with GS Rating Snapshot module' do
-    with_shared_context 'with Alameda High School', js: true do
+    with_shared_context 'with Alameda High School' do
       context 'when configured to get GS rating from school cache' do
         before do
           FactoryGirl.create(:school_cache_gs_rating_configuration)
@@ -53,7 +53,7 @@ describe 'School Profile Overview Page' do
           end
           it { is_expected.to have_large_gs_rating }
           its("large_gs_rating.rating_value") { is_expected.to eq('5') } # 5 is hardcoded in factory for now
-          when_I :click_on_large_gs_rating do
+          when_I :click_on_large_gs_rating , js:true do
             it 'should go to the quality page' do
               expect(SchoolProfileQualityPage.new).to be_displayed
             end
@@ -87,13 +87,13 @@ describe 'School Profile Overview Page' do
   end
 
   with_shared_context 'Given basic school profile page' do
-    with_shared_context 'with Alameda High School', js: true do
+    with_shared_context 'with Alameda High School' do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
 
       its(:header) { is_expected.to_not have_in_english_link }
       its(:header) { is_expected.to have_in_spanish_link }
-      context 'switch to spanish' do
+      context 'switch to spanish', js: true do
         before { page_object.header.switch_to_spanish }
         its(:header) { is_expected.to have_in_english_link }
         context 'switch to english' do
