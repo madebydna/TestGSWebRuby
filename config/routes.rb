@@ -259,7 +259,7 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'states#show'
       get 'browse', to: 'states#foobar', as: :browse
       get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
-      get 'guided-search', to: 'states#guided_search', as: :guided_search
+      get 'guided-search', to: 'guided_search#show', as: :guided_search
       get 'events', to: 'states#events', as: :events
 
 
@@ -317,7 +317,7 @@ LocalizedProfiles::Application.routes.draw do
       get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
       get 'enrollment', to: 'cities#enrollment', as: :enrollment
       get 'schools', to: 'error#page_not_found', as: :browse
-      get 'guided-search', to: 'cities#guided_search', as: :guided_search
+      get 'guided-search', to: 'guided_search#show', as: :guided_search
 
       scope '/enrollment', as: :enrollment do
         get '/:tab', to: 'cities#enrollment'

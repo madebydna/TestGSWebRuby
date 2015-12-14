@@ -2,7 +2,6 @@ class StatesController < ApplicationController
   include SeoHelper
   include MetaTagsHelper
   include HubConcerns
-  include GuidedSearchConcerns
 
   before_action :set_city_state
   before_action :set_hub

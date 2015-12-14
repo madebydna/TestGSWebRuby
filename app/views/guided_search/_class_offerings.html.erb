@@ -25,20 +25,20 @@
 
         <h4>Girls Sports</h4>
         <div class="btn-group js-girls-sports-values js-sports-button-group pts full-width" >
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'soccer'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'track'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'basketball'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'volleyball'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'girls_sports', sport: 'cheerleading'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'girls_sports', sport: 'soccer'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'girls_sports', sport: 'track'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'girls_sports', sport: 'basketball'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'girls_sports', sport: 'volleyball'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'girls_sports', sport: 'cheerleading'} %>
         </div>
 
         <h4>Boys Sports</h4>
         <div class="btn-group js-boys-sports-values js-sports-button-group pts full-width" >
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'soccer'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'track'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'basketball'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'football'} %>
-          <%= render partial: 'shared/guided_search/sports_button', locals: {filter: 'boys_sports', sport: 'baseball'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'boys_sports', sport: 'soccer'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'boys_sports', sport: 'track'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'boys_sports', sport: 'basketball'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'boys_sports', sport: 'football'} %>
+          <%= render partial: 'sports_button', locals: {filter: 'boys_sports', sport: 'baseball'} %>
         </div>
 
         <div class="clearfix">
@@ -169,6 +169,6 @@
 
 
 
-  <%=render 'shared/guided_search/button_navigation', previous_tab_name: @guided_search_tab[3],current_tab_name:@guided_search_tab[4]%>
+  <%=render 'button_navigation', previous_tab_name: @guided_search_tab[3],current_tab_name:@guided_search_tab[4]%>
 
 </div>

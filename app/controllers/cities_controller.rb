@@ -3,7 +3,6 @@ class CitiesController < ApplicationController
   include MetaTagsHelper
   include AdvertisingHelper
   include ApplicationHelper
-  include GuidedSearchConcerns
   include GoogleMapConcerns
 
   before_action :set_city_state
