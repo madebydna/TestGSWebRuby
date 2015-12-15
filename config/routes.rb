@@ -91,7 +91,6 @@ LocalizedProfiles::Application.routes.draw do
     # TODO: see how to fix this route for ruby
     get '/reviews/', as: :the_scoop
     get '/account/', as: :my_account
-    get '/mySchoolList.page', as: :my_school_list
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
     get '/official-school-profile/dashboard/', as: :osp_dashboard

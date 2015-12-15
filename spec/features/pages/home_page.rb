@@ -1,9 +1,12 @@
 require_relative './modules/join_modals'
 require_relative './modules/flash_messages'
+require_relative './modules/top_nav_section'
+
 
 class HomePage < SitePrism::Page
   include EmailJoinModal
   include FlashMessages
+  include TopNavSection
 
   element :search_hero_section, 'h1', text: 'Welcome to GreatSchools'
   element :browse_by_city_section, 'h3', text: 'Browse by city'

@@ -1,5 +1,6 @@
 require 'spec_helper'
 require_relative 'home_page'
+require_relative 'account_page'
 require_relative '../examples/footer_examples'
 
 describe 'Home Page' do
@@ -71,6 +72,17 @@ describe 'Home Page' do
     end
     it { is_expected.to have_greatkids_articles_section }
 
+  end
+
+  context 'top nav' do
+    include_context 'signed in verified user'
+    before { visit home_path }
+    it { is_expected.to have_top_nav }
+    when_I :click_on_my_school_list_link do
+      it 'should go to the account page' do
+        expect(AccountPage.new).to be_displayed
+      end
+    end
   end
 
 end
