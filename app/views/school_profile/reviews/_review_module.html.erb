@@ -22,7 +22,7 @@
       <div class="clearfix">
         <div class="rs-review-posted mts fr"><%= t('.posted') %> <%= review.posted %></div>
       </div>
-      <%= render 'shared/report_and_helpful_review_buttons', review: review %>
+      <%= render 'school_profile/reviews/report_and_helpful_review_buttons', review: review %>
       <div style="display:none;">
         <%= div_tag sizes: {xs: 12, sm: 12, md: 12, lg: 12}, class: "js-report-review-container-#{review.id}" %>
       </div>
@@ -56,7 +56,7 @@
         <% else %>
           <div class="well mbn"><%= t('.no_content_message') %></div>
         <% end %>
-        <%= render 'shared/report_and_helpful_review_buttons', review: review %>
+        <%= render 'school_profile/reviews/report_and_helpful_review_buttons', review: review %>
       <% end %>
 
       <div style="display:none;">
@@ -69,6 +69,6 @@
 
 <% unique_content_for :global_hidden_content do %>
   <div class="js-report-review-form-template rs-report-review-form">
-    <%= render 'shared/report_review_form' %>
+    <%= render 'school_profile/reviews/report_review_form' %>
   </div>
 <% end %>

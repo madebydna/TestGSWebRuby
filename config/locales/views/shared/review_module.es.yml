@@ -1,9 +1,0 @@
----
-es:
-  shared:
-    review_module:
-      no_content_message: Esta evaluación fue enviada sin contenido
-      posted: Publicado
-      school_leader: LÍDER DE LA ESCUELA
-      school_leader_message: Mensaje a las familias
-      user_type_html: '- un <span class="cuc_posted-by">%{user_type}</span>'

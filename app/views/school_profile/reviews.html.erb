@@ -39,7 +39,7 @@
             <%= render 'review_list_header', reviews: @school_reviews %>
 
             <div class="js_reviewsList">
-                <%= render partial: '/shared/review_module',
+                <%= render partial: 'school_profile/reviews/review_module',
                            collection: @school_reviews.having_comments.take(10), as: :review, locals: { include_rich_snippets: true } %>
             </div>
 
