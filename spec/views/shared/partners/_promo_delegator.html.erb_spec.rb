@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe 'shared/partners/_promo_delegator.html.erb' do
+describe 'partners/_promo_delegator.html.erb' do
   before do
     # This is just because the sample partial I am using needs this
     allow(view).to receive(:catalog_path).and_return('')
   end
 
-  subject { 'shared/partners/promo_delegator' }
+  subject { 'partners/promo_delegator' }
   let(:promo) {
     {
       type: 'send_to_partner',

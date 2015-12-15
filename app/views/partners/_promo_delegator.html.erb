@@ -6,7 +6,7 @@
 
 <% promos.each do |promo| %>
   <% if promo[:profile_modules].include?(partial) || force_show %>
-    <%= render partial: "shared/partners/#{promo[:type]}",
+    <%= render partial: "partners/#{promo[:type]}",
               locals: {
                 promo: promo,
                 options: options
