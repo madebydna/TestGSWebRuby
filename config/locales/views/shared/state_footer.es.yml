@@ -1,5 +1,0 @@
----
-es:
-  shared:
-    state_footer:
-      all_cities_in: 'Todas las ciudades en %{state}:'

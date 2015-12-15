@@ -1,6 +1,6 @@
 <% state %>
 
-<% cache(["shared/popular_cities_in_state_#{state[:short]}", I18n.locale]) do %>
+<% cache(["nav/popular_cities_in_state_#{state[:short]}", I18n.locale]) do %>
 
   <% cities = City.popular_cities(state[:short], limit: 30) %>
 

@@ -1,0 +1,4 @@
+es:
+  nav:
+    popular_cities_in_state:
+      find_the_great_schools_in: Encuentra las grandes escuelas de %{state_name}
