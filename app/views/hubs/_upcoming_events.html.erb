@@ -39,10 +39,10 @@
     <% end %>
 
     <% if controller.controller_name == 'cities' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
-      <%= render 'shared/event_announcements', announcement: announcement  %>
+      <%= render 'hubs/event_announcements', announcement: announcement  %>
     <% end %>
     <% if controller.controller_name == 'states' && controller.action_name == 'show' && announcement.try(:[], :visible) %>
-          <%= render 'shared/event_announcements', announcement: announcement  %>
+      <%= render 'hubs/event_announcements', announcement: announcement  %>
     <% end %>
   </div>
   <% if defined?(community_page) %>

@@ -20,59 +20,58 @@ class CitiesController < ApplicationController
         @city.titleize => nil
     }
 
-    if @hub.nil?  || hub_matching_current_url[:city].nil?
-      city_home
+    if @hub && hub_matching_current_url[:city]
+      city_hub
     else
-      @hub.has_guided_search?
+      gon.pagename = 'GS:City:Home'
+      @ad_page_name = 'City_Page'.to_sym
 
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-      @browse_links = CollectionConfig.browse_links(collection_configs)
-      @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
-      @sponsor = CollectionConfig.sponsor(collection_configs)
-      @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
-      @announcement = CollectionConfig.city_hub_announcement(collection_configs)
-      @articles = CollectionConfig.city_featured_articles(collection_configs)
-      @partner_carousel = parse_partners CollectionConfig.city_hub_partners(collection_configs)
-      @important_events = CollectionConfig.city_hub_important_events(collection_configs)
-      @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
-      @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
+      if @city_object.blank? && @state.present?
+        return redirect_to state_url
+      end
+
+      @show_ads = true
+      if @hub.present?
+        @collection_id = @hub.collection_id
+        collection_configs = hub_configs(@collection_id)
+        @show_ads = CollectionConfig.show_ads(collection_configs)
+      end
+
+      @city_rating = CityRating.get_rating(@state[:short], @city)
+      @top_schools = all_schools_by_rating_desc(@city_object,4)
+      @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
+      @show_ads = @show_ads && PropertyConfig.advertising_enabled?
+      gon.show_ads = show_ads?
       ad_setTargeting_through_gon
       data_layer_through_gon
       set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
-      gon.state_abbr = @state[:short]
-
+      set_city_home_metadata
     end
   end
 
-  def city_home
-    gon.pagename = 'GS:City:Home'
-    @ad_page_name = 'City_Page'.to_sym
+  def city_hub
+    @hub.has_guided_search?
 
-    if @city_object.blank? && @state.present?
-      return redirect_to state_url
-    end
-
-    @show_ads = true
-    if @hub.present?
-      @collection_id = @hub.collection_id
-      collection_configs = hub_configs(@collection_id)
-      @show_ads = CollectionConfig.show_ads(collection_configs)
-    end
-
-    @city_rating = CityRating.get_rating(@state[:short], @city)
-    @top_schools = all_schools_by_rating_desc(@city_object,4)
-    @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
-    @show_ads = @show_ads && PropertyConfig.advertising_enabled?
-    gon.show_ads = show_ads?
+    @collection_id = @hub.collection_id
+    collection_configs = hub_configs(@collection_id)
+    @browse_links = CollectionConfig.browse_links(collection_configs)
+    @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
+    @sponsor = CollectionConfig.sponsor(collection_configs)
+    @choose_school = CollectionConfig.city_hub_choose_school(collection_configs)
+    @announcement = CollectionConfig.city_hub_announcement(collection_configs)
+    @articles = CollectionConfig.city_featured_articles(collection_configs)
+    @partner_carousel = parse_partners CollectionConfig.city_hub_partners(collection_configs)
+    @important_events = CollectionConfig.city_hub_important_events(collection_configs)
+    @hero_image = "hubs/desktop/#{@collection_id}-#{@state[:short].upcase}_hero.jpg"
+    @hero_image_mobile = "hubs/small/#{@collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+    @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
+    @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
     ad_setTargeting_through_gon
     data_layer_through_gon
     set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
-    set_city_home_metadata
+    gon.state_abbr = @state[:short]
 
-    render 'city_home'
+    render 'hubs/city_hub'
   end
 
   def all_schools_by_rating_desc(city, count=0)
@@ -100,7 +99,7 @@ class CitiesController < ApplicationController
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
-      render 'shared/events'
+      render 'hubs/events'
     end
   end
 
@@ -127,7 +126,7 @@ class CitiesController < ApplicationController
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
-      render 'shared/community'
+      render 'hubs/community'
     end
   end
 
@@ -180,7 +179,7 @@ class CitiesController < ApplicationController
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
-      render 'shared/choosing_schools'
+      render 'hubs/choosing_schools'
     end
   end
 
@@ -210,7 +209,7 @@ class CitiesController < ApplicationController
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
-      render 'shared/enrollment'
+      render 'hubs/enrollment'
     end
   end
 

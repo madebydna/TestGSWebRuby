@@ -1,6 +1,6 @@
 ---
 es:
-  states:
-    show:
+  hubs:
+    state_hub:
       browse_cities: Búsqueda todas las ciudades
       browse_districts: Búsqueda todos los distritos

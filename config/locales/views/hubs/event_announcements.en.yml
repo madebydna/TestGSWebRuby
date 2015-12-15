@@ -1,6 +1,6 @@
 ---
 en:
-  shared:
+  hubs:
     event_announcements:
       announcement: Announcement
       no_data_found: No Data Found

@@ -42,7 +42,7 @@
             </a>
           </div>
           <% unless  browse_links.nil? %>
-              <%= render 'shared/browse_schools_list', browse_links: browse_links %>
+              <%= render 'hubs/browse_schools_list', browse_links: browse_links %>
           <% end %>
         </div>
         <% if @hub.has_guided_search? %>
@@ -60,5 +60,5 @@
   </div>
 </div>
 <% unless  browse_links.nil? %>
-    <%= render 'shared/browse_schools_list', browse_links: browse_links, mobile: true %>
+    <%= render 'hubs/browse_schools_list', browse_links: browse_links, mobile: true %>
 <% end %>

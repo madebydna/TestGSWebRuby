@@ -1,5 +1,5 @@
 ---
 en:
-  shared:
+  hubs:
     no_school_alert:
       alert_text: 'Oops! The school you were looking for may no longer exist. Find more schools below.'

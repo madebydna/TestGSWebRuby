@@ -12,49 +12,49 @@ class StatesController < ApplicationController
   before_action :set_state_home_omniture_data, only: [:show]
 
   def show
-    if @hub.nil?
-      state_home
+    if @hub
+      state_hub
     else
-      collection_id = @hub.collection_id
-      configs = hub_configs(collection_id)
-
-      @hub.has_guided_search?
-
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @content_modules = CollectionConfig.content_modules(configs)
-      @sponsor = CollectionConfig.sponsor(configs, :state)
-      @browse_links = CollectionConfig.browse_links(configs)
-      @partners = CollectionConfig.state_partners(configs)
-      @choose_school = CollectionConfig.state_choose_school(configs)
-      @articles = CollectionConfig.state_featured_articles(configs)
-      @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
-      @show_ads = CollectionConfig.show_ads(configs)
-      @important_events = CollectionConfig.city_hub_important_events(configs)
-      @announcement = CollectionConfig.city_hub_announcement(configs)
+      #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
+      if @state[:short] == 'dc'
+        return redirect_to city_path('washington-dc', 'washington'), status: 301
+      end
+      @params_hash = parse_array_query_string(request.query_string)
       gon.state_abbr = @state[:short]
-
+      @ad_page_name = :State_Home_Standard
+      @show_ads = PropertyConfig.advertising_enabled?
+      gon.show_ads = show_ads?
       ad_setTargeting_through_gon
       data_layer_through_gon
-
     end
-
   end
 
-  def state_home
-    #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
-    if @state[:short] == 'dc'
-      return redirect_to city_path('washington-dc', 'washington'), status: 301
-    end
-    @params_hash = parse_array_query_string(request.query_string)
+  # TODO This should be in either at StateHubsController or a HubsController
+  def state_hub
+    collection_id = @hub.collection_id
+    configs = hub_configs(collection_id)
+
+    @hub.has_guided_search?
+
+    @collection_nickname = CollectionConfig.collection_nickname(configs)
+    @content_modules = CollectionConfig.content_modules(configs)
+    @sponsor = CollectionConfig.sponsor(configs, :state)
+    @browse_links = CollectionConfig.browse_links(configs)
+    @partners = CollectionConfig.state_partners(configs)
+    @choose_school = CollectionConfig.state_choose_school(configs)
+    @articles = CollectionConfig.state_featured_articles(configs)
+    @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
+    @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+    @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
+    @show_ads = CollectionConfig.show_ads(configs)
+    @important_events = CollectionConfig.city_hub_important_events(configs)
+    @announcement = CollectionConfig.city_hub_announcement(configs)
     gon.state_abbr = @state[:short]
-    @ad_page_name = :State_Home_Standard
-    @show_ads = PropertyConfig.advertising_enabled?
-    gon.show_ads = show_ads?
+
     ad_setTargeting_through_gon
     data_layer_through_gon
-    render 'states/state_home'
+
+    render 'hubs/state_hub'
   end
 
   def choosing_schools
@@ -83,7 +83,7 @@ class StatesController < ApplicationController
                                   school choice #{@state[:long].titleize}, #{@state[:long].titleize} school choice tips,
                                   #{@state[:long].titleize} school choice steps"
       data_layer_through_gon
-      render 'shared/choosing_schools'
+      render 'hubs/choosing_schools'
     end
   end
 
@@ -111,7 +111,7 @@ class StatesController < ApplicationController
                                   #{@state[:long].titleize} public schools dates, #{@state[:long].titleize} school
                                   system calendar, #{@state[:long].titleize} public schools calendar"
       data_layer_through_gon
-      render 'shared/events'
+      render 'hubs/events'
 
     end
   end
@@ -163,7 +163,7 @@ class StatesController < ApplicationController
 
       data_layer_through_gon
 
-      render 'shared/enrollment'
+      render 'hubs/enrollment'
     end
   end
 
@@ -188,7 +188,7 @@ class StatesController < ApplicationController
       gon.state_abbr = @state[:short]
       data_layer_through_gon
 
-      render 'shared/community'
+      render 'hubs/community'
     end
   end
 
