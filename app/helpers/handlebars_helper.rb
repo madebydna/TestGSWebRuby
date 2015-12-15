@@ -13,7 +13,7 @@ module HandlebarsHelper
   def include_handlebars_template(template_path)
     template_path.sub!(/^\//, '')
     templates_for(template_path).map do |template|
-      render partial: 'shared/handlebars_wrapper', locals: {
+      render partial: 'handlebars/handlebars_wrapper', locals: {
         template: template,
         id: path_as_template_id(template),
       }
