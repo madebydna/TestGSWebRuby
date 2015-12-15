@@ -1,6 +1,8 @@
 require 'spec_helper'
+require_relative 'examples/user_profile_association'
 
 describe User do
+  it_behaves_like 'user with user profile association'
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
@@ -302,19 +304,6 @@ describe User do
       it 'should return true' do
         allow(user).to receive(:member_roles).and_return(member_roles)
         expect(user.has_role?(some_role)).to be_truthy
-      end
-    end
-
-    describe '#create_user_profile' do
-      it 'should log exceptions' do
-        user_profile_stub = Class.new
-        allow(user_profile_stub).to receive(:create) { raise 'error' }
-        allow(user_profile_stub).to receive(:where) { user_profile_stub }
-        allow(user_profile_stub).to receive(:first) { nil }
-
-        stub_const('UserProfile', user_profile_stub)
-        expect(user).to receive(:log_user_exception)
-        expect{ user.send(:create_user_profile) }.to raise_error
       end
     end
 

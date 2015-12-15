@@ -2,11 +2,11 @@ class User < ActiveRecord::Base
   # reviews
   include UserReviewConcerns
   include UserEmailConcerns
+  include UserProfileAssociation
 
   self.table_name = 'list_member'
   db_magic :connection => :gs_schooldb
 
-  has_one :user_profile, foreign_key: 'member_id'
   has_many :subscriptions, foreign_key: 'member_id'
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :favorite_schools, foreign_key: 'member_id'
@@ -250,14 +250,6 @@ class User < ActiveRecord::Base
     self.reviews_user_flagged.map(&:id).include? review.id
   end
 
-  def has_active_profile?
-    user_profile && user_profile.active?
-  end
-
-  def has_inactive_profile?
-    user_profile && user_profile.inactive?
-  end
-
   def add_user_grade_level(grade)
     StudentGradeLevel.find_or_create_by(member_id: id, grade: grade)
   end
@@ -268,7 +260,7 @@ class User < ActiveRecord::Base
 
   end
 
-  private
+  protected
 
   def encrypted_password=(encrypted_password)
     # TODO: expose this behavior as a method password= using the attr_writer helper.
@@ -297,18 +289,6 @@ class User < ActiveRecord::Base
 
   def self.generate_password
     SecureRandom.urlsafe_base64 8
-  end
-
-  def create_user_profile
-    profile = UserProfile.where(member_id: id).first
-    if profile.nil?
-      begin
-        UserProfile.create!(member_id: id, screen_name: "user#{id}", private:true, how:self.how, active: true, state:'ca')
-      rescue => e
-        log_user_exception(e)
-        raise e
-      end
-    end
   end
 
   def set_defaults
