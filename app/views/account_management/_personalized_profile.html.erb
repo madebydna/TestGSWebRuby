@@ -10,7 +10,7 @@
           </div>
         </div>
       </div>
-      <%= render partial: 'shared/account_management/osp_module' %>
+      <%= render partial: 'osp_module' %>
     </div>
 <% end %>
 
@@ -44,16 +44,16 @@
           </div>
         </div>
         <div class="fl js-hometown-chooser-display dn">
-          <%= render 'shared/account_management/cityChooser' %>
+          <%= render 'cityChooser' %>
         </div>
     <% else %>
 
         <div class="fl js-hometown-chooser-display">
-          <%= render 'shared/account_management/cityChooser' %>
+          <%= render 'cityChooser' %>
         </div>
     <% end %>
   </div>
-  <%= render 'shared/account_management/grade_level_selector'%>
+  <%= render 'grade_level_selector'%>
 
 </div>
 
@@ -84,7 +84,7 @@
       </div>
     </div>
   </div>
-  <%= render partial: 'shared/account_management/school_list' %>
+  <%= render partial: 'school_list' %>
 </div>
 
 <div class="limit-width-1200">
@@ -98,7 +98,7 @@
       </div>
     </div>
   </div>
-  <%= render partial: 'shared/account_management/email_settings' %>
+  <%= render partial: 'email_settings' %>
 </div>
 
 <div class="limit-width-1200">
@@ -112,7 +112,7 @@
       </div>
     </div>
   </div>
-  <%= render partial: 'shared/account_management/change_password_form' %>
+  <%= render partial: 'change_password_form' %>
 </div>
 
 
