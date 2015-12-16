@@ -7,17 +7,17 @@ class ExternalContentFetcher
   def initialize(key, url, use_stdout=false)
     raise "ExternalContentFetcher requires a key and URL. Was provided key='#{key}', url='#{url}'" unless key.present? && url.present?
     @key = key
+    @use_stdout = use_stdout
     begin
       @uri = URI.parse(URI.encode(url))
     rescue => e
-      return error("Provided invalid URI: #{url}", e)
+      error("Provided invalid URI: #{url}", e)
+      raise "Provided invalid URI: #{url}"
     end
-    @use_stdout = use_stdout
+    raise "Invalid URI Exception: #{url}" unless uri_valid?
   end
 
   def fetch!
-    return false unless uri_valid?
-
     body = get_response_as_string
     return false unless body.present?
 
@@ -42,22 +42,6 @@ class ExternalContentFetcher
     end
   end
 
-  def error(msg, exception=nil, vars=nil)
-    GSLogger.error(:external_content_fetcher, exception, {message: msg, vars: vars})
-    if @use_stdout
-      log_msg = msg
-      if vars
-        log_msg << " (#{vars.to_s})"
-      end
-      if exception
-        log_msg << ": #{exception.class} #{exception.message}"
-        log_msg << "\n" << exception.backtrace.join("\n")
-      end
-      puts log_msg
-    end
-    false
-  end
-
   def get_response_as_string
     begin
       response = make_request
@@ -66,8 +50,15 @@ class ExternalContentFetcher
       return nil
     end
 
-    error("Error: empty response from #{@uri.to_s}") and (return nil) unless response.present? && response.body.present?
-    error("Error: #{response.code} response code from #{@uri.to_s}, expected 200") and (return nil) unless response.code == '200'
+    unless response.present? && response.body.present?
+      error("Error: empty response from #{@uri.to_s}")
+      return nil
+    end
+
+    unless response.code == '200'
+      error("Error: #{response.code} response code from #{@uri.to_s}, expected 200")
+      return nil
+    end
 
     response.body
   end
@@ -82,5 +73,21 @@ class ExternalContentFetcher
     return error("Provided invalid URI: #{@uri.to_s}: Invalid scheme") unless @uri.scheme == 'http' || @uri.scheme == 'https'
     return error("Provided invalid URI: #{@uri.to_s}: Missing host")   unless @uri.host.present?
     true
+  end
+
+  def error(msg, exception=nil, vars=nil)
+    GSLogger.error(:external_content_fetcher, exception, {message: msg, vars: vars})
+    if @use_stdout
+      log_msg = msg
+      if vars
+        log_msg << " (#{vars.to_s})"
+      end
+      if exception
+        log_msg << ": #{exception.class} #{exception.message}"
+        log_msg << "\n" << exception.backtrace.join("\n")
+      end
+      puts log_msg
+    end
+    false
   end
 end
