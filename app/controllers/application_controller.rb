@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   include AdvertisingHelper
   include DataLayerConcerns
   include JavascriptI18nConcerns
+  include FlashMessageConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -167,32 +168,6 @@ class ApplicationController < ActionController::Base
     @school.extend SchoolProfileDataDecorator
 
     render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
-  end
-
-  def flash_message(type, message)
-    Rails.logger.debug("Setting flash #{type} message: #{message}")
-    flash[type] = Array(flash[type])
-    if message.is_a? Array
-      flash[type] += message
-    else
-      flash[type] << message
-    end
-  end
-
-  def flash_error(message)
-    flash_message :error, message
-  end
-
-  def flash_notice(message)
-    flash_message :notice, message
-  end
-
-  def flash_success(message)
-    flash_message :success, message
-  end
-
-  def flash_notice_include?(message)
-    flash[:notice].try(:include?, message)
   end
 
   def already_redirecting?
