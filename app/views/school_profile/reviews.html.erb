@@ -64,10 +64,10 @@
 <div class="gs-bootstrap">
   <div class="limit-width-1200">
     <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
-    <%= render 'data_layouts/sticky_nearby_schools' %>
+    <%= render 'school_profile/data_layouts/sticky_nearby_schools' %>
   </div>
 </div>
-<%= render 'data_layouts/nearby_schools' %>
+<%= render 'school_profile/data_layouts/nearby_schools' %>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 
 <%= render 'school_profile/rich_snippets/rich_snippets_school_info', school: @school %>

@@ -18,7 +18,7 @@ class CategoryPlacement < ActiveRecord::Base
   # layout name => partial name
   # Used by rails_admin to populate dropdown list of layouts
   def possible_layouts
-    file_names = Dir.entries(Rails.root.join('app', 'views', 'data_layouts').to_s)
+    file_names = Dir.entries(Rails.root.join('app', 'views', 'school_profile', 'data_layouts').to_s)
 
     # Remove invalid files from listing, e.g. '.' and '..'
     file_names.reject! { |f| f =~ /^\W+$/ }
@@ -114,8 +114,8 @@ class CategoryPlacement < ActiveRecord::Base
       'app',
       'views'
     )
-    page_specific_layout = "data_layouts/#{page.name}_#{title}_#{layout}"
-    module_specific_layout = "data_layouts/#{title}_#{layout}"
+    page_specific_layout = "school_profile/data_layouts/#{page.name}_#{title}_#{layout}"
+    module_specific_layout = "school_profile/data_layouts/#{title}_#{layout}"
 
     page_specific_file =
       Rails.root.join(view_directory, page_specific_layout)
@@ -128,7 +128,7 @@ class CategoryPlacement < ActiveRecord::Base
   end
 
   def partial
-    "data_layouts/#{layout}"
+    "school_profile/data_layouts/#{layout}"
   end
 
   def parent

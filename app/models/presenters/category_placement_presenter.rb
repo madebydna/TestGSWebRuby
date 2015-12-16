@@ -3,6 +3,7 @@ class CategoryPlacementPresenter
   attr_reader :category_placement
 
   VIEW_DIRECTORY = Rails.root.join('app', 'views')
+  DATA_LAYOUTS_DIRECTORY = 'school_profile/data_layouts'
 
   def initialize(category_placement, page_config, template)
     @category_placement = category_placement
@@ -61,11 +62,11 @@ class CategoryPlacementPresenter
   end
 
   def module_specific_partial
-    module_specific_layout = "data_layouts/#{wrapper_layout}"
+    module_specific_layout = "#{DATA_LAYOUTS_DIRECTORY}/#{wrapper_layout}"
     module_specific_file =
       File.join(
         VIEW_DIRECTORY,
-        'data_layouts',
+        DATA_LAYOUTS_DIRECTORY,
         "_#{wrapper_layout}.html.erb"
       )
 
@@ -77,7 +78,7 @@ class CategoryPlacementPresenter
   end
 
   def default_partial
-    File.join('data_layouts', layout)
+    File.join(DATA_LAYOUTS_DIRECTORY, layout)
   end
 
   def show_bottom_ads?

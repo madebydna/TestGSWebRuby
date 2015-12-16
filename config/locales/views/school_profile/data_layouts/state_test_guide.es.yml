@@ -1,0 +1,8 @@
+---
+es:
+  school_profile:
+    data_layouts:
+      state_test_guide:
+        state_test_guide_text_html: ! 'Recursos: Entender su hijo de'
+        parcc_state_test_guide_text_link: Informe de resultados PARCC
+        sbac_state_test_guide_text_link: Informe de resultados SBAC

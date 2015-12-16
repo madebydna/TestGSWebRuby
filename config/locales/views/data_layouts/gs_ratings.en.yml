@@ -1,9 +1,0 @@
----
-en:
-  data_layouts:
-    gs_ratings:
-      greatschools_rating: GreatSchools Rating
-      learn_more_html: Learn More &raquo;
-      methodology: Methodology
-      rating_breakdown: Rating Breakdown
-      view_more_details: View more details about the GreatSchools rating
