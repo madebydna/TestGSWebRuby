@@ -1,8 +1,10 @@
 require 'spec_helper'
 require_relative 'examples/user_profile_association'
+require_relative 'examples/model_with_password'
 
 describe User do
   it_behaves_like 'user with user profile association'
+  it_behaves_like 'model with password', :new_user
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
@@ -104,30 +106,6 @@ describe User do
         school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
 
         expect(user.has_subscription?('mystat', school)).to be_falsey
-      end
-    end
-
-    describe '#password_is?' do
-
-      it 'checks for valid passwords' do
-        user.password = 'password'
-        user.encrypt_plain_text_password
-        expect(user.password_is? 'password').to be_truthy
-        expect(user.password_is? 'pass').to be_falsey
-      end
-
-      it 'does not allow nil or blank passwords' do
-        user.password = nil
-        expect(user).to_not be_valid
-        user.password = ''
-        expect(user).to_not be_valid
-      end
-
-      # required use of string#rindex in code
-      it 'should match the right password when password is "provisional:" ' do
-        user.password = 'provisional:'
-        user.encrypt_plain_text_password
-        expect(user.password_is? 'provisional:').to be_truthy
       end
     end
 
@@ -307,22 +285,6 @@ describe User do
       end
     end
 
-    describe '#encrypt_plain_text_password_after_first_save' do
-      it 'should log exceptions' do
-        user.password = 'abcdefg'
-        user.send(:encrypted_password=, nil)
-        allow(user).to receive(:save!) { raise 'error' }
-        expect(user).to receive(:log_user_exception)
-        expect { user.send(:encrypt_plain_text_password_after_first_save) }.to raise_error
-      end
-
-      it "should only get called once, at the time user is first saved" do
-        user.password = 'foobarbaz'
-        expect(user).to receive(:encrypt_plain_text_password_after_first_save).and_call_original.once
-        user.save
-      end
-    end
-
     describe '#time_added' do
       after { clean_models User }
 
@@ -425,7 +387,5 @@ describe User do
       end.to change { user.subscriptions.size }.from(0).to(2)
     end
   end
-
-
 
 end

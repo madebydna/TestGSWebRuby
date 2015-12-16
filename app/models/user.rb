@@ -4,6 +4,10 @@ class User < ActiveRecord::Base
   include UserEmailConcerns
   include UserProfileAssociation
 
+  # Include Password
+  # Causes additional before_save / after_create hooks to be executed !
+  include Password
+
   self.table_name = 'list_member'
   db_magic :connection => :gs_schooldb
 
@@ -19,21 +23,15 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
   before_save :verify_email!, if: "facebook_id != nil"
-  before_save :encrypt_plain_text_password
   # creating an encrypted pw for user requires their user ID. So pw must be encrypted after first time user is saved
-  after_create :create_user_profile, :encrypt_plain_text_password_after_first_save
+  after_create :create_user_profile
   validates_format_of :email, :with => /\A[^@]+@([^@\.]+\.)+[^@\.]+\z/, message: 'Please enter a valid email address.'
-  validates :plain_text_password, length: { in: 6..14 }, if: :should_validate_password?
 
   after_initialize :set_defaults
 
-  attr_accessible :email, :password, :facebook_id, :first_name, :last_name, :how,:welcome_message_status
-  attr_accessor :updating_password, :plain_text_password
+  attr_accessible :email, :facebook_id, :first_name, :last_name, :how,:welcome_message_status
 
   scope :verified, -> { where(email_verified: true) }
-
-  SECRET = 23088
-  PROVISIONAL_PREFIX = 'provisional:'
 
   def self.new_facebook_user(attributes)
     user = self.new
@@ -50,7 +48,7 @@ class User < ActiveRecord::Base
   end
 
   def provisional?
-    encrypted_password.present? && encrypted_password.index(PROVISIONAL_PREFIX) || !email_verified?
+    password_is_provisional? || !email_verified?
   end
 
   def self.validate_email_verification_token(token, time_string)
@@ -73,57 +71,8 @@ class User < ActiveRecord::Base
     [token.generate, token.time_as_string]
   end
 
-  def password=(password)
-    # TODO: expose this behavior as a different method to users of User class, such as plain_text_password=
-    ActiveSupport::Deprecation.silence do
-      self.plain_text_password = password
-    end
-  end
-  def password
-    plain_text_password
-  end
-
-  def encrypt_plain_text_password_after_first_save
-    # TODO: put this elsewhere
-
-    if password.present? && encrypted_password.blank?
-      begin
-        encrypt_plain_text_password
-        save!
-      rescue => e
-        log_user_exception(e)
-        raise e
-      end
-    end
-  end
-
-  def has_password?
-    encrypted_password.present?
-  end
-
-  def encrypt_plain_text_password
-    if password.present? && id.present?
-      encrypted_pw = encrypt_password(password)
-      if email_verified?
-        self.encrypted_password = encrypted_pw
-      else
-        self.encrypted_password = password + PROVISIONAL_PREFIX + encrypted_pw
-      end
-    end
-  end
-
-  def encrypt_password(password)
-    if password.present?
-      Digest::MD5.base64digest SECRET.to_s + password + id.to_s
-    end
-  end
-
-  def password_is?(password)
-    encrypted_password.present? && encrypted_password == encrypt_password(password)
-  end
-
   def auth_token
-    Digest::MD5.base64digest("#{SECRET}#{id}") + id.to_s
+    Encryption.new(self).auth_token
   end
 
   def verify!
@@ -261,31 +210,6 @@ class User < ActiveRecord::Base
   end
 
   protected
-
-  def encrypted_password=(encrypted_password)
-    # TODO: expose this behavior as a method password= using the attr_writer helper.
-    # force users of User class to set plain text password using a different method name, such as plain_text_password=
-    ActiveSupport::Deprecation.silence do
-      write_attribute(:password, encrypted_password)
-    end
-  end
-
-  def encrypted_password
-    pw = read_attribute(:password)
-    prefix_index = nil
-
-    prefix_index = pw.rindex PROVISIONAL_PREFIX if pw.present?
-
-    if prefix_index
-      pw[(PROVISIONAL_PREFIX.length + prefix_index)..-1]
-    else
-      pw
-    end
-  end
-
-  def should_validate_password?
-    updating_password || new_record?
-  end
 
   def self.generate_password
     SecureRandom.urlsafe_base64 8
