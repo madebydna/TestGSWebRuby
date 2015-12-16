@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
 
   def self.new_facebook_user(attributes)
     user = self.new
-    user.assign_attributes(attributes.reverse_merge(how: 'facebook', password: generate_password))
+    user.assign_attributes(attributes.reverse_merge(how: 'facebook', password: Password.generate_password))
     user
   end
 
@@ -210,10 +210,6 @@ class User < ActiveRecord::Base
   end
 
   protected
-
-  def self.generate_password
-    SecureRandom.urlsafe_base64 8
-  end
 
   def set_defaults
     now = Time.now

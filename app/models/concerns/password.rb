@@ -18,6 +18,12 @@ module Password
     end
   end
 
+  # This is not how to create class methods that will get mixed into the base class
+  # This is a method that can be invoked anywhere in the app via Password.generate_password
+  def self.generate_password
+    SecureRandom.urlsafe_base64(8)
+  end
+
   PROVISIONAL_PREFIX = 'provisional:'
 
   # Returns the plain text password in the case where it has been set and not encrypted yet
