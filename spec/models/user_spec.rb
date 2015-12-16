@@ -1,10 +1,12 @@
 require 'spec_helper'
 require_relative 'examples/user_profile_association'
 require_relative 'examples/model_with_password'
+require_relative 'examples/model_with_esp_memberships'
 
 describe User do
   it_behaves_like 'user with user profile association'
   it_behaves_like 'model with password', :new_user
+  it_behaves_like 'model with esp memberships'
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
@@ -243,24 +245,6 @@ describe User do
           expected_array = [review1, review2].sort
           expect(user.reviews_for_school(school).to_a.sort).to eq(expected_array)
         end
-      end
-    end
-
-    describe '#is_esp_superuser' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:role )}
-      let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:esp_superuser_role.id)}
-
-      it 'should return false, since the user has no member_roles' do
-        allow(Role).to receive(:esp_superuser).and_return(esp_superuser_role)
-        allow(user).to receive(:member_roles).and_return(nil)
-        expect(user.is_esp_superuser?).to be_falsey
-      end
-
-
-      it 'should return true, since user has a super user member_role' do
-        allow(Role).to receive(:esp_superuser).and_return(esp_superuser_role)
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.is_esp_superuser?).to be_truthy
       end
     end
 
