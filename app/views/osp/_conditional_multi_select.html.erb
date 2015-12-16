@@ -22,7 +22,7 @@
       </span>
       <div class="mtm">
         <% is_none_active = preexisting_esp_values.include?(input_value) ? true : false  %>
-        <%= render partial: 'shared/form_elements/checkbox_square', locals: {
+        <%= render partial: 'checkbox_square', locals: {
                 key: "#{q_id}-#{response_key}[]",
                 value: input_value,
                 button_classes: 'js-disableTriggerElement mb2',
@@ -36,7 +36,7 @@
   <div class="col-xs-12">
     <% display_text_and_value_map.each_pair do |text, value| %>
       <% is_active = preexisting_esp_values.include?(value.to_s.downcase) ? true : nil %>
-      <%= render partial: 'shared/form_elements/checkbox_button', locals: {
+      <%= render partial: 'checkbox_button', locals: {
               key: "#{q_id}-#{response_key}[]",
               text: text,
               value: value,
