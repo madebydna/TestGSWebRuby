@@ -2,7 +2,7 @@
 <%= render 'nav/search_bar', state: @state, collection_nickname: @collection_nickname, collection_id: @collection_id %>
 
 <div class="limit-width-1200" style='mbl'>
-  <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+  <%= render 'nav/breadcrumbs', breadcrumbs: @breadcrumbs %>
   <% unless @events.nil? %>
     <%= render 'hubs/events_list', events: @events %>
   <% end %>
