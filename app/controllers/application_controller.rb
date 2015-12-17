@@ -111,10 +111,6 @@ class ApplicationController < ActionController::Base
     gs_legacy_url_decode(params[:city])
   end
 
-  def district_param
-    return if params[:district].nil?
-    gs_legacy_url_decode(params[:district])
-  end
 
   def redirect_tab_urls
     if params[:tab] == 'reviews'
