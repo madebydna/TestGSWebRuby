@@ -50,11 +50,6 @@ class User < ActiveRecord::Base
     password_is_provisional? || !email_verified?
   end
 
-  def email_verification_token(time = nil)
-    token = EmailVerificationToken.new(user: self, time: time)
-    [token.generate, token.time_as_string]
-  end
-
   def verify!
     # legacy java code puts plaintext password and a 'provisional:' string in the password field until account
     # is verified. After that, the plaintext password and prefix are removed, leaving just the hashed password

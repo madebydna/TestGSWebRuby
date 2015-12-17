@@ -186,7 +186,7 @@ class OspRegistrationController < ApplicationController
   def osp_email_verification_url(user)
     tracking_code = 'eml_ospverify'
     verification_link_params = {}
-    hash, date = user.email_verification_token
+    hash, date = EmailVerificationToken.token_and_date(user)
     verification_link_params.merge!(
         id: hash,
         date: date,

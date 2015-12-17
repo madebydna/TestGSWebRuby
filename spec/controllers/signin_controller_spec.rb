@@ -702,7 +702,7 @@ describe SigninController do
 
   describe SigninController::UserAuthenticatorAndVerifier do
     let(:user) { FactoryGirl.create(:new_user) }
-    let(:token_and_time) { user.email_verification_token }
+    let(:token_and_time) { EmailVerificationToken.token_and_date(user) }
     let(:token) { token_and_time[0] }
     let(:time) { token_and_time[1] }
     subject { SigninController::UserAuthenticatorAndVerifier.new(token, time) }
@@ -725,22 +725,22 @@ describe SigninController do
     end
 
     context 'when date is in the future' do
-      let(:token_and_time) { user.email_verification_token(10.days.from_now) }
+      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 10.days.from_now) }
       it { is_expected.to_not be_token_valid }
     end
 
     context 'when date is a second ago' do
-      let(:token_and_time) { user.email_verification_token(1.second.ago) }
+      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.second.ago) }
       it { is_expected.to be_token_valid }
     end
 
     context 'when date is yesterday' do
-      let(:token_and_time) { user.email_verification_token(1.days.ago) }
+      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.days.ago) }
       it { is_expected.to be_token_valid }
     end
 
     context 'when date is malformed' do
-      let(:token_and_time) { user.email_verification_token('fubar date') }
+      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 'fubar date') }
       it { is_expected.to_not be_token_valid }
     end
 

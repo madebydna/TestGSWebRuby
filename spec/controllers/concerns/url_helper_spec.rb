@@ -313,11 +313,11 @@ describe UrlHelper do
         expect(subject['s_cid']).to eq('eml_passwordreset')
       end
       it 'should add the appropriate token to the url' do
-        hash, date = user.email_verification_token
+        hash, date = EmailVerificationToken.token_and_date(user)
         expect(subject['id']).to eq(CGI.escape(hash))
       end
       it 'should add the appropriate date to the url' do
-        hash, date = user.email_verification_token
+        hash, date = EmailVerificationToken.token_and_date(user)
         expect(subject['date']).to eq(date)
       end
       context 'with a caller-specified s_cid' do
