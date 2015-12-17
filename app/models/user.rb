@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   include UserEspMemberships
   include Subscriptions
   include FavoriteSchoolsAssociation
+  include StudentGradeLevelsAssociation
 
   # Include Password
   # Causes additional before_save / after_create hooks to be executed !
@@ -17,7 +18,6 @@ class User < ActiveRecord::Base
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
-  has_many :student_grade_levels, foreign_key: 'member_id'
   has_many :review_votes, foreign_key: 'member_id'
 
   validates_presence_of :email
@@ -98,16 +98,6 @@ class User < ActiveRecord::Base
 
   def flagged_review?(review)
     self.reviews_user_flagged.map(&:id).include? review.id
-  end
-
-  def add_user_grade_level(grade)
-    StudentGradeLevel.find_or_create_by(member_id: id, grade: grade)
-  end
-
-  def delete_user_grade_level(grade)
-    grade = StudentGradeLevel.find_by(member_id: id, grade: grade)
-    grade.delete if grade.present?
-
   end
 
   protected
