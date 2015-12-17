@@ -1,6 +1,6 @@
 class StatesController < ApplicationController
   include SeoHelper
-  include MetaTagsHelper
+  include StatesMetaTagsConcerns
   include HubConcerns
 
   before_action :set_city_state
@@ -8,10 +8,11 @@ class StatesController < ApplicationController
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
   before_action :set_footer_cities
-  before_action :write_meta_tags, only: [:show, :community]
+  # before_action :write_meta_tags, only: [:show, :community]
   before_action :set_state_home_omniture_data, only: [:show]
 
   def show
+    write_meta_tags
     if @hub
       state_hub
     else
@@ -168,6 +169,7 @@ class StatesController < ApplicationController
   end
 
   def community
+    write_meta_tags
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -222,6 +224,15 @@ class StatesController < ApplicationController
   end
 
   private
+
+  def write_meta_tags
+    method_base = "#{controller_name}_#{action_name}"
+    title_method = "#{method_base}_title".to_sym
+    description_method = "#{method_base}_description".to_sym
+    keywords_method = "#{method_base}_keywords".to_sym
+    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+  end
+
 
     def set_community_omniture_data
       if @tab == 'Community' || @show_tabs == false

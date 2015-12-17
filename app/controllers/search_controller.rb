@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   include ApplicationHelper
-  include MetaTagsHelper
+  include SearchMetaTagsConcerns
   include ActionView::Helpers::TagHelper
   include PaginationConcerns
   include SortingConcerns

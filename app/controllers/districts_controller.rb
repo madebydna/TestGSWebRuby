@@ -1,6 +1,6 @@
 class DistrictsController < ApplicationController
   include SeoHelper
-  include MetaTagsHelper
+  include DistrictsMetaTagsConcerns
   include HubConcerns
   include GoogleMapConcerns
 
@@ -9,7 +9,6 @@ class DistrictsController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
-  before_action :write_meta_tags
   before_action :redirect_to_canonical_url
 
   def show
@@ -24,6 +23,7 @@ class DistrictsController < ApplicationController
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
 
     @breadcrumbs = district_home_breadcrumbs
+    write_meta_tags
     ad_setTargeting_through_gon
     data_layer_through_gon
     prepare_map
@@ -32,6 +32,14 @@ class DistrictsController < ApplicationController
   end
 
   private
+
+  def write_meta_tags
+    method_base = "#{controller_name}_#{action_name}"
+    title_method = "#{method_base}_title".to_sym
+    description_method = "#{method_base}_description".to_sym
+    keywords_method = "#{method_base}_keywords".to_sym
+    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+  end
 
   def district_home_breadcrumbs
     if ( @state.present? &&  @city.present?)

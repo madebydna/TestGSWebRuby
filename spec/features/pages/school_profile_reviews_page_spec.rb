@@ -121,10 +121,10 @@ describe 'School Profile Reviews Page' do
           its('active_slide.review_comment') { is_expected.to_not be_visible }
           with_shared_context 'select first radio button option' do
             its('active_slide.review_comment') { is_expected.to be_visible }
-            when_I :submit_a_comment do
+            # when_I :submit_a_comment do
               before { pending 'Legitimate bug'; fail; }
               it { is_expected.to have_role_question }
-            end
+            # end
           end
         end
       end

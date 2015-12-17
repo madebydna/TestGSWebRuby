@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MetaTagsHelper do
+describe SearchMetaTagsConcerns do
 
   describe '#canonical_url_without_params' do
 
