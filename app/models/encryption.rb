@@ -14,8 +14,4 @@ class Encryption
     end
   end
 
-  def auth_token
-    Digest::MD5.base64digest("#{SECRET}#{user.id}") + user.id.to_s
-  end
-
 end

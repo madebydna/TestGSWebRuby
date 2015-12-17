@@ -56,10 +56,6 @@ class User < ActiveRecord::Base
     [token.generate, token.time_as_string]
   end
 
-  def auth_token
-    Encryption.new(self).auth_token
-  end
-
   def verify!
     # legacy java code puts plaintext password and a 'provisional:' string in the password field until account
     # is verified. After that, the plaintext password and prefix are removed, leaving just the hashed password
