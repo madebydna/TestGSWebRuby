@@ -5,6 +5,7 @@ require_relative 'examples/model_with_esp_memberships'
 require_relative 'examples/model_with_subscriptions_association'
 require_relative 'examples/model_with_favorite_schools_association'
 require_relative 'examples/model_with_student_grade_levels_association'
+require_relative 'examples/model_with_roles_association'
 
 describe User do
   it_behaves_like 'user with user profile association'
@@ -13,6 +14,7 @@ describe User do
   it_behaves_like 'model with subscriptions association'
   it_behaves_like 'model with favorite schools association'
   it_behaves_like 'model with student grade levels association'
+  it_behaves_like 'model with roles association'
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
@@ -131,27 +133,6 @@ describe User do
       end
     end
 
-    describe '#has_role' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:role,id:1 )}
-      let!(:some_role) {FactoryGirl.build(:role,id:2 )}
-      let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:2)}
-
-      it 'should return false, since the user has no member_roles' do
-        allow(user).to receive(:member_roles).and_return(nil)
-        expect(user.has_role?(esp_superuser_role)).to be_falsey
-      end
-
-      it 'should return false, since the user role id does not match' do
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.has_role?(esp_superuser_role)).to be_falsey
-      end
-
-      it 'should return true' do
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.has_role?(some_role)).to be_truthy
-      end
-    end
-
     describe '#time_added' do
       after { clean_models User }
 
@@ -225,7 +206,5 @@ describe User do
       end
     end
   end
-
-
 
 end

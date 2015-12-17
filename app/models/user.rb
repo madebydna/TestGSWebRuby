@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   include Subscriptions
   include FavoriteSchoolsAssociation
   include StudentGradeLevelsAssociation
+  include RolesAssociation
 
   # Include Password
   # Causes additional before_save / after_create hooks to be executed !
@@ -16,8 +17,6 @@ class User < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   has_many :saved_searches, foreign_key: 'member_id'
-  has_many :member_roles, foreign_key: 'member_id'
-  has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
   has_many :review_votes, foreign_key: 'member_id'
 
   validates_presence_of :email
@@ -71,10 +70,6 @@ class User < ActiveRecord::Base
 
   def has_facebook_account?
     facebook_id.present?
-  end
-
-  def has_role?(role)
-    member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }
   end
 
   def flagged_review?(review)
