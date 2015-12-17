@@ -62,7 +62,7 @@ class EmailVerificationToken
   end
 
   def expired?
-    EMAIL_TOKEN_EXPIRATION.ago > @time
+    EMAIL_TOKEN_EXPIRATION.ago > @time || @time > Time.zone.now
   end
 
   def valid?

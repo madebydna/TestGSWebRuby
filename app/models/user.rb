@@ -51,21 +51,6 @@ class User < ActiveRecord::Base
     password_is_provisional? || !email_verified?
   end
 
-  def self.validate_email_verification_token(token, time_string)
-    begin
-      token = EmailVerificationToken.parse token, time_string
-    rescue
-      return false
-    end
-    if token.valid?
-      user = token.user
-      user.email_verified = true
-      return user
-    else
-      return false
-    end
-  end
-
   def email_verification_token(time = nil)
     token = EmailVerificationToken.new(user: self, time: time)
     [token.generate, token.time_as_string]
