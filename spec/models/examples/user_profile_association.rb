@@ -49,7 +49,7 @@ shared_examples_for 'user with user profile association' do
       allow(user_profile_stub).to receive(:first) { nil }
 
       stub_const('UserProfile', user_profile_stub)
-      expect(subject).to receive(:log_user_exception)
+      expect(GSLogger).to receive(:error)
       expect{ subject.send(:create_user_profile) }.to raise_error
     end
   end

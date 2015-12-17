@@ -84,9 +84,4 @@ class User < ActiveRecord::Base
     self.updated ||= now
   end
 
-  def log_user_exception(e)
-    Rails.logger.warn("Error: #{e.message} for user ID #{id}, email: #{email}. Stacktrace:")
-    Rails.backtrace_cleaner.clean(e.backtrace).each { |frame| Rails.logger.warn(frame) }
-  end
-
 end
