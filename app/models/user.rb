@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   include UserProfileAssociation
   include UserEspMemberships
   include Subscriptions
+  include FavoriteSchoolsAssociation
 
   # Include Password
   # Causes additional before_save / after_create hooks to be executed !
@@ -14,7 +15,6 @@ class User < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   has_many :saved_searches, foreign_key: 'member_id'
-  has_many :favorite_schools, foreign_key: 'member_id'
   has_many :member_roles, foreign_key: 'member_id'
   has_many :roles, through: :member_roles #Need to use :through in order to use MemberRole model, to specify gs_schooldb
   has_many :student_grade_levels, foreign_key: 'member_id'
@@ -91,17 +91,6 @@ class User < ActiveRecord::Base
   def has_facebook_account?
     facebook_id.present?
   end
-
-  def add_favorite_school!(school)
-    favorite_school = FavoriteSchool.build_for_school school
-    favorite_schools << favorite_school
-    favorite_school.save!
-  end
-
-  def favorited_school?(school)
-    favorite_schools.any? { |favorite| favorite.school_id == school.id && favorite.state == school.state }
-  end
-  alias_method :favored_school?, :favorited_school?
 
   def has_role?(role)
     member_roles.present? && member_roles.any? { |member_role| member_role.role_id == role.id }

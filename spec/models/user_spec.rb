@@ -3,12 +3,14 @@ require_relative 'examples/user_profile_association'
 require_relative 'examples/model_with_password'
 require_relative 'examples/model_with_esp_memberships'
 require_relative 'examples/model_with_subscriptions_association'
+require_relative 'examples/model_with_favorite_schools_association'
 
 describe User do
   it_behaves_like 'user with user profile association'
   it_behaves_like 'model with password', :new_user
   it_behaves_like 'model with esp memberships'
   it_behaves_like 'model with subscriptions association'
+  it_behaves_like 'model with favorite schools association'
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
