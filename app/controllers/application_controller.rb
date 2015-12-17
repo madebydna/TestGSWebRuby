@@ -95,18 +95,14 @@ class ApplicationController < ActionController::Base
   end
 
   def state_param
-    state = params[:state] || ''
-    state.gsub! '-', ' ' if state.length > 2
+    state = (gs_legacy_url_decode(params[:state]) || '').dup
     state_abbreviation = States.abbreviation(state)
     state_abbreviation.downcase! if state_abbreviation.present?
     state_abbreviation
   end
 
   def state_param_safe
-    state = (gs_legacy_url_decode(params[:state]) || '').dup
-    state_abbreviation = States.abbreviation(state)
-    state_abbreviation.downcase! if state_abbreviation.present?
-    state_abbreviation
+    state_param
   end
 
   def city_param
