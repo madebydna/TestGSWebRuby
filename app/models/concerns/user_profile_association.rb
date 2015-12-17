@@ -19,7 +19,8 @@ module UserProfileAssociation
       begin
         UserProfile.create!(member_id: id, screen_name: "user#{id}", private:true, how:self.how, active: true, state:'ca')
       rescue => e
-        log_user_exception(e)
+        vars = attributes.keep_if {|k, _| [:id, :email].include?(k) }
+        GSLogger.error(:misc, e, vars: vars, message: 'Unable to create user profile for user')
         raise e
       end
     end

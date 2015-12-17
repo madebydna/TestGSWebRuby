@@ -98,7 +98,8 @@ module Password
         encrypt_plain_text_password
         save!
       rescue => e
-        log_user_exception(e)
+        vars = attributes.keep_if {|k, _| [:id, :email].include?(k) }
+        GSLogger.error(:misc, e, vars: vars, message: 'Unable to encrypt plain text password')
         raise e
       end
     end
