@@ -1,11 +1,11 @@
 class OspController < ApplicationController
   include PhotoUploadConcerns
+  include PopularCitiesConcerns
 
   #order of some of these callbacks matter
   before_action :set_login_redirect
   before_action :set_city_state
   before_action :login_required_for_osp, except: [:approve_provisional_osp_user_data]
-  before_action :set_footer_cities, only: [:show]
   before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
   before_action :validate_delaware_users, except: [:approve_provisional_osp_user_data]
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
@@ -20,6 +20,7 @@ class OspController < ApplicationController
 
   def show
     @osp_data = OspData.new(@school) #add rescue here that shows nice error
+    @cities = popular_cities
     render_osp_page
   end
 

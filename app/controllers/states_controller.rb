@@ -2,17 +2,17 @@ class StatesController < ApplicationController
   include SeoHelper
   include StatesMetaTagsConcerns
   include HubConcerns
+  include PopularCitiesConcerns
 
   before_action :set_city_state
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
-  before_action :set_footer_cities
-  # before_action :write_meta_tags, only: [:show, :community]
   before_action :set_state_home_omniture_data, only: [:show]
 
   def show
     write_meta_tags
+    @cities = popular_cities
     if @hub
       state_hub
     else
@@ -32,6 +32,7 @@ class StatesController < ApplicationController
 
   # TODO This should be in either at StateHubsController or a HubsController
   def state_hub
+    @cities = popular_cities
     collection_id = @hub.collection_id
     configs = hub_configs(collection_id)
 
@@ -59,6 +60,7 @@ class StatesController < ApplicationController
   end
 
   def choosing_schools
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -89,6 +91,7 @@ class StatesController < ApplicationController
   end
 
   def events
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -117,11 +120,8 @@ class StatesController < ApplicationController
     end
   end
 
-  def guided_search
-    render_guided_search
-  end
-
   def enrollment
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -170,6 +170,7 @@ class StatesController < ApplicationController
 
   def community
     write_meta_tags
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -194,20 +195,20 @@ class StatesController < ApplicationController
     end
   end
 
+  private
+
   def page_view_metadata
-
     @page_view_metadata ||= (
-    page_view_metadata = {}
+      page_view_metadata = {}
 
-    page_view_metadata['page_name'] = gon.pagename || "GS:State:Home"
-    page_view_metadata['State']      = @state[:short].upcase # abbreviation
-    page_view_metadata['editorial']  = 'FindaSchoo'
-    page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
+      page_view_metadata['page_name'] = gon.pagename || "GS:State:Home"
+      page_view_metadata['State']      = @state[:short].upcase # abbreviation
+      page_view_metadata['editorial']  = 'FindaSchoo'
+      page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
 
-    page_view_metadata
+      page_view_metadata
 
     )
-
   end
 
   def ad_setTargeting_through_gon

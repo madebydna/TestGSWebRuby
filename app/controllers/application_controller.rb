@@ -230,10 +230,6 @@ class ApplicationController < ActionController::Base
     write_cookie :redirect_uri, request.url, { expires: 10.minutes.from_now }
   end
 
-  def set_footer_cities
-    @cities = City.popular_cities(@state[:short], limit: 28)
-  end
-
   def set_city_state
     @state = {
       long: States.state_name(gs_legacy_url_decode(params[:state])),

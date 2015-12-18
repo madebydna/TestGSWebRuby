@@ -4,15 +4,16 @@ class CitiesController < ApplicationController
   include ApplicationHelper
   include GoogleMapConcerns
   include CitiesMetaTagsConcerns
+  include PopularCitiesConcerns
 
   before_action :set_city_state
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
-  before_action :set_footer_cities
 
   def show
     write_meta_tags
+    @cities = popular_cities
     @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
     @breadcrumbs = {
@@ -51,6 +52,7 @@ class CitiesController < ApplicationController
 
   def city_hub
     write_meta_tags
+    @cities = popular_cities
     @hub.has_guided_search?
 
     @collection_id = @hub.collection_id
@@ -75,14 +77,9 @@ class CitiesController < ApplicationController
     render 'hubs/city_hub'
   end
 
-  def all_schools_by_rating_desc(city, count=0)
-    @all_schools_in_city_by_rating_desc ||= city.schools_by_rating_desc
-    count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
-  end
-
-
   def events
     write_meta_tags
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -107,6 +104,7 @@ class CitiesController < ApplicationController
 
   def community
     write_meta_tags
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -134,6 +132,7 @@ class CitiesController < ApplicationController
   end
 
   def partner
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -162,6 +161,7 @@ class CitiesController < ApplicationController
 
   def choosing_schools
     write_meta_tags
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -220,6 +220,7 @@ class CitiesController < ApplicationController
 
   def programs
     write_meta_tags
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -246,10 +247,6 @@ class CitiesController < ApplicationController
     end
   end
 
-  def guided_search
-    render_guided_search
-  end
-
   private
 
   def write_meta_tags
@@ -258,6 +255,11 @@ class CitiesController < ApplicationController
     description_method = "#{method_base}_description".to_sym
     keywords_method = "#{method_base}_keywords".to_sym
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+  end
+
+  def all_schools_by_rating_desc(city, count=0)
+    @all_schools_in_city_by_rating_desc ||= city.schools_by_rating_desc
+    count != 0 ? @all_schools_in_city_by_rating_desc.take(count) : @all_schools_in_city_by_rating_desc
   end
 
   def set_city_home_metadata
