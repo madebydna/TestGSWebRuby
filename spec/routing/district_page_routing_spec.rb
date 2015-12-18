@@ -15,51 +15,28 @@ describe 'district page routing' do
   end
 
   describe 'show' do
-    it 'should route a multi-word district' do
-      expect( get '/minnesota/st.-paul/minnesota-department-of-corrections/' ).to route_to(
-        'districts#show',
-        state: 'minnesota',
-        city: 'st.-paul',
-        district: 'minnesota-department-of-corrections'
-      )
-    end
-
-    it 'should route a district with a period in it' do
-      expect( get '/minnesota/st.-paul/st.-paul-public-school-district/' ).to route_to(
-        'districts#show',
-        state: 'minnesota',
-        city: 'st.-paul',
-        district: 'st.-paul-public-school-district'
-      )
-    end
-
-    it 'should route a district with a number in it' do
-      expect( get '/minnesota/st.-paul/district-12/' ).to route_to(
-        'districts#show',
-        state: 'minnesota',
-        city: 'st.-paul',
-        district: 'district-12'
-      )
-    end
-
-    it 'should route a district beginning with a number in it' do
-      expect( get '/minnesota/st.-paul/12th-district/' ).to route_to(
-        'districts#show',
-        state: 'minnesota',
-        city: 'st.-paul',
-        district: '12th-district'
-      )
-    end
-
-    it 'should route a district with a # in it' do
-      # %23 is the encoded value of #
-      expect( get '/minnesota/st.-paul/district-%2312/' ).to route_to(
-        'districts#show',
-        state: 'minnesota',
-        city: 'st.-paul',
-        district: 'district-#12'
-      )
+    {
+        'one-word state' => 'minnesota',
+        'two-word state' => 'new-jersey',
+    }.each do |state_description, state|
+      describe state_description do
+        {
+            'normal district' => 'Alameda-School-District',
+            'district with a period in it' => 'st.-paul-public-school-district',
+            'district with a number in it' => 'district-12',
+            'district beginning with a number' => '12th-district',
+            'district with a # in it' => 'district-%2312'
+        }.each do |district_description, district|
+          it "should route to a #{district_description}" do
+            expect( get "/#{state}/alameda/#{district}/" ).to route_to(
+              'districts#show',
+              state: state,
+              city: 'alameda',
+              district: district.sub('%23', '#')
+            )
+          end
+        end
+      end
     end
   end
-
 end
