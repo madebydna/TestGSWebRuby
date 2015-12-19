@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'features/search/search_spec_helper'
 require 'features/examples/page_examples'
-require 'features/selectors/search_page'
-require 'features/selectors/city_browse_page'
+require 'features/pages/page_objects/search_page'
+require 'features/pages/page_objects/city_browse_page'
 include SearchSpecHelper
 
 #Visiting Search Pages

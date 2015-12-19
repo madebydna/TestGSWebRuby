@@ -1,6 +1,6 @@
 require 'spec_helper'
 require_relative '../contexts/footer_contexts'
-require 'features/selectors/state_home_page'
+require 'features/pages/page_objects/state_home_page'
 
 
 #Footer Shared Examples
