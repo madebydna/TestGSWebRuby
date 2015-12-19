@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'controllers/contexts/osp_shared_contexts'
 
-describe Admin::OspController do
+describe OspController do
   include ActionView::Helpers::TranslationHelper
 
   describe '#show' do
@@ -49,7 +49,7 @@ describe Admin::OspController do
       context 'when signed in and going to delaware with an gs_localAuth token set' do
         let(:auth_cookie) do
           current_user.email = 'aroy@greatschools.org' #this will add a + into the token after encoding
-          Digest::MD5.base64digest(Admin::OspController::AUTH_SALT + current_user.email) 
+          Digest::MD5.base64digest(OspController::AUTH_SALT + current_user.email)
         end
         it 'should render the osp page' do
           request.cookies['gs_localAuth'] = auth_cookie
@@ -75,7 +75,7 @@ describe Admin::OspController do
       end
 
       context 'when signed in and going to delaware with an incorrect gs_localAuth token set' do
-        let(:auth_cookie) { Digest::MD5.base64digest(Admin::OspController::AUTH_SALT + current_user.email + 'blah') }
+        let(:auth_cookie) { Digest::MD5.base64digest(OspController::AUTH_SALT + current_user.email + 'blah') }
         it 'should redirect to the my account page' do
           request.cookies['gs_localAuth'] = auth_cookie
           get :show, state: 'DE', schoolId: school.id, page: 1
