@@ -1,5 +1,7 @@
 module AdvertisingConcerns
 
+  protected
+
   def set_global_ad_targeting_through_gon
     set_ad_targeting_gon_hash!
 
