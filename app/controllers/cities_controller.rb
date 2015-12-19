@@ -1,6 +1,5 @@
 class CitiesController < ApplicationController
   include SeoHelper
-  include AdvertisingHelper
   include ApplicationHelper
   include GoogleMapConcerns
   include CitiesMetaTagsConcerns
