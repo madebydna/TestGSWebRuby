@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'features/page_objects/home_page'
 require 'features/page_objects/account_page'
-require_relative '../examples/footer_examples'
+require 'features/examples/footer_examples'
 
 describe 'Home Page' do
   before { visit home_path }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'features/page_objects/district_home_page'
-require_relative '../examples/page_examples'
+require 'features/examples/page_examples'
 
 describe 'District Home Page' do
   before do

@@ -2,12 +2,11 @@ require 'spec_helper'
 require 'features/examples/page_examples'
 require 'features/contexts/queue_daemon_contexts'
 require 'features/contexts/compare_schools_contexts'
-require_relative '../examples/osp_examples'
-require_relative '../examples/footer_examples'
-require_relative '../contexts/osp_contexts'
 require 'features/examples/osp_examples'
 require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
+require 'features/examples/osp_examples'
+require 'features/examples/footer_examples'
 
 describe 'OSP Basic Page' do
   with_shared_context 'visit OSP superuser page' do

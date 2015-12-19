@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../contexts/footer_contexts'
+require 'features/contexts/footer_contexts'
 require 'features/page_objects/state_home_page'
 
 

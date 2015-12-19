@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative 'spec/features/pages/page_objects/city_home_page'
-require_relative '../features/examples/page_examples'
-require_relative '../features/contexts/state_home_contexts'
+require 'features/page_objects/city_home_page'
+require 'features/examples/page_examples'
+require 'features/contexts/state_home_contexts'
 
 describe 'Events Page' do
   let(:events_page_url) { 'http://localhost:3000/michigan/detroit/events' }

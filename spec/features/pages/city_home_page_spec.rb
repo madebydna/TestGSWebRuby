@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative 'city_home_page'
-require_relative '../examples/page_examples'
-require_relative '../contexts/state_home_contexts'
+require 'features/page_objects/city_home_page'
+require 'features/examples/page_examples'
+require 'features/contexts/state_home_contexts'
 
 describe 'City Home Page' do
   before do

@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'features/page_objects/review_school_chooser_page'
 require 'features/page_objects/school_profile_reviews_page'
-require_relative '../contexts/review_school_chooser_contexts'
-require_relative '../examples/footer_examples'
+require 'features/contexts/review_school_chooser_contexts'
+require 'features/examples/footer_examples'
 
 describe 'Review School Chooser Page' do
   with_shared_context 'Visit Review School Chooser Page for topic 1' do
