@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../features/search/search_spec_helper'
+require 'features/pages/search/search_spec_helper'
 require 'controllers/concerns/advertising_helper_shared'
 
 describe 'search/_search_results.html.erb', js: true do

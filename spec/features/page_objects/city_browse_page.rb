@@ -1,4 +1,4 @@
-require_relative '../pages/modules/breadcrumbs'
+require 'features/page_objects/modules/breadcrumbs'
 
 class CityBrowsePage < SearchPage
   include Breadcrumbs

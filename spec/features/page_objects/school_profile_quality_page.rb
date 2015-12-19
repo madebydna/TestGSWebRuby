@@ -1,6 +1,6 @@
-require_relative 'header_section'
-require_relative './modules/breadcrumbs'
-require_relative './modules/gs_rating'
+require 'features/page_objects/header_section'
+require 'features/page_objects/modules/breadcrumbs'
+require 'features/page_objects/modules/gs_rating'
 
 class SchoolProfileQualityPage < SitePrism::Page
   include Breadcrumbs

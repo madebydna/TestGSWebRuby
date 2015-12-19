@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'features/contexts/school_profile_contexts'
 require 'features/examples/page_examples'
-require 'features/pages/school_profile_overview_page'
-require 'features/pages/school_profile_reviews_page'
-require 'features/pages/school_profile_quality_page'
+require 'features/page_objects/school_profile_overview_page'
+require 'features/page_objects/school_profile_reviews_page'
+require 'features/page_objects/school_profile_quality_page'
 require 'features/examples/state_footer_examples'
 
 shared_context 'with an inactive school' do

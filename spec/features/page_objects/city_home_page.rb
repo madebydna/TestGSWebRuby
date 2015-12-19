@@ -1,6 +1,6 @@
-require_relative './modules/join_modals'
-require_relative './modules/flash_messages'
-require_relative './modules/breadcrumbs'
+require 'features/page_objects/modules/join_modals'
+require 'features/page_objects/modules/flash_messages'
+require 'features/page_objects/modules/breadcrumbs'
 
 
 class CityHomePage < SitePrism::Page

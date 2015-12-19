@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative 'forgot_password_page'
-require_relative 'join_page'
-require_relative 'reset_password_page'
+require 'features/page_objects/forgot_password_page'
+require 'features/page_objects/join_page'
+require 'features/page_objects/reset_password_page'
 
 describe 'Forgot password page' do
 

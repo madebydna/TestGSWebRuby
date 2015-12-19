@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../search/search_spec_helper'
-require_relative '../shared/shared_examples_for_pages_with_assigned_schools'
+require 'features/pages/search/search_spec_helper'
+require 'features/examples/shared_examples_for_pages_with_assigned_schools'
 
 # shared_examples_for '(features shared across all search pages)' do
 shared_examples_for 'By Location Search' do

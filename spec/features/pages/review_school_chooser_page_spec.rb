@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative 'review_school_chooser_page'
-require_relative 'school_profile_reviews_page'
+require 'features/page_objects/review_school_chooser_page'
+require 'features/page_objects/school_profile_reviews_page'
 require_relative '../contexts/review_school_chooser_contexts'
 require_relative '../examples/footer_examples'
 

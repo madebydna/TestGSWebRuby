@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/pages/admin/review_users_page'
+require 'features/page_objects/review_users_page'
 
 describe 'Review users page' do
 

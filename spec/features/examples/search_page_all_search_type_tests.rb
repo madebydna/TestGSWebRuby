@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../search/search_spec_helper'
-require_relative './shared_examples_for_pages_with_search_bars'
+require 'features/pages/search/search_spec_helper'
+require 'features/examples/shared_examples_for_pages_with_search_bars'
 
 # shared_examples_for '(features shared across all search pages)' do
 shared_examples_for 'Features Shared Across All Search Pages' do

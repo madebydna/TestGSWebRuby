@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative 'district_home_page'
+require 'features/page_objects/district_home_page'
 require_relative '../examples/page_examples'
 
 describe 'District Home Page' do

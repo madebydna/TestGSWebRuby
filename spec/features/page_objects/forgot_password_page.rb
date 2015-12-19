@@ -1,4 +1,4 @@
-require_relative './modules/flash_messages'
+require 'features/page_objects/modules/flash_messages'
 
 class ForgotPasswordPage < SitePrism::Page
   include FlashMessages

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/pages/admin/school_moderation_page'
+require 'features/page_objects/school_moderation_page'
 
 shared_context 'visit page' do |page_class, *args|
   let(:page_object) { page_class.new }

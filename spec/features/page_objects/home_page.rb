@@ -1,6 +1,6 @@
-require_relative './modules/join_modals'
-require_relative './modules/flash_messages'
-require_relative './modules/top_nav_section'
+require 'features/page_objects/modules/join_modals'
+require 'features/page_objects/modules/flash_messages'
+require 'features/page_objects/modules/top_nav_section'
 
 
 class HomePage < SitePrism::Page

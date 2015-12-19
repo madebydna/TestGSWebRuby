@@ -1,4 +1,4 @@
-require_relative './modules/flash_messages'
+require 'features/page_objects/modules/flash_messages'
 
 class JoinPage < SitePrism::Page
   include FlashMessages

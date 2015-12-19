@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../features/pages/city_home_page'
+require 'features/page_objects/city_home_page'
 require_relative '../features/examples/page_examples'
 require_relative '../features/contexts/state_home_contexts'
 

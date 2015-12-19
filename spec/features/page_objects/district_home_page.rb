@@ -1,4 +1,4 @@
-require_relative './modules/breadcrumbs'
+require 'features/page_objects/modules/breadcrumbs'
 
 
 class DistrictHomePage < SitePrism::Page

@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative 'home_page'
-require_relative 'account_page'
+require 'features/page_objects/home_page'
+require 'features/page_objects/account_page'
 require_relative '../examples/footer_examples'
 
 describe 'Home Page' do

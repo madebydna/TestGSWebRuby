@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/pages/admin/review_moderation_page'
+require 'features/page_objects/review_moderation_page'
 
 
 shared_context 'visit the review moderation page' do
