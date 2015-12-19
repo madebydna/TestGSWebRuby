@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   include UrlHelper
   include OmnitureConcerns
   include HubConcerns
-  include AdvertisingHelper
+  include AdvertisingConcerns
   include DataLayerConcerns
   include JavascriptI18nConcerns
   include FlashMessageConcerns
@@ -310,38 +310,6 @@ class ApplicationController < ActionController::Base
     set_omniture_evars_in_cookie('ab_version' => ab_version)
     set_omniture_sprops_in_cookie('ab_version' => ab_version)
   end
-
-  def set_global_ad_targeting_through_gon
-    set_ad_targeting_gon_hash!
-
-    if ab_version == 'a'
-      ad_targeting_gon_hash['Responsive_Group'] = 'Control'
-    elsif ab_version == 'b'
-      ad_targeting_gon_hash['Responsive_Group'] = 'Test'
-    end
-
-    @advertising_enabled = advertising_enabled?
-    gon.advertising_enabled = @advertising_enabled
-
-    if @advertising_enabled
-      ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
-      ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
-    end
-  end
-
-  def advertising_enabled?
-    advertising_enabled = true
-    # equivalent to saying disable advertising if property is not nil and false
-    unless ENV_GLOBAL['advertising_enabled'].nil? || ENV_GLOBAL['advertising_enabled'] == true
-      advertising_enabled = false
-    end
-    if advertising_enabled # if env disables ads, don't bother checking property table
-      advertising_enabled = PropertyConfig.advertising_enabled?
-    end
-    return advertising_enabled
-  end
-
-
 
   def write_locale_session
     [:state_locale, :city_locale].each { |k| session.delete(k) }
