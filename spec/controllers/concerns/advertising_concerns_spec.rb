@@ -29,7 +29,7 @@ describe AdvertisingConcerns do
           expect(ad_targeting_gon_hash['Responsive_Group']).to eq(result)
         end
 
-        subject { controller.set_global_ad_targeting_through_gon }
+        subject { controller.send(:set_global_ad_targeting_through_gon) }
 
         context 'when advertising enabled' do
           let(:env_global) { {'advertising_env' => 'blah'} }
@@ -63,7 +63,7 @@ describe AdvertisingConcerns do
   end
 
   describe '#advertising_enabled?' do
-    subject { controller.advertising_enabled? }
+    subject { controller.send(:advertising_enabled?) }
     let(:property_config) { double }
     before do
       stub_const('PropertyConfig', property_config)
