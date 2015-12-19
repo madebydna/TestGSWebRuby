@@ -95,6 +95,17 @@ shared_context 'with Alameda High School' do
   end
 end
 
+shared_context 'with a Washington, DC school' do
+  let!(:school) do
+    s = FactoryGirl.build(:washington_dc_ps_head_start)
+    s.on_db(:dc).save
+    s
+  end
+  after do
+    clean_models :dc, School
+  end
+end
+
 shared_context 'with elementary school in CA' do
   let!(:school) { FactoryGirl.create(:bay_farm_elementary_school) }
   after do
@@ -133,3 +144,12 @@ shared_context 'Given school profile page with Contact this school section' do |
   end
 end
 
+shared_context 'with apply now URL in school metadata' do
+  let!(:apply_now_url_metadata) do
+    SchoolMetadata.create(
+      school_id: school.id,
+      meta_key: 'apply_now_url',
+      meta_value: 'http://www.schoolchoicede.org/ApplyInfo/AppoKN'
+    )
+  end
+end

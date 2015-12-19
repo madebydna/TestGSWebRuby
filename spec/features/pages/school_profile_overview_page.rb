@@ -13,6 +13,7 @@ class SchoolProfileOverviewPage < SitePrism::Page
   element :profile_navigation, '#navigation2'
   section :header, HeaderSection, '.navbar-static'
   element :write_a_review_button, 'button', text: 'Write a review'
+  element :apply_now_button, 'button', text: 'Apply now'
 
   section :reviews_section, '#reviews-section', visible: false do
     element :bar_chart, '.horizontal-bar-chart'

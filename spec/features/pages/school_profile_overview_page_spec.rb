@@ -4,6 +4,7 @@ require_relative '../examples/page_examples'
 require_relative '../pages/school_profile_overview_page'
 require_relative '../pages/school_profile_reviews_page'
 require_relative '../pages/school_profile_quality_page'
+require_relative '../shared/state_footer_features'
 
 shared_context 'with an inactive school' do
   let!(:school) { FactoryGirl.create(:alameda_high_school, active: false) }
@@ -92,6 +93,7 @@ describe 'School Profile Overview Page' do
     with_shared_context 'with Alameda High School' do
       include_example 'should be on the correct page'
       expect_it_to_have_element(:profile_navigation)
+      it_behaves_like 'page with state footer features', short: 'CA', long: 'California'
 
       its(:header) { is_expected.to_not have_in_english_link }
       its(:header) { is_expected.to have_in_spanish_link }
@@ -107,14 +109,26 @@ describe 'School Profile Overview Page' do
       describe 'breadcrumbs' do
         it { is_expected.to have_breadcrumbs }
         its('first_breadcrumb.title') { is_expected.to have_text('California') }
-        its('first_breadcrumb') { is_expected.to have_link('California', href: "http://localhost:3001/california/") }
+        its('first_breadcrumb') { is_expected.to have_link('California', href: 'http://localhost:3001/california/') }
         its('second_breadcrumb.title') { is_expected.to have_text('Alameda') }
-        its('second_breadcrumb') { is_expected.to have_link('Alameda', href: "http://localhost:3001/california/alameda/") }
+        its('second_breadcrumb') { is_expected.to have_link('Alameda', href: 'http://localhost:3001/california/alameda/') }
         its('third_breadcrumb.title') { is_expected.to have_text('Schools') }
-        its('third_breadcrumb') { is_expected.to have_link('Schools', href: "http://localhost:3001/california/alameda/schools/") }
+        its('third_breadcrumb') { is_expected.to have_link('Schools', href: 'http://localhost:3001/california/alameda/schools/') }
         its('fourth_breadcrumb.title') { is_expected.to have_text('Alameda High School') }
         its('fourth_breadcrumb') { is_expected.to have_link('Alameda High School', subject.current_url) }
         its('fourth_breadcrumb') { is_expected.to have_breadcrumb_link }
+
+        with_shared_context 'with a Washington, DC school' do
+          its('first_breadcrumb.title') { is_expected.to have_text('District of Columbia') }
+          its('first_breadcrumb') { is_expected.to have_link('District of Columbia', href: 'http://localhost:3001/washington-dc/') }
+          its('second_breadcrumb.title') { is_expected.to have_text('Washington, D.C.') }
+          its('second_breadcrumb') { is_expected.to have_link('Washington, D.C.', href: 'http://localhost:3001/washington-dc/washington/') }
+          its('third_breadcrumb.title') { is_expected.to have_text('Schools') }
+          its('third_breadcrumb') { is_expected.to have_link('Schools', href: 'http://localhost:3001/washington-dc/washington/schools/') }
+          its('fourth_breadcrumb.title') { is_expected.to have_text('Washington Dc Ps Head Start') }
+          its('fourth_breadcrumb') { is_expected.to have_link('Washington Dc Ps Head Start', subject.current_url) }
+          its('fourth_breadcrumb') { is_expected.to have_breadcrumb_link }
+        end
       end
     end
 
@@ -216,7 +230,17 @@ describe 'School Profile Overview Page' do
     with_subject :media_gallery do
       # it { is_expected.to have_placeholder_image }
     end
+  end
 
+  describe 'Apply now button' do
+    with_shared_context 'Given basic school profile page' do
+      include_context 'with Alameda High School'
+      it { is_expected.to_not have_apply_now_button }
+      with_shared_context 'with apply now URL in school metadata' do
+        include_context 'Visit School Profile Overview'
+        it { is_expected.to have_apply_now_button }
+      end
+    end
   end
 
 end
