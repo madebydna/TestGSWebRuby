@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'features/page_objects/city_home_page'
-require_relative '../features/examples/page_examples'
-require_relative '../features/contexts/state_home_contexts'
+require 'features/examples/page_examples'
+require 'features/contexts/state_home_contexts'
 
 shared_examples_for 'it displays static and dynamic content' do |opts|
   let(:title) { opts[:title] }
