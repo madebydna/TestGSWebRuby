@@ -1,8 +1,6 @@
 class SchoolProfileQualityController < SchoolProfileController
   protect_from_forgery
 
-  include AdvertisingHelper
-
   layout 'application'
 
   def quality
