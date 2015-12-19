@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 class SchoolProfilePageFactory
   attr_reader :page
 

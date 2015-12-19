@@ -1,10 +1,10 @@
 require 'spec_helper'
-require_relative '../contexts/school_profile_contexts'
-require_relative '../examples/page_examples'
-require_relative '../pages/school_profile_overview_page'
-require_relative '../pages/school_profile_reviews_page'
-require_relative '../pages/school_profile_quality_page'
-require_relative '../shared/state_footer_features'
+require 'features/contexts/school_profile_contexts'
+require 'features/examples/page_examples'
+require 'features/pages/school_profile_overview_page'
+require 'features/pages/school_profile_reviews_page'
+require 'features/pages/school_profile_quality_page'
+require 'features/examples/state_footer_examples'
 
 shared_context 'with an inactive school' do
   let!(:school) { FactoryGirl.create(:alameda_high_school, active: false) }

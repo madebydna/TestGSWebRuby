@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative '../contexts/school_profile_contexts'
-require_relative '../examples/page_examples'
-require_relative '../pages/school_profile_details_page'
+require 'features/contexts/school_profile_contexts'
+require 'features/examples/page_examples'
+require 'features/pages/school_profile_details_page'
 
 
 

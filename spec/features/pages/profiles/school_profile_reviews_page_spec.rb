@@ -1,9 +1,9 @@
 require 'spec_helper'
-require_relative '../contexts/school_profile_contexts'
-require_relative '../contexts/school_profile_reviews_contexts'
-require_relative '../examples/page_examples'
-require_relative '../examples/school_profile_reviews_examples'
-require_relative '../pages/school_profile_reviews_page'
+require 'features/contexts/school_profile_contexts'
+require 'features/contexts/school_profile_reviews_contexts'
+require 'features/examples/page_examples'
+require 'features/examples/school_profile_reviews_examples'
+require 'features/pages/school_profile_reviews_page'
 require 'support/shared_contexts_for_signed_in_users'
 
 describe 'School Profile Reviews Page' do

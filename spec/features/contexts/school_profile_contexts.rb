@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../localized_profiles/school_profile_page_factory'
+require 'factories/school_profile_page_factory'
 
 shared_context 'Given basic school profile page' do |page_name = nil|
   let!(:profile_page) { SchoolProfilePageFactory.new(page_name).page }
