@@ -48,7 +48,7 @@ module AuthenticationConcerns
       # nothing to do
     end
 
-    if user.present? && UserAuthenticationToken.new(user).matches?(auth_token)
+    if user.present? && UserAuthenticationToken.new(user).matches_digest?(auth_token)
       self.current_user = user
       remember_user if should_remember_user?
     end

@@ -11,7 +11,11 @@ describe UserAuthenticationToken do
 
   describe '#matches?' do
     it 'is expected to match itself' do
-      expect(UserAuthenticationToken.new(user).matches?(UserAuthenticationToken.new(user).generate))
+      expect(UserAuthenticationToken.new(user).matches_digest?(UserAuthenticationToken.new(user).generate))
+    end
+
+    it 'is expected to not match foo' do
+      expect(UserAuthenticationToken.new(user).matches_digest?('foo'))
     end
   end
 end

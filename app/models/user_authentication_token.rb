@@ -5,10 +5,10 @@ class UserAuthenticationToken
   end
 
   def generate
-    Digest::MD5.base64digest("#{Encryption::SECRET}#{user.id}") + user.id.to_s
+    @_generate ||= Digest::MD5.base64digest("#{Encryption::SECRET}#{user.id}") + user.id.to_s
   end
 
-  def matches?(other)
+  def matches_digest?(other)
     generate == other
   end
 end
