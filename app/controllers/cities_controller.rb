@@ -3,6 +3,7 @@ class CitiesController < ApplicationController
   include ApplicationHelper
   include GoogleMapConcerns
   include CitiesMetaTagsConcerns
+  include CommunityTabConcerns
   include PopularCitiesConcerns
 
   before_action :set_city_state
@@ -109,8 +110,9 @@ class CitiesController < ApplicationController
     else
       @collection_id = @hub.collection_id
       collection_configs = hub_configs(@collection_id)
+      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
+      @tab = get_community_tab_from_request_path(request.path, @show_tabs)
 
-      set_community_tab(collection_configs)
       set_community_gon_pagename
 
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
