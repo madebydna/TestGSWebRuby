@@ -43,8 +43,8 @@ class CitiesController < ApplicationController
       @show_ads = @show_ads && PropertyConfig.advertising_enabled?
       gon.show_ads = show_ads?
       ad_setTargeting_through_gon
+      gon.pagename = 'GS:City:Home'
       data_layer_through_gon
-      set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
       set_city_home_metadata
     end
   end
@@ -69,8 +69,8 @@ class CitiesController < ApplicationController
     @canonical_url = city_url(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city))
     @show_ads = CollectionConfig.show_ads(collection_configs) && PropertyConfig.advertising_enabled?
     ad_setTargeting_through_gon
+    gon.pagename = 'GS:City:Home'
     data_layer_through_gon
-    set_omniture_data('GS:City:Home', 'Home,CityHome', @city.titleize)
     gon.state_abbr = @state[:short]
 
     render 'hubs/city_hub'
@@ -93,7 +93,7 @@ class CitiesController < ApplicationController
         t('events', scope: 'controllers.cities_controller') =>nil
       }
       @canonical_url = city_events_url(@state[:long], @city)
-      set_omniture_data('GS:City:Events', 'Home,CityHome,Events', @city.titleize)
+      gon.pagename = 'GS:City:Events'
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
@@ -111,7 +111,7 @@ class CitiesController < ApplicationController
       collection_configs = hub_configs(@collection_id)
 
       set_community_tab(collection_configs)
-      set_community_omniture_data
+      set_community_gon_pagename
 
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @important_events = CollectionConfig.city_hub_important_events(collection_configs)
@@ -150,7 +150,7 @@ class CitiesController < ApplicationController
       set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
                     description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
-      set_omniture_data('GS:City:Partner', 'Home,CityHome,Partner', @city.titleize)
+      gon.pagename = 'GS:City:Partner'
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
@@ -178,7 +178,7 @@ class CitiesController < ApplicationController
         t('choosing_a_school', scope: 'controllers.cities_controller') => nil
       }
       @canonical_url = city_choosing_schools_url(params[:state], params[:city])
-      set_omniture_data('GS:City:ChoosingSchools', 'Home,CityHome,ChoosingSchools', @city.titleize)
+      gon.pagename = 'GS:City:ChoosingSchools'
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
@@ -209,7 +209,7 @@ class CitiesController < ApplicationController
       }
 
       @canonical_url = city_enrollment_url(params[:state], params[:city])
-      set_enrollment_omniture_data
+      set_enrollment_gon_pagename
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
@@ -239,7 +239,7 @@ class CitiesController < ApplicationController
               @city.titleize => city_path(params[:state], params[:city]) ,
               t('programs', scope: 'controllers.cities_controller') =>nil
             }
-      set_omniture_data('GS:City:Programs', 'Home,CityHome,Programs', @city.titleize)
+      gon.pagename = 'GS:City:Programs'
       data_layer_through_gon
       gon.state_abbr = @state[:short]
 
@@ -280,29 +280,23 @@ class CitiesController < ApplicationController
   end
 
 
-  def set_enrollment_omniture_data
+  def set_enrollment_gon_pagename
     # preschool not tracked separately since it is the default state of the page
     if @tab[:key] == 'preschool'
       page_name = "GS:City:Enrollment"
-      page_hier = "Home,CityHome,Enrollment"
     else
       page_name = "GS:City:Enrollment:#{@tab[:key].titleize}"
-      page_hier = "Home,CityHome,Enrollment,#{@tab[:key].titleize}"
     end
-
-    set_omniture_data(page_name, page_hier, @city.titleize)
+    gon.pagename = page_name
   end
 
-  def set_community_omniture_data
+  def set_community_gon_pagename
     if @tab == 'Community' || @show_tabs == false
       page_name = "GS:City:EducationCommunity"
-      page_hier = "Home,CityHome,EducationCommunity"
     else
       page_name = "GS:City:EducationCommunity:#{@tab}"
-      page_hier = "Home,CityHome,EducationCommunity,#{@tab}"
     end
-
-    set_omniture_data(page_name, page_hier, @city.titleize)
+    gon.pagename = page_name
   end
 
   def parse_partners(partners)

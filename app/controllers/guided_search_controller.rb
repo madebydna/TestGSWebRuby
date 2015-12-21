@@ -17,7 +17,7 @@ class GuidedSearchController < ApplicationController
 
         nav_helper = TopNav.new(@school, {}, @hub)
 
-        set_omniture_data('GS:GuidedSchoolSearch', 'Search,Guided Search',nav_helper.topnav_title)
+        gon.pagename = 'GS:GuidedSchoolSearch'
         set_meta_tags(
           title: "Your Personalized #{nav_helper.topnav_title} School Search | GreatSchools",
           keywords: "#{nav_helper.topnav_title} school wizard, #{nav_helper.topnav_title} schools, #{nav_helper.topnav_title} school guided search",

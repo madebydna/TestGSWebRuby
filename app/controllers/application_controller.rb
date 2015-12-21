@@ -259,16 +259,6 @@ class ApplicationController < ActionController::Base
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
   end
 
-  def set_omniture_data(page_name, page_hier, locale = nil)
-    set_omniture_data_for_user_request
-    gon.pagename = page_name
-    gon.omniture_pagename = page_name
-    gon.omniture_hier1 = page_hier
-    gon.omniture_sprops['localPageName'] = gon.omniture_pagename if @hub.present?
-    gon.omniture_sprops['locale'] = locale
-    gon.omniture_channel = @state[:short].try(:upcase) if @state.present?
-  end
-
   def set_community_tab(collection_configs)
     @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
     case request.path

@@ -4,7 +4,7 @@ class CommunityLandingController < ApplicationController
 
 
   def show
-    set_omniture_data('GS:Home:CommunityLandingPage', 'Home,CommunityLandingPage')
+    gon.pagename = 'GS:Home:CommunityLandingPage'
     set_meta_tags title: 'Connect With Greatschools',
                   description:'Tell your school\'s story. Connect with Greatschools',
                   keywords:'Connect with Greatschools,Find Community with Greatschools'

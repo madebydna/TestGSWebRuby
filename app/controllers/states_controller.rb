@@ -8,11 +8,11 @@ class StatesController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
-  before_action :set_state_home_omniture_data, only: [:show]
 
   def show
     write_meta_tags
     @cities = popular_cities
+    gon.pagename = 'GS:State:Home'
     if @hub
       state_hub
     else
@@ -79,7 +79,7 @@ class StatesController < ApplicationController
       @canonical_url = state_choosing_schools_url(params[:state])
       gon.state_abbr = @state[:short]
 
-      set_omniture_data('GS:State:ChoosingSchools', 'Home,StateHome,ChoosingSchools',@state[:long].titleize)
+      gon.pagename = 'GS:State:ChoosingSchools'
       set_meta_tags title:       "Choosing a school in #{@state[:long].titleize}",
                     description: " Five simple steps to help parents choose a school in #{@state[:long].titleize}",
                     keywords:    "choose a #{@state[:long].titleize} school, choosing #{@state[:long].titleize} schools,
@@ -107,7 +107,7 @@ class StatesController < ApplicationController
       gon.state_abbr = @state[:short]
 
 
-      set_omniture_data('GS:State:Events', 'Home,StateHome,Events',@state[:long].titleize)
+      gon.pagename = 'GS:State:Events'
       set_meta_tags title:       "Education Events in  #{@state[:long].titleize}",
                     description: "Key #{@state[:long].titleize} dates and events to mark on your calendar",
                     keywords:    "#{@state[:long].titleize} school system events, #{@state[:long].titleize}
@@ -153,7 +153,7 @@ class StatesController < ApplicationController
       @canonical_url = state_enrollment_url(params[:state])
       gon.state_abbr = @state[:short]
 
-      set_omniture_data('GS:State:Enrollment', 'Home,StateHome,Enrollment',@state[:long].titleize)
+      gon.pagename = 'GS:State:Enrollment'
       set_meta_tags title:       "#{@state[:long].titleize} Schools Enrollment Information",
                     description: " Practical information including rules, deadlines and tips, for enrolling your child
                                    in #{@state[:long].titleize}  schools",
@@ -178,7 +178,7 @@ class StatesController < ApplicationController
       collection_configs = hub_configs(@collection_id)
 
       set_community_tab(collection_configs)
-      set_community_omniture_data
+      set_community_gon_pagename
 
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
@@ -234,20 +234,13 @@ class StatesController < ApplicationController
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
   end
 
-
-    def set_community_omniture_data
-      if @tab == 'Community' || @show_tabs == false
-        page_name = "GS:State:EducationCommunity"
-        page_hier = "Home,StateHome,EducationCommunity"
-      else
-        page_name = "GS:State:EducationCommunity:#{@tab}"
-        page_hier = "Home,StateHome,EducationCommunity,#{@tab}"
-      end
-
-      set_omniture_data(page_name, page_hier, @state[:long].titleize)
+  def set_community_gon_pagename
+    if @tab == 'Community' || @show_tabs == false
+      page_name = "GS:State:EducationCommunity"
+    else
+      page_name = "GS:State:EducationCommunity:#{@tab}"
     end
-
-  def set_state_home_omniture_data
-    set_omniture_data('GS:State:Home', 'Home,StateHome')
+    gon.pagename = page_name
   end
+
 end
