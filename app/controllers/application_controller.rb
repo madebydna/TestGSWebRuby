@@ -259,22 +259,6 @@ class ApplicationController < ActionController::Base
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
   end
 
-  def set_community_tab(collection_configs)
-    @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
-    case request.path
-    when /(education-community\/education)/
-      @tab = 'Education'
-    when /(education-community\/funders)/
-      @tab = 'Funders'
-    when /(education-community$)/
-      if @show_tabs == false
-        @tab = ''
-      else
-        @tab = 'Community'
-      end
-    end
-  end
-
   def ab_version
     request.headers["X-ABVersion"]
   end
