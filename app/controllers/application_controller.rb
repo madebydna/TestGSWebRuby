@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   include DataLayerConcerns
   include JavascriptI18nConcerns
   include FlashMessageConcerns
+  include AbTestConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -20,7 +21,6 @@ class ApplicationController < ActionController::Base
   before_action :add_user_info_to_gtm_data_layer
   before_action :set_optimizely_gon_env_value
   before_action :add_ab_test_to_gon
-  before_action :track_ab_version_in_omniture
   before_action :write_locale_session
   before_action :set_signed_in_gon_value
   before_action :set_locale
@@ -257,32 +257,6 @@ class ApplicationController < ActionController::Base
     description_method = "#{method_base}_description".to_sym
     keywords_method = "#{method_base}_keywords".to_sym
     set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
-  end
-
-  def ab_version
-    request.headers["X-ABVersion"]
-  end
-
-  def add_ab_test_to_gon
-    # Adding for a/b test
-    #     Responsive-Test Group ID: 4517881831
-    #     Control ID: 4020610234
-    responsive_ads = "4517881831"
-    control_id = "4020610234"
-
-    ab_id = ''
-    if(ab_version == "a")
-      ab_id = control_id
-    elsif (ab_version == "b")
-      ab_id = responsive_ads
-    end
-    gon.ad_set_channel_ids = ab_id
-    gon.ab_value = ab_version
-  end
-
-  def track_ab_version_in_omniture
-    set_omniture_evars_in_cookie('ab_version' => ab_version)
-    set_omniture_sprops_in_cookie('ab_version' => ab_version)
   end
 
   def write_locale_session
