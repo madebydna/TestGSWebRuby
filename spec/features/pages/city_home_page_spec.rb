@@ -4,19 +4,31 @@ require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
 require 'features/examples/top_rated_schools_section_examples'
 
+module FactoryGirl
+  def self.create_on_shard(shard, *args)
+    obj = build(*args)
+    obj.on_db(shard).save
+    obj
+  end
+  def self.create_list_on_shard(shard, *args)
+    objs = build_list(*args)
+    objs.each { |o| o.on_db(shard).save }
+    objs
+  end
+end
+
 describe 'City Home Page' do
   before do
     create(:city, state: 'MN', name: 'St. Paul')
-    visit city_path('minnesota', 'st.-paul')
   end
-  after { clean_dbs :us_geo }
-  subject(:page_object) { CityHomePage.new }
+  after { clean_dbs :us_geo, :mn }
+  subject(:page_object) do
+    visit city_path('minnesota', 'st.-paul')
+    CityHomePage.new
+  end
 
-  # PT-1347 This is a test in itself because this URL used to be unreachable
-  include_example 'should have url path', '/minnesota/st.-paul/'
-
+  its(:current_path) { is_expected.to eq '/minnesota/st.-paul/' }
   it { is_expected.to have_email_signup_section }
-
 
   context 'when I click the "sign up for email updates" button', js: true do
     before { page_object.email_signup_section.submit_button.click }
@@ -91,5 +103,39 @@ describe 'City Home Page' do
     it { is_expected.to have_breadcrumbs }
     its('first_breadcrumb.title') { is_expected.to have_text('Minnesota') }
     its('first_breadcrumb') { is_expected.to have_link('Minnesota', href: "/minnesota/") }
+  end
+
+  describe 'largest districts' do
+    context 'with three districts' do
+      let!(:districts) do
+        [2,3,1].each do |num_schools|
+          FactoryGirl.create_on_shard(:mn, :district, name: 'foo', city: 'St. Paul', state: 'MN', num_schools: num_schools)
+        end
+      end
+      it { is_expected.to have_largest_districts_section }
+      with_subject :largest_districts_section do
+        its('districts.length') { is_expected.to eq(3) }
+        its('first_district') { is_expected.to have_district_link }
+        its('first_district.href') { is_expected.to include('/minnesota/st.-paul/foo/') }
+        its('first_district.city_state.text') { is_expected.to eq('St. Paul, MN') }
+        its('first_district.text') { is_expected.to include('3 schools') }
+        its('second_district.text') { is_expected.to include('2 schools') }
+        its('third_district.text') { is_expected.to match(/1 school$/) }
+      end
+    end
+
+    context 'with six districts' do
+      let!(:districts) do
+        [5, 25, 15, 10, 30, 40].each do |num_schools|
+          FactoryGirl.create_on_shard(:mn, :district, name: 'foo', city: 'St. Paul', state: 'MN', num_schools: num_schools)
+        end
+      end
+      it { is_expected.to have_largest_districts_section }
+      with_subject :largest_districts_section do
+        its('districts.length') { is_expected.to eq(5) }
+        its('first_district.text') { is_expected.to include('40 schools') }
+        its('fifth_district.text') { is_expected.to include('10 schools') }
+      end
+    end
   end
 end

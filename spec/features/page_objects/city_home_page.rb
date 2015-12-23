@@ -36,6 +36,20 @@ class CityHomePage < SitePrism::Page
     end
   end
 
+  section :largest_districts_section, '#largest-districts-in-city' do
+    sections :districts, '.search-result-border' do
+      element :district_link, 'a'
+      element :city_state, 'span:eq(2)'
+      def text
+        root_element.text
+      end
+      def href
+        district_link['href']
+      end
+    end
+    define_ordinal_methods(:district, :districts)
+  end
+
   def click_on_preschool_link
     preschool_link.click
   end
