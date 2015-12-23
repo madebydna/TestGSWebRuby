@@ -26,6 +26,13 @@ shared_context 'Given school profile page with GS Rating Snapshot module' do |pa
   end
 end
 
+shared_context 'Given school profile page with zillow module' do |page_name| nil
+let!(:profile_page) do
+  SchoolProfilePageFactory.new(page_name).
+      with_zillow_module
+end
+end
+
 shared_context 'Given school profile page with Reviews Snapshot module' do |page_name| nil
   let!(:profile_page) do
     SchoolProfilePageFactory.new(page_name).
@@ -60,6 +67,15 @@ shared_context 'Given school profile page with media gallery on overview' do |pa
       with_media_gallery
   end
 end
+
+shared_context 'Given school profile page with Ratings on overview' do |page_name = nil|
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_gs_rating_snapshot_module
+  end
+end
+
+
 
 shared_context 'Visit School Profile Details' do |s = nil|
   subject(:page_object) do

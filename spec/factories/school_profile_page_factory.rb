@@ -120,5 +120,15 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_zillow_module
+    FactoryGirl.create(
+        :category_placement,
+        title: 'Nearby homes and rentals',
+        page: page,
+        layout: 'zillow'
+    )
+
+    return self
+  end
 
 end

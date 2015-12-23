@@ -44,6 +44,15 @@ class SchoolProfileOverviewPage < SitePrism::Page
     element :placeholder_image, 'img[alt="Media missing"]'
   end
 
+  section :gs_rating , 'overall-gs-rating' do
+
+  end
+
+
+  element :zillow_header, 'h2', text:'Nearby homes and rentals'
+
+  element :zillow_content, 'div.gs-zillow-module'
+
   def click_on_write_a_review_button
     write_a_review_button.click
   end
