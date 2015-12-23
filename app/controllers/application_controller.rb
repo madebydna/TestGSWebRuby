@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   include FlashMessageConcerns
   include AbTestConcerns
   include TrailingSlashConcerns
+  include CityParamsConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -107,10 +108,6 @@ class ApplicationController < ActionController::Base
     state_param
   end
 
-  def city_param
-    return if params[:city].nil?
-    gs_legacy_url_decode(params[:city])
-  end
 
   def path_w_query_string (do_not_append, page_name)
     url = Addressable::URI.parse(request.original_url)
@@ -131,11 +128,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_city_instance_variable
-    if @city.nil?
-      block_given? ? yield : render('error/page_not_found', layout: 'error', status: 404)
-    end
-  end
 
   # Finds school given request param schoolId
   def find_school
