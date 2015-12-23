@@ -2,6 +2,10 @@ module AdvertisingConcerns
 
   protected
 
+  def show_ads?
+    @show_ads
+  end
+
   def set_global_ad_targeting_through_gon
     set_ad_targeting_gon_hash!
 

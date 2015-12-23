@@ -188,10 +188,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def show_ads?
-    @show_ads
-  end
-
   def set_signed_in_gon_value
     if current_user
       gon.signed_in = true
