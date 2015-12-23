@@ -159,14 +159,6 @@ class ApplicationController < ActionController::Base
     @city = gs_legacy_url_decode(params[:city]) if params[:city]
   end
 
-  def write_meta_tags
-    method_base = "#{controller_name}_#{action_name}"
-    title_method = "#{method_base}_title".to_sym
-    description_method = "#{method_base}_description".to_sym
-    keywords_method = "#{method_base}_keywords".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
-  end
-
   def write_locale_session
     [:state_locale, :city_locale].each { |k| session.delete(k) }
     if state_param_safe.present?
