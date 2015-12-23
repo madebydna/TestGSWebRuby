@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   include JavascriptI18nConcerns
   include FlashMessageConcerns
   include AbTestConcerns
+  include TrailingSlashConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -169,14 +170,6 @@ class ApplicationController < ActionController::Base
   def already_redirecting?
     # Based on rails source code for redirect_to
     response_body
-  end
-
-  def with_trailing_slash(string)
-    if string[-1] == '/'
-      string
-    else
-      string + '/'
-    end
   end
 
   def exception_handler(e)
