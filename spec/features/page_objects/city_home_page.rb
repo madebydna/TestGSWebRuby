@@ -22,7 +22,19 @@ class CityHomePage < SitePrism::Page
   element :private_link, 'a', text: 'Private schools'
   element :public_charter_link, 'a', text: 'Public charter schools'
   element :view_all_link, 'a', text: 'View all schools'
-  element :city_rating, '.jumbo-text', text: "4"
+
+  section :city_rating, '.rs-city-rating' do
+    element :rating, '.jumbo-text,.jumbo-text-sub'
+    def value
+      rating.text
+    end
+    def has_rating?(v)
+      value == v
+    end
+    def not_rated?
+      value == 'NR'
+    end
+  end
 
   def click_on_preschool_link
     preschool_link.click

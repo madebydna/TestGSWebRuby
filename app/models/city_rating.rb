@@ -1,4 +1,6 @@
 class CityRating < ActiveRecord::Base
+  include StateSharding
+
   self.table_name = 'city_rating'
 
   scope :active, -> { where(active: true) }
