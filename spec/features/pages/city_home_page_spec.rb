@@ -5,9 +5,7 @@ require 'features/contexts/state_home_contexts'
 require 'features/examples/top_rated_schools_section_examples'
 
 describe 'City Home Page' do
-  before do
-    create(:city, state: 'MN', name: 'St. Paul')
-  end
+  let!(:city) { create(:city, state: 'MN', name: 'St. Paul') }
   after { clean_dbs :us_geo, :mn }
   subject(:page_object) do
     visit city_path('minnesota', 'st.-paul')
@@ -67,7 +65,12 @@ describe 'City Home Page' do
     end
   end
 
-  it_behaves_like 'page with top rated schools section'
+  describe 'Top rated schools' do
+    let!(:top_rated_schools) { CityHomePageFactory.new.create_top_rated_schools('MN', 'St. Paul') }
+    let(:heading_object) { city }
+    after { clean_dbs :gs_schooldb, :ca, :mn }
+    it_behaves_like 'page with top rated schools section'
+  end
 
   describe 'City rating' do
     context 'with a city rating' do

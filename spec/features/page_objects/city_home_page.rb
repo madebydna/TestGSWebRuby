@@ -8,7 +8,8 @@ class CityHomePage < SitePrism::Page
   include EmailJoinModal
   include FlashMessages
   include Breadcrumbs
-  include TopRatedSchoolsSection
+
+  section :top_rated_schools_section, PageObjects::TopRatedSchools::Section, '#top-rated-schools-in-city'
 
   section :email_signup_section, '.js-shared-email-signup' do
     element :submit_button, '.hidden-xs button', text: 'Sign up'

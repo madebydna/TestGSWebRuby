@@ -154,7 +154,8 @@
       partial: 'shared/horizontal_school_boxes', 
       locals: { 
         title: "Top rated schools in #{@district.name}",
-        schools: SchoolProfileDecorator.decorate_collection(@top_schools)
+        schools: SchoolProfileDecorator.decorate_collection(@top_schools),
+        css_id: 'top-rated-schools-in-district'
       }
     )
   %>
