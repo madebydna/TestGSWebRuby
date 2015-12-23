@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/city_home_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
+require 'features/examples/top_rated_schools_section_examples'
 
 describe 'City Home Page' do
   before do
@@ -66,6 +67,9 @@ describe 'City Home Page' do
       end
     end
   end
+
+  it_behaves_like 'page with top rated schools section'
+
   describe 'City rating on page' do
     # TODO: Set up city_rating
     #it { is_expected.to have_city_rating}

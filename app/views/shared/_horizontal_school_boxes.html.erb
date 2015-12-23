@@ -29,7 +29,7 @@
 <% end %>
 
 <% if schools.size >= 4 %>
-  <div class="limit-width-1200 clearfix">
+  <div <%= "id=\"#{css_id}\"".html_safe if css_id %> class="limit-width-1200 clearfix">
     <div class="clearfix mbm plm">
       <hr />
       <div class="fl">

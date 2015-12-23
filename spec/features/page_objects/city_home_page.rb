@@ -1,12 +1,14 @@
 require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/modules/flash_messages'
 require 'features/page_objects/modules/breadcrumbs'
+require 'features/page_objects/modules/top_rated_schools_section'
 
 
 class CityHomePage < SitePrism::Page
   include EmailJoinModal
   include FlashMessages
   include Breadcrumbs
+  include TopRatedSchoolsSection
 
   section :email_signup_section, '.js-shared-email-signup' do
     element :submit_button, '.hidden-xs button', text: 'Sign up'
