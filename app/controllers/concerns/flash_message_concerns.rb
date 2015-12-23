@@ -28,4 +28,14 @@ module FlashMessageConcerns
     flash[:notice].try(:include?, message)
   end
 
+  # delete this (and the before_action call) after the java pages that use the
+  # flash_notice_key go away
+  def adapt_flash_messages_from_java
+    if cookies[:flash_notice_key]
+      translated_message = t(read_cookie_value(:flash_notice_key))
+      flash_notice(translated_message)
+      delete_cookie(:flash_notice_key)
+    end
+  end
+
 end
