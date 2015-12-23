@@ -1,5 +1,5 @@
 <% ga_hash = { :'ga-click-category' => 'Profile data - quality snapshot', :'ga-click-action' => 'Quicklinks click' } %>
-<div class='mtm'>
+<div class='mtm quick-links'>
   <div class='pbm'><span class='open-sans_b'><%= t('.report_card') %></span>
     <%= link_to t('.test_scores'), school_quality_path(@school, anchor: 'Test_scores'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Test scores'}) %>,
     <%= link_to t('.college_readiness'), school_quality_path(@school, anchor: 'College_readiness'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'College readiness'}) %>,

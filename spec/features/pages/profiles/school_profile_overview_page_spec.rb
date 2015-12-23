@@ -246,15 +246,13 @@ describe 'School Profile Overview Page' do
   describe 'zillow module' do
     include_context 'Given school profile page with zillow module'
     include_context 'with Alameda High School'
-
-    it {is_expected.to have_zillow_header }
-    it {
-      subject
-      save_and_open_page
-      is_expected.to have_zillow_content }
-
-
-
+    it { is_expected.to have_zillow_header }
+    it {is_expected.to have_zillow_content }
+  end
+  describe 'quick links module' do
+    include_context 'Given school profile page with quick links'
+    include_context 'with Alameda High School'
+    it { is_expected.to have_quick_links }
   end
 
 

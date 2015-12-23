@@ -53,6 +53,11 @@ class SchoolProfileOverviewPage < SitePrism::Page
 
   element :zillow_content, 'div.gs-zillow-module'
 
+
+  section :quick_links , 'div.quick-links' do
+
+  end
+
   def click_on_write_a_review_button
     write_a_review_button.click
   end

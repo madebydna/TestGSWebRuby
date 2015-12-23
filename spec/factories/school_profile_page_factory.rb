@@ -131,4 +131,15 @@ class SchoolProfilePageFactory
     return self
   end
 
+  def with_quick_links
+    FactoryGirl.create(
+        :category_placement,
+        title: 'Quick links',
+        page: page,
+        layout: 'quick_links'
+    )
+
+    return self
+  end
+
 end

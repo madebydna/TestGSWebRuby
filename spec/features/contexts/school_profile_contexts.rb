@@ -27,10 +27,18 @@ shared_context 'Given school profile page with GS Rating Snapshot module' do |pa
 end
 
 shared_context 'Given school profile page with zillow module' do |page_name| nil
-let!(:profile_page) do
-  SchoolProfilePageFactory.new(page_name).
-      with_zillow_module
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_zillow_module
+  end
 end
+
+
+shared_context 'Given school profile page with quick links' do |page_name| nil
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_quick_links
+  end
 end
 
 shared_context 'Given school profile page with Reviews Snapshot module' do |page_name| nil
