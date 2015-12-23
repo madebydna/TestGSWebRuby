@@ -1,6 +1,7 @@
 class SchoolProfileController < SchoolController
   protect_from_forgery
 
+  include SchoolParamsConcerns
   extend UrlHelper
 
   # TODO: Refactor these actions
