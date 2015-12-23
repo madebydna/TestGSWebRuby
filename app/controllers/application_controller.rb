@@ -140,7 +140,6 @@ class ApplicationController < ActionController::Base
     gon.optimizely_key = ENV_GLOBAL['optimizely_key']
   end
 
-
   # get Page name in PageConfig, based on current controller action
   def configured_page_name
     # i.e. 'School stats' in page config means this controller needs a 'school_stats' action
@@ -201,15 +200,6 @@ class ApplicationController < ActionController::Base
         request.query_parameters
       )
     end
-  end
-
-  def only_latin1_characters?(*values)
-    values.each do |value|
-      # ISO-8859-1 is Latin-1
-      latin_value = value.to_s.clone.force_encoding('ISO-8859-1')
-      return false unless latin_value == value.to_s
-    end
-    true
   end
 
   def set_uuid_cookie

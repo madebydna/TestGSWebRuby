@@ -1,5 +1,7 @@
 class OspRegistrationController < ApplicationController
 
+  include Latin1CharactersConcerns
+
   BLACKLISTED_TOP_LEVEL_DOMAINS = ['pl', 'ru']
 
   before_action :set_city_state
