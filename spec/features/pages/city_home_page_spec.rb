@@ -4,19 +4,6 @@ require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
 require 'features/examples/top_rated_schools_section_examples'
 
-module FactoryGirl
-  def self.create_on_shard(shard, *args)
-    obj = build(*args)
-    obj.on_db(shard).save
-    obj
-  end
-  def self.create_list_on_shard(shard, *args)
-    objs = build_list(*args)
-    objs.each { |o| o.on_db(shard).save }
-    objs
-  end
-end
-
 describe 'City Home Page' do
   before do
     create(:city, state: 'MN', name: 'St. Paul')
