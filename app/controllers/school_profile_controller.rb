@@ -253,4 +253,14 @@ class SchoolProfileController < SchoolController
       end
     end
   end
+
+  def redirect_tab_urls
+    if params[:tab] == 'reviews'
+      redirect_to path_w_query_string 'tab', 'reviews'
+    elsif ['test-scores', 'ratings', 'college-readiness', 'climate'].include? params[:tab]
+      redirect_to path_w_query_string 'tab', 'quality'
+    elsif ['demographics', 'teachers', 'programs-culture', 'programs-resources', 'extracurriculars', 'culture', 'enrollment'].include? params[:tab]
+      redirect_to path_w_query_string 'tab', 'details'
+    end
+  end
 end

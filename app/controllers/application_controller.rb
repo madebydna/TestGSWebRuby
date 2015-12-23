@@ -112,17 +112,6 @@ class ApplicationController < ActionController::Base
     gs_legacy_url_decode(params[:city])
   end
 
-
-  def redirect_tab_urls
-    if params[:tab] == 'reviews'
-      redirect_to path_w_query_string 'tab', 'reviews'
-    elsif ['test-scores', 'ratings', 'college-readiness', 'climate'].include? params[:tab]
-      redirect_to path_w_query_string 'tab', 'quality'
-    elsif ['demographics', 'teachers', 'programs-culture', 'programs-resources', 'extracurriculars', 'culture', 'enrollment'].include? params[:tab]
-      redirect_to path_w_query_string 'tab', 'details'
-    end
-  end
-
   def path_w_query_string (do_not_append, page_name)
     url = Addressable::URI.parse(request.original_url)
     url.path = url.path + page_name + '/' unless page_name.nil?
