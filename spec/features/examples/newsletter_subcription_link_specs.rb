@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'features/contexts/shared_contexts_for_signed_in_users'
 
 feature '/gsr/user/subscriptions' do
   after { clean_models User, Subscription }

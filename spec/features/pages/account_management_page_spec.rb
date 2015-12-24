@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'features/contexts/shared_contexts_for_signed_in_users'
 
 feature 'Account management page' do
 

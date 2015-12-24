@@ -3,6 +3,7 @@ require 'features/page_objects/city_home_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
 require 'features/examples/top_rated_schools_section_examples'
+require 'features/contexts/shared_contexts_for_signed_in_users'
 
 describe 'City Home Page' do
   let!(:city) { create(:city, state: 'MN', name: 'St. Paul') }

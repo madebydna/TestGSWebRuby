@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'support/shared_contexts_for_signed_in_users'
+require 'features/contexts/shared_contexts_for_signed_in_users'
 require 'features/page_objects/osp_page'
 
 ### Setting Up Signed in User ###

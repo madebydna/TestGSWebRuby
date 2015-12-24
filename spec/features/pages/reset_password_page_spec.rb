@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/reset_password_page'
 require 'features/page_objects/join_page'
 require 'features/page_objects/account_page'
-require 'support/shared_contexts_for_signed_in_users'
+require 'features/contexts/shared_contexts_for_signed_in_users'
 
 describe 'Reset password page' do
 

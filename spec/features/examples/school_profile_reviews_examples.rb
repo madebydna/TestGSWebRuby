@@ -2,7 +2,7 @@ require 'spec_helper'
 require_relative '../contexts/school_profile_contexts'
 require_relative '../examples/page_examples'
 require 'features/page_objects/school_profile_reviews_page'
-require 'support/shared_contexts_for_signed_in_users'
+require 'features/contexts/shared_contexts_for_signed_in_users'
 
 
 
