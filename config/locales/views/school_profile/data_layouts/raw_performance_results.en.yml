@@ -1,0 +1,5 @@
+en:
+  school_profile:
+    data_layouts:
+      raw_performance_results:
+          state_average: 'state avg %{val}%'

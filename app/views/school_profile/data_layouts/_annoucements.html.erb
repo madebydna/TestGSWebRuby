@@ -1,0 +1,19 @@
+<% if @school.collection.present? && @school.collection.profile_banner.present? %>
+    <% content = @school.collection.profile_banner %>
+    <div class="alert alert-success mtl"><p><span class="open-sans_sb prm"><%= db_t(content["title"]) %></span><%= db_t(content["content"]) %>
+        <% if hub_params.present? %>
+            <%= link_to db_t(content["link_name"]).html_safe, content["link_to"] %>
+        <% end %>
+    </p></div>
+<% end %>
+
+<div class="gs-bootstrap">
+  <div class="container-fluid">
+    <%= render partial: "partners/promo_delegator",
+      locals: {
+        promos: Collection.promos_for(@school.collections),
+        partial: current_partial,
+      }
+    %>
+  </div>
+</div>

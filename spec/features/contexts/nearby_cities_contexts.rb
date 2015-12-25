@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../../spec/features/search/search_spec_helper'
+require 'features/pages/search/search_spec_helper'
 include SearchSpecHelper
 
 shared_context 'Nearby Cities in search bar' do

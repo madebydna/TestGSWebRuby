@@ -1,4 +1,4 @@
-<%= render 'shared/qualaroo' %>
+<%= render 'qualaroo' %>
 <div class="mbl">
 <%= render 'school_profile/header', school: @school, page_name: :reviews %>
 <%= render 'school_profile/dark_header', school: @school, page_name: :reviews %>
@@ -39,7 +39,7 @@
             <%= render 'review_list_header', reviews: @school_reviews %>
 
             <div class="js_reviewsList">
-                <%= render partial: '/shared/review_module',
+                <%= render partial: 'school_profile/reviews/review_module',
                            collection: @school_reviews.having_comments.take(10), as: :review, locals: { include_rich_snippets: true } %>
             </div>
 
@@ -64,12 +64,12 @@
 <div class="gs-bootstrap">
   <div class="limit-width-1200">
     <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
-    <%= render 'data_layouts/sticky_nearby_schools' %>
+    <%= render 'school_profile/data_layouts/sticky_nearby_schools' %>
   </div>
 </div>
-<%= render 'data_layouts/nearby_schools' %>
+<%= render 'school_profile/data_layouts/nearby_schools' %>
 <%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 
-<%= render 'shared/rich_snippets/rich_snippets_school_info', school: @school %>
-<%= render 'shared/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
-<%= render 'shared/rich_snippets/rich_snippets_average_review_rating', school: @school, school_reviews: @school_reviews %>
+<%= render 'school_profile/rich_snippets/rich_snippets_school_info', school: @school %>
+<%= render 'school_profile/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
+<%= render 'school_profile/rich_snippets/rich_snippets_average_review_rating', school: @school, school_reviews: @school_reviews %>

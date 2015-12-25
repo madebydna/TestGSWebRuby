@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'shared/_search_hero.html.erb' do
+describe 'hubs/_search_hero.html.erb' do
   let(:city_page_url) { 'http://localhost:3000/michigan/detroit' }
   before(:each) do
     allow(view).to receive(:sponsor) { { text: "I'm a sponsor", path: '/image/path/woot' } }

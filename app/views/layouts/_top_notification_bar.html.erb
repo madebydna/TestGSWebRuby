@@ -1,0 +1,20 @@
+<div id="js-top-notification-bar" class="limit-width-1200" style="display:none;">
+  <%= render "layouts/notification_bar" %>
+</div>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#js-top-notification-bar").slideDown("slow");
+  });
+</script>
+
+<%= include_handlebars_templates('notification_bar_message') %>
+
+<style type="text/css">
+    #js-top-notification-bar {
+        position: fixed;
+        top: 66px;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+</style>

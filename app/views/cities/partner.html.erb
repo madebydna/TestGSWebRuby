@@ -3,13 +3,13 @@
 
 <div class="bg-light-gray hide-for-mobile fixed-top pvm">
   <div class="limit-width-1200">
-    <%= render 'shared/upcoming_events', important_events: @events, community_page: true %>
+    <%= render 'hubs/upcoming_events', important_events: @events, community_page: true %>
   </div>
 </div>
 
 <div class="limit-width-1200" style='margin-bottom: 40px;'>
   <div class="row">
-    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    <%= render 'nav/breadcrumbs', breadcrumbs: @breadcrumbs %>
   </div>
 
   <div class="row">
@@ -39,4 +39,4 @@
   </div>
 </div>
 
-<%= render 'shared/state_footer', state: @state, cities: @cities %>
+<%= render 'nav/state_footer', state: @state, cities: @cities %>

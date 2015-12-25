@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../localized_profiles/school_profile_page_factory'
+require 'factories/school_profile_page_factory'
 
 shared_context 'Given basic school profile page' do |page_name = nil|
   let!(:profile_page) { SchoolProfilePageFactory.new(page_name).page }
@@ -23,6 +23,21 @@ shared_context 'Given school profile page with GS Rating Snapshot module' do |pa
   let!(:profile_page) do
     SchoolProfilePageFactory.new(page_name).
         with_gs_rating_snapshot_module
+  end
+end
+
+shared_context 'Given school profile page with zillow module' do |page_name| nil
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_zillow_module
+  end
+end
+
+
+shared_context 'Given school profile page with quick links' do |page_name| nil
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_quick_links
   end
 end
 
@@ -61,6 +76,15 @@ shared_context 'Given school profile page with media gallery on overview' do |pa
   end
 end
 
+shared_context 'Given school profile page with Ratings on overview' do |page_name = nil|
+  let!(:profile_page) do
+    SchoolProfilePageFactory.new(page_name).
+        with_gs_rating_snapshot_module
+  end
+end
+
+
+
 shared_context 'Visit School Profile Details' do |s = nil|
   subject(:page_object) do
     visit school_details_path(s || school)
@@ -92,6 +116,17 @@ shared_context 'with Alameda High School' do
   let!(:school) { FactoryGirl.create(:alameda_high_school) }
   after do
     clean_models School
+  end
+end
+
+shared_context 'with a Washington, DC school' do
+  let!(:school) do
+    s = FactoryGirl.build(:washington_dc_ps_head_start)
+    s.on_db(:dc).save
+    s
+  end
+  after do
+    clean_models :dc, School
   end
 end
 
@@ -133,3 +168,12 @@ shared_context 'Given school profile page with Contact this school section' do |
   end
 end
 
+shared_context 'with apply now URL in school metadata' do
+  let!(:apply_now_url_metadata) do
+    SchoolMetadata.create(
+      school_id: school.id,
+      meta_key: 'apply_now_url',
+      meta_value: 'http://www.schoolchoicede.org/ApplyInfo/AppoKN'
+    )
+  end
+end

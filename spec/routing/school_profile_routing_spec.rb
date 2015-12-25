@@ -33,25 +33,6 @@ describe 'school profile routing' do
     expect( get '/1/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'1/alameda/1-Alameda-High-School')
   end
 
-  it 'ruby should route to new district home page' do
-    expect( get '/california/alameda/Alameda-High-School/' ).to route_to(
-      'districts#show',
-      state: 'california',
-      city: 'alameda',
-      district: 'Alameda-High-School'
-    )
-  end
-
-  it 'should route to the school when the city has a period in it' do
-    expect( get '/minnesota/st.-paul/3692-St-Paul-Conservatory-Performing-Art/' ).to route_to(
-      'school_profile_overview#overview',
-      state: 'minnesota',
-      city: 'st.-paul',
-      schoolId: '3692',
-      school_name: 'St-Paul-Conservatory-Performing-Art'
-    )
-  end
-
   it 'should not handle old style overview URL with invalid params: /school/overview.page?id=1&state=ZZ' do
     expect( get '/school/overview.page?id=1&state=ZZ' ).to(
       route_to('error#page_not_found', path: 'school/overview', format: 'page', id: '1', state: 'ZZ')
@@ -65,155 +46,96 @@ describe 'school profile routing' do
   end
 
   describe 'non-pk school scope' do
+    [
+      ['overview', '', 'school'],
+      ['reviews', 'reviews/', 'school_reviews'],
+      ['quality', 'quality/', 'school_quality'],
+      ['details', 'details/', 'school_details'],
+    ].each do |(action, path, path_helper)|
+      describe "#{action} tab" do
+        [
+            ['one-word state', 'minnesota', 'mn'],
+            ['two-word state', 'new-jersey', 'nj']
+        ].each do |(state_description, state, state_abbr)|
+          describe "In a #{state_description}" do
+            {
+                'one-word city' => 'minneapolis',
+                'two-word city' => 'maple-grove',
+                'city with a period in it' => 'st.-paul',
+                'city with a # in it' => 'st.-%23aul',
+                'city starting with a number' => '12th-city'
+            }.each do |city_description, city|
+              describe "In a #{city_description}" do
+                before do
+                  @school = FactoryGirl.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'e,m,h')
+                  expect(@school).not_to be_preschool
+                end
+                it "has a route for #{action}" do
+                  expect( get "/#{state}/#{city}/1-Alameda-High-School/#{path}" ).
+                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                end
 
-    it 'has a route for overview' do
-      expect( get '/california/alameda/1-Alameda-High-School/' ).
-          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
+                it "has a path helper for #{action}" do
+                  expect( get(send("#{path_helper}_path", @school)) ).
+                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                end
+
+                it "has a url helper for #{action}" do
+                  expect( get(send("#{path_helper}_url", @school)) ).
+                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                end
+              end
+            end
+          end
+        end
+      end
     end
-
-    it 'has a url helper for overview' do
-      expect( get school_path(@school) ).
-          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-
-      expect( get school_url(@school) ).
-          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    it 'has a route for  reviews' do
-      expect( get '/california/alameda/1-Alameda-High-School/reviews/' ).
-          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a url helper for reviews' do
-      expect( get school_reviews_path(@school) ).
-          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-      expect( get school_reviews_url(@school) ).
-          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    it 'has a route for details' do
-      expect( get '/california/alameda/1-Alameda-High-School/details/' ).
-          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a url helper for details' do
-      expect( get school_details_path(@school) ).
-          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-      expect( get school_details_url(@school) ).
-          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    it 'has a route for quality' do
-      expect( get '/california/alameda/1-Alameda-High-School/quality/' ).
-          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a url helper for quality' do
-      expect( get school_quality_path(@school) ).
-          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-      expect( get school_quality_url(@school) ).
-          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    # it 'has a route for write a review' do TODO: ask samson if I can delete this spec
-    #   expect( get '/california/alameda/1-Alameda-High-School/reviews/write/' ).
-    #       to route_to('reviews#new', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    # end
-
-    # it 'has a url helper for write a review' do TODO: ask Samson if I can remove this spec
-    #   expect( get school_review_form_path(@school) ).
-    #       to route_to('reviews#new', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    #   expect( get school_review_form_url(@school) ).
-    #       to route_to('reviews#new', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    # end
-
   end
-
-
 
   describe 'pk school scope' do
+    [
+        ['overview', '', 'school'],
+        ['reviews', 'reviews/', 'school_reviews'],
+        ['quality', 'quality/', 'school_quality'],
+        ['details', 'details/', 'school_details'],
+    ].each do |(action, path, path_helper)|
+      describe "#{action} tab" do
+        [
+            ['one-word state', 'minnesota', 'mn'],
+            ['two-word state', 'new-jersey', 'nj']
+        ].each do |(state_description, state, state_abbr)|
+          describe "In a #{state_description}" do
+            {
+                'one-word city' => 'minneapolis',
+                'two-word city' => 'maple-grove',
+                'city with a period in it' => 'st.-paul',
+                'city with a # in it' => 'st.-%23aul',
+                'city starting with a number' => '12th-city'
+            }.each do |city_description, city|
+              describe "In a #{city_description}" do
+                before do
+                  @school = FactoryGirl.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'p')
+                  expect(@school).to be_preschool
+                end
+                it "has a route for #{action}" do
+                  expect( get "/#{state}/#{city}/preschools/Alameda-High-School/1/#{path}" ).
+                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                end
 
-    before do
-      @school = FactoryGirl.build(:school, state: 'ca', city: 'alameda', id: 1, name: 'alameda high school', level_code: 'p')
-      expect( @school).to be_preschool
+                it "has a path helper for #{action}" do
+                  expect( get(send("#{path_helper}_path", @school)) ).
+                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                end
+
+                it "has a url helper for #{action}" do
+                  expect( get(send("#{path_helper}_url", @school)) ).
+                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                end
+              end
+            end
+          end
+        end
+      end
     end
-
-    it 'has a route for overview' do
-      expect( get '/california/alameda/preschools/Alameda-High-School/1/' ).
-          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a route for overviews when the city has a period in its name' do
-      build(:school, state: 'nc', city: 'st. pauls', id: 6810, name: 'faith assembly of god day care', level_code: 'p')
-      expect( get '/north-carolina/st.-pauls/preschools/Faith-Assembly-Of-God-Day-Care/6810/' ).
-        to route_to('school_profile_overview#overview', state: 'north-carolina', city: 'st.-pauls', schoolId: '6810', school_name: 'Faith-Assembly-Of-God-Day-Care' )
-    end
-
-    it 'has a url helper for overview' do
-      expect( get school_path(@school) ).
-          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-
-      expect( get school_url(@school) ).
-          to route_to('school_profile_overview#overview', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    it 'has a route for reviews' do
-      expect( get '/california/alameda/preschools/Alameda-High-School/1/reviews/' ).
-          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a url helper for reviews' do
-      expect( get school_reviews_path(@school) ).
-          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-      expect( get school_reviews_url(@school) ).
-          to route_to('school_profile_reviews#reviews', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    it 'has a route for details' do
-      expect( get '/california/alameda/preschools/Alameda-High-School/1/details/' ).
-          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a url helper for details' do
-      expect( get school_details_path(@school) ).
-          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-      expect( get school_details_url(@school) ).
-          to route_to('school_profile_details#details', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    it 'has a route for quality' do
-      expect( get '/california/alameda/preschools/Alameda-High-School/1/quality/' ).
-          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-    it 'has a url helper for quality' do
-      expect( get school_quality_path(@school) ).
-          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-      expect( get school_quality_url(@school) ).
-          to route_to('school_profile_quality#quality', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    end
-
-
-    # it 'has a route for write a review' do TODO: ask Sasmon if I can delete this spec
-    #   expect( get '/california/alameda/preschools/Alameda-High-School/1/reviews/write/' ).
-    #       to route_to('reviews#new', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    # end
-
-    # it 'has a url helper for write a review' do TODO: ask Samson if I can delete this spec
-    #   expect( get school_review_form_path(@school) ).
-    #       to route_to('reviews#new', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    #   expect( get school_review_form_url(@school) ).
-    #       to route_to('reviews#new', state: 'california', city: 'alameda', schoolId: '1', school_name: 'Alameda-High-School' )
-    # end
-
   end
-
-
 end

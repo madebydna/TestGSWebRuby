@@ -1,6 +1,6 @@
 class DistrictsController < ApplicationController
   include SeoHelper
-  include MetaTagsHelper
+  include DistrictsMetaTagsConcerns
   include HubConcerns
   include GoogleMapConcerns
 
@@ -9,11 +9,11 @@ class DistrictsController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
-  before_action :write_meta_tags
   before_action :redirect_to_canonical_url
 
   def show
     gon.pagename = 'DistrictHome'
+    @district = district
     @ad_page_name = :District_Home # TODO verify name to use
 
     @nearby_districts = @district.nearby_districts
@@ -24,14 +24,29 @@ class DistrictsController < ApplicationController
     @show_ads = hub_show_ads? && PropertyConfig.advertising_enabled?
 
     @breadcrumbs = district_home_breadcrumbs
+    write_meta_tags
     ad_setTargeting_through_gon
     data_layer_through_gon
     prepare_map
-    set_omniture_data
     render 'districts/district_home'
   end
 
   private
+
+  def write_meta_tags
+    method_base = "#{controller_name}_#{action_name}"
+    title_method = "#{method_base}_title".to_sym
+    description_method = "#{method_base}_description".to_sym
+    keywords_method = "#{method_base}_keywords".to_sym
+    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+  end
+
+  def district
+    return @_district if defined?(@_district)
+    @_district ||= (
+      District.find_by_state_and_name(state_param_safe, district_param)
+    )
+  end
 
   def district_home_breadcrumbs
     if ( @state.present? &&  @city.present?)
@@ -42,18 +57,18 @@ class DistrictsController < ApplicationController
     end
   end
 
-
-
   def require_district
-    @district = District.find_by_state_and_name(state_param_safe, district_param)
-    return redirect_to city_url if @district.nil?
+    return redirect_to city_url if district.nil?
+  end
 
+  def district_param
+    return if params[:district].nil?
+    gs_legacy_url_decode(params[:district])
   end
 
   def redirect_to_canonical_url
-
     #  this prevents an endless redirect loop for the district pages
-    canonical_path = remove_query_params_from_url( self.city_district_path(district_params_from_district(@district)), [:lang] )
+    canonical_path = remove_query_params_from_url( self.city_district_path(district_params_from_district(district)), [:lang] )
 
     # Add a tailing slash to the request path, only if one doesn't already exist.
     # Requests made by rspec sometimes contain a trailing slash
@@ -69,14 +84,6 @@ class DistrictsController < ApplicationController
 
   def canonical_path
     city_district_path(district_params_from_district(@district))
-  end
-
-  def set_omniture_data
-    gon.omniture_sprops = {}
-    gon.omniture_pagename = "GS:District:Home"
-    gon.omniture_hier1 = "District,District Home,#{@district.name}"
-    gon.omniture_sprops['locale'] = @city
-    gon.omniture_channel = @state[:short].try(:upcase) if @state
   end
 
   def top_schools(district, count = 10)

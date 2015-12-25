@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'shared/_tabs.html.erb' do
+describe 'hubs/_tabs.html.erb' do
   before(:each) do
     allow(view).to receive(:city) { 'detroit' }
     allow(view).to receive(:logged_in?) { false }
@@ -29,7 +29,7 @@ describe 'shared/_tabs.html.erb' do
 
 end
 
-describe 'shared/_education_community_partners.html.erb' do
+describe 'hubs/_education_community_partners.html.erb' do
   before(:each) do
     collection_configs = [FactoryGirl.build(:community_partners_collection_config)]
     @partners = CollectionConfig.ed_community_partners(collection_configs)

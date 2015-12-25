@@ -1,7 +1,6 @@
 class SchoolProfileReviewsController < SchoolProfileController
   protect_from_forgery
 
-  include AdvertisingHelper
   include DeferredActionConcerns
   include ReviewControllerConcerns
 

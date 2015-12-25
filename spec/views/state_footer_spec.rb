@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'shared/_state_footer.html.erb' do
+describe 'nav/_state_footer.html.erb' do
   before(:each) { clean_dbs :us_geo }
   after(:each) { clean_dbs :us_geo }
   before(:each) do

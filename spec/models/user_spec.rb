@@ -1,16 +1,25 @@
 require 'spec_helper'
+require_relative 'examples/user_profile_association'
+require_relative 'examples/model_with_password'
+require_relative 'examples/model_with_esp_memberships'
+require_relative 'examples/model_with_subscriptions_association'
+require_relative 'examples/model_with_favorite_schools_association'
+require_relative 'examples/model_with_student_grade_levels_association'
+require_relative 'examples/model_with_roles_association'
 
 describe User do
+  it_behaves_like 'user with user profile association'
+  it_behaves_like 'model with password', :new_user
+  it_behaves_like 'model with esp memberships'
+  it_behaves_like 'model with subscriptions association'
+  it_behaves_like 'model with favorite schools association'
+  it_behaves_like 'model with student grade levels association'
+  it_behaves_like 'model with roles association'
 
   context 'new user with valid password' do
     let!(:user) { FactoryGirl.build(:new_user) }
     before(:each) { clean_dbs :gs_schooldb }
     before(:each) { user.encrypt_plain_text_password }
-
-    it 'should be able to have subscriptions' do
-      association = User.reflect_on_association(:subscriptions)
-      expect(association.macro).to eq(:has_many)
-    end
 
     it 'should be provisional after being saved' do
       user.save!
@@ -30,148 +39,6 @@ describe User do
 
     it 'should have a value for time_added' do
       expect(user.time_added).to_not be_nil
-    end
-
-    describe '#new_subscription!' do
-      let(:user) { FactoryGirl.build(:user) }
-      let(:now) { Time.now }
-
-      it 'sets default state and school id when no school provided' do
-        subscription = user.new_subscription(:mystat)
-        expect(subscription.state).to eq('CA')
-        expect(subscription.school_id).to eq(0)
-      end
-
-      it 'defaults expires to nil when no expiration set' do
-        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats','A description', nil, true)
-        allow(Subscription).to receive(:subscription_product).with(:mystat).and_return(subscription_product)
-        subscription = user.new_subscription(:mystat)
-        expect(subscription.expires).to be_nil
-      end
-
-      it 'should perform expiration date math correctly' do
-        subscription_product = Subscription::SubscriptionProduct.new('mystat', 'My School Stats','A description', 1.year, true)
-
-        allow(Subscription).to receive(:subscription_product).with(:mystat).and_return(subscription_product)
-
-        subscription = user.new_subscription(:mystat)
-        expires = subscription.expires
-        expect(expires.year).to eq(now.year + 1)
-        expect(expires.month).to eq(now.month)
-        expect(expires.day).to eq(now.day)
-      end
-
-      it 'raises an exception if it can\'t find subscription_product' do
-        expect{ user.new_subscription 'bogus' }.to raise_error
-      end
-    end
-
-    describe 'check if user has subscription' do
-      it 'has the subscription already' do
-        subscriptions = []
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
-        allow(user).to receive(:subscriptions).and_return(subscriptions)
-
-        school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
-
-        expect(user.has_subscription?('mystat', school)).to be_truthy
-      end
-
-      it "does not have the subscription already, because the school's state is different" do
-        subscriptions = []
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: 10.days.from_now)
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
-        allow(user).to receive(:subscriptions).and_return(subscriptions)
-
-        school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'tx')
-
-        expect(user.has_subscription?('mystat', school)).to be_falsey
-      end
-
-      it 'does not have the subscription already, because the subscription has expired' do
-        subscriptions = []
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'ca', school_id: 1, expires: 10.days.from_now)
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat', state: 'mi', school_id: 1, expires: Time.now - 10.days)
-        subscriptions << FactoryGirl.build_stubbed(:subscription, list: 'mystat_private', state: 'ca', school_id: 2, expires: 10.days.from_now)
-
-        allow(user).to receive(:subscriptions).and_return(subscriptions)
-
-        school = FactoryGirl.build_stubbed(:school_with_params, id: 1, state: 'mi')
-
-        expect(user.has_subscription?('mystat', school)).to be_falsey
-      end
-    end
-
-    describe '#password_is?' do
-
-      it 'checks for valid passwords' do
-        user.password = 'password'
-        user.encrypt_plain_text_password
-        expect(user.password_is? 'password').to be_truthy
-        expect(user.password_is? 'pass').to be_falsey
-      end
-
-      it 'does not allow nil or blank passwords' do
-        user.password = nil
-        expect(user).to_not be_valid
-        user.password = ''
-        expect(user).to_not be_valid
-      end
-
-      # required use of string#rindex in code
-      it 'should match the right password when password is "provisional:" ' do
-        user.password = 'provisional:'
-        user.encrypt_plain_text_password
-        expect(user.password_is? 'provisional:').to be_truthy
-      end
-    end
-
-    describe '#validate_email_verification_token' do
-      before(:each) do
-        @token, @time = user.email_verification_token
-      end
-
-      it 'returns false when given nils and blanks' do
-        expect(User.validate_email_verification_token nil, nil).to be_falsey
-        expect(User.validate_email_verification_token '', nil).to be_falsey
-        expect(User.validate_email_verification_token nil, '').to be_falsey
-        expect(User.validate_email_verification_token '', '').to be_falsey
-      end
-
-      it 'returns false for malformed token' do
-        expect(User.validate_email_verification_token 'not_a_valid_token', @time.to_s).to be_falsey
-        longer_token = (1..24).to_a.join
-        expect(User.validate_email_verification_token longer_token, @time.to_s).to be_falsey
-      end
-
-      describe 'with a valid token' do
-
-        it 'returns a user when it gets a valid token and date' do
-          allow(User).to receive(:find).and_return(user)
-
-          verified_user = User.validate_email_verification_token @token, @time
-
-          expect(verified_user).to eq(user)
-          expect(user).to be_email_verified
-        end
-
-        it 'returns false if date is expired' do
-          expired_date = Time.now - EmailVerificationToken::EMAIL_TOKEN_EXPIRATION
-          expect(User.validate_email_verification_token @token, expired_date).to be_falsey
-        end
-
-        it 'returns false if date is in the future' do
-          expired_date = Time.now + 1.day
-          expect(User.validate_email_verification_token @token, expired_date).to be_falsey
-        end
-
-        it 'returns false if date is malformed' do
-          expect(User.validate_email_verification_token @token, 'not_a_valid_date').to be_falsey
-        end
-      end
     end
 
     describe '#active_reviews_for_school' do
@@ -266,74 +133,6 @@ describe User do
       end
     end
 
-    describe '#is_esp_superuser' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:role )}
-      let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:esp_superuser_role.id)}
-
-      it 'should return false, since the user has no member_roles' do
-        allow(Role).to receive(:esp_superuser).and_return(esp_superuser_role)
-        allow(user).to receive(:member_roles).and_return(nil)
-        expect(user.is_esp_superuser?).to be_falsey
-      end
-
-
-      it 'should return true, since user has a super user member_role' do
-        allow(Role).to receive(:esp_superuser).and_return(esp_superuser_role)
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.is_esp_superuser?).to be_truthy
-      end
-    end
-
-    describe '#has_role' do
-      let!(:esp_superuser_role) {FactoryGirl.build(:role,id:1 )}
-      let!(:some_role) {FactoryGirl.build(:role,id:2 )}
-      let!(:member_roles) {FactoryGirl.build_list(:member_role,1,member_id: user.id,role_id:2)}
-
-      it 'should return false, since the user has no member_roles' do
-        allow(user).to receive(:member_roles).and_return(nil)
-        expect(user.has_role?(esp_superuser_role)).to be_falsey
-      end
-
-      it 'should return false, since the user role id does not match' do
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.has_role?(esp_superuser_role)).to be_falsey
-      end
-
-      it 'should return true' do
-        allow(user).to receive(:member_roles).and_return(member_roles)
-        expect(user.has_role?(some_role)).to be_truthy
-      end
-    end
-
-    describe '#create_user_profile' do
-      it 'should log exceptions' do
-        user_profile_stub = Class.new
-        allow(user_profile_stub).to receive(:create) { raise 'error' }
-        allow(user_profile_stub).to receive(:where) { user_profile_stub }
-        allow(user_profile_stub).to receive(:first) { nil }
-
-        stub_const('UserProfile', user_profile_stub)
-        expect(user).to receive(:log_user_exception)
-        expect{ user.send(:create_user_profile) }.to raise_error
-      end
-    end
-
-    describe '#encrypt_plain_text_password_after_first_save' do
-      it 'should log exceptions' do
-        user.password = 'abcdefg'
-        user.send(:encrypted_password=, nil)
-        allow(user).to receive(:save!) { raise 'error' }
-        expect(user).to receive(:log_user_exception)
-        expect { user.send(:encrypt_plain_text_password_after_first_save) }.to raise_error
-      end
-
-      it "should only get called once, at the time user is first saved" do
-        user.password = 'foobarbaz'
-        expect(user).to receive(:encrypt_plain_text_password_after_first_save).and_call_original.once
-        user.save
-      end
-    end
-
     describe '#time_added' do
       after { clean_models User }
 
@@ -407,36 +206,5 @@ describe User do
       end
     end
   end
-
-  describe '#safely_add_subscription!' do
-    after do
-      clean_dbs :gs_schooldb, :ca
-    end
-    let(:user) { FactoryGirl.create(:verified_user) }
-    [
-      [ 'osp_partner_promos', nil, nil ],
-      [ 'mystat', 'CA', 1000 ],
-      [ 'mystat_private', 'CA', 1000 ],
-      [ 'osp', nil, nil ],
-    ].each do |opts|
-      list = opts.first
-      it "should try to create only one list with: #{opts.to_s}" do
-        subscription_school = FactoryGirl.create(:school, state: opts[1], id: opts[2]) if opts[1] && opts[2]
-        expect_any_instance_of(Subscription).to receive(:save!).once.and_call_original
-        2.times { user.safely_add_subscription!(list, subscription_school) }
-      end
-    end
-
-    it "should allow the same list for multiple schools" do
-      schools = FactoryGirl.create_list(:school, 2)
-      expect do
-        schools.each do |school|
-          user.safely_add_subscription!('mystat', school)
-        end
-      end.to change { user.subscriptions.size }.from(0).to(2)
-    end
-  end
-
-
 
 end

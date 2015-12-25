@@ -169,7 +169,7 @@ class WordpressInterfaceController < ApplicationController
     if (user.blank?)
       user = User.new
       user.email = email
-      user.password = User.generate_password
+      user.password = Password.generate_password
       user.how = how
       unless user.save!
         GSLogger.error(:gk_action, nil, message: 'WP Newsletter user failed to save', vars: {

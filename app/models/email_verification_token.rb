@@ -21,6 +21,11 @@ class EmailVerificationToken
     end
   end
 
+  def self.token_and_date(user, time = nil)
+    token = new(user: user, time: time)
+    [token.generate, token.time_as_string]
+  end
+
   def self.parse(token, time_string)
     user_id = token[24..-1] if token.present? && token.length > 24
 
@@ -62,7 +67,7 @@ class EmailVerificationToken
   end
 
   def expired?
-    EMAIL_TOKEN_EXPIRATION.ago > @time
+    EMAIL_TOKEN_EXPIRATION.ago > @time || @time > Time.zone.now
   end
 
   def valid?

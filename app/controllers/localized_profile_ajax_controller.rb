@@ -1,6 +1,7 @@
 class LocalizedProfileAjaxController < ApplicationController
   protect_from_forgery
 
+  include SchoolParamsConcerns
   before_action :require_state, :require_school
 
   layout false

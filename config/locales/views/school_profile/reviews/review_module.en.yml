@@ -1,0 +1,10 @@
+---
+en:
+  school_profile:
+    reviews:
+      review_module:
+        no_content_message: This review submitted without content.
+        posted: Posted
+        school_leader: SCHOOL LEADER
+        school_leader_message: Message to families
+        user_type_html: '- a <span class="cuc_posted-by">%{user_type}</span>'

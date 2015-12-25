@@ -1,0 +1,6 @@
+---
+en:
+  hubs:
+    state_hub:
+      browse_cities: Browse all cities
+      browse_districts: Browse all districts

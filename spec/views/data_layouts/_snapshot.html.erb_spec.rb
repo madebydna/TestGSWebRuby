@@ -31,7 +31,7 @@ describe '_snapshot.html.erb' do
     end
 
     subject do
-      render :partial => 'data_layouts/snapshot',
+      render :partial => 'school_profile/data_layouts/snapshot',
              locals: {
                data: data, category_placement: category_placement
              }

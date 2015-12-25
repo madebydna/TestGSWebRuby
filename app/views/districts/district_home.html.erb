@@ -12,7 +12,7 @@
 <div class="limit-width-1200">
 
   <div class="phm row">
-    <%= render 'shared/breadcrumbs', breadcrumbs: @breadcrumbs %>
+    <%= render 'nav/breadcrumbs', breadcrumbs: @breadcrumbs %>
 
     <h1 class="dark-grey notranslate" style="color:#20AEDC;"><%= district.name %></h1>
     <% grade_range_row_content = [] %>
@@ -137,7 +137,7 @@
 
     <div class="<%= second_column_sizes %> ma ptm">
       <h3 class="ma" style="width:300px">Nearby homes for sale</h3>
-      <%= render 'data_layouts/zillow_content', data: @zillow_data %>
+      <%= render 'school_profile/data_layouts/zillow_content', data: @zillow_data %>
     </div>
   </div>
 
@@ -154,11 +154,12 @@
       partial: 'shared/horizontal_school_boxes', 
       locals: { 
         title: "Top rated schools in #{@district.name}",
-        schools: SchoolProfileDecorator.decorate_collection(@top_schools)
+        schools: SchoolProfileDecorator.decorate_collection(@top_schools),
+        css_id: 'top-rated-schools-in-district'
       }
     )
   %>
 
 </div>
 
-<%= render 'shared/state_footer', state: @state %>
+<%= render 'nav/state_footer', state: @state %>

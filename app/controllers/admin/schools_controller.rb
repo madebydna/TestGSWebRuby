@@ -1,5 +1,7 @@
 class Admin::SchoolsController < ApplicationController
 
+  include SchoolParamsConcerns
+
   MODERATION_LIST_PAGE_SIZE = 50
 
   before_action :require_state, :require_school, except: :index

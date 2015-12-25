@@ -1,7 +1,6 @@
 class SchoolProfileDetailsController < SchoolProfileController
   protect_from_forgery
 
-  include AdvertisingHelper
 
   layout 'application'
 

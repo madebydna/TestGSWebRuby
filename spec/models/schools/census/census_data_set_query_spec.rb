@@ -9,14 +9,12 @@ describe CensusDataSetQuery do
 
   describe '#default_scope' do
     it 'should enforce only active data sets' do
-      # TODO: what's the correct way to
-      CensusDataSet = class_double('CensusDataSet').as_stubbed_const
-      allow(CensusDataSet).to receive(:on_db).and_return(CensusDataSet)
-      allow(CensusDataSet).to receive(:active).and_return(CensusDataSet)
-      # CensusDataSet = double(CensusDataSet).as_null_object
-      expect(CensusDataSet).to receive(:active)
+      census_data_set_class_double = class_double('CensusDataSet')
+      stub_const('CensusDataSet', census_data_set_class_double)
+      allow(census_data_set_class_double).to receive(:on_db).and_return(census_data_set_class_double)
+      allow(census_data_set_class_double).to receive(:active).and_return(census_data_set_class_double)
+      expect(census_data_set_class_double).to receive(:active)
       subject.default_scope
-      # CensusDataSet = CensusDataSetCopy
     end
   end
 

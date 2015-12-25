@@ -1,7 +1,7 @@
 require 'spec_helper'
-require_relative '../examples/page_examples'
-require_relative '../contexts/state_home_contexts'
-require_relative '../examples/footer_examples'
+require 'features/examples/page_examples'
+require 'features/contexts/state_home_contexts'
+require 'features/examples/footer_examples'
 require 'features/contexts/cities_contexts'
 
 describe 'State Home Page' do

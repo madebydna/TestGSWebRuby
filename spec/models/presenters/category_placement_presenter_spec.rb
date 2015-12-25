@@ -24,17 +24,17 @@ describe CategoryPlacementPresenter do
       FactoryGirl.build(:category_placement, title: 'test', layout: 'layout')
     end
 
-    it 'should not find module wrapper layout data_layouts/test_layout' do
+    it 'should not find module wrapper layout school_profile/data_layouts/test_layout' do
       expect(subject.module_specific_partial).to be_nil
     end
 
-    it 'should find module wrapper layout data_layouts/_programs_section' do
+    it 'should find module wrapper layout school_profile/data_layouts/_programs_section' do
       pending 'Pending creation of layout wrapper'
       fail
       category_placement.title = 'Programs'
       category_placement.layout = 'section'
       expect(subject.module_specific_partial)
-        .to eq('data_layouts/programs_section')
+        .to eq('school_profile/data_layouts/programs_section')
     end
   end
 
@@ -54,7 +54,7 @@ describe CategoryPlacementPresenter do
     #   it 'two partials should be rendered' do
     #     # expect(view).to receive(:render) { yield if block_given }.twice
     #     expect(view).to receive(:render)
-    #       .with(layout: 'data_layouts/programs_section', locals: Hash)
+    #       .with(layout: 'school_profile/data_layouts/programs_section', locals: Hash)
     #     subject.render
     #   end
     # end

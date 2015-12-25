@@ -7,7 +7,7 @@ shared_examples_for 'a default state controller action' do |action, page_name|
     if action == :show
       it 'renders state home' do
         get :show, state: 'nebraska'
-        expect(response).to render_template('states/state_home')
+        expect(response).to render_template('states/show')
       end
     else
       it 'renders a 404 page' do
@@ -80,7 +80,7 @@ describe StatesController do
       it 'renders the page' do
         allow(CollectionConfig).to receive(:enrollment_tabs).and_return(empty_tabs)
         get :enrollment, state: 'indiana'
-        expect(response).to render_template('shared/enrollment')
+        expect(response).to render_template('hubs/enrollment')
       end
     end
   end
@@ -95,12 +95,5 @@ describe StatesController do
 
   describe 'GET community' do
     it_behaves_like 'a default state controller action', :community, 'GS:State:EducationCommunity'
-  end
-
-  describe 'GET guided_search' do
-    it 'renders an error page' do
-      get :guided_search, state: 'indiana'
-      expect(response).to redirect_to(state_url('indiana'))
-    end
   end
 end

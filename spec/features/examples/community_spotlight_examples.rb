@@ -1,4 +1,4 @@
-require 'features/selectors/community_spotlight_page'
+require 'features/page_objects/community_spotlight_page'
 require 'features/contexts/community_spotlight_contexts'
 require 'features/examples/url_examples'
 require 'features/examples/page_examples'

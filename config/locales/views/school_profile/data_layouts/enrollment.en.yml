@@ -1,0 +1,9 @@
+---
+en:
+  school_profile:
+    data_layouts:
+      enrollment:
+        applications_due: Applications Due
+        applications_due_choice_admission_text: 'Applications due for most schools. See 
+        the choice admission policy for details.'
+        students_accepted_text: "Students accepted for the %{year} school year"

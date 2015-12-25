@@ -1,0 +1,29 @@
+
+<div class="guided-search">
+
+<%= render 'helpme_module' %>
+
+<div class="limit-width-940 border-all-light-grey mbxl">
+
+  <%= render 'steps_navigation' %>
+
+  <form role="form" name="guidedSearch" action="/search/search.page" class="js-guidedSearch"
+        method="get" >
+    <input type="hidden" name="sort" value="rating_desc">
+
+    <div   class="tab-content">
+  <%=render 'get_started'%>
+  <%=render 'child_care'%>
+  <%=render 'dress_code'%>
+  <%=render 'school_focus'%>
+  <%=render 'class_offerings'%>
+
+  </div>
+  </form>
+</div>
+
+
+
+<%= render 'nav/short_footer' %>
+
+</div>

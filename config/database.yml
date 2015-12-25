@@ -125,11 +125,11 @@ test: &test
   profile_config_rw:
     <<: *mysql_localhost_rw
     database: localized_profiles_test
-    legacy: false
+    legacy: true
   profile_config:
     <<: *mysql_localhost_rw
     database: localized_profiles_test
-    legacy: false
+    legacy: true
   _STATE__rw:
     <<: *mysql_localhost_rw
     database: __STATE__test

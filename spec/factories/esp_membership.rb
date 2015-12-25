@@ -19,4 +19,9 @@ FactoryGirl.define do
     active 0
   end
 
+  trait :with_rejected_status do
+    status 'rejected'
+    active 0
+  end
+
 end

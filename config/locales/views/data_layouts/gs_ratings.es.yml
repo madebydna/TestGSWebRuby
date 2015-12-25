@@ -1,9 +1,0 @@
----
-es:
-  data_layouts:
-    gs_ratings:
-      greatschools_rating: Calificación de GreatSchools
-      learn_more_html: Aprender mås &raquo;
-      methodology: Metodología
-      rating_breakdown: Desglose de Clasificación
-      view_more_details: Ver más detalles acerca de la calificación GreatSchools

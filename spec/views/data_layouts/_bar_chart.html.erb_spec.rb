@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'data_layouts/_bar_chart.html.erb' do
+describe 'school_profile/data_layouts/_bar_chart.html.erb' do
 
   let(:data) { {} }
   let(:category_placement) { FactoryGirl.create(:leaf_category_placement_no_parent) }
@@ -19,7 +19,7 @@ describe 'data_layouts/_bar_chart.html.erb' do
     stub_template "_about_this_data.html.erb" => '<br/>'
     allow_any_instance_of(BarCharts::BasicBarChart).to receive(:script_tag).and_return(nil)
     expect do
-      render partial: 'data_layouts/bar_chart', locals: { category: category_placement.category, category_placement: category_placement, data: data }
+      render partial: 'school_profile/data_layouts/bar_chart', locals: { category: category_placement.category, category_placement: category_placement, data: data }
     end.to_not raise_error
   end
 

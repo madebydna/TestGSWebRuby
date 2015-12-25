@@ -1,4 +1,0 @@
-es:
-  data_layouts:
-    raw_performance_results:
-        state_average: 'Prom. %{val}%'

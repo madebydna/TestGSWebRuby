@@ -1,5 +1,6 @@
 <% title # require title %>
 <% schools # require list of schools to display info for %>
+<% css_id = nil unless defined?(css_id) %>
 <% unless defined?(ad_no_show) %>
   <% ad_no_show = false %>
 <% end %>
@@ -29,7 +30,7 @@
 <% end %>
 
 <% if schools.size >= 4 %>
-  <div class="limit-width-1200 clearfix">
+  <div <%= "id=\"#{css_id}\"".html_safe if css_id %> class="limit-width-1200 clearfix">
     <div class="clearfix mbm plm">
       <hr />
       <div class="fl">

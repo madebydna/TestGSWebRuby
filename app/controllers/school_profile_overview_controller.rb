@@ -1,8 +1,6 @@
 class SchoolProfileOverviewController < SchoolProfileController
   protect_from_forgery
 
-  include AdvertisingHelper
-
   layout 'application'
 
   def overview

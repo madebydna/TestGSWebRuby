@@ -1,5 +1,7 @@
 class OspRegistrationController < ApplicationController
 
+  include Latin1CharactersConcerns
+
   BLACKLISTED_TOP_LEVEL_DOMAINS = ['pl', 'ru']
 
   before_action :set_city_state
@@ -51,7 +53,6 @@ class OspRegistrationController < ApplicationController
     page_title = 'School Account - Register | GreatSchools'
     gon.pageTitle = page_title
     gon.pagename = 'GS:OSP:Register'
-    set_omniture_data('GS:OSP:Register', 'Home,OSP,RegisterPage')
     set_meta_tags title: page_title,
                   description:' Register for a school account to edit your school\'s profile on GreatSchools.',
                   keywords:'School accounts, register, registration, edit profile'
@@ -186,7 +187,7 @@ class OspRegistrationController < ApplicationController
   def osp_email_verification_url(user)
     tracking_code = 'eml_ospverify'
     verification_link_params = {}
-    hash, date = user.email_verification_token
+    hash, date = EmailVerificationToken.token_and_date(user)
     verification_link_params.merge!(
         id: hash,
         date: date,

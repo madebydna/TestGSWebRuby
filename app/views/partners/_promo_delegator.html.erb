@@ -1,0 +1,16 @@
+<% force_show ||= false %>
+<% options ||= {} %>
+<% promo_type ||= nil %>
+<% promos ||= [] %>
+<% promos = promos.select { |p| p[:type] == promo_type } if promo_type.present? %>
+
+<% promos.each do |promo| %>
+  <% if promo[:profile_modules].include?(partial) || force_show %>
+    <%= render partial: "partners/#{promo[:type]}",
+              locals: {
+                promo: promo,
+                options: options
+              }
+    %>
+  <% end %>
+<% end %>

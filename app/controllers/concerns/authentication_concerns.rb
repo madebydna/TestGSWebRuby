@@ -24,8 +24,9 @@ module AuthenticationConcerns
 
   def set_auth_cookie
     # cookies[:auth_token] = {:value => current_user.session_token, :expires => current_user.session_expires_at} if current_user
+    auth_token = UserAuthenticationToken.new(current_user).generate
     cookies[:auth_token] = {
-      value: current_user.auth_token,
+      value: auth_token,
       domain: :all
     }
     cookies[:MEMID] = {
@@ -33,7 +34,7 @@ module AuthenticationConcerns
       domain: :all
     }
     cookies[legacy_community_cookie_name] = {
-      value: current_user.auth_token.gsub('=', '~'),
+      value: auth_token.gsub('=', '~'),
       domain: :all
     }
   end
@@ -47,7 +48,7 @@ module AuthenticationConcerns
       # nothing to do
     end
 
-    if user.present? && user.auth_token == auth_token
+    if user.present? && UserAuthenticationToken.new(user).matches_digest?(auth_token)
       self.current_user = user
       remember_user if should_remember_user?
     end
@@ -113,7 +114,7 @@ module AuthenticationConcerns
 
   def register_user(is_facebook, options)
     email_options = {}
-    password = options[:password] || User.generate_password
+    password = options[:password] || Password.generate_password
 
     if is_facebook
       options[:how] = 'facebook'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'search district browse routing' do
+describe 'search city browse routing' do
 
   def request
     return double().as_null_object
@@ -14,51 +14,22 @@ describe 'search district browse routing' do
     default_url_options[:host] = 'greatschools.org'
   end
 
-  let(:state) { 'michigan' }
-
-  it 'should route a multi-word district' do
-    expect( get "/#{state}/michigan-city/schools/" ).to route_to(
-      controller: 'search',
-      action: 'city_browse',
-      state: state,
-      city: 'michigan-city'
-    )
-  end
-
-  it 'should route a district with a period in it' do
-    expect( get "/#{state}/st.-louis/schools/" ).to route_to(
-      controller: 'search',
-      action: 'city_browse',
-      state: state,
-      city: 'st.-louis'
-    )
-  end
-
-  it 'should route a district with a number in it' do
-    expect( get "/#{state}/city12/schools/" ).to route_to(
-      controller: 'search',
-      action: 'city_browse',
-      state: state,
-      city: 'city12'
-    )
-  end
-
-  it 'should route a district beginning with a number in it' do
-    expect( get "/#{state}/12th-city/schools/" ).to route_to(
-      controller: 'search',
-      action: 'city_browse',
-      state: state,
-      city: '12th-city'
-    )
-  end
-
-  it 'should route a district with a # in it' do
-    # %23 is the encoded value of #
-    expect( get "/#{state}/city%2312/schools/" ).to route_to(
-      controller: 'search',
-      action: 'city_browse',
-      state: state,
-      city: 'city#12'
-    )
+  {
+      'one-word state' => 'minnesota',
+      'two-word state' => 'new-jersey'
+  }.each do |state_description, state|
+    describe state_description do
+      {
+          'one-word city' => 'minneapolis',
+          'two-word city' => 'maple-grove',
+          'city with a period in it' => 'st.-paul',
+          'city with a # in it' => 'st.-%23aul',
+          'city starting with a number' => '12th-city'
+      }.each do |city_description, city|
+        it "should route a #{city_description}" do
+          expect( get "/#{state}/#{city}/schools/" ).to route_to('search#city_browse', state: state, city: city.sub('%23', '#'))
+        end
+      end
+    end
   end
 end

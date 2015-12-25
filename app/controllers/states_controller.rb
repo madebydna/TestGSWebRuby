@@ -1,64 +1,67 @@
 class StatesController < ApplicationController
   include SeoHelper
-  include MetaTagsHelper
+  include StatesMetaTagsConcerns
   include HubConcerns
-  include GuidedSearchConcerns
+  include CommunityTabConcerns
+  include PopularCitiesConcerns
 
   before_action :set_city_state
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
-  before_action :set_footer_cities
-  before_action :write_meta_tags, only: [:show, :community]
-  before_action :set_state_home_omniture_data, only: [:show]
 
   def show
-    if @hub.nil?
-      state_home
+    write_meta_tags
+    @cities = popular_cities
+    gon.pagename = 'GS:State:Home'
+    if @hub
+      state_hub
     else
-      collection_id = @hub.collection_id
-      configs = hub_configs(collection_id)
-
-      @hub.has_guided_search?
-
-      @collection_nickname = CollectionConfig.collection_nickname(configs)
-      @content_modules = CollectionConfig.content_modules(configs)
-      @sponsor = CollectionConfig.sponsor(configs, :state)
-      @browse_links = CollectionConfig.browse_links(configs)
-      @partners = CollectionConfig.state_partners(configs)
-      @choose_school = CollectionConfig.state_choose_school(configs)
-      @articles = CollectionConfig.state_featured_articles(configs)
-      @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
-      @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
-      @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
-      @show_ads = CollectionConfig.show_ads(configs)
-      @important_events = CollectionConfig.city_hub_important_events(configs)
-      @announcement = CollectionConfig.city_hub_announcement(configs)
+      #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
+      if @state[:short] == 'dc'
+        return redirect_to city_path('washington-dc', 'washington'), status: 301
+      end
+      @params_hash = parse_array_query_string(request.query_string)
       gon.state_abbr = @state[:short]
-
+      @ad_page_name = :State_Home_Standard
+      @show_ads = PropertyConfig.advertising_enabled?
+      gon.show_ads = show_ads?
       ad_setTargeting_through_gon
       data_layer_through_gon
-
     end
-
   end
 
-  def state_home
-    #PT-1205 Special case for dc to redirect to /washington-dc/washington city page
-    if @state[:short] == 'dc'
-      return redirect_to city_path('washington-dc', 'washington'), status: 301
-    end
-    @params_hash = parse_array_query_string(request.query_string)
+  # TODO This should be in either at StateHubsController or a HubsController
+  def state_hub
+    @cities = popular_cities
+    collection_id = @hub.collection_id
+    configs = hub_configs(collection_id)
+
+    @hub.has_guided_search?
+
+    @collection_nickname = CollectionConfig.collection_nickname(configs)
+    @content_modules = CollectionConfig.content_modules(configs)
+    @sponsor = CollectionConfig.sponsor(configs, :state)
+    @browse_links = CollectionConfig.browse_links(configs)
+    @partners = CollectionConfig.state_partners(configs)
+    @choose_school = CollectionConfig.state_choose_school(configs)
+    @articles = CollectionConfig.state_featured_articles(configs)
+    @hero_image = "hubs/desktop/#{collection_id}-#{@state[:short].upcase}_hero.jpg"
+    @hero_image_mobile  = "hubs/small/#{collection_id}-#{@state[:short].upcase}_hero_small.jpg"
+    @canonical_url = state_url(gs_legacy_url_encode(@state[:long]))
+    @show_ads = CollectionConfig.show_ads(configs)
+    @important_events = CollectionConfig.city_hub_important_events(configs)
+    @announcement = CollectionConfig.city_hub_announcement(configs)
     gon.state_abbr = @state[:short]
-    @ad_page_name = :State_Home_Standard
-    @show_ads = PropertyConfig.advertising_enabled?
-    gon.show_ads = show_ads?
+
     ad_setTargeting_through_gon
     data_layer_through_gon
-    render 'states/state_home'
+
+    render 'hubs/state_hub'
   end
 
   def choosing_schools
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -77,18 +80,19 @@ class StatesController < ApplicationController
       @canonical_url = state_choosing_schools_url(params[:state])
       gon.state_abbr = @state[:short]
 
-      set_omniture_data('GS:State:ChoosingSchools', 'Home,StateHome,ChoosingSchools',@state[:long].titleize)
+      gon.pagename = 'GS:State:ChoosingSchools'
       set_meta_tags title:       "Choosing a school in #{@state[:long].titleize}",
                     description: " Five simple steps to help parents choose a school in #{@state[:long].titleize}",
                     keywords:    "choose a #{@state[:long].titleize} school, choosing #{@state[:long].titleize} schools,
                                   school choice #{@state[:long].titleize}, #{@state[:long].titleize} school choice tips,
                                   #{@state[:long].titleize} school choice steps"
       data_layer_through_gon
-      render 'shared/choosing_schools'
+      render 'hubs/choosing_schools'
     end
   end
 
   def events
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -104,7 +108,7 @@ class StatesController < ApplicationController
       gon.state_abbr = @state[:short]
 
 
-      set_omniture_data('GS:State:Events', 'Home,StateHome,Events',@state[:long].titleize)
+      gon.pagename = 'GS:State:Events'
       set_meta_tags title:       "Education Events in  #{@state[:long].titleize}",
                     description: "Key #{@state[:long].titleize} dates and events to mark on your calendar",
                     keywords:    "#{@state[:long].titleize} school system events, #{@state[:long].titleize}
@@ -112,16 +116,13 @@ class StatesController < ApplicationController
                                   #{@state[:long].titleize} public schools dates, #{@state[:long].titleize} school
                                   system calendar, #{@state[:long].titleize} public schools calendar"
       data_layer_through_gon
-      render 'shared/events'
+      render 'hubs/events'
 
     end
   end
 
-  def guided_search
-    render_guided_search
-  end
-
   def enrollment
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
@@ -153,7 +154,7 @@ class StatesController < ApplicationController
       @canonical_url = state_enrollment_url(params[:state])
       gon.state_abbr = @state[:short]
 
-      set_omniture_data('GS:State:Enrollment', 'Home,StateHome,Enrollment',@state[:long].titleize)
+      gon.pagename = 'GS:State:Enrollment'
       set_meta_tags title:       "#{@state[:long].titleize} Schools Enrollment Information",
                     description: " Practical information including rules, deadlines and tips, for enrolling your child
                                    in #{@state[:long].titleize}  schools",
@@ -164,19 +165,21 @@ class StatesController < ApplicationController
 
       data_layer_through_gon
 
-      render 'shared/enrollment'
+      render 'hubs/enrollment'
     end
   end
 
   def community
+    write_meta_tags
+    @cities = popular_cities
     if @hub.nil?
       render 'error/page_not_found', layout: 'error', status: 404
     else
       @collection_id = @hub.collection_id
       collection_configs = hub_configs(@collection_id)
-
-      set_community_tab(collection_configs)
-      set_community_omniture_data
+      @show_tabs = CollectionConfig.ed_community_show_tabs(collection_configs)
+      @tab = get_community_tab_from_request_path(request.path, @show_tabs)
+      set_community_gon_pagename
 
       @collection_nickname = CollectionConfig.collection_nickname(collection_configs)
       @sub_heading = CollectionConfig.ed_community_subheading(collection_configs)
@@ -189,24 +192,24 @@ class StatesController < ApplicationController
       gon.state_abbr = @state[:short]
       data_layer_through_gon
 
-      render 'shared/community'
+      render 'hubs/community'
     end
   end
 
+  private
+
   def page_view_metadata
-
     @page_view_metadata ||= (
-    page_view_metadata = {}
+      page_view_metadata = {}
 
-    page_view_metadata['page_name'] = gon.pagename || "GS:State:Home"
-    page_view_metadata['State']      = @state[:short].upcase # abbreviation
-    page_view_metadata['editorial']  = 'FindaSchoo'
-    page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
+      page_view_metadata['page_name'] = gon.pagename || "GS:State:Home"
+      page_view_metadata['State']      = @state[:short].upcase # abbreviation
+      page_view_metadata['editorial']  = 'FindaSchoo'
+      page_view_metadata['template']   = "ros" # use this for page name - configured_page_name
 
-    page_view_metadata
+      page_view_metadata
 
     )
-
   end
 
   def ad_setTargeting_through_gon
@@ -224,19 +227,21 @@ class StatesController < ApplicationController
 
   private
 
-    def set_community_omniture_data
-      if @tab == 'Community' || @show_tabs == false
-        page_name = "GS:State:EducationCommunity"
-        page_hier = "Home,StateHome,EducationCommunity"
-      else
-        page_name = "GS:State:EducationCommunity:#{@tab}"
-        page_hier = "Home,StateHome,EducationCommunity,#{@tab}"
-      end
-
-      set_omniture_data(page_name, page_hier, @state[:long].titleize)
-    end
-
-  def set_state_home_omniture_data
-    set_omniture_data('GS:State:Home', 'Home,StateHome')
+  def write_meta_tags
+    method_base = "#{controller_name}_#{action_name}"
+    title_method = "#{method_base}_title".to_sym
+    description_method = "#{method_base}_description".to_sym
+    keywords_method = "#{method_base}_keywords".to_sym
+    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
   end
+
+  def set_community_gon_pagename
+    if @tab == 'Community' || @show_tabs == false
+      page_name = "GS:State:EducationCommunity"
+    else
+      page_name = "GS:State:EducationCommunity:#{@tab}"
+    end
+    gon.pagename = page_name
+  end
+
 end
