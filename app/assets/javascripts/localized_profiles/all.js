@@ -14,10 +14,9 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
         var DEFAULT_MODAL_DELAY = 15000;
         var hover_delay = custom_modal_delay !== undefined ? custom_modal_delay : DEFAULT_MODAL_DELAY;
         GS.schoolProfiles.hover_time_out = setTimeout(
+        // Named function hover_handle used for changing delay in optimizely    
             GS.schoolProfiles.hover_handle = function () {
             showSignUpForSchoolModal();
-            /* google event trigger */
-            dataLayer.push({'event': 'analyticsEvent', 'eventCategory': 'User Interruption', 'eventAction': 'Hover', 'eventLabel': 'GS Profile Newsletter/MSS', 'eventNonInt': true});
             },
             hover_delay);
     };

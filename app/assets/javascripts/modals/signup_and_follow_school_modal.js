@@ -22,7 +22,8 @@ GS.modal.SignupAndFollowSchoolModal = function($, options) {
       'show': {
         'eventCategory': 'User Interruption',
         'eventAction': 'Hover',
-        'eventLabel': 'GS Profile Newsletter/MSS'
+        'eventLabel': 'GS Profile Newsletter/MSS',
+        'eventNonInt': true
       }
     }
   };
