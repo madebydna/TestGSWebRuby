@@ -1,5 +1,8 @@
 class SearchController < ApplicationController
   include ApplicationHelper
+  include SearchHelper
+  include SchoolHelper
+  include DataDisplayHelper
   include SearchMetaTagsConcerns
   include ActionView::Helpers::TagHelper
   include PaginationConcerns
