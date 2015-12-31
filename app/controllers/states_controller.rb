@@ -1,6 +1,7 @@
 class StatesController < ApplicationController
   include SeoHelper
   include SearchHelper
+  include SchoolHelper
   include StatesMetaTagsConcerns
   include HubConcerns
   include CommunityTabConcerns
