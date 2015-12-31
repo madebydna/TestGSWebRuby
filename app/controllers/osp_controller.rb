@@ -1,6 +1,7 @@
 class OspController < ApplicationController
   include PhotoUploadConcerns
   include PopularCitiesConcerns
+  include SchoolHelper
 
   #order of some of these callbacks matter
   before_action :set_login_redirect

@@ -2,6 +2,7 @@ class CitiesController < ApplicationController
   include ApplicationHelper
   include SeoHelper
   include SearchHelper
+  include SchoolHelper
   include GoogleMapConcerns
   include CitiesMetaTagsConcerns
   include CommunityTabConcerns

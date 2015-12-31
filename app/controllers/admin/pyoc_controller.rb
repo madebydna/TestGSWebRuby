@@ -1,6 +1,7 @@
 class Admin::PyocController <  ApplicationController
 
   include PdfConcerns
+  include SchoolHelper
 
   def print_pdf
 

@@ -3,6 +3,7 @@ class DistrictsController < ApplicationController
   include DistrictsMetaTagsConcerns
   include HubConcerns
   include GoogleMapConcerns
+  include SchoolHelper
 
   before_action :set_city_state
   before_action :require_district
