@@ -2,7 +2,7 @@ en:
   models:
     data_readers:
       performance_data_reader:
-        # great_schools_rating_html: 'The GreatSchools rating includes the following measures of school quality: math test scores, English language arts test scores, and science test scores. <a href="http://www.greatschools.org/about/ratings.page">Methodology details</a>'
         great_schools_rating_html: 'The GreatSchools rating measures English language arts, math, and science test scores for students at this school compared to all students statewide.'
         test_scores_html: 'The Test Score rating includes the following measures of school quality: math test scores, English language arts test scores, and science test scores.'
         test_scores_for_low_income_students_html: 'This rating measures how low-income students at this school performed on test scores compared to all students statewide.'
+        ca_similar_schools_comparison_predicted_rating_html: "This value represents what we would expect a school's rating to be, given the demographic and socioeconomic characteristics of the student population."

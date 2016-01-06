@@ -5,3 +5,4 @@ es:
         great_schools_rating_html: 'La calificación de GreatSchools miden los resultados de exámenes de inglés de lengua y literatura, matemáticas, y ciencia para los estudiantes de esta escuela en comparación con todos los estudiantes de todo el estado.'
         test_scores_html: 'The Test Score rating includes the following measures of school quality: math test scores, English language arts test scores, and science test scores.'
         test_scores_for_low_income_students_html: 'Esta calificación mide como los estudiantes de bajos ingresos en esta escuela realizaron en las calificaciones obtenidas en comparación a todos los estudiantes en todo el estado.'
+        ca_similar_schools_comparison_predicted_rating_html: "Este valor representa lo que esperaríamos que la calificación de una escuela sea, dadas las características demográficas y socioeconómicas de la población estudiantil."

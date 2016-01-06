@@ -1,0 +1,6 @@
+---
+en:
+  school_profile:
+    data_layouts:
+      comparison_rating:
+        description_text_html: "Schools serving similar student populations most often got a: <strong>%{value}</strong>"
