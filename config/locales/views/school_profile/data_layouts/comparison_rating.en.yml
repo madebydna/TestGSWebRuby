@@ -3,6 +3,6 @@ en:
   school_profile:
     data_layouts:
       comparison_rating:
-        description_text_html: "<span class='font-size-medium'>Schools serving similar student populations most often got a: </span><strong>%{value}</strong>"
+        description_text_html: "<span class='font-size-medium'>Schools serving similar student populations most often got a: <strong>%{value}</strong></span>"
         #for ga event label
         CA Similar Schools Comparison Predicted Rating: 'Similar schools predicted rating'
