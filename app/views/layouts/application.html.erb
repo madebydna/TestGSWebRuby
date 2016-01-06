@@ -8,7 +8,6 @@
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= render 'optimizely/install' %>
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
 
