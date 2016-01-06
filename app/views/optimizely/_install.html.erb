@@ -1,10 +1,1 @@
-<script type="text/javascript">
-     var head = document.getElementsByTagName('head')[0];
-     var optimizelyScript = document.createElement('script');
-     optimizelyScript.type = 'text/javascript';
-     optimizelyScript.src = "http://cdn.optimizely.com/js/"+ gon.optimizely_key +".js";
-     head.appendChild(optimizelyScript);
-     window.optimizely = window.optimizely || [];
-     window.optimizely.push("activateSiteCatalyst");
-     window.optimizely.push("activateUniversalAnalytics");
-</script>
+<script type="text/javascript" src="http://cdn.optimizely.com/js/<%= @optimizely_key  %>.js"></script>
