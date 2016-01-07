@@ -1,6 +1,2 @@
-<script type="text/javascript" src="http://cdn.optimizely.com/js/<%= @optimizely_key  %>.js">
-  window.optimizely = window.optimizely || [];
-  window.optimizely.push("activateSiteCatalyst");
-  window.optimizely.push("activateUniversalAnalytics");
-</script>
+<script type="text/javascript" src="http://cdn.optimizely.com/js/<%= ENV_GLOBAL['optimizely_key'] %>.js"></script>
 

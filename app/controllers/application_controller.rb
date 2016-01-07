@@ -22,7 +22,6 @@ class ApplicationController < ActionController::Base
   before_action :set_uuid_cookie
   before_action :login_from_cookie, :init_omniture
   before_action :add_user_info_to_gtm_data_layer
-  before_action :set_optimizely_gon_env_value
   before_action :add_ab_test_to_gon
   before_action :write_locale_session
   before_action :set_signed_in_gon_value
@@ -134,10 +133,6 @@ class ApplicationController < ActionController::Base
     gon.omniture_account = ENV_GLOBAL['omniture_account']
     gon.omniture_server = ENV_GLOBAL['omniture_server']
     gon.omniture_server_secure = ENV_GLOBAL['omniture_server_secure']
-  end
-
-  def set_optimizely_gon_env_value
-    gon.optimizely_key = ENV_GLOBAL['optimizely_key']
   end
 
   # get Page name in PageConfig, based on current controller action
