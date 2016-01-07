@@ -30,6 +30,14 @@ class SchoolProfileController < SchoolController
 
   protected
 
+  def school_reviews
+    @_school_reviews ||= begin
+      reviews = SchoolProfileReviewsDecorator.decorate(@school.reviews_with_calculations, view_context)
+      reviews.promote_review!(params[:review_id].to_i) if params[:review_id].present?
+      reviews
+    end
+  end
+
   def set_omniture_data(page_name)
     set_omniture_hier_for_new_profiles
     set_omniture_data_for_school(page_name)
@@ -39,8 +47,7 @@ class SchoolProfileController < SchoolController
   def init_page
     @school_user = school_user if logged_in?
     set_noindex_meta_tags if @school.demo_school?
-    @school_reviews = SchoolProfileReviewsDecorator.decorate(@school.reviews_with_calculations, view_context)
-    @school_reviews.promote_review!(params[:review_id].to_i) if params[:review_id].present?
+    @school_reviews = school_reviews
     @static_google_maps = static_google_maps
     gon.pagename = configured_page_name
     gon.review_count = @school_reviews.number_of_reviews_with_comments

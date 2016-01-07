@@ -222,4 +222,44 @@ describe SchoolProfileController do
       expect(callback.present?).to be_truthy
     end
   end
+
+  it { is_expected.to respond_to(:school_reviews) }
+  describe '#school_reviews' do
+    subject { controller.send(:school_reviews) }
+    let(:school_reviews) do
+      collection = SchoolReviews.new
+      collection.instance_variable_set(:@reviews, FactoryGirl.build_list(:five_star_review, 2))
+      collection
+    end
+    let(:school) { double('school').as_null_object }
+
+    context 'given a school object that has reviews with calculations' do
+      before do
+        allow(school).to receive(:reviews_with_calculations).and_return(school_reviews)
+        controller.instance_variable_set(:@school, school)
+      end
+
+      it { is_expected.to be_a(SchoolProfileReviewsDecorator) }
+      its('reviews.size') { is_expected.to eq(2) }
+      it 'should memoize the result' do
+        expect(SchoolProfileReviewsDecorator).to receive(:decorate).once
+        2.times { subject }
+      end
+
+      it 'should not tell school_reviews to promote the specified review to top of list' do
+        expect(school_reviews).to_not receive(:promote_review!)
+        subject
+      end
+
+      context 'when a review_id param is present' do
+        before do
+          controller.params[:review_id] = '1'
+        end
+        it 'should tell school_reviews to promote the specified review to top of list' do
+          expect(school_reviews).to receive(:promote_review!).with(controller.params[:review_id].to_i)
+          subject
+        end
+      end
+    end
+  end
 end
