@@ -3,9 +3,6 @@
 <head>
   <%= display_meta_tags %>
   <script src="http://cdn.optimizely.com/js/394711409.js"></script>
-<script>
-    window.optimizely.push("activateUniversalAnalytics");
-</script>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= render 'google_tag_manager/init_data_layer' %>
