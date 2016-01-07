@@ -7,58 +7,64 @@
   # review callout for two thirds of the module
   no_reviews_to_display = overall_reviews.size == 0 && reviews_with_comments.size == 0
 %>
+<% content_column_size = @show_ads ? 8 : 12 %>
 
   <div id="reviews-section" class="gs-bootstrap">
     <hr />
     <div class="container-fluid">
       <div class="row">
-        <% if no_reviews_to_display %>
-          <div class="col-xs-12 col-sm-8">
-            <div class="col-xs-12 col-sm-offset-1 col-sm-10">
-              <div class="mbm mtl">
-               <%= render 'school_profile/overview/review_school_callout', school: @school  %>
+        <div class="col-xs-12 col-sm-<%= content_column_size %>">
+          <div class="row">
+            <% if no_reviews_to_display %>
+              <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                <div class="mbm mtl">
+                  <%= render 'school_profile/overview/review_school_callout', school: @school  %>
+                </div>
+                <div class="mvm tac">
+                  <h3 class="uc"><%= t('.other_topics_header') %></h3>
+                  <ul class="tdn pan">
+                    <li class="di"><%= link_to t('.teacher_effectiveness'), school_reviews_url(@school, anchor: "topic7") %> | </li>
+                    <li class="di"><%= link_to t('.homework'), school_reviews_url(@school, anchor: "topic6") %> | </li>
+                    <li class="di"><%= link_to t('.student_respect'), school_reviews_url(@school, anchor: "topic4") %></li>
+                  </ul>
+                </div>
               </div>
-              <div class="mvm tac">
-                <h3 class="uc"><%= t('.other_topics_header') %></h3>
-                <ul class="tdn pan">
-                  <li class="di"><%= link_to t('.teacher_effectiveness'), school_reviews_url(@school, anchor: "topic7") %> | </li>
-                  <li class="di"><%= link_to t('.homework'), school_reviews_url(@school, anchor: "topic6") %> | </li>
-                  <li class="di"><%= link_to t('.student_respect'), school_reviews_url(@school, anchor: "topic4") %></li>
-                </ul>
+            <% else  %>
+              <div class="col-xs-12 col-sm-6">
+                <h2><%= t('.reviews_header', count: ratings_count) %></h2>
+                <button class="btn btn-primary js-button-link" data-link-value="<%= school_reviews_url(@school, anchor: "topic1") %>">
+                  <%= t('.review_this_school') %>
+                </button>
+                <br/>
+                <% if overall_reviews.having_answers.count > 0  %>
+                  <div class="dib tac mtl mbm">
+                    <%= draw_stars_48 average_score %>
+                    <div class="open-sans_sb mvm uc"><%= t('.community_rating') %></div>
+                  </div>
+                  <div class="mtm mbl">
+                    <p class="open-sans_i font-size-medium gray-darker"><%= overall_reviews.first.question.question  %></p>
+                    <%= render 'school_profile/data_viz/simple_bar_chart/display',
+                               bar_chart_data: overall_reviews.score_distribution_with_percentage
+                    %>
+                  </div>
+                <% end  %>
               </div>
-            </div>
-          </div>
-        <% else  %>
-          <div class="col-xs-12 col-sm-4">
-            <h2><%= t('.reviews_header', count: ratings_count) %></h2>
-            <button class="btn btn-primary js-button-link" data-link-value="<%= school_reviews_url(@school, anchor: "topic1") %>">
-              <%= t('.review_this_school') %>
-            </button>
-            <% if overall_reviews.having_answers.count > 0  %> 
-              <div class="dib tac mtl mbm">
-                <%= draw_stars_48 average_score %>
-                <div class="open-sans_sb mvm uc"><%= t('.community_rating') %></div>
-              </div>
-              <div class="mtm mbl">
-                <p class="open-sans_i font-size-medium gray-darker"><%= overall_reviews.first.question.question  %></p>
-                <%= render 'school_profile/data_viz/simple_bar_chart/display',
-                  bar_chart_data: overall_reviews.score_distribution_with_percentage
-                %>
-              </div>
-          <% end  %>
-          </div>
-          <div class="col-xs-12 col-sm-4">
-            <%= render 'school_profile/overview/recent_comments', reviews: reviews_with_comments if reviews_with_comments.count > 0 %>
-            <% if reviews_with_comments.count < @max_number_of_reviews_on_overview %>
-              <div class="mtl">
-                <%= render 'school_profile/overview/review_school_callout', school: @school  %>
+              <div class="col-xs-12 col-sm-6">
+                <%= render 'school_profile/overview/recent_comments', reviews: reviews_with_comments if reviews_with_comments.count > 0 %>
+                <% if reviews_with_comments.count < @max_number_of_reviews_on_overview %>
+                  <div class="mtl">
+                    <%= render 'school_profile/overview/review_school_callout', school: @school  %>
+                  </div>
+                <% end  %>
               </div>
             <% end  %>
           </div>
-        <% end  %>
-        <div class="col-xs-12 col-sm-4 ptl">
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews_Test, ad_size_name: 'box', defer_render: true, visible_for: ' ' %>
         </div>
+        <% if @show_ads %>
+          <div class="col-xs-12 col-sm-4 ptl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Reviews_Test, ad_size_name: 'box', defer_render: false, visible_for: ' ' %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
