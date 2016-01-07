@@ -2,6 +2,7 @@
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
   <%= display_meta_tags %>
+  <script src="http://cdn.optimizely.com/js/394711409.js"></script>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= render 'google_tag_manager/init_data_layer' %>
@@ -35,7 +36,6 @@
 </head>
 <body class="open-sans">
 
-<script src="http://cdn.optimizely.com/js/394711409.js"></script>
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
