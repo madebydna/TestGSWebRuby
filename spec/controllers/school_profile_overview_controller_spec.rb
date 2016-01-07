@@ -56,4 +56,17 @@ describe SchoolProfileOverviewController do
     end
   end
 
+  describe '#add_number_of_school_reviews_to_gtm_data_layer' do
+    let(:school_reviews) { double('school_reviews', number_of_reviews_with_comments: 3) }
+    before do
+      allow(controller).to receive(:school_reviews).and_return(school_reviews)
+    end
+    subject { controller.send(:add_number_of_school_reviews_to_gtm_data_layer) }
+
+    it 'should add number of reviews to gtm data layer' do
+      number_of_reviews_in_gtm_data_layer = proc { controller.gon.data_layer_hash.try(:fetch, 'number_of_school_reviews') }
+      expect { subject }.to change(&number_of_reviews_in_gtm_data_layer).from(nil).to(3)
+    end
+  end
+
 end
