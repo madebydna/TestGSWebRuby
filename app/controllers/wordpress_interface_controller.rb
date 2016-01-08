@@ -90,9 +90,8 @@ class WordpressInterfaceController < ApplicationController
   end
 
   def validate_url_test_guide(url)
-    if /^http:\/\/.[A-Za-z0-9_\-.]+\.greatschools.org\/gk\/common-core-test-guide\//i.match(url) ||
-        /^http:\/\/localhost[0-9:]*\/gk\/common-core-test-guide\//i.match(url) ||
-        /^http:\/\/greatschools.org\/gk\/common-core-test-guide\//i.match(url)
+    if /^http[s]?:\/\/([A-Za-z0-9_\-.]+\.)*greatschools\.org\/gk\/common-core-test-guide\//i.match(url) ||
+        /^http[s]?:\/\/localhost[0-9:]*\/gk\/common-core-test-guide\//i.match(url)
       return true
     end
     false

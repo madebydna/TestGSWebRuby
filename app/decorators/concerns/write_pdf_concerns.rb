@@ -16,6 +16,8 @@ module WritePdfConcerns
   FONT_SIZE_8 = 8
   FONT_SIZE_9 = 9
   FONT_SIZE_10 = 10
+  FONT_SIZE_16 = 16
+  FONT_SIZE_24 = 24
 
 
   IMAGE_PATH_SCHOOL_SIZE= "app/assets/images/pyoc/school_size_pyoc.png"
@@ -32,6 +34,11 @@ module WritePdfConcerns
   NO_PROGRAM_DATA = "?"
 
   IMAGE_SCALE_25 = 0.25
+  IMAGE_SCALE_47 = 0.47
+
+  SHOW_ENHANCED_RATINGS_MAPPING = Hash.new(true).merge({
+    OK: false,
+  }).with_indifferent_access
 
   def generate_schools_pdf(get_page_number_start, is_high_school_batch, is_k8_batch, is_pk8_batch, schools_decorated_with_cache_results, collection_id)
     start_time = Time.now
@@ -40,6 +47,7 @@ module WritePdfConcerns
     position_on_page = 0
 
     schools_decorated_with_cache_results.each_with_index do |school, index|
+      add_attrs!(school)
 
       if index % 3 == 0 and index != 0
         start_new_page()
@@ -186,8 +194,8 @@ module WritePdfConcerns
 
       move_down_15
 
-      draw_overall_gs_rating(school_cache)
-      draw_other_gs_ratings_table(school_cache)
+      draw_overall_gs_rating(school_cache, school)
+      draw_other_gs_ratings_table(school_cache) if school.show_enhanced_ratings?
 
       move_down_medium
 
@@ -278,8 +286,13 @@ module WritePdfConcerns
              :size => 6
   end
 
-  def draw_gs_rating_image(rating)
-    image "app/assets/images/pyoc/overall_rating_#{rating}.png", :at => [15, cursor], :scale => IMAGE_SCALE_25
+  def draw_gs_rating_image(rating, school)
+    image_args = if school.show_enhanced_ratings?
+                   { at: [15, cursor], scale: IMAGE_SCALE_25 }
+                 else
+                   { at: [20, cursor - 9], scale: IMAGE_SCALE_47 }
+                 end
+    image("app/assets/images/pyoc/overall_rating_#{rating}.png", image_args)
   end
 
   def draw_other_gs_rating_image(test_scores_rating)
@@ -290,23 +303,40 @@ module WritePdfConcerns
     @is_spanish == true
   end
 
-  def draw_overall_gs_rating(school_cache)
+  def draw_overall_gs_rating(school_cache, school)
     bounding_box([1, cursor], :width => 0, :height => 0) do
       move_down 2
 
-      draw_gs_rating_image(school_cache.overall_gs_rating)
+      draw_gs_rating_image(school_cache.overall_gs_rating, school)
 
-      move_down 25
+      school.show_enhanced_ratings? ? move_down(25) : move_down(60)
+
+      text_box_args = draw_overall_gs_rating_text_box_args(school)
+
       fill_color BLACK
-      text_box is_spanish ? "Calificación general" : "Overall rating",
-               :at => [is_spanish ? 10 : 13, cursor],
-               :width => is_spanish ? 35 : 25,
-               :height => 25,
-               :size => 6,
-               :style => :bold,
-               :align => :center
-
+      text_box(is_spanish ? "Calificación general" : "Overall rating", text_box_args)
     end
+  end
+
+  def draw_overall_gs_rating_text_box_args(school)
+    text_box_args = {
+      at:     [is_spanish ? 10 : 13, cursor],
+      width:  is_spanish ? 35 : 25,
+      height: 25,
+      size:   6,
+      style:  :bold,
+      align:  :center
+    }
+
+    unless school.show_enhanced_ratings?
+      text_box_args.merge!({
+        at:    [15, cursor],
+        width: 55,
+        size:  8,
+      })
+    end
+
+    text_box_args
   end
 
   def draw_other_gs_ratings_table(school_cache)
@@ -370,14 +400,46 @@ module WritePdfConcerns
       end
 
     end
-          table(data, :column_widths => is_spanish ? [56, 56, 56] : [50, 50, 50],
-          :position => 1,
-          :cell_style => {:align => :center, size: 6, :padding => [0, 0, 0, 0], :text_color => BLACK}) do
-      cells.borders = []
-      row(0).font_style = :bold
-      row(0).size = FONT_SIZE_10
-      row(0).padding = [0, 0, 5, 0]
-      row(1).height = 12
+
+
+    if school.show_enhanced_ratings?
+      table_args = {
+        column_widths: is_spanish ? [56, 56, 56] : [50, 50, 50],
+        position:      1,
+        cell_style:    {
+          align:      :center,
+          size:       6,
+          padding:    [0, 0, 0, 0],
+          text_color: BLACK
+        }
+      }
+
+      table(data, table_args) do
+        cells.borders = []
+        row(0).font_style = :bold
+        row(0).size = FONT_SIZE_10
+        row(0).padding = [0, 0, 5, 0]
+        row(1).height = 12
+      end
+    else
+      table_args = {
+        column_widths: [56, 56, 56],
+        position:      90,
+        cell_style:    {
+          align:      :center,
+          size:       8,
+          padding:    [0, 0, 0, 0],
+          text_color: BLACK
+        }
+      }
+
+      table(data, table_args) do
+        cells.borders = []
+        row(0).font_style = :bold
+        row(0).padding = [10, 0, 11, 0]
+        row(0).size = FONT_SIZE_24
+        row(1).height = 12
+      end
     end
   end
 
@@ -776,5 +838,23 @@ module WritePdfConcerns
     end
   end
 
+  private
+
+  # I am showing/hiding certain parts of the pdf based on the show_enhanced_ratings flag
+  # I took a shortcut for now and am using this to show/hide multiple parts instead of just one
+  # Eventually, if we want more granular control we should make flags based on the particular thing
+  # to be shown/hidden. That way you have more control over the exact thing to show/hide and not just
+  # control over showing/hiding enhanced ratings, which alters multiple things
+  def add_attrs!(school)
+    set_enhanced_ratings_attr!(school)
+  end
+
+  def set_enhanced_ratings_attr!(school)
+    show_enhanced_ratings = SHOW_ENHANCED_RATINGS_MAPPING[school.state]
+
+    school.define_singleton_method :show_enhanced_ratings? do
+      show_enhanced_ratings
+    end
+  end
 
 end

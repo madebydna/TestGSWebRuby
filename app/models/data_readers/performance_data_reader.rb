@@ -51,11 +51,12 @@ class PerformanceDataReader < SchoolProfileDataReader
       end.compact
     end.flatten
   end
-end
 
-def description_for(data_type)
-  if data_type.present?
-    normalized_data_type = data_type.gsub(' ', '_').underscore
-    I18n.t("models.data_readers.performance_data_reader.#{normalized_data_type}_html")
+  def description_for(data_type)
+    if data_type.present?
+      normalized_data_type = data_type.gsub(' ', '_').underscore
+      I18n.t("models.data_readers.performance_data_reader.#{normalized_data_type}_html")
+    end
   end
+
 end

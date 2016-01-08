@@ -1,0 +1,18 @@
+<% rating            = data.try(:first) %>
+<% rating_value      = rating.try(:value) %>
+
+<% gs_rating         = @school.gs_rating || 'NR' %>
+<% gs_rating_present = gs_rating.to_s.upcase != 'NR' %>
+
+<% if gs_rating_present && rating_value.present? %>
+  <div class='pbm'>
+    <%= t('.description_text_html', value: rating_value.to_i) %>
+    <%= render 'school_profile/data_viz/tooltip_activator',
+      text: rating.description,
+      trigger: 'focus' ,
+      ga_category: 'Profile data - quality snapshot',
+      ga_action: 'Open Tooltip',
+      ga_label: t(".#{rating.label}")
+    %>
+  </div>
+<% end %>

@@ -1,6 +1,9 @@
 class CompareSchoolsController < ApplicationController
   include GoogleMapConcerns
   include CompareSchoolsConcerns
+  include SearchHelper
+  include SchoolHelper
+  include DataDisplayHelper
 
   def show
     require_state
