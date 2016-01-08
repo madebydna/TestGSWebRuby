@@ -31,8 +31,8 @@ class Advertising
           dimensions:[300,250]
         }
       },
-      Reviews_Test: {
-        name: "Reviews_Test",
+      Reviews_Adaptive: {
+        name: "Reviews_Adaptive",
         desktop:{
           dimensions:[[300,600],[300,250]]
         },
