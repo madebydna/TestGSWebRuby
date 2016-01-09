@@ -3,6 +3,7 @@ class NearbySchoolsCaching::QueryResultDecorator < Draper::Decorator
   delegate_all
 
   include ApplicationHelper
+  include SchoolHelper
   include GradeLevelConcerns
   include SchoolPhotoConcerns
 
