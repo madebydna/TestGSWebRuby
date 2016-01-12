@@ -82,6 +82,22 @@ class SchoolProfileDecorator < Draper::Decorator
     h.search_path(query_params)
   end
 
+# location search for school address, filtered by school level(s) & sorted by rating
+  def school_level_and_address_location_search_sorted_by_rating_url
+    query_params = {
+      lat: school.lat,
+      lon: school.lon,
+      state: school.state,
+      locationType: 'street_address',
+      normalizedAddress: google_formatted_street_address,
+      locationSearchString: full_address,
+      distance: 3,
+      sort:'rating_desc',
+      gradeLevels: level_code_array
+    }
+    h.search_path(query_params)
+  end
+
   def school_boundary_hash
     boundary_hash = { level: single_level_code, schoolId: id, state: state }
     boundary_hash.merge(districtId: district) if district.present?

@@ -11,20 +11,62 @@ describe SchoolProfileDecorator do
       SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, zipcode: 90406, type: 'private'))
     end
     it "should return url" do
-     search_url = '/search/search.page'
-     search_url << '?distance=5'
-     search_url << '&lat=30.111'
-     search_url << '&locationSearchString=90406'
-     search_url << '&locationType=street_address'
-     search_url << '&lon=-120.22'
-     search_url += '&normalizedAddress=90406'
-     search_url << '&sort=distance_asc'
-     search_url << '&sortBy=DISTANCE'
-     search_url << '&state=CA'
+      search_url = '/search/search.page'
+      search_url << '?distance=5'
+      search_url << '&lat=30.111'
+      search_url << '&locationSearchString=90406'
+      search_url << '&locationType=street_address'
+      search_url << '&lon=-120.22'
+      search_url += '&normalizedAddress=90406'
+      search_url << '&sort=distance_asc'
+      search_url << '&sortBy=DISTANCE'
+      search_url << '&state=CA'
       expect(subject.school_zip_location_search_url).to eq(search_url)
     end
+  end
 
+  describe '#school_level_and_address_location_search_sorted_by_rating_url' do
+    before do 
+      allow(subject).to receive(:google_formatted_street_address).and_return('googleformattedaddress')
+      allow(subject).to receive(:full_address).and_return('fulladdress')
+    end
+    context 'with one level for a school' do
+      subject do
+        SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, type: 'private', level_code: 'e'))
+      end
+      it 'should return url' do
+        search_url = '/search/search.page'
+        search_url << '?distance=3'
+        search_url << '&gradeLevels%5B%5D=e'
+        search_url << '&lat=30.111'
+        search_url << '&locationSearchString=fulladdress'
+        search_url << '&locationType=street_address'
+        search_url << '&lon=-120.22'
+        search_url += '&normalizedAddress=googleformattedaddress'
+        search_url << '&sort=rating_desc'
+        search_url << '&state=CA'
+        expect(subject.school_level_and_address_location_search_sorted_by_rating_url).to eq(search_url)
+      end
+    end
 
+    context 'with two levels for a school' do
+      subject do
+        SchoolProfileDecorator.decorate(FactoryGirl.build(:alameda_high_school,lat: 30.111, lon: -120.22, type: 'private', level_code: 'e,m'))
+      end
+      it 'should return url' do
+        search_url = '/search/search.page'
+        search_url << '?distance=3'
+        search_url << '&gradeLevels%5B%5D=e&gradeLevels%5B%5D=m'
+        search_url << '&lat=30.111'
+        search_url << '&locationSearchString=fulladdress'
+        search_url << '&locationType=street_address'
+        search_url << '&lon=-120.22'
+        search_url += '&normalizedAddress=googleformattedaddress'
+        search_url << '&sort=rating_desc'
+        search_url << '&state=CA'
+        expect(subject.school_level_and_address_location_search_sorted_by_rating_url).to eq(search_url)
+      end
+    end
   end
 
   describe "#type_url" do
