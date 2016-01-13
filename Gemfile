@@ -124,6 +124,7 @@ end
 
 group :test do
   gem 'capybara-screenshot', '~> 1.0.11'
+  gem 'headless', '~> 2.2.0'
 end
 
 group :development, :test do

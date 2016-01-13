@@ -203,6 +203,7 @@ GEM
     has_scope (0.5.1)
     hashery (2.1.1)
     hashie (2.1.1)
+    headless (2.2.0)
     highline (1.7.2)
     hike (1.2.3)
     hitimes (1.2.2)
@@ -548,6 +549,7 @@ DEPENDENCIES
   haml-rails
   has_scope
   hashie
+  headless (~> 2.2.0)
   i18n-tasks (~> 0.8.3)
   jquery-cookie-rails
   jquery-datatables-rails!
@@ -602,3 +604,6 @@ DEPENDENCIES
   wiselinks
   yard
   yui-compressor (~> 0.12.0)
+
+BUNDLED WITH
+   1.11.2
