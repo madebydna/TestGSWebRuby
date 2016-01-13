@@ -1,4 +1,3 @@
-require './app/models/presenters/topnav'
 require 'open-uri'
 
 module ApplicationHelper
