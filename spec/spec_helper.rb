@@ -33,6 +33,7 @@ require 'rspec/rails'
 require 'database_cleaner'
 require 'support/database_cleaner_extensions'
 require 'capybara/rspec'
+require 'headless'
 require 'factory_girl'
 require 'support/factory_girl_extensions'
 require 'support/rspec_custom_masters'
@@ -124,6 +125,13 @@ RSpec.configure do |config|
   # remove support for "should" syntax, since it is deprecated. Use expect syntax instead
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:suite) do
+    # Use the headless gem to manage your Xvfb server
+    # Do not destroy X server incase another process is using it
+    Headless.new(:destroy_on_exit => false).start
+    #DatabaseCleaner.strategy = :truncation
   end
 
   config.alias_it_should_behave_like_to :test_group, ''
