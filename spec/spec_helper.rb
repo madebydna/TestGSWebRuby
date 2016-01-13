@@ -1,19 +1,20 @@
 ENV["RAILS_ENV"] = 'test'
-ENV['coverage'] = 'true'
+ENV['coverage'] = 'false' unless ENV.has_key?('coverage')
 
 require 'rubygems'
 
 require 'capybara-screenshot/rspec'
-require 'simplecov'
 if ENV['JENKINS_URL'] # on ci server
+  require 'simplecov'
   require 'simplecov-rcov'
   SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
-elsif ENV['coverage']
+elsif ENV['coverage'] == 'true'
+  require 'simplecov'
   require 'simplecov-html'
   SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 end
 
-if ENV['JENKINS_URL'] || ENV['coverage']
+if ENV['JENKINS_URL'] || ENV['coverage'] == 'true'
   SimpleCov.start 'rails' do
     add_group 'Changed' do |source_file|
       `git ls-files --exclude-standard --others \
