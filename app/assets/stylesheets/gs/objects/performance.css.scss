@@ -18,6 +18,10 @@
   @include border-circle($size: 32px);
 }
 
+.gs-rating-white-lg {
+  @include border-circle($size: 64px);
+}
+
 .performance-box {
   color: $text-color;
   padding: $spacing-medium;

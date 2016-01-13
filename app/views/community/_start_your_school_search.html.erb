@@ -3,26 +3,21 @@
   <h2 class="lg-roboto"><%= t(".#{@t_scope}.title") %></h2>
   <div class='header-subtext open-sans_sb'><%= t(".#{@t_scope}.subtitle") %></div>
 </div>
-<%= render partial: 'at_1198' %>
-<div class='row'>
-  <% #Ratings1 %>
-  <div class='col-xs-12 col-sm-6 pal'>
-    <!-- <div class='clearfix mrm pull&#45;left'> -->
-    <!--   <div class="gs&#45;rating&#45;white&#45;sm rating&#45;icon&#45;margin above_average">10</div> -->
-    <!--   <div class="gs&#45;rating&#45;white&#45;sm rating&#45;icon&#45;margin average">5</div> -->
-    <!--   <div class="gs&#45;rating&#45;white&#45;sm rating&#45;icon&#45;margin below_average">1</div> -->
-    <!-- </div> -->
-    <span class='ratings-sub-title'><%= t(".#{@t_scope}.paragraph_title_1") %></span>
-    <div><%= t(".#{@t_scope}.paragraph_description_1_html") %></div>
-  </div>
-  <% #Ratings2 %>
-  <div class='col-xs-12 col-sm-6 pal'>
-    <!-- <div class='clearfix mrm pull&#45;left'> -->
-    <!--   <div class="gs&#45;rating&#45;smallish rating&#45;icon&#45;margin above_average">10</div> -->
-    <!--   <div class="gs&#45;rating&#45;smallish rating&#45;icon&#45;margin average">5</div> -->
-    <!--   <div class="gs&#45;rating&#45;smallish rating&#45;icon&#45;margin below_average">1</div> -->
-    <!-- </div> -->
-    <span class='ratings-sub-title'><%= t(".#{@t_scope}.paragraph_title_2") %></span>
-    <div><%= t(".#{@t_scope}.paragraph_description_2") %></div>
+
+<div class="container-fluid">
+  <div class='row'>
+    <% #Ratings1 %>
+    <div class='col-xs-12 col-sm-6 pal'>
+        <%= render partial: 'community/school_rating_sample' %>
+        <span class='ratings-sub-title'><%= t(".#{@t_scope}.paragraph_title_1") %></span>
+        <div><%= t(".#{@t_scope}.paragraph_description_1_html") %></div>
+    </div>
+
+    <% #Ratings2 %>
+    <div class='col-xs-12 col-sm-6 pal'>
+        <%= render partial: 'community/comparison_barchart_sample' %>
+        <span class='ratings-sub-title'><%= t(".#{@t_scope}.paragraph_title_2") %></span>
+        <div><%= t(".#{@t_scope}.paragraph_description_2") %></div>
+    </div>
   </div>
 </div>
