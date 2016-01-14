@@ -29,6 +29,15 @@ class SearchController < ApplicationController
   MAX_RADIUS = 60
   MIN_RADIUS = 1
 
+
+  def default_search
+      gon.pagename = "DefaultSearchPage"
+      render 'search/default_search'
+
+
+  end
+
+
   def search
     @state = {
         long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
