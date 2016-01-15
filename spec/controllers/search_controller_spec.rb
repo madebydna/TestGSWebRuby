@@ -24,6 +24,12 @@ describe SearchController do
         expect(response).to redirect_to(default_search_url)
       end
     end
+    context 'when only blank q and state params present' do
+      it 'should go to default search page' do
+        get :search, state: 'CA', q: ''
+        expect(response).to redirect_to(default_search_url)
+      end
+    end
   end
 
   describe '#parse_filters' do
