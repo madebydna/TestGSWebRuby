@@ -55,7 +55,9 @@ class OspRegistrationController < ApplicationController
     gon.pagename = 'GS:OSP:Register'
     set_meta_tags title: page_title,
                   description:' Register for a school account to edit your school\'s profile on GreatSchools.',
-                  keywords:'School accounts, register, registration, edit profile'
+                  keywords:'School accounts, register, registration, edit profile',
+                  robots: 'noindex, nofollow, noarchive'
+
   end
 
   def is_delaware_public_or_charter_user?
