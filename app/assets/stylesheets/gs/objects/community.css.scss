@@ -78,6 +78,33 @@
     background-color: #f4f4f4;
     border: 2px solid #dedede;
     border-radius: 4px;
-    height:160px;
+    height: auto;
+  }
+  .school-rating {
+    margin-bottom: 10px;
+
+    .rating-score {
+      padding-top: 20px;
+      @media (max-width: $screen-sm-min) {
+        padding-top: 5px;
+      }
+    }
+    .rating {
+      @media (max-width: $screen-sm-min) {
+        margin: 5px 0;
+      }
+      h2 {
+        padding-left: 10px;
+        @media (max-width: $screen-sm-min) {
+          padding: 5px 0 0 5px;
+        }
+      }
+    }
+    .score {
+      @media (max-width: $screen-sm-min) {
+        margin-left: 6px;
+      }
+    }
+    min-height: 130px;
   }
 }
