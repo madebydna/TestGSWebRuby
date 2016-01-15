@@ -20,7 +20,9 @@
           end
         %>
 
-        <% if @district %>
+        <% if @normalized_address %>
+        <%=  @normalized_address  %>
+        <% elsif @district %>
           <%= t('.in_district', district: @district.name) %>
         <% elsif @city %>
           <%= t('.in_city_state', city: @city.name, state: @city.state) %>

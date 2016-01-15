@@ -144,7 +144,7 @@ class SearchController < ApplicationController
       @lon = params_hash['lon']
       search_options.merge!({lat: @lat, lon: @lon, radius: radius_param})
       search_options.merge!({state: state_abbreviation}) if @state
-      @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
+      @normalized_address = params_hash['normalizedAddress']
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end
