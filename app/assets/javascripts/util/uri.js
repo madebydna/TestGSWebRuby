@@ -116,8 +116,7 @@ GS.uri.Uri.putIntoQueryString = function(queryString, key, value, overwrite) {
 GS.uri.Uri.getFromQueryString = function(key, queryString) {
     queryString = queryString || window.location.search.substring(1);
     var vars = [];
-//    var results = [];
-    var result ;
+    var result;
 
     if (queryString.length > 0) {
         vars = queryString.split("&");
@@ -126,11 +125,9 @@ GS.uri.Uri.getFromQueryString = function(key, queryString) {
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
         var thisKey = pair[0];
-//        var result ;
 
         if (decodeURIComponent(thisKey) === key) {
             result = decodeURIComponent(pair[1].replace(/\+/g, ' '));
-//            results.push(result);
             break;
         }
     }
