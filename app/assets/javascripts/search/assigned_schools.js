@@ -40,13 +40,12 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var lat = GS.uri.Uri.getFromQueryString("lat");
         var lon = GS.uri.Uri.getFromQueryString("lon");
         var gradeLevels = GS.uri.Uri.getFromQueryStringAsArray("gradeLevels[]");
+        var gradeLevelsCommaSeperated = gradeLevels.join();
         if (!lat || !lon || !isSearchSpecificEnough()) {
             $('#js-assigned-school-not-valid').show('slow');
             return;
         }
-        var data = {lat: lat, lon: lon ,level:gradeLevels};
-
-alert(data.level);
+        var data = {lat: lat, lon: lon ,level:gradeLevelsCommaSeperated};
         jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
             if (data && data.results && data.results.length) {
                 var totalSchoolsFound = 0;
