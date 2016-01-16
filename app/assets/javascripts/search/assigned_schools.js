@@ -34,8 +34,6 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     };
 
     var getAssignedSchools = function(setAssignedSchoolCallbackFn) {
-        alert('I am here');
-
         setAssignedSchoolCallbackFn = setAssignedSchoolCallbackFn || setAssignedSchool;
         var lat = GS.uri.Uri.getFromQueryString("lat");
         var lon = GS.uri.Uri.getFromQueryString("lon");
