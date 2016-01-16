@@ -32,6 +32,7 @@ class SchoolCacheDecorator
       @cache_data.each_with_object({}) do |(_, data), hash|
         data.each do |key, values|
           hash[key.to_sym] = []
+          values = Array.wrap(values)
           values.each { |v| hash[key.to_sym] << v.symbolize_keys }
         end
       end
