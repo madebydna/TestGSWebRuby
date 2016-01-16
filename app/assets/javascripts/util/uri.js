@@ -116,7 +116,8 @@ GS.uri.Uri.putIntoQueryString = function(queryString, key, value, overwrite) {
 GS.uri.Uri.getFromQueryString = function(key, queryString) {
     queryString = queryString || window.location.search.substring(1);
     var vars = [];
-    var result;
+//    var results = [];
+    var result ;
 
     if (queryString.length > 0) {
         vars = queryString.split("&");
@@ -125,14 +126,41 @@ GS.uri.Uri.getFromQueryString = function(key, queryString) {
     for (var i = 0; i < vars.length; i++) {
         var pair = vars[i].split("=");
         var thisKey = pair[0];
+//        var result ;
 
         if (decodeURIComponent(thisKey) === key) {
             result = decodeURIComponent(pair[1].replace(/\+/g, ' '));
+//            results.push(result);
             break;
         }
     }
     return result;
 };
+
+/**
+ * Static method that returns the value associated with a key in the current url's query string
+ * @param key
+ */
+GS.uri.Uri.getFromQueryStringAsArray = function(key, queryString) {
+    queryString = queryString || window.location.search.substring(1);
+    var vars = [];
+    var results = [];
+    if (queryString.length > 0) {
+        vars = queryString.split("&");
+    }
+
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        var thisKey = pair[0];
+        var result ;
+        if (decodeURIComponent(thisKey) === key) {
+            result = decodeURIComponent(pair[1].replace(/\+/g, ' '));
+            results.push(result);
+        }
+    }
+    return results;
+};
+
 
 /**
  * Static method that removes a key/value from the provided querystring
