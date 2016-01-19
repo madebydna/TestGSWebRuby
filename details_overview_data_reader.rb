@@ -1,4 +1,4 @@
-class CacheDataReader < SchoolProfileDataReader
+class DetailsOverviewDataReader < SchoolProfileDataReader
   include CachedCategoryDataConcerns
 
   # Yes, yes, we know it's silly that the PerformanceDataReader pulls from
@@ -14,12 +14,13 @@ class CacheDataReader < SchoolProfileDataReader
   attr_accessor :category, :config, :data
 
   def data_for_category(category)
-    require'pry';binding.pry
     self.category = category
     self.config = category.parsed_json_config
     get_data!
     transform_data_keys!
-    data 
+    data
+    # CombineCharacteristicsAndEspResponsesData.new(transform_data_keys!)
+    # CombineCharacteristicsAndEspResponsesData.run
   rescue
     []
   end

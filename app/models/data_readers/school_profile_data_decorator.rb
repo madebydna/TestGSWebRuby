@@ -34,8 +34,8 @@ module SchoolProfileDataDecorator
     if (base.instance_variable_get :@performance_data_reader).nil?
       base.instance_variable_set :@performance_data_reader, PerformanceDataReader.new(base)
     end
-    if (base.instance_variable_get :@cache_data_reader).nil?
-      base.instance_variable_set :@cache_data_reader, CacheDataReader.new(base)
+    if (base.instance_variable_get :@details_overview_data_reader).nil?
+      base.instance_variable_set :@details_overview_data_reader, CacheDataReader.new(base)
     end
     if (base.instance_variable_get :@nearby_schools_data_reader).nil?
       base.instance_variable_set :@nearby_schools_data_reader, NearbySchoolsDataReader.new(base)
@@ -63,7 +63,7 @@ module SchoolProfileDataDecorator
       rating_data: @rating_data,
       snapshot: @snapshot_data_reader,
       performance: @performance_data_reader,
-      cache: @cache_data_reader,
+      details_overview: @details_overview_data_reader,
       nearby_schools: @nearby_schools_data_reader,
       test_scores: @test_scores_data_reader
     }
@@ -82,7 +82,7 @@ module SchoolProfileDataDecorator
       rating_data
       snapshot
       performance
-      cache
+      details_overview
       nearby_schools
       test_scores
       census_data_points
@@ -223,9 +223,9 @@ module SchoolProfileDataDecorator
     _memoize(:performance, category_key(category)) { @performance_data_reader.data_for_category category }
   end
 
-  def cache(options = {})
+  def details_overview(options = {})
     category = options[:category]
-    _memoize(:cache, category_key(category)) { @cache_data_reader.data_for_category category }
+    _memoize(:details_overview, category_key(category)) { @details_overview_data_reader.data_for_category category }
   end
 
   def nearby_schools(options = {})
