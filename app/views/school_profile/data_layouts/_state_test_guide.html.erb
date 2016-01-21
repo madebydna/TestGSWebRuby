@@ -8,14 +8,24 @@
   display_link = (sbac_state || parcc_state) &&
     @school.public_or_charter? && 
       @school.includes_level_code?(level_codes_targeted)
+
+  milestone_level_codes_targeted = %w(h)
+  display_milestone_link = @school.includes_level_code?(milestone_level_codes_targeted)
 %>
 
 <% if display_link  %>
-  <div class="external-link-callout mtl">
+  <div class="external-link-callout mtl mhs">
     <%= t('.state_test_guide_text_html') %>
     <a class="open-sans_b" target="_blank" href="<%= common_core_test_guide_url %>">
       <%# If link is displayed and is not sbac state will display parcc link text %>
        <%= sbac_state ? t('.sbac_state_test_guide_text_link') : t('.parcc_state_test_guide_text_link') %>
     </a> 
+  </div>
+<% elsif display_milestone_link %>
+  <div class="external-link-callout mtl mhs">
+    <%= t('.high_school_milestone_text') %>
+    <a class="open-sans_b" target="_blank" href="<%= gk_levels_high_school_path %>">
+      <%= t('.high_school_milestone_link_text') %>
+    </a>
   </div>
 <% end  %>
