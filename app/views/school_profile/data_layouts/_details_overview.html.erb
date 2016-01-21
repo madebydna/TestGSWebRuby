@@ -1,21 +1,43 @@
+<% data %>
+<% basic_information = data.basic_information %>
+
+<% programs_and_culture = {
+    header: 'Programs & culture',
+    data: {
+        'Academic focus' => 'Business, Special Ed, Technology',
+        'Arts' => 'Computer animation, Graphics, Video, and Film',
+        'World languages' => 'French, German, Spanish, Hungarian, Polish'
+    },
+    link: 'tbd'
+} %>
+
+
 <div class="container gs-bootstrap">
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-lg-8">
       <div class="row">
         <div class="col-xs-12 col-lg-6">
-          <h2>BASIC INFORMATION</h2>
+          <h2><%= basic_information[:header] %></h2>
           <ul>
-            <li>Before/AfterCare</li>
-            <li>Dress Code</li>
-            <li>Transporation</li>
+            <% basic_information[:data].each_pair do |label, values| %>
+              <li>
+                <strong><%= label %></strong>
+                <br/>
+                <%= values %>
+              </li>
+            <% end %>
           </ul>
         </div>
         <div class="col-xs-12 col-lg-6">
-          <h2>PROGRAMS & CULTURE</h2>
+          <h2><%= programs_and_culture[:header] %></h2>
           <ul>
-            <li>Before/AfterCare</li>
-            <li>Dress Code</li>
-            <li>Transporation</li>
+            <% programs_and_culture[:data].each_pair do |label, values| %>
+              <li>
+                <strong><%= label %></strong>
+                <br/>
+                <%= values %>
+              </li>
+            <% end %>
           </ul>
         </div>
         <div class="clearfix visible-lg"></div>
