@@ -1,6 +1,7 @@
 <% if @greatkids_content.present? %>
 <div class="limit-width-1200">
-  <% @greatkids_content.features.each_with_index do |feature, index| %>
+  <% @greatkids_content.features[0..1].each_with_index do |feature, index| %>
+    <% next unless feature.valid_posts.present? && feature.valid_posts.size > 1 %>
     <% if index > 0 %>
       <hr/>
     <% end %>
@@ -8,7 +9,7 @@
       <h2><%= feature.heading %></h2>
     </div>
     <div class="row">
-      <% feature.posts_with_thumbnails.each do |post| %>
+      <% feature.valid_posts[0..1].each do |post| %>
         <% article_hash = {
           title: post.promo || post.title,
           image: post.large_tile_image.try(:url),

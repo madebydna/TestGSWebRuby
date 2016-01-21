@@ -18,7 +18,11 @@ class HomeController < ApplicationController
     set_omniture_pagename
     gon.pagename = "Homepage"
 
-    @greatkids_content = greatkids_content
+    begin
+      @greatkids_content = greatkids_content
+    rescue => e
+      GSLogger.error(:external_content_fetcher, e, {message: 'Unexpected exception retrieving greatkids content for homepage'})
+    end
   end
 
   def set_omniture_pagename
