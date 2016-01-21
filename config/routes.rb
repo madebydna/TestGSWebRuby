@@ -88,6 +88,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
     get '/gk/emotional-smarts/', as: :emotional_smarts
+    get '/gk/road-to-college/', as: :road_to_college
     get '/gk/category/learning-disabilities/', as: :learning_disabilities
     get '/parenting.topic?content=1539', as: :health_and_behavior
     get '/gk/common-core-test-guide/', as: :common_core_test_guide
