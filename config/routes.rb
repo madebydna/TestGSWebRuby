@@ -118,7 +118,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/summer-learning/', as: :summer_learning
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
-    get '/gk/levels/high-school/', as: :gk_levels_high_school #spanish for this is hardcoded in view!! BB-380
+    get '/gk/levels/high-school/', as: :gk_levels_high_school
+    get '/gk/levels/high-school-es/', as: :gk_levels_high_school_es
     get '/status/error404.page'
   end
 

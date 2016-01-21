@@ -25,7 +25,7 @@
   <div class="external-link-callout mtl mhs">
     <%= t('.high_school_milestone_text') %>
     <%# hardcoded for now because we need to handle writing out worspress spanish links%>
-    <a class="open-sans_b" target="_blank" href="<%= locale == :es ? '/gk/levels/high-school-es/?lang=es' : gk_levels_high_school_path %>">
+    <a class="open-sans_b" target="_blank" href="<%= locale == :es ? gk_levels_high_school_es_path : gk_levels_high_school_path %>">
       <%= t('.high_school_milestone_link_text') %>
     </a>
   </div>
