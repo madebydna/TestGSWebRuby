@@ -1,14 +1,19 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this section %>
+<% section_id = category_placement.layout_config_json['section_id'] %>
 
 <% GSLogger.swallow_and_log_errors_unless_development(:school_profile, category_placement.attributes, 'Something went wrong when trying to render category placement') do %>
   <% children = @page_config.category_placement_children_with_data category_placement %>
   <% if children.any? && category_placement.title.present? %>
     <% partial_collection_markup = render partial: 'category_placement', collection: children, as: :category_placement %>
     <% if partial_collection_markup.present? %>
-      <div class="row">
+      <% section_class = 'row' %>
+      <% if section_id == 'facebook-section' %>
+        <% section_class = 'row dn' %>
+      <% end %>
+      <%= content_tag('div', class: section_class, id: section_id) do %>
         <%= render "shared/section_header", category_placement: category_placement %>
         <%= partial_collection_markup %>
-      </div>
+      <% end %>
     <% end %>
   <% end %>
 <% end %>

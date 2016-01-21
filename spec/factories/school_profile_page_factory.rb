@@ -16,7 +16,8 @@ class SchoolProfilePageFactory
       :category_placement,
       title: 'Facebook',
       page: page,
-      layout: 'section'
+      layout: 'section',
+      layout_config: JSON.pretty_unparse({ section_id: 'facebook-section' })
     )
 
     facebook_module = FactoryGirl.create(

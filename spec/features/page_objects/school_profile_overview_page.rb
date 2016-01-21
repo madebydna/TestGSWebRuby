@@ -31,6 +31,10 @@ class SchoolProfileOverviewPage < SitePrism::Page
     end
   end
 
+  section :facebook_section, '#facebook-section' do
+    element :facebook_module_heading, 'h2', text:'Facebook'
+  end
+
   element :contact_this_school_header, 'h2', text:'Contact this school'
 
   element :contact_this_school_content, 'div.contact-content'
