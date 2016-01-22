@@ -2,15 +2,16 @@ require 'features/page_objects/header_section'
 require 'features/page_objects/modules/breadcrumbs'
 require 'features/page_objects/modules/gs_rating'
 require 'features/page_objects/modules/modals'
+require 'features/page_objects/modules/school_profile_page'
 
 class SchoolProfileOverviewPage < SitePrism::Page
   include Breadcrumbs
   include GSRating
   include Modals
+  include SchoolProfilePage
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
-  element :profile_navigation, '#navigation2'
   section :header, HeaderSection, '.navbar-static'
   element :write_a_review_button, 'button', text: 'Write a review'
   element :apply_now_button, 'button', text: 'Apply now'
