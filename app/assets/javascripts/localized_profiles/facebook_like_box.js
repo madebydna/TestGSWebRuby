@@ -1,5 +1,41 @@
 GS.facebook = GS.facebook || {};
 
+GS.facebook.tryFacebookFallbackBehaviorOnInterval = function() {
+  if ($('.js-fb-page-plugin')[0]) {
+    jQuery(function () {
+      var opts = {
+        fbPagePluginDiv: jQuery('.js-fb-page-plugin').first(),
+        fbPagePluginFallbackDiv: jQuery('.js-fb-page-plugin-fallback').first(),
+        tooShortCounter: 0,
+        justRightCounter: 0
+      };
+
+      opts.intervalId = window.setInterval(GS.facebook.checkIframeHeight.bind(undefined, opts, jQuery), 50);
+
+      // Stop monitoring after at most 15 seconds. e.g. if Facebook failed to insert the iframe.
+      window.setTimeout(function () {
+        window.clearInterval(opts.intervalId);
+      }, 15000);
+    });
+  }
+};
+
+GS.facebook.showFacebookSection = function() {
+  var facebookSectionSelector = '#facebook-section';
+  var facebookSectionDesktopAdId = 'School_OverviewFacebookAd';
+  var facebookSectionMobileAdId = 'School_OverviewFacebookMobile_Ad';
+
+  $(facebookSectionSelector).removeClass('dn').show();
+
+  if($('#' + facebookSectionDesktopAdId).is(':visible')) {
+    GS.ad.showAd(facebookSectionDesktopAdId);
+  } else if ($('#' + facebookSectionMobileAdId).is(':visible')) {
+    GS.ad.showAd(facebookSectionMobileAdId);
+  }
+
+  GS.facebook.tryFacebookFallbackBehaviorOnInterval();
+};
+
 /**
  * Monitors the height of the Facebook plugin iframe, and calls handleIframeTooShort if it consistently drops
  * below HEIGHT_CUTOFF, where consistently is defined as at least TOO_SHORT_LIMIT measurements.
