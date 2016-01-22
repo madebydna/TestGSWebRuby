@@ -35,7 +35,7 @@ module SchoolProfileDataDecorator
       base.instance_variable_set :@performance_data_reader, PerformanceDataReader.new(base)
     end
     if (base.instance_variable_get :@details_overview_data_reader).nil?
-      base.instance_variable_set :@details_overview_data_reader, CacheDataReader.new(base)
+      base.instance_variable_set :@details_overview_data_reader, DetailsOverviewDataReader.new(base)
     end
     if (base.instance_variable_get :@nearby_schools_data_reader).nil?
       base.instance_variable_set :@nearby_schools_data_reader, NearbySchoolsDataReader.new(base)
