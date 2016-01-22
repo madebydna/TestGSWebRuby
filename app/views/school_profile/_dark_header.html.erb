@@ -6,7 +6,15 @@
 <% contact_info_anchor = school_url(school, anchor: 'Contact_this_school') %>
 <% contact_info_link = raw(
      '<span class="iconx16 i-16-blue-map-view"></span>' <<
-     link_to(t('contact_info', scope: t_scope), contact_info_anchor)
+     link_to(
+       t('contact_info', scope: t_scope),
+       contact_info_anchor,
+       class: 'js-gaClick',
+       data: {
+         'ga-click-category' => 'Profile interactions',
+         'ga-click-action' => 'Contact Info'
+       }
+     )
    )
 %>
 <% apply_now_url = school.school_metadata.apply_now_url %>
@@ -68,7 +76,7 @@
   ]
 %>
 
-<div id="ab-test-profile-header" class="profile-dark-header gs-bootstrap dn">
+<div class="profile-dark-header gs-bootstrap">
   <div class="header">
     <div class="container-fluid">
       <div class="pbm">
@@ -107,7 +115,8 @@
             <div class="col-xs-4">
               <%= link_to t('contact_info', scope: t_scope),
                   contact_info_anchor,
-                  class: 'btn btn-primary btn-block'
+                  class: 'btn btn-primary btn-block js-gaClick',
+                  data: { 'ga-click-category' => 'Profile interactions', 'ga-click-action' => 'Contact Info'}
               %>
             </div>
             <% if apply_now_url.present? %>
