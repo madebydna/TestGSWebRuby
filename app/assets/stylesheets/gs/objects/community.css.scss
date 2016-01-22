@@ -74,4 +74,43 @@
       }
     }
   }
+  .community-samples {
+    background-color: #f4f4f4;
+    border: 2px solid #dedede;
+    border-radius: 4px;
+    height: auto;
+  }
+  .school-rating {
+    margin-bottom: 10px;
+
+    .rating-score {
+      padding-top: 20px;
+      @media (max-width: $screen-sm-min) {
+        padding-top: 5px;
+      }
+    }
+    .rating {
+      @media (max-width: $screen-sm-min) {
+        margin: 5px 0;
+      }
+      h2 {
+        font-size: 27px;
+        padding-left: 10px;
+        @media (max-width: $screen-sm-min) {
+          padding: 5px 0 0 5px;
+        }
+      }
+    }
+    .score {
+      h4 {
+        font-size: 16px;
+        margin-top: 5px;
+      }
+      @media (max-width: $screen-sm-min) {
+        margin-left: 6px;
+        margin-top: 0;
+      }
+    }
+    min-height: 130px;
+  }
 }

@@ -36,6 +36,9 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  get '/find-schools/', as: :default_search, to: 'search#default_search'
+
+
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'
@@ -85,6 +88,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
     get '/gk/emotional-smarts/', as: :emotional_smarts
+    get '/gk/road-to-college/', as: :road_to_college
     get '/gk/category/learning-disabilities/', as: :learning_disabilities
     get '/parenting.topic?content=1539', as: :health_and_behavior
     get '/gk/common-core-test-guide/', as: :common_core_test_guide
@@ -114,6 +118,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/summer-learning/', as: :summer_learning
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
+    get '/gk/levels/high-school/', as: :gk_levels_high_school
+    get '/gk/levels/high-school-es/', as: :gk_levels_high_school_es
     get '/status/error404.page'
   end
 

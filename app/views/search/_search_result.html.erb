@@ -1,4 +1,4 @@
-<% school_page_path = (school.try(:profile_path) || school_path(school)) %>
+<% school_page_path =  school_path(school) %>
 <% query_string = '' %>
 <% query_string << "?lang=#{params[:lang]}" if params[:lang] %>
 <% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>

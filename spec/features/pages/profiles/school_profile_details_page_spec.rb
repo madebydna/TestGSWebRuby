@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'features/contexts/school_profile_contexts'
 require 'features/examples/page_examples'
 require 'features/page_objects/school_profile_details_page'
-
+require 'features/examples/school_profile_header_examples'
 
 
 def expect_it_to_have_element(element)
@@ -24,7 +24,7 @@ describe 'School Profile Details Page' do
   include_context 'Visit School Profile Details'
   with_shared_context 'with Cristo Rey New York High School' do
     include_example 'should be on the correct page'
-    expect_it_to_have_element(:profile_navigation)
+    it_behaves_like 'a page with school profile header'
   end
 
   after do

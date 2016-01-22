@@ -17,8 +17,22 @@ describe SearchController do
     end
   end
 
-  describe '#parse_filters' do
+  describe '#search' do
+    context 'when only lat and lon params present' do
+      it 'should go to default search page' do
+        get :search, lat: '1', lon: '1'
+        expect(response).to redirect_to(default_search_url)
+      end
+    end
+    context 'when only blank q and state params present' do
+      it 'should go to default search page' do
+        get :search, state: 'CA', q: ''
+        expect(response).to redirect_to(default_search_url)
+      end
+    end
+  end
 
+  describe '#parse_filters' do
     context 'when on district browse and there is matching hub' do
       let(:params_hash) { {} }
       before do

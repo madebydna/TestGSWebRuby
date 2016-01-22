@@ -12,6 +12,7 @@
 //= require ./forgot_password_init
 // require ./header_init
 //= require ./home_init
+//= require ./defaultSearch_init
 //= require ./osp_init
 //= require ./osp_landing_init
 //= require ./osp_registration_init

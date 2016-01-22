@@ -6,7 +6,13 @@ class WpFeature
 
   define_initialize_that_accepts_hash
 
-  def posts_with_thumbnails
-    posts.select { |post| post.thumbnail_images.present? }
+  def valid_posts
+    begin
+      posts.select do |post|
+        post.thumbnail_images.present? && (post.promo || post.title) && post.url && post.large_tile_image
+      end
+    rescue
+      []
+    end
   end
 end

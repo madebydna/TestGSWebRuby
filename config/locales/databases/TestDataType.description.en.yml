@@ -22,6 +22,7 @@ en:
   AZ Learns: AZ Learns
   AZ MAP: AZ MAP
   AZ Terra Nova: AZ Terra Nova
+  AZMerit: AZMerit
   Average SAT Score: Average SAT Score
   Award or Recognition: Award or Recognition
   Business Week Best Schools: Business Week Best Schools
@@ -35,13 +36,16 @@ en:
     percentil
   CA Cat6 mean npr: CA Cat6 mean npr
   CA HS Exit Exam: CA HS Exit Exam
+  CA Similar Schools Comparison Predicted Rating: CA Similar Schools Comparison Predicted
+    Rating
   CA Standards Test: CA Standards Test
-  California Assessment of Student Performance and Progress: California Assessment of Student Performance and Progress
   CO Academic Performance Ratings: CO Academic Performance Ratings
   CO Student Assessment Program: CO Student Assessment Program
   CO TCAP: CO TCAP
   CT Connecticut Academic Performance Test: CT Connecticut Academic Performance Test
   CT Connecticut Mastery Test: CT Connecticut Mastery Test
+  California Assessment of Student Performance and Progress: California Assessment
+    of Student Performance and Progress
   Climate CulHighExp rating: Climate CulHighExp rating
   Climate Family Engagement rating: Climate Family Engagement rating
   Climate SchEnv rating: Climate SchEnv rating
@@ -83,6 +87,8 @@ en:
   GA GHSGT: GA GHSGT
   GA HS Writing Test: GA HS Writing Test
   GA Middle Grades Writing Assessment: GA Middle Grades Writing Assessment
+  GA Milestones End-of-Course: GA Milestones End-of-Course
+  GA Milestones End-of-Grade: GA Milestones End-of-Grade
   GreatSchools Overall Rating: GreatSchools Overall Rating
   HI Hawaii Content and Performance Standards: HI Hawaii Content and Performance Standards
   Hawaii State Assessment: Hawaii State Assessment
@@ -120,6 +126,8 @@ en:
   LA EOC: LA EOC
   LA Educational Assessment Program: LA Educational Assessment Program
   LA Graduation Exit Examination: LA Graduation Exit Examination
+  LA The Partnership for Assessment of Readiness for College and Careers: LA The Partnership
+    for Assessment of Readiness for College and Careers
   MA MCAS: MA MCAS
   MA MCAS STE: MA MCAS STE
   MD High School Assessment: MD High School Assessment
@@ -228,6 +236,7 @@ en:
   SC PASS: SC PASS
   SD Dakota State Test of Educational Progress: SD Dakota State Test of Educational
     Progress
+  Smarter Balance Assessment: Smarter Balance Assessment
   Stanford 10: Stanford 10
   Stanford 9 Achievement Test: Stanford 9 Achievement Test
   Student Growth: Student Growth
@@ -265,4 +274,5 @@ en:
     System
   Wisconsin Accountability Report: Wisconsin Accountability Report
   adequate yearly progress: adequate yearly progress
+  blank: blank
   total rating: total rating

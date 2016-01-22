@@ -17,6 +17,10 @@ module DataLayerConcerns
     @data_layer_gon_hash ||= (gon.data_layer_hash = {})
   end
 
+  def set_gtm_data_layer_attribute(key, value)
+    data_layer_gon_hash[key] = value
+  end
+
   def add_user_info_to_gtm_data_layer
     if current_user
       data_layer_gon_hash['User ID'] = current_user.id

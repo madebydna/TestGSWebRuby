@@ -4,6 +4,7 @@ en:
   ACT/SAT College Ready: ACT/SAT College Ready
   ACT/SAT Participation: ACT/SAT Participation
   AP Participation Rate: AP Participation Rate
+  AZMerit: AZMerit
   Achievement - Indicators Met: Achievement - Indicators Met
   Achievement - Performance Index: Achievement - Performance Index
   Adequate Yearly Progress: Adequate Yearly Progress
@@ -35,11 +36,14 @@ en:
   CA API Similar Schools Rank: CA API Similar Schools Rank
   CA API Statewide Rank: CA API Statewide Rank
   CA API Total: CA API Total
+  CA Similar Schools Comparison Predicted Rating: CA Similar Schools Comparison Predicted
+    Rating
   California Academic Performance Index (API) Base: California Academic Performance
     Index (API) Base
   California Academic Performance Index (API) Growth: California Academic Performance
     Index (API) Growth
-  California Assessment of Student Performance and Progress (CAASPP): California Assessment of Student Performance and Progress (CAASPP)
+  California Assessment of Student Performance and Progress (CAASPP): California Assessment
+    of Student Performance and Progress (CAASPP)
   California High School Exit Examination: California High School Exit Examination
   California Sixth Edition Survey (CAT6) Percent Scoring at or Above 50th Percentile: California
     Sixth Edition Survey (CAT6) Percent Scoring at or Above 50th Percentile
@@ -100,6 +104,10 @@ en:
   Georgia High School Graduation Tests: Georgia High School Graduation Tests
   Georgia High School Writing Test (GHSWT): Georgia High School Writing Test (GHSWT)
   Georgia Middle Grades Writing Assessment: Georgia Middle Grades Writing Assessment
+  Georgia Milestones End-of-Course (EOC) Assessment: Georgia Milestones End-of-Course
+    (EOC) Assessment
+  Georgia Milestones End-of-Grade (EOG) Assessment: Georgia Milestones End-of-Grade
+    (EOG) Assessment
   Great Start to Quality preschool rating: Great Start to Quality preschool rating
   GreatSchools Overall Rating: GreatSchools Overall Rating
   GreatSchools rating: GreatSchools rating
@@ -139,6 +147,8 @@ en:
   Louisiana Educational Assessment Program: Louisiana Educational Assessment Program
   Louisiana End of Course Test: Louisiana End of Course Test
   Louisiana Graduation Exit Examination: Louisiana Graduation Exit Examination
+  Louisiana The Partnership for Assessment of Readiness for College and Careers (PARCC): Louisiana
+    The Partnership for Assessment of Readiness for College and Careers (PARCC)
   MCA-II Graduation-Required Assessments for Diploma (MCA-II/GRAD): MCA-II Graduation-Required
     Assessments for Diploma (MCA-II/GRAD)
   MCAS Science and Technology/Engineering (MCAS STE) Tests: MCAS Science and Technology/Engineering
@@ -181,9 +191,9 @@ en:
   Missouri Assessment Program: Missouri Assessment Program
   Missouri Assessment Program (MAP) End-of-Course Assessments: Missouri Assessment
     Program (MAP) End-of-Course Assessments
+  NY State Common Core Regents Exam: NY State Common Core Regents Exam
   NYC Progress Report Grade: NYC Progress Report Grade
   NYC Progress Report URL: NYC Progress Report URL
-  NY State Common Core Regents Exam: NY State Common Core Regents Exam
   Nebraska School-based Teacher-led Assessment and Reporting System (STARS): Nebraska
     School-based Teacher-led Assessment and Reporting System (STARS)
   Nebraska State Accountability (NeSA): Nebraska State Accountability (NeSA)
@@ -253,6 +263,7 @@ en:
   Report Card Grade: Report Card Grade
   Rhode Island New Standards Reference Exams (NSREs): Rhode Island New Standards Reference
     Exams (NSREs)
+  Smarter Balance Assessment: Smarter Balance Assessment
   South Carolina High School Assessment Program: South Carolina High School Assessment
     Program
   South Carolina Palmetto Assessment of State Standards (PASS): South Carolina Palmetto

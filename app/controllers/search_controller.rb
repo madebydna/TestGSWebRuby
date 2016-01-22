@@ -29,6 +29,18 @@ class SearchController < ApplicationController
   MAX_RADIUS = 60
   MIN_RADIUS = 1
 
+
+  def default_search
+      gon.pagename = "DefaultSearchPage"
+      set_meta_tags title: 'Find a School In Your State | GreatSchools',
+                    description: 'Find and compare schools across the country by searching near an address or by name. Search for public, private, and charter schools, preschools, elementary, middle, and high schools.'
+
+      render 'search/default_search'
+
+
+  end
+
+
   def search
     @state = {
         long: States.state_name(params[:state].downcase.gsub(/\-/, ' ')),
@@ -38,19 +50,20 @@ class SearchController < ApplicationController
     @allow_compare = can_compare?
     gon.allow_compare = can_compare?
 
-    if params.include?(:lat) && params.include?(:lon)
+    if params.include?(:lat) && params.include?(:lon) && @state.present?
       self.by_location
-    elsif params.include?(:city) && params.include?(:district_name)
+    elsif params.include?(:city) && params.include?(:district_name) && @state.present?
       self.district_browse
-    elsif params.include?(:city)
+    elsif params.include?(:city) && @state.present?
       self.city_browse
     elsif params.include?(:q)
       if params_hash['q'].blank? && @state.present?
-        redirect_to state_url(:state => @state[:long]) and return
+        redirect_to default_search_url  and return
       end
       self.by_name
     else
-      render 'error/page_not_found', layout: 'error', status: 404
+      redirect_to default_search_url
+
     end
   end
 
@@ -131,7 +144,7 @@ class SearchController < ApplicationController
       @lon = params_hash['lon']
       search_options.merge!({lat: @lat, lon: @lon, radius: radius_param})
       search_options.merge!({state: state_abbreviation}) if @state
-      @normalized_address = params_hash['normalizedAddress'][0..75] if params_hash['normalizedAddress'].present?
+      @normalized_address = params_hash['normalizedAddress']
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end

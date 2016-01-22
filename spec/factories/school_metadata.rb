@@ -8,4 +8,9 @@ FactoryGirl.define do
     meta_key 'overallRating'
     meta_value '9'
   end
+
+  factory :facebook_school_metadata, class: SchoolMetadata do
+    meta_key 'facebook_url'
+    meta_value 'http://www.facebook.com/test'
+  end
 end

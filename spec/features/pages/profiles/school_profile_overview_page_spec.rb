@@ -5,6 +5,7 @@ require 'features/page_objects/school_profile_overview_page'
 require 'features/page_objects/school_profile_reviews_page'
 require 'features/page_objects/school_profile_quality_page'
 require 'features/examples/state_footer_examples'
+require 'features/examples/school_profile_header_examples'
 
 shared_context 'with an inactive school' do
   let!(:school) { FactoryGirl.create(:alameda_high_school, active: false) }
@@ -92,7 +93,7 @@ describe 'School Profile Overview Page' do
   with_shared_context 'Given basic school profile page' do
     with_shared_context 'with Alameda High School' do
       include_example 'should be on the correct page'
-      expect_it_to_have_element(:profile_navigation)
+      it_behaves_like 'a page with school profile header'
       it_behaves_like 'page with state footer features', short: 'CA', long: 'California'
 
       its(:header) { is_expected.to_not have_in_english_link }
@@ -142,12 +143,12 @@ describe 'School Profile Overview Page' do
 
     with_shared_context 'with Cristo Rey New York High School' do
       include_example 'should be on the correct page'
-      expect_it_to_have_element(:profile_navigation)
+      it_behaves_like 'a page with school profile header'
     end
 
     with_shared_context 'with a demo school' do
       include_example 'should be on the correct page'
-      expect_it_to_have_element(:profile_navigation)
+      it_behaves_like 'a page with school profile header'
       include_example 'should have the noindex meta tag'
       include_example 'should have the nofollow meta tag'
       include_example 'should have the noarchive meta tag'
@@ -232,17 +233,6 @@ describe 'School Profile Overview Page' do
     end
   end
 
-  describe 'Apply now button' do
-    with_shared_context 'Given basic school profile page' do
-      include_context 'with Alameda High School'
-      it { is_expected.to_not have_apply_now_button }
-      with_shared_context 'with apply now URL in school metadata' do
-        include_context 'Visit School Profile Overview'
-        it { is_expected.to have_apply_now_button }
-      end
-    end
-  end
-
   describe 'zillow module' do
     include_context 'Given school profile page with zillow module'
     include_context 'with Alameda High School'
@@ -255,6 +245,19 @@ describe 'School Profile Overview Page' do
     it { is_expected.to have_quick_links }
   end
 
+  describe 'facebook_module' do
+      include_context 'Given school profile page with Facebook module' do
+      include_context 'with Alameda High School'
+      before do
+        FactoryGirl.create(:facebook_school_metadata, school_id: school.id)
+      end
+      after do
+        clean_dbs :gs_schooldb
+      end
+      it { is_expected.to have_facebook_section }
+      its (:facebook_section) { is_expected.to have_facebook_module_heading }
+    end
+  end
 
 
 end

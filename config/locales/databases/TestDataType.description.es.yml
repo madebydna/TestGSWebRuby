@@ -1,268 +1,206 @@
 ---
 es:
-  NJ Biology Competency Test: NJ Biology Competency Test
-  ACT: ACT
-  ACT Percent College Ready: ACT Percent College Ready
-  ACT/SAT Participation: ACT/SAT Participation
+  ACT: ACTO
   AK Alaska Benchmark Exam: AK Alaska Benchmark Exam
-  AK High School Graduation Qualifying Exam: AK High School Graduation Qualifying
-    Exam
-  AK Standards Based Assessment: AK Standards Based Assessment
-  AL Alabama High School Graduation Exam: AL Alabama High School Graduation Exam
-  AL Alabama Science Assessment: AL Alabama Science Assessment
-  AL Direct Assessment of Writing Exam: AL Direct Assessment of Writing Exam
-  AL Reading and Mathematics Test: AL Reading and Mathematics Test
-  AP Participation Rate: AP Participation Rate
-  AR Arkansas Benchmark Exams: AR Arkansas Benchmark Exams
-  AR Comprehensive Testing, Assessment and Accountability Program End-of-Course Exams: AR
-    Comprehensive Testing, Assessment and Accountability Program End-of-Course Exams
-  AR Comprehensive Testing, Assessment, and Accountability Program Benchmark Exams: AR
-    Comprehensive Testing, Assessment, and Accountability Program Benchmark Exams
-  AZ Aims: AZ Aims
+  AK High School Graduation Qualifying Exam: AK de la graduación Examen de Calificación
+  AK Standards Based Assessment: Evaluación Basado AK Normas
+  AL Alabama High School Graduation Exam: Graduación de la Escuela de AL Alabama examen
+  AL Alabama Science Assessment: Evaluación AL Alabama Ciencia
+  AL Direct Assessment of Writing Exam: AL evaluación directa de Examen de Escritura
+  AL Reading and Mathematics Test: AL Lectura y Prueba de Matemáticas
+  AR Arkansas Benchmark Exams: Exámenes Benchmark AR Arkansas
+  AR Comprehensive Testing, Assessment and Accountability Program End-of-Course Exams: AR pruebas completas, evaluación y rendición de cuentas del programa de fin de curso Exámenes
+  AR Comprehensive Testing, Assessment, and Accountability Program Benchmark Exams: AR pruebas completas, evaluación y rendición de cuentas del Programa de Exámenes Benchmark
+  AZ Aims: AZ Objetivos
   AZ Learns: AZ Learns
-  AZ MAP: AZ MAP
+  AZ MAP: AZ MAPA
   AZ Terra Nova: AZ Terra Nova
-  Average SAT Score: Average SAT Score
-  Award or Recognition: Award or Recognition
-  Business Week Best Schools: Business Week Best Schools
-  CA API Base: CA API Base
-  CA API Change from previous year: CA API Change from previous year
-  CA API Growth: CA API Growth
-  CA API Similar Schools Rank: CA API Similar Schools Rank
-  CA API Statewide Rank: CA API Statewide Rank
-  CA API Total: CA API Total
-  CA CAT6 % scoring at or above 50th percentil: CA CAT6 % scoring at or above 50th
-    percentil
-  CA Cat6 mean npr: CA Cat6 mean npr
-  CA HS Exit Exam: CA HS Exit Exam
-  CA Standards Test: CA Standards Test
-  California Assessment of Student Performance and Progress: California Assessment of Student Performance and Progress
-  CO Academic Performance Ratings: CO Academic Performance Ratings
-  CO Student Assessment Program: CO Student Assessment Program
+  CA API Base: CA Base API
+  CA API Change from previous year: CA Cambio API del año anterior
+  CA API Growth: Crecimiento API CA
+  CA CAT6 % scoring at or above 50th percentil: CA CAT6% de puntuación igual o superior a 50º percentil
+  CA Cat6 mean npr: CA Cat6 significa npr
+  CA HS Exit Exam: CA HS Examen de Salida
+  CA Standards Test: CA Examen de Estándares
+  CO Academic Performance Ratings: CO Académicas Calificaciones de Desempeño
+  CO Student Assessment Program: Programa de Evaluación de Estudiantes CO
   CO TCAP: CO TCAP
-  CT Connecticut Academic Performance Test: CT Connecticut Academic Performance Test
+  CT Connecticut Academic Performance Test: Prueba de Rendimiento Académico de Connecticut CT
   CT Connecticut Mastery Test: CT Connecticut Mastery Test
-  Climate CulHighExp rating: Climate CulHighExp rating
-  Climate Family Engagement rating: Climate Family Engagement rating
-  Climate SchEnv rating: Climate SchEnv rating
-  Climate Social Emotional Learning rating: Climate Social Emotional Learning rating
-  Climate TeachSupp rating: Climate TeachSupp rating
-  Climate overall-climate rating: Climate overall-climate rating
-  Comprehensive Test of Basic Skills: Comprehensive Test of Basic Skills
-  DC OSSE Rating: DC OSSE Rating
+  California Assessment of Student Performance and Progress: Evaluación del desempeño y progreso de los estudiantes de California
+  Climate CulHighExp rating: Climatológico CulHighExp
+  Climate Family Engagement rating: Evaluación del Clima de Participación Familiar
+  Climate SchEnv rating: Climatológico SchEnv
+  Climate Social Emotional Learning rating: Clima Social calificación Aprendizaje Emocional
+  Climate TeachSupp rating: Climatológico TeachSupp
+  Climate overall-climate rating: Clima calificación global del clima
+  DC OSSE Rating: DC OSSE Clasificación
   DC-CAS: DC-CAS
-  DE AIR: DE AIR
-  DE Comprehensive Assessment System: DE Comprehensive Assessment System
-  ! 'Detroit Prek Rating: Administration and Management': ! 'Detroit Prek Rating:
-    Administration and Management'
-  ! 'Detroit Prek Rating: Curriculum and Instruction': ! 'Detroit Prek Rating: Curriculum
-    and Instruction'
-  ! 'Detroit Prek Rating: Environment': ! 'Detroit Prek Rating: Environment'
-  ! 'Detroit Prek Rating: Family and Community Partnerships': ! 'Detroit Prek Rating:
-    Family and Community Partnerships'
-  ! 'Detroit Prek Rating: Overall Rating': ! 'Detroit Prek Rating: Overall Rating'
-  ! 'Detroit Prek Rating: Staff Qualifications and Professional Development': ! 'Detroit
-    Prek Rating: Staff Qualifications and Professional Development'
-  ESD Preschool Rating: ESD Preschool Rating
-  Excellent Schools Detroit Academic Progress Rating: Excellent Schools Detroit Academic
-    Progress Rating
-  Excellent Schools Detroit Academic Status Rating: Excellent Schools Detroit Academic
-    Status Rating
-  Excellent Schools Detroit Overall Rating: Excellent Schools Detroit Overall Rating
-  Excellent Schools Detroit School Climate Rating: Excellent Schools Detroit School
-    Climate Rating
+  DE AIR: DE AIRE
+  DE Comprehensive Assessment System: Sistema de Evaluación Integral DE
+  ! 'Detroit Prek Rating: Administration and Management': ! 'Detroit Prek Clasificación: Administración y Dirección de'
+  ! 'Detroit Prek Rating: Curriculum and Instruction': ! 'Detroit Prek Clasificación: Currículo e Instrucción'
+  ! 'Detroit Prek Rating: Environment': ! 'Detroit Prek Clasificación: Medio Ambiente'
+  ! 'Detroit Prek Rating: Family and Community Partnerships': ! 'Detroit Prek Clasificación: Familia y Comunidad Asociaciones'
+  ! 'Detroit Prek Rating: Overall Rating': ! 'Detroit Prek Rating: Calificación General'
+  ! 'Detroit Prek Rating: Staff Qualifications and Professional Development': ! 'Detroit Prek Clasificación: Cualificaciones y Desarrollo Profesional'
+  ESD Preschool Rating: EDS Preescolar Clasificación
   FL EOC: FL EOC
   FL FCAT2: FL FCAT2
-  FL Norm Referenced Test: FL Norm Referenced Test
-  FL School Grade: FL School Grade
-  FL Test: FL Test
+  FL Norm Referenced Test: FL Norma Prueba de Referencia
+  FL School Grade: FL Grado Escuela
+  FL Test: Prueba FL
   GA CRCT: GA CRCT
-  GA College and Career Ready Performance Index: GA College and Career Ready Performance
-    Index
+  GA College and Career Ready Performance Index: GA Universidad y carrera Índice de Rendimiento Ready
   GA EOCT: GA EOCT
   GA GHSGT: GA GHSGT
-  GA HS Writing Test: GA HS Writing Test
-  GA Middle Grades Writing Assessment: GA Middle Grades Writing Assessment
-  GreatSchools Overall Rating: GreatSchools Overall Rating
-  HI Hawaii Content and Performance Standards: HI Hawaii Content and Performance Standards
-  Hawaii State Assessment: Hawaii State Assessment
-  High School Graduation Count (DEPRECATED - USE CENSUS): High School Graduation Count
-    (DEPRECATED - USE CENSUS)
-  High School Graduation Rate (DEPRECATED - USE CENSUS): High School Graduation Rate
-    (DEPRECATED - USE CENSUS)
-  ID Idaho Standards Achievement Test: ID Idaho Standards Achievement Test
-  IL Prairie State Achievement Exam: IL Prairie State Achievement Exam
-  IL Prairie State Achievement Exam - numbers tested are not grade specific: IL Prairie
-    State Achievement Exam - numbers tested are not grade specific
-  IL Standards Achievement Test: IL Standards Achievement Test
-  IL Standards Achievement Test - numbers tested are not grade specific: IL Standards
-    Achievement Test - numbers tested are not grade specific
-  IN A-F Grade: IN A-F Grade
-  IN End of Course Assessment: IN End of Course Assessment
-  IN End of Course Assessment (Private): IN End of Course Assessment (Private)
-  IN Statewide Testing for Educational Progress Plus: IN Statewide Testing for Educational
-    Progress Plus
-  IN Statewide Testing for Educational Progress Plus (Private): IN Statewide Testing
-    for Educational Progress Plus (Private)
-  IN preschool Paths to Quality rating: IN preschool Paths to Quality rating
-  Integrated LA Educational Assessment Program (iLEAP): Integrated LA Educational
-    Assessment Program (iLEAP)
-  Iowa Assessment: Iowa Assessment
-  Iowa Test of Basic Skills (multistate): Iowa Test of Basic Skills (multistate)
-  Iowa Test of Educational Development (multistate): Iowa Test of Educational Development
-    (multistate)
-  KS Kansas State Assessments: KS Kansas State Assessments
-  KS Kansas State Assessments (Private): KS Kansas State Assessments (Private)
-  KY Core Content Test: KY Core Content Test
-  KY End of Course: KY End of Course
-  Kentucky Performance Rating for Educational Progress (K-PREP): Kentucky Performance
-    Rating for Educational Progress (K-PREP)
+  GA HS Writing Test: GA HS examen de redacción
+  GA Middle Grades Writing Assessment: Grados GA Media escritura de Evaluación
+  GA Milestones End-of-Course: Hitos GA Fin de Curso
+  GA Milestones End-of-Grade: Hitos GA de Fin de Grado
+  HI Hawaii Content and Performance Standards: Hawai Hawaii Contenido y Normas de Desempeño
+  Hawaii State Assessment: Evaluación del estado de Hawaii
+  High School Graduation Count (DEPRECATED - USE CENSUS): Escuela Secundaria Conde Graduación (DEPRECATED - USO DEL CENSO)
+  High School Graduation Rate (DEPRECATED - USE CENSUS): Escuela Secundaria Tasa de Graduación (DEPRECATED - USO DEL CENSO)
+  ID Idaho Standards Achievement Test: ID Normas Idaho Prueba de Aprovechamiento
+  IL Prairie State Achievement Exam: Examen de Logro IL Prairie State
+  IL Prairie State Achievement Exam - numbers tested are not grade specific: IL Prairie State Achievement Exam - números probados no son grado específico
+  IL Standards Achievement Test: Normas IL Prueba de Aprovechamiento
+  IL Standards Achievement Test - numbers tested are not grade specific: Normas IL Prueba de Aprovechamiento - números probados no son grado específico
+  IN A-F Grade: EN UN-F Grado
+  IN End of Course Assessment: EN Fin de Curso de Evaluación
+  IN End of Course Assessment (Private): EN Final de Evaluación de golf (privado)
+  IN Statewide Testing for Educational Progress Plus: En las pruebas de todo el estado para el Progreso Educativo Plus
+  IN Statewide Testing for Educational Progress Plus (Private): En las pruebas de todo el estado para el Progreso Educativo Plus (Privado)
+  IN preschool Paths to Quality rating: EN Caminos preescolar a Valoración de la calidad
+  Integrated LA Educational Assessment Program (iLEAP): Programa de Evaluación Integrada LA Educativa (iLEAP)
+  Iowa Test of Basic Skills (multistate): Prueba de Iowa de Habilidades Básicas (multiestatal)
+  Iowa Test of Educational Development (multistate): Prueba de Iowa de Desarrollo Educativo (multiestatal)
+  KS Kansas State Assessments: Las evaluaciones del estado de Kansas KS
+  KS Kansas State Assessments (Private): KS evaluaciones del estado de Kansas (Privado)
+  KY Core Content Test: KY Core Prueba de contenido
+  KY End of Course: KY Fin de Curso
   LA EOC: LA EOC
-  LA Educational Assessment Program: LA Educational Assessment Program
-  LA Graduation Exit Examination: LA Graduation Exit Examination
+  LA Educational Assessment Program: Programa de Evaluación de la Educación LA
+  LA Graduation Exit Examination: LA Examen de Graduación Salir
+  LA The Partnership for Assessment of Readiness for College and Careers: LA La Asociación para la Evaluación de la preparación para la universidad y carreras
   MA MCAS: MA MCAS
   MA MCAS STE: MA MCAS STE
-  MD High School Assessment: MD High School Assessment
-  MD Maryland School Assessment: MD Maryland School Assessment
+  MD High School Assessment: Evaluación MD Escuela Secundaria
+  MD Maryland School Assessment: Evaluación MD Maryland School
   ME MHSA: ME MHSA
-  MEAP High School Test DEPRECATED: MEAP High School Test DEPRECATED
-  MI Education Assessment Program (Private): MI Education Assessment Program (Private)
-  MI Educational Assessment Program: MI Educational Assessment Program
-  MI Educational Assessment Program DEPRECATED: MI Educational Assessment Program
-    DEPRECATED
-  MI Merit Examination: MI Merit Examination
-  MI Merit Examination (Private): MI Merit Examination (Private)
-  MI Merit Examination DEPRECATED: MI Merit Examination DEPRECATED
-  MI School Accountability Scorecards: MI School Accountability Scorecards
-  MI YES: MI YES
-  MN Basic Skills Tests: MN Basic Skills Tests
-  MN Comprehensive Assessments (pre 2007): MN Comprehensive Assessments (pre 2007)
-  MN Comprehensive Assessments II: MN Comprehensive Assessments II
-  MN Comprehensive Assessments III: MN Comprehensive Assessments III
-  MN Comprehensive Assessments III private: MN Comprehensive Assessments III private
-  MN Comprehensive Assessments private: MN Comprehensive Assessments private
-  MN Comprehensive Assessments with Graduation Required Assessments for Diploma: MN
-    Comprehensive Assessments with Graduation Required Assessments for Diploma
-  MN Comprehensive Assessments with Graduation Required Assessments for Diploma private: MN
-    Comprehensive Assessments with Graduation Required Assessments for Diploma private
-  MO MAP: MO MAP
-  MO MAP EOC: MO MAP EOC
+  MEAP High School Test DEPRECATED: MEAP Secundaria Prueba DEPRECATED
+  MI Education Assessment Program (Private): Programa de Evaluación de la Educación MI (Privado)
+  MI Educational Assessment Program: Programa de Evaluación Educativa MI
+  MI Educational Assessment Program DEPRECATED: MI Educativo Evaluación Programa DEPRECATED
+  MI Merit Examination: Examen Mérito MI
+  MI Merit Examination (Private): Examen Mérito MI (Privado)
+  MI Merit Examination DEPRECATED: MI Mérito Examen DEPRECATED
+  MI School Accountability Scorecards: Scorecards Responsabilidad MI School
+  MI YES: MI SI
+  MN Basic Skills Tests: MN Habilidades Básicas pruebas
+  MN Comprehensive Assessments (pre 2007): MN integrales Evaluaciones (pre 2007)
+  MN Comprehensive Assessments II: MN Integral Evaluaciones II
+  MN Comprehensive Assessments III: MN Integral evaluaciones III
+  MN Comprehensive Assessments III private: MN integrales evaluaciones III privada
+  MN Comprehensive Assessments private: MN Integral evaluaciones privada
+  MN Comprehensive Assessments with Graduation Required Assessments for Diploma: MN evaluaciones integrales con graduación requieren valoraciones de Diploma
+  MN Comprehensive Assessments with Graduation Required Assessments for Diploma private: MN evaluaciones integrales con graduación requieren valoraciones de Diploma privada
+  MO MAP: MO MAPA
+  MO MAP EOC: MO MAPA EOC
   MS Curriculum Test 2: MS Curriculum Test 2
-  MS Mississippi Science Test: MS Mississippi Science Test
-  MS Subject Area Testing Program: MS Subject Area Testing Program
-  MS Writing Assessment: MS Writing Assessment
-  MT Comprehensive Assessment System - Criterion-referenced test: MT Comprehensive
-    Assessment System - Criterion-referenced test
-  Maine Educational Assessment: Maine Educational Assessment
-  NC ABC ratings: NC ABC ratings
-  NC End of Class: NC End of Class
-  NC End of Grade: NC End of Grade
-  NC Writing Assessment: NC Writing Assessment
-  NCLB - year of improvement: NCLB - year of improvement
-  ND CAT/Terra Nova Results: ND CAT/Terra Nova Results
-  ND State Assessment: ND State Assessment
-  NE School-based Teacher-led Assessment and Reporting System: NE School-based Teacher-led
-    Assessment and Reporting System
-  NE State Accountability: NE State Accountability
-  NH Educational Improvement and Assessment Program: NH Educational Improvement and
-    Assessment Program
-  NJ Assessment of Skills and Knowledge: NJ Assessment of Skills and Knowledge
-  NJ High school test: NJ High school test
-  NJ Middle school test: NJ Middle school test
-  NM High School Standards Assessment: NM High School Standards Assessment
-  NM Standards Based Assessment: NM Standards Based Assessment
+  MS Mississippi Science Test: Prueba Ciencia Mississippi MS
+  MS Subject Area Testing Program: MS Asunto Programa de Pruebas Área
+  MS Writing Assessment: Evaluación de Escritura MS
+  MT Comprehensive Assessment System - Criterion-referenced test: Sistema de Evaluación Integral MT - examen de criterio
+  Maine Educational Assessment: Evaluación Educativa Maine
+  NC ABC ratings: Clasificaciones NC ABC
+  NC End of Class: NC Fin de Clase
+  NC End of Grade: NC Fin de Grado
+  NC Writing Assessment: Evaluación de Escritura NC
+  NCLB - year of improvement: NCLB - año de la mejora
+  ND CAT/Terra Nova Results: ND CAT / Terra Nova Resultados
+  ND State Assessment: Evaluación del Estado de Dakota del Norte
+  NE School-based Teacher-led Assessment and Reporting System: Evaluación dirigida por el maestro basada en la escuela NE y Reporting System
+  NE State Accountability: Rendición de cuentas NE Estado
+  NH Educational Improvement and Assessment Program: Mejora Educativa NH y Programa de Evaluación
+  NJ Assessment of Skills and Knowledge: Evaluación NJ de Habilidades y Conocimientos
+  NJ Biology Competency Test: NJ Biología Prueba de Competencia
+  NJ High school test: Prueba de alta escuela NJ
+  NJ Middle school test: Prueba de la escuela media NJ
+  NM High School Standards Assessment: Evaluación de Normas Secundaria NM
+  NM Standards Based Assessment: Evaluación de Normas NM base
   NM Terra Nova: NM Terra Nova
-  NV Analytic Writing Exam: NV Analytic Writing Exam
-  NV Criterion Referenced Test: NV Criterion Referenced Test
-  NV High School Proficiency Exam: NV High School Proficiency Exam
-  NY Common Core Regents: NY Common Core Regents
-  NY Regents: NY Regents
-  NY State Assessments: NY State Assessments
-  NYC progress report grade: NYC progress report grade
-  NYC progress report url: NYC progress report url
-  New England Common Assessment Program: New England Common Assessment Program
-  New FCAT Writing Test: New FCAT Writing Test
-  OH Report Card - Annual Measurable Objectives: OH Report Card - Annual Measurable
-    Objectives
-  OH Report Card - Overall Rollup: OH Report Card - Overall Rollup
-  OH Report Card - Performance Index: OH Report Card - Performance Index
-  OH Report Card - Standards Met: OH Report Card - Standards Met
-  OH Report Card - Value Added - Gifted: OH Report Card - Value Added - Gifted
-  OH Report Card - Value Added - Lowest 20% in Achievement: OH Report Card - Value
-    Added - Lowest 20% in Achievement
-  OH Report Card - Value Added - Overall: OH Report Card - Value Added - Overall
-  OH Report Card - Value Added - Students with Disabilities: OH Report Card - Value
-    Added - Students with Disabilities
-  OH Value Added: OH Value Added
-  OK A-F Grade: OK A-F Grade
-  OK OCCT End of Instruction test: OK OCCT End of Instruction test
-  OK Oklahoma Core Curriculum Tests: OK Oklahoma Core Curriculum Tests
-  OLD AZ Aims: OLD AZ Aims
-  OLD AZ Terra Nova: OLD AZ Terra Nova
-  OLD MI Educational Assessment Program DEPRECATED: OLD MI Educational Assessment
-    Program DEPRECATED
-  OR Assessment of Knowledge and Skills: OR Assessment of Knowledge and Skills
-  Ohio Achievement Test: Ohio Achievement Test
-  Ohio Graduation Tests: Ohio Graduation Tests
-  Ohio Graduation Tests (Private): Ohio Graduation Tests (Private)
-  Ohio Performance Index Ratings: Ohio Performance Index Ratings
-  Ohio Proficiency Test: Ohio Proficiency Test
-  Overall Academic Rating: Overall Academic Rating
-  PA Keystone End of Course: PA Keystone End of Course
-  PA System of School Assessment: PA System of School Assessment
-  PSCB's Rating: PSCB's Rating
-  Percent Tested ACT: Percent Tested ACT
-  Percent Tested SAT: Percent Tested SAT
-  Percent of students reaching college ready benchmark: Percent of students reaching
-    college ready benchmark
-  Post Secondary Readiness Rating: Post Secondary Readiness Rating
-  Proficiency Assessments for Wyoming Students: Proficiency Assessments for Wyoming
-    Students
-  Public-Private-Ratings-Combined-2: Public-Private-Ratings-Combined-2
-  Public-Private-Ratings-WI WSAS: Public-Private-Ratings-WI WSAS
-  QRIS Tier Rating: QRIS Tier Rating
-  RI New Standards Reference Examinations: RI New Standards Reference Examinations
-  SC End-of-Course Examination Program: SC End-of-Course Examination Program
+  NV Analytic Writing Exam: Examen NV Analítica Escritura
+  NV Criterion Referenced Test: NV Prueba Basada
+  NV High School Proficiency Exam: NV alta Proficiency Exam School
+  NY Common Core Regents: NY comunes Core Regentes
+  NY Regents: NY Regentes
+  NY State Assessments: Evaluaciones Estatales NY
+  NYC progress report grade: NYC informe sobre la marcha de grado
+  NYC progress report url: NYC informe url
+  New England Common Assessment Program: Programa de Evaluación Común de Nueva Inglaterra
+  New FCAT Writing Test: Nuevo examen de redacción del FCAT
+  OH Report Card - Annual Measurable Objectives: OH Boleta - Objetivos Anuales
+  OH Report Card - Overall Rollup: OH Report Card - El paquete acumulativo general
+  OH Report Card - Performance Index: OH Boleta - Índice de Rendimiento
+  OH Report Card - Standards Met: OH Boleta - Estándares Alcanzados
+  OH Report Card - Value Added - Gifted: OH Boleta - Valor Agregado - Dotados
+  OH Report Card - Value Added - Lowest 20% in Achievement: OH Boleta - Valor Agregado - Menor de 20% en el Logro
+  OH Report Card - Value Added - Overall: OH Boleta - Valor Agregado - En general
+  OH Report Card - Value Added - Students with Disabilities: OH Boleta - Valor Agregado - Estudiantes con Discapacidad
+  OH Value Added: OH Valor Agregado
+  OK A-F Grade: OK A-F Grado
+  OK OCCT End of Instruction test: Aceptar OCCT Fin de la prueba de Instrucción
+  OK Oklahoma Core Curriculum Tests: OK Pruebas Curriculum Oklahoma Core
+  OLD AZ Aims: VIEJO AZ Objetivos
+  OLD AZ Terra Nova: VIEJO AZ Terra Nova
+  OLD MI Educational Assessment Program DEPRECATED: VIEJO MI Educativo Programa de Evaluación DEPRECATED
+  OR Assessment of Knowledge and Skills: Evaluación O de Conocimientos y Habilidades
+  Ohio Achievement Test: Ohio Prueba de Aprovechamiento
+  Ohio Graduation Tests: Exámenes de Graduación de Ohio
+  Ohio Graduation Tests (Private): Exámenes de Graduación de Ohio (Privado)
+  Ohio Performance Index Ratings: Índice de Rendimiento Ohio Calificaciones
+  PA Keystone End of Course: PA Keystone Fin de Curso
+  PA System of School Assessment: Sistema PA de Evaluación Escolar
+  PSCB's Rating: Clasificación de JCSP
+  Percent of students reaching college ready benchmark: Porcentaje de estudiantes que llegan a la universidad de referencia listo
+  Post Secondary Readiness Rating: Publicar Secundaria de Preparación Clasificación
+  Proficiency Assessments for Wyoming Students: Las evaluaciones de competencia para estudiantes de Wyoming
+  RI New Standards Reference Examinations: RI Nuevos Estándares de Referencia Exámenes
+  SC End-of-Course Examination Program: SC de Fin de Curso Programa de Exámenes
   SC HSAP: SC HSAP
   SC PACT: SC PACT
   SC PASS: SC PASS
-  SD Dakota State Test of Educational Progress: SD Dakota State Test of Educational
-    Progress
+  SD Dakota State Test of Educational Progress: Prueba de Progreso Educativo Estatal de Dakota del SD
   Stanford 10: Stanford 10
-  Stanford 9 Achievement Test: Stanford 9 Achievement Test
-  Student Growth: Student Growth
-  Student growth Rating: Student growth Rating
-  Sum of num_tested for all grades for reading/ELA: Sum of num_tested for all grades
-    for reading/ELA
-  TN Gateway Tests: TN Gateway Tests
-  TN Tennessee Comprehensive Assessment Program: TN Tennessee Comprehensive Assessment
-    Program
-  TX Accountability: TX Accountability
-  TX Gold Performance: TX Gold Performance
-  TX STAAR Exam: TX STAAR Exam
-  Test Score Rating: Test Score Rating
-  Texas Assessment of Knowledge and Skills: Texas Assessment of Knowledge and Skills
-  UT Criterion-Referenced End-of-Course Test: UT Criterion-Referenced End-of-Course
-    Test
-  UT Criterion-Referenced Test: UT Criterion-Referenced Test
-  UT Criterion-Referenced Test (orig): UT Criterion-Referenced Test (orig)
+  Student growth Rating: El crecimiento del Estudiante
+  Sum of num_tested for all grades for reading/ELA: Suma de num_tested para todos los grados para la lectura / ELA
+  TN Gateway Tests: Pruebas TN puerta de enlace
+  TN Tennessee Comprehensive Assessment Program: Programa de Evaluación Integral de Tennessee TN
+  TX Accountability: TX Rendición de Cuentas
+  TX Gold Performance: TX Performance Oro
+  TX STAAR Exam: TX STAAR examen
+  Test Score Rating: Prueba Score Rating
+  Texas Assessment of Knowledge and Skills: Evaluación de Conocimientos y Habilidades de Texas
+  UT Criterion-Referenced End-of-Course Test: UT Criterion-Referenced de Fin de Curso de Prueba
+  UT Criterion-Referenced Test: UT examen de criterio
+  UT Criterion-Referenced Test (orig): Con referencia a las Criterio UT Test (orig)
   UT Stanford 9: UT Stanford 9
-  VA Accreditation: VA Accreditation
-  VA End of Class: VA End of Class
-  VA Standards of Learning: VA Standards of Learning
-  VT New Standards Reference Exam: VT New Standards Reference Exam
+  VA Accreditation: VA Acreditación
+  VA End of Class: VA Fin de Clase
+  VA Standards of Learning: Normas VA de Aprendizaje
+  VT New Standards Reference Exam: VT Nuevos Estándares de Referencia de exámenes
   WA HSPE: WA HSPE
   WA MSP: WA MSP
   WA WASL: WA WASL
   WA Washington EOC: WA Washington EOC
-  WI Concept and Knowledge Examinations: WI Concept and Knowledge Examinations
-  WI State Accountability Rating: WI State Accountability Rating
-  WI WRCT test: WI WRCT test
-  WI WSAS test: WI WSAS test
-  WI WSAS-Private: WI WSAS-Private
-  WV Educational Standards Test: WV Educational Standards Test
-  WY Wyoming Comprehensive Assessment System: WY Wyoming Comprehensive Assessment
-    System
-  Wisconsin Accountability Report: Wisconsin Accountability Report
-  adequate yearly progress: adequate yearly progress
-  total rating: total rating
+  WI Concept and Knowledge Examinations: WI Concepto y Conocimiento Exámenes
+  WI State Accountability Rating: Clasificación de Responsabilidad WI Estado
+  WI WRCT test: Prueba WI WRCT
+  WI WSAS test: Prueba WI WSAS
+  WI WSAS-Private: WI WSAS-privada
+  WV Educational Standards Test: Normas para la Educación de prueba WV
+  WY Wyoming Comprehensive Assessment System: Sistema de Evaluación Integral de Wyoming WY
+  adequate yearly progress: el progreso anual adecuado
+  total rating: Puntuación total de

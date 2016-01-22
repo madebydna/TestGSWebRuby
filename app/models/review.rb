@@ -57,7 +57,7 @@ class Review < ActiveRecord::Base
   validates :comment, length: {
       maximum: 2400,
   }
-  validate :comment_minimum_length
+  validate :comment_minimum_length, unless: '@moderated == true'
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
   before_save :remove_answers_for_principals, unless: '@moderated == true'

@@ -9,7 +9,7 @@ class CommunityLandingController < ApplicationController
                   description:'Tell your school\'s story. Connect with Greatschools',
                   keywords:'Connect with Greatschools,Find Community with Greatschools'
 
-    render 'home/community_landing'
+    render 'home/community_landing',status:404
 
  end
 end
