@@ -23,9 +23,21 @@ class DetailsOverviewDecorator
 
     transformed_data["link"] = more_data
 
+    if transformed_data["data"].empty?
+      return {}
+    end
+
     return transformed_data
   end
 
+  def has_basic_information_data?
+    if basic_information.empty?
+      return false
+    else
+      return true
+    end
+  end
+  
   def programs_and_culture
     transformed_data = {}
 

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe DetailsOverviewDecorator do
-
   subject do
     DetailsOverviewDecorator.new(data, school, view)
   end
@@ -88,6 +87,64 @@ describe DetailsOverviewDecorator do
       expect(subject.basic_information["link"]["More"]).to eq('foo.com')
     end
 
+    context 'when given bad data' do
+      let(:data) do
+        {
+            'foo' => 'bar'
+        }
+      end
+
+      it 'should return an empty hash' do
+        expect(subject.basic_information).to be_empty
+      end
+    end
+
+    context 'when given an empty hash' do
+      let(:data) do
+        {}
+      end
+
+      it 'should return an empty hash' do
+        expect(subject.basic_information).to be_empty
+      end
+    end
+  end
+
+  describe '#has_basic_information_data?' do
+    context 'when given bad data' do
+      let(:data) do
+        {
+            'foo' => 'bar'
+        }
+      end
+
+      it { is_expected.to_not have_basic_information_data }
+    end
+
+    context 'when given good data' do
+      let(:data) do
+        data = {
+            "Before/After Care" => ['Before care'],
+            "Dress Code" => ['Uniform'],
+            "Transportation" => ['Buses / vans provided for students'],
+            "Academic Focus" => ['Business, Special Ed, Technology'],
+            "Arts" => ['Computer animation, Graphics, Video and Film'],
+            "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
+            "Student Demographics" => {
+                "Hispanic" => 88,
+                "Black" => 7,
+                "White" => 2,
+                "Asian/Pacific Islander" => 2,
+                "2 or more races" => 1
+            },
+            "Free & reduced lunch participants" => 98,
+            "Students w/ disabilities" => 6,
+            "English language learners" => 45,
+        }
+      end
+
+      it { is_expected.to have_basic_information_data }
+    end
   end
 
   describe '#programs_and_culture' do
