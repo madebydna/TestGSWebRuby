@@ -44,7 +44,7 @@ describe SchoolProfileOverviewController do
 
       include_examples 'sets at least one google ad targeting attribute'
       include_examples 'sets the base google ad targeting attributes for all pages'
-      include_examples 'sets specific google ad targeting attributes', %w[City county gs_rating level school_id State type zipcode district_id]
+      include_examples 'sets specific google ad targeting attributes', %w[City county gs_rating level school_id State type zipcode district_id number_of_reviews_with_comments]
     end
 
     context 'when ads are not enabled' do
@@ -55,18 +55,4 @@ describe SchoolProfileOverviewController do
       include_example 'does not set any google ad targeting attributes'
     end
   end
-
-  describe '#add_number_of_school_reviews_to_gtm_data_layer' do
-    let(:school_reviews) { double('school_reviews', number_of_reviews_with_comments: 3) }
-    before do
-      allow(controller).to receive(:school_reviews).and_return(school_reviews)
-    end
-    subject { controller.send(:add_number_of_school_reviews_to_gtm_data_layer) }
-
-    it 'should add number of reviews to gtm data layer' do
-      number_of_reviews_in_gtm_data_layer = proc { controller.gon.data_layer_hash.try(:fetch, 'number_of_school_reviews') }
-      expect { subject }.to change(&number_of_reviews_in_gtm_data_layer).from(nil).to(3)
-    end
-  end
-
 end
