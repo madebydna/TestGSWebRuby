@@ -14,7 +14,6 @@
 //= require jquery.cookie.js
 //= require dataTables/jquery.dataTables
 //= require lodash
-//= require ./resources/omniture
 //= require ./util/util
 //= require ./util/expand_toggle
 //= require ./util/tracking
