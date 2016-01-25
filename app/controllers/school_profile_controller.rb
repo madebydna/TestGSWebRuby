@@ -174,7 +174,7 @@ class SchoolProfileController < SchoolController
     page_view_metadata['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
     page_view_metadata['template']    = "SchoolProf"
     page_view_metadata['collection_ids']  = @school.collection_ids
-
+    page_view_metadata['number_of_reviews_with_comments'] =  @_school_reviews.number_of_reviews_with_comments
     page_view_metadata
 
     )
