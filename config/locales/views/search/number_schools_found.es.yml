@@ -27,17 +27,17 @@ es:
         one: escuela preescolar
         other: escuelas preescolares
       number_of_schools_found:
-        one: 1 escuela encontrada
-        other: "%{count} escuelas encontradas"
+        one: 1 escuela encontrada cerca de
+        other: "%{count} escuelas encontradas cerca de"
       number_of_schools_found_with_level_code:
-        one: "1 %{level_code} encontrada"
-        other: "%{count} %{level_code} encontradas"
+        one: "1 %{level_code} encontrada cerca de"
+        other: "%{count} %{level_code} encontradas cerca de"
       number_of_schools_found_with_school_type:
-        one: "1 escuela %{school_type} encontrada"
-        other: "%{count} escuelas %{school_type} encontradas"
+        one: "1 escuela %{school_type} encontrada cerca de"
+        other: "%{count} escuelas %{school_type} encontradas cerca de"
       number_of_schools_found_with_level_code_and_school_type:
-        one: "1 %{level_code} %{school_type} encontrada"
-        other: "%{count} %{level_code} %{school_type} encontradas"
+        one: "1 %{level_code} %{school_type} encontrada cerca de"
+        other: "%{count} %{level_code} %{school_type} encontradas cerca de"
       within_radius:
         one: a 1 milla de %{address}
         other: a %{count} milla de %{address}
