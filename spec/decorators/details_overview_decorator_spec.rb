@@ -185,6 +185,65 @@ describe DetailsOverviewDecorator do
       expect(subject.programs_and_culture["link"]["More program info"]).to eq('foo.com')
     end
 
+    context 'when given bad data' do
+      let(:data) do
+        {
+            'foo' => 'bar'
+        }
+      end
+
+      it 'should return an empty hash' do
+        expect(subject.programs_and_culture).to be_empty
+      end
+    end
+
+    context 'when given an empty hash' do
+      let(:data) do
+        {}
+      end
+
+      it 'should return an empty hash' do
+        expect(subject.programs_and_culture).to be_empty
+      end
+    end
+
+  end
+
+  describe '#has_programs_and_culture_data?' do
+    context 'when given bad data' do
+      let(:data) do
+        {
+            'foo' => 'bar'
+        }
+      end
+
+      it { is_expected.to_not have_programs_and_culture_data }
+    end
+
+    context 'when given good data' do
+      let(:data) do
+        data = {
+            "Before/After Care" => ['Before care'],
+            "Dress Code" => ['Uniform'],
+            "Transportation" => ['Buses / vans provided for students'],
+            "Academic Focus" => ['Business, Special Ed, Technology'],
+            "Arts" => ['Computer animation, Graphics, Video and Film'],
+            "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
+            "Student Demographics" => {
+                "Hispanic" => 88,
+                "Black" => 7,
+                "White" => 2,
+                "Asian/Pacific Islander" => 2,
+                "2 or more races" => 1
+            },
+            "Free & reduced lunch participants" => 98,
+            "Students w/ disabilities" => 6,
+            "English language learners" => 45,
+        }
+      end
+
+      it { is_expected.to have_programs_and_culture_data }
+    end
   end
 
   describe '#diversity' do
@@ -236,24 +295,65 @@ describe DetailsOverviewDecorator do
     it 'should return a url' do
       expect(subject.diversity["link"]["More diversity info"]).to eq('foo.com')
     end
+
+    context 'when given bad data' do
+      let(:data) do
+        {
+            'foo' => 'bar'
+        }
+      end
+
+      it 'should return an empty hash' do
+        expect(subject.diversity).to be_empty
+      end
+    end
+
+    context 'when given an empty hash' do
+      let(:data) do
+        {}
+      end
+
+      it 'should return an empty hash' do
+        expect(subject.diversity).to be_empty
+      end
+    end
   end
 
-  # describe '#application_deadline' do
-  #
-  #   subject do
-  #     EspEnrollmentDecorator.new(esp_enrollment_data).application_deadline
-  #   end
-  #
-  #   context 'When application_deadline is "date"' do
-  #     # MI 5874
-  #     let(:esp_enrollment_data) do
-  #       {
-  #           'application_deadline' => 'date',
-  #           'application_deadline_date' => '01/01/2020'
-  #       }
-  #     end
-  #
-  #     it 'it should return the actual date' do
-  #       expect(subject).to eq 'January 01, 2020'
-  #     end
+  describe '#has_diversity_data?' do
+    context 'when given bad data' do
+      let(:data) do
+        {
+            'foo' => 'bar'
+        }
+      end
+
+      it { is_expected.to_not have_diversity_data }
+    end
+
+    context 'when given good data' do
+      let(:data) do
+        data = {
+            "Before/After Care" => ['Before care'],
+            "Dress Code" => ['Uniform'],
+            "Transportation" => ['Buses / vans provided for students'],
+            "Academic Focus" => ['Business, Special Ed, Technology'],
+            "Arts" => ['Computer animation, Graphics, Video and Film'],
+            "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
+            "Student Demographics" => {
+                "Hispanic" => 88,
+                "Black" => 7,
+                "White" => 2,
+                "Asian/Pacific Islander" => 2,
+                "2 or more races" => 1
+            },
+            "Free & reduced lunch participants" => 98,
+            "Students w/ disabilities" => 6,
+            "English language learners" => 45,
+        }
+      end
+
+      it { is_expected.to have_diversity_data }
+    end
+  end
+
 end

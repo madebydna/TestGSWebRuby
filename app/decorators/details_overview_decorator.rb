@@ -5,29 +5,32 @@ class DetailsOverviewDecorator
     @view = view
   end
 
-  def basic_information
+  def get_data(header, array_of_keys, links = {})
     transformed_data = {}
 
-    transformed_data["header"] = "BASIC INFORMATION"
+    transformed_data["header"] = header
 
-    basic_information_data = @data.select do |key, value|
-      array_of_keys = ["Before/After Care", "Dress Code", "Transportation"]
+    raw_data = @data.select do |key, value|
       array_of_keys.include? key
     end
 
-    transformed_data["data"] = basic_information_data
+    transformed_data["data"] = raw_data
 
-    more_data = {
-      "More" => @view.school_details_path(@school)
-    }
-
-    transformed_data["link"] = more_data
+    transformed_data["link"] = links
 
     if transformed_data["data"].empty?
       return {}
     end
 
     return transformed_data
+  end
+
+  def basic_information
+    header = "BASIC INFORMATION"
+    array_of_keys = ["Before/After Care", "Dress Code", "Transportation"]
+    links = {"More" => @view.school_details_path(@school)}
+
+    get_data(header, array_of_keys, links)
   end
 
   def has_basic_information_data?
@@ -37,48 +40,38 @@ class DetailsOverviewDecorator
       return true
     end
   end
-  
+
   def programs_and_culture
-    transformed_data = {}
+    header = "PROGRAMS & CULTURE"
+    array_of_keys = ["Academic Focus", "Arts", "World Languages"]
+    links = {"More program info" => @view.school_details_path(@school)}
 
-    transformed_data["header"] = "PROGRAMS & CULTURE"
+    get_data(header, array_of_keys, links)
+  end
 
-    programs_and_culture_data = @data.select do |key, value|
-      array_of_keys = ["Academic Focus", "Arts", "World Languages"]
-      array_of_keys.include? key
+  def has_programs_and_culture_data?
+    if programs_and_culture.empty?
+      return false
+    else
+      return true
     end
-
-    transformed_data["data"] = programs_and_culture_data
-
-    more_data = {
-        "More program info" => @view.school_details_path(@school)
-    }
-
-    transformed_data["link"] = more_data
-
-    return transformed_data
   end
 
   def diversity
-    transformed_data = {}
+    header = "DIVERSITY"
+    array_of_keys = ['Student Demographics', 'Free & reduced lunch participants', 'Students w/ disabilities', 'English language learners']
+    links = {"More" => @view.school_details_path(@school),
+             "More diversity info" => @view.school_details_path(@school)}
 
-    transformed_data["header"] = "DIVERSITY"
+    get_data(header, array_of_keys, links)
+  end
 
-    diversity_data = @data.select do |key, value|
-      array_of_keys = ["Student Demographics", "Free & reduced lunch participants", "Students w/ disabilities", "English language learners"]
-      array_of_keys.include? key
+  def has_diversity_data?
+    if diversity.empty?
+      return false
+    else
+      return true
     end
-
-    transformed_data["data"] = diversity_data
-
-    more_data = {
-      "More" => @view.school_details_path(@school),
-      "More diversity info" => @view.school_details_path(@school)
-    }
-
-    transformed_data["link"] = more_data
-
-    return transformed_data
   end
 
 end

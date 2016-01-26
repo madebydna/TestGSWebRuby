@@ -1,6 +1,7 @@
-<% data = DetailsOverviewDecorator.new(data, @school, self) %>
+<% require 'pry'; binding.pry %>
+<% decorator = DetailsOverviewDecorator.new(data, @school, self) %>
 
-<% basic_information = data.basic_information %>
+<% basic_information = decorator.basic_information %>
 
 <% programs_and_culture = {
     header: 'Programs & culture',
