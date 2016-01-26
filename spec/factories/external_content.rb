@@ -11,13 +11,33 @@ FactoryGirl.define do
           'posts' => [{
             "id" => 18185,
             "type" => "page",
-            "url" => "http=>//dev-wp.greatschools.org/gk/sbac-more-about-this-guide/",
+            "url" => "http://dev-wp.greatschools.org/gk/sbac-more-about-this-guide/",
             "title" => "SBAC more about this guide",
             "excerpt" => "Make the new Smarter Balanced state test work for your child.",
             "thumbnail" => "http=>//dev-wp.greatschools.org/gk/wp-content/uploads/2015/09/test-embed-thumbnail-creation-un-360x180.jpg",
             "custom_fields" => {
               "wpcf-promo" => [
                 "Let us help you understand what these state test results mean, and it will help you to uncover your child's strengths and struggles."
+              ]
+            },
+            "thumbnail_size" => "large-tile",
+            "thumbnail_images" => {
+              "large-tile" => {
+                "url" => "http=>//dev-wp.greatschools.org/gk/wp-content/uploads/2015/09/test-embed-thumbnail-creation-un-360x180.jpg",
+                "width" => 360,
+                "height" => 180
+              }
+            }
+          },{
+            "id" => 18186,
+            "type" => "page",
+            "url" => "http://dev-wp.greatschools.org/gk/sbac-more-about-this-guide-2/",
+            "title" => "SBAC even more about this guide",
+            "excerpt" => "Make the new Smarter Balanced state test work even more for your child.",
+            "thumbnail" => "http=>//dev-wp.greatschools.org/gk/wp-content/uploads/2015/09/test-embed-thumbnail-creation-un-360x180.jpg",
+            "custom_fields" => {
+              "wpcf-promo" => [
+                "Let us help you understand even more about what these state test results mean, and it will help you to uncover your child's strengths and struggles."
               ]
             },
             "thumbnail_size" => "large-tile",
