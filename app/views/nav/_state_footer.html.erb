@@ -12,9 +12,9 @@
         <% if state[:short].downcase == 'dc' %>
             <% state_name_long = "Washington DC" %>
         <% end %>
-      <span class='gray-dark'><%= t('.all_cities_in', state: state_name_long) %></span>
+      <span class="gray-dark hidden-print"><%= t('.all_cities_in', state: state_name_long) %></span>
 
-      <ul class='di'>
+      <ul class="di hidden-print">
         <% ('A'..'Z').to_a.each do |letter| %>
           <li class='di'><%= link_to(letter, city_alphabet_path(gs_legacy_url_encode(state[:long].capitalize), state[:short].upcase, letter)) %></li>
         <% end %>

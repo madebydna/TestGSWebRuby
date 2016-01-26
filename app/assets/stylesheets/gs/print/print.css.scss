@@ -11,4 +11,8 @@
   @include responsive-invisibility('.hidden-sm');
   @include responsive-visibility('.visible-sm');
 
+  /* Prevent Chrome from adding the href after every link */
+  a[href]:after {
+    content: none !important;
+  }
 }
