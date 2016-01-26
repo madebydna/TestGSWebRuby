@@ -190,3 +190,6 @@ en:
             performance_level: average
             value_html: 31<sup>%</sup>
             state_average: State average 31%
+      collection_id_22:
+        description_above_fold: How are our local public high schools doing at preparing all students for success?
+        description_below_fold: Across the Bay Area, too many low-income students and students of color have historically been left behind. Check out which schools are changing the odds and find out how your high school is doing!
