@@ -1,0 +1,35 @@
+<% school_page_path = school_path(school) %>
+<% query_string = '' %>
+<% query_string << "?lang=#{params[:lang]}" if params[:lang] %>
+<% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>
+<% school_page_url << query_string %>
+
+<% unless defined? account_page %>
+  <% account_page = false %>
+<% end %>
+
+<% # This partial needs gs-bootstrap because accounts page aren't bootstrapified yet    %>
+<div class="pvm gs-bootstrap js-schoolSearchResult js-schoolSearchResultCompareErrorMessage" data-schoolId="<%= school.id %>" data-schoolState="<%= school.state %>">
+  <div class="clearfix search-result-border bg-white">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-10 clearfix">
+          <%= render 'search/search_result/title', school: school,
+            school_page_url: school_page_url,
+            decorated_school: decorated_school
+          %>
+        <%= render 'search/search_result/icons_container', 
+          school: school, school_page_url: school_page_url, 
+          decorated_school: decorated_school
+      %>
+        </div>
+        <!-- do not show on account page -->
+        <% if account_page == false %>
+          <div class="col-xs-12 col-sm-3 col-md-2 tar pvl">
+            <%= render 'search/search_result/buttons_container', school: school %> 
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

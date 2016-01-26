@@ -1,0 +1,9 @@
+---
+es:
+  search:
+    search_result:
+      school_reviews_icon:
+        no_reviews: No hay comentarios de la Comunidad
+        reviews:
+          one: "%{count} evaluacion"
+          other: "%{count} evaluaciones"

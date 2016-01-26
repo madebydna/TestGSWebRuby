@@ -1,0 +1,16 @@
+<% if search_by_location? %>
+  <% distance = decorated_school.distance #converting to 2 decimal places    %>
+<% end %>
+<div class="row">
+  <div class="mtm"></div>
+  <div class="fl gray-darker plm">
+    <%= link_to "#{school.name}", school_page_url, style: 'line-height: 1.1em', class: 'link-darkgray open-sans_sb mbs font-size-large rs-schoolName' %>
+    <br class="hidden-xs"/>
+    <%= db_t(school_type_display(school.type)) %>&nbsp;<%= (decorated_school.try(:grade_range) || decorated_school.process_level) %>&nbsp;
+    | <%= "#{school.street}, #{school.city}, #{school.state.upcase} #{school.zip}" %>
+  <% if search_by_location? %>
+    <!-- Distance -->
+    (<%= distance %> <%= t('.miles') %>)
+  <% end %>
+  </div>
+</div>

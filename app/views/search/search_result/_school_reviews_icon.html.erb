@@ -1,0 +1,8 @@
+<div class="tac">
+  <% if !school.community_rating.nil? && !school.review_count.nil? %>
+    <div class="prm vam"><%= draw_stars_16 school.community_rating %></div>
+    <div><%= link_to t('.reviews', count: school.review_count), school_reviews_page_url, class: 'font-size-small js-reviewCount' %></div>
+  <% else %>
+    <em class="js-reviewCount"><%= t('.no_reviews') %></em>
+  <% end %>
+</div>
