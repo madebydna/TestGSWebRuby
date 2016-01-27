@@ -25,20 +25,18 @@ class DetailsOverviewDecorator
     return transformed_data
   end
 
+  ["basic_information", "programs_and_culture", "diversity"].each do |action|
+    define_method("has_#{action}_data?") do
+      send(action).present?
+    end
+  end
+
   def basic_information
     header = "BASIC INFORMATION"
     array_of_keys = ["Before/After Care", "Dress Code", "Transportation"]
     links = {"More" => @view.school_details_path(@school)}
 
     get_data(header, array_of_keys, links)
-  end
-
-  def has_basic_information_data?
-    if basic_information.empty?
-      return false
-    else
-      return true
-    end
   end
 
   def programs_and_culture
@@ -49,14 +47,6 @@ class DetailsOverviewDecorator
     get_data(header, array_of_keys, links)
   end
 
-  def has_programs_and_culture_data?
-    if programs_and_culture.empty?
-      return false
-    else
-      return true
-    end
-  end
-
   def diversity
     header = "DIVERSITY"
     array_of_keys = ['Student Demographics', 'Free & reduced lunch participants', 'Students w/ disabilities', 'English language learners']
@@ -64,14 +54,6 @@ class DetailsOverviewDecorator
              "More diversity info" => @view.school_details_path(@school)}
 
     get_data(header, array_of_keys, links)
-  end
-
-  def has_diversity_data?
-    if diversity.empty?
-      return false
-    else
-      return true
-    end
   end
 
 end
