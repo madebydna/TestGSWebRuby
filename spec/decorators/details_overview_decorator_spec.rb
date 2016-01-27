@@ -31,7 +31,7 @@ describe DetailsOverviewDecorator do
   end
 
   let(:view) do
-    double(school_details_path: 'foo.com')
+    double(school_details_path: 'foo.com', school_quality_path: 'foo.com')
   end
 
 
