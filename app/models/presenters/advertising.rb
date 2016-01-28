@@ -90,6 +90,15 @@ class Advertising
         mobile:{
           dimensions:[[320,60],[320,50]]
         }
+      },
+      Details_Adaptive: {
+        name: "Details_Adaptive",
+        desktop:{
+          dimensions:[300,250]
+        },
+        mobile:{
+          dimensions:[300,250]
+        }
       }
     }
 
