@@ -83,7 +83,7 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
     def value
       @characteristics_hash.each_with_object({}) do |(chars_hash), result_hash|
-        result_hash[chars_hash[:breakdown]] = chars_hash[:school_value]
+      result_hash[I18n.db_t(chars_hash[:breakdown])] = chars_hash[:school_value]
       end
     end
   end

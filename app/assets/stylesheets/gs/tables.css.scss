@@ -46,3 +46,9 @@
     }
   }
 }
+
+.table-striped-inverted {
+  > tbody > tr:nth-of-type(odd) {
+    background-color: $white;
+  }
+}
