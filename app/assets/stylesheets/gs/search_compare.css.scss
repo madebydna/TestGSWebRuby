@@ -8,3 +8,9 @@
   height: 200px;
   overflow-y: scroll;
 }
+
+.js-compareSchoolButton .iconx16 {
+  @media screen and (max-width: $screen-sm-min) {
+    margin-left: 35%;
+  }
+}
