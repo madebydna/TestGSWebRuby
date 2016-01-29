@@ -6,23 +6,73 @@ describe DetailsOverviewDecorator do
   end
 
   let(:data) do
-    data = {
-      "Before/After Care" => ['Before care'],
-      "Dress Code" => ['Uniform'],
-      "Transportation" => ['Buses / vans provided for students'],
-      "Academic Focus" => ['Business, Special Ed, Technology'],
-      "Arts" => ['Computer animation, Graphics, Video and Film'],
-      "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-      "Student ethnicity" => {
-        "Hispanic" => 88,
-        "Black" => 7,
-        "White" => 2,
+    {
+      "Before/After Care"                 => ['Before care'],
+      "Dress Code"                        => ['Uniform'],
+      "Transportation"                    => ['Buses / vans provided for students'],
+      "Academic Focus"                    => ['Business, Special Ed, Technology'],
+      "Arts"                              => ['Computer animation, Graphics, Video and Film'],
+      "World Languages"                   => ['French, German, Spanish, Hungarian, Polish'],
+      "Student ethnicity"              => {
+        "Hispanic"               => 88,
+        "Black"                  => 7,
+        "White"                  => 2,
         "Asian/Pacific Islander" => 2,
-        "2 or more races" => 1
+        "2 or more races"        => 1
       },
       "FRL" => 98,
-      "Students with disabilities" => 6,
-      "English language learners" => 45,
+      "Students with disabilities"        => 6,
+      "English language learners"         => 45,
+    }
+  end
+
+  let(:basic_information_data) do
+    {
+      "header" => "BASIC INFORMATION",
+      "data"                => {
+          "Before/After Care" => 'Before care',
+          "Dress Code"        => 'Uniform',
+          "Transportation"    => 'Buses / vans provided for students'
+      },
+      "link" => {
+          "More" => 'foo.com'
+      }
+    }
+  end
+
+  let(:programs_and_culture_data) do
+    {
+        "header" => "PROGRAMS & CULTURE",
+        "data" => {
+            "Academic Focus"  => 'Business, Special Ed, Technology',
+            "Arts"            => 'Computer animation, Graphics, Video and Film',
+            "World Languages" => 'French, German, Spanish, Hungarian, Polish'
+        },
+        "link" => {
+            "More program info" => 'foo.com'
+        }
+    }
+  end
+
+  let(:diversity_data) do
+    {
+        "header" => "DIVERSITY",
+        "data" => {
+            "Student ethnicity" => {
+                "Hispanic" => 88,
+                "Black" => 7,
+                "White" => 2,
+                "Asian/Pacific Islander" => 2,
+                "2 or more races" => 1
+            },
+            "FRL" => 98,
+            "Students with disabilities" => 6,
+            "English language learners" => 45,
+        },
+        "link" => {
+            "More" => 'foo.com',
+            "More diversity info" => 'bar.com'
+        }
     }
   end
 
@@ -31,329 +81,94 @@ describe DetailsOverviewDecorator do
   end
 
   let(:view) do
-    double(school_details_path: 'foo.com', school_quality_path: 'foo.com')
+    double(school_details_path: 'bar.com', school_quality_path: 'foo.com')
   end
-
 
   describe '.initialize' do
 
     it { is_expected.to be_a(DetailsOverviewDecorator) }
 
-    it 'should be an instance of DetailsOverviewDecorator' do
-      expect(subject).to be_a(DetailsOverviewDecorator)
-    end
-
-    it 'should be an instance of DetailsOverviewDecorator' do
+    it 'should return an instance variable called data' do
       expect(subject.instance_variable_get(:@data)).to eq(data)
     end
 
   end
 
+  ["basic_information", "programs_and_culture", "diversity"].each do |action|
+    describe "##{action}" do
+      it { is_expected.to respond_to(action.to_sym) }
+
+      it 'should return a hash' do
+        expect(subject.send(action.to_sym)).to be_a(Hash)
+      end
+
+      it 'should return transformed data' do
+        expect(subject.send(action.to_sym)).to eq(send("#{action}_data".to_sym))
+      end
+
+      it 'should return a key called "link"' do
+        expect(subject.send(action.to_sym)).to have_key("link")
+      end
+
+      it 'should not return an empty hash' do
+        expect(subject.send(action.to_sym)["link"]).not_to be_empty
+      end
+
+      context 'when given bad data' do
+        let(:data) do
+          {
+              'foo' => 'bar'
+          }
+        end
+
+        it 'should return an empty hash' do
+          expect(subject.send(action.to_sym)).to be_empty
+        end
+      end
+
+      context 'when given an empty hash' do
+        let(:data) do
+          {}
+        end
+
+        it 'should return an empty hash' do
+          expect(subject.send(action.to_sym)).to be_empty
+        end
+      end
+
+      describe "#has_#{action}_data?" do
+        context 'when given bad data' do
+          let(:data) do
+            {
+                'foo' => 'bar'
+            }
+          end
+
+          it { is_expected.to_not send("have_#{action}_data".to_sym) }
+        end
+      end
+    end
+  end
+
   describe '#basic_information' do
-
-    let(:basic_information_data) do
-      {
-        "header" => "BASIC INFORMATION",
-        "data" => {
-          "Before/After Care" => 'Before care',
-          "Dress Code" => 'Uniform',
-          "Transportation" => 'Buses / vans provided for students'
-        },
-        "link" => {
-          "More" => 'foo.com'
-        }
-      }
-    end
-
-    it { is_expected.to respond_to(:basic_information) }
-
-    it 'should return a hash' do
-      expect(subject.basic_information).to be_a(Hash)
-    end
-
-    it 'should return transformed data' do
-      expect(subject.basic_information).to eq(basic_information_data)
-    end
-
-    it 'should return a key called "link"' do
-      expect(subject.basic_information).to have_key("link")
-    end
-
-    it 'should not return an empty hash' do
-      expect(subject.basic_information["link"]).not_to be_empty
-    end
-
     it 'should return a url' do
       expect(subject.basic_information["link"]["More"]).to eq('foo.com')
     end
-
-    context 'when given bad data' do
-      let(:data) do
-        {
-            'foo' => 'bar'
-        }
-      end
-
-      it 'should return an empty hash' do
-        expect(subject.basic_information).to be_empty
-      end
-    end
-
-    context 'when given an empty hash' do
-      let(:data) do
-        {}
-      end
-
-      it 'should return an empty hash' do
-        expect(subject.basic_information).to be_empty
-      end
-    end
   end
-
-  describe '#has_basic_information_data?' do
-    context 'when given bad data' do
-      let(:data) do
-        {
-            'foo' => 'bar'
-        }
-      end
-
-      it { is_expected.to_not have_basic_information_data }
-    end
-
-    context 'when given good data' do
-      let(:data) do
-        data = {
-            "Before/After Care" => ['Before care'],
-            "Dress Code" => ['Uniform'],
-            "Transportation" => ['Buses / vans provided for students'],
-            "Academic Focus" => ['Business, Special Ed, Technology'],
-            "Arts" => ['Computer animation, Graphics, Video and Film'],
-            "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-            "Student ethnicity" => {
-                "Hispanic" => 88,
-                "Black" => 7,
-                "White" => 2,
-                "Asian/Pacific Islander" => 2,
-                "2 or more races" => 1
-            },
-            "FRL" => 98,
-            "Students with disabilities" => 6,
-            "English language learners" => 45,
-        }
-      end
-
-      it { is_expected.to have_basic_information_data }
-    end
-  end
-
+  
   describe '#programs_and_culture' do
-
-    let(:programs_and_culture_data) do
-      {
-        "header" => "PROGRAMS & CULTURE",
-        "data" => {
-          "Academic Focus" => 'Business, Special Ed, Technology',
-          "Arts" => 'Computer animation, Graphics, Video and Film',
-          "World Languages" => 'French, German, Spanish, Hungarian, Polish'
-        },
-        "link" => {
-          "More program info" => 'foo.com'
-        }
-      }
-    end
-
-    it { is_expected.to respond_to(:programs_and_culture) }
-
-    it 'should return a hash' do
-      expect(subject.programs_and_culture).to be_a(Hash)
-    end
-
-    it 'should return transformed data' do
-      expect(subject.programs_and_culture).to eq(programs_and_culture_data)
-    end
-
-    it 'should return a key called "link"' do
-      expect(subject.programs_and_culture).to have_key("link")
-    end
-
-    it 'should not return an empty hash' do
-      expect(subject.programs_and_culture["link"]).not_to be_empty
-    end
-
     it 'should return a url' do
       expect(subject.programs_and_culture["link"]["More program info"]).to eq('foo.com')
-    end
-
-    context 'when given bad data' do
-      let(:data) do
-        {
-            'foo' => 'bar'
-        }
-      end
-
-      it 'should return an empty hash' do
-        expect(subject.programs_and_culture).to be_empty
-      end
-    end
-
-    context 'when given an empty hash' do
-      let(:data) do
-        {}
-      end
-
-      it 'should return an empty hash' do
-        expect(subject.programs_and_culture).to be_empty
-      end
-    end
-
-  end
-
-  describe '#has_programs_and_culture_data?' do
-    context 'when given bad data' do
-      let(:data) do
-        {
-            'foo' => 'bar'
-        }
-      end
-
-      it { is_expected.to_not have_programs_and_culture_data }
-    end
-
-    context 'when given good data' do
-      let(:data) do
-        data = {
-            "Before/After Care" => ['Before care'],
-            "Dress Code" => ['Uniform'],
-            "Transportation" => ['Buses / vans provided for students'],
-            "Academic Focus" => ['Business, Special Ed, Technology'],
-            "Arts" => ['Computer animation, Graphics, Video and Film'],
-            "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-            "Student ethnicity" => {
-                "Hispanic" => 88,
-                "Black" => 7,
-                "White" => 2,
-                "Asian/Pacific Islander" => 2,
-                "2 or more races" => 1
-            },
-            "FRL" => 98,
-            "Students with disabilities" => 6,
-            "English language learners" => 45,
-        }
-      end
-
-      it { is_expected.to have_programs_and_culture_data }
     end
   end
 
   describe '#diversity' do
-
-    let(:diversity_data) do
-      {
-        "header" => "DIVERSITY",
-        "data" => {
-          "Student ethnicity" => {
-            "Hispanic" => 88,
-            "Black" => 7,
-            "White" => 2,
-            "Asian/Pacific Islander" => 2,
-            "2 or more races" => 1
-          },
-          "FRL" => 98,
-          "Students with disabilities" => 6,
-          "English language learners" => 45,
-        },
-        "link" => {
-          "More" => 'foo.com',
-          "More diversity info" => 'foo.com'
-        }
-      }
-    end
-
-    it { is_expected.to respond_to(:diversity) }
-
-    it 'should return a hash' do
-      expect(subject.diversity).to be_a(Hash)
-    end
-
-    it 'should return transformed data' do
-      expect(subject.diversity).to eq(diversity_data)
-    end
-
-    it 'should return a key called "link"' do
-      expect(subject.diversity).to have_key("link")
-    end
-
-    it 'should not return an empty hash' do
-      expect(subject.diversity["link"]).not_to be_empty
-    end
-
     it 'should return a url' do
       expect(subject.diversity["link"]["More"]).to eq('foo.com')
     end
 
     it 'should return a url' do
-      expect(subject.diversity["link"]["More diversity info"]).to eq('foo.com')
-    end
-
-    context 'when given bad data' do
-      let(:data) do
-        {
-            'foo' => 'bar'
-        }
-      end
-
-      it 'should return an empty hash' do
-        expect(subject.diversity).to be_empty
-      end
-    end
-
-    context 'when given an empty hash' do
-      let(:data) do
-        {}
-      end
-
-      it 'should return an empty hash' do
-        expect(subject.diversity).to be_empty
-      end
+      expect(subject.diversity["link"]["More diversity info"]).to eq('bar.com')
     end
   end
-
-  describe '#has_diversity_data?' do
-    context 'when given bad data' do
-      let(:data) do
-        {
-            'foo' => 'bar'
-        }
-      end
-
-      it { is_expected.to_not have_diversity_data }
-    end
-
-    context 'when given good data' do
-      let(:data) do
-        data = {
-            "Before/After Care" => 'Before care',
-            "Dress Code" => 'Uniform',
-            "Transportation" => 'Buses / vans provided for students',
-            "Academic Focus" => 'Business, Special Ed, Technology',
-            "Arts" => 'Computer animation, Graphics, Video and Film',
-            "World Languages" => 'French, German, Spanish, Hungarian, Polish',
-            "Student ethnicity" => {
-                "Hispanic" => 88,
-                "Black" => 7,
-                "White" => 2,
-                "Asian/Pacific Islander" => 2,
-                "2 or more races" => 1
-            },
-            "FRL" => 98,
-            "Students with disabilities" => 6,
-            "English language learners" => 45,
-        }
-      end
-
-      it { is_expected.to have_diversity_data }
-    end
-  end
-
 end

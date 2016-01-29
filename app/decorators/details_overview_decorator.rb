@@ -5,19 +5,18 @@ class DetailsOverviewDecorator
     @view = view
   end
 
-
   ["basic_information", "programs_and_culture", "diversity"].each do |action|
     define_method("has_#{action}_data?") do
       send(action).present?
     end
 
     define_method("#{action}") do
-      klass = DetailsOverviewDecorator.const_get(action.camelcase)
+      @_item ||= (klass = DetailsOverviewDecorator.const_get(action.camelcase)
       item = klass.new(
           @data,
-          quality: @view.school_quality_path(@school),
-          details: @view.school_details_path(@school))
-      item.get_data
+          details: @view.school_quality_path(@school),
+          quality: @view.school_details_path(@school))
+      item.get_data)
     end
   end
 
@@ -29,13 +28,13 @@ class DetailsOverviewDecorator
     end
 
     def get_data
-      transformed_data = {}
+      @_transformed_data ||= (transformed_data = {}
 
       transformed_data["header"] = header
 
-      raw_data = data.select do |key, value|
-        array_of_keys.include? key
-      end
+      raw_data = data.select {|key, _| array_of_keys.include? key }
+
+      return {} if raw_data.empty?
 
       data = Hash[
         raw_data.collect do |k,v|
@@ -49,11 +48,7 @@ class DetailsOverviewDecorator
 
       transformed_data["link"] = links
 
-      if transformed_data["data"].empty?
-        return {}
-      end
-
-      return transformed_data
+      transformed_data)
     end
   end
 
@@ -80,8 +75,8 @@ class DetailsOverviewDecorator
       super(data)
       @header = "DIVERSITY"
       @array_of_keys = ['Student ethnicity', 'FRL', 'Students with disabilities', 'English language learners']
-      @links = {"More" => urls[:quality],
-                "More diversity info" => urls[:details]}
+      @links = {"More" => urls[:details],
+                "More diversity info" => urls[:quality]}
     end
   end
 
