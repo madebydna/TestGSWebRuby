@@ -30,6 +30,12 @@ class TestDataSet < ActiveRecord::Base
       .with_display_targets('desktop')
   end
 
+  def self.fetch_feed_test_scores(school, data_set_conditions = {})
+    self.base_performance_query(school)
+        .where(data_set_conditions)
+        .with_display_targets('feed')
+  end
+
   scope :with_display_targets, ->(*display_targets) {
     where_statements = display_targets.map do |target|
       "display_target like '%#{target}%'"

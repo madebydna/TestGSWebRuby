@@ -4,6 +4,29 @@ describe TestScoresCaching::BreakdownsCacher do
   let(:school) { FactoryGirl.build(:alameda_high_school) }
   let(:test_scores_cacher) { TestScoresCaching::BreakdownsCacher.new(school) }
 
+  describe '#query_results' do
+    let(:test_data_types) {{17 => true, 19 => true, 21 => true}}
+
+    it 'should call feed-specific methods on TestDataSet' do
+      allow(TestDataSet).to receive(:fetch_test_scores).and_return []
+      allow(TestDataSet).to receive(:fetch_test_scores).and_return []
+      expect(TestDataSet).not_to receive(:fetch_feed_test_scores)
+      expect(test_scores_cacher.query_results).to be_empty
+    end
+
+    it 'should keep only known data type ids' do
+      allow(test_scores_cacher).to receive(:test_data_types).and_return(test_data_types)
+      expect(TestDataSet).to receive(:fetch_test_scores).and_return [Struct.new(:data_type_id).new(17), Struct.new(:data_type_id).new(18)]
+      expect(TestDataSet).to receive(:fetch_test_scores).and_return [Struct.new(:data_type_id).new(19)]
+      expect(test_scores_cacher.query_results).not_to be_empty
+      expect(test_scores_cacher.query_results.map {|q| q.data_type_id}.sort).to eq([17,19])
+    end
+  end
+
+  describe '.active' do
+    it {expect(TestScoresCaching::BreakdownsCacher.active?).to be_truthy }
+  end
+
   describe '#build_hash_for_data_set' do
 
     let(:result) {

@@ -3,10 +3,9 @@ require 'models/schools/testscores/testscores_shared_contexts'
 require 'models/schools/testscores/testscores_shared_examples'
 
 describe TestDataSet do
+  subject { TestDataSet }
+
   describe '#ratings_for_school' do
-
-    subject { TestDataSet }
-
     with_shared_context 'when there is a deactivated test_data_set' do
       include_example 'should not return a test_data_set'
     end
@@ -15,5 +14,38 @@ describe TestDataSet do
       include_example 'should not return a test_data_set'
     end
 
+  end
+
+  describe '#fetch_feed_test_scores' do
+    with_shared_context 'when there is an active feed test_data_set' do
+      it {expect(subject.fetch_feed_test_scores(school).to_a).to_not be_empty}
+    end
+
+    with_shared_context 'when there is an inactive feed test_data_set' do
+      it {expect(subject.fetch_feed_test_scores(school).to_a).to be_empty}
+    end
+
+    with_shared_context 'when there is an active feed test_data_set with a deactivated test_data_school_value' do
+      it {expect(subject.fetch_feed_test_scores(school).to_a).to be_empty}
+    end
+  end
+
+  describe '#fetch_test_scores' do
+    with_shared_context 'when there is an active desktop test_data_set' do
+      it {expect(subject.fetch_test_scores(school).to_a).to_not be_empty}
+    end
+    with_shared_context 'when there is an inactive desktop test_data_set' do
+      it {expect(subject.fetch_test_scores(school).to_a).to be_empty}
+    end
+    with_shared_context 'when there is an active desktop test_data_set with a deactivated test_data_school_value' do
+      it {expect(subject.fetch_test_scores(school).to_a).to be_empty}
+    end
+  end
+
+  describe '#base_performance_query' do
+    let(:school) { FactoryGirl.build(:school, id: 1) }
+    describe 'with no data' do
+      it {expect(subject.base_performance_query(school).to_a).to be_empty}
+    end
   end
 end
