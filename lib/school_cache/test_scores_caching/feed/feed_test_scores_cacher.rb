@@ -5,8 +5,7 @@ class FeedTestScoresCacher < TestScoresCaching::BreakdownsCacher
     @query_results ||= (
       results =
           (
-          TestDataSet.fetch_feed_test_scores(school, breakdown_id: 1) +
-              TestDataSet.fetch_feed_test_scores(school, grade: 'All')
+            TestDataSet.fetch_feed_test_scores(school)
           ).select do |result|
             data_type_id = result.data_type_id
             # skip this if no corresponding test data type

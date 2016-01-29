@@ -6,6 +6,8 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
     @query_results ||= (
       results =
         (
+          # The site only shows subgroup ratings for all students. So here we grab all the non-subgroup data
+          # and add in the grade All subgroup data.
           TestDataSet.fetch_test_scores(school, breakdown_id: 1) +
           TestDataSet.fetch_test_scores(school, grade: 'All')
         ).select do |result|
