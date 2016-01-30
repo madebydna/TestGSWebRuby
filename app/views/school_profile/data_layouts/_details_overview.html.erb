@@ -4,126 +4,133 @@
 <% diversity = decorator.diversity %>
 
 <% programs_and_culture = {
-    header: 'Programs & culture',
-    data: {
-        'Academic focus' => 'Business, Special Ed, Technology',
-        'Arts' => 'Computer animation, Graphics, Video, and Film',
-        'World languages' => 'French, German, Spanish, Hungarian, Polish'
-    },
-    link: 'tbd'
+        header: 'Programs & culture',
+        data: {
+                'Academic focus' => 'Business, Special Ed, Technology',
+                'Arts' => 'Computer animation, Graphics, Video, and Film',
+                'World languages' => 'French, German, Spanish, Hungarian, Polish'
+        },
+        link: 'tbd'
 } %>
+<div id="details-section" class="mtl gs-bootstrap js-overview-details mtl">
 
+  <hr class="thick">
+  <% motto = data["Best known for"] %>
+  <% if  motto %>
+      <%= render 'school_profile/overview/details_overview/principal_motto', motto: motto %>
+  <% else %>
+      <%= render 'school_profile/overview/details_overview/osp_callout' %>
+  <% end %>
 
-<!-- <div class="container gs-bootstrap js-overview-details dn mtl" style="border:2px solid lightgray"> -->
-<div id="details-section" class="gs-bootstrap mtl" style="border:2px solid lightgray">
+  <hr class="thick">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12 pvl tac">
-        <div class="open-sans_sb mvm uc gray-darker">Principal Motto</div>
-        <h3 class="open-sans_i mtn gray-darker">&quot;Leadership Through Education&quot;</h3>
-      </div>
-    </div>
-    <div class="row bg-light-gray">
       <div class="col-xs-12 col-sm-6 col-lg-8">
-      <div class="row">
-        <div class="col-xs-12 col-lg-6">
-          <h3 class="uc"><%= basic_information['header'] %></h3>
-          <ul>
-            <% basic_information['data'].each_pair do |label, values| %>
-              <li>
-                <strong><%= label %></strong>
-                <br/>
-                <%= values %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-        <div class="col-xs-12 col-lg-6">
-          <h3 class="uc"><%= programs_and_culture[:header] %></h3>
-          <ul>
-            <% programs_and_culture[:data].each_pair do |label, values| %>
-              <li>
-                <strong><%= label %></strong>
-                <br/>
-                <%= values %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
-        <div class="clearfix visible-lg"></div>
-        <div class="col-lg-12 hidden-xs hidden-sm hidden-md visible-lg">
-          <h3 class="uc"><%= diversity[:header] %></h3>
-          <div class="row">
-            <div class="col-lg-6">
-              <strong><%= t('.student_demographics') %></strong>
-              <div class="row">
-                <div class="col-xs-6">
-                  <%= render 'school_profile/overview/details_overview/pie_chart', 
-                    piedata: data["Student ethnicity"],
-                    display:'desktop'
-                  %>
+        <div class="row">
+          <div class="col-xs-12 col-lg-6">
+            <h3 class="uc"><%= basic_information['header'] %></h3>
+            <ul>
+              <% basic_information['data'].each_pair do |label, values| %>
+                  <li>
+                    <strong><%= label %></strong>
+                    <br/>
+                    <%= values %>
+                  </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="col-xs-12 col-lg-6">
+            <h3 class="uc"><%= programs_and_culture[:header] %></h3>
+            <ul>
+              <% programs_and_culture[:data].each_pair do |label, values| %>
+                  <li>
+                    <strong><%= label %></strong>
+                    <br/>
+                    <%= values %>
+                  </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="clearfix visible-lg"></div>
+          <div class="col-lg-12 hidden-xs hidden-sm hidden-md visible-lg">
+            <h3 class="uc"><%= diversity[:header] %></h3>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <strong><%= t('.student_demographics') %></strong>
+
+                <div class="row">
+                  <div class="col-xs-6">
+                    <%= render 'school_profile/overview/details_overview/pie_chart',
+                               piedata: data["Student ethnicity"],
+                               display: 'desktop'
+                    %>
+                  </div>
+                  <div class="col-xs-6">
+                    <%= render 'school_profile/overview/details_overview/ethnicity_table',
+                               data: data["Student ethnicity"]
+                    %>
+                  </div>
+                </div>
               </div>
-              <div class="col-xs-6">
-                <%= render 'school_profile/overview/details_overview/ethnicity_table',
-                  data: data["Student ethnicity"]
-                %>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-              <h3 style="margin: 5px 0;">Additional Diversity stff</h3>
-              <ul>
-                <li>Before/AfterCare</li>
-                <li>Dress Code</li>
-                <li>Before/AfterCare</li>
-                <li>Dress Code</li>
-                <li>Transporation</li>
-              </ul>
+              <div class="col-lg-6">
+                <h3 style="margin: 5px 0;">Additional Diversity stff</h3>
+                <ul>
+                  <li>Before/AfterCare</li>
+                  <li>Dress Code</li>
+                  <li>Before/AfterCare</li>
+                  <li>Dress Code</li>
+                  <li>Transporation</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
       <% if @show_ads %>
-      <div class="col-xs-12 col-sm-4 col-lg-4">
-        <div class="mtl">
-          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Details_Adaptive, defer_render: true, visible_for: ' ' %>
-        </div>
-      </div>
+          <div class="col-xs-12 col-sm-4 col-lg-4">
+            <div class="mtl">
+              <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Details_Adaptive, defer_render: true, visible_for: ' ' %>
+            </div>
+          </div>
       <% end %>
       <div class="clearfix hidden-lg"></div>
       <div class="col-xs-12 col-sm-12 col-md-8 hidden-lg">
-      <h3 class="uc"><%= diversity[:header] %></h3>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6 hidden-lg">
-          <strong><%= t('.student_demographics') %></strong>
-          <div class="row">
-            <div class="col-xs-6">
-              <%= render 'school_profile/overview/details_overview/pie_chart', 
-                piedata: data["Student ethnicity"],
-                display:'mobile'
-              %>
+        <h3 class="uc"><%= diversity[:header] %></h3>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 hidden-lg">
+            <strong><%= t('.student_demographics') %></strong>
+
+            <div class="row">
+              <div class="col-xs-6">
+                <%= render 'school_profile/overview/details_overview/pie_chart',
+                           piedata: data["Student ethnicity"],
+                           display: 'mobile'
+                %>
+              </div>
+              <div class="col-xs-6">
+                <%= render 'school_profile/overview/details_overview/ethnicity_table',
+                           data: data["Student ethnicity"]
+                %>
+              </div>
             </div>
-            <div class="col-xs-6">
-              <%= render 'school_profile/overview/details_overview/ethnicity_table',
-                data: data["Student ethnicity"]
-              %>
           </div>
+          <div class="col-xs-12 col-sm-6 hidden-lg">
+            <h3 style="margin: 5px 0;">Additional Diversity stuff</h3>
+            <ul>
+              <li>Before/AfterCare</li>
+              <li>Dress Code</li>
+              <li>Dress Code</li>
+              <li>Transporation</li>
+              <li>Transporation</li>
+            </ul>
           </div>
         </div>
-        <div class="col-xs-12 col-sm-6 hidden-lg">
-          <h3 style="margin: 5px 0;">Additional Diversity stuff</h3>
-          <ul>
-            <li>Before/AfterCare</li>
-            <li>Dress Code</li>
-            <li>Dress Code</li>
-            <li>Transporation</li>
-            <li>Transporation</li>
-          </ul>
-        </div>
-      </div>
       </div>
     </div>
   </div>
+  <hr>
 </div>
+
 

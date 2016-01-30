@@ -1,0 +1,9 @@
+---
+en:
+  school_profile:
+    overview:
+      details_overview:
+        osp_callout:
+          button: Claim this school profiled!
+          callout_html: "Share with parents your school's programs&nbsp;and&nbsp;focus!"
+          school_administrators: School administrators!

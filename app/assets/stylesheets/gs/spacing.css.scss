@@ -339,6 +339,10 @@ hr.brand-bar {
   background: $brand-secondary;
 }
 
+hr.thick {
+  border-bottom: 4px solid $module-gray-stroke;
+}
+
 // vertical divider - used on overview
 .vdl{
   padding-bottom: -10px;

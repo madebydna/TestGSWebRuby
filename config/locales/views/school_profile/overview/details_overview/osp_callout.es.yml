@@ -1,0 +1,9 @@
+---
+es:
+  school_profile:
+    overview:
+      details_overview:
+        osp_callout:
+          button: Claim esta escuela perfilado!
+          callout_html: Comparte con los padres programas de su escuela y centrarse!
+          school_administrators: Los administradores escolares!
