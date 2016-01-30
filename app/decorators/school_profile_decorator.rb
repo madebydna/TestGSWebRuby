@@ -89,7 +89,7 @@ class SchoolProfileDecorator < Draper::Decorator
       lon: school.lon,
       state: school.state,
       locationType: 'street_address',
-      normalizedAddress: google_formatted_street_address,
+      normalizedAddress:  full_address,
       locationSearchString: full_address,
       distance: 3,
       sort:'rating_desc',
