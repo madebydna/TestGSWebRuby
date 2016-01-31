@@ -37,7 +37,15 @@ class DetailsOverviewDecorator
         array_of_keys.include? key
       end
 
-      transformed_data["data"] = raw_data
+      data = Hash[
+        raw_data.collect do |k,v|
+          v = v.values if v.is_a?(Hash) && k != 'Student ethnicity'
+          v = v.join(', ') if v.respond_to?(:join)
+          [k, v]
+        end
+      ]
+
+      transformed_data["data"] = data
 
       transformed_data["link"] = links
 
@@ -71,7 +79,7 @@ class DetailsOverviewDecorator
     def initialize(data, urls)
       super(data)
       @header = "DIVERSITY"
-      @array_of_keys = ['Student Demographics', 'Free & reduced lunch participants', 'Students w/ disabilities', 'English language learners']
+      @array_of_keys = ['Student ethnicity', 'FRL', 'Students with disabilities', 'English language learners']
       @links = {"More" => urls[:quality],
                 "More diversity info" => urls[:details]}
     end

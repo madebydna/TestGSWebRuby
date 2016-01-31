@@ -13,15 +13,15 @@ describe DetailsOverviewDecorator do
       "Academic Focus" => ['Business, Special Ed, Technology'],
       "Arts" => ['Computer animation, Graphics, Video and Film'],
       "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-      "Student Demographics" => {
+      "Student ethnicity" => {
         "Hispanic" => 88,
         "Black" => 7,
         "White" => 2,
         "Asian/Pacific Islander" => 2,
         "2 or more races" => 1
       },
-      "Free & reduced lunch participants" => 98,
-      "Students w/ disabilities" => 6,
+      "FRL" => 98,
+      "Students with disabilities" => 6,
       "English language learners" => 45,
     }
   end
@@ -55,9 +55,9 @@ describe DetailsOverviewDecorator do
       {
         "header" => "BASIC INFORMATION",
         "data" => {
-          "Before/After Care" => ['Before care'],
-          "Dress Code" => ['Uniform'],
-          "Transportation" => ['Buses / vans provided for students']
+          "Before/After Care" => 'Before care',
+          "Dress Code" => 'Uniform',
+          "Transportation" => 'Buses / vans provided for students'
         },
         "link" => {
           "More" => 'foo.com'
@@ -130,15 +130,15 @@ describe DetailsOverviewDecorator do
             "Academic Focus" => ['Business, Special Ed, Technology'],
             "Arts" => ['Computer animation, Graphics, Video and Film'],
             "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-            "Student Demographics" => {
+            "Student ethnicity" => {
                 "Hispanic" => 88,
                 "Black" => 7,
                 "White" => 2,
                 "Asian/Pacific Islander" => 2,
                 "2 or more races" => 1
             },
-            "Free & reduced lunch participants" => 98,
-            "Students w/ disabilities" => 6,
+            "FRL" => 98,
+            "Students with disabilities" => 6,
             "English language learners" => 45,
         }
       end
@@ -153,9 +153,9 @@ describe DetailsOverviewDecorator do
       {
         "header" => "PROGRAMS & CULTURE",
         "data" => {
-          "Academic Focus" => ['Business, Special Ed, Technology'],
-          "Arts" => ['Computer animation, Graphics, Video and Film'],
-          "World Languages" => ['French, German, Spanish, Hungarian, Polish']
+          "Academic Focus" => 'Business, Special Ed, Technology',
+          "Arts" => 'Computer animation, Graphics, Video and Film',
+          "World Languages" => 'French, German, Spanish, Hungarian, Polish'
         },
         "link" => {
           "More program info" => 'foo.com'
@@ -229,15 +229,15 @@ describe DetailsOverviewDecorator do
             "Academic Focus" => ['Business, Special Ed, Technology'],
             "Arts" => ['Computer animation, Graphics, Video and Film'],
             "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-            "Student Demographics" => {
+            "Student ethnicity" => {
                 "Hispanic" => 88,
                 "Black" => 7,
                 "White" => 2,
                 "Asian/Pacific Islander" => 2,
                 "2 or more races" => 1
             },
-            "Free & reduced lunch participants" => 98,
-            "Students w/ disabilities" => 6,
+            "FRL" => 98,
+            "Students with disabilities" => 6,
             "English language learners" => 45,
         }
       end
@@ -252,15 +252,15 @@ describe DetailsOverviewDecorator do
       {
         "header" => "DIVERSITY",
         "data" => {
-          "Student Demographics" => {
+          "Student ethnicity" => {
             "Hispanic" => 88,
             "Black" => 7,
             "White" => 2,
             "Asian/Pacific Islander" => 2,
             "2 or more races" => 1
           },
-          "Free & reduced lunch participants" => 98,
-          "Students w/ disabilities" => 6,
+          "FRL" => 98,
+          "Students with disabilities" => 6,
           "English language learners" => 45,
         },
         "link" => {
@@ -333,21 +333,21 @@ describe DetailsOverviewDecorator do
     context 'when given good data' do
       let(:data) do
         data = {
-            "Before/After Care" => ['Before care'],
-            "Dress Code" => ['Uniform'],
-            "Transportation" => ['Buses / vans provided for students'],
-            "Academic Focus" => ['Business, Special Ed, Technology'],
-            "Arts" => ['Computer animation, Graphics, Video and Film'],
-            "World Languages" => ['French, German, Spanish, Hungarian, Polish'],
-            "Student Demographics" => {
+            "Before/After Care" => 'Before care',
+            "Dress Code" => 'Uniform',
+            "Transportation" => 'Buses / vans provided for students',
+            "Academic Focus" => 'Business, Special Ed, Technology',
+            "Arts" => 'Computer animation, Graphics, Video and Film',
+            "World Languages" => 'French, German, Spanish, Hungarian, Polish',
+            "Student ethnicity" => {
                 "Hispanic" => 88,
                 "Black" => 7,
                 "White" => 2,
                 "Asian/Pacific Islander" => 2,
                 "2 or more races" => 1
             },
-            "Free & reduced lunch participants" => 98,
-            "Students w/ disabilities" => 6,
+            "FRL" => 98,
+            "Students with disabilities" => 6,
             "English language learners" => 45,
         }
       end
