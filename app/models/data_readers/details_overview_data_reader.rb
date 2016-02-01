@@ -126,12 +126,10 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
       end
     end
 
-    def is_valid_esp_data_hash_value?(value)
-      value.is_a?(Hash) &&
-        REQUIRED_ESP_KEYS.all? do |key|
-        value.has_key?(key) &&
-          valid_esp_data_source?(value['source'])
-      end
+    def is_valid_esp_data_hash_value?(esp_value_hash)
+      esp_value_hash.is_a?(Hash) &&
+        REQUIRED_ESP_KEYS.all? { |key| esp_value_hash.has_key?(key) } &&
+          valid_esp_data_source?(esp_value_hash['source'])
     end
 
     def valid_esp_data_source?(source)
