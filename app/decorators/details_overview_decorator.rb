@@ -11,12 +11,12 @@ class DetailsOverviewDecorator
     end
 
     define_method("#{action}") do
-      @_item ||= (klass = DetailsOverviewDecorator.const_get(action.camelcase)
+      klass = DetailsOverviewDecorator.const_get(action.camelcase)
       item = klass.new(
           @data,
           details: @view.school_quality_path(@school),
           quality: @view.school_details_path(@school))
-      item.get_data)
+      item.get_data
     end
   end
 

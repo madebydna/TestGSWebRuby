@@ -150,6 +150,15 @@ describe DetailsOverviewDecorator do
     end
   end
 
+
+  describe '#basic_information' do
+    it 'should return transformed data when given basic information' do
+      expect(subject.basic_information).to eq(basic_information_data)
+      expect(subject.programs_and_culture).to eq(programs_and_culture_data)
+      expect(subject.diversity).to eq(diversity_data)
+    end
+  end
+
   describe '#basic_information' do
     it 'should return a url' do
       expect(subject.basic_information["link"]["More"]).to eq('foo.com')
