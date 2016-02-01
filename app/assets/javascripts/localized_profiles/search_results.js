@@ -391,7 +391,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var $schoolText = $school.siblings('.js-compareSchoolsText');
             $schoolText.hide();
             $schoolText.removeClass('js-buttonSelected');
-            $school.animate({width: '150px', paddingLeft: '20px'},500, function() {
+            $school.animate({width: '100%', paddingLeft: '20px'},500, function() {
                 $school.find('.iconx16').removeClass('i-16-check-bigger-on').addClass('i-16-check-bigger-off');
                 $school.removeClass('btn-border-green');
                 $school.find('.js-compareSchoolsButtonText').text('Compare');
