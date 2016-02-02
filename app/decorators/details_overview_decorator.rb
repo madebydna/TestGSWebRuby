@@ -56,7 +56,7 @@ class DetailsOverviewDecorator
     def initialize(data, urls)
       super(data)
       @header = "BASIC INFORMATION"
-      @array_of_keys = ["Before/After Care", "Dress Code", "Transportation"]
+      @array_of_keys = ["Before/After Care", "Dress code", "Transportation"]
       @links = {"More" => urls[:details]}
     end
   end
