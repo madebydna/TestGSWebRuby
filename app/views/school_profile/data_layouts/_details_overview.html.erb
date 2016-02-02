@@ -23,9 +23,9 @@
 
         <% def display_details_info(info) %>
           <div class="col-xs-12 col-lg-6">
-            <h3 class="uc"><%= info['header'] %></h3>
+            <h3 class="uc"><%= info.header %></h3>
             <ul class="list-unstyled">
-              <% info['data'].each_pair do |label, values| %>
+              <% info.get_data.each_pair do |label, values| %>
                 <li>
                   <strong><%= label %></strong>
                   <br/>
@@ -48,27 +48,27 @@
 
       <% if decorator.has_diversity_data? %>
         <div class="col-lg-12 hidden-xs hidden-sm hidden-md visible-lg">
-          <h3 class="uc"><%= diversity['header'] %></h3>
+          <h3 class="uc"><%= diversity.header %></h3>
           <div class="row">
             <div class="col-lg-6">
               <strong><%= t('.student_demographics') %></strong>
               <div class="row">
                 <div class="col-xs-6">
                   <%= render 'school_profile/overview/details_overview/pie_chart', 
-                    piedata: diversity['data']["Student ethnicity"],
+                    piedata: diversity.student_ethnicity,
                     display:'desktop'
                   %>
               </div>
               <div class="col-xs-6">
                 <%= render 'school_profile/overview/details_overview/ethnicity_table',
-                  data: diversity['data']["Student ethnicity"]
+                  data: diversity.student_ethnicity
                 %>
             </div>
           </div>
         </div>
         <div class="col-lg-6">
               <ul class="list-unstyled">
-                <% diversity['data'].except('Student ethnicity').each_pair do |label, values| %>
+                <% diversity.get_data.each_pair do |label, values| %>
                   <div>
                     <strong><%= label %>:</strong>
                     <%= values.to_f.round %>%
@@ -91,27 +91,27 @@
       <div class="clearfix hidden-lg"></div>
       <% if decorator.has_diversity_data? %>
       <div class="col-xs-12 col-sm-12 col-md-8 hidden-lg">
-      <h3 class="uc"><%= diversity['header'] %></h3>
+      <h3 class="uc"><%= diversity.header %></h3>
       <div class="row">
         <div class="col-xs-12 col-sm-6 hidden-lg">
           <strong><%= t('.student_demographics') %></strong>
           <div class="row">
             <div class="col-xs-6">
               <%= render 'school_profile/overview/details_overview/pie_chart', 
-                piedata: diversity['data']["Student ethnicity"],
+                piedata: diversity.student_ethnicity,
                 display:'mobile'
               %>
             </div>
             <div class="col-xs-6">
               <%= render 'school_profile/overview/details_overview/ethnicity_table',
-                data: diversity['data']["Student ethnicity"]
+                data: diversity.student_ethnicity
               %>
           </div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-6 hidden-lg">
           <ul class="list-unstyled">
-            <% diversity['data'].except('Student ethnicity').each_pair do |label, values| %>
+            <% diversity.get_data.each_pair do |label, values| %>
               <div>
                 <strong><%= label %>:</strong>
                 <%= values.to_f.round %>%

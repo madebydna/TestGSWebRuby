@@ -28,51 +28,32 @@ describe DetailsOverviewDecorator do
 
   let(:basic_information_data) do
     {
-      "header" => "BASIC INFORMATION",
-      "data"                => {
-          "Before/After Care" => 'Before care',
-          "Dress Code"        => 'Uniform',
-          "Transportation"    => 'Buses / vans provided for students'
-      },
-      "link" => {
-          "More" => 'foo.com'
-      }
+      "Before/After Care" => 'Before care',
+      "Dress Code"        => 'Uniform',
+      "Transportation"    => 'Buses / vans provided for students'
     }
   end
 
   let(:programs_and_culture_data) do
     {
-        "header" => "PROGRAMS & CULTURE",
-        "data" => {
-            "Academic Focus"  => 'Business, Special Ed, Technology',
-            "Arts"            => 'Computer animation, Graphics, Video and Film',
-            "World Languages" => 'French, German, Spanish, Hungarian, Polish'
-        },
-        "link" => {
-            "More program info" => 'foo.com'
-        }
+      "Academic Focus"  => 'Business, Special Ed, Technology',
+      "Arts"            => 'Computer animation, Graphics, Video and Film',
+      "World Languages" => 'French, German, Spanish, Hungarian, Polish'
     }
   end
 
   let(:diversity_data) do
     {
-        "header" => "DIVERSITY",
-        "data" => {
-            "Student ethnicity" => {
-                "Hispanic" => 88,
-                "Black" => 7,
-                "White" => 2,
-                "Asian/Pacific Islander" => 2,
-                "2 or more races" => 1
-            },
-            "FRL" => 98,
-            "Students with disabilities" => 6,
-            "English language learners" => 45,
-        },
-        "link" => {
-            "More" => 'foo.com',
-            "More diversity info" => 'bar.com'
-        }
+      "Student ethnicity" => {
+          "Hispanic" => 88,
+          "Black" => 7,
+          "White" => 2,
+          "Asian/Pacific Islander" => 2,
+          "2 or more races" => 1
+      },
+      "FRL" => 98,
+      "Students with disabilities" => 6,
+      "English language learners" => 45,
     }
   end
 
@@ -99,35 +80,6 @@ describe DetailsOverviewDecorator do
       it { is_expected.to respond_to(action.to_sym) }
 
 
-
-
-
-
-      it 'should not return an empty hash' do
-        expect(subject.send(action.to_sym)["link"]).not_to be_empty
-      end
-
-      context 'when given bad data' do
-        let(:data) do
-          {
-              'foo' => 'bar'
-          }
-        end
-
-        it 'should return an empty hash' do
-          expect(subject.send(action.to_sym)).to be_empty
-        end
-      end
-
-      context 'when given an empty hash' do
-        let(:data) do
-          {}
-        end
-
-        it 'should return an empty hash' do
-          expect(subject.send(action.to_sym)).to be_empty
-        end
-      end
 
       describe "#has_#{action}_data?" do
         context 'when given bad data' do
@@ -156,7 +108,7 @@ describe DetailsOverviewDecorator do
 
     describe '#header' do
       it 'should return the correct header' do
-        expect(subject.header).to eq(basic_information_data['header'])
+        expect(subject.header).to eq('BASIC INFORMATION')
       end
     end
 
@@ -171,41 +123,37 @@ describe DetailsOverviewDecorator do
         expect(subject.get_data).to eq(basic_information_data)
       end
 
-      it 'should return a key called "link"' do
-        expect(subject.get_data).to have_key("link")
+      context 'when given bad data' do
+        let(:data) do
+          {
+            'foo' => 'bar'
+          }
+        end
+
+        it 'should return an empty hash' do
+          expect(subject.get_data).to be_empty
+        end
+      end
+
+      context 'when given an empty hash' do
+        let(:data) do
+          {}
+        end
+
+        it 'should return an empty hash' do
+          expect(subject.get_data).to be_empty
+        end
       end
     end
 
-
   end
 
-  describe '#basic_information' do
-    it 'should return transformed data when given basic information' do
-      expect(subject.basic_information).to eq(basic_information_data)
-      expect(subject.programs_and_culture).to eq(programs_and_culture_data)
-      expect(subject.diversity).to eq(diversity_data)
+  describe 'generated information methods' do
+    it 'should return correct type of DetailsInformation' do
+      expect(subject.basic_information).to be_a(DetailsOverviewDecorator::BasicInformation)
+      expect(subject.programs_and_culture).to be_a(DetailsOverviewDecorator::ProgramsAndCulture)
+      expect(subject.diversity).to be_a(DetailsOverviewDecorator::Diversity)
     end
   end
 
-  describe '#basic_information' do
-    it 'should return a url' do
-      expect(subject.basic_information["link"]["More"]).to eq('foo.com')
-    end
-  end
-  
-  describe '#programs_and_culture' do
-    it 'should return a url' do
-      expect(subject.programs_and_culture["link"]["More program info"]).to eq('foo.com')
-    end
-  end
-
-  describe '#diversity' do
-    it 'should return a url' do
-      expect(subject.diversity["link"]["More"]).to eq('foo.com')
-    end
-
-    it 'should return a url' do
-      expect(subject.diversity["link"]["More diversity info"]).to eq('bar.com')
-    end
-  end
 end

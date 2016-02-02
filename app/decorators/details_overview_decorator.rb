@@ -7,7 +7,7 @@ class DetailsOverviewDecorator
 
   ["basic_information", "programs_and_culture", "diversity"].each do |action|
     define_method("has_#{action}_data?") do
-      send(action).present?
+      send(action).send(:get_data).present?
     end
 
     define_method("#{action}") do
@@ -28,27 +28,19 @@ class DetailsOverviewDecorator
     end
 
     def get_data
-      @_transformed_data ||= (transformed_data = {}
+      @_transformed_data ||= begin
+        raw_data = data.select { |key, _| array_of_keys.include? key }
 
-      transformed_data["header"] = header
+        return {} if raw_data.empty?
 
-      raw_data = data.select {|key, _| array_of_keys.include? key }
-
-      return {} if raw_data.empty?
-
-      data = Hash[
-        raw_data.collect do |k,v|
-          v = v.values if v.is_a?(Hash) && k != 'Student ethnicity'
-          v = v.join(', ') if v.respond_to?(:join)
-          [k, v]
-        end
-      ]
-
-      transformed_data["data"] = data
-
-      transformed_data["link"] = links
-
-      transformed_data)
+        Hash[
+          raw_data.collect do |k,v|
+            v = v.values if v.is_a?(Hash) && k != 'Student ethnicity'
+            v = v.join(', ') if v.respond_to?(:join)
+            [k, v]
+          end
+        ]
+      end
     end
   end
 
@@ -74,9 +66,13 @@ class DetailsOverviewDecorator
     def initialize(data, urls)
       super(data)
       @header = "DIVERSITY"
-      @array_of_keys = ['Student ethnicity', 'FRL', 'Students with disabilities', 'English language learners']
+      @array_of_keys = ['FRL', 'Students with disabilities', 'English language learners']
       @links = {"More" => urls[:details],
                 "More diversity info" => urls[:quality]}
+    end
+
+    def student_ethnicity
+      data['Student ethnicity']
     end
   end
 
