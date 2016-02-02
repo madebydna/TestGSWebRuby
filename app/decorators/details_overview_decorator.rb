@@ -67,8 +67,7 @@ class DetailsOverviewDecorator
       super(data)
       @header = "DIVERSITY"
       @array_of_keys = ['FRL', 'Students with disabilities', 'English language learners']
-      @links = {"More" => urls[:details],
-                "More diversity info" => urls[:quality]}
+      @links = {"More diversity info" => urls[:quality]}
     end
 
     def student_ethnicity
