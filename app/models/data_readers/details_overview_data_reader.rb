@@ -83,6 +83,7 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
     def value
       @characteristics_hash.each_with_object({}) do |(chars_hash), result_hash|
+      next unless chars_hash[:school_value]
       result_hash[I18n.db_t(chars_hash[:breakdown])] = chars_hash[:school_value]
       end
     end
@@ -90,7 +91,7 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
   class DataTypeDetector
 
-    REQUIRED_CHARACTERISTICS_KEYS = [:breakdown, :school_value]
+    REQUIRED_CHARACTERISTICS_KEYS = [:breakdown]
     REQUIRED_ESP_KEYS = ["member_id", "source"]
     VALID_ESP_DATA_SOURCES= ["osp", "datateam"]
 

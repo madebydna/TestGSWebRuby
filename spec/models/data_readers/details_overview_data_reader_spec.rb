@@ -76,7 +76,6 @@ describe DetailsOverviewDataReader do
          :state_average_2011=>11.071,
          :school_value_2014=>57.5758
       },
-
       {:breakdown=>"Hispanic",
        :original_breakdown=>"Hispanic",
        :created=>"2014-07-25T10:20:09-07:00",
@@ -265,6 +264,78 @@ describe DetailsOverviewDataReader do
     }
   end 
 
+  let(:characteristics_data_with_breakdowns_without_school_values) do
+    {
+      ["Facilities", "Facilities", nil]=>
+      [
+        {:sports_fields=> {"member_id"=>5893684,
+                           "source"=>"osp",
+                           "created"=>"2015-07-31T22:25:47-07:00"
+      },
+      :audiovisual=> {"member_id"=>5893684,
+                      "source"=>"osp",
+                      "created"=>"2015-07-31T22:25:47-07:00"
+      },
+      :cafeteria=> {"member_id"=>5893684,
+                    "source"=>"osp",
+                    "created"=>"2015-07-31T22:25:47-07:00"
+      }
+      }
+      ],
+      ["English language learners", "English language learners", nil]=>
+      [{:breakdown=>"All students",
+        :original_breakdown=>"All students",
+        :created=>"2014-07-25T10:20:09-07:00",
+        :school_value=>77.3,
+        :source=>"CA Dept. of Education",
+        :year=>2014,
+        :state_average_2012=>23.0,
+        :school_value_2014=>14.6465}],
+        ["Something", "Something", nil]=>
+      [{:breakdown=>"All students",
+        :original_breakdown=>"All students",
+        :created=>"2014-07-25T10:20:09-07:00",
+        :school_value=>77.3,
+        :source=>"CA Dept. of Education",
+        :year=>2014,
+        :state_average_2012=>23.0,
+        :school_value_2014=>14.6465}],
+        ["Student ethnicity", "Student ethnicity", nil]=>
+      [
+        {:breakdown=>"White",
+         :original_breakdown=>"White",
+         :created=>"2014-07-25T10:20:09-07:00",
+         :school_value=>98.0,
+         :source=>"CA Dept. of Education",
+         :year=>2014,
+         :school_value_2011=>1.67598,
+         :state_average_2011=>26.6216,
+         :school_value_2012=>1.56863,
+         :state_average_2012=>26.0,
+         :school_value_2014=>2.52525
+      },
+      {:breakdown=>"Filipino",
+       :original_breakdown=>"Filipino",
+       :created=>"2014-07-25T10:20:09-07:00",
+       :school_value=>2.00,
+       :source=>"CA Dept. of Education",
+       :year=>2014,
+       :school_value_2014=>1.51515
+      },
+      # this breakdown has state values but no school value
+      {:breakdown=>"Two or more races",
+       :original_breakdown=>"Multiracial",
+       :created=>"2014-07-25T10:20:09-07:00",
+       :source=>"CA Dept. of Education",
+       :year=>2014,
+       :state_average_2011=>2.89175,
+       :state_average_2012=>3.0,
+       :school_value_2014=>1.51515
+      }
+      ]
+    }
+  end 
+
   let(:invalid_data) do
     [{bad: 'data'}]
   end
@@ -327,8 +398,6 @@ describe DetailsOverviewDataReader do
   end
 
   describe DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData do
-    context 'with characteristics and osp data' do
-      subject { DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(characteristics_and_osp_data) }
       let(:charactersitics_and_osp_results) {
         {
           "Facilities"=>['sports_fields', 'audiovisual', 'cafeteria'],
@@ -337,15 +406,22 @@ describe DetailsOverviewDataReader do
           "Student ethnicity"=>{"White"=>98.00,"Filipino"=>2.00}
         }
       }
+    context 'with characteristics and osp data' do
+      subject { DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(characteristics_and_osp_data) }
       it 'should return correctly formatted data' do
         expect(Hash[subject.run.sort]).to eq(Hash[charactersitics_and_osp_results.sort])
       end
     end
-    context 'with invalid data' do
-      subject { DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(invalid_data) }
-      # it 'should raise invalid data reader format error' do
-      #   expect{subject.run}.to raise_error(Error::InvalidDataReaderFormat)
-      # end
+    context 'with characterstics data that has state value and no school value for a ethnicity breakdowninvalid data' do
+      subject do
+        DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(
+          characteristics_data_with_breakdowns_without_school_values
+        )
+      end
+      it 'should return student ethnicity breakdowns that with school values and ignore breakdowns with no school value' do
+        
+        expect(Hash[subject.run.sort]).to eq(Hash[charactersitics_and_osp_results.sort])
+      end
     end
   end
 end
