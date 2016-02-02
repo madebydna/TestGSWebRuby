@@ -98,17 +98,10 @@ describe DetailsOverviewDecorator do
     describe "##{action}" do
       it { is_expected.to respond_to(action.to_sym) }
 
-      it 'should return a hash' do
-        expect(subject.send(action.to_sym)).to be_a(Hash)
-      end
 
-      it 'should return transformed data' do
-        expect(subject.send(action.to_sym)).to eq(send("#{action}_data".to_sym))
-      end
 
-      it 'should return a key called "link"' do
-        expect(subject.send(action.to_sym)).to have_key("link")
-      end
+
+
 
       it 'should not return an empty hash' do
         expect(subject.send(action.to_sym)["link"]).not_to be_empty
@@ -150,6 +143,41 @@ describe DetailsOverviewDecorator do
     end
   end
 
+  describe DetailsOverviewDecorator::BasicInformation do
+    subject do
+      DetailsOverviewDecorator::BasicInformation.new(data, urls)
+    end
+
+    let(:urls) do
+      {
+        :details => 'foo.com'
+      }
+    end
+
+    describe '#header' do
+      it 'should return the correct header' do
+        expect(subject.header).to eq(basic_information_data['header'])
+      end
+    end
+
+    describe '#initialize' do
+      it 'should return a hash' do
+        expect(subject.data).to be_a(Hash)
+      end
+    end
+
+    describe '#get_data' do
+      it 'should return transformed data' do
+        expect(subject.get_data).to eq(basic_information_data)
+      end
+
+      it 'should return a key called "link"' do
+        expect(subject.get_data).to have_key("link")
+      end
+    end
+
+
+  end
 
   describe '#basic_information' do
     it 'should return transformed data when given basic information' do

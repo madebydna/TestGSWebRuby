@@ -16,7 +16,7 @@ class DetailsOverviewDecorator
           @data,
           details: @view.school_quality_path(@school),
           quality: @view.school_details_path(@school))
-      item.get_data
+      item
     end
   end
 
