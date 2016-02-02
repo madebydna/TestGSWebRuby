@@ -113,15 +113,6 @@ if (gon.advertising_enabled) {
   };
 
   GS.ad.setPageLevelTargeting = function () {
-    // add targeting for adobe
-    GS.ad.AamCookieName = "gpt_aam";
-    if (typeof GS.ad.AamGpt.getCookie(GS.ad.AamCookieName) !== 'undefined') {
-      googletag.pubads().setTargeting(GS.ad.AamGpt.getKey(GS.ad.AamCookieName), GS.ad.AamGpt.getValues(GS.ad.AamCookieName));
-    }
-    if (typeof GS.ad.AamGpt.getCookie("aam_uuid") !== "undefined") {
-      googletag.pubads().setTargeting("aamId", GS.ad.AamGpt.getCookie("aam_uuid"));
-    }
-
     // being set in localized_profile_controller - ad_setTargeting_through_gon
     // sets all targeting based on what is set in the controller
     if ($.isEmptyObject(gon.ad_set_targeting)) {
