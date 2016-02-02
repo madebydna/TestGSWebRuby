@@ -6,8 +6,8 @@ class DistrictCacher
   # :test_scores
   # :ratings
 
-  def initialize(school)
-    @district = school
+  def initialize(district)
+    @district = district
   end
 
   def cache
@@ -68,38 +68,18 @@ class DistrictCacher
     ]
   end
 
-  def self.create_caches_for_data_type(school, data_type)
-    if data_type != :ratings
-      cachers_for_data_type(data_type).each do |cacher_class|
-        begin
-          cacher_class.new(school).cache
-        rescue => error
-          error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
-          GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
-        end
-      end
-    else
-      begin
-        ratings_cache_for_school(school)
-      rescue => error
-        error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
-        GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
-      end
-    end
-  end
-
-  def self.create_cache(school, cache_key)
+  def self.create_cache(district, cache_key)
     begin
       if cache_key != 'ratings'
         cacher_class = cacher_for(cache_key)
-        cacher = cacher_class.new(school)
+        cacher = cacher_class.new(district)
         cacher.cache
       else
-        ratings_cache_for_district(school)
+        ratings_cache_for_district(district)
       end
     rescue => error
-      error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
-      GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
+      error_vars = { cache_key: cache_key, school_state: district.state, school_id: district.id }
+      GSLogger.error(:district_cache, error, vars: error_vars, message: 'Failed to build district cache')
     end
   end
 
@@ -140,7 +120,7 @@ class DistrictCacher
 
 
   def self.ratings_cache_for_district(district)
-    # change it  to get data for District Rating
+    # To do  change it  to get data for District Rating
     results_obj_array = TestDataSet.ratings_for_school(district)
     district_cache = DistrictCache.find_or_initialize_by(district_id: district.id,state: district.state,name: 'ratings')
 
