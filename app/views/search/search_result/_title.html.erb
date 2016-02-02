@@ -13,7 +13,7 @@
     <br/>
     <%= db_t(school_type_display(school.type)) %>&nbsp;<%= (decorated_school.try(:grade_range) || decorated_school.process_level) %>&nbsp;
     | <%= "#{school.street}, #{school.city}, #{school.state.upcase} #{school.zipcode}" %>
-  <% if search_by_location? %>
+  <% if distance %>
     <!-- Distance -->
     (<%= distance %> <%= t('.miles') %>)
   <% end %>
