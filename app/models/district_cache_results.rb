@@ -47,6 +47,8 @@ class DistrictCacheResults
   private
 
   def build_district_data_hash
+    require 'pry'
+    binding.pry
     @query_results.each do |result|
       district_id = result[:district_id]
       state = result[:state]

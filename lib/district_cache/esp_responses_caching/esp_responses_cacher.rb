@@ -10,6 +10,8 @@ class EspResponsesCaching::EspResponsesCacher < Cacher
 
   def build_hash_for_cache
     hash = {}
+    require 'pry'
+    binding.pry
     query_results.each do |data_set_and_value|
       hash.deep_merge!(build_esp_response_hash(data_set_and_value))
     end

@@ -36,6 +36,14 @@ class TestDataSet < ActiveRecord::Base
         .with_display_targets('feed')
   end
 
+  def self.fetch_feed_test_scores_district(district, data_set_conditions = {})
+    require 'pry'
+    binding.pry
+    self.base_performance_district_query(district)
+    .where(data_set_conditions)
+    .with_display_targets('feed')
+  end
+
   scope :with_display_targets, ->(*display_targets) {
     where_statements = display_targets.map do |target|
       "display_target like '%#{target}%'"
@@ -68,10 +76,27 @@ class TestDataSet < ActiveRecord::Base
       TestDataSchoolValue.number_tested as number_students_tested,
       TestDataSet.proficiency_band_id as proficiency_band_id,
       TestDataStateValue.number_tested as state_number_tested ")
-      .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
-      .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
-      .where(TestDataSchoolValue: { school_id: school.id, active: 1 })
+      .joins("LEFT OUTER JOIN TestDataDistrictValue on TestDataDistrictValue.data_set_id = TestDataSet.id")
+      .joins("LEFT OUTER JOIN TestDataDistrictValue on TestDataDistrictValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
+      .where(TestDataDistrictValue: { school_id: school.id, active: 1 })
       .active
+  end
+
+
+  def self.base_performance_district_query(district)
+    binding.pry
+    TestDataSet.on_db(district.shard)
+    .select("*,TestDataSet.id as data_set_id,
+      TestDataDistrictValue.value_float as school_value_float,
+      TestDataDistrictValue.value_text as school_value_text,
+      TestDataDistrictValue.number_tested as number_students_tested,
+      TestDataSet.proficiency_band_id as proficiency_band_id,
+      TestDataDistrictValue.number_tested as state_number_tested ")
+    .joins("LEFT OUTER JOIN TestDataDistrictValue on TestDataDistrictValue.data_set_id = TestDataSet.id")
+    .joins("LEFT OUTER JOIN TestDataDistrictValue on TestDataDistrictValue.data_set_id = TestDataSet.id and TestDataDistrictValue.active = 1")
+    .where(TestDataDistrictValue: { district_id: district.id, active: 1 })
+    .active
+    binding.pry
   end
 
   def self.fetch_performance_results(school, data_set_conditions = {})

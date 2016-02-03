@@ -11,6 +11,8 @@ class DistrictCacher
   end
 
   def cache
+    require 'pry'
+    binding.pry
     final_hash = build_hash_for_cache
     district_cache = DistrictCache.find_or_initialize_by(
         district_id: district.id,
@@ -47,7 +49,7 @@ class DistrictCacher
 
   def self.cacher_for(key)
     {
-        test_scores:      TestScoresCaching::DistrictBreakdownsCacher
+        test_scores:      TestScoresCaching::DistrictTestScoresCacher
 
     }[key.to_s.to_sym]
   end
@@ -64,11 +66,13 @@ class DistrictCacher
 
   def self.registered_cachers
     @registered_cachers ||= [
-      TestScoresCaching::BreakdownsCacher
+        TestScoresCaching::DistrictTestScoresCacher
     ]
   end
 
   def self.create_cache(district, cache_key)
+
+
     begin
       if cache_key != 'ratings'
         cacher_class = cacher_for(cache_key)

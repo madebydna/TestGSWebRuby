@@ -3,6 +3,8 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
   CACHE_KEY = 'test_scores'
 
   def query_results
+    require 'pry'
+    binding.pry
     @query_results ||= (
       results = TestDataSet.fetch_test_scores(school, breakdown_id: 1).select do |result|
         data_type_id = result.data_type_id
