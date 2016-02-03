@@ -57,13 +57,13 @@
                     <div class="row">
                       <div class="col-xs-6">
                         <%= render 'school_profile/overview/details_overview/pie_chart',
-                                   piedata: diversity.student_ethnicity,
+                                   piedata: diversity.student_diversity,
                                    display: 'desktop'
                         %>
                       </div>
                       <div class="col-xs-6">
                         <%= render 'school_profile/overview/details_overview/ethnicity_table',
-                                   data: diversity.student_ethnicity
+                                   data: diversity.student_diversity
                         %>
                       </div>
                     </div>
@@ -103,13 +103,13 @@
                 <div class="row">
                   <div class="col-xs-6">
                     <%= render 'school_profile/overview/details_overview/pie_chart',
-                               piedata: diversity.student_ethnicity,
+                               piedata: diversity.student_diversity,
                                display: 'mobile'
                     %>
                   </div>
                   <div class="col-xs-6">
                     <%= render 'school_profile/overview/details_overview/ethnicity_table',
-                               data: diversity.student_ethnicity
+                               data: diversity.student_diversity
                     %>
                   </div>
                 </div>

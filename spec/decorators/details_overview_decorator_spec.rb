@@ -20,9 +20,16 @@ describe DetailsOverviewDecorator do
         "2 or more races"        => 1,
         "Asian/Pacific Islander" => 2
       },
-      "Free or reducted lunch" => 98,
+      "Free or reduced lunch" => 98,
       "Students with disabilities"        => 6,
       "English language learners"         => 45,
+    }
+  end
+
+  let(:raw_sports_data) do
+    {
+      "Boy sports"                        => ['Basketball'],
+      "Girl sports"                       => ['Basketball', 'Baseball']
     }
   end
 
@@ -51,7 +58,7 @@ describe DetailsOverviewDecorator do
           "Asian/Pacific Islander" => 2,
           "2 or more races" => 1
       },
-      "Free or reducted lunch" => 98,
+      "Free or reduced lunch" => 98,
       "Students with disabilities" => 6,
       "English language learners" => 45,
     }
@@ -163,6 +170,34 @@ describe DetailsOverviewDecorator do
 
         it 'should return an empty hash' do
           expect(subject.get_data).to be_empty
+        end
+      end
+    end
+
+  end
+
+
+  describe DetailsOverviewDecorator::ProgramsAndCulture do
+    subject do
+      DetailsOverviewDecorator::ProgramsAndCulture.new(data.merge, urls)
+    end
+
+    let(:urls) do
+      {
+        :details => 'foo.com'
+      }
+    end
+
+    context 'when configured with only sports data' do
+      subject do
+        DetailsOverviewDecorator::ProgramsAndCulture.new(raw_sports_data, urls)
+      end
+
+      describe '#get_data' do
+        it 'should combine boy_sports and girl_sports into sports' do
+          expect(subject.get_data).to have_key('Sports')
+          expect(subject.get_data).to_not have_key('Boys sports')
+          expect(subject.get_data).to_not have_key('Girls sports')
         end
       end
     end

@@ -21,53 +21,97 @@ class DetailsOverviewDecorator
   end
 
   class DetailsInformation
-    attr_reader :data, :header, :array_of_keys, :links
+    attr_reader :data, :header, :configured_keys, :links, :transformed_data
 
     def initialize(data)
       @data = data
+      @transformed_data = Hash.new { |hash, key| hash[key] = [] }
     end
 
     def get_data
-      @_transformed_data ||= begin
-        raw_data = data.select { |key, _| array_of_keys.include? key }
-
-        return {} if raw_data.empty?
-
-        Hash[
-          raw_data.collect do |k,v|
-            v = v.values if v.is_a?(Hash) && k != 'Student ethnicity'
-            v = v.join(', ') if v.respond_to?(:join)
-            [k, v]
-          end
-        ]
+      @_get_data ||= begin
+        transform_data
+        # Only return first three pairs
+        Hash[transformed_data.take(3)]
       end
+    end
+
+    private
+
+    def sort_based_on_configured_keys
+      @transformed_data = Hash[
+        @transformed_data.sort_by { |key, _| configured_keys.values.index(key) }
+      ]
+    end
+
+    def transform_data
+      combine_and_rename_keys
+      join_values
+      sort_based_on_configured_keys
+      nil
+    end
+
+    def combine_and_rename_keys
+      configured_data.each do |k, v|
+        configured_key = configured_keys[k]
+        @transformed_data[configured_key] << v
+      end
+    end
+
+    # format values as comma-separated strings
+    def join_values
+      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.join(', ')] } ]
+    end
+
+    def configured_data
+      @_configured_data ||= data.select { |key, _| configured_keys.has_key?(key) }
     end
   end
 
   class BasicInformation < DetailsInformation
     def initialize(data, urls)
       super(data)
-      @header = "BASIC INFORMATION"
-      @array_of_keys = ["Before / After care", "Dress policy", "Transportation", "Coed / Single gender", "Facilities"]
-      @links = {"More" => urls[:details]}
+      @header = 'BASIC INFORMATION'
+      @configured_keys = {
+        'Before / After care'   => 'Before / After care',
+        'Dress policy'          => 'Dress policy',
+        'Transportation'        => 'Transportation',
+        'Coed / Single gender'  => 'Coed / Single gender',
+        'Facilities'            => 'Facilities'
+      }
+      @links = {'More' => urls[:details]}
     end
   end
 
   class ProgramsAndCulture < DetailsInformation
     def initialize(data, urls)
       super(data)
-      @header = "PROGRAMS & CULTURE"
-      @array_of_keys = ["Academic focus", "Arts", "World languages", "Student clubs"]
-      @links = {"More program info" => urls[:details]}
+      @header = 'PROGRAMS & CULTURE'
+      @configured_keys = {
+        'Academic focus'          => 'Academic focus',
+        'Arts media'              => 'Arts',
+        'Arts music'              => 'Arts',
+        'Arts performing written' => 'Arts',
+        'Arts visual'             => 'Arts',
+        'World languages'         => 'World languages',
+        'Boys sports'             => 'Sports',
+        'Girls sports'            => 'Sports',
+        'Student clubs'           => 'Student clubs'
+      }
+      @links = {'More program info' => urls[:details]}
     end
   end
 
   class Diversity < DetailsInformation
     def initialize(data, urls)
       super(data)
-      @header = "DIVERSITY"
-      @array_of_keys = ['Free or reducted lunch', 'Students with disabilities', 'English language learners']
-      @links = {"More diversity info" => urls[:quality]}
+      @header = 'DIVERSITY'
+      @configured_keys = {
+        'Free or reduced lunch'       => 'Free or reduced lunch',
+        'Students with disabilities'  => 'Students with disabilities',
+        'English language learners'   => 'English language learners'
+      }
+      @links = {'More diversity info' => urls[:quality]}
     end
 
     def student_diversity
