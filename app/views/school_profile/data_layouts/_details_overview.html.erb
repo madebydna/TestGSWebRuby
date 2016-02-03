@@ -28,7 +28,7 @@
                       <li class="mvm">
                         <strong><%= label %></strong>
                         <br/>
-                        <%= values.titleize %>
+                        <%= truncate(values.titleize, length: 60, separator: ', ') %>
                       </li>
                   <% end %>
                 </ul>
