@@ -72,7 +72,9 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
     end
 
     def value
-      @esp_hash.first.keys.map(&:to_s)
+      @esp_hash.first.keys.map do |value|
+        I18n.db_t(value.to_s.capitalize.gsub('_',' '), default: value.to_s)
+      end
     end
   end
 

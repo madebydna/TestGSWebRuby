@@ -55,7 +55,14 @@ class DetailsOverviewDecorator
       combine_and_rename_keys
       join_values
       sort_based_on_configured_keys
+      translate_keys
       nil
+    end
+
+    def translate_keys
+      @transformed_data = @transformed_data.each_with_object({}) do |(k,v), hash|
+        hash[I18n.t(k.to_sym, scope:'decorators.details_overview_decorator')] = v
+      end
     end
 
     def combine_and_rename_keys
