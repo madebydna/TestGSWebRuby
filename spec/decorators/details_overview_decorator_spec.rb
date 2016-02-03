@@ -64,6 +64,26 @@ describe DetailsOverviewDecorator do
     }
   end
 
+  let(:only_student_ethnicity_data) do
+    {
+      "Student ethnicity" => {
+        "Hispanic" => 88,
+        "Black" => 7,
+        "White" => 2,
+        "Asian/Pacific Islander" => 2,
+        "2 or more races" => 1
+      }
+    }
+  end
+
+  let(:diversity_data_without_student_ethnicity_data) do
+    {
+      "Free or reduced lunch" => 98,
+      "Students with disabilities" => 6,
+      "English language learners" => 45
+    }
+  end
+
   let(:school) do
     school = FactoryGirl.build(:alameda_high_school)
   end
@@ -101,6 +121,20 @@ describe DetailsOverviewDecorator do
       end
     end
   end
+    describe '#has_diversity_data?' do
+      context 'when given onty student ethnicity data' do
+        it 'is expected to return true' do
+          decorator = DetailsOverviewDecorator.new(only_student_ethnicity_data, school, view)
+          expect(decorator.has_diversity_data?).to be_truthy
+        end
+      end
+      context 'when given no student ethnicity data but other diversity data' do
+        it 'is expected to return false' do
+          decorator = DetailsOverviewDecorator.new(diversity_data_without_student_ethnicity_data, school, view)
+          expect(decorator.has_diversity_data?).to be_falsey
+        end
+      end
+    end
 
   describe DetailsOverviewDecorator::Diversity do
     subject do

@@ -5,10 +5,17 @@ class DetailsOverviewDecorator
     @view = view
   end
 
-  ["basic_information", "programs_and_culture", "diversity"].each do |action|
+  ["basic_information", "programs_and_culture"].each do |action|
     define_method("has_#{action}_data?") do
       send(action).send(:get_data).present?
     end
+  end
+
+  def has_diversity_data?
+    @data['Student ethnicity'].present?
+  end
+
+  ["basic_information", "programs_and_culture", "diversity"].each do |action|
 
     define_method("#{action}") do
       klass = DetailsOverviewDecorator.const_get(action.camelcase)
