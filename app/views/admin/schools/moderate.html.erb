@@ -69,7 +69,7 @@
   <div class="rs-list-of-reviews">
     <%= render partial: 'review', collection: @reviews, as: :review %>
     <% if  @paginate %>
-        school reviews: <%= paginate @reviews, param_name: :page, params: {state: gs_legacy_url_encode(params[:state])} %>
+        school reviews: <%= paginate @reviews, param_name: :page, params: {state: (params[:state])} %>
     <% end %>
   </div>
 </div>
