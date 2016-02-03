@@ -95,7 +95,7 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
     REQUIRED_CHARACTERISTICS_KEYS = [:breakdown]
     REQUIRED_ESP_KEYS = ["member_id", "source"]
-    VALID_ESP_DATA_SOURCES= ["osp", "datateam"]
+    VALID_ESP_DATA_SOURCES= ["usp", "osp", "datateam"]
 
     def initialize(value)
       @value = value
