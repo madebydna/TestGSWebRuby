@@ -20,7 +20,7 @@
     <script type="text/javascript">
       $(function() {
           GS.visualchart.drawPieChart(
-            <%= raw data_array.sort.to_json %>,
+            <%= raw data_array.to_json %>,
             "<%= piechart_id %>",
             null,
             <%= raw piechart_options.to_json %>,

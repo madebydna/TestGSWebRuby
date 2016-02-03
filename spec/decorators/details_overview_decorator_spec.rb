@@ -14,11 +14,11 @@ describe DetailsOverviewDecorator do
       "Arts"                              => ['Computer animation, Graphics, Video and Film'],
       "World languages"                   => ['French, German, Spanish, Hungarian, Polish'],
       "Student ethnicity"              => {
-        "Hispanic"               => 88,
         "Black"                  => 7,
+        "Hispanic"               => 88,
         "White"                  => 2,
-        "Asian/Pacific Islander" => 2,
-        "2 or more races"        => 1
+        "2 or more races"        => 1,
+        "Asian/Pacific Islander" => 2
       },
       "Free or reducted lunch" => 98,
       "Students with disabilities"        => 6,
@@ -91,6 +91,27 @@ describe DetailsOverviewDecorator do
 
           it { is_expected.to_not send("have_#{action}_data".to_sym) }
         end
+      end
+    end
+  end
+
+  describe DetailsOverviewDecorator::Diversity do
+    subject do
+      DetailsOverviewDecorator::Diversity.new(data, urls)
+    end
+
+    let(:urls) do
+      {
+        :details => 'foo.com'
+      }
+    end
+
+    describe '#student_diversity' do
+      it 'should return items sorted by value descending' do
+        result_hash = subject.student_diversity
+        values = result_hash.values
+        sorted_values = values.sort.reverse
+        expect(values).to eq(sorted_values)
       end
     end
   end

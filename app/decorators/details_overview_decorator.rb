@@ -70,8 +70,9 @@ class DetailsOverviewDecorator
       @links = {"More diversity info" => urls[:quality]}
     end
 
-    def student_ethnicity
-      data['Student ethnicity']
+    def student_diversity
+      diversity_data = data['Student ethnicity']
+      Hash[diversity_data.sort_by(&:last).reverse]
     end
   end
 
