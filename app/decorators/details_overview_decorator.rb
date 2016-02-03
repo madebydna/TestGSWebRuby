@@ -48,7 +48,7 @@ class DetailsOverviewDecorator
     def initialize(data, urls)
       super(data)
       @header = "BASIC INFORMATION"
-      @array_of_keys = ["Before/After Care", "Dress code", "Transportation"]
+      @array_of_keys = ["Before / After care", "Dress policy", "Transportation", "Coed / Single gender", "Facilities"]
       @links = {"More" => urls[:details]}
     end
   end
@@ -57,7 +57,7 @@ class DetailsOverviewDecorator
     def initialize(data, urls)
       super(data)
       @header = "PROGRAMS & CULTURE"
-      @array_of_keys = ["Academic Focus", "Arts", "World Languages"]
+      @array_of_keys = ["Academic focus", "Arts", "World languages", "Student clubs"]
       @links = {"More program info" => urls[:details]}
     end
   end
@@ -66,7 +66,7 @@ class DetailsOverviewDecorator
     def initialize(data, urls)
       super(data)
       @header = "DIVERSITY"
-      @array_of_keys = ['FRL', 'Students with disabilities', 'English language learners']
+      @array_of_keys = ['Free or reducted lunch', 'Students with disabilities', 'English language learners']
       @links = {"More diversity info" => urls[:quality]}
     end
 

@@ -7,12 +7,12 @@ describe DetailsOverviewDecorator do
 
   let(:data) do
     {
-      "Before/After Care"                 => ['Before care'],
-      "Dress Code"                        => ['Uniform'],
+      "Before / After care"                 => ['Before care'],
+      "Dress policy"                        => ['Uniform'],
       "Transportation"                    => ['Buses / vans provided for students'],
-      "Academic Focus"                    => ['Business, Special Ed, Technology'],
+      "Academic focus"                    => ['Business, Special Ed, Technology'],
       "Arts"                              => ['Computer animation, Graphics, Video and Film'],
-      "World Languages"                   => ['French, German, Spanish, Hungarian, Polish'],
+      "World languages"                   => ['French, German, Spanish, Hungarian, Polish'],
       "Student ethnicity"              => {
         "Hispanic"               => 88,
         "Black"                  => 7,
@@ -20,7 +20,7 @@ describe DetailsOverviewDecorator do
         "Asian/Pacific Islander" => 2,
         "2 or more races"        => 1
       },
-      "FRL" => 98,
+      "Free or reducted lunch" => 98,
       "Students with disabilities"        => 6,
       "English language learners"         => 45,
     }
@@ -28,17 +28,17 @@ describe DetailsOverviewDecorator do
 
   let(:basic_information_data) do
     {
-      "Before/After Care" => 'Before care',
-      "Dress Code"        => 'Uniform',
+      "Before / After care" => 'Before care',
+      "Dress policy"        => 'Uniform',
       "Transportation"    => 'Buses / vans provided for students'
     }
   end
 
   let(:programs_and_culture_data) do
     {
-      "Academic Focus"  => 'Business, Special Ed, Technology',
+      "Academic focus"  => 'Business, Special Ed, Technology',
       "Arts"            => 'Computer animation, Graphics, Video and Film',
-      "World Languages" => 'French, German, Spanish, Hungarian, Polish'
+      "World languages" => 'French, German, Spanish, Hungarian, Polish'
     }
   end
 
@@ -51,7 +51,7 @@ describe DetailsOverviewDecorator do
           "Asian/Pacific Islander" => 2,
           "2 or more races" => 1
       },
-      "FRL" => 98,
+      "Free or reducted lunch" => 98,
       "Students with disabilities" => 6,
       "English language learners" => 45,
     }
