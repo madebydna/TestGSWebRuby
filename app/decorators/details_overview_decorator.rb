@@ -68,7 +68,11 @@ class DetailsOverviewDecorator
     def combine_and_rename_keys
       configured_data.each do |k, v|
         configured_key = configured_keys[k]
-        @transformed_data[configured_key] = @transformed_data[configured_key] + v
+        if v.is_a?(Hash)
+          @transformed_data[configured_key] << v
+        else
+          @transformed_data[configured_key] = @transformed_data[configured_key] + v
+        end
       end
     end
 
@@ -135,7 +139,7 @@ class DetailsOverviewDecorator
     end
 
     def format_values
-      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.values.first] } ]
+      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.first.values.first] } ]
     end
 
     def student_diversity
