@@ -53,7 +53,7 @@ class DetailsOverviewDecorator
 
     def transform_data
       combine_and_rename_keys
-      join_values
+      format_values
       sort_based_on_configured_keys
       translate_keys
       nil
@@ -73,7 +73,7 @@ class DetailsOverviewDecorator
     end
 
     # format values as comma-separated strings
-    def join_values
+    def format_values
       @transformed_data = Hash[transformed_data.map { |k, v| [k, v.join(', ')] } ]
     end
 
@@ -126,6 +126,10 @@ class DetailsOverviewDecorator
         'English language learners'   => 'English language learners'
       }
       @links = {'More diversity info' => urls[:quality]}
+    end
+
+    def format_values
+      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.first.values.first] } ]
     end
 
     def student_diversity
