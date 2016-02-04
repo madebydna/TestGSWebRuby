@@ -52,3 +52,23 @@
     background-color: $white;
   }
 }
+
+// use this class to have strings in data cut off and not wrap to next row
+// will cause table to default to columns with same width
+// to customize column width you can use inline percentage in the td element
+.table-overflow-hidden {
+  table-layout: fixed;
+  > tbody 
+    > tr {
+      > td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+}
+
+
+
+
+
