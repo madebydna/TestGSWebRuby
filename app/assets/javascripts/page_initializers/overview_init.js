@@ -8,7 +8,5 @@ if(gon.pagename == "Overview"){
   GS.syncHeight.syncHeights();
   GS.nearbySchools.initialize();
 
-  googletag.cmd.push(function () {
-    GS.schoolProfiles.showDetailsOverviewSection();
-  });
+  GS.schoolProfiles.showDetailsOverviewSection();
 };

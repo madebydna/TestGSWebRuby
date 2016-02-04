@@ -134,8 +134,10 @@ if (gon.advertising_enabled) {
 
   GS.ad.showAd = function (divId) {
     if ($.inArray(divId, GS.ad.shownArray) == -1) {
-      GS.ad.shownArray.push(divId);
-      googletag.display(divId);
+      googletag.cmd.push(function () {
+        GS.ad.shownArray.push(divId);
+        googletag.display(divId);
+      });
     }
     else {
       googletag.pubads().refresh([GS.ad.slot[divId]]);
