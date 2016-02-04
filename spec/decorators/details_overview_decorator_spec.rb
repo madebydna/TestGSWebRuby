@@ -10,9 +10,10 @@ describe DetailsOverviewDecorator do
       "Before / After care"                 => ['Before care'],
       "Dress policy"                        => ['Uniform'],
       "Transportation"                    => ['Buses / vans provided for students'],
-      "Academic focus"                    => ['Business, Special Ed, Technology'],
-      "Arts"                              => ['Computer animation, Graphics, Video and Film'],
-      "World languages"                   => ['French, German, Spanish, Hungarian, Polish'],
+      "Academic focus"                    => ['Business', 'Special Ed', 'Technology'],
+      "Arts media"                        => ['Computer animation', 'Graphics'],
+      "Arts visual"                        => ['Video and Film'],
+      "World languages"                   => ['French', 'German', 'Spanish', 'Hungarian', 'Polish'],
       "Student ethnicity"              => {
         "Black"                  => 7,
         "Hispanic"               => 88,
@@ -26,10 +27,32 @@ describe DetailsOverviewDecorator do
     }
   end
 
+  let(:data_with_lower_case_and_duplicates) do
+    {
+      "Before / After care"                 => ['Before care'],
+      "Dress policy"                        => ['Uniform'],
+      "Transportation"                    => ['Buses / vans provided for students'],
+      "Academic focus"                    => ['Business', 'Special Ed', 'Technology', 'Business'],
+      "Arts media"                        => ['Computer animation', 'Graphics', 'Video and Film'],
+      "Student clubs"                     => ['none', 'None'],
+      "Student ethnicity"              => {
+        "Black"                  => 7,
+        "Hispanic"               => 88,
+        "White"                  => 2,
+        "2 or more races"        => 1,
+        "Asian/Pacific Islander" => 2
+      },
+      "Free or reduced lunch" => 98,
+      "Students with disabilities"        => 6,
+      "English language learners"         => 45,
+    }
+  end
+
+
   let(:raw_sports_data) do
     {
-      "Boy sports"                        => ['Basketball'],
-      "Girl sports"                       => ['Basketball', 'Baseball']
+      "Boys sports"                        => ['Basketball'],
+      "Girls sports"                       => ['Basketball', 'Baseball']
     }
   end
 
@@ -45,7 +68,7 @@ describe DetailsOverviewDecorator do
     {
       "Academic focus"  => 'Business, Special Ed, Technology',
       "Arts"            => 'Computer animation, Graphics, Video and Film',
-      "World languages" => 'French, German, Spanish, Hungarian, Polish'
+      "Student clubs"    => 'None'
     }
   end
 
@@ -213,13 +236,19 @@ describe DetailsOverviewDecorator do
 
   describe DetailsOverviewDecorator::ProgramsAndCulture do
     subject do
-      DetailsOverviewDecorator::ProgramsAndCulture.new(data.merge, urls)
+      DetailsOverviewDecorator::ProgramsAndCulture.new(data_with_lower_case_and_duplicates, urls)
     end
 
     let(:urls) do
       {
         :details => 'foo.com'
       }
+    end
+
+    describe '#get_data' do
+      it 'should return transformed data' do
+        expect(subject.get_data).to eq(programs_and_culture_data)
+      end
     end
 
     context 'when configured with only sports data' do

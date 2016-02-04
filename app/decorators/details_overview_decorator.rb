@@ -68,13 +68,19 @@ class DetailsOverviewDecorator
     def combine_and_rename_keys
       configured_data.each do |k, v|
         configured_key = configured_keys[k]
-        @transformed_data[configured_key] << v
+        @transformed_data[configured_key] = @transformed_data[configured_key] + v
       end
     end
 
-    # format values as comma-separated strings
+    # format values as unique comma-separated strings and capitalize the first word
     def format_values
-      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.join(', ')] } ]
+      formatted_data = transformed_data.map do |k, v|
+        capitalized_values =  v.map(&:gs_capitalize_first)
+        unique_values = capitalized_values.uniq
+        value = unique_values.join(', ')
+        [k,value]
+      end
+      @transformed_data = Hash[formatted_data]
     end
 
     def configured_data
@@ -129,7 +135,7 @@ class DetailsOverviewDecorator
     end
 
     def format_values
-      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.first.values.first] } ]
+      @transformed_data = Hash[transformed_data.map { |k, v| [k, v.values.first] } ]
     end
 
     def student_diversity
