@@ -11,8 +11,6 @@ class DistrictCacher
   end
 
   def cache
-    require 'pry'
-    binding.pry
     final_hash = build_hash_for_cache
     district_cache = DistrictCache.find_or_initialize_by(
         district_id: district.id,

@@ -58,20 +58,13 @@ parsed_arguments.each do |args|
   states = args[:states]
   cache_keys = args[:cache_keys]
   districts_where = args[:districts_where]
-  require 'pry'
-  binding.pry
   states.each do |state|
-    binding.pry
     cache_keys.each do |cache_key|
-      binding.pry
       if districts_where
-        binding.pry
         District.on_db(state.downcase.to_sym).where(districts_where).each do |district|
-          binding.pry
           DistrictCacher.create_cache(district, cache_key)
         end
       else
-        binding.pry
         District.on_db(state.downcase.to_sym).all.each do |district|
           DistrictCacher.create_cache(district, cache_key)
         end

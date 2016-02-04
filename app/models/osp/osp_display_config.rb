@@ -76,7 +76,6 @@ class OspDisplayConfig < ActiveRecord::Base
   end
 
   def years_display
-    # binding.pry
     if self.year_display.present?
       self.year_display
     else

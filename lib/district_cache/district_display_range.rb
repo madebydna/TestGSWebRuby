@@ -1,4 +1,4 @@
-class DisplayRange < ActiveRecord::Base
+class DistrictDisplayRange < ActiveRecord::Base
 
   db_magic :connection => :gs_schooldb
 

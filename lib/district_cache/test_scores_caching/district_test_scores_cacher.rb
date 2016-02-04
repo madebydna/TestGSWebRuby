@@ -3,8 +3,6 @@ class TestScoresCaching::DistrictTestScoresCacher < TestScoresCaching::DistrictB
   CACHE_KEY = 'test_scores'
 
   def query_results
-    require 'pry'
-    binding.pry
     @query_results ||= (
       results = TestDataSet.fetch_feed_test_scores_district(district).select do |result|
         data_type_id = result.data_type_id
@@ -17,21 +15,12 @@ class TestScoresCaching::DistrictTestScoresCacher < TestScoresCaching::DistrictB
 
   def build_hash_for_cache
     hash = {}
-    require 'pry'
-    binding.pry
     query_results.map do |data_set_and_value|
       hash.deep_merge!(build_hash_for_data_set(data_set_and_value))
     end
-    add_lowest_grade_to_hash(hash)
    hash
   end
 
-  def add_lowest_grade_to_hash(data_type_hash)
-    data_type_hash.each do |data_type_id, test_hash|
-      lowest_grade = test_hash[:grades].keys.map(&:to_i).min
-      test_hash[:lowest_grade] = lowest_grade
-    end
-  end
 
   def innermost_hash(test)
     hash = {

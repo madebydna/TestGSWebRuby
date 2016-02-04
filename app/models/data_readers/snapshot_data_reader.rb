@@ -81,10 +81,8 @@ class SnapshotDataReader < SchoolProfileDataReader
       sym = source.to_sym
       if sym == :census_data_points
         data_for_all_sources[source.to_sym] = formatted_characteristics
-        # binding.pry
       else
         data_for_all_sources[source.to_sym] = school.send(source.to_sym, category)
-        # binding.pry
       end
 
     end

@@ -1,4 +1,4 @@
-module CacheValidation
+module DistrictCacheValidation
 
   include DistrictDataValidation
 
@@ -12,6 +12,12 @@ module CacheValidation
     @cache
   end
 
+  def remove_empty_values!
+    @cache.keep_if do | char_type, values |
+      values.present? or (log_data_rejection(@state,@district.id,char_type,"No value found") and false)
+    end
+  end
+
   # Place validation methods below this comment.
   # Validations will be executed in the order that they are listed here.
   # Please give methods understandable names and logic with
@@ -21,5 +27,7 @@ module CacheValidation
   def validate_format!
     remove_empty_values!
   end
+
+
 
 end

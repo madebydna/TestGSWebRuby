@@ -1,4 +1,4 @@
-module CacheFormat
+module DistrictCacheFormat
   include CacheValidation
 
   def build_hash_for_cache

@@ -47,8 +47,6 @@ class SchoolCacheResults
   private
 
   def build_school_data_hash
-    require 'pry'
-    binding.pry
     @query_results.each do |result|
       school_id = result[:school_id]
       state = result[:state]
