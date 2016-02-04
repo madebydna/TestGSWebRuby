@@ -3,7 +3,7 @@ class DistrictCacher
   attr_accessor :district
 
   # Known data types:
-  # :test_scores
+  # :feed_test_scores
   # :ratings
 
   def initialize(district)
@@ -47,7 +47,7 @@ class DistrictCacher
 
   def self.cacher_for(key)
     {
-        test_scores:      TestScoresCaching::DistrictTestScoresCacher
+        feed_test_scores:      TestScoresCaching::DistrictTestScoresCacher
 
     }[key.to_s.to_sym]
   end
@@ -80,7 +80,7 @@ class DistrictCacher
         ratings_cache_for_district(district)
       end
     rescue => error
-      error_vars = { cache_key: cache_key, school_state: district.state, school_id: district.id }
+      error_vars = { cache_key: cache_key, district_state: district.state, district_id: district.id }
       GSLogger.error(:district_cache, error, vars: error_vars, message: 'Failed to build district cache')
     end
   end

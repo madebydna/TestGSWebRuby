@@ -1,6 +1,6 @@
 class TestScoresCaching::DistrictTestScoresCacher < TestScoresCaching::DistrictBase
 
-  CACHE_KEY = 'test_scores'
+  CACHE_KEY = 'feed_test_scores'
 
   def query_results
     @query_results ||= (

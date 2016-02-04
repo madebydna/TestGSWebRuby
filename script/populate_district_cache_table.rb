@@ -1,5 +1,5 @@
 def all_cache_keys
-  ['ratings','test_scores']
+  ['ratings','feed_test_scores']
 end
 
 def all_states
@@ -9,8 +9,8 @@ end
 def usage
   abort "\n\nUSAGE: rails runner script/populate_district_cache_table (all | [state]:[cache_keys]:[districts_where])
 
-Ex: rails runner script/populate_district_cache_table al:test_scores de:all:9,18,23
-Ex: rails runner script/populate_district_cache_table al:test_scores de:all:\"id IN (9,18,23)\"
+Ex: rails runner script/populate_district_cache_table al:feed_test_scores de:all:9,18,23
+Ex: rails runner script/populate_district_cache_table al:feed_test_scores de:all:\"id IN (9,18,23)\"
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
 end
