@@ -10,7 +10,10 @@
         <div class='col-xs-12 col-md-2 tac'>
           <div class='shim-170 hidden-xs hidden-sm'></div>
           <div class='shim-10 visible-xs visible-sm'></div>
-          <div class='btn btn-lg btn-gk-primary'><%= t('.watch_now') %></div>
+          <%=
+            link = locale == :es ? gk_levels_high_school_es_path : gk_levels_high_school_path
+            link_to t('.watch_now'), link, class: 'btn btn-lg btn-gk-primary'
+          %>
         </div>
       </div>
       <div class='pull-right hidden-xs hidden-sm'>
