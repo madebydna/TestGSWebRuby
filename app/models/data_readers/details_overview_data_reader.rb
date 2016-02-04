@@ -6,75 +6,106 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
   attr_accessor :category, :config, :data
 
   def data_for_category(category)
-    self.category = category
-    self.config = category.parsed_json_config
-    get_data!
-    transform_data_keys!
-    CombineCharacteristicsAndEspResponsesData.new(data).run
-  rescue  => error
-    GSLogger.error('MISC', error, message: "Details overview data reader failed to get data for category: #{category}")
-    {} 
+    begin
+      self.category = category
+      self.config = category.parsed_json_config
+      raw_cache_data = all_school_cache_data_raw
+      CombineCharacteristicsAndEspResponsesData.new(category, raw_cache_data).run
+    rescue  => error
+      GSLogger.error('MISC', error, message: "Details overview data reader failed to get data for category: #{category}")
+      {}
+    end
   end
 
   protected
 
-  def get_data!
-    self.data = cached_data_for_category
+  def all_school_cache_data_raw
+    @_all_school_cache_data_raw ||= (
+        school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_KEYS)
+        decorated_school = school_cache_results.decorate_schools(school).first
+    )
   end
 
   class CombineCharacteristicsAndEspResponsesData
-    def initialize(data)
-      @data = data
+    def initialize(category, raw_cache_data)
+      @raw_cache_data = raw_cache_data.cache_data
+      @category = category
+      @esp_raw_cache_data = @raw_cache_data["esp_responses"]
+      @characteristics_raw_cache_data = @raw_cache_data["characteristics"]
+      @esp_cache_data = get_esp_response_cache_data
+      @characteristics_cache_data = get_characteristics_cache_data
+      @key_map = build_key_map
     end
 
     def run
-      @data.each_with_object({}) do |(key, value), hash|
-        begin
-          hash[get_key(key)] = EspAndCharacteristicsValueParserFactory.new(value).build.value
-        rescue Error::InvalidDataReaderFormat =>error
-          GSLogger.error('MISC', error, message: "Details overview data reader failed to parse key:#{key} value: #{value}")
-        end
+      esp_data = build_esp_data
+      characterstics_data =  build_characteristics_data
+      esp_data.merge(characterstics_data)
+    end
+
+    def get_desired_esp_keys
+      @category.category_data.select { |d| d.key_type == "esp_response" }.map(&:response_key)
+    end
+
+    def get_esp_response_cache_data
+      get_desired_esp_keys.each_with_object({}) do |key, h|
+        h[key] = @esp_raw_cache_data[key] if @esp_raw_cache_data[key]
       end
     end
 
-    def get_key(key)
-      key.first if key.is_a?(Array) && key.first.is_a?(String)
-    end
-  end
-
-  class EspAndCharacteristicsValueParserFactory
-    def initialize(value)
-      @value = value
+    def get_desired_characteristics_keys
+      @category.category_data.select { |d| d.key_type == "census_data" }.map(&:response_key)
     end
 
-    def characteristics
-      CharacteristicsValueParser.new(@value)
+    def get_characteristics_cache_data
+      get_desired_characteristics_keys.each_with_object({}) do |key, h|
+        h[key] = @characteristics_raw_cache_data[key] if @characteristics_raw_cache_data[key]
+      end
     end
 
-    def esp
-      EspResponseValueParser.new(@value)
+    def build_esp_data
+      @esp_cache_data.each_with_object({}) do |esp_array, results_hash|
+        response_key = esp_array.first
+        response_values_array = esp_array.last.keys
+        value = EspResponseValueParser.new(response_key, response_values_array).parse
+        key = @key_map[response_key]
+        results_hash[key] = value
+      end
     end
 
-    def unknown
-      raise Error::InvalidDataReaderFormat,
-        'Invalid data for details overview data reader'
+    def build_key_map
+      @category.category_data.each_with_object({}){ |cd, h| h[cd.response_key] = cd.label(false) }
     end
 
-    def build
-      type =  DataTypeDetector.new(@value).data_type
-      self.send(type)
+    def build_characteristics_data
+      @characteristics_cache_data .each_with_object({}) do |array, results_hash|
+        response_key = array.first
+        characterstics_array_hash = array.last
+        value = CharacteristicsValueParser.new(characterstics_array_hash).parse
+        key = @key_map[response_key]
+        results_hash[key] = value
+      end
     end
   end
 
   class EspResponseValueParser
-    def initialize(hash)
-      @esp_hash = hash
+    def initialize(esp_response_key, response_values_array)
+      @response_values_array = response_values_array
+      @esp_response_key = esp_response_key
     end
 
-    def value
-      @esp_hash.first.keys.map do |value|
-        I18n.db_t(value.to_s.capitalize.gsub('_',' '), default: value.to_s)
-      end
+    def parse
+      @response_values_array.map { |response_value| value(response_value) }
+    end
+
+    def value(response_value)
+      response_value_map[[@esp_response_key,response_value]] || response_value
+    end
+
+    def response_value_map
+      @_response_value_map ||=(
+        ResponseValue.lookup_table
+      )
     end
   end
 
@@ -83,60 +114,11 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
       @characteristics_hash = hash
     end
 
-    def value
+    def parse
       @characteristics_hash.each_with_object({}) do |(chars_hash), result_hash|
-      next unless chars_hash[:school_value]
-      result_hash[I18n.db_t(chars_hash[:breakdown])] = chars_hash[:school_value]
+      next unless chars_hash["school_value"]
+      result_hash[I18n.db_t(chars_hash["breakdown"])] = chars_hash["school_value"]
       end
-    end
-  end
-
-  class DataTypeDetector
-
-    REQUIRED_CHARACTERISTICS_KEYS = [:breakdown]
-    REQUIRED_ESP_KEYS = ["member_id", "source"]
-    VALID_ESP_DATA_SOURCES= ["usp", "osp", "datateam"]
-
-    def initialize(value)
-      @value = value
-    end
-
-    def data_type
-      return :unknown unless @value.is_a?(Array)
-      return :characteristics if characteristics?
-      return :esp if esp?
-      return :unknown
-    end
-
-    private
-
-    def characteristics?
-      @value.all? { |hash| is_valid_characteristics_data_hash?(hash) }
-    end
-
-    def is_valid_characteristics_data_hash?(hash)
-      REQUIRED_CHARACTERISTICS_KEYS.all? { |key| hash.has_key?(key) }
-    end
-
-    def esp?
-      @value.count == 1 && is_valid_esp_data_hash?(@value.first)
-    end
-
-    def is_valid_esp_data_hash?(hash)
-      hash.is_a?(Hash) && 
-        hash.values.all? do |hash|
-        is_valid_esp_data_hash_value?(hash)
-      end
-    end
-
-    def is_valid_esp_data_hash_value?(esp_value_hash)
-      esp_value_hash.is_a?(Hash) &&
-        REQUIRED_ESP_KEYS.all? { |key| esp_value_hash.has_key?(key) } &&
-          valid_esp_data_source?(esp_value_hash['source'])
-    end
-
-    def valid_esp_data_source?(source)
-      VALID_ESP_DATA_SOURCES.include?(source)
     end
   end
 
