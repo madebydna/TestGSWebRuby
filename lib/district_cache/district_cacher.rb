@@ -52,6 +52,11 @@ class DistrictCacher
     }[key.to_s.to_sym]
   end
 
+
+  def self.active?
+    true
+  end
+
   # Should return true if param is a data type cacher depends on. See top of class for known data type symbols
   def self.listens_to?(_)
     raise NotImplementedError
@@ -74,6 +79,7 @@ class DistrictCacher
     begin
       if cache_key != 'ratings'
         cacher_class = cacher_for(cache_key)
+        return unless cacher_class.active?
         cacher = cacher_class.new(district)
         cacher.cache
       else
