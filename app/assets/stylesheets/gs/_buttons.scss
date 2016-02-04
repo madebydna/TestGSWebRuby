@@ -59,6 +59,9 @@
 .btn-primary {
   @include button-variant($btn-primary-color, $btn-primary-bg, $btn-primary-border, $btn-primary-bg, '#FFFFFF', $btn-primary-border);
 }
+.btn-gk-primary {
+  @include button-default-variant($btn-gk-primary-color, $btn-gk-primary-bg, $btn-gk-primary-shadow, $btn-gk-primary-selected-bg, $btn-gk-primary-hover-color, $btn-gk-primary-hover-bg, $btn-gk-primary-hover-shadow);
+}
 .btn-default {
   @include button-default-variant($btn-default-color, $btn-default-bg, $btn-default-color, $btn-default-bg, $btn-default-hover, $btn-default-hover, $btn-default-active-border);
 }

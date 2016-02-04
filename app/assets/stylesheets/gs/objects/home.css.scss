@@ -1,0 +1,42 @@
+.highschool-milestones-bg {
+  height: 290px;
+  background: image_url('home/GK_Milestones_Highschool_Desktop_Banner.jpg');
+  background-size: 100%;
+  background-color: #fff;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  @media only screen and (max-width: $screen-sm) {
+    height: 340px;
+  }
+
+  h1 {
+    text-shadow: 1px 1px #333;
+  }
+
+  .section {
+    max-width: 1200px;
+  }
+
+  .milestones-main-container {
+   margin-top: 20px;
+  }
+
+  .milestone {
+    font-size: 80px;
+  }
+
+  .high-school {
+    font-size: 20px;
+    color: #FFFFFF;
+  }
+
+  .sub-header {
+    font-size: 34px;
+    @media only screen and (max-width: $screen-xs-min) {
+      font-size: 30px;
+    }
+    color: #FFFFFF;
+  }
+}
