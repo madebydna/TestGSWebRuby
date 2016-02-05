@@ -8,6 +8,7 @@ module SubscriptionConcerns
     begin
       subscribe_actions(subscription_params).map do |action|
         subscribed = action.subscribe_to_greatnews
+        next if subscription_params.list == 'gsnewsletter'
         if subscription_params.has_list?
           subscribed = action.subscribe_to_list(subscription_params.list)
         else
