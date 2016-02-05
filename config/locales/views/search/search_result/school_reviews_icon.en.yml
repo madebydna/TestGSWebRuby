@@ -1,0 +1,9 @@
+---
+en:
+  search:
+    search_result:
+      school_reviews_icon:
+        no_reviews: No Community Reviews
+        reviews:
+          one: "%{count} review"
+          other: "%{count} reviews"

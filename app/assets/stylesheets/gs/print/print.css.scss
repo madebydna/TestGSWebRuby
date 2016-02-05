@@ -1,0 +1,18 @@
+/* Core bootstrap overrides */
+
+@media print {
+  html, body {
+    width: 1200px !important;
+  }
+  @include make-grid(sm);
+  @include responsive-invisibility('.visible-xs');
+  @include responsive-visibility('.hidden-xs');
+  @include responsive-invisibility('.hidden-xs.hidden-print');
+  @include responsive-invisibility('.hidden-sm');
+  @include responsive-visibility('.visible-sm');
+
+  /* Prevent Chrome from adding the href after every link */
+  a[href]:after {
+    content: none !important;
+  }
+}

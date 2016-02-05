@@ -2,6 +2,8 @@
 en:
   NJ Biology Competency Test: NJ Biology Competency Test
   ACT: ACT
+  ACT Aspire: ACT Aspire
+  ACT PLAN: ACT PLAN
   ACT Percent College Ready: ACT Percent College Ready
   ACT/SAT Participation: ACT/SAT Participation
   AK Alaska Benchmark Exam: AK Alaska Benchmark Exam
@@ -54,6 +56,8 @@ en:
   Climate overall-climate rating: Climate overall-climate rating
   Comprehensive Test of Basic Skills: Comprehensive Test of Basic Skills
   DC OSSE Rating: DC OSSE Rating
+  DC The Partnership for Assessment of Readiness for College and Careers: DC The Partnership
+    for Assessment of Readiness for College and Careers
   DC-CAS: DC-CAS
   DE AIR: DE AIR
   DE Comprehensive Assessment System: DE Comprehensive Assessment System
@@ -142,6 +146,7 @@ en:
   MI Merit Examination (Private): MI Merit Examination (Private)
   MI Merit Examination DEPRECATED: MI Merit Examination DEPRECATED
   MI School Accountability Scorecards: MI School Accountability Scorecards
+  MI Student Test of Educational Progress: MI Student Test of Educational Progress
   MI YES: MI YES
   MN Basic Skills Tests: MN Basic Skills Tests
   MN Comprehensive Assessments (pre 2007): MN Comprehensive Assessments (pre 2007)

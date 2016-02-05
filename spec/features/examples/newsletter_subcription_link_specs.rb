@@ -9,7 +9,7 @@ feature '/gsr/user/subscriptions' do
       include_context 'signed in verified user'
 
       subject do
-        visit create_subscription_from_link_path(list: 'gsnewsletter')
+        visit create_subscription_from_link_path(list: 'greatnews')
       end
       before { subject }
 
@@ -42,7 +42,7 @@ feature '/gsr/user/subscriptions' do
       let(:user) { FactoryGirl.create(:verified_user, password: 'password') }
 
       subject do
-        visit create_subscription_from_link_path(list: 'gsnewsletter')
+        visit create_subscription_from_link_path(list: 'greatnews')
         page
       end
 

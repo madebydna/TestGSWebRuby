@@ -7,51 +7,6 @@ GS.ad.googleId = '/1002894/';
 
 if (gon.advertising_enabled) {
 //adobe audience manager code - copied and pasted
-  GS.ad.AamGpt = {
-    strictEncode: function (str) {
-      return encodeURIComponent(str).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
-    },
-    getCookie: function (c_name) {
-      var i, x, y, c = document.cookie.split(";");
-      for (i = 0; i < c.length; i++) {
-        x = c[i].substr(0, c[i].indexOf("="));
-        y = c[i].substr(c[i].indexOf("=") + 1);
-        x = x.replace(/^\s+|\s+$/g, "");
-        if (x == c_name) {
-          return unescape(y);
-        }
-      }
-    },
-    getKey: function (c_name) {
-      var c = this.getCookie(c_name);
-      c = this.strictEncode(c);
-      if (typeof c != "undefined" && c.match(/\w+%3D/)) {
-        var cList = c.split("%3D");
-        if (typeof cList[0] != "undefined" && cList[0].match(/\w+/)) {
-          return cList[0];
-        }
-      }
-    },
-    getValues: function (c_name) {
-      var c = this.getCookie(c_name);
-      c = this.strictEncode(c);
-      if (typeof c != "undefined" && c.match(/\w+%3D\w+/)) {
-        var cList = c.split("%3D");
-        if (typeof cList[1] != "undefined" && cList[1].match(/\w+/)) {
-          var vList = cList[1].split("%2C");
-          if (typeof vList[0] != "undefined") {
-            return vList;
-          } else {
-            return null;
-          }
-        } else {
-          return null;
-        }
-      } else {
-        return null;
-      }
-    }
-  };
 
   GS.ad.slotRenderedHandler = function(event) {
     if (event.isEmpty) {
@@ -158,15 +113,6 @@ if (gon.advertising_enabled) {
   };
 
   GS.ad.setPageLevelTargeting = function () {
-    // add targeting for adobe
-    GS.ad.AamCookieName = "gpt_aam";
-    if (typeof GS.ad.AamGpt.getCookie(GS.ad.AamCookieName) !== 'undefined') {
-      googletag.pubads().setTargeting(GS.ad.AamGpt.getKey(GS.ad.AamCookieName), GS.ad.AamGpt.getValues(GS.ad.AamCookieName));
-    }
-    if (typeof GS.ad.AamGpt.getCookie("aam_uuid") !== "undefined") {
-      googletag.pubads().setTargeting("aamId", GS.ad.AamGpt.getCookie("aam_uuid"));
-    }
-
     // being set in localized_profile_controller - ad_setTargeting_through_gon
     // sets all targeting based on what is set in the controller
     if ($.isEmptyObject(gon.ad_set_targeting)) {
@@ -188,8 +134,10 @@ if (gon.advertising_enabled) {
 
   GS.ad.showAd = function (divId) {
     if ($.inArray(divId, GS.ad.shownArray) == -1) {
-      GS.ad.shownArray.push(divId);
-      googletag.display(divId);
+      googletag.cmd.push(function () {
+        GS.ad.shownArray.push(divId);
+        googletag.display(divId);
+      });
     }
     else {
       googletag.pubads().refresh([GS.ad.slot[divId]]);

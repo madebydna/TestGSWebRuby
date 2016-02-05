@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row tac">
+    <div class="open-sans font-size-large">
+      <div class="open-sans_sb dib">
+        <%= t('.intro_callout') %>
+      </div>
+      <div class="gray-darker open-sans dib">
+        <%= t('.callout_html') %>
+      </div>
+      <div class="dib">
+        <button class="mhm mvs btn btn-primary js-button-link"
+          data-link-value="<%= osp_register_url(city: @school.city,
+                                                school_id: @school.id,
+                                                state: @school.state) %>">
+          <%= t('.button') %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

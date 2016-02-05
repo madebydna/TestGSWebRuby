@@ -42,7 +42,7 @@ describe SchoolProfileDecorator do
         search_url << '&locationSearchString=fulladdress'
         search_url << '&locationType=street_address'
         search_url << '&lon=-120.22'
-        search_url += '&normalizedAddress=googleformattedaddress'
+        search_url += '&normalizedAddress=fulladdress'
         search_url << '&sort=rating_desc'
         search_url << '&state=CA'
         expect(subject.school_level_and_address_location_search_sorted_by_rating_url).to eq(search_url)
@@ -61,7 +61,7 @@ describe SchoolProfileDecorator do
         search_url << '&locationSearchString=fulladdress'
         search_url << '&locationType=street_address'
         search_url << '&lon=-120.22'
-        search_url += '&normalizedAddress=googleformattedaddress'
+        search_url += '&normalizedAddress=fulladdress'
         search_url << '&sort=rating_desc'
         search_url << '&state=CA'
         expect(subject.school_level_and_address_location_search_sorted_by_rating_url).to eq(search_url)

@@ -57,11 +57,17 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       });
     };
 
+    var showDetailsOverviewSection = function() {
+      $('.js-overview-details').removeClass('dn');
+      GS.ad.showAd('School_OverviewDetails_AdaptiveAd');
+    };
+
     return {
       showSignUpForSchoolModal: showSignUpForSchoolModal,
       showSignUpForSchoolModalAfterDelay: showSignUpForSchoolModalAfterDelay,
       initializeFollowThisSchool: initializeFollowThisSchool,
-      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton
+      initializeSaveThisSchoolButton: initializeSaveThisSchoolButton,
+      showDetailsOverviewSection: showDetailsOverviewSection
     };
 
   })(jQuery);

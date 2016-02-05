@@ -32,7 +32,6 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if ($form.selector.indexOf('Mobile') > -1) {
               custom_link = custom_link + '_mobile';
             }
-            GS.track.sendCustomLink(custom_link);
         });
     };
 
@@ -91,10 +90,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (menu.css('display') == 'none') {
                 GS.popup.closeOtherPopups();
                 menu.show();
-                GS.track.sendCustomLink('search_open_filters');
             } else {
                 menu.hide();
-                GS.track.sendCustomLink('search_close_filters');
             }
         });
         GS.popup.registerCloseHandler(function() {$('.js-searchFiltersMenu').hide();});
@@ -106,12 +103,10 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             if (advancedFiltersMenu.css('display') == 'none') {
                 advancedFiltersMenu.show('slow');
                 $(this).text(GS.I18n.t('fewer_filters'));
-                GS.track.sendCustomLink('search_expand_advanced_filters');
             }
             else {
                 advancedFiltersMenu.hide('fast');
                 $(this).text(GS.I18n.t('more_filters'));
-                GS.track.sendCustomLink('search_collapse_advanced_filters');
             }
         });
     };
@@ -128,10 +123,8 @@ GS.search.results = GS.search.results || (function(state_abbr) {
               hideFilterMenuMobile(function() {
                   $(".js-searchFiltersDropdownMobile").blur();
               });
-              GS.track.sendCustomLink('search_close_filters_mobile');
             } else {
               showFilterMenuMobile();
-              GS.track.sendCustomLink('search_open_filters_mobile');
             }
         });
         GS.popup.registerCloseHandler(hideFilterMenuMobile);
@@ -398,7 +391,7 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             var $schoolText = $school.siblings('.js-compareSchoolsText');
             $schoolText.hide();
             $schoolText.removeClass('js-buttonSelected');
-            $school.animate({width: '150px', paddingLeft: '20px'},500, function() {
+            $school.animate({width: '100%', paddingLeft: '20px'},500, function() {
                 $school.find('.iconx16').removeClass('i-16-check-bigger-on').addClass('i-16-check-bigger-off');
                 $school.removeClass('btn-border-green');
                 $school.find('.js-compareSchoolsButtonText').text('Compare');
@@ -621,7 +614,6 @@ GS.search.results = GS.search.results || (function(state_abbr) {
             GS.search.autocomplete.searchAutocomplete.detachAutocomplete();
             GS.search.autocomplete.searchAutocomplete.init(GS.search.stateAbbreviation);
             $('.js-currentLocationText').html($(this).text());
-            GS.track.sendCustomLink('search_change_state');
         });
     };
 

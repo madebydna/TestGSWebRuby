@@ -152,22 +152,10 @@ GS.track.trackEvent = function(eventNames) {
         omnitureObject.linkTrackEvents = mappedEvents.join(',');
         omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
         omnitureObject.events = mappedEvents.join(',');
-        if (s.tl) {
-            s.tl(null, 'o', null, omnitureObject);
-        }
         if (missingEvents.length > 0) {
             GS.util.log('Events missing for the following:' + missingEvents);
         }
     });
-};
-
-GS.track.sendCustomLink = function(linkName) {
-    var omnitureObject = {};
-    omnitureObject.pageName = GS.track.baseOmnitureObject.pageName;
-    if (s.tl) {
-        s.tl(true, 'o', linkName, omnitureObject);
-    }
-    return true;
 };
 
 GS.track.doUnlessTrackingIsDisabled = function(cb) {

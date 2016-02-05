@@ -21,6 +21,7 @@ es:
     la prueba (puntuación de 3 o superior)
   About the program: Acerca del programa
   About the school: Sobre la escuela
+  Academic Focus: Academic Focus
   Academic Personalism: El personalismo Académico
   Academic Press: Academic Press
   Academic award: Recompensa académica
@@ -47,6 +48,10 @@ es:
   Applications Received: Aplicaciones recibidos
   Approach to addressing and preventing bullying: Aproximación a abordar y prevenir
     la intimidación
+  Arts media: Arts media
+  Arts music: Arts music
+  Arts performing written: Arts performing written
+  Arts visual: Arts visual
   Attending the most selective US colleges (as rated by Barron's Profiles of American Colleges): Asistir
     las universidades estadounidenses más selectivas (según la clasificación de perfiles
     de Barron de Universidades de América)
@@ -59,6 +64,7 @@ es:
   Average number of units completed in first year for graduates in-state: Promedio
     del número de unidades completado en el primer año para los graduados en el estado
   Average teacher experience (in years): Experiencia docente media (en años)
+  Before / after care: Before / after care
   Before / after care offered: Antes / después de la atención ofrecida
   Before care begins: Antes de que comience el cuidado
   Before school: Antes de la escuela
@@ -80,6 +86,7 @@ es:
   Clubs (misc): Clubes (misc.)
   Clubs - dance: Clubes - danza
   Clubs - language: Clubes - idioma
+  Coed / Single Gender: Coed / Single Gender
   Coed/Single-gender: Coed / género individual
   Collective Responsibility: Responsabilidad colectiva
   College name: Nombre del Colegio
@@ -132,6 +139,7 @@ es:
   Extended care / Extended programs: Cuidado extendido / programas ampliados
   Extra learning resources: Recursos de aprendizaje adicionales
   Extra learning resources (misc): Recursos de aprendizaje adicionales (misc.)
+  FRL: FRL
   Feeder pattern: Patrón alimentador
   Female: Femenino
   Financial aid offered: La ayuda financiera ofrecida
@@ -142,7 +150,6 @@ es:
   Girls sports: Deportes de las muchachas
   Girls sports (misc): Deportes de las muchachas (misc.)
   Graduate high school: Graduado de escuela secundaria
-  Graduates eligible for 4 yr college: Graduados eligible para universidad
   Graduates who enroll in college immediately after high school graduation: Los graduados
     que se matriculan en la universidad inmediatamente después de graduarse de la
     secundaria
@@ -271,6 +278,8 @@ es:
   Staff details: Detalles del Personal
   Start 9th grade: Iniciar noveno grado
   Start time: Hora de inicio
+  Student Clubs: Student Clubs
+  Student ethnicity: Student ethnicity
   Student Growth: Crecimiento estudiantil
   Student-Teacher Trust: Student-Teacher Trust
   Students "choicing" into this school who live in the district: Estudiantes "choicing"
@@ -332,8 +341,8 @@ es:
     a estas escuelas
   Students who complete the 1st year of college (24 credits) on time: Los estudiantes
     que completen el primero año de universidad (24 créditos) en el tiempo
+  Students with disabilities: Students with disabilities
   Summer program offered: Programa de verano ofrecido
-  Test Scores: Resultados de exámenes
   Test scores for low-income students: Resultados de los examenes de estudiantes de bajos ingresos
   test_score_rating: Calificación de examenes
   Teacher Influence: Influencia del profesor
@@ -366,6 +375,7 @@ es:
   This school's reading score: Puntuación de la lectura de esta escuela
   This school's science score: Puntuación de la ciencia de esta escuela
   Total: Total
+  Transportation: Transporte
   Transportation details: Detalles de transporte
   Transportation options: Transporte
   Transportation options (misc): Transporte (misc.)

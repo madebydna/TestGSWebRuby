@@ -1,0 +1,34 @@
+<%
+  data_array = GooglePieChartDataBuilder.new(piedata).build
+%>
+
+<% piechart_options = {
+        fontSize: '13',
+        title: 'diversity',
+        width: '150',
+        height: '150'
+#        backgroundColor: '#f5f5f5'
+}.stringify_keys;
+%>
+
+<% piechart_id = "details-overview-pie-chart#{@school.id}-#{display}" %>
+<div id="<%= piechart_id %>" class="notranslate">
+
+</div>
+<% if data_array.size > 0  %> 
+  <% content_for :head do %>
+    <script type="text/javascript">
+      $(function() {
+          GS.visualchart.drawPieChart(
+            <%= raw data_array.to_json %>,
+            "<%= piechart_id %>",
+            null,
+            <%= raw piechart_options.to_json %>,
+            // Probably want to add a new name & sizing to window.sizing.js
+            '<%= raw 'ethnicity' %>'
+            );
+          });
+    </script>
+  <% end %>
+<% end  %>
+

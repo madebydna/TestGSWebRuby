@@ -41,6 +41,7 @@ class GSLogger
       log.prepend("\n").concat("\n")
 
       Rails.logger.send(level.downcase, log)
+      # puts log
     end
 
     #make sure to keep the order of the logs consistent

@@ -4,6 +4,7 @@
   <%= display_meta_tags %>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
@@ -49,7 +50,6 @@
 
 <%= content_for?(:content) ? yield(:content) : yield %>
 
-<%=  render 'omniture/omniture' %>
 <%=  render 'omniture/quantcast' %>
 <%=  render 'omniture/comscore' %>
 

@@ -35,7 +35,7 @@ describe 'Home Page' do
       clean_models :gs_schooldb, PropertyConfig
     end
     it { is_expected.to have_search_hero_section }
-    it { is_expected.to have_common_core_banner_section }
+    it { is_expected.to have_high_chool_milesontes_section }
   end
 
   context 'when I click the "sign up for email updates" button', js: true do

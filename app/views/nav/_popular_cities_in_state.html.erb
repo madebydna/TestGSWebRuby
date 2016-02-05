@@ -4,7 +4,7 @@
 
   <% cities = City.popular_cities(state[:short], limit: 30) %>
 
-  <div class="js-city-list row tal mbl">
+  <div class="js-city-list row tal mbl hidden-print">
       <% state_name_long = state[:long].titleize %>
       <% if state[:short].downcase == 'dc' %>
          <% state_name_long = "Washington DC" %>

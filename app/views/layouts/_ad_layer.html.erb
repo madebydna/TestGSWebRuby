@@ -35,7 +35,7 @@
 <% end %>
 <% slotdef = "Responsive_#{insert_mobile}#{page}_#{slot_name}_#{width}x#{height}" %>
 <% iddef = "#{page}#{slot_name}#{insert_mobile}Ad#{id_counter}" %>
-<div class="js-<%= iddef %>-wrapper">
+<div class="js-<%= iddef %>-wrapper hidden-print">
   <div class="<%= visible_for %>">
       <div class="gs_ad_slot ma" id="<%= iddef %>" data-ad-size="<%= dimensions %>" style="width: <%= width %>px"  data-dfp="<%= slotdef %>" data-ad-setting="<%= ad_size_name %>" <%= "data-ad-defer-render" if defer_render %>></div>
   </div>

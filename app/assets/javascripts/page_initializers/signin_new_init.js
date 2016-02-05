@@ -20,7 +20,6 @@ if(gon.pagename == 'signin/new'){
             var omnitureObject = GS.track.getOmnitureObject();
             omnitureObject.pageName = SIGNIN_PAGENAME;
             omnitureObject.hier1 = SIGNIN_HIER;
-            sendToOmniture(omnitureObject);
             location.hash = '';
         });
 
@@ -31,14 +30,10 @@ if(gon.pagename == 'signin/new'){
             var omnitureObject = GS.track.getOmnitureObject();
             omnitureObject.pageName = JOIN_PAGENAME;
             omnitureObject.hier1 = JOIN_HIER;
-            sendToOmniture(omnitureObject);
             location.hash = '#';
         });
 
-        var sendToOmniture = function(omnitureObject){
-            var s_code = s.t(omnitureObject);
-            if (s_code)document.write(s_code);
-        };
+
 
         $('.js-join-form').parsley({
             excluded: '', // don't exclude hidden fields, since we want to validate the stars

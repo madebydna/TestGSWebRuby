@@ -72,7 +72,6 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
         }
         $(elemListViewToggle).on('click', function() {
             hideMapView();
-            GS.track.sendCustomLink('search_list_view');
         });
         $(elemListViewToggle).hover(
             function () {
@@ -86,7 +85,6 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
         );
         $(elemMapViewToggle).on('click', function() {
             showMapView();
-            GS.track.sendCustomLink('search_map_view');
         });
         $(elemMapViewToggle).hover(
             function () {
@@ -102,10 +100,8 @@ GS.search.toggleListMapView = GS.search.toggleListMapView || (function () {
             var currentlyVisible = ($(elemMapCanvas).filter(":visible").length == 1);
             if (currentlyVisible) {
                 hideMapView();
-                GS.track.sendCustomLink('search_list_view_mobile');
             } else {
                 showMapView();
-                GS.track.sendCustomLink('search_map_view_mobile');
             }
         });
 

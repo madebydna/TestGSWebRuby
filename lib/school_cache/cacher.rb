@@ -59,14 +59,18 @@ class Cacher
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        nearby_schools:   NearbySchoolsCaching::NearbySchoolsCacher
-
+        nearby_schools:   NearbySchoolsCaching::NearbySchoolsCacher,
+        feed_test_scores: FeedTestScoresCacher
     }[key.to_s.to_sym]
   end
 
   # Should return true if param is a data type cacher depends on. See top of class for known data type symbols
   def self.listens_to?(_)
     raise NotImplementedError
+  end
+
+  def self.active?
+    true
   end
 
   def self.cachers_for_data_type(data_type)
@@ -81,7 +85,8 @@ class Cacher
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
-      NearbySchoolsCaching::NearbySchoolsCacher
+      NearbySchoolsCaching::NearbySchoolsCacher,
+      FeedTestScoresCacher
     ]
   end
 
@@ -89,7 +94,7 @@ class Cacher
     if data_type != :ratings
       cachers_for_data_type(data_type).each do |cacher_class|
         begin
-          cacher_class.new(school).cache
+          cacher_class.new(school).cache if cacher_class.active?
         rescue => error
           error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
           GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
@@ -109,6 +114,7 @@ class Cacher
     begin
       if cache_key != 'ratings'
         cacher_class = cacher_for(cache_key)
+        return unless cacher_class.active?
         cacher = cacher_class.new(school)
         cacher.cache
       else

@@ -1,0 +1,32 @@
+<% query_string = '' %>
+<% query_string << "?lang=#{params[:lang]}" if params[:lang] %>
+<% school_reviews_page_url = school_page_url + 'reviews/' + query_string %>
+<% school_quality_page_url = school_page_url + 'quality/' + query_string %>
+<div class="row">
+  <% value = school.overall_gs_rating %>
+  <% value ||= 'NR' %>
+  <% value = value.to_s.upcase %>
+  <% rated = value != 'NR' %>
+
+  <!-- GS Rating -->
+  <% if rated %>
+    <div class="col-xs-6 col-sm-3 mtm tac">
+      <%= render 'search/search_result/gs_rating_icon',
+        school_quality_page_url:  school_quality_page_url,
+        school: school %>
+    </div>
+  <% end %>
+  <!-- School Reviews -->
+  <div class="col-xs-6 col-sm-3 mvl">
+    <%= render 'search/search_result/school_reviews_icon', school: school,
+      school_reviews_page_url: school_reviews_page_url
+     %>
+  </div>
+  <!-- Fit score -->
+  <% if filtering_search? %>
+    <div class="col-xs-6 col-sm-3 mtl mbs js-schoolFitScore">
+      <%= render 'fit_score_icon_and_popup', school: school, 
+        decorated_school: decorated_school %>
+    </div>
+  <% end %>
+</div>

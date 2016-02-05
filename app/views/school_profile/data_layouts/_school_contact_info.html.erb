@@ -28,7 +28,7 @@
         <span class="iconx16 i-16-fax vam"></span><span class="mlm vam"><%= @school.fax %></span><br/>
       <% end %>
       <span class="iconx16 i-16-home vam"></span>
-      <%= link_to zillow_url(@school), class: 'contact-content vam pls', rel: 'nofollow', onclick: "if (s.tl) {s.tl(this,'o', 'Zillow_'+gon.omniture_pagename);} return true;", target: '_blank' do %>
+      <%= link_to zillow_url(@school), class: 'contact-content vam pls', rel: 'nofollow', target: '_blank' do %>
           <span><%= t('school_profile.data_layouts.school_contact_info.nearby_homes') %></span>
       <% end %>
     </div>

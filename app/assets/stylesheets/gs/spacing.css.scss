@@ -134,6 +134,7 @@ General comments:
 .shim-25 { clear: both; height: 25px; font-size: 1px; line-height: 25px; }
 .shim-50 { clear: both; height: 50px; font-size: 1px; line-height: 50px; }
 .shim-100 { clear: both; height: 100px; font-size: 1px; line-height: 100px; }
+.shim-170 { clear: both; height: 170px; font-size: 1px; line-height: 170px; }
 
 .db { display: block; }
 .di { display: inline; }
@@ -176,6 +177,17 @@ General comments:
 .oh { overflow: hidden; }
 .oa { overflow: auto; }
 .ov { overflow: visible; }
+
+.wb-n {
+  word-break: normal;
+}
+
+.wb-ba {
+  word-break: break-all;
+}
+.wb-ka {
+  word-break: keep-all;
+}
 
 
 .content-centered {
@@ -325,6 +337,10 @@ General comments:
 hr.brand-bar {
   height: 2px;
   background: $brand-secondary;
+}
+
+hr.thick {
+  border-bottom: 4px solid $module-gray-stroke;
 }
 
 // vertical divider - used on overview

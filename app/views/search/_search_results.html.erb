@@ -42,7 +42,8 @@
             <% end %>
             <% decorated_school = SchoolSearchResultDecorator.decorate(school) %>
             <% @school = decorated_school %>
-            <%= render 'search_result', school: school, decorated_school: decorated_school %>
+            <%= render 'search/search_result', school: school, decorated_school: decorated_school %>
+            <%= render 'search/search_result/container', school: school, decorated_school: decorated_school %>
         <% end %>
         <% if @show_ads %>
             <%= render 'layouts/ad_layer', page: ('Search').to_sym, slot: 'Footer'.to_sym, view: :desktop %>

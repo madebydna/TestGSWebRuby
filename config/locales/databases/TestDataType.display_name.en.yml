@@ -1,5 +1,7 @@
 ---
 en:
+  ACT Aspire: ACT Aspire
+  ACT PLAN: ACT PLAN
   ACT Percent College Ready: ACT Percent College Ready
   ACT/SAT College Ready: ACT/SAT College Ready
   ACT/SAT Participation: ACT/SAT Participation
@@ -147,8 +149,6 @@ en:
   Louisiana Educational Assessment Program: Louisiana Educational Assessment Program
   Louisiana End of Course Test: Louisiana End of Course Test
   Louisiana Graduation Exit Examination: Louisiana Graduation Exit Examination
-  Louisiana The Partnership for Assessment of Readiness for College and Careers (PARCC): Louisiana
-    The Partnership for Assessment of Readiness for College and Careers (PARCC)
   MCA-II Graduation-Required Assessments for Diploma (MCA-II/GRAD): MCA-II Graduation-Required
     Assessments for Diploma (MCA-II/GRAD)
   MCAS Science and Technology/Engineering (MCAS STE) Tests: MCAS Science and Technology/Engineering
@@ -173,6 +173,8 @@ en:
   Michigan Merit Examination (MME): Michigan Merit Examination (MME)
   Michigan Merit Examination (MME) (Private Schools): Michigan Merit Examination (MME)
     (Private Schools)
+  Michigan Student Test of Educational Progress (M-STEP): Michigan Student Test of
+    Educational Progress (M-STEP)
   Minnesota Basic Skills Test: Minnesota Basic Skills Test
   Minnesota Comprehensive Assessments: Minnesota Comprehensive Assessments
   Minnesota Comprehensive Assessments (MCA) (Private Schools): Minnesota Comprehensive
@@ -283,6 +285,8 @@ en:
   Texas Assessment of Knowledge and Skills (TAKS): Texas Assessment of Knowledge and
     Skills (TAKS)
   Texas Gold Performance Acknowledgments: Texas Gold Performance Acknowledgments
+  The Partnership for Assessment of Readiness for College and Careers (PARCC): The
+    Partnership for Assessment of Readiness for College and Careers (PARCC)
   The Pennsylvania Keystone Exams: The Pennsylvania Keystone Exams
   Total number tested: Total number tested
   Transitional Colorado Assessment Program (TCAP): Transitional Colorado Assessment
