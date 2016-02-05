@@ -88,14 +88,14 @@ describe SubscriptionsController do
   end
 
   describe '#subscription_from_link' do
-    subject { post :subscription_from_link, list: 'gsnewsletter' }
+    subject { post :subscription_from_link, list: 'greatnews' }
     before do
       allow(controller).to receive(:home_path).and_return('www.greatschools.org/')
     end
-    context 'with params gsnewsletter' do
+    context 'with params greatnews' do
       let(:subscription_params){
         {
-          'list' => 'gsnewsletter',
+          'list' => 'greatnews',
           'controller' => 'subscriptions',
           'action' => 'subscription_from_link',
           'message'=> 'You\'ve signed up to receive GreatSchools\'s newsletter'
@@ -134,7 +134,7 @@ describe SubscriptionsController do
       end
     end
 
-    context 'without params gsnewsletter' do
+    context 'without params greatnews' do
       subject { post :subscription_from_link }
       it 'should redirect to home_path' do
         expect(subject).to redirect_to('www.greatschools.org/')
