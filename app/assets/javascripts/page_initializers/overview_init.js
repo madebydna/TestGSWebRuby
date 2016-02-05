@@ -8,5 +8,4 @@ if(gon.pagename == "Overview"){
   GS.syncHeight.syncHeights();
   GS.nearbySchools.initialize();
 
-  GS.schoolProfiles.showDetailsOverviewSection();
 };
