@@ -4,6 +4,6 @@ es:
     overview:
       details_overview:
         osp_callout:
-          button: Claim esta escuela perfilado!
-          callout_html: Comparte con los padres programas de su escuela y centrarse!
-          school_administrators: Los administradores escolares!
+          button: Reclamar esta escuela
+          callout_html: Reclama tu página de perfil de la escuela para actualizar y añadir información
+          intro_callout: ¿Trabaja en esta escuela?

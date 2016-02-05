@@ -4,6 +4,6 @@ en:
     overview:
       details_overview:
         osp_callout:
-          button: Claim this school profiled!
-          callout_html: "Share with parents your school's programs&nbsp;and&nbsp;focus!"
-          school_administrators: School administrators!
+          button: Claim this school
+          callout_html: "Claim your school profile page to update and add information."
+          intro_callout: Do you work at this school?
