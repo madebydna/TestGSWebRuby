@@ -21,14 +21,13 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
   def all_school_cache_data_raw
     @_all_school_cache_data_raw ||= (
-        school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_KEYS)
-        decorated_school = school_cache_results.decorate_schools(school).first
+      school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_KEYS).school_data_hash.values.first
     )
   end
 
   class CombineCharacteristicsAndEspResponsesData
     def initialize(category, raw_cache_data)
-      @raw_cache_data = raw_cache_data.cache_data
+      @raw_cache_data = raw_cache_data
       @category = category
       @esp_raw_cache_data = @raw_cache_data["esp_responses"]
       @characteristics_raw_cache_data = @raw_cache_data["characteristics"]
@@ -78,9 +77,9 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
     end
 
     def build_characteristics_data
-      @characteristics_cache_data .each_with_object({}) do |array, results_hash|
-        response_key = array.first
-        characterstics_array_hash = array.last
+      @characteristics_cache_data.each_with_object({}) do |(k,v), results_hash|
+        response_key = k
+        characterstics_array_hash = v
         value = CharacteristicsValueParser.new(characterstics_array_hash).parse
         key = @key_map[response_key]
         results_hash[key] = value

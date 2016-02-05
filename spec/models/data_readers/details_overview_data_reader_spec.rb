@@ -36,161 +36,180 @@ describe DetailsOverviewDataReader do
 
   let(:sample_data) do
     {
-      [:fac, nil] => [ 
-        {:sports_fields=> {"member_id"=>5893684,
-                           "source"=>"osp",
-                           "created"=>"2015-07-31T22:25:47-07:00" },
-        :audiovisual=> {"member_id"=>5893684,
+      "esp_responses" => {
+        "fac" =>  
+          {"sports_fields"=> {"member_id"=>5893684,
+                            "source"=>"osp",
+                            "created"=>"2015-07-31T22:25:47-07:00" },
+          "audiovisual"=> {"member_id"=>5893684,
+                          "source"=>"osp",
+                          "created"=>"2015-07-31T22:25:47-07:00" },
+          "cafeteria"=> {"member_id"=>5893684,
                         "source"=>"osp",
-                        "created"=>"2015-07-31T22:25:47-07:00" },
-        :cafeteria=> {"member_id"=>5893684,
-                      "source"=>"osp",
-                      "created"=>"2015-07-31T22:25:47-07:00" }
-        }
+                        "created"=>"2015-07-31T22:25:47-07:00" }
+          },
+        "foreign_language" => 
+          {"mandarin"=> {"member_id"=>5893684,
+                        "source"=>"osp",
+                        "created"=>"2015-07-31T22:25:47-07:00"}
+        }, 
+      },
+      "characteristics"=> {
+      "English learners"=> [
+        {"breakdown"=>"All students",
+         "original_breakdown"=>"All students",
+         "created"=>"2014-07-25T10:20:09-07:00",
+         "school_value"=>77.3,
+         "source"=>"CA Dept. of Education",
+         "year"=>2014,
+         "state_average_2012"=>23.0,
+         "school_value_2014"=>14.6465}
       ],
-      [:foreign_language, nil] => [
-        {:mandarin=> {"member_id"=>5893684,
-                      "source"=>"osp",
-                      "created"=>"2015-07-31T22:25:47-07:00"}
-      }, 
-      ],
-      [:'English learners', nil]=> [
-        {:breakdown=>"All students",
-         :original_breakdown=>"All students",
-         :created=>"2014-07-25T10:20:09-07:00",
-         :school_value=>77.3,
-         :source=>"CA Dept. of Education",
-         :year=>2014,
-         :state_average_2012=>23.0,
-         :school_value_2014=>14.6465}
-      ],
-      [:Ethnicity, nil]=> 
+      "Ethnicity"=> 
       [
-        {:breakdown=>"Asian",
-         :original_breakdown=>"Asian",
-         :created=>"2014-07-25T10:20:09-07:00",
-         :school_value=>57.5758,
-         :source=>"CA Dept. of Education",
-         :year=>2014,
-         :school_value_2011=>56.4246,
-         :state_average_2011=>11.071,
-         :school_value_2014=>57.5758
+        {"breakdown"=>"Asian",
+         "original_breakdown"=>"Asian",
+         "created"=>"2014-07-25T10:20:09-07:00",
+         "school_value"=>57.5758,
+         "source"=>"CA Dept. of Education",
+         "year"=>2014,
+         "school_value_2011"=>56.4246,
+         "state_average_2011"=>11.071,
+         "school_value_2014"=>57.5758
       },
-      {:breakdown=>"Hispanic",
-       :original_breakdown=>"Hispanic",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>24.2424,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2011=>24.581,
-       :state_average_2011=>51.4939,
-       :school_value_2012=>24.7059,
-       :state_average_2012=>52.0,
-       :school_value_2014=>24.2424
+      {"breakdown"=>"Hispanic",
+       "original_breakdown"=>"Hispanic",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>24.2424,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2011"=>24.581,
+       "state_average_2011"=>51.4939,
+       "school_value_2012"=>24.7059,
+       "state_average_2012"=>52.0,
+       "school_value_2014"=>24.2424
       },
-      {:breakdown=>"Black",
-       :original_breakdown=>"African American",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>8.0808,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2011=>13.4078,
-       :state_average_2011=>6.63967,
-       :school_value_2012=>12.9412,
-       :state_average_2012=>6.0,
-       :school_value_2014=>8.08081
+      {"breakdown"=>"Black",
+       "original_breakdown"=>"African American",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>8.0808,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2011"=>13.4078,
+       "state_average_2011"=>6.63967,
+       "school_value_2012"=>12.9412,
+       "state_average_2012"=>6.0,
+       "school_value_2014"=>8.08081
       },
-      {:breakdown=>"Pacific Islander",
-       :original_breakdown=>"Pacific Islander",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>3.0303,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2014=>3.0303
+      {"breakdown"=>"Pacific Islander",
+       "original_breakdown"=>"Pacific Islander",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>3.0303,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2014"=>3.0303
       },
-      {:breakdown=>"White",
-       :original_breakdown=>"White",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>2.52525,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2011=>1.67598,
-       :state_average_2011=>26.6216,
-       :school_value_2012=>1.56863,
-       :state_average_2012=>26.0,
-       :school_value_2014=>2.52525
+      {"breakdown"=>"White",
+       "original_breakdown"=>"White",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>2.52525,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2011"=>1.67598,
+       "state_average_2011"=>26.6216,
+       "school_value_2012"=>1.56863,
+       "state_average_2012"=>26.0,
+       "school_value_2014"=>2.52525
       },
-      {:breakdown=>"Two or more races",
-       :original_breakdown=>"Multiracial",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>1.51515,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2011=>1.11732,
-       :state_average_2011=>2.89175,
-       :school_value_2012=>1.56863,
-       :state_average_2012=>3.0,
-       :school_value_2014=>1.51515
+      {"breakdown"=>"Two or more races",
+       "original_breakdown"=>"Multiracial",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>1.51515,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2011"=>1.11732,
+       "state_average_2011"=>2.89175,
+       "school_value_2012"=>1.56863,
+       "state_average_2012"=>3.0,
+       "school_value_2014"=>1.51515
       },
-      {:breakdown=>"Filipino",
-       :original_breakdown=>"Filipino",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>1.51515,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2014=>1.51515
+      {"breakdown"=>"Filipino",
+       "original_breakdown"=>"Filipino",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>1.51515,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2014"=>1.51515
       }
       ]
     }
+    }
   end 
 
-  let(:bad_sample_data) do
+  let(:sample_data_missing_school_value_for_breakdown) do
     {
-# bad Facilities data missing source key
-      [:fac, nil] => [ 
-        {:sports_fields=> {"member_id"=>5893684,
-                           "created"=>"2016-07-31T22:25:47-07:00" }
-        }
-      ],
-      [:foreign_language, nil] => [
-        {:mandarin=> {"member_id"=>5893684,
-                      "source"=>"osp",
-                      "created"=>"2015-07-31T22:25:47-07:00"}
-      }, 
-      ],
-      [:'English learners', nil]=> [
-        {:breakdown=>"All students",
-         :original_breakdown=>"All students",
-         :created=>"2014-07-25T10:20:09-07:00",
-         :school_value=>77.3,
-         :source=>"CA Dept. of Education",
-         :year=>2014,
-         :state_average_2012=>23.0,
-         :school_value_2014=>14.6465}
-      ],
-# bad Ethnicity data with hispanic breakdown missing school_value
-      [:Ethnicity, nil]=> 
-      [
-       {:breakdown=>"Hispanic",
-       :original_breakdown=>"Hispanic",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2011=>24.581,
-       :state_average_2011=>51.4939,
-       :school_value_2012=>24.7059,
-       :state_average_2012=>52.0,
-       :school_value_2014=>24.2424
+
+      "esp_responses" => {
+        "fac" =>  
+          {"sports_fields"=> {"member_id"=>5893684,
+                            "source"=>"osp",
+                            "created"=>"2015-07-31T22:25:47-07:00" }
+        }, 
+        "foreign_language" => 
+          {"mandarin"=> {"member_id"=>5893684,
+                        "source"=>"osp",
+                        "created"=>"2015-07-31T22:25:47-07:00"}
+        } 
       },
-      {:breakdown=>"Filipino",
-       :original_breakdown=>"Filipino",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>1.51515,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2014=>1.51515
+      "characteristics"=> {
+      "English learners"=> [
+        {"breakdown"=>"All students",
+         "original_breakdown"=>"All students",
+         "created"=>"2014-07-25T10:20:09-07:00",
+         "school_value"=>77.3,
+         "source"=>"CA Dept. of Education",
+         "year"=>2014,
+         "state_average_2012"=>23.0,
+         "school_value_2014"=>14.6465}
+      ],
+# Ethnicity data with hispanic breakdown missing school_value
+      "Ethnicity"=> 
+      [
+        {"breakdown"=>"Asian",
+         "original_breakdown"=>"Asian",
+         "created"=>"2014-07-25T10:20:09-07:00",
+         "school_value"=>57.5758,
+         "source"=>"CA Dept. of Education",
+         "year"=>2014,
+         "school_value_2011"=>56.4246,
+         "state_average_2011"=>11.071,
+         "school_value_2014"=>57.5758
+      },
+      {"breakdown"=>"Hispanic",
+       "original_breakdown"=>"Hispanic",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "school_value"=>43.2424,
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2011"=>24.581,
+       "state_average_2011"=>51.4939,
+       "school_value_2012"=>24.7059,
+       "state_average_2012"=>52.0,
+       "school_value_2014"=>24.2424
+      },
+      {"breakdown"=>"Black",
+       "original_breakdown"=>"African American",
+       "created"=>"2014-07-25T10:20:09-07:00",
+       "source"=>"CA Dept. of Education",
+       "year"=>2014,
+       "school_value_2011"=>13.4078,
+       "state_average_2011"=>6.63967,
+       "school_value_2012"=>12.9412,
+       "state_average_2012"=>6.0,
+       "school_value_2014"=>8.08081
       }
-      ]
+        ]
+    }
     }
   end
 
@@ -198,148 +217,63 @@ describe DetailsOverviewDataReader do
   let(:fake_category) do
     double(keys: sample_data.keys,
            key_label_map: sample_label_map, 
-           parsed_json_config: {}.with_indifferent_access
+           parsed_json_config: {}.with_indifferent_access,
+           category_data: category_data
           )
   end
 
   let(:characteristics_and_osp_data) do
     {
-      ["Facilities", "Facilities", nil]=>
+    "esp_responses" => {
+        "fac" =>  
+          {"sports_fields"=> {"member_id"=>5893684,
+                            "source"=>"osp",
+                            "created"=>"2015-07-31T22:25:47-07:00" },
+          "audiovisual"=> {"member_id"=>5893684,
+                          "source"=>"osp",
+                          "created"=>"2015-07-31T22:25:47-07:00" },
+          "cafeteria"=> {"member_id"=>5893684,
+                        "source"=>"osp",
+                        "created"=>"2015-07-31T22:25:47-07:00" }
+          }
+    },
+      "characteristics"=> {
+      "English learners"=> [
+        {"breakdown"=>"All students",
+         "original_breakdown"=>"All students",
+         "created"=>"2014-07-25T10:20:09-07:00",
+         "school_value"=>77.3,
+         "source"=>"CA Dept. of Education",
+         "year"=>2014,
+         "state_average_2012"=>23.0,
+         "school_value_2014"=>14.6465}],
+     "Ethnicity"=>
       [
-        {:sports_fields=> {"member_id"=>5893684,
-                           "source"=>"osp",
-                           "created"=>"2015-07-31T22:25:47-07:00"
+        {"breakdown" =>"White",
+         "original_breakdown" =>"White",
+         "created" =>"2014-07-25T10:20:09-07:00",
+         "school_value" =>98.0,
+         "source" =>"CA Dept. of Education",
+         "year" =>2014,
+         "school_value_2011" =>1.67598,
+         "state_average_2011" =>26.6216,
+         "school_value_2012" =>1.56863,
+         "state_average_2012" =>26.0,
+         "school_value_2014" =>2.52525
       },
-      :audiovisual=> {"member_id"=>5893684,
-                      "source"=>"osp",
-                      "created"=>"2015-07-31T22:25:47-07:00"
-      },
-      :cafeteria=> {"member_id"=>5893684,
-                    "source"=>"osp",
-                    "created"=>"2015-07-31T22:25:47-07:00"
-      }
-      }
-      ],
-      ["English language learners", "English language learners", nil]=>
-      [{:breakdown=>"All students",
-        :original_breakdown=>"All students",
-        :created=>"2014-07-25T10:20:09-07:00",
-        :school_value=>77.3,
-        :source=>"CA Dept. of Education",
-        :year=>2014,
-        :state_average_2012=>23.0,
-        :school_value_2014=>14.6465}],
-        ["Something", "Something", nil]=>
-      [{:breakdown=>"All students",
-        :original_breakdown=>"All students",
-        :created=>"2014-07-25T10:20:09-07:00",
-        :school_value=>77.3,
-        :source=>"CA Dept. of Education",
-        :year=>2014,
-        :state_average_2012=>23.0,
-        :school_value_2014=>14.6465}],
-        ["Student ethnicity", "Student ethnicity", nil]=>
-      [
-        {:breakdown=>"White",
-         :original_breakdown=>"White",
-         :created=>"2014-07-25T10:20:09-07:00",
-         :school_value=>98.0,
-         :source=>"CA Dept. of Education",
-         :year=>2014,
-         :school_value_2011=>1.67598,
-         :state_average_2011=>26.6216,
-         :school_value_2012=>1.56863,
-         :state_average_2012=>26.0,
-         :school_value_2014=>2.52525
-      },
-      {:breakdown=>"Filipino",
-       :original_breakdown=>"Filipino",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>2.00,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2014=>1.51515
+      {"breakdown" =>"Filipino",
+       "original_breakdown" =>"Filipino",
+       "created" =>"2014-07-25T10:20:09-07:00",
+       "school_value" =>2.00,
+       "source" =>"CA Dept. of Education",
+       "year" =>2014,
+       "school_value_2014" =>1.51515
       }
       ]
     }
-  end 
-
-  let(:characteristics_data_with_breakdowns_without_school_values) do
-    {
-      ["Facilities", "Facilities", nil]=>
-      [
-        {:sports_fields=> {"member_id"=>5893684,
-                           "source"=>"osp",
-                           "created"=>"2015-07-31T22:25:47-07:00"
-      },
-      :audiovisual=> {"member_id"=>5893684,
-                      "source"=>"osp",
-                      "created"=>"2015-07-31T22:25:47-07:00"
-      },
-      :cafeteria=> {"member_id"=>5893684,
-                    "source"=>"osp",
-                    "created"=>"2015-07-31T22:25:47-07:00"
-      }
-      }
-      ],
-      ["English language learners", "English language learners", nil]=>
-      [{:breakdown=>"All students",
-        :original_breakdown=>"All students",
-        :created=>"2014-07-25T10:20:09-07:00",
-        :school_value=>77.3,
-        :source=>"CA Dept. of Education",
-        :year=>2014,
-        :state_average_2012=>23.0,
-        :school_value_2014=>14.6465}],
-        ["Something", "Something", nil]=>
-      [{:breakdown=>"All students",
-        :original_breakdown=>"All students",
-        :created=>"2014-07-25T10:20:09-07:00",
-        :school_value=>77.3,
-        :source=>"CA Dept. of Education",
-        :year=>2014,
-        :state_average_2012=>23.0,
-        :school_value_2014=>14.6465}],
-        ["Student ethnicity", "Student ethnicity", nil]=>
-      [
-        {:breakdown=>"White",
-         :original_breakdown=>"White",
-         :created=>"2014-07-25T10:20:09-07:00",
-         :school_value=>98.0,
-         :source=>"CA Dept. of Education",
-         :year=>2014,
-         :school_value_2011=>1.67598,
-         :state_average_2011=>26.6216,
-         :school_value_2012=>1.56863,
-         :state_average_2012=>26.0,
-         :school_value_2014=>2.52525
-      },
-      {:breakdown=>"Filipino",
-       :original_breakdown=>"Filipino",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :school_value=>2.00,
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :school_value_2014=>1.51515
-      },
-      # this breakdown has state values but no school value
-      {:breakdown=>"Two or more races",
-       :original_breakdown=>"Multiracial",
-       :created=>"2014-07-25T10:20:09-07:00",
-       :source=>"CA Dept. of Education",
-       :year=>2014,
-       :state_average_2011=>2.89175,
-       :state_average_2012=>3.0,
-       :school_value_2014=>1.51515
-      }
-      ]
     }
-  end 
-
-  let(:invalid_data) do
-    [{bad: 'data'}]
   end
-  
+
   describe '#data_for_category' do
     before do
       allow(subject).to receive(:category).and_return(fake_category)
@@ -347,7 +281,7 @@ describe DetailsOverviewDataReader do
     end
     context 'with valid data' do
       before do
-        allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
+        allow(subject).to receive(:all_school_cache_data_raw).and_return(sample_data)
       end
       let(:results) do
         {
@@ -369,14 +303,17 @@ describe DetailsOverviewDataReader do
         expect(Hash[subject.data_for_category(fake_category)]).to eq(Hash[results.sort])
       end
     end
-    context 'with invalid data' do
+    context 'with Ethnicity data that has breakdown without school value' do
       before do
-        allow(subject).to receive(:cached_data_for_category).and_return(bad_sample_data)
+        allow(subject).to receive(:all_school_cache_data_raw).and_return(sample_data_missing_school_value_for_breakdown)
       end
-      let(:bad_results) do
+      let(:results_missing_one_breakdown) do
         {
+
+          "Facilities"=>['sports_fields'],
           "Foreign language"=>['mandarin'],
-          "English language learners"=>{"All Students"=> 77.3}
+          "English language learners"=>{"All Students"=> 77.3},
+          "Student ethnicity"=>{"Asian"=>57.5758,"Hispanic"=>43.2424 }
         }
       end
       it 'it should return a hash' do 
@@ -387,12 +324,8 @@ describe DetailsOverviewDataReader do
           to receive(:new).once
         subject.data_for_category(fake_category)
       end
-      it 'it should log an Error::InvalidDataReaderFormat to GSLogger' do
-        expect(GSLogger).to receive(:error).with('MISC', be_a(Error::InvalidDataReaderFormat), be_a(Hash)).exactly(2).times
-        subject.data_for_category(fake_category)
-      end
       it 'it should return hash with correctly formatted data that had no errors' do
-        expect(Hash[subject.data_for_category(fake_category)]).to eq(Hash[bad_results.sort])
+        expect(Hash[subject.data_for_category(fake_category)]).to eq(Hash[results_missing_one_breakdown.sort])
       end
     end
   end
@@ -402,24 +335,12 @@ describe DetailsOverviewDataReader do
         {
           "Facilities"=>['sports_fields', 'audiovisual', 'cafeteria'],
           "English language learners"=>{"All Students"=> 77.3},
-          "Something"=>{"All Students"=> 77.3},
           "Student ethnicity"=>{"White"=>98.00,"Filipino"=>2.00}
         }
       }
     context 'with characteristics and osp data' do
-      subject { DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(characteristics_and_osp_data) }
+      subject { DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(fake_category, characteristics_and_osp_data) }
       it 'should return correctly formatted data' do
-        expect(Hash[subject.run.sort]).to eq(Hash[charactersitics_and_osp_results.sort])
-      end
-    end
-    context 'with characterstics data that has state value and no school value for a ethnicity breakdowninvalid data' do
-      subject do
-        DetailsOverviewDataReader::CombineCharacteristicsAndEspResponsesData.new(
-          characteristics_data_with_breakdowns_without_school_values
-        )
-      end
-      it 'should return student ethnicity breakdowns that with school values and ignore breakdowns with no school value' do
-        
         expect(Hash[subject.run.sort]).to eq(Hash[charactersitics_and_osp_results.sort])
       end
     end
