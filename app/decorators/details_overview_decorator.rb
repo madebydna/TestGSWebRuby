@@ -103,7 +103,7 @@ class DetailsOverviewDecorator
         'Coed / Single gender'  => 'Coed / Single gender',
         'Facilities'            => 'Facilities'
       }
-      @links = {'More' => urls[:details]}
+      @links = {I18n.t(:more, scope:'decorators.details_overview_decorator') => urls[:details]}
     end
   end
 
@@ -122,7 +122,7 @@ class DetailsOverviewDecorator
         'Girls sports'            => 'Sports',
         'Student clubs'           => 'Student clubs'
       }
-      @links = {'More program info' => urls[:details]}
+      @links = {I18n.t(:more_program_info, scope:'decorators.details_overview_decorator') => urls[:details]}
     end
   end
 
@@ -135,7 +135,7 @@ class DetailsOverviewDecorator
         'Students with disabilities'  => 'Students with disabilities',
         'English language learners'   => 'English language learners'
       }
-      @links = {'More diversity info' => urls[:quality]}
+      @links = {I18n.t(:more_diversity_info, scope:'decorators.details_overview_decorator') => urls[:quality]}
     end
 
     def format_values
