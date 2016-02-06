@@ -403,10 +403,10 @@ en:
   World languages taught: World languages taught
   World languages taught (misc): World languages taught (misc.)
   Year received: Year received
-  caaspp_english: caaspp_english
-  caaspp_math: caaspp_math
-  ela_test_scores: ela_test_scores
-  eligible_for_4yr_college: eligible_for_4yr_college
-  graduation_rate: graduation_rate
-  math_test_scores: math_test_scores
-  test_score_rating: test_score_rating
+  caaspp_english: ELA proficiency
+  caaspp_math: Math Proficiency
+  ela_test_scores: ELA Test Scores
+  eligible_for_4yr_college: Graduates eligible for UC/CSU
+  graduation_rate: Graduation Rate
+  math_test_scores: Math Test Scores
+  test_score_rating: Test Score Rating
