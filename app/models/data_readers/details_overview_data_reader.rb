@@ -29,8 +29,8 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
     def initialize(category, raw_cache_data)
       @raw_cache_data = raw_cache_data
       @category = category
-      @esp_raw_cache_data = @raw_cache_data["esp_responses"]
-      @characteristics_raw_cache_data = @raw_cache_data["characteristics"]
+      @esp_raw_cache_data = @raw_cache_data["esp_responses"] if @raw_cache_data
+      @characteristics_raw_cache_data = @raw_cache_data["characteristics"] if @raw_cache_data
       @esp_cache_data = get_esp_response_cache_data
       @characteristics_cache_data = get_characteristics_cache_data
       @key_map = build_key_map
