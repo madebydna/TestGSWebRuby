@@ -264,6 +264,7 @@ describe DetailsOverviewDataReader do
     }
   end
 
+  let(:nil_cache_data) { nil }
 
   let(:sample_data_missing_school_value_for_breakdown) do
     {
@@ -456,6 +457,12 @@ describe DetailsOverviewDataReader do
       it 'should return correctedly formatted data' do
         expect(Hash[subject.data_for_category(fake_category)]).to eq(Hash[results.sort])
       end
+    end
+
+    context 'with nil cache data' do
+      it 'it should return an empty hash' do 
+        expect(subject.data_for_category(fake_category)).to eq({})
+       end
     end
 
     context 'with Ethnicity data that has breakdown without school value' do
