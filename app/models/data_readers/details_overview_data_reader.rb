@@ -48,7 +48,9 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
     def get_esp_response_cache_data
       get_desired_esp_keys.each_with_object({}) do |key, h|
-        h[key] = @esp_raw_cache_data[key] if @esp_raw_cache_data[key]
+        if @esp_raw_cache_data && @esp_raw_cache_data[key]
+          h[key] = @esp_raw_cache_data[key]
+        end
       end
     end
 
@@ -58,7 +60,9 @@ class DetailsOverviewDataReader < SchoolProfileDataReader
 
     def get_characteristics_cache_data
       get_desired_characteristics_keys.each_with_object({}) do |key, h|
-        h[key] = @characteristics_raw_cache_data[key] if @characteristics_raw_cache_data[key]
+        if @characteristics_raw_cache_data && @characteristics_raw_cache_data[key]
+          h[key] = @characteristics_raw_cache_data[key] 
+        end
       end
     end
 
