@@ -258,7 +258,7 @@ $(function() {
                 }
             }
         });
-        searchOptions['grades'] = encodeURIComponent($('#js-guided-grades').val());
+        searchOptions['gradeLevels'] = encodeURIComponent($('#js-guided-grades').val());
         searchOptions.state = 'DE';
         return searchOptions;
     };
@@ -275,7 +275,7 @@ $(function() {
         searchOptions['locationSearchString'] = encodeURIComponent(GS.search.schoolSearchForm.getSearchQuery());
         // pull values from any selects here
         searchOptions['distance'] = $('#js-guided-distance').val() || 5;
-        searchOptions['grades'] = $('#js-guided-grades').val();
+        searchOptions['gradeLevels'] = $('#js-guided-grades').val();
 
         // Not setting a timeout breaks back button
         setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
