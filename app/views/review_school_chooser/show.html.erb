@@ -52,25 +52,27 @@
         </a>
       </div>
     </section>
-<% end  %> 
+<% end  %>
+  <!--
   <section class="reviews-list">
     <div class="container-fluid pbl">
       <div id="js_reviewsListHeader" class="rs-review-list-header">
         <div class="plm mbl tac">
-          <h3><%= t('.review_lists_header') %></h3>
+          <h3><%#= t('.review_lists_header') %></h3>
         </div>
       </div>
       <div class="js_reviewsList">
-        <%= render partial: 'review_module', 
-          collection: @reviews, 
-          as: :review, locals: { border_bottom: false} %>
+        <%#= render partial: 'review_module',
+          #collection: @reviews,
+          #as: :review, locals: { border_bottom: false} %>
       </div>
     </div>
     <div class="review-school-picker-module">
-      <h1><%= t('.school_picker_header_2') %></h1>
-      <%=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
+      <h1><%#= t('.school_picker_header_2') %></h1>
+      <%#=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
     </div>
   </section>
+-->
 </div>
 
 <%= render partial: 'nav/home_footer' %>
