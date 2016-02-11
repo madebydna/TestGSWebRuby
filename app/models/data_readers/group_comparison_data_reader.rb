@@ -224,11 +224,16 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   # about it to the all students data point hash as a :subext key.
   def add_enrollment_callback
     enrollment_sym = SchoolCache::ENROLLMENT
+    enrollment_cache_data_value_key = [enrollment_sym, nil]
+
     return unless config[:breakdown_all] == enrollment_sym.to_s
 
-    enrollment_data = get_cache_data(data_type: enrollment_sym)[[enrollment_sym, nil]]
-    enrollment_size = enrollment_data.first[:school_value]
+    cache_data_for_enrollment = get_cache_data(data_type: enrollment_sym)
 
+    return unless cache_data_for_enrollment.has_key?(enrollment_cache_data_value_key)
+
+    enrollment_data = cache_data_for_enrollment[enrollment_cache_data_value_key]
+    enrollment_size = enrollment_data.first[:school_value]
     data.values.flatten.each do | hash |
       if hash[:breakdown].to_s.downcase == 'all students'
         if enrollment_size
