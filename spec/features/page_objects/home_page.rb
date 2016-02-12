@@ -9,7 +9,10 @@ class HomePage < SitePrism::Page
   include TopNavSection
 
   element :search_hero_section, 'h1', text: 'Welcome to GreatSchools'
-  element :browse_by_city_section, 'h3', text: 'Browse by city'
+  element :browse_by_city_header, 'h3', text: 'Browse by city'
+  section :browse_by_cities_section, '.rs-browse-by-cities' do
+    elements :cities, '.city'
+  end
   section :email_signup_section, '.js-shared-email-signup' do
     element :submit_button, '.hidden-xs button', text: 'Sign up'
   end
