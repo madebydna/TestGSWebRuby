@@ -193,3 +193,47 @@ en:
       collection_id_22:
         description_above_fold: How are our local public high schools doing at preparing all students for success?
         description_below_fold: Across the Bay Area, too many low-income students and students of color have historically been left behind. Check out which schools are changing the odds and find out how your high school is doing!
+        column_1:
+          title: GRADUATION RATES IN SAN JOSE
+          datapoint_1:
+            title: Hispanic students
+            performance_level: below_average
+            value_html: 71<sup>%</sup>
+            state_average: State average 76%
+          datapoint_2:
+            title: White students
+            performance_level: below_average
+            value_html: 76<sup>%</sup>
+            state_average: State average 89%
+          datapoint_3:
+            title: Asian students
+            performance_level: average
+            value_html: 85<sup>%</sup>
+            state_average: State average 92%
+          datapoint_4:
+            title: African-American students
+            performance_level: below_average
+            value_html: 71<sup>%</sup>
+            state_average: State average 68%
+        column_2:
+          title: SAN JOSE GRADUATES ELIGIBLE FOR UC/CSU
+          datapoint_1:
+            title: Hispanic students
+            performance_level: average
+            value_html: 46<sup>%</sup>
+            state_average: State average 32%
+          datapoint_2:
+            title: White students
+            performance_level: above_average
+            value_html: 55<sup>%</sup>
+            state_average: State average 49%
+          datapoint_3:
+            title: Asian students
+            performance_level: above_average
+            value_html: 65<sup>%</sup>
+            state_average: State average 71%
+          datapoint_4:
+            title: African-American students
+            performance_level: average
+            value_html: 31<sup>%</sup>
+            state_average: State average 31%
