@@ -27,6 +27,6 @@ class HomePage < SitePrism::Page
   element :who_we_are_section, 'h2', text: 'Who we are'
   element :our_supporters_section, 'h2', text: 'Our supporters'
   element :common_core_banner_section, 'h2', text: 'GreatKids State Test Guide for Parents'
-  element :high_chool_milesontes_section, 'h1', text: 'MILESTONES'
+  element :high_school_milestones_section, 'h1', text: 'MILESTONES'
 
 end
