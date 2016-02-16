@@ -5,13 +5,6 @@ shared_context 'Given basic school profile page' do |page_name = nil|
   let!(:profile_page) { SchoolProfilePageFactory.new(page_name).page }
 end
 
-shared_context 'Given school profile page with Facebook module' do |page_name| nil
-  let!(:profile_page) do
-    SchoolProfilePageFactory.new(page_name).
-      with_facebook_like_box_module
-  end
-end
-
 shared_context 'Given school profile page with Snapshot module' do |page_name| nil
   let!(:profile_page) do
     SchoolProfilePageFactory.new(page_name).
