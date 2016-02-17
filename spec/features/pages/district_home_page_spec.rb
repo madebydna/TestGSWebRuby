@@ -32,4 +32,6 @@ describe 'District Home Page' do
     let(:heading_object) { district }
     it_behaves_like 'page with top rated schools section'
   end
+  it { is_expected.to have_district_link}
+
 end
