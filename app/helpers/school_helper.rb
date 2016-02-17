@@ -17,7 +17,7 @@ module SchoolHelper
     if (school.present? && school.zipcode.present?)
       "http://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode.split("-")[0]}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
     else
-      "http://www.zillow.com/cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
+      "http://www.zillow.com/?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
     end
   end
   # this is the single place to reference naming for school type
