@@ -5,7 +5,7 @@ class WordpressInterfaceController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:call_from_wordpress]
 
   # These arrays are for white listing
-  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup']
+  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup', 'email_cuecardscenario']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
   NEWSLETTER_HOW = 'wp_newsletter'
@@ -92,9 +92,10 @@ class WordpressInterfaceController < ApplicationController
 
   def email_cuecardscenario(wp_params)
     # need to bail if bogus url ----
-    if validate_url_cue_cards(wp_params['link_url'])
+    if validate_url_cue_card(wp_params['link_url'])
       link_url = wp_params['link_url']
     end
+
 
     return_value = EmailCueCardsScenario.deliver_to_user(wp_params['email_to'],
                                                          wp_params['email_from'],
@@ -206,20 +207,20 @@ class WordpressInterfaceController < ApplicationController
   end
 
 
-  def create_data_extension_row_for_user(email, cellphone)
-    client = FuelSDK::Client.new (
-        client: {
-            'id' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
-            'secret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
-        }
-    )
-    request = FuelSDK::List.new
-    request.client = client
-    response = list.get
-    p response
-    # ENV_GLOBAL['exacttarget_api_client_id_SMS']
-    # ENV_GLOBAL['exacttarget_api_client_secret_SMS']
-    # ENV_GLOBAL['exacttarget_api_app_id_SMS']
-  end
+  # def create_data_extension_row_for_user(email, cellphone)
+  #   client = FuelSDK::Client.new (
+  #       client: {
+  #           'id' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
+  #           'secret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+  #       }
+  #   )
+  #   request = FuelSDK::List.new
+  #   request.client = client
+  #   response = list.get
+  #   p response
+  #   # ENV_GLOBAL['exacttarget_api_client_id_SMS']
+  #   # ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+  #   # ENV_GLOBAL['exacttarget_api_app_id_SMS']
+  # end
 
 end

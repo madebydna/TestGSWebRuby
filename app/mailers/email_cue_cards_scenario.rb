@@ -9,7 +9,7 @@ class EmailCueCardsScenario < AbstractExactTargetMailer
         cue_card_from_email: email_from,
         cue_card_from_name: name_from,
         cue_card_link: link_url,
-        cue_card_scenario: scenario
+        cue_card_content: scenario
     }
 
     deliver(email_to, exact_target_email_attributes)
