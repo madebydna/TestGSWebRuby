@@ -1,4 +1,4 @@
-require 'fuelsdk'
+# require 'fuelsdk'
 class WordpressInterfaceController < ApplicationController
 
   layout false
