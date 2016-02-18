@@ -245,20 +245,5 @@ describe 'School Profile Overview Page' do
     it { is_expected.to have_quick_links }
   end
 
-  describe 'facebook_module' do
-      include_context 'Given school profile page with Facebook module' do
-      include_context 'with Alameda High School'
-      before do
-        FactoryGirl.create(:facebook_school_metadata, school_id: school.id)
-      end
-      after do
-        clean_dbs :gs_schooldb
-      end
-      it { is_expected.to have_facebook_section }
-      its (:facebook_section) { is_expected.to have_facebook_module_heading }
-    end
-  end
-
-
 end
 
