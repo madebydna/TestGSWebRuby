@@ -192,7 +192,7 @@ en:
             state_average: State average 31%
       collection_id_22:
         description_above_fold: How are our local public high schools doing at preparing all students for success?
-        description_below_fold: Across the Bay Area, too many low-income students and students of color have historically been left behind. Check out which schools are changing the odds and find out how your high school is doing!
+        description_below_fold: Across the Bay Area, too many low-income students and students of color have historically been left behind. Check out which San Jose Unified schools (includes both SJUSD district schools and public charter schools) are changing the odds and find out how your school is doing!
         column_1:
           title: GRADUATION RATES IN SAN JOSE
           datapoint_1:

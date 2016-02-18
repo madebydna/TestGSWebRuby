@@ -191,8 +191,8 @@ es:
             value_html: 31<sup>%</sup>
             state_average: Prom. 31%
       collection_id_22:
-        description_above_fold: ¿Cómo es el rendimiento de nuestras preparatorias públicas locales al preparar a todos los estudiantes para el éxito?
-        description_below_fold: Por todo el área de la Bahía, históricamente muchos estudiantes se han quedado atrás académicamente. ¡Vea cuales escuelas están cambiando las probabilidades y descubra cómo su preparatoria se compara!
+        description_above_fold: ¿Cómo están preparando nuestras escuelas secundarias públicas locales a todos los estudiantes para el éxito?
+        description_below_fold: Por todo el área de la bahía, demasiados estudiantes de bajos ingresos y estudiantes de color históricamente se han quedado atrás. Ver cuales de las escuelas en San Jose Unificado (incluye tanto a las escuelas del distrito SJUSD y las escuelas públicas) están cambiando las probabilidades y descubra cómo su escuela está haciendo!
         column_1:
           title: TASA DE GRADUADOS EN SAN JOSE
           datapoint_1:
