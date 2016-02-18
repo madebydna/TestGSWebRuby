@@ -5,7 +5,7 @@ class WordpressInterfaceController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:call_from_wordpress]
 
   # These arrays are for white listing
-  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup', 'email_cuecardscenario']
+  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup', 'email_cuecardscenario', 'get_like_count', 'post_like']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
   NEWSLETTER_HOW = 'wp_newsletter'
@@ -84,6 +84,46 @@ class WordpressInterfaceController < ApplicationController
                                    test_type)
 
     {'return_value' => return_value}
+  end
+
+  def get_like_count(wp_params)
+    user_session_key, item_key = wp_params['user_session_key'], wp_params['scenario_key']
+
+    user_like_count = CustomerLike.where(
+                                     product_id: 1,
+                                     item_key: item_key,
+                                     active: 1,
+                                     user_session_key: user_session_key)
+                                  .count
+
+    total_like_count = CustomerLike.where(
+                                     product_id: 1,
+                                     item_key: item_key,
+                                     active: 1)
+                                    .count
+
+    { user_like_count: user_like_count, total_like_count: total_like_count }
+  end
+
+  def post_like(wp_params)
+    user_session_key, item_key = wp_params['user_session_key'], wp_params['scenario_key']
+
+    customer_like = CustomerLike.where(
+                      product_id: 1,
+                      item_key: item_key,
+                      active: 1,
+                      user_session_key: user_session_key
+                    ).first_or_initialize
+
+    customer_like.save
+
+    total_like_count = CustomerLike.where(
+                                     product_id: 1,
+                                     item_key: item_key,
+                                     active: 1)
+                                   .count
+
+    { total_like_count: total_like_count }
   end
 
   def message_signup(wp_params)
