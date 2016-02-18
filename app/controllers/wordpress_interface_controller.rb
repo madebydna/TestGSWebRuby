@@ -1,3 +1,4 @@
+require 'fuelsdk'
 class WordpressInterfaceController < ApplicationController
 
   layout false
@@ -89,9 +90,33 @@ class WordpressInterfaceController < ApplicationController
 
   end
 
+  def email_cuecardscenario(wp_params)
+    # need to bail if bogus url ----
+    if validate_url_cue_cards(wp_params['link_url'])
+      link_url = wp_params['link_url']
+    end
+
+    return_value = EmailCueCardsScenario.deliver_to_user(wp_params['email_to'],
+                                                         wp_params['email_from'],
+                                                         wp_params['name_from'],
+                                                         wp_params['scenario'],
+                                                         link_url)
+
+    {'return_value' => return_value}
+
+  end
+
   def validate_url_test_guide(url)
     if /^http[s]?:\/\/([A-Za-z0-9_\-.]+\.)*greatschools\.org\/gk\/common-core-test-guide\//i.match(url) ||
         /^http[s]?:\/\/localhost[0-9:]*\/gk\/common-core-test-guide\//i.match(url)
+      return true
+    end
+    false
+  end
+
+  def validate_url_cue_card(url)
+    if /^http[s]?:\/\/([A-Za-z0-9_\-.]+\.)*greatschools\.org\/gk\/cue-cards\//i.match(url) ||
+        /^http[s]?:\/\/localhost[0-9:]*\/gk\/cue-cards\//i.match(url)
       return true
     end
     false
@@ -178,6 +203,23 @@ class WordpressInterfaceController < ApplicationController
       end
     end
     user.id
+  end
+
+
+  def create_data_extension_row_for_user(email, cellphone)
+    client = FuelSDK::Client.new (
+        client: {
+            'id' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
+            'secret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+        }
+    )
+    request = FuelSDK::List.new
+    request.client = client
+    response = list.get
+    p response
+    # ENV_GLOBAL['exacttarget_api_client_id_SMS']
+    # ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+    # ENV_GLOBAL['exacttarget_api_app_id_SMS']
   end
 
 end
