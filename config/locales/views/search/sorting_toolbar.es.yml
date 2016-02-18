@@ -4,7 +4,7 @@ es:
     sorting_toolbar:
       distance: Distancia
       fit: Apto
-      rating: Clasificación
+      rating: Calificación de GreatSchools
       relevance: Pertinencia
       school_name: Nombre de escuela
       sort_by_label: ! 'Ordenar por: %{sort}'
