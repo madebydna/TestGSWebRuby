@@ -33,7 +33,15 @@ describe GroupComparisonDataReader do
           school_value: 100.0,
           state_average: 78.35,
           performance_level: 'above_average',
-        }
+         },
+        {
+          year: 2013,
+          breakdown: 'All students',
+          original_breakdown: 'All students',
+          school_value: 100.0,
+          state_average: 78.35,
+          performance_level: 'above_average',
+         }
       ],
       [:second_data_type, nil] => [
         {
@@ -144,6 +152,7 @@ describe GroupComparisonDataReader do
       end
 
       it 'should create a DataDisplayCollection for each data type' do
+        allow(DataDisplayCollection).to receive(:new).and_return(double("data_display_collect", display?: true))
         expect(DataDisplayCollection).to receive(:new).exactly(sample_data.keys.size).times
         subject.data_for_category(fake_category)
       end
@@ -175,48 +184,149 @@ describe GroupComparisonDataReader do
         allow(subject).to receive(:category).and_return(fake_category)
         allow(fake_category).to receive(:category_data).and_return(category_data)
         allow(subject).to receive(:cached_data_for_category).and_return(sample_data)
-        allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ETHNICITY).and_return(ethnicity_subtext_data)
-        allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ENROLLMENT).and_return(enrollment_subtext_data)
-        all_types = Genders.all + StudentTypes.all_datatypes
-        allow(subject).to receive(:get_cache_data).with(all_types.map { |t| { data_type: t } }).and_return(types_subtext_data)
-        allow(subject).to receive(:category).and_return(fake_category)
-        allow(subject).to receive(:config).and_return({
-          breakdown: 'Ethnicity',
-          breakdown_all: 'Enrollment',
-          group_comparison_callbacks: [
-            'add_ethnicity_callback',
-            'add_enrollment_callback',
-            'add_student_types_callback',
-          ]
-        }.with_indifferent_access)
-        subject.send(:get_data!)
+        allow(subject).to receive(:data_display_collections)
       end
+      context 'with ETHNICITY and ENROLLMENT Data' do
+        before do
+          allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ETHNICITY).and_return(ethnicity_subtext_data)
+          allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ENROLLMENT).and_return(enrollment_subtext_data)
+          all_types = Genders.all + StudentTypes.all_datatypes
+          allow(subject).to receive(:get_cache_data).with(all_types.map { |t| { data_type: t } }).and_return(types_subtext_data)
+          allow(subject).to receive(:config).and_return({
+            breakdown: 'Ethnicity',
+            breakdown_all: 'Enrollment',
+            group_comparison_callbacks: [
+              'add_ethnicity_callback',
+              'add_enrollment_callback',
+              'add_student_types_callback',
+            ]
+          }.with_indifferent_access)
+          subject.send(:get_data!)
+        end
 
-      let(:school) { FactoryGirl.create(:school, id: 1) }
+        let(:school) { FactoryGirl.create(:school, id: 1) }
 
-      subject { GroupComparisonDataReader.new(school) }
+        subject { GroupComparisonDataReader.new(school) }
 
-      after { clean_models :gs_schooldb, SchoolCache }
-      after { clean_models :ca, School }
+        after { clean_models :gs_schooldb, SchoolCache }
+        after { clean_models :ca, School }
 
-      it 'should return results with the subtext key set' do
-        subject.data.values.first.each do |d|
-          expect(d[:subtext]).to be_present
+        it 'should return results with the subtext key set' do
+          subject.data.values.first.each do |d|
+            expect(d[:subtext]).to be_present
+          end
+        end
+
+        context 'when there is corresponding Ethnicity, gender, or programs data for a data set' do
+          it 'should set subtext to \'x% of population\'' do
+            subject.data.values.first.each do |d|
+              (expect(d[:subtext]).to include '% of population') unless d[:breakdown] == 'All students'
+            end
+          end
+        end
+
+        context 'when there is corresponding Enrollment data for a data set' do
+          let(:num_students) { num_students = enrollment_subtext_data.values.first.first[:school_value].round(0) }
+          it 'should set subtext to \'10 students\'' do
+            subject.data.values.first.each do |d|
+              (expect(d[:subtext]).to include "#{num_students} students") if d[:breakdown] == 'All students'
+            end
+          end
         end
       end
+      context 'with no Enrollment subtext data' do
+        before do
+          allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ETHNICITY).and_return(ethnicity_subtext_data)
+          allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ENROLLMENT).and_return({})
+          all_types = Genders.all + StudentTypes.all_datatypes
+          allow(subject).to receive(:get_cache_data).with(all_types.map { |t| { data_type: t } }).and_return(types_subtext_data)
+          allow(subject).to receive(:config).and_return({
+            breakdown: 'Ethnicity',
+            breakdown_all: 'Enrollment',
+            group_comparison_callbacks: [
+              'add_ethnicity_callback',
+              'add_enrollment_callback',
+              'add_student_types_callback',
+            ]
+          }.with_indifferent_access)
+          subject.send(:get_data!)
+        end
 
-      context 'when there is corresponding Ethnicity, gender, or programs data for a data set' do
-        it 'should set subtext to \'x% of population\'' do
+        let(:school) { FactoryGirl.create(:school, id: 1) }
+
+        subject { GroupComparisonDataReader.new(school) }
+
+        after { clean_models :gs_schooldb, SchoolCache }
+        after { clean_models :ca, School }
+
+        it 'should return results with the subtext key set' do
           subject.data.values.first.each do |d|
-            (expect(d[:subtext]).to include '% of population') unless d[:breakdown] == 'All students'
+            expect(d[:subtext]).to be_present
+          end
+        end
+
+        context 'when there is corresponding Ethnicity, gender, or programs data for a data set' do
+          it 'should set subtext to \'x% of population\'' do
+            subject.data.values.first.each do |d|
+              (expect(d[:subtext]).to include '% of population') unless d[:breakdown] == 'All students'
+            end
+          end
+        end
+
+        context 'when there is corresponding Enrollment data for a data set' do
+          it 'should set subtext to \'&nbsp;\'' do
+            subject.data.values.first.each do |d|
+              (expect(d[:subtext]).to include '&nbsp;') if d[:breakdown] == 'All students'
+            end
           end
         end
       end
 
-      context 'when there is corresponding Enrollment data for a data set' do
-        it 'should set subtext to \'number students tested\'' do
+      context 'with no Ethnicity subtext data' do
+        before do
+          allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ETHNICITY).and_return({})
+          allow(subject).to receive(:get_cache_data).with(data_type: SchoolCache::ENROLLMENT).and_return(enrollment_subtext_data)
+          all_types = Genders.all + StudentTypes.all_datatypes
+          allow(subject).to receive(:get_cache_data).with(all_types.map { |t| { data_type: t } }).and_return(types_subtext_data)
+          allow(subject).to receive(:config).and_return({
+            breakdown: 'Ethnicity',
+            breakdown_all: 'Enrollment',
+            group_comparison_callbacks: [
+              'add_ethnicity_callback',
+              'add_enrollment_callback',
+              'add_student_types_callback',
+            ]
+          }.with_indifferent_access)
+          subject.send(:get_data!)
+        end
+
+        let(:school) { FactoryGirl.create(:school, id: 1) }
+
+        subject { GroupComparisonDataReader.new(school) }
+
+        after { clean_models :gs_schooldb, SchoolCache }
+        after { clean_models :ca, School }
+
+        it 'should return results with the subtext key set' do
           subject.data.values.first.each do |d|
-            (expect(d[:subtext]).to include 'students tested') if d[:breakdown] == 'All students'
+            expect(d[:subtext]).to be_present
+          end
+        end
+
+        context 'when there is corresponding Ethnicity, gender, or programs data for a data set' do
+          it 'should set subtext to \'&nbsp;\'' do
+            subject.data.values.first.each do |d|
+              (expect(d[:subtext]).to include '&nbsp;') unless d[:breakdown] == 'All students'
+            end
+          end
+        end
+
+        context 'when there is corresponding Enrollment data for a data set' do
+          let(:num_students) { num_students = enrollment_subtext_data.values.first.first[:school_value].round(0) }
+          it 'should set subtext to \'10 students\'' do
+            subject.data.values.first.each do |d|
+              (expect(d[:subtext]).to include "#{num_students} students") if d[:breakdown] == 'All students'
+            end
           end
         end
       end

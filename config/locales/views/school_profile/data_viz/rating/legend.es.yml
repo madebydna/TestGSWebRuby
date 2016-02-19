@@ -3,4 +3,4 @@ es:
     data_viz:
       rating:
         legend:
-          legend: Calificaciónes son en base a 10
+          legend: Las calificaciones son del 1 al 10

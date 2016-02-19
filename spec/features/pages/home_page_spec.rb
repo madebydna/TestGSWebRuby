@@ -9,7 +9,8 @@ describe 'Home Page' do
   subject(:page_object) { HomePage.new }
 
   it { is_expected.to have_search_hero_section }
-  it { is_expected.to have_browse_by_city_section }
+  it { is_expected.to have_browse_by_city_header }
+  it { is_expected.to have_browse_by_cities_section }
   it { is_expected.to have_email_signup_section }
   it { is_expected.to_not have_greatkids_articles_section }
   it { is_expected.to have_offers_section }
@@ -24,6 +25,44 @@ describe 'Home Page' do
   it { is_expected.to have_our_supporters_section }
   include_examples 'should have a footer'
 
+  context 'when browsing by city' do
+    list_of_cities = [
+      "Atlanta, GA",
+      "Austin, TX",
+      "Boston, MA",
+      "Brooklyn, NY",
+      "Charlotte, NC",
+      "Chicago, IL",
+      "Dallas, TX",
+      "Denver, CO",
+      "Houston, TX",
+      "Indianapolis, IN",
+      "Las Vegas, NV",
+      "Los Angeles, CA",
+      "Miami, FL",
+      "Nashville, TN",
+      "New York City, NY",
+      "Orlando, FL",
+      "Philadelphia, PA",
+      "Phoenix, AZ",
+      "San Antonio, TX",
+      "San Diego, CA",
+      "San Francisco, CA",
+      "Seattle, WA",
+      "Tampa, FL",
+      "Washington, DC"
+    ]
+
+    with_subject(:browse_by_cities_section) do
+      its("cities.length") { should eq(24) }
+      it 'should match the given list of cities' do
+        list_of_cities.each_with_index do | city, index |
+          expect(subject.cities[index].text).to eq(city)
+        end
+      end
+    end
+  end
+
   context 'when configured to show greatkids banner' do
     before do
       Rails.cache.clear
@@ -35,7 +74,7 @@ describe 'Home Page' do
       clean_models :gs_schooldb, PropertyConfig
     end
     it { is_expected.to have_search_hero_section }
-    it { is_expected.to have_high_chool_milesontes_section }
+    it { is_expected.to have_high_school_milestones_section }
   end
 
   context 'when I click the "sign up for email updates" button', js: true do
@@ -77,7 +116,6 @@ describe 'Home Page' do
       clean_models :gs_schooldb, ExternalContent
     end
     it { is_expected.to have_greatkids_articles_section }
-
   end
 
   context 'top nav' do

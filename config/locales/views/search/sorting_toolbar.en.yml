@@ -4,7 +4,7 @@ en:
     sorting_toolbar:
       distance: Distance
       fit: Fit
-      rating: Rating
+      rating: GreatSchools Rating
       relevance: Relevance
       school_name: School name
       sort_by_label: "Sort by: %{sort}"

@@ -43,7 +43,7 @@ $(function() {
   });
 
   $('.js-send-me-updates-button-footer').on('click', function () {
-    if (GS.schoolNameFromUrl() === undefined) {
+    if (GS.schoolNameFromUrl() === undefined || GS.stateAbbreviationFromUrl() === undefined ) {
         GS.sendUpdates.signupAndGetNewsletter();
     } else {
       var state = GS.stateAbbreviationFromUrl();

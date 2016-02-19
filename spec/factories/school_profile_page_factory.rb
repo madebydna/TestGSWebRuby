@@ -11,25 +11,6 @@ class SchoolProfilePageFactory
     end
   end
 
-  def with_facebook_like_box_module
-    facebook_section = FactoryGirl.create(
-      :category_placement,
-      title: 'Facebook',
-      page: page,
-      layout: 'section',
-      layout_config: JSON.pretty_unparse({ section_id: 'facebook-section' })
-    )
-
-    facebook_module = FactoryGirl.create(
-      :category_placement,
-      page: page,
-      layout: 'facebook_like_box',
-      parent: facebook_section
-    )
-
-    return self
-  end
-
   def with_snapshot_module
     snapshot_category = FactoryGirl.create(:category, name: 'Snapshot', source: 'snapshot')
 

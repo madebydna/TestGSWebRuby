@@ -6,7 +6,6 @@
 //= require ./compare_schools_list
 //= require ./compare_schools_popup
 //= require ./data_viz
-//= require ./facebook_like_box
 //= require ./header_ui
 //= require ./reviews
 //= require ./school_static_map

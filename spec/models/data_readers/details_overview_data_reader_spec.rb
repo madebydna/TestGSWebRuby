@@ -264,8 +264,6 @@ describe DetailsOverviewDataReader do
     }
   end
 
-  let(:nil_cache_data) { nil }
-
   let(:sample_data_missing_school_value_for_breakdown) do
     {
 
@@ -460,6 +458,9 @@ describe DetailsOverviewDataReader do
     end
 
     context 'with nil cache data' do
+      before do
+        allow(subject).to receive(:all_school_cache_data_raw).and_return(nil)
+      end
       it 'it should return an empty hash' do 
         expect(subject.data_for_category(fake_category)).to eq({})
        end

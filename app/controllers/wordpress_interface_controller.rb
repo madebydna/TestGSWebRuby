@@ -1,10 +1,11 @@
+# require 'fuelsdk'
 class WordpressInterfaceController < ApplicationController
 
   layout false
   skip_before_filter :verify_authenticity_token, :only => [:call_from_wordpress]
 
   # These arrays are for white listing
-  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup']
+  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup', 'email_cuecardscenario', 'get_like_count', 'post_like']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
   NEWSLETTER_HOW = 'wp_newsletter'
@@ -85,13 +86,78 @@ class WordpressInterfaceController < ApplicationController
     {'return_value' => return_value}
   end
 
+  def get_like_count(wp_params)
+    user_session_key, item_key = wp_params['user_session_key'], wp_params['scenario_key']
+
+    user_like_count = CustomerLike.where(
+                                     product_id: 1,
+                                     item_key: item_key,
+                                     active: 1,
+                                     user_session_key: user_session_key)
+                                  .count
+
+    total_like_count = CustomerLike.where(
+                                     product_id: 1,
+                                     item_key: item_key,
+                                     active: 1)
+                                    .count
+
+    { user_like_count: user_like_count, total_like_count: total_like_count }
+  end
+
+  def post_like(wp_params)
+    user_session_key, item_key = wp_params['user_session_key'], wp_params['scenario_key']
+
+    customer_like = CustomerLike.where(
+                      product_id: 1,
+                      item_key: item_key,
+                      active: 1,
+                      user_session_key: user_session_key
+                    ).first_or_initialize
+
+    customer_like.save
+
+    total_like_count = CustomerLike.where(
+                                     product_id: 1,
+                                     item_key: item_key,
+                                     active: 1)
+                                   .count
+
+    { total_like_count: total_like_count }
+  end
+
   def message_signup(wp_params)
+
+  end
+
+  def email_cuecardscenario(wp_params)
+    # need to bail if bogus url ----
+    if validate_url_cue_card(wp_params['link_url'])
+      link_url = wp_params['link_url']
+    end
+
+
+    return_value = EmailCueCardsScenario.deliver_to_user(wp_params['email_to'],
+                                                         wp_params['email_from'],
+                                                         wp_params['name_from'],
+                                                         wp_params['scenario'],
+                                                         link_url)
+
+    {'return_value' => return_value}
 
   end
 
   def validate_url_test_guide(url)
     if /^http[s]?:\/\/([A-Za-z0-9_\-.]+\.)*greatschools\.org\/gk\/common-core-test-guide\//i.match(url) ||
         /^http[s]?:\/\/localhost[0-9:]*\/gk\/common-core-test-guide\//i.match(url)
+      return true
+    end
+    false
+  end
+
+  def validate_url_cue_card(url)
+    if /^http[s]?:\/\/([A-Za-z0-9_\-.]+\.)*greatschools\.org\/gk\/cue-cards\//i.match(url) ||
+        /^http[s]?:\/\/localhost[0-9:]*\/gk\/cue-cards\//i.match(url)
       return true
     end
     false
@@ -179,5 +245,22 @@ class WordpressInterfaceController < ApplicationController
     end
     user.id
   end
+
+
+  # def create_data_extension_row_for_user(email, cellphone)
+  #   client = FuelSDK::Client.new (
+  #       client: {
+  #           'id' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
+  #           'secret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+  #       }
+  #   )
+  #   request = FuelSDK::List.new
+  #   request.client = client
+  #   response = list.get
+  #   p response
+  #   # ENV_GLOBAL['exacttarget_api_client_id_SMS']
+  #   # ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+  #   # ENV_GLOBAL['exacttarget_api_app_id_SMS']
+  # end
 
 end

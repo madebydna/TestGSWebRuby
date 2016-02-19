@@ -2,17 +2,17 @@ es:
   school_profile:
     data_layouts:
       quick_links:
-        report_card: 'Enlaces de boletas de calificaciones:'
+        report_card: 'Enlaces estadísticas:'
         school_details: 'Enlaces a detalles de la escuela:'
         reviews: 'Enlaces a comentarios:'
-        test_scores: Resultados de los examenes
+        test_scores: Resultados de exámenes
         college_readiness: Preparación universitaria
-        student_group_comparison: Puntuaciones de grupos estudiantiles
-        student_demographics: Diversidad de los estudiantes
+        student_group_comparison: Calificaciones según grupos de estudiantes
+        student_demographics: Demografía de los estudiantes
         programs: Programas
         classes: Clases
         extracurriculars: Extracurriculares
         teachers: Maestros
-        parent_reviews: Revisiones de los padres
-        student_reviews: Revisiones de estudiantes
-        write_a_review: Escribe una revisión
+        parent_reviews: Opinión de los padres
+        student_reviews: Opinión de estudiantes
+        write_a_review: Deje su opinión
