@@ -4,13 +4,13 @@ require 'features/examples/page_examples'
 require 'features/examples/top_rated_schools_section_examples'
 
 describe 'District Home Page' do
-  let!(:district) { create(:district, state: 'ca', city: 'Alameda', name: 'Alameda City Unified' ,home_page_url:'www.alameda.k12.ca.us') }
+  let!(:district) { create(:district, state: 'ca', city: 'Alameda', name: 'Alameda City Unified' ,home_page_url:'https://www.alameda.k12.ca.us') }
   after { clean_dbs :us_geo, :gs_schooldb, :ca }
   subject(:page_object) do
     visit district_path('california', 'alameda', 'alameda-city-unified')
     DistrictHomePage.new
   end
-  it { is_expected.to have_link('District website' ,href:"http://www.alameda.k12.ca.us")}
+  it { is_expected.to have_link('District website' ,href:"https://www.alameda.k12.ca.us")}
   it { is_expected.to have_email_signup_section }
   describe 'breadcrumbs' do
     it { is_expected.to have_breadcrumbs }
