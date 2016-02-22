@@ -7,5 +7,5 @@ es:
         graduation_rate: ! '%{percent}% Graduado'
         math_test_scores: ! '%{percent}% cumplieron o excedieron los estándares'
         ela_test_scores: ! '%{percent}% cumplieron o excedieron los estándares'
-        state_average: El promedio del estado
+        state_average: Promedio del estado
         state_avg: Prom.

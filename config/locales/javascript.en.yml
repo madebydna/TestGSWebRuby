@@ -36,6 +36,8 @@ en:
       advanced: Advanced
       proficient: Proficient
       proficient_or_better: Proficient or better
+    This school: This school
+    State average: State average
     too_many_schools_error_html: '<strong>You&#39ve already selected 4 schools to compare.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspCompare schools.</a>'
     view_less: View less »
     view_more: View more »

@@ -2,6 +2,6 @@
 es:
   decorators:
     test_scores_bar:
-      state_average: 'El promedio del estado'
+      state_average: 'Promedio del estado'
       students_proficient_or_better: 'Los estudiantes son competentes o mejor'
       students_tested: 'Los estudiantes probaron'
