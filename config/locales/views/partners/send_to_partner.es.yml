@@ -4,8 +4,8 @@ es:
     send_to_partner:
       in_partnership_with: EN COLABORACIÓN CON
       innovate_public_schools:
-        call_to_action: ¿Quiere más escuelas públicas excelentes en su comunidad?
-        link_text: ¡Aprenda más!
+        call_to_action: ¿Quiere más buenas escuelas públicas en su comunidad?
+        link_text: ¡Infórmese!
         link_url: http://innovateschools.org/greatschools/?lang=es
         logo_path: /catalog/partner_logos/innovate_public_schools.png
       excellent_schools_detroit:
