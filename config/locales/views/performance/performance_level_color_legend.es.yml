@@ -4,6 +4,6 @@ es:
       red: Rojo
       orange: Naranja
       green: Verde
-      bottom_30: Abajo 30% de las escuelas del estado
-      middle_40: Medio 40% de las escuelas del estado
-      top_30: Arriba 30% de las escuelas del estado
+      bottom_30: 30% de las escuelas más inferiores del estado
+      middle_40: 40% de las escuelas medias del estado
+      top_30: 30% de las mejores escuelas del estado
