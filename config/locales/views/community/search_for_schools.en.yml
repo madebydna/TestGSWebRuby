@@ -2,6 +2,7 @@ en:
   community:
     search_for_schools:
       collection_id_15:
+        title: Start Your School Search
         top_schools: TOP SCHOOLS SERVING
         low_income: Economically disadvantaged students
         african_americans: African American students
