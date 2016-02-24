@@ -5,9 +5,9 @@ es:
       lib:
         stars_input:
           average: Promedio
-          bad: Malo
-          good: Bueno
-          great: Gran
+          bad: Mala
+          good: Buena
+          great: Muy buena
           required_vote_error_message: '¡Gracias por compartir su historia! Por 
           favor vote para guardar sus comentarios.'
           terrible: Terrible

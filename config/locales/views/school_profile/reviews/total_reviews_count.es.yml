@@ -7,4 +7,4 @@ es:
         no_reviews_text: Todavía no hay comentarios.
         total_reviews_link: "%{count} opiniones"
         total_reviews_text_prefix: Hay
-        total_reviews_text_suffix: acerca de todos los temas escolares.
+        total_reviews_text_suffix: sobre todos los temas escolares.
