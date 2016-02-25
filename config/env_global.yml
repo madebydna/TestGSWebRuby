@@ -37,5 +37,5 @@ queue_daemon_update_order:
 #  - 3
   - 4
 #  - 5
-is_feed_builder: false
+is_feed_builder: true
 # End configs for scripts

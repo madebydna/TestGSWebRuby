@@ -26,7 +26,6 @@ def parse_arguments
     args = []
     ARGV.each_with_index do |arg, i|
       feed_name, state, school_id, district_id, location, name= arg.split(':')
-      require 'pry'
       state = state == 'all' ? all_states : state.split(',')
       return false unless (state-all_states).empty?
 
@@ -60,39 +59,74 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
   a = Time.now
   puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
 
+  # require 'pry'
+  # xsd_schema ='greatschools-test.xsd'
+  state_test_infos = []
+
+  TestDescription.where(state:state).find_each do |test|
+    test_info = TestDataType.where(:id => test.data_type_id).first
+    test_data_set_info = TestDataSet.on_db(state.downcase.to_sym).
+        where(:data_type_id =>test.data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
+    state_test_info =  {'id' => test.data_type_id ,
+                        'test-name' => test_info.description,
+                        'tes  t-abbrv' => test_info.name ,
+                        'scale' => test.scale,
+                        'most-recent-year' => test_data_set_info.year,
+                        'level-code' => test_data_set_info.level_code,
+                        'description' => test.description
+                        }
+    state_test_infos.push(state_test_info)
+  end
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
   generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
-
-  File.open(generated_feed_file_location+generated_feed_file_name, 'w') { |f|
+  xmlFile =generated_feed_file_location+generated_feed_file_name
+  File.open(xmlFile, 'w') { |f|
     xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
-    if school_ids.present?
-      School.on_db(state.downcase.to_sym).where(:id => school_ids).each do |school|
-        xml.school {
-          xml.school_id school.id
-        }
+    xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
+    xml.tag!('gs-test-feed' ,
+             {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
+                :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
+      # if state_test_infos.present?
+      #   state_test_infos.each do |test|
+      #    xml.test {
+      #      xml.id '123'
+      #
+      #
+      # }
+      # end
+      # end
+
+      if school_ids.present?
+        School.on_db(state.downcase.to_sym).where(:id => school_ids).each do |school|
+          xml.school {
+            xml.school_id school.id
+          }
+        end
+      else
+        School.on_db(state.downcase.to_sym).all.each do |school|
+          xml.school {
+            xml.school_id school.id
+          }
+        end
       end
-    else
-      School.on_db(state.downcase.to_sym).all.each do |school|
-        xml.school {
-          xml.school_id school.id
-        }
-      end
-    end
-    if district_ids.present?
-      District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
-        xml.district {
-          xml.district_id district.id
-        }
-      end
-    else
-      District.on_db(state.downcase.to_sym).all.each do |district|
-        xml.district {
-          xml.district_id district.id
-        }
+      if district_ids.present?
+        District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
+          xml.district {
+            xml.district_id district.id
+          }
+        end
+      else
+        District.on_db(state.downcase.to_sym).all.each do |district|
+          xml.district {
+            xml.district_id district.id
+          }
+        end
       end
     end
   }
 
+
+  # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
   puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
 
 end
