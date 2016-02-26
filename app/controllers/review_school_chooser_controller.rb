@@ -38,11 +38,10 @@ class ReviewSchoolChooserController < ApplicationController
   end
 
   def reviews
-    # cache_key = "reviews-school"
-    # Rails.cache.fetch(cache_key, expires_in: 1.hour) do
-    # review_topic.first_question.reviews.active.has_comment.order(created: :desc).limit(15).includes(:answers, :votes, question: :review_topic).extend(SchoolAssociationPreloading).preload_associated_schools!
-    # end
-    []
+    cache_key = "recent-reviews-national"
+    Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+      review_topic.first_question.reviews.active.has_comment.order(id: :desc).limit(15).includes(:answers, :votes, question: :review_topic).extend(SchoolAssociationPreloading).preload_associated_schools!
+    end
   end
 
 end
