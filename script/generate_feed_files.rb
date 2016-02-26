@@ -63,18 +63,23 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
   # xsd_schema ='greatschools-test.xsd'
   state_test_infos = []
 
-  TestDescription.where(state:state).find_each do |test|
-    test_info = TestDataType.where(:id => test.data_type_id).first
+  TestDescription.where(state: state).find_each do |test|
+    data_type_id = test.data_type_id
+    test_info = TestDataType.where(:id => data_type_id).first
     test_data_set_info = TestDataSet.on_db(state.downcase.to_sym).
-        where(:data_type_id =>test.data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
-    state_test_info =  {'id' => test.data_type_id ,
-                        'test-name' => test_info.description,
-                        'tes  t-abbrv' => test_info.name ,
-                        'scale' => test.scale,
-                        'most-recent-year' => test_data_set_info.year,
-                        'level-code' => test_data_set_info.level_code,
-                        'description' => test.description
-                        }
+        where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
+    if test_data_set_info.present?
+      length_to_append = 5 - data_type_id.to_s.length
+      state_test_info = {:id => state.upcase+ ("0" * length_to_append + data_type_id.to_s)[0,5],
+                         :test_name => test_info.description,
+                         :test_abbrv => test_info.name,
+                         :scale => test.scale,
+                         :most_recent_year => test_data_set_info.year,
+                         :level_code => test_data_set_info.level_code,
+                         :description => test.description
+      }
+
+    end
     state_test_infos.push(state_test_info)
   end
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
@@ -83,45 +88,51 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
   File.open(xmlFile, 'w') { |f|
     xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
     xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-    xml.tag!('gs-test-feed' ,
+    xml.tag!('gs-test-feed',
              {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
-                :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
-      # if state_test_infos.present?
-      #   state_test_infos.each do |test|
-      #    xml.test {
-      #      xml.id '123'
-      #
-      #
-      # }
-      # end
-      # end
+              :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
+      if state_test_infos.present?
+        state_test_infos.each do |test|
+          if test.present?
+            xml.tag! 'test' do
+              xml.tag! 'id', test[:id]
+              xml.tag! 'test-name', test[:test_name]
+              xml.tag! 'scale', test[:scale]
+              xml.tag! 'test-abbrv', test[:test_abbrv]
+              xml.tag! 'most-recent-year', test[:most_recent_year]
+              xml.tag! 'level-code', test[:level_code]
+              xml.tag! 'description', test[:description]
+            end
+          end
+        end
+      end
 
-      if school_ids.present?
-        School.on_db(state.downcase.to_sym).where(:id => school_ids).each do |school|
-          xml.school {
-            xml.school_id school.id
-          }
-        end
-      else
-        School.on_db(state.downcase.to_sym).all.each do |school|
-          xml.school {
-            xml.school_id school.id
-          }
-        end
-      end
-      if district_ids.present?
-        District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
-          xml.district {
-            xml.district_id district.id
-          }
-        end
-      else
-        District.on_db(state.downcase.to_sym).all.each do |district|
-          xml.district {
-            xml.district_id district.id
-          }
-        end
-      end
+      # if school_ids.present?
+      #   School.on_db(state.downcase.to_sym).where(:id => school_ids).each do |school|
+      #     xml.school {
+      #       xml.school_id school.id
+      #     }
+      #   end
+      # else
+      #   School.on_db(state.downcase.to_sym).all.each do |school|
+      #     xml.school {
+      #       xml.school_id school.id
+      #     }
+      #   end
+      # end
+      # if district_ids.present?
+      #   District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
+      #     xml.district {
+      #       xml.district_id district.id
+      #     }
+      #   end
+      # else
+      #   District.on_db(state.downcase.to_sym).all.each do |district|
+      #     xml.district {
+      #       xml.district_id district.id
+      #     }
+      #   end
+      # end
     end
   }
 
