@@ -49,14 +49,11 @@
             </div>
           </div>
           <p class="tac">
-            <%= link_to t('.privacy_policy'), privacy_url %> 
+            <%= link_to t('.privacy_policy'), privacy_url %>&nbsp;
             <%= t('.terms_of_use_html',
                   terms_of_use_link: link_to(
                     t('.greatschools_terms_of_use'),
-                    terms_of_use_url ),
-                  privacy_policy_link: link_to(
-                          t('.privacy_policy'),
-                          privacy_url ),
+                    terms_of_use_url )
                 )
             %>
           </p>
