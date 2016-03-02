@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   before_action :adapt_flash_messages_from_java
   before_action :set_uuid_cookie
-  before_action :login_from_cookie, :init_omniture
+  before_action :login_from_cookie
   before_action :add_user_info_to_gtm_data_layer
   before_action :add_ab_test_to_gon
   before_action :write_locale_session
@@ -127,12 +127,6 @@ class ApplicationController < ActionController::Base
       else
         render 'error/internal_error', layout: 'error', status: 500
     end
-  end
-
-  def init_omniture
-    gon.omniture_account = ENV_GLOBAL['omniture_account']
-    gon.omniture_server = ENV_GLOBAL['omniture_server']
-    gon.omniture_server_secure = ENV_GLOBAL['omniture_server_secure']
   end
 
   # get Page name in PageConfig, based on current controller action
