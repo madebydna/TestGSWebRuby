@@ -217,4 +217,5 @@ group :profile do
   gem 'ruby-prof'
 end
 
-
+# ExactTarget API
+gem 'fuelsdk', '~> 0.1.11'

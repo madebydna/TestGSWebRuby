@@ -89,18 +89,10 @@ class WordpressInterfaceController < ApplicationController
   def get_like_count(wp_params)
     user_session_key, item_key = wp_params['user_session_key'], wp_params['scenario_key']
 
-    user_like_count = CustomerLike.where(
-                                     product_id: 1,
-                                     item_key: item_key,
-                                     active: 1,
-                                     user_session_key: user_session_key)
-                                  .count
+    likes_scope = CustomerLike.active_cue_card_likes_for(item_key)
 
-    total_like_count = CustomerLike.where(
-                                     product_id: 1,
-                                     item_key: item_key,
-                                     active: 1)
-                                    .count
+    user_like_count = likes_scope.where(user_session_key: user_session_key).count
+    total_like_count = likes_scope.count
 
     { user_like_count: user_like_count, total_like_count: total_like_count }
   end
@@ -108,20 +100,12 @@ class WordpressInterfaceController < ApplicationController
   def post_like(wp_params)
     user_session_key, item_key = wp_params['user_session_key'], wp_params['scenario_key']
 
-    customer_like = CustomerLike.where(
-                      product_id: 1,
-                      item_key: item_key,
-                      active: 1,
-                      user_session_key: user_session_key
-                    ).first_or_initialize
+    likes_scope = CustomerLike.active_cue_card_likes_for(item_key)
 
+    customer_like = likes_scope.where(user_session_key: user_session_key).first_or_initialize
     customer_like.save
 
-    total_like_count = CustomerLike.where(
-                                     product_id: 1,
-                                     item_key: item_key,
-                                     active: 1)
-                                   .count
+    total_like_count = likes_scope.count
 
     { total_like_count: total_like_count }
   end

@@ -3,7 +3,8 @@ es:
   community:
     search_for_schools:
       collection_id_15:
-        african_americans: Estudiantes Afroamericanos
-        latinos: Estudiantes Latinos
+        african_americans: Estudiantes afroamericanos
+        latinos: Estudiantes latinos
         low_income: Estudiantes de bajos ingresos
-        top_schools: LAS MEJORES ESCUELAS QUE SIRVEN
+        top_schools: LAS MEJORES ESCUELAS PARA
+        title: COMIENCE SU BÚSQUEDA DE ESCUELA

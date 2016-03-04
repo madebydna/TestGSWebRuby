@@ -17,7 +17,7 @@ es:
         other: "%{count} evaluaciones"
       see_comments:
         one: "Ver %{count} comentario"
-        other: "Ver todos %{count} comentarios"
+        other: "Ver los %{count} comentarios"
       see_ratings: Ver calificaciones
       see_reviews:
         one: "Ver %{count} evaluacion"

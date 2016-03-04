@@ -18,6 +18,8 @@ atlassian-ide-plugin.xml
 .*un~
 tags
 
+
+Vagrantfile
 profiling-results/
 profiling-results-*
 tmp

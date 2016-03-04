@@ -124,8 +124,8 @@ es:
   Educational philosophy and approach to learning: Filosofía y enfoque de aprendizaje
     para la Educación
   Effective Leaders: Los líderes eficaces
-  ela_test_scores: Puntajes en Inglés
-  eligible_for_4yr_college: ! 'Graduados eligible para UC/CSU'
+  ela_test_scores: Resultados en Inglés
+  eligible_for_4yr_college: ! 'Graduados elegibles para UC/CSU'
   Employees: Empleados
   End time: Hora de finalización
   English Instruction: Instrucción Inglés
@@ -156,7 +156,7 @@ es:
   Graduates who need remediation, or help strengthening basic skills: Los graduados
     que necesitan reparación o ayuda fortalecimiento de las competencias básicas
   graduation_rate: Índice de Graduados
-  GreatSchools Rating: Calificación de GreatSchools
+  GreatSchools Rating: Calificaciones de GreatSchools
   HIB preparation score: Puntuación de preparación HIB
   High expectations are set for all students' academic success: Las altas expectativas
     se establecen para el éxito académico de todos los estudiantes
@@ -179,7 +179,7 @@ es:
   Male: Masculino
   Math Instruction: Instrucción de Matemáticas
   Math skills development: Desarrollo de habilidades matemáticas
-  math_test_scores: Puntajes en Matemáticas
+  math_test_scores: Resultados en Matemáticas
   Maximum number of 2 year olds per adult: Número máximo de niños 2 años de edad por
     adulto
   Maximum number of 3 year olds per adult: Número máximo de niños 3 años de edad por
@@ -326,7 +326,7 @@ es:
     que participan en un programa de almuerzo gratis oa precio reducido
   Students per teacher: Estudiantes por maestro
   Students respect one another: Los estudiantes respetan unos a otros
-  Students taking AP courses: Los estudiantes que toman cursos de AP
+  Students taking AP courses: Estudiantes que toman cursos de AP
   Students taking the ACT: Los estudiantes que toman el ACT
   Students taking the SAT: Los estudiantes que toman el SAT
   Students taking the SAT or ACT: Los estudiantes que toman el SAT o ACT
@@ -344,7 +344,7 @@ es:
   Students with disabilities: Students with disabilities
   Summer program offered: Programa de verano ofrecido
   Test scores for low-income students: Resultado de exámenes de estudiantes de bajos ingresos
-  test_score_rating: Calificación de examenes
+  test_score_rating: Calificación de exámenes
   Teacher Influence: Influencia del profesor
   ! 'Teacher experience: 5 years or more': ! 'Experiencia Profesor: 5 años o más'
   Teacher-Parent Trust: Fideicomiso Maestro-Padres
@@ -371,6 +371,7 @@ es:
     preparados para la universidad (basado en ACT)
   Tested students who are college-ready (based on SAT): Alumnos evaluados que están
     preparados para la universidad (basado en SAT)
+  This school: Esta escuela
   This school's math score: Puntuación de matemáticas de esta escuela
   This school's reading score: Puntuación de la lectura de esta escuela
   This school's science score: Puntuación de la ciencia de esta escuela

@@ -3,4 +3,4 @@ es:
     data_viz:
       bar_chart:
         legend:
-          legend: 'El promedio del estado'
+          legend: 'Promedio del estado'

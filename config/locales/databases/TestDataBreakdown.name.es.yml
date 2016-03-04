@@ -1,10 +1,10 @@
 ---
 es:
-  African American: Afroamericano
+  African American: Afroamericanos
   Alaska Native: Nativos de Alaska
   All: Todos
   Alternate assessment: Evaluación alternativo
-  Asian: Asiático
+  Asian: Asiáticos
   Asian Indian: India asiática
   Asian/Pacific Islander: Asiático / Islas del Pacífico
   Bilingual: Bilingüe
@@ -13,11 +13,11 @@ es:
   Combined groups (ethnicity): Grupos combinados (etnia)
   Declined to state: Rehusó a estado
   Economic Status Unknown: Situación Económica Desconocido
-  Economically disadvantaged: Con desventaja económica
+  Economically disadvantaged: De bajos recursos
   English Language Learner Current: Inglés como segunda lengua actual
   English Language Learner Exited: Inglés como segunda lengua Exited
-  Female: Femenino
-  Filipino: Filipino
+  Female: Mujeres
+  Filipino: Filipinos
   Fluent-English Proficient and English Only: Sólo Fluido-Inglés Competente y Inglés
   Former LEP student - monitoring year 1: El ex estudiante LEP - seguimiento a 1 año
   Former LEP student - monitoring year 2: El ex estudiante LEP - 2 años monitoreo
@@ -34,7 +34,7 @@ es:
   Grade AE: Grado AE
   Grade Unknown: Grado Desconocido
   Guamanian: Guam
-  Hispanic: Hispano
+  Hispanic: Hispanos/Latinos
   Homeless: Sin hogar
   Immigrant: Inmigrante
   Japanese: Japonés
@@ -49,8 +49,8 @@ es:
   Limited English Proficient Current Plus Former: Dominio Limitado del Inglés actual
     Ex Plus
   Limited English Proficient Former: Dominio Limitado del Inglés Antiguo
-  Limited English proficient: Aprendices de Inglés
-  Male: Masculino
+  Limited English proficient: Principiantes de Inglés
+  Male: Varones
   Migrant: Emigrante
   Multiracial: De raza multiple
   Native American: Nativo americano
@@ -61,7 +61,7 @@ es:
   Not Full Academic Year: No completa Año Académico
   Not Gifted: No Dotados
   Not Homeless: No sin hogar
-  Not economically disadvantaged: No en desventaja económica
+  Not economically disadvantaged: Sin desventaja económica
   Not limited English proficient: No limitado dominio del Inglés
   Not migrant: No migrante
   Not poverty: No es la pobreza
@@ -82,7 +82,7 @@ es:
   Reduced lunch eligible: Reducido el almuerzo
   Samoan: Samoa
   Special Education with Accomodation: Educación Especial con Alojamiento
-  Students with disabilities: Estudiantes con discapacidad
+  Students with disabilities: Estudiantes con discapacidades
   Students with disabilities and English language learners: Los estudiantes con discapacidades
     y estudiantes del idioma inglés
   Students without disabilities: Los estudiantes sin discapacidad
@@ -92,4 +92,4 @@ es:
   Title I program (no services): Programa de Título I (sin servicios)
   Title I program (prior): Programa de Título I (previa)
   Vietnamese: Vietnamita
-  White: Blanco
+  White: Blancos

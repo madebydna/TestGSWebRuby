@@ -5,9 +5,9 @@ es:
         state_average: 'Prom. %{val}%'
         state_average_not_available: PROMEDIO DEL ESTADO NO DISPONIBLE
         collection_id_15:
-          a_through_g: Graduados eligible para universidad
+          a_through_g: Graduados elegibles para la universidad
           a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
-          graduation_rate: Tasa de graduados
+          graduation_rate: Índice de graduados
           graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           caaspp_math: Dominio de Matemáticas
           caaspp_math_explanation_html: <strong>Dominio de Matemáticas:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en matemáticas.
@@ -15,9 +15,9 @@ es:
           caaspp_english_explanation_html: <strong>Dominio de Inglés:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en artes del lenguaje inglés.
           school_info: Escuela
         collection_id_16:
-          a_through_g: Graduados eligible para universidad
+          a_through_g: Graduados elegibles para la universidad
           a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
-          graduation_rate: Tasa de graduados
+          graduation_rate: Índice de graduados
           graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           caaspp_math: Dominio de Matemáticas
           caaspp_math_explanation_html: <strong>Dominio de Matemáticas:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en matemáticas.
@@ -25,9 +25,9 @@ es:
           caaspp_english_explanation_html: <strong>Dominio de Inglés:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en artes del lenguaje inglés.
           school_info: Escuela
         collection_id_17:
-          a_through_g: Graduados eligible para universidad
+          a_through_g: Graduados elegibles para la universidad
           a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
-          graduation_rate: Tasa de graduados
+          graduation_rate: Índice de graduados
           graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           caaspp_math: Dominio de Matemáticas
           caaspp_math_explanation_html: <strong>Dominio de Matemáticas:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en matemáticas.
@@ -35,9 +35,9 @@ es:
           caaspp_english_explanation_html: <strong>Dominio de Inglés:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en artes del lenguaje inglés.
           school_info: Escuela
         collection_id_18:
-          a_through_g: Graduados eligible para universidad
+          a_through_g: Graduados elegibles para la universidad
           a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
-          graduation_rate: Tasa de graduados
+          graduation_rate: Índice de graduados
           graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           caaspp_math: Dominio de Matemáticas
           caaspp_math_explanation_html: <strong>Dominio de Matemáticas:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en matemáticas.
@@ -45,9 +45,9 @@ es:
           caaspp_english_explanation_html: <strong>Dominio de Inglés:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en artes del lenguaje inglés.
           school_info: Escuela
         collection_id_22:
-          a_through_g: Graduados eligible para universidad
+          a_through_g: Graduados elegibles para la universidad
           a_through_g_explanation_html: <strong>Graduados elegibles para una de universidad 4 años</strong> es el % de graduados que han tomado los cursos requeridos para ser elegible para una universidad pública de California - ya sea de la Universidad de California o la Universidad Estatal de California.
-          graduation_rate: Tasa de graduados
+          graduation_rate: Índice de graduados
           graduation_rate_explanation_html: <strong>Porcentaje de graduación</strong> es el % de los estudiantes que se graduaron de la escuela secundaria dentro de un plazo de 4 años.
           caaspp_math: Dominio de Matemáticas
           caaspp_math_explanation_html: <strong>Dominio de Matemáticas:</strong> El porcentaje de estudiantes que cumplen o exceden los estándares de preparación universitaria y profesional para su nivel de grado en matemáticas.

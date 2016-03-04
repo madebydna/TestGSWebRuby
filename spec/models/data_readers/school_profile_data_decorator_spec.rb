@@ -117,14 +117,14 @@ describe SchoolProfileDataDecorator do
 
         allow(subject).to receive(:footnotes_for_category).and_return(
           [
-            source: 'NCES',
+            source: 'California Department of Education',
             year: '2012'
           ]
         )
 
         expected = [
           label: 'Student ethnicity',
-          value: 'NCES, 2011-2012'
+          value: 'California Department of Education, 2011-2012'
         ]
 
         expect(subject.footnotes(category: footnotes_category, page_config: @page_config)).to eq expected

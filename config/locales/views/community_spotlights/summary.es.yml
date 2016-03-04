@@ -1,51 +1,51 @@
 es:
   community_spotlights:
     summary:
-      read_more: Leer más
+      read_more: Lea más
       collection_id_15:
-        description_above_fold: ¿Cómo es el rendimiento de nuestras preparatorias públicas locales al preparar a todos los estudiantes para el éxito?
-        description_below_fold: Por todo el área de la Bahía, históricamente muchos estudiantes se han quedado atrás académicamente. ¡Vea cuales escuelas están cambiando las probabilidades y descubra cómo su preparatoria se compara!
+        description_above_fold: ¿Cómo están trabajando nuestras escuelas públicas locales para que todos los estudiantes tengan éxito?
+        description_below_fold: Históricamente, muchos estudiantes se han quedado atrás académicamente en toda el Área de la Bahía. ¡Vea qué escuelas están cambiando esta situación y conozca el trabajo de su preparatoria!
         column_1:
           title: TASA DE GRADUADOS EN EL ÁREA DE LA BAHÍA
           datapoint_1:
-            title: Estudiantes Hispanos
+            title: Estudiantes hispanos
             performance_level: below_average
             value_html: 74<sup>%</sup>
             state_average: Prom. 76%
           datapoint_2:
-            title: Estudiantes Blancos
+            title: Estudiantes blancos
             performance_level: average
             value_html: 91<sup>%</sup>
             state_average: Prom. 89%
           datapoint_3:
-            title: Estudiantes Asiático
+            title: Estudiantes asiático
             performance_level: average
             value_html: 93<sup>%</sup>
             state_average: Prom. 92%
           datapoint_4:
-            title: Estudiantes Afroamericanos
+            title: Estudiantes afroamericanos
             performance_level: below_average
             value_html: 68<sup>%</sup>
             state_average: Prom. 68%
         column_2:
           title: GRADUADOS DEL ÁREA DE LA BAHíA ELEGIBLES PARA UC/CSU
           datapoint_1:
-            title: Estudiantes Hispanos
+            title: Estudiantes hispanos
             performance_level: average
             value_html: 34<sup>%</sup>
             state_average: Prom. 32%
           datapoint_2:
-            title: Estudiantes Blancos
+            title: Estudiantes blancos
             performance_level: above_average
             value_html: 60<sup>%</sup>
             state_average: Prom. 49%
           datapoint_3:
-            title: Estudiantes Asiático
+            title: Estudiantes asiático
             performance_level: above_average
             value_html: 75<sup>%</sup>
             state_average: Prom. 71%
           datapoint_4:
-            title: Estudiantes Afroamericanos
+            title: Estudiantes afroamericanos
             performance_level: average
             value_html: 30<sup>%</sup>
             state_average: Prom. 31%

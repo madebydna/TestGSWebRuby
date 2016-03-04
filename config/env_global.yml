@@ -7,10 +7,6 @@ gsweb_host: "localhost"
 gsweb_port: "8080"
 GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
 GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
-# The omniture account for production is stored in the config file on the server.
-omniture_account: "gsnetdev"
-omniture_server: "gms.greatschools.org"
-omniture_server_secure: "sgms.greatschools.org"
 facebook_app_id: "178930405559082"
 facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
 solr.ro.server.url: "http://omega.greatschools.org:8580/main/"
@@ -25,6 +21,11 @@ mail_enabled: true
 exacttarget_api_key: API_86987
 exacttarget_api_secret: welcome@1
 exacttarget_wsdl: https://webservice.exacttarget.com/etframework.wsdl
+
+exacttarget_api_client_id_SMS: afievwrm4tz2tidnbg0458x0
+exacttarget_api_client_secret_SMS: zC8g7eGqud0oyTdbMl0IqwtH
+exacttarget_api_app_id_SMS: c1d444f8-087d-4921-927e-790a7bad1119
+
 connection_pooling_enabled: false
 search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
 

@@ -28,7 +28,7 @@ es:
       private: privada
       public: pública
     search_form:
-      long_placeholder: Introduzca ciudad, código postal, dirección, o el nombre de la escuela
+      long_placeholder: Ingrese ciudad, código postal, dirección, o nombre de la escuela
       short_placeholder: Ciudad, código postal, la dirección o la escuela
     saved_search_validation_error: Por favor, nombre su búsqueda
     strong_fit: Fuerte
@@ -36,6 +36,8 @@ es:
       advanced: Avanzado
       proficient: Competente
       proficient_or_better: Competente o mejor
+    This school: Esta escuela
+    State average: Promedio estatal
     too_many_schools_error_html: '<strong>Ya ha seleccionado 4 escuelas para comparar.&nbsp</strong><a class="pointer js-compareSchoolsSubmit">&nbspComparar las escuelas.</a>'
     view_less: Ver menos »
     view_more: Ver más »

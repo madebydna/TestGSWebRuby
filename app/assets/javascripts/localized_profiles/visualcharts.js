@@ -177,7 +177,7 @@ GS.visualchart = GS.visualchart || function($) {
             var numberOfBars = barLabels.length;
             dataTable.addColumn('string', 'data point');
             for(var i = 0; i < numberOfBars; i++) {
-              dataTable.addColumn('number', barLabels[i]);
+              dataTable.addColumn('number', GS.I18n.t(barLabels[i]));
               dataTable.addColumn({'type': 'string', 'role': 'annotation'});
               dataTable.addColumn({'type': 'string', 'role': 'tooltip', 'p': {'html': true}});
             }

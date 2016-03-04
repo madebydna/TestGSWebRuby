@@ -32,7 +32,7 @@
     <% end %>
     <% if decorator.source(value) %>
       <div class="pbm">
-        <p class="font-size-small ptm"><%= t('school_profile.data_layouts.test_scores.source') %>: <%= decorator.source(value) %></p>
+        <p class="font-size-small ptm"><%= t('school_profile.data_layouts.test_scores.source') %>: <%= db_t(decorator.source(value)) %></p>
       </div>
     <% end %>
     <% if @school.show_ads %>

@@ -6,6 +6,62 @@ def all_states
   States.abbreviations
 end
 
+def get_state_fips
+  state_fips = {}
+  state_fips['AL'] = '01'
+  state_fips['AK'] = '02'
+  state_fips['AZ'] = '04'
+  state_fips['AR'] = '05'
+  state_fips['CA'] = '06'
+  state_fips['CO'] = '08'
+  state_fips['CT'] = '09'
+  state_fips['DE'] = '10'
+  state_fips['DC'] = '11'
+  state_fips['FL'] = '12'
+  state_fips['GA'] = '13'
+  state_fips['HI'] = '15'
+  state_fips['ID'] = '16'
+  state_fips['IL'] = '17'
+  state_fips['IN'] = '18'
+  state_fips['IA'] = '19'
+  state_fips['KS'] = '20'
+  state_fips['KY'] = '21'
+  state_fips['LA'] = '22'
+  state_fips['ME'] = '23'
+  state_fips['MD'] = '24'
+  state_fips['MA'] = '25'
+  state_fips['MI'] = '26'
+  state_fips['MN'] = '27'
+  state_fips['MS'] = '28'
+  state_fips['MO'] = '29'
+  state_fips['MT'] = '30'
+  state_fips['NE'] = '31'
+  state_fips['NV'] = '32'
+  state_fips['NH'] = '33'
+  state_fips['NJ'] = '34'
+  state_fips['NM'] = '35'
+  state_fips['NY'] = '36'
+  state_fips['NC'] = '37'
+  state_fips['ND'] = '38'
+  state_fips['OH'] = '39'
+  state_fips['OK'] = '40'
+  state_fips['OR'] = '41'
+  state_fips['PA'] = '42'
+  state_fips['RI'] = '44'
+  state_fips['SC'] = '45'
+  state_fips['SD'] = '46'
+  state_fips['TN'] = '47'
+  state_fips['TX'] = '48'
+  state_fips['UT'] = '49'
+  state_fips['VT'] = '50'
+  state_fips['VA'] = '51'
+  state_fips['WA'] = '53'
+  state_fips['WV'] = '54'
+  state_fips['WI'] = '55'
+  state_fips['WY'] = '56'
+  return state_fips
+end
+
 def usage
   abort "\n\nUSAGE: rails runner script/generate_feed_files(all | [feed_name]:[state]:[school_id]:[district_id]:[location]:[name])
 
@@ -26,7 +82,6 @@ def parse_arguments
     args = []
     ARGV.each_with_index do |arg, i|
       feed_name, state, school_id, district_id, location, name= arg.split(':')
-      require 'pry'
       state = state == 'all' ? all_states : state.split(',')
       return false unless (state-all_states).empty?
 
@@ -55,44 +110,102 @@ end
 parsed_arguments = parse_arguments
 
 usage unless parsed_arguments.present?
+SCHOOL_CACHE_KEYS = %w(test_scores)
 
 def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
   a = Time.now
   puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
 
+  # require 'pry'
+  # xsd_schema ='greatschools-test.xsd'
+  state_test_infos = []
+
+  TestDescription.where(state: state).find_each do |test|
+    data_type_id = test.data_type_id
+    test_info = TestDataType.where(:id => data_type_id).first
+    test_data_set_info = TestDataSet.on_db(state.downcase.to_sym).
+        where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
+    if test_data_set_info.present?
+      state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
+                         :test_name => test_info.description,
+                         :test_abbrv => test_info.name,
+                         :scale => test.scale,
+                         :most_recent_year => test_data_set_info.year,
+                         :level_code => test_data_set_info.level_code,
+                         :description => test.description
+      }
+
+    end
+    state_test_infos.push(state_test_info)
+  end
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
   generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
-
-  File.open(generated_feed_file_location+generated_feed_file_name, 'w') { |f|
+  xmlFile =generated_feed_file_location+generated_feed_file_name
+  File.open(xmlFile, 'w') { |f|
     xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
-    if school_ids.present?
-      School.on_db(state.downcase.to_sym).where(:id => school_ids).each do |school|
-        xml.school {
-          xml.school_id school.id
-        }
+    xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
+    xml.tag!('gs-test-feed',
+             {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
+              :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
+      if state_test_infos.present?
+        state_test_infos.each do |test|
+          if test.present?
+            xml.tag! 'test' do
+              xml.tag! 'id', test[:id]
+              xml.tag! 'test-name', test[:test_name]
+              xml.tag! 'scale', test[:scale]
+              xml.tag! 'test-abbrv', test[:test_abbrv]
+              xml.tag! 'most-recent-year', test[:most_recent_year]
+              xml.tag! 'level-code', test[:level_code]
+              xml.tag! 'description', test[:description]
+            end
+          end
+        end
       end
-    else
-      School.on_db(state.downcase.to_sym).all.each do |school|
-        xml.school {
-          xml.school_id school.id
-        }
+     # require 'pry'
+     #  binding.pry
+     #
+     #  query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
+     #  school_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
+     #  school_in_feed.each do |school|
+     #    query = query.include_schools(school.state, school.id)
+     #  end
+     #  query_results = query.query
+     #
+     #  school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
+     #  schools_with_cache_results= school_cache_results.decorate_schools(school_in_feed)
+     #   binding.pry
+      if school_ids.present?
+        school_in_feed.each do |school|
+          xml.tag! 'test-result' do
+            xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
+          end
+        end
+      else
+        School.on_db(state.downcase.to_sym).all.each do |school|
+          xml.school {
+            xml.school_id school.id
+          }
+        end
       end
-    end
-    if district_ids.present?
-      District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
-        xml.district {
-          xml.district_id district.id
-        }
-      end
-    else
-      District.on_db(state.downcase.to_sym).all.each do |district|
-        xml.district {
-          xml.district_id district.id
-        }
-      end
+      # if district_ids.present?
+      #   District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
+      #     xml.district {
+      #       xml.district_id district.id
+      #     }
+      #   end
+      # else
+      #   District.on_db(state.downcase.to_sym).all.each do |district|
+      #     xml.district {
+      #       xml.district_id district.id
+      #     }
+      #   end
+      # end
     end
   }
 
+
+  # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
   puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
 
 end
