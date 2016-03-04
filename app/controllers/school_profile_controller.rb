@@ -13,6 +13,7 @@ class SchoolProfileController < SchoolController
   before_action :store_location, only: [:overview, :quality, :details, :reviews]
   before_action :set_last_school_visited, only: [:overview, :quality, :details, :reviews]
   before_action :set_seo_meta_tags, only: [:overview, :quality, :details, :reviews]
+  before_action :set_hreflang, only: [:overview, :quality, :details, :reviews]
 
   before_action :ad_setTargeting_through_gon, only: [:overview, :quality, :details, :reviews]
   before_action :data_layer_through_gon, only: [:overview, :quality, :details, :reviews]
@@ -89,6 +90,13 @@ class SchoolProfileController < SchoolController
         request.query_parameters
       ), status: :moved_permanently
     end
+  end
+
+  def set_hreflang
+    @hreflang = {}
+    @hreflang[:en] = remove_query_params_from_url(school_url(@school), [:lang])
+    @hreflang[:es] = add_query_params_to_url(school_url(@school), true, {lang: :es})
+    @hreflang
   end
 
   def set_seo_meta_tags

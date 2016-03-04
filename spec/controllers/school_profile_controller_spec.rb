@@ -158,6 +158,58 @@ describe SchoolProfileController do
 
   end
 
+  describe '#set_hreflang' do
+    let(:school) {
+      FactoryGirl.build(:school,
+                        id: 1,
+                        state: 'mi',
+                        city: 'detroit'
+      )
+    }
+    let(:env_global) { ENV_GLOBAL.to_hash.merge({'app_pk_host' => 'pk.greatschools.org'}) }
+
+    before do
+      controller.instance_variable_set(:@school, school)
+      stub_const('ENV_GLOBAL', env_global)
+    end
+
+    subject {controller.send(:set_hreflang)}
+
+    it {should be_a Hash}
+    it {should have_key(:en)}
+    it {should have_key(:es)}
+
+    context 'for a preschool' do
+      before do
+        school.level_code = 'p'
+        school.name = 'ABC Preschool'
+      end
+
+      it 'should use pk subdomain for english' do
+        expect(subject[:en]).to eq 'http://pk.greatschools.org/michigan/detroit/preschools/ABC-Preschool/1/'
+      end
+
+      it 'should use pk subdomain for spanish' do
+        expect(subject[:es]).to eq 'http://pk.greatschools.org/michigan/detroit/preschools/ABC-Preschool/1/?lang=es'
+      end
+    end
+
+    context 'for an elementary school' do
+      before do
+        school.level_code='e'
+        school.name='Test School'
+      end
+
+      it 'should not use pk subdomain for english' do
+        expect(subject[:en]).to eq 'http://localhost/michigan/detroit/1-Test-School/'
+      end
+
+      it 'should not use pk subdomain for spanish' do
+        expect(subject[:es]).to eq 'http://localhost/michigan/detroit/1-Test-School/?lang=es'
+      end
+    end
+  end
+
   describe 'Ads are getting correct values in gon' do
     describe '#ad_setTargeting_through_gon' do
       let(:school) {
