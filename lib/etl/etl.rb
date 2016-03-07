@@ -16,10 +16,12 @@ module GS
       def run(row)
         return if row.nil?
         rows = @step.run(row) if @step
-        rows ||= row
         rows = [rows] unless rows.is_a?(Array)
         @children.each do |step|
-          rows.each { |r| step.run(r.dup) }
+          rows.each do |r|
+            next unless r
+            step.run(r.dup)
+          end
         end
         rows
       end
