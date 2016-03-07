@@ -1,28 +1,28 @@
 require 'spec_helper'
 
-describe HashLookupTransformer do
+describe HashLookup do
   describe '.initialize' do
     context 'with empty key' do
-      subject { HashLookupTransformer.new(nil, {}) }
+      subject { HashLookup.new(nil, {}) }
       it 'is expected to raise error' do
         expect { subject }.to raise_error
       end
     end
     context 'with empty destination key' do
-      subject { HashLookupTransformer.new(:foo, {}, nil) }
+      subject { HashLookup.new(:foo, {}, nil) }
       it 'is expected to raise error' do
         expect { subject }.to raise_error
       end
     end
     context 'when nil hash' do
-      subject { HashLookupTransformer.new(:foo, nil, :bar) }
+      subject { HashLookup.new(:foo, nil, :bar) }
       it 'is expected to raise error' do
         expect { subject }.to raise_error
       end
     end
 
     context 'with valid attributes' do
-      subject { HashLookupTransformer.new(:foo, {}, :bar) }
+      subject { HashLookup.new(:foo, {}, :bar) }
       it 'is expected to raise error' do
         expect { subject }.to_not raise_error
       end
@@ -38,7 +38,7 @@ describe HashLookupTransformer do
     end
     subject { transformer.process(row) }
     context 'when not providing destination key' do
-      let(:transformer) { HashLookupTransformer.new(:foo, lookup_hash) }
+      let(:transformer) { HashLookup.new(:foo, lookup_hash) }
       context 'when row has the key to look up' do
         let(:row) do
           {
@@ -63,7 +63,7 @@ describe HashLookupTransformer do
     end
 
     context 'when providing destination key' do
-      let(:transformer) { HashLookupTransformer.new(:foo, lookup_hash, :bar) }
+      let(:transformer) { HashLookup.new(:foo, lookup_hash, :bar) }
       context 'when row has the key to look up' do
         let(:row) do
           {
