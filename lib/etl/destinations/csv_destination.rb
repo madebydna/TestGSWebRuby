@@ -1,4 +1,5 @@
 require 'step'
+require 'csv'
 
 # simple destination assuming all rows have the same fields
 class CsvDestination < GS::ETL::Step

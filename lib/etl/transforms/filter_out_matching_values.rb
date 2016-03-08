@@ -1,4 +1,6 @@
-class  FilterOutMatchingValues
+require 'step'
+
+class  FilterOutMatchingValues < GS::ETL::Step
   def initialize(values_to_match, field)
     @values_to_match = values_to_match
     @field = field
@@ -8,14 +10,21 @@ class  FilterOutMatchingValues
   def process(row)
     value = row[@field]
     if value_already_transformed?(value)
+      record(:duplicate_value)
       return nil
     elsif value_match?(value)
+      record(:filtered_out_because_match)
       @values_transformed << value
       return nil
-     else
+    else
+      record(:non_match)
       @values_transformed << value
       return row
     end
+  end
+
+  def event_key
+    "#{@field}"
   end
 
   private
