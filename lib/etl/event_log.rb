@@ -1,8 +1,15 @@
 require 'step'
+require 'etl'
 
 module GS
   module ETL
     class EventLog < GS::ETL::Step
+      include GS::ETL::Source
+
+      def event_log
+        nil
+      end
+
       def initialize
         @data = []
       end
@@ -24,6 +31,7 @@ module GS
         @data[id][key] ||= {}
         @data[id][key][value] ||= 0
         @data[id][key][value] += 1
+        nil
       end
 
       def lines

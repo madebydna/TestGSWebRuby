@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
+require 'event_log'
 require 'sources/csv_source'
 require 'sources/row_exploder_source'
 require 'transforms/row_exploder'
@@ -92,11 +93,12 @@ class Foo < GS::ETL::DataProcessor
 
     s1.destination CsvDestination, @output_file
 
-    event_log_steps.destination EventReportStdout
+    event_log.destination EventReportStdout
 
-    s1.transform RunOtherStepTree, event_log
+    system('clear')
+    s1.transform RunOtherStep, event_log
 
-    s1.run
+    s1.root.run
 
   end
 end

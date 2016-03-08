@@ -21,5 +21,6 @@ class EventReportStdout < GS::ETL::Step
       "Sum: #{sum}",
       "Avg: #{average}%\n").to_s
 
+    row
   end
 end
