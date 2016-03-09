@@ -110,14 +110,9 @@ end
 parsed_arguments = parse_arguments
 
 usage unless parsed_arguments.present?
-SCHOOL_CACHE_KEYS = %w(test_scores)
+SCHOOL_CACHE_FEED_KEYS = %w(test_scores feed_test_scores)
 
-def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
-  a = Time.now
-  puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
-
-  # require 'pry'
-  # xsd_schema ='greatschools-test.xsd'
+def generate_state_test_info(state)
   state_test_infos = []
 
   TestDescription.where(state: state).find_each do |test|
@@ -127,6 +122,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
         where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
     if test_data_set_info.present?
       state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
+                         :test_id => data_type_id,
                          :test_name => test_info.description,
                          :test_abbrv => test_info.name,
                          :scale => test.scale,
@@ -138,6 +134,16 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
     end
     state_test_infos.push(state_test_info)
   end
+  state_test_infos
+end
+
+def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
+  a = Time.now
+  puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
+
+  # require 'pry'
+  # xsd_schema ='greatschools-test.xsd'
+  state_test_infos = generate_state_test_info(state)
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
   generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
   xmlFile =generated_feed_file_location+generated_feed_file_name
@@ -150,7 +156,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
       if state_test_infos.present?
         state_test_infos.each do |test|
           if test.present?
-            xml.tag! 'test' do
+              xml.tag! 'test' do
               xml.tag! 'id', test[:id]
               xml.tag! 'test-name', test[:test_name]
               xml.tag! 'scale', test[:scale]
@@ -162,30 +168,39 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
           end
         end
       end
-     # require 'pry'
-     #  binding.pry
-     #
-     #  query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_KEYS)
-     #  school_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
-     #  school_in_feed.each do |school|
-     #    query = query.include_schools(school.state, school.id)
-     #  end
-     #  query_results = query.query
-     #
-     #  school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
-     #  schools_with_cache_results= school_cache_results.decorate_schools(school_in_feed)
-     #   binding.pry
-      if school_ids.present?
-        school_in_feed.each do |school|
-          xml.tag! 'test-result' do
-            xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
+      # require 'pry'
+      school_data_for_feed = prep_data_for_feed(school_ids, state)
+      if school_data_for_feed.present?
+        school_data_for_feed.each do |school|
+          if state_test_infos.present?
+            state_test_infos.each do |test|
+              test_id=test[:test_id]
+              complete_test_score_data = school.school_cache.test_scores[test_id.to_s]["All"]["grades"]
+              complete_test_score_data.each do |grade, grade_data|
+                grade_data_level = grade_data["level_code"]
+                grade_data_level.each do |level, subject_data|
+                  subject_data.each do |subject, years_data|
+                    years_data.each do |year, data|
+                      xml.tag! 'test-result' do
+                        xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
+                        xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                        xml.tag! 'grade-name', grade
+                        xml.tag! 'level-code-name', level
+                        xml.tag! 'subject-name', subject
+                        xml.tag! 'year', year
+                        xml.tag! 'number-tested', data["number_students_tested"]
+                        xml.tag! 'score', data["score"]
+                        # binding.pry
+                      end
+                    end
+                  end
+                end
+              end
+
+            end
+
           end
-        end
-      else
-        School.on_db(state.downcase.to_sym).all.each do |school|
-          xml.school {
-            xml.school_id school.id
-          }
+
         end
       end
       # if district_ids.present?
@@ -208,6 +223,27 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
   # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
   puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
 
+end
+
+
+def prep_data_for_feed(school_ids, state)
+  query = SchoolCacheQuery.new.include_cache_keys(SCHOOL_CACHE_FEED_KEYS)
+  if school_ids.present?
+    schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
+  else
+    schools_in_feed = School.on_db(state.downcase.to_sym).all
+  end
+  schools_in_feed.each do |school|
+    query = query.include_schools(school.state, school.id)
+  end
+  query_results = query.query
+  school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_FEED_KEYS, query_results)
+  # school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_FEED_KEYS)
+
+  schools_with_cache_results= school_cache_results.decorate_schools(schools_in_feed)
+  schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
+    FeedDecorator.decorate(school)
+  end
 end
 
 parsed_arguments.each do |args|
