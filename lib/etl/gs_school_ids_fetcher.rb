@@ -1,3 +1,5 @@
+require 'sharded_database_column_fetcher'
+
 class GsSchoolIdsFetcher
   STATE_ID_FIELD = 'state_id'
   TABLE = 'school'

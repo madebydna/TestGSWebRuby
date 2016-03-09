@@ -13,7 +13,7 @@ class  FilterOutMatchingValues < GS::ETL::Step
       record(:duplicate_value)
       return nil
     elsif value_match?(value)
-      record(:filtered_out_because_match)
+      record(:filtered_match)
       @values_transformed << value
       return nil
     else
