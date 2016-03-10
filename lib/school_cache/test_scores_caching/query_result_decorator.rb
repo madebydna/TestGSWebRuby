@@ -65,6 +65,10 @@ class TestScoresCaching::QueryResultDecorator
     proficiency_band.name if proficiency_band
   end
 
+  def proficiency_band_id
+    self['proficiency_band_id'] if self['proficiency_band_id'].present?
+  end
+
   def school_value
     self['school_value_text'] || self['school_value_float']
   end

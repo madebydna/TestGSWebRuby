@@ -140,8 +140,6 @@ end
 def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
   a = Time.now
   puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
-
-  # require 'pry'
   # xsd_schema ='greatschools-test.xsd'
   state_test_infos = generate_state_test_info(state)
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
@@ -168,14 +166,13 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
           end
         end
       end
-      # require 'pry'
       school_data_for_feed = prep_data_for_feed(school_ids, state)
       if school_data_for_feed.present?
         school_data_for_feed.each do |school|
           if state_test_infos.present?
             state_test_infos.each do |test|
               test_id=test[:test_id]
-              complete_test_score_data = school.school_cache.test_scores[test_id.to_s]["All"]["grades"]
+              complete_test_score_data = school.school_cache.feed_test_scores[test_id.to_s]["All"]["grades"]
               complete_test_score_data.each do |grade, grade_data|
                 grade_data_level = grade_data["level_code"]
                 grade_data_level.each do |level, subject_data|
@@ -190,7 +187,6 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
                         xml.tag! 'year', year
                         xml.tag! 'number-tested', data["number_students_tested"]
                         xml.tag! 'score', data["score"]
-                        # binding.pry
                       end
                     end
                   end
@@ -238,8 +234,6 @@ def prep_data_for_feed(school_ids, state)
   end
   query_results = query.query
   school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_FEED_KEYS, query_results)
-  # school_cache_results = SchoolCache.cached_results_for(school, self.class::SCHOOL_CACHE_FEED_KEYS)
-
   schools_with_cache_results= school_cache_results.decorate_schools(schools_in_feed)
   schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
     FeedDecorator.decorate(school)
