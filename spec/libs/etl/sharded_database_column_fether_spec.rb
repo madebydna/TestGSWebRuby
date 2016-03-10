@@ -7,7 +7,7 @@ describe  ShardedDatabaseColumnFetcher do
   end
     let(:client) { double(query: query_response) }
     let(:subject) do
-      fetcher = ShardedDatabaseColumnFetcher.new('dev','ca', 'school', 'state_id')
+      fetcher = ShardedDatabaseColumnFetcher.new('dev.greatschools.org','ca', 'school', 'state_id')
       fetcher.instance_variable_set(:@client, client)
       fetcher
     end
@@ -33,7 +33,7 @@ describe  ShardedDatabaseColumnFetcher do
   context 'with where statement' do
     let(:client) { double() }
     let(:subject) do
-      fetcher = ShardedDatabaseColumnFetcher.new('dev','ca', 'school', 'state_id', 'where state_id != \'\'')
+      fetcher = ShardedDatabaseColumnFetcher.new('dev.greatschools.org','ca', 'school', 'state_id', 'where state_id != \'\'')
       fetcher.instance_variable_set(:@client, client)
       fetcher.column
     end
