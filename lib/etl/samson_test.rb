@@ -15,7 +15,7 @@ require 'sources/buffered_group_by'
 require 'transforms/fill'
 
 
-class Foo < GS::ETL::DataProcessor
+class CATestProcessor < GS::ETL::DataProcessor
 
   def initialize(source_file, output_file)
     @source_file = source_file
