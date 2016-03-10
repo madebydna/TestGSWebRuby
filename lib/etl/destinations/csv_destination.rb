@@ -4,18 +4,23 @@ require 'csv'
 # simple destination assuming all rows have the same fields
 class CsvDestination < GS::ETL::Step
 
-  def initialize(output_file)
+  def initialize(output_file, *fields)
     @output_file = output_file
-    @csv = CSV.open(output_file, 'w')
+    @csv = CSV.open(output_file, 'w', col_sep: "\t")
+    @fields = fields
   end
 
   def write(row)
+    fields = @fields || row.keys
+    if @fields
+      row = row.select { |k| @fields.include?(k) }
+    end
     unless @headers_written
       @headers_written = true
-      @csv << row.keys
+      @csv << fields
     end
     record('Wrote row')
-    @csv << row.values
+    @csv << fields.map { |f| row[f] }
     row
   end
 
