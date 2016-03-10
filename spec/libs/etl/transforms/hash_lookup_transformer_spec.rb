@@ -15,15 +15,15 @@ describe HashLookup do
       end
     end
     context 'when nil hash' do
-      subject { HashLookup.new(:foo, nil, :bar) }
+      subject { HashLookup.new(:foo, nil, to: :bar) }
       it 'is expected to raise error' do
         expect { subject }.to raise_error
       end
     end
 
     context 'with valid attributes' do
-      subject { HashLookup.new(:foo, {}, :bar) }
-      it 'is expected to raise error' do
+      subject { HashLookup.new(:foo, {}, to: :bar) }
+      it 'is expected to not raise error' do
         expect { subject }.to_not raise_error
       end
     end
@@ -63,7 +63,7 @@ describe HashLookup do
     end
 
     context 'when providing destination key' do
-      let(:transformer) { HashLookup.new(:foo, lookup_hash, :bar) }
+      let(:transformer) { HashLookup.new(:foo, lookup_hash, to: :bar) }
       context 'when row has the key to look up' do
         let(:row) do
           {
