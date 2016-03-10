@@ -55,7 +55,7 @@ module GS
           key: key,
           value: value
         }
-        event_log.process(row)
+        event_log.process(row) if event_log
       end
 
       def event_key
