@@ -2,7 +2,7 @@ $LOAD_PATH << "."
 
 require 'common'
 
-source CsvSource, '/Users/rhunter/CodeGS/etl_data_files/nc_2015_first_50.txt', col_sep: ' ', headers: true, header_converters: :symbol
+source CsvSource, '/Users/rhunter/CodeGS/etl_data_files/wa_2015_state_first_50.txt', col_sep: ' ', headers: true, header_converters: :symbol
 
 #concat_state_id!
 
@@ -16,15 +16,14 @@ transform do |row|
   # save the county rows in separate file
 
   #require 'pry'; binding.pry
-  
+
   rows_county = (row[:county_code] == "1") && (row[:district_code] == "") && (row[:school_code] == "")
 
   rows_county ? row : nil
 
   ap row
   row
-  
+
 end
 
 destination CsvDestination, '/Users/rhunter/CodeGS/etl_data_files/county_info_all.txt'
-

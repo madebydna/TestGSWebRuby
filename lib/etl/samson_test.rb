@@ -15,6 +15,7 @@ require 'sources/buffered_group_by'
 require 'transforms/fill'
 require 'ca_entity_level_parser'
 require 'transforms/with_block'
+require 'gs_breakdown_id_definitions'
 
 
 class CATestProcessor < GS::ETL::DataProcessor
@@ -92,25 +93,7 @@ class CATestProcessor < GS::ETL::DataProcessor
     s1.transform(
       HashLookup,
       :breakdown,
-      {
-        '1' => 1,
-        '3' => 12,
-        '4' => 11,
-        '160' => 15,
-        '28' => 19,
-        '31' => 9,
-        '111' => 10,
-        '128' => 13,
-        '99' => 14,
-        '74' => 3,
-        '75' => 4,
-        '77' => 5,
-        '78' => 6,
-        '80' => 8,
-        '76' => 2,
-        '79' => 112,
-        '144' => 21,
-      },
+      GsBreakdownIdDefinitions.breakdown_lookup,
       to: :breakdown_id,
       ignore: ['6','7','8','90','91','92','93','94','121''202','200','203',
                '205','206', '207','220','221','222','223','204','201','224',
@@ -135,24 +118,24 @@ class CATestProcessor < GS::ETL::DataProcessor
 
     # s2 = s1.transform BufferedGroupBy, [:year, :grade, :level_code, :test_data_type_id, :subject_id], [:breakdown_id, :proficiency_band_id]
     s1.transform FieldRenamer, :test_data_type_id, :data_type_id
-    s2 = s1.destination LoadConfigFile, '/tmp/ca_config_file.txt', {
-      source_id: 7,
-      state: 'ca',
-      notes: 'Year 2015 CA TEST',
-      url: 'http://caaspp.cde.ca.gov/sb2015/ResearchFileList',
-      file: 'ca/2015/output/ca.2015.1.public.charter.[level].txt',
-      level: nil,
-      school_type: 'public,charter'
-    }
+    # s2 = s1.destination LoadConfigFile, '/tmp/ca_config_file.txt', {
+    #   source_id: 7,
+    #   state: 'ca',
+    #   notes: 'Year 2015 CA TEST',
+    #   url: 'http://caaspp.cde.ca.gov/sb2015/ResearchFileList',
+    #   file: 'ca/2015/output/ca.2015.1.public.charter.[level].txt',
+    #   level: nil,
+    #   school_type: 'public,charter'
+    # }
 
-    # s1.destination CsvDestination, @output_file, :year, :entity_type, 
-    #   :entity_level, :state_id, :school_id, :school_name, :district_id, 
-    #   :district_name, :test_data_type, :test_data_type_id, :grade,
-    #   :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band, 
-    #   :proficiency_band_id, :level_code, :number_tested, :value_float
+    s1.destination CsvDestination, @output_file, :year, :entity_type,
+      :entity_level, :state_id, :school_id, :school_name, :district_id,
+      :district_name, :test_data_type, :test_data_type_id, :grade,
+      :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
+      :proficiency_band_id, :level_code, :number_tested, :value_float
 
     s1.root.run
-    s2.run
+    #s2.run
     #
 
 
@@ -162,7 +145,7 @@ end
 file = '/Users/samson/Development/data/ca2015_sample.txt'
 # file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
 output_file = '/tmp/output.csv'
-Foo.new(file, output_file).run
+CATestProcessor.new(file, output_file).run
 
 
 
