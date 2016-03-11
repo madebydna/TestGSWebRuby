@@ -3,8 +3,8 @@ module GS
     class Step
       attr_accessor :parent, :children, :id, :event_log
 
-      def add_step(step_class, *args)
-        step = step_class.new(*args)
+      def add_step(step_class, *args, &block)
+        step = step_class.new(*args, &block)
         step.id = id+1
         add(step)
         step

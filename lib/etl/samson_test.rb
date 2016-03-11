@@ -13,6 +13,8 @@ require 'destinations/event_report_stdout'
 require 'destinations/load_config_file'
 require 'sources/buffered_group_by'
 require 'transforms/fill'
+require 'ca_entity_level_parser'
+require 'transforms/with_block'
 
 
 class CATestProcessor < GS::ETL::DataProcessor
@@ -116,6 +118,15 @@ class CATestProcessor < GS::ETL::DataProcessor
     )
 
     s1.transform FieldRenamer, :proficiency_band_value, :value_float
+    s1.transform FieldRenamer, :proficiency_band_value, :school_value_float
+    s1.transform FieldRenamer, :students_tested, :number_tested
+    s1.transform FieldRenamer, :test_year, :year
+
+    s1.transform WithBlock do |row|
+      CaEntityLevelParser.new(row).parse
+    end
+
+    s1.destination CsvDestination, @output_file
 
     event_log.destination EventReportStdout
 
