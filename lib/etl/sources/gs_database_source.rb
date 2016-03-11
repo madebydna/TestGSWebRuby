@@ -2,7 +2,7 @@
 class GsShardedDatabaseSource < GS::ETL::Step
   include GS::ETL::Source
   def initialize(args)
-    args.fetch(:host, 'datadev')
+    args.fetch(:host, 'datadev.greatschools.org')
     args.fetch(:state, 'ca')
     args.fetch(:table, 'school')
     args.fetch(:where, '')

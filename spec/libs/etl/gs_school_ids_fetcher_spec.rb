@@ -9,10 +9,10 @@ describe GsSchoolIdsFetcher do
      stub_const('ShardedDatabaseColumnFetcher', fake_column_fetcher_class)
      allow(fake_column_fetcher_class).to receive(:new).and_return(fetcher)
   end
-  let(:subject) { gs_school_ids_fetcher = GsSchoolIdsFetcher.new('dev','ca') }
+  let(:subject) { gs_school_ids_fetcher = GsSchoolIdsFetcher.new('dev.greatschools.org','ca') }
   describe '#column' do
     it 'should instantiate column fetcher with correct params' do
-      expect(fake_column_fetcher_class).to receive(:new).with('dev', 'ca', 'school', 'state_id', 'where state_id != \'\'')
+      expect(fake_column_fetcher_class).to receive(:new).with('dev.greatschools.org', 'ca', 'school', 'state_id', 'where state_id != \'\'')
       subject.column
     end
     it 'should return column' do

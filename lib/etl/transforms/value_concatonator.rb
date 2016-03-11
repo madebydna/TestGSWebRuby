@@ -1,3 +1,5 @@
+require 'step'
+
 class ValueConcatonator < GS::ETL::Step
 
   def initialize(destination_column, *source_columns)
@@ -7,6 +9,7 @@ class ValueConcatonator < GS::ETL::Step
 
   def process(row)
       row[@destination_column]  = @source_columns.reduce('') { |sum, c| sum + row[c] }
+      record(:concatonate_column)
       row
   end
 

@@ -7,7 +7,7 @@ describe GsShardedDatabaseSource do
   end
   let(:client) { double(query: query_response) }
   context 'with no where statement' do
-    let(:args) { {host: 'datadev', state: 'ca', table: 'school' } }
+    let(:args) { {host: 'datadev.greatschools.org', state: 'ca', table: 'school' } }
     let(:subject) do
       fetcher = GsShardedDatabaseSource.new(args)
       fetcher.instance_variable_set(:@client, client)
@@ -22,7 +22,7 @@ describe GsShardedDatabaseSource do
     end
   end
   context 'with where statement' do
-    let(:args) { {host: 'datadev', state: 'ca', table: 'school', where: 'where state_id != \'\'' } }
+    let(:args) { {host: 'datadev.greatschools.org', state: 'ca', table: 'school', where: 'where state_id != \'\'' } }
     let(:subject) do
       fetcher =  GsShardedDatabaseSource.new(args)
       fetcher.instance_variable_set(:@client, client)

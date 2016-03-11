@@ -24,8 +24,8 @@ module GS
         @step = step
       end
 
-      def add_step(source_class, *args)
-        @step = @step.add_step(source_class, *args)
+      def add_step(source_class, *args, &block)
+        @step = @step.add_step(source_class, *args, &block)
       end
       alias_method :transform, :add_step
       alias_method :destination, :add_step
