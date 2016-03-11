@@ -1,11 +1,7 @@
 <% school_page_path =  school_path(school) %>
-<% query_string = '' %>
-<% query_string << "?lang=#{params[:lang]}" if params[:lang] %>
 <% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>
-<% school_reviews_page_url = school_page_url + 'reviews/' + query_string %>
-<% school_quality_page_url = school_page_url + 'quality/' + query_string %>
-<% school_page_url << query_string %>
 <% school_provided_photo = decorated_school.uploaded_photo(130) %>
+<% school_reviews_page_url = school_reviews_url(school) %>
 <% if search_by_location? %>
   <% distance = decorated_school.distance #converting to 2 decimal places %>
 <% end %>
@@ -63,7 +59,7 @@
             <% end%>
             <!-- GS Rating -->
             <div class="col-xs-6 col-sm-4 mvl tac">
-              <%=link_to school_quality_page_url do%>
+              <%=link_to school_quality_url(school) do%>
               <%= render 'performance/gs_rating', value: school.overall_gs_rating, size: 'sm', css_class: 'ma' %>
               <div class="pts"></div>
               <span class="tac font-size-xs db link-darkgray" style="line-height: 1.3em;"><%= t('.greatschools_rating_html') %></span>
