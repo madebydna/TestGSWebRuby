@@ -75,6 +75,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
+                    url = GS.I18n.preserveLanguageParam(url);
                     GS.uri.Uri.goToPage(url);
                     return false
                 } else if (searchType == 'byLocation') {
@@ -228,9 +229,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
 
         // Not setting a timeout breaks back button
-        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
+        setTimeout(function() { 
+          var url = window.location.protocol + '//' + window.location.host +
             SEARCH_PAGE_PATH +
-            GS.uri.Uri.getQueryStringFromObject(searchOptions)); }, 1);
+            GS.uri.Uri.getQueryStringFromObject(searchOptions);
+          url = GS.I18n.preserveLanguageParam(url);
+          GS.uri.Uri.goToPage(url); 
+        }, 1);
     };
 
 
@@ -405,9 +410,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             queryString.state = state;
         }
 
-        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
-                SEARCH_PAGE_PATH +
-                GS.uri.Uri.getQueryStringFromObject(queryString)); }, 1);
+        setTimeout(function() {
+          var url = window.location.protocol + '//' + window.location.host +
+            SEARCH_PAGE_PATH +
+            GS.uri.Uri.getQueryStringFromObject(queryString);
+          url = GS.I18n.preserveLanguageParam(url);
+          GS.uri.Uri.goToPage(url);
+        }, 1);
         return false;
     };
 
