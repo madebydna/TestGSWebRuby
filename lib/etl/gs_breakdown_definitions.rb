@@ -1,7 +1,5 @@
 class GsBreakdownDefinitions
-
   def self.breakdown_lookup
-
     breakdown_hash = {
         '1' => 1,
         '3' => 12,
@@ -22,6 +20,6 @@ class GsBreakdownDefinitions
         '144' => 21,
     }
 
+    breakdown_hash
   end
-
 end

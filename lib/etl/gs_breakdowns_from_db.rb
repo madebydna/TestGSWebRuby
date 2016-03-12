@@ -1,7 +1,7 @@
 require 'mysql2'
 
 class GsBreakdownsFromDb
-  
+
   def self.fetch
 
     all_breakdowns = Hash.new
@@ -11,13 +11,10 @@ class GsBreakdownsFromDb
     results = client.query("select * from gs_schooldb.TestDataBreakdown;")
 
     results.each do |row|
-
       all_breakdowns[ row["id"] ] = row["name"]
-
     end
-
+    # require 'pry'; binding.pry
+    # p all_breakdowns
     all_breakdowns
-
   end
-
 end
