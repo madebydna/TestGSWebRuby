@@ -277,7 +277,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
                     years_data.each do |year, data|
                       # Proficient and above data that is not stored by band name in cache data
                       xml.tag! 'test-result' do
-                        xml.tag! 'universal-id', get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
+                        xml.tag! 'universal-id', '1' + get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
                         xml.tag! 'entity-level', "District"
                         xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
                         xml.tag! 'grade-name', grade
