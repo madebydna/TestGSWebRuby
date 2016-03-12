@@ -30,8 +30,8 @@ module GS
       def inject(start_value, &block)
         result = block.call(start_value, self)
         children.each do |child|
-          result = result.clone if result
-          child.inject(result, &block)
+          r = result ? result.clone : nil
+          child.inject(r, &block)
         end
       end
 
