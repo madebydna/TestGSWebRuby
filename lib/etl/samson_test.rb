@@ -16,17 +16,27 @@ require 'transforms/fill'
 require 'ca_entity_level_parser'
 require 'transforms/with_block'
 require 'gs_breakdown_id_definitions'
+require 'transforms/column_selector'
+require 'transforms/keep_rows'
 
 
 class CATestProcessor < GS::ETL::DataProcessor
 
-  def initialize(source_file, output_file)
+  def initialize(source_file, output_files)
     @source_file = source_file
-    @output_file = output_file
+    @state_output_file = output_files.fetch(:state)
+    @school_output_file = output_files.fetch(:school)
+    @district_output_file = output_files.fetch(:district)
+    @config_output_file = output_files.fetch(:config)
   end
 
   def run
     s1 = source CsvSource, @source_file
+
+    s1.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
+      :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested,
+      :percentage_standard_exceeded, :percentage_standard_met, :percentage_standard_nearly_met, 
+      :percentage_standard_not_met
 
     s1.transform Fill,
       test_data_type: 'caasp',
@@ -72,8 +82,7 @@ class CATestProcessor < GS::ETL::DataProcessor
       test_year: :year,
       test_id: :subject,
       subgroup_id: :breakdown,
-      students_tested: :number_tested,
-      test_year: :year
+      students_tested: :number_tested
     }
 
     s1.transform TrimLeadingZeros, :grade
@@ -89,7 +98,6 @@ class CATestProcessor < GS::ETL::DataProcessor
       to: :subject_id
     )
 
-
     s1.transform(
       HashLookup,
       :breakdown,
@@ -101,51 +109,67 @@ class CATestProcessor < GS::ETL::DataProcessor
     )
 
     s1.transform FieldRenamer, :proficiency_band_value, :value_float
-    s1.transform FieldRenamer, :proficiency_band_value, :school_value_float
-    s1.transform FieldRenamer, :students_tested, :number_tested
-    s1.transform FieldRenamer, :test_year, :year
 
     s1.transform WithBlock do |row|
       CaEntityLevelParser.new(row).parse
     end
 
-    s1.destination CsvDestination, @output_file
+    # s1.destination CsvDestination, @output_file
 
+    s1.transform FieldRenamer, :test_data_type_id, :data_type_id
+
+    last_node_before_split = s1.transform KeepRows, ['district','school','state'], :entity_level
+
+    node_for_state_only_data = last_node_before_split.transform KeepRows, ['state'], :entity_level
+
+    node_for_school_only_data = last_node_before_split.transform KeepRows, ['school'], :entity_level
+
+    node_for_district_only_data = last_node_before_split.transform KeepRows, ['district'], :entity_level
+
+    node_for_config_file = last_node_before_split.destination LoadConfigFile, '/tmp/ca_config_file.txt', {
+      source_id: 7,
+      state: 'ca',
+      notes: 'Year 2015 CA TEST',
+      url: 'http://caaspp.cde.ca.gov/sb2015/ResearchFileList',
+      file: 'ca/2015/output/ca.2015.1.public.charter.[level].txt',
+      level: nil,
+      school_type: 'public,charter'
+    }
+
+    column_order = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
+      :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
+      :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
+      :proficiency_band_id, :level_code, :number_tested, :value_float]
+
+    node_for_state_only_data.destination CsvDestination, @state_output_file, *column_order
+    node_for_school_only_data.destination CsvDestination, @school_output_file, *column_order
+    node_for_district_only_data.destination CsvDestination, @district_output_file, *column_order
+
+    node_for_config_file.destination CsvDestination, @config_output_file, *column_order
     event_log.destination EventReportStdout
 
     system('clear')
     s1.transform RunOtherStep, event_log
 
-    # s2 = s1.transform BufferedGroupBy, [:year, :grade, :level_code, :test_data_type_id, :subject_id], [:breakdown_id, :proficiency_band_id]
-    s1.transform FieldRenamer, :test_data_type_id, :data_type_id
-    # s2 = s1.destination LoadConfigFile, '/tmp/ca_config_file.txt', {
-    #   source_id: 7,
-    #   state: 'ca',
-    #   notes: 'Year 2015 CA TEST',
-    #   url: 'http://caaspp.cde.ca.gov/sb2015/ResearchFileList',
-    #   file: 'ca/2015/output/ca.2015.1.public.charter.[level].txt',
-    #   level: nil,
-    #   school_type: 'public,charter'
-    # }
-
-    s1.destination CsvDestination, @output_file, :year, :entity_type,
-      :entity_level, :state_id, :school_id, :school_name, :district_id,
-      :district_name, :test_data_type, :test_data_type_id, :grade,
-      :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
-      :proficiency_band_id, :level_code, :number_tested, :value_float
-
     s1.root.run
-    #s2.run
-    #
-
+    node_for_config_file.run
 
   end
 end
 
-file = '/Users/samson/Development/data/ca2015_sample.txt'
+# ca2015_all_csv_v1_sample.txt
+
+# file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1.txt'
+
 # file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
-output_file = '/tmp/output.csv'
-CATestProcessor.new(file, output_file).run
+
+output_files = {
+    state: '/tmp/sample_output_state.csv',
+    school: '/tmp/sample_output_school.csv',
+    district: '/tmp/sample_output_district.csv',
+    config: '/tmp/sample_output_config.csv' }
+
+CATestProcessor.new(file, output_files).run
 
 
 
