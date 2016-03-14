@@ -1,4 +1,4 @@
-class GsBreakdownIdDefinitions
+class GsBreakdownDefinitions
 
   def self.breakdown_lookup
 
