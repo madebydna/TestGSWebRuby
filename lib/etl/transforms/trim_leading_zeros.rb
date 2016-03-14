@@ -7,7 +7,7 @@ class TrimLeadingZeros < GS::ETL::Step
   end
 
   def process(row)
-    row[@field].sub!(/^0/, '') if row.has_key?(@field)
+    row[@field].sub!(/^0+/, '') if row.has_key?(@field)
     row
   end
 
@@ -16,7 +16,7 @@ class TrimLeadingZeros < GS::ETL::Step
   end
 
   def field=(f)
-    raise 'Field to cannot be nil or empty' if f.empty?
+    raise 'Field to cannot be nil or empty' if f == nil || f.length == 0
     @field = f
   end
 
