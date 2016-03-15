@@ -7,12 +7,12 @@ require 'step'
 #     c: 3
 #   }
 # ] 
-# RowExploder.new([:a, :b, :c], 'type', 'value')
+# RowExploder.new('type', 'value', [:a, :b, :c])
 # becomes
 # [
 #   {
-#     type: 'a',
-#     value: 1,
+#     type: 'a', # the label_field
+#     value: 1,  # the value_field
 #   },
 #   {
 #     type: 'b',
@@ -25,10 +25,14 @@ require 'step'
 # ]
 class RowExploder < GS::ETL::Step
 
+  # label_field is used to store the name of the column that was used to
+  # explode a new row
+  # value_field is used to store the value that was in the cell for 
+  # the column that was exploded
   def initialize(label_field, value_field, *fields)
-    @fields = *fields
-    @label_field = label_field
-    @value_field = value_field
+    self.fields = fields
+    self.label_field = label_field
+    self.value_field = value_field
   end
 
   def process(row)
@@ -45,5 +49,26 @@ class RowExploder < GS::ETL::Step
 
   def event_key
     @label_field
+  end
+
+  def label_field=(label_field)
+    if label_field == nil || label_field.length < 1
+      raise ArgumentError, 'label_field must be provided'
+    end
+    @label_field = label_field
+  end
+
+  def value_field=(value_field)
+    if value_field == nil || value_field.length < 1
+      raise ArgumentError, 'value_field must be provided'
+    end
+    @value_field = value_field
+  end
+
+  def fields=(fields)
+    if fields == nil || fields.length < 1
+      raise ArgumentError, 'fields must be provided'
+    end
+    @fields = fields
   end
 end
