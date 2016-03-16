@@ -11,7 +11,8 @@ class GSLogger
     community_spotlight: 'COMMUNITY_SPOTLIGHT',
     external_content_fetcher: 'EXTERNAL_CONTENT_FETCHER',
     school_cache: 'SCHOOL_CACHE',
-    gk_action: 'GK_ACTION'
+    gk_action: 'GK_ACTION',
+    shared_cache: 'SHARED_CACHE'
   })
 
   class << self
