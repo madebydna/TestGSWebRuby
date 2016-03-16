@@ -175,6 +175,30 @@ Possible feed  files: #{all_feeds.join(', ')}\n\n"
 end
 
 
+def prep_state_data_for_feed(state)
+  proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
+  test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
+  state_test_data =TestDataSet.test_scores_for_state(state)
+  state_test_infos = []
+  state_test_data.each do |data|
+    state_test_info = {:universal_id => get_state_fips[state.upcase],
+                       :entity_level => 'state',
+                       :test_id => state.upcase + data.data_type_id.to_s.rjust(5, '0'),
+                       :year => data.year,
+                       :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
+                       :grade_name => data.grade_name,
+                       :level_code_name => data.level_code,
+                       :score => data.state_value_text|| data.state_value_float,
+                       # For proficient and above band id is always null in database
+                       :proficiency_band_id => data.proficiency_band_id.nil? ?  '': data.proficiency_band_id,
+                       :proficiency_band_name =>  data.proficiency_band_id.nil? ? 'proficient and above' : proficiency_bands[data.proficiency_band_id].name,
+                       :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
+    }
+    state_test_infos.push(state_test_info)
+  end
+  state_test_infos
+end
+
 def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
   a = Time.now
   puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
@@ -192,7 +216,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
       if state_test_infos.present?
         state_test_infos.each do |test|
           if test.present?
-            xml.tag! 'test' do
+             xml.tag! 'test' do
               xml.tag! 'id', test[:id]
               xml.tag! 'test-name', test[:test_name]
               xml.tag! 'scale', test[:scale]
@@ -204,11 +228,20 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
           end
         end
       end
-      # entity_type = "district"
-      # require 'pry'
-      #      binding.pry
+
       school_data_for_feed = prep_school_data_for_feed(school_ids, state)
-      cached_data_for_all_districts = prep_district_data_for_feed(district_ids, state)
+      district_data_for_feed = prep_district_data_for_feed(district_ids, state)
+      state_data_for_feed = prep_state_data_for_feed(state)
+
+      if state_data_for_feed.present?
+        state_data_for_feed.each do |state_data|
+          xml.tag! 'test-result' do
+            state_data.each do |key,value |
+              xml.tag! key.to_s.gsub("_","-"), value
+           end
+          end
+        end
+      end
 
       if school_data_for_feed.present?
         school_data_for_feed.each do |school|
@@ -232,7 +265,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
                         xml.tag! 'year', year
                         xml.tag! 'number-tested', data["number_students_tested"]
                         xml.tag! 'score', data["score"]
-                        xml.tag! 'proficiency-band-name', "Proficient and above"
+                        xml.tag! 'proficiency-band-name', "proficient and above"
                       end
 
                       bands = data.keys.select { |key| key.ends_with?('band_id') }
@@ -264,8 +297,8 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
 
         end
       end
-      if cached_data_for_all_districts.present?
-        cached_data_for_all_districts.each do |district|
+      if district_data_for_feed.present?
+        district_data_for_feed.each do |district|
           if state_test_infos.present?
             state_test_infos.each do |test|
               test_id=test[:test_id]
@@ -319,19 +352,6 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
         end
       end
 
-      # if district_ids.present?
-      #   District.on_db(state.downcase.to_sym).where(:id => district_ids).each do |district|
-      #     xml.district {
-      #       xml.district_id district.id
-      #     }
-      #   end
-      # else
-      #   District.on_db(state.downcase.to_sym).all.each do |district|
-      #     xml.district {
-      #       xml.district_id district.id
-      #     }
-      #   end
-      # end
     end
   }
 

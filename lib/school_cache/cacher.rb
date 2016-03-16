@@ -9,6 +9,7 @@ class Cacher
   # :school_reviews
   # :school_media
   # :esp_response
+  # :feed_test_scores
 
   def initialize(school)
     @school = school
