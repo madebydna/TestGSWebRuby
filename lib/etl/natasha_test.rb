@@ -17,6 +17,7 @@ require 'ca_entity_level_parser'
 require 'transforms/with_block'
 require 'gs_breakdown_definitions'
 require 'gs_breakdowns_from_db'
+require 'transforms/unique_values'
 
 class CATestProcessor < GS::ETL::DataProcessor
 
@@ -183,6 +184,10 @@ class CATestProcessor < GS::ETL::DataProcessor
                    :district_name, :test_data_type, :test_data_type_id, :grade,
                    :subject, :subject_id, :ca_breakdown_id, :ca_breakdown_label, :gs_breakdown_label, :gs_breakdown_id, :proficiency_band,
                    :proficiency_band_id, :level_code, :number_tested, :value_float
+
+    s1.transform(UniqueValues, :ca_breakdown_label, :ca_breakdown_id, :gs_breakdown_label, :gs_breakdown_id)
+
+    s1.destination CsvDestination, @output_file, :ca_breakdown_label, :ca_breakdown_id, :gs_breakdown_label, :gs_breakdown_id
 
     s1.root.run
     #s2.run
