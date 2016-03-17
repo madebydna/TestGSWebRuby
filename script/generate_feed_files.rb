@@ -1,4 +1,6 @@
-module GenerateFeed
+module FeedHelper
+  FEED_CACHE_KEYS = %w(feed_test_scores)
+
   def all_feeds
     ['test_scores', 'ratings']
   end
@@ -124,6 +126,31 @@ module GenerateFeed
     end
   end
 
+  def prep_state_data_for_feed(state)
+    proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
+    test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
+    query_results =TestDataSet.test_scores_for_state(state)
+    state_level_test_data = []
+    query_results.each do |data|
+      test_data = {:universal_id => get_state_fips[state.upcase],
+                   :entity_level => 'state',
+                   :test_id => state.upcase + data.data_type_id.to_s.rjust(5, '0'),
+                   :year => data.year,
+                   :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
+                   :grade_name => data.grade_name,
+                   :level_code_name => data.level_code,
+                   :score => data.state_value_text|| data.state_value_float,
+                   # For proficient and above band id is always null in database
+                   :proficiency_band_id => data.proficiency_band_id.nil? ? '' : data.proficiency_band_id,
+                   :proficiency_band_name => data.proficiency_band_id.nil? ? 'proficient and above' : proficiency_bands[data.proficiency_band_id].name,
+                   :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
+      }
+      state_level_test_data.push(test_data)
+    end
+    state_level_test_data
+  end
+
+
   def parse_arguments
     # Returns false or parsed arguments
     if ARGV[0] == 'all' && ARGV[1].nil?
@@ -159,248 +186,235 @@ module GenerateFeed
       args
     end
   end
-end
+
+  def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
+    a = Time.now
+    puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
+    # xsd_schema ='greatschools-test.xsd'
+
+    #Generate State Test Master Data
+    state_test_infos_for_feed = prep_state_test_infos_data_for_feed(state)
+    #Generate School Test  Data
+    school_data_for_feed = prep_school_data_for_feed(school_ids, state)
+    # Generate District Test Data
+    district_data_for_feed = prep_district_data_for_feed(district_ids, state)
+    # Generate state Test Data
+    state_data_for_feed = prep_state_data_for_feed(state)
+
+    generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
+    generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
+
+    xmlFile =generated_feed_file_location+generated_feed_file_name
+    File.open(xmlFile, 'w') { |f|
+      xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
+      xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
+      xml.tag!('gs-test-feed',
+               {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
+                :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
+        if state_test_infos_for_feed.present?
+          state_test_infos_for_feed.each do |test_info|
+            xml.tag! 'test' do
+              test_info.each do |key, value|
+                xml.tag! key.to_s.gsub("_", "-"), value
+              end
+            end
+          end
+        end
 
 
-include GenerateFeed
-FEED_CACHE_KEYS = %w(feed_test_scores)
+        if state_data_for_feed.present?
+          state_data_for_feed.each do |state_data|
+            xml.tag! 'test-result' do
+              state_data.each do |key, value|
+                xml.tag! key.to_s.gsub("_", "-"), value
+              end
+            end
+          end
+        end
+        # require 'pry'
+        # binding.pry
 
 
-def usage
-  abort "\n\nUSAGE: rails runner script/generate_feed_files(all | [feed_name]:[state]:[school_id]:[district_id]:[location]:[name])
+        if school_data_for_feed.present?
+          school_data_for_feed.each do |school|
+            if state_test_infos_for_feed.present?
+              # binding.pry
+
+              state_test_infos_for_feed.each do |test|
+                # binding.pry
+
+                test_id=test[:test_id]
+                all_test_score_data = school.school_cache.feed_test_scores[test_id.to_s]
+                if all_test_score_data.present?
+                  complete_test_score_data = all_test_score_data["All"]["grades"]
+                end
+                if complete_test_score_data.present?
+                  complete_test_score_data.each do |grade, grade_data|
+                    grade_data_level = grade_data["level_code"]
+                    grade_data_level.each do |level, subject_data|
+                      subject_data.each do |subject, years_data|
+                        years_data.each do |year, data|
+                          # Proficient and above data that is not stored by band name in cache data
+                          xml.tag! 'test-result' do
+                            xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
+                            xml.tag! 'entity-level', "School"
+                            xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                            xml.tag! 'grade-name', grade
+                            xml.tag! 'level-code-name', level
+                            xml.tag! 'subject-name', subject
+                            xml.tag! 'year', year
+                            xml.tag! 'number-tested', data["number_students_tested"]
+                            xml.tag! 'score', data["score"]
+                            xml.tag! 'proficiency-band-name', "proficient and above"
+                          end
+
+                          bands = data.keys.select { |key| key.ends_with?('band_id') }
+                          band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
+                          band_names.each do |band|
+                            xml.tag! 'test-result' do
+                              xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
+                              xml.tag! 'entity-level', "School"
+                              xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                              xml.tag! 'grade-name', grade
+                              xml.tag! 'level-code-name', level
+                              xml.tag! 'subject-name', subject
+                              xml.tag! 'year', year
+                              xml.tag! 'number-tested', data[band+"_number_students_tested"]
+                              xml.tag! 'score', data[band+"_score"]
+                              xml.tag! 'proficiency-band-name', band
+                              xml.tag! 'proficiency-band-id', data[band+"_band_id"]
+                            end
+                          end
+
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+
+            end
+
+          end
+        end
+        if district_data_for_feed.present?
+          district_data_for_feed.each do |district|
+            if state_test_infos_for_feed.present?
+              state_test_infos_for_feed.each do |test|
+                test_id=test[:test_id]
+                all_test_score_data = district.district_cache.feed_test_scores[test_id.to_s]
+                if all_test_score_data.present?
+                  complete_test_score_data = all_test_score_data["All"]["grades"]
+                end
+                if complete_test_score_data.present?
+                  complete_test_score_data.each do |grade, grade_data|
+                    grade_data_level = grade_data["level_code"]
+                    grade_data_level.each do |level, subject_data|
+                      subject_data.each do |subject, years_data|
+                        years_data.each do |year, data|
+                          # Proficient and above data that is not stored by band name in cache data
+                          xml.tag! 'test-result' do
+                            xml.tag! 'universal-id', '1' + get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
+                            xml.tag! 'entity-level', "District"
+                            xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                            xml.tag! 'grade-name', grade
+                            xml.tag! 'level-code-name', level
+                            xml.tag! 'subject-name', subject
+                            xml.tag! 'year', year
+                            xml.tag! 'number-tested', data["number_students_tested"]
+                            xml.tag! 'score', data["score"]
+                            xml.tag! 'proficiency-band-name', "proficient and above"
+                          end
+
+                          bands = data.keys.select { |key| key.ends_with?('band_id') }
+                          band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
+                          band_names.each do |band|
+                            xml.tag! 'test-result' do
+                              xml.tag! 'universal-id', get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
+                              xml.tag! 'entity-level', "District"
+                              xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                              xml.tag! 'grade-name', grade
+                              xml.tag! 'level-code-name', level
+                              xml.tag! 'subject-name', subject
+                              xml.tag! 'year', year
+                              xml.tag! 'number-tested', data[band+"_number_students_tested"]
+                              xml.tag! 'score', data[band+"_score"]
+                              xml.tag! 'proficiency-band-name', band
+                              xml.tag! 'proficiency-band-id', data[band+"_band_id"]
+                            end
+                          end
+
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+
+            end
+
+          end
+        end
+
+      end
+    }
+
+
+    # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
+    puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
+
+  end
+
+  def usage
+    abort "\n\nUSAGE: rails runner script/generate_feed_files(all | [feed_name]:[state]:[school_id]:[district_id]:[location]:[name])
 
 Ex: rails runner script/generate_feed_files.rb test_scores:ca:1:1:'/tmp/':test_score_feed (generates test_score file for state of CA , school id 1 , district id 1 at location /tmp/ with name as  <state>_test_score_feed )
 
 Possible feed  files: #{all_feeds.join(', ')}\n\n"
-end
-
-
-def prep_state_data_for_feed(state)
-  proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
-  test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
-  query_results =TestDataSet.test_scores_for_state(state)
-  state_level_test_data = []
-  query_results.each do |data|
-    test_data = {:universal_id => get_state_fips[state.upcase],
-                       :entity_level => 'state',
-                       :test_id => state.upcase + data.data_type_id.to_s.rjust(5, '0'),
-                       :year => data.year,
-                       :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
-                       :grade_name => data.grade_name,
-                       :level_code_name => data.level_code,
-                       :score => data.state_value_text|| data.state_value_float,
-                       # For proficient and above band id is always null in database
-                       :proficiency_band_id => data.proficiency_band_id.nil? ?  '': data.proficiency_band_id,
-                       :proficiency_band_name =>  data.proficiency_band_id.nil? ? 'proficient and above' : proficiency_bands[data.proficiency_band_id].name,
-                       :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
-    }
-    state_level_test_data.push(test_data)
-  end
-  state_level_test_data
-end
-
-def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
-  a = Time.now
-  puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
-  # xsd_schema ='greatschools-test.xsd'
-
-  #Generate State Test Master Data
-  state_test_infos_for_feed = prep_state_test_infos_data_for_feed(state)
-  #Generate School Test  Data
-  school_data_for_feed = prep_school_data_for_feed(school_ids, state)
-  # Generate District Test Data
-  district_data_for_feed = prep_district_data_for_feed(district_ids, state)
-  # Generate state Test Data
-  state_data_for_feed = prep_state_data_for_feed(state)
-
-  generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
-  generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
-
-  xmlFile =generated_feed_file_location+generated_feed_file_name
-  File.open(xmlFile, 'w') { |f|
-    xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
-    xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-    xml.tag!('gs-test-feed',
-             {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
-              :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
-      if state_test_infos_for_feed.present?
-        state_test_infos_for_feed.each do |test_info|
-          xml.tag! 'test' do
-            test_info.each do |key,value |
-              xml.tag! key.to_s.gsub("_","-"), value
-            end
-          end
-        end
-      end
-
-
-      if state_data_for_feed.present?
-        state_data_for_feed.each do |state_data|
-          xml.tag! 'test-result' do
-            state_data.each do |key,value |
-              xml.tag! key.to_s.gsub("_","-"), value
-            end
-          end
-        end
-      end
-      # require 'pry'
-      # binding.pry
-
-
-      if school_data_for_feed.present?
-        school_data_for_feed.each do |school|
-          if state_test_infos_for_feed.present?
-            # binding.pry
-
-            state_test_infos_for_feed.each do |test|
-              # binding.pry
-
-              test_id=test[:test_id]
-              all_test_score_data = school.school_cache.feed_test_scores[test_id.to_s]
-              if all_test_score_data.present?
-                complete_test_score_data = all_test_score_data["All"]["grades"]
-              end
-              if complete_test_score_data.present?
-              complete_test_score_data.each do |grade, grade_data|
-                grade_data_level = grade_data["level_code"]
-                grade_data_level.each do |level, subject_data|
-                  subject_data.each do |subject, years_data|
-                    years_data.each do |year, data|
-                      # Proficient and above data that is not stored by band name in cache data
-                      xml.tag! 'test-result' do
-                        xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
-                        xml.tag! 'entity-level', "School"
-                        xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
-                        xml.tag! 'grade-name', grade
-                        xml.tag! 'level-code-name', level
-                        xml.tag! 'subject-name', subject
-                        xml.tag! 'year', year
-                        xml.tag! 'number-tested', data["number_students_tested"]
-                        xml.tag! 'score', data["score"]
-                        xml.tag! 'proficiency-band-name', "proficient and above"
-                      end
-
-                      bands = data.keys.select { |key| key.ends_with?('band_id') }
-                      band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
-                      band_names.each do |band|
-                        xml.tag! 'test-result' do
-                          xml.tag! 'universal-id', get_state_fips[state.upcase] + school.id.to_s.rjust(5, '0')
-                          xml.tag! 'entity-level', "School"
-                          xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
-                          xml.tag! 'grade-name', grade
-                          xml.tag! 'level-code-name', level
-                          xml.tag! 'subject-name', subject
-                          xml.tag! 'year', year
-                          xml.tag! 'number-tested', data[band+"_number_students_tested"]
-                          xml.tag! 'score', data[band+"_score"]
-                          xml.tag! 'proficiency-band-name', band
-                          xml.tag! 'proficiency-band-id', data[band+"_band_id"]
-                        end
-                      end
-
-                    end
-                  end
-                end
-              end
-              end
-            end
-
-          end
-
-        end
-      end
-      if district_data_for_feed.present?
-        district_data_for_feed.each do |district|
-          if state_test_infos_for_feed.present?
-            state_test_infos_for_feed.each do |test|
-              test_id=test[:test_id]
-              all_test_score_data = district.district_cache.feed_test_scores[test_id.to_s]
-              if all_test_score_data.present?
-                complete_test_score_data = all_test_score_data["All"]["grades"]
-              end
-              if complete_test_score_data.present?
-              complete_test_score_data.each do |grade, grade_data|
-                grade_data_level = grade_data["level_code"]
-                grade_data_level.each do |level, subject_data|
-                  subject_data.each do |subject, years_data|
-                    years_data.each do |year, data|
-                      # Proficient and above data that is not stored by band name in cache data
-                      xml.tag! 'test-result' do
-                        xml.tag! 'universal-id', '1' + get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
-                        xml.tag! 'entity-level', "District"
-                        xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
-                        xml.tag! 'grade-name', grade
-                        xml.tag! 'level-code-name', level
-                        xml.tag! 'subject-name', subject
-                        xml.tag! 'year', year
-                        xml.tag! 'number-tested', data["number_students_tested"]
-                        xml.tag! 'score', data["score"]
-                        xml.tag! 'proficiency-band-name', "proficient and above"
-                      end
-
-                      bands = data.keys.select { |key| key.ends_with?('band_id') }
-                      band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
-                      band_names.each do |band|
-                        xml.tag! 'test-result' do
-                          xml.tag! 'universal-id', get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
-                          xml.tag! 'entity-level', "District"
-                          xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
-                          xml.tag! 'grade-name', grade
-                          xml.tag! 'level-code-name', level
-                          xml.tag! 'subject-name', subject
-                          xml.tag! 'year', year
-                          xml.tag! 'number-tested', data[band+"_number_students_tested"]
-                          xml.tag! 'score', data[band+"_score"]
-                          xml.tag! 'proficiency-band-name', band
-                          xml.tag! 'proficiency-band-id', data[band+"_band_id"]
-                        end
-                      end
-
-                    end
-                  end
-                end
-              end
-              end
-            end
-
-          end
-
-        end
-      end
-
-    end
-  }
-
-
-  # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
-  puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
-
-end
-
-parsed_arguments = parse_arguments
-
-usage unless parsed_arguments.present?
-
-
-parsed_arguments.each do |args|
-  states = args[:states]
-  feed_names = args[:feed_names]
-  school_ids = args[:school_id]
-  district_ids = args[:district_id]
-  location = args[:location]
-  name = args[:name]
-  feed_names.each_with_index do |feed, index|
-    states.each do |state|
-      if feed == 'test_scores'
-        feed_location = location.present? && location[index].present? ? location[index] : 'default'
-        feed_name = name.present? && name[index].present? ? name[index] : 'default'
-        generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed)
-      elsif feed == 'ratings'
-        # To do Create the feed for ratings
-           end
-    end
   end
 end
+
+
+
+
+
+
+
+
+class GenerateFeedFiles
+  include FeedHelper
+
+  def initialize()
+    parsed_arguments = parse_arguments
+
+    usage unless parsed_arguments.present?
+
+
+    parsed_arguments.each do |args|
+      states = args[:states]
+      feed_names = args[:feed_names]
+      school_ids = args[:school_id]
+      district_ids = args[:district_id]
+      location = args[:location]
+      name = args[:name]
+      feed_names.each_with_index do |feed, index|
+        states.each do |state|
+          if feed == 'test_scores'
+            feed_location = location.present? && location[index].present? ? location[index] : 'default'
+            feed_name = name.present? && name[index].present? ? name[index] : 'default'
+            generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed)
+          elsif feed == 'ratings'
+            # To do Create the feed for ratings
+          end
+        end
+      end
+    end
+  end
+
+end
+
+
+GenerateFeedFiles.new()
 
 
 
