@@ -230,26 +230,10 @@ module FeedHelper
       xml.tag!('gs-test-feed',
                {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
                 :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
-        if state_test_infos_for_feed.present?
-          state_test_infos_for_feed.each do |test_info|
-            xml.tag! 'test' do
-              test_info.each do |key, value|
-                xml.tag! key.to_s.gsub("_", "-"), value
-              end
-            end
-          end
-        end
+        # Generates the XML Tag -> Data , xml , tag-name
+        generate_xml_tag(state_test_infos_for_feed, 'test', xml)
 
-
-        if state_data_for_feed.present?
-          state_data_for_feed.each do |state_data|
-            xml.tag! 'test-result' do
-              state_data.each do |key, value|
-                xml.tag! key.to_s.gsub("_", "-"), value
-              end
-            end
-          end
-        end
+        generate_xml_tag(state_data_for_feed, 'test-result', xml)
 
 
         if school_data_for_feed.present?
@@ -291,6 +275,18 @@ module FeedHelper
 
   end
 
+  def generate_xml_tag(data, tag_name ,xml)
+    if data.present?
+      data.each do |test_info|
+        xml.tag! tag_name do
+          test_info.each do |key, value|
+            xml.tag! key.to_s.gsub("_", "-"), value
+          end
+        end
+      end
+    end
+  end
+
   def generate_data(all_test_score_data, entity,test_id, xml,entity_level)
     state = @state
     if all_test_score_data.present?
@@ -320,7 +316,7 @@ module FeedHelper
               band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
               band_names.each do |band|
                 xml.tag! 'test-result' do
-                  xml.tag! 'universal-id', get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+                  xml.tag! 'universal-id', entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
                   xml.tag! 'entity-level', entity_level.titleize
                   xml.tag! 'test-id', state.upcase + test_id.to_s.rjust(5, '0')
                   xml.tag! 'grade-name', grade
