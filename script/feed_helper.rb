@@ -197,8 +197,6 @@ module FeedHelper
   end
 
   def generate_test_score_feed
-    district_ids = @district_ids
-    school_ids = @school_ids
     state = @state
     feed_location = @feed_location
     feed_name = @feed_name
@@ -259,7 +257,7 @@ module FeedHelper
                 test_id=test[:test_id]
                 school_cache = school.school_cache
                 all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
-                generate_data(all_test_score_data, school, state, test_id, xml,'school')
+                generate_data(all_test_score_data, school,test_id, xml,'school')
 
               end
 
@@ -274,7 +272,7 @@ module FeedHelper
                 test_id=test[:test_id]
                 district_cache = district.district_cache
                 all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
-                generate_data(all_test_score_data, district, state, test_id, xml,'district')
+                generate_data(all_test_score_data, district,test_id, xml,'district')
               end
 
             end
@@ -291,7 +289,8 @@ module FeedHelper
 
   end
 
-  def generate_data(all_test_score_data, district, state, test_id, xml,entity_level)
+  def generate_data(all_test_score_data, entity,test_id, xml,entity_level)
+    state = @state
     if all_test_score_data.present?
       complete_test_score_data = all_test_score_data["All"]["grades"]
     end
@@ -303,9 +302,9 @@ module FeedHelper
             years_data.each do |year, data|
               # Proficient and above data that is not stored by band name in cache data
               xml.tag! 'test-result' do
-                xml.tag! 'universal-id', entity_level == 'district'? '1' + get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
+                xml.tag! 'universal-id', entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
                 xml.tag! 'entity-level', entity_level.titleize
-                xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                xml.tag! 'test-id', state.upcase + test_id.to_s.rjust(5, '0')
                 xml.tag! 'grade-name', grade
                 xml.tag! 'level-code-name', level
                 xml.tag! 'subject-name', subject
@@ -319,9 +318,9 @@ module FeedHelper
               band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
               band_names.each do |band|
                 xml.tag! 'test-result' do
-                  xml.tag! 'universal-id', get_state_fips[state.upcase] + district.id.to_s.rjust(5, '0')
+                  xml.tag! 'universal-id', get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
                   xml.tag! 'entity-level', entity_level.titleize
-                  xml.tag! 'test-id', state.upcase + test_id.to_s.to_s.rjust(5, '0')
+                  xml.tag! 'test-id', state.upcase + test_id.to_s.rjust(5, '0')
                   xml.tag! 'grade-name', grade
                   xml.tag! 'level-code-name', level
                   xml.tag! 'subject-name', subject
