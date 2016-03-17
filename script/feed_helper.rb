@@ -5,6 +5,8 @@ module FeedHelper
       'test_scores' => 'local-gs-test-feed'
   }
 
+  PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
+
   def all_feeds
     ['test_scores', 'ratings']
   end
@@ -186,7 +188,7 @@ module FeedHelper
                    :score => data.state_value_text|| data.state_value_float,
                    # For proficient and above band id is always null in database
                    :proficiency_band_id => data.proficiency_band_id.nil? ? '' : data.proficiency_band_id,
-                   :proficiency_band_name => data.proficiency_band_id.nil? ? 'proficient and above' : proficiency_bands[data.proficiency_band_id].name,
+                   :proficiency_band_name => data.proficiency_band_id.nil? ? PROFICIENT_AND_ABOVE_BAND : proficiency_bands[data.proficiency_band_id].name,
                    :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
       }
       state_level_test_data.push(test_data)
@@ -329,7 +331,7 @@ module FeedHelper
                                                     :level_code_name => level,
                                                     :score => data["score"],
                                                     :proficiency_band_id => '',
-                                                    :proficiency_band_name => 'proficient and above',
+                                                    :proficiency_band_name => PROFICIENT_AND_ABOVE_BAND,
                                                     :number_tested => data["number_students_tested"]
               }
               parsed_data_for_xml.push(test_data_for_proficient_and_above)
