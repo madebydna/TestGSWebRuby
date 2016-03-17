@@ -63,7 +63,7 @@ module GenerateFeed
     return state_fips
   end
 
-  def prep_state_test_data_for_feed(state)
+  def prep_state_test_infos_data_for_feed(state)
     state_test_infos = []
 
     TestDescription.where(state: state).find_each do |test|
@@ -205,7 +205,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
   # xsd_schema ='greatschools-test.xsd'
 
   #Generate State Test Master Data
-  state_test_infos = prep_state_test_data_for_feed(state)
+  state_test_infos_for_feed = prep_state_test_infos_data_for_feed(state)
   #Generate School Test  Data
   school_data_for_feed = prep_school_data_for_feed(school_ids, state)
   # Generate District Test Data
@@ -215,6 +215,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
 
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
   generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
+
   xmlFile =generated_feed_file_location+generated_feed_file_name
   File.open(xmlFile, 'w') { |f|
     xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
@@ -222,8 +223,8 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
     xml.tag!('gs-test-feed',
              {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
               :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
-      if state_test_infos.present?
-        state_test_infos.each do |test_info|
+      if state_test_infos_for_feed.present?
+        state_test_infos_for_feed.each do |test_info|
           xml.tag! 'test' do
             test_info.each do |key,value |
               xml.tag! key.to_s.gsub("_","-"), value
@@ -248,10 +249,10 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
 
       if school_data_for_feed.present?
         school_data_for_feed.each do |school|
-          if state_test_infos.present?
+          if state_test_infos_for_feed.present?
             # binding.pry
 
-            state_test_infos.each do |test|
+            state_test_infos_for_feed.each do |test|
               # binding.pry
 
               test_id=test[:test_id]
@@ -310,8 +311,8 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
       end
       if district_data_for_feed.present?
         district_data_for_feed.each do |district|
-          if state_test_infos.present?
-            state_test_infos.each do |test|
+          if state_test_infos_for_feed.present?
+            state_test_infos_for_feed.each do |test|
               test_id=test[:test_id]
               all_test_score_data = district.district_cache.feed_test_scores[test_id.to_s]
               if all_test_score_data.present?
