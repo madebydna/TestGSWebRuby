@@ -93,7 +93,7 @@ class LoadConfigFile < GS::ETL::Step
         breakdown_id: 'var:breakdown_id',
         proficiency_band_id: 'var:proficiency_band_id',
         value_float_varname: 'value_float',
-        name_varname: 'number_tested',
+        num_varname: 'number_tested',
       }
     end
 

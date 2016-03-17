@@ -18,6 +18,7 @@ require 'transforms/with_block'
 require 'gs_breakdown_id_definitions'
 require 'transforms/column_selector'
 require 'transforms/keep_rows'
+require 'transforms/value_concatonator'
 
 
 class CATestProcessor < GS::ETL::DataProcessor
@@ -27,7 +28,6 @@ class CATestProcessor < GS::ETL::DataProcessor
     @state_output_file = output_files.fetch(:state)
     @school_output_file = output_files.fetch(:school)
     @district_output_file = output_files.fetch(:district)
-    @config_output_file = output_files.fetch(:config)
   end
 
   def run
@@ -44,6 +44,9 @@ class CATestProcessor < GS::ETL::DataProcessor
       school_name: 'school_name',
       district_name: 'district_name',
       level_code: 'e,m,h'
+
+    s1.transform ValueConcatonator, :state_id, :county_code,
+      :district_code, :school_code
 
     s1.transform RowExploder,
       :proficiency_band,
@@ -76,6 +79,15 @@ class CATestProcessor < GS::ETL::DataProcessor
       to: :test_data_type_id
     )
 
+    s1.transform(
+      HashLookup,
+      :test_data_type,
+      {
+        'caasp' => 236
+      },
+      to: :data_type_id
+    )
+
     s1.transform MultiFieldRenamer, {
       district_code: :district_id,
       school_code: :school_id,
@@ -101,7 +113,7 @@ class CATestProcessor < GS::ETL::DataProcessor
     s1.transform(
       HashLookup,
       :breakdown,
-      GsBreakdownIdDefinitions.breakdown_lookup,
+       GsBreakdownIdDefinitions.breakdown_lookup,
       to: :breakdown_id,
       ignore: ['6','7','8','90','91','92','93','94','121''202','200','203',
                '205','206', '207','220','221','222','223','204','201','224',
@@ -116,8 +128,6 @@ class CATestProcessor < GS::ETL::DataProcessor
 
     # s1.destination CsvDestination, @output_file
 
-    s1.transform FieldRenamer, :test_data_type_id, :data_type_id
-
     last_node_before_split = s1.transform KeepRows, ['district','school','state'], :entity_level
 
     node_for_state_only_data = last_node_before_split.transform KeepRows, ['state'], :entity_level
@@ -126,7 +136,7 @@ class CATestProcessor < GS::ETL::DataProcessor
 
     node_for_district_only_data = last_node_before_split.transform KeepRows, ['district'], :entity_level
 
-    node_for_config_file = last_node_before_split.destination LoadConfigFile, '/tmp/ca_config_file.txt', {
+    node_for_config_file = last_node_before_split.destination LoadConfigFile, '/tmp/config.ca.2015.test.1.txt', {
       source_id: 7,
       state: 'ca',
       notes: 'Year 2015 CA TEST',
@@ -145,12 +155,11 @@ class CATestProcessor < GS::ETL::DataProcessor
     node_for_school_only_data.destination CsvDestination, @school_output_file, *column_order
     node_for_district_only_data.destination CsvDestination, @district_output_file, *column_order
 
-    node_for_config_file.destination CsvDestination, @config_output_file, *column_order
-    event_log.destination EventReportStdout
+    # event_log.destination EventReportStdout
 
-    system('clear')
-    s1.transform RunOtherStep, event_log
-
+    # system('clear')
+    # s1.transform RunOtherStep, event_log
+    #
     s1.root.run
     node_for_config_file.run
 
@@ -159,15 +168,14 @@ end
 
 # ca2015_all_csv_v1_sample.txt
 
-# file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1.txt'
+file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1_100000.txt'
 
 # file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
 
 output_files = {
-    state: '/tmp/sample_output_state.csv',
-    school: '/tmp/sample_output_school.csv',
-    district: '/tmp/sample_output_district.csv',
-    config: '/tmp/sample_output_config.csv' }
+    state: '/tmp/ca.2015.1.public.charter.state.txt',
+    school: '/tmp/ca.2015.1.public.charter.school.txt',
+    district: '/tmp/ca.2015.1.public.charter.district.txt' }
 
 CATestProcessor.new(file, output_files).run
 
