@@ -99,6 +99,8 @@ module FeedHelper
   def prep_school_data_for_feed
     state =@state
     school_ids = @school_ids
+    school_data_for_feed = []
+
     query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
     if school_ids.present?
       schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
@@ -114,6 +116,20 @@ module FeedHelper
     schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
       SchoolFeedDecorator.decorate(school)
     end
+    if schools_decorated_with_cache_results.present?
+      schools_decorated_with_cache_results.each do |school|
+        if @state_test_infos_for_feed.present?
+          @state_test_infos_for_feed.each do |test|
+            test_id=test[:test_id]
+            school_cache = school.school_cache
+            all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
+            school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school, test_id, 'school')
+          end
+        end
+
+      end
+    end
+    school_data_for_feed
   end
 
   def prep_district_data_for_feed
@@ -208,14 +224,46 @@ module FeedHelper
     # xsd_schema ='greatschools-test.xsd'
 
     #Generate State Test Master Data
-    state_test_infos_for_feed = prep_state_test_infos_data_for_feed
+    @state_test_infos_for_feed = prep_state_test_infos_data_for_feed
     # Generate state Test Data
     state_data_for_feed = prep_state_data_for_feed
 
     #Generate School Test  Data
-    schools_data = prep_school_data_for_feed
+    school_data_for_feed = prep_school_data_for_feed
     # Generate District Test Data
     districts_data = prep_district_data_for_feed
+
+
+    # school_data_for_feed = []
+    # if schools_data.present?
+    #   schools_data.each do |school|
+    #     if state_test_infos_for_feed.present?
+    #       state_test_infos_for_feed.each do |test|
+    #         test_id=test[:test_id]
+    #         school_cache = school.school_cache
+    #         all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
+    #         school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school, test_id, 'school')
+    #       end
+    #     end
+    #
+    #   end
+    # end
+
+    districts_data_for_feed = []
+
+    if districts_data.present?
+      districts_data.each do |district|
+        if @state_test_infos_for_feed.present?
+          @state_test_infos_for_feed.each do |test|
+            test_id=test[:test_id]
+            district_cache = district.district_cache
+            all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
+            districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, 'district')
+          end
+        end
+
+      end
+    end
 
     # [:school , :disctrict].each do
     #
@@ -224,6 +272,18 @@ module FeedHelper
     generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
 
     xmlFile =generated_feed_file_location+generated_feed_file_name
+
+
+    # Write to XML File
+    generate_xml_feed(districts_data_for_feed, school_data_for_feed, state_data_for_feed, @state_test_infos_for_feed, xmlFile)
+
+
+    # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
+    puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
+
+  end
+
+  def generate_xml_feed(districts_data_for_feed, school_data_for_feed, state_data_for_feed, state_test_infos_for_feed, xmlFile)
     File.open(xmlFile, 'w') { |f|
       xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
       xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
@@ -236,55 +296,18 @@ module FeedHelper
         # Generate state test data tag
         generate_xml_tag(state_data_for_feed, 'test-result', xml)
 
-        school_data_for_feed = []
-        if schools_data.present?
-          schools_data.each do |school|
-            if state_test_infos_for_feed.present?
-              state_test_infos_for_feed.each do |test|
-                test_id=test[:test_id]
-                school_cache = school.school_cache
-                all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
-                school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school,test_id,'school')
-              end
-            end
-
-          end
-        end
-
-        require 'pry'
-        # binding.pry
-        # Generate state test data tag
+        # Generate school test data tag
         generate_xml_tag(school_data_for_feed, 'test-result', xml)
 
-
-        districts_data_for_feed = []
-
-        if districts_data.present?
-          districts_data.each do |district|
-            if state_test_infos_for_feed.present?
-              state_test_infos_for_feed.each do |test|
-                test_id=test[:test_id]
-                district_cache = district.district_cache
-                all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
-                districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district,test_id,'district')
-              end
-            end
-
-          end
-        end
+        # Generate district test data tag
         generate_xml_tag(districts_data_for_feed, 'test-result', xml)
 
 
       end
     }
-
-
-    # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
-    puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
-
   end
 
-  def generate_xml_tag(data, tag_name ,xml)
+  def generate_xml_tag(data, tag_name, xml)
     if data.present?
       data.each do |test_info|
         xml.tag! tag_name do
@@ -296,8 +319,8 @@ module FeedHelper
     end
   end
 
-  def parse_cache_data_for_xml(all_test_score_data, entity,test_id,entity_level)
-    data_to_go_in_xml = []
+  def parse_cache_data_for_xml(all_test_score_data, entity, test_id, entity_level)
+    parsed_data_for_xml = []
     state = @state
     if all_test_score_data.present?
       complete_test_score_data = all_test_score_data["All"]["grades"]
@@ -308,21 +331,20 @@ module FeedHelper
         grade_data_level.each do |level, subject_data|
           subject_data.each do |subject, years_data|
             years_data.each do |year, data|
-
-              test_data_for_proficient_and_above = {:universal_id => entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
-                           :entity_level => entity_level.titleize,
-                           :test_id => state.upcase + test_id.to_s.rjust(5, '0'),
-                           :year => year,
-                           :subject_name => subject,
-                           :grade_name => grade,
-                           :level_code_name => level,
-                           :score =>  data["score"],
-                           # For proficient and above band id is always null in database
-                           :proficiency_band_id => '',
-                           :proficiency_band_name =>  'proficient and above',
-                           :number_tested => data["number_students_tested"]
+              # For proficient and above band id is always null in database
+              test_data_for_proficient_and_above = {:universal_id => entity_level == 'district' ? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
+                                                    :entity_level => entity_level.titleize,
+                                                    :test_id => state.upcase + test_id.to_s.rjust(5, '0'),
+                                                    :year => year,
+                                                    :subject_name => subject,
+                                                    :grade_name => grade,
+                                                    :level_code_name => level,
+                                                    :score => data["score"],
+                                                    :proficiency_band_id => '',
+                                                    :proficiency_band_name => 'proficient and above',
+                                                    :number_tested => data["number_students_tested"]
               }
-              data_to_go_in_xml.push(test_data_for_proficient_and_above)
+              parsed_data_for_xml.push(test_data_for_proficient_and_above)
 
 
               # Get Band Names from Cache
@@ -331,21 +353,21 @@ module FeedHelper
               test_data = {}
               # Get Data For All Bands
               band_names.each do |band|
-                test_data = {:universal_id => entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
+                test_data = {:universal_id => entity_level == 'district' ? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
                              :entity_level => entity_level.titleize,
                              :test_id => state.upcase + test_id.to_s.rjust(5, '0'),
                              :year => year,
                              :subject_name => subject,
                              :grade_name => grade,
                              :level_code_name => level,
-                             :score =>   data[band+"_score"],
+                             :score => data[band+"_score"],
                              # For proficient and above band id is always null in database
                              :proficiency_band_id => data[band+"_band_id"],
-                             :proficiency_band_name =>  band,
+                             :proficiency_band_name => band,
                              :number_tested => data[band+"_number_students_tested"]
                 }
               end
-              data_to_go_in_xml.push(test_data)
+              parsed_data_for_xml.push(test_data)
 
 
             end
@@ -353,7 +375,7 @@ module FeedHelper
         end
       end
     end
-    data_to_go_in_xml
+    parsed_data_for_xml
   end
 
   def usage
