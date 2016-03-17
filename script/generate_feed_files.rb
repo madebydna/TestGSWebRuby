@@ -4,13 +4,20 @@ require 'feed_helper'
 class GenerateFeedFiles
   include FeedHelper
 
+  def self.generate
+    GenerateFeedFiles.new.generate
+  end
+
   def initialize()
-    parsed_arguments = parse_arguments
+    @parsed_arguments = parse_arguments
 
-    usage unless parsed_arguments.present?
+    usage unless @parsed_arguments.present?
 
 
-    parsed_arguments.each do |args|
+  end
+
+  def generate
+    @parsed_arguments.each do |args|
       states = args[:states]
       feed_names = args[:feed_names]
       school_ids = args[:school_id]
@@ -29,12 +36,12 @@ class GenerateFeedFiles
         end
       end
     end
-  end
 
+  end
 end
 
 
-GenerateFeedFiles.new()
+GenerateFeedFiles.generate()
 
 
 
