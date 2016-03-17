@@ -28,7 +28,7 @@ class GenerateFeedFiles
           @feed_type = feed
           if feed == 'test_scores'
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
-            @feed_name = name.present? && name[index].present? ? name[index] : 'local-gs-test-feed'
+            @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
             generate_test_score_feed
           elsif feed == 'ratings'
             # To do Create the feed for ratings

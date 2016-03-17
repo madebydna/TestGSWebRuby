@@ -1,6 +1,10 @@
 module FeedHelper
   FEED_CACHE_KEYS = %w(feed_test_scores)
 
+  FEED_NAME_MAPPING = {
+      'test_scores' => 'local-gs-test-feed'
+  }
+
   def all_feeds
     ['test_scores', 'ratings']
   end
@@ -8,6 +12,7 @@ module FeedHelper
   def all_states
     States.abbreviations
   end
+
 
   def get_state_fips
     state_fips = {}
