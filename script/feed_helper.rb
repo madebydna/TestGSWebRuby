@@ -150,6 +150,23 @@ module FeedHelper
     districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
       DistrictFeedDecorator.decorate(district)
     end
+    districts_data_for_feed = []
+
+    if districts_decorated_with_cache_results.present?
+      districts_decorated_with_cache_results.each do |district|
+        if @state_test_infos_for_feed.present?
+          @state_test_infos_for_feed.each do |test|
+            test_id=test[:test_id]
+            district_cache = district.district_cache
+            all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
+            districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, 'district')
+          end
+        end
+
+      end
+    end
+    districts_data_for_feed
+
   end
 
   def prep_state_data_for_feed
@@ -231,39 +248,10 @@ module FeedHelper
     #Generate School Test  Data
     school_data_for_feed = prep_school_data_for_feed
     # Generate District Test Data
-    districts_data = prep_district_data_for_feed
+    districts_data_for_feed = prep_district_data_for_feed
 
 
-    # school_data_for_feed = []
-    # if schools_data.present?
-    #   schools_data.each do |school|
-    #     if state_test_infos_for_feed.present?
-    #       state_test_infos_for_feed.each do |test|
-    #         test_id=test[:test_id]
-    #         school_cache = school.school_cache
-    #         all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
-    #         school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school, test_id, 'school')
-    #       end
-    #     end
-    #
-    #   end
-    # end
 
-    districts_data_for_feed = []
-
-    if districts_data.present?
-      districts_data.each do |district|
-        if @state_test_infos_for_feed.present?
-          @state_test_infos_for_feed.each do |test|
-            test_id=test[:test_id]
-            district_cache = district.district_cache
-            all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
-            districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, 'district')
-          end
-        end
-
-      end
-    end
 
     # [:school , :disctrict].each do
     #
