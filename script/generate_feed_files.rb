@@ -63,7 +63,7 @@ module GenerateFeed
     return state_fips
   end
 
-  def generate_state_test_info(state)
+  def prep_state_test_data_for_feed(state)
     state_test_infos = []
 
     TestDescription.where(state: state).find_each do |test|
@@ -178,10 +178,10 @@ end
 def prep_state_data_for_feed(state)
   proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
   test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
-  state_test_data =TestDataSet.test_scores_for_state(state)
-  state_test_infos = []
-  state_test_data.each do |data|
-    state_test_info = {:universal_id => get_state_fips[state.upcase],
+  query_results =TestDataSet.test_scores_for_state(state)
+  state_level_test_data = []
+  query_results.each do |data|
+    test_data = {:universal_id => get_state_fips[state.upcase],
                        :entity_level => 'state',
                        :test_id => state.upcase + data.data_type_id.to_s.rjust(5, '0'),
                        :year => data.year,
@@ -194,16 +194,25 @@ def prep_state_data_for_feed(state)
                        :proficiency_band_name =>  data.proficiency_band_id.nil? ? 'proficient and above' : proficiency_bands[data.proficiency_band_id].name,
                        :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
     }
-    state_test_infos.push(state_test_info)
+    state_level_test_data.push(test_data)
   end
-  state_test_infos
+  state_level_test_data
 end
 
 def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
   a = Time.now
   puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
   # xsd_schema ='greatschools-test.xsd'
-  state_test_infos = generate_state_test_info(state)
+
+  #Generate State Test Master Data
+  state_test_infos = prep_state_test_data_for_feed(state)
+  #Generate School Test  Data
+  school_data_for_feed = prep_school_data_for_feed(school_ids, state)
+  # Generate District Test Data
+  district_data_for_feed = prep_district_data_for_feed(district_ids, state)
+  # Generate state Test Data
+  state_data_for_feed = prep_state_data_for_feed(state)
+
   generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
   generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
   xmlFile =generated_feed_file_location+generated_feed_file_name
@@ -214,41 +223,43 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
              {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
               :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
       if state_test_infos.present?
-        state_test_infos.each do |test|
-          if test.present?
-             xml.tag! 'test' do
-              xml.tag! 'id', test[:id]
-              xml.tag! 'test-name', test[:test_name]
-              xml.tag! 'scale', test[:scale]
-              xml.tag! 'test-abbrv', test[:test_abbrv]
-              xml.tag! 'most-recent-year', test[:most_recent_year]
-              xml.tag! 'level-code', test[:level_code]
-              xml.tag! 'description', test[:description]
+        state_test_infos.each do |test_info|
+          xml.tag! 'test' do
+            test_info.each do |key,value |
+              xml.tag! key.to_s.gsub("_","-"), value
             end
           end
         end
       end
 
-      school_data_for_feed = prep_school_data_for_feed(school_ids, state)
-      district_data_for_feed = prep_district_data_for_feed(district_ids, state)
-      state_data_for_feed = prep_state_data_for_feed(state)
 
       if state_data_for_feed.present?
         state_data_for_feed.each do |state_data|
           xml.tag! 'test-result' do
             state_data.each do |key,value |
               xml.tag! key.to_s.gsub("_","-"), value
-           end
+            end
           end
         end
       end
+      # require 'pry'
+      # binding.pry
+
 
       if school_data_for_feed.present?
         school_data_for_feed.each do |school|
           if state_test_infos.present?
+            # binding.pry
+
             state_test_infos.each do |test|
+              # binding.pry
+
               test_id=test[:test_id]
-              complete_test_score_data = school.school_cache.feed_test_scores[test_id.to_s]["All"]["grades"]
+              all_test_score_data = school.school_cache.feed_test_scores[test_id.to_s]
+              if all_test_score_data.present?
+                complete_test_score_data = all_test_score_data["All"]["grades"]
+              end
+              if complete_test_score_data.present?
               complete_test_score_data.each do |grade, grade_data|
                 grade_data_level = grade_data["level_code"]
                 grade_data_level.each do |level, subject_data|
@@ -290,7 +301,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
                   end
                 end
               end
-
+              end
             end
 
           end
@@ -302,7 +313,11 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
           if state_test_infos.present?
             state_test_infos.each do |test|
               test_id=test[:test_id]
-              complete_test_score_data = district.district_cache.feed_test_scores[test_id.to_s]["All"]["grades"]
+              all_test_score_data = district.district_cache.feed_test_scores[test_id.to_s]
+              if all_test_score_data.present?
+                complete_test_score_data = all_test_score_data["All"]["grades"]
+              end
+              if complete_test_score_data.present?
               complete_test_score_data.each do |grade, grade_data|
                 grade_data_level = grade_data["level_code"]
                 grade_data_level.each do |level, subject_data|
@@ -344,7 +359,7 @@ def generate_test_score_feed(district_ids, school_ids, state, feed_location, fee
                   end
                 end
               end
-
+              end
             end
 
           end
