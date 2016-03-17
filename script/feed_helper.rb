@@ -70,8 +70,9 @@ module FeedHelper
     return state_fips
   end
 
-  def prep_state_test_infos_data_for_feed(state)
+  def prep_state_test_infos_data_for_feed
     state_test_infos = []
+    state = @state
 
     TestDescription.where(state: state).find_each do |test|
       data_type_id = test.data_type_id
@@ -135,7 +136,8 @@ module FeedHelper
     end
   end
 
-  def prep_state_data_for_feed(state)
+  def prep_state_data_for_feed
+    state = @state
     proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
     query_results =TestDataSet.test_scores_for_state(state)
@@ -206,9 +208,9 @@ module FeedHelper
     # xsd_schema ='greatschools-test.xsd'
 
     #Generate State Test Master Data
-    state_test_infos_for_feed = prep_state_test_infos_data_for_feed(state)
+    state_test_infos_for_feed = prep_state_test_infos_data_for_feed
     # Generate state Test Data
-    state_data_for_feed = prep_state_data_for_feed(state)
+    state_data_for_feed = prep_state_data_for_feed
 
     #Generate School Test  Data
     school_data_for_feed = prep_school_data_for_feed
