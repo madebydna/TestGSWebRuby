@@ -1,4 +1,4 @@
-class FeedDecorator < Draper::Decorator
+class SchoolFeedDecorator < Draper::Decorator
 
   include ActionView::Helpers
 

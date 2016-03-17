@@ -90,7 +90,9 @@ module FeedHelper
     state_test_infos
   end
 
-  def prep_school_data_for_feed(school_ids, state)
+  def prep_school_data_for_feed
+    state =@state
+    school_ids = @school_ids
     query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
     if school_ids.present?
       schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
@@ -104,14 +106,16 @@ module FeedHelper
     school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
     schools_with_cache_results= school_cache_results.decorate_schools(schools_in_feed)
     schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
-      FeedDecorator.decorate(school)
+      SchoolFeedDecorator.decorate(school)
     end
   end
 
-  def prep_district_data_for_feed(district_ids, state)
+  def prep_district_data_for_feed
+    state =@state
+    ids = @district_ids
     query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
-    if district_ids.present?
-      districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids)
+    if ids.present?
+      districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => ids)
     else
       districts_in_feed = District.on_db(state.downcase.to_sym).all
     end
@@ -187,21 +191,31 @@ module FeedHelper
     end
   end
 
-  def generate_test_score_feed(district_ids, school_ids, state, feed_location, feed_name, feed_type)
+  def generate_test_score_feed
+    district_ids = @district_ids
+    school_ids = @school_ids
+    state = @state
+    feed_location = @feed_location
+    feed_name = @feed_name
+    feed_type = @feed_type
     a = Time.now
     puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
     # xsd_schema ='greatschools-test.xsd'
 
     #Generate State Test Master Data
     state_test_infos_for_feed = prep_state_test_infos_data_for_feed(state)
-    #Generate School Test  Data
-    school_data_for_feed = prep_school_data_for_feed(school_ids, state)
-    # Generate District Test Data
-    district_data_for_feed = prep_district_data_for_feed(district_ids, state)
     # Generate state Test Data
     state_data_for_feed = prep_state_data_for_feed(state)
 
-    generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
+    #Generate School Test  Data
+    school_data_for_feed = prep_school_data_for_feed
+    # Generate District Test Data
+    district_data_for_feed = prep_district_data_for_feed
+
+    # [:school , :disctrict].each do
+    #
+    # end
+    generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"-#{state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
     generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
 
     xmlFile =generated_feed_file_location+generated_feed_file_name
