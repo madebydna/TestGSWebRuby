@@ -309,7 +309,7 @@ module FeedHelper
           subject_data.each do |subject, years_data|
             years_data.each do |year, data|
 
-              test_data = {:universal_id => entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
+              test_data_for_proficient_and_above = {:universal_id => entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
                            :entity_level => entity_level.titleize,
                            :test_id => state.upcase + test_id.to_s.rjust(5, '0'),
                            :year => year,
@@ -322,12 +322,14 @@ module FeedHelper
                            :proficiency_band_name =>  'proficient and above',
                            :number_tested => data["number_students_tested"]
               }
-              data_to_go_in_xml.push(test_data)
+              data_to_go_in_xml.push(test_data_for_proficient_and_above)
 
 
-
+              # Get Band Names from Cache
               bands = data.keys.select { |key| key.ends_with?('band_id') }
               band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
+              test_data = {}
+              # Get Data For All Bands
               band_names.each do |band|
                 test_data = {:universal_id => entity_level == 'district'? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
                              :entity_level => entity_level.titleize,
