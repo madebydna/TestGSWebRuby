@@ -226,9 +226,9 @@ end
 
 # ca2015_all_csv_v1_sample.txt
 
-file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1_100000.txt'
+# file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1_100000.txt'
 
-# file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
+file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
 
 output_files = {
     state: '/tmp/ca.2015.1.public.charter.state.txt',
