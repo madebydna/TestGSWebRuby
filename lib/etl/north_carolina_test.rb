@@ -13,76 +13,25 @@ require 'destinations/event_report_stdout'
 require 'destinations/load_config_file'
 require 'sources/buffered_group_by'
 require 'transforms/fill'
-require 'ca_entity_level_parser'
+require 'nc_entity_level_parser'
 require 'transforms/with_block'
-require 'gs_breakdown_definitions'
-require 'gs_breakdowns_from_db'
+require 'nc_breakdown_definitions'
 require 'transforms/column_selector'
 require 'transforms/keep_rows'
 require 'transforms/value_concatenator'
-require 'transforms/unique_values'
 
 
-class CATestProcessor < GS::ETL::DataProcessor
+class NCTestProcessor < GS::ETL::DataProcessor
 
   def initialize(source_file, output_files)
     @source_file = source_file
     @state_output_file = output_files.fetch(:state)
     @school_output_file = output_files.fetch(:school)
     @district_output_file = output_files.fetch(:district)
-    @unique_values_output_file = output_files.fetch(:unique_values)
   end
 
   def run
-    ca_test_data_load_lookup_table = {
-        '1' => "All Students: All Students",
-        '3' => "Males: Gender",
-        '4' => "Females: Gender",
-        '6' => "Fluent-English Proficient and English Only: English-Language Fluency",
-        '7' => "Initially-Fluent English Proficient (I-FEP): English-Language Fluency",
-        '8' => "Reclassified-Fluent English Proficient (R-FEP): English-Language Fluency",
-        '28' => "Migrant Education: Migrant",
-        '31' => "Economically Disadvantaged: Economic Status",
-        '74' => "Black or African American: Ethnicity",
-        '75' => "American Indian or Alaska Native: Ethnicity",
-        '76' => "Asian: Ethnicity",
-        '77' => "Filipino: Ethnicity",
-        '78' => "Hispanic or Latino: Ethnicity",
-        '79' => "Native Hawaiian or Pacific Islander: Ethnicity",
-        '80' => "White: Ethnicity",
-        '90' => "Not a High School Graduate: Parent Education",
-        '91' => "High School Graduate: Parent Education",
-        '92' => "Some College (Includes AA Degree): Parent Education",
-        '93' => "College Graduate: Parent Education",
-        '94' => "Graduate School/Post Graduate: Parent Education",
-        '99' => "Students with No Reported Disability: Disability Status",
-        '111' => "Not Economically Disadvantaged: Economic Status",
-        '120' => "English Learners Enrolled in School in the U.S. Less Than 12 Months: English-Language Fluency",
-        '121' => "Parent Education -- Declined to State: Parent Education",
-        '128' => "Students with Disability: Disability Status",
-        '142' => "English Learners Enrolled in School in the U.S. 12 Months or More: English-Language Fluency",
-        '144' => "Ethnicity -- Two or More Races: Ethnicity",
-        '160' => "English Learner: English-Language Fluency",
-        '180' => "English Only: English-Language Fluency",
-        '200' => "Black or African American: Ethnicity for Economically Disadvantaged",
-        '201' => "American Indian or Alaska Native: Ethnicity for Economically Disadvantaged",
-        '202' => "Asian: Ethnicity for Economically Disadvantaged",
-        '203' => "Filipino: Ethnicity for Economically Disadvantaged",
-        '204' => "Hispanic or Latino: Ethnicity for Economically Disadvantaged",
-        '205' => "Native Hawaiian or Pacific Islander: Ethnicity for Economically Disadvantaged",
-        '206' => "White: Ethnicity for Economically Disadvantaged",
-        '207' => "Ethnicity -- Two or More Races: Ethnicity for Economically Disadvantaged",
-        '220' => "Black or African American: Ethnicity for Not Economically Disadvantaged",
-        '221' => "American Indian or Alaska Native: Ethnicity for Not Economically Disadvantaged",
-        '222' => "Asian: Ethnicity for Not Economically Disadvantaged",
-        '223' => "Filipino: Ethnicity for Not Economically Disadvantaged",
-        '224' => "Hispanic or Latino: Ethnicity for Not Economically Disadvantaged",
-        '225' => "Native Hawaiian or Pacific Islander: Ethnicity for Not Economically Disadvantaged",
-        '226' => "White: Ethnicity for Not Economically Disadvantaged",
-        '227' => "Ethnicity -- Two or More Races: Ethnicity for Not Economically Disadvantaged"
-    }
-
-    s1 = GS::ETL::StepsBuilder.new(self.source_step)
+    s1 = source CsvSource, @source_file
 
     s1.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
       :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested,
@@ -144,7 +93,7 @@ class CATestProcessor < GS::ETL::DataProcessor
       school_code: :school_id,
       test_year: :year,
       test_id: :subject,
-      subgroup_id: :ca_breakdown_id,
+      subgroup_id: :breakdown,
       students_tested: :number_tested
     }
 
@@ -163,9 +112,9 @@ class CATestProcessor < GS::ETL::DataProcessor
 
     s1.transform(
       HashLookup,
-      :ca_breakdown_id,
-       GsBreakdownDefinitions.breakdown_lookup,
-      to: :gs_breakdown_id,
+      :breakdown,
+       NcBreakdownDefinitions.breakdown_lookup,
+      to: :breakdown_id,
       ignore: ['6','7','8','90','91','92','93','94','121''202','200','203',
                '205','206', '207','220','221','222','223','204','201','224',
                '225','226','227','180', '120','142']
@@ -177,9 +126,6 @@ class CATestProcessor < GS::ETL::DataProcessor
       CaEntityLevelParser.new(row).parse
     end
 
-    s1.transform(HashLookup, :gs_breakdown_id, GsBreakdownsFromDb.fetch, to: :gs_breakdown_label)
-
-    s1.transform(HashLookup, :ca_breakdown_id, ca_test_data_load_lookup_table, to: :ca_breakdown_label)
     # s1.destination CsvDestination, @output_file
 
     last_node_before_split = s1.transform KeepRows, ['district','school','state'], :entity_level
@@ -209,43 +155,29 @@ class CATestProcessor < GS::ETL::DataProcessor
     node_for_school_only_data.destination CsvDestination, @school_output_file, *column_order
     node_for_district_only_data.destination CsvDestination, @district_output_file, *column_order
 
-    unique_values = s1.transform(UniqueValues, :ca_breakdown_label, :ca_breakdown_id, :gs_breakdown_label, :gs_breakdown_id)
-
-    s1.destination CsvDestination, @unique_values_output_file, :ca_breakdown_label, :ca_breakdown_id, :gs_breakdown_label, :gs_breakdown_id
     # event_log.destination EventReportStdout
 
     # system('clear')
     # s1.transform RunOtherStep, event_log
     #
-    source_step.run
+    s1.root.run
     node_for_config_file.run
-    unique_values.run
 
-  end
-
-  def source_step
-    @_source_step ||= (
-      step = CsvSource.new(@source_file)
-      step.event_log = self.event_log
-      step
-    )
   end
 end
 
 # ca2015_all_csv_v1_sample.txt
 
-# file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1_100000.txt'
+file = '/Users/rhunter/CodeGS/etl_data_files/Disag_2014-15_Data.txt'
 
-file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
+# file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
 
 output_files = {
     state: '/tmp/ca.2015.1.public.charter.state.txt',
     school: '/tmp/ca.2015.1.public.charter.school.txt',
-    district: '/tmp/ca.2015.1.public.charter.district.txt',
-    unique_values: '/tmp/ca.2015.unique_files.txt'
-}
+    district: '/tmp/ca.2015.1.public.charter.district.txt' }
 
-CATestProcessor.new(file, output_files).run
+NCTestProcessor.new(file, output_files).run
 
 
 

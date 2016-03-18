@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-# 1 take ids or column names that we are concating
+# 1 take ids or column names that we are concatenating
 # 2 create a new column name
-# 3 enter concataned values for all columns from step 1 into new column
+# 3 enter concatenated values for all columns from step 1 into new column
 
-describe ValueConcatonator do
+describe ValueConcatenator do
   let(:source_column) { :source }
   let(:source_column2) { :source2 }
   context 'with output row' do
-    let(:subject) { ValueConcatonator.new(:output, source_column, source_column2) }
+    let(:subject) { ValueConcatenator.new(:output, source_column, source_column2) }
     let(:row) { { source: 'badda', source2: 'bing' } }
     let(:output_row) { {source: 'badda', source2: 'bing', output: 'baddabing' } }
 

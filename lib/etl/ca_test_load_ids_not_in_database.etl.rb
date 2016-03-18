@@ -3,7 +3,7 @@ require 'etl'
 require 'event_log'
 require 'sources/gs_sharded_database_source'
 require 'transforms/filter_out_matching_values'
-require 'transforms/value_concatonator'
+require 'transforms/value_concatenator'
 require 'destinations/csv_destination'
 require 'sources/csv_source'
 require 'gs_school_ids_fetcher'
@@ -20,7 +20,7 @@ class  MisMatchFinder < GS::ETL::DataProcessor
   def run
     ca_test_load = source CsvSource, @source_file
 
-    ca_test_load.transform ValueConcatonator, :state_id,
+    ca_test_load.transform ValueConcatenator, :state_id,
                                               :county_code,
                                               :district_code,
                                               :school_code
