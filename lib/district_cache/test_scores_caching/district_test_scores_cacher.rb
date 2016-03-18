@@ -27,10 +27,13 @@ class TestScoresCaching::DistrictTestScoresCacher < TestScoresCaching::DistrictB
 
   def innermost_hash(test)
     hash = {
-      number_students_tested: test.number_students_tested,
-      score: test.school_value,
-      state_average: test.state_value,
+        number_students_tested: test.number_students_tested,
+        score: test.school_value,
+        state_average: test.state_value
     }
+    if test.proficiency_band_id.present?
+      hash.merge!(band_id: test.proficiency_band_id)
+    end
 
     proficiency_band_name = test.proficiency_band_name
     if proficiency_band_name
