@@ -25,9 +25,12 @@ class  MisMatchFinder < GS::ETL::DataProcessor
                                               :district_code,
                                               :school_code
 
+
+#   Need to add filter out duplicate values transform
     ca_test_load.transform FilterOutMatchingValues,
       @values_to_match,
       :state_id
+      
     #
     # ca_test_load.transform FilterOutMatchingValues, 
     #   ['0000000'],
@@ -35,17 +38,17 @@ class  MisMatchFinder < GS::ETL::DataProcessor
 
 
     ca_test_load.destination CsvDestination, @output_file
-    event_log.destination EventReportStdout
-
-    system('clear')
-    ca_test_load.transform RunOtherStep, event_log
-
+    # event_log.destination EventReportStdout
+#
+    # system('clear')
+    # ca_test_load.transform RunOtherStep, event_log
+    #
     ca_test_load.root.run
   end
 
 end
 
-ca_test_load_file = '/Users/jwrobel/dev/ca2015_all_csv_v1.txt'
+ca_test_load_file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1.txt'
 destination_file =  '/tmp/all_ids_in_test_load_and_not_in_gs_ca_db.csv'
 state_ids_in_database = GsSchoolIdsFetcher.new('ditto', 'ca').values_array
 

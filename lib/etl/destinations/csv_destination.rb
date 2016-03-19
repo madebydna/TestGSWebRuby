@@ -7,7 +7,7 @@ class CsvDestination < GS::ETL::Step
   def initialize(output_file, *fields)
     @output_file = output_file
     @csv = CSV.open(output_file, 'w', col_sep: "\t")
-    @fields = fields
+    @fields = fields.empty? ? nil : fields
   end
 
   def write(row)
