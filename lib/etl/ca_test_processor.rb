@@ -82,7 +82,7 @@ class CATestProcessor < GS::ETL::DataProcessor
         '227' => "Ethnicity -- Two or More Races: Ethnicity for Not Economically Disadvantaged"
     }
 
-    s1 = source CsvSource, @source_file
+    s1 = GS::ETL::StepsBuilder.new(self.source_step)
 
     s1.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
       :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested,
@@ -217,10 +217,18 @@ class CATestProcessor < GS::ETL::DataProcessor
     # system('clear')
     # s1.transform RunOtherStep, event_log
     #
-    s1.root.run
+    source_step.run
     node_for_config_file.run
     unique_values.run
 
+  end
+
+  def source_step
+    @_source_step ||= (
+      step = CsvSource.new(@source_file)
+      step.event_log = self.event_log
+      step
+    )
   end
 end
 
