@@ -5,16 +5,20 @@ require 'etl'
 class CsvSource < GS::ETL::Step
   include GS::ETL::Source
 
-  def initialize(input_files)
+  DEFAULT_OPTIONS = { headers: true, header_converters: :symbol }
+
+  def initialize(input_files, options)
     if input_files && ! input_files.is_a?(Array)
       input_files = [input_files]
     end
     self.input_files = input_files
+    @options = DEFAULT_OPTIONS.merge(options)
   end
 
   def each
     @input_files.each do |file|
-      CSV.foreach(file, headers: true, header_converters: :symbol) do |row|
+      CSV.foreach(file, @options) do |row|
+        # require 'pry'; binding.pry
         record('Row read', file)
         yield(row.to_hash)
       end

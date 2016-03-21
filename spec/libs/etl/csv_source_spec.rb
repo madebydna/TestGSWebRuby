@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe CsvSource do
   let(:files) { double('files') }
-  let(:csv_source) { CsvSource.new(files) }
+  let(:options) { Hash.new }
+  let(:csv_source) { CsvSource.new(files, options) }
   subject { csv_source }
 
   describe '#initialize' do
@@ -22,6 +23,12 @@ describe CsvSource do
 
     describe 'when given a single file' do
       it { is_expected.to be_a(CsvSource) }
+    end
+
+    describe 'when given an empty options hash' do
+      it 'should set default options' do
+       expect(csv_source.instance_variable_get(:@options)).to eq(CsvSource::DEFAULT_OPTIONS)
+      end
     end
   end
 
@@ -46,8 +53,8 @@ describe CsvSource do
       end
       it 'calls CSV.foreach on each file' do
         subject
-        expect(fake_csv).to have_received(:foreach).with(files[0])
-        expect(fake_csv).to have_received(:foreach).with(files[1])
+        expect(fake_csv).to have_received(:foreach).with(files[0], csv_source.instance_variable_get(:@options))
+        expect(fake_csv).to have_received(:foreach).with(files[1], csv_source.instance_variable_get(:@options))
       end
 
     end
