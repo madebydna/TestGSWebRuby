@@ -1,7 +1,7 @@
 module GS
   module ETL
     class Step
-      attr_accessor :parent, :children, :id, :event_log
+      attr_accessor :parents, :children, :id, :event_log
 
       def add_step(step_class, *args, &block)
         step = step_class.new(*args, &block)
@@ -11,15 +11,6 @@ module GS
       end
       alias_method :transform, :add_step
       alias_method :destination, :add_step
-
-      def fork(step_class, *args)
-        step = add_step(step_class, *args)
-        step.parent ? step.parent : step
-      end
-
-      def root
-        parent.nil? ? self : parent.root
-      end
 
       def log_and_process(row)
         return unless row
@@ -48,6 +39,10 @@ module GS
         @children ||= []
       end
 
+      def parents
+        @parents ||= []
+      end
+
       def record(value = 'success', key = event_key)
         row = {
           id: id,
@@ -65,7 +60,7 @@ module GS
       def add(step)
         step.event_log = event_log if step.respond_to?('event_log=')
         self.children << step
-        step.parent = self
+        step.parents << self
         self
       end
     end

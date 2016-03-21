@@ -17,17 +17,6 @@ describe GS::ETL::Step do
     end
   end
 
-  describe '#root' do
-    it 'child node returns the root node' do
-      new_step = subject.add_step(fake_step_class)
-      expect(new_step.parent).to eq(subject)
-    end
-
-    it 'root node returns itself' do
-      expect(subject.root).to eq(subject)
-    end
-  end
-
   describe '#log_and_process' do
     let(:event_log) { double(process: nil) }
     before { subject.event_log = event_log }
@@ -107,7 +96,7 @@ describe GS::ETL::Step do
     end
     it 'should set the step''s parent to this step' do
       subject.add(step)
-      expect(step.parent).to eq(subject)
+      expect(step.parents).to include(subject)
     end
   end
 
