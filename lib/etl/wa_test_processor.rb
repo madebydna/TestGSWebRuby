@@ -36,6 +36,42 @@ class WATestProcessor < GS::ETL::DataProcessor
   def run
     combined_sources_step.destination CsvDestination, '/tmp/test_wa.txt'
 
+    s1.transform ColumnSelector, :schoolyear, :buildingnumber, :gradetested, :elatotaltested,
+                 :elapercentlevel1, :elapercentlevel2, :elapercentlevelbasic, :elapercentlevel3,
+                 :elapercentlevel4, :mathtotaltested, :mathpercentlevel1, :mathpercentlevel2,
+                 :mathpercentlevelbasic, :mathpercentlevel3, :mathpercentlevel4
+
+    column_order = [
+        :year,
+        :state_id,
+        :grade,
+        :elatotaltested,
+        :elapercentlevel1,
+        :elapercentlevel2,
+        :elapercentlevelbasic,
+        :elapercentlevel3,
+        :elapercentlevel4,
+        :mathtotaltested,
+        :mathpercentlevel1,
+        :mathpercentlevel2,
+        :mathpercentlevelbasic,
+        :mathpercentlevel3,
+        :mathpercentlevel4,
+    ]
+
+    s1.transform(
+        HashLookup,
+        :schoolyear,
+        {
+            '2014-15' => '2015'
+        }, to: :year
+    )
+
+    s1.transform MultiFieldRenamer, {
+        buildingnumber: :state_id,
+        gradetested: :grade
+    }
+
     source_steps.each do |step|
       step.run
     end
