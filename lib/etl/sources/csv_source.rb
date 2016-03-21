@@ -11,7 +11,7 @@ class CsvSource < GS::ETL::Step
     col_sep:','
   }
 
-  def initialize(input_files, options)
+  def initialize(input_files, options = {})
     if input_files && ! input_files.is_a?(Array)
       input_files = [input_files]
     end
