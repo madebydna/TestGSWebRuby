@@ -5,7 +5,11 @@ require 'etl'
 class CsvSource < GS::ETL::Step
   include GS::ETL::Source
 
-  DEFAULT_OPTIONS = { headers: true, header_converters: :symbol }
+  DEFAULT_OPTIONS = {
+    headers: true,
+    header_converters: :symbol,
+    col_sep:','
+  }
 
   def initialize(input_files, options)
     if input_files && ! input_files.is_a?(Array)
@@ -17,10 +21,11 @@ class CsvSource < GS::ETL::Step
 
   def each
     @input_files.each do |file|
-      CSV.foreach(file, @options) do |row|
-        # require 'pry'; binding.pry
-        record('Row read', file)
-        yield(row.to_hash)
+      CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
+        csv.each do |row|
+          record('Row read', file)
+          yield(row.to_hash)
+        end
       end
     end
   end
