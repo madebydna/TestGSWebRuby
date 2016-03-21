@@ -9,9 +9,6 @@ describe RowExploder do
     it 'should raise an error if value_field is not present' do
       expect { RowExploder.new(:foo, nil, :bar) }.to raise_error(ArgumentError)
     end
-    it 'should raise an error if value_field is not present' do
-      expect { RowExploder.new(:foo, nil, :bar) }.to raise_error
-    end
     it 'should return a new instance when valid params are given' do
       expect(RowExploder.new(:foo, :bar, :baz, :baz2)).to be_a(RowExploder)
     end

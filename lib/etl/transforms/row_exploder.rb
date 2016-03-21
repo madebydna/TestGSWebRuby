@@ -11,7 +11,7 @@ require 'step'
 # becomes
 # [
 #   {
-#     type: 'a', # the label_field
+#     type: 'a', # the label_fields
 #     value: 1,  # the value_field
 #   },
 #   {
@@ -25,13 +25,13 @@ require 'step'
 # ]
 class RowExploder < GS::ETL::Step
 
-  # label_field is used to store the name of the column that was used to
+  # label_fields is used to store the name of the column that was used to
   # explode a new row
   # value_field is used to store the value that was in the cell for 
   # the column that was exploded
-  def initialize(label_field, value_field, *fields)
+  def initialize(label_fields, value_field, *fields)
     self.fields = fields
-    self.label_field = label_field
+    self.label_fields = [*label_fields]
     self.value_field = value_field
   end
 
@@ -39,7 +39,7 @@ class RowExploder < GS::ETL::Step
     rows = @fields.map do |field|
       value_for_field = row[field]
       new_row = row.clone
-      new_row[@label_field] = field
+      @label_fields.each { |f| new_row[f] = field }
       new_row[@value_field] = value_for_field
       new_row
     end
@@ -48,27 +48,25 @@ class RowExploder < GS::ETL::Step
   end
 
   def event_key
-    @label_field
+    @label_fields
   end
 
-  def label_field=(label_field)
-    if label_field == nil || label_field.length < 1
-      raise ArgumentError, 'label_field must be provided'
+  def label_fields=(label_fields)
+    if label_fields.nil? || label_fields.empty?
+      raise ArgumentError, 'label_fields must be provided'
     end
-    @label_field = label_field
+    @label_fields = label_fields
   end
 
   def value_field=(value_field)
-    if value_field == nil || value_field.length < 1
+    if value_field.nil? || value_field.empty?
       raise ArgumentError, 'value_field must be provided'
     end
     @value_field = value_field
   end
 
   def fields=(fields)
-    if fields == nil || fields.length < 1
-      raise ArgumentError, 'fields must be provided'
-    end
+    raise ArgumentError, 'fields must be provided' if fields.empty?
     @fields = fields
   end
 end
