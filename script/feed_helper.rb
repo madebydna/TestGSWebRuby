@@ -182,12 +182,17 @@ module FeedHelper
     end
   end
 
-  def prep_state_data_for_feed
+
+  def get_state_test_data
+    state =@state
+    query_results =TestDataSet.test_scores_for_state(state)
+  end
+
+  def transpose_state_data_for_feed(query_results)
     state = @state
+    state_level_test_data = []
     proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
-    query_results =TestDataSet.test_scores_for_state(state)
-    state_level_test_data = []
     query_results.each do |data|
       test_data = {:universal_id => get_state_fips[state.upcase],
                    :entity_level => 'state',
@@ -253,6 +258,9 @@ module FeedHelper
     puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
     # xsd_schema ='greatschools-test.xsd'
 
+    #Generate State Test Master Data
+    @state_test_infos_for_feed = prep_state_test_infos_data_for_feed
+
     # Generate District Test Data From Cache
     districts_decorated_with_cache_results = get_district_cache_data
 
@@ -261,22 +269,17 @@ module FeedHelper
     schools_decorated_with_cache_results = get_school_cache_data
 
 
+    # Generate District Test Data From Test Tables
+    state_test_results = get_state_test_data
 
-    #Generate State Test Master Data
-    @state_test_infos_for_feed = prep_state_test_infos_data_for_feed
-    # Generate state Test Data
-    state_data_for_feed = prep_state_data_for_feed
+    # Translating State Test  data to XML for State
+    state_data_for_feed = transpose_state_data_for_feed(state_test_results)
 
-
-
-
-    # Translating Cache data to XML for District
+    # Translating Cache data to XML for School
     school_data_for_feed =  transpose_school_data_for_feed(schools_decorated_with_cache_results)
 
     # Translating Cache data to XML for District
     districts_data_for_feed = transpose_district_data_for_feed(districts_decorated_with_cache_results)
-
-
 
 
     # [:school , :disctrict].each do
