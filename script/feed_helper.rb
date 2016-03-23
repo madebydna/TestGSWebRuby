@@ -72,7 +72,7 @@ module FeedHelper
     return state_fips
   end
 
-  def prep_state_test_infos_data_for_feed
+  def get_state_test_master_data
     state_test_infos = []
     state = @state
 
@@ -196,7 +196,7 @@ module FeedHelper
     query_results.each do |data|
       test_data = {:universal_id => get_state_fips[state.upcase],
                    :entity_level => 'state',
-                   :test_id => state.upcase + data.data_type_id.to_s.rjust(5, '0'),
+                   :test_id => transpose_test_id(data.data_type_id),
                    :year => data.year,
                    :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
                    :grade_name => data.grade_name,
@@ -210,6 +210,11 @@ module FeedHelper
       state_level_test_data.push(test_data)
     end
     state_level_test_data
+  end
+
+  def transpose_test_id(test_id)
+    state = @state
+    state.upcase + test_id.to_s.rjust(5, '0')
   end
 
 
@@ -259,7 +264,7 @@ module FeedHelper
     # xsd_schema ='greatschools-test.xsd'
 
     #Generate State Test Master Data
-    @state_test_infos_for_feed = prep_state_test_infos_data_for_feed
+    @state_test_infos_for_feed = get_state_test_master_data
 
     # Generate District Test Data From Cache
     districts_decorated_with_cache_results = get_district_cache_data
@@ -351,7 +356,7 @@ module FeedHelper
               # For proficient and above band id is always null in database
               test_data_for_proficient_and_above = {:universal_id => entity_level == 'district' ? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
                                                     :entity_level => entity_level.titleize,
-                                                    :test_id => state.upcase + test_id.to_s.rjust(5, '0'),
+                                                    :test_id => transpose_test_id(test_id),
                                                     :year => year,
                                                     :subject_name => subject,
                                                     :grade_name => grade,
@@ -372,7 +377,7 @@ module FeedHelper
               band_names.each do |band|
                 test_data = {:universal_id => entity_level == 'district' ? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
                              :entity_level => entity_level.titleize,
-                             :test_id => state.upcase + test_id.to_s.rjust(5, '0'),
+                             :test_id => transpose_test_id(test_id),
                              :year => year,
                              :subject_name => subject,
                              :grade_name => grade,
