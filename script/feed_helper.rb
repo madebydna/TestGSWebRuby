@@ -99,25 +99,14 @@ module FeedHelper
   end
 
   def prep_school_data_for_feed
-    state =@state
-    school_ids = @school_ids
-    school_data_for_feed = []
 
-    query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
-    if school_ids.present?
-      schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
-    else
-      schools_in_feed = School.on_db(state.downcase.to_sym).all
-    end
-    schools_in_feed.each do |school|
-      query = query.include_schools(school.state, school.id)
-    end
-    query_results = query.query
-    school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
-    schools_with_cache_results= school_cache_results.decorate_schools(schools_in_feed)
-    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
-      SchoolFeedDecorator.decorate(school)
-    end
+
+
+
+  end
+
+  def transpose_school_data_for_feed(schools_decorated_with_cache_results)
+    school_data_for_feed = []
     if schools_decorated_with_cache_results.present?
       schools_decorated_with_cache_results.each do |school|
         if @state_test_infos_for_feed.present?
@@ -134,11 +123,26 @@ module FeedHelper
     school_data_for_feed
   end
 
-  def prep_district_data_for_feed
-
-
-
+  def get_school_cache_data
+    state =@state
+    school_ids = @school_ids
+    query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
+    if school_ids.present?
+      schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
+    else
+      schools_in_feed = School.on_db(state.downcase.to_sym).all
+    end
+    schools_in_feed.each do |school|
+      query = query.include_schools(school.state, school.id)
+    end
+    query_results = query.query
+    school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
+    schools_with_cache_results= school_cache_results.decorate_schools(schools_in_feed)
+    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
+      SchoolFeedDecorator.decorate(school)
+    end
   end
+
 
   def transpose_district_data_for_feed(districts_decorated_with_cache_results)
     districts_data_for_feed = []
@@ -249,8 +253,12 @@ module FeedHelper
     puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
     # xsd_schema ='greatschools-test.xsd'
 
-    # Generate District Test Data From Cache 
+    # Generate District Test Data From Cache
     districts_decorated_with_cache_results = get_district_cache_data
+
+
+    # Generate District Test Data From Cache
+    schools_decorated_with_cache_results = get_school_cache_data
 
 
 
@@ -259,10 +267,13 @@ module FeedHelper
     # Generate state Test Data
     state_data_for_feed = prep_state_data_for_feed
 
-    #Generate School Test  Data
-    school_data_for_feed = prep_school_data_for_feed
 
-    # Translating Cache data to XML
+
+
+    # Translating Cache data to XML for District
+    school_data_for_feed =  transpose_school_data_for_feed(schools_decorated_with_cache_results)
+
+    # Translating Cache data to XML for District
     districts_data_for_feed = transpose_district_data_for_feed(districts_decorated_with_cache_results)
 
 
