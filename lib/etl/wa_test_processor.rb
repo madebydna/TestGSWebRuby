@@ -34,7 +34,51 @@ class WATestProcessor < GS::ETL::DataProcessor
   end
 
   def run
-    combined_sources_step.destination CsvDestination, '/tmp/test_wa.txt'
+    # combined_sources_step.add(output_files_step_tree)
+    s1 = combined_sources_step.transform RowExploder,
+      [:subject, :proficiency_band],
+      :proficiency_band_value,
+      :elapercentlevel1,
+      :elapercentlevel2,
+      :elapercentlevel3,
+      :elapercentlevel4,
+      :elapercentlevelbasic,
+      :mathpercentlevel1,
+      :mathpercentlevel2,
+      :mathpercentlevel3,
+      :mathpercentlevel4,
+      :mathpercentlevelbasic
+
+    s1 = s1.transform HashLookup,
+      :subject,
+      {
+        mathpercentlevel1: 5, 
+        mathpercentlevel2: 5, 
+        mathpercentlevel3: 5, 
+        mathpercentlevel4: 5,
+        mathpercentlevelbasic: 5,
+        elapercentlevel1: 2, 
+        elapercentlevel2: 2, 
+        elapercentlevel3: 2, 
+        elapercentlevelbasic: 2
+      }
+
+    s1 = s1.transform HashLookup,
+      :proficiency_band,
+      {
+        mathpercentlevel1: 183,
+        mathpercentlevel2: 184,
+        mathpercentlevel3: 186,
+        mathpercentlevel4: 187,
+        mathpercentlevelbasic: 185,
+        elapercentlevel1: 183,
+        elapercentlevel2: 184,
+        elapercentlevel3: 186,
+        elapercentlevel4: 187,
+        elapercentlevelbasic: 185
+      }
+
+    s1.destination CsvDestination, '/Users/samson/Desktop/test_wa.tsv'
 
     s1.transform ColumnSelector, :schoolyear, :buildingnumber, :gradetested, :elatotaltested,
                  :elapercentlevel1, :elapercentlevel2, :elapercentlevelbasic, :elapercentlevel3,
@@ -79,13 +123,13 @@ class WATestProcessor < GS::ETL::DataProcessor
 
   def source_steps
     @_source_steps ||= (
-      source_file_1 = '/Users/samson/Development/data/wa/2_23_SBA Scores by School.txt'
-      source_file_2 = '/Users/samson/Development/data/wa/School_SBA_Scores_by_Subgroup_1.txt'
+      source_file_1 = '/Users/samson/Development/data/wa/2_23_SBA Scores by School_01.txt'
+      source_file_2 = '/Users/samson/Development/data/wa/School_SBA_Scores_by_Subgroup_1_01.txt'
 
-      source1 = CsvSource.new(source_file_1)
+      source1 = CsvSource.new(source_file_1, col_sep: "\t")
       source1.event_log = self.event_log
 
-      source2 = CsvSource.new(source_file_2)
+      source2 = CsvSource.new(source_file_2, col_sep: "\t")
       source2.event_log = self.event_log
 
       [source1, source2]
@@ -110,17 +154,13 @@ class WATestProcessor < GS::ETL::DataProcessor
 
 end
 
-# ca2015_all_csv_v1_sample.txt
-
-# file = '/Users/jwrobel/dev/data/ca2015_all_csv_v1_100000.txt'
-
-file = '/Users/samson/Development/data/ca2015_RM_csv_v1_all.txt'
+file = '/tmp/test_wa.txt'
 
 output_files = {
-    state: '/tmp/ca.2015.1.public.charter.state.txt',
-    school: '/tmp/ca.2015.1.public.charter.school.txt',
-    district: '/tmp/ca.2015.1.public.charter.district.txt',
-    unique_values: '/tmp/ca.2015.unique_files.txt'
+  state: '/tmp/wa.2015.1.public.charter.state.txt',
+  school: '/tmp/wa.2015.1.public.charter.school.txt',
+  district: '/tmp/wa.2015.1.public.charter.district.txt',
+  unique_values: '/tmp/wa.2015.unique_files.txt'
 }
 
 WATestProcessor.new(file, output_files).run
