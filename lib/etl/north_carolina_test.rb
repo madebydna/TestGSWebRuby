@@ -14,7 +14,7 @@ require 'destinations/load_config_file'
 require 'sources/buffered_group_by'
 require 'transforms/fill'
 require 'nc_entity_level_parser'
-# require 'transforms/with_block'
+require 'transforms/with_block'
 require 'nc_breakdown_definitions'
 require 'transforms/column_selector'
 # require 'transforms/keep_rows'
@@ -125,9 +125,9 @@ class NCTestProcessor < GS::ETL::DataProcessor
     #
     s1.transform FieldRenamer, :proficiency_band_value, :value_float
     #
-    # s1.transform WithBlock do |row|
-    #   CaEntityLevelParser.new(row).parse
-    # end
+    s1.transform WithBlock do |row|
+      NcEntityLevelParser.new(row).parse
+    end
     #
     # s1.destination CsvDestination, @output_file
     #
