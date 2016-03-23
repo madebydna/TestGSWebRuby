@@ -1,4 +1,4 @@
-class CaEntityLevelParser
+class NcEntityLevelParser
   def initialize (row)
     @row = row
   end

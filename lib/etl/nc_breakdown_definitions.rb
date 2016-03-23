@@ -1,24 +1,24 @@
 class NcBreakdownDefinitions
   def self.breakdown_lookup
     breakdown_hash = {
-        'blck' => 3,
-        'all' => 1,
-        'amin' => 4,
-        'asia' => 2,
-        'lep' => 15,
-        'not_lep' => 16,
-        'fem' => 11,
-        'paci' => 112,
-        'hisp' => 6,
-        'eds' => 9,
-        'male' => 12,
-        'mult' => 21,
-        'swd' => 13,
-        'not_swd' => 14,
-        'not_mig' => 28,
-        'mig' => 19,
-        'whte' => 8,
-        'aig' => 66
+        'BLCK' => 3,
+        'ALL' => 1,
+        'AMIN' => 4,
+        'ASIA' => 2,
+        'LEP' => 15,
+        'NOT_LEP' => 16,
+        'FEM' => 11,
+        'PACI' => 112,
+        'HISP' => 6,
+        'EDS' => 9,
+        'MALE' => 12,
+        'MULT' => 21,
+        'SWD' => 13,
+        'NOT_SWD' => 14,
+        'NOT_MIG' => 28,
+        'MIG' => 19,
+        'WHTE' => 8,
+        'AIG' => 66
     }
 
     breakdown_hash

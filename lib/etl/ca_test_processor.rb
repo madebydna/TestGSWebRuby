@@ -96,7 +96,7 @@ class CATestProcessor < GS::ETL::DataProcessor
       district_name: 'district_name',
       level_code: 'e,m,h'
 
-    s1.transform ValueConcatenator, :state_id, :county_code,
+    s1.transform ValueConcatonator, :state_id, :county_code,
       :district_code, :school_code
 
     s1.transform RowExploder,

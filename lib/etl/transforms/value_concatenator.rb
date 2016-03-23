@@ -1,6 +1,6 @@
 require 'step'
 
-class ValueConcatenate < GS::ETL::Step
+class ValueConcatenator < GS::ETL::Step
 
   def initialize(destination_column, *source_columns)
     @destination_column = destination_column
