@@ -135,6 +135,30 @@ module FeedHelper
   end
 
   def prep_district_data_for_feed
+
+
+
+  end
+
+  def transpose_district_data_for_feed(districts_decorated_with_cache_results)
+    districts_data_for_feed = []
+    if districts_decorated_with_cache_results.present?
+      districts_decorated_with_cache_results.each do |district|
+        if @state_test_infos_for_feed.present?
+          @state_test_infos_for_feed.each do |test|
+            test_id=test[:test_id]
+            district_cache = district.district_cache
+            all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
+            districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, 'district')
+          end
+        end
+
+      end
+    end
+    districts_data_for_feed
+  end
+
+  def get_district_cache_data
     state =@state
     ids = @district_ids
     query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
@@ -152,23 +176,6 @@ module FeedHelper
     districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
       DistrictFeedDecorator.decorate(district)
     end
-    districts_data_for_feed = []
-
-    if districts_decorated_with_cache_results.present?
-      districts_decorated_with_cache_results.each do |district|
-        if @state_test_infos_for_feed.present?
-          @state_test_infos_for_feed.each do |test|
-            test_id=test[:test_id]
-            district_cache = district.district_cache
-            all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
-            districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, 'district')
-          end
-        end
-
-      end
-    end
-    districts_data_for_feed
-
   end
 
   def prep_state_data_for_feed
@@ -242,6 +249,11 @@ module FeedHelper
     puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
     # xsd_schema ='greatschools-test.xsd'
 
+    # Generate District Test Data From Cache 
+    districts_decorated_with_cache_results = get_district_cache_data
+
+
+
     #Generate State Test Master Data
     @state_test_infos_for_feed = prep_state_test_infos_data_for_feed
     # Generate state Test Data
@@ -249,8 +261,9 @@ module FeedHelper
 
     #Generate School Test  Data
     school_data_for_feed = prep_school_data_for_feed
-    # Generate District Test Data
-    districts_data_for_feed = prep_district_data_for_feed
+
+    # Translating Cache data to XML
+    districts_data_for_feed = transpose_district_data_for_feed(districts_decorated_with_cache_results)
 
 
 

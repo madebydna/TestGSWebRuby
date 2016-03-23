@@ -2,7 +2,7 @@
 # don't change above comment since it's used by script
 mysql_dev: &mysql_dev
   <<: *mysql
-  host: alpha.greatschools.org
+  host: feeds-dev.greatschools.org
   username: service
   password: service
 
