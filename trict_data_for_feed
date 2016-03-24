@@ -1,0 +1,23 @@
+
+[1mFrom:[0m /vagrant/GSWebRuby/script/feed_helper.rb @ line 155 FeedHelper#transpose_district_data_for_feed:
+
+    [1;34m141[0m: [32mdef[0m [1;34mtranspose_district_data_for_feed[0m(districts_decorated_with_cache_results)
+    [1;34m142[0m:   districts_data_for_feed = []
+    [1;34m143[0m:   [32mif[0m districts_decorated_with_cache_results.present?
+    [1;34m144[0m:     districts_decorated_with_cache_results.each [32mdo[0m |district|
+    [1;34m145[0m:       district_data_for_feed =  []
+    [1;34m146[0m:       [32mif[0m @state_test_infos_for_feed.present?
+    [1;34m147[0m:         @state_test_infos_for_feed.each [32mdo[0m |test|
+    [1;34m148[0m:           test_id=test[[33m:test_id[0m]
+    [1;34m149[0m:           district_cache = district.district_cache
+    [1;34m150[0m:           all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
+    [1;34m151[0m:           district_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, [31m[1;31m'[0m[31mdistrict[1;31m'[0m[31m[0m)
+    [1;34m152[0m:         [32mend[0m
+    [1;34m153[0m:       [32mend[0m
+    [1;34m154[0m:       districts_data_for_feed.push(district_data_for_feed)
+ => [1;34m155[0m:       binding.pry
+    [1;34m156[0m:     [32mend[0m
+    [1;34m157[0m:   [32mend[0m
+    [1;34m158[0m:   districts_data_for_feed
+    [1;34m159[0m: [32mend[0m
+

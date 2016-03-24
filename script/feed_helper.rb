@@ -7,6 +7,14 @@ module FeedHelper
 
   PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
 
+  ENTITY_TYPE_SCHOOL = 'school'
+
+
+  ENTITY_TYPE_DISTRICT = 'district'
+
+  ENTITY_TYPE_STATE = 'state'
+
+
   def all_feeds
     ['test_scores', 'ratings']
   end
@@ -16,7 +24,7 @@ module FeedHelper
   end
 
 
-  def get_state_fips
+  def state_fips
     state_fips = {}
     state_fips['AL'] = '01'
     state_fips['AK'] = '02'
@@ -99,22 +107,24 @@ module FeedHelper
   end
 
 
+
   def transpose_school_data_for_feed(schools_decorated_with_cache_results)
-    school_data_for_feed = []
+    schools_data_for_feed = []
     if schools_decorated_with_cache_results.present?
       schools_decorated_with_cache_results.each do |school|
+        school_data_for_feed = {}
         if @state_test_infos_for_feed.present?
           @state_test_infos_for_feed.each do |test|
             test_id=test[:test_id]
             school_cache = school.school_cache
             all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
-            school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school, test_id, 'school')
+            school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school, test_id, ENTITY_TYPE_SCHOOL)
           end
         end
-
+        (schools_data_for_feed << school_data_for_feed).flatten!
       end
     end
-    school_data_for_feed
+    schools_data_for_feed
   end
 
   def get_school_cache_data
@@ -138,19 +148,21 @@ module FeedHelper
   end
 
 
+
   def transpose_district_data_for_feed(districts_decorated_with_cache_results)
     districts_data_for_feed = []
     if districts_decorated_with_cache_results.present?
       districts_decorated_with_cache_results.each do |district|
+        district_data_for_feed =  {}
         if @state_test_infos_for_feed.present?
           @state_test_infos_for_feed.each do |test|
             test_id=test[:test_id]
             district_cache = district.district_cache
             all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
-            districts_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, 'district')
+            district_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, ENTITY_TYPE_DISTRICT)
           end
         end
-
+        (districts_data_for_feed << district_data_for_feed).flatten!
       end
     end
     districts_data_for_feed
@@ -188,8 +200,8 @@ module FeedHelper
     proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
     query_results.each do |data|
-      test_data = {:universal_id => transpose_universal_id(nil,'state'),
-                   :entity_level => 'state',
+      test_data = {:universal_id => transpose_universal_id(nil, ENTITY_TYPE_STATE),
+                   :entity_level => ENTITY_TYPE_STATE,
                    :test_id => transpose_test_id(data.data_type_id),
                    :year => data.year,
                    :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
@@ -205,6 +217,7 @@ module FeedHelper
     end
     state_level_test_data
   end
+
 
   def transpose_test_id(test_id)
     state = @state
@@ -253,7 +266,7 @@ module FeedHelper
     feed_location = @feed_location
     feed_name = @feed_name
     feed_type = @feed_type
-    a = Time.now
+    start_time = Time.now
     puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
     # xsd_schema ='greatschools-test.xsd'
 
@@ -281,21 +294,18 @@ module FeedHelper
     districts_data_for_feed = transpose_district_data_for_feed(districts_decorated_with_cache_results)
 
 
-    # [:school , :disctrict].each do
-    #
-    # end
     generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"-#{state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
     generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
 
-    xmlFile =generated_feed_file_location+generated_feed_file_name
+    xml_name =generated_feed_file_location+generated_feed_file_name
 
 
     # Write to XML File
-    generate_xml_feed(districts_data_for_feed, school_data_for_feed, state_data_for_feed, @state_test_infos_for_feed, xmlFile)
+    generate_xml_feed(districts_data_for_feed, school_data_for_feed, state_data_for_feed, @state_test_infos_for_feed, xml_name)
 
 
     # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
-    puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-a).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
+    puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
 
   end
 
@@ -337,7 +347,6 @@ module FeedHelper
 
   def parse_cache_data_for_xml(all_test_score_data, entity, test_id, entity_level)
     parsed_data_for_xml = []
-    state = @state
     if all_test_score_data.present?
       complete_test_score_data = all_test_score_data["All"]["grades"]
     end
@@ -347,26 +356,12 @@ module FeedHelper
         grade_data_level.each do |level, subject_data|
           subject_data.each do |subject, years_data|
             years_data.each do |year, data|
-              # For proficient and above band id is always null in database
-              test_data_for_proficient_and_above = {:universal_id => transpose_universal_id(entity, entity_level),
-                                                    :entity_level => entity_level.titleize,
-                                                    :test_id => transpose_test_id(test_id),
-                                                    :year => year,
-                                                    :subject_name => subject,
-                                                    :grade_name => grade,
-                                                    :level_code_name => level,
-                                                    :score => data["score"],
-                                                    :proficiency_band_id => '',
-                                                    :proficiency_band_name => PROFICIENT_AND_ABOVE_BAND,
-                                                    :number_tested => data["number_students_tested"]
-              }
-              parsed_data_for_xml.push(test_data_for_proficient_and_above)
-
 
               # Get Band Names from Cache
               bands = data.keys.select { |key| key.ends_with?('band_id') }
               band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
-              test_data = {}
+              band_names << PROFICIENT_AND_ABOVE_BAND
+
               # Get Data For All Bands
               band_names.each do |band|
                 test_data = {:universal_id => transpose_universal_id(entity, entity_level),
@@ -376,17 +371,14 @@ module FeedHelper
                              :subject_name => subject,
                              :grade_name => grade,
                              :level_code_name => level,
-                             :score => data[band+"_score"],
-                             # For proficient and above band id is always null in database
-                             :proficiency_band_id => data[band+"_band_id"],
-                             :proficiency_band_name => band,
-                             :number_tested => data[band+"_number_students_tested"]
+                             :score => transpose_test_score(band, data),
+                             :proficiency_band_id => transpose_band_id(band, data),
+                             :proficiency_band_name => transpose_band_name(band),
+                             :number_tested => data["number_students_tested"]
                 }
+                parsed_data_for_xml.push(test_data)
               end
-              parsed_data_for_xml.push(test_data)
-
-
-            end
+           end
           end
         end
       end
@@ -394,14 +386,28 @@ module FeedHelper
     parsed_data_for_xml
   end
 
+  def transpose_test_score(band, data)
+    band == PROFICIENT_AND_ABOVE_BAND ?  data["score"]: data[band+"_score"]
+  end
+
+  def transpose_band_name(band)
+    # For proficient and above band id is always null in database
+    band == PROFICIENT_AND_ABOVE_BAND ? PROFICIENT_AND_ABOVE_BAND:  band
+  end
+
+  def transpose_band_id(band, data)
+    # For proficient and above band id is always null in database
+    band == PROFICIENT_AND_ABOVE_BAND ? '':  data[band+"_band_id"]
+  end
+
   def transpose_universal_id(entity = nil, entity_level)
     state = @state
-    if (entity_level == 'district' )
-      '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
-    elsif (entity_level == 'school' )
-      get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+    if (entity_level == ENTITY_TYPE_DISTRICT)
+      '1' + state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+    elsif (entity_level == ENTITY_TYPE_SCHOOL)
+      state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
     else
-      get_state_fips[state.upcase]
+      state_fips[state.upcase]
     end
 
   end
