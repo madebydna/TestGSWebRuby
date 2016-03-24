@@ -7,7 +7,7 @@ class WithBlock < GS::ETL::Step
   end
 
   def process(row)
-    @building_block.call(row)
+    row = @building_block.call(row)
     record(:row_manipulated)
     row
   end
