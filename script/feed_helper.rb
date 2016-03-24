@@ -98,12 +98,6 @@ module FeedHelper
     state_test_infos
   end
 
-  def prep_school_data_for_feed
-
-
-
-
-  end
 
   def transpose_school_data_for_feed(schools_decorated_with_cache_results)
     school_data_for_feed = []
@@ -194,7 +188,7 @@ module FeedHelper
     proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
     query_results.each do |data|
-      test_data = {:universal_id => get_state_fips[state.upcase],
+      test_data = {:universal_id => transpose_universal_id(nil,'state'),
                    :entity_level => 'state',
                    :test_id => transpose_test_id(data.data_type_id),
                    :year => data.year,
@@ -354,7 +348,7 @@ module FeedHelper
           subject_data.each do |subject, years_data|
             years_data.each do |year, data|
               # For proficient and above band id is always null in database
-              test_data_for_proficient_and_above = {:universal_id => entity_level == 'district' ? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
+              test_data_for_proficient_and_above = {:universal_id => transpose_universal_id(entity, entity_level),
                                                     :entity_level => entity_level.titleize,
                                                     :test_id => transpose_test_id(test_id),
                                                     :year => year,
@@ -375,7 +369,7 @@ module FeedHelper
               test_data = {}
               # Get Data For All Bands
               band_names.each do |band|
-                test_data = {:universal_id => entity_level == 'district' ? '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0') : get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0'),
+                test_data = {:universal_id => transpose_universal_id(entity, entity_level),
                              :entity_level => entity_level.titleize,
                              :test_id => transpose_test_id(test_id),
                              :year => year,
@@ -398,6 +392,18 @@ module FeedHelper
       end
     end
     parsed_data_for_xml
+  end
+
+  def transpose_universal_id(entity = nil, entity_level)
+    state = @state
+    if (entity_level == 'district' )
+      '1' + get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+    elsif (entity_level == 'school' )
+      get_state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
+    else
+      get_state_fips[state.upcase]
+    end
+
   end
 
   def usage
