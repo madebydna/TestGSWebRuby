@@ -393,8 +393,7 @@ module FeedHelper
   end
 
   def transpose_band_name(band)
-    # For proficient and above band id is always null in database
-    band == PROFICIENT_AND_ABOVE_BAND ? PROFICIENT_AND_ABOVE_BAND:  band
+    band
   end
 
   def transpose_band_id(band, data)
