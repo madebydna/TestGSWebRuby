@@ -7,7 +7,7 @@ describe NcEntityLevelParser do
     let(:output_row) { NcEntityLevelParser.new(row).parse }
 
     it 'should add entity level column with value "state"' do
-      expect(output_row).to eq({school_id:"550sea", entity_level:"state", state_id: nil, district_id: nil})
+      expect(output_row).to eq({school_id:"550sea", entity_level:"state", state_id: "550", district_id: "550"})
     end
   end
 
@@ -16,7 +16,7 @@ describe NcEntityLevelParser do
     let(:output_row) { NcEntityLevelParser.new(row).parse }
 
     it 'should add entity level column with value "district"' do
-      expect(output_row).to eq({school_id:"660LEA", entity_level:"district", state_id:"660", district_id: "660"})
+      expect(output_row).to eq({school_id:"660LEA", entity_level:"district", state_id: "660", district_id: "660"})
     end
   end
 

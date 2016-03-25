@@ -7,6 +7,7 @@ class NcEntityLevelParser
     @row[:entity_level] = get_value
     @row[:state_id] = get_state_id
     @row[:district_id] = get_district_id
+    @row
   end
 
   def get_value
@@ -19,26 +20,36 @@ class NcEntityLevelParser
     end
   end
 
-  def get_state_id
-    @row[:school_id].to_s[0,3] if is_school?
-  end
-
-  def get_district_id
-    @row[:school_id].to_s[0,3] if is_school? || is_district?
-  end
-
-  def is_state?
-     /sea/i.match(@row[:school_id])
+  def is_school?
+    unless is_state? || is_district?
+      true
+    end
   end
 
   def is_district?
     /LEA/i.match(@row[:school_id])
   end
 
-  def is_school?
-    unless is_state? || is_district?
-      true
+  def is_state?
+     /sea/i.match(@row[:school_id])
+  end
+
+  def get_district_id
+    @row[:school_id].to_s[0,3]
+  end
+
+  def get_state_id
+    if is_school?
+      @row[:school_id].to_s
+    elsif is_district? || is_state?
+      @row[:school_id].to_s[0,3]
     end
   end
+
+
+
+
+
+
 
 end
