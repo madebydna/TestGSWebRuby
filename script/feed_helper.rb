@@ -200,7 +200,7 @@ module FeedHelper
     proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
     state_test_data.each do |data|
-      # binding.pry if !data.proficiency_band_id.nil?
+      band = proficiency_bands[data["proficiency_band_id"]].present? ? proficiency_bands[data["proficiency_band_id"]].name : nil
       test_data = {:universal_id => transpose_universal_id(nil, ENTITY_TYPE_STATE),
                    :entity_level => ENTITY_TYPE_STATE,
                    :test_id => transpose_test_id(data.data_type_id),
@@ -210,9 +210,8 @@ module FeedHelper
                    :level_code_name => data.level_code,
                    :score => data.state_value_text|| data.state_value_float,
                    # For proficient and above band id is always null in database
-
                    :proficiency_band_id => data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"],
-                   :proficiency_band_name => data["proficiency_band_id"].nil? ? PROFICIENT_AND_ABOVE_BAND : proficiency_bands[data["proficiency_band_id"]].name,
+                   :proficiency_band_name => transpose_band_name(band),
                    :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
       }
       state_level_test_data.push(test_data)
@@ -393,7 +392,8 @@ module FeedHelper
   end
 
   def transpose_band_name(band)
-    band
+    # For proficient and above band id is always null in database
+    band == nil ? PROFICIENT_AND_ABOVE_BAND:  band
   end
 
   def transpose_band_id(band, data)
