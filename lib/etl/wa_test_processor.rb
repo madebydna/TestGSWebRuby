@@ -215,8 +215,8 @@ class WATestProcessor < GS::ETL::DataProcessor
 
   def source_steps
     @_source_steps ||= (
-      source_file_2 = '/Users/samson/Development/data/wa/2_23_SBA Scores by School.txt'
-      source_file_1 = '/Users/samson/Development/data/wa/School_SBA_Scores_by_Subgroup_1.txt'
+      source_file_2 = '/vagrant/GSWebRuby/tmp/wa_2_23_SBA_ScoresBySchool_Sample.txt'
+      source_file_1 = '/vagrant/GSWebRuby/tmp/School_SBA_ScoresBySubgroup1.txt'
 
       source1 = CsvSource.new(source_file_1, col_sep: "\t")
       source1.event_log = self.event_log
