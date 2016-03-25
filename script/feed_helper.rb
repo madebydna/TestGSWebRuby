@@ -195,7 +195,6 @@ module FeedHelper
   end
 
   def transpose_state_data_for_feed(state_test_data)
-    require 'pry'
     state_level_test_data = []
     proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
