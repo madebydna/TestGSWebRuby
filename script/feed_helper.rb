@@ -202,22 +202,30 @@ module FeedHelper
     state_test_data.each do |data|
       band = proficiency_bands[data["proficiency_band_id"]].present? ? proficiency_bands[data["proficiency_band_id"]].name : nil
       entity_level = ENTITY_TYPE_STATE
+      grade = data["grade_name"]
+      year = data["year"]
+      level = data["level_code"]
+      subject = test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : ''
       test_data = {:universal_id => transpose_universal_id(nil, entity_level),
                    :entity_level => entity_level.titleize,
                    :test_id => transpose_test_id(data.data_type_id),
-                   :year => data.year,
-                   :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
-                   :grade_name => data.grade_name,
-                   :level_code_name => data.level_code,
+                   :year => year,
+                   :subject_name => subject,
+                   :grade_name => grade,
+                   :level_code_name => level,
                    :score => transpose_test_score(band, data,entity_level),
                    # For proficient and above band id is always null in database
                    :proficiency_band_id => transpose_band_id(band, data, entity_level),
                    :proficiency_band_name => transpose_band_name(band),
-                   :number_tested => data["number_students_tested"].nil? ? '' : data["number_students_tested"]
+                   :number_tested => transpose_number_tested(data)
       }
       state_level_test_data.push(test_data)
     end
     state_level_test_data
+  end
+
+  def transpose_number_tested(data)
+    data["number_students_tested"].nil? ? '' : data["number_students_tested"]
   end
 
 
@@ -376,7 +384,7 @@ module FeedHelper
                              :score => transpose_test_score(band, data,entity_level),
                              :proficiency_band_id => transpose_band_id(band, data,entity_level),
                              :proficiency_band_name => transpose_band_name(band),
-                             :number_tested => data["number_students_tested"]
+                             :number_tested => transpose_number_tested(data)
                 }
                 parsed_data_for_xml.push(test_data)
               end
