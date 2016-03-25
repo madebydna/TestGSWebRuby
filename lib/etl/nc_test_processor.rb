@@ -50,11 +50,13 @@ class NCTestProcessor < GS::ETL::DataProcessor
         pct_l5: :level_5
     }
 
-    s1.transform FilterOutMatchingValues, ['MC','EXT2','EXT1','RG','X1','X2'], :type
+    s1.transform FilterOutMatchingValues, :type, ['MC','EXT2','EXT1','RG','X1','X2']
 
-    s1.transform FilterOutMatchingValues, ['gs'], :grade
+    s1.transform FilterOutMatchingValues, :grade, ['gs']
 
-    s1.transform FilterOutMatchingValues, ['EOG','EOC','ALL'], :subject
+    s1.transform FilterOutMatchingValues, :subject, ['EOG','EOC','ALL']
+
+    s1.transform FilterOutMatchingValues, :breakdown, [/^male_*/i,/^fem_*/i]
 
     s1.transform RowExploder,
       :proficiency_band,

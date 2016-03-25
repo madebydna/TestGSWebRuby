@@ -1,7 +1,7 @@
 require 'step'
 
 class  FilterOutMatchingValues < GS::ETL::Step
-  def initialize(values_to_match, field)
+  def initialize(field, *values_to_match)
     @values_to_match = values_to_match
     @field = field
   end
@@ -23,7 +23,10 @@ class  FilterOutMatchingValues < GS::ETL::Step
 
   private
   def value_match?(value)
-    @values_to_match.include?(value)
+    @values_to_match.any? do |match|
+      match == value ||
+          match.is_a?(Regexp) && !!(match =~ value)
+    end
   end
 
   def  value_already_transformed?(value)
