@@ -213,7 +213,7 @@ module FeedHelper
                    # For proficient and above band id is always null in database
                    :proficiency_band_id => transpose_band_id(band, data, entity_level),
                    :proficiency_band_name => transpose_band_name(band),
-                   :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
+                   :number_tested => data["number_students_tested"].nil? ? '' : data["number_students_tested"]
       }
       state_level_test_data.push(test_data)
     end

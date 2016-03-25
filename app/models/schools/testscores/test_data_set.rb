@@ -76,7 +76,7 @@ class TestDataSet < ActiveRecord::Base
              TestDataStateValue.value_float as state_value_float,
              TestDataStateValue.value_text as state_value_text,
              TestDataSet.proficiency_band_id as proficiency_band_id,
-             TestDataStateValue.number_tested as state_number_tested ")
+             TestDataStateValue.number_tested as number_students_tested ")
     .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
     .where('TestDataStateValue.active = ?',1)
     .active
