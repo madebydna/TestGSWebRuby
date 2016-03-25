@@ -92,12 +92,12 @@ module FeedHelper
       if test_data_set_info.present?
         state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
                            :test_id => data_type_id,
-                           :test_name => test_info.description,
-                           :test_abbrv => test_info.name,
-                           :scale => test.scale,
-                           :most_recent_year => test_data_set_info.year,
-                           :level_code => test_data_set_info.level_code,
-                           :description => test.description
+                           :test_name => test_info["description"],
+                           :test_abbrv => test_info["name"],
+                           :scale => test["scale"],
+                           :most_recent_year => test_data_set_info["year"],
+                           :level_code => test_data_set_info["level_code"],
+                           :description => test["description"]
         }
 
       end
@@ -205,20 +205,9 @@ module FeedHelper
       grade = data["grade_name"]
       year = data["year"]
       level = data["level_code"]
+      test_id =data["data_type_id"]
       subject = test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : ''
-      test_data = {:universal_id => transpose_universal_id(nil, entity_level),
-                   :entity_level => entity_level.titleize,
-                   :test_id => transpose_test_id(data.data_type_id),
-                   :year => year,
-                   :subject_name => subject,
-                   :grade_name => grade,
-                   :level_code_name => level,
-                   :score => transpose_test_score(band, data,entity_level),
-                   # For proficient and above band id is always null in database
-                   :proficiency_band_id => transpose_band_id(band, data, entity_level),
-                   :proficiency_band_name => transpose_band_name(band),
-                   :number_tested => transpose_number_tested(data)
-      }
+      test_data = create_hash_for_xml(band, data, nil, entity_level, grade, level, subject, test_id, year)
       state_level_test_data.push(test_data)
     end
     state_level_test_data
@@ -374,18 +363,7 @@ module FeedHelper
 
               # Get Data For All Bands
               band_names.each do |band|
-                test_data = {:universal_id => transpose_universal_id(entity, entity_level),
-                             :entity_level => entity_level.titleize,
-                             :test_id => transpose_test_id(test_id),
-                             :year => year,
-                             :subject_name => subject,
-                             :grade_name => grade,
-                             :level_code_name => level,
-                             :score => transpose_test_score(band, data,entity_level),
-                             :proficiency_band_id => transpose_band_id(band, data,entity_level),
-                             :proficiency_band_name => transpose_band_name(band),
-                             :number_tested => transpose_number_tested(data)
-                }
+                test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year)
                 parsed_data_for_xml.push(test_data)
               end
            end
@@ -394,6 +372,21 @@ module FeedHelper
       end
     end
     parsed_data_for_xml
+  end
+
+  def create_hash_for_xml(band, data, entity = nil, entity_level, grade, level, subject, test_id, year)
+    test_data = {:universal_id => transpose_universal_id(entity, entity_level),
+                 :entity_level => entity_level.titleize,
+                 :test_id => transpose_test_id(test_id),
+                 :year => year,
+                 :subject_name => subject,
+                 :grade_name => grade,
+                 :level_code_name => level,
+                 :score => transpose_test_score(band, data, entity_level),
+                 :proficiency_band_id => transpose_band_id(band, data, entity_level),
+                 :proficiency_band_name => transpose_band_name(band),
+                 :number_tested => transpose_number_tested(data)
+    }
   end
 
   def transpose_test_score(band, data,entity_level)
