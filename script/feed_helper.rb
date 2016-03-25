@@ -203,7 +203,7 @@ module FeedHelper
       band = proficiency_bands[data["proficiency_band_id"]].present? ? proficiency_bands[data["proficiency_band_id"]].name : nil
       entity_level = ENTITY_TYPE_STATE
       test_data = {:universal_id => transpose_universal_id(nil, entity_level),
-                   :entity_level => entity_level,
+                   :entity_level => entity_level.titleize,
                    :test_id => transpose_test_id(data.data_type_id),
                    :year => data.year,
                    :subject_name => test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : '',
