@@ -210,7 +210,7 @@ module FeedHelper
                    :level_code_name => data.level_code,
                    :score => data.state_value_text|| data.state_value_float,
                    # For proficient and above band id is always null in database
-                   :proficiency_band_id => data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"],
+                   :proficiency_band_id => transpose_band_id(band, data,ENTITY_TYPE_STATE),
                    :proficiency_band_name => transpose_band_name(band),
                    :number_tested => data.state_number_tested.nil? ? '' : data.state_number_tested
       }
@@ -373,7 +373,7 @@ module FeedHelper
                              :grade_name => grade,
                              :level_code_name => level,
                              :score => transpose_test_score(band, data),
-                             :proficiency_band_id => transpose_band_id(band, data),
+                             :proficiency_band_id => transpose_band_id(band, data,entity_level),
                              :proficiency_band_name => transpose_band_name(band),
                              :number_tested => data["number_students_tested"]
                 }
@@ -396,9 +396,13 @@ module FeedHelper
     band == nil ? PROFICIENT_AND_ABOVE_BAND:  band
   end
 
-  def transpose_band_id(band, data)
+  def transpose_band_id(band, data, entity_level)
     # For proficient and above band id is always null in database
-    band == PROFICIENT_AND_ABOVE_BAND ? '':  data[band+"_band_id"]
+    if (entity_level == ENTITY_TYPE_STATE )
+      band ==  data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"]
+    else
+      band == PROFICIENT_AND_ABOVE_BAND ? '' : data[band+"_band_id"]
+    end
   end
 
   def transpose_universal_id(entity = nil, entity_level)
