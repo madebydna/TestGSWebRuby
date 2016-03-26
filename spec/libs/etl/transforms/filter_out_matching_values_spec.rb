@@ -16,12 +16,12 @@ describe FilterOutMatchingValues do
 
   context 'with value found in regex values to match' do
     let(:values_to_match) { [/^male_*/i] }
-    let(:row) { {field: 'Male_Asian'} }
+    let(:row) { {field: 'MALE_ASIA'} }
     it { is_expected.to eq(nil) }
   end
   context 'with value not found in regex values to match' do
     let(:values_to_match) { [/^male_*/i] }
-    let(:row) { {field: 'Fem_HISP'} }
+    let(:row) { {field: 'FEM_HISP'} }
     it { is_expected.to eq(row) }
   end
 end

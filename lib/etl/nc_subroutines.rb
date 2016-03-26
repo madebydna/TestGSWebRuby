@@ -9,6 +9,7 @@ class NcSubroutines
     @row[:test_data_type_id] = get_test_data_type_id
     @row[:grade] = fix_grade
     @row[:value_float] = fix_value_float
+    @row
   end
 
   def get_level_code

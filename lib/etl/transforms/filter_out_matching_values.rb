@@ -25,7 +25,8 @@ class  FilterOutMatchingValues < GS::ETL::Step
   def value_match?(value)
     @values_to_match.any? do |match|
       match == value ||
-          match.is_a?(Regexp) && !!(match =~ value)
+          (match.is_a?(Regexp) && !!(match =~ value))
+
     end
   end
 
