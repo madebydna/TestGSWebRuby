@@ -99,9 +99,8 @@ module FeedHelper
                            :level_code => test_data_set_info["level_code"],
                            :description => test["description"]
         }
-
+        state_test_infos.push(state_test_info)
       end
-      state_test_infos.push(state_test_info)
     end
     state_test_infos
   end
