@@ -1,3 +1,4 @@
+require 'source'
 
 class GsShardedDatabaseSource < GS::ETL::Step
   include GS::ETL::Source

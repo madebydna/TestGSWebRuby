@@ -1,4 +1,5 @@
 require 'step'
+require 'source'
 
 class BufferedGroupBy < GS::ETL::Step
   include GS::ETL::Source

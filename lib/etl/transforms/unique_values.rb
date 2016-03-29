@@ -1,6 +1,7 @@
 require 'step'
 require 'set'
 require 'etl'
+require 'source'
 
 class UniqueValues < GS::ETL::Step
   include GS::ETL::Source

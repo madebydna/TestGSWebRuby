@@ -4,22 +4,6 @@ require_relative '../states'
 
 module GS
   module ETL
-    module Source
-      def run
-        each do |row|
-          children.each do |child|
-            child.propagate(row) do |row, step|
-              if row.is_a?(Array)
-                row.map { |r| step.log_and_process(r) }
-              else
-                step.log_and_process(row)
-              end
-            end
-          end
-        end
-      end
-    end
-
     class StepsBuilder
       attr_accessor :step
       def initialize(step)
@@ -36,8 +20,6 @@ module GS
         @step.send(method, *args, &block)
       end
     end
-
-
   end
 end
 

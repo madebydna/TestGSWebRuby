@@ -1,5 +1,6 @@
 require 'step'
 require 'etl'
+require 'source'
 
 module GS
   module ETL

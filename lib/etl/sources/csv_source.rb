@@ -1,6 +1,7 @@
 require 'csv'
 require 'step'
 require 'etl'
+require 'source'
 
 class CsvSource < GS::ETL::Step
   include GS::ETL::Source

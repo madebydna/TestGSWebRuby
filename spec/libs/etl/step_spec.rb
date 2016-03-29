@@ -38,7 +38,7 @@ describe GS::ETL::Step do
     end
   end
 
-  describe '#inject' do
+  describe '#propagate' do
     context 'given a root node with two children' do
       let(:root) { subject } 
       let!(:leaf1) { subject.add_step(fake_step_class) }
@@ -47,7 +47,7 @@ describe GS::ETL::Step do
       it 'should pass the row through each node' do
         row = {foo: :bar}
         enumerated_steps = []
-        processed_row = root.inject(row) do |r, step|
+        processed_row = root.propagate(row) do |r, step|
           enumerated_steps << step
           expect(r).to eq(row)
           r
@@ -58,7 +58,7 @@ describe GS::ETL::Step do
       it 'object changes in one node dont affect sibling nodes' do
         row = {foo: :bar}
         enumerated_steps = []
-        processed_row = root.inject(row.clone) do |r, s|
+        processed_row = root.propagate(row.clone) do |r, s|
           enumerated_steps << s
           expect(r).to eq(row)
           if s == leaf1
