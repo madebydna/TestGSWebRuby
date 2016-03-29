@@ -8,7 +8,7 @@ module GS
       def run
         each do |row|
           children.each do |child|
-            child.inject(row) do |row, step|
+            child.propagate(row) do |row, step|
               if row.is_a?(Array)
                 row.map { |r| step.log_and_process(r) }
               else

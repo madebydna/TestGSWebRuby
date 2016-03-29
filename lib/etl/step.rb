@@ -18,11 +18,11 @@ module GS
         process(row)
       end
 
-      def inject(start_value, &block)
+      def propagate(start_value, &block)
         result = block.call(start_value, self)
         children.each do |child|
           r = result ? result.clone : nil
-          child.inject(r, &block)
+          child.propagate(r, &block)
         end
       end
 
