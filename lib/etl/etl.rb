@@ -123,6 +123,33 @@ module GS
       def config_output_file
         FILE_LOCATION + ['config', state,  @year ,'test.1.JZW.txt'].join('.')
       end
+
+      def tab_delimited_source(file)
+        source = CsvSource.new(file, col_sep: "\t")
+        source.event_log = self.event_log
+        source
+      end
+      
+      def union_steps(*steps)
+        step = GS::ETL::Step.new
+        step.event_log = self.event_log
+        steps.each { |s| s.add(step) }
+        step
+      end
+
+      def attach(attachable)
+        unless self.attachable_output_step
+          raise 'Illegal state: no output step to attach graph to'
+        end
+        unless attachable.attachable_input_step
+          raise 'Illegal state: graph has no input step to attach'
+        end
+
+        self.attachable_output_step.add(graph.attachable_input_step)
+        @runnable_steps += graph.runnable_steps
+        @attachable_output_step = graph.attachable_output_step
+      end
+
     end
   end
 end

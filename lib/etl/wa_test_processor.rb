@@ -24,6 +24,7 @@ require 'transforms/unique_values'
 
 
 class WATestProcessor < GS::ETL::DataProcessor
+  attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
   def initialize(source_file, output_files)
     @source_file = source_file
@@ -31,14 +32,42 @@ class WATestProcessor < GS::ETL::DataProcessor
     @school_output_file = output_files.fetch(:school)
     @district_output_file = output_files.fetch(:district)
     @unique_values_output_file = output_files.fetch(:unique_values)
+    @runnable_steps = []
+    @attachable_input_step = nil
+    @attachable_output_step = nil
   end
 
-  def run
+  def source_steps
+    [
+      school_sbac,
+      school_sbac_by_subgroup,
+      district_sbac_by_subgroup
+    ]
+  end
+
+  def build_graph
+    return if @graph_built
+
+    @runnable_steps = [
+      school_sbac_by_subgroup_source,
+      school_sbac_source,
+      district_sbac_by_subgroup_source
+    ]
+
+    combined_sources_step = union_steps(
+      school_sbac_by_subgroup,
+      school_sbac,
+      district_sbac_by_subgroup
+    )
+
+
     s1 = combined_sources_step.transform(ColumnSelector,
                                          :countydistrictnumber,
                                          :schoolyear,
                                          :school,
+                                         :entity_level,
                                          :district,
+                                         :district_id,
                                          :subgroup,
                                          :buildingnumber,
                                          :gradetested,
@@ -56,10 +85,9 @@ class WATestProcessor < GS::ETL::DataProcessor
                                          :mathpercentlevel4)
     
     s1 = s1.transform Fill,
-      entity_level: 'school',
       entity_type: 'public_charter',
       level_code: 'e,m,h',
-      test_data_type: 'SBAC',
+      test_data_type: 'sbac',
       test_data_type_id: 240
 
     s1 = s1.transform WithBlock do |row|
@@ -95,6 +123,25 @@ class WATestProcessor < GS::ETL::DataProcessor
                                   },
                                   to: :breakdown_id
 
+    s1 = s1.transform WithBlock do |row|
+      # prof_null => {
+      # 	sbac => ['level_basic','level_3','level_4']
+      # }
+      if row[:elapercentlevelbasic] || row[:elapercentlevel3] || row[:elapercentlevel4]
+        row[:elapercentnull] = 
+          row[:elapercentlevelbasic].to_f + 
+          row[:elapercentlevel3].to_f + 
+          row[:elapercentlevel4].to_f
+      end
+      if row[:mathpercentlevelbasic] || row[:mathpercentlevel3] || row[:mathpercentlevel4]
+        row[:mathpercentnull] = 
+          row[:mathpercentlevelbasic].to_f + 
+          row[:mathpercentlevel3].to_f + 
+          row[:mathpercentlevel4].to_f
+      end
+      row
+    end
+
     s1 = s1.transform RowExploder,
       [:subject, :proficiency_band],
       :value_float,
@@ -103,11 +150,13 @@ class WATestProcessor < GS::ETL::DataProcessor
       :elapercentlevel3,
       :elapercentlevel4,
       :elapercentlevelbasic,
+      :elapercentnull,
       :mathpercentlevel1,
       :mathpercentlevel2,
       :mathpercentlevel3,
       :mathpercentlevel4,
-      :mathpercentlevelbasic
+      :mathpercentlevelbasic,
+      :mathpercentnull
 
     s1 = s1.transform(WithBlock) { |row| row if row[:value_float] != nil }
 
@@ -119,12 +168,27 @@ class WATestProcessor < GS::ETL::DataProcessor
         mathpercentlevel3: :math, 
         mathpercentlevel4: :math,
         mathpercentlevelbasic: :math,
-        elapercentlevel1: :ela, 
-        elapercentlevel2: :ela, 
-        elapercentlevel3: :ela, 
-        elapercentlevel4: :ela, 
-        elapercentlevelbasic: :ela
+        mathpercentnull: :math,
+        elapercentlevel1: :reading, 
+        elapercentlevel2: :reading, 
+        elapercentlevel3: :reading, 
+        elapercentlevel4: :reading, 
+        elapercentnull: :reading,
+        elapercentlevelbasic: :reading
       }
+
+    s1 = s1.transform WithBlock do |row|
+      if row[:subject] == :math
+        row[:number_tested] = row[:mathtotaltested]
+      elsif row[:subject] == :reading
+        row[:number_tested] = row[:elatotaltested]
+      end
+      row
+    end
+
+    s1 = s1.transform WithBlock do |row|
+      row if row[:number_tested] && row[:number_tested].to_i >= 10
+    end
 
     s1 = s1.transform HashLookup,
       :proficiency_band,
@@ -134,18 +198,21 @@ class WATestProcessor < GS::ETL::DataProcessor
         mathpercentlevel3: :level_3, 
         mathpercentlevel4: :level_4,
         mathpercentlevelbasic: :level_basic,
+        mathpercentnull: :null,
         elapercentlevel1: :level_1, 
         elapercentlevel2: :level_2, 
         elapercentlevel3: :level_3, 
         elapercentlevel4: :level_4, 
-        elapercentlevelbasic: :level_basic
+        elapercentlevelbasic: :level_basic,
+        elapercentnull: :null
       }
+
 
     s1 = s1.transform HashLookup,
       :subject,
       {
         math: 5,
-        ela: 2
+        reading: 2
       },
       to: :subject_id
 
@@ -157,11 +224,7 @@ class WATestProcessor < GS::ETL::DataProcessor
         level_3: 186,
         level_4: 187,
         level_basic: 185,
-        level_1: 183,
-        level_2: 184,
-        level_3: 186,
-        level_4: 187,
-        level_basic: 185
+        null: :null
       },
       to: :proficiency_band_id
 
@@ -186,61 +249,77 @@ class WATestProcessor < GS::ETL::DataProcessor
       row
     end
 
-    # column_order = [
-    #     :year,
-    #     :state_id,
-    #     :grade,
-    #     :elatotaltested,
-    #     :elapercentlevel1,
-    #     :elapercentlevel2,
-    #     :elapercentlevelbasic,
-    #     :elapercentlevel3,
-    #     :elapercentlevel4,
-    #     :mathtotaltested,
-    #     :mathpercentlevel1,
-    #     :mathpercentlevel2,
-    #     :mathpercentlevelbasic,
-    #     :mathpercentlevel3,
-    #     :mathpercentlevel4,
-    # ]
+    s1 = s1.transform WithBlock do |row|
+      if row[:value_float] && row[:value_float].to_s.include?('.')
+        row[:value_float] = "%g" % row[:value_float].to_f.round(1)
+      end
+      row
+    end
 
     s1 = s1.add(output_files_step_tree)
 
-    # s1 = s1.destination CsvDestination, '/Users/samson/Desktop/test_wa.tsv', *column_order
-
-    source_steps.each do |step|
-      step.run
-    end
+    @graph_built = true
   end
 
-  def source_steps
-    @_source_steps ||= (
-      source_file_2 = '/vagrant/GSWebRuby/tmp/wa_2_23_SBA_ScoresBySchool_Sample.txt'
-      source_file_1 = '/vagrant/GSWebRuby/tmp/School_SBA_ScoresBySubgroup1.txt'
+  def run
+    build_graph
+    runnable_steps.each(&:run)
+  end
 
-      source1 = CsvSource.new(source_file_1, col_sep: "\t")
-      source1.event_log = self.event_log
 
-      source2 = CsvSource.new(source_file_2, col_sep: "\t")
-      source2.event_log = self.event_log
-
-      [source1, source2]
+  def school_sbac_source
+    @_school_sbac_source ||= tab_delimited_source(
+      [
+        '/Users/samson/Development/data/wa/2_23_SBA Scores by School.txt'
+      ]
     )
   end
 
-  def combined_sources_step
-    @_combined_sources_step ||= (
-      s1 = source_steps[0]
-      s1.transform Fill, SubGroup: nil, :'District ID' => nil
+  def school_sbac
+    @_school_sbac ||= (
+      s = school_sbac_source.transform Fill,
+        subgroup: 'all_students',
+        entity_level: 'school'
+      s = s.transform FieldRenamer, :countydistrictnumber, :district_id
+      s
+    )
+  end
 
-      s2 = source_steps[1]
-      s2.transform Fill, CountyDistrictNumber: nil, ESD: nil
-      s2.transform Fill, ESD: nil
+  def school_sbac_by_subgroup_source
+    @_school_sbac_by_subgroup_source ||=
+      tab_delimited_source(
+        [
+          '/Users/samson/Development/data/wa/School_SBA_Scores_by_Subgroup_1.txt',
+          '/Users/samson/Development/data/wa/School SBA Scores by Subgroup 2.txt'
+        ]
+      )
+  end
 
-      combined_sources_step = s1.add_step(GS::ETL::Step)
-      s2.add(combined_sources_step)
+  def school_sbac_by_subgroup
+    @_school_sbac_by_subgroup ||= (
+      s = school_sbac_by_subgroup_source
+      s = s.transform Fill,
+        ESD: nil,
+        entity_level: 'school'
+      s
+    )
+  end
 
-      combined_sources_step
+  def district_sbac_by_subgroup_source
+    @_district_sbac_by_subgroup_source ||=
+      tab_delimited_source([
+        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 1.txt',
+        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 2.txt'
+      ])
+  end
+
+  def district_sbac_by_subgroup
+    @_district_sbac_by_subgroup ||= (
+      s = district_sbac_by_subgroup_source
+      s = s.transform Fill,
+        schoolid: 'school',
+        entity_level: 'district'
+      s
     )
   end
 
