@@ -18,7 +18,7 @@ require 'transforms/column_selector'
 require 'transforms/filter_out_matching_values'
 
 
-class NCTestProcessor < GS::ETL::DataProcessor
+class NCTestProcessor < GS::ETL::TestProcessor
 
   def initialize(source_file, output_file)
     @source_file = source_file

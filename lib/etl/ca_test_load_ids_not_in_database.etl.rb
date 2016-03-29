@@ -9,7 +9,7 @@ require 'sources/csv_source'
 require 'gs_school_ids_fetcher'
 require 'destinations/event_report_stdout'
 
-class  MisMatchFinder < GS::ETL::DataProcessor
+class  MisMatchFinder < GS::ETL::TestProcessor
 
   def initialize(source_file, values_to_match, output_file)
     @source_file = source_file

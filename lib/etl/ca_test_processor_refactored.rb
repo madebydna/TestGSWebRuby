@@ -21,7 +21,7 @@ require 'transforms/keep_rows'
 require 'transforms/value_concatonator'
 require 'transforms/filter_out_matching_values'
 
-class CATestProcessor < GS::ETL::DataProcessor
+class CATestProcessor < GS::ETL::TestProcessor
 
   def initialize(source_file)
     @source_file = source_file

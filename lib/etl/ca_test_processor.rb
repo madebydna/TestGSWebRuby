@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
+require 'test_processor'
 require 'event_log'
 require 'sources/csv_source'
 require 'transforms/row_exploder'
@@ -23,7 +24,7 @@ require 'transforms/value_concatenator'
 require 'transforms/unique_values'
 
 
-class CATestProcessor < GS::ETL::DataProcessor
+class CATestProcessor < GS::ETL::TestProcessor
 
   def initialize(source_file, output_files)
     @source_file = source_file

@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
+require 'test_processor'
 require 'event_log'
 require 'sources/csv_source'
 require 'transforms/row_exploder'
@@ -19,11 +20,11 @@ require 'gs_breakdown_definitions'
 require 'gs_breakdowns_from_db'
 require 'transforms/column_selector'
 require 'transforms/keep_rows'
-require 'transforms/value_concatonator'
+require 'transforms/value_concatenator'
 require 'transforms/unique_values'
 
 
-class WATestProcessor < GS::ETL::DataProcessor
+class WATestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
   def initialize(source_file, output_files)
