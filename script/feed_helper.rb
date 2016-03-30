@@ -141,7 +141,7 @@ module FeedHelper
     schools_in_feed.each_slice(@batch_size.to_i) do |slice|
       school_batches.push(slice)
     end
-    puts "Total Schools in Feed #{schools_in_feed.size}"
+    puts "Total Schools in State #{schools_in_feed.size}"
     puts "School Batch Size #{@batch_size}"
     puts "Total Schools Batches Feed #{school_batches.size}"
     school_batches
@@ -160,9 +160,9 @@ module FeedHelper
     districts_in_feed.each_slice(@batch_size.to_i) do |slice|
       district_batches.push(slice)
     end
-    puts "Total Districts in Feed #{districts_in_feed.size}"
+    puts "Total Districts in State #{districts_in_feed.size}"
     puts "District Batch Size #{@batch_size}"
-    puts "Total Schools Batches Feed #{district_batches.size}"
+    puts "Total Districts Batches Feed #{district_batches.size}"
 
     district_batches
   end
