@@ -141,6 +141,9 @@ module FeedHelper
     schools_in_feed.each_slice(@batch_size.to_i) do |slice|
       school_batches.push(slice)
     end
+    puts "Total Schools in Feed #{schools_in_feed.size}"
+    puts "School Batch Size #{@batch_size}"
+    puts "Total Schools Batches Feed #{school_batches.size}"
     school_batches
   end
 
@@ -157,6 +160,10 @@ module FeedHelper
     districts_in_feed.each_slice(@batch_size.to_i) do |slice|
       district_batches.push(slice)
     end
+    puts "Total Districts in Feed #{districts_in_feed.size}"
+    puts "District Batch Size #{@batch_size}"
+    puts "Total Schools Batches Feed #{district_batches.size}"
+
     district_batches
   end
 
@@ -312,19 +319,22 @@ module FeedHelper
 
 
 
-        school_batches.each do |school_batch|
+        school_batches.each_with_index do |school_batch,index|
+          puts "school batch Start #{Time.now} for Batch Number #{index+1}"
+
           schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
           school_data_for_feed =  transpose_school_data_for_feed(schools_decorated_with_cache_results)
           generate_xml_tag(school_data_for_feed, 'test-result', xml)
-          puts "school Batch end #{Time.now}"
+          puts "school Batch end #{Time.now} for Batch Number #{index+1}"
         end
 
 
-        district_batches.each do |district_batch|
+        district_batches.each_with_index do |district_batch , index|
+          puts "district batch Start #{Time.now} for Batch Number #{index+1}"
           districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
           district_data_for_feed =  transpose_district_data_for_feed(districts_decorated_with_cache_results)
           generate_xml_tag(district_data_for_feed, 'test-result', xml)
-          puts "District Batch end #{Time.now}"
+          puts "district Batch end #{Time.now} for Batch Number #{index+1}"
         end
 
       end
@@ -332,7 +342,6 @@ module FeedHelper
   end
 
   def get_schools_batch_cache_data(school_batch)
-    puts "school batch Start #{Time.now}"
     query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
     school_batch.each do |school|
       query = query.include_schools(school.state, school.id)
@@ -346,7 +355,6 @@ module FeedHelper
   end
 
   def get_districts_batch_cache_data(district_batch)
-    puts "district batch Start #{Time.now}"
     query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
     district_batch.each do |district|
       query = query.include_districts(district.state, district.id)
