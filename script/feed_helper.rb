@@ -14,7 +14,6 @@ module FeedHelper
 
   ENTITY_TYPE_STATE = 'state'
 
-  BATCH_SIZE = 2
 
 
   def all_feeds
@@ -139,7 +138,7 @@ module FeedHelper
       schools_in_feed = School.on_db(state.downcase.to_sym).all
     end
     school_batches = []
-    schools_in_feed.each_slice(BATCH_SIZE) do |slice|
+    schools_in_feed.each_slice(@batch_size.to_i) do |slice|
       school_batches.push(slice)
     end
     school_batches
@@ -155,7 +154,7 @@ module FeedHelper
       districts_in_feed = District.on_db(state.downcase.to_sym).all
     end
     district_batches = []
-    districts_in_feed.each_slice(BATCH_SIZE) do |slice|
+    districts_in_feed.each_slice(@batch_size.to_i) do |slice|
       district_batches.push(slice)
     end
     district_batches
@@ -227,10 +226,10 @@ module FeedHelper
     else
       args = []
       ARGV.each_with_index do |arg, i|
-        feed_name, state, school_id, district_id, location, name= arg.split(':')
+        feed_name, state, school_id, district_id, location, name, batch_size= arg.split(':')
         state = state == 'all' ? all_states : state.split(',')
+        batch_size = batch_size if batch_size.present?
         return false unless (state-all_states).empty?
-
         feed_name ||= 'none_given'
         feed_name = feed_name.split(',')
         feed_name = all_feeds if feed_name == ['all']
@@ -248,6 +247,8 @@ module FeedHelper
         args[i][:district_id] = district_id if district_id.present?
         args[i][:location] = location if location.present?
         args[i][:name] = name if name.present?
+        args[i][:batch_size] = batch_size if batch_size.present?
+
       end
       args
     end
@@ -258,6 +259,7 @@ module FeedHelper
     feed_location = @feed_location
     feed_name = @feed_name
     feed_type = @feed_type
+
     start_time = Time.now
     puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
     # xsd_schema ='greatschools-test.xsd'
