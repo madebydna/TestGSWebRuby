@@ -1,5 +1,19 @@
 require 'spec_helper'
 
+shared_example 'should record value as ignored' do
+  ignored_key = "foo:alfdj"
+  expect(transformer).to receive(:record).with(:executed, ignored_key)
+  expect(transformer).to receive(:record).with(:"alfdj ignored", ignored_key)
+  subject[:foo]
+end
+
+shared_example 'should record value as not mapped' do
+  not_mapped_key = "foo:alfdj"
+  expect(transformer).to receive(:record).with(:executed, not_mapped_key)
+  expect(transformer).to receive(:record).with(:"* Not Mapped *", not_mapped_key)
+  subject[:foo]
+end
+
 describe HashLookup do
   describe '.initialize' do
     context 'with empty key' do
@@ -38,7 +52,8 @@ describe HashLookup do
     end
     subject { transformer.process(row) }
     context 'when not providing destination key' do
-      let(:transformer) { HashLookup.new(:foo, lookup_hash) }
+      let(:options) { {} }
+      let(:transformer) { HashLookup.new(:foo, lookup_hash, options) }
       context 'when row has the key to look up' do
         let(:row) do
           {
@@ -49,21 +64,32 @@ describe HashLookup do
           expect(subject[:foo]).to eq(:Blackberry)
         end
       end
-
       context 'when value doesnt exist in lookup table' do
         let(:row) do
           {
             foo: :alfdj
           }
         end
-        it 'should overwrite with nil' do
-          expect(subject[:foo]).to be_nil
+        context 'when value ignored' do
+          let(:options) { { ignore: [:alfdj]} }
+          it 'should not overwrite value' do
+            expect(subject[:foo]).to eq(:alfdj)
+          end
+          include_example 'should record value as ignored'
+        end
+        context 'when value is not ignored' do
+          it 'should not overwrite value' do
+            expect(subject[:foo]).to eq(:alfdj)
+          end
+          include_example 'should record value as not mapped'
         end
       end
     end
 
     context 'when providing destination key' do
-      let(:transformer) { HashLookup.new(:foo, lookup_hash, to: :bar) }
+      let(:options) { { to: :bar} }
+      let(:transformer) { HashLookup.new(:foo, lookup_hash, options) }
+      subject { transformer.process(row) }
       context 'when row has the key to look up' do
         let(:row) do
           {
@@ -77,18 +103,41 @@ describe HashLookup do
       end
 
       context 'when value doesnt exist in lookup table' do
-        let(:row) do
-          {
-            foo: :alfdj
-          }
+        context 'when desination there is no current value for destination key' do
+          let(:row) do
+            {
+              foo: :alfdj
+            }
+          end
+          context 'with the value not ignored' do
+            it 'should overwrite with nil' do
+              expect(subject[:foo]).to eq(:alfdj)
+              expect(subject[:bar]).to be_nil
+            end
+            include_example 'should record value as not mapped'
+          end
+          context 'with value ignored' do
+            let(:options) { { to: :bar, ignore: [:alfdj]} }
+            it 'should overwrite with nil' do
+              expect(subject[:foo]).to eq(:alfdj)
+              expect(subject[:bar]).to be_nil
+            end
+            include_example 'should record value as ignored'
+          end
         end
-        it 'should overwrite with nil' do
-          expect(subject[:foo]).to eq(:alfdj)
-          expect(subject[:bar]).to be_nil
+        context 'when destination key has a current value' do
+          let(:row) do
+            {
+              foo: :alfdj,
+              bar: :buddy
+            }
+          end
+          it 'should keep current value' do
+            expect(subject[:foo]).to eq(:alfdj)
+            expect(subject[:bar]).to eq(:buddy)
+          end
         end
       end
     end
-
-
   end
 end

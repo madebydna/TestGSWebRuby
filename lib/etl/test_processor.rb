@@ -38,6 +38,7 @@ module GS
         school_steps
         state_steps
         district_steps
+        # unique_breakdown_mappings
       end
 
       def output_files_root_step
@@ -49,7 +50,7 @@ module GS
       def self.define_output_files
         ENTITIES.each do |entity|
           define_method("#{entity}_output_file".to_sym) do
-            FILE_LOCATION +  data_file_prefix + entity + ".tree4.txt"
+            FILE_LOCATION +  data_file_prefix + entity + ".txt"
           end
         end
       end
@@ -57,7 +58,7 @@ module GS
       def self.define_entity_methods
         ENTITIES.each do |entity|
           define_method("#{entity}_steps".to_sym) do
-            node = output_files_root_step.add_step(KeepRows, [entity], :entity_level)
+            node = output_files_root_step.add_step(KeepRows, :entity_level, entity)
             node.destination CsvDestination,
               send("#{entity}_output_file".to_sym),
               *COLUMN_ORDER
@@ -84,7 +85,7 @@ module GS
       end
 
       def config_output_file
-        FILE_LOCATION + ['config', state,  @year ,'test.1.JZW.txt'].join('.')
+        FILE_LOCATION + ['config', state,  @year ,'test.1.txt'].join('.')
       end
 
       def tab_delimited_source(file)

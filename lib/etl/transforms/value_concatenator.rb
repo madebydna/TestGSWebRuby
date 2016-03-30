@@ -8,7 +8,6 @@ class ValueConcatenator < GS::ETL::Step
   end
 
   def process(row)
-      p row
       row[@destination_column]  = @source_columns.reduce('') { |sum, c| sum + row[c] }
       record(:concatenate_column)
       row

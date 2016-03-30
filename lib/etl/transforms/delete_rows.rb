@@ -1,6 +1,6 @@
 require 'step'
 
-class  FilterOutMatchingValues < GS::ETL::Step
+class  DeleteRows < GS::ETL::Step
   def initialize(field, *values_to_match)
     @values_to_match = values_to_match
     @field = field
@@ -28,9 +28,5 @@ class  FilterOutMatchingValues < GS::ETL::Step
           (match.is_a?(Regexp) && !!(match =~ value))
 
     end
-  end
-
-  def  value_already_transformed?(value)
-    @values_transformed.include?(value)
   end
 end
