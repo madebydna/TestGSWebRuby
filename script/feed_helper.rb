@@ -383,7 +383,7 @@ module FeedHelper
   def parse_cache_data_for_xml(all_test_score_data, entity, test_id, entity_level)
     parsed_data_for_xml = []
     if all_test_score_data.present?
-      complete_test_score_data = all_test_score_data["All"]["grades"]
+      complete_test_score_data = all_test_score_data["All"].present? ? all_test_score_data["All"]["grades"] :nil
     end
     if complete_test_score_data.present?
       complete_test_score_data.each do |grade, grade_data|
