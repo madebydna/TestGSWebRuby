@@ -87,7 +87,7 @@ module GS
       end
 
       def school_steps
-        node = output_files_root_step.add_step(KeepRows, :entity_level, 'district')
+        node = output_files_root_step.add_step(KeepRows, :entity_level, 'school')
         node.destination CsvDestination,
           send("school_output_file".to_sym),
           *COLUMN_ORDER
