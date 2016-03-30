@@ -23,7 +23,6 @@ module GS
 
       def output_files_step_tree
         self.class.define_output_files
-        self.class.define_entity_methods
         build_file_output_steps
         output_files_root_step
       end
@@ -50,21 +49,49 @@ module GS
       def self.define_output_files
         ENTITIES.each do |entity|
           define_method("#{entity}_output_file".to_sym) do
-            FILE_LOCATION +  data_file_prefix + entity + ".txt"
+            FILE_LOCATION +  data_file_prefix + entity + ".WED.txt"
           end
         end
       end
 
-      def self.define_entity_methods
-        ENTITIES.each do |entity|
-          define_method("#{entity}_steps".to_sym) do
-            node = output_files_root_step.add_step(KeepRows, :entity_level, entity)
-            node.destination CsvDestination,
-              send("#{entity}_output_file".to_sym),
-              *COLUMN_ORDER
-            node
-          end
+      def state_steps
+        node = output_files_root_step.add_step(KeepRows, :entity_level, 'state')
+        node = node.transform WithBlock do |row|
+          row[:state_id] = 'state'
+          row[:school_id] = 'state'
+          row[:school_name] = 'state'
+          row[:district_name] ='state'
+          row[:district_id] = 'state'
+          row
         end
+        node.destination CsvDestination,
+          send("state_output_file".to_sym),
+          *COLUMN_ORDER
+        node
+      end
+
+      def district_steps
+        node = output_files_root_step.add_step(KeepRows, :entity_level, 'district')
+        node = node.transform WithBlock do |row|
+          row[:school_id] = 'district'
+          row[:school_name] = 'district'
+          row
+        end
+       node = node.transform Fill,
+          school_id: 'district',
+          school_name: 'district'
+        node.destination CsvDestination,
+          send("district_output_file".to_sym),
+          *COLUMN_ORDER
+        node
+      end
+
+      def school_steps
+        node = output_files_root_step.add_step(KeepRows, :entity_level, 'district')
+        node.destination CsvDestination,
+          send("school_output_file".to_sym),
+          *COLUMN_ORDER
+        node
       end
 
       def config_hash

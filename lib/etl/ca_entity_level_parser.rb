@@ -25,7 +25,7 @@ class CaEntityLevelParser
   end
 
   def is_district?
-    /[1-9]/.match(@row[:district_id]) && ! is_school?
+    /[1-9]/.match(@row[:district_code]) && ! is_school?
   end
 
   def is_county?

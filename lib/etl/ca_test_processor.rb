@@ -536,6 +536,14 @@ class CATestProcessor < GS::ETL::TestProcessor
       CaEntityLevelParser.new(row).parse
     end
 
+    s1 = s1.transform WithBlock do |row|
+      if row[:entity_level] == 'district'
+        row[:district_id] = row[:district_code]
+        row[:state_id] = row[:state_id].gsub('0000000','')
+      end
+      row
+    end
+
     last_before_split = s1.transform KeepRows, :entity_level, *['district','school','state']
 
     @config_node = last_before_split.destination LoadConfigFile, config_output_file, config_hash
