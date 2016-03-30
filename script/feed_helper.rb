@@ -14,6 +14,8 @@ module FeedHelper
 
   ENTITY_TYPE_STATE = 'state'
 
+  BATCH_SIZE = 2
+
 
   def all_feeds
     ['test_scores', 'ratings']
@@ -107,10 +109,10 @@ module FeedHelper
 
 
 
-  def transpose_school_data_for_feed(schools_decorated_with_cache_results)
+  def transpose_school_data_for_feed(schools_cache_data)
     schools_data_for_feed = []
-    if schools_decorated_with_cache_results.present?
-      schools_decorated_with_cache_results.each do |school|
+    if schools_cache_data.present?
+      schools_cache_data.each do |school|
         school_data_for_feed = {}
         if @state_test_infos_for_feed.present?
           @state_test_infos_for_feed.each do |test|
@@ -124,34 +126,46 @@ module FeedHelper
       end
     end
     schools_data_for_feed
+
   end
 
-  def get_school_cache_data
+
+  def get_school_batches
     state =@state
     school_ids = @school_ids
-    query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
     if school_ids.present?
       schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
     else
       schools_in_feed = School.on_db(state.downcase.to_sym).all
     end
-    schools_in_feed.each do |school|
-      query = query.include_schools(school.state, school.id)
+    school_batches = []
+    schools_in_feed.each_slice(BATCH_SIZE) do |slice|
+      school_batches.push(slice)
     end
-    query_results = query.query
-    school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
-    schools_with_cache_results= school_cache_results.decorate_schools(schools_in_feed)
-    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
-      SchoolFeedDecorator.decorate(school)
-    end
+    school_batches
   end
 
 
+  def get_district_batches
+    state =@state
+    district_ids = @district_ids
+    if district_ids.present?
+      districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids)
+    else
+      districts_in_feed = District.on_db(state.downcase.to_sym).all
+    end
+    district_batches = []
+    districts_in_feed.each_slice(BATCH_SIZE) do |slice|
+      district_batches.push(slice)
+    end
+    district_batches
+  end
 
-  def transpose_district_data_for_feed(districts_decorated_with_cache_results)
+
+  def transpose_district_data_for_feed(districts_cache_data)
     districts_data_for_feed = []
-    if districts_decorated_with_cache_results.present?
-      districts_decorated_with_cache_results.each do |district|
+    if districts_cache_data.present?
+      districts_cache_data.each do |district|
         district_data_for_feed =  {}
         if @state_test_infos_for_feed.present?
           @state_test_infos_for_feed.each do |test|
@@ -167,25 +181,6 @@ module FeedHelper
     districts_data_for_feed
   end
 
-  def get_district_cache_data
-    state =@state
-    ids = @district_ids
-    query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
-    if ids.present?
-      districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => ids)
-    else
-      districts_in_feed = District.on_db(state.downcase.to_sym).all
-    end
-    districts_in_feed.each do |district|
-      query = query.include_districts(district.state, district.id)
-    end
-    query_results = query.query
-    district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
-    districts_with_cache_results= district_cache_results.decorate_districts(districts_in_feed)
-    districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
-      DistrictFeedDecorator.decorate(district)
-    end
-  end
 
 
   def get_state_test_data
@@ -270,25 +265,18 @@ module FeedHelper
     #Generate State Test Master Data
     @state_test_infos_for_feed = get_state_test_master_data
 
-    # Generate District Test Data From Cache
-    districts_decorated_with_cache_results = get_district_cache_data
 
+    # Generate School Batches
+    school_batches = get_school_batches
 
-    # Generate District Test Data From Cache
-    schools_decorated_with_cache_results = get_school_cache_data
-
+    # Generate District Batches
+    district_batches =  get_district_batches
 
     # Generate District Test Data From Test Tables
     state_test_results = get_state_test_data
 
     # Translating State Test  data to XML for State
     state_data_for_feed = transpose_state_data_for_feed(state_test_results)
-
-    # Translating Cache data to XML for School
-    school_data_for_feed =  transpose_school_data_for_feed(schools_decorated_with_cache_results)
-
-    # Translating Cache data to XML for District
-    districts_data_for_feed = transpose_district_data_for_feed(districts_decorated_with_cache_results)
 
 
     generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"-#{state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
@@ -298,7 +286,7 @@ module FeedHelper
 
 
     # Write to XML File
-    generate_xml_feed(districts_data_for_feed, school_data_for_feed, state_data_for_feed, @state_test_infos_for_feed, xml_name)
+    generate_xml_feed(district_batches, school_batches, state_data_for_feed, @state_test_infos_for_feed, xml_name)
 
 
     # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
@@ -306,7 +294,7 @@ module FeedHelper
 
   end
 
-  def generate_xml_feed(districts_data_for_feed, school_data_for_feed, state_data_for_feed, state_test_infos_for_feed, xmlFile)
+  def generate_xml_feed(district_batches, school_batches, state_data_for_feed, state_test_infos_for_feed, xmlFile)
     File.open(xmlFile, 'w') { |f|
       xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
       xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
@@ -319,16 +307,56 @@ module FeedHelper
         # Generate state test data tag
         generate_xml_tag(state_data_for_feed, 'test-result', xml)
 
-        # Generate school test data tag
-        generate_xml_tag(school_data_for_feed, 'test-result', xml)
 
-        # Generate district test data tag
-        generate_xml_tag(districts_data_for_feed, 'test-result', xml)
 
+
+        school_batches.each do |school_batch|
+          schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
+          school_data_for_feed =  transpose_school_data_for_feed(schools_decorated_with_cache_results)
+          generate_xml_tag(school_data_for_feed, 'test-result', xml)
+          puts "school Batch end #{Time.now}"
+        end
+
+
+        district_batches.each do |district_batch|
+          districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
+          district_data_for_feed =  transpose_district_data_for_feed(districts_decorated_with_cache_results)
+          generate_xml_tag(district_data_for_feed, 'test-result', xml)
+          puts "District Batch end #{Time.now}"
+        end
 
       end
     }
   end
+
+  def get_schools_batch_cache_data(school_batch)
+    puts "school batch Start #{Time.now}"
+    query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
+    school_batch.each do |school|
+      query = query.include_schools(school.state, school.id)
+    end
+    query_results = query.query_and_use_cache_keys
+    school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
+    schools_with_cache_results= school_cache_results.decorate_schools(school_batch)
+    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
+      SchoolFeedDecorator.decorate(school)
+    end
+  end
+
+  def get_districts_batch_cache_data(district_batch)
+    puts "district batch Start #{Time.now}"
+    query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
+    district_batch.each do |district|
+      query = query.include_districts(district.state, district.id)
+    end
+    query_results = query.query_and_use_cache_keys
+    district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
+    districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
+    districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
+     DistrictFeedDecorator.decorate(district)
+    end
+  end
+
 
   def generate_xml_tag(data, tag_name, xml)
     if data.present?
@@ -364,7 +392,7 @@ module FeedHelper
                 test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year)
                 parsed_data_for_xml.push(test_data)
               end
-           end
+            end
           end
         end
       end
@@ -389,7 +417,7 @@ module FeedHelper
 
   def transpose_test_score(band, data,entity_level)
     if (entity_level == ENTITY_TYPE_STATE)
-     data.state_value_text|| data.state_value_float
+      data.state_value_text|| data.state_value_float
     else
       band == PROFICIENT_AND_ABOVE_BAND ?  data["score"]: data[band+"_score"]
     end
