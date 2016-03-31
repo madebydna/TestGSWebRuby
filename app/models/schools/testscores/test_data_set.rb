@@ -31,13 +31,13 @@ class TestDataSet < ActiveRecord::Base
   end
 
   def self.fetch_feed_test_scores(school, data_set_conditions = {})
-    self.base_performance_query(school)
+    self.base_performance_school_feed_query(school)
         .where(data_set_conditions)
         .with_display_targets('feed')
   end
 
   def self.fetch_feed_test_scores_district(district)
-    self.base_performance_district_query(district)
+    self.base_performance_district_feed_query(district)
     .with_display_targets('feed')
   end
 
@@ -100,10 +100,28 @@ class TestDataSet < ActiveRecord::Base
       .active
   end
 
+  def self.base_performance_school_feed_query(school)
+    TestDataSet.on_db(school.shard)
+        .select("*,TestDataSet.id as data_set_id,
+      TestDataStateValue.value_float as state_value_float,
+      TestDataStateValue.value_text as state_value_text,
+      TestDataSchoolValue.value_float as school_value_float,
+      TestDataSchoolValue.value_text as school_value_text,
+      TestDataSchoolValue.number_tested as number_students_tested,
+      TestDataSet.proficiency_band_id as proficiency_band_id,
+      TestDataStateValue.number_tested as state_number_tested ")
+        .joins("LEFT OUTER JOIN TestDataSchoolValue on TestDataSchoolValue.data_set_id = TestDataSet.id")
+        .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
+        .joins("LEFT OUTER JOIN gs_schooldb.TestDataType on TestDataType.id = TestDataSet.data_type_id")
+        .where(TestDataSchoolValue: { school_id: school.id, active: 1 })
+        .where(TestDataType: {classification:'state_test'})
+        .active
+  end
 
-  def self.base_performance_district_query(district)
+
+  def self.base_performance_district_feed_query(district)
     TestDataSet.on_db(district.shard)
-    .select("*,TestDataSet.id as data_set_id,
+        .select("*,TestDataSet.id as data_set_id,
       TestDataStateValue.value_float as state_value_float,
       TestDataStateValue.value_text as state_value_text,
       TestDataDistrictValue.value_float as school_value_float,
@@ -111,10 +129,12 @@ class TestDataSet < ActiveRecord::Base
       TestDataDistrictValue.number_tested as number_students_tested,
       TestDataSet.proficiency_band_id as proficiency_band_id,
       TestDataStateValue.number_tested as state_number_tested ")
-    .joins("LEFT OUTER JOIN TestDataDistrictValue on TestDataDistrictValue.data_set_id = TestDataSet.id")
-    .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
-    .where(TestDataDistrictValue: { district_id: district.id, active: 1 })
-    .active
+        .joins("LEFT OUTER JOIN TestDataDistrictValue on TestDataDistrictValue.data_set_id = TestDataSet.id")
+        .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id and TestDataStateValue.active = 1")
+        .joins("LEFT OUTER JOIN gs_schooldb.TestDataType on TestDataType.id = TestDataSet.data_type_id")
+        .where(TestDataDistrictValue: {district_id: district.id, active: 1})
+        .where(TestDataType: {classification: 'state_test'})
+        .active
   end
 
   def self.fetch_performance_results(school, data_set_conditions = {})
