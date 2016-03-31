@@ -22,17 +22,13 @@ require 'transforms/column_selector'
 require 'transforms/keep_rows'
 require 'transforms/value_concatenator'
 require 'transforms/unique_values'
-
+require 'destinations/column_value_report'
 
 class WATestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
   def initialize(source_file, output_files)
     @source_file = source_file
-    @state_output_file = output_files.fetch(:state)
-    @school_output_file = output_files.fetch(:school)
-    @district_output_file = output_files.fetch(:district)
-    @unique_values_output_file = output_files.fetch(:unique_values)
     @runnable_steps = []
     @attachable_input_step = nil
     @attachable_output_step = nil
@@ -40,9 +36,10 @@ class WATestProcessor < GS::ETL::TestProcessor
 
   def source_steps
     [
-      school_sbac,
-      school_sbac_by_subgroup,
-      district_sbac_by_subgroup
+      # school_sbac_by_subgroup,
+      # school_sbac,
+      district_sbac_by_subgroup,
+      district_sbac
     ]
   end
 
@@ -50,15 +47,17 @@ class WATestProcessor < GS::ETL::TestProcessor
     return if @graph_built
 
     @runnable_steps = [
-      school_sbac_by_subgroup_source,
-      school_sbac_source,
-      district_sbac_by_subgroup_source
+      # school_sbac_by_subgroup_source,
+      # school_sbac_source,
+      district_sbac_by_subgroup_source,
+      district_sbac_source
     ]
 
     combined_sources_step = union_steps(
-      school_sbac_by_subgroup,
-      school_sbac,
-      district_sbac_by_subgroup
+      # school_sbac_by_subgroup,
+      # school_sbac,
+      district_sbac_by_subgroup,
+      district_sbac
     )
 
 
@@ -100,6 +99,18 @@ class WATestProcessor < GS::ETL::TestProcessor
         row[:breakdown] = breakdown_string
         row.delete(:subgroup)
       end
+      row
+    end
+
+    s1 = s1.transform WithBlock do |row|
+      if row[:breakdown] == 'hispanic_latino_of_any_races'
+        row[:breakdown] = 'hispanic_latino_of_any_race_s'
+      end
+      row
+    end
+
+    s1 = s1.transform WithBlock do |row|
+      row[:district_id] = '00000' if row[:district_id] == '-'
       row
     end
 
@@ -250,6 +261,8 @@ class WATestProcessor < GS::ETL::TestProcessor
       row
     end
 
+    attach_to_step(column_value_report, s1)
+
     s1 = s1.transform WithBlock do |row|
       if row[:value_float] && row[:value_float].to_s.include?('.')
         row[:value_float] = "%g" % row[:value_float].to_f.round(1)
@@ -275,6 +288,32 @@ class WATestProcessor < GS::ETL::TestProcessor
       ]
     )
   end
+
+  def column_value_report
+    @_column_value_report ||= (
+      ColumnValueReport.new(
+        '/Users/samson/Desktop/column_value_report.tsv',
+        *(COLUMN_ORDER - [:value_float, :number_tested])
+      )
+    )
+  end
+
+  # def state_sbac_by_subgroup_source
+  #   @_school_sbac_by_subgroup_source ||= tab_delimited_source(
+  #     [
+  #       '/Users/samson/Development/data/wa/State SBA Scores by Subgroup 1.txt',
+  #       '/Users/samson/Development/data/wa/State SBA Scores by Subgroup 2.txt'
+  #     ]
+  #   )
+  # end
+
+  # def state_sbac_by_subgroup
+  #   @_state_sbac_by_subgroup ||= (
+  #     s = state_sbac_by_subgroup_source.transform Fill,
+
+
+  #   )
+  # end
 
   def school_sbac
     @_school_sbac ||= (
@@ -314,6 +353,26 @@ class WATestProcessor < GS::ETL::TestProcessor
       ])
   end
 
+  def district_sbac_source
+    @_district_sbac_by_subgroup_source ||=
+      tab_delimited_source([
+        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 1.txt',
+        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 2.txt'
+      ])
+  end
+
+
+  def district_sbac
+    @_district_sbac ||= (
+      s = district_sbac_source
+      s = s.transform Fill,
+        subgroup: 'all_students',
+        schoolid: 'school',
+        entity_level: 'district'
+      s
+    )
+  end
+
   def district_sbac_by_subgroup
     @_district_sbac_by_subgroup ||= (
       s = district_sbac_by_subgroup_source
@@ -326,16 +385,8 @@ class WATestProcessor < GS::ETL::TestProcessor
 
 end
 
-file = '/tmp/test_wa.txt'
 
-output_files = {
-  state: '/tmp/wa.2015.1.public.charter.state.txt',
-  school: '/tmp/wa.2015.1.public.charter.school.txt',
-  district: '/tmp/wa.2015.1.public.charter.district.txt',
-  unique_values: '/tmp/wa.2015.unique_files.txt'
-}
-
-WATestProcessor.new(file, output_files).run
+WATestProcessor.new(nil, {}).run
 
 
 
