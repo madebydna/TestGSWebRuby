@@ -14,7 +14,7 @@ module FeedHelper
 
   ENTITY_TYPE_STATE = 'state'
 
-
+  DEFAULT_BATCH_SIZE = 700
 
   def all_feeds
     ['test_scores', 'ratings']

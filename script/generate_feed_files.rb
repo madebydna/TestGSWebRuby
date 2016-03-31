@@ -30,7 +30,7 @@ class GenerateFeedFiles
           if feed == 'test_scores'
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
             @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
-            @batch_size = @batch_size.present? ? @batch_size : 3
+            @batch_size = @batch_size.present? ? @batch_size : DEFAULT_BATCH_SIZE
             generate_test_score_feed
           elsif feed == 'ratings'
             # To do Create the feed for ratings
