@@ -113,12 +113,11 @@ module FeedHelper
     if schools_cache_data.present?
       schools_cache_data.each do |school|
         school_data_for_feed = {}
-        if @state_test_infos_for_feed.present?
-          @state_test_infos_for_feed.each do |test|
-            test_id=test[:test_id]
-            school_cache = school.school_cache
-            all_test_score_data = school_cache.feed_test_scores[test_id.to_s]
-            school_data_for_feed = parse_cache_data_for_xml(all_test_score_data, school, test_id, ENTITY_TYPE_SCHOOL)
+        school_cache = school.school_cache
+        school_test_data  = school_cache ? school_cache.feed_test_scores : nil
+        if school_test_data .present?
+          school_test_data .each do |test_id , data |
+            school_data_for_feed = parse_cache_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
           end
         end
         (schools_data_for_feed << school_data_for_feed).flatten!
@@ -173,12 +172,11 @@ module FeedHelper
     if districts_cache_data.present?
       districts_cache_data.each do |district|
         district_data_for_feed =  {}
-        if @state_test_infos_for_feed.present?
-          @state_test_infos_for_feed.each do |test|
-            test_id=test[:test_id]
-            district_cache = district.district_cache
-            all_test_score_data = district_cache.feed_test_scores[test_id.to_s]
-            district_data_for_feed = parse_cache_data_for_xml(all_test_score_data, district, test_id, ENTITY_TYPE_DISTRICT)
+        district_cache = district.district_cache
+        district_test_data  = district_cache ? district_cache.feed_test_scores : nil
+        if district_test_data.present?
+          district_test_data.each do |test_id, data |
+            district_data_for_feed = parse_cache_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
           end
         end
         (districts_data_for_feed << district_data_for_feed).flatten!
