@@ -1,6 +1,7 @@
 module GS
   module ETL
     class TestProcessor
+      attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
       FILE_LOCATION = '/tmp/'
       SCHOOL_TYPE_STRING = 'public.charter'
@@ -128,17 +129,20 @@ module GS
         step
       end
 
-      def attach(attachable)
+      def attach_to_step(graph, step)
+        unless graph.attachable_input_step
+          raise 'Illegal state: graph has no input step to attach'
+        end
+        step.add(graph.attachable_input_step)
+        @runnable_steps += graph.runnable_steps
+        @attachable_output_step = graph.attachable_output_step
+      end
+
+      def attach(graph)
         unless self.attachable_output_step
           raise 'Illegal state: no output step to attach graph to'
         end
-        unless attachable.attachable_input_step
-          raise 'Illegal state: graph has no input step to attach'
-        end
-
-        self.attachable_output_step.add(graph.attachable_input_step)
-        @runnable_steps += graph.runnable_steps
-        @attachable_output_step = graph.attachable_output_step
+        attach_to_step(graph, self.attachable_output_step)
       end
 
     end
