@@ -273,6 +273,7 @@ class WATestProcessor < GS::ETL::TestProcessor
     s1 = s1.add(output_files_step_tree)
 
     @graph_built = true
+    self
   end
 
   def run
@@ -383,6 +384,22 @@ class WATestProcessor < GS::ETL::TestProcessor
     )
   end
 
+  # requires the 'graph' gem
+  def draw
+    require 'graph'
+    g = Graph.new
+    steps = [
+      district_sbac_by_subgroup_source,
+      district_sbac_source
+    ]
+    steps.each do |source|
+      source.to_a.each { |s| g.node(s.descriptor) }
+      source.each_edge do |node1, node2|
+        g.edge(node1.descriptor, (node2.descriptor))
+      end
+    end
+    g.save "etl_graph", "png"
+  end
 end
 
 

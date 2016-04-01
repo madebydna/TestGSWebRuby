@@ -28,6 +28,17 @@ module GS
         end
       end
 
+      def to_a
+        [self] + children.inject([]) { |array, child| array += child.to_a }
+      end
+
+      def each_edge(&block)
+        children.each do |child|
+          block.call(self, child)
+          child.each_edge(&block)
+        end
+      end
+
       def process(row)
         # Do nothing for base step
         row
@@ -35,6 +46,10 @@ module GS
 
       def id
         @id || 0
+      end
+
+      def descriptor
+        self.class.name + id.to_s
       end
 
       def children
