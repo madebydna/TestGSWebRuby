@@ -270,7 +270,7 @@ module FeedHelper
     # xsd_schema ='greatschools-test.xsd'
 
     #Generate State Test Master Data
-    @state_test_infos_for_feed = get_state_test_master_data
+    state_test_infos_for_feed = get_state_test_master_data
 
 
     # Generate School Batches
@@ -293,7 +293,7 @@ module FeedHelper
 
 
     # Write to XML File
-    generate_xml_feed(district_batches, school_batches, state_data_for_feed, @state_test_infos_for_feed, xml_name)
+    generate_xml_feed(district_batches, school_batches, state_data_for_feed, state_test_infos_for_feed, xml_name)
 
 
     # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
