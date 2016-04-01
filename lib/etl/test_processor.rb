@@ -65,8 +65,8 @@ module GS
       end
 
       def state_steps
-        node = output_files_root_step.add_step(KeepRows, :entity_level, 'state')
-        node = node.transform WithBlock do |row|
+        node = output_files_root_step.add_step('', KeepRows, :entity_level, 'state')
+        node = node.transform '', WithBlock do |row|
           row[:state_id] = 'state'
           row[:school_id] = 'state'
           row[:school_name] = 'state'
@@ -74,31 +74,31 @@ module GS
           row[:district_id] = 'state'
           row
         end
-        node.destination CsvDestination,
+        node.destination '', CsvDestination,
           send("state_output_file".to_sym),
           *COLUMN_ORDER
         node
       end
 
       def district_steps
-        node = output_files_root_step.add_step(KeepRows, :entity_level, 'district')
-        node = node.transform WithBlock do |row|
+        node = output_files_root_step.add_step('', KeepRows, :entity_level, 'district')
+        node = node.transform '', WithBlock do |row|
           row[:school_id] = 'district'
           row[:school_name] = 'district'
           row
         end
-       node = node.transform Fill,
+       node = node.transform '', Fill,
           school_id: 'district',
           school_name: 'district'
-        node.destination CsvDestination,
+        node.destination '', CsvDestination,
           send("district_output_file".to_sym),
           *COLUMN_ORDER
         node
       end
 
       def school_steps
-        node = output_files_root_step.add_step(KeepRows, :entity_level, 'school')
-        node.destination CsvDestination,
+        node = output_files_root_step.add_step('', KeepRows, :entity_level, 'school')
+        node.destination '', CsvDestination,
           send("school_output_file".to_sym),
           *COLUMN_ORDER
         node

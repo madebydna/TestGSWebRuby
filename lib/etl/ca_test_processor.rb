@@ -69,12 +69,12 @@ class CATestProcessor < GS::ETL::TestProcessor
   def reading_math_union_prep
     @_reading_math_prep ||=(
     s = reading_math_source
-    s = s.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
+    s = s.transform '', ColumnSelector, :test_year, :state_id, :county_code, :district_code,
       :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested,
       :percentage_standard_exceeded, :percentage_standard_met,
       :percentage_standard_nearly_met, :percentage_standard_not_met, :percentage_standard_met_and_above
 
-    s = s.transform Transposer,
+    s = s.transform '', Transposer,
       :proficiency_band,
       :proficiency_band_value,
       :percentage_standard_exceeded,
@@ -83,14 +83,14 @@ class CATestProcessor < GS::ETL::TestProcessor
       :percentage_standard_not_met,
       :percentage_standard_met_and_above
 
-    s = s.transform Fill,
+    s = s.transform '', Fill,
       test_data_type: 'caasp',
       entity_type: 'public_charter',
       school_name: 'school_name',
       district_name: 'district_name',
       level_code: 'e,m,h'
 
-    s = s.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
+    s = s.transform '', ColumnSelector, :test_year, :state_id, :county_code, :district_code,
       :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested, :proficiency_band,
       :proficiency_band_value, :test_data_type, :entity_type, :school_name, :district_name, :level_code
     s
@@ -99,20 +99,20 @@ class CATestProcessor < GS::ETL::TestProcessor
 
   def science_source_union_prep
     @_science_source_union_prep ||= (
-    s = science_source.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
+    s = science_source.transform '', ColumnSelector, :test_year, :state_id, :county_code, :district_code,
       :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested,
       :percentage_advanced, :percentage_basic, :percentage_below_basic, :percentage_far_below_basic,
       :percentage_proficient, :percentage_at_or_above_proficient
 
-    s = s.transform KeepRows, :test_id, '32'
+    s = s.transform '', KeepRows, :test_id, '32'
 
-    s = s.transform(
+    s = s.transform('',
       HashLookup,
       :test_id,
       {'32' => 'science' }
     )
 
-    s = s.transform Transposer,
+    s = s.transform '', Transposer,
       :proficiency_band,
       :proficiency_band_value,
       :percentage_advanced,
@@ -123,14 +123,14 @@ class CATestProcessor < GS::ETL::TestProcessor
       :percentage_at_or_above_proficient
 
 
-    s  = s.transform Fill,
+    s  = s.transform '', Fill,
       test_data_type: 'cst',
       entity_type: 'public_charter',
       school_name: 'school_name',
       district_name: 'district_name',
       level_code: 'e,m,h'
 
-    s = s.transform ColumnSelector, :test_year, :state_id, :county_code, :district_code,
+    s = s.transform '', ColumnSelector, :test_year, :state_id, :county_code, :district_code,
       :school_code, :subgroup_id, :test_type, :test_id, :grade, :students_tested, :proficiency_band,
       :proficiency_band_value, :test_data_type, :entity_type, :school_name, :district_name, :level_code
     s
@@ -204,19 +204,19 @@ class CATestProcessor < GS::ETL::TestProcessor
       reading_math_union_prep
     )
 
-   s1 = combined_sources_step.transform ValueConcatenator, :state_id, :county_code,
+   s1 = combined_sources_step.transform '', ValueConcatenator, :state_id, :county_code,
      :district_code, :school_code
 
-   s1 = s1.transform DeleteRows, :proficiency_band_value, '*', ''
+   s1 = s1.transform '', DeleteRows, :proficiency_band_value, '*', ''
 
 
-    s1 = s1.transform WithBlock do |row|
+    s1 = s1.transform '', WithBlock do |row|
       return nil if row[:students_tested].to_i < 10
       row
     end
 
     # Map proficiency band IDs
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :proficiency_band,
       {
@@ -235,7 +235,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       to: :proficiency_band_id
     )
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :proficiency_band,
       {
@@ -252,7 +252,7 @@ class CATestProcessor < GS::ETL::TestProcessor
         percentage_at_or_above_proficient: 'null' }
     )
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :test_data_type,
       {
@@ -262,7 +262,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       to: :test_data_type_id
     )
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :test_data_type,
       {
@@ -272,7 +272,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       to: :data_type_id
     )
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :state_id,
       {
@@ -341,7 +341,7 @@ class CATestProcessor < GS::ETL::TestProcessor
         to: :school_code
     )
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
     HashLookup,
     :state_id,
     {
@@ -409,7 +409,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       "19768850130799" => "19647330118158" }
     )
 
-    s1 = s1.transform MultiFieldRenamer, {
+    s1 = s1.transform '', MultiFieldRenamer, {
       # district_code: :district_id,
       school_code: :school_id,
       test_year: :year,
@@ -418,11 +418,11 @@ class CATestProcessor < GS::ETL::TestProcessor
       students_tested: :number_tested
     }
 
-    s1 = s1.transform ValueConcatenator, :district_id,
+    s1 = s1.transform '', ValueConcatenator, :district_id,
       :county_code,
       :district_code
 
-    s1 = s1.transform( 
+    s1 = s1.transform('',
       HashLookup,
       :state_id,
       {
@@ -492,14 +492,14 @@ class CATestProcessor < GS::ETL::TestProcessor
       to: :district_id
     )
 
-    s1 = s1.transform TrimLeadingZeros, :grade
+    s1 = s1.transform '', TrimLeadingZeros, :grade
 
-    s1 = s1.transform WithBlock do |row|
+    s1 = s1.transform '', WithBlock do |row|
       row[:grade] = 'All' if row[:grade] == '13'
       row
     end
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :subject,
       {
@@ -510,7 +510,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       to: :subject_id
     )
 
-    s1 = s1.transform(
+    s1 = s1.transform('',
       HashLookup,
       :state_breakdown_id,
       state_breakdown_to_gs_breakdown_ids,
@@ -520,23 +520,23 @@ class CATestProcessor < GS::ETL::TestProcessor
                '225','226','227','180', '120','142']
     )
 
-     s1 = s1.transform DeleteRows,
+     s1 = s1.transform '', DeleteRows,
        :state_breakdown_id,
       *['6','7','8','90','91','92','93','94','121','202','200','203',
        '205','206', '207','220','221','222','223','204','201','224',
        '225','226','227','180', '120','142']
-    
-    s1 = s1.transform DeleteRows, :breakdown_id, ''
 
-    s1 = s1.transform MultiFieldRenamer,
+    s1 = s1.transform '', DeleteRows, :breakdown_id, ''
+
+    s1 = s1.transform '', MultiFieldRenamer,
       { proficiency_band_value: :value_float,
         state_breakdown_id: :breakdown }
 
-    s1 = s1.transform WithBlock do |row|
+    s1 = s1.transform '', WithBlock do |row|
       CaEntityLevelParser.new(row).parse
     end
 
-    s1 = s1.transform WithBlock do |row|
+    s1 = s1.transform '', WithBlock do |row|
       if row[:entity_level] == 'district'
         row[:district_id] = row[:district_code]
         row[:state_id] = row[:state_id].gsub('0000000','')
@@ -544,9 +544,9 @@ class CATestProcessor < GS::ETL::TestProcessor
       row
     end
 
-    last_before_split = s1.transform KeepRows, :entity_level, *['district','school','state']
+    last_before_split = s1.transform '', KeepRows, :entity_level, *['district','school','state']
 
-    @config_node = last_before_split.destination LoadConfigFile, config_output_file, config_hash
+    @config_node = last_before_split.destination '', LoadConfigFile, config_output_file, config_hash
 
     s1.add(output_files_step_tree)
 

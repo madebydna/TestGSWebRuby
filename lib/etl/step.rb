@@ -1,14 +1,16 @@
 module GS
   module ETL
     class Step
-      attr_accessor :parents, :children, :id, :event_log
+      attr_accessor :parents, :children, :id, :event_log, :description
 
-      def add_step(step_class, *args, &block)
+      def add_step(description, step_class, *args, &block)
         step = step_class.new(*args, &block)
+        step.description = description
         step.id = id+1
         add(step)
         step
       end
+
       alias_method :transform, :add_step
       alias_method :destination, :add_step
 
