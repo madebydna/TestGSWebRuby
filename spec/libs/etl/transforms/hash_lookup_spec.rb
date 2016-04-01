@@ -90,51 +90,64 @@ describe HashLookup do
       let(:options) { { to: :bar} }
       let(:transformer) { HashLookup.new(:foo, lookup_hash, options) }
       subject { transformer.process(row) }
-      context 'when row has the key to look up' do
-        let(:row) do
-          {
-            foo: :b
-          }
-        end
-        it 'should lookup and assign the value in lookup hash' do
-          expect(subject[:foo]).to eq(:b)
-          expect(subject[:bar]).to eq(:Blackberry)
-        end
-      end
 
-      context 'when value doesnt exist in lookup table' do
-        context 'when desination there is no current value for destination key' do
+      context 'when destination key is a brand new column' do
+        context 'when value is found in lookup table' do
+          let(:row) do
+            {
+              foo: :b
+            }
+          end
+        end
+
+        context 'when value is not in lookup table' do
           let(:row) do
             {
               foo: :alfdj
             }
           end
           context 'with the value not ignored' do
-            it 'should overwrite with nil' do
+            it 'should create new column with value nil' do
               expect(subject[:foo]).to eq(:alfdj)
+              expect(subject.has_key?(:bar)).to eq(true)
               expect(subject[:bar]).to be_nil
             end
             include_example 'should record value as not mapped'
           end
           context 'with value ignored' do
             let(:options) { { to: :bar, ignore: [:alfdj]} }
-            it 'should overwrite with nil' do
+            it 'should create new column with nil' do
               expect(subject[:foo]).to eq(:alfdj)
+              expect(subject.has_key?(:bar)).to eq(true)
               expect(subject[:bar]).to be_nil
             end
             include_example 'should record value as ignored'
           end
         end
+      end
+      context 'when destination key is an existing column' do
         context 'when destination key has a current value' do
-          let(:row) do
-            {
-              foo: :alfdj,
-              bar: :buddy
-            }
+          context 'when value is not found in lookup table' do
+            let(:row) do
+              {
+                foo: :value_not_in_lookup_hash,
+                bar: :buddy
+              }
+            end
+            it 'destination key should keep current value' do
+              expect(subject[:bar]).to eq(:buddy)
+            end
           end
-          it 'should keep current value' do
-            expect(subject[:foo]).to eq(:alfdj)
-            expect(subject[:bar]).to eq(:buddy)
+          context 'when value is found in lookup table' do
+            let(:row) do
+              {
+                foo: :b,
+                bar: :buddy
+              }
+            end
+            it 'should lookup and assign the value in lookup hash to destination key' do
+              expect(subject[:bar]).to eq(:Blackberry)
+            end
           end
         end
       end

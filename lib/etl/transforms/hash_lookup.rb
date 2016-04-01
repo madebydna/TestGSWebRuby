@@ -16,15 +16,15 @@ class HashLookup < GS::ETL::Step
   end
 
   def process(row)
-    match_value = row[@key]
-    event_key = "#{@key}:#{match_value}"
+    lookup_value = row[@key]
+    event_key = "#{@key}:#{lookup_value}"
     record(:executed, event_key)
-    if @lookup_table.has_key?(match_value)
-      new_value = @lookup_table[match_value]
+    new_value = @lookup_table[lookup_value] || row[@destination_key]
+    row[@destination_key] = new_value
+    if @lookup_table.has_key?(lookup_value)
       record(:"mapped to #{new_value}", event_key)
-      row[@destination_key] = new_value
-    elsif @ignore.include?(match_value)
-      record(:"#{match_value} ignored", event_key)
+    elsif @ignore.include?(lookup_value)
+      record(:"#{lookup_value} ignored", event_key)
     else
       record(:'* Not Mapped *', event_key)
     end
