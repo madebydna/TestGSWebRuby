@@ -8,7 +8,12 @@ class ColumnSelector < GS::ETL::Step
 
  def process(row)
    original_columns = row.keys
-   row.keep_if { |field, value| @columns_selected.include?(field) }
+   row.keep_if do |field, value|
+     @columns_selected.any? do |match|
+       match == field ||
+         (match.is_a?(Regexp) && !!(match =~ field))
+     end
+   end
    record(:columns_removed) if original_columns != row.keys
    row
  end
