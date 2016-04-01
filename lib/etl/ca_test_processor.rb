@@ -27,12 +27,12 @@ require 'transforms/delete_rows'
 class CATestProcessor < GS::ETL::TestProcessor
 
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
-  def initialize(*source_files)
-    @reading_math_source_file = source_files.first
-    @science_source_file = source_files.last
-    @year = '2015'
-    @runnable_steps = []
-  end
+  # def initialize(*source_files)
+  #   @reading_math_source_file = source_files.first
+  #   @science_source_file = source_files.last
+  #   @year = '2015'
+  #   @runnable_steps = []
+  # end
 
   def config_hash
     {
@@ -52,7 +52,7 @@ class CATestProcessor < GS::ETL::TestProcessor
 
   def science_source
     @_science_source ||= (
-      science_csv = CsvSource.new(@science_source_file)
+      science_csv = CsvSource.new(input_filename('ca2015_all_csv_v2_SCI.txt'), max: @options[:max])
       science_csv.event_log = self.event_log
       science_csv
     )
@@ -60,7 +60,7 @@ class CATestProcessor < GS::ETL::TestProcessor
 
   def reading_math_source
     @_reading_math_source ||=(
-    reading_math_csv = CsvSource.new(@reading_math_source_file)
+    reading_math_csv = CsvSource.new(input_filename('ca2015_all_csv_v2.txt'), max: @options[:max])
     reading_math_csv.event_log = self.event_log
     reading_math_csv
     )
@@ -575,5 +575,4 @@ file2 = '/Users/jwrobel/dev/derek_files/ca2015_all_csv_v2_SCI.txt'
 
 # file2 = '/Users/jwrobel/dev/data/ca2015_all_csv_v2_SCI.txt'
 
-CATestProcessor.new(file, file2).run
-
+CATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run

@@ -11,6 +11,15 @@ module GS
                        :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
                        :proficiency_band_id, :level_code, :number_tested, :value_float]
 
+      def initialize(input_dir, options = {})
+        @input_dir = input_dir
+        @options = options
+        @runnable_steps = []
+      end
+
+      def input_filename(fn)
+        File.join(@input_dir, fn)
+      end
 
       def source(source_class, *args)
         source = source_class.new(*args)
@@ -117,11 +126,13 @@ module GS
       end
 
       def tab_delimited_source(file)
-        source = CsvSource.new(file, col_sep: "\t")
+        #TODO: shouldn't need to check for existence of options
+        max = (@options && @options[:max]) || nil
+        source = CsvSource.new(file, col_sep: "\t", max: max)
         source.event_log = self.event_log
         source
       end
-      
+
       def union_steps(*steps)
         step = GS::ETL::Step.new
         step.event_log = self.event_log

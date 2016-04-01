@@ -13,19 +13,18 @@ class CsvSource < GS::ETL::Step
   }
 
   def initialize(input_files, options = {})
-    if input_files && ! input_files.is_a?(Array)
-      input_files = [input_files]
-    end
-    self.input_files = input_files
+    @input_files = input_files.is_a?(Array) ? input_files : [input_files]
     @options = DEFAULT_OPTIONS.merge(options)
   end
 
   def each
+    max = @options.delete(:max)
     @input_files.each do |file|
       CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
-        csv.each do |row|
+        enum = max ? csv.first(max) : csv
+        enum.each do |row|
           record('Row read', file)
-          yield(row.to_hash)
+          yield row.to_hash
         end
       end
     end
@@ -42,5 +41,3 @@ class CsvSource < GS::ETL::Step
     @input_files = input_files
   end
 end
-
-
