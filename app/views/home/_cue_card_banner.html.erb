@@ -1,0 +1,26 @@
+<div class='cue-cards-bg'>
+  <section class='section gs-bootstrap container-fluid'>
+    <div class='row'>
+      <div class='col-md-7 hidden-xs hidden-sm'>
+        <%= image_tag(image_path('home/cue_cards_home_cards.png')) %>
+      </div>
+      <div class='col-xs-12 col-md-5 milestones-main-container'>
+        <div class='col-xs-12 '>
+          <div class='tough-parenting'>Tough parenting situation?</div>
+          <h1 class=" gk-brand-primary tac">Parenting Cue Cards</h1>
+
+        </div>
+        <div class='col-xs-12 tac'>
+
+          <%=
+              link = gk_cue_cards_path
+              link_to 'Get Help', link, class: 'btn btn-lg btn-gk-primary'
+          %>
+        </div>
+
+
+      </div>
+
+    </div>
+  </section>
+</div>

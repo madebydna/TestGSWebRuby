@@ -119,6 +119,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
     get '/gk/levels/high-school/', as: :gk_levels_high_school
+    get '/gk/cue-cards/', as: :gk_cue_cards
     get '/gk/levels/high-school-es/', as: :gk_levels_high_school_es
     get '/status/error404.page'
   end
