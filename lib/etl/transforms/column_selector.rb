@@ -7,6 +7,7 @@ class ColumnSelector < GS::ETL::Step
   end
 
  def process(row)
+   return row if @columns_selected.empty?
    original_columns = row.keys
    row.keep_if do |field, value|
      @columns_selected.any? do |match|
