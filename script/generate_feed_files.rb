@@ -18,6 +18,7 @@ class GenerateFeedFiles
     @parsed_arguments.each do |args|
       states = args[:states]
       feed_names = args[:feed_names]
+      @batch_size = args[:batch_size]
       @school_ids = args[:school_id]
       @district_ids = args[:district_id]
       location = args[:location]
@@ -29,6 +30,7 @@ class GenerateFeedFiles
           if feed == 'test_scores'
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
             @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
+            @batch_size = @batch_size.present? ? @batch_size : DEFAULT_BATCH_SIZE
             generate_test_score_feed
           elsif feed == 'ratings'
             # To do Create the feed for ratings

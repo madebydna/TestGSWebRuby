@@ -7,6 +7,7 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
   @media only screen and (max-width: $screen-sm) {
     height: 340px;
   }
@@ -38,5 +39,55 @@
       font-size: 30px;
     }
     color: #FFFFFF;
+  }
+}
+
+.cue-cards-bg {
+  height: 290px;
+  background: image_url('home/cue_cards_home_bg-sm.jpg');
+  background-size: 100%;
+  background-color: #fff;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  @media only screen and (max-width: $screen-sm) {
+    height: 340px;
+  }
+
+  h1 {
+    font-family: "RobotoDraft", "Roboto", sans-serif;
+    font-size: 50px;
+    @media only screen and (max-width: $screen-sm-max) {
+      margin-bottom: 40px;
+    }
+    //text-shadow: 1px 1px #333;
+  }
+
+  .tough-parenting {
+    margin-top: 20px;
+    font-family: "RobotoDraft", "Roboto", sans-serif;
+    font-size: 30px;
+    @media only screen and (max-width: $screen-xs-min) {
+      font-size: 24px;
+      text-align: center;
+    }
+  }
+
+  .section {
+    max-width: 1200px;
+  }
+
+  //.milestones-main-container {
+  //  margin-top: 20px;
+  //}
+  //
+  //.milestone {
+  //  font-size: 70px;
+  //}
+
+  .tough-parenting {
+
   }
 }

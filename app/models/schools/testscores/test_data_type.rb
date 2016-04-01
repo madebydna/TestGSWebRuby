@@ -1,7 +1,7 @@
 class TestDataType < ActiveRecord::Base
   self.table_name = 'TestDataType'
   db_magic :connection => :gs_schooldb
-  attr_accessible :description, :display_name, :display_type, :name, :type
+  attr_accessible :description, :display_name, :display_type, :name, :type  , :classification
   has_many :test_data_sets, class_name: 'TestDataSet', foreign_key: 'data_type_id'
   #bad_attribute_names :type
   #self.inheritance_column = nil
