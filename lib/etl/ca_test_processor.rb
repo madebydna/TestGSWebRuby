@@ -27,12 +27,6 @@ require 'transforms/delete_rows'
 class CATestProcessor < GS::ETL::TestProcessor
 
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
-  # def initialize(*source_files)
-  #   @reading_math_source_file = source_files.first
-  #   @science_source_file = source_files.last
-  #   @year = '2015'
-  #   @runnable_steps = []
-  # end
 
   def config_hash
     {
@@ -561,18 +555,5 @@ class CATestProcessor < GS::ETL::TestProcessor
   end
 
 end
-
-file = '/Users/jwrobel/dev/derek_files/ca2015_all_csv_v2.txt'
-file2 = '/Users/jwrobel/dev/derek_files/ca2015_all_csv_v2_SCI.txt'
-
-# file = '/Users/jwrobel/dev/derek_files/ca2015_all_csv_v2_100000.txt'
-# file2 = '/Users/jwrobel/dev/derek_files/ca2015_all_csv_v2_100000_sci.txt'
-# file = '/Users/jwrobel/dev/derek_files/5838305_school_data_v2.txt'
-# file2 = '/Users/jwrobel/dev/derek_files/5838305_school_data_SCI_v2.txt'
-
-# file = '/Users/jwrobel/dev/compare_files_monday/two_schools_raw.txt'
-# file2 = '/Users/jwrobel/dev/compare_files_monday/two_schools_raw_sci.txt'
-
-# file2 = '/Users/jwrobel/dev/data/ca2015_all_csv_v2_SCI.txt'
 
 CATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
