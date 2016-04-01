@@ -3,7 +3,7 @@ require 'etl'
 require 'test_processor'
 require 'event_log'
 require 'sources/csv_source'
-require 'transforms/row_exploder'
+require 'transforms/transposer'
 require 'transforms/joiner'
 require 'transforms/hash_lookup'
 require 'transforms/field_renamer'
@@ -154,7 +154,7 @@ class WATestProcessor < GS::ETL::TestProcessor
       row
     end
 
-    s1 = s1.transform RowExploder,
+    s1 = s1.transform Transposer,
       [:subject, :proficiency_band],
       :value_float,
       :elapercentlevel1,

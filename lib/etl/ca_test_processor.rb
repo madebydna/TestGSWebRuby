@@ -3,7 +3,7 @@ require 'etl'
 require 'test_processor'
 require 'event_log'
 require 'sources/csv_source'
-require 'transforms/row_exploder'
+require 'transforms/transposer'
 require 'transforms/joiner'
 require 'transforms/hash_lookup'
 require 'transforms/field_renamer'
@@ -74,7 +74,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       :percentage_standard_exceeded, :percentage_standard_met,
       :percentage_standard_nearly_met, :percentage_standard_not_met, :percentage_standard_met_and_above
 
-    s = s.transform RowExploder,
+    s = s.transform Transposer,
       :proficiency_band,
       :proficiency_band_value,
       :percentage_standard_exceeded,
@@ -112,7 +112,7 @@ class CATestProcessor < GS::ETL::TestProcessor
       {'32' => 'science' }
     )
 
-    s = s.transform RowExploder,
+    s = s.transform Transposer,
       :proficiency_band,
       :proficiency_band_value,
       :percentage_advanced,

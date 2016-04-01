@@ -2,8 +2,8 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
 require 'event_log'
 require 'sources/csv_source'
-require 'sources/row_exploder_source'
-require 'transforms/row_exploder'
+require 'sources/transposer_source'
+require 'transforms/transposer'
 require 'transforms/joiner'
 require 'transforms/hash_lookup'
 require 'transforms/field_renamer'
@@ -22,7 +22,7 @@ class Foo < GS::ETL::DataProcessor
   def run
     s1 = source CsvSource, @source_file
 
-    s1.transform RowExploder,
+    s1.transform Transposer,
       :proficiency_band_id,
       :proficiency_band_value,
       :percentage_standard_exceeded,

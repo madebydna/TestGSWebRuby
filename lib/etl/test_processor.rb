@@ -50,7 +50,7 @@ module GS
       def self.define_output_files
         ENTITIES.each do |entity|
           define_method("#{entity}_output_file".to_sym) do
-            FILE_LOCATION +  data_file_prefix + entity + ".WED.txt"
+            FILE_LOCATION +  data_file_prefix + entity + ".txt"
           end
         end
       end

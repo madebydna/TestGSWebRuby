@@ -7,7 +7,7 @@ require 'step'
 #     c: 3
 #   }
 # ] 
-# RowExploder.new('type', 'value', [:a, :b, :c])
+# Transposer.new('type', 'value', [:a, :b, :c])
 # becomes
 # [
 #   {
@@ -23,7 +23,7 @@ require 'step'
 #     value: 3,
 #   }
 # ]
-class RowExploder < GS::ETL::Step
+class Transposer < GS::ETL::Step
 
   # label_fields is used to store the name of the column that was used to
   # explode a new row
@@ -36,7 +36,7 @@ class RowExploder < GS::ETL::Step
   end
 
   def process(row)
-    rows = @fields.map do |field|
+    rows = fields_to_transpose(row).map do |field|
       value_for_field = row[field]
       new_row = row.clone
       @label_fields.each { |f| new_row[f] = field }
@@ -49,6 +49,17 @@ class RowExploder < GS::ETL::Step
 
   def event_key
     @label_fields
+  end
+
+  def fields_to_transpose(row)
+    @_fields_to_transpose ||= (
+    row.keys.keep_if do |field|
+      @fields.any? do |match|
+        match == field ||
+          (match.is_a?(Regexp) && !!(match =~ field))
+      end
+    end
+    )
   end
 
   def label_fields=(label_fields)

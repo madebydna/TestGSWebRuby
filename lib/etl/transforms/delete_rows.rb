@@ -1,4 +1,8 @@
 require 'step'
+# example: 
+# arguments: column to match, list of string or regex values to delete
+# the following will delete rows for column Watermark
+# s.transform DeleteRows, :watermark, /Achievement/, /K-3 Literacy data/, 'Buddy'
 
 class  DeleteRows < GS::ETL::Step
   def initialize(field, *values_to_match)

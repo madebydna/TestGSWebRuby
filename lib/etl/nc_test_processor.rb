@@ -2,7 +2,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
 require 'event_log'
 require 'sources/csv_source'
-require 'transforms/row_exploder'
+require 'transforms/transposer'
 require 'transforms/hash_lookup'
 require 'transforms/multi_field_renamer'
 require 'destinations/csv_destination'
@@ -60,7 +60,7 @@ class NCTestProcessor < GS::ETL::TestProcessor
 
 
 
-    s1.transform RowExploder,
+    s1.transform Transposer,
       :proficiency_band,
       :proficiency_band_value,
       :level_1,
