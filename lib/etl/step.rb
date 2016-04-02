@@ -49,7 +49,11 @@ module GS
       end
 
       def descriptor
-        self.class.name + id.to_s
+        if self.description
+          self.class.name + "\n" + self.description 
+        else
+          self.class.name
+        end
       end
 
       def children
