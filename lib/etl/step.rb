@@ -20,8 +20,8 @@ module GS
         process(row)
       end
 
-      def propagate(start_value, &block)
-        result = block.call(start_value, self)
+      def propagate(result_from_parent, &block)
+        result = block.call(self, result_from_parent)
         children.each do |child|
           r = result ? result.clone : nil
           child.propagate(r, &block)

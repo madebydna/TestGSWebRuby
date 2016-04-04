@@ -1,3 +1,5 @@
+require_relative './file_logger'
+
 module GS
   module ETL
     class TestProcessor
@@ -28,7 +30,8 @@ module GS
       end
 
       def event_log
-        @event_log ||= EventLog.new
+        # @event_log ||= EventLog.new
+        # @event_log ||= FileLogger.new File.join(FILE_LOCATION, "#{self.class.name}.log")
       end
 
       def output_files_step_tree
