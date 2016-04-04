@@ -23,4 +23,8 @@ class ColumnSelector < GS::ETL::Step
    "Columns selected: #{@columns_selected.map(&:to_s).join(' ,')}"
  end
 
+ def description
+   "#{super}\n" + @columns_selected.join("\n - ")
+ end
+
 end

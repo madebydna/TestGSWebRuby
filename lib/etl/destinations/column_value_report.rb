@@ -34,8 +34,15 @@ class ColumnValueReport < GS::ETL::TestProcessor
 
   def build_graph
     @attachable_input_step = ColumnSelector.new(*@fields)
-    aggregator = @attachable_input_step.transform ColumnValueAggregator
-    @attachable_output_step = aggregator.destination CsvDestination, @output_file
+    aggregator = @attachable_input_step.transform(
+      "Aggregate distinct values per column",
+      ColumnValueAggregator
+    )
+    @attachable_output_step = aggregator.destination(
+      "Output distinct values per column to CSV",
+      CsvDestination,
+      @output_file
+    )
     @runnable_steps = [aggregator]
     @attachable_input_step
   end

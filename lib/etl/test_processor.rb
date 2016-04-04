@@ -52,7 +52,9 @@ module GS
 
       def output_files_root_step
         @_output_files_root_step ||= (
-          Step.new
+          s = Step.new
+          s.description = 'Root for output files subgraph'
+          s
         )
       end
 
@@ -65,8 +67,8 @@ module GS
       end
 
       def state_steps
-        node = output_files_root_step.add_step('', KeepRows, :entity_level, 'state')
-        node = node.transform '', WithBlock do |row|
+        node = output_files_root_step.add_step('Keep only state rows', KeepRows, :entity_level, 'state')
+        node = node.transform 'Fill a bunch of columns with "state"', WithBlock do |row|
           row[:state_id] = 'state'
           row[:school_id] = 'state'
           row[:school_name] = 'state'
@@ -74,31 +76,33 @@ module GS
           row[:district_id] = 'state'
           row
         end
-        node.destination '', CsvDestination,
+        node.destination 'Output state rows to CSV', CsvDestination,
           send("state_output_file".to_sym),
           *COLUMN_ORDER
         node
       end
 
       def district_steps
-        node = output_files_root_step.add_step('', KeepRows, :entity_level, 'district')
-        node = node.transform '', WithBlock do |row|
-          row[:school_id] = 'district'
-          row[:school_name] = 'district'
-          row
-        end
-       node = node.transform '', Fill,
+        node = output_files_root_step.add_step(
+          'Keep only district rows',
+          KeepRows,
+          :entity_level, 'district'
+        )
+        node = node.transform 'Fill a couple columns with "district"', Fill,
           school_id: 'district',
           school_name: 'district'
-        node.destination '', CsvDestination,
+
+        node.destination 'Output district rows to CSV',
+          CsvDestination,
           send("district_output_file".to_sym),
           *COLUMN_ORDER
+
         node
       end
 
       def school_steps
-        node = output_files_root_step.add_step('', KeepRows, :entity_level, 'school')
-        node.destination '', CsvDestination,
+        node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
+        node.destination 'Output school rows to CSV', CsvDestination,
           send("school_output_file".to_sym),
           *COLUMN_ORDER
         node
@@ -129,6 +133,7 @@ module GS
         #TODO: shouldn't need to check for existence of options
         max = (@options && @options[:max]) || nil
         source = CsvSource.new(file, col_sep: "\t", max: max)
+        source.description = [*file].map { |f| f.split('/').last }.join("\n")
         source.event_log = self.event_log
         source
       end
@@ -136,6 +141,7 @@ module GS
       def union_steps(*steps)
         step = GS::ETL::Step.new
         step.event_log = self.event_log
+        step.description = "Union steps:\n" + steps.map(&:description).join("\n")
         steps.each { |s| s.add(step) }
         step
       end

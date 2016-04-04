@@ -61,7 +61,8 @@ class WATestProcessor < GS::ETL::TestProcessor
     )
 
 
-    s1 = combined_sources_step.transform(ColumnSelector,
+    s1 = combined_sources_step.transform('Select useful columns',
+                                         ColumnSelector,
                                          :countydistrictnumber,
                                          :schoolyear,
                                          :school,
@@ -84,13 +85,16 @@ class WATestProcessor < GS::ETL::TestProcessor
                                          :mathpercentlevel3,
                                          :mathpercentlevel4)
     
-    s1 = s1.transform Fill,
+    s1 = s1.transform 'Fill entity_type, level_code, test_data_type and test_data_type_id',
+      Fill,
       entity_type: 'public_charter',
       level_code: 'e,m,h',
       test_data_type: 'sbac',
       test_data_type_id: 240
 
-    s1 = s1.transform WithBlock do |row|
+    s1 = s1.transform "Rename subgroup to breakdown, \n" +
+                      'Remove special characters, replace spaces with underscores',
+      WithBlock do |row|
       breakdown_string = row[:subgroup]
       if breakdown_string
         breakdown_string.gsub!(/[^\w ]+/, '')
@@ -102,59 +106,64 @@ class WATestProcessor < GS::ETL::TestProcessor
       row
     end
 
-    s1 = s1.transform WithBlock do |row|
-      if row[:breakdown] == 'hispanic_latino_of_any_races'
-        row[:breakdown] = 'hispanic_latino_of_any_race_s'
+    s1 = s1.transform 'Handle hispanic_latino_of_any_races breakdown',
+      WithBlock do |row|
+        if row[:breakdown] == 'hispanic_latino_of_any_races'
+          row[:breakdown] = 'hispanic_latino_of_any_race_s'
+        end
+        row
       end
-      row
-    end
 
-    s1 = s1.transform WithBlock do |row|
-      row[:district_id] = '00000' if row[:district_id] == '-'
-      row
-    end
-
-    s1 = s1.transform HashLookup, :breakdown, {
-                                    'all_students' => 1,
-                                    'american_indian_alaskan_native' => 4,
-                                    'asian' => 2,
-                                    'asian_pacific_islander' => 22,
-                                    'black_african_american' => 3,
-                                    'female' => 11,
-                                    'hispanic_latino_of_any_race_s' => 6,
-                                    'limited_english' => 15,
-                                    'low_income' => 9,
-                                    'male' => 12,
-                                    'migrant' => 19,
-                                    'non_low_income' => 10,
-                                    'non_special_education' => 14,
-                                    'native_hawaiian_other_pacific_islander' => 7,
-                                    'special_education' => 13,
-                                    'two_or_more_races' => 21,
-                                    'white' => 8
-                                  },
-                                  to: :breakdown_id
-
-    s1 = s1.transform WithBlock do |row|
-      # prof_null => {
-      # 	sbac => ['level_basic','level_3','level_4']
-      # }
-      if row[:elapercentlevelbasic] || row[:elapercentlevel3] || row[:elapercentlevel4]
-        row[:elapercentnull] = 
-          row[:elapercentlevelbasic].to_f + 
-          row[:elapercentlevel3].to_f + 
-          row[:elapercentlevel4].to_f
+    s1 = s1.transform 'Replace hyphen district_id with five zeros',
+      WithBlock do |row|
+        row[:district_id] = '00000' if row[:district_id] == '-'
+        row
       end
-      if row[:mathpercentlevelbasic] || row[:mathpercentlevel3] || row[:mathpercentlevel4]
-        row[:mathpercentnull] = 
-          row[:mathpercentlevelbasic].to_f + 
-          row[:mathpercentlevel3].to_f + 
-          row[:mathpercentlevel4].to_f
-      end
-      row
-    end
 
-    s1 = s1.transform Transposer,
+    s1 = s1.transform 'Map state breakdown strings to GS breakdown IDs',
+      HashLookup,
+      :breakdown,
+      {
+        'all_students' => 1,
+        'american_indian_alaskan_native' => 4,
+        'asian' => 2,
+        'asian_pacific_islander' => 22,
+        'black_african_american' => 3,
+        'female' => 11,
+        'hispanic_latino_of_any_race_s' => 6,
+        'limited_english' => 15,
+        'low_income' => 9,
+        'male' => 12,
+        'migrant' => 19,
+        'non_low_income' => 10,
+        'non_special_education' => 14,
+        'native_hawaiian_other_pacific_islander' => 7,
+        'special_education' => 13,
+        'two_or_more_races' => 21,
+        'white' => 8
+      },
+      to: :breakdown_id
+
+    s1 = s1.transform 'Sum basic, level3, and level4 proficiency levels to get proficiency band null',
+      WithBlock do |row|
+        if row[:elapercentlevelbasic] || row[:elapercentlevel3] || row[:elapercentlevel4]
+          row[:elapercentnull] = 
+            row[:elapercentlevelbasic].to_f + 
+            row[:elapercentlevel3].to_f + 
+            row[:elapercentlevel4].to_f
+        end
+        if row[:mathpercentlevelbasic] || row[:mathpercentlevel3] || row[:mathpercentlevel4]
+          row[:mathpercentnull] = 
+            row[:mathpercentlevelbasic].to_f + 
+            row[:mathpercentlevel3].to_f + 
+            row[:mathpercentlevel4].to_f
+        end
+        row
+      end
+
+    s1 = s1.transform "Convert subject+proficiency band columns into subject \n" +
+                      'and proficiency band columns, with rows for each subject / band',
+      Transposer,
       [:subject, :proficiency_band],
       :value_float,
       :elapercentlevel1,
@@ -170,9 +179,13 @@ class WATestProcessor < GS::ETL::TestProcessor
       :mathpercentlevelbasic,
       :mathpercentnull
 
-    s1 = s1.transform(WithBlock) { |row| row if row[:value_float] != nil }
+    s1 = s1.transform 'Remove rows with nil value_float',
+      WithBlock do |row|
+        row if row[:value_float] != nil
+      end
 
-    s1 = s1.transform HashLookup,
+    s1 = s1.transform 'After transposing, Map values in new subject field to correct subject',
+      HashLookup,
       :subject,
       {
         mathpercentlevel1: :math, 
@@ -189,20 +202,25 @@ class WATestProcessor < GS::ETL::TestProcessor
         elapercentlevelbasic: :reading
       }
 
-    s1 = s1.transform WithBlock do |row|
-      if row[:subject] == :math
-        row[:number_tested] = row[:mathtotaltested]
-      elsif row[:subject] == :reading
-        row[:number_tested] = row[:elatotaltested]
+    s1 = s1.transform "Rename [subject]totaltested to totaltested, \n" +
+                      'depending on which subject this row is for',
+      WithBlock do |row|
+        if row[:subject] == :math
+          row[:number_tested] = row[:mathtotaltested]
+        elsif row[:subject] == :reading
+          row[:number_tested] = row[:elatotaltested]
+        end
+        row
       end
-      row
-    end
 
-    s1 = s1.transform WithBlock do |row|
-      row if row[:number_tested] && row[:number_tested].to_i >= 10
-    end
+    s1 = s1.transform 'Remove rows where number tested < 10',
+      WithBlock do |row|
+        row if row[:number_tested] && row[:number_tested].to_i >= 10
+      end
 
-    s1 = s1.transform HashLookup,
+    s1 = s1.transform "After transposing, Map values in new \n" +
+                      'proficiency_band field to correct subject',
+      HashLookup,
       :proficiency_band,
       {
         mathpercentlevel1: :level_1, 
@@ -220,7 +238,8 @@ class WATestProcessor < GS::ETL::TestProcessor
       }
 
 
-    s1 = s1.transform HashLookup,
+    s1 = s1.transform "Map subjects to GS subject IDs",
+      HashLookup,
       :subject,
       {
         math: 5,
@@ -228,7 +247,8 @@ class WATestProcessor < GS::ETL::TestProcessor
       },
       to: :subject_id
 
-    s1 = s1.transform HashLookup,
+    s1 = s1.transform "Map state proficiency bands to GS proficiency band IDs",
+      HashLookup,
       :proficiency_band,
       {
         level_1: 183,
@@ -240,35 +260,39 @@ class WATestProcessor < GS::ETL::TestProcessor
       },
       to: :proficiency_band_id
 
-    s1 = s1.transform(
+    s1 = s1.transform "Change school year range to single year",
         HashLookup,
         :schoolyear,
         {
             '2014-15' => '2015'
         }, to: :year
-    )
 
-    s1 = s1.transform MultiFieldRenamer, {
+    s1 = s1.transform "Rename some columns in input file",
+      MultiFieldRenamer,
+      {
         buildingnumber: :state_id,
         gradetested: :grade,
         school: :school_name,
         district: :district_name,
         countydistrictnumber: :district_id
-    }
+      }
 
-    s1 = s1.transform WithBlock do |row|
-      row[:school_id] = row[:state_id]
-      row
-    end
+    s1 = s1.transform "Copy state_id into school_id column",
+      WithBlock do |row|
+        row[:school_id] = row[:state_id]
+        row
+      end
 
     attach_to_step(column_value_report, s1)
 
-    s1 = s1.transform WithBlock do |row|
-      if row[:value_float] && row[:value_float].to_s.include?('.')
-        row[:value_float] = "%g" % row[:value_float].to_f.round(1)
+    s1 = s1.transform "Format value_float. \n" +
+                      "Round to 1 decimal place, remove trailing zeros",
+      WithBlock do |row|
+        if row[:value_float] && row[:value_float].to_s.include?('.')
+          row[:value_float] = "%g" % row[:value_float].to_f.round(1)
+        end
+        row
       end
-      row
-    end
 
     s1 = s1.add(output_files_step_tree)
 
@@ -355,10 +379,9 @@ class WATestProcessor < GS::ETL::TestProcessor
   end
 
   def district_sbac_source
-    @_district_sbac_by_subgroup_source ||=
+    @_district_sbac_source ||=
       tab_delimited_source([
-        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 1.txt',
-        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 2.txt'
+        '/Users/samson/Development/data/wa/2_22_SBA Scores by District.txt'
       ])
   end
 
@@ -366,7 +389,8 @@ class WATestProcessor < GS::ETL::TestProcessor
   def district_sbac
     @_district_sbac ||= (
       s = district_sbac_source
-      s = s.transform Fill,
+      s = s.transform 'Add subgroup, schoolid, entity_level to District SBAC',
+        Fill,
         subgroup: 'all_students',
         schoolid: 'school',
         entity_level: 'district'
@@ -377,7 +401,8 @@ class WATestProcessor < GS::ETL::TestProcessor
   def district_sbac_by_subgroup
     @_district_sbac_by_subgroup ||= (
       s = district_sbac_by_subgroup_source
-      s = s.transform Fill,
+      s = s.transform 'Add schoolid and entity_level to District SBAC by Subgroup',
+        Fill,
         schoolid: 'school',
         entity_level: 'district'
       s
@@ -403,7 +428,8 @@ class WATestProcessor < GS::ETL::TestProcessor
 end
 
 
-WATestProcessor.new(nil, {}).run
+WATestProcessor.new(nil, {}).build_graph.draw
+# WATestProcessor.new(nil, {}).run
 
 
 
