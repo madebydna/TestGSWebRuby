@@ -19,8 +19,13 @@ module GS
         @runnable_steps = []
       end
 
-      def input_filename(fn)
-        File.join(@input_dir, fn)
+      def input_filename(name_or_regex)
+        if name_or_regex.is_a? Regexp
+          Dir.entries(@input_dir).map { |entry| input_filename(file) }
+            .select { |abs_path| File.file? abs_path && name_or_regex =~ file }
+        else
+          File.join(@input_dir, name_or_regex)
+        end
       end
 
       def source(source_class, *args)
@@ -132,17 +137,19 @@ module GS
         FILE_LOCATION + ['config', state,  @year ,'test.1.txt'].join('.')
       end
 
-      def tab_delimited_source(file)
+      def tab_delimited_source(file_array_or_str)
+        filenames = *file_array_or_str
+        paths = filenames.map { |fn| input_filename fn }
         #TODO: shouldn't need to check for existence of options
-        max = (@options && @options[:max]) || nil
-        source = CsvSource.new(file, col_sep: "\t", max: max)
-        source.description = [*file].map { |f| f.split('/').last }.join("\n")
+        max = (@options && @options[:max])
+        source = CsvSource.new(paths, col_sep: "\t", max: max)
+        source.description = filenames.map { |f| f.split('/').last }.join("\n")
         source.event_log = self.event_log
         source
       end
 
       def union_steps(*steps)
-        step = GS::ETL::Step.new
+        step = Step.new
         step.event_log = self.event_log
         step.description = "Union steps:\n" + steps.map(&:description).join("\n")
         steps.each { |s| s.add(step) }

@@ -27,12 +27,12 @@ require 'destinations/column_value_report'
 class WATestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
-  def initialize(source_file, output_files)
-    @source_file = source_file
-    @runnable_steps = []
-    @attachable_input_step = nil
-    @attachable_output_step = nil
-  end
+  # def initialize(source_file, output_files)
+  #   @source_file = source_file
+  #   @runnable_steps = []
+  #   @attachable_input_step = nil
+  #   @attachable_output_step = nil
+  # end
 
   def source_steps
     [
@@ -309,7 +309,7 @@ class WATestProcessor < GS::ETL::TestProcessor
   def school_sbac_source
     @_school_sbac_source ||= tab_delimited_source(
       [
-        '/Users/samson/Development/data/wa/2_23_SBA Scores by School.txt'
+        '2_23_SBA Scores by School.txt'
       ]
     )
   end
@@ -317,7 +317,7 @@ class WATestProcessor < GS::ETL::TestProcessor
   def column_value_report
     @_column_value_report ||= (
       ColumnValueReport.new(
-        '/Users/samson/Desktop/column_value_report.tsv',
+        '/tmp/column_value_report.tsv',
         *(COLUMN_ORDER - [:value_float, :number_tested])
       )
     )
@@ -354,8 +354,8 @@ class WATestProcessor < GS::ETL::TestProcessor
     @_school_sbac_by_subgroup_source ||=
       tab_delimited_source(
         [
-          '/Users/samson/Development/data/wa/School_SBA_Scores_by_Subgroup_1.txt',
-          '/Users/samson/Development/data/wa/School SBA Scores by Subgroup 2.txt'
+          'School_SBA_Scores_by_Subgroup_1.txt',
+          'School SBA Scores by Subgroup 2.txt'
         ]
       )
   end
@@ -373,18 +373,17 @@ class WATestProcessor < GS::ETL::TestProcessor
   def district_sbac_by_subgroup_source
     @_district_sbac_by_subgroup_source ||=
       tab_delimited_source([
-        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 1.txt',
-        '/Users/samson/Development/data/wa/District SBA Scores by Subgroup 2.txt'
+        'District SBA Scores by Subgroup 1.txt',
+        'District SBA Scores by Subgroup 2.txt'
       ])
   end
 
   def district_sbac_source
     @_district_sbac_source ||=
       tab_delimited_source([
-        '/Users/samson/Development/data/wa/2_22_SBA Scores by District.txt'
+        '2_22_SBA Scores by District.txt'
       ])
   end
-
 
   def district_sbac
     @_district_sbac ||= (
@@ -428,8 +427,5 @@ class WATestProcessor < GS::ETL::TestProcessor
 end
 
 
-WATestProcessor.new(nil, {}).build_graph.draw
-# WATestProcessor.new(nil, {}).run
-
-
-
+WATestProcessor.new('/Users/samson/Development/data/wa', max: 100).build_graph.draw
+# WATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
