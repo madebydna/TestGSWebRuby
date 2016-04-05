@@ -29,43 +29,32 @@ require 'transforms/field_renamer'
 class OHTestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step, :grade_subject_column_headers
 
-  def initialize
-    @runnable_steps = []
-  end
-
-  def source_steps
-
-  end
-
   def build_graph
 
     return if @graph_built
 
     @runnable_steps = [
-      district_files,
-      school_files
-     # state_files
-
-# set up runnable steps for files
+      # district_files,
+      # school_files
+     state_files
     ]
 
     combined_sources_steps = union_steps(
-      districts_pre_union_steps,
-      schools_pre_union_steps
-      # state_pre_union_steps
+      # districts_pre_union_steps,
+      # schools_pre_union_steps
+      state_pre_union_steps
     )
 
-    # s1 = combined_sources_steps.transform ColumnSelector, :subject_grade, :value_float, :grade, :subject, :district_id, :state_id, :entity_level, :student_group
+#  Test output for schools and districts
+    # s1 = combined_sources_steps.destination 'output test for districts and schools', CsvDestination, '/tmp/district_ohio_test.txt',
+    #   *[ :entity_level, :grade, :subject, :student_group, :state_id, :district_id, :district_name,
+    #      :school_id, :school_name, :value_float ]
 
-    # s1 = combined_sources_steps.destination CsvDestination, '/tmp/district_ohio_test.txt',
-    #   *[ :subject_grade, :value_float, :grade, :subject, :district_id, :state_id,
-    #     :entity_level, :student_group, :district_name, :school_id, :school_name, :subject_grade]
-    #
-    #
-    s1 = combined_sources_steps.destination '', CsvDestination, '/tmp/state_ohio_test.txt', 
+#  Test output for state files
+    s1 = combined_sources_steps.destination 'output test for state files', CsvDestination, '/tmp/state_ohio_test.txt',
       :value_float, :grade, :subject, :district_id, :state_id,
       :entity_level, :student_group, :district_name, :school_id, :school_name, :grade_breakdown
-    
+
     s1
     @graph_built = true
     self
@@ -80,17 +69,17 @@ class OHTestProcessor < GS::ETL::TestProcessor
     @_districts ||=(
       tab_delimited_source(
         [
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_district_ethnicity_tabs_100.txt',
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_district_gender_100.txt',
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_district_lep_100.txt',
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_district_all_tabs_100.txt'
-        ]
+          '1415_district_ethnicity_tabs.txt',
+          '1415_district_gender_tabs.txt',
+          '1415_district_lep_tabs.txt',
+          '1415_district_all_tabs.txt'
+        ].map { |file| input_filename(file) }
       )
     )
   end
 
   def tab_delimited_source(file)
-    source = CsvSource.new(file, col_sep: "\t")
+    source = CsvSource.new(file, col_sep: "\t", max: @options[:max])
     file_name = file.first.split('/').last
     source.description = "Read #{file_name}"
     source.event_log = self.event_log
@@ -98,7 +87,7 @@ class OHTestProcessor < GS::ETL::TestProcessor
   end
 
   def csv_source(file)
-    source = CsvSource.new(file)
+    source = CsvSource.new(file, max: @options[:max])
     file_name = file.first.split('/').last
     source.description = "Read #{file_name}"
     source.event_log = self.event_log
@@ -152,19 +141,19 @@ class OHTestProcessor < GS::ETL::TestProcessor
     end
 
     s.transform 'select columns', ColumnSelector,
-      :value_float, :grade, :subject, :district_id, :state_id, 
-      :entity_level, :student_group, :district_name, :school_id, :school_name, :subject_grade
+      :value_float, :grade, :subject, :district_id, :state_id,
+      :entity_level, :student_group, :district_name, :school_id, :school_name
   end
 
   def school_files
     @_school_files ||=(
       tab_delimited_source(
         [
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_school_ethnic_tabs.txt',
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_school_gender_tabs.txt',
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_school_lep_tabs.txt',
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/1415_school_all_tabs.txt'
-        ]
+          '1415_school_ethnic_tabs.txt',
+          '1415_school_gender_tabs.txt',
+          '1415_school_lep_tabs.txt',
+          '1415_school_all_tabs.txt'
+          ].map { |file| input_filename(file) }
       )
     )
   end
@@ -197,7 +186,6 @@ class OHTestProcessor < GS::ETL::TestProcessor
       grade = subject_grade_match[2] || 'All'
       row[:subject] = subject
       row[:grade] = grade
-      row.delete(:subject_grade)
       row
     end
 
@@ -219,15 +207,18 @@ class OHTestProcessor < GS::ETL::TestProcessor
 
     s.transform 'select columns before union for schools', ColumnSelector,
       :value_float, :grade, :subject, :district_id, :state_id, :entity_level, 
-      :student_group, :district_name, :school_id, :school_name, :subject_grade
+      :student_group, :district_name, :school_id, :school_name
   end
 
   def state_files
     @_state_files ||=(
       csv_source(
         [
-          '/Users/jwrobel/dev/ohio_test_load/raw_data/state_gender_prof_csv.csv'
-        ]
+          '1415_state_gender_proficiency_values.csv',
+          '1415_state_lep_proficiency_values.csv',
+          '1415_state_frl_proficiency_values.csv',
+          '1415_state_race_proficiency_values.csv'
+        ].map { |file| input_filename(file) }
       )
     )
   end
@@ -297,7 +288,5 @@ class OHTestProcessor < GS::ETL::TestProcessor
 
 end
 
-# file = '/tmp/test_wa.txt'
-
-OHTestProcessor.new.build_graph.draw
-OHTestProcessor.new.run
+OHTestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).build_graph.draw
+OHTestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
