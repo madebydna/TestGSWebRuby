@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 
 # Look a row's value up in a hash, and assign result to destination key
 # Destination key defaults to original key, so will overwrite original value by

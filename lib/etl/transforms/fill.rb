@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 
 class Fill < GS::ETL::Step
   def initialize(hash_of_fields_and_values)

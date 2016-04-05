@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 require_relative 'field_renamer'
 
 class MultiFieldRenamer < GS::ETL::Step

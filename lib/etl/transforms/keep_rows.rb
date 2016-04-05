@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 
 class  KeepRows < GS::ETL::Step
   def initialize(field, *values_to_match)

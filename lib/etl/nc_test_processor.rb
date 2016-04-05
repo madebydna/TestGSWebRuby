@@ -1,21 +1,15 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
+require_relative 'test_processor'
 require 'etl'
 require 'event_log'
 require 'sources/csv_source'
-require 'transforms/transposer'
-require 'transforms/hash_lookup'
-require 'transforms/multi_field_renamer'
 require 'destinations/csv_destination'
 require 'destinations/event_report_stdout'
 require 'destinations/load_config_file'
 require 'sources/buffered_group_by'
-require 'transforms/fill'
 require 'nc_entity_level_parser'
 require 'nc_subroutines'
-require 'transforms/with_block'
 require 'nc_breakdown_definitions'
-require 'transforms/column_selector'
-require 'transforms/filter_out_matching_values'
 
 
 class NCTestProcessor < GS::ETL::TestProcessor

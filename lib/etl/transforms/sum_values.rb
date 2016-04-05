@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 
 class SumValues < GS::ETL::Step
   def initialize(output_column, *input_columns)

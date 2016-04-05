@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 # example: 
 # arguments: column to match, list of string or regex values to delete
 # the following will delete rows for column Watermark

@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 # e.g
 # [
 #   {

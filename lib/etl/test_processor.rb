@@ -1,4 +1,5 @@
 require_relative './file_logger'
+Dir['./transforms/*.rb'].each { |file| require_relative file }
 
 module GS
   module ETL
