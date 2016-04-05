@@ -46,7 +46,7 @@ class OHTestProcessor < GS::ETL::TestProcessor
     )
 
 #  Test output for schools and districts
-    # s1 = combined_sources_steps.destination 'output test for districts and schools', CsvDestination, '/tmp/district_ohio_test.txt',
+    # s1 = combined_sources_steps.destination 'output test for districts and schools', CsvDestination, '/tmp/school_district_ohio_test.txt',
     #   *[ :entity_level, :grade, :subject, :student_group, :state_id, :district_id, :district_name,
     #      :school_id, :school_name, :value_float ]
 
@@ -287,6 +287,9 @@ class OHTestProcessor < GS::ETL::TestProcessor
   end
 
 end
+
+
+raise ArgumentError.new('****Requires directory holding prepped files as command line argument****')  unless ARGV[0]
 
 OHTestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).build_graph.draw
 OHTestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
