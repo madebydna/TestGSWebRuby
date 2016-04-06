@@ -27,8 +27,10 @@ class WATestProcessor < GS::ETL::TestProcessor
     [
       # school_sbac_by_subgroup,
       # school_sbac,
-      district_sbac_by_subgroup,
-      district_sbac
+      # district_sbac_by_subgroup,
+      # district_sbac,
+      state_sbac_by_subgroup,
+      state_sbac
     ]
   end
 
@@ -38,15 +40,19 @@ class WATestProcessor < GS::ETL::TestProcessor
     @runnable_steps = [
       # school_sbac_by_subgroup_source,
       # school_sbac_source,
-      district_sbac_by_subgroup_source,
-      district_sbac_source
+      # district_sbac_by_subgroup_source,
+      # district_sbac_source,
+      state_sbac_by_subgroup_source,
+      state_sbac_source
     ]
 
     combined_sources_step = union_steps(
       # school_sbac_by_subgroup,
       # school_sbac,
-      district_sbac_by_subgroup,
-      district_sbac
+      # district_sbac_by_subgroup,
+      # district_sbac,
+      state_sbac_by_subgroup,
+      state_sbac
     )
 
 
@@ -272,8 +278,6 @@ class WATestProcessor < GS::ETL::TestProcessor
         row
       end
 
-    attach_to_step(column_value_report, s1)
-
     s1 = s1.transform "Format value_float. \n" +
                       "Round to 1 decimal place, remove trailing zeros",
       WithBlock do |row|
@@ -284,6 +288,8 @@ class WATestProcessor < GS::ETL::TestProcessor
       end
 
     s1 = s1.add(output_files_step_tree)
+
+    attach_to_step(column_value_report, s1)
 
     @graph_built = true
     self
@@ -374,9 +380,57 @@ class WATestProcessor < GS::ETL::TestProcessor
       ])
   end
 
+  def state_sbac_by_subgroup_source
+    @_state_sbac_by_subgroup_source ||=
+      tab_delimited_source([
+        'State SBA Scores by Subgroup 1.txt',
+        'State SBA Scores by Subgroup 2.txt'
+      ])
+  end
+
+  def state_sbac_source
+    @_state_sbac_source ||=
+      tab_delimited_source([
+        '2_21_SBA Scores by State.txt'
+      ])
+  end
+
+  def state_sbac
+    @state_sbac ||= (
+      s = state_sbac_source
+      s = s.transform "Fill missing columns for state file", Fill,
+        esd: nil,
+        countynumber: nil,
+        county: nil,
+        countydistrictnumber: nil,
+        district: nil,
+        entity_level: 'state',
+        subgroup: 'all_students'
+      s
+    )
+  end
+
+  def state_sbac_by_subgroup
+    @state_sbac_by_subgroup ||= (
+      s = state_sbac_by_subgroup_source
+      s = s.transform "Fill missing columns for state file", Fill,
+        esd: nil,
+        countynumber: nil,
+        county: nil,
+        countydistrictnumber: nil,
+        entity_level: 'state',
+        district: nil
+      s
+    )
+  end
+
   def district_sbac
     @_district_sbac ||= (
       s = district_sbac_source
+      s = s.transform 'Copy buildingnumber to countydistrictnumber which will eventually become state_id', WithBlock do |row|
+        row[:buildingnumber] = row[:countydistrictnumber]
+        row
+      end
       s = s.transform 'Add subgroup, schoolid, entity_level to District SBAC',
         Fill,
         subgroup: 'all_students',
@@ -389,6 +443,10 @@ class WATestProcessor < GS::ETL::TestProcessor
   def district_sbac_by_subgroup
     @_district_sbac_by_subgroup ||= (
       s = district_sbac_by_subgroup_source
+      s = s.transform 'Copy buildingnumber to countydistrictnumber which will eventually become state_id', WithBlock do |row|
+        row[:buildingnumber] = row[:countydistrictnumber]
+        row
+      end
       s = s.transform 'Add schoolid and entity_level to District SBAC by Subgroup',
         Fill,
         schoolid: 'school',
