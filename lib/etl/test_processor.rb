@@ -1,5 +1,13 @@
 require_relative './file_logger'
-Dir['./transforms/*.rb'].each { |file| require_relative file }
+
+require_all = ->(dir) do
+  dir_relative_to_this_file = File.dirname(__FILE__)
+  glob = File.join(dir_relative_to_this_file, dir, '*.rb')
+  Dir[glob].map { |file| require_relative file }
+end
+
+require_all.call 'transforms'
+require_all.call 'sources'
 
 module GS
   module ETL
