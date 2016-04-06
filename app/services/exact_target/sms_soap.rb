@@ -3,12 +3,13 @@ require 'fuelsdk'
 class ExactTarget
   class SmsSoap
 
+
     def exacttarget_login()
       FuelSDK::Client.new (
                               {
                                   'client' => {
-                                      'id' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
-                                      'secret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+                                      'id' => ENV_GLOBAL['exacttarget_v2_api_key'],
+                                      'secret' => ENV_GLOBAL['exacttarget_v2_api_secret']
                                   }
                               }
                           )

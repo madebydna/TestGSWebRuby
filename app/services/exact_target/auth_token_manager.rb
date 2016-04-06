@@ -9,8 +9,8 @@ class ExactTarget
 
     def credentials_rest()
       {
-          'clientId' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
-          'clientSecret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
+          'clientId' => ENV_GLOBAL['exacttarget_v2_api_key'],
+          'clientSecret' => ENV_GLOBAL['exacttarget_v2_api_secret']
       }
     end
 
