@@ -4,50 +4,44 @@ class NcSubroutines
   end
 
   def parse
-    @row[:level_code] = get_level_code
     @row[:test_data_type] = get_test_data_type
-    @row[:test_data_type_id] = get_test_data_type_id
     @row[:grade] = fix_grade
+    @row[:level_code] = get_level_code
+    @row[:test_data_type_id] = get_test_data_type_id
+    @row[:subject] = downcase_subject
+    @row[:breakdown] = downcase_breakdown
     @row[:value_float] = fix_value_float
     @row
   end
 
-  def get_level_code
-    if /ALL/i.match(@row[:grade])
-      level_code = 'm,h'
-    else
-      level_code = 'e,m,h'
-    end
-    level_code
-  end
-
   def get_test_data_type
-    if /ma|rd|sc/i.match(@row[:subject])
-      test_data_type = 'eog'
-    else
-      test_data_type = 'eoc'
-    end
-    test_data_type
-  end
-
-  def get_test_data_type_id
-    test_data_type_id = nil
-    if /eog/i.match(@row[:test_data_type])
-      test_data_type_id = 35
-    elsif /eoc/i.match(@row[:test_data_type])
-      test_data_type_id = 34
-    end
-    test_data_type_id
+    /ma|rd|sc/i.match(@row[:subject]) ? 'eog' : 'eoc'
   end
 
   def fix_grade
-    grade = nil
-    if @row[:test_data_type] == 'eoc'
-      grade = 'All'
-    else
-      grade = @row[:grade]
+    @row[:test_data_type] == 'eoc' ? 'All' : @row[:grade]
+  end
+
+  def get_level_code
+    /All/i.match(@row[:grade]) ? 'm,h' : 'e,m,h'
+  end
+
+  def get_test_data_type_id
+    /eog/i.match(@row[:test_data_type]) ? 35 : 34
+  end
+
+  def downcase_subject
+    subject = nil
+    if @row[:subject]
+      subject = @row[:subject].downcase
     end
-    grade
+  end
+
+  def downcase_breakdown
+    breakdown = nil
+    if @row[:breakdown]
+      subject = @row[:breakdown].downcase
+    end
   end
 
   def fix_value_float
