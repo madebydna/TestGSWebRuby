@@ -13,6 +13,7 @@ module GS
   module ETL
     class TestProcessor
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
+      attr_writer :source_columns
 
       FILE_LOCATION = '/tmp/'
       SCHOOL_TYPE_STRING = 'public.charter'
@@ -26,6 +27,10 @@ module GS
         @input_dir = input_dir
         @options = options
         @runnable_steps = []
+      end
+
+      def source_columns
+        @source_columns ||= []
       end
 
       def input_filename(name_or_regex)
@@ -151,7 +156,7 @@ module GS
         paths = filenames.map { |fn| input_filename fn }
         #TODO: shouldn't need to check for existence of options
         max = (@options && @options[:max])
-        source = CsvSource.new(paths, col_sep: "\t", max: max)
+        source = CsvSource.new(paths, source_columns, col_sep: "\t", max: max)
         source.description = filenames.map { |f| f.split('/').last }.join("\n")
         source.event_log = self.event_log
         source
