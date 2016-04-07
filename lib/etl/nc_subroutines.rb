@@ -11,6 +11,7 @@ class NcSubroutines
     @row[:subject] = downcase_subject
     @row[:breakdown] = downcase_breakdown
     @row[:value_float] = fix_value_float
+    #@letsee = set_null_prof_band_value
     @row
   end
 
@@ -40,17 +41,12 @@ class NcSubroutines
   def downcase_breakdown
     breakdown = nil
     if @row[:breakdown]
-      subject = @row[:breakdown].downcase
+      breakdown = @row[:breakdown].downcase
     end
   end
 
   def fix_value_float
-    if /<5/.match(@row[:value_float])
-      value_float = 5
-    else
-      value_float = @row[:value_float]
-    end
-    value_float
+    /<5/.match(@row[:value_float]) ? 5 : @row[:value_float]
   end
 
 end
