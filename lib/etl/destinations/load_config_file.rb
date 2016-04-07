@@ -130,7 +130,17 @@ class LoadConfigFile < GS::ETL::Step
 
     def write_data
       @rows.each do |row|
-        values = @fields.map { |f| row[f] }
+        
+        if !! row[:proficiency_band_id].match(/null/) && row[:proficiency_band_id] != 'null'
+          row[:proficiency_band_id] = row[:proficiency_band_id].gsub(',null', '')
+        end
+        values = @fields.map do |f|
+          v = row[f]
+          if %[breakdown_id proficiency_band_id level_code].include?(f.to_s)
+            v = "\"#{v}\""
+          end
+          v
+        end
         @file.puts("\t" << values.join("\t"))
       end
       @file.puts('end dataset')

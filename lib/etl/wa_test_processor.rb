@@ -16,19 +16,17 @@ require 'destinations/column_value_report'
 class WATestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
-  # def initialize(source_file, output_files)
-  #   @source_file = source_file
-  #   @runnable_steps = []
-  #   @attachable_input_step = nil
-  #   @attachable_output_step = nil
-  # end
+  def initialize(*args)
+    super(*args)
+    @year = 2015
+  end
 
   def source_steps
     [
-      # school_sbac_by_subgroup,
-      # school_sbac,
-      # district_sbac_by_subgroup,
-      # district_sbac,
+      school_sbac_by_subgroup,
+      school_sbac,
+      district_sbac_by_subgroup,
+      district_sbac,
       state_sbac_by_subgroup,
       state_sbac
     ]
@@ -38,19 +36,26 @@ class WATestProcessor < GS::ETL::TestProcessor
     return if @graph_built
 
     @runnable_steps = [
-      # school_sbac_by_subgroup_source,
-      # school_sbac_source,
-      # district_sbac_by_subgroup_source,
-      # district_sbac_source,
+      school_sbac_by_subgroup_source,
+      school_sbac_source,
+      district_sbac_by_subgroup_source,
+      district_sbac_source,
       state_sbac_by_subgroup_source,
       state_sbac_source
     ]
 
+    source(file_with_subgroups, foo: :bar) do |node|
+      node.transform(Blah).
+      node.transform Blah
+      node.transform Blah
+      node.transform Blah
+    end
+
     combined_sources_step = union_steps(
-      # school_sbac_by_subgroup,
-      # school_sbac,
-      # district_sbac_by_subgroup,
-      # district_sbac,
+      school_sbac_by_subgroup,
+      school_sbac,
+      district_sbac_by_subgroup,
+      district_sbac,
       state_sbac_by_subgroup,
       state_sbac
     )
@@ -85,6 +90,7 @@ class WATestProcessor < GS::ETL::TestProcessor
       entity_type: 'public_charter',
       level_code: 'e,m,h',
       test_data_type: 'sbac',
+      data_type_id: 240,
       test_data_type_id: 240
 
     s1 = s1.transform "Rename subgroup to breakdown, \n" +
@@ -189,12 +195,12 @@ class WATestProcessor < GS::ETL::TestProcessor
         mathpercentlevel4: :math,
         mathpercentlevelbasic: :math,
         mathpercentnull: :math,
-        elapercentlevel1: :reading, 
-        elapercentlevel2: :reading, 
-        elapercentlevel3: :reading, 
-        elapercentlevel4: :reading, 
-        elapercentnull: :reading,
-        elapercentlevelbasic: :reading
+        elapercentlevel1: :ela, 
+        elapercentlevel2: :ela, 
+        elapercentlevel3: :ela, 
+        elapercentlevel4: :ela, 
+        elapercentnull: :ela,
+        elapercentlevelbasic: :ela
       }
 
     s1 = s1.transform "Rename [subject]totaltested to totaltested, \n" +
@@ -202,7 +208,7 @@ class WATestProcessor < GS::ETL::TestProcessor
       WithBlock do |row|
         if row[:subject] == :math
           row[:number_tested] = row[:mathtotaltested]
-        elsif row[:subject] == :reading
+        elsif row[:subject] == :ela
           row[:number_tested] = row[:elatotaltested]
         end
         row
@@ -238,7 +244,7 @@ class WATestProcessor < GS::ETL::TestProcessor
       :subject,
       {
         math: 5,
-        reading: 2
+        ela: 4
       },
       to: :subject_id
 
@@ -287,6 +293,17 @@ class WATestProcessor < GS::ETL::TestProcessor
         row
       end
 
+    last_before_split = s1.transform(
+      "Get rid of rows without school, district,\n" + 
+      "or state entity level",
+      KeepRows,
+      :entity_level,
+      *['district','school','state']
+    )
+
+    @runnable_steps << last_before_split.destination(
+      '', LoadConfigFile, config_output_file, config_hash)
+
     s1 = s1.add(output_files_step_tree)
 
     attach_to_step(column_value_report, s1)
@@ -300,6 +317,17 @@ class WATestProcessor < GS::ETL::TestProcessor
     runnable_steps.each(&:run)
   end
 
+  def config_hash
+    {
+      source_id: 8,
+      state: 'wa',
+      notes: 'DXT-1558: WA 2015 SBAC',
+      url: 'http://reportcard.ospi.k12.wa.us/DataDownload.aspx',
+      file: 'wa/2015/output/wa.2015.1.public.charter.[level].txt',
+      level: nil,
+      school_type: 'public,charter'
+    }
+  end
 
   def school_sbac_source
     @_school_sbac_source ||= tab_delimited_source(
@@ -318,29 +346,12 @@ class WATestProcessor < GS::ETL::TestProcessor
     )
   end
 
-  # def state_sbac_by_subgroup_source
-  #   @_school_sbac_by_subgroup_source ||= tab_delimited_source(
-  #     [
-  #       '/Users/samson/Development/data/wa/State SBA Scores by Subgroup 1.txt',
-  #       '/Users/samson/Development/data/wa/State SBA Scores by Subgroup 2.txt'
-  #     ]
-  #   )
-  # end
-
-  # def state_sbac_by_subgroup
-  #   @_state_sbac_by_subgroup ||= (
-  #     s = state_sbac_by_subgroup_source.transform Fill,
-
-
-  #   )
-  # end
-
   def school_sbac
     @_school_sbac ||= (
-      s = school_sbac_source.transform Fill,
+      s = school_sbac_source.transform 'Fill subgroup and entity_level columns', Fill,
         subgroup: 'all_students',
         entity_level: 'school'
-      s = s.transform FieldRenamer, :countydistrictnumber, :district_id
+      s = s.transform 'Rename countydistrictnumber to district_id', FieldRenamer, :countydistrictnumber, :district_id
       s
     )
   end
@@ -358,7 +369,7 @@ class WATestProcessor < GS::ETL::TestProcessor
   def school_sbac_by_subgroup
     @_school_sbac_by_subgroup ||= (
       s = school_sbac_by_subgroup_source
-      s = s.transform Fill,
+      s = s.transform 'Fill ESD and entity_level columns', Fill,
         ESD: nil,
         entity_level: 'school'
       s
@@ -474,5 +485,5 @@ class WATestProcessor < GS::ETL::TestProcessor
 end
 
 
-WATestProcessor.new('/Users/samson/Development/data/wa', max: 100).build_graph.draw
-# WATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
+# WATestProcessor.new('/Users/samson/Development/data/wa', max: 100).build_graph.run
+WATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
