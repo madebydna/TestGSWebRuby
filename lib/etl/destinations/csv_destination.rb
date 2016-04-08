@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 require 'csv'
 
 # simple destination assuming all rows have the same fields

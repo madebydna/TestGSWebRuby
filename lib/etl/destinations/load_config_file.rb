@@ -1,4 +1,4 @@
-require 'step'
+require_relative '../step'
 class LoadConfigFile < GS::ETL::Step
   def initialize(file, options = {})
     @file = File.open(file, 'w')
