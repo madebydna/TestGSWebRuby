@@ -1,7 +1,9 @@
 require 'csv'
 require_relative '../source'
 
+
 class CsvSource < GS::ETL::Source
+  attr_reader :columns
 
   DEFAULT_OPTIONS = {
     headers: true,
@@ -9,8 +11,9 @@ class CsvSource < GS::ETL::Source
     col_sep:','
   }
 
-  def initialize(input_files, options = {})
+  def initialize(input_files, columns, options = {})
     @input_files = input_files.is_a?(Array) ? input_files : [input_files]
+    self.columns = columns
     @options = DEFAULT_OPTIONS.merge(options)
   end
 
@@ -49,5 +52,11 @@ class CsvSource < GS::ETL::Source
       raise ArgumentError, 'Must provide at least one input file'
     end
     @input_files = input_files
+  end
+
+  private
+
+  def columns=(columns)
+    @columns = columns
   end
 end

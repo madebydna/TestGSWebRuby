@@ -1,6 +1,7 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative 'test_processor'
 require 'etl'
+require 'test_processor'
 require 'event_log'
 require 'sources/csv_source'
 require 'destinations/csv_destination'
@@ -10,7 +11,8 @@ require 'sources/buffered_group_by'
 require 'nc_entity_level_parser'
 require 'nc_subroutines'
 require 'nc_breakdown_definitions'
-
+require 'transforms/column_selector'
+require 'transforms/delete_rows'
 
 class NCTestProcessor < GS::ETL::TestProcessor
 
@@ -24,15 +26,15 @@ class NCTestProcessor < GS::ETL::TestProcessor
 
     s1 = GS::ETL::StepsBuilder.new(source_step)
 
-    s1.transform ColumnSelector, :school_code, :name,	:subject,	:grade, :subgroup,	:num_tested,
+    s1.transform 'Select useful columns', ColumnSelector, :school_code, :name,	:subject,	:grade, :subgroup,	:num_tested,
       :pct_l1,	:pct_l2,	:pct_l3, :pct_l4,	:pct_l5
 
-    s1.transform Fill,
+    s1.transform 'Fill year, entity_type, and district_name', Fill,
       year: '2015',
       entity_type: 'public_charter_private',
       district_name: 'district_name'
 
-    s1.transform MultiFieldRenamer, {
+    s1.transform 'Rename some columns in input file', MultiFieldRenamer, {
         school_code: :school_id,
         name: :school_name,
         subgroup: :breakdown,
@@ -44,41 +46,41 @@ class NCTestProcessor < GS::ETL::TestProcessor
         pct_l5: :level_5
     }
 
-    s1.transform FilterOutMatchingValues, :breakdown, /^male_*/i,/^fem_*/i
+    s1.transform "-", DeleteRows, :breakdown, /male_*/i, /fem_*/i, /AIG_MATH/i, /AIG_READ/i
 
-    s1.transform FilterOutMatchingValues, :type, 'MC','EXT2','EXT1','RG','X1','X2'
+    s1.transform "-", DeleteRows, :type, 'MC','EXT2','EXT1','RG','X1','X2'
 
-    s1.transform FilterOutMatchingValues, :grade, 'gs'
+    s1.transform "-", DeleteRows, :grade, /gs/i
 
-    s1.transform FilterOutMatchingValues, :subject, 'EOG','EOC','ALL'
+    s1.transform "-", DeleteRows, :subject, 'EOG','EOC','ALL'
 
 
-
-    s1.transform Transposer,
+    s1.transform "-", Transposer,
       :proficiency_band,
       :proficiency_band_value,
       :level_1,
       :level_2,
       :level_3,
       :level_4,
-      :level_5
+      :level_5,
+      :null
 
     # Map proficiency band IDs
-    s1.transform(
+    s1.transform("-",
       HashLookup,
       :proficiency_band,
       {
+        null: 'null',
         level_1: 115,
         level_2: 116,
         level_3: 117,
         level_4: 118,
-        level_5: 119,
-        '' => 'null'
+        level_5: 119
       },
       to: :proficiency_band_id
     )
 
-    s1.transform(
+    s1.transform("-",
       HashLookup,
       :subject,
       {
@@ -92,21 +94,20 @@ class NCTestProcessor < GS::ETL::TestProcessor
       to: :subject_id
     )
     #
-    s1.transform(
+    s1.transform('Map state breakdown strings to GS breakdown IDs',
       HashLookup,
       :breakdown,
        NcBreakdownDefinitions.breakdown_lookup,
-      to: :breakdown_id,
-      ignore: ['aig_math','aig_read']
+      to: :breakdown_id
     )
 
-    s1.transform FieldRenamer, :proficiency_band_value, :value_float
+    s1.transform "-", FieldRenamer, :proficiency_band_value, :value_float
 
-    s1.transform WithBlock do |row|
+    s1.transform "-", WithBlock do |row|
       NcEntityLevelParser.new(row).parse
     end
 
-    s1.transform WithBlock do |row|
+    s1.transform "-", WithBlock do |row|
       NcSubroutines.new(row).parse
     end
 
@@ -115,7 +116,9 @@ class NCTestProcessor < GS::ETL::TestProcessor
       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
       :proficiency_band_id, :level_code, :number_tested, :value_float]
 
-    s1.destination CsvDestination, @output_file, *column_order
+    s1.destination "-", CsvDestination, @output_file, *column_order
+
+    s1 = s1.add(output_files_step_tree)
 
     source_step.run
 

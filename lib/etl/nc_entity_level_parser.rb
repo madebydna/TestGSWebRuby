@@ -21,9 +21,7 @@ class NcEntityLevelParser
   end
 
   def is_school?
-    unless is_state? || is_district?
-      true
-    end
+    ! is_state? && ! is_district?
   end
 
   def is_district?
