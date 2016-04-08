@@ -1,4 +1,5 @@
 require_relative './file_logger'
+require_relative '../states' # FIXME: This require is outside the etl directory
 
 require_all = ->(dir) do
   dir_relative_to_this_file = File.dirname(__FILE__)
@@ -8,6 +9,7 @@ end
 
 require_all.call 'transforms'
 require_all.call 'sources'
+require_all.call 'destinations'
 
 module GS
   module ETL
