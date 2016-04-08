@@ -1,11 +1,8 @@
-require 'step'
-require 'etl'
-require 'source'
+require_relative 'source'
 
 module GS
   module ETL
-    class EventLog < GS::ETL::Step
-      include GS::ETL::Source
+    class EventLog < GS::ETL::Source
 
       def event_log
         nil
