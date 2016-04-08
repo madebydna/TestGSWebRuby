@@ -60,6 +60,53 @@ module GS
         # LoadConfigFile, config_output_file, config_hash
       end
 
+      class << self
+        attr_reader :source_pairs, :shared_root, :shared_leaf
+
+        def source(*args, &block)
+          @source_pairs ||= {}
+          source_class = ((args[0].is_a? Class) && (args[0] < GS::ETL::Source)) ? args.shift : CsvSource
+          source_step = source_class.new(*args)
+          index = (@source_pairs.keys.select { |k| k.is_a? Integer }.max || 0).next
+          block = block_given? ? block : proc { |s| s }
+          @source_pairs[index] = [source_step, block]
+          source_step
+        end
+
+        def source_named(name, *args, &block)
+          source_obj = source(*args, &block)
+          old_key = @source_pairs.find { |k,v| v[0] == source_obj }
+          @source_pairs[name] = @source_pairs.delete(old_key)
+        end
+
+        def shared
+          @shared_root = Step.new
+          @shared_leaf = yield(@shared_root)
+        end
+      end
+
+      def build_graph
+        source_pairs = self.class.source_pairs
+        @sources = source_pairs.each_with_object({}) { |(k, v), h| h[k] = v[0] }
+        source_leaves = source_pairs.values.map do |source, block|
+          instance_exec(source, &block)
+        end
+        union_steps(*source_leaves).add(self.class.shared_root)
+        self.class.shared_leaf.add(output_files_step_tree)
+      end
+
+      def context_for_sources
+        {dir: @input_dir, max: @options[:max]}
+      end
+
+      def run
+        build_graph
+        @sources.values.each do |source|
+          source.run(context_for_sources)
+        end
+        #@config_node.run
+      end
+
       private
 
       def build_file_output_steps
