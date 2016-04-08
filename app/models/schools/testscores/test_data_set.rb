@@ -7,6 +7,7 @@ class TestDataSet < ActiveRecord::Base
 
   has_many :test_data_school_values, class_name: 'TestDataSchoolValue', foreign_key: 'data_set_id'
   has_many :test_data_state_values, class_name: 'TestDataStateValue', foreign_key: 'data_set_id'
+  has_many :test_data_district_values, class_name: 'TestDataDistrictValue', foreign_key: 'data_set_id'
   belongs_to :test_data_type, :class_name => 'TestDataType', foreign_key: 'data_type_id'
 
   delegate :value_text, :modified, :modified_by,
@@ -58,6 +59,16 @@ class TestDataSet < ActiveRecord::Base
     .active
     .includes(:test_data_school_values)
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
+    .with_display_targets('ratings')
+    .with_no_subject_breakdowns
+    .all_students
+  end
+
+  def self.ratings_for_district district
+    TestDataSet.on_db(district.shard)
+    .active
+    .includes(:test_data_district_values)
+    .where('TestDataDistrictValue.district_id = ? and TestDataDistrictValue.active = ?', district.id, 1).references(:test_data_district_values)
     .with_display_targets('ratings')
     .with_no_subject_breakdowns
     .all_students
