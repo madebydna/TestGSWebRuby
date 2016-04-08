@@ -1,10 +1,8 @@
 require 'set'
 
-require_relative '../step'
 require_relative '../source'
 
-class UniqueValues < GS::ETL::Step
-  include GS::ETL::Source
+class UniqueValues < GS::ETL::Source
   attr_accessor :fields
 
   def initialize(*fields)

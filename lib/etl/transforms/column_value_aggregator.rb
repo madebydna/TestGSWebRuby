@@ -1,4 +1,3 @@
-require_relative '../step'
 require_relative '../source'
 # $LOAD_PATH.unshift File.dirname(__FILE__)
 # require 'etl'
@@ -25,8 +24,7 @@ require_relative '../source'
 # require 'transforms/value_concatenator'
 # require 'transforms/unique_values'
 
-class ColumnValueAggregator < GS::ETL::Step
-  include GS::ETL::Source
+class ColumnValueAggregator < GS::ETL::Source
 
   def initialize
     @hashes ||= Hash.new(0)

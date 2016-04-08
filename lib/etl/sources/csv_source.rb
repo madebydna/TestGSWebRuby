@@ -1,9 +1,7 @@
 require 'csv'
-require_relative '../step'
 require_relative '../source'
 
-class CsvSource < GS::ETL::Step
-  include GS::ETL::Source
+class CsvSource < GS::ETL::Source
 
   DEFAULT_OPTIONS = {
     headers: true,
@@ -16,9 +14,22 @@ class CsvSource < GS::ETL::Step
     @options = DEFAULT_OPTIONS.merge(options)
   end
 
-  def each
-    max = @options.delete(:max)
-    @input_files.each do |file|
+  def filename_with_dir(name_or_regex, dir)
+    if name_or_regex.is_a? Regexp
+      Dir.entries(dir).map { |entry| input_filename(file) }
+        .select { |abs_path| File.file? abs_path && name_or_regex =~ file }
+    else
+      File.join(dir, name_or_regex)
+    end
+  end
+
+  def each(context={})
+    max = @options.delete(:max) || context[:max]
+    if context[:dir]
+      @input_files.map { |f| filename_with_dir(f, context[:dir]) }.flatten
+    else
+      @input_files
+    end.each do |file|
       CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
         enum = max ? csv.first(max) : csv
         enum.each do |row|

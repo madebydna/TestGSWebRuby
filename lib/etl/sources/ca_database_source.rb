@@ -1,9 +1,7 @@
-require_relative '../step'
 require_relative '../source'
 
+class GsShardedDatabaseSource < GS::ETL::Source
 
-class GsShardedDatabaseSource < GS::ETL::Step
-  include GS::ETL::Source
   def initialize(args)
     args.fetch(:host, 'datadev.greatschools.org')
     args.fetch(:state, 'ca')

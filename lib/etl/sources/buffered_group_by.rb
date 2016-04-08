@@ -1,8 +1,6 @@
-require_relative '../step'
 require_relative '../source'
 
-class BufferedGroupBy < GS::ETL::Step
-  include GS::ETL::Source
+class BufferedGroupBy < GS::ETL::Source
   attr_accessor :group_by_fields, :join_fields
 
   def initialize(group_by_fields, join_fields)

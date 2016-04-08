@@ -1,8 +1,11 @@
+require_relative 'step'
+
 module GS
   module ETL
-    module Source
-      def run
-        each do |row|
+    class Source < GS::ETL::Step
+
+      def run(context={})
+        run_proc = Proc.new do |row|
           propagate(row) do |step, rows|
             if rows.is_a?(Array)
               rows.map { |r| step.log_and_process(r) }
@@ -10,6 +13,12 @@ module GS
               step.log_and_process(rows)
             end
           end
+        end
+
+        if method(:each).arity != 0
+          each(context, &run_proc)
+        else
+          each(&run_proc)
         end
       end
     end
