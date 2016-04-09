@@ -33,8 +33,8 @@ class DistrictRatingsCacher < DistrictCacher
     {
         data_type_id: data_set_and_value.data_type_id,
         year: data_set_and_value.year,
-        value_text: data_set_and_value.test_data_district_values[0].value_text,
-        value_float: data_set_and_value.test_data_district_values[0].value_float,
+        value_text: data_set_and_value.test_data_district_values[0].present? ? data_set_and_value.test_data_district_values[0].value_text : null,
+        value_float: data_set_and_value.test_data_district_values[0].present? ? data_set_and_value.test_data_district_values[0].value_float : null,
         test_data_type_display_name:  test_data_types[data_set_and_value.data_type_id].display_name
     }
   end
