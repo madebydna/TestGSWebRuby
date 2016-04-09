@@ -18,11 +18,12 @@ class DistrictRatingsCacher < DistrictCacher
   end
 
   def build_hash_for_cache
-    hash = {}
+    hash = []
     query_results.each do |data_set_and_value|
       data_type_id = data_set_and_value.data_type_id
       if (test_data_types && test_data_types[data_type_id].present?)
-      hash.deep_merge!(build_ratings_cache(data_set_and_value))
+        ratings_hash = build_ratings_cache(data_set_and_value)
+        hash.push(ratings_hash)
       end
     end
     hash
@@ -32,8 +33,8 @@ class DistrictRatingsCacher < DistrictCacher
     {
         data_type_id: data_set_and_value.data_type_id,
         year: data_set_and_value.year,
-        school_value_text: data_set_and_value.school_value_text,
-        school_value_float: data_set_and_value.school_value_float,
+        value_text: data_set_and_value.test_data_district_values[0].value_text,
+        value_float: data_set_and_value.test_data_district_values[0].value_float,
         test_data_type_display_name:  test_data_types[data_set_and_value.data_type_id].display_name
     }
   end
