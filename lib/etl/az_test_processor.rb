@@ -2,36 +2,53 @@ require_relative "test_processor"
 
 class AZTestProcessor < GS::ETL::TestProcessor
 
-  source("aims_dist_sci_2015.txt", col_sep: "\t") do |s|
+  source("aims_dist_sci_2015.txt",[], col_sep: "\t") do |s|
     s.transform("", Fill, { entity_level: 'district' })
   end
 
-  source("aims_schl_sci_2015.txt", col_sep: "\t") do |s|
+  source("aims_schl_sci_2015.txt",[], col_sep: "\t") do |s|
     s.transform("", Fill, { entity_level: 'school' })
+    .transform('', WithBlock) do |row|
+       #require 'pry'; binding.pry
+       row
+    end
   end
 
-  source("aims_state_sci_2015.txt", col_sep: "\t") do |s|
+  source("aims_state_sci_2015.txt",[], col_sep: "\t") do |s|
     s.transform("", Fill, { entity_level: 'state' })
   end
 
-  key_map = {
-    'X' => 'All',
-    'A' => 'Asian',
-    'B' => 'African American',
-    'H' => 'Hispanic or Latino',
-    'I' => 'Native American',
-    'W' => 'White',
-    'L' => 'Limited English Proficient',
-    'T' => 'Economically Disadvantaged',
-    'S' => 'Students With Disabilities',
-    'M' => 'MALE',
-    'F' => 'FEMALE',
-    'G' => 'MIGRANT'
+  key_map_az_gs = {
+    'X' => 1,
+    'A' => 2,
+    'B' => 3,
+    'H' => 6,
+    'I' => 4,
+    'W' => 8,
+    'L' => 15,
+    'T' => 9,
+    'S' => 13,
+    'M' => 12,
+    'F' => 11,
+    'G' => 19
   }
 
   shared do |s|
-    s.transform("Mapping type to breakdown description",
-      HashLookup, :type, key_map)
+    s.transform("Creating StateID", WithBlock) do |row|
+      if row[:entity_level] == 'district'
+        row[:state_id] = row[:distcode]
+      elsif row[:entity_level] == 'school'
+        row[:state_id] = row[:schlcode]
+      end
+      row
+    end
+    .transform("Adding column breakdown_id from type",
+     HashLookup, :type, key_map_az_gs, to: :breakdown_id)
+    .transform("Lowercase breakdown",
+     WithBlock) do |row|
+       row[:type].downcase!
+       row
+     end
     .transform("Renaming fields",
       MultiFieldRenamer,
       {
@@ -43,14 +60,24 @@ class AZTestProcessor < GS::ETL::TestProcessor
         type: :breakdown,
         pctpass: :value_float
       })
+      .transform("Padding ID's to 5 digits", WithBlock) do |row|
+        [:state_id, :district_id, :school_id].each do |id_field|
+          if row[id_field] =~ /^[0-9]+$/
+            row[id_field] = '%05i' % (row[id_field].to_i)
+          end
+        end
+        row
+      end
     .transform('Fill missing default fields', Fill, {
-      subject: 25,
+      subject_id: 25,
+      subject: 'science',
       entity_type: 'public_charter',
       proficiency_band: 'null',
       proficiency_band_id: 'null',
-      state_id: '01453',
-      number_tested: '',
-      level_code: 'e,m,h'
+      number_tested: nil,
+      level_code: 'e,m,h',
+      test_data_type: 'aims',
+      test_data_type_id: 137,
     })
     .transform('Map "All" grade level', HashLookup, :grade, {'9999'=>'All'} )
     .transform('Fill missing ids and names with entity_level', WithBlock) do |row|
@@ -62,4 +89,4 @@ class AZTestProcessor < GS::ETL::TestProcessor
   end
 end
 
-AZTestProcessor.new(ARGV[0], max: ARGV[1].to_i).run
+AZTestProcessor.new(ARGV[0], max: nil).run
