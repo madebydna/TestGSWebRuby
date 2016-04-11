@@ -21,6 +21,18 @@ class NCTestProcessor < GS::ETL::TestProcessor
     @output_file = output_file
   end
 
+  def config_hash
+    {
+        source_id: 8,
+        state: "nc",
+        notes: "Year 2014-2015 NC EOG, EOC results.",
+        url: "http://accrpt.ncpublicschools.org/docs/disag_datasets/",
+        file: "nc/2015/output/nc.2015.2.public.charter.[level].txt",
+        level: nil,
+        school_type: "public,charter,private"
+    }
+  end
+
   def run
     source_step = CsvSource.new(@source_file, [], col_sep: "\t")
 
@@ -114,20 +126,15 @@ class NCTestProcessor < GS::ETL::TestProcessor
       NcSubroutines.new(row).parse
     end
 
-    s1.transform "-", DeleteRows, :value_float, "-"
+    last_before_split = s1.transform "-", DeleteRows, :value_float, "-"
 
-    column_order = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
-      :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
-      :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
-      :proficiency_band_id, :level_code, :number_tested, :value_float]
+    load_config_file = last_before_split.destination(
+        '', LoadConfigFile, config_output_file, config_hash)
 
-
-
-    s1.destination "-", CsvDestination, @output_file, *column_order
-
-    s1 = s1.add(output_files_step_tree)
+    s1 = last_before_split.add(output_files_step_tree)
 
     source_step.run
+    load_config_file.run
 
   end
 end

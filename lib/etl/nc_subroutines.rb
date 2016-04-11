@@ -45,7 +45,13 @@ class NcSubroutines
   end
 
   def fix_value_float
-    /<5/.match(@row[:value_float]) ? 5 : @row[:value_float]
+    if /<5/.match(@row[:value_float])
+      5
+    elsif />95/.match(@row[:value_float])
+      95
+    else
+      @row[:value_float]
+    end
   end
 
 end
