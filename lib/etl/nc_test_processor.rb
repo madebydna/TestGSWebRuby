@@ -22,12 +22,12 @@ class NCTestProcessor < GS::ETL::TestProcessor
   end
 
   def run
-    source_step = CsvSource.new(@source_file, col_sep: "\t")
+    source_step = CsvSource.new(@source_file, [], col_sep: "\t")
 
     s1 = GS::ETL::StepsBuilder.new(source_step)
 
     s1.transform 'Select useful columns', ColumnSelector, :school_code, :name,	:subject,	:grade, :subgroup,	:num_tested,
-      :pct_l1,	:pct_l2,	:pct_l3, :pct_l4,	:pct_l5
+      :pct_l1,	:pct_l2,	:pct_l3, :pct_l4,	:pct_l5, :pct_glp
 
     s1.transform 'Fill year, entity_type, and district_name', Fill,
       year: '2015',
@@ -43,7 +43,8 @@ class NCTestProcessor < GS::ETL::TestProcessor
         pct_l2: :level_2,
         pct_l3: :level_3,
         pct_l4: :level_4,
-        pct_l5: :level_5
+        pct_l5: :level_5,
+        pct_glp: :null
     }
 
     s1.transform "-", DeleteRows, :breakdown, /male_*/i, /fem_*/i, /AIG_MATH/i, /AIG_READ/i
@@ -53,6 +54,8 @@ class NCTestProcessor < GS::ETL::TestProcessor
     s1.transform "-", DeleteRows, :grade, /gs/i
 
     s1.transform "-", DeleteRows, :subject, 'EOG','EOC','ALL'
+
+
 
 
     s1.transform "-", Transposer,
@@ -70,13 +73,13 @@ class NCTestProcessor < GS::ETL::TestProcessor
       HashLookup,
       :proficiency_band,
       {
-        null: 'null',
         level_1: 115,
         level_2: 116,
         level_3: 117,
         level_4: 118,
-        level_5: 119
-      },
+        level_5: 119,
+        null: 'null'
+                 },
       to: :proficiency_band_id
     )
 
@@ -111,10 +114,14 @@ class NCTestProcessor < GS::ETL::TestProcessor
       NcSubroutines.new(row).parse
     end
 
+    s1.transform "-", DeleteRows, :value_float, "-"
+
     column_order = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
       :district_id, :district_name, :test_data_type, :test_data_type_id, :grade,
       :subject, :subject_id, :breakdown, :breakdown_id, :proficiency_band,
       :proficiency_band_id, :level_code, :number_tested, :value_float]
+
+
 
     s1.destination "-", CsvDestination, @output_file, *column_order
 

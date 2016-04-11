@@ -15,8 +15,6 @@ source CsvSource, '/Users/rhunter/CodeGS/etl_data_files/nc_2015_first_50.txt', c
 transform do |row|
   # save the county rows in separate file
 
-  #require 'pry'; binding.pry
-  
   rows_county = (row[:county_code] == "1") && (row[:district_code] == "") && (row[:school_code] == "")
 
   rows_county ? row : nil

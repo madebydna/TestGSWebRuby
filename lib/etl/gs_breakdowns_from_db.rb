@@ -13,8 +13,7 @@ class GsBreakdownsFromDb
     results.each do |row|
       all_breakdowns[ row["id"] ] = row["name"]
     end
-    # require 'pry'; binding.pry
-    # p all_breakdowns
+
     all_breakdowns
   end
 end

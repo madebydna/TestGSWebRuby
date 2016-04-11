@@ -11,7 +11,6 @@ class NcSubroutines
     @row[:subject] = downcase_subject
     @row[:breakdown] = downcase_breakdown
     @row[:value_float] = fix_value_float
-    #@letsee = set_null_prof_band_value
     @row
   end
 
