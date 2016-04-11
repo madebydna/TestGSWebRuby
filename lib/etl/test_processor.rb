@@ -4,7 +4,7 @@ require_relative '../states' # FIXME: This require is outside the etl directory
 require_all = ->(dir) do
   dir_relative_to_this_file = File.dirname(__FILE__)
   glob = File.join(dir_relative_to_this_file, dir, '*.rb')
-  Dir[glob].map { |file| require_relative file }
+  Dir[glob].each { |file| require file }
 end
 
 require_all.call 'transforms'
@@ -70,11 +70,16 @@ module GS
 
         def source(*args, &block)
           @source_pairs ||= {}
-          source_class = ((args[0].is_a? Class) && (args[0] < GS::ETL::Source)) ? args.shift : CsvSource
+          source_class = if args[0].is_a? Class and args[0] < GS::ETL::Source
+                           args.shift
+                         else
+                           CsvSource
+                         end
           source_step = source_class.new(*args)
-          index = (@source_pairs.keys.select { |k| k.is_a? Integer }.max || 0).next
+          max_current_index = @source_pairs.keys.select { |k| k.is_a? Integer }.max
+          next_index = ( max_current_index || -1 ).next
           block = block_given? ? block : proc { |s| s }
-          @source_pairs[index] = [source_step, block]
+          @source_pairs[next_index] = [source_step, block]
           source_step
         end
 
