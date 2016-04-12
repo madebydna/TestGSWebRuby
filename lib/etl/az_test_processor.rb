@@ -87,6 +87,18 @@ class AZTestProcessor < GS::ETL::TestProcessor
       row
     end
   end
+
+  def config_hash
+    {
+        source_id: 18,
+        state: 'az',
+        notes: 'DXT-1530: AZ AIMS science 2015 test load.',
+        url: 'http://www.azed.gov/assessment/',
+        file: 'az/2015/output/newdatatools/az.2015.1.public.charter.district.txt',
+        level: nil,
+        school_type: 'public,charter'
+    }
+  end
 end
 
 AZTestProcessor.new(ARGV[0], max: nil).run

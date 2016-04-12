@@ -17,7 +17,7 @@ module GS
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
       attr_writer :source_columns
 
-      FILE_LOCATION = './tmp/'
+      FILE_LOCATION = './output/'
       SCHOOL_TYPE_STRING = 'public.charter'
       ENTITIES = ['school', 'state', 'district']
       COLUMN_ORDER = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
@@ -61,8 +61,8 @@ module GS
         output_files_root_step
       end
 
-      def config_steps
-        # LoadConfigFile, config_output_file, config_hash
+      def config_step
+        @config_step ||= LoadConfigFile.new config_output_file, config_hash
       end
 
       class << self
@@ -103,6 +103,7 @@ module GS
         end
         union_steps(*source_leaves).add(self.class.shared_root)
         self.class.shared_leaf.add(output_files_step_tree)
+        self.class.shared_leaf.add(config_step)
       end
 
       def context_for_sources
@@ -114,7 +115,7 @@ module GS
         @sources.values.each do |source|
           source.run(context_for_sources)
         end
-        #@config_node.run
+        config_step.run
       end
 
       private
@@ -185,7 +186,7 @@ module GS
       end
 
       def config_hash
-        #  If config hash is NOT defined by transform script shuould raise error
+        #  If config hash is NOT defined by transform script should raise error
         raise ArgumentError
       end
 
