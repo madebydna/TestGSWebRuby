@@ -23,7 +23,7 @@ class NCTestProcessor < GS::ETL::TestProcessor
 
   def config_hash
     {
-        source_id: 8,
+        source_id: 22,
         state: "nc",
         notes: "Year 2014-2015 NC EOG, EOC results.",
         url: "http://accrpt.ncpublicschools.org/docs/disag_datasets/",
