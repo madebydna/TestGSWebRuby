@@ -103,7 +103,10 @@ module GS
         end
         union_steps(*source_leaves).add(self.class.shared_root)
         self.class.shared_leaf.add(output_files_step_tree)
-        self.class.shared_leaf.add(config_step)
+        self.class.shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
+         row[:data_type_id] = row[:test_data_type_id]
+         row
+        end.add(config_step)
       end
 
       def context_for_sources

@@ -2,6 +2,11 @@ require_relative "test_processor"
 
 class AZTestProcessor < GS::ETL::TestProcessor
 
+  def initialize(*args)
+    super
+    @year = 2015
+  end
+
   source("aims_dist_sci_2015.txt",[], col_sep: "\t") do |s|
     s.transform("", Fill, { entity_level: 'district' })
   end
@@ -94,7 +99,7 @@ class AZTestProcessor < GS::ETL::TestProcessor
         state: 'az',
         notes: 'DXT-1530: AZ AIMS science 2015 test load.',
         url: 'http://www.azed.gov/assessment/',
-        file: 'az/2015/output/newdatatools/az.2015.1.public.charter.district.txt',
+        file: 'az/2015/output/newdatatools/az.2015.1.public.charter.[level].txt',
         level: nil,
         school_type: 'public,charter'
     }
