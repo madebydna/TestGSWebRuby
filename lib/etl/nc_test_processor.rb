@@ -27,7 +27,7 @@ class NCTestProcessor < GS::ETL::TestProcessor
         state: "nc",
         notes: "Year 2014-2015 NC EOG, EOC results.",
         url: "http://accrpt.ncpublicschools.org/docs/disag_datasets/",
-        file: "nc/2015/output/nc.2015.2.public.charter.[level].txt",
+        file: "nc/2015/output/nc.2015.2.public.charter.private.[level].txt",
         level: nil,
         school_type: "public,charter,private"
     }
@@ -38,7 +38,7 @@ class NCTestProcessor < GS::ETL::TestProcessor
 
     s1 = GS::ETL::StepsBuilder.new(source_step)
 
-    s1.transform 'Select useful columns', ColumnSelector, :school_code, :name,	:subject,	:grade, :subgroup,	:num_tested,
+    s1.transform 'Select useful columns', ColumnSelector, :school_code, :name,	:type, :subject,	:grade, :subgroup,	:num_tested,
       :pct_l1,	:pct_l2,	:pct_l3, :pct_l4,	:pct_l5, :pct_glp
 
     s1.transform 'Fill year, entity_type, and district_name', Fill,
@@ -124,6 +124,11 @@ class NCTestProcessor < GS::ETL::TestProcessor
 
     s1.transform "-", WithBlock do |row|
       NcSubroutines.new(row).parse
+    end
+
+    s1.transform "-", WithBlock do |row|
+     row[:data_type_id] = row[:test_data_type_id]
+     row
     end
 
     last_before_split = s1.transform "-", DeleteRows, :value_float, "-"

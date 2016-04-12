@@ -17,7 +17,7 @@ module GS
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
       attr_writer :source_columns
 
-      FILE_LOCATION = './output/'
+      FILE_LOCATION = '/tmp/'
       SCHOOL_TYPE_STRING = 'public.charter'
       ENTITIES = ['school', 'state', 'district']
       COLUMN_ORDER = [ :year, :entity_type, :entity_level, :state_id, :school_id, :school_name,
