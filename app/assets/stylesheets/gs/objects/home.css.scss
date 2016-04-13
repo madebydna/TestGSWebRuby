@@ -65,6 +65,7 @@
   h1 {
     margin-top: $spacing-small;
     font-family: "RobotoSlab-Light", sans-serif;
+    font-weight: bolder;
     font-size: 50px;
     @media only screen and (max-width: $screen-sm-max) {
       margin-top: 0px;
