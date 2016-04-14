@@ -2,6 +2,8 @@ class TestDescription < ActiveRecord::Base
   self.table_name = 'test_description'
   db_magic :connection => :gs_schooldb
   attr_accessible :data_type_id, :description, :scale, :source, :state, :subgroup_description
+  belongs_to :test_data_set, :class_name => 'TestDataSet', foreign_key: 'data_set_id'
+
 
   def self.by_data_type_ids(data_type_ids, state)
     begin

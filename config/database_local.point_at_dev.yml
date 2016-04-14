@@ -2,12 +2,13 @@
 # don't change above comment since it's used by script
 mysql_dev: &mysql_dev
   <<: *mysql
-  host: jazz.greatschools.org
+  host: feeds-dev.greatschools.org
   username: service
   password: service
 
 mysql_dev_rw: &mysql_dev_rw
   <<: *mysql_dev
+
 
 mysql_dev_ro: &mysql_dev_ro
   <<: *mysql_dev

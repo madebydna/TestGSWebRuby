@@ -23,21 +23,26 @@ class GenerateFeedFiles
       @district_ids = args[:district_id]
       location = args[:location]
       name = args[:name]
+
+
+
       feed_names.each_with_index do |feed, index|
         states.each do |state|
           @state = state
           @feed_type = feed
+          @batch_size = @batch_size.present? ? @batch_size : DEFAULT_BATCH_SIZE
+          # Generate School Batches
+          @school_batches ||= get_school_batches
+          # Generate District Batches
+          @district_batches ||=  get_district_batches
           if feed == 'test_scores'
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
             @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
-            @batch_size = @batch_size.present? ? @batch_size : DEFAULT_BATCH_SIZE
             generate_test_score_feed
-          elsif feed == 'ratings'
-            # To do Create the feed for ratings
-            # @feed_location = location.present? && location[index].present? ? location[index] : 'default'
-            # @feed_location = name.present? && name[index].present? ? name[index] : 'default'
-            # generate_test_score_feed
-
+          elsif feed == 'test_rating'
+            @feed_location = location.present? && location[index].present? ? location[index] : 'default'
+            @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
+            generate_test_rating_feed
           end
         end
       end

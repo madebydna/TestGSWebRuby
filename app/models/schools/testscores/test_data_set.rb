@@ -54,6 +54,15 @@ class TestDataSet < ActiveRecord::Base
 
   scope :active, -> { where(active: 1) }
 
+  def self.ratings_config_for_state(state,data_type_id)
+    TestDataSet.on_db(state.downcase.to_sym)
+    .where('data_type_id =?',data_type_id)
+    .active
+    .with_display_targets('ratings')
+    .with_no_subject_breakdowns
+    .all_students
+  end
+
   def self.ratings_for_school school
     TestDataSet.on_db(school.shard)
     .active
