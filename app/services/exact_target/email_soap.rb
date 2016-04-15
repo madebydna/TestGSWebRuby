@@ -12,8 +12,8 @@ class ExactTarget
       @client = FuelSDK::Client.new(
           {
               'client' => {
-                  'id' => ENV_GLOBAL['exacttarget_api_client_id_email'],
-                  'secret' => ENV_GLOBAL['exacttarget_api_client_secret_email']
+                  'id' => ENV_GLOBAL['exacttarget_v2_api_key'],
+                  'secret' => ENV_GLOBAL['exacttarget_v2_api_secret']
               }
           }
       )

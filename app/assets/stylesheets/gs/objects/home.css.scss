@@ -43,7 +43,6 @@
 }
 
 .cue-cards-bg {
-  height: 290px;
   background: image_url('home/cue_cards_home_bg-sm.jpg');
   background-size: 100%;
   background-color: #fff;
@@ -52,42 +51,58 @@
   -o-background-size: cover;
   background-size: cover;
 
-  @media only screen and (max-width: $screen-sm) {
-    height: 340px;
+  @media only screen and (max-width: $screen-xs-max) {
+    text-align: center;
+  }
+
+  img {
+    width: 85%;
+    @media only screen and (max-width: $screen-md-max) {
+      width: 100%;
+    }
   }
 
   h1 {
-    font-family: "RobotoDraft", "Roboto", sans-serif;
+    margin-top: $spacing-small;
+    font-family: "RobotoSlab-Light", sans-serif;
+    font-weight: bolder;
     font-size: 50px;
     @media only screen and (max-width: $screen-sm-max) {
-      margin-bottom: 40px;
+      margin-top: 0px;
+      font-size: 40px;
+  }
+    @media only screen and (max-width: $screen-xs-max) {
+      margin-top: $spacing-small;
+      font-size: 55px;
+      text-align: center;
     }
-    //text-shadow: 1px 1px #333;
   }
 
   .tough-parenting {
     margin-top: 20px;
     font-family: "RobotoDraft", "Roboto", sans-serif;
     font-size: 30px;
-    @media only screen and (max-width: $screen-xs-min) {
+    @media only screen and (max-width: $screen-sm-max) {
       font-size: 24px;
+      margin-top: 10px;
+    }
+    @media only screen and (max-width: $screen-xs-min) {
       text-align: center;
     }
   }
 
-  .section {
-    max-width: 1200px;
+  .btn {
+    @include button-size($padding-large-vertical, $padding-large-horizontal, $font-size-large, $line-height-large, $btn-border-radius-large);
+
+    @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+      @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $btn-border-radius-base);
   }
 
-  //.milestones-main-container {
-  //  margin-top: 20px;
-  //}
-  //
-  //.milestone {
-  //  font-size: 70px;
-  //}
+}
 
-  .tough-parenting {
 
+
+  .section {
+    max-width: 1200px;
   }
 }

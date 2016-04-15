@@ -7,6 +7,9 @@
     <span itemscope="postalCode"><%= school.zipcode %></span>
   </div>
 
+  <% if school_reviews && school_reviews.average_5_star_rating > 0 %>
+      <%= render 'school_profile/rich_snippets/rich_snippets_average_review_rating', school_reviews: school_reviews %>
+  <% end %>
   <% if school.phone.present? %>
     <span itemprop="telephone"><%= school.phone %></span>
   <% end %>
