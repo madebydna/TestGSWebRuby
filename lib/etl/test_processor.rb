@@ -66,7 +66,7 @@ module GS
       end
 
       class << self
-        attr_reader :source_pairs, :shared_root, :shared_leaf
+        attr_accessor :source_pairs, :shared_root, :shared_leaf
 
         def source(*args, &block)
           @source_pairs ||= {}
@@ -100,6 +100,9 @@ module GS
         @sources = source_pairs.each_with_object({}) { |(k, v), h| h[k] = v[0] }
         source_leaves = source_pairs.values.map do |source, block|
           instance_exec(source, &block)
+        end
+        unless self.class.shared_root
+          self.class.shared_root = self.class.shared_leaf = Step.new
         end
         union_steps(*source_leaves).add(self.class.shared_root)
         self.class.shared_leaf.add(output_files_step_tree)
