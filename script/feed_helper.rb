@@ -15,11 +15,13 @@ module FeedHelper
 
   FEED_NAME_MAPPING = {
       'test_scores' => 'local-gs-test-feed',
-      'test_rating' => 'local-gs-test-rating-feed'
+      'test_rating' => 'local-gs-test-rating-feed',
+     'official_overall' => 'local-gs-official-overall-rating'
   }
 
   RATINGS_ID_RATING_FEED_MAPPING = {
-      'test_rating' => 164
+      'test_rating' => 164,
+      'official_overall' => 174
   }
 
   PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
@@ -34,7 +36,7 @@ module FeedHelper
   DEFAULT_BATCH_SIZE = 700
 
   def all_feeds
-    ['test_scores', 'test_rating']
+    ['test_scores', 'test_rating','official_overall']
   end
 
   def all_states
@@ -255,22 +257,35 @@ module FeedHelper
     query_results =TestDataSet.ratings_config_for_state(state,@ratings_id_for_feed)
   end
 
-  def state_master_data_ratings_for_feed(state_master_data)
+  def transpose_ratings_description(data_type_id)
     # How we calculate test_description  can change based on decision from Product team
-    test_description = "GreatSchools compared the test results for each grade and subject across all
+    if data_type_id == RATINGS_ID_RATING_FEED_MAPPING['official_overall']
+          desc =  "The GreatSchools rating is a simple tool for parents to compare schools based on test scores, student academic
+                   growth, and college readiness. It compares schools across the state, where the highest rated schools in
+                   the state are designated as 'Above Average' and the lowest 'Below Average'  It is designed to be a starting
+                   point to help parents make baseline comparisons. We always advise parents to visit the school and consider other
+                   information on school performance and programs, as well as consider their child's and family's needs as part of
+                   the school selection process."
+    elsif data_type_id == RATINGS_ID_RATING_FEED_MAPPING['test_rating']
+          desc = "GreatSchools compared the test results for each grade and subject across all
                        #{@state} schools and divided them into 1 through 10 ratings (10 is the best).
                        Please note, private schools are not required to release test results, so ratings are available
                        only for public schools. GreatSchools Ratings cannot be compared across states,
                        because of differences in the states' standardized testing programs.
                        Keep in mind that when comparing schools using GreatSchools Ratings it's important to factor in
                        other information, including the quality of each school's teachers, the school culture, special programs, etc."
+    end
+
+  end
+
+  def state_master_data_ratings_for_feed(state_master_data)
 
     state_level_ratings_config_data = []
     state_master_data.each do |data|
       config_data = {
           :test_id => transpose_test_id(data[:data_type_id]),
           :year => data[:year],
-          :test_description => test_description
+          :description => transpose_ratings_description(data[:data_type_id])
       }
       state_level_ratings_config_data.push(config_data)
     end
@@ -351,7 +366,6 @@ module FeedHelper
     feed_location = @feed_location
     feed_name = @feed_name
     feed_type = @feed_type
-    @ratings_id_for_feed = RATINGS_ID_RATING_FEED_MAPPING[feed_type] || 164
 
 
     start_time = Time.now
@@ -422,10 +436,11 @@ module FeedHelper
 
   end
 def generate_ratings_xml_feed(district_batches, school_batches,state_test_infos_for_feed, xmlFile)
+  root_element = @root_element
   File.open(xmlFile, 'w') { |f|
     xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
     xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-    xml.tag!('gs-test-rating-feed',
+    xml.tag!(root_element,
              {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
               :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test-ratings.xsd"}) do
 
@@ -437,9 +452,8 @@ def generate_ratings_xml_feed(district_batches, school_batches,state_test_infos_
 
       school_batches.each_with_index do |school_batch,index|
         puts "school batch Start #{Time.now} for Batch Number #{index+1}"
-        # schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        @schools_decorated_with_cache_results ||= get_schools_batch_cache_data(school_batch)
-        school_data_for_feed =  transpose_school_test_rating_data_for_feed(@schools_decorated_with_cache_results)
+        schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
+        school_data_for_feed =  transpose_school_test_rating_data_for_feed(schools_decorated_with_cache_results)
         generate_xml_tag(school_data_for_feed, 'test-rating-value', xml)
         puts "school Batch end #{Time.now} for Batch Number #{index+1}"
       end
@@ -447,9 +461,8 @@ def generate_ratings_xml_feed(district_batches, school_batches,state_test_infos_
 
       district_batches.each_with_index do |district_batch , index|
         puts "district batch Start #{Time.now} for Batch Number #{index+1}"
-        # districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        @districts_decorated_with_cache_results ||= get_districts_batch_cache_data(district_batch)
-        district_data_for_feed =  transpose_district_test_rating_data_for_feed(@districts_decorated_with_cache_results)
+        districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
+        district_data_for_feed =  transpose_district_test_rating_data_for_feed(districts_decorated_with_cache_results)
         generate_xml_tag(district_data_for_feed, 'test-rating-value', xml)
         puts "district Batch end #{Time.now} for Batch Number #{index+1}"
       end

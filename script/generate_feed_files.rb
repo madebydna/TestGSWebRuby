@@ -42,6 +42,14 @@ class GenerateFeedFiles
           elsif feed == 'test_rating'
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
             @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
+            @root_element = 'gs-test-rating-feed'
+            @ratings_id_for_feed = RATINGS_ID_RATING_FEED_MAPPING[@feed_type]
+            generate_test_rating_feed
+          elsif feed == 'official_overall'
+            @feed_location = location.present? && location[index].present? ? location[index] : 'default'
+            @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
+            @root_element = 'gs-official-overall-rating-feed'
+            @ratings_id_for_feed = RATINGS_ID_RATING_FEED_MAPPING[@feed_type]
             generate_test_rating_feed
           end
         end
