@@ -1,8 +1,10 @@
 require_relative 'step'
+# require 'enumerable'
 
 module GS
   module ETL
     class Source < GS::ETL::Step
+      include Enumerable
 
       def run(context={})
         propagated_action = Proc.new do |step, rows|

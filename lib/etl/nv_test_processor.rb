@@ -1,3 +1,4 @@
+require "set"
 require_relative "test_processor"
 
 class NameMappingAggregator < GS::ETL::Source
@@ -5,39 +6,80 @@ class NameMappingAggregator < GS::ETL::Source
 
   def initialize
     @schools_seen = {}
+    @dup_names = Set.new(["Eureka", "Lincoln", "Allen"])
   end
 
   def process(row)
-    if @schools_seen.key? row[:name]
-      unless @schools_seen[row[:name]].include? row[:id]
-        @schools_seen[row[:name]] << row[:id]
-      end
-    else
-      @schools_seen[row[:name]] = [row[:id]]
-    end
+    return if @dup_names.include? row[:name]
+    return if @schools_seen.include? row[:name]
+    @schools_seen[row[:name]] = [row[:id], row[:entity]]
     nil
   end
 
   def each
     @schools_seen.each do |k, v|
-      row = { name: k, ids: v.join(",")}
+      row = { name: k.downcase, id: v[0], entity: v[1]}
       yield row
     end
   end
 end
 
 class NVTestProcessor < GS::ETL::TestProcessor
-  # def run
-  #   source = CsvSource.new('data/nv/nv_crt_2014.txt', [], col_sep: "\t")
-  #   agg = source.transform("Generate school name and id mapping", NameMappingAggregator)
-  #   agg.destination('Output name / id keymap', CsvDestination, 'nv_keymap.txt')
-  #
-  #   source.run
-  #   # p agg.schools_seen.select { |k, v| v.length > 1 }
-  #   agg.run
-  #   # agg.each { |row| p row }
-  # end
+  # Notes about duplicate schools
+  # 02151 Allen ES - one has an entry for Pacific Islander
+  # 16266 Allen ES - has no entry for Pacific Islander
 
+  def initialize(*args)
+    super
+    @breakdowns = {
+        'Female' => 11,
+        'Male' => 12,
+        'Am In/AK Native' => 4,
+        'Black' => 3,
+        'Hispanic' => 6,
+        'White' => 8,
+        'Two or More Races' => 21,
+        'Asian' => 2,
+        'Pacific Islander' => 7,
+        'ELL' => 15,
+        'Not ELL' => 16,
+        'FRL' => 9,
+        'Not FRL' => 10
+    }
+  end
+
+  def make_id_reference_file
+    source = CsvSource.new('data/nv/nv_crt_2014.txt', [], col_sep: "\t")
+    agg = source.transform("Generate school name and id mapping", NameMappingAggregator)
+    agg.destination('Output name / id keymap', CsvDestination, input_filename('nv_keymap.txt'))
+
+    source.run
+    agg.run
+  end
+
+  def info_from_name
+    @info_from_name ||= CsvSource.new(File.join(@input_dir, "nv_keymap.txt"), [], col_sep: "\t")
+                            .each_with_object({}) do |row, memo|
+                              row = row.to_hash
+                              result = { entity_level: row[:entity] }
+                              if row[:entity] == 'school'
+                                result.merge! school_name: row[:name], school_id: row[:id]
+                              elsif row[:entity] == 'district'
+                                result.merge! district_name: row[:name], district_id: row[:id]
+                              end
+                              memo[row[:name]] = result
+    end
+  end
+
+  def entity_info(name)
+    name = name.downcase
+    result = info_from_name[name]
+    until result || name.length == 0
+      name.gsub!(/ ?\w+\Z/, '')
+      result = info_from_name[name]
+    end
+    result
+  end
   # source("CRT Grade 5 School.csv", [], col_sep: ",") do |s|
   #   s.transform("Load CRT Grade 5 School", Fill, { entity_level: 'school' })
   # end
@@ -46,9 +88,21 @@ class NVTestProcessor < GS::ETL::TestProcessor
   #   s.transform("Load CRT Grade 8 School", Fill, { entity_level: 'school'})
   # end
 
-  source("HSPE School.csv", [], col_sep: ",", max: 4) do |s|
-    s.transform("", WithBlock) { |row| p row }
-        .transform("Load HSPE School.csv", Fill, { entity_level: 'school' })
+  source("CRT Grade 5 School.csv", [], col_sep: ",", max: 4) do |s|
+    s.transform("", WithBlock) do |row|
+      group = row[:group]
+      # require 'pry'; binding.pry
+      if breakdown_id = @breakdowns[group]
+        row.merge! breakdown: group, breakdown_id: breakdown_id
+        row.merge! @current_entity_info
+      elsif @current_entity_info = entity_info(group)
+        row.merge! breakdown: group, breakdown_id: breakdown_id
+        row.merge! breakdown_id: 1, breakdown: 'all'
+        row.merge! @current_entity_info
+      end
+      row
+    end
+    .transform("", WithBlock) { |row| p row }
   end
 
   # shared do |s|
@@ -70,10 +124,6 @@ class NVTestProcessor < GS::ETL::TestProcessor
     }
   end
 
-  # Notes about duplicate schools
-  # 02151 Allen ES - one has an entry for Pacific Islander
-  # 16266 Allen ES - has no entry for Pacific Islander
-
   # we need to create a hash like the below dynamically
   # key_map_state_id = {
   #   "State" => :state,
@@ -83,4 +133,4 @@ class NVTestProcessor < GS::ETL::TestProcessor
   # }
 end
 
-NVTestProcessor.new("data/nv").run
+nv = NVTestProcessor.new("data/nv").run
