@@ -1,6 +1,29 @@
 require "set"
 require_relative "test_processor"
 
+# Schools / Districts not included in 2014 nv_keymap.txt
+# "Eureka"
+# "Lincoln"
+# "University Schools" - NEW
+# "WCSD" - Washoe County School District…?
+# "Allen ES"
+# "Allen ES"
+# "American Prep Academy" - NEW, not in 2014 file
+# "Beatty ES" - we think this is the same school (K-8), but there is a “Beatty Middle” in the 2014 file
+# "Beatty ES"
+# "Cold Springs MS" - “Cold Springs Middle” is a duplicate in the 2014 file
+# "Doral Academy" - NEW, not in 2014 file
+# "Eureka Elementary School"
+# "Founders Academy of Las Vegas" - NEW, not in 2014 file
+# "Imagine Schools at Mountain Vi" - Imagine s at Mountain Vi
+# "Learning Bridge" - NEW, not in 2014 file
+# "Lemelson STEM Academy ES" - NEW, not in 2014 file
+# "Lincoln ES"
+# "Mater Academy of Nevada" - NEW, not in 2014 file
+# "O'Roarke ES" - O%Roarke
+# "Smith Valley Schools" - Smith Valley s
+# "SNACS" - NEW, not in 2014 file
+
 class NameMappingAggregator < GS::ETL::Source
   attr_accessor :schools_seen
 
