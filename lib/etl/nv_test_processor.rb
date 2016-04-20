@@ -1,6 +1,29 @@
 require "set"
 require_relative "test_processor"
 
+# Schools / Districts not included in 2014 nv_keymap.txt
+# "Eureka"
+# "Lincoln"
+# "University Schools" - NEW
+# "WCSD" - Washoe County School District…?
+# "Allen ES"
+# "Allen ES"
+# "American Prep Academy" - NEW, not in 2014 file
+# "Beatty ES" - we think this is the same school (K-8), but there is a “Beatty Middle” in the 2014 file
+# "Beatty ES"
+# "Cold Springs MS" - “Cold Springs Middle” is a duplicate in the 2014 file
+# "Doral Academy" - NEW, not in 2014 file
+# "Eureka Elementary School"
+# "Founders Academy of Las Vegas" - NEW, not in 2014 file
+# "Imagine Schools at Mountain Vi" - Imagine s at Mountain Vi
+# "Learning Bridge" - NEW, not in 2014 file
+# "Lemelson STEM Academy ES" - NEW, not in 2014 file
+# "Lincoln ES"
+# "Mater Academy of Nevada" - NEW, not in 2014 file
+# "O'Roarke ES" - O%Roarke
+# "Smith Valley Schools" - Smith Valley s
+# "SNACS" - NEW, not in 2014 file
+
 class NameMappingAggregator < GS::ETL::Source
   attr_accessor :schools_seen
 
@@ -10,8 +33,8 @@ class NameMappingAggregator < GS::ETL::Source
   end
 
   def process(row)
-    return if @dup_names.include? row[:name]
-    return if @schools_seen.include? row[:name]
+    return if @dup_names.include? row[:name] # checks that row is not a duplicate
+    return if @schools_seen.include? row[:name] # checks that row has not already been
     @schools_seen[row[:name]] = [row[:id], row[:entity]]
     nil
   end
@@ -46,6 +69,7 @@ class NVTestProcessor < GS::ETL::TestProcessor
         'FRL' => 9,
         'Not FRL' => 10
     }
+    @current_entity_info = nil
   end
 
   def make_id_reference_file
@@ -61,22 +85,26 @@ class NVTestProcessor < GS::ETL::TestProcessor
     @info_from_name ||= CsvSource.new(File.join(@input_dir, "nv_keymap.txt"), [], col_sep: "\t")
                             .each_with_object({}) do |row, memo|
                               row = row.to_hash
-                              result = { entity_level: row[:entity] }
+                              entity_info = { entity_level: row[:entity] }
                               if row[:entity] == 'school'
-                                result.merge! school_name: row[:name], school_id: row[:id]
+                                entity_info.merge! school_name: row[:name], school_id: row[:id]
                               elsif row[:entity] == 'district'
-                                result.merge! district_name: row[:name], district_id: row[:id]
+                                entity_info.merge! district_name: row[:name], district_id: row[:id]
                               end
-                              memo[row[:name]] = result
+                              memo[row[:name]] = entity_info
     end
   end
 
   def entity_info(name)
     name = name.downcase
     result = info_from_name[name]
+    # old_name = name.clone
     until result || name.length == 0
-      name.gsub!(/ ?\w+\Z/, '')
+      name.gsub!(/\s*\S+\Z/, '')
+      # p name, old_name
+      # if name == old_name then raise(name) end
       result = info_from_name[name]
+      # old_name = name.clone
     end
     result
   end
@@ -88,21 +116,26 @@ class NVTestProcessor < GS::ETL::TestProcessor
   #   s.transform("Load CRT Grade 8 School", Fill, { entity_level: 'school'})
   # end
 
-  source("CRT Grade 5 School.csv", [], col_sep: ",", max: 4) do |s|
+  source("CRT Grade 5 School.csv", [], col_sep: ",") do |s|
     s.transform("", WithBlock) do |row|
       group = row[:group]
       # require 'pry'; binding.pry
-      if breakdown_id = @breakdowns[group]
+      if (breakdown_id = @breakdowns[group]) && @current_entity_info
         row.merge! breakdown: group, breakdown_id: breakdown_id
         row.merge! @current_entity_info
       elsif @current_entity_info = entity_info(group)
-        row.merge! breakdown: group, breakdown_id: breakdown_id
         row.merge! breakdown_id: 1, breakdown: 'all'
         row.merge! @current_entity_info
+      else
+        @current_entity_info = nil
+        if !@breakdowns[group] then p group end
       end
       row
     end
-    .transform("", WithBlock) { |row| p row }
+  end
+
+  def output_files_step_tree
+    GS::ETL::Step.new
   end
 
   # shared do |s|
