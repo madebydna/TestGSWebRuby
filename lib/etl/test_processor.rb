@@ -66,7 +66,7 @@ module GS
       end
 
       class << self
-        attr_accessor :source_pairs, :shared_root, :shared_leaf
+        attr_accessor :source_pairs, :shared_block
 
         def source(*args, &block)
           @source_pairs ||= {}
@@ -89,9 +89,8 @@ module GS
           @source_pairs[name] = @source_pairs.delete(old_key)
         end
 
-        def shared
-          @shared_root = Step.new
-          @shared_leaf = yield(@shared_root)
+        def shared(&block)
+          @shared_block = block
         end
       end
 
@@ -101,12 +100,12 @@ module GS
         source_leaves = source_pairs.values.map do |source, block|
           instance_exec(source, &block)
         end
-        unless self.class.shared_root
-          self.class.shared_root = self.class.shared_leaf = Step.new
-        end
-        union_steps(*source_leaves).add(self.class.shared_root)
-        self.class.shared_leaf.add(output_files_step_tree)
-        self.class.shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
+        shared_root = Step.new
+        shared_block = self.class.shared_block || Proc.new { |s| s }
+        shared_leaf = instance_exec(shared_root, &shared_block)
+        union_steps(*source_leaves).add(shared_root)
+        shared_leaf.add(output_files_step_tree)
+        shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
          row[:data_type_id] = row[:test_data_type_id]
          row
         end.add(config_step)
