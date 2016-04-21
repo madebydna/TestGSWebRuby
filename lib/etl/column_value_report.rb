@@ -8,21 +8,21 @@ class ColumnValueReport < GS::ETL::TestProcessor
   def initialize(output_file, *fields)
     self.output_file = output_file
     self.fields = [*fields]
-    build_graph
+    # build_graph
   end
 
   def build_graph
     @attachable_input_step = ColumnSelector.new(*@fields)
-    aggregator = @attachable_input_step.transform(
+    @aggregator = @attachable_input_step.transform(
       "Aggregate distinct values per column",
       ColumnValueAggregator
     )
-    @attachable_output_step = aggregator.destination(
+    @attachable_output_step = @aggregator.destination(
       "Output distinct values per column to CSV",
       CsvDestination,
       @output_file
     )
-    @runnable_steps = [aggregator]
+    @runnable_steps = [@aggregator]
     @attachable_input_step
   end
 

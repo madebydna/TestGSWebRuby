@@ -97,7 +97,13 @@ module GS
         end
       end
 
+      def build_column_value_report
+        require_relative 'column_value_report'
+        ::ColumnValueReport.new('column_value_report.txt', :grade, :breakdown_id)
+      end
+
       def build_graph
+        require_relative 'column_value_report'
         source_pairs = self.class.source_pairs
         @sources = source_pairs.map { |pair| pair[0] }
         source_leaves = source_pairs.map do |source, block|
@@ -108,6 +114,9 @@ module GS
         shared_leaf = instance_exec(shared_root, &shared_block)
         union_steps(*source_leaves).add(shared_root)
         shared_leaf.add(output_files_step_tree)
+        column_value_report = build_column_value_report
+        shared_leaf.add(column_value_report.build_graph)
+        @runnable_steps += column_value_report.runnable_steps
         shared_leaf.transform("Adds data_type_id column for config file", WithBlock) do |row|
          row[:data_type_id] = row[:test_data_type_id]
          row
@@ -124,6 +133,9 @@ module GS
           source.run(context_for_sources)
         end
         config_step.run
+        @runnable_steps.each do |step|
+          step.run
+        end
       end
 
       private
