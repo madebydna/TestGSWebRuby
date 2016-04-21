@@ -66,42 +66,45 @@ module GS
       end
 
       class << self
-        attr_accessor :source_pairs, :shared_block
+        attr_writer :shared_block
 
         def source(*args, &block)
-          @source_pairs ||= {}
           source_class = if args[0].is_a? Class and args[0] < GS::ETL::Source
                            args.shift
                          else
                            CsvSource
                          end
           source_step = source_class.new(*args)
-          max_current_index = @source_pairs.keys.select { |k| k.is_a? Integer }.max
-          next_index = ( max_current_index || -1 ).next
           block = block_given? ? block : proc { |s| s }
-          @source_pairs[next_index] = [source_step, block]
+          source_pairs << [source_step, block]
           source_step
-        end
-
-        def source_named(name, *args, &block)
-          source_obj = source(*args, &block)
-          old_key = @source_pairs.find { |k,v| v[0] == source_obj }
-          @source_pairs[name] = @source_pairs.delete(old_key)
         end
 
         def shared(&block)
           @shared_block = block
         end
+
+        def xsource(*args, &block)
+          puts "ignoring source #{args.map(&:inspect).join(' ')}"
+        end
+
+        def source_pairs
+          @source_pairs ||= []
+        end
+
+        def shared_block
+          @shared_block ||= Proc.new { |s| s }
+        end
       end
 
       def build_graph
         source_pairs = self.class.source_pairs
-        @sources = source_pairs.each_with_object({}) { |(k, v), h| h[k] = v[0] }
-        source_leaves = source_pairs.values.map do |source, block|
+        @sources = source_pairs.map { |pair| pair[0] }
+        source_leaves = source_pairs.map do |source, block|
           instance_exec(source, &block)
         end
         shared_root = Step.new
-        shared_block = self.class.shared_block || Proc.new { |s| s }
+        shared_block = self.class.shared_block
         shared_leaf = instance_exec(shared_root, &shared_block)
         union_steps(*source_leaves).add(shared_root)
         shared_leaf.add(output_files_step_tree)
@@ -117,7 +120,7 @@ module GS
 
       def run
         build_graph
-        @sources.values.each do |source|
+        @sources.each do |source|
           source.run(context_for_sources)
         end
         config_step.run
