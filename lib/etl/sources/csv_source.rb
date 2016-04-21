@@ -19,8 +19,8 @@ class CsvSource < GS::ETL::Source
 
   def filename_with_dir(name_or_regex, dir)
     if name_or_regex.is_a? Regexp
-      Dir.entries(dir).map { |entry| input_filename(file) }
-        .select { |abs_path| File.file? abs_path && name_or_regex =~ file }
+      Dir.entries(dir).map { |entry| File.join(dir, entry) }
+        .select { |abs_path| File.file?(abs_path) && (name_or_regex =~ abs_path) }
     else
       File.join(dir, name_or_regex)
     end
