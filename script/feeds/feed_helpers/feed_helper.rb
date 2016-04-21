@@ -1,4 +1,5 @@
-module FeedHelper
+module FeedHelpers
+
   include Rails.application.routes.url_helpers
   include UrlHelper
 
@@ -16,7 +17,7 @@ module FeedHelper
   FEED_NAME_MAPPING = {
       'test_scores' => 'local-gs-test-feed',
       'test_rating' => 'local-gs-test-rating-feed',
-     'official_overall' => 'local-gs-official-overall-rating'
+      'official_overall' => 'local-gs-official-overall-rating'
   }
 
   RATINGS_ID_RATING_FEED_MAPPING = {
@@ -100,31 +101,13 @@ module FeedHelper
     return state_fips
   end
 
-  def get_state_test_master_data
-    state_test_infos = []
-    state = @state
+  def get_feed_name(feed, index)
+    feed_location = @location.present? && @location[index].present?  ? @location[index] : ''
+    feed_name = @name.present? && @name[index].present? ? @name[index] : FEED_NAME_MAPPING[feed]
+    generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"_#{@state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
+    xml_name =feed_location+generated_feed_file_name
 
-    TestDescription.where(state: state).find_each do |test|
-      data_type_id = test.data_type_id
-      test_info = TestDataType.where(:id => data_type_id).first
-      test_data_set_info = TestDataSet.on_db(state.downcase.to_sym).
-          where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
-      if test_data_set_info.present?
-        state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
-                           :test_id => data_type_id,
-                           :test_name => test_info["description"],
-                           :test_abbrv => test_info["name"],
-                           :scale => test["scale"],
-                           :most_recent_year => test_data_set_info["year"],
-                           :level_code => test_data_set_info["level_code"],
-                           :description => test["description"]
-        }
-        state_test_infos.push(state_test_info)
-      end
-    end
-    state_test_infos
   end
-
 
 
   def transpose_school_test_rating_data_for_feed(schools_cache_data)
@@ -159,7 +142,7 @@ module FeedHelper
           district_data_ratings.push(district_data.find {|h| h["data_type_id"]== @ratings_id_for_feed})
           district_data_for_feed = parse_cache_test_rating_data_for_xml(district_data_ratings, district,ENTITY_TYPE_DISTRICT)
         else
-            puts "No Rating data present for district  #{district.id} and ratings id #{@ratings_id_for_feed} for most recent year "
+          puts "No Rating data present for district  #{district.id} and ratings id #{@ratings_id_for_feed} for most recent year "
         end
         (districts_data_for_feed << district_data_for_feed).flatten!
       end
@@ -167,25 +150,6 @@ module FeedHelper
     districts_data_for_feed
   end
 
-
-  def transpose_school_data_for_feed(schools_cache_data)
-    schools_data_for_feed = []
-    if schools_cache_data.present?
-      schools_cache_data.each do |school|
-        school_data_for_feed = {}
-        school_cache = school.school_cache
-        school_test_data  = school_cache ? school_cache.feed_test_scores : nil
-        if school_test_data .present?
-          school_test_data .each do |test_id , data |
-            school_data_for_feed = parse_cache_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
-          end
-        end
-        (schools_data_for_feed << school_data_for_feed).flatten!
-      end
-    end
-    schools_data_for_feed
-
-  end
 
 
   def get_school_batches
@@ -222,35 +186,9 @@ module FeedHelper
     puts "Total Districts in State #{districts_in_feed.size}"
     puts "District Batch Size #{@batch_size}"
     puts "Total Districts Batches Feed #{district_batches.size}"
-
     district_batches
   end
 
-
-  def transpose_district_data_for_feed(districts_cache_data)
-    districts_data_for_feed = []
-    if districts_cache_data.present?
-      districts_cache_data.each do |district|
-        district_data_for_feed =  {}
-        district_cache = district.district_cache
-        district_test_data  = district_cache ? district_cache.feed_test_scores : nil
-        if district_test_data.present?
-          district_test_data.each do |test_id, data |
-            district_data_for_feed = parse_cache_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
-          end
-        end
-        (districts_data_for_feed << district_data_for_feed).flatten!
-      end
-    end
-    districts_data_for_feed
-  end
-
-
-
-  def get_state_test_data
-    state =@state
-    query_results =TestDataSet.test_scores_for_state(state)
-  end
 
   def get_state_master_data_ratings
     state =@state
@@ -260,14 +198,14 @@ module FeedHelper
   def transpose_ratings_description(data_type_id)
     # How we calculate test_description  can change based on decision from Product team
     if data_type_id == RATINGS_ID_RATING_FEED_MAPPING['official_overall']
-          desc =  "The GreatSchools rating is a simple tool for parents to compare schools based on test scores, student academic
+      desc =  "The GreatSchools rating is a simple tool for parents to compare schools based on test scores, student academic
                    growth, and college readiness. It compares schools across the state, where the highest rated schools in
                    the state are designated as 'Above Average' and the lowest 'Below Average'  It is designed to be a starting
                    point to help parents make baseline comparisons. We always advise parents to visit the school and consider other
                    information on school performance and programs, as well as consider their child's and family's needs as part of
                    the school selection process."
     elsif data_type_id == RATINGS_ID_RATING_FEED_MAPPING['test_rating']
-          desc = "GreatSchools compared the test results for each grade and subject across all
+      desc = "GreatSchools compared the test results for each grade and subject across all
                        #{@state} schools and divided them into 1 through 10 ratings (10 is the best).
                        Please note, private schools are not required to release test results, so ratings are available
                        only for public schools. GreatSchools Ratings cannot be compared across states,
@@ -292,23 +230,7 @@ module FeedHelper
     state_level_ratings_config_data
   end
 
-  def transpose_state_data_for_feed(state_test_data)
-    state_level_test_data = []
-    proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
-    test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
-    state_test_data.each do |data|
-      band = proficiency_bands[data["proficiency_band_id"]].present? ? proficiency_bands[data["proficiency_band_id"]].name : nil
-      entity_level = ENTITY_TYPE_STATE
-      grade = data["grade_name"]
-      year = data["year"]
-      level = data["level_code"]
-      test_id =data["data_type_id"]
-      subject = test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : ''
-      test_data = create_hash_for_xml(band, data, nil, entity_level, grade, level, subject, test_id, year)
-      state_level_test_data.push(test_data)
-    end
-    state_level_test_data
-  end
+
 
 
 
@@ -400,110 +322,41 @@ module FeedHelper
 
 
 
-  def generate_test_score_feed
-    state = @state
-    feed_location = @feed_location
-    feed_name = @feed_name
-    feed_type = @feed_type
-
-    start_time = Time.now
-    puts "--- Start Time for generating feed: FeedType: #{feed_type}  for state #{state} --- #{Time.now}"
-    # xsd_schema ='greatschools-test.xsd'
-
-    #Generate State Test Master Data
-    state_test_infos_for_feed = get_state_test_master_data
-
-
-    # Generate District Test Data From Test Tables
-    state_test_results = get_state_test_data
-
-    # Translating State Test  data to XML for State
-    state_data_for_feed = transpose_state_data_for_feed(state_test_results)
-
-
-    generated_feed_file_name = feed_name.present? && feed_name != 'default' ? feed_name+"-#{state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed_type+"_#{state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
-    generated_feed_file_location = feed_location.present? && feed_location != 'default' ? feed_location : ''
-
-    xml_name =generated_feed_file_location+generated_feed_file_name
-
-
-    # Write to XML File
-    generate_xml_feed(@district_batches, @school_batches, state_data_for_feed, state_test_infos_for_feed, xml_name)
-
-
-    # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
-    puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
-
-  end
-def generate_ratings_xml_feed(district_batches, school_batches,state_test_infos_for_feed, xmlFile)
-  root_element = @root_element
-  File.open(xmlFile, 'w') { |f|
-    xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
-    xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-    xml.tag!(root_element,
-             {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
-              :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test-ratings.xsd"}) do
-
-
-      # Generates test info tag
-      generate_xml_tag(state_test_infos_for_feed, 'test-rating', xml)
-
-
-
-      school_batches.each_with_index do |school_batch,index|
-        puts "school batch Start #{Time.now} for Batch Number #{index+1}"
-        schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        school_data_for_feed =  transpose_school_test_rating_data_for_feed(schools_decorated_with_cache_results)
-        generate_xml_tag(school_data_for_feed, 'test-rating-value', xml)
-        puts "school Batch end #{Time.now} for Batch Number #{index+1}"
-      end
-
-
-      district_batches.each_with_index do |district_batch , index|
-        puts "district batch Start #{Time.now} for Batch Number #{index+1}"
-        districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        district_data_for_feed =  transpose_district_test_rating_data_for_feed(districts_decorated_with_cache_results)
-        generate_xml_tag(district_data_for_feed, 'test-rating-value', xml)
-        puts "district Batch end #{Time.now} for Batch Number #{index+1}"
-      end
-
-    end
-  }
-
-end
-  def generate_xml_feed(district_batches, school_batches, state_data_for_feed, state_test_infos_for_feed, xmlFile)
+  def generate_ratings_xml_feed(district_batches, school_batches,state_test_infos_for_feed, xmlFile)
+    root_element = @root_element
     File.open(xmlFile, 'w') { |f|
       xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
       xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-      xml.tag!('gs-test-feed',
+      xml.tag!(root_element,
                {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
-                :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test.xsd"}) do
-        # Generates test info tag
-        generate_xml_tag(state_test_infos_for_feed, 'test', xml)
+                :'xsi:noNamespaceSchemaLocation' => "http://www.greatschools.org/feeds/greatschools-test-ratings.xsd"}) do
 
-        # Generate state test data tag
-        generate_xml_tag(state_data_for_feed, 'test-result', xml)
+
+        # Generates test info tag
+        write_xml_tag(state_test_infos_for_feed, 'test-rating', xml)
+
 
 
         school_batches.each_with_index do |school_batch,index|
           puts "school batch Start #{Time.now} for Batch Number #{index+1}"
-          @schools_decorated_with_cache_results ||= get_schools_batch_cache_data(school_batch)
-          school_data_for_feed =  transpose_school_data_for_feed(@schools_decorated_with_cache_results)
-          generate_xml_tag(school_data_for_feed, 'test-result', xml)
+          schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
+          school_data_for_feed =  transpose_school_test_rating_data_for_feed(schools_decorated_with_cache_results)
+          write_xml_tag(school_data_for_feed, 'test-rating-value', xml)
           puts "school Batch end #{Time.now} for Batch Number #{index+1}"
         end
 
 
         district_batches.each_with_index do |district_batch , index|
           puts "district batch Start #{Time.now} for Batch Number #{index+1}"
-          @districts_decorated_with_cache_results ||= get_districts_batch_cache_data(district_batch)
-          district_data_for_feed =  transpose_district_data_for_feed(@districts_decorated_with_cache_results)
-          generate_xml_tag(district_data_for_feed, 'test-result', xml)
+          districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
+          district_data_for_feed =  transpose_district_test_rating_data_for_feed(districts_decorated_with_cache_results)
+          write_xml_tag(district_data_for_feed, 'test-rating-value', xml)
           puts "district Batch end #{Time.now} for Batch Number #{index+1}"
         end
 
       end
     }
+
   end
 
   def get_schools_batch_cache_data(school_batch)
@@ -528,12 +381,12 @@ end
     district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
     districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
     districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
-     DistrictFeedDecorator.decorate(district)
+      DistrictFeedDecorator.decorate(district)
     end
   end
 
 
-  def generate_xml_tag(data, tag_name, xml)
+  def write_xml_tag(data, tag_name, xml)
     data_for_xml = data.reject(&:blank?)
     if data_for_xml.present?
       data_for_xml.each do |tag_data|
@@ -557,71 +410,29 @@ end
 
   def create_test_rating_hash_for_xml(data,entity,entity_level)
     test_rating = {:universal_id => transpose_universal_id(entity, entity_level),
-                 :entity_level => entity_level.titleize,
-                 :test_rating_id => transpose_test_id(data["data_type_id"]),
-                 :rating => transpose_ratings(data,entity_level),
-                 :url => transpose_url(entity,entity_level)
+                   :entity_level => entity_level.titleize,
+                   :test_rating_id => transpose_test_id(data["data_type_id"]),
+                   :rating => transpose_ratings(data,entity_level),
+                   :url => transpose_url(entity,entity_level)
     }
 
   end
 
   def transpose_url(entity,entity_level)
     begin
-    if (entity_level == ENTITY_TYPE_DISTRICT)
-      url = city_district_url district_params_from_district(entity)
-    elsif (entity_level == ENTITY_TYPE_SCHOOL)
-      url = school_url entity
-    end
+      if (entity_level == ENTITY_TYPE_DISTRICT)
+        url = city_district_url district_params_from_district(entity)
+      elsif (entity_level == ENTITY_TYPE_SCHOOL)
+        url = school_url entity
+      end
     rescue  => e
       puts "#{e}"
       url = state_url(state_params(@state))
     end
   end
 
-  def parse_cache_data_for_xml(all_test_score_data, entity, test_id, entity_level)
-    parsed_data_for_xml = []
-    if all_test_score_data.present?
-      complete_test_score_data = all_test_score_data["All"].present? ? all_test_score_data["All"]["grades"] :nil
-    end
-    if complete_test_score_data.present?
-      complete_test_score_data.each do |grade, grade_data|
-        grade_data_level = grade_data["level_code"]
-        grade_data_level.each do |level, subject_data|
-          subject_data.each do |subject, years_data|
-            years_data.each do |year, data|
 
-              # Get Band Names from Cache
-              bands = data.keys.select { |key| key.ends_with?('band_id') }
-              band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
-              band_names << PROFICIENT_AND_ABOVE_BAND
 
-              # Get Data For All Bands
-              band_names.each do |band|
-                test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year)
-                parsed_data_for_xml.push(test_data)
-              end
-            end
-          end
-        end
-      end
-    end
-    parsed_data_for_xml
-  end
-
-  def create_hash_for_xml(band, data, entity = nil, entity_level, grade, level, subject, test_id, year)
-    test_data = {:universal_id => transpose_universal_id(entity, entity_level),
-                 :entity_level => entity_level.titleize,
-                 :test_id => transpose_test_id(test_id),
-                 :year => year,
-                 :subject_name => subject,
-                 :grade_name => grade,
-                 :level_code_name => level,
-                 :score => transpose_test_score(band, data, entity_level),
-                 :proficiency_band_id => transpose_band_id(band, data, entity_level),
-                 :proficiency_band_name => transpose_band_name(band),
-                 :number_tested => transpose_number_tested(data)
-    }
-  end
 
   def transpose_test_score(band, data,entity_level)
     if (entity_level == ENTITY_TYPE_STATE)
@@ -672,4 +483,5 @@ end
 
     Possible feed  files: #{all_feeds.join(', ')}\n\n"
   end
+
 end
