@@ -39,6 +39,10 @@ class GenerateFeedFiles
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
             @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
             generate_test_score_feed
+          elsif feed == 'test_scores_subgroup'
+            @feed_location = location.present? && location[index].present? ? location[index] : 'default'
+            @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]
+            generate_test_score_subgroup_feed
           elsif feed == 'test_rating'
             @feed_location = location.present? && location[index].present? ? location[index] : 'default'
             @feed_name = name.present? && name[index].present? ? name[index] : FEED_NAME_MAPPING[feed]

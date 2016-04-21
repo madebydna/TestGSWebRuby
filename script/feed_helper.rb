@@ -16,7 +16,8 @@ module FeedHelper
   FEED_NAME_MAPPING = {
       'test_scores' => 'local-gs-test-feed',
       'test_rating' => 'local-gs-test-rating-feed',
-     'official_overall' => 'local-gs-official-overall-rating'
+     'official_overall' => 'local-gs-official-overall-rating',
+      'test_scores_subgroup' => 'local-gs-test-subgroup-feed'
   }
 
   RATINGS_ID_RATING_FEED_MAPPING = {
@@ -435,6 +436,11 @@ module FeedHelper
     puts "--- Time taken to generate feed : FeedType: #{feed_type}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
 
   end
+
+  def generate_test_score_subgroup_feed
+    #mostly the same as above, but will need to look into test_data_set.rb
+  end
+
 def generate_ratings_xml_feed(district_batches, school_batches,state_test_infos_for_feed, xmlFile)
   root_element = @root_element
   File.open(xmlFile, 'w') { |f|
