@@ -26,13 +26,10 @@ module FeedBuilders
 
       # Write to XML File
       generate_xml_rating_feed
-
-
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
       puts "--- Time taken to generate feed : FeedType: #{@feed_type}  for state #{@state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
-
-
     end
+
     def transpose_school_test_rating_data_for_feed(schools_cache_data)
       schools_data_for_feed = []
       if schools_cache_data.present?
