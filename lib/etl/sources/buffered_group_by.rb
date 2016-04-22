@@ -34,7 +34,7 @@ class BufferedGroupBy < GS::ETL::Source
   def each
     data = output_data
     data.each do |row|
-      record(:'Row unbuffered')
+      record(row, :'Row unbuffered')
       yield(row)
     end
   end

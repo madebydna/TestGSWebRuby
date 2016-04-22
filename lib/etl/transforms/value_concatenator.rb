@@ -9,7 +9,7 @@ class ValueConcatenator < GS::ETL::Step
 
   def process(row)
       row[@destination_column]  = @source_columns.reduce('') { |sum, c| sum + row[c] }
-      record(:concatenate_column)
+      record(row, :concatenate_column)
       row
   end
 

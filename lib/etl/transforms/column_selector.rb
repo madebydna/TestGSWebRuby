@@ -15,7 +15,7 @@ class ColumnSelector < GS::ETL::Step
          (match.is_a?(Regexp) && !!(match =~ field))
      end
    end
-   record(:columns_removed) if original_columns != row.keys
+   record(row, :columns_removed) if original_columns != row.keys
    row
  end
 

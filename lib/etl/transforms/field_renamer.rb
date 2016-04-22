@@ -9,10 +9,10 @@ class FieldRenamer < GS::ETL::Step
 
   def process(row)
     if can_process?(row)
-      record(:renamed)
+      record(row, :renamed)
       row[@to] = row.delete(@from)
     else
-      record(:skipped)
+      record(row, :skipped)
     end
     row
   end

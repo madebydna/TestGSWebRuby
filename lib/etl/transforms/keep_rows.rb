@@ -9,10 +9,10 @@ class  KeepRows < GS::ETL::Step
   def process(row)
     value = row[@field]
     if value_match?(value)
-      record(:filter_for_value_match)
+      record(row, :filter_for_value_match)
       return row
     else
-      record(:removed_non_match)
+      record(row, :removed_non_match)
       return nil
     end
   end

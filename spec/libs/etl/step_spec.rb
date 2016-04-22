@@ -77,8 +77,10 @@ describe GS::ETL::Step do
   end
 
   describe '#record' do
-    let(:logger) { double(debug: nil) }
-    allow(subject).to receive(:logger).and_return(logger)
+    let(:logger) { double(log: nil) }
+    before do
+      allow(subject).to receive(:logger).and_return(logger)
+    end
 
     it 'tells the event log to process (with correct input data)' do
       subject.id = 10
@@ -88,8 +90,8 @@ describe GS::ETL::Step do
         key: 'my key',
         value: 'val'
       }
-      subject.record('val', 'my key')
-      expect(event_log).to have_received(:process).with(event_hash)
+      subject.record(GS::ETL::Row.new({}, 1), 'val', 'my key')
+      expect(logger).to have_received(:log).with(event_hash)
     end
   end
 

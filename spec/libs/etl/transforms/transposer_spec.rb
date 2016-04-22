@@ -64,10 +64,11 @@ describe Transposer do
     end
 
     it 'should record an event' do
-      event_log = double('event log')
-      expect(event_log).to receive(:process)
-      subject.event_log = event_log
+      logger = double(log: nil)
+      stub_const('GS::ETL::Logging', double(logger: logger))
+      subject.instance_variable_set(:@logger, logger)
       subject.process(row)
+      expect(logger).to have_received(:log)
     end
 
   end

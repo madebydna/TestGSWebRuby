@@ -1,5 +1,7 @@
 require_relative './file_logger'
 require_relative '../states' # FIXME: This require is outside the etl directory
+require_relative './logging'
+require_relative './row'
 
 require_all = ->(dir) do
   dir_relative_to_this_file = File.dirname(__FILE__)
@@ -14,6 +16,8 @@ require_all.call 'destinations'
 module GS
   module ETL
     class TestProcessor
+      include GS::ETL::Logging
+
       attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
       attr_writer :source_columns
 

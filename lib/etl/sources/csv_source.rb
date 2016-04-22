@@ -27,18 +27,35 @@ class CsvSource < GS::ETL::Source
     end
   end
 
-  def each(context={})
-    max = @options.delete(:max) || context[:max]
-    if context[:dir]
-      @input_files.map { |f| filename_with_dir(f, context[:dir]) }.flatten
+  def max
+    @_max ||= @options.delete(:max)
+  end
+
+  def input_files(dir = nil)
+    if dir
+      @input_files.map { |f| filename_with_dir(f, dir) }.flatten
     else
       @input_files
-    end.each do |file|
+    end
+  end
+
+  def each(context={})
+    max = self.max || context[:max]
+    input_files.each do |file|
       CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
         enum = max ? csv.first(max) : csv
-        enum.each do |row|
-          record('Row read', file)
-          yield row.to_hash
+        enum.each_with_index do |csv_row, row_num|
+          row = GS::ETL::Row.new(csv_row.to_hash, row_num)
+          if row_num == 1
+            record(row, "Opened #{file} and got #{csv_row.headers.size} headers: #{csv_row.headers}")
+          end
+          record(row, 'Row read', file)
+          begin
+            yield row
+          rescue => e
+            logger.error("Error in file #{file} at line #{row_num+1}: #{e}")
+            raise
+          end
         end
       end
     end

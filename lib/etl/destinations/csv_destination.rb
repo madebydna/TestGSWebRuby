@@ -19,7 +19,7 @@ class CsvDestination < GS::ETL::Step
       @headers_written = true
       @csv << fields
     end
-    record('Wrote row')
+    record(row, 'Wrote row')
     @csv << fields.map { |f| row[f] }
     row
   end

@@ -13,10 +13,10 @@ class  DeleteRows < GS::ETL::Step
   def process(row)
     value = row[@field]
     if value_match?(value)
-      record(:filtered_match)
+      record(row, :filtered_match)
       return nil
     else
-      record(:non_match)
+      record(row, :non_match)
       return row
     end
   end

@@ -43,7 +43,7 @@ class Transposer < GS::ETL::Step
       new_row[@value_field] = value_for_field
       new_row
     end
-    record("1 row to #{rows.length} rows")
+    record(row, "1 row to #{rows.length} rows")
     rows
   end
 

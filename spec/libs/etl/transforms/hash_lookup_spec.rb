@@ -2,15 +2,15 @@ require 'spec_helper'
 
 shared_example 'should record value as ignored' do
   ignored_key = "foo:alfdj"
-  expect(transformer).to receive(:record).with(:executed, ignored_key)
-  expect(transformer).to receive(:record).with(:"alfdj ignored", ignored_key)
+  expect(transformer).to receive(:record).with(be_kind_of(Hash), :executed, ignored_key)
+  expect(transformer).to receive(:record).with(be_kind_of(Hash), :"alfdj ignored", ignored_key)
   subject[:foo]
 end
 
 shared_example 'should record value as not mapped' do
   not_mapped_key = "foo:alfdj"
-  expect(transformer).to receive(:record).with(:executed, not_mapped_key)
-  expect(transformer).to receive(:record).with(:"* Not Mapped *", not_mapped_key)
+  expect(transformer).to receive(:record).with(be_kind_of(Hash), :executed, not_mapped_key)
+  expect(transformer).to receive(:record).with(be_kind_of(Hash), :"* Not Mapped *", not_mapped_key)
   subject[:foo]
 end
 

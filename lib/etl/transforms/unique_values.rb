@@ -17,7 +17,7 @@ class UniqueValues < GS::ETL::Source
 
   def each
     @set.each do |row|
-      record(:'Row processed')
+      record(row, :'Row processed')
       yield(row)
     end
   end

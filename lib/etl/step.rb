@@ -1,7 +1,12 @@
+require 'logger'
+require_relative './logging'
 module GS
   module ETL
+
     class Step
-      attr_accessor :parents, :children, :id, :event_log, :description
+      include GS::ETL::Logging
+
+      attr_accessor :parents, :children, :id, :description
 
       def add_step(description, step_class, *args, &block)
         step = step_class.new(*args, &block)
@@ -16,8 +21,10 @@ module GS
 
       def log_and_process(row)
         return unless row
-        record(:executed) if self.event_log
+        record(row, :executed)
         process(row)
+      rescue => e
+        raise "error in step '#{descriptor}' : #{e.message}"
       end
 
       def propagate(result_from_parent, &block)
@@ -64,14 +71,19 @@ module GS
         @parents ||= []
       end
 
-      def record(value = 'success', key = event_key)
-        row = {
+      def record(row, value = 'success', key = event_key)
+        row_num = row && row.respond_to?(:row_num) ? row.row_num : nil
+        clone_num = row && row.respond_to?(:clone_num) ? row.clone_num : nil
+        event = {
           id: id,
           step: self.class,
           key: key,
-          value: value
+          value: value,
+          descriptor: descriptor,
+          row_num: row_num,
+          clone_num: clone_num
         }
-        event_log.process(row) if event_log
+        logger.log(event)
       end
 
       def event_key
