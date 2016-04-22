@@ -57,7 +57,7 @@ class SearchController < ApplicationController
     elsif params.include?(:city) && @state.present?
       self.city_browse
     elsif params.include?(:q)
-      if params_hash['q'].blank? && @state.present?
+      if params_hash['q'].blank?
         redirect_to default_search_url  and return
       end
       self.by_name

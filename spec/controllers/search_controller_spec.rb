@@ -18,17 +18,34 @@ describe SearchController do
   end
 
   describe '#search' do
+    subject {get :search, params_hash}
     context 'when only lat and lon params present' do
-      it 'should go to default search page' do
-        get :search, lat: '1', lon: '1'
-        expect(response).to redirect_to(default_search_url)
-      end
+      let (:params_hash) { {lat: '1', lon: '1'} }
+      before { expect(controller).not_to receive(:by_location) }
+      it { expect(subject).to redirect_to(default_search_url) }
     end
-    context 'when only blank q and state params present' do
-      it 'should go to default search page' do
-        get :search, state: 'CA', q: ''
-        expect(response).to redirect_to(default_search_url)
-      end
+
+    context 'when q is blank and state is present' do
+      let (:params_hash) { {state: 'CA', q: ''} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when no query parameters are specified' do
+      let (:params_hash) { {} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when the q parameter is blank' do
+      let (:params_hash) { {q: ''} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when query parameter and state is specified' do
+      let (:params_hash) { {q: 'query', state: 'ca'} }
+      it { expect(subject).to render_template 'search_page' }
     end
   end
 
