@@ -1,5 +1,5 @@
-require_relative '../../feeds/feed_helpers/feed_helper'
-require_relative '../../feeds/feed_helpers/feed_data_helper'
+require_relative '../../../feeds/feed_helpers/feed_helper'
+require_relative '../../../feeds/feed_helpers/feed_data_helper'
 
 
 module FeedBuilders
@@ -16,8 +16,6 @@ module FeedBuilders
       @feed_file = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
-      # @ratings_id_for_feed = attributes[:ratings_id_for_feed]
-
     end
 
     def generate_feed

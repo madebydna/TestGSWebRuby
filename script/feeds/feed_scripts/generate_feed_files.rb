@@ -3,8 +3,9 @@ require_relative '../../feeds/feed_helpers/feed_helper'
 require_relative '../../feeds/feed_helpers/feed_data_helper'
 require_relative '../../feeds/feed_config/feed_constants'
 
-require_relative '../../feeds/feed_builders/test_score_feed'
-require_relative '../../feeds/feed_builders/test_rating_feed'
+require_relative '../../feeds/feed_builders/test_score/test_score_feed'
+require_relative '../../feeds/feed_builders/rating/test_rating_feed'
+
 
 
 module FeedScripts

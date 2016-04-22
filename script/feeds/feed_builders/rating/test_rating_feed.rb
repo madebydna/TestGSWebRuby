@@ -1,5 +1,5 @@
-require_relative '../../feeds/feed_helpers/feed_helper'
-require_relative '../../feeds/feed_helpers/feed_data_helper'
+require_relative '../../../feeds/feed_helpers/feed_helper'
+require_relative '../../../feeds/feed_helpers/feed_data_helper'
 
 
 module FeedBuilders
@@ -33,44 +33,53 @@ module FeedBuilders
       puts "--- Time taken to generate feed : FeedType: #{@feed_type}  for state #{@state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
     end
 
-    def transpose_school_test_rating_data_for_feed(schools_cache_data)
+    def process_school_batch_data_for_feed(schools_cache_data)
       schools_data_for_feed = []
       if schools_cache_data.present?
         schools_cache_data.each do |school|
-          school_data_for_feed = {}
-          school_cache = school.school_cache
-          school_data  = school_cache ? school_cache.ratings : nil
-          school_data_ratings = []
-          if school_data.present? && school_data.find {|h| h["data_type_id"]== @ratings_id_for_feed}.present?
-            school_data_ratings.push(school_data.find {|h| h["data_type_id"]== @ratings_id_for_feed})
-            school_data_for_feed = parse_cache_test_rating_data_for_xml(school_data_ratings, school,ENTITY_TYPE_SCHOOL)
-          else
-            puts "No Rating data present for school #{school.id}, school type #{school.type}  and ratings id #{@ratings_id_for_feed} for most recent year"
-          end
+          school_data_for_feed = process_school_data_for_feed(school)
           (schools_data_for_feed << school_data_for_feed).flatten!
         end
       end
       schools_data_for_feed
     end
 
-    def transpose_district_test_rating_data_for_feed(districts_cache_data)
+    def process_school_data_for_feed(school)
+      school_data_for_feed = {}
+      school_cache = school.school_cache
+      school_data = school_cache ? school_cache.ratings : nil
+      school_data_ratings = []
+      if school_data.present? && school_data.find { |h| h["data_type_id"]== @ratings_id_for_feed }.present?
+        school_data_ratings.push(school_data.find { |h| h["data_type_id"]== @ratings_id_for_feed })
+        school_data_for_feed = transpose_data_for_xml(school_data_ratings, school, ENTITY_TYPE_SCHOOL)
+      else
+        puts "No Rating data present for school #{school.id}, school type #{school.type}  and ratings id #{@ratings_id_for_feed} for most recent year"
+      end
+      school_data_for_feed
+    end
+
+    def process_district_batch_data_for_feed(districts_cache_data)
       districts_data_for_feed = []
       if districts_cache_data.present?
         districts_cache_data.each do |district|
-          district_data_for_feed = {}
-          district_cache = district.district_cache
-          district_data  = district_cache ? district_cache.cache_data['ratings'] : nil
-          district_data_ratings = []
-          if district_data.present? && district_data.find {|h| h["data_type_id"]== @ratings_id_for_feed}.present?
-            district_data_ratings.push(district_data.find {|h| h["data_type_id"]== @ratings_id_for_feed})
-            district_data_for_feed = parse_cache_test_rating_data_for_xml(district_data_ratings, district,ENTITY_TYPE_DISTRICT)
-          else
-            puts "No Rating data present for district  #{district.id} and ratings id #{@ratings_id_for_feed} for most recent year "
-          end
+          district_data_for_feed = process_district_data_for_feed(district)
           (districts_data_for_feed << district_data_for_feed).flatten!
         end
       end
       districts_data_for_feed
+    end
+
+    def process_district_data_for_feed(district)
+      district_cache = district.district_cache
+      district_data = district_cache ? district_cache.cache_data['ratings'] : nil
+      district_data_ratings = []
+      if district_data.present? && district_data.find { |h| h["data_type_id"]== @ratings_id_for_feed }.present?
+        district_data_ratings.push(district_data.find { |h| h["data_type_id"]== @ratings_id_for_feed })
+        district_data_for_feed = transpose_data_for_xml(district_data_ratings, district, ENTITY_TYPE_DISTRICT)
+      else
+        puts "No Rating data present for district  #{district.id} and ratings id #{@ratings_id_for_feed} for most recent year "
+      end
+      district_data_for_feed
     end
 
     def transpose_state_master_data_ratings_for_feed(state_master_data)
@@ -85,7 +94,7 @@ module FeedBuilders
       end
       state_level_ratings_config_data
     end
-    def parse_cache_test_rating_data_for_xml(ratings_data,entity,entity_level)
+    def transpose_data_for_xml(ratings_data,entity,entity_level)
       parsed_data_for_xml = []
       ratings_data.each do |data|
         ratings_data = create_test_rating_hash_for_xml(data, entity, entity_level)
@@ -128,8 +137,9 @@ module FeedBuilders
     def write_district_info(xml)
       @district_batches.each_with_index do |district_batch, index|
         puts "district batch Start #{Time.now} for Batch Number #{index+1}"
+        # Get district cache data for the batche
         districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        district_data_for_feed = transpose_district_test_rating_data_for_feed(districts_decorated_with_cache_results)
+        district_data_for_feed = process_district_batch_data_for_feed(districts_decorated_with_cache_results)
         write_xml_tag(district_data_for_feed, 'test-rating-value', xml)
         puts "district Batch end #{Time.now} for Batch Number #{index+1}"
       end
@@ -138,8 +148,9 @@ module FeedBuilders
     def write_school_info(xml)
       @school_batches.each_with_index do |school_batch, index|
         puts "school batch Start #{Time.now} for Batch Number #{index+1}"
+        # Get school cache data for the batche
         schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        school_data_for_feed = transpose_school_test_rating_data_for_feed(schools_decorated_with_cache_results)
+        school_data_for_feed = process_school_batch_data_for_feed(schools_decorated_with_cache_results)
         write_xml_tag(school_data_for_feed, 'test-rating-value', xml)
         puts "school Batch end #{Time.now} for Batch Number #{index+1}"
       end
