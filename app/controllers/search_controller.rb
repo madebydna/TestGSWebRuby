@@ -57,6 +57,10 @@ class SearchController < ApplicationController
     elsif params.include?(:city) && @state.present?
       self.city_browse
     elsif params.include?(:q)
+      query = params['q'].mb_chars.tidy_bytes.to_s
+      if query != params['q']
+        redirect_to url_for(params.merge(only_path: true, q: query)) and return
+      end
       if params_hash['q'].blank?
         redirect_to default_search_url  and return
       end

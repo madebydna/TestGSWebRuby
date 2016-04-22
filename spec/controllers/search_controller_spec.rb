@@ -50,6 +50,13 @@ describe SearchController do
         expect(subject).to render_template 'search_page'
       end
     end
+
+    context 'when given an invalid UTF-8 byte sequence' do
+      let (:params_hash) { {q: "here comes a really bad character: \xF4"}}
+      it 'redirects and subs out the bad characters' do
+        expect(subject.status).to eq(302)
+      end
+    end
   end
 
   describe '#process_results' do
