@@ -8,7 +8,8 @@ class CsvSource < GS::ETL::Source
   DEFAULT_OPTIONS = {
     headers: true,
     header_converters: :symbol,
-    col_sep:','
+    col_sep:',',
+    quote_char: '`'
   }
 
   def initialize(input_files, columns, options = {})

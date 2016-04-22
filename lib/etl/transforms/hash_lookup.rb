@@ -33,16 +33,19 @@ class HashLookup < GS::ETL::Step
 
   def lookup_table=(hash)
     raise 'Lookup table cannot be nil' if hash.nil?
+    raise 'Lookup table must be a Hash' unless hash.is_a?(Hash)
     @lookup_table = hash
   end
 
   def key=(key)
     raise 'Key to transform cannot be nil or empty' if key.empty?
+    raise "Key must be a symbol but was a #{key.class}" unless key.is_a?(Symbol)
     @key = key
   end
 
   def destination_key=(key)
     raise 'Destination key cannot be nil or empty' if key.empty?
+    raise "Destination Key must be a symbol but was a #{key.class}" unless key.is_a?(Symbol)
     @destination_key = key
   end
 end

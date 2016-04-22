@@ -9,7 +9,7 @@ require 'ca_entity_level_parser'
 require 'transforms/with_block'
 require 'gs_breakdown_definitions'
 require 'gs_breakdowns_from_db'
-require 'destinations/column_value_report'
+require 'column_value_report'
 
 class WATestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step

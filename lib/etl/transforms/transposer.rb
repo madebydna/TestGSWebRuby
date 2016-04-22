@@ -52,7 +52,7 @@ class Transposer < GS::ETL::Step
   end
 
   def fields_to_transpose(row)
-    row.keys.keep_if do |field|
+    row.keys.select do |field|
       @fields.any? do |match|
         match == field ||
           (match.is_a?(Regexp) && !!(match =~ field))

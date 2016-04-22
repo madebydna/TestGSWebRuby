@@ -1,23 +1,17 @@
 require_relative 'step'
-# require 'enumerable'
 
 module GS
   module ETL
     class Source < GS::ETL::Step
-      include Enumerable
 
       def run(context={})
-        propagated_action = Proc.new do |step, rows|
-          if rows.is_a?(Array)
-            rows.map { |r| step.log_and_process(r) }
-          else
-            step.log_and_process(rows)
-          end
-        end
-
         run_proc = Proc.new do |row|
-          children.each do |child|
-            child.propagate(row, &propagated_action)
+          propagate(row) do |step, rows|
+            if rows.is_a?(Array)
+              rows.flatten.map { |r| step.log_and_process(r) }.flatten
+            else
+              step.log_and_process(rows)
+            end
           end
         end
 

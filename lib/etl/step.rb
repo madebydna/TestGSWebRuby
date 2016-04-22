@@ -50,7 +50,7 @@ module GS
 
       def descriptor
         if self.description
-          self.class.name + "\n" + self.description 
+          self.class.name + ' ' + self.description 
         else
           self.class.name
         end
