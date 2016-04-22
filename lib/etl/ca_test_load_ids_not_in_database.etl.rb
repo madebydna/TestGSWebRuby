@@ -1,7 +1,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
 require 'test_processor'
-require 'event_log'
 require 'sources/gs_sharded_database_source'
 require 'transforms/filter_out_matching_values'
 require 'transforms/value_concatenator'

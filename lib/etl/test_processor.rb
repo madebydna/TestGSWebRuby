@@ -46,13 +46,7 @@ module GS
 
       def source(source_class, *args)
         source = source_class.new(*args)
-        source.event_log = event_log if source.respond_to?('event_log=')
         StepsBuilder.new(source)
-      end
-
-      def event_log
-        # @event_log ||= EventLog.new
-        # @event_log ||= FileLogger.new File.join(FILE_LOCATION, "#{self.class.name}.log")
       end
 
       def output_files_step_tree
@@ -233,13 +227,11 @@ module GS
         max = (@options && @options[:max])
         source = CsvSource.new(paths, source_columns, col_sep: "\t", max: max)
         source.description = filenames.map { |f| f.split('/').last }.join("\n")
-        source.event_log = self.event_log
         source
       end
 
       def union_steps(*steps)
         step = Step.new
-        step.event_log = self.event_log
         step.description = "Union steps:\n" + steps.map(&:description).join("\n")
         steps.each { |s| s.add(step) }
         step

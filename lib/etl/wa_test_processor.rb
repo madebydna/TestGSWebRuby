@@ -1,10 +1,8 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
 require 'test_processor'
-require 'event_log'
 require 'sources/csv_source'
 require 'destinations/csv_destination'
-require 'destinations/event_report_stdout'
 require 'destinations/load_config_file'
 require 'sources/buffered_group_by'
 require 'ca_entity_level_parser'

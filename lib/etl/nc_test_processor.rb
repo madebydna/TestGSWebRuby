@@ -2,7 +2,6 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative 'test_processor'
 require 'etl'
 require 'test_processor'
-require 'event_log'
 require 'sources/csv_source'
 require 'destinations/csv_destination'
 require 'destinations/event_report_stdout'

@@ -1,7 +1,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
 require 'test_processor'
-require 'event_log'
 require 'sources/csv_source'
 require 'destinations/csv_destination'
 require 'destinations/event_report_stdout'
@@ -34,7 +33,6 @@ class CATestProcessor < GS::ETL::TestProcessor
   def science_source
     @_science_source ||= (
       science_csv = CsvSource.new(input_filename('ca2015_all_csv_v2_SCI.txt'), max: @options[:max])
-      science_csv.event_log = self.event_log
       science_csv
     )
   end
@@ -42,7 +40,6 @@ class CATestProcessor < GS::ETL::TestProcessor
   def reading_math_source
     @_reading_math_source ||=(
     reading_math_csv = CsvSource.new(input_filename('ca2015_all_csv_v2.txt'), max: @options[:max])
-    reading_math_csv.event_log = self.event_log
     reading_math_csv
     )
   end

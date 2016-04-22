@@ -1,7 +1,6 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'etl'
 require 'test_processor'
-require 'event_log'
 require 'sources/gs_sharded_database_source'
 require 'transforms/filter_out_matching_values'
 require 'destinations/csv_destination'
@@ -23,10 +22,8 @@ class  MisMatchFinder < GS::ETL::TestProcessor
       'state_id'
 
     schools_in_gs_ca_db.destination CsvDestination, @output_file
-    event_log.destination EventReportStdout
 
     system('clear')
-    schools_in_gs_ca_db.transform RunOtherStep, event_log
 
     schools_in_gs_ca_db.root.run
   end

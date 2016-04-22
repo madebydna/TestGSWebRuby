@@ -79,12 +79,10 @@ module GS
       end
 
       def add(step)
-        step.event_log = event_log if step.respond_to?('event_log=')
         self.children << step
         step.parents << self
         self
       end
     end
-
   end
 end

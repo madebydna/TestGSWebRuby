@@ -18,18 +18,20 @@ describe GS::ETL::Step do
   end
 
   describe '#log_and_process' do
-    let(:event_log) { double(process: nil) }
-    before { subject.event_log = event_log }
+    let(:logger) { double(debug: nil) }
+    before do
+      allow(subject).to receive(:logger).and_return(logger)
+    end
 
     it 'should not do anything if row is nil' do
       subject.log_and_process(nil)
-      expect(event_log).to_not have_received(:process)
+      expect(logger).to_not have_received(:debug)
     end
 
     it 'when given row, it should record event and process row' do
       row = {foo: :bar}
       subject.log_and_process(row)
-      expect(event_log).to have_received(:process).with({
+      expect(logger).to have_received(:debug).with({
         id: subject.id,
         step: GS::ETL::Step,
         key: 'Implement #event_key on GS::ETL::Step',
@@ -72,8 +74,8 @@ describe GS::ETL::Step do
   end
 
   describe '#record' do
-    let(:event_log) { double(process: nil) }
-    before { subject.event_log = event_log }
+    let(:logger) { double(debug: nil) }
+    allow(subject).to receive(:logger).and_return(logger)
 
     it 'tells the event log to process (with correct input data)' do
       subject.id = 10
