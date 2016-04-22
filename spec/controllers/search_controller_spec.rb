@@ -49,6 +49,21 @@ describe SearchController do
     end
   end
 
+  describe '#process_results' do
+    let (:results) { {num_found: 0, results: []}}
+    before do
+      controller.instance_variable_set(:@params_hash, {})
+      controller.instance_variable_set(:@results_offset, 0)
+      controller.instance_variable_set(:@page_size, 25)
+    end
+    it 'JT-927 regression: does not crash when map_schools is empty' do
+      # Crash occurred when results was empty and calculate_map_range returned a non-zero range
+      allow(controller).to receive(:calculate_map_range) { [1, 2] }
+      controller.process_results(results, 0)
+      expect(controller.instance_variable_get(:@map_schools)).not_to be_nil
+    end
+  end
+
   describe '#parse_filters' do
     context 'when on district browse and there is matching hub' do
       let(:params_hash) { {} }
