@@ -1,5 +1,7 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative '../../feeds/feed_helpers/feed_helper'
+require_relative '../../feeds/feed_helpers/feed_data_helper'
+
 require_relative '../../feeds/feed_builders/test_score_feed'
 require_relative '../../feeds/feed_builders/test_rating_feed'
 require_relative '../../feeds/feed_config/feed_constants'
@@ -8,6 +10,7 @@ require_relative '../../feeds/feed_config/feed_constants'
 module FeedScripts
   class GenerateFeedFiles
     include FeedHelper
+    include FeedDataHelper
     include FeedConstants
 
     def self.generate

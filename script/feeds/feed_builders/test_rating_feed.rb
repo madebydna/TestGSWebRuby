@@ -1,8 +1,11 @@
 require_relative '../../feeds/feed_helpers/feed_helper'
+require_relative '../../feeds/feed_helpers/feed_data_helper'
+
 
 module FeedBuilders
   class TestRatingFeed
     include FeedHelper
+    include FeedDataHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
