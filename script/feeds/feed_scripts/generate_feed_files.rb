@@ -7,7 +7,7 @@ require_relative '../../feeds/feed_config/feed_constants'
 
 module FeedScripts
   class GenerateFeedFiles
-    include FeedHelpers
+    include FeedHelper
     include FeedConstants
 
     def self.generate

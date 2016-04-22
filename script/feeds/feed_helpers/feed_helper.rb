@@ -1,7 +1,7 @@
 require_relative '../../feeds/feed_config/feed_constants'
 
 
-module FeedHelpers
+module FeedHelper
 
   include Rails.application.routes.url_helpers
   include UrlHelper
@@ -61,7 +61,31 @@ module FeedHelpers
     district_batches
   end
 
+  def get_schools_batch_cache_data(school_batch)
+    query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
+    school_batch.each do |school|
+      query = query.include_schools(school.state, school.id)
+    end
+    query_results = query.query_and_use_cache_keys
+    school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
+    schools_with_cache_results= school_cache_results.decorate_schools(school_batch)
+    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
+      SchoolFeedDecorator.decorate(school)
+    end
+  end
 
+  def get_districts_batch_cache_data(district_batch)
+    query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
+    district_batch.each do |district|
+      query = query.include_districts(district.state, district.id)
+    end
+    query_results = query.query_and_use_cache_keys
+    district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
+    districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
+    districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
+      DistrictFeedDecorator.decorate(district)
+    end
+  end
 
 
   def transpose_ratings_description(data_type_id)
@@ -134,37 +158,6 @@ module FeedHelpers
     end
   end
 
-
-
-
-
-  def get_schools_batch_cache_data(school_batch)
-    query = SchoolCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
-    school_batch.each do |school|
-      query = query.include_schools(school.state, school.id)
-    end
-    query_results = query.query_and_use_cache_keys
-    school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
-    schools_with_cache_results= school_cache_results.decorate_schools(school_batch)
-    schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
-      SchoolFeedDecorator.decorate(school)
-    end
-  end
-
-  def get_districts_batch_cache_data(district_batch)
-    query = DistrictCacheQuery.new.include_cache_keys(FEED_CACHE_KEYS)
-    district_batch.each do |district|
-      query = query.include_districts(district.state, district.id)
-    end
-    query_results = query.query_and_use_cache_keys
-    district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
-    districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
-    districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
-      DistrictFeedDecorator.decorate(district)
-    end
-  end
-
-
   def write_xml_tag(data, tag_name, xml)
     if data.present?
       data_for_xml = data.reject(&:blank?)
@@ -178,24 +171,7 @@ module FeedHelpers
     end
   end
 
-  def parse_cache_test_rating_data_for_xml(ratings_data,entity,entity_level)
-    parsed_data_for_xml = []
-    ratings_data.each do |data|
-      ratings_data = create_test_rating_hash_for_xml(data, entity, entity_level)
-      parsed_data_for_xml.push(ratings_data)
-    end
-    parsed_data_for_xml
-  end
 
-  def create_test_rating_hash_for_xml(data,entity,entity_level)
-    test_rating = {:universal_id => transpose_universal_id(entity, entity_level),
-                   :entity_level => entity_level.titleize,
-                   :test_rating_id => transpose_test_id(data["data_type_id"]),
-                   :rating => transpose_ratings(data,entity_level),
-                   :url => transpose_url(entity,entity_level)
-    }
-
-  end
 
   def transpose_url(entity,entity_level)
     begin

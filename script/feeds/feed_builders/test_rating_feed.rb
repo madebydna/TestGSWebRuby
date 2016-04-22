@@ -2,7 +2,7 @@ require_relative '../../feeds/feed_helpers/feed_helper'
 
 module FeedBuilders
   class TestRatingFeed
-    include FeedHelpers
+    include FeedHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
@@ -82,7 +82,24 @@ module FeedBuilders
       end
       state_level_ratings_config_data
     end
+    def parse_cache_test_rating_data_for_xml(ratings_data,entity,entity_level)
+      parsed_data_for_xml = []
+      ratings_data.each do |data|
+        ratings_data = create_test_rating_hash_for_xml(data, entity, entity_level)
+        parsed_data_for_xml.push(ratings_data)
+      end
+      parsed_data_for_xml
+    end
 
+    def create_test_rating_hash_for_xml(data,entity,entity_level)
+      test_rating = {:universal_id => transpose_universal_id(entity, entity_level),
+                     :entity_level => entity_level.titleize,
+                     :test_rating_id => transpose_test_id(data["data_type_id"]),
+                     :rating => transpose_ratings(data,entity_level),
+                     :url => transpose_url(entity,entity_level)
+      }
+
+    end
     def get_state_master_data_ratings
       query_results =TestDataSet.ratings_config_for_state(@state,@ratings_id_for_feed)
     end

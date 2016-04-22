@@ -2,7 +2,7 @@ require_relative '../../feeds/feed_helpers/feed_helper'
 
 module FeedBuilders
   class TestScoreFeed
-    include FeedHelpers
+    include FeedHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
@@ -92,23 +92,17 @@ module FeedBuilders
       }
     end
 
-    def parse_cache_data_for_xml(all_test_score_data, entity, test_id, entity_level)
+    def parse_tests_data_for_xml(all_test_score_data, entity, test_id, entity_level)
       parsed_data_for_xml = []
-      if all_test_score_data.present?
-        complete_test_score_data = all_test_score_data["All"].present? ? all_test_score_data["All"]["grades"] : nil
-      end
-      if complete_test_score_data.present?
-        complete_test_score_data.each do |grade, grade_data|
-          grade_data_level = grade_data["level_code"]
-          grade_data_level.each do |level, subject_data|
+      complete_test_score_data_for_breakdown_all = all_test_score_data.present? && all_test_score_data["All"].present? ? all_test_score_data["All"]["grades"] : nil
+      if complete_test_score_data_for_breakdown_all.present?
+        complete_test_score_data_for_breakdown_all.each do |grade, grade_data|
+          grade_data_for_all_levels = grade_data["level_code"]
+          grade_data_for_all_levels.each do |level, subject_data|
             subject_data.each do |subject, years_data|
               years_data.each do |year, data|
-
                 # Get Band Names from Cache
-                bands = data.keys.select { |key| key.ends_with?('band_id') }
-                band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
-                band_names << PROFICIENT_AND_ABOVE_BAND
-
+                band_names = get_band_names(data)
                 # Get Data For All Bands
                 band_names.each do |band|
                   test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year)
@@ -122,22 +116,34 @@ module FeedBuilders
       parsed_data_for_xml
     end
 
-    def transpose_school_data_for_feed(schools_cache_data)
+    def get_band_names(data)
+      bands = data.keys.select { |key| key.ends_with?('band_id') }
+      band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
+      band_names << PROFICIENT_AND_ABOVE_BAND
+      band_names
+    end
+
+    def transpose_schools_data_for_feed(schools_cache_data)
       schools_data_for_feed = []
       if schools_cache_data.present?
         schools_cache_data.each do |school|
-          school_data_for_feed = {}
-          school_cache = school.school_cache
-          school_test_data = school_cache ? school_cache.feed_test_scores : nil
-          if school_test_data.present?
-            school_test_data.each do |test_id, data|
-              school_data_for_feed = parse_cache_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
-            end
-          end
+          school_data_for_feed = transpose_school(school)
           (schools_data_for_feed << school_data_for_feed).flatten!
         end
       end
       schools_data_for_feed
+    end
+
+    def transpose_school(school)
+      school_data_for_feed = {}
+      school_cache = school.school_cache
+      school_test_data = school_cache ? school_cache.feed_test_scores : nil
+      if school_test_data.present?
+        school_test_data.each do |test_id, data|
+          school_data_for_feed = parse_tests_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
+        end
+      end
+      school_data_for_feed
     end
 
     def generate_xml_test_score_feed
@@ -164,7 +170,7 @@ module FeedBuilders
       @district_batches.each_with_index do |district_batch, index|
         puts "district batch Start #{Time.now} for Batch Number #{index+1}"
         districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        district_data_for_feed = transpose_district_data_for_feed(districts_decorated_with_cache_results)
+        district_data_for_feed = transpose_districts_data_for_feed(districts_decorated_with_cache_results)
         write_xml_tag(district_data_for_feed, 'test-result', xml)
         puts "district Batch end #{Time.now} for Batch Number #{index+1}"
       end
@@ -174,28 +180,33 @@ module FeedBuilders
       @school_batches.each_with_index do |school_batch, index|
         puts "school batch Start #{Time.now} for Batch Number #{index+1}"
         schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        school_data_for_feed = transpose_school_data_for_feed(schools_decorated_with_cache_results)
+        school_data_for_feed = transpose_schools_data_for_feed(schools_decorated_with_cache_results)
         write_xml_tag(school_data_for_feed, 'test-result', xml)
         puts "school Batch end #{Time.now} for Batch Number #{index+1}"
       end
     end
 
-    def transpose_district_data_for_feed(districts_cache_data)
+    def transpose_districts_data_for_feed(districts_cache_data)
       districts_data_for_feed = []
       if districts_cache_data.present?
         districts_cache_data.each do |district|
-          district_data_for_feed = {}
-          district_cache = district.district_cache
-          district_test_data = district_cache ? district_cache.feed_test_scores : nil
-          if district_test_data.present?
-            district_test_data.each do |test_id, data|
-              district_data_for_feed = parse_cache_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
-            end
-          end
+          district_data_for_feed = transpose_district(district)
           (districts_data_for_feed << district_data_for_feed).flatten!
         end
       end
       districts_data_for_feed
+    end
+
+    def transpose_district(district)
+      district_data_for_feed = {}
+      district_cache = district.district_cache
+      district_test_data = district_cache ? district_cache.feed_test_scores : nil
+      if district_test_data.present?
+        district_test_data.each do |test_id, data|
+          district_data_for_feed = parse_tests_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
+        end
+      end
+      district_data_for_feed
     end
 
   end
