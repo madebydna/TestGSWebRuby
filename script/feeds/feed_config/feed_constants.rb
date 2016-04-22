@@ -15,8 +15,8 @@ module FeedConstants
 
     FEED_TO_SCHEMA_MAPPING = {
         'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
-        'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-ratings.xsd',
-        'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-ratings.xsd'
+        'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
+        'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd'
     }
     FEED_TO_ROOT_ELEMENT_MAPPING = {
         'test_scores' => 'gs-test-feed',

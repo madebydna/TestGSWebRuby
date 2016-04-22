@@ -134,10 +134,12 @@ module FeedHelper
 
   def transpose_ratings(data,entity_level)
     if (entity_level == ENTITY_TYPE_SCHOOL)
-      data["school_value_text"]|| data["school_value_float"]
+      rating = data["school_value_text"]|| data["school_value_float"]
     elsif (entity_level == ENTITY_TYPE_DISTRICT)
-      data["value_text"]|| data["value_float"]
+      rating = data["value_text"]|| data["value_float"]
     end
+    # Rating should be sent nil and not zero if data not present , that's why the try
+    rating.try(:to_i)
   end
 
   def transpose_band_name(band)

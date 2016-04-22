@@ -43,17 +43,29 @@ module FeedBuilders
     end
 
     def process_school_data_for_feed(school)
-      school_data_for_feed = {}
-      school_cache = school.school_cache
-      school_data = school_cache ? school_cache.ratings : nil
-      school_data_ratings = []
-      if school_data.present? && school_data.find { |h| h["data_type_id"]== @ratings_id_for_feed }.present?
-        school_data_ratings.push(school_data.find { |h| h["data_type_id"]== @ratings_id_for_feed })
-        school_data_for_feed = transpose_data_for_xml(school_data_ratings, school, ENTITY_TYPE_SCHOOL)
-      else
-        puts "No Rating data present for school #{school.id}, school type #{school.type}  and ratings id #{@ratings_id_for_feed} for most recent year"
-      end
+      school_ratings_cache_data = get_school_ratings_cache_data(school)
+      school_rating_id_cache_data = get_rating_data_for_feed(school_ratings_cache_data)
+      school_data_for_feed = transpose_data_for_xml(school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
       school_data_for_feed
+    end
+
+    def process_district_data_for_feed(district)
+      district_ratings_cache_data = get_district_ratings_cache_data(district)
+      district_rating_id_cache_data = get_rating_data_for_feed(district_ratings_cache_data)
+      district_data_for_feed= transpose_data_for_xml(district_rating_id_cache_data, district, ENTITY_TYPE_DISTRICT)
+      district_data_for_feed
+    end
+    def get_rating_data_for_feed(ratings_cache_data)
+      data = []
+      data.push(ratings_cache_data.try(:find) { |h| h["data_type_id"]== @ratings_id_for_feed })
+    end
+
+    def get_school_ratings_cache_data(school)
+      school.try(:school_cache).cache_data['ratings']
+    end
+
+    def get_district_ratings_cache_data(district)
+      district.try(:district_cache).cache_data['ratings']
     end
 
     def process_district_batch_data_for_feed(districts_cache_data)
@@ -65,18 +77,7 @@ module FeedBuilders
       districts_data_for_feed
     end
 
-    def process_district_data_for_feed(district)
-      district_cache = district.district_cache
-      district_data = district_cache ? district_cache.cache_data['ratings'] : nil
-      district_data_ratings = []
-      if district_data.present? && district_data.find { |h| h["data_type_id"]== @ratings_id_for_feed }.present?
-        district_data_ratings.push(district_data.find { |h| h["data_type_id"]== @ratings_id_for_feed })
-        district_data_for_feed = transpose_data_for_xml(district_data_ratings, district, ENTITY_TYPE_DISTRICT)
-      else
-        puts "No Rating data present for district  #{district.id} and ratings id #{@ratings_id_for_feed} for most recent year "
-      end
-      district_data_for_feed
-    end
+
 
     def transpose_state_master_data_ratings_for_feed(state_master_data)
       state_level_ratings_config_data = []
