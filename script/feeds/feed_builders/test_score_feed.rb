@@ -16,6 +16,8 @@ module FeedBuilders
       @feed_file = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
+      # @ratings_id_for_feed = attributes[:ratings_id_for_feed]
+
     end
 
     def generate_feed

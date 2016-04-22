@@ -4,13 +4,7 @@ module FeedDataHelper
   include FeedConstants
 
   def get_school_batches
-    state =@state
-    school_ids = @school_ids
-    if school_ids.present?
-      schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
-    else
-      schools_in_feed = School.on_db(state.downcase.to_sym).all
-    end
+    schools_in_feed = get_schools_in_feed
     school_batches = []
     schools_in_feed.each_slice(@batch_size.to_i) do |slice|
       school_batches.push(slice)
@@ -21,14 +15,19 @@ module FeedDataHelper
     school_batches
   end
 
-  def get_district_batches
+  def get_schools_in_feed
     state =@state
-    district_ids = @district_ids
-    if district_ids.present?
-      districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids)
+    school_ids = @school_ids
+    if school_ids.present?
+      schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
     else
-      districts_in_feed = District.on_db(state.downcase.to_sym).all
+      schools_in_feed = School.on_db(state.downcase.to_sym).all
     end
+    schools_in_feed
+  end
+
+  def get_district_batches
+    districts_in_feed = get_districts_in_feed
     district_batches = []
     districts_in_feed.each_slice(@batch_size.to_i) do |slice|
       district_batches.push(slice)
@@ -37,6 +36,17 @@ module FeedDataHelper
     puts "District Batch Size #{@batch_size}"
     puts "Total Districts Batches Feed #{district_batches.size}"
     district_batches
+  end
+
+  def get_districts_in_feed
+    state =@state
+    district_ids = @district_ids
+    if district_ids.present?
+      districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids)
+    else
+      districts_in_feed = District.on_db(state.downcase.to_sym).all
+    end
+    districts_in_feed
   end
 
   def get_schools_batch_cache_data(school_batch)

@@ -13,6 +13,18 @@ module FeedConstants
         'official_overall' => 174
     }
 
+    FEED_TO_SCHEMA_MAPPING = {
+        'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
+        'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-ratings.xsd',
+        'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-ratings.xsd'
+    }
+    FEED_TO_ROOT_ELEMENT_MAPPING = {
+        'test_scores' => 'gs-test-feed',
+        'test_rating' => 'gs-test-rating-feed',
+        'official_overall' => 'gs-official-overall-rating-feed'
+    }
+
+
     PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
 
     ENTITY_TYPE_SCHOOL = 'school'
