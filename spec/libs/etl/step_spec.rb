@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'step'
+require 'row'
 
 describe GS::ETL::Step do
   let(:fake_step_class) do 
@@ -91,7 +92,7 @@ describe GS::ETL::Step do
         value: 'val'
       }
       subject.record(GS::ETL::Row.new({}, 1), 'val', 'my key')
-      expect(logger).to have_received(:log).with(event_hash)
+      expect(logger).to have_received(:log).with(include(event_hash))
     end
   end
 
