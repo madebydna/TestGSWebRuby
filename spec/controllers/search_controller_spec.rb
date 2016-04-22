@@ -45,7 +45,10 @@ describe SearchController do
 
     context 'when query parameter and state is specified' do
       let (:params_hash) { {q: 'query', state: 'ca'} }
-      it { expect(subject).to render_template 'search_page' }
+      it 'should render the search results page' do
+        allow(SchoolSearchService).to receive(:by_name).and_return(results: [], num_found: 0)
+        expect(subject).to render_template 'search_page'
+      end
     end
   end
 
