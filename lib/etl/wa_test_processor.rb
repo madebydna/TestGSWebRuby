@@ -42,13 +42,6 @@ class WATestProcessor < GS::ETL::TestProcessor
       state_sbac_source
     ]
 
-    source(file_with_subgroups, foo: :bar) do |node|
-      node.transform(Blah).
-      node.transform Blah
-      node.transform Blah
-      node.transform Blah
-    end
-
     combined_sources_step = union_steps(
       school_sbac_by_subgroup,
       school_sbac,

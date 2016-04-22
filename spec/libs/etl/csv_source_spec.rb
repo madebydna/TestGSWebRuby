@@ -34,11 +34,11 @@ describe CsvSource do
 
   describe '#each' do
     context 'when given two files' do
-      let(:event_log) { double('event log', process: nil) }
       let(:files) { [double('file1'), double('file2')] }
-      let(:fake_csv) do
-        double('csv', foreach: proc do |file|
-          yield(row)
+      let(:fake_csv) { double('csv', open: csv_instance) }
+      let(:csv_instance) do
+        double('csv', each_with_index: proc do |row, num|
+          yield(row, 1)
         end)
       end
       let(:row) do
@@ -49,12 +49,14 @@ describe CsvSource do
       end
       subject { csv_source.each }
       before do
+        pending
+        fail
         stub_const('CSV', fake_csv)
       end
       it 'calls CSV.foreach on each file' do
         subject
-        expect(fake_csv).to have_received(:foreach).with(files[0], csv_source.instance_variable_get(:@options))
-        expect(fake_csv).to have_received(:foreach).with(files[1], csv_source.instance_variable_get(:@options))
+        expect(csv_instance).to have_received(:each_with_index).with(files[0], csv_source.instance_variable_get(:@options))
+        expect(csv_instance).to have_received(:each_with_index).with(files[1], csv_source.instance_variable_get(:@options))
       end
 
     end

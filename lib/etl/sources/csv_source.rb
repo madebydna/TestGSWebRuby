@@ -12,7 +12,7 @@ class CsvSource < GS::ETL::Source
   }
 
   def initialize(input_files, columns, options = {})
-    @input_files = input_files.is_a?(Array) ? input_files : [input_files]
+    self.input_files = input_files
     self.columns = columns
     @options = DEFAULT_OPTIONS.merge(options)
   end
@@ -45,9 +45,7 @@ class CsvSource < GS::ETL::Source
 
   def input_files=(input_files)
     raise ArgumentError, 'input_files must not be nil' unless input_files
-    unless input_files.is_a?(Array)
-      raise ArgumentError, 'input_files must be an array'
-    end
+    input_files = [*input_files]
     if input_files.length < 1
       raise ArgumentError, 'Must provide at least one input file'
     end
