@@ -99,23 +99,21 @@ module FeedBuilders
     def parse_tests_data_for_xml(all_test_score_data, entity, test_id, entity_level)
       parsed_data_for_xml = []
       complete_test_score_data_for_breakdown_all = all_test_score_data.present? && all_test_score_data["All"].present? ? all_test_score_data["All"]["grades"] : nil
-      if complete_test_score_data_for_breakdown_all.present?
-        complete_test_score_data_for_breakdown_all.each do |grade, grade_data|
+        complete_test_score_data_for_breakdown_all.try(:each) do |grade, grade_data|
           grade_data_for_all_levels = grade_data["level_code"]
-          grade_data_for_all_levels.each do |level, subject_data|
-            subject_data.each do |subject, years_data|
-              years_data.each do |year, data|
+          grade_data_for_all_levels.try(:each) do |level, subject_data|
+            subject_data.try(:each) do |subject, years_data|
+              years_data.try(:each) do |year, data|
                 # Get Band Names from Cache
                 band_names = get_band_names(data)
                 # Get Data For All Bands
-                band_names.each do |band|
+                band_names.try(:each) do |band|
                   test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year)
                   parsed_data_for_xml.push(test_data)
                 end
               end
             end
           end
-        end
       end
       parsed_data_for_xml
     end
@@ -129,12 +127,10 @@ module FeedBuilders
 
     def transpose_schools_data_for_feed(schools_cache_data)
       schools_data_for_feed = []
-      if schools_cache_data.present?
-        schools_cache_data.each do |school|
+        schools_cache_data.try(:each) do |school|
           school_data_for_feed = transpose_school(school)
           (schools_data_for_feed << school_data_for_feed).flatten!
         end
-      end
       schools_data_for_feed
     end
 
@@ -142,10 +138,8 @@ module FeedBuilders
       school_data_for_feed = {}
       school_cache = school.school_cache
       school_test_data = school_cache ? school_cache.feed_test_scores : nil
-      if school_test_data.present?
-        school_test_data.each do |test_id, data|
+        school_test_data.try(:each)do |test_id, data|
           school_data_for_feed = parse_tests_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
-        end
       end
       school_data_for_feed
     end
@@ -192,12 +186,10 @@ module FeedBuilders
 
     def transpose_districts_data_for_feed(districts_cache_data)
       districts_data_for_feed = []
-      if districts_cache_data.present?
-        districts_cache_data.each do |district|
+        districts_cache_data.try(:each) do |district|
           district_data_for_feed = transpose_district(district)
           (districts_data_for_feed << district_data_for_feed).flatten!
         end
-      end
       districts_data_for_feed
     end
 
@@ -205,11 +197,9 @@ module FeedBuilders
       district_data_for_feed = {}
       district_cache = district.district_cache
       district_test_data = district_cache ? district_cache.feed_test_scores : nil
-      if district_test_data.present?
-        district_test_data.each do |test_id, data|
+        district_test_data.try(:each) do |test_id, data|
           district_data_for_feed = parse_tests_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
         end
-      end
       district_data_for_feed
     end
 

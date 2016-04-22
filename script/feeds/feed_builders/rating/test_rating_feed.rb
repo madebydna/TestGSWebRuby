@@ -35,12 +35,10 @@ module FeedBuilders
 
     def process_school_batch_data_for_feed(schools_cache_data)
       schools_data_for_feed = []
-      if schools_cache_data.present?
-        schools_cache_data.each do |school|
+        schools_cache_data.try(:each) do |school|
           school_data_for_feed = process_school_data_for_feed(school)
           (schools_data_for_feed << school_data_for_feed).flatten!
         end
-      end
       schools_data_for_feed
     end
 
@@ -60,12 +58,10 @@ module FeedBuilders
 
     def process_district_batch_data_for_feed(districts_cache_data)
       districts_data_for_feed = []
-      if districts_cache_data.present?
-        districts_cache_data.each do |district|
+        districts_cache_data.try(:each) do |district|
           district_data_for_feed = process_district_data_for_feed(district)
           (districts_data_for_feed << district_data_for_feed).flatten!
         end
-      end
       districts_data_for_feed
     end
 
@@ -84,7 +80,7 @@ module FeedBuilders
 
     def transpose_state_master_data_ratings_for_feed(state_master_data)
       state_level_ratings_config_data = []
-      state_master_data.each do |data|
+      state_master_data.try(:each) do |data|
         config_data = {
             :test_id => transpose_test_id(data[:data_type_id]),
             :year => data[:year],
@@ -96,7 +92,7 @@ module FeedBuilders
     end
     def transpose_data_for_xml(ratings_data,entity,entity_level)
       parsed_data_for_xml = []
-      ratings_data.each do |data|
+      ratings_data.try(:each)do |data|
         ratings_data = create_test_rating_hash_for_xml(data, entity, entity_level)
         parsed_data_for_xml.push(ratings_data)
       end
