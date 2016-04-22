@@ -330,10 +330,12 @@ class WATestProcessor < GS::ETL::TestProcessor
 
   def column_value_report
     @_column_value_report ||= (
-      ColumnValueReport.new(
+      report = ColumnValueReport.new(
         '/tmp/column_value_report.tsv',
         *(COLUMN_ORDER - [:value_float, :number_tested])
       )
+      report.build_graph
+      report
     )
   end
 
