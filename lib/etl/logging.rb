@@ -18,7 +18,7 @@ module GS
         end
 
         def self.build_file_logger(file)
-          f = File.open('foo.log', File::WRONLY | File::APPEND)
+          f = File.open(file, File::WRONLY | File::APPEND)
           logger = new(f)
           logger
         end
@@ -129,10 +129,6 @@ module GS
           message_tokens << "event: #{hash[:key]}"[0..30]
           message_tokens << "message: #{hash[:value]}"[0..30]
           message_tokens.join(' | ')
-        end
-
-        def formatter
-
         end
       end
 
