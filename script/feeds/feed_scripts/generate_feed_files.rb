@@ -19,17 +19,16 @@ module FeedScripts
     end
 
     def initialize()
-      @parsed_arguments = parse_arguments
-      usage unless @parsed_arguments.present?
-      @parsed_arguments.each do |args|
-        @states = args[:states]
-        @feed_names = args[:feed_names]
-        @batch_size = args[:batch_size].present? ? args[:batch_size] : DEFAULT_BATCH_SIZE
-        @school_ids = args[:school_id]
-        @district_ids = args[:district_id]
-        @location = args[:location]
-        @name = args[:name]
-      end
+      arguments = parse_arguments
+      usage unless arguments.present?
+        @states = arguments[:states]
+        @feed_names = arguments[:feed_names]
+        @batch_size = arguments[:batch_size].present? ? arguments[:batch_size] : DEFAULT_BATCH_SIZE
+        @school_ids = arguments[:school_id]
+        @district_ids = arguments[:district_id]
+        @location = arguments[:location]
+        @name = arguments[:name]
+
     end
 
     def generate

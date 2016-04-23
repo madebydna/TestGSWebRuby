@@ -17,6 +17,8 @@ module FeedHelper
     return hash
   end
 
+
+
   def get_feed_name(feed, index)
     feed_location = @location.present? && @location[index].present?  ? @location[index] : ''
     feed_name = @name.present? && @name[index].present? ? @name[index] : FEED_NAME_MAPPING[feed]
@@ -55,44 +57,34 @@ module FeedHelper
     state.upcase + test_id.to_s.rjust(5, '0')
   end
 
+  def options_for_generating_all_feeds
+    [{  states: all_states, feed_names: all_feeds}]
+ end
+
   def parse_arguments
-    # Returns false or parsed arguments
-    binding.pry
+    # To Generate All feeds for all states in current directory do rails runner script/feeds/feed_scripts/generate_feed_files.rb all
     if ARGV[0] == 'all' && ARGV[1].nil?
-      [{
-           states: all_states,
-           feed_names: all_feeds
-       }]
+      OPTIONS_FOR_GENERATING_ALL_FEEDS
     else
-      args = []
-      ARGV.each_with_index do |arg, i|
-        feed_name, state, school_id, district_id, location, name, batch_size= arg.split(':')
-        binding.pry
-        state = state == 'all' ? all_states : state.split(',')
-        batch_size = batch_size if batch_size.present?
-        return false unless (state-all_states).empty?
-        feed_name ||= 'none_given'
-        feed_name = feed_name.split(',')
-        feed_name = all_feeds if feed_name == ['all']
-        return false unless (feed_name-all_feeds).empty?
-
-        school_id = school_id.present? ? school_id.split(',') : school_id
-        district_id = district_id.present? ? district_id.split(',') : district_id
-        location = location.present? ? location.split(',') : location
-        name = name.present? ? name.split(',') : name
-
-        args[i] = {}
-        args[i][:states] = state
-        args[i][:feed_names] = feed_name
-        args[i][:school_id] = school_id if school_id.present?
-        args[i][:district_id] = district_id if district_id.present?
-        args[i][:location] = location if location.present?
-        args[i][:name] = name if name.present?
-        args[i][:batch_size] = batch_size if batch_size.present?
-
-      end
-      args
+      feed_name, state, school_id, district_id, location, name, batch_size= ARGV[0].try(:split, ':')
+      state = state == 'all' ? all_states : split_argument(state)
+      feed_name = feed_name == 'all' ? all_feeds : split_argument(feed_name)
+      return false unless (feed_name-all_feeds).empty?
+      return false unless (state-all_states).empty?
+      args = {
+            :states => state,
+            :feed_names => feed_name,
+            :school_id => split_argument(school_id),
+            :district_id => split_argument(district_id),
+            :location => split_argument(location),
+            :name => split_argument(name),
+            :batch_size => batch_size
+          }
     end
+  end
+
+  def split_argument(argument)
+    argument.try(:split, ",") || argument
   end
 
   def write_xml_tag(data, tag_name, xml)
