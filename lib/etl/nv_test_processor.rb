@@ -1,32 +1,55 @@
 # coding: utf-8
 require "set"
-require_relative "test_processor"
+load "test_processor.rb"
 
-# NOTES:
-# - What to do with new schools
+# TODO
+# - Write new CRT schools to file
+# - Add renames and special cases for HSPE schools
+# - Write new HSPE schools to file
 
-# Schools / Districts not included in 2014 nv_keymap.txt
-# "Eureka"
-# "Lincoln"
+# Schools / Districts not included in
+# "Eureka" - Duplicate names exist in nv_crt_2014.txt
+# "Lincoln" - Duplicate names exist in nv_crt_2014.txt
 # "University Schools" - NEW
-# "WCSD" - Washoe County School District…?
-# "Allen ES"
-# "Allen ES"
+# "WCSD" - Rename Washoe County School District…?
+# "Allen ES" - Duplicate names exist in nv_crt_2014.txt
 # "American Prep Academy" - NEW, not in 2014 file
 # "Beatty ES" - we think this is the same school (K-8), but there is a “Beatty Middle” in the 2014 file
-# "Beatty ES"
 # "Cold Springs MS" - “Cold Springs Middle” is a duplicate in the 2014 file
 # "Doral Academy" - NEW, not in 2014 file
-# "Eureka Elementary School"
+# "Eureka Elementary School" - Two Elementary schools exist in nv_crt_2014.txt
 # "Founders Academy of Las Vegas" - NEW, not in 2014 file
 # "Imagine Schools at Mountain Vi" - Imagine s at Mountain Vi
 # "Learning Bridge" - NEW, not in 2014 file
 # "Lemelson STEM Academy ES" - NEW, not in 2014 file
-# "Lincoln ES"
 # "Mater Academy of Nevada" - NEW, not in 2014 file
 # "O'Roarke ES" - O%Roarke
 # "Smith Valley Schools" - Smith Valley s
 # "SNACS" - NEW, not in 2014 file
+
+# Entities not included in 2014 HSPE
+# University Schools - New
+# WCSD - Rename
+# ASPIRE Academy High School - New
+# CSNHS East - Rename
+# CSNHS South - Rename
+# CSNHS West - Rename
+# Eagle Ridge High School - New
+# Innovations Charter SEC - New
+# Innovations HS - New
+# Juvenile Detention 3-12 - New
+# Leadership Academy of Nevada - New
+# Lincoln Co Alternative - New
+# Nevada Learning Academy at CCS - New
+# NNVA - New
+# Pathways HS (Alt) - Rename
+# Pioneer HS Alt - Rename
+# Rainshadow CCHS - Rename
+# Red Rock Academy - New
+# SSCS - Rename of spanish springs?
+# SVHS - Rename of spring valley?
+# Turning Point - New
+# WPHS - Rename of west prep?
 
 class NVTestProcessor < GS::ETL::TestProcessor
   # Notes about duplicate schools
@@ -44,13 +67,13 @@ class NVTestProcessor < GS::ETL::TestProcessor
         'White' => 8,
         'Two or More Races' => 21,
         'Asian' => 2,
+        'Unknown Ethnicity' => 38,
         'Pacific Islander' => 7,
         'ELL' => 15,
         'Not ELL' => 16,
         'FRL' => 9,
         'Not FRL' => 10
     }
-    @name_id_map_path = File.join(@input_dir, 'nv_name_id_map.txt')
     @subject_id_map = {
       'reading' => '2',
       'writing' => '3',
@@ -72,49 +95,47 @@ class NVTestProcessor < GS::ETL::TestProcessor
       '__exceeds_standard' => 'exceeds_standard'
     }
     @current_entity_info = nil
+    @entity_hashes = {}
+
+    @renames = {
+      crt: {
+        'beatty middle' => 'beatty es',
+        'cold springs middle' => 'cold springs ms',
+        'o%roarke' => 'o\'roarke es',
+        'imagine s at mountain vi' => 'imagine schools at mountain vi',
+        'washoe' => 'wcsd'
+      },
+      hspe: {}
+    }
+
+    @special_case_entities = {
+      crt: {
+        'eureka' => {id: '06', entity_level: 'district'},
+        'eureka elementary school' => {id: '06103', entity_level: 'school'},
+        'lincoln' => {id: '09', entity_level: 'district'},
+        'lincoln es' => {id: '02222', entity_level: 'school'}
+      },
+      hspe: {}
+    }
   end
 
   source(/CRT Grade [58] School.csv/, []) do |s|
-    s.transform('Add entity and breakdown ids', WithBlock) do |row|
-      group = row[:group]
-      if @current_entity_info && (breakdown_id = @breakdowns[group])
-        row.merge! breakdown: group, breakdown_id: breakdown_id
-        row.merge! @current_entity_info
-      elsif @current_entity_info = find_entity_info(group)
-        row.merge! breakdown_id: 1, breakdown: 'all'
-        row.merge! @current_entity_info
-      else
-        @current_entity_info = nil
-        if !@breakdowns[group] then puts group end
-      end
-    end
-      .transform('Transpose out science proficiency bands',
+    ems = entity_mapping_step(:crt)
+    s.add(ems)
+    ems.transform('Transpose out science proficiency bands',
         Transposer, :prof_subject, :value_float, *subject_prof_bands('science'))
       .transform('Fill test_data_type',
         Fill, test_data_type: 'crt', test_data_type_id: 90)
   end
 
-  # source('HSPE School.csv', [], max: nil) do |s|
-  #   s.transform('Add entity and breakdown ids', WithBlock) do |row|
-  #     group = row[:group]
-  #     if @current_entity_info && (breakdown_id = @breakdowns[group])
-  #       row.merge! breakdown: group, breakdown_id: breakdown_id
-  #       row.merge! @current_entity_info
-  #     elsif @current_entity_info = find_entity_info(group)
-  #       puts group
-  #       row.merge! breakdown_id: 1, breakdown: 'all'
-  #       row.merge! @current_entity_info
-  #     else
-  #       @current_entity_info = nil
-  #       if !@breakdowns[group] then end
-  #     end
-  #     nil
-  #   end
-  #     .transform('Transpose out science proficiency bands',
-  #       Transposer, :prof_subject, :value_float, *subject_prof_bands('science'))
-  #     .transform('Fill test_data_type',
-  #       Fill, test_data_type: 'crt', test_data_type_id: 90)
-  # end
+  xsource('HSPE School.csv', []) do |s|
+    ems = entity_mapping_step(:hspe)
+    s.add(ems)
+    ems.transform('Transpose out science proficiency bands',
+        Transposer, :prof_subject, :value_float, *subject_prof_bands('science'))
+      .transform('Fill test_data_type',
+        Fill, test_data_type: 'hspe', test_data_type_id: 91)
+  end
 
   shared do |s|
     s.transform('Split subject and proficiency band', WithBlock) do |row|
@@ -127,10 +148,28 @@ class NVTestProcessor < GS::ETL::TestProcessor
         row
     end
       .transform("Fill year", Fill, year: '2015')
-      .transform('', WithBlock) do |row|
-      row
-    end
+  end
 
+  def entity_mapping_step(type)
+    skipped_path = "#{type}_skipped.txt"
+    skipped_entities_dest = CsvDestination.new(input_filename(skipped_path))
+
+    WithBlock.new do |row|
+      group = row[:group]
+      if @current_entity_info && (breakdown_id = @breakdowns[group])
+        row.merge!(breakdown: group, breakdown_id: breakdown_id)
+        row.merge!(@current_entity_info)
+      elsif @current_entity_info = find_entity_info(group, type)
+        row.merge!(breakdown_id: 1, breakdown: 'all')
+        row.merge!(@current_entity_info)
+      else
+        @current_entity_info = nil
+        unless @breakdowns[group]
+          skipped_entities_dest.write({name: (p group)})
+        end
+        nil
+      end
+    end.tap { |s| s.description = 'Add entity and breakdown ids' }
   end
 
   def subject_prof_bands(*subjects)
@@ -139,49 +178,90 @@ class NVTestProcessor < GS::ETL::TestProcessor
     end.flatten
   end
 
-  def find_entity_info(name)
+  def find_entity_info(name, type)
     name = name.downcase
-    result = info_from_name[name]
-    until result || name.length == 0
+    reference_hash = entity_hash(type)
+    loop do
+      result = reference_hash[name]
       name.gsub!(/\s*\S+\Z/, '')
-      result = info_from_name[name]
+      if (result || name.length == 0)
+        break result
+      end
     end
-    result
   end
 
-  def info_from_name
-    if @info_from_name
-      @info_from_name
+  def entity_hash(type)
+    if @entity_hashes[type]
+      @entity_hashes[type]
     else
-      make_crt_name_id_map_file
-      @info_from_name = CsvSource.new(@name_id_map_path, [], col_sep: "\t")
-        .each_with_object({}) do |row, memo|
-          row = row.to_hash
-          entity_info = { entity_level: row[:entity_level] }
-
-          if row[:entity_level] == 'school'
-            entity_info.merge! school_name: row[:name], school_id: row[:id]
-          elsif row[:entity_level] == 'district'
-            entity_info.merge! district_name: row[:name], district_id: row[:id]
-          end
-          memo[row[:name]] = entity_info
-        end
+      make_name_id_map_file(type)
+      @entity_hashes[type] = entity_hash_from_file(type)
     end
   end
 
-  def make_crt_name_id_map_file
-    return if File.exist?(@name_id_map_path)
-    source = CsvSource.new('data/nv/nv_crt_2014.txt', [], col_sep: "\t")
+  def entity_hash_from_file(type)
+    CsvSource.new(name_id_map_path(type), [], col_sep: "\t")
+      .each_with_object({}) do |row, memo|
+        entity_info = { entity_level: row[:entity_level] }
+
+        if row[:entity_level] == 'school'
+          entity_info.merge! school_name: row[:name], school_id: row[:id]
+        elsif row[:entity_level] == 'district'
+          entity_info.merge! district_name: row[:name], district_id: row[:id]
+        end
+        memo[row[:name]] = entity_info
+    end.tap do |entity_hash|
+      @renames[type].each { |from, to| rename_key(entity_hash, from, to) }
+      entity_hash.merge! @special_case_entities[type]
+    end
+  end
+
+  def make_name_id_map_file(type)
+    map_path = name_id_map_path(type)
+    return if File.exist? map_path
+
+    duplicates_path = input_filename "#{type}_duplicates.txt"
+
+    source = CsvSource.new(map_source_path(type), [], col_sep: "\t")
     agg = source.transform("Generate school name and id mapping", NameMappingAggregator)
-    agg.destination('Output name / id keymap', CsvDestination, @name_id_map_path)
+
     source.run
-    agg.run
+
+    begin
+      map_dest = agg.transform('Select normal records', WithBlock) do |row|
+        row[:name] && row
+      end
+        .destination('Output name to id map', CsvDestination, map_path)
+
+      dup_dest = agg.transform('Select duplicate names', WithBlock) do |row|
+        row[:duplicate] && row
+      end
+        .destination('Output duplicate names', CsvDestination, duplicates_path)
+
+      agg.run
+      [map_dest, dup_dest].each(&:close)
+    rescue
+      [map_path, duplicates_path].each { |path| File.delete path }
+      raise
+    end
+  end
+
+  def rename_key(hash, from, to)
+    hash[to] = hash.delete(from)
+  end
+
+  def name_id_map_path(type)
+    input_filename "#{type.to_s}_nv_name_id_map.txt"
+  end
+
+  def map_source_path(type)
+    input_filename "nv_#{type.to_s}_2014.txt"
   end
 
   def config_hash
     {
         source_id: 8,
-        state: 'wa',
+        state: 'nv',
         notes: 'DXT-1558: WA 2015 SBAC',
         url: 'http://reportcard.ospi.k12.wa.us/DataDownload.aspx',
         file: 'wa/2015/output/wa.2015.1.public.charter.[level].txt',
@@ -194,20 +274,30 @@ end
 class NameMappingAggregator < GS::ETL::Source
 
   def initialize
-    @schools_seen = {}
-    @dup_names = Set.new(["Eureka", "Lincoln", "Allen"])
+    @entities_seen = {}
   end
 
   def process(row)
-    return if (@schools_seen.include?(row[:name]) || @dup_names.include?(row[:name]))
-    @schools_seen[row[:name]] = [row[:id], row[:entity]]
+    if same_name_entities = @entities_seen[row[:name]]
+      unless same_name_entities.include? row[:id]
+        same_name_entities[row[:id]] = row[:entity]
+      end
+    else
+      @entities_seen[row[:name]] = { row[:id] => row[:entity] }
+    end
     nil
   end
 
   def each
-    @schools_seen.each do |k, v|
-      row = { name: k.downcase, id: v[0], entity_level: v[1]}
-      yield row
+    @entities_seen.each do |name, hash_by_id|
+      if hash_by_id.count == 1
+        id, entity_level = hash_by_id.each.first
+        yield({ name: name.downcase, id: id, entity_level: entity_level })
+      else
+        hash_by_id.each do |id, entity_leve|
+          yield({ duplicate: name.downcase, id: id, entity_level: entity_level })
+        end
+      end
     end
   end
 end
