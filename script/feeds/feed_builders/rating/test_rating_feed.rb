@@ -93,7 +93,7 @@ module FeedBuilders
     end
     def transpose_data_for_xml(ratings_data,entity,entity_level)
       parsed_data_for_xml = []
-      ratings_data.try(:each)do |data|
+      ratings_data.reject(&:nil?).try(:each)do |data|
         ratings_data = create_test_rating_hash_for_xml(data, entity, entity_level)
         parsed_data_for_xml.push(ratings_data)
       end

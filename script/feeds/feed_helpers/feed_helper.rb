@@ -57,15 +57,17 @@ module FeedHelper
 
   def parse_arguments
     # Returns false or parsed arguments
+    binding.pry
     if ARGV[0] == 'all' && ARGV[1].nil?
       [{
            states: all_states,
-           feed_name: all_feeds
+           feed_names: all_feeds
        }]
     else
       args = []
       ARGV.each_with_index do |arg, i|
         feed_name, state, school_id, district_id, location, name, batch_size= arg.split(':')
+        binding.pry
         state = state == 'all' ? all_states : state.split(',')
         batch_size = batch_size if batch_size.present?
         return false unless (state-all_states).empty?
