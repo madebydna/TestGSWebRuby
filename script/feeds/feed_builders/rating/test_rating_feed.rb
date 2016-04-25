@@ -43,22 +43,15 @@ module FeedBuilders
     end
 
     def process_school_data_for_feed(school)
-      school_ratings_cache_data =  FeedBuilders::TestRatingFeedDataReader.new({school:school}).get_school_ratings_cache_data
-      school_rating_id_cache_data = get_rating_data_for_feed(school_ratings_cache_data)
+      school_rating_id_cache_data = FeedBuilders::TestRatingFeedDataReader.new({school:school,ratings_id_for_feed: @ratings_id_for_feed}).get_school_data
       school_data_for_feed = transpose_data_for_xml(school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
       school_data_for_feed
     end
 
     def process_district_data_for_feed(district)
-      district_ratings_cache_data = FeedBuilders::TestRatingFeedDataReader.new({district:district}).get_district_ratings_cache_data
-
-      district_rating_id_cache_data = get_rating_data_for_feed(district_ratings_cache_data)
+      district_rating_id_cache_data =  FeedBuilders::TestRatingFeedDataReader.new({district:district,ratings_id_for_feed: @ratings_id_for_feed}).get_district_data
       district_data_for_feed= transpose_data_for_xml(district_rating_id_cache_data, district, ENTITY_TYPE_DISTRICT)
       district_data_for_feed
-    end
-    def get_rating_data_for_feed(ratings_cache_data)
-      data = []
-      data.push(ratings_cache_data.try(:find) { |h| h["data_type_id"]== @ratings_id_for_feed })
     end
 
     def process_district_batch_data_for_feed(districts_cache_data)
@@ -100,9 +93,6 @@ module FeedBuilders
       }
 
     end
-    # def get_state_master_data_ratings
-    #   query_results =TestDataSet.ratings_config_for_state(@state,@ratings_id_for_feed)
-    # end
 
     def generate_xml_rating_feed
       root_element = @root_element

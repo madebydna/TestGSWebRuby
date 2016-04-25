@@ -17,14 +17,49 @@ module FeedHelper
     return hash
   end
 
+  def options_for_generating_all_feeds
+    [{  states: all_states, feed_names: all_feeds}]
+  end
 
+  def parse_arguments
+    # To Generate All feeds for all states in current directory do rails runner script/feeds/feed_scripts/generate_feed_files.rb all
+    if ARGV[0] == 'all' && ARGV[1].nil?
+      OPTIONS_FOR_GENERATING_ALL_FEEDS
+    else
+      feed_name, state, school_id, district_id, location, name, batch_size= ARGV[0].try(:split, ':')
+      state = state == 'all' ? all_states : split_argument(state)
+      feed_name = feed_name == 'all' ? all_feeds : split_argument(feed_name)
+      return false unless (feed_name-all_feeds).empty?
+      return false unless (state-all_states).empty?
+      args = {
+          :states => state,
+          :feed_names => feed_name,
+          :school_id => split_argument(school_id),
+          :district_id => split_argument(district_id),
+          :location => split_argument(location),
+          :name => split_argument(name),
+          :batch_size => batch_size
+      }
+    end
+  end
+
+  def split_argument(argument)
+    argument.try(:split, ",") || argument
+  end
 
   def get_feed_name(feed, index)
     feed_location = @location.present? && @location[index].present?  ? @location[index] : ''
     feed_name = @name.present? && @name[index].present? ? @name[index] : FEED_NAME_MAPPING[feed]
     generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"_#{@state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
     xml_name =feed_location+generated_feed_file_name
+  end
 
+  def usage
+    abort "\n\nUSAGE: rails runner script/generate_feed_files(all | [feed_name]:[state]:[school_id]:[district_id]:[location]:[name]:[batch-size])
+
+    Ex: rails runner script/generate_feed_files.rb test_scores:ca:1,2:1,2:'/tmp/':test_score_feed_test:5 (generates test_score file for state of CA , school id 1,2 , district id 1,2 at location /tmp/ with name as  <state>_test_score_feed batching 5 schools at a time)
+
+    Possible feed  files: #{all_feeds.join(', ')}\n\n"
   end
 
   def transpose_ratings_description(data_type_id)
@@ -57,50 +92,6 @@ module FeedHelper
     state.upcase + test_id.to_s.rjust(5, '0')
   end
 
-  def options_for_generating_all_feeds
-    [{  states: all_states, feed_names: all_feeds}]
- end
-
-  def parse_arguments
-    # To Generate All feeds for all states in current directory do rails runner script/feeds/feed_scripts/generate_feed_files.rb all
-    if ARGV[0] == 'all' && ARGV[1].nil?
-      OPTIONS_FOR_GENERATING_ALL_FEEDS
-    else
-      feed_name, state, school_id, district_id, location, name, batch_size= ARGV[0].try(:split, ':')
-      state = state == 'all' ? all_states : split_argument(state)
-      feed_name = feed_name == 'all' ? all_feeds : split_argument(feed_name)
-      return false unless (feed_name-all_feeds).empty?
-      return false unless (state-all_states).empty?
-      args = {
-            :states => state,
-            :feed_names => feed_name,
-            :school_id => split_argument(school_id),
-            :district_id => split_argument(district_id),
-            :location => split_argument(location),
-            :name => split_argument(name),
-            :batch_size => batch_size
-          }
-    end
-  end
-
-  def split_argument(argument)
-    argument.try(:split, ",") || argument
-  end
-
-  def write_xml_tag(data, tag_name, xml)
-    if data.present?
-      data_for_xml = data.reject(&:blank?)
-      data_for_xml.each do |tag_data|
-        xml.tag! tag_name do
-          tag_data.each do |key, value|
-            xml.tag! key.to_s.gsub("_", "-"), value
-          end
-        end
-      end
-    end
-  end
-
-
 
   def transpose_url(entity,entity_level)
     begin
@@ -114,9 +105,6 @@ module FeedHelper
       url = state_url(state_params(@state))
     end
   end
-
-
-
 
   def transpose_test_score(band, data,entity_level)
     if (entity_level == ENTITY_TYPE_STATE)
@@ -162,12 +150,19 @@ module FeedHelper
 
   end
 
-  def usage
-    abort "\n\nUSAGE: rails runner script/generate_feed_files(all | [feed_name]:[state]:[school_id]:[district_id]:[location]:[name]:[batch-size])
 
-    Ex: rails runner script/generate_feed_files.rb test_scores:ca:1,2:1,2:'/tmp/':test_score_feed_test:5 (generates test_score file for state of CA , school id 1,2 , district id 1,2 at location /tmp/ with name as  <state>_test_score_feed batching 5 schools at a time)
 
-    Possible feed  files: #{all_feeds.join(', ')}\n\n"
+  def write_xml_tag(data, tag_name, xml)
+    if data.present?
+      data_for_xml = data.reject(&:blank?)
+      data_for_xml.each do |tag_data|
+        xml.tag! tag_name do
+          tag_data.each do |key, value|
+            xml.tag! key.to_s.gsub("_", "-"), value
+          end
+        end
+      end
+    end
   end
 
 end
