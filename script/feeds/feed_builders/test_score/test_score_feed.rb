@@ -1,12 +1,12 @@
 require_relative '../../../feeds/feed_helpers/feed_helper'
 require_relative '../../../feeds/feed_helpers/feed_data_helper'
 
+require_relative 'test_score_feed_data_reader'
 
 module FeedBuilders
   class TestScoreFeed
     include FeedHelper
     include FeedDataHelper
-
 
     def initialize(attributes = {})
       @state = attributes[:state]
@@ -23,9 +23,9 @@ module FeedBuilders
       puts "--- Start Time for generating feed: FeedType: #{@feed_type}  for state #{@state} --- #{Time.now}"
       # xsd_schema ='greatschools-test.xsd'
       #Generate State Test Master Data
-      @state_test_infos_for_feed = get_state_test_master_data
+      @state_test_infos_for_feed = FeedBuilders::TestScoreFeedDataReader.new({state: @state}).get_master_data
       # Generate District Test Data From Test Tables
-      state_test_results = get_state_test_data
+      state_test_results = FeedBuilders::TestScoreFeedDataReader.new({state: @state}).get_state_data
       # Translating State Test  data to XML for State
       @state_data_for_feed = transpose_state_data_for_feed(state_test_results)
       # Write to XML File
@@ -33,34 +33,6 @@ module FeedBuilders
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
       puts "--- Time taken to generate feed : FeedType: #{@feed_type}  for state #{@state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
 
-    end
-
-    def get_state_test_master_data
-      state_test_infos = []
-      state = @state
-      TestDescription.where(state: state).find_each do |test|
-        data_type_id = test.data_type_id
-        test_info = TestDataType.where(:id => data_type_id).first
-        test_data_set_info = TestDataSet.on_db(state.downcase.to_sym).
-            where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
-        if test_data_set_info.present?
-          state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
-                             :test_id => data_type_id,
-                             :test_name => test_info["description"],
-                             :test_abbrv => test_info["name"],
-                             :scale => test["scale"],
-                             :most_recent_year => test_data_set_info["year"],
-                             :level_code => test_data_set_info["level_code"],
-                             :description => test["description"]
-          }
-          state_test_infos.push(state_test_info)
-        end
-      end
-      state_test_infos
-    end
-
-    def get_state_test_data
-      TestDataSet.test_scores_for_state(@state)
     end
 
     def transpose_state_data_for_feed(state_test_data)
@@ -136,7 +108,7 @@ module FeedBuilders
 
     def transpose_school(school)
       school_data_for_feed = {}
-      school_test_data = get_school_tests_cache_data(school)
+      school_test_data = FeedBuilders::TestScoreFeedDataReader.new({school: school}).get_school_data
       school_test_data.try(:each)do |test_id, data|
           school_data_for_feed = transpose_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
       end
@@ -194,19 +166,11 @@ module FeedBuilders
 
     def transpose_district(district)
       district_data_for_feed = {}
-      district_test_data = get_district_tests_cache_data(district)
+      district_test_data = FeedBuilders::TestScoreFeedDataReader.new({district: district}).get_district_data
         district_test_data.try(:each) do |test_id, data|
           district_data_for_feed = transpose_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
         end
       district_data_for_feed
     end
-
-    def get_school_tests_cache_data(school)
-      school.try(:school_cache).cache_data['feed_test_scores']
-    end
-    def get_district_tests_cache_data(district)
-      district.try(:district_cache).cache_data['feed_test_scores']
-    end
-
   end
 end
