@@ -8,6 +8,12 @@ module FeedBuilders
     include FeedHelper
     include FeedDataHelper
 
+    @@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
+    @@test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
+    @@test_data_breakdowns = Hash[TestDataBreakdown.all.map { |bd| [bd.id, bd] }]
+    @@test_data_breakdowns_name_mapping = Hash[TestDataBreakdown.all.map { |bd| [bd.name, bd] }]
+
+
     def initialize(attributes = {})
       @state = attributes[:state]
       @school_batches = attributes[:school_batches]
@@ -37,20 +43,17 @@ module FeedBuilders
 
     def transpose_state_data_for_feed(state_test_data)
       state_level_test_data = []
-      proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
-      test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
-      test_data_breakdowns = Hash[TestDataBreakdown.all.map { |bd| [bd.id, bd] }]
       state_test_data.each do |data|
-        band = proficiency_bands[data["proficiency_band_id"]].present? ? proficiency_bands[data["proficiency_band_id"]].name : nil
+        band = @@proficiency_bands[data["proficiency_band_id"]].present? ? @@proficiency_bands[data["proficiency_band_id"]].name : nil
         entity_level = ENTITY_TYPE_STATE
         grade = data["grade_name"]
         year = data["year"]
         level = data["level_code"]
         test_id =data["data_type_id"]
-        subject = test_data_subjects[data.subject_id].present? ? test_data_subjects[data.subject_id].name : ''
-        breakdown_name = test_data_breakdowns[data.breakdown_id].present? ? test_data_breakdowns[data.breakdown_id].name : ''
+        subject = @@test_data_subjects[data.subject_id].present? ? @@test_data_subjects[data.subject_id].name : ''
+        breakdown_name = @@test_data_breakdowns[data.breakdown_id].present? ? @@test_data_breakdowns[data.breakdown_id].name : ''
         breakdown_id = data["breakdown_id"]
-        test_data = create_hash_for_xml(band, data, nil, entity_level, grade, level, subject, test_id, year, breakdown_name, breakdown_id)
+        test_data = create_hash_for_xml(band, data, nil, entity_level, grade, level, subject, test_id, year, breakdown_id,breakdown_name )
         state_level_test_data.push(test_data)
       end
       state_level_test_data
@@ -68,32 +71,32 @@ module FeedBuilders
                    :proficiency_band_id => transpose_band_id(band, data, entity_level),
                    :proficiency_band_name => transpose_band_name(band),
                    :number_tested => transpose_number_tested(data),
-                   :breakdown_id => breakdown_id,
+                   :breakdown_id => transpose_breakdown_id(breakdown_id,breakdown_name,@@test_data_breakdowns_name_mapping),
                    :breakdown_name => breakdown_name
       }
     end
 
     #Todo
     def transpose_data_for_xml(all_test_score_data, entity, test_id, entity_level)
-      # parsed_data_for_xml = []
-      # complete_test_score_data_for_breakdown_all = all_test_score_data.present? && all_test_score_data["All"].present? ? all_test_score_data["All"]["grades"] : nil
-      # complete_test_score_data_for_breakdown_all.try(:each) do |grade, grade_data|
-      #   grade_data_for_all_levels = grade_data["level_code"]
-      #   grade_data_for_all_levels.try(:each) do |level, subject_data|
-      #     subject_data.try(:each) do |subject, years_data|
-      #       years_data.try(:each) do |year, data|
-      #         # Get Band Names from Cache
-      #         band_names = get_band_names(data)
-      #         # Get Data For All Bands
-      #         band_names.try(:each) do |band|
-      #           test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year)
-      #           parsed_data_for_xml.push(test_data)
-      #         end
-      #       end
-      #     end
-      #   end
-      # end
-      # parsed_data_for_xml
+      parsed_data_for_xml = []
+      all_test_score_data.try(:each) do |breakdown,breakdown_data|
+        breakdown_data["grades"].try(:each) do |grade, grade_data|
+          grade_data["level_code"].try(:each) do |level, subject_data|
+          subject_data.try(:each) do |subject, years_data|
+            years_data.try(:each) do |year, data|
+              # Get Band Names from Cache
+              band_names = get_band_names(data)
+              # Get Data For All Bands
+              band_names.try(:each) do |band|
+                test_data = create_hash_for_xml(band, data, entity, entity_level, grade, level, subject, test_id, year,nil,breakdown)
+                parsed_data_for_xml.push(test_data)
+              end
+            end
+          end
+        end
+      end
+      end
+      parsed_data_for_xml
     end
 
     def get_band_names(data)
@@ -133,10 +136,9 @@ module FeedBuilders
           # Generate state test data tag
           write_xml_tag(@state_data_for_feed, 'test-result', xml)
           #Generate School Info
-          #write_school_info(xml)
+          write_school_info(xml)
           #Generate District Info
-          #write_district_info(xml)
-
+          write_district_info(xml)
         end
       }
     end

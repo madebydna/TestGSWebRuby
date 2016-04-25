@@ -92,6 +92,11 @@ module FeedHelper
     state.upcase + test_id.to_s.rjust(5, '0')
   end
 
+  def transpose_breakdown_id(breakdown_id,breakdown_name,test_data_breakdowns)
+   breakdown_name = breakdown_name == 'All' ? 'All students' : breakdown_name
+   breakdown_id.present?  ?  breakdown_id : test_data_breakdowns[breakdown_name].try(:id)
+
+  end
 
   def transpose_url(entity,entity_level)
     begin
