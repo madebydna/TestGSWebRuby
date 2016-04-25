@@ -67,14 +67,14 @@ class OHTestProcessor < GS::ETL::TestProcessor
   end
 
   def tab_delimited_source(file)
-    source = ExcelSource.new(file, col_sep: "\t", max: @options[:max])
+    source = ExcelSource.new(file, nil, col_sep: "\t", max: @options[:max])
     file_name = file.first.split('/').last
     source.description = "Read #{file_name}"
     source
   end
 
   def csv_source(file)
-    source = CsvSource.new(file, max: @options[:max])
+    source = CsvSource.new(file, nil, max: @options[:max])
     file_name = file.first.split('/').last
     source.description = "Read #{file_name}"
     source
