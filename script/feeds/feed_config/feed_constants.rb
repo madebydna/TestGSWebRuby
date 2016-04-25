@@ -4,6 +4,7 @@ module FeedConstants
 
     FEED_NAME_MAPPING = {
         'test_scores' => 'local-gs-test-feed',
+        'test_subgroup' => 'local-gs-test-subgroup-feed',
         'test_rating' => 'local-gs-test-rating-feed',
         'official_overall' => 'local-gs-official-overall-rating'
     }
@@ -15,11 +16,13 @@ module FeedConstants
 
     FEED_TO_SCHEMA_MAPPING = {
         'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
+        'test_subgroup' => 'http://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
         'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
         'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd'
     }
     FEED_TO_ROOT_ELEMENT_MAPPING = {
         'test_scores' => 'gs-test-feed',
+        'test_subgroup' => 'gs-test-subgroup-feed',
         'test_rating' => 'gs-test-rating-feed',
         'official_overall' => 'gs-official-overall-rating-feed'
     }
@@ -37,7 +40,7 @@ module FeedConstants
     DEFAULT_BATCH_SIZE = 300
 
     def all_feeds
-      ['test_scores', 'test_rating','official_overall']
+      ['test_scores', 'test_subgroup', 'test_rating','official_overall']
     end
 
     def all_states

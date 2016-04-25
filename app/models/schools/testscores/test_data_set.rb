@@ -104,6 +104,25 @@ class TestDataSet < ActiveRecord::Base
     .with_display_targets('feed')
   end
 
+  def self.test_scores_subgroup_for_state(state)
+    TestDataSet.on_db(state.downcase.to_sym)
+        .select("TestDataSet.data_type_id as data_type_id,
+             TestDataSet.year,
+             TestDataSet.subject_id,
+             TestDataSet.breakdown_id,
+             TestDataSet.grade as grade_name,
+             TestDataSet.level_code as level_code,
+             TestDataSet.id as data_set_id,
+             TestDataStateValue.value_float as state_value_float,
+             TestDataStateValue.value_text as state_value_text,
+             TestDataSet.proficiency_band_id as proficiency_band_id,
+             TestDataStateValue.number_tested as number_students_tested ")
+        .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
+        .where('TestDataStateValue.active = ?',1)
+        .active
+        .with_display_targets('feed')
+  end
+
   def self.base_performance_query(school)
     TestDataSet.on_db(school.shard)
       .select("*,TestDataSet.id as data_set_id,

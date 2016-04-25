@@ -40,5 +40,9 @@ module FeedBuilders
     def get_state_data
       TestDataSet.test_scores_for_state(@state)
     end
+
+    def get_state_subgroup_data
+      TestDataSet.test_scores_subgroup_for_state(@state)
+    end
   end
 end
