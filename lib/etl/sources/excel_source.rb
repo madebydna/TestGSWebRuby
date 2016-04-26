@@ -21,7 +21,7 @@ class ExcelSource < GS::ETL::Source
 
   def each(context={})
     max = self.max || context[:max]
-    input_files.each do |file|
+    input_files(context[:dir]).each do |file|
       xlsx = ::Roo::Excelx.new(file)
       xlsx.each_with_index(header_search: [/./], pad_cell: true) do |row_as_hash, row_num|
         break if row_num == max

@@ -41,7 +41,7 @@ class CsvSource < GS::ETL::Source
 
   def each(context={})
     max = self.max || context[:max]
-    input_files.each do |file|
+    input_files(context[:dir]).each do |file|
       CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
         enum = max ? csv.first(max) : csv
         enum.each_with_index do |csv_row, row_num|
