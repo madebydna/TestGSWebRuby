@@ -33,7 +33,7 @@ describe GS::ETL::Source do
       no_context_source.add(child_step)
     end
 
-    it 'propagates its records directly to child nodes' do
+    it 'propagates its records directly to child nodes without processing' do
       expect(child_step).to receive(:propagate).with(1)
       no_context_source.run
     end

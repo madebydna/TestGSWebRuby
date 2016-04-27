@@ -1,7 +1,48 @@
 require_relative '../step'
+require_relative '../row'
 
 describe GS::ETL::Step do
-  subject { described_class.new }
+
+  let(:fake_step_class) { Class.new(described_class) }
+
+  describe '#add_step' do
+    it 'returns an instance of given step class' do
+      expect(subject.add_step('A description', fake_step_class)).to be_a(fake_step_class)
+    end
+
+    it 'adds the new step as a child' do
+      new_step = subject.add_step('A description', fake_step_class)
+      expect(subject.children.size).to eq(1)
+      expect(subject.children.first).to eq(new_step)
+    end
+  end
+
+  describe '#log_and_process' do
+    let(:logger) { double(log: nil) }
+
+    before do
+      allow(subject).to receive(:logger).and_return(logger)
+    end
+
+    it 'should not do anything if row is nil' do
+      subject.log_and_process(nil)
+      expect(logger).to_not have_received(:log)
+    end
+
+    it 'when given row, it should record event and process row' do
+      row = {foo: :bar}
+      subject.log_and_process(row)
+      stub_const('GS::ETL::Logging', double(logger: logger))
+      expect(logger).to have_received(:log).with(
+        include(
+          id: subject.id,
+          step: GS::ETL::Step,
+          key: 'Implement #event_key on GS::ETL::Step',
+          value: :executed
+        )
+      )
+    end
+  end
 
   describe '#propagate' do
     let(:value) { double('value') }
@@ -32,14 +73,16 @@ describe GS::ETL::Step do
     end
 
     context 'with multiple children' do
-      let(:child_steps) do (1..3).map { described_class.new } end
+      let(:child_steps) do
+        (1..3).map { described_class.new }
+      end
 
       before do
         allow(value).to receive(:clone).and_return(0, 1, 2)
         child_steps.each { |step| subject.add(step) }
       end
 
-      it 'clones the result of propagated_action' do
+      it 'clones the results of the propagated_action' do
         child_steps.each_with_index do |child, index|
           expect(child).to receive(:propagate).with([index]) do |*args, &block|
             expect(block).to eq propagated_action
@@ -47,6 +90,37 @@ describe GS::ETL::Step do
         end
         invoke
       end
+    end
+  end
+
+  describe '#record' do
+    let(:logger) { double(log: nil) }
+    before do
+      allow(subject).to receive(:logger).and_return(logger)
+    end
+
+    it 'tells the event log to process (with correct input data)' do
+      subject.id = 10
+      event_hash = {
+        id: 10,
+        step: GS::ETL::Step.class,
+        key: 'my key',
+        value: 'val'
+      }
+      subject.record(GS::ETL::Row.new({}, 1), 'val', 'my key')
+      expect(logger).to have_received(:log).with(include(event_hash))
+    end
+  end
+
+  describe '#add' do
+    let(:step) { GS::ETL::Step.new }
+    it 'should add a child step' do
+      subject.add(step)
+      expect(subject.children.first).to eq(step)
+    end
+    it 'should set the step''s parent to this step' do
+      subject.add(step)
+      expect(step.parents).to include(subject)
     end
   end
 end
