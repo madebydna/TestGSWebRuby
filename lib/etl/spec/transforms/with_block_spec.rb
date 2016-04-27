@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/with_block'
 
 describe WithBlock do
   let(:block) do

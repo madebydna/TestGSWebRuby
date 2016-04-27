@@ -1,17 +1,21 @@
-require 'spec_helper'
+require_relative '../../transforms/hash_lookup'
 
-shared_example 'should record value as ignored' do
-  ignored_key = "foo:alfdj"
-  expect(transformer).to receive(:record).with(be_kind_of(Hash), :executed, ignored_key)
-  expect(transformer).to receive(:record).with(be_kind_of(Hash), :"alfdj ignored", ignored_key)
-  subject[:foo]
+RSpec.shared_examples 'record ignored values' do
+  it 'should record value as ignored' do
+    ignored_key = "foo:alfdj"
+    expect(transformer).to receive(:record).with(be_kind_of(Hash), :executed, ignored_key)
+    expect(transformer).to receive(:record).with(be_kind_of(Hash), :"alfdj ignored", ignored_key)
+    subject[:foo]
+  end
 end
 
-shared_example 'should record value as not mapped' do
-  not_mapped_key = "foo:alfdj"
-  expect(transformer).to receive(:record).with(be_kind_of(Hash), :executed, not_mapped_key)
-  expect(transformer).to receive(:record).with(be_kind_of(Hash), :"* Not Mapped *", not_mapped_key)
-  subject[:foo]
+RSpec.shared_examples 'record unmapped values' do
+  it 'should record value as not mapped' do
+    not_mapped_key = "foo:alfdj"
+    expect(transformer).to receive(:record).with(be_kind_of(Hash), :executed, not_mapped_key)
+    expect(transformer).to receive(:record).with(be_kind_of(Hash), :"* Not Mapped *", not_mapped_key)
+    subject[:foo]
+  end
 end
 
 describe HashLookup do
@@ -75,16 +79,16 @@ describe HashLookup do
           it 'should not overwrite value' do
             expect(subject[:foo]).to eq(:alfdj)
           end
-          include_example 'should record value as ignored'
+          include_examples 'record ignored values'
         end
         context 'when value is not ignored' do
           it 'should not overwrite value' do
             expect(subject[:foo]).to eq(:alfdj)
           end
-          include_example 'should record value as not mapped'
+          include_examples 'record unmapped values'
         end
       end
-    end
+      end
 
     context 'when providing destination key' do
       let(:options) { { to: :bar} }
@@ -112,7 +116,7 @@ describe HashLookup do
               expect(subject.has_key?(:bar)).to eq(true)
               expect(subject[:bar]).to be_nil
             end
-            include_example 'should record value as not mapped'
+            include_examples 'record unmapped values'
           end
           context 'with value ignored' do
             let(:options) { { to: :bar, ignore: [:alfdj]} }
@@ -121,7 +125,7 @@ describe HashLookup do
               expect(subject.has_key?(:bar)).to eq(true)
               expect(subject[:bar]).to be_nil
             end
-            include_example 'should record value as ignored'
+            include_examples 'record ignored values'
           end
         end
       end

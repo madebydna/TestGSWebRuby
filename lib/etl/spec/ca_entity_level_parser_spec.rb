@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../ca_entity_level_parser.rb'
 
 describe CaEntityLevelParser do
   let(:subject) { CaEntityLevelParser.new(row).parse }
@@ -6,7 +6,7 @@ describe CaEntityLevelParser do
   context 'with a county' do
     let(:row) { { county_code: '01', district_code: '000', school_id: '0000' } }
     let(:output_row) { { county_code: '01', district_code: '000', school_id: '0000', entity_level: 'county' } }
-    
+
     it 'should add entity level column with county' do
       expect(subject).to eq(output_row)
     end
@@ -27,7 +27,7 @@ describe CaEntityLevelParser do
       expect(subject).to eq(output_row)
     end
   end
-    
+
   context 'with a state' do
     let(:row) { { county_code: '00', district_code: '000', school_id: '0000' } }
     let(:output_row) { { county_code: '00', district_code: '000', school_id: '0000', entity_level: 'state' } }
@@ -36,5 +36,3 @@ describe CaEntityLevelParser do
     end
   end
 end
-
-

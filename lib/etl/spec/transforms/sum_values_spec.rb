@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/sum_values'
 
 describe SumValues do
   let(:subject) { SumValues.new(output_column, *input_columns) }

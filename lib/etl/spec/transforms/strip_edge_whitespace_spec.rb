@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/strip_edge_whitespace'
 
 describe StripEdgeWhitespace do
 
@@ -20,7 +20,7 @@ describe StripEdgeWhitespace do
       expect(StripEdgeWhitespace.new(:foo, :both)).to be_a(StripEdgeWhitespace)
     end
   end
-  
+
   describe '#process' do
     subject { transformer.process(row) }
     context 'when which_sides is :left' do

@@ -1,5 +1,6 @@
-require 'spec_helper'
-describe TrimLeadingZeros do 
+require_relative '../../transforms/trim_leading_zeros'
+
+describe TrimLeadingZeros do
 
   describe '#new' do
     it 'should raise error if no field provided' do

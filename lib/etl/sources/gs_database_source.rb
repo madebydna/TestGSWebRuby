@@ -1,3 +1,4 @@
+require 'mysql2'
 require_relative '../source'
 
 class GsShardedDatabaseSource < GS::ETL::Source
@@ -10,7 +11,7 @@ class GsShardedDatabaseSource < GS::ETL::Source
     @state = state.downcase
     @table = table
     @where = where
-    @client = Mysql2::Client.new(:host => @host, :username=>'service', :password=>'service')
+    @client = ::Mysql2::Client.new(:host => @host, :username=>'service', :password=>'service')
   end
 
   def each

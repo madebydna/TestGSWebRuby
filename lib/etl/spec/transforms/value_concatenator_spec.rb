@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/value_concatenator'
 
 # 1 take ids or column names that we are concatenating
 # 2 create a new column name
@@ -18,5 +18,3 @@ describe ValueConcatenator do
   end
 
 end
-
-

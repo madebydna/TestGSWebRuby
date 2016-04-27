@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../nc_entity_level_parser'
 
 describe NcEntityLevelParser do
 

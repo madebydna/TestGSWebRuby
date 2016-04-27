@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../sharded_database_column_fetcher'
 
 describe  ShardedDatabaseColumnFetcher do
   context 'with no where statement' do
@@ -43,5 +43,3 @@ describe  ShardedDatabaseColumnFetcher do
     end
   end
 end
-
-

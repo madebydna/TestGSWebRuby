@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/delete_rows'
 
 describe DeleteRows do
   let(:subject) {DeleteRows.new(:field, *values_to_match).process(row) }

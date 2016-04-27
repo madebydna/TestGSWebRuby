@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/unique_values'
 
 describe UniqueValues do
   let(:subject) { UniqueValues.new(*fields) }

@@ -1,9 +1,8 @@
-require 'spec_helper'
-require 'step'
+require_relative '../../transforms/fill'
 
 describe Fill do
 
-  # will need to add #initialize test
+  #TODO: add #initialize test
 
   describe "#process" do
 
@@ -26,9 +25,7 @@ describe Fill do
       end
 
     end
-    
+
   end
 
 end
-
-

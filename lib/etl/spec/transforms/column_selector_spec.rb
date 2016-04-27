@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/column_selector'
 
 describe ColumnSelector do
   let(:subject) { ColumnSelector.new(*columns_selected).process(row) }

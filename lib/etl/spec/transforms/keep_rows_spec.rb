@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/keep_rows'
 
 describe KeepRows do
     let(:subject) { KeepRows.new(:field, *values_to_match).process(row) }

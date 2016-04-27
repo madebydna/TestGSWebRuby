@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../sources/csv_source'
 
 describe CsvSource do
   let(:files) { double('files') }

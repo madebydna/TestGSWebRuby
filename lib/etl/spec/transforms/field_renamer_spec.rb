@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../../transforms/field_renamer'
 
 describe FieldRenamer do
 
@@ -40,4 +40,3 @@ describe FieldRenamer do
   end
 
 end
-

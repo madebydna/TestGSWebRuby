@@ -5,7 +5,7 @@ class StripEdgeWhitespace
   end
 
   def process(row)
-    return row unless row[@field].present?
+    return row unless row[@field].is_a? String
 
     case @which_sides
       when :both
@@ -31,4 +31,3 @@ class StripEdgeWhitespace
     @field = field
   end
 end
-

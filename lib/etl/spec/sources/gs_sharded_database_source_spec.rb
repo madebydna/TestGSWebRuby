@@ -1,6 +1,7 @@
-require 'spec_helper'
+require_relative '../../sources/gs_sharded_database_source'
 
-describe GsShardedDatabaseSource do
+#FIXME: FactoryGirl not part of environment yet
+xdescribe GsShardedDatabaseSource do
   let(:query_response) do
     [ FactoryGirl.attributes_for(:demo_school, state_id: 1),
       FactoryGirl.attributes_for(:demo_school, state_id: 2) ]
@@ -34,4 +35,3 @@ describe GsShardedDatabaseSource do
     end
   end
 end
-

@@ -1,3 +1,5 @@
+require 'mysql2'
+
 class ShardedDatabaseColumnFetcher
   def initialize(host, state, table, column, where = '')
     @host = host
@@ -5,7 +7,7 @@ class ShardedDatabaseColumnFetcher
     @table = table
     @column = column
     @where = where
-    @client = Mysql2::Client.new(:host => @host, :username=>'service', :password=>'service')
+    @client = ::Mysql2::Client.new(:host => @host, :username=>'service', :password=>'service')
   end
 
   def column

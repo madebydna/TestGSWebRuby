@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative '../gs_school_ids_fetcher'
 
 describe GsSchoolIdsFetcher do
   let(:values_array) { [5] }
@@ -25,5 +25,3 @@ describe GsSchoolIdsFetcher do
     end
   end
 end
-
-
