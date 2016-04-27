@@ -4,7 +4,6 @@ load "test_processor.rb"
 
 # TODO
 # - Write new CRT schools to file
-# - Add renames and special cases for HSPE schools
 # - Write new HSPE schools to file
 
 # Schools / Districts not included in
@@ -28,6 +27,8 @@ load "test_processor.rb"
 # "SNACS" - NEW, not in 2014 file
 
 # Entities not included in 2014 HSPE
+# Clark - This seems to be a district...
+# Pershing - district?
 # University Schools - New
 # WCSD - Rename
 # ASPIRE Academy High School - New
@@ -46,10 +47,10 @@ load "test_processor.rb"
 # Pioneer HS Alt - Rename
 # Rainshadow CCHS - Rename
 # Red Rock Academy - New
-# SSCS - Rename of spanish springs?
-# SVHS - Rename of spring valley?
+# SSCS - New (spanish springs already exists)
+# SVHS - New (spring valley already exists)
 # Turning Point - New
-# WPHS - Rename of west prep?
+# WPHS - New (west prep already exists)
 
 class NVTestProcessor < GS::ETL::TestProcessor
   # Notes about duplicate schools
@@ -80,14 +81,14 @@ class NVTestProcessor < GS::ETL::TestProcessor
       'math' => '5',
       'science' => '25'
     }
-    @prof_id_map = {
+    @proficiency_id_map = {
       'null' => 'null',
       'emergent_developing' => '58',
       'approaches_standard' => '59',
       'meets_standard' => '60',
       'exceeds_standard' => '61'
     }
-    @prof_map = {
+    @proficiency_map = {
       '___proficient' => 'null',
       '__emergentdeveloping' => 'emergent_developing',
       '__approaches_standard' => 'approaches_standard',
@@ -105,7 +106,15 @@ class NVTestProcessor < GS::ETL::TestProcessor
         'imagine s at mountain vi' => 'imagine schools at mountain vi',
         'washoe' => 'wcsd'
       },
-      hspe: {}
+      hspe: {
+        'washoe' => 'wcsd',
+        'csn east' => 'csnhs east',
+        'csn south' => 'csnhs south',
+        'csn west' => 'csnhs west',
+        'pathways  (alt)' => 'pathways hs (alt)',
+        'pioneer  alt' => 'pioneer hs alt',
+        'rainshadow cc' => 'rainshadow cchs'
+      }
     }
 
     @special_case_entities = {
@@ -119,7 +128,7 @@ class NVTestProcessor < GS::ETL::TestProcessor
     }
   end
 
-  source(/CRT Grade [58] School.csv/, []) do |s|
+  source(/CRT Grade [58] School.csv/, [], quote_char: '"') do |s|
     ems = entity_mapping_step(:crt)
     s.add(ems)
     ems.transform('Transpose out science proficiency bands',
@@ -128,24 +137,25 @@ class NVTestProcessor < GS::ETL::TestProcessor
         Fill, test_data_type: 'crt', test_data_type_id: 90)
   end
 
-  xsource('HSPE School.csv', []) do |s|
+  source('HSPE School.csv', [], quote_char: '"') do |s|
+    hs_subjects = ['mathematics', 'science', 'reading', 'writing']
     ems = entity_mapping_step(:hspe)
     s.add(ems)
     ems.transform('Transpose out science proficiency bands',
-        Transposer, :prof_subject, :value_float, *subject_prof_bands('science'))
+        Transposer, :prof_subject, :value_float, *subject_prof_bands(*hs_subjects))
       .transform('Fill test_data_type',
         Fill, test_data_type: 'hspe', test_data_type_id: 91)
   end
 
   shared do |s|
     s.transform('Split subject and proficiency band', WithBlock) do |row|
-        subject, prof_band_str = row.delete(:prof_subject).to_s.match(/(\A[^_]+)(.*)/)[1..2]
-        row[:subject] = subject
-        row[:subject_id] = @subject_id_map[subject]
-        row[:proficiency_band] = @prof_map[prof_band_str]
-        row[:proficiency_band_id] = @prof_id_map[prof_band_str]
-        row[:number_tested] = row.delete((subject+'__number_tested').to_sym)
-        row
+      subject, prof_band_str = row.delete(:prof_subject).to_s.match(/(\A[^_]+)(.*)/)[1..2]
+      row[:subject] = subject
+      row[:subject_id] = @subject_id_map[subject]
+      row[:proficiency_band] = @proficiency_map[prof_band_str]
+      row[:proficiency_band_id] = @proficiency_id_map[prof_band_str]
+      row[:number_tested] = row.delete((subject+'__number_tested').to_sym)
+      row
     end
       .transform("Fill year", Fill, year: '2015')
   end
@@ -159,9 +169,11 @@ class NVTestProcessor < GS::ETL::TestProcessor
       if @current_entity_info && (breakdown_id = @breakdowns[group])
         row.merge!(breakdown: group, breakdown_id: breakdown_id)
         row.merge!(@current_entity_info)
+        row
       elsif @current_entity_info = find_entity_info(group, type)
         row.merge!(breakdown_id: 1, breakdown: 'all')
         row.merge!(@current_entity_info)
+        row
       else
         @current_entity_info = nil
         unless @breakdowns[group]
@@ -174,7 +186,7 @@ class NVTestProcessor < GS::ETL::TestProcessor
 
   def subject_prof_bands(*subjects)
     subjects.map do |subject|
-      @prof_map.keys.map { |suffix| (subject+suffix).to_sym }
+      @proficiency_map.keys.map { |suffix| (subject+suffix).to_sym }
     end.flatten
   end
 
@@ -211,7 +223,7 @@ class NVTestProcessor < GS::ETL::TestProcessor
         end
         memo[row[:name]] = entity_info
     end.tap do |entity_hash|
-      @renames[type].each { |from, to| rename_key(entity_hash, from, to) }
+      @renames[type].each { |from, to| entity_hash[to] = entity_hash.delete(from) }
       entity_hash.merge! @special_case_entities[type]
     end
   end
@@ -244,10 +256,6 @@ class NVTestProcessor < GS::ETL::TestProcessor
       [map_path, duplicates_path].each { |path| File.delete path }
       raise
     end
-  end
-
-  def rename_key(hash, from, to)
-    hash[to] = hash.delete(from)
   end
 
   def name_id_map_path(type)

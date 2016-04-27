@@ -130,7 +130,7 @@ module GS
         @sources.each do |source|
           source.run(context_for_sources)
         end
-        config_step.run
+        @runnable_steps << config_step
         @runnable_steps.each do |step|
           step.run
         end
