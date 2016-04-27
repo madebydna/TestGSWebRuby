@@ -131,9 +131,7 @@ module GS
           source.run(context_for_sources)
         end
         @runnable_steps << config_step
-        @runnable_steps.each do |step|
-          step.run
-        end
+        @runnable_steps.each(&:run)
       end
 
       private
