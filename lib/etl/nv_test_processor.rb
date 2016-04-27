@@ -124,7 +124,12 @@ class NVTestProcessor < GS::ETL::TestProcessor
         'lincoln' => {id: '09', entity_level: 'district'},
         'lincoln es' => {id: '02222', entity_level: 'school'}
       },
-      hspe: {}
+      hspe: {
+        'clark' => {id: '02', entity_level: 'district'},
+        'clark hs' => {id: '02401', entity_level: 'school'},
+        'pershing' => {id: '14', entity_level: 'district'},
+        'pershing hs' => {id: '14601', entity_level: 'school'}
+      }
     }
   end
 
