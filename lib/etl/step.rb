@@ -1,8 +1,8 @@
 require 'logger'
 require_relative './logging'
+
 module GS
   module ETL
-
     class Step
       include GS::ETL::Logging
 
@@ -23,15 +23,16 @@ module GS
         return unless row
         record(row, :executed)
         process(row)
-      rescue => e
-        raise "error in step '#{descriptor}' : #{e.message}"
       end
 
       def propagate(result_from_parent, &block)
-        result = block.call(self, result_from_parent)
+        *results = block.call(self, result_from_parent)
+        clones = results
         children.each do |child|
-          r = result ? result.clone : nil
-          child.propagate(r, &block)
+          if children.count > 1
+            clones = results.map { |row| row && row.clone }
+          end
+          child.propagate(clones, &block)
         end
       end
 
@@ -95,6 +96,15 @@ module GS
         step.parents << self
         self
       end
+
+      def px()
+        add_step('print row', WithBlock) { |row| puts row.inspect }
+      end
+
+      def pp()
+        add_step('print and pass row', WithBlock) { |row| p row }
+      end
+
     end
   end
 end
