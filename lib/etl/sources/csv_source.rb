@@ -31,6 +31,10 @@ class CsvSource < GS::ETL::Source
     @_max ||= @options.delete(:max)
   end
 
+  def offset
+    @_offset ||= @options.delete(:offset)
+  end
+
   def input_files(dir = nil)
     if dir
       @input_files.map { |f| filename_with_dir(f, dir) }.flatten
@@ -41,9 +45,15 @@ class CsvSource < GS::ETL::Source
 
   def each(context={})
     max = self.max || context[:max]
+    offset = self.offset || context[:offset]
     input_files(context[:dir]).each do |file|
       CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
-        enum = max ? csv.first(max) : csv
+        # enum = max ? csv.first(max) : csv
+        if offset || max
+          enum = csv.drop(offset).first(max)
+        else
+          enum = csv
+        end
         enum.each_with_index do |csv_row, row_num|
           row = GS::ETL::Row.new(csv_row.to_hash, row_num)
           if row_num == 1
