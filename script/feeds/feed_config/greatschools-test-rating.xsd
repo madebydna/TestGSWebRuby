@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+
+    <xs:include schemaLocation="greatschools-common.xsd"/>
+
+    <xs:element name="gs-test-rating-feed">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="test-rating" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="test-rating-value" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="test-rating-id">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="test-rating">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" minOccurs="1" maxOccurs="1" type="test-rating-id" />
+                <xs:element name="year" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="description"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="test-rating-value">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element name="test-rating-id" minOccurs="1" maxOccurs="1" type="test-rating-id" />
+                <xs:element name="rating">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:int">
+                            <xs:enumeration value="1"/>
+                            <xs:enumeration value="2"/>
+                            <xs:enumeration value="3"/>
+                            <xs:enumeration value="4"/>
+                            <xs:enumeration value="5"/>
+                            <xs:enumeration value="6"/>
+                            <xs:enumeration value="7"/>
+                            <xs:enumeration value="8"/>
+                            <xs:enumeration value="9"/>
+                            <xs:enumeration value="10"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="url" minOccurs="1" maxOccurs="1" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

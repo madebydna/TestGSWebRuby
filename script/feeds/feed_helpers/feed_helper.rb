@@ -50,7 +50,9 @@ module FeedHelper
   def get_feed_name(feed, index)
     feed_location = @location.present? && @location[index].present?  ? @location[index] : ''
     feed_name = @name.present? && @name[index].present? ? @name[index] : FEED_NAME_MAPPING[feed]
-    generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"_#{@state}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
+    #generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
+    generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}.xml" : feed+"-#{@state.upcase}.xml"
+    # removing timestamp for now as flat feed process does not like timestamp
     xml_name =feed_location+generated_feed_file_name
   end
 
