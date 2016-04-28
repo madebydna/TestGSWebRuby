@@ -75,7 +75,7 @@ class WATestProcessor < GS::ETL::TestProcessor
                                          :mathpercentlevelbasic,
                                          :mathpercentlevel3,
                                          :mathpercentlevel4)
-    
+
     s1 = s1.transform 'Fill entity_type, level_code, test_data_type and test_data_type_id',
       Fill,
       entity_type: 'public_charter',
@@ -139,15 +139,15 @@ class WATestProcessor < GS::ETL::TestProcessor
     s1 = s1.transform 'Sum basic, level3, and level4 proficiency levels to get proficiency band null',
       WithBlock do |row|
         if row[:elapercentlevelbasic] || row[:elapercentlevel3] || row[:elapercentlevel4]
-          row[:elapercentnull] = 
-            row[:elapercentlevelbasic].to_f + 
-            row[:elapercentlevel3].to_f + 
+          row[:elapercentnull] =
+            row[:elapercentlevelbasic].to_f +
+            row[:elapercentlevel3].to_f +
             row[:elapercentlevel4].to_f
         end
         if row[:mathpercentlevelbasic] || row[:mathpercentlevel3] || row[:mathpercentlevel4]
-          row[:mathpercentnull] = 
-            row[:mathpercentlevelbasic].to_f + 
-            row[:mathpercentlevel3].to_f + 
+          row[:mathpercentnull] =
+            row[:mathpercentlevelbasic].to_f +
+            row[:mathpercentlevel3].to_f +
             row[:mathpercentlevel4].to_f
         end
         row
@@ -180,16 +180,16 @@ class WATestProcessor < GS::ETL::TestProcessor
       HashLookup,
       :subject,
       {
-        mathpercentlevel1: :math, 
-        mathpercentlevel2: :math, 
-        mathpercentlevel3: :math, 
+        mathpercentlevel1: :math,
+        mathpercentlevel2: :math,
+        mathpercentlevel3: :math,
         mathpercentlevel4: :math,
         mathpercentlevelbasic: :math,
         mathpercentnull: :math,
-        elapercentlevel1: :ela, 
-        elapercentlevel2: :ela, 
-        elapercentlevel3: :ela, 
-        elapercentlevel4: :ela, 
+        elapercentlevel1: :ela,
+        elapercentlevel2: :ela,
+        elapercentlevel3: :ela,
+        elapercentlevel4: :ela,
         elapercentnull: :ela,
         elapercentlevelbasic: :ela
       }
@@ -215,16 +215,16 @@ class WATestProcessor < GS::ETL::TestProcessor
       HashLookup,
       :proficiency_band,
       {
-        mathpercentlevel1: :level_1, 
-        mathpercentlevel2: :level_2, 
-        mathpercentlevel3: :level_3, 
+        mathpercentlevel1: :level_1,
+        mathpercentlevel2: :level_2,
+        mathpercentlevel3: :level_3,
         mathpercentlevel4: :level_4,
         mathpercentlevelbasic: :level_basic,
         mathpercentnull: :null,
-        elapercentlevel1: :level_1, 
-        elapercentlevel2: :level_2, 
-        elapercentlevel3: :level_3, 
-        elapercentlevel4: :level_4, 
+        elapercentlevel1: :level_1,
+        elapercentlevel2: :level_2,
+        elapercentlevel3: :level_3,
+        elapercentlevel4: :level_4,
         elapercentlevelbasic: :level_basic,
         elapercentnull: :null
       }
@@ -285,7 +285,7 @@ class WATestProcessor < GS::ETL::TestProcessor
       end
 
     last_before_split = s1.transform(
-      "Get rid of rows without school, district,\n" + 
+      "Get rid of rows without school, district,\n" +
       "or state entity level",
       KeepRows,
       :entity_level,
@@ -295,7 +295,7 @@ class WATestProcessor < GS::ETL::TestProcessor
     @runnable_steps << last_before_split.destination(
       '', LoadConfigFile, config_output_file, config_hash)
 
-    s1 = s1.add(output_files_step_tree)
+    s1.add(output_files_step_tree)
 
     attach_to_step(column_value_report, s1)
 

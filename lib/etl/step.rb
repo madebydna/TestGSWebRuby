@@ -74,7 +74,7 @@ module GS
 
       def descriptor
         if self.description
-          self.class.name + ' ' + self.description 
+          self.class.name + ' ' + self.description
         else
           self.class.name
         end
@@ -110,7 +110,7 @@ module GS
       def add(step)
         self.children << step
         step.parents << self
-        self
+        step
       end
 
       def px()

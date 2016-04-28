@@ -114,12 +114,18 @@ describe GS::ETL::Step do
 
   describe '#add' do
     let(:step) { GS::ETL::Step.new }
+    let(:result) { subject.add(step) }
+    before { result }
+
+    it 'should return the added step' do
+      expect(result).to eq step
+    end
+
     it 'should add a child step' do
-      subject.add(step)
       expect(subject.children.first).to eq(step)
     end
+
     it 'should set the step''s parent to this step' do
-      subject.add(step)
       expect(step.parents).to include(subject)
     end
   end

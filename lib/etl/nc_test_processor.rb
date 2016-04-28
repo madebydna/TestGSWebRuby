@@ -135,7 +135,7 @@ class NCTestProcessor < GS::ETL::TestProcessor
     load_config_file = last_before_split.destination(
         '', LoadConfigFile, config_output_file, config_hash)
 
-    s1 = last_before_split.add(output_files_step_tree)
+    last_before_split.add(output_files_step_tree)
 
     source_step.run
     load_config_file.run
@@ -148,6 +148,3 @@ file = '/Users/rhunter/CodeGS/etl_data_files/Disag_2014-15_Data.txt'
 output_file = '/Users/rhunter/CodeGS/etl_data_files/nc_transformed_output.txt'
 
 NCTestProcessor.new(file, output_file).run
-
-
-
