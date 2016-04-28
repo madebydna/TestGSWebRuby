@@ -8,19 +8,15 @@ class AZTestProcessor < GS::ETL::TestProcessor
   end
 
   source("aims_dist_sci_2015.txt",[], col_sep: "\t") do |s|
-    s.transform("", Fill, { entity_level: 'district' })
+    s.transform("Set district entity_level", Fill, { entity_level: 'district' })
   end
 
   source("aims_schl_sci_2015.txt",[], col_sep: "\t") do |s|
-    s.transform("", Fill, { entity_level: 'school' })
-    .transform('', WithBlock) do |row|
-       #require 'pry'; binding.pry
-       row
-    end
+    s.transform("Set school entity_level", Fill, { entity_level: 'school' })
   end
 
   source("aims_state_sci_2015.txt",[], col_sep: "\t") do |s|
-    s.transform("", Fill, { entity_level: 'state' })
+    s.transform("Set state entity_level", Fill, { entity_level: 'state' })
   end
 
   key_map_az_gs = {
