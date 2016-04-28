@@ -18,7 +18,7 @@ describe GS::ETL::Step do
   end
 
   describe '#log_and_process' do
-    let(:logger) { double(log: nil) }
+    let(:logger) { double(log_event: nil) }
 
     before do
       allow(subject).to receive(:logger).and_return(logger)
@@ -26,14 +26,14 @@ describe GS::ETL::Step do
 
     it 'should not do anything if row is nil' do
       subject.log_and_process(nil)
-      expect(logger).to_not have_received(:log)
+      expect(logger).to_not have_received(:log_event)
     end
 
     it 'when given row, it should record event and process row' do
       row = {foo: :bar}
       subject.log_and_process(row)
       stub_const('GS::ETL::Logging', double(logger: logger))
-      expect(logger).to have_received(:log).with(
+      expect(logger).to have_received(:log_event).with(
         include(
           id: subject.id,
           step: GS::ETL::Step,
@@ -94,7 +94,7 @@ describe GS::ETL::Step do
   end
 
   describe '#record' do
-    let(:logger) { double(log: nil) }
+    let(:logger) { double(log_event: nil) }
     before do
       allow(subject).to receive(:logger).and_return(logger)
     end
@@ -108,7 +108,7 @@ describe GS::ETL::Step do
         value: 'val'
       }
       subject.record(GS::ETL::Row.new({}, 1), 'val', 'my key')
-      expect(logger).to have_received(:log).with(include(event_hash))
+      expect(logger).to have_received(:log_event).with(include(event_hash))
     end
   end
 
