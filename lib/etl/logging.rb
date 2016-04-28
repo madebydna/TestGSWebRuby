@@ -3,7 +3,13 @@ require 'logger'
 module GS
   module ETL
     module Logging
-      class LoggerGroup
+      class Logger
+        def disabled?
+          ::GS::ETL::Logging.disabled?
+        end
+      end
+      
+      class LoggerGroup < Logger
         def initialize(*loggers)
           @loggers = loggers
         end
@@ -12,7 +18,7 @@ module GS
         end
       end
 
-      class StandardLogger
+      class StandardLogger < Logger
         def self.build_stdout_logger
           new(STDOUT)
         end
@@ -24,7 +30,7 @@ module GS
         end
 
         def initialize(*args)
-          l = Logger.new(*args)
+          l = ::Logger.new(*args)
           l.formatter = proc do |severity, datetime, progname, msg|
                "#{datetime.strftime("%F %T.%L")} : #{msg}\n"
           end
@@ -32,6 +38,7 @@ module GS
         end
 
         def log(hash)
+          return if disabled?
           message = GS::ETL::Logging.format_one_line(hash)
           @logger.debug(message)
         end
@@ -42,14 +49,14 @@ module GS
 
       end
 
-      class AggregatingLogger
+      class AggregatingLogger < Logger
         def self.build_stdout_logger
           new(STDOUT)
         end
 
         def initialize(*args)
           @data = []
-          @logger = Logger.new(*args)
+          @logger = ::Logger.new(*args)
         end
 
         def print_line(line)
@@ -79,6 +86,7 @@ module GS
         end
 
         def log(hash)
+          return if disabled?
           id = hash[:id]
           key = hash[:key]
           step = hash[:step]
@@ -122,6 +130,18 @@ module GS
       class << self
         def logger
           @logger ||= GS::ETL::Logging::StandardLogger.build_stdout_logger
+        end
+
+        def disabled?
+          !!@disabled
+        end
+        
+        def disable
+          @disabled = true
+        end
+
+        def enable
+          @disabled = false
         end
 
         def logger=(logger)
