@@ -8,9 +8,14 @@ class ValueConcatenator < GS::ETL::Step
   end
 
   def process(row)
-      row[@destination_column]  = @source_columns.reduce('') { |sum, c| sum + row[c] }
-      record(row, :concatenate_column)
-      row
+    row[@destination_column] = @source_columns.reduce('') do |sum, c|
+      unless row.has_key?(c)
+        raise ArgumentError.new "Column #{c} (#{c.class}) doesn't exist in row"
+      end
+      sum << row[c]
+    end
+    record(row, :concatenate_column)
+    row
   end
 
   def event_key

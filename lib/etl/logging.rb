@@ -35,6 +35,11 @@ module GS
           message = GS::ETL::Logging.format_one_line(hash)
           @logger.debug(message)
         end
+
+        def error(*args)
+          @logger.error(*args)
+        end
+
       end
 
       class AggregatingLogger
@@ -60,7 +65,10 @@ module GS
             key.to_s[-16..-1] || key,
             "Sum: #{sum}",
             "Avg: #{average}%\n").to_s
+        end
 
+        def error(*args)
+          @logger.error(*args)
         end
 
         def print_report

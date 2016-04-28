@@ -21,8 +21,24 @@ module GS
 
       def log_and_process(row)
         return unless row
-        record(row, :executed)
-        process(row)
+        result = nil
+        unless row.is_a?(Hash) || row.is_a?(GS::ETL::Row)
+          raise ArgumentError.new(
+            "#{self.class} - #{description} #log_and_process received a #{row.class} instead of a Hash"
+          )
+        end
+        begin
+          result = process(row)
+          if result == nil
+            record(row, :'filtered out row')
+          else
+            record(row, :executed)
+          end
+        rescue => e
+          logger.error("#{self.class} : #{description} : Error executing row ##{row.row_num}")
+          raise
+        end
+        result
       end
 
       def propagate(result_from_parent, &block)
@@ -103,6 +119,14 @@ module GS
 
       def pp()
         add_step('print and pass row', WithBlock) { |row| p row }
+      end
+
+      def breakpoint
+        add_step('add pry breakpoint', WithBlock) do |row|
+          require 'pry'
+          binding.pry
+          row
+        end
       end
 
     end

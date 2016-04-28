@@ -16,7 +16,7 @@ class LoadConfigFile < GS::ETL::Step
         :subject_id
       ], [:breakdown_id, :proficiency_band_id]
     )
-    @options = options
+    self.options = options
     self.write_file_header
   end
 
@@ -50,6 +50,14 @@ class LoadConfigFile < GS::ETL::Step
     @file.puts("\tsource_id\tdate_loaded\tnotes")
     @file.puts("dataload\t#{@source_id}\t#{data_loaded}\t#{@notes}")
     @file.puts
+  end
+
+  def options=(hash)
+    raise ArgumentError.new('Options must be of type Hash') unless hash.is_a?(Hash)
+    unless hash.has_key?(:file)
+      raise ArgumentError.new('Options must contain key :file to be put into config file outout')
+    end
+    @options = hash
   end
 
   class Section
