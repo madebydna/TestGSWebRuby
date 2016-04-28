@@ -7,14 +7,18 @@ module GS
         def disabled?
           ::GS::ETL::Logging.disabled?
         end
+
+        def error(*args)
+          @logger.error(*args)
+        end
       end
       
       class LoggerGroup < Logger
         def initialize(*loggers)
           @loggers = loggers
         end
-        def log(*args)
-          @loggers.each { |logger| logger.log(*args) }
+        def log_event(*args)
+          @loggers.each { |logger| logger.log_event(*args) }
         end
       end
 
@@ -37,16 +41,11 @@ module GS
           @logger = l
         end
 
-        def log(hash)
+        def log_event(hash)
           return if disabled?
           message = GS::ETL::Logging.format_one_line(hash)
           @logger.debug(message)
         end
-
-        def error(*args)
-          @logger.error(*args)
-        end
-
       end
 
       class AggregatingLogger < Logger
@@ -74,10 +73,6 @@ module GS
             "Avg: #{average}%\n").to_s
         end
 
-        def error(*args)
-          @logger.error(*args)
-        end
-
         def print_report
           print "\033[1;1H"
           lines.each do |line|
@@ -85,7 +80,7 @@ module GS
           end
         end
 
-        def log(hash)
+        def log_event(hash)
           return if disabled?
           id = hash[:id]
           key = hash[:key]

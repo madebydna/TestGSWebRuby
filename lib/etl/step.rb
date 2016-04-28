@@ -100,7 +100,7 @@ module GS
           row_num: row_num,
           clone_num: clone_num
         }
-        logger.log(event)
+        logger.log_event(event)
       end
 
       def event_key
