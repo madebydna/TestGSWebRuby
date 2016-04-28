@@ -122,7 +122,7 @@ module GS
       end
 
       def context_for_sources
-        {dir: @input_dir, max: @options[:max]}
+        {dir: @input_dir, max: @options[:max], offset: @options[:offset]}
       end
 
       def run
