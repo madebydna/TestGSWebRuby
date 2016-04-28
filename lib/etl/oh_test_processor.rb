@@ -52,12 +52,13 @@ class OHTestProcessor < GS::ETL::TestProcessor
     s = s.transform 'split out subject and grade into 2 columns', WithBlock do |row|
       value = row[:subject_grade]
       value = value.to_s.split('_201415').first
-       subject_grade_match = /(\D+)(\d+)?/.match(value)
-       subject = subject_grade_match[1].gsub('_end_of_course','')
-       grade = subject_grade_match[2] || 'All'
-       row[:subject] = subject
-       row[:grade] = grade
-       row
+      subject_grade_match = /(\D+)(\d+)?/.match(value)
+      subject = subject_grade_match[1].gsub('_end_of_course','')
+      grade = subject_grade_match[2] || 'All'
+      subject = subject.chomp('_')
+      row[:subject] = subject
+      row[:grade] = grade
+      row
     end
   end
 
@@ -86,6 +87,7 @@ class OHTestProcessor < GS::ETL::TestProcessor
       subject_grade_match = /(\D+)(\d+)?/.match(value)
       subject = subject_grade_match[1].gsub('_end_of_course','')
       grade = subject_grade_match[2] || 'All'
+      subject = subject.chomp('_')
       row[:subject] = subject
       row[:grade] = grade
       row
@@ -118,7 +120,6 @@ class OHTestProcessor < GS::ETL::TestProcessor
 
     s = s.transform 'fill \'state\' into entity type, entity level, and district, and school fields', Fill,
     {
-      entity_type: 'state',
       district_id: 'state',
       state_id: 'state',
       entity_level: 'state',
@@ -181,6 +182,7 @@ class OHTestProcessor < GS::ETL::TestProcessor
 
   shared do |s|
      s = s.transform 'Set year, level code, and test data type', Fill,
+       entity_type: 'public_charter',
        year: 2015,
        level_code: 'e,m,h',
        test_data_type: 'oaa',
@@ -205,18 +207,19 @@ class OHTestProcessor < GS::ETL::TestProcessor
     s = s.transform 'Look up GS subject ID for each subject', HashLookup,
       :subject,
       {
-        'Mathematics' => 5,
-        'Reading' => 2,
-        'Science' => 25,
-        'Social Studies' => 24,
-        'Writing' => 3,
+        'mathematics' => 5,
+        'math' => 5,
+        'reading' => 2,
+        'science' => 25,
+        'social_studies' => 24,
+        'writing' => 3,
       },
       to: :subject_id
 
     s = s.transform 'Look up breakdown IDs', HashLookup,
       :breakdown,
       {
-					'all' => 1,
+					'All' => 1,
 					'disabled' => 13,
 					'not_disabled' => 14,
 					'nondisabled' => 14,
