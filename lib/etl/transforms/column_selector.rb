@@ -3,7 +3,7 @@ require_relative '../step'
 class ColumnSelector < GS::ETL::Step
 
   def initialize(*columns_selected)
-    @columns_selected = columns_selected
+    self.columns_selected = columns_selected
   end
 
  def process(row)
@@ -25,6 +25,20 @@ class ColumnSelector < GS::ETL::Step
 
  def description
    "#{super}\n" + @columns_selected.join("\n - ")
+ end
+
+ def columns_selected=(columns)
+   unless columns.is_a?(Array) && columns.size > 0
+     raise ArgumentError.new('Columns must be a non-empty array')
+   end
+   columns.each_with_index do |column, index|
+     unless [String, Symbol, Regexp].include?(column.class)
+       raise ArgumentError.new("Columns must be an array of "\
+                               "columns(Strings or Symbols) or regexes, "\
+                               "but columns[#{index}] is a #{columns[index].class}")
+     end
+   end
+   @columns_selected = columns
  end
 
 end
