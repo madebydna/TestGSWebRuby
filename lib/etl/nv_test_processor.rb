@@ -1,10 +1,8 @@
 # coding: utf-8
-require "set"
 load "test_processor.rb"
 
 # TODO
-# - Write new CRT schools to file
-# - Write new HSPE schools to file
+# - Config file
 
 # Schools / Districts not included in
 # "Eureka" - Duplicate names exist in nv_crt_2014.txt
@@ -59,6 +57,7 @@ class NVTestProcessor < GS::ETL::TestProcessor
 
   def initialize(*args)
     super
+    @year = 2015
     @breakdowns = {
         'Female' => 11,
         'Male' => 12,
@@ -136,7 +135,13 @@ class NVTestProcessor < GS::ETL::TestProcessor
   source(/CRT Grade [58] School.csv/, [], quote_char: '"') do |s|
     ems = entity_mapping_step(:crt)
     s.add(ems)
-    ems.transform('Transpose out science proficiency bands',
+    ems.transform('Remove dash values', WithBlock) do |row|
+      row.to_a.each do |field, value|
+        row[field] = nil if value == '-'
+      end
+      row
+    end
+      .transform('Transpose out science proficiency bands',
         Transposer, :prof_subject, :value_float, *subject_prof_bands('science'))
       .transform('Fill test_data_type',
         Fill, test_data_type: 'crt', test_data_type_id: 90)
@@ -146,7 +151,13 @@ class NVTestProcessor < GS::ETL::TestProcessor
     hs_subjects = ['mathematics', 'science', 'reading', 'writing']
     ems = entity_mapping_step(:hspe)
     s.add(ems)
-    ems.transform('Transpose out science proficiency bands',
+    ems.transform('Remove dash values', WithBlock) do |row|
+      row.to_a.each do |field, value|
+        row[field] = nil if value == '-'
+      end
+      row
+    end
+      .transform('Transpose out science proficiency bands',
         Transposer, :prof_subject, :value_float, *subject_prof_bands(*hs_subjects))
       .transform('Fill test_data_type',
         Fill, test_data_type: 'hspe', test_data_type_id: 91)
@@ -157,12 +168,15 @@ class NVTestProcessor < GS::ETL::TestProcessor
       subject, prof_band_str = row.delete(:prof_subject).to_s.match(/(\A[^_]+)(.*)/)[1..2]
       row[:subject] = subject
       row[:subject_id] = @subject_id_map[subject]
-      row[:proficiency_band] = @proficiency_map[prof_band_str]
-      row[:proficiency_band_id] = @proficiency_id_map[prof_band_str]
+      proficiency_band = row[:proficiency_band] = @proficiency_map[prof_band_str]
+      row[:proficiency_band_id] = @proficiency_id_map[proficiency_band]
       row[:number_tested] = row.delete((subject+'__number_tested').to_sym)
       row
     end
-      .transform("Fill year", Fill, year: '2015')
+      .transform('Fill year, level_code, and entity_type', Fill,
+                 year: @year,
+                 level_code: 'e,m,h',
+                 entity_type: 'public_charter')
   end
 
   def entity_mapping_step(type)
@@ -182,7 +196,8 @@ class NVTestProcessor < GS::ETL::TestProcessor
       else
         @current_entity_info = nil
         unless @breakdowns[group]
-          skipped_entities_dest.write({name: (p group)})
+          puts "Entity not processed: #{group}"
+          skipped_entities_dest.write({name: group})
         end
         nil
       end
@@ -222,9 +237,9 @@ class NVTestProcessor < GS::ETL::TestProcessor
         entity_info = { entity_level: row[:entity_level] }
 
         if row[:entity_level] == 'school'
-          entity_info.merge! school_name: row[:name], school_id: row[:id]
+          entity_info.merge! school_name: row[:name], state_id: row[:id]
         elsif row[:entity_level] == 'district'
-          entity_info.merge! district_name: row[:name], district_id: row[:id]
+          entity_info.merge! district_name: row[:name], state_id: row[:id]
         end
         memo[row[:name]] = entity_info
     end.tap do |entity_hash|
