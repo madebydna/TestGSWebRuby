@@ -33,6 +33,8 @@ module GS
         @input_dir = input_dir
         @options = options
         @runnable_steps = []
+
+        instance_exec(&self.class.before)
       end
 
       def source_columns
@@ -64,7 +66,14 @@ module GS
       end
 
       class << self
-        attr_writer :shared_block
+
+        def before(&block)
+          if block_given?
+            @before_block = block
+          else
+            @before_block
+          end
+        end
 
         def source(*args, &block)
           source_class = if args[0].is_a? Class and args[0] < GS::ETL::Source
@@ -170,7 +179,7 @@ module GS
           row
         end
         node.destination 'Output state rows to CSV', CsvDestination,
-          send("state_output_file".to_sym),
+          state_output_file,
           *COLUMN_ORDER
         node
       end
@@ -187,7 +196,7 @@ module GS
 
         node.destination 'Output district rows to CSV',
           CsvDestination,
-          send("district_output_file".to_sym),
+          district_output_file,
           *COLUMN_ORDER
 
         node
@@ -196,7 +205,7 @@ module GS
       def school_steps
         node = output_files_root_step.add_step('Keep only school rows', KeepRows, :entity_level, 'school')
         node.destination 'Output school rows to CSV', CsvDestination,
-          send("school_output_file".to_sym),
+          school_output_file,
           *COLUMN_ORDER
         node
       end
