@@ -18,17 +18,59 @@ describe SearchController do
   end
 
   describe '#search' do
+    subject {get :search, params_hash}
     context 'when only lat and lon params present' do
-      it 'should go to default search page' do
-        get :search, lat: '1', lon: '1'
-        expect(response).to redirect_to(default_search_url)
+      let (:params_hash) { {lat: '1', lon: '1'} }
+      before { expect(controller).not_to receive(:by_location) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when q is blank and state is present' do
+      let (:params_hash) { {state: 'CA', q: ''} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when no query parameters are specified' do
+      let (:params_hash) { {} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when the q parameter is blank' do
+      let (:params_hash) { {q: ''} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when query parameter and state is specified' do
+      let (:params_hash) { {q: 'query', state: 'ca'} }
+      it 'should render the search results page' do
+        allow(SchoolSearchService).to receive(:by_name).and_return(results: [], num_found: 0)
+        expect(subject).to render_template 'search_page'
       end
     end
-    context 'when only blank q and state params present' do
-      it 'should go to default search page' do
-        get :search, state: 'CA', q: ''
-        expect(response).to redirect_to(default_search_url)
+
+    context 'when given an invalid UTF-8 byte sequence' do
+      let (:params_hash) { {q: "here comes a really bad character: \xF4"}}
+      it 'redirects and subs out the bad characters' do
+        expect(subject.status).to eq(302)
       end
+    end
+  end
+
+  describe '#process_results' do
+    let (:results) { {num_found: 0, results: []}}
+    before do
+      controller.instance_variable_set(:@params_hash, {})
+      controller.instance_variable_set(:@results_offset, 0)
+      controller.instance_variable_set(:@page_size, 25)
+    end
+    it 'JT-927 regression: does not crash when map_schools is empty' do
+      # Crash occurred when results was empty and calculate_map_range returned a non-zero range
+      allow(controller).to receive(:calculate_map_range) { [1, 2] }
+      controller.process_results(results, 0)
+      expect(controller.instance_variable_get(:@map_schools)).not_to be_nil
     end
   end
 

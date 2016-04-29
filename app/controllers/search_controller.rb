@@ -57,7 +57,11 @@ class SearchController < ApplicationController
     elsif params.include?(:city) && @state.present?
       self.city_browse
     elsif params.include?(:q)
-      if params_hash['q'].blank? && @state.present?
+      query = params['q'].mb_chars.tidy_bytes.to_s
+      if query != params['q']
+        redirect_to url_for(params.merge(only_path: true, q: query)) and return
+      end
+      if params_hash['q'].blank?
         redirect_to default_search_url  and return
       end
       self.by_name
@@ -251,26 +255,23 @@ class SearchController < ApplicationController
       setup_fit_scores(@schools, @params_hash) if filtering_search?
     end
 
-    (map_start, map_end) = calculate_map_range solr_offset
-    @map_schools = school_results[map_start .. map_end]
-
     @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
     relative_offset = @results_offset - solr_offset
-    @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+    @schools = school_results[relative_offset .. (relative_offset+@page_size-1)] || []
 
     if params[:limit]
       if params[:limit].to_i > 0
-        @schools = @schools[0..(params[:limit].to_i - 1)]
+        @schools = @schools[0..(params[:limit].to_i - 1)] || []
       else
         @schools = []
       end
     end
 
     (map_start, map_end) = calculate_map_range solr_offset
-    @map_schools = school_results[map_start .. map_end]
+    @map_schools = school_results[map_start .. map_end] || []
     SchoolSearchResultReviewInfoAppender.add_review_info_to_school_search_results!(@map_schools)
 
     # mark the results that appear in the list so the map can handle them differently

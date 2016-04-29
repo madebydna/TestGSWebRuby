@@ -340,6 +340,15 @@ LocalizedProfiles::Application.routes.draw do
       }
     end
 
+    # NOTE: this must come after the city scope, because it will match anything after the city name
+    # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*
+    get '/:state/:city/:district', to: 'districts#show', as: :district, constraints: {
+        format: false,
+        state: States.any_state_name_regex,
+        city: /[^\/]+/,
+        district: /(?!preschools)[^\/]+/
+    }
+
     # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
     get '/school/overview.page', to: redirect { |params, request|
           if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
@@ -367,13 +376,6 @@ LocalizedProfiles::Application.routes.draw do
     resource :user, only: [:create], controller: 'school_user', action: 'create'
     get '', to: 'school_profile_overview#overview'
   end
-
-  # TODO: This route should be deleted. It's probably leftover from the initial Java->Ruby migration of district home
-  get '/gsr/:state/:city/:district', to: 'districts#show', as: :district, constraints: lambda{ |request|
-    district = request.params[:district]
-    # district can't = preschools and must start with letter
-    return district != 'preschools' && district.match(/^[a-zA-Z].*$/)
-  }
 
   constraints(PathWithPeriod) do
     match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]
