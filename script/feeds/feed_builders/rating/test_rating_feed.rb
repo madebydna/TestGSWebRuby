@@ -67,7 +67,7 @@ module FeedBuilders
       state_level_ratings_config_data = []
       state_master_data.try(:each) do |data|
         config_data = {
-            :test_id => transpose_test_id(data[:data_type_id]),
+            :id => transpose_test_id(data[:data_type_id]),
             :year => data[:year],
             :description => transpose_ratings_description(data[:data_type_id])
         }

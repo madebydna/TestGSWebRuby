@@ -67,20 +67,22 @@ module FeedHelper
   def transpose_ratings_description(data_type_id)
     # How we calculate test_description  can change based on decision from Product team
     if data_type_id == RATINGS_ID_RATING_FEED_MAPPING['official_overall']
-      desc =  "The GreatSchools rating is a simple tool for parents to compare schools based on test scores, student academic
-                   growth, and college readiness. It compares schools across the state, where the highest rated schools in
-                   the state are designated as 'Above Average' and the lowest 'Below Average'  It is designed to be a starting
-                   point to help parents make baseline comparisons. We always advise parents to visit the school and consider other
-                   information on school performance and programs, as well as consider their child's and family's needs as part of
-                   the school selection process."
+      desc =  "The GreatSchools rating is a simple tool for parents to compare schools based on test scores,\
+student academic growth, and college readiness. It compares schools across the state, \
+where the highest rated schools in the state are designated as 'Above Average' and the lowest 'Below Average'.\
+It is designed to be a starting point to help parents make baseline comparisons. We always advise parents to visit \
+the school and consider other information on school performance and programs, as well as consider their child's and \
+family's needs as part of the school selection process."
+
     elsif data_type_id == RATINGS_ID_RATING_FEED_MAPPING['test_rating']
-      desc = "GreatSchools compared the test results for each grade and subject across all
-                       #{@state} schools and divided them into 1 through 10 ratings (10 is the best).
-                       Please note, private schools are not required to release test results, so ratings are available
-                       only for public schools. GreatSchools Ratings cannot be compared across states,
-                       because of differences in the states' standardized testing programs.
-                       Keep in mind that when comparing schools using GreatSchools Ratings it's important to factor in
-                       other information, including the quality of each school's teachers, the school culture, special programs, etc."
+
+      desc = "GreatSchools compared the test results for each grade and subject across all \#{@state} schools and divided them into 1 through 10 ratings (10 is the best).\
+Please note, private schools are not required to release test results, so ratings are available \
+only for public schools. GreatSchools Ratings cannot be compared across states,\
+because of differences in the states' standardized testing programs.\
+Keep in mind that when comparing schools using GreatSchools Ratings it's important to factor in \
+other information, including the quality of each school's teachers, the school culture, special programs, etc."
+
     end
 
   end
@@ -139,9 +141,9 @@ module FeedHelper
   def transpose_band_id(band, data, entity_level)
     # For proficient and above band id is always null in database
     if (entity_level == ENTITY_TYPE_STATE )
-      band ==  data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"]
+      band =  data["proficiency_band_id"].nil? ? 0 : data["proficiency_band_id"]
     else
-      band == PROFICIENT_AND_ABOVE_BAND ? '' : data[band+"_band_id"]
+      band == data[band+"_band_id"].nil? ? 0  : data[band+"_band_id"]
     end
   end
 

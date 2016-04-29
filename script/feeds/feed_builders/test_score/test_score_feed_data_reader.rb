@@ -23,7 +23,6 @@ module FeedBuilders
             where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
         if test_data_set_info.present?
           state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
-                             :test_id => data_type_id,
                              :test_name => test_info["description"],
                              :test_abbrv => test_info["name"],
                              :scale => test["scale"],

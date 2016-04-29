@@ -61,8 +61,8 @@ module FeedBuilders
 
     def create_hash_for_xml(band, data, entity = nil, entity_level, grade, level, subject, test_id, year, breakdown_id, breakdown_name)
       test_data = {:universal_id => transpose_universal_id(entity, entity_level),
-                   :entity_level => entity_level.titleize,
                    :test_id => transpose_test_id(test_id),
+                   :entity_level => entity_level.titleize,
                    :year => year,
                    :subject_name => subject,
                    :grade_name => grade,
@@ -76,7 +76,6 @@ module FeedBuilders
       }
     end
 
-    #Todo
     def transpose_data_for_xml(all_test_score_data, entity, test_id, entity_level)
       parsed_data_for_xml = []
       all_test_score_data.try(:each) do |breakdown,breakdown_data|
