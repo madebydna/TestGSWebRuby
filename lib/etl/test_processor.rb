@@ -141,6 +141,7 @@ module GS
         end
         @runnable_steps << config_step
         @runnable_steps.each(&:run)
+        GS::ETL::Logging.logger.finish if GS::ETL::Logging.logger
       end
 
       private

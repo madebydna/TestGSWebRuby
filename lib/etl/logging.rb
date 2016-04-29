@@ -11,6 +11,10 @@ module GS
         def error(*args)
           @logger.error(*args)
         end
+
+        def finish
+          # noop by default
+        end
       end
       
       class LoggerGroup < Logger
@@ -54,21 +58,24 @@ module GS
         end
 
         def initialize(*args)
-          @data = []
+          @data = {}
           @logger = ::Logger.new(*args)
         end
 
         def print_line(line)
-          name = line[:name] || ''
+          description = line[:description] || ''
           key = line[:key] || ''
+          value = line[:value] || ''
           sum = line[:sum] || 0
           average = line[:avg]
           average = average.round(2) if average
 
           printf(
-            "%-70s %-20s %-13s %s",
-            name[-66..-1] || name,
-            key.to_s[-16..-1] || key,
+            "%-100s %-20s %-11s %s",
+            key[-100..-1] || description,
+            # description[-50..-1] || description,
+            # key.to_s[-30..-1] || key,
+            value.to_s[-20..-1] || value,
             "Sum: #{sum}",
             "Avg: #{average}%\n").to_s
         end
@@ -82,7 +89,7 @@ module GS
 
         def log_event(hash)
           return if disabled?
-          id = hash[:id]
+          id = hash[:descriptor]
           key = hash[:key]
           step = hash[:step]
           value = hash[:value]
@@ -91,25 +98,28 @@ module GS
           @data[id][key] ||= {}
           @data[id][key][value] ||= 0
           @data[id][key][value] += 1
+          # print_report
+        end
+
+        def finish
           print_report
         end
 
         def lines
           lines = []
-          @data.each_with_index do |key_hash, id|
+          @data.each_pair do |description, key_hash|
             next unless key_hash
 
-            key_hash.each do |name, key_occurrences|
+            key_hash.each do |key, key_occurrences|
               executions = key_occurrences[:executed]
-              key_occurrences.each_pair do |key, occurrences|
-                next if key == :executed
+              key_occurrences.each_pair do |value, occurrences|
+                next if value == :executed
                 sum = occurrences
                 average = (sum / executions.to_f) * 100
-                line = [name, key, sum, average]
                 line = {
-                  id: id,
-                  name: name,
+                  description: description,
                   key: key,
+                  value: value,
                   sum: sum,
                   avg: average
                 }

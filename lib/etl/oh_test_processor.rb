@@ -10,6 +10,7 @@ require 'gs_breakdown_definitions'
 require 'gs_breakdowns_from_db'
 
 
+GS::ETL::Logging.logger = GS::ETL::Logging::AggregatingLogger.build_stdout_logger
 class OHTestProcessor < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step, :grade_subject_column_headers
 
