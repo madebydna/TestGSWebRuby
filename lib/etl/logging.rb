@@ -72,9 +72,8 @@ module GS
 
           printf(
             "%-100s %-20s %-11s %s",
-            key[-100..-1] || description,
             # description[-50..-1] || description,
-            # key.to_s[-30..-1] || key,
+            key.to_s[-100..-1] || key,
             value.to_s[-20..-1] || value,
             "Sum: #{sum}",
             "Avg: #{average}%\n").to_s

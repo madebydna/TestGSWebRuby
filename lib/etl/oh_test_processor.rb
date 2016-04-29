@@ -182,12 +182,32 @@ class OHTestProcessor < GS::ETL::TestProcessor
   end
 
   shared do |s|
-     s = s.transform 'Set year, level code, and test data type', Fill,
-       entity_type: 'public_charter',
-       year: 2015,
-       level_code: 'e,m,h',
-       test_data_type: 'oaa',
-       test_data_type_id: 20
+    s = s.transform 'Select only interesting columns', ColumnSelector,
+      :year,
+      :entity_type,
+      :entity_level,
+      :state_id,
+      :school_id,
+      :school_name,
+      :district_id,
+      :district_name,
+      :test_data_type,
+      :test_data_type_id,
+      :test_grade,
+      :test_subject,
+      :subject_id,
+      :student_group,
+      :proficiency_level,
+      :level_code,
+      :number_tested,
+      :value_float
+
+    s = s.transform 'Set year, level code, and test data type', Fill,
+      entity_type: 'public_charter',
+      year: 2015,
+      level_code: 'e,m,h',
+      test_data_type: 'oaa',
+      test_data_type_id: 20
 
     s = s.transform 'add student group All for files w/o student group', WithBlock do |row|
       row[:student_group] = 'All' unless row.has_key?(:student_group)
@@ -197,7 +217,7 @@ class OHTestProcessor < GS::ETL::TestProcessor
     s = s.transform 'Rename proficiency band',
       FieldRenamer, :proficiency_level, :proficiency_band
 
-    s = s.transform 'Rename student group band',
+    s = s.transform 'Rename student group',
       FieldRenamer, :student_group, :breakdown
 
     s = s.transform 'rename grade and subject column', MultiFieldRenamer, {
@@ -211,42 +231,65 @@ class OHTestProcessor < GS::ETL::TestProcessor
         'mathematics' => 5,
         'math' => 5,
         'reading' => 2,
+        'Reading' => 2,
         'science' => 25,
         'social_studies' => 24,
         'writing' => 3,
+        '' => 'null',
+        nil => 'null'
       },
       to: :subject_id
 
-    s = s.transform 'Look up breakdown IDs', HashLookup,
-      :breakdown,
-      {
-					'All' => 1,
-					'disabled' => 13,
-					'not_disabled' => 14,
-					'nondisabled' => 14,
-					'disadvantaged' => 9,
-					'nondisadvantaged' => 10,
-					'economically_disadvantaged' => 9,
-					'non_economically_disadvantaged' => 10,
-					'american_indian_or_alaskan_native' => 4,
-					'asian_or_pacific_islander' => 22,
-					'black' => 3,
-					'hispanic' => 6,
-					'multiracial' => 21,
-					'white' => 8,
-					'female' => 11,
-					'male' => 12,
-					'lep' => 15,
-					'migrant' => 19,
-					'gifted' => 66
+      s = s.transform 'Normalize breakdown before ID lookup', WithBlock do |row|
+        if row[:breakdown]
+          row[:breakdown] = row[:breakdown].gsub(/\s+/, '_').downcase
+        end
+        row
+      end
 
-      },
-      to: :breakdown_id
+    # HashLookup: breakdown:yeslimited_english_proficiency_flag_state_tests                                * Not Mapped *       Sum: 2      Avg: 100.0%
+    # HashLookup: breakdown:nolimited_english_proficiency_flag_state_tests                                 * Not Mapped *       Sum: 2      Avg: 100.0%
+    s = s.transform 'Look up breakdown IDs', HashLookup,
+    :breakdown,
+    {
+      'all' => 1,
+      'disabled' => 13,
+      'not_disabled' => 14,
+      'nondisabled' => 14,
+      'disadvantaged' => 9,
+      'nondisadvantaged' => 10,
+      'frl' => 9,
+      'nonfrl' => 10,
+      'economically_disadvantaged' => 9,
+      'yeconomic_disadvantage_flag' => 9,
+      'non_economically_disadvantaged' => 10,
+      'american_indian_or_alaskan_native' => 4,
+      'asian_or_pacific_islander' => 22,
+      'pacific_islander' => 7,
+      'asian' => 2,
+      'black' => 3,
+      'black_non_hispanic' => 3,
+      'black_nonhispanic' => 3,
+      'hispanic' => 6,
+      'multiracial' => 21,
+      'white' => 8,
+      'white_nonhispanic' => 8,
+      'white_non_hispanic' => 8,
+      'female' => 11,
+      'male' => 12,
+      'lep' => 15,
+      'nonlep' => 16,
+      'migrant' => 19,
+      'notmigrant' => 28,
+      'gifted' => 66,
+      'nongifted' => 120
+    },
+    to: :breakdown_id
 
     s = s.transform 'look up proficiency bands', HashLookup,
       :proficiency_band,
       {
-        'null' => 'null',
+        nil => 'null',
         'Limited' => 208,
         'Basic' => 209,
         'Proficient' => 210,
