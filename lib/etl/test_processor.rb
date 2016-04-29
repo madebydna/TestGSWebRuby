@@ -34,7 +34,7 @@ module GS
         @options = options
         @runnable_steps = []
 
-        instance_exec(&self.class.before)
+        instance_exec(&self.class.before) if self.class.before
       end
 
       def source_columns
