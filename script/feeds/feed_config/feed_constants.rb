@@ -6,7 +6,7 @@ module FeedConstants
         'test_scores' => 'local-gs-test-feed',
         'test_subgroup' => 'local-gs-test-subgroup-feed',
         'test_rating' => 'local-gs-test-rating-feed',
-        'official_overall' => 'local-gs-official-overall-rating'
+        'official_overall' => 'local-gs-official-overall-rating-feed'
     }
 
     RATINGS_ID_RATING_FEED_MAPPING = {

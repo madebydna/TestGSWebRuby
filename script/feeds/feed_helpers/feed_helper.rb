@@ -141,9 +141,9 @@ other information, including the quality of each school's teachers, the school c
   def transpose_band_id(band, data, entity_level)
     # For proficient and above band id is always null in database
     if (entity_level == ENTITY_TYPE_STATE )
-      band =  data["proficiency_band_id"].nil? ? 0 : data["proficiency_band_id"]
+      band =  data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"]
     else
-      band == data[band+"_band_id"].nil? ? 0  : data[band+"_band_id"]
+      band = data[band+"_band_id"].nil? ? ''  : data[band+"_band_id"]
     end
   end
 
