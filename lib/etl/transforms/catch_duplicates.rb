@@ -3,26 +3,34 @@ require_relative '../step'
 
 class CatchDuplicates < GS::ETL::Step
 
-  def initialize(*columns_selected)
-    @columns_selected = columns_selected
-    @values = []
-  end
-
-  def columns_selected=(columns_selected)
-    columns_selected
+  def initialize(accumulate, *columns_selected)
+    if accumulate.is_a? TrueClass
+      @should_accumulate = true
+    else
+      columns_selected.unshift accumulate
+    end
+    @columns_selected = Set.new columns_selected
+    @values = Hash.new { |h, k| h[k] =  [] }
   end
 
   def key_for_row(row)
-    row.select { |key| @columns_selected.include? key }.values
+    row.select { |key| @columns_selected.include? key }.values.join('').to_sym
   end
 
   def process(row)
     key = key_for_row(row)
     if @values.include? key
-      dup_message = row.select { |k, _| @columns_selected.include? k}.inspect
-      raise StandardError, "Duplicate data: #{ dup_message }"
+      @values[key] << row.row_num
+      dup_data = row.select { |k, _| @columns_selected.include? k}.inspect
+      msg = "Duplicate data: #{ dup_data } for rows #{@values[key]}"
+
+      if @should_accumulate
+        puts msg
+      else
+        raise msg
+      end
     else
-      @values << key
+      @values[key] << row.row_num
     end
     row
   end

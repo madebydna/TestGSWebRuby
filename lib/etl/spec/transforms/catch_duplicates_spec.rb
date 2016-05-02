@@ -1,29 +1,41 @@
 require_relative '../../transforms/catch_duplicates'
+require_relative '../../row'
 
 describe CatchDuplicates do
-  let(:subject) { CatchDuplicates.new(*columns_selected)}
+  subject { described_class.new *columns_selected }
   let(:columns_selected) { [:foo, :bar] }
+  let(:dup_data) { rows[1].select { |k, v| columns_selected.include? k} }
+  let(:dup_message) { "Duplicate data: #{dup_data.inspect} for rows [0, 1]" }
+  let(:rows) { hashes.each_with_index.map { |h, i| GS::ETL::Row.new h, i } }
+  let(:processed_rows) { rows.each { |row| subject.process(row) } }
 
-  describe '#key_for_row' do
-    context 'when passed a row' do
-      let(:row) { {foo:1, bar:2, baz:3} }
-      it 'should select the values determined by columns_selected' do
-        expect(subject.key_for_row(row)).to eq [1, 2]
+  context 'when raising on first duplicate' do
+    describe '#process' do
+      context 'when passed a row that is not a duplicate' do
+        let(:hashes) { [{foo:1, baz:2, bar:3}, {foo:4, baz:5, bar:6}] }
+        it { expect{processed_rows}.to_not raise_error }
+      end
+
+      context 'when passed a row that is a duplicate' do
+        let(:hashes) { [{foo:1, bar:2, baz:3}, {foo:1, bar:2, baz:3}] }
+        it { expect{processed_rows}.to raise_error dup_message }
       end
     end
   end
 
-  describe '#process' do
-    let(:processed_rows) { rows.each { |row| subject.process(row) } }
-    context 'when passed a row that is not a duplicate' do
-      let(:rows) { [{foo:1, bar:2, baz:3}, {foo:4, bar:5, baz:6}] }
-      it { expect{processed_rows}.to_not raise_error }
-    end
+  context 'when accumulating duplicates' do
+    subject { described_class.new(true, *columns_selected) }
 
-    context 'when passed a row that is a duplicate' do
-      let(:rows) { [{foo:1, bar:2, baz:3}, {foo:1, bar:2, baz:3}] }
-      let(:dup_message) { rows[1].select { |k, v| columns_selected.include? k}.inspect }
-      it { expect{processed_rows}.to raise_error("Duplicate data: #{dup_message}")}
+    describe '#process' do
+      context 'when passed a row that is a duplicate' do
+        let(:hashes) { [{foo:1, bar:2, baz:3}, {foo:1, bar:2, baz:3}] }
+
+        it 'should print duplicates' do
+          allow(subject).to receive(:puts)
+          processed_rows
+          expect(subject).to have_received(:puts).with(dup_message)
+        end
+      end
     end
   end
 end
