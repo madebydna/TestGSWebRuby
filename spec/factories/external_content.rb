@@ -53,7 +53,7 @@ FactoryGirl.define do
         },
         'es' => {
             'first_feature' => {
-                'heading' => 'Establezca su hijo para el exito!',
+                'heading' => 'Prepare a su hijo para tener éxito',
                 'posts' => []
             }
         }
