@@ -4,8 +4,8 @@ require_relative 'test_rating_feed_data_reader'
 
 module Feeds
   class TestRatingFeed
-    include FeedHelper
-    include FeedDataHelper
+    include Feeds::FeedHelper
+    include Feeds::FeedDataHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
@@ -22,7 +22,8 @@ module Feeds
       #Get State Rating Master Data
       state_ratings_info = Feeds::TestRatingFeedDataReader.new({state: @state, ratings_id_for_feed: @ratings_id_for_feed }).get_master_data
       # Translating State Ratings Master  data to XML for State
-      @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info)
+      state_name= States.state_name(@state).titleize
+      @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info,state_name)
 
       # Write to XML File
       generate_xml_rating_feed
@@ -59,13 +60,13 @@ module Feeds
       districts_data_for_feed
     end
 
-    def transpose_state_master_data_ratings_for_feed(state_master_data)
+    def transpose_state_master_data_ratings_for_feed(state_master_data,state)
       state_level_ratings_config_data = []
       state_master_data.try(:each) do |data|
         config_data = {
             :id => transpose_test_id(data[:data_type_id]),
             :year => data[:year],
-            :description => transpose_ratings_description(data[:data_type_id])
+            :description => transpose_ratings_description(data[:data_type_id],state)
         }
         state_level_ratings_config_data.push(config_data)
       end

@@ -5,8 +5,8 @@ require_relative 'test_score_feed_data_reader'
 
 module Feeds
   class TestScoreSubgroupFeed
-    include FeedHelper
-    include FeedDataHelper
+    include Feeds::FeedHelper
+    include Feeds::FeedDataHelper
 
     @@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     @@test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]

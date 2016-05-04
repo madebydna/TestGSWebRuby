@@ -2,8 +2,7 @@ require_relative '../feed_config/feed_constants'
 
 module Feeds
   class Arguments
-
-    include FeedConstants
+    include Feeds::FeedConstants
     attr_accessor :states, :feed_names, :batch_size, :school_ids, :district_ids,:locations ,:names
 
     def initialize()

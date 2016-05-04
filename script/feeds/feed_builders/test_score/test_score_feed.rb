@@ -5,8 +5,8 @@ require_relative 'test_score_feed_data_reader'
 
 module Feeds
   class TestScoreFeed
-    include FeedHelper
-    include FeedDataHelper
+    include Feeds::FeedHelper
+    include Feeds::FeedDataHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
