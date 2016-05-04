@@ -56,12 +56,11 @@ module FeedScripts
                      root_element: FEED_TO_ROOT_ELEMENT_MAPPING[feed],
                      ratings_id_for_feed: RATINGS_ID_RATING_FEED_MAPPING[feed]
         }
-        feed_generation_class = get_feed_generation_class(feed)
-        feed_generation_class.new(feed_opts).generate_feed
+        feed_generation_class(feed).new(feed_opts).generate_feed
       end
     end
 
-    def get_feed_generation_class(key)
+    def feed_generation_class(key)
       {
           test_scores:       FeedBuilders::TestScoreFeed,
           test_subgroup:     FeedBuilders::TestScoreSubgroupFeed,
