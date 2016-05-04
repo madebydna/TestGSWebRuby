@@ -2,16 +2,15 @@ require_relative '../../feed_helpers/feed_helper'
 require_relative '../../feed_helpers/feed_data_helper'
 require_relative 'test_rating_feed_data_reader'
 
-module FeedBuilders
+module Feeds
   class TestRatingFeed
     include FeedHelper
     include FeedDataHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
-      @school_batches = attributes[:school_batches]
-      @district_batches = attributes[:district_batches]
-      @feed_type = attributes[:feed_type]
+      @district_batches = get_district_batches(@state,attributes[:district_ids],attributes[:batch_size])
+      @school_batches = get_school_batches(@state,attributes[:school_ids],attributes[:batch_size])
       @feed_file = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
@@ -19,18 +18,15 @@ module FeedBuilders
     end
 
     def generate_feed
-      start_time = Time.now
-      puts "--- Start Time for generating feed: FeedType: #{@feed_type}  for state #{@state} --- #{Time.now}"
-      # xsd_schema ='greatschools-test-rating.xsd'
+       # xsd_schema ='greatschools-test-rating.xsd'
       #Get State Rating Master Data
-      state_ratings_info = FeedBuilders::TestRatingFeedDataReader.new({state: @state,ratings_id_for_feed: @ratings_id_for_feed }).get_master_data
+      state_ratings_info = Feeds::TestRatingFeedDataReader.new({state: @state, ratings_id_for_feed: @ratings_id_for_feed }).get_master_data
       # Translating State Ratings Master  data to XML for State
       @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info)
 
       # Write to XML File
       generate_xml_rating_feed
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
-      puts "--- Time taken to generate feed : FeedType: #{@feed_type}  for state #{@state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
     end
 
     def process_school_batch_data_for_feed(schools_cache_data)
@@ -43,13 +39,13 @@ module FeedBuilders
     end
 
     def process_school_data_for_feed(school)
-      school_rating_id_cache_data = FeedBuilders::TestRatingFeedDataReader.new({school:school,ratings_id_for_feed: @ratings_id_for_feed}).get_school_data
+      school_rating_id_cache_data = Feeds::TestRatingFeedDataReader.new({school:school, ratings_id_for_feed: @ratings_id_for_feed}).get_school_data
       school_data_for_feed = transpose_data_for_xml(school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
       school_data_for_feed
     end
 
     def process_district_data_for_feed(district)
-      district_rating_id_cache_data =  FeedBuilders::TestRatingFeedDataReader.new({district:district,ratings_id_for_feed: @ratings_id_for_feed}).get_district_data
+      district_rating_id_cache_data =  Feeds::TestRatingFeedDataReader.new({district:district, ratings_id_for_feed: @ratings_id_for_feed}).get_district_data
       district_data_for_feed= transpose_data_for_xml(district_rating_id_cache_data, district, ENTITY_TYPE_DISTRICT)
       district_data_for_feed
     end

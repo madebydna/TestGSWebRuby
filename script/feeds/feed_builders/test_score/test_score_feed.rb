@@ -3,36 +3,31 @@ require_relative '../../feed_helpers/feed_data_helper'
 
 require_relative 'test_score_feed_data_reader'
 
-module FeedBuilders
+module Feeds
   class TestScoreFeed
     include FeedHelper
     include FeedDataHelper
 
     def initialize(attributes = {})
       @state = attributes[:state]
-      @school_batches = attributes[:school_batches]
-      @district_batches = attributes[:district_batches]
-      @feed_type = attributes[:feed_type]
+      @district_batches = get_district_batches(@state,attributes[:district_ids],attributes[:batch_size])
+      @school_batches = get_school_batches(@state,attributes[:school_ids],attributes[:batch_size])
       @feed_file = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
     end
 
     def generate_feed
-      start_time = Time.now
-      puts "--- Start Time for generating feed: FeedType: #{@feed_type}  for state #{@state} --- #{Time.now}"
       # xsd_schema ='greatschools-test.xsd'
       #Generate State Test Master Data
-      @state_test_infos_for_feed = FeedBuilders::TestScoreFeedDataReader.new({state: @state}).get_master_data
+      @state_test_infos_for_feed = Feeds::TestScoreFeedDataReader.new({state: @state}).get_master_data
       # Generate District Test Data From Test Tables
-      state_test_results = FeedBuilders::TestScoreFeedDataReader.new({state: @state}).get_state_data
+      state_test_results = Feeds::TestScoreFeedDataReader.new({state: @state}).get_state_data
       # Translating State Test  data to XML for State
       @state_data_for_feed = transpose_state_data_for_feed(state_test_results)
       # Write to XML File
       generate_xml_test_score_feed
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
-      puts "--- Time taken to generate feed : FeedType: #{@feed_type}  for state #{@state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
-
     end
 
     def transpose_state_data_for_feed(state_test_data)
@@ -108,7 +103,7 @@ module FeedBuilders
 
     def transpose_school(school)
       school_data_for_feed = {}
-      school_test_data = FeedBuilders::TestScoreFeedDataReader.new({school: school}).get_school_data
+      school_test_data = Feeds::TestScoreFeedDataReader.new({school: school}).get_school_data
       school_test_data.try(:each)do |test_id, data|
           school_data_for_feed = transpose_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
       end
@@ -166,7 +161,7 @@ module FeedBuilders
 
     def transpose_district(district)
       district_data_for_feed = {}
-      district_test_data = FeedBuilders::TestScoreFeedDataReader.new({district: district}).get_district_data
+      district_test_data = Feeds::TestScoreFeedDataReader.new({district: district}).get_district_data
         district_test_data.try(:each) do |test_id, data|
           district_data_for_feed = transpose_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
         end

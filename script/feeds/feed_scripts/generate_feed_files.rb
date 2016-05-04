@@ -12,7 +12,7 @@ require_relative '../feed_builders/rating/test_rating_feed'
 
 
 
-module FeedScripts
+module Feeds
   class GenerateFeedFiles
     include FeedHelper
     include FeedDataHelper
@@ -26,37 +26,35 @@ module FeedScripts
       arguments = Feeds::Arguments.new
       arguments.states.each do |state|
         state = state
-        # Generate School Batches
-        school_batches = get_school_batches(state,arguments.school_ids,arguments.batch_size)
-        # Generate District Batches
-        district_batches = get_district_batches(state,arguments.district_ids,arguments.batch_size)
-        generate_all_feeds(district_batches, school_batches, state,arguments.feed_names, arguments.locations,arguments.names)
+        generate_all_feeds(arguments.district_ids, arguments.school_ids, arguments.batch_size,state,arguments.feed_names,
+                           arguments.locations,arguments.names)
       end
     end
 
-    def generate_all_feeds(district_batches, school_batches, state,feed_names,locations,names)
+    def generate_all_feeds(district_ids,school_ids,batch_size,state,feed_names,locations,names)
       feed_names.each_with_index do |feed, index|
-        # Get Feed Name
-        feed_file = get_feed_name(feed, index,locations,names,state)
         feed_opts = {state: state,
-                     school_batches: school_batches,
-                     district_batches: district_batches,
-                     feed_type: feed,
-                     feed_file: feed_file,
+                     school_ids: school_ids,
+                     district_ids: district_ids,
+                     feed_file: get_feed_name(feed, index,locations,names,state),
+                     batch_size: batch_size,
                      schema: FEED_TO_SCHEMA_MAPPING[feed],
                      root_element: FEED_TO_ROOT_ELEMENT_MAPPING[feed],
                      ratings_id_for_feed: RATINGS_ID_RATING_FEED_MAPPING[feed]
         }
+        start_time = Time.now
+        puts "--- Start Time for generating feed: FeedType: #{feed}  for state #{state} --- #{Time.now}"
         feed_generation_class(feed).new(feed_opts).generate_feed
+        puts "--- Time taken to generate feed : FeedType: #{feed}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
       end
     end
 
     def feed_generation_class(key)
       {
-          test_scores:       FeedBuilders::TestScoreFeed,
-          test_subgroup:     FeedBuilders::TestScoreSubgroupFeed,
-          test_rating:       FeedBuilders::TestRatingFeed,
-          official_overall:  FeedBuilders::TestRatingFeed
+          test_scores:       Feeds::TestScoreFeed,
+          test_subgroup:     Feeds::TestScoreSubgroupFeed,
+          test_rating:       Feeds::TestRatingFeed,
+          official_overall:  Feeds::TestRatingFeed
       }[key.to_s.to_sym]
     end
   end

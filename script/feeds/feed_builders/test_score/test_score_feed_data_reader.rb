@@ -1,4 +1,4 @@
-module FeedBuilders
+module Feeds
   class TestScoreFeedDataReader
     def initialize(attributes = {})
       @school = attributes[:school]
