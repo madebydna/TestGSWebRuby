@@ -87,7 +87,7 @@ gem 'rubocop-checkstyle_formatter', require: false
 
 gem 'protected_attributes'
 
-gem 'nokogiri', '= 1.6.1'
+gem 'nokogiri', '= 1.6.7'
 
 # SOAP client
 gem 'savon', '~> 2.6.0'
@@ -118,8 +118,7 @@ group :development do
   gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
-
-  gem 'pry-debugger'
+  gem 'byebug'
 end
 
 group :test do
@@ -178,7 +177,6 @@ group :development, :test do
 
   # Turn off assets logging in development
   gem 'quiet_assets'
-  gem 'debugger'
 
   gem 'yard'
 
