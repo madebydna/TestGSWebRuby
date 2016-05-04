@@ -1,6 +1,9 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative '../feed_helpers/feed_helper'
 require_relative '../feed_helpers/feed_data_helper'
+require_relative '../feed_helpers/arguments'
+
+
 require_relative '../feed_config/feed_constants'
 
 require_relative '../feed_builders/test_score/test_score_feed'
@@ -19,34 +22,22 @@ module FeedScripts
       GenerateFeedFiles.new.generate
     end
 
-    def initialize()
-      arguments = parse_arguments
-      usage unless arguments.present?
-        @states = arguments[:states]
-        @feed_names = arguments[:feed_names]
-        @batch_size = arguments[:batch_size].present? ? arguments[:batch_size] : DEFAULT_BATCH_SIZE
-        @school_ids = arguments[:school_id]
-        @district_ids = arguments[:district_id]
-        @location = arguments[:location]
-        @name = arguments[:name]
-
-    end
-
     def generate
-      @states.each do |state|
-        @state = state
+      arguments = Feeds::Arguments.new
+      arguments.states.each do |state|
+        state = state
         # Generate School Batches
-        school_batches = get_school_batches
+        school_batches = get_school_batches(state,arguments.school_ids,arguments.batch_size)
         # Generate District Batches
-        district_batches = get_district_batches
-        generate_all_feeds(district_batches, school_batches, state)
+        district_batches = get_district_batches(state,arguments.district_ids,arguments.batch_size)
+        generate_all_feeds(district_batches, school_batches, state,arguments.feed_names, arguments.locations,arguments.names)
       end
     end
 
-    def generate_all_feeds(district_batches, school_batches, state)
-      @feed_names.each_with_index do |feed, index|
+    def generate_all_feeds(district_batches, school_batches, state,feed_names,locations,names)
+      feed_names.each_with_index do |feed, index|
         # Get Feed Name
-        feed_file = get_feed_name(feed, index)
+        feed_file = get_feed_name(feed, index,locations,names,state)
         feed_opts = {state: state,
                      school_batches: school_batches,
                      district_batches: district_batches,

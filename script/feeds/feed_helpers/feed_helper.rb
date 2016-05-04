@@ -17,41 +17,12 @@ module FeedHelper
     return hash
   end
 
-  def options_for_generating_all_feeds
-    [{  states: all_states, feed_names: all_feeds}]
-  end
 
-  def parse_arguments
-    # To Generate All feeds for all states in current directory do rails runner script/feeds/feed_scripts/generate_feed_files.rb all
-    if ARGV[0] == 'all' && ARGV[1].nil?
-      OPTIONS_FOR_GENERATING_ALL_FEEDS
-    else
-      feed_name, state, school_id, district_id, location, name, batch_size= ARGV[0].try(:split, ':')
-      state = state == 'all' ? all_states : split_argument(state)
-      feed_name = feed_name == 'all' ? all_feeds : split_argument(feed_name)
-      return false unless (feed_name-all_feeds).empty?
-      return false unless (state-all_states).empty?
-      args = {
-          :states => state,
-          :feed_names => feed_name,
-          :school_id => split_argument(school_id),
-          :district_id => split_argument(district_id),
-          :location => split_argument(location),
-          :name => split_argument(name),
-          :batch_size => batch_size
-      }
-    end
-  end
-
-  def split_argument(argument)
-    argument.try(:split, ",") || argument
-  end
-
-  def get_feed_name(feed, index)
-    feed_location = @location.present? && @location[index].present?  ? @location[index] : ''
-    feed_name = @name.present? && @name[index].present? ? @name[index] : FEED_NAME_MAPPING[feed]
+  def get_feed_name(feed, index,locations,names,state)
+    feed_location = locations.present? && locations[index].present?  ? locations[index] : ''
+    feed_name = names.present? && names[index].present? ? names[index] : FEED_NAME_MAPPING[feed]
     #generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
-    generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}.xml" : feed+"-#{@state.upcase}.xml"
+    generated_feed_file_name = feed_name.present? ? feed_name+"-#{state.upcase}.xml" : feed+"-#{state.upcase}.xml"
     # removing timestamp for now as flat feed process does not like timestamp
     xml_name =feed_location+generated_feed_file_name
   end
