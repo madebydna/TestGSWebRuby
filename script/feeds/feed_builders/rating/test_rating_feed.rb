@@ -1,5 +1,5 @@
-require_relative '../../../feeds/feed_helpers/feed_helper'
-require_relative '../../../feeds/feed_helpers/feed_data_helper'
+require_relative '../../feed_helpers/feed_helper'
+require_relative '../../feed_helpers/feed_data_helper'
 require_relative 'test_rating_feed_data_reader'
 
 module FeedBuilders

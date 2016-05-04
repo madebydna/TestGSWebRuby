@@ -1,4 +1,4 @@
-require_relative '../../feeds/feed_config/feed_constants'
+require_relative '../feed_config/feed_constants'
 require_relative 'feed_data_helper'
 
 
