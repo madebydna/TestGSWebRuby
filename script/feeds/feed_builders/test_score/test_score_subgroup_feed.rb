@@ -7,6 +7,7 @@ module Feeds
   class TestScoreSubgroupFeed
     include Feeds::FeedHelper
     include Feeds::FeedDataHelper
+    include Feeds::TestScoreFeedDataReader
 
     @@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
     @@test_data_subjects = Hash[TestDataSubject.all.map { |o| [o.id, o] }]
@@ -26,9 +27,9 @@ module Feeds
     def generate_feed
       # xsd_schema ='greatschools-test-subgroup.xsd'
       #Generate State Test Master Data
-      @state_test_infos_for_feed = Feeds::TestScoreFeedDataReader.new({state: @state}).get_master_data
+      @state_test_infos_for_feed = get_test_score_state_master_data(@state)
       # Generate District Test Data From Test Tables
-      state_test_results = Feeds::TestScoreFeedDataReader.new({state: @state}).get_state_subgroup_data
+      state_test_results = get_state_subgroup_data(@state)
       # Translating State Test  data to XML for State
       @state_data_for_feed = transpose_state_data_for_feed(state_test_results)
       # Write to XML File
@@ -111,7 +112,7 @@ module Feeds
 
     def transpose_school(school)
       school_data_for_feed = {}
-      school_test_data = Feeds::TestScoreFeedDataReader.new({school: school}).get_school_data
+      school_test_data = get_school_test_score_data(school)
       school_test_data.try(:each)do |test_id, data|
         school_data_for_feed = transpose_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL)
       end
@@ -168,7 +169,7 @@ module Feeds
 
     def transpose_district(district)
       district_data_for_feed = {}
-      district_test_data = Feeds::TestScoreFeedDataReader.new({district: district}).get_district_data
+      district_test_data = get_district_test_score_data(district)
       district_test_data.try(:each) do |test_id, data|
         district_data_for_feed = transpose_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT)
       end

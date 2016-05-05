@@ -1,21 +1,15 @@
 module Feeds
-  class TestScoreFeedDataReader
-    def initialize(attributes = {})
-      @school = attributes[:school]
-      @district = attributes[:district ]
-      @state = attributes[:state]
+  module TestScoreFeedDataReader
+
+    def get_school_test_score_data(school)
+      school.try(:school_cache).cache_data['feed_test_scores']
     end
 
-    def get_school_data
-      @school.try(:school_cache).cache_data['feed_test_scores']
+    def get_district_test_score_data(district)
+      district.try(:district_cache).cache_data['feed_test_scores']
     end
-
-    def get_district_data
-      @district.try(:district_cache).cache_data['feed_test_scores']
-    end
-    def get_master_data
+    def get_test_score_state_master_data(state)
       state_test_infos = []
-      state = @state
       TestDescription.where(state: state).find_each do |test|
         data_type_id = test.data_type_id
         test_info = TestDataType.where(:id => data_type_id).first
@@ -36,12 +30,12 @@ module Feeds
       state_test_infos
     end
 
-    def get_state_data
-      TestDataSet.test_scores_for_state(@state)
+    def get_state_data(state)
+      TestDataSet.test_scores_for_state(state)
     end
 
-    def get_state_subgroup_data
-      TestDataSet.test_scores_subgroup_for_state(@state)
+    def get_state_subgroup_data(state)
+      TestDataSet.test_scores_subgroup_for_state(state)
     end
   end
 end
