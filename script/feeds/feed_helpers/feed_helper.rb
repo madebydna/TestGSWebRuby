@@ -73,18 +73,7 @@ other information, including the quality of each school's teachers, the school c
 
     end
 
-    def transpose_url(entity,entity_level)
-      begin
-        if (entity_level == ENTITY_TYPE_DISTRICT)
-          url = city_district_url district_params_from_district(entity)
-        elsif (entity_level == ENTITY_TYPE_SCHOOL)
-          url = school_url entity
-        end
-      rescue  => e
-        puts "#{e}"
-        url = state_url(state_params(@state))
-      end
-    end
+
 
     def transpose_test_score(band, data,entity_level)
       if (entity_level == ENTITY_TYPE_STATE)
@@ -94,15 +83,6 @@ other information, including the quality of each school's teachers, the school c
       end
     end
 
-    def transpose_ratings(data,entity_level)
-      if (entity_level == ENTITY_TYPE_SCHOOL)
-        rating = data["school_value_text"]|| data["school_value_float"]
-      elsif (entity_level == ENTITY_TYPE_DISTRICT)
-        rating = data["value_text"]|| data["value_float"]
-      end
-      # Rating should be sent nil and not zero if data not present , that's why the try
-      rating.try(:to_i)
-    end
 
     def transpose_band_name(band)
       # For proficient and above band id is always null in database
