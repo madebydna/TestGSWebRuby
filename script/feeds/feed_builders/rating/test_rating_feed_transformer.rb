@@ -1,4 +1,3 @@
-require_relative 'test_rating_feed_data_reader'
 require_relative '../../feed_config/feed_constants'
 
 
