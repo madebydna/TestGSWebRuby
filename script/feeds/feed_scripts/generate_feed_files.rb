@@ -39,7 +39,8 @@ module Feeds
                      batch_size: batch_size,
                      schema: FEED_TO_SCHEMA_MAPPING[feed],
                      root_element: FEED_TO_ROOT_ELEMENT_MAPPING[feed],
-                     ratings_id_for_feed: RATINGS_ID_RATING_FEED_MAPPING[feed]
+                     ratings_id_for_feed: RATINGS_ID_RATING_FEED_MAPPING[feed],
+                     data_type: DATA_TYPE_TEST_SCORE_FEED_MAPPING[feed],
         }
         start_time = Time.now
         puts "--- Start Time for generating feed: FeedType: #{feed}  for state #{state} --- #{Time.now}"

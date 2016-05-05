@@ -3,6 +3,10 @@ module Feeds
     # module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
 
+      WITH_NO_BREAKDOWN = 'with_no_breakdown'
+
+      WITH_ALL_BREAKDOWN = 'wth_all_breakdown'
+
       FEED_NAME_MAPPING = {
           'test_scores' => 'local-gs-test-feed',
           'test_subgroup' => 'local-gs-test-subgroup-feed',
@@ -13,6 +17,11 @@ module Feeds
       RATINGS_ID_RATING_FEED_MAPPING = {
           'test_rating' => 164,
           'official_overall' => 174
+      }
+
+      DATA_TYPE_TEST_SCORE_FEED_MAPPING = {
+          'test_scores' => WITH_NO_BREAKDOWN,
+          'test_subgroup' => WITH_ALL_BREAKDOWN,
       }
 
       FEED_TO_SCHEMA_MAPPING = {
@@ -27,7 +36,6 @@ module Feeds
           'test_rating' => 'gs-test-rating-feed',
           'official_overall' => 'gs-official-overall-rating-feed'
       }
-
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
 

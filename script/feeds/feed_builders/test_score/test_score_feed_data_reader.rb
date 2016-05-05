@@ -1,5 +1,10 @@
+require_relative '../../feed_config/feed_constants'
+
+
 module Feeds
   module TestScoreFeedDataReader
+
+    include Feeds::FeedConstants
 
     def get_school_test_score_data(school)
       school.try(:school_cache).cache_data['feed_test_scores']
@@ -30,12 +35,22 @@ module Feeds
       state_test_infos
     end
 
-    def get_state_data(state)
-      TestDataSet.test_scores_for_state(state)
+    def get_state_test_score_data(state,data_type)
+      if data_type == WITH_NO_BREAKDOWN
+        get_state_data_with_no_subgroup(state)
+      elsif data_type == WITH_ALL_BREAKDOWN
+        get_state_data_with_subgroup(state)
+      end
     end
 
-    def get_state_subgroup_data(state)
-      TestDataSet.test_scores_subgroup_for_state(state)
-    end
+    private
+
+        def get_state_data_with_no_subgroup(state)
+          TestDataSet.test_scores_for_state(state)
+        end
+
+        def get_state_data_with_subgroup(state)
+          TestDataSet.test_scores_subgroup_for_state(state)
+        end
   end
 end

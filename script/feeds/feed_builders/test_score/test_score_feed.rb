@@ -17,6 +17,7 @@ module Feeds
       @feed_file = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
+      @data_type = attributes[:data_type]
     end
 
     def generate_feed
@@ -24,7 +25,7 @@ module Feeds
       #Generate State Test Master Data
       @state_test_infos_for_feed = get_test_score_state_master_data(@state)
       # Generate District Test Data From Test Tables
-      state_test_results = get_state_data(@state)
+      state_test_results = get_state_test_score_data(@state,@data_type)
       # Translating State Test  data to XML for State
       @state_data_for_feed = transpose_state_data_for_feed(state_test_results)
       # Write to XML File

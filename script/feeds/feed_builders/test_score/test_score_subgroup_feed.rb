@@ -29,7 +29,7 @@ module Feeds
       #Generate State Test Master Data
       @state_test_infos_for_feed = get_test_score_state_master_data(@state)
       # Generate District Test Data From Test Tables
-      state_test_results = get_state_subgroup_data(@state)
+      state_test_results = get_state_data_with_subgroup(@state)
       # Translating State Test  data to XML for State
       @state_data_for_feed = transpose_state_data_for_feed(state_test_results)
       # Write to XML File
