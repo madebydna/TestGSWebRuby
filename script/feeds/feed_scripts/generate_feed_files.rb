@@ -15,7 +15,6 @@ require_relative '../feed_builders/rating/test_rating_feed'
 module Feeds
   class GenerateFeedFiles
     include Feeds::FeedHelper
-    include Feeds::FeedDataHelper
     include Feeds::FeedConstants
 
     def self.generate

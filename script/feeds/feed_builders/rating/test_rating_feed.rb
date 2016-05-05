@@ -24,6 +24,7 @@ module Feeds
       # Translating State Ratings Master  data to XML for State
       state_name= States.state_name(@state).titleize
       @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info,state_name)
+      binding.pry
 
       # Write to XML File
       generate_xml_rating_feed
@@ -31,12 +32,7 @@ module Feeds
     end
 
     def process_school_batch_data_for_feed(schools_cache_data)
-      schools_data_for_feed = []
-        schools_cache_data.try(:each) do |school|
-          school_data_for_feed = process_school_data_for_feed(school)
-          (schools_data_for_feed << school_data_for_feed).flatten!
-        end
-      schools_data_for_feed
+      schools_cache_data.try(:map) {|school| process_school_data_for_feed(school) }.flatten
     end
 
     def process_school_data_for_feed(school)
@@ -52,33 +48,23 @@ module Feeds
     end
 
     def process_district_batch_data_for_feed(districts_cache_data)
-      districts_data_for_feed = []
-        districts_cache_data.try(:each) do |district|
-          district_data_for_feed = process_district_data_for_feed(district)
-          (districts_data_for_feed << district_data_for_feed).flatten!
-        end
-      districts_data_for_feed
+      districts_cache_data.try(:map) {|district| process_district_data_for_feed(district) }.flatten
     end
 
     def transpose_state_master_data_ratings_for_feed(state_master_data,state)
-      state_level_ratings_config_data = []
-      state_master_data.try(:each) do |data|
-        config_data = {
+      state_master_data_for_xml = state_master_data.try(:map) do |data|
+        {
             :id => transpose_test_id(data[:data_type_id]),
             :year => data[:year],
             :description => transpose_ratings_description(data[:data_type_id],state)
         }
-        state_level_ratings_config_data.push(config_data)
       end
-      state_level_ratings_config_data
     end
-    def transpose_data_for_xml(ratings_data,entity,entity_level)
-      parsed_data_for_xml = []
-      ratings_data.reject(&:nil?).try(:each)do |data|
-        ratings_data = create_test_rating_hash_for_xml(data, entity, entity_level)
-        parsed_data_for_xml.push(ratings_data)
-      end
-      parsed_data_for_xml
+
+    def transpose_data_for_xml(ratings_data = [],entity,entity_level)
+      # Array.wrap will convert nil to [], Object to [Object], and leave existing arrays alone
+      Array.wrap(ratings_data).try(:map) { |data| create_test_rating_hash_for_xml(data, entity, entity_level)}.compact
+
     end
 
     def create_test_rating_hash_for_xml(data,entity,entity_level)

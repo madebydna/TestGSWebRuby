@@ -19,14 +19,13 @@ module Feeds
     end
 
     def get_master_data
-      query_results =TestDataSet.ratings_config_for_state(@state,@ratings_id_for_feed)
+      TestDataSet.ratings_config_for_state(@state,@ratings_id_for_feed)
     end
 
     private
 
     def get_rating_data_for_feed(ratings_cache_data)
-      data = []
-      data.push(ratings_cache_data.try(:find) { |h| h["data_type_id"]== @ratings_id_for_feed })
+      Array.wrap(ratings_cache_data).try(:select) { |h| h["data_type_id"]== @ratings_id_for_feed }
     end
 
   end
