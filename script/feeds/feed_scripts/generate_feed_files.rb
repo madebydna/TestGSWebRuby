@@ -7,7 +7,6 @@ require_relative '../feed_helpers/arguments'
 require_relative '../feed_config/feed_constants'
 
 require_relative '../feed_builders/test_score/test_score_feed'
-require_relative '../feed_builders/test_score/test_score_subgroup_feed'
 require_relative '../feed_builders/rating/test_rating_feed'
 
 
@@ -52,7 +51,7 @@ module Feeds
     def feed_generation_class(key)
       {
           test_scores:       Feeds::TestScoreFeed,
-          test_subgroup:     Feeds::TestScoreSubgroupFeed,
+          test_subgroup:     Feeds::TestScoreFeed,
           test_rating:       Feeds::TestRatingFeed,
           official_overall:  Feeds::TestRatingFeed
       }[key.to_s.to_sym]

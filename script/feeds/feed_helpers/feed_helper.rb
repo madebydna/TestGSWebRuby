@@ -70,9 +70,7 @@ other information, including the quality of each school's teachers, the school c
     def transpose_breakdown_id(breakdown_id,breakdown_name,test_data_breakdowns)
      breakdown_name = breakdown_name == 'All' ? 'All students' : breakdown_name
      breakdown_id.present?  ?  breakdown_id : test_data_breakdowns[breakdown_name].try(:id)
-
     end
-
 
 
     def transpose_test_score(band, data,entity_level)
