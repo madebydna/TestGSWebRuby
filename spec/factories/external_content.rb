@@ -1,3 +1,4 @@
+# Encoding: utf-8
 FactoryGirl.define do
   factory :homepage_features_external_content, class: ExternalContent do
     sequence(:id) { |n| n }
