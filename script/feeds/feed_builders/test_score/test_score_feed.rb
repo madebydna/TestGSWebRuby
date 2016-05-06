@@ -29,7 +29,7 @@ module Feeds
       # Generate District Test Data From Test Tables
       state_test_results = get_state_test_score_data(@state,@data_type)
       # Translating State Test  data to XML for State
-      @state_data_for_feed = transpose_state_data_for_feed(state_test_results)
+      @state_data_for_feed = transpose_state_data_for_feed(@state,state_test_results)
       # Write to XML File
       generate_xml_test_score_feed
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
@@ -55,7 +55,7 @@ module Feeds
       school_data_for_feed = {}
       school_test_data = get_school_test_score_data(school)
       school_test_data.try(:each)do |test_id, data|
-          school_data_for_feed = transpose_data_for_xml(data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
+          school_data_for_feed = transpose_data_for_xml(@state,data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
       end
       school_data_for_feed
     end
@@ -113,7 +113,7 @@ module Feeds
       district_data_for_feed = {}
       district_test_data = get_district_test_score_data(district)
         district_test_data.try(:each) do |test_id, data|
-          district_data_for_feed = transpose_data_for_xml(data, district, test_id, ENTITY_TYPE_DISTRICT,@data_type)
+          district_data_for_feed = transpose_data_for_xml(@state,data, district, test_id, ENTITY_TYPE_DISTRICT,@data_type)
         end
       district_data_for_feed
     end
