@@ -124,6 +124,10 @@ end
 
 group :test do
   gem 'capybara-screenshot', '~> 1.0.11'
+
+  # Mock external http requests for tests
+  gem 'webmock'
+
 end
 
 group :development, :test do

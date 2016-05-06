@@ -39,6 +39,7 @@ require 'support/factory_girl_extensions'
 require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
+require 'webmock/rspec'
 
 def disconnect_connection_pools(db)
   ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
