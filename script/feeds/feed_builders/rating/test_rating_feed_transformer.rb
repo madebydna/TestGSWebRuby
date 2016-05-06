@@ -26,7 +26,7 @@ module Feeds
                      :entity_level => entity_level.titleize,
                      :test_rating_id => transpose_test_id(state,data["data_type_id"]),
                      :rating => transpose_ratings(data,entity_level),
-                     :url => transpose_url(entity,entity_level)
+                     :url => transpose_url(entity,entity_level,state)
       }
     end
 
@@ -40,7 +40,7 @@ module Feeds
       rating.try(:to_i)
     end
 
-    def transpose_url(entity,entity_level)
+    def transpose_url(entity,entity_level,state)
       begin
         if (entity_level == ENTITY_TYPE_DISTRICT)
           url = city_district_url district_params_from_district(entity)
@@ -49,7 +49,7 @@ module Feeds
         end
       rescue  => e
         puts "#{e}"
-        url = state_url(state_params(@state))
+        url = state_url(state_params(state))
       end
     end
     def transpose_ratings_description(data_type_id,state)

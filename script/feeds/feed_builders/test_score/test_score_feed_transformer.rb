@@ -10,7 +10,7 @@ module Feeds
     @@test_data_breakdowns = Hash[TestDataBreakdown.all.map { |bd| [bd.id, bd] }]
     @@test_data_breakdowns_name_mapping = Hash[TestDataBreakdown.all.map { |bd| [bd.name, bd] }]
 
-    def transpose_state_data_for_feed(state,state_test_data)
+    def transpose_state_data_for_feed(state,state_test_data,data_type)
       state_level_test_data = []
       state_test_data.each do |data|
         band = @@proficiency_bands[data["proficiency_band_id"]].present? ? @@proficiency_bands[data["proficiency_band_id"]].name : nil
@@ -22,7 +22,7 @@ module Feeds
         subject = @@test_data_subjects[data.subject_id].present? ? @@test_data_subjects[data.subject_id].name : ''
         breakdown_name = @@test_data_breakdowns[data.breakdown_id].present? ? @@test_data_breakdowns[data.breakdown_id].name : ''
         breakdown_id = data["breakdown_id"]
-        test_data = create_hash_for_xml(state,band, data, nil, entity_level, grade, level, subject, test_id, year, @data_type, breakdown_id,breakdown_name )
+        test_data = create_hash_for_xml(state,band, data, nil, entity_level, grade, level, subject, test_id, year, data_type, breakdown_id,breakdown_name )
         state_level_test_data.push(test_data)
       end
       state_level_test_data
@@ -40,7 +40,7 @@ module Feeds
                 band_names = get_band_names(data)
                 # Get Data For All Bands
                 band_names.try(:each) do |band|
-                  test_data = create_hash_for_xml(state,band, data, entity, entity_level, grade, level, subject, test_id, year,@data_type,nil,breakdown)
+                  test_data = create_hash_for_xml(state,band, data, entity, entity_level, grade, level, subject, test_id, year,data_type,nil,breakdown)
                   parsed_data_for_xml.push(test_data)
                 end
               end
