@@ -1,0 +1,3 @@
+class GsExactTargetAuthorizationError < StandardError
+end
+

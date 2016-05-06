@@ -17,19 +17,36 @@ class ExactTarget
               'Authorization' => 'Bearer ' + access_token
           }
       )
-      post_json(uri, send_hash, req)
+      result = post_json(uri, send_hash, req)
+      authenticate(result)
     end
 
-    def post_json_get_auth(send_hash)
+    def post_auth_token_request
       uri = access_token_uri
       req = Net::HTTP::Post.new(
           uri.request_uri,
           initheader = {'Content-Type' => 'application/json'}
       )
-      post_json(uri, send_hash, req)
+      result = post_json(uri, credentials_rest, req)
+      authenticate_token(result)
     end
 
     private
+
+    def authenticate(result)
+      ExactTargetAuthorizationChecker.authorize(result)
+    end
+
+    def authenticate_token(result)
+      ExactTargetAuthorizationChecker.authorize_token(result)
+    end
+
+    def credentials_rest
+      {
+        'clientId' => ENV_GLOBAL['exacttarget_v2_api_key'],
+        'clientSecret' => ENV_GLOBAL['exacttarget_v2_api_secret']
+      }
+    end
 
     def access_token_uri
       URI('https://auth.exacttargetapis.com/v1/requestToken')
@@ -40,9 +57,9 @@ class ExactTarget
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       response = http.request(request)
-      # require 'pry'
-      # binding.pry
       JSON.parse(response.body)
     end
   end
 end
+
+

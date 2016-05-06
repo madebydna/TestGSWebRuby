@@ -1,38 +1,29 @@
 class ExactTarget
   class SmsRest
-
+    attr_reader :auth_token_manager
     def initialize
       @sms_rest_calls = ExactTarget::SmsRestCalls.new
-      define_all_methods
+      @auth_token_manager = ExactTarget::AuthTokenManager
+      ExactTarget::SmsRestCalls.instance_methods(false).each { |method_name|  SmsRest.define_rest_method(method_name) }
     end
 
-    def define_all_methods
-      ExactTarget::SmsRestCalls.instance_methods(false).each do |method_name|
-        # @sms_rest_calls.methods.each do |method_name|
-        define_method(method_name) do
-          access_token = ExactTarget::AuthTokenManager.fetch_accesstoken
-          result = @sms_rest_calls.send(method_name, access_token, args)
-          if (!ExactTarget::AuthTokenManager.authentication_verify(result))
-            result = @sms_rest_calls.send(method_name, access_token, args)
+    def self.define_rest_method(method_name)
+      define_method(method_name) do |*args|
+        access_token = auth_token_manager.fetch_access_token
+        begin
+          begin
+            result = @sms_rest_calls.send(method_name, access_token, *args)
+          rescue GsExactTargetAuthorizationError
+            access_token = auth_token_manager.fetch_new_access_token
+            result = @sms_rest_calls.send(method_name, access_token, *args)
           end
-          result
+        rescue GsExactTargetAuthorizationError => e
+          vars = {method_name: method_name, args: args }
+          GSLogger.error(:misc, e, message: "Unable to make ExactTarget Sms Rest Call", vars: vars)
+          raise e
         end
+        result
       end
     end
-
-    # def method_missing(method_name, *args)
-    #   super if !@sms_rest_calls.respond_to? method_name
-    #   access_token = ExactTarget::AuthTokenManager.fetch_accesstoken
-    #   result = @sms_rest_calls.send(method_name, access_token, args)
-    #   if(!ExactTarget::AuthTokenManager.authentication_verify(result))
-    #     result = @sms_rest_calls.send(method_name, access_token, args)
-    #   end
-    #   result
-    # end
-    #
-    # def respond_to_missing? (method_name, include_private = false)
-    #   @sms_rest_calls.respond_to?(method_name) || super
-    # end
-
   end
 end
