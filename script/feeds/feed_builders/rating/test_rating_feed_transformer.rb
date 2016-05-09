@@ -7,7 +7,7 @@ module Feeds
     include Feeds::FeedConstants
 
     def transpose_state_master_data_ratings_for_feed(state_master_data,state)
-      state_master_data_for_xml = state_master_data.try(:map) do |data|
+      state_master_data.try(:map) do |data|
         {
             :id => transpose_test_id(state,data[:data_type_id]),
             :year => data[:year],
@@ -22,7 +22,7 @@ module Feeds
     end
 
     def create_test_rating_hash_for_xml(state,data,entity,entity_level)
-      test_rating = {:universal_id => transpose_universal_id(state,entity, entity_level),
+      {:universal_id => transpose_universal_id(state,entity, entity_level),
                      :entity_level => entity_level.titleize,
                      :test_rating_id => transpose_test_id(state,data["data_type_id"]),
                      :rating => transpose_ratings(data,entity_level),
@@ -31,9 +31,9 @@ module Feeds
     end
 
     def transpose_ratings(data,entity_level)
-      if (entity_level == ENTITY_TYPE_SCHOOL)
+      if entity_level == ENTITY_TYPE_SCHOOL
         rating = data["school_value_text"]|| data["school_value_float"]
-      elsif (entity_level == ENTITY_TYPE_DISTRICT)
+      elsif entity_level == ENTITY_TYPE_DISTRICT
         rating = data["value_text"]|| data["value_float"]
       end
       # Rating should be sent nil and not zero if data not present , that's why the try
@@ -42,9 +42,9 @@ module Feeds
 
     def transpose_url(entity,entity_level,state)
       begin
-        if (entity_level == ENTITY_TYPE_DISTRICT)
+        if entity_level == ENTITY_TYPE_DISTRICT
           url = city_district_url district_params_from_district(entity)
-        elsif (entity_level == ENTITY_TYPE_SCHOOL)
+        elsif entity_level == ENTITY_TYPE_SCHOOL
           url = school_url entity
         end
       rescue  => e

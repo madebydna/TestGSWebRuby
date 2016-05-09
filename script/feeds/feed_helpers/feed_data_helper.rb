@@ -54,9 +54,9 @@ module Feeds
       query_results = query.query_and_use_cache_keys
       school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
       schools_with_cache_results= school_cache_results.decorate_schools(school_batch)
-      schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
-        SchoolFeedDecorator.decorate(school)
-      end
+      schools_with_cache_results.map do |school|
+              SchoolFeedDecorator.decorate(school)
+            end
     end
 
     def get_districts_batch_cache_data(district_batch)
@@ -67,9 +67,9 @@ module Feeds
       query_results = query.query_and_use_cache_keys
       district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
       districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
-      districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
-        DistrictFeedDecorator.decorate(district)
-      end
+      districts_with_cache_results.map do |district|
+              DistrictFeedDecorator.decorate(district)
+            end
     end
   end
 end

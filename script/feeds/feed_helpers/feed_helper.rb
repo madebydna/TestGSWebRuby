@@ -14,7 +14,7 @@ module Feeds
       # the feed Url need to have production host values irrespective of the server the feeds are being running on hence the value is set here
       hash[:host] = 'www.greatschools.org'
       hash[:port]= nil
-      return hash
+      hash
     end
 
 
@@ -24,7 +24,7 @@ module Feeds
       #generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
       generated_feed_file_name = feed_name.present? ? feed_name+"-#{state.upcase}.xml" : feed+"-#{state.upcase}.xml"
       # removing timestamp for now as flat feed process does not like timestamp
-      xml_name =feed_location+generated_feed_file_name
+      feed_location+generated_feed_file_name
     end
 
     def transpose_test_id(state,test_id)
@@ -32,9 +32,9 @@ module Feeds
      end
 
     def transpose_universal_id(state,entity = nil, entity_level)
-      if (entity_level == ENTITY_TYPE_DISTRICT)
+      if entity_level == ENTITY_TYPE_DISTRICT
         '1' + state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
-      elsif (entity_level == ENTITY_TYPE_SCHOOL)
+      elsif entity_level == ENTITY_TYPE_SCHOOL
         state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
       else
         state_fips[state.upcase]

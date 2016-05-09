@@ -77,7 +77,7 @@ module Feeds
 
 
     def transpose_test_score(band, data,entity_level)
-      if (entity_level == ENTITY_TYPE_STATE)
+      if entity_level == ENTITY_TYPE_STATE
         data.state_value_text|| data.state_value_float
       else
         band == PROFICIENT_AND_ABOVE_BAND ?  data["score"]: data[band+"_score"]
@@ -92,10 +92,10 @@ module Feeds
 
     def transpose_band_id(band, data, entity_level)
       # For proficient and above band id is always null in database
-      if (entity_level == ENTITY_TYPE_STATE )
-        band =  data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"]
+      if entity_level == ENTITY_TYPE_STATE
+       data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"]
       else
-        band = data[band+"_band_id"].nil? ? ''  : data[band+"_band_id"]
+        data[band+"_band_id"].nil? ? ''  : data[band+"_band_id"]
       end
     end
 
