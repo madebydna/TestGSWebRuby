@@ -84,21 +84,17 @@ module Feeds
     end
 
     def process_school_data_for_feed(school)
-      school_data_for_feed = {}
       school_test_data = get_school_test_score_data(school)
-      school_test_data.try(:each)do |test_id, data|
-        school_data_for_feed = transpose_data_for_xml(@state,data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
+      school_test_data.try(:map)do |test_id, data|
+       transpose_data_for_xml(@state,data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
       end
-      school_data_for_feed
     end
 
     def process_district_data_for_feed(district)
-      district_data_for_feed = {}
       district_test_data = get_district_test_score_data(district)
-        district_test_data.try(:each) do |test_id, data|
-          district_data_for_feed = transpose_data_for_xml(@state,data, district, test_id, ENTITY_TYPE_DISTRICT,@data_type)
+        district_test_data.try(:map) do |test_id, data|
+           transpose_data_for_xml(@state,data, district, test_id, ENTITY_TYPE_DISTRICT,@data_type)
         end
-      district_data_for_feed
     end
   end
 end
