@@ -1,7 +1,6 @@
 var GS = GS || {};
 
 GS.schoolProfiles = GS.schoolProfiles || (function($) {
-    var showABTestAds = true;
 
     var shouldShowSignUpForSchoolModal = function() {
      return $.cookie('profileModal') != 'true' && !GS.session.isSignedIn();
@@ -81,13 +80,17 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
     };
 
     var enableABTestAds = function() {
-      showABTestAds = true;
+      window.showABTestAdsOnSchoolProfileOverview = true;
     };
     var disableABTestAds = function() {
-      showABTestAds = false;
+      window.showABTestAdsOnSchoolProfileOverview = false;
     };
     var shouldShowABTestAds = function() {
-      return showABTestAds;
+      if (window.hasOwnProperty('showABTestAdsOnSchoolProfileOverview')) {
+        return window.showABTestAdsOnSchoolProfileOverview;
+      } else {
+        return true;
+      }
     };
 
     return {
@@ -102,4 +105,4 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       shouldShowABTestAds: shouldShowABTestAds
     };
 
-  })(jQuery);
+})(jQuery);
