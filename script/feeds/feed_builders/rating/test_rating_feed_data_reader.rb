@@ -18,7 +18,7 @@ module Feeds
     private
 
     def get_rating_data_for_feed(ratings_cache_data,ratings_id_for_feed)
-      Array.wrap(ratings_cache_data).try(:select) { |h| h["data_type_id"]== ratings_id_for_feed }
+      Array.wrap(ratings_cache_data).try(:select) { |h| h['data_type_id']== ratings_id_for_feed }
     end
 
   end

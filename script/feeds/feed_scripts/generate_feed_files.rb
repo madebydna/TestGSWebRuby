@@ -44,7 +44,7 @@ module Feeds
         start_time = Time.now
         puts "--- Start Time for generating feed: FeedType: #{feed}  for state #{state} --- #{Time.now}"
         feed_generation_class(feed).new(feed_opts).generate_feed
-        puts "--- Time taken to generate feed : FeedType: #{feed}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime "%H:%M:%S:%L"}"
+        puts "--- Time taken to generate feed : FeedType: #{feed}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime '%H:%M:%S:%L'}"
       end
     end
 
@@ -57,5 +57,5 @@ module Feeds
       }[key.to_s.to_sym]
     end
   end
-GenerateFeedFiles.generate()
+  GenerateFeedFiles.generate
 end
