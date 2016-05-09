@@ -43,20 +43,20 @@ module Feeds
     def transpose_url(entity,entity_level,state)
       begin
         if entity_level == ENTITY_TYPE_DISTRICT
-          url = city_district_url district_params_from_district(entity)
+          city_district_url district_params_from_district(entity)
         elsif entity_level == ENTITY_TYPE_SCHOOL
-          url = school_url entity
+          school_url entity
         end
       rescue  => e
         puts "#{e}"
-        url = state_url(state_params(state))
+         state_url(state_params(state))
       end
     end
     def transpose_ratings_description(data_type_id,state)
       state_name= States.state_name(state).titleize
       # How we calculate test_description  can change based on decision from Product team
       if data_type_id == RATINGS_ID_RATING_FEED_MAPPING['official_overall']
-        desc =  "The GreatSchools rating is a simple tool for parents to compare schools based on test scores,\
+        "The GreatSchools rating is a simple tool for parents to compare schools based on test scores,\
 student academic growth, and college readiness. It compares schools across the state, \
 where the highest rated schools in the state are designated as 'Above Average' and the lowest 'Below Average'.\
 It is designed to be a starting point to help parents make baseline comparisons. We always advise parents to visit \
@@ -65,7 +65,7 @@ family's needs as part of the school selection process."
 
       elsif data_type_id == RATINGS_ID_RATING_FEED_MAPPING['test_rating']
 
-        desc = "GreatSchools compared the test results for each grade and subject across all #{state_name} schools and divided them into 1 through 10 ratings (10 is the best).\
+        "GreatSchools compared the test results for each grade and subject across all #{state_name} schools and divided them into 1 through 10 ratings (10 is the best).\
 Please note, private schools are not required to release test results, so ratings are available \
 only for public schools. GreatSchools Ratings cannot be compared across states,\
 because of differences in the states' standardized testing programs.\

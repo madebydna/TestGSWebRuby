@@ -31,7 +31,7 @@ module Feeds
          feed_names = feed_names == 'all' ? all_feeds : split_argument(feed_names)
          return false unless (feed_names-all_feeds).empty?
          return false unless (states-all_states).empty?
-         args = {
+          {
                :states => states,
                :feed_names => feed_names,
                :school_ids => split_argument(school_ids),
@@ -39,7 +39,7 @@ module Feeds
                :locations => split_argument(locations),
                :names => split_argument(names),
                :batch_size => batch_size.present? ? batch_size : DEFAULT_BATCH_SIZE
-              }
+          }
        end
      end
 

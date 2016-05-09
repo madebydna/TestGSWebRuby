@@ -57,5 +57,5 @@ module Feeds
       }[key.to_s.to_sym]
     end
   end
-GenerateFeedFiles.generate()
+  GenerateFeedFiles.generate
 end
