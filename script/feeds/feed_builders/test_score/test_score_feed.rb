@@ -35,13 +35,6 @@ module Feeds
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
     end
 
-    def get_band_names(data)
-      bands = data.keys.select { |key| key.ends_with?('band_id') }
-      band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
-      band_names << PROFICIENT_AND_ABOVE_BAND
-      band_names
-    end
-
     def generate_xml_test_score_feed
       File.open(@feed_file, 'w') { |f|
         xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
