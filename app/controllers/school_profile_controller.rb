@@ -107,16 +107,41 @@ class SchoolProfileController < SchoolController
 
   #title logic
   #schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
-  def seo_meta_tags_title
-    return_title_str = ''
-    return_title_str << @school.name + ' - '
-     if @school.state.downcase == 'dc'
-       return_title_str << 'Washington, DC'
-     else
-       return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
-     end
-     return_title_str << ' - School ' + action_name
+  # def seo_meta_tags_title
+  #   return_title_str = ''
+  #   return_title_str << @school.name + ' - '
+  #    if @school.state.downcase == 'dc'
+  #      return_title_str << 'Washington, DC'
+  #    else
+  #      return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+  #    end
+  #    return_title_str << ' - School ' + action_name
+  #
+  # end
 
+  def alt_states
+    [] #tbd
+  end
+
+  def seo_meta_tags_title
+    alt_states.include?(@school.state) && action_name == 'overview' ? seo_meta_tags_title_alt : seo_meta_tags_title_standard
+  end
+
+  # schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
+  def seo_meta_tags_title_standard
+    return_title_str = ''  #these two lines could be done in one: return_title_str = @school.name + ' - '
+    return_title_str << @school.name + ' - '
+    if @school.state.downcase == 'dc'
+      return_title_str << 'Washington, DC'
+    else
+      return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+    end
+    return_title_str << ' - School ' + action_name
+  end
+
+  #Prune Hill Elementary School 2016 Ratings | Camas, WA | GreatSchools
+  def seo_meta_tags_title_alt
+    "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
   end
 
   def seo_meta_tags_description

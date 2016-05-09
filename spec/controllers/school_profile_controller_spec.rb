@@ -44,6 +44,32 @@ describe SchoolProfileController do
         expect(controller.send(:seo_meta_tags_title)).to eq('Amazing Life Games Pre-School - Washington, DC - School overview')
       end
 
+      it 'should have correctly formatted title when school is in alt state' do
+        controller.instance_variable_set(:@school, school)
+        allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return(['AK'])
+        school.name = 'The Athenian School'
+        school.city = 'Danville'
+        school.state = 'AK'
+        expect(controller.send(:seo_meta_tags_title))
+            .to eq 'The Athenian School 2016 Ratings | Danville, AK | GreatSchools'
+      end
+
+      it 'should have correctly formatted title when school is in alt state and page is not overview' do
+        controller.instance_variable_set(:@school, school)
+        allow(controller).to receive(:action_name).and_return 'quality'
+        allow(controller).to receive(:alt_states).and_return(['AK'])
+        school.name = 'The Athenian School'
+        school.city = 'Danville'
+        school.state = 'AK'
+        expect(controller.send(:seo_meta_tags_title))
+            .to eq 'The Athenian School - Danville, Alaska - AK - School quality'
+      end
+
+    end
+
+    it 'should return an array when alt_states is called' do
+      expect(controller.send(:alt_states).class).to eq(Array)
     end
 
     describe '#seo_meta_tags_description' do
