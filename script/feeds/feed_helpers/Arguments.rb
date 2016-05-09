@@ -14,13 +14,17 @@ module Feeds
     private
 
      def options_for_generating_all_feeds
-       [{  states: all_states, feed_names: all_feeds}]
+       {  :states => all_states,
+          :feed_names => all_feeds,
+          :batch_size =>  DEFAULT_BATCH_SIZE
+
+       }
      end
 
      def parse_arguments
        # To Generate All feeds for all states in current directory do rails runner script/feeds/feed_scripts/generate_feed_files.rb all
        if ARGV[0] == 'all' && ARGV[1].nil?
-         OPTIONS_FOR_GENERATING_ALL_FEEDS
+         options_for_generating_all_feeds
        else
          feed_names, states, school_ids, district_ids, locations, names, batch_size= ARGV[0].try(:split, ':')
          states = states == 'all' ? all_states : split_argument(states)
