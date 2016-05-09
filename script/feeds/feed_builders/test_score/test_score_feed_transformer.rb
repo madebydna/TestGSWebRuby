@@ -13,15 +13,15 @@ module Feeds
     def transpose_state_data_for_feed(state,state_test_data,data_type)
       state_level_test_data = []
       state_test_data.each do |data|
-        band = @@proficiency_bands[data['proficiency_band_id']].present? ? @@proficiency_bands[data['proficiency_band_id']].name : nil
+        band = @@proficiency_bands[data["proficiency_band_id"]].present? ? @@proficiency_bands[data["proficiency_band_id"]].name : nil
         entity_level = ENTITY_TYPE_STATE
-        grade = data['grade_name']
-        year = data['year']
-        level = data['level_code']
-        test_id =data['data_type_id']
+        grade = data["grade_name"]
+        year = data["year"]
+        level = data["level_code"]
+        test_id =data["data_type_id"]
         subject = @@test_data_subjects[data.subject_id].present? ? @@test_data_subjects[data.subject_id].name : ''
         breakdown_name = @@test_data_breakdowns[data.breakdown_id].present? ? @@test_data_breakdowns[data.breakdown_id].name : ''
-        breakdown_id = data['breakdown_id']
+        breakdown_id = data["breakdown_id"]
         test_data = create_hash_for_xml(state,band, data, nil, entity_level, grade, level, subject, test_id, year, data_type, breakdown_id,breakdown_name )
         state_level_test_data.push(test_data)
       end
@@ -30,10 +30,10 @@ module Feeds
 
     def transpose_data_for_xml(state,all_test_score_data, entity, test_id, entity_level,data_type)
       parsed_data_for_xml = []
-      test_score_data = all_test_score_data.present? &&  data_type == WITH_NO_BREAKDOWN ? all_test_score_data.try(:slice, 'All') : all_test_score_data
+      test_score_data = all_test_score_data.present? &&  data_type == WITH_NO_BREAKDOWN ? all_test_score_data.try(:slice,"All") : all_test_score_data
       test_score_data.try(:each) do |breakdown,breakdown_data|
-        breakdown_data['grades'].try(:each) do |grade, grade_data|
-          grade_data['level_code'].try(:each) do |level, subject_data|
+        breakdown_data["grades"].try(:each) do |grade, grade_data|
+          grade_data["level_code"].try(:each) do |level, subject_data|
             subject_data.try(:each) do |subject, years_data|
               years_data.try(:each) do |year, data|
                 # Get Band Names from Cache
@@ -77,10 +77,10 @@ module Feeds
 
 
     def transpose_test_score(band, data,entity_level)
-      if entity_level == ENTITY_TYPE_STATE
+      if (entity_level == ENTITY_TYPE_STATE)
         data.state_value_text|| data.state_value_float
       else
-        band == PROFICIENT_AND_ABOVE_BAND ?  data['score']: data[band+'_score']
+        band == PROFICIENT_AND_ABOVE_BAND ?  data["score"]: data[band+"_score"]
       end
     end
 
@@ -92,15 +92,15 @@ module Feeds
 
     def transpose_band_id(band, data, entity_level)
       # For proficient and above band id is always null in database
-      if entity_level == ENTITY_TYPE_STATE
-
+      if (entity_level == ENTITY_TYPE_STATE )
+        band =  data["proficiency_band_id"].nil? ? '' : data["proficiency_band_id"]
       else
-
+        band = data[band+"_band_id"].nil? ? ''  : data[band+"_band_id"]
       end
     end
 
     def transpose_number_tested(data)
-      data['number_students_tested'].nil? ? '' : data['number_students_tested']
+      data["number_students_tested"].nil? ? '' : data["number_students_tested"]
     end
 
   end

@@ -22,12 +22,12 @@ module Feeds
             where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
         if test_data_set_info.present?
           state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
-                             :test_name => test_info['description'],
-                             :test_abbrv => test_info['name'],
-                             :scale => test['scale'],
-                             :most_recent_year => test_data_set_info['year'],
-                             :level_code => test_data_set_info['level_code'],
-                             :description => test['description']
+                             :test_name => test_info["description"],
+                             :test_abbrv => test_info["name"],
+                             :scale => test["scale"],
+                             :most_recent_year => test_data_set_info["year"],
+                             :level_code => test_data_set_info["level_code"],
+                             :description => test["description"]
           }
           state_test_infos.push(state_test_info)
         end

@@ -49,7 +49,7 @@ module Feeds
       DEFAULT_BATCH_SIZE = 300
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall)
+        ['test_scores', 'test_subgroup', 'test_rating','official_overall']
       end
 
       def all_states
@@ -110,7 +110,7 @@ module Feeds
         state_fips['WV'] = '54'
         state_fips['WI'] = '55'
         state_fips['WY'] = '56'
-        state_fips
+        return state_fips
       end
 
     end

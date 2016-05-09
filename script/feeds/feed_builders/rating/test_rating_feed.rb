@@ -40,7 +40,7 @@ module Feeds
         xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
         xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
         xml.tag!(root_element,
-                 {'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+                 {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
                   :'xsi:noNamespaceSchemaLocation' => @schema}) do
 
                         # Generates test info tag
@@ -83,11 +83,13 @@ module Feeds
     def process_school_data_for_feed(school, ratings_id_for_feed)
       school_rating_id_cache_data = get_school_data_for_ratings(school, ratings_id_for_feed)
       school_data_for_feed = transpose_data_for_xml(@state, school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
+      school_data_for_feed
     end
 
     def process_district_data_for_feed(district, ratings_id_for_feed)
       district_rating_id_cache_data = get_district_data_for_ratings(district, ratings_id_for_feed)
       district_data_for_feed= transpose_data_for_xml(@state, district_rating_id_cache_data, district, ENTITY_TYPE_DISTRICT)
+      district_data_for_feed
     end
   end
 end

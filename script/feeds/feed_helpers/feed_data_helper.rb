@@ -17,7 +17,12 @@ module Feeds
     end
 
     def get_schools_in_feed(state,school_ids)
-        school_ids.present? ? School.on_db(state.downcase.to_sym).where(:id => school_ids) : School.on_db(state.downcase.to_sym).all
+      if school_ids.present?
+        schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
+      else
+        schools_in_feed = School.on_db(state.downcase.to_sym).all
+      end
+      schools_in_feed
     end
 
     def get_district_batches(state,district_ids,batch_size)
@@ -33,7 +38,12 @@ module Feeds
     end
 
     def get_districts_in_feed(state,district_ids)
-        district_ids.present? ?  District.on_db(state.downcase.to_sym).where(:id => district_ids) : District.on_db(state.downcase.to_sym).all
+      if district_ids.present?
+        districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids)
+      else
+        districts_in_feed = District.on_db(state.downcase.to_sym).all
+      end
+      districts_in_feed
     end
 
     def get_schools_batch_cache_data(school_batch)
@@ -44,7 +54,7 @@ module Feeds
       query_results = query.query_and_use_cache_keys
       school_cache_results = SchoolCacheResults.new(FEED_CACHE_KEYS, query_results)
       schools_with_cache_results= school_cache_results.decorate_schools(school_batch)
-      schools_with_cache_results.map do |school|
+      schools_decorated_with_cache_results = schools_with_cache_results.map do |school|
         SchoolFeedDecorator.decorate(school)
       end
     end
@@ -57,7 +67,7 @@ module Feeds
       query_results = query.query_and_use_cache_keys
       district_cache_results = DistrictCacheResults.new(FEED_CACHE_KEYS, query_results)
       districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
-      districts_with_cache_results.map do |district|
+      districts_decorated_with_cache_results = districts_with_cache_results.map do |district|
         DistrictFeedDecorator.decorate(district)
       end
     end
