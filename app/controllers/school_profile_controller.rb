@@ -105,8 +105,8 @@ class SchoolProfileController < SchoolController
                   :keywords =>  seo_meta_tags_keywords
   end
 
-  # title logic
-  # schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
+  #title logic
+  #schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
   def seo_meta_tags_title
     return_title_str = ''
     return_title_str << @school.name + ' - '
@@ -179,7 +179,7 @@ class SchoolProfileController < SchoolController
     page_view_metadata['State']       = @school.state # abbreviation
     page_view_metadata['type']        = @school.type  # private, public, charter
     page_view_metadata['zipcode']     = @school.zipcode
-    page_view_metadata['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
+    page_view_metadata['district_id'] = @school.district.present? ? @school.district.id.to_s : ""
     page_view_metadata['template']    = "SchoolProf"
     page_view_metadata['collection_ids']  = @school.collection_ids
     page_view_metadata['number_of_reviews_with_comments'] =  @_school_reviews.present? ? @_school_reviews.number_of_reviews_with_comments : "0"

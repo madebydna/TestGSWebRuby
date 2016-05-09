@@ -275,6 +275,30 @@ describe SchoolProfileController do
     end
   end
 
+  describe '#set_school_district_id' do
+    it 'should set school district_id correctly' do
+      this_school = FactoryGirl.create(:school, :with_district)
+      allow(this_school).to receive(:gs_rating).and_return 10
+      controller.instance_variable_set(:@school, this_school)
+      page_view_metadata = controller.send(:page_view_metadata)
+      expect(page_view_metadata['district_id']).to eql(this_school.district.id.to_s)
+    end
+    after do
+      clean_dbs :ca
+    end
+
+    it 'should return empty string if school has no district_id' do
+      this_school = FactoryGirl.create(:school)
+      allow(this_school).to receive(:gs_rating).and_return 10
+      controller.instance_variable_set(:@school, this_school)
+      page_view_metadata = controller.send(:page_view_metadata)
+      expect(page_view_metadata['district_id']).to eql("")
+    end
+    after do
+      clean_dbs :ca
+    end
+  end
+
   it { is_expected.to respond_to(:school_reviews) }
   describe '#school_reviews' do
     subject { controller.send(:school_reviews) }
