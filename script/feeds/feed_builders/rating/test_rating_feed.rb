@@ -14,8 +14,8 @@ module Feeds
 
     def initialize(attributes = {})
       @state = attributes[:state]
-      @district_batches = get_district_batches(@state,attributes[:district_ids],attributes[:batch_size])
-      @school_batches = get_school_batches(@state,attributes[:school_ids],attributes[:batch_size])
+      @district_batches = get_district_batches(@state, attributes[:district_ids], attributes[:batch_size])
+      @school_batches = get_school_batches(@state, attributes[:school_ids], attributes[:batch_size])
       @feed_file = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
@@ -23,11 +23,11 @@ module Feeds
     end
 
     def generate_feed
-       # xsd_schema ='greatschools-test-rating.xsd'
+      # xsd_schema ='greatschools-test-rating.xsd'
       #Get State Rating Master Data
       state_ratings_info =get_ratings_master_data(@state, @ratings_id_for_feed)
       # Translating State Ratings Master  data to XML for State
-      @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info,@state)
+      @state_ratings_info_for_feed = transpose_state_master_data_ratings_for_feed(state_ratings_info, @state)
 
       # Write to XML File
       generate_xml_rating_feed
@@ -43,12 +43,12 @@ module Feeds
                  {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
                   :'xsi:noNamespaceSchemaLocation' => @schema}) do
 
-          # Generates test info tag
-          write_xml_tag(@state_ratings_info_for_feed, 'test-rating', xml)
-          write_school_info(xml)
-          write_district_info(xml)
-        end
-      }
+                        # Generates test info tag
+                        write_xml_tag(@state_ratings_info_for_feed, 'test-rating', xml)
+                        write_school_info(xml)
+                        write_district_info(xml)
+                  end
+                  }
 
     end
 
@@ -73,22 +73,22 @@ module Feeds
     end
 
     def process_school_batch_data_for_feed(schools_cache_data, ratings_id_for_feed)
-      schools_cache_data.try(:map) {|school| process_school_data_for_feed(school, ratings_id_for_feed) }.flatten
+      schools_cache_data.try(:map) { |school| process_school_data_for_feed(school, ratings_id_for_feed) }.flatten
     end
 
     def process_district_batch_data_for_feed(districts_cache_data, ratings_id_for_feed)
-      districts_cache_data.try(:map) {|district| process_district_data_for_feed(district, ratings_id_for_feed) }.flatten
+      districts_cache_data.try(:map) { |district| process_district_data_for_feed(district, ratings_id_for_feed) }.flatten
     end
 
     def process_school_data_for_feed(school, ratings_id_for_feed)
-      school_rating_id_cache_data = get_school_data_for_ratings(school,ratings_id_for_feed)
-      school_data_for_feed = transpose_data_for_xml(@state,school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
+      school_rating_id_cache_data = get_school_data_for_ratings(school, ratings_id_for_feed)
+      school_data_for_feed = transpose_data_for_xml(@state, school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
       school_data_for_feed
     end
 
     def process_district_data_for_feed(district, ratings_id_for_feed)
-      district_rating_id_cache_data =  get_district_data_for_ratings(district, ratings_id_for_feed)
-      district_data_for_feed= transpose_data_for_xml(@state,district_rating_id_cache_data, district, ENTITY_TYPE_DISTRICT)
+      district_rating_id_cache_data = get_district_data_for_ratings(district, ratings_id_for_feed)
+      district_data_for_feed= transpose_data_for_xml(@state, district_rating_id_cache_data, district, ENTITY_TYPE_DISTRICT)
       district_data_for_feed
     end
   end

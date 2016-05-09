@@ -42,24 +42,6 @@ module Feeds
       band_names
     end
 
-    def transpose_schools_data_for_feed(schools_cache_data)
-      schools_data_for_feed = []
-        schools_cache_data.try(:each) do |school|
-          school_data_for_feed = transpose_school(school)
-          (schools_data_for_feed << school_data_for_feed).flatten!
-        end
-      schools_data_for_feed
-    end
-
-    def transpose_school(school)
-      school_data_for_feed = {}
-      school_test_data = get_school_test_score_data(school)
-      school_test_data.try(:each)do |test_id, data|
-          school_data_for_feed = transpose_data_for_xml(@state,data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
-      end
-      school_data_for_feed
-    end
-
     def generate_xml_test_score_feed
       File.open(@feed_file, 'w') { |f|
         xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
@@ -67,24 +49,24 @@ module Feeds
         xml.tag!(@root_element,
                  {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
                   :'xsi:noNamespaceSchemaLocation' => @schema}) do
-          # Generates test info tag
-          write_xml_tag(@state_test_infos_for_feed, 'test', xml)
-          # Generate state test data tag
-          write_xml_tag(@state_data_for_feed, 'test-result', xml)
-          #Generate School Info
-          write_school_info(xml)
-          #Generate District Info
-          write_district_info(xml)
+                            # Generates test info tag
+                            write_xml_tag(@state_test_infos_for_feed, 'test', xml)
+                            # Generate state test data tag
+                            write_xml_tag(@state_data_for_feed, 'test-result', xml)
+                            #Generate School Info
+                            write_school_info(xml)
+                            #Generate District Info
+                            write_district_info(xml)
 
-        end
-      }
+                          end
+                  }
     end
 
     def write_district_info(xml)
       @district_batches.each_with_index do |district_batch, index|
         puts "district batch Start #{Time.now} for Batch Number #{index+1}"
         districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        district_data_for_feed = transpose_districts_data_for_feed(districts_decorated_with_cache_results)
+        district_data_for_feed = process_district_batch_data_for_feed(districts_decorated_with_cache_results)
         write_xml_tag(district_data_for_feed, 'test-result', xml)
         puts "district Batch end #{Time.now} for Batch Number #{index+1}"
       end
@@ -94,22 +76,30 @@ module Feeds
       @school_batches.each_with_index do |school_batch, index|
         puts "school batch Start #{Time.now} for Batch Number #{index+1}"
         schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        school_data_for_feed = transpose_schools_data_for_feed(schools_decorated_with_cache_results)
+        school_data_for_feed = process_school_batch_data_for_feed(schools_decorated_with_cache_results)
         write_xml_tag(school_data_for_feed, 'test-result', xml)
         puts "school Batch end #{Time.now} for Batch Number #{index+1}"
       end
     end
 
-    def transpose_districts_data_for_feed(districts_cache_data)
-      districts_data_for_feed = []
-        districts_cache_data.try(:each) do |district|
-          district_data_for_feed = transpose_district(district)
-          (districts_data_for_feed << district_data_for_feed).flatten!
-        end
-      districts_data_for_feed
+    def process_school_batch_data_for_feed(schools_cache_data)
+      schools_cache_data.try(:map) { |school| process_school_data_for_feed(school) }.flatten
     end
 
-    def transpose_district(district)
+    def process_district_batch_data_for_feed(districts_cache_data)
+      districts_cache_data.try(:map) { |district| process_district_data_for_feed(district) }.flatten
+    end
+
+    def process_school_data_for_feed(school)
+      school_data_for_feed = {}
+      school_test_data = get_school_test_score_data(school)
+      school_test_data.try(:each)do |test_id, data|
+        school_data_for_feed = transpose_data_for_xml(@state,data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
+      end
+      school_data_for_feed
+    end
+
+    def process_district_data_for_feed(district)
       district_data_for_feed = {}
       district_test_data = get_district_test_score_data(district)
         district_test_data.try(:each) do |test_id, data|
