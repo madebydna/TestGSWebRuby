@@ -40,7 +40,7 @@ module Feeds
         xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
         xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
         xml.tag!(@root_element,
-                 {'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance",
+                 {'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
                   :'xsi:noNamespaceSchemaLocation' => @schema}) do
                             # Generates test info tag
                             write_xml_tag(@state_test_infos_for_feed, 'test', xml)
