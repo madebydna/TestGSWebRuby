@@ -44,7 +44,7 @@ module Feeds
 
     def get_band_names(data)
       bands = data.keys.select { |key| key.ends_with?('band_id') }
-      band_names = bands.map { |band| band[0..(band.length-"_band_id".length-1)] }
+      band_names = bands.map { |band| band[0..(band.length-'_band_id'.length-1)] }
       band_names << PROFICIENT_AND_ABOVE_BAND
       band_names
     end
@@ -55,7 +55,7 @@ module Feeds
         data_for_xml.each do |tag_data|
           xml.tag! tag_name do
             tag_data.each do |key, value|
-              xml.tag! key.to_s.gsub("_", "-"), value
+              xml.tag! key.to_s.gsub('_', '-'), value
             end
           end
         end

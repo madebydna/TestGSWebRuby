@@ -24,7 +24,7 @@ module Feeds
     def create_test_rating_hash_for_xml(state,data,entity,entity_level)
       {:universal_id => transpose_universal_id(state,entity, entity_level),
                      :entity_level => entity_level.titleize,
-                     :test_rating_id => transpose_test_id(state,data["data_type_id"]),
+                     :test_rating_id => transpose_test_id(state,data['data_type_id']),
                      :rating => transpose_ratings(data,entity_level),
                      :url => transpose_url(entity,entity_level,state)
       }
@@ -32,9 +32,9 @@ module Feeds
 
     def transpose_ratings(data,entity_level)
       if entity_level == ENTITY_TYPE_SCHOOL
-        rating = data["school_value_text"]|| data["school_value_float"]
+        rating = data['school_value_text']|| data['school_value_float']
       elsif entity_level == ENTITY_TYPE_DISTRICT
-        rating = data["value_text"]|| data["value_float"]
+        rating = data['value_text']|| data['value_float']
       end
       # Rating should be sent nil and not zero if data not present , that's why the try
       rating.try(:to_i)
