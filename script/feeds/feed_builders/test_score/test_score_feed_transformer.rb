@@ -78,6 +78,7 @@ module Feeds
 
     def transpose_test_score(band, data,entity_level)
       if entity_level == ENTITY_TYPE_STATE
+        # Get Score from Data which is in Active Record
         data.state_value_text|| data.state_value_float
       else
         band == PROFICIENT_AND_ABOVE_BAND ?  data['score']: data[band+'_score']

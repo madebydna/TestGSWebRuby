@@ -4,11 +4,14 @@ require_relative 'feed_data_helper'
 module Feeds
   module FeedHelper
 
+    # Included to get the rails action Url to generate district , profile and state url
     include Rails.application.routes.url_helpers
     include UrlHelper
+
+
     include Feeds::FeedConstants
 
-    # This method is needed to Use URLHelper to generate School and District Url
+    # This method is needed to Use URLHelper to generate State , School and District Url
     def default_url_options
       hash = {}
       # the feed Url need to have production host values irrespective of the server the feeds are being running on hence the value is set here
