@@ -1,6 +1,5 @@
 module Feeds
   module FeedConstants
-    # module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
 
       WITH_NO_BREAKDOWN = 'with_no_breakdown'
@@ -113,5 +112,5 @@ module Feeds
         state_fips
       end
 
-    end
+  end
 end
