@@ -106,7 +106,7 @@ class SchoolProfileController < SchoolController
   end
 
   def alt_states
-    [] #tbd
+    ['CA','IA','NJ']
   end
 
   def seo_meta_tags_title

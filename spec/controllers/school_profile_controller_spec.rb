@@ -17,6 +17,7 @@ describe SchoolProfileController do
         #get 'overview'
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return([])
         school.level_code = 'h'
         school.name = 'Alameda High School'
         school.state = 'CA'
@@ -27,6 +28,7 @@ describe SchoolProfileController do
       it 'should set the title format correctly for the school PreK' do
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return([])
         school.level_code = 'p'
         school.name = 'Greater St. Stephen Baptist Training'
         school.state = 'MI'
@@ -37,6 +39,7 @@ describe SchoolProfileController do
       it 'should set the title format correctly for the school in DC' do
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return([])
         school.level_code = 'p'
         school.name = 'Amazing Life Games Pre-School'
         school.state = 'DC'
@@ -47,23 +50,23 @@ describe SchoolProfileController do
       it 'should have correctly formatted title when school is in alt state' do
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
-        allow(controller).to receive(:alt_states).and_return(['AK'])
+        allow(controller).to receive(:alt_states).and_return(['CA'])
         school.name = 'The Athenian School'
         school.city = 'Danville'
-        school.state = 'AK'
+        school.state = 'CA'
         expect(controller.send(:seo_meta_tags_title))
-            .to eq 'The Athenian School 2016 Ratings | Danville, AK | GreatSchools'
+            .to eq 'The Athenian School 2016 Ratings | Danville, CA | GreatSchools'
       end
 
       it 'should have correctly formatted title when school is in alt state and page is not overview' do
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'quality'
-        allow(controller).to receive(:alt_states).and_return(['AK'])
+        allow(controller).to receive(:alt_states).and_return(['CA'])
         school.name = 'The Athenian School'
         school.city = 'Danville'
-        school.state = 'AK'
+        school.state = 'CA'
         expect(controller.send(:seo_meta_tags_title))
-            .to eq 'The Athenian School - Danville, Alaska - AK - School quality'
+            .to eq 'The Athenian School - Danville, California - CA - School quality'
       end
 
     end
