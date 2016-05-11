@@ -19,7 +19,8 @@ module Feeds
         data_type_id = test.data_type_id
         test_info = TestDataType.where(:id => data_type_id).first
         test_data_set_info = TestDataSet.on_db(state.downcase.to_sym).
-            where(:data_type_id => data_type_id).where(:active => 1).where(:display_target => 'feed').max_by(&:year)
+            where(:data_type_id => data_type_id).where(:active => 1).where(
+            'display_target LIKE ?','%feed%').max_by(&:year)
         if test_data_set_info.present?
           state_test_info = {:id => state.upcase + data_type_id.to_s.rjust(5, '0'),
                              :test_name => test_info['description'],
