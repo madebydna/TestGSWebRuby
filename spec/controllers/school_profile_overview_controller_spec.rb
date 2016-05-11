@@ -29,7 +29,7 @@ describe SchoolProfileOverviewController do
       school.county =  'some county'
       school.zipcode = '90210'
       allow(school).to receive(:gs_rating) { '9' }
-      allow(school).to receive(:district) { double('district', FIPScounty: 1) }
+      allow(school).to receive(:district) { double('district', id: 1) }
     end
     subject do
       get 'overview', controller.view_context.school_params(school)
