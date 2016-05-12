@@ -18,8 +18,13 @@ module Feeds
     def self.formatter
       proc do |severity, datetime, progname, msg|
         date_format = datetime.strftime("%Y-%m-%d %H:%M:%S")
-           # Adding caller let you know which method the log was being called from details http://alisnic.github.io/posts/ruby-logs/
-          "[#{date_format}] #{severity.ljust(5)}  (#{caller[4]}}): #{msg}\n"
+        # Adding caller let you know which method the log was being called from details http://alisnic.github.io/posts/ruby-logs/
+        if  (severity == 'ERROR' || severity == 'FATAL')
+          # Adding Stack trace for error and fatal exceptions
+          "[#{date_format}] #{severity.ljust(5)}  (#{caller[4]}}): #{msg}\n Backtrace:\n\t#{msg.try(:backtrace).try(:join, "\n\t")}\n"
+        else
+          "[#{date_format}] #{severity.ljust(5)}  : #{msg}\n"
+        end
       end
     end
 

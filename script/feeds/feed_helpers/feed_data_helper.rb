@@ -10,9 +10,9 @@ module Feeds
       schools_in_feed.each_slice(batch_size.to_i) do |slice|
         school_batches.push(slice)
       end
-      puts "Total Schools in State #{schools_in_feed.size}"
-      puts "School Batch Size #{batch_size}"
-      puts "Total Schools Batches Feed #{school_batches.size}"
+      Feeds::FeedLog.log.debug "Total Schools in database for #{state} : #{schools_in_feed.size}"
+      Feeds::FeedLog.log.debug "School Batch Size #{batch_size}"
+      Feeds::FeedLog.log.debug "Total Schools Batches Feed #{school_batches.size}"
       school_batches
     end
 
@@ -31,9 +31,9 @@ module Feeds
       districts_in_feed.each_slice(batch_size.to_i) do |slice|
         district_batches.push(slice)
       end
-      puts "Total Districts in State #{districts_in_feed.size}"
-      puts "District Batch Size #{batch_size}"
-      puts "Total Districts Batches Feed #{district_batches.size}"
+      Feeds::FeedLog.log.debug "Total Districts in database for #{state} : #{districts_in_feed.size}"
+      Feeds::FeedLog.log.debug "District Batch Size #{batch_size}"
+      Feeds::FeedLog.log.debug "Total Districts Batches Feed #{district_batches.size}"
       district_batches
     end
 
@@ -69,7 +69,7 @@ module Feeds
       districts_with_cache_results= district_cache_results.decorate_districts(district_batch)
       districts_with_cache_results.map do |district|
               DistrictFeedDecorator.decorate(district)
-            end
+      end
     end
   end
 end

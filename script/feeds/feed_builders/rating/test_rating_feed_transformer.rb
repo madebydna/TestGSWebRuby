@@ -48,7 +48,8 @@ module Feeds
           school_url entity
         end
       rescue  => e
-        puts "#{e}"
+         Feeds::FeedLog.log.info "Could not find the correct url for #{entity_level} in #{state} and id #{entity.id} hence state url will be sent"
+         Feeds::FeedLog.log.error e
          state_url(state_params(state))
       end
     end

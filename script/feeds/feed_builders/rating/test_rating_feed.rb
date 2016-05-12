@@ -54,21 +54,21 @@ module Feeds
 
     def write_district_info(xml)
       @district_batches.each_with_index do |district_batch, index|
-        puts "district batch Start #{Time.now} for Batch Number #{index+1}"
+        Feeds::FeedLog.log.debug "District batch Start #{Time.now} for Batch Number #{index+1}"
         districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
         district_data_for_feed = process_district_batch_data_for_feed(districts_decorated_with_cache_results, @ratings_id_for_feed)
         write_xml_tag(district_data_for_feed, 'test-rating-value', xml)
-        puts "district Batch end #{Time.now} for Batch Number #{index+1}"
+        Feeds::FeedLog.log.debug  "District Batch end #{Time.now} for Batch Number #{index+1}"
       end
     end
 
     def write_school_info(xml)
       @school_batches.each_with_index do |school_batch, index|
-        puts "school batch Start #{Time.now} for Batch Number #{index+1}"
+        Feeds::FeedLog.log.debug  "School batch Start #{Time.now} for Batch Number #{index+1}"
         schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
         school_data_for_feed = process_school_batch_data_for_feed(schools_decorated_with_cache_results, @ratings_id_for_feed)
         write_xml_tag(school_data_for_feed, 'test-rating-value', xml)
-        puts "school Batch end #{Time.now} for Batch Number #{index+1}"
+        Feeds::FeedLog.log.debug "School Batch end #{Time.now} for Batch Number #{index+1}"
       end
     end
 
