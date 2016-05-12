@@ -8,6 +8,7 @@ require_relative '../feed_config/feed_constants'
 
 require_relative '../feed_builders/test_score/test_score_feed'
 require_relative '../feed_builders/rating/test_rating_feed'
+require_relative '../feed_helpers/feed_logger'
 
 
 
@@ -23,7 +24,12 @@ module Feeds
     def generate
       arguments = Feeds::Arguments.new
       arguments.states.each do |state|
-        state = state
+        # Adding test messages
+        # Feeds::FeedLog.log.info "Look, ma! I'm loggin'! -info"
+        # Feeds::FeedLog.log.error "Look, ma! I'm loggin'! -error"
+        # Feeds::FeedLog.log.debug "Look, ma! I'm loggin'! -debug"
+        # Feeds::FeedLog.log.warn "Look, ma! I'm loggin'! -warn"
+
         generate_all_feeds(arguments.district_ids, arguments.school_ids, arguments.batch_size,state,arguments.feed_names,
                            arguments.locations,arguments.names)
       end
