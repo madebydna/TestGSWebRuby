@@ -42,5 +42,10 @@ queue_daemon_update_order:
 #  - 3
   - 4
 #  - 5
-is_feed_builder: false
 # End configs for scripts
+# Start Config for Feeds
+is_feed_builder: false
+# The location of feed logs
+feed_log_location : ../before/feeds_log.log
+# The level of feed logs
+feed_log_level : Logger::DEBUG

@@ -23,11 +23,11 @@
 
 
     <% if @show_ads %>
-      <div class="row pvl mvl phm">
+      <div class="row pvm phm">
         <div class="col-xs-12 col-md-8">
           <div class="row ">
     <% else %>
-      <div class="row pvl mvl phm">
+      <div class="row pvm phm">
     <% end %>
 
     <% children.each_with_index { |cp, index |  %>
@@ -69,8 +69,8 @@
               </div>
             <% else %>
               </div>
-              <div class="row">
-              <div class="col-xs-12 hdp">
+              <div class="js-alert-partnership row">
+              <div class="js-icons-block col-xs-12 hdp">
                 <%= category_placement_content %>
               </div>
             <% end %>

@@ -8,7 +8,7 @@
     <div class="row limit-width-1200">
       <div class="mtl pvl clearfix">
         <%= @show_ads ?  '<div class="col-xs-12 col-sm-7 col-md-8 col-lg-8">'.html_safe : '' %>
-          <div id="galleria">
+          <div id="galleria" class="js-media-gallery">
             <%= include_lightbox_school_video(school_video_hash) %>
             <%= include_lightbox_media(@school) %>
           </div>
@@ -41,7 +41,7 @@
   <% layout_grid = (@show_ads ?  "col-xs-12 col-sm-6 col-md-6 col-lg-6" : "col-xs-12 col-sm-12 col-md-12 col-lg-12") %>
   <div class="row mtl">
     <div class=" <%= layout_grid %>">
-      <div class="well ma" style="max-width: 400px">
+      <div class="well ma js-media-gallery" style="max-width: 400px">
         <div class="pam tac"><%= image_tag(image_path("lib/media_missing.png"))%></div>
         <p class="ptm"><%= t('.no_photos') %>
         <%= link_to t('.upload_photos_html').html_safe, osp_register_url(city: @school.city,school_id: @school.id.to_s,state: @school.state) %>

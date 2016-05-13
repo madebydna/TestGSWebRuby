@@ -105,18 +105,31 @@ class SchoolProfileController < SchoolController
                   :keywords =>  seo_meta_tags_keywords
   end
 
-  # title logic
-  # schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
+  def alt_states
+    ['CA','IA','NJ']
+  end
+
   def seo_meta_tags_title
+    alt_states.include?(@school.state) && action_name == 'overview' ? seo_meta_tags_title_alt : seo_meta_tags_title_standard
+  end
+
+  #title logic
+  # schoolName+' - '+city+', '+stateNameFull+' - '+stateAbbreviation+' - School '+PageName
+  def seo_meta_tags_title_standard
     return_title_str = ''
     return_title_str << @school.name + ' - '
-     if @school.state.downcase == 'dc'
-       return_title_str << 'Washington, DC'
-     else
-       return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
-     end
-     return_title_str << ' - School ' + action_name
+    if @school.state.downcase == 'dc'
+      return_title_str << 'Washington, DC'
+    else
+      return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+    end
+    return_title_str << ' - School ' + action_name
+  end
 
+  #title logic
+  #Prune Hill Elementary School 2016 Ratings | Camas, WA | GreatSchools
+  def seo_meta_tags_title_alt
+    "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
   end
 
   def seo_meta_tags_description
@@ -179,7 +192,7 @@ class SchoolProfileController < SchoolController
     page_view_metadata['State']       = @school.state # abbreviation
     page_view_metadata['type']        = @school.type  # private, public, charter
     page_view_metadata['zipcode']     = @school.zipcode
-    page_view_metadata['district_id'] = @school.district.present? ? @school.district.FIPScounty : ""
+    page_view_metadata['district_id'] = @school.district.present? ? @school.district.id.to_s : ""
     page_view_metadata['template']    = "SchoolProf"
     page_view_metadata['collection_ids']  = @school.collection_ids
     page_view_metadata['number_of_reviews_with_comments'] =  @_school_reviews.present? ? @_school_reviews.number_of_reviews_with_comments : "0"

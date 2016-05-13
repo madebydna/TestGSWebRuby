@@ -17,6 +17,7 @@ describe SchoolProfileController do
         #get 'overview'
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return([])
         school.level_code = 'h'
         school.name = 'Alameda High School'
         school.state = 'CA'
@@ -27,6 +28,7 @@ describe SchoolProfileController do
       it 'should set the title format correctly for the school PreK' do
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return([])
         school.level_code = 'p'
         school.name = 'Greater St. Stephen Baptist Training'
         school.state = 'MI'
@@ -37,6 +39,7 @@ describe SchoolProfileController do
       it 'should set the title format correctly for the school in DC' do
         controller.instance_variable_set(:@school, school)
         allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return([])
         school.level_code = 'p'
         school.name = 'Amazing Life Games Pre-School'
         school.state = 'DC'
@@ -44,6 +47,32 @@ describe SchoolProfileController do
         expect(controller.send(:seo_meta_tags_title)).to eq('Amazing Life Games Pre-School - Washington, DC - School overview')
       end
 
+      it 'should have correctly formatted title when school is in alt state' do
+        controller.instance_variable_set(:@school, school)
+        allow(controller).to receive(:action_name).and_return 'overview'
+        allow(controller).to receive(:alt_states).and_return(['CA'])
+        school.name = 'The Athenian School'
+        school.city = 'Danville'
+        school.state = 'CA'
+        expect(controller.send(:seo_meta_tags_title))
+            .to eq 'The Athenian School 2016 Ratings | Danville, CA | GreatSchools'
+      end
+
+      it 'should have correctly formatted title when school is in alt state and page is not overview' do
+        controller.instance_variable_set(:@school, school)
+        allow(controller).to receive(:action_name).and_return 'quality'
+        allow(controller).to receive(:alt_states).and_return(['CA'])
+        school.name = 'The Athenian School'
+        school.city = 'Danville'
+        school.state = 'CA'
+        expect(controller.send(:seo_meta_tags_title))
+            .to eq 'The Athenian School - Danville, California - CA - School quality'
+      end
+
+    end
+
+    it 'should return an array when alt_states is called' do
+      expect(controller.send(:alt_states).class).to eq(Array)
     end
 
     describe '#seo_meta_tags_description' do
@@ -272,6 +301,30 @@ describe SchoolProfileController do
       all_callbacks = controller._process_action_callbacks
       callback = all_callbacks.select { |s| s.instance_variable_get(:@key) == :set_state_school_id_gon_var }
       expect(callback.present?).to be_truthy
+    end
+  end
+
+  describe '#set_school_district_id' do
+    it 'should set school district_id correctly' do
+      this_school = FactoryGirl.create(:school, :with_district)
+      allow(this_school).to receive(:gs_rating).and_return 10
+      controller.instance_variable_set(:@school, this_school)
+      page_view_metadata = controller.send(:page_view_metadata)
+      expect(page_view_metadata['district_id']).to eql(this_school.district.id.to_s)
+    end
+    after do
+      clean_dbs :ca
+    end
+
+    it 'should return empty string if school has no district_id' do
+      this_school = FactoryGirl.create(:school)
+      allow(this_school).to receive(:gs_rating).and_return 10
+      controller.instance_variable_set(:@school, this_school)
+      page_view_metadata = controller.send(:page_view_metadata)
+      expect(page_view_metadata['district_id']).to eql("")
+    end
+    after do
+      clean_dbs :ca
     end
   end
 
