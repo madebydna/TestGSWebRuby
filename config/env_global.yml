@@ -45,7 +45,7 @@ queue_daemon_update_order:
 # End configs for scripts
 # Start Config for Feeds
 is_feed_builder: false
-# The location of feed logs
-feed_log_location : ../before/feeds_log.log
-# The level of feed logs
-feed_log_level : Logger::DEBUG
+# The location of feed logs - Absolute Path if no property set the log will be generated at the location where the script is being run from
+feed_log_location : /vagrant/feeds_log.txt
+# The level of feed logs -If no Level set default is DEBUG  .  debug - 0 ,  info -1  , warn -2 ,error -3 , fatal-4 , unknown -5
+feed_log_level : 0

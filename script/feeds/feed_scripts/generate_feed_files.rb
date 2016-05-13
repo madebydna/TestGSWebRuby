@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.dirname(__FILE__)
 require_relative '../feed_helpers/feed_helper'
 require_relative '../feed_helpers/feed_data_helper'
-require_relative '../feed_helpers/arguments'
+require_relative '../feed_helpers/Arguments'
 require_relative '../feed_helpers/feed_logger'
 
 require_relative '../feed_config/feed_constants'
