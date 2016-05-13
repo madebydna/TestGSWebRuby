@@ -14,7 +14,7 @@
 %>
 
 <% if display_link  %>
-  <div class="external-link-callout mts mhs">
+  <div class="external-link-callout mtl mhs">
     <%= t('.state_test_guide_text_html') %>
     <a class="open-sans_b" target="_blank" href="<%= common_core_test_guide_url %>">
       <%# If link is displayed and is not sbac state will display parcc link text %>
@@ -22,7 +22,7 @@
     </a> 
   </div>
 <% elsif display_milestone_link %>
-  <div class="external-link-callout mts mhs">
+  <div class="external-link-callout mtl mhs">
     <%= t('.high_school_milestone_text') %>
     <%# hardcoded for now because we need to handle writing out worspress spanish links%>
     <a class="open-sans_b" target="_blank" href="<%= locale == :es ? gk_levels_high_school_es_path : gk_levels_high_school_path %>">
