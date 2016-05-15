@@ -54,7 +54,7 @@ module Feeds
     def create_hash_for_xml(state,band, data, entity = nil, entity_level, grade, level, subject, test_id, year, data_type,breakdown_id, breakdown_name)
       test_data = {:universal_id => transpose_universal_id(state,entity, entity_level),
                    :test_id => transpose_test_id(state,test_id),
-                   :entity_level => entity_level.titleize,
+                   # :entity_level => entity_level.titleize,
                    :year => year,
                    :subject_name => subject,
                    :grade_name => grade,

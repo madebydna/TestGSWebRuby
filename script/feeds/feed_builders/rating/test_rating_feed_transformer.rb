@@ -23,7 +23,7 @@ module Feeds
 
     def create_test_rating_hash_for_xml(state,data,entity,entity_level)
       {:universal_id => transpose_universal_id(state,entity, entity_level),
-                     :entity_level => entity_level.titleize,
+                     # :entity_level => entity_level.titleize,
                      :test_rating_id => transpose_test_id(state,data['data_type_id']),
                      :rating => transpose_ratings(data,entity_level),
                      :url => transpose_url(entity,entity_level,state)
