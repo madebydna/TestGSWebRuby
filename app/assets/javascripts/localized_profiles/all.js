@@ -62,47 +62,12 @@ GS.schoolProfiles = GS.schoolProfiles || (function($) {
       GS.ad.showAd('School_OverviewDetails_AdaptiveAd');
     };
 
-    var showABTestAdsOnlyOnce = function() {
-      if (GS.schoolProfiles.shouldShowABTestAds() === true) {
-        var adNames = ['School_OverviewCustomAd', 'School_OverviewTextAd', 'School_OverviewTextMobile_Ad'];
-        for(var i = 0; i < adNames.length; i++) {
-          var adName = adNames[i];
-          var containerSelector = '#' + adName;
-          var adShownProperty = adName + 'shown';
-          if(!showABTestAdsOnlyOnce.hasOwnProperty(adShownProperty)) {
-            if($(containerSelector).is(':visible')) {
-              showABTestAdsOnlyOnce[adShownProperty] = true;
-              GS.ad.showAd(adName);
-            }
-          }
-        }
-      }
-    };
-
-    var enableABTestAds = function() {
-      window.showABTestAdsOnSchoolProfileOverview = true;
-    };
-    var disableABTestAds = function() {
-      window.showABTestAdsOnSchoolProfileOverview = false;
-    };
-    var shouldShowABTestAds = function() {
-      if (window.hasOwnProperty('showABTestAdsOnSchoolProfileOverview')) {
-        return window.showABTestAdsOnSchoolProfileOverview;
-      } else {
-        return true;
-      }
-    };
-
     return {
       showSignUpForSchoolModal: showSignUpForSchoolModal,
       showSignUpForSchoolModalAfterDelay: showSignUpForSchoolModalAfterDelay,
       initializeFollowThisSchool: initializeFollowThisSchool,
       initializeSaveThisSchoolButton: initializeSaveThisSchoolButton,
-      showDetailsOverviewSection: showDetailsOverviewSection,
-      showABTestAdsOnlyOnce: showABTestAdsOnlyOnce,
-      enableABTestAds: enableABTestAds,
-      disableABTestAds: disableABTestAds,
-      shouldShowABTestAds: shouldShowABTestAds
+      showDetailsOverviewSection: showDetailsOverviewSection
     };
 
-})(jQuery);
+  })(jQuery);
