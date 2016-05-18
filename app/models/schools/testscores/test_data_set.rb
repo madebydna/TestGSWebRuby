@@ -97,11 +97,12 @@ class TestDataSet < ActiveRecord::Base
              TestDataStateValue.value_text as state_value_text,
              TestDataSet.proficiency_band_id as proficiency_band_id,
              TestDataStateValue.number_tested as number_students_tested ")
-    .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
-    .where('TestDataStateValue.active = ?',1)
-    .active
-    .all_students
-    .with_display_targets('feed')
+            .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
+            .joins("LEFT OUTER JOIN gs_schooldb.TestDataType on TestDataType.id = TestDataSet.data_type_id")
+            .where('TestDataStateValue.active = ?',1).where(TestDataType: {classification:'state_test'})
+            .active
+            .all_students
+            .with_display_targets('feed')
   end
 
   def self.test_scores_subgroup_for_state(state)
@@ -117,10 +118,11 @@ class TestDataSet < ActiveRecord::Base
              TestDataStateValue.value_text as state_value_text,
              TestDataSet.proficiency_band_id as proficiency_band_id,
              TestDataStateValue.number_tested as number_students_tested ")
-        .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
-        .where('TestDataStateValue.active = ?',1)
-        .active
-        .with_display_targets('feed')
+            .joins("LEFT OUTER JOIN TestDataStateValue on TestDataStateValue.data_set_id = TestDataSet.id")
+            .joins("LEFT OUTER JOIN gs_schooldb.TestDataType on TestDataType.id = TestDataSet.data_type_id")
+            .where('TestDataStateValue.active = ?',1).where(TestDataType: {classification:'state_test'})
+            .active
+            .with_display_targets('feed')
   end
 
   def self.base_performance_query(school)
