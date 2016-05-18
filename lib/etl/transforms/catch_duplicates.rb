@@ -24,12 +24,13 @@ class CatchDuplicates < GS::ETL::Step
       dup_data = row.select { |k, _| @columns_selected.include? k}.inspect
       msg = "Duplicate data: #{ dup_data } for rows #{@values[key]}"
 
-      @values[key] << row.row_num
       if @should_accumulate
         puts msg
       else
         raise msg
       end
+    else
+      @values[key] << row.row_num
     end
     row
   end
