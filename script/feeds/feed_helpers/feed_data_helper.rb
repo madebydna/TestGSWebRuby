@@ -18,9 +18,9 @@ module Feeds
 
     def get_schools_in_feed(state,school_ids)
       if school_ids.present?
-        schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids)
+        schools_in_feed = School.on_db(state.downcase.to_sym).where(:id => school_ids).active
       else
-        schools_in_feed = School.on_db(state.downcase.to_sym).all
+        schools_in_feed = School.on_db(state.downcase.to_sym).all.active
       end
       schools_in_feed
     end
@@ -39,9 +39,9 @@ module Feeds
 
     def get_districts_in_feed(state,district_ids)
       if district_ids.present?
-        districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids)
+        districts_in_feed = District.on_db(state.downcase.to_sym).where(:id => district_ids).active
       else
-        districts_in_feed = District.on_db(state.downcase.to_sym).all
+        districts_in_feed = District.on_db(state.downcase.to_sym).all.active
       end
       districts_in_feed
     end
