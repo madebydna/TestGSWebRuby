@@ -84,6 +84,7 @@ RSpec.configure do |config|
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
   config.include WaitForAjax, type: :feature
+  WebMock.disable_net_connect!(allow_localhost: true)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
