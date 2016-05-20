@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.dirname(__FILE__)
+$LOAD_PATH.unshift File.expand_path('../..', __FILE__)
 require 'etl'
 require 'test_processor'
 require 'sources/csv_source'
@@ -11,7 +11,7 @@ require 'gs_breakdown_definitions'
 require 'gs_breakdowns_from_db'
 require 'column_value_report'
 
-class WATestProcessor < GS::ETL::TestProcessor
+class WATestProcessor2015SBAC < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
   def initialize(*args)
@@ -479,4 +479,4 @@ end
 
 
 # WATestProcessor.new('/Users/samson/Development/data/wa', max: 100).build_graph.run
-WATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
+WATestProcessor2015SBAC.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run

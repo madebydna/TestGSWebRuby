@@ -1,16 +1,8 @@
-$LOAD_PATH.unshift File.dirname(__FILE__)
-require 'etl'
-require 'test_processor'
-require 'sources/csv_source'
-require 'destinations/csv_destination'
-require 'destinations/event_report_stdout'
-require 'destinations/load_config_file'
-require 'sources/buffered_group_by'
-require 'ca_entity_level_parser'
+$LOAD_PATH.unshift File.expand_path('../..', __FILE__)
 require 'ca_gs_breakdown_definitions'
-require 'gs_breakdowns_from_db'
+require_relative '../test_processor'
 
-class CATestProcessor < GS::ETL::TestProcessor
+class CATestProcessor2015CAASPP < GS::ETL::TestProcessor
 
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step
 
@@ -116,7 +108,7 @@ class CATestProcessor < GS::ETL::TestProcessor
   end
 
   def state_breakdown_to_gs_breakdown_ids
-    CaGsBreakdownDefinitions.breakdown_lookup
+    ::CaGsBreakdownDefinitions.breakdown_lookup
   end
 
   def  state_breakdown_ids_to_state_breakdown_labels
@@ -540,4 +532,4 @@ class CATestProcessor < GS::ETL::TestProcessor
 
 end
 
-CATestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run
+CATestProcessor2015CAASPP.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) ).run

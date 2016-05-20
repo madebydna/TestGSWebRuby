@@ -1,5 +1,5 @@
 # coding: utf-8
-load "test_processor.rb"
+require_relative "../test_processor.rb"
 
 # TODO
 # - Config file
@@ -50,7 +50,7 @@ load "test_processor.rb"
 # Turning Point - New
 # WPHS - New (west prep already exists)
 
-class NVTestProcessor < GS::ETL::TestProcessor
+class NVTestProcessor2015CRTHSPE < GS::ETL::TestProcessor
   # Notes about duplicate schools
   # 02151 Allen ES - one has an entry for Pacific Islander
   # 16266 Allen ES - has no entry for Pacific Islander
@@ -346,4 +346,4 @@ class NameMappingAggregator < GS::ETL::Source
   end
 end
 
-NVTestProcessor.new("data/nv").run
+NVTestProcessor2015CRTHSPE.new("data/nv").run

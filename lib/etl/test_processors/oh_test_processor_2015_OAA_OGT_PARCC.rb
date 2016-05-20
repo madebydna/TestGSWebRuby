@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift File.dirname(__FILE__)
+$LOAD_PATH.unshift File.expand_path('../..', __FILE__)
 require 'etl'
 require 'test_processor'
 require 'sources/csv_source'
@@ -11,7 +11,7 @@ require 'gs_breakdowns_from_db'
 
 
 GS::ETL::Logging.logger = GS::ETL::Logging::AggregatingLogger.build_stdout_logger
-class OHTestProcessor < GS::ETL::TestProcessor
+class OhTestProcessor2015OAAOGTPARCC < GS::ETL::TestProcessor
   attr_reader :runnable_steps, :attachable_input_step, :attachable_output_step, :grade_subject_column_headers
 
   def config_hash
@@ -330,7 +330,7 @@ end
 
 raise ArgumentError.new('****Requires directory holding prepped files as command line argument****')  unless ARGV[0]
 
-processor = OHTestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) )
+processor = OhTestProcessor2015OAAOGTPARCC.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i) )
 processor.build_graph
 processor.draw
-OHTestProcessor.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i), offset: 0).run
+OhTestProcessor2015OAAOGTPARCC.new(ARGV[0], max: (ARGV[1] && ARGV[1].to_i), offset: 0).run

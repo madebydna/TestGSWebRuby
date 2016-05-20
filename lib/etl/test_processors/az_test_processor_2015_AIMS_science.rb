@@ -1,6 +1,6 @@
-require_relative "test_processor"
+require_relative "../test_processor"
 
-class AZTestProcessor < GS::ETL::TestProcessor
+class AZTestProcessor2015AIMSScience < GS::ETL::TestProcessor
 
   def initialize(*args)
     super
@@ -102,4 +102,4 @@ class AZTestProcessor < GS::ETL::TestProcessor
   end
 end
 
-AZTestProcessor.new(ARGV[0], max: nil).run
+AZTestProcessor2015AIMSScience.new(ARGV[0], max: nil).run

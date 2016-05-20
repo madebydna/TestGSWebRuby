@@ -1,19 +1,9 @@
-$LOAD_PATH.unshift File.dirname(__FILE__)
-require_relative 'test_processor'
-require 'etl'
-require 'test_processor'
-require 'sources/csv_source'
-require 'destinations/csv_destination'
-require 'destinations/event_report_stdout'
-require 'destinations/load_config_file'
-require 'sources/buffered_group_by'
-require 'nc_entity_level_parser'
-require 'nc_subroutines'
+$LOAD_PATH.unshift File.expand_path('../..', __FILE__)
+require_relative '../test_processor'
+require_relative '../etl'
 require 'nc_breakdown_definitions'
-require 'transforms/column_selector'
-require 'transforms/delete_rows'
 
-class NCTestProcessor < GS::ETL::TestProcessor
+class NCTestProcessor2015EOGEOC < GS::ETL::TestProcessor
 
   def initialize(source_file, output_file)
     @source_file = source_file
@@ -147,4 +137,4 @@ file = '/Users/rhunter/CodeGS/etl_data_files/Disag_2014-15_Data.txt'
 
 output_file = '/Users/rhunter/CodeGS/etl_data_files/nc_transformed_output.txt'
 
-NCTestProcessor.new(file, output_file).run
+NCTestProcessor2015EOGEOC.new(file, output_file).run
