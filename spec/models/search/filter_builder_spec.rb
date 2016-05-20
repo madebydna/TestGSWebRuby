@@ -461,6 +461,18 @@ describe FilterBuilder do
         expect(forced_simple).to start_with('simple')
       end
     end
+
+    context 'In Colorado' do
+      let (:colorado_cache_key) { FilterBuilder.new('co', nil, false).filters.cache_key }
+      let (:forced_simple) { FilterBuilder.new('co', nil, true).filters.cache_key }
+      it 'should represent a colorado_rating' do
+        expect(colorado_cache_key).to start_with('colorado_rating')
+      end
+      it 'should represent a simple configuration if forced' do
+        expect(forced_simple).to start_with('simple')
+      end
+    end
+
     context 'in Michigan' do
       let (:mi_cache_key) { FilterBuilder.new('mi', nil, false).filters.cache_key }
       context 'in Detroit' do

@@ -125,12 +125,8 @@ describe SearchController do
 
     context 'When there is overall rating in filter params' do
       gs_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
-        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(false)
       }
 
       context 'with only above_average filter' do
@@ -157,12 +153,8 @@ describe SearchController do
 
     context 'When there is path to quality rating in filter params' do
       path_to_quality_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(true)
-        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(false)
       }
 
       context 'with a few ratings' do
@@ -186,11 +178,7 @@ describe SearchController do
 
     context 'When there is great start to quality rating in filter params' do
       gstq_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(true)
       }
 
@@ -223,6 +211,37 @@ describe SearchController do
     end
 
   end
+
+  context 'When there is colorado_rating in filter params' do
+    before do
+      allow(controller).to receive(:should_apply_filter?).and_return(false)
+      allow(controller).to receive(:should_apply_filter?).
+        with(:colorado_rating).and_return(true)
+    end
+
+    context 'with a few ratings' do
+      let(:params_hash) do
+        {'colorado_rating' => ['colorado_1','colorado_2']}
+      end
+      it "should set the right filter for ratings" do
+        filters = controller.send(:parse_filters, params_hash)
+        expect(filters).to eq(colorado_rating: ['Colorado 1','Colorado 2'])
+      end
+    end
+
+    context 'with a all ratings' do
+      let(:params_hash) do
+        {'colorado_rating' => ['colorado_1','colorado_2','colorado_3','colorado_4']}
+      end
+      it "should set all 4 ratings filters, so that only schools with ratings are displayed" do
+        filters = controller.send(:parse_filters, params_hash)
+        expect(filters).to eq(
+          colorado_rating: ["Colorado 1", "Colorado 2", "Colorado 3", "Colorado 4"]
+        )
+      end
+    end
+  end
+
 
   describe '#ad_setTargeting_through_gon' do
     before do

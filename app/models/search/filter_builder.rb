@@ -65,7 +65,8 @@ class FilterBuilder
             de: [],
             ga: [],
             ok: add_special_education_options_callbacks,
-            oh: add_vouchers_callbacks_oh
+            oh: add_vouchers_callbacks_oh,
+            co: colorado_callbacks
         }
     ).stringify_keys!
   end
@@ -149,6 +150,39 @@ class FilterBuilder
     ]
   end
 
+  def colorado_callbacks
+    [
+      {
+        callback_type: 'cache_key',
+        options: {
+          value: 'colorado_rating',
+          version: 1
+        }
+      },
+      {
+        conditions:
+        [
+          {
+            key: 'name',
+            match: 'gs_rating'
+          }
+        ],
+        callback_type: 'insert_after',
+        options:
+        {
+          a_filter: {
+            label: 'Colorado rating', display_type: :title, name: :colorado_rating, filters: {
+              ptq1: { label: t('Colorado 1'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_1 },
+              ptq2: { label: t('Colorado 2'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_2 },
+              ptq3: { label: t('Colorado 3'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_3 },
+              ptq4: { label: t('Colorado 4'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_4 },
+            }
+          }
+        }
+      }
+    ]
+  end
+
   def add_vouchers_callbacks
     [
       {
@@ -219,8 +253,7 @@ class FilterBuilder
         {key: 'name', match: 'gs_rating'}
       ],
       callback_type: 'insert_after',
-      options:
-      {
+      options: {
         ptq_rating: {
           label: t('PTQ Rating (Preschool Only)'), display_type: :title, name: :ptq_rating, filters: {
             ptq1: { label: t('Level 1'), display_type: :basic_checkbox, name: :ptq_rating, value: :level_1 },
