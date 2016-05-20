@@ -13,12 +13,14 @@ describe 'Old prefiltered browse URLs' do
     describe "in a #{state_description}" do
       {
           :'one-word city' => 'minneapolis',
-          :'two-word city with junk in it' => '12th-st.-%23paul'
+          :'two-word city with junk in it' => '12th-st.-%23paul',
+          :'city starting with public' => 'public-township-of-roy'
       }.each do |city_description, city|
         describe "in a #{city_description}" do
           {
               :'normal district' => 'Alameda-School-District',
               :'district with junk in it' => '12th-district-12-%2312',
+              :'district starting with public' => 'public-schools-of-petoskey'
           }.each do |district_description, district|
             describe "in district browse with a #{district_description}" do
               {

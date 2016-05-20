@@ -32,18 +32,18 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
-      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:level]}", '/schools')}/?gradeLevels=#{params[:level][0]}" }
+      to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:level]}/", '/schools/')}?gradeLevels=#{params[:level][0]}" }
 
   get ':state/:city/:type/schools/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
                     type: /public|public-charter|private/},
-      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}", '')}/?st=#{params[:type].split('-').last}" }
+      to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:type]}/", '/')}?st=#{params[:type].split('-').last}" }
 
   get ':state/:city/:type/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/,
                     type: /public|public-charter|private/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
-      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools')}/?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
+      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
   get ':state/:city/:district_name/schools/', as: :search_district_browse,
     # This city regex allows for all characters except /
@@ -53,18 +53,18 @@ LocalizedProfiles::Application.routes.draw do
   get ':state/:city/:district_name/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
-      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:level]}", '/schools')}/?gradeLevels=#{params[:level][0]}" }
+      to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:level]}/", '/schools/')}?gradeLevels=#{params[:level][0]}" }
 
   get ':state/:city/:district_name/:type/schools/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     type: /public|public-charter|private/},
-      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}", '')}/?st=#{params[:type].split('-').last}" }
+      to: redirect {|params, request| "#{request.path.chomp('/').concat('/').sub("/#{params[:type]}/", '/')}?st=#{params[:type].split('-').last}" }
 
   get ':state/:city/:district_name/:type/:level/',
       constraints: {state: States.any_state_name_regex, city: /[^\/]+/, district_name: /[^\/]+/,
                     type: /public|public-charter|private/,
                     level: /preschools|elementary-schools|middle-schools|high-schools/},
-      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools')}/?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
+      to: redirect {|params, request| "#{request.path.chomp('/').sub("/#{params[:type]}/#{params[:level]}", '/schools/')}?gradeLevels=#{params[:level][0]}&st=#{params[:type].split('-').last}" }
 
   get '/search/search.page', as: :search, to: 'search#search'
 
