@@ -61,13 +61,14 @@ module Feeds
                    :level_code_name => level,
                    :score => transpose_test_score(band, data, entity_level),
                    :proficiency_band_id => transpose_band_id(band, data, entity_level),
-                   :proficiency_band_name => transpose_band_name(band),
-                   :number_tested => transpose_number_tested(data)
+                   :proficiency_band_name => transpose_band_name(band)
       }
       additional_data_for_subgroup = {:breakdown_id => transpose_breakdown_id(breakdown_id,breakdown_name,@@test_data_breakdowns_name_mapping),
                                       :breakdown_name => breakdown_name
       }
-      data_type == WITH_ALL_BREAKDOWN ? test_data.merge!(additional_data_for_subgroup) : test_data
+      number_tested = { :number_tested => transpose_number_tested(data,band,entity_level)
+      }
+      data_type == WITH_ALL_BREAKDOWN ? test_data.merge!(additional_data_for_subgroup).merge!(number_tested) : test_data.merge!(number_tested)
     end
 
     def transpose_breakdown_id(breakdown_id,breakdown_name,test_data_breakdowns)
@@ -94,14 +95,28 @@ module Feeds
     def transpose_band_id(band, data, entity_level)
       # For proficient and above band id is always null in database
       if entity_level == ENTITY_TYPE_STATE
-        data['proficiency_band_id'].nil? ? '' : data['proficiency_band_id']
+       data['proficiency_band_id']
       else
-        data[band+'_band_id'].nil? ? ''  : data[band+'_band_id']
+       data[band+'_band_id']
       end
     end
 
-    def transpose_number_tested(data)
-      data['number_students_tested'].nil? ? '' : data['number_students_tested']
+    def transpose_number_tested(data,band,entity_level)
+      if entity_level == ENTITY_TYPE_STATE
+        data['number_students_tested']
+      else
+        band == PROFICIENT_AND_ABOVE_BAND ?  data['number_students_tested']:         data[band+'_number_students_tested']
+      end
+    end
+
+    def get_band_names(data)
+      bands = data.keys.select { |key| key.ends_with?('band_id') }
+      proficient_score  = data.has_key? 'score'
+      band_names = bands.map { |band| band[0..(band.length-'_band_id'.length-1)] }
+      if proficient_score
+        band_names << PROFICIENT_AND_ABOVE_BAND
+      end
+      band_names
     end
 
   end
