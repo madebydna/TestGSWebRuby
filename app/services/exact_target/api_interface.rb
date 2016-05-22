@@ -6,10 +6,11 @@ class ExactTarget
   class ApiInterface
 
     def full_path_uri(uri)
-      URI('https://www.exacttargetapis.com/sms/v1/'+uri)
+      URI('https://www.exacttargetapis.com'+uri)
     end
 
     def post_json_with_auth(uri, send_hash, access_token)
+      uri = full_path_uri(uri)
       req = Net::HTTP::Post.new(
           uri.request_uri,
           initheader = {
@@ -20,6 +21,20 @@ class ExactTarget
       result = post_json(uri, send_hash, req)
       authenticate(result)
     end
+
+    def patch_json_with_auth(uri, send_hash, access_token)
+      uri = full_path_uri(uri)
+      req = Net::HTTP::Patch.new(
+        uri.request_uri,
+        initheader = {
+          'Content-Type' => 'application/json',
+          'Authorization' => 'Bearer ' + access_token
+        }
+      )
+      result = post_json(uri, send_hash, req)
+      authenticate(result)
+    end
+
 
     def post_auth_token_request
       uri = access_token_uri
