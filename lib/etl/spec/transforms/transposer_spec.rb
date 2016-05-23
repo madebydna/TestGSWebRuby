@@ -1,16 +1,31 @@
 require_relative '../../transforms/transposer'
 
 describe Transposer do
-
   describe '.new' do
     it 'should raise an error if label_field is not present' do
       expect { Transposer.new(nil, :foo, :bar) }.to raise_error(ArgumentError)
     end
+    it 'should raise an error if label_field is not an array of symbols' do
+      expect { Transposer.new(["string"], :foo, :bar) }.to raise_error(ArgumentError)
+    end
     it 'should raise an error if value_field is not present' do
       expect { Transposer.new(:foo, nil, :bar) }.to raise_error(ArgumentError)
     end
+    it 'should raise an error if value_field is not a symbol' do
+      expect { Transposer.new(:foo, "string", :bar) }.to raise_error(ArgumentError)
+    end
+    it 'should raise an error if fields is not an array of symbols or regexes' do
+      expect { Transposer.new([:baz], :foo, "string") }.to raise_error(ArgumentError)
+    end
     it 'should return a new instance when valid params are given' do
       expect(Transposer.new(:foo, :bar, :baz, :baz2)).to be_a(Transposer)
+    end
+  end
+
+  describe '#label_fields=' do
+    subject { Transposer.new([:foo], :bar, [:baz]) }
+    it 'should raise an error if label_field is not an array' do
+      expect { subject.label_fields=(:foobar) }.to raise_error(ArgumentError)
     end
   end
 
@@ -70,8 +85,6 @@ describe Transposer do
       subject.process(row)
       expect(logger).to have_received(:log_event)
     end
-
   end
-
 
 end
