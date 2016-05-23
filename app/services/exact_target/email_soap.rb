@@ -28,6 +28,13 @@ class ExactTarget
       process_response(response, {call: :get, subscriber: email}).results.first
     end
 
+    def get_subscribers_with_status_not_active
+      call = subscriber_call
+      call.filter = {'Property' => 'Status','SimpleOperator' => 'notEquals','Value' => 'Active' }
+      response = call.get
+      process_response(response, {call: :get, suscriber: 'status not active' }).results
+    end
+
     def create_subscriber(user)
       #puts "Creating subscriber #{user.email}"
       call = subscriber_call
