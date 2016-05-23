@@ -49,15 +49,15 @@ module Feeds
     end
 
     def get_list_of_xml_to_validate(xml_location)
-      Array.wrap(Dir.glob(xml_location + "*.xml"))
+      Array.wrap(Dir.glob(xml_location + '*.xml'))
     end
 
     def download_xsd
-      FEED_TO_SCHEMA_MAPPING.try(:each) do |k, file|
-        uri = URI.parse(file)
+      FEED_TO_SCHEMA_MAPPING.try(:each) do |k, schema|
+        uri = URI.parse(schema)
         xsd_file_name =URI(uri).path.split('/').last
         resp = Net::HTTP.get_response(uri)
-        open(xsd_file_name, "wb") { |file|
+        open(xsd_file_name, 'wb') { |file|
           file.write(resp.body)
         }
       end
