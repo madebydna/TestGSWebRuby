@@ -4,12 +4,12 @@ require 'exact_target'
 describe ExactTarget::ApiInterface do
 
   describe '#full_path_uri' do
-    subject { ExactTarget::ApiInterface.new.full_path_uri ('test') }
+    subject { ExactTarget::ApiInterface.new.full_path_uri ('/test') }
     it 'should return a URI' do
       expect(subject).to be_a(URI)
     end
     it 'should append argument to end of uri' do
-      result_uri = 'https://www.exacttargetapis.com/sms/v1/test'
+      result_uri = 'https://www.exacttargetapis.com/test'
       expect(subject).to eq(URI(result_uri))
     end
   end
@@ -45,7 +45,7 @@ describe ExactTarget::ApiInterface do
 
   describe '#post_json_with_auth' do
     subject do
-      ExactTarget::ApiInterface.new.post_json_with_auth(URI('https://www.exacttargetapis.com/sms/v1/test'), {}, 'test')
+      ExactTarget::ApiInterface.new.post_json_with_auth('/sms/v1/test', {}, 'test')
     end
     let(:headers) do
       { 'Content-Type' =>  'application/json', 'Authorization' => 'Bearer ' + 'test' }
