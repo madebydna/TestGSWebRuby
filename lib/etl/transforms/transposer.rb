@@ -29,6 +29,7 @@ class Transposer < GS::ETL::Step
   # explode a new row
   # value_field is used to store the value that was in the cell for
   # the column that was exploded
+
   def initialize(label_fields, value_field, *fields)
     self.fields = fields
     self.label_fields = [*label_fields]
@@ -60,43 +61,46 @@ class Transposer < GS::ETL::Step
     end
   end
 
-  def label_fields=(label_fields)
-    @label_fields = label_fields if are_label_fields_valid?(label_fields)
+  def fields_nil_or_empty(fields, message)
+    raise ArgumentError, message if fields.nil? || fields.empty?
   end
 
-  def are_label_fields_valid?(label_fields)
-    if label_fields.nil? || label_fields.empty?
-      raise ArgumentError, 'label_fields must be provided'
-    elsif !label_fields.is_a?(Array)
-      raise ArgumentError, 'label_fields must be an array'
-    elsif !label_fields.all? { |label_field| label_field.is_a?(Symbol) }
-      raise ArgumentError, 'label_fields can only contain symbols'
+  def fields_is_an_array(fields, message)
+    raise ArgumentError, message unless fields.is_a?(Array)
+  end
+
+  def field_is_a_symbol(field, message)
+    raise ArgumentError, message unless field.is_a?(Symbol)
+  end
+
+  def fields_contains_only_symbols(fields, message)
+    unless fields.all? { |field| field.is_a?(Symbol) }
+      raise ArgumentError, message
     end
-    label_fields
+  end
+
+  def fields_contains_only_symbols_or_regexes(fields, message)
+    unless fields.all? { |field| field.is_a?(Symbol) || field.is_a?(Regexp) }
+      raise ArgumentError, message
+    end
+  end
+
+  def label_fields=(label_fields)
+    fields_nil_or_empty(label_fields, "Label fields are nil or empty.")
+    fields_is_an_array(label_fields, "Label fields must be an array.")
+    fields_contains_only_symbols(label_fields, "Label fields must contain only symbols.")
+    @label_fields = label_fields
   end
 
   def value_field=(value_field)
-   @value_field = value_field if is_value_field_valid?(value_field)
-  end
-
-  def is_value_field_valid?(value_field)
-    if value_field.nil? || value_field.empty?
-      raise ArgumentError, 'value_field must be provided'
-    elsif !value_field.is_a?(Symbol)
-      raise ArgumentError, 'value_field must be a symbol'
-    end
-    value_field
+    fields_nil_or_empty(value_field, "Value fields are nil or empty.")
+    field_is_a_symbol(value_field, "Value field must be a symbol.")
+    @value_field = value_field
   end
 
   def fields=(fields)
-    @fields = fields if are_fields_valid?(fields)
-  end
-
-  def are_fields_valid?(fields)
-    raise ArgumentError, 'fields must be provided' if fields.empty?
-    unless fields.all? { |field| field.is_a?(Symbol) || field.is_a?(Regexp) }
-      raise ArgumentError, 'fields can only contain symbols or regexes'
-    end
-    fields
+    fields_nil_or_empty(fields, "Fields are nil or empty.")
+    fields_contains_only_symbols_or_regexes(fields, "Fields must contain only symbols or regexes.")
+    @fields = fields
   end
 end
