@@ -6,7 +6,7 @@ require_relative '../step'
 #     b: 2,
 #     c: 3
 #   }
-# ] 
+# ]
 # Transposer.new(:type, :value, [:a, :b, :c])
 # becomes
 # [
@@ -27,7 +27,7 @@ class Transposer < GS::ETL::Step
 
   # label_fields is used to store the name of the column that was used to
   # explode a new row
-  # value_field is used to store the value that was in the cell for 
+  # value_field is used to store the value that was in the cell for
   # the column that was exploded
   def initialize(label_fields, value_field, *fields)
     self.fields = fields
@@ -61,31 +61,42 @@ class Transposer < GS::ETL::Step
   end
 
   def label_fields=(label_fields)
+    @label_fields = label_fields if are_label_fields_valid?(label_fields)
+  end
+
+  def are_label_fields_valid?(label_fields)
     if label_fields.nil? || label_fields.empty?
       raise ArgumentError, 'label_fields must be provided'
     elsif !label_fields.is_a?(Array)
       raise ArgumentError, 'label_fields must be an array'
-    end
-    unless label_fields.all? { |label_field| label_field.is_a?(Symbol) }
+    elsif !label_fields.all? { |label_field| label_field.is_a?(Symbol) }
       raise ArgumentError, 'label_fields can only contain symbols'
     end
-    @label_fields = label_fields
+    label_fields
   end
 
   def value_field=(value_field)
+   @value_field = value_field if is_value_field_valid?(value_field)
+  end
+
+  def is_value_field_valid?(value_field)
     if value_field.nil? || value_field.empty?
       raise ArgumentError, 'value_field must be provided'
     elsif !value_field.is_a?(Symbol)
       raise ArgumentError, 'value_field must be a symbol'
     end
-    @value_field = value_field
+    value_field
   end
 
   def fields=(fields)
+    @fields = fields if are_fields_valid?(fields)
+  end
+
+  def are_fields_valid?(fields)
     raise ArgumentError, 'fields must be provided' if fields.empty?
     unless fields.all? { |field| field.is_a?(Symbol) || field.is_a?(Regexp) }
       raise ArgumentError, 'fields can only contain symbols or regexes'
     end
-    @fields = fields
+    fields
   end
 end
