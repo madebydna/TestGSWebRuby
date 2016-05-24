@@ -10,7 +10,7 @@ class Advertising
       Snapshot: {
         name: "Snapshot",
         desktop:{
-            dimensions:[[300,600],[300,250]]
+            dimensions:[[300,250]]
         },
         mobile:{
             dimensions:[300,250]
