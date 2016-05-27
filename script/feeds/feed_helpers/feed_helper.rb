@@ -45,19 +45,12 @@ module Feeds
 
     end
 
-    def get_band_names(data)
-      bands = data.keys.select { |key| key.ends_with?('band_id') }
-      band_names = bands.map { |band| band[0..(band.length-'_band_id'.length-1)] }
-      band_names << PROFICIENT_AND_ABOVE_BAND
-      band_names
-    end
-
     def write_xml_tag(data, tag_name, xml)
       if data.present?
         data_for_xml = data.reject(&:blank?)
-        data_for_xml.each do |tag_data|
+        data_for_xml.reject(&:blank?).each do |tag_data|
           xml.tag! tag_name do
-            tag_data.each do |key, value|
+            tag_data.compact.each do |key, value|
               xml.tag! key.to_s.gsub('_', '-'), value
             end
           end

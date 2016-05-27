@@ -105,12 +105,22 @@ class SchoolProfileController < SchoolController
                   :keywords =>  seo_meta_tags_keywords
   end
 
-  def alt_states
-    ['CA','IA','NJ']
+  def title_state_options
+    @_title_state_options ||= (
+      hash = Hash.new(:default)
+      %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = :option1 }
+      hash
+    )
   end
 
   def seo_meta_tags_title
-    alt_states.include?(@school.state) && action_name == 'overview' ? seo_meta_tags_title_alt : seo_meta_tags_title_standard
+    option = title_state_options[@school.state]
+    option_enabled = action_name == 'overview'
+    if option_enabled && option == :option1
+      seo_meta_tags_title_alt
+    else
+      seo_meta_tags_title_standard
+    end
   end
 
   #title logic
@@ -132,7 +142,37 @@ class SchoolProfileController < SchoolController
     "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
   end
 
+  def description_state_options
+    @_description_state_options ||= (
+      hash = Hash.new(:default)
+      %w(FL NC).each {|state| hash[state] = :option1 }
+      %w(UT WA).each {|state| hash[state] = :option2 }
+      %w(NY MD).each {|state| hash[state] = :option3 }
+      %w(GA WI).each {|state| hash[state] = :option4 }
+      %w(IL PA).each {|state| hash[state] = :option5 }
+      hash
+    )
+  end
+
   def seo_meta_tags_description
+    option = description_state_options[@school.state]
+    option_enabled = !@school.preschool?
+    if option_enabled && option == :option1
+      "Newly updated test scores, student-teacher ratio, & diversity stats - #{@school.name} reviews & ratings from parents and students."
+    elsif option_enabled && option == :option2
+      "Read the latest reviews & ratings from parents and students about #{@school.name}. Make the best decision for your child."
+    elsif option_enabled && option == :option3
+      "Up-to-date test scores & in-depth statistics about #{@school.name}. Read reviews & ratings from parents and students."
+    elsif option_enabled && option == :option4
+      "Submit your rating for #{@school.name}. Read reviews, newly-updated school & district test scores, and in-depth school report cards."
+    elsif option_enabled && option == :option5
+      "What do other parents think of #{@school.name}? Read the largest review site for #{@school.name} at GreatSchools.org."
+    else
+      seo_meta_tags_description_default
+    end
+  end
+
+  def seo_meta_tags_description_default
     return_description_str = ''
     state_name_local = ''
     return_description_str << @school.name

@@ -24,6 +24,7 @@ module Feeds
       }
 
       FEED_TO_SCHEMA_MAPPING = {
+          'common_schema' => 'http://www.greatschools.org/feeds/greatschools-common.xsd',
           'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
           'test_subgroup' => 'http://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
           'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',

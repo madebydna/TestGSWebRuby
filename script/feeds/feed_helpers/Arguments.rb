@@ -30,7 +30,7 @@ module Feeds
          states = states == 'all' ? all_states : split_argument(states)
          feed_names = feed_names == 'all' ? all_feeds : split_argument(feed_names)
          return false unless (feed_names-all_feeds).empty?
-         return false unless (states-all_states).empty?
+         return false unless (states.map(&:upcase)-all_states.map(&:upcase)).empty?
           {
                :states => states,
                :feed_names => feed_names,
