@@ -21,8 +21,8 @@ class DetailsOverviewDecorator
       klass = DetailsOverviewDecorator.const_get(action.camelcase)
       item = klass.new(
           @data,
-          details: @view.school_details_path(@school),
-          quality: @view.school_quality_path(@school))
+          details: @view.send(:school_details_path, @school),
+          quality: @view.send(:school_quality_path, @school))
       item
     end
   end
