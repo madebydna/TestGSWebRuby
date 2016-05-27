@@ -247,7 +247,9 @@ describe SchoolProfileController do
     end
   end
 
-  it { is_expected.to respond_to(:set_noindex_meta_tags) }
+  it 'should respond to set_noindex_meta_tags' do
+    expect(subject.respond_to?(:set_noindex_meta_tags, true)).to be_truthy
+  end
   describe '#set_noindex_meta_tags' do
     subject { controller.send(:set_noindex_meta_tags) }
     it 'should call set_meta_tags with the correct hash' do
@@ -275,7 +277,9 @@ describe SchoolProfileController do
     end
   end
 
-  it { is_expected.to respond_to(:school_reviews) }
+  it 'should respond to school_reviews' do
+    expect(subject.respond_to?(:school_reviews, true)).to be_truthy
+  end
   describe '#school_reviews' do
     subject { controller.send(:school_reviews) }
     let(:school_reviews) do

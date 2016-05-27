@@ -669,7 +669,7 @@ describe SigninController do
 
         it 'should log the user in' do
           controller.send :authenticate_token_and_redirect
-          expect(controller).to be_logged_in
+          expect(controller.send(:logged_in?)).to be_truthy
         end
       end
 
@@ -689,7 +689,7 @@ describe SigninController do
 
         it 'should not log the user in' do
           controller.send :authenticate_token_and_redirect
-          expect(controller).to_not be_logged_in
+          expect(controller.send(:logged_in?)).to be_falsey
         end
 
         it 'should flash an error message' do
