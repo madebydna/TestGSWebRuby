@@ -25,16 +25,17 @@ class ExactTarget
       call = subscriber_call
       call.filter = filter_on_email(email)
       response = call.get
-
       process_response(response, {call: :get, subscriber: email}).results.first
     end
 
     def data_extension_all_subscriber_create
-        call = data_extension_all_subscribers_call
-        props = [{"Subscriber_key" => '123456-dfd0', 'email'=>'jwrobel+test@greatschools.org'}]
-        call.props = props
-        results = call.post
-        results
+      #  Note that documentation for this api call does not indicate the props  array
+      # https://code.exacttarget.com/apis-sdks/fuel-sdks/data-extension-rows/data-extension-row-create.html
+      call = data_extension_all_subscribers_call
+      props = [{"Subscriber_key" => '123456-dfd0', 'email'=>'jwrobel+test@greatschools.org'}]
+      call.props = props
+      results = call.post
+      results
     end
 
     def get_subscribers_with_status_not_active
@@ -113,8 +114,6 @@ class ExactTarget
       call.authStub = @client
       call
     end
-
-
 
     def process_response(response, opt_vars = {})
       unless response.success?
