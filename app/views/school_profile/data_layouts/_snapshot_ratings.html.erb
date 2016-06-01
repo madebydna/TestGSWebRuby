@@ -1,7 +1,7 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
 <% gs_rating = @school.gs_rating || 'nr' %>
-<div class="row pr" style="height: 300px;">
+<div class="js-ratings-vertical-rule row pr" style="height: 300px;">
   <div class="col-xs-12 tac">
     <a href="<%= school_quality_url(@school) %>#Ratings">
       <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
@@ -43,7 +43,7 @@
 <% end %>
 
 
-<div class="tac pa full-width"  style="bottom: 20px;" >
+<div class="js-tsr-block tac pa full-width"  style="bottom: 20px;" >
     <%= link_to t('.test_scores'), school_quality_url(@school, anchor:"Test_scores") %>&nbsp;|&nbsp;
     <%= link_to t('.ratings'), school_quality_url(@school, anchor:"Ratings") %>
 </div>

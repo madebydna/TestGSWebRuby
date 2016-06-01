@@ -1,32 +1,24 @@
-module FeedBuilders
-  class TestRatingFeedDataReader
-    def initialize(attributes = {})
-      @school = attributes[:school]
-      @district = attributes[:district ]
-      @state = attributes[:state]
-      @ratings_id_for_feed = attributes[:ratings_id_for_feed]
+module Feeds
+  module TestRatingFeedDataReader
+
+    def get_school_data_for_ratings(school,ratings_id)
+      data = school.try(:school_cache).cache_data['ratings']
+      get_rating_data_for_feed(data,ratings_id)
     end
 
-
-    def get_school_data
-      data = @school.try(:school_cache).cache_data['ratings']
-      get_rating_data_for_feed(data)
+    def get_district_data_for_ratings(district, ratings_id)
+      data = district.try(:district_cache).cache_data['ratings']
+      get_rating_data_for_feed(data,ratings_id)
     end
 
-    def get_district_data
-      data = @district.try(:district_cache).cache_data['ratings']
-      get_rating_data_for_feed(data)
-    end
-
-    def get_master_data
-      query_results =TestDataSet.ratings_config_for_state(@state,@ratings_id_for_feed)
+    def get_ratings_master_data(state, rating_id)
+      TestDataSet.ratings_config_for_state(state,rating_id)
     end
 
     private
 
-    def get_rating_data_for_feed(ratings_cache_data)
-      data = []
-      data.push(ratings_cache_data.try(:find) { |h| h["data_type_id"]== @ratings_id_for_feed })
+    def get_rating_data_for_feed(ratings_cache_data,ratings_id_for_feed)
+      Array.wrap(ratings_cache_data).try(:select) { |h| h['data_type_id']== ratings_id_for_feed }
     end
 
   end
