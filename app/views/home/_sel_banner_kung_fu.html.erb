@@ -1,0 +1,35 @@
+<% utm_params = { utm_source: 'GS', utm_medium: 'web_module', utm_content: 'homepage', utm_campaign: 'Emotional_Smarts' } %>
+<%= link_to emotional_smarts_url(utm_params), class: 'sel-promo-banner-kung-fu' do %>
+  <div class="sel-promo-banner-kung-fu">
+    <div class="limit-width-1200 phl">
+      <div class="row">
+        <div class="col-xs-12 col-md-3 hidden-sm">
+          <div class="sel-banner-heart hidden-xs">
+            <%= image_tag(image_path('home/sel_banner_heart.png'), class:'fr') %>
+          </div>
+          <div class="hidden-sm hidden-md hidden-lg tac">
+            Support provided by: 
+            <%= image_tag(image_path('home/kung_fu_panda_logo_mobile.png'), class: 'ma' ) %>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-9">
+          <div class="banner-text-container">
+            <div class="banner-text">
+              <h2><%= t('.heading') %></h2>
+              <div class="subtitle-lg text_000"><%= t('.body') %></div>
+            </div>
+            <div class="clearfix">
+              <button class="fl btn btn-lg btn-primary"><%= t('.button_text') %></button>
+            </div>
+            <div class="clearfix col-sm-7 tar font-size-large hidden-xs prl">
+                Support provided by:
+            </div>
+            <div class="col-xs-12 col-sm-7 font-size-xs mtm">
+              <%= t('.copyright_html') %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
