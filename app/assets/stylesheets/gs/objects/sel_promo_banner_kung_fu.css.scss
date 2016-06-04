@@ -52,10 +52,17 @@ a.sel-promo-banner-kung-fu:hover {
         }
       }
     }
+    .supported-by-text {
+      text-align: right;
+      margin-right: 325px;
+      font-size: $font-size-large;
+    }
   }
+
 
   // Fake GK button
   button {
+    float: left;
     margin-top: $spacing-large;
     background-color: #343434;
     border-color: #131f28;
@@ -66,6 +73,7 @@ a.sel-promo-banner-kung-fu:hover {
   }
     @media (max-width: $screen-sm-min) {
       margin: $spacing-medium 0;
+      float: none;
     }
 
   }
