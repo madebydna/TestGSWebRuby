@@ -46,7 +46,7 @@ module Feeds
 
       ENTITY_TYPE_STATE = 'state'
 
-      DEFAULT_BATCH_SIZE = 300
+      DEFAULT_BATCH_SIZE = 1
 
       def all_feeds
         %w(test_scores test_subgroup test_rating official_overall)
