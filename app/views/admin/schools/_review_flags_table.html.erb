@@ -17,7 +17,11 @@
       <td><%= flag.created.strftime('%B %d, %Y') %></td>
       <td>
         <% if flag.user %>
-          <%= link_to(flag.user.email, users_admin_reviews_path(review_moderation_search_string: flag.review.user.email)) %>
+          <% if flag.review.user %>
+            <%= link_to(flag.user.email, users_admin_reviews_path(review_moderation_search_string: flag.review.user.email)) %>
+          <% else %>
+            [Review has no user]
+          <% end %>
         <% else %>
           Unknown
         <% end %>
