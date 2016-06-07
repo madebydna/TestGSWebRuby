@@ -1,0 +1,80 @@
+a.sel-promo-banner-kung-fu {
+  color: $text-color;
+}
+a.sel-promo-banner-kung-fu:hover {
+    text-decoration: none;
+    color: $text-color;
+}
+
+.sel-promo-banner-kung-fu {
+  text-decoration: none;
+  // Banner background
+  background-color: white;
+  background-image: image_url('home/sel_banner_bg.png');
+  background-repeat: repeat;
+
+  .limit-width-1200 {
+    background-image:  image_url('home/kung_fu_panda_logo_desktop.png');
+    background-position: right bottom;
+    background-repeat: no-repeat;
+    min-height: 216px;
+
+    @media (max-width: $screen-sm-min) {
+      background-image: none;
+      background-position: none;
+      background-repeat: no-repeat;
+    }
+  }
+  // Heart image
+  .sel-banner-heart {
+    img {
+      margin: $spacing-small 0;
+      height: 212px;
+    }
+  }
+
+// Banner text
+  .banner-text-container {
+    padding: 0 0;
+    @media (min-width: $screen-sm-min) {
+      padding-left: 20px;
+  }
+    .banner-text {
+      margin-top: $spacing-large;
+      h2 {
+        color: $gk-brand-primary;
+        font-size: 36px;
+        margin: 0;
+      }
+      @media (max-width: $screen-md-max) {
+        h2 {
+          font-size: 30px;
+        }
+      }
+    }
+    .supported-by-text {
+      text-align: right;
+      margin-right: 325px;
+      font-size: $font-size-large;
+    }
+  }
+
+
+  // Fake GK button
+  button {
+    float: left;
+    margin-top: $spacing-large;
+    background-color: #343434;
+    border-color: #131f28;
+    border-bottom-width: 3px;
+    &:hover, &:active {
+      background-color: #495056;
+      border-color: #383838;
+  }
+    @media (max-width: $screen-sm-min) {
+      margin: $spacing-medium 0;
+      float: none;
+    }
+
+  }
+}
