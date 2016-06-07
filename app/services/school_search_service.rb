@@ -237,7 +237,10 @@ class SchoolSearchService
         filter_arr << "+great_start_to_quality_rating:(#{filters[:gstq_rating].compact.join(' ')})"
       end
       if filters.include?(:colorado_rating)
-        filter_arr << "+path_to_quality_rating:(#{filters[:colorado_rating].compact.join(' ')})"
+        colorado_filters = filters[:colorado_rating].flat_map do |f|
+          ["#{f}+", f, "#{f}-"]
+        end
+        filter_arr << "+state_overall_school_rating:(#{colorado_filters.join(' ')})"
       end
       hash.delete :filters
     end

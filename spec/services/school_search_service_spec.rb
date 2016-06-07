@@ -276,7 +276,7 @@ describe 'School Search Service' do
       let(:colorado_rating_filters) do
         {
           filters: {
-            colorado_rating: [:colorado_1]
+            colorado_rating: [:A]
           }
         }
       end
@@ -294,7 +294,7 @@ describe 'School Search Service' do
       end
       it 'extracts colorado rating' do
         rval = SchoolSearchService.extract_hard_filters(colorado_rating_filters)
-        expect(rval).to include('+colorado_rating:(colorado_1)')
+        expect(rval).to include('+state_overall_school_rating:(A+ A A-)')
       end
     end
     describe 'handles level code' do

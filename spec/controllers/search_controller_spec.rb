@@ -221,22 +221,22 @@ describe SearchController do
 
     context 'with a few ratings' do
       let(:params_hash) do
-        {'colorado_rating' => ['colorado_1','colorado_2']}
+        {'colorado_rating' => %w[A B]}
       end
       it "should set the right filter for ratings" do
         filters = controller.send(:parse_filters, params_hash)
-        expect(filters).to eq(colorado_rating: ['Colorado 1','Colorado 2'])
+        expect(filters).to eq(colorado_rating: %w[A B])
       end
     end
 
     context 'with a all ratings' do
       let(:params_hash) do
-        {'colorado_rating' => ['colorado_1','colorado_2','colorado_3','colorado_4']}
+        {'colorado_rating' => %w[A B C D F]}
       end
       it "should set all 4 ratings filters, so that only schools with ratings are displayed" do
         filters = controller.send(:parse_filters, params_hash)
         expect(filters).to eq(
-          colorado_rating: ["Colorado 1", "Colorado 2", "Colorado 3", "Colorado 4"]
+          colorado_rating: %w[A B C D F]
         )
       end
     end

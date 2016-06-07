@@ -171,11 +171,12 @@ class FilterBuilder
         options:
         {
           a_filter: {
-            label: 'Colorado rating', display_type: :title, name: :colorado_rating, filters: {
-              ptq1: { label: t('Colorado 1'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_1 },
-              ptq2: { label: t('Colorado 2'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_2 },
-              ptq3: { label: t('Colorado 3'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_3 },
-              ptq4: { label: t('Colorado 4'), display_type: :basic_checkbox, name: :colorado_rating, value: :colorado_4 },
+            label: t('Colorado rating'), display_type: :title, name: :colorado_rating, filters: {
+              colorado1: { label: 'A', display_type: :basic_checkbox, name: :colorado_rating, value: :'A'},
+              colorado2: { label: 'B', display_type: :basic_checkbox, name: :colorado_rating, value: :'B'},
+              colorado3: { label: 'C', display_type: :basic_checkbox, name: :colorado_rating, value: :'C'},
+              colorado4: { label: 'D', display_type: :basic_checkbox, name: :colorado_rating, value: :'D'},
+              colorado5: { label: 'F', display_type: :basic_checkbox, name: :colorado_rating, value: :'F'}
             }
           }
         }
