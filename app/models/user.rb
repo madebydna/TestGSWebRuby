@@ -71,6 +71,9 @@ class User < ActiveRecord::Base
     self.reviews_user_flagged.map(&:id).include? review.id
   end
 
+  def opted_in_auto_graduate?
+    child_age.present?
+  end
   protected
 
   def set_defaults
