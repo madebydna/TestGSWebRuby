@@ -24,16 +24,11 @@ class AccountManagementController < ApplicationController
     # NOT USED YET - gets subscription status but not for schools
     # @subscriptions = UserSubscriptions.new(@current_user).get
 
-    account_meta_tags
+    account_meta_tags('My account')
     set_saved_searches_instance_variables
     @reviews =  current_user.reviews
     @display_grade_level_array = grade_array_pk_to_12
     @selected_grade_level = @current_user.student_grade_levels
-  end
-
-  def account_meta_tags
-    set_meta_tags :title => "My account | GreatSchools",
-                :robots => "noindex"
   end
 
   protected

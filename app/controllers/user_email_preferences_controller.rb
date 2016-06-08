@@ -13,15 +13,10 @@ class UserEmailPreferencesController < ApplicationController
 
     @subscriptions = UserSubscriptions.new(@current_user).get
 
-    account_meta_tags
+    account_meta_tags('My email preferences')
 
     @display_grade_level_array = grade_array_pk_to_8
     @selected_grade_level = @current_user.student_grade_levels
-  end
-
-  def account_meta_tags
-    set_meta_tags :title => "My email preferences | GreatSchools",
-                  :robots => "noindex"
   end
 
 end

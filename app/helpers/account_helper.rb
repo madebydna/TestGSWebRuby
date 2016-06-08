@@ -11,6 +11,12 @@ module AccountHelper
     end
   end
 
+  def account_meta_tags(page_title)
+    title = page_title << " | GreatSchools"
+    set_meta_tags :title => title,
+                  :robots => "noindex"
+  end
+
   def grade_array_pk_to_12
     ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   end
