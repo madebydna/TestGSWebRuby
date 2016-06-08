@@ -171,7 +171,7 @@ class FilterBuilder
         options:
         {
           a_filter: {
-            label: t('Colorado rating'), display_type: :title, name: :colorado_rating, filters: {
+            label: t('Colorado school grade'), display_type: :title, name: :colorado_rating, filters: {
               colorado1: { label: 'A', display_type: :basic_checkbox, name: :colorado_rating, value: :'A'},
               colorado2: { label: 'B', display_type: :basic_checkbox, name: :colorado_rating, value: :'B'},
               colorado3: { label: 'C', display_type: :basic_checkbox, name: :colorado_rating, value: :'C'},
