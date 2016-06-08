@@ -71,6 +71,10 @@ LocalizedProfiles::Application.routes.draw do
   get '/find-schools/', as: :default_search, to: 'search#default_search'
 
 
+  resources :user_preferences, only: [:edit]
+
+  get '/my-preferences' => 'user_email_preferences#show', as: 'my_preferences'
+ 
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'

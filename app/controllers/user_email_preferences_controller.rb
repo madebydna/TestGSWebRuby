@@ -1,11 +1,11 @@
 class UserEmailPreferencesController < ApplicationController
-  protect_from_forgery
 
   include AccountHelper
 
-  layout 'application'
+  protect_from_forgery
+  before_action :verify_and_login_user
 
-  before_action :login_required
+  layout 'application'
 
   def show
     @page_name = 'User Email Preferences'
@@ -19,4 +19,23 @@ class UserEmailPreferencesController < ApplicationController
     @selected_grade_level = @current_user.student_grade_levels
   end
 
+
+  def verify_and_login_user
+    token = params[:id]
+    token = CGI.unescape(token) if token
+    begin
+      parsed_token = UserVerificationToken.parse(token)
+    rescue UserVerificationToken::ParseError => error
+      GSLogger.warn(:misc, error)
+      parsed_token = nil
+    end
+
+    if parsed_token && parsed_token.valid?
+      log_user_in UserVerificationToken.parse(token).user
+    else
+      redirect_to signin_url
+    end
+  end
+
 end
+
