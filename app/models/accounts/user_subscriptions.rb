@@ -29,6 +29,13 @@ class UserSubscriptions
   end
 end
 
+############################################################################################################
+#
+#   This next section represents the flow and information needed for the accounts view
+#   This will be refactored in the next round
+#
+############################################################################################################
+
 #     @current_user.subscriptions.group_by(&:list).each do |list, subscriptions|
 #       if Subscription.is_grouped?(list)
 #         first_decorated_subscription = NewsletterDecorator.decorate(subscriptions.first)
