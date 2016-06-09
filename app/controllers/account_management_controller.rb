@@ -39,5 +39,4 @@ class AccountManagementController < ApplicationController
     @saved_searches = current_user.saved_searches.limit(50).all
   end
 
-
 end
