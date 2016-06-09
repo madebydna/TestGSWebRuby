@@ -411,11 +411,9 @@ class SearchController < ApplicationController
     end
 
     if should_apply_filter?(:colorado_rating) || params_hash.include?('colorado_rating')
-      colorado_rating_params = params_hash['colorado_rating']
-      colorado_rating_params = [colorado_rating_params] unless colorado_rating_params.instance_of?(Array)
+      colorado_rating_params = Array.wrap(params_hash['colorado_rating'])
       all_ratings = %w[A B C D F]
-      colorado_ratings = colorado_rating_params.select { |rating_param| all_ratings.include?(rating_param) }
-      colorado_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if colorado_ratings.present?
+      colorado_ratings = colorado_rating_params & all_ratings
       filters[:colorado_rating] = colorado_ratings unless colorado_ratings.empty?
     end
 
