@@ -2,15 +2,15 @@ class UserVerificationToken
 
   class UserVerificationTokenParseError < StandardError; end
 
-  def initialize(user_id, token)
+  def initialize(user_id, token = nil)
     @user_id = user_id
     @token = token
     @user_searched = false
     @token_generator = UserAuthenticationToken.new(user)
   end
 
-  def self.token
-    token = new(user: user)
+  def self.token(user_id)
+    token = new(user_id)
     token.generate
   end
 

@@ -24,7 +24,6 @@ class UserEmailPreferencesController < ApplicationController
 
   def verify_and_login_user
     token = params[:id]
-    token = CGI.unescape(token) if token
     begin
       parsed_token = UserVerificationToken.parse(token)
     rescue UserVerificationToken::ParseError => error
