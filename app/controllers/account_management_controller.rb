@@ -14,7 +14,9 @@ class AccountManagementController < ApplicationController
     # User might not have a user_profile row in the db. It might be nil
     @state_locale = state_locale
 
-    gon.state_locale_abbr = @state_locale[:short]
+    if @state_locale.present?
+      gon.state_locale_abbr = @state_locale[:short]
+    end
 
     # User might not have a user_profile row in the db. It might be nil
     @city_locale  = @current_user.user_profile.try(:city)
@@ -36,6 +38,5 @@ class AccountManagementController < ApplicationController
   def set_saved_searches_instance_variables
     @saved_searches = current_user.saved_searches.limit(50).all
   end
-
 
 end

@@ -1,0 +1,36 @@
+<% greatnews = 'no' %>
+<% if @subscriptions.include? :greatnews %>
+  <% greatnews = 'yes' %>
+<% end %>
+
+<% greatkidsnews = 'no' %>
+<% if @subscriptions.include? :greatkidsnews %>
+  <% greatkidsnews = 'yes' %>
+<% end %>
+
+<% sponsor = 'no' %>
+<% if @subscriptions.include? :sponsor %>
+  <% sponsor = 'yes' %>
+<% end %>
+
+<% auto_graduate = 'no' %>
+<% if @subscriptions.include? :auto_graduate %>
+  <% auto_graduate = 'yes' %>
+<% end %>
+
+
+<section>
+  <h1 class="tac">Manage my email preferences</h1>
+  <h2 class="tac"><strong>Welcome! We're glad you are here</strong><br/>
+    Help us send you the most relevant information by updating your preferences below.</h2>
+
+  <h2><strong>Email</strong></h2>
+  <p><%= @current_user.email %></p>
+
+  <h2>My Newsletters</h2>
+  <p>Great news: <%= greatnews %></p>
+  <p>Great kids news: <%= greatkidsnews %></p>
+  <p>Partners: <%= sponsor %></p>
+  <p>Auto graduate: <%= auto_graduate %></p>
+  <p>Grades: <%= @selected_grade_level %></p>
+</section>
