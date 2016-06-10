@@ -410,6 +410,13 @@ class SearchController < ApplicationController
       filters[:gstq_rating] = gstq_rating_params unless gstq_rating_params.empty?
     end
 
+    if should_apply_filter?(:colorado_rating) || params_hash.include?('colorado_rating')
+      colorado_rating_params = Array.wrap(params_hash['colorado_rating'])
+      all_ratings = %w[A B C D F]
+      colorado_ratings = colorado_rating_params & all_ratings
+      filters[:colorado_rating] = colorado_ratings unless colorado_ratings.empty?
+    end
+
     if should_apply_filter?(:cgr)
       valid_cgr_values = ['70_TO_100']
       filters[:school_college_going_rate] = params_hash['cgr'].gsub('_',' ') if valid_cgr_values.include? params_hash['cgr']

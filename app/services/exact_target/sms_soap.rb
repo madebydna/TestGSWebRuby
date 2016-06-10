@@ -89,6 +89,7 @@ class ExactTarget
       # require 'pry'
       # binding.pry
       dataextensionrow.post
+
     end
 
     # myClient = FuelSDK::Client.new {'client' => { 'id' => CLIENTID, 'secret' => SECRET }}
@@ -97,14 +98,17 @@ class ExactTarget
     # dataextensionrow.Name = 'ExampleDEName'
     # dataextensionrow.props = ['FirstName', 'LastName', 'AnotherColumnName']
     # response = dataextensionrow.get
-    # p response
+    # p respon.props = ["Name"]
+    def get_columns
+      dataextensioncolumn = FuelSDK::DataExtension::Column.new
+      myClient = exacttarget_login()
+      dataextensioncolumn.authStub = myClient
+      dataextensioncolumn.props = ["Name", "CustomerKey"]
+      dataextensioncolumn.filter = {'Property' => 'CustomerKey', 'SimpleOperator' => 'equals', 'Value' => '[6A8A3ED9-CFBD-4728-ADE8-B5885427CB1D].[Subscriber_key]'}
+      response = dataextensioncolumn.get
+      p response
+    end
 
-    # GET DATA EXTENSION COLUMN INFO
-    # myClient = FuelSDK::Client.new {'client' => { 'id' => CLIENTID, 'secret' => SECRET }}
-    # dataextensioncolumn = FuelSDK::DataExtension::Column.new
-    # dataextensioncolumn.authStub = myClient
-    # response = dataextensioncolumn.get
-    # p response
 
     # GET DATA EXTENSIONS
     def get_data_extensions()
@@ -135,11 +139,8 @@ class ExactTarget
       # DeleteAtEndOfRetentionPeriod
       # RetainUntil
       # DataRetentionPeriod
-      dataextension.props = ['Name', 'CreatedDate']
-      dataextension.filter = {'Property' => 'name', 'SimpleOperator' => 'equals', 'Value' => 'Mobile Test'}
-
-      require 'pry'
-      binding.pry
+      dataextension.props = ['Name', 'CustomerKey', 'CreatedDate']
+      dataextension.filter = {'Property' => 'name', 'SimpleOperator' => 'equals', 'Value' => 'All Subscriptions'}
 
       @response = dataextension.get
       # p response
