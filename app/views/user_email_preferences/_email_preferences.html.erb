@@ -1,23 +1,11 @@
 <% greatnews = 'no' %>
-<% if @subscriptions.include? :greatnews %>
-  <% greatnews = 'yes' %>
-<% end %>
-
 <% greatkidsnews = 'no' %>
-<% if @subscriptions.include? :greatkidsnews %>
-  <% greatkidsnews = 'yes' %>
-<% end %>
-
 <% sponsor = 'no' %>
-<% if @subscriptions.include? :sponsor %>
-  <% sponsor = 'yes' %>
-<% end %>
-
 <% auto_graduate = 'no' %>
-<% if @subscriptions.include? :auto_graduate %>
-  <% auto_graduate = 'yes' %>
-<% end %>
-
+<% greatnews = 'yes' if @subscriptions.include? :greatnews %>
+<% greatkidsnews = 'yes' if @subscriptions.include? :greatkidsnews %>
+<% sponsor = 'yes' if @subscriptions.include? :sponsor %>
+<% auto_graduate = 'yes' if @subscriptions.include? :auto_graduate %>
 
 <section>
   <h1 class="tac">Manage my email preferences</h1>
