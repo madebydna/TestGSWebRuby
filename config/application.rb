@@ -40,8 +40,8 @@ module LocalizedProfiles
     config.autoload_paths += Dir[Rails.root.join('config', 'initializers', 'extensions', '**/')]
     config.autoload_paths += Dir[Rails.root.join('lib', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '**/')]
-    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'concerns', '**/')]
-    config.autoload_paths += Dir[Rails.root.join('app', 'decorators', 'concerns', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'controllers', 'modules', '**/')]
+    config.autoload_paths += Dir[Rails.root.join('app', 'decorators', 'modules', '**/')]
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '**/')]
 
     # Only load the plugins named here, in the order given (default is alphabetical).
