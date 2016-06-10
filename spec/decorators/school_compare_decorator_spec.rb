@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'decorators/concerns/grade_level_concerns_shared'
+require 'decorators/modules/grade_level_concerns_shared'
 require 'helpers/school_with_cache_helper'
 
 RSpec.configure do |c|

@@ -15,7 +15,15 @@
 
 <% state_rating = @school.state_rating %>
 <% if state_rating %>
-    <% rating_text = (@school.state == 'CA' ? t('.api_score') : t('.state_rating')) %>
+
+    <% if @school.state == 'CA' %>
+      <% rating_text = t('.api_score') %>
+    <% elsif @school.state == 'CO' %>
+      <% rating_text = t('.colorado_school_grade') %>
+    <% else %>
+      <% rating_text = t('.state_rating') %>
+    <% end %>
+
     <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
 <% end %>
 

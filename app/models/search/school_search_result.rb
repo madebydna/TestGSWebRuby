@@ -7,7 +7,7 @@ class SchoolSearchResult
                 :foreign_language, :girls_sports, :grade_range, :id, :immersion_language, :instructional_model,
                 :latitude, :level, :level_code, :longitude, :name, :on_page, :overall_gs_rating,
                 :review_count, :school_media_first_hash, :special_ed_programs, :state, :state_name, :street, :summer_program,
-                :transportation, :type, :voucher_type, :zip, :zipcode, :profile_path, :students_vouchers, :path_to_quality_rating
+                :transportation, :type, :voucher_type, :zip, :zipcode, :profile_path, :students_vouchers, :path_to_quality_rating, :colorado_rating
 
   def initialize(hash)
     @fit_score = 0
@@ -41,6 +41,7 @@ class SchoolSearchResult
     @on_page = hash['on_page']
     @overall_gs_rating = hash['overall_gs_rating']
     @path_to_quality_rating = hash['path_to_quality_rating']
+    @colorado_rating = hash['colorado_rating']
     @profile_path = hash['school_profile_path']
     @review_count = hash['school_review_count_ruby']
     @school_media_first_hash = hash['school_media_first_hash']
