@@ -73,7 +73,8 @@ LocalizedProfiles::Application.routes.draw do
 
   resources :user_preferences, only: [:edit]
 
-  get '/my-preferences' => 'user_email_preferences#show', as: 'my_preferences'
+  get '/preferences' => 'user_email_preferences#show', as: 'user_preferences'
+  get '/unsubscribe' => 'user_email_unsubscribe#show', as: 'user_unsubscribe'
  
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
