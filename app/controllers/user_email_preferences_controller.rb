@@ -21,7 +21,6 @@ class UserEmailPreferencesController < ApplicationController
     @display_grade_level_array = grade_array_pk_to_8
     # selected_grade_level = @current_user.student_grade_levels
     @selected_grade_level = @current_user.student_grade_levels.map(&:grade).join(",")
-
   end
 
 end

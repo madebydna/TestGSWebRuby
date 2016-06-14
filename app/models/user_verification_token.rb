@@ -1,11 +1,12 @@
 class UserVerificationToken
 
+  TOKEN_LENGTH = 24
+
   class UserVerificationTokenParseError < StandardError; end
 
   def initialize(user_id, token = nil)
     @user_id = user_id
     @token = token
-    @user_searched = false
     @token_generator = UserAuthenticationToken.new(user)
   end
 
@@ -15,28 +16,30 @@ class UserVerificationToken
   end
 
   def self.parse(token)
-    user_id = token[24..-1] if token.present? && token.length > 24
-    if user_id.nil?
-      raise ParseError.new("Malformed user verification token: #{token}; Missing user id")
-    end
-    UserVerificationToken.new(user_id, token)
+    user_id = get_user_id(token)
+    new(user_id, token)
   end
 
+  def self.get_user_id(token)
+    user_id = token[TOKEN_LENGTH..-1] if token.present? && token.length > TOKEN_LENGTH
+    if user_id.blank?
+      raise ParseError.new("Malformed user verification token: #{token}; Missing user id")
+    end
+    user_id
+  end
 
   def generate
+    if user.blank?
+      raise 'Must initialize UserAuthenticationToken with a user'
+    end
     @token_generator.generate
   end
 
   def user
-    if @user.nil? && !@user_searched
-      begin
-        @user = User.find(@user_id)
-      rescue
-        # keep going, track that we hit the db and got nothing
-      end
-      @user_searched = true
-    end
-    @user
+    return @_user if defined?(@_user)
+    @_user = (
+      @user = User.find_by_id(@user_id)
+    )
   end
 
   def valid?

@@ -7,15 +7,32 @@ describe UserVerificationToken do
   end
 
   describe '.token' do
-    
+    context 'with valid user id' do
+      it 'should delegate generate to token generator' do
+        token_generator = double('token_generator')
+        user = FactoryGirl.create(:user)
+        allow(UserAuthenticationToken).to receive(:new).with(user).and_return(token_generator)
+        expect(token_generator).to receive(:generate)
+        UserVerificationToken.token(user.id)
+      end
+    end
   end
 
   describe '#generate' do
-    it 'should call generate on token generator' do
-      user_verification_token = UserVerificationToken.new(1)
-      token_generator = user_verification_token.instance_variable_get(:@token_generator)
-      expect(user_verification_token).to receive(:generate)
-      user_verification_token.generate
+    context 'with user in database' do
+      it 'should call generate on token generator' do
+        user_verification_token = UserVerificationToken.new(1)
+        token_generator = user_verification_token.instance_variable_get(:@token_generator)
+        expect(user_verification_token).to receive(:generate)
+        user_verification_token.generate
+      end
+    end
+    context 'with user not found in database' do
+      it 'should raise error' do
+        user_verification_token = UserVerificationToken.new(1)
+        allow(user_verification_token).to receive(:user).and_return(nil)
+        expect{ user_verification_token.generate }.to raise_error
+      end
     end
   end
 
@@ -65,7 +82,7 @@ describe UserVerificationToken do
   end
 
   describe '#valid?' do
-    context 'if user is defined' do
+    context 'with user present' do
       context 'with matching token' do
         it 'should return true' do
           user_verification_token = stub_matching_token
@@ -79,15 +96,14 @@ describe UserVerificationToken do
           expect(user_verification_token.valid?).to eq(false)
         end
       end
-
-      context 'if user is not defined' do
+    end
+      context 'with user not present' do
         it 'should return false' do
           user_verification_token = UserVerificationToken.new(1, 'token')
           allow(user_verification_token).to receive(:user).and_return(nil)
           expect(user_verification_token.valid?).to eq(false)
         end
       end
-    end
   end
 
   describe '.parse' do
