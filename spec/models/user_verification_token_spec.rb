@@ -127,18 +127,6 @@ describe UserVerificationToken do
     'f'*22 + '==5800007'
   end
 
-  def stub_invalid_token_generator
-    token_generator = Struct.new(:generate)
-    allow(token_generator).to receive(:generate).and_return('invalidtokenresponse')
-    token_generator
-  end
-
-  def stub_valid_token_generator
-    token_generator = Struct.new(:generate)
-    allow(token_generator).to receive(:generate).and_return(well_formed_valid_token)
-    token_generator
-  end
-
   def stub_matching_token
     user_verification_token = UserVerificationToken.new(1, 'token')
     allow(user_verification_token).to receive(:user).and_return('foo')
