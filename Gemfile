@@ -122,6 +122,7 @@ group :development do
 end
 
 group :test do
+  gem 'rspec_junit_formatter', '~> 0.2.3'
   gem 'capybara-screenshot', '~> 1.0.11'
 
   # Mock external http requests for tests
