@@ -75,8 +75,10 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/preferences' => 'user_email_preferences#show', as: 'user_preferences'
   get '/preferences_update' => 'user_email_preferences#update', as: 'user_preferences_update'
-  get '/unsubscribe' => 'user_email_unsubscribe#show', as: 'user_unsubscribe'
- 
+
+  resources :user_email_unsubscribes, only: [:create]
+  get '/unsubscribe' => 'user_email_unsubscribes#new', as: 'unsubscribe'
+
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
   get '/compare', as: :compare_schools, to: 'compare_schools#show'

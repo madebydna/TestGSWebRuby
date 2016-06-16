@@ -23,7 +23,7 @@ class UserVerificationToken
   def self.get_user_id(token)
     user_id = token[TOKEN_LENGTH..-1] if token.present? && token.length > TOKEN_LENGTH
     if user_id.blank?
-      raise ParseError.new("Malformed user verification token: #{token}; Missing user id")
+      raise UserVerificationTokenParseError.new("Malformed user verification token: #{token}; Missing user id")
     end
     user_id
   end

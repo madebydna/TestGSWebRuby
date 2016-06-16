@@ -29,7 +29,7 @@ module AccountHelper
   def verify_and_login_user(token)
     begin
       parsed_token = UserVerificationToken.parse(token)
-    rescue UserVerificationToken::ParseError => error
+    rescue UserVerificationToken::UserVerificationTokenParseError => error
       GSLogger.warn(:misc, error)
       parsed_token = nil
     end

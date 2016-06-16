@@ -1,0 +1,9 @@
+---
+es:
+  user_email_unsubscribes:
+    unsubscribe:
+      header: Unsubscribe from Emails
+      manage_preferences: Manage preferences
+      manage_preferences_subtext: To unsubscribe from some of our email newsletters
+      unsubscribe: Unsubscribe
+      unsubscribe_subtext: This will unsubscribe you from all GreatSchools email lists

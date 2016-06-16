@@ -1,0 +1,15 @@
+<div class="gs-bootstrap mbl">
+  <div class="tac container-fluid">
+    <h1> <%= t('.header') %></h1>
+    <div class="mha mvl">
+      <%= form_tag(user_email_unsubscribes_path) do %>
+        <button class="btn btn-lg btn-primary"><%= t('.unsubscribe') %></button>
+      <% end  %>
+      <div class="mtm"><%= t('.unsubscribe_subtext') %></div>
+      <div class="mha mvl">
+        <a href="<%= user_preferences_path %>"><%= t('.manage_preferences') %></a>
+        <div class="mtm"><%= t('.manage_preferences_subtext') %></div>
+      </div>
+    </div>
+  </div>
+</div>
