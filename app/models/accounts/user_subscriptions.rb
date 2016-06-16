@@ -6,6 +6,7 @@ class UserSubscriptions
 
   def get
     subscriptions = []
+
     if @user.subscriptions.present?
 
       if @user.has_signedup?('greatnews')
@@ -19,10 +20,7 @@ class UserSubscriptions
       if @user.has_signedup?('sponsor')
         subscriptions << :sponsor
       end
-    end
 
-    if @user.opted_in_auto_graduate?
-      subscriptions << :auto_graduate
     end
 
     subscriptions

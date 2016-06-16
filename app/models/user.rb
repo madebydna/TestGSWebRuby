@@ -74,6 +74,14 @@ class User < ActiveRecord::Base
   def opted_in_auto_graduate?
     child_age.present?
   end
+
+  def update_auto_graduate(auto_graduate)
+    if auto_graduate.present?
+      self.child_age = 'true'
+      self.save
+    end
+  end
+
   protected
 
   def set_defaults
