@@ -5,8 +5,10 @@ class UserGradeManager
   end
 
   def update(new_grades)
-    delete_grades(old_to_delete(new_grades, get_grades))
-    save_grades(new_to_add(new_grades, get_grades))
+    del_grades = grades_to_delete(new_grades, get_grades)
+    add_grades = grades_to_add(new_grades, get_grades)
+    delete_grades(del_grades)
+    save_grades(add_grades)
   end
 
   def save_grades(grades_to_add)
@@ -14,23 +16,34 @@ class UserGradeManager
       s = StudentGradeLevel.new
       s.grade = grade
       s.member_id = @user.id
-      s.save
+      unless s.save!
+        GSLogger.error(:preferences, nil, message: 'User grades failed to save', vars: {
+            member_id: @user.id,
+            grade: grade
+        })
+      end
     end
   end
 
   def delete_grades(grades_to_delete)
-    @user.student_grade_levels.where(grade: grades_to_delete).destroy_all
+    begin
+      @user.student_grade_levels.where(grade: grades_to_delete).destroy_all
+    rescue
+      GSLogger.error(:unsubscribe, nil, message: 'User delete grades failed', vars: {
+          member_id: @user.id
+      })
+    end
   end
 
   def get_grades
     @user.student_grade_levels.map(&:grade)
   end
 
-  def new_to_add(a, b)
+  def grades_to_add(a, b)
     a - b
   end
 
-  def old_to_delete(a, b)
+  def grades_to_delete(a, b)
     b - a
   end
 
