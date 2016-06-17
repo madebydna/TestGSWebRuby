@@ -25,19 +25,4 @@ module AccountHelper
     ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8']
   end
 
-
-  def verify_and_login_user(token)
-    begin
-      parsed_token = UserVerificationToken.parse(token)
-    rescue UserVerificationToken::UserVerificationTokenParseError => error
-      GSLogger.warn(:misc, error)
-      parsed_token = nil
-    end
-
-    if parsed_token && parsed_token.valid?
-      log_user_in UserVerificationToken.parse(token).user
-    else
-      redirect_to signin_url
-    end
-  end
 end

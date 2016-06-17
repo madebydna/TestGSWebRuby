@@ -5,8 +5,9 @@ class UserEmailPreferencesController < ApplicationController
   protect_from_forgery
   before_action only: [:show] do
     token = params[:token]
-    verify_and_login_user(token)
+    login_user_from_token(token)
   end
+  before_action :login_required, only: [:show, :update]
 
   layout 'application'
 
@@ -44,6 +45,13 @@ class UserEmailPreferencesController < ApplicationController
   def validate_update_auto_graduate
     params['auto_graduate']
     # ['sponsor']
+  end
+
+  private
+
+  def login_user_from_token(token)
+    user = UserVerificationToken.user(token)
+    log_user_in(user) if user
   end
 end
 

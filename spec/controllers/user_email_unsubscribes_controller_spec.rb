@@ -7,7 +7,7 @@ describe UserEmailUnsubscribesController do
   describe '#new' do
     it 'should redirect to signin page if not user not signed' do
       get :new
-      expect(response).to redirect_to(signin_url)
+      expect(response).to redirect_to(signin_path)
     end
     context 'with valid token' do
       it 'assigns @page_name' do
@@ -26,7 +26,7 @@ describe UserEmailUnsubscribesController do
       it 'should redirect to singin url' do
         invalid_token = stub_invalid_token
         get :new, {token: invalid_token }
-        expect(response).to redirect_to(signin_url)
+        expect(response).to redirect_to(signin_path)
       end
     end
   end

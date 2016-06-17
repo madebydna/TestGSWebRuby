@@ -1,15 +1,12 @@
 class UserEmailUnsubscribesController < ApplicationController
 
-  include AccountHelper
-  include AuthenticationConcerns
-
   protect_from_forgery
 
   before_action only: [:new] do
     token = params[:token]
-    verify_and_login_user(token)
+    login_user_from_token(token)
   end
-  before_action :login_required, only: [:create]
+  before_action :login_required, only: [:new, :create]
 
   layout 'application'
 
@@ -24,4 +21,10 @@ class UserEmailUnsubscribesController < ApplicationController
     render :new
   end
 
+  private
+
+  def login_user_from_token(token)
+    user = UserVerificationToken.user(token)
+    log_user_in(user) if user
+  end
 end

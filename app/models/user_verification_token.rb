@@ -20,6 +20,22 @@ class UserVerificationToken
     new(user_id, token)
   end
 
+  def self.user(token)
+   parsed_token = safe_parse(token)
+    if parsed_token && parsed_token.valid?
+      return parsed_token.user
+    end
+  end
+
+  def self.safe_parse(token)
+    begin
+      parsed_token = parse(token)
+    rescue UserVerificationToken::UserVerificationTokenParseError => error
+      GSLogger.warn(:misc, error)
+    end
+    parsed_token
+  end
+
   def self.get_user_id(token)
     user_id = token[TOKEN_LENGTH..-1] if token.present? && token.length > TOKEN_LENGTH
     if user_id.blank?

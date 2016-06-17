@@ -24,19 +24,17 @@ describe 'unsubscribe page' do
     it { is_expected.to have_unsubscribe }
     it { is_expected.to have_manage_preferences }
 
-    # when_I :unsubscribe_from_emails do
-    #   it 'should display success message' do
-    #     pending('need to fix flash message')
-    #     fail
-    #     message = 'You have unsubscribed from all GreatSchool emails'
-    #     expect(subject).to have_flash_message(message)
-    #   end
-    # end
-
-    when_I :click_manage_preferences do
-      it 'should display home page' do
-        pending('need to handle navigating preferences page when logged in and without token')
+    when_I :unsubscribe_from_emails do
+      it 'should display success message' do
+        pending('need to fix flash message')
         fail
+        message = 'You have unsubscribed from all GreatSchool emails'
+        expect(subject).to have_flash_message(message)
+      end
+    end
+
+    when_I :click_manage_preferences, js: true do
+      it 'should display home page' do
         expect(UserEmailPreferencesPage.new).to be_displayed
       end
     end

@@ -12,4 +12,7 @@ class UserEmailUnsubscribesPage < SitePrism::Page
     unsubscribe.click
   end
 
+  def click_manage_preferences
+    manage_preferences.click
+  end
 end
