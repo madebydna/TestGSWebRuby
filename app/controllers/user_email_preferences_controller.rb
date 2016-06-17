@@ -24,6 +24,19 @@ class UserEmailPreferencesController < ApplicationController
     @display_grade_level_array = grade_array_pk_to_8
 
     @selected_grade_level = @current_user.student_grade_levels.map(&:grade).join(",")
+
+    @available_grades = {
+      'PK' => 'PK',
+      'K' => 'K',
+      '1' => '1st',
+      '2' => '2nd',
+      '3' => '3rd',
+      '4' => '4th',
+      '5' => '5th',
+      '6' => '6th',
+      '7' => '7th',
+      '8' => '8th'
+    }
   end
 
   def update
