@@ -1,0 +1,24 @@
+---
+en:
+  user_email_preferences:
+    email_preferences:
+      auto_graduate_label: Next school year, we will automatically move you up a grade.
+      email_heading: Email
+      grades_label: You are currently signed up for the following grades. Update anytime.
+      greatkidsnews_title: GreatKids by Grade
+      greatkidsnews_subtitle: Weekly essentials about your child's grade.
+      greatschools_terms_of_use: GreatSchools Terms of Use.
+      greatnews_title: The GreatKids | GreatSchools weekly
+      greatnews_subtitle: A weekly round of our best articles, videos, and more.
+      heading: Manage my email preferences
+      newsletters_heading: My Newsletters
+      sponsor_title: From our Partners
+      sponsor_subtitle: Special offers and info from GreatKids | GreatSchools' carefully chosen partners
+      subheading_pt_1: Welcome! We're glad you're here
+      subheading_pt_2: Help us send you the most relevant information by updating your preferences below.
+      submit_label: Save my changes
+      keep_following_same_grade: 'No, I want to keep following the same grade next year (for now).'
+      terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
+      privacy_policy: Privacy Policy.
+
+
