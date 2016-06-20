@@ -40,7 +40,9 @@ class UserSubscriptionManager
 
   def delete_subscriptions(subs_to_delete)
     begin
-      @user.subscriptions.where(list: subs_to_delete).destroy_all
+      subscriptions = @user.subscriptions.where(list: subs_to_delete)
+      subscriptions.each { |s| SubscriptionHistory.archive_subscription(s) }
+      subscriptions.destroy_all
     rescue
       GSLogger.error(:unsubscribe, nil, message: 'User delete subscriptions failed', vars: {
           member_id: @user.id

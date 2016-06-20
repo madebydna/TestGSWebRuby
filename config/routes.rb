@@ -74,7 +74,7 @@ LocalizedProfiles::Application.routes.draw do
   resources :user_preferences, only: [:edit]
 
   get '/preferences' => 'user_email_preferences#show', as: 'user_preferences'
-  get '/preferences_update' => 'user_email_preferences#update', as: 'user_preferences_update'
+  post '/preferences_update' => 'user_email_preferences#update', as: 'user_preferences_update'
 
   resources :user_email_unsubscribes, only: [:create]
   get '/unsubscribe' => 'user_email_unsubscribes#new', as: 'unsubscribe'
