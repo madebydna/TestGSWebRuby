@@ -1,7 +1,7 @@
 <% greatnews = @current_preferences.include? :greatnews %>
 <% greatkidsnews = @current_preferences.include? :greatkidsnews %>
 <% sponsor = @current_preferences.include? :sponsor %>
-<% auto_graduate = @current_preferences.include? :auto_graduate %>
+<% decline_auto_graduate = @current_preferences.include? :decline_auto_graduate %>
 
 <section class="row">
   <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2 js-user-preferences-form-container phl">
@@ -48,7 +48,7 @@
             <% @available_grades.to_a.in_groups_of(5).each do |grade_group| %>
               <div>
               <% grade_group.compact.each do |grade, label| %>
-                <div class="pas btn-checkbox fl js-disableTarget btn js-checkboxButton "
+                <div class="pas btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
                      style="min-width:30px"
                      data-checkbox-button-key="grade[]"
                      data-checkbox-button-value="<%= grade %>"
@@ -68,12 +68,12 @@
         <em><%= t('.auto_graduate_label') %></em>
         <div class="mtm">
           <div class="fl prm mtm mbm">
-            <div class="js-checkbox iconx16 js-icon <%= auto_graduate ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>" 
+            <div class="js-checkbox iconx16 js-icon <%= decline_auto_graduate ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box'  %>" 
                  data-toggle="button" readonly="">
-              <input name="auto_graduate"
+              <input name="decline_auto_graduate"
                  disabled="true"
                  type="hidden"
-                 value="false">
+                 value="true">
             </div>
           </div>
           <%= t('.keep_following_same_grade') %>

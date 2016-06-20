@@ -17,17 +17,17 @@ class UserEmailPreferencesController < ApplicationController
 
     @current_preferences = UserSubscriptions.new(@current_user).get
 
-    @current_preferences << :auto_graduate if @current_user.opted_in_auto_graduate?
+    @current_preferences << :decline_auto_graduate if @current_user.specified_auto_graduate? && @current_user.opted_in_auto_graduate? == false
 
     account_meta_tags('My email preferences')
 
     @display_grade_level_array = grade_array_pk_to_8
 
-    @selected_grade_level = @current_user.student_grade_levels.map(&:grade).join(",")
+    @current_grades = @current_user.student_grade_levels.map(&:grade)
 
     @available_grades = {
       'PK' => 'PK',
-      'K' => 'K',
+      'KG' => 'K',
       '1' => '1st',
       '2' => '2nd',
       '3' => '3rd',
@@ -42,22 +42,25 @@ class UserEmailPreferencesController < ApplicationController
   def update
     UserSubscriptionManager.new(@current_user).update(validate_update_subscriptions)
     UserGradeManager.new(@current_user).update(validate_update_grades)
-    @current_user.update_auto_graduate(validate_update_auto_graduate)
+    @current_user.update_auto_graduate(auto_graduate_value)
+    redirect_to user_preferences_path
   end
 
   def validate_update_grades
-    params['grades']
+    params['grades'] || []
     #['1','2','3','4']
   end
 
   def validate_update_subscriptions
-    params['subscriptions']
-      # ['sponsor']
+    params['subscriptions'] || []
   end
 
-  def validate_update_auto_graduate
-    params['auto_graduate']
-    # ['sponsor']
+  def auto_graduate_value
+    if params['decline_auto_graduate'] == 'true'
+      return 'false'
+    elsif params['decline_auto_graduate'] == nil
+      return 'true'
+    end
   end
 
   private

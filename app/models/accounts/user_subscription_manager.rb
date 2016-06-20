@@ -6,8 +6,8 @@ class UserSubscriptionManager
 
   def update(new_subscriptions)
     delete_subs = subscriptions_to_delete(new_subscriptions, get_subscriptions)
-    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions)
     delete_subscriptions(delete_subs)
+    add_subs = subscriptions_to_add(new_subscriptions, get_subscriptions)
     save_subscriptions(add_subs)
   end
 
@@ -40,7 +40,7 @@ class UserSubscriptionManager
 
   def delete_subscriptions(subs_to_delete)
     begin
-      subscriptions = @user.subscriptions.where(list: subs_to_delete)
+      subscriptions = @user.subscriptions_matching_lists(subs_to_delete)
       subscriptions.each { |s| SubscriptionHistory.archive_subscription(s) }
       subscriptions.destroy_all
     rescue
@@ -51,14 +51,14 @@ class UserSubscriptionManager
   end
 
   def get_subscriptions
-    UserSubscriptions.new(@user).get
+    UserSubscriptions.new(@user).get.map(&:to_s)
   end
 
-  def subscriptions_to_add(a, b)
-    a - b
+  def subscriptions_to_add(desired_subscriptions, current_subscriptions)
+    desired_subscriptions - current_subscriptions
   end
 
-  def subscriptions_to_delete(a, b)
-    b - a
+  def subscriptions_to_delete(desired_subscriptions, current_subscriptions)
+    current_subscriptions - desired_subscriptions
   end
 end
