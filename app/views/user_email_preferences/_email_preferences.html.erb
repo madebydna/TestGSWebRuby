@@ -5,9 +5,9 @@
 
 <section class="row">
   <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2 js-user-preferences-form-container phl">
-    <%= form_tag('/preferences/', method: :post) do |f| %>
-      <h1><%= t('.heading') %></h1>
-      <h2 class="font-size-large"><strong><%= t('.subheading_pt_1') %></strong><br/><%= t('.subheading_pt_2') %></h2>
+    <%= form_tag(user_preferences_update_path, method: :post) do |f| %>
+      <h1 class="tac"><%= t('.heading') %></h1>
+      <h2 class="tac font-size-large"><strong><%= t('.subheading_pt_1') %></strong><br/><%= t('.subheading_pt_2') %></h2>
 
       <h3 class="mbs"><%= t('.email_heading') %></h3>
       <p><%= @current_user.email %></p>
