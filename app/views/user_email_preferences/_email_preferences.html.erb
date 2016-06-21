@@ -4,7 +4,7 @@
 <% decline_auto_graduate = @current_preferences.include? :decline_auto_graduate %>
 
 <section class="row">
-  <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2 js-user-preferences-form-container phl">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 js-user-preferences-form-container phl">
     <%= form_tag(user_preferences_update_path, method: :post) do |f| %>
       <h1 class="tac"><%= t('.heading') %></h1>
       <h2 class="tac font-size-large"><strong><%= t('.subheading_pt_1') %></strong><br/><%= t('.subheading_pt_2') %></h2>
@@ -100,11 +100,12 @@
       </div>
 
 
-      <div>
+      <div class="tac">
         <%= content_tag('button', type: 'submit', class: 'mtm mbm btn btn-lg btn-primary rs-submit') do %>
           <span class="font-size-xl"><%= t('.submit_label') %></span>
         <% end %>
       </div>
+      <div class="tac"><%= link_to('Unsubscribe', unsubscribe_path) %></div>
 
       <%# <div> %>
         <%# link_to t('.privacy_policy'), privacy_url %>&nbsp;
