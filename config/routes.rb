@@ -73,11 +73,11 @@ LocalizedProfiles::Application.routes.draw do
 
   resources :user_preferences, only: [:edit]
 
-  get '/preferences' => 'user_email_preferences#show', as: 'user_preferences'
-  post '/preferences' => 'user_email_preferences#update', as: 'user_preferences_update'
+  get '/preferences/' => 'user_email_preferences#show', as: 'user_preferences'
+  post '/preferences/' => 'user_email_preferences#update', as: 'user_preferences_update'
 
   resources :user_email_unsubscribes, only: [:create]
-  get '/unsubscribe' => 'user_email_unsubscribes#new', as: 'unsubscribe'
+  get '/unsubscribe/' => 'user_email_unsubscribes#new', as: 'unsubscribe'
 
   resources :saved_searches, only: [:create, :destroy], path: '/gsr/ajax/saved_search'
 
