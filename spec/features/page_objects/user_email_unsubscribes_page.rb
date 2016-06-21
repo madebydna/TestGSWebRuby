@@ -6,7 +6,7 @@ class UserEmailUnsubscribesPage < SitePrism::Page
   set_url_matcher /\/unsubscribe/
 
   element :unsubscribe,'button', text: 'Unsubscribe'
-  element :manage_preferences, 'a', text: 'Manage preferences'
+  element :manage_preferences, 'a', text: 'Manage your email preferences.'
 
   def unsubscribe_from_emails
     unsubscribe.click

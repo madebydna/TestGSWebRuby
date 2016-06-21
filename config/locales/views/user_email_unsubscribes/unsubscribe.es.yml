@@ -2,8 +2,8 @@
 es:
   user_email_unsubscribes:
     unsubscribe:
-      header: Unsubscribe from Emails
-      manage_preferences: Manage preferences
-      manage_preferences_subtext: To unsubscribe from some of our email newsletters
+      header: We don't want to lose you!
+      manage_preferences: Manage your email preferences.
+      manage_preferences_intro_text: We recently made some changes that allow us to send more customized emails based on your child's grade.
       unsubscribe: Unsubscribe
-      unsubscribe_subtext: This will unsubscribe you from all GreatSchools email lists
+      unsubscribe_intro_text: But if you're sure you want nothing else from us...
