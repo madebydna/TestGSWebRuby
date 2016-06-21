@@ -24,3 +24,4 @@
 //= require ./search_init
 //= require ./signin_new_init
 //= require ./state_init
+//= require ./email_preferences

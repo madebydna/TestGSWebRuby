@@ -12,7 +12,7 @@ class UserEmailPreferencesController < ApplicationController
   layout 'application'
 
   def show
-    @page_name = 'User Email Preferences'
+    @page_name = 'User Email Preferences' # This is also hardcoded in email_preferences.js
     gon.pagename = @page_name
 
     @current_preferences = UserSubscriptions.new(@current_user).get

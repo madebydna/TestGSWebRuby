@@ -32,7 +32,7 @@
 
       <div class="mtm">
         <div class="fl prm mtm">
-          <div class="js-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>" 
+          <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>" 
                data-toggle="button" readonly="">
             <input name="subscriptions[]"
                disabled="true"
@@ -48,7 +48,7 @@
             <% @available_grades.to_a.in_groups_of(5).each do |grade_group| %>
               <div>
               <% grade_group.compact.each do |grade, label| %>
-                <div class="pas btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
+                <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
                      style="min-width:30px"
                      data-checkbox-button-key="grade[]"
                      data-checkbox-button-value="<%= grade %>"
@@ -122,16 +122,4 @@
 </section>
 
 <script>
-  $('.js-user-preferences-form-container .js-checkbox').on('click', function() {
-    $(this)
-      .toggleClass('active')
-      .toggleClass('i-16-blue-check-box i-grey-unchecked-box');
-  });
-
-  $('.js-user-preferences-form-container form').on('submit', function() {
-    var $form = $(this);
-    $form.find('div.active input').each(function() {
-      $(this).prop('disabled', false);
-    });
-  });
 </script>
