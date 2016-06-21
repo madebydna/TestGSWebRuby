@@ -25,4 +25,19 @@ module AccountHelper
     ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8']
   end
 
+  def available_grades
+    {
+        'PK' => 'PK',
+        'K' => 'K',
+        '1' => '1st',
+        '2' => '2nd',
+        '3' => '3rd',
+        '4' => '4th',
+        '5' => '5th',
+        '6' => '6th',
+        '7' => '7th',
+        '8' => '8th'
+    }
+  end
+
 end
