@@ -17,8 +17,8 @@ class UserEmailUnsubscribesController < ApplicationController
 
   def create
     UserSubscriptionManager.new(current_user).unsubscribe
-    flash_notice 'You have unsubscribed from all GreatSchool emails'
-    render :new
+    flash_notice t('controllers.user_email_unsubscribes_controller.success')
+    redirect_to home_url
   end
 
   private

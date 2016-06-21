@@ -1,6 +1,7 @@
 require 'spec_helper'
 require 'features/page_objects/user_email_preferences_page'
 require 'features/page_objects/join_page'
+require 'features/page_objects/home_page'
 require 'features/page_objects/user_email_unsubscribes_page'
 
 describe 'unsubscribe page' do
@@ -35,7 +36,7 @@ describe 'unsubscribe page' do
 
     when_I :click_manage_preferences, js: true do
       it 'should display home page' do
-        expect(UserEmailPreferencesPage.new).to be_displayed
+        expect(HomePage.new).to be_displayed
       end
     end
   end
