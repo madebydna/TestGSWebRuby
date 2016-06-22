@@ -28,7 +28,7 @@ module AccountHelper
   def available_grades
     {
         'PK' => 'PK',
-        'K' => 'K',
+        'KG' => 'K',
         '1' => '1st',
         '2' => '2nd',
         '3' => '3rd',
