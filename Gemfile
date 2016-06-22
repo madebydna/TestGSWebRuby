@@ -82,7 +82,7 @@ gem 'draper', '~> 1.3.1'
 gem 'addressable'
 
 gem 'rack-mini-profiler', require: false
-gem 'rubocop', '= 0.20.1', require: false
+gem 'rubocop', '= 0.40.0', require: false
 gem 'rubocop-checkstyle_formatter', require: false
 
 gem 'protected_attributes'
