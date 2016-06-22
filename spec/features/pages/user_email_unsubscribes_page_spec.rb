@@ -25,18 +25,16 @@ describe 'unsubscribe page' do
     it { is_expected.to have_unsubscribe }
     it { is_expected.to have_manage_preferences }
 
-    when_I :unsubscribe_from_emails do
-      it 'should display success message' do
-        pending('need to fix flash message')
-        fail
-        message = 'You have unsubscribed from all GreatSchool emails'
-        expect(subject).to have_flash_message(message)
+    when_I :unsubscribe_from_emails, js: true do
+      it 'should display home page' do
+        home_page = HomePage.new
+        expect(home_page).to be_displayed
       end
     end
 
     when_I :click_manage_preferences, js: true do
-      it 'should display home page' do
-        expect(HomePage.new).to be_displayed
+      it 'should display preferences page' do
+        expect(UserEmailPreferencesPage.new).to be_displayed
       end
     end
   end
@@ -46,6 +44,7 @@ describe 'unsubscribe page' do
       invalid_token = 'invalid'
       visit '/unsubscribe/?token=' + invalid_token
     end
+
     it 'should display join page' do
       expect(JoinPage.new).to be_displayed
     end
