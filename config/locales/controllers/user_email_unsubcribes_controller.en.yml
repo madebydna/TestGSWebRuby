@@ -1,4 +1,4 @@
 en:
   controllers:
     user_email_unsubscribes_controller:
-      success: You successfully unsubscribed from all GreatSchools emails.
+      success: You'll be missed! You've been unsubscribed from the GreatSchools email list.
