@@ -40,6 +40,7 @@ require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
 require 'webmock/rspec'
+$LOAD_PATH.unshift File.expand_path('../../script', __FILE__)
 
 def disconnect_connection_pools(db)
   ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|

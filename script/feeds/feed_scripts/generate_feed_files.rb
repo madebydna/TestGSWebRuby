@@ -21,7 +21,7 @@ module Feeds
     end
 
     def generate
-      arguments = Feeds::Arguments.new
+      arguments = Feeds::Arguments.new(ARGV[0])
       arguments.states.each do |state|
         begin
           Feeds::FeedLog.log.debug "Starting Feed Generation for state #{state}"
