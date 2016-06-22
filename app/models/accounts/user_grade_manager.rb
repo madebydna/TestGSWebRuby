@@ -27,7 +27,9 @@ class UserGradeManager
 
   def delete_grades(grades_to_delete)
     begin
-      @user.student_grade_levels.where(grade: grades_to_delete).destroy_all
+      user_grades = @user.student_grade_levels.where(grade: grades_to_delete)
+      user_grades.each { |g| StudentGradeLevelHistory.archive_student_grade_level(g) }
+      user_grades.destroy_all
     rescue
       GSLogger.error(:unsubscribe, nil, message: 'User delete grades failed', vars: {
           member_id: @user.id

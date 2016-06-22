@@ -14,7 +14,7 @@ describe UserEmailPreferencesController do
 
       subject { post :update, grades: ['PK'], greatnews: 'true' }
       it 'should redirect to the home page' do
-        expect(subject).to redirect_to(user_preferences_path)
+        expect(subject).to redirect_to(home_path)
       end
     end
   end
