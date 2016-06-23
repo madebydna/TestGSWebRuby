@@ -25,7 +25,7 @@ class UserEmailPreferencesController < ApplicationController
     UserSubscriptionManager.new(@current_user).update(param_subscriptions)
     UserGradeManager.new(@current_user).update(param_grades)
     @current_user.update_auto_graduate(auto_graduate_value)
-    flash_notice 'You have updated your preferences for GreatSchool emails'
+    flash_notice t('controllers.user_email_preferences_controller.success')
     redirect_to home_path
   end
 
