@@ -36,22 +36,6 @@ module Feeds
       state_test_infos
     end
 
-    def get_state_test_score_data(state,data_type)
-      if data_type == WITH_NO_BREAKDOWN
-        get_state_data_with_no_subgroup(state)
-      elsif data_type == WITH_ALL_BREAKDOWN
-        get_state_data_with_subgroup(state)
-      end
-    end
 
-    private
-
-        def get_state_data_with_no_subgroup(state)
-          TestDataSet.test_scores_for_state(state)
-        end
-
-        def get_state_data_with_subgroup(state)
-          TestDataSet.test_scores_subgroup_for_state(state)
-        end
   end
 end
