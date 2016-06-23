@@ -105,22 +105,52 @@ class SchoolProfileController < SchoolController
                   :keywords =>  seo_meta_tags_keywords
   end
 
-  def title_state_options
-    @_title_state_options ||= (
-      hash = Hash.new(:default)
-      %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = :option1 }
-      hash
-    )
-  end
+  # def title_state_options
+  #   @_title_state_options ||= (
+  #     hash = Hash.new(:default)
+  #     %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = :option1 }
+  #     hash
+  #   )
+  # end
 
-  def seo_meta_tags_title
+  # def seo_meta_tags_title
+  #   option = title_state_options[@school.state]
+  #   option_enabled = action_name == 'overview'
+  #   if option_enabled && option == :option1
+  #     "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
+  #   elsif option_enabled && option == :option2
+  #     "#{@school.name}: What Do Parents Say? | GreatSchools"
+  #   elsif option_enabled && option == :option3
+  #     "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools"
+  #   elsif option_enabled && option == :option4
+  #     "#{@school.name} | Best School Ratings by GreatSchools"
+  #   elsif option_enabled && option == :option5
+  #     "#{@school.name}: Everything You Need to Know | GreatSchools"
+  #   else
+  #     seo_meta_tags_title_standard
+  #   end
+  # end
+
+  def seo_meta_tags_title ## FIX ME
     option = title_state_options[@school.state]
     option_enabled = action_name == 'overview'
-    if option_enabled && option == :option1
-      seo_meta_tags_title_alt
+    if option_enabled && option != :default
+      option
     else
       seo_meta_tags_title_standard
     end
+  end
+
+  def title_state_options
+    @_title_state_options ||= (
+      hash = Hash.new(:default)
+      %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools" }
+      %w(OH).each {|state| hash[state] = "#{@school.name}: What Do Parents Say? | GreatSchools" }
+      %w(AZ).each {|state| hash[state] = "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools" }
+      %w(TX).each {|state| hash[state] = "#{@school.name} | Best School Ratings by GreatSchools" }
+      %w(NV).each {|state| hash[state] = "#{@school.name}: Everything You Need to Know | GreatSchools" }
+      hash
+    )
   end
 
   #title logic
@@ -138,9 +168,9 @@ class SchoolProfileController < SchoolController
 
   #title logic
   #Prune Hill Elementary School 2016 Ratings | Camas, WA | GreatSchools
-  def seo_meta_tags_title_alt
-    "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
-  end
+  # def seo_meta_tags_title_alt
+  #   "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
+  # end
 
   def description_state_options
     @_description_state_options ||= (

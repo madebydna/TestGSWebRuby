@@ -52,7 +52,7 @@ describe SchoolProfileController do
       end
 
       describe 'for option 1' do
-        let (:option_map) { {'CA' => :option1} }
+        let (:option_map) { {'CA' => "#{school.name} #{Time.now.year} Ratings | #{school.city}, #{school.state} | GreatSchools" } }
 
         before do
           allow(controller).to receive(:title_state_options).and_return(option_map)
@@ -61,27 +61,114 @@ describe SchoolProfileController do
         it 'should have correctly formatted title' do
           controller.instance_variable_set(:@school, school)
           allow(controller).to receive(:action_name).and_return 'overview'
-          school.name = 'The Athenian School'
-          school.city = 'Danville'
-          school.state = 'CA'
-          expect(subject)
-              .to eq 'The Athenian School 2016 Ratings | Danville, CA | GreatSchools'
+          expect(subject).to eq 'Alameda High School 2016 Ratings | Alameda, CA | GreatSchools'
         end
 
         it 'should not pull default title when page is not overview' do
           controller.instance_variable_set(:@school, school)
           allow(controller).to receive(:action_name).and_return 'quality'
-          school.name = 'The Athenian School'
-          school.city = 'Danville'
-          school.state = 'CA'
           expect(subject)
-              .to eq 'The Athenian School - Danville, California - CA - School quality'
+              .to eq 'Alameda High School - Alameda, California - CA - School quality'
         end
       end
+
+      describe 'for option 2' do
+        let (:option_map) { {'CA' => "#{school.name}: What Do Parents Say? | GreatSchools"} }
+
+        before do
+          allow(controller).to receive(:title_state_options).and_return(option_map)
+        end
+
+
+        it 'should have correctly formatted title' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'overview'
+          expect(subject)
+              .to eq 'Alameda High School: What Do Parents Say? | GreatSchools'
+        end
+
+        it 'should not pull default title when page is not overview' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'quality'
+          expect(subject)
+              .to eq 'Alameda High School - Alameda, California - CA - School quality'
+        end
+      end
+
+      describe 'for option 3' do
+        let (:option_map) { {'CA' => "#{school.name}: The Latest School Ratings & Reviews | GreatSchools"} }
+
+        before do
+          allow(controller).to receive(:title_state_options).and_return(option_map)
+        end
+
+        it 'should have correctly formatted title' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'overview'
+          expect(subject)
+              .to eq 'Alameda High School: The Latest School Ratings & Reviews | GreatSchools'
+        end
+
+        it 'should not pull default title when page is not overview' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'quality'
+          expect(subject)
+              .to eq 'Alameda High School - Alameda, California - CA - School quality'
+        end
+      end
+
+      describe 'for option 4' do
+        let (:option_map) { {'CA' => "#{school.name} | Best School Ratings by GreatSchools"} }
+
+        before do
+          allow(controller).to receive(:title_state_options).and_return(option_map)
+        end
+
+        it 'should have correctly formatted title' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'overview'
+          expect(subject)
+              .to eq 'Alameda High School | Best School Ratings by GreatSchools'
+        end
+
+        it 'should not pull default title when page is not overview' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'quality'
+          expect(subject)
+              .to eq 'Alameda High School - Alameda, California - CA - School quality'
+        end
+      end
+
+      describe 'for option 5' do
+        let (:option_map) { {'CA' => "#{school.name}: Everything You Need to Know | GreatSchools"} }
+
+        before do
+          allow(controller).to receive(:title_state_options).and_return(option_map)
+        end
+
+        it 'should have correctly formatted title' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'overview'
+          expect(subject)
+              .to eq 'Alameda High School: Everything You Need to Know | GreatSchools'
+        end
+
+        it 'should not pull default title when page is not overview' do
+          controller.instance_variable_set(:@school, school)
+          allow(controller).to receive(:action_name).and_return 'quality'
+          expect(subject)
+              .to eq 'Alameda High School - Alameda, California - CA - School quality'
+        end
+      end
+
     end
 
     describe '#title_state_options' do
       let (:subject) { controller.send(:title_state_options) }
+
+      before do
+        controller.instance_variable_set(:@school, school)
+      end
 
       it 'should return a Hash' do
         expect(subject.class).to eq(Hash)
