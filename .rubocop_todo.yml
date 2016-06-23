@@ -644,8 +644,7 @@ Style/ClassVars:
 # Offense count: 72
 # Cop supports --auto-correct.
 Style/ClosingParenthesisIndentation:
-  Enabled: true
-  Severity: autocorrect
+  Enabled: false
 
 # Offense count: 4
 # Cop supports --auto-correct.
