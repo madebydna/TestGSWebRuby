@@ -13,6 +13,7 @@ class UserEmailUnsubscribesController < ApplicationController
   def new
     @page_name = 'User Email Unsubscribe'
     gon.pagename = @page_name
+    set_tracking_info
   end
 
   def create
@@ -26,5 +27,9 @@ class UserEmailUnsubscribesController < ApplicationController
   def login_user_from_token(token)
     user = UserVerificationToken.user(token)
     log_user_in(user) if user
+  end
+
+  def set_tracking_info
+    data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = 'GS:Email:Unsubscribe'
   end
 end
