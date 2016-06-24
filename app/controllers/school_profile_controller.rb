@@ -144,11 +144,11 @@ class SchoolProfileController < SchoolController
   def title_state_options
     @_title_state_options ||= (
       hash = Hash.new(:default)
-      %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools" }
-      %w(OH).each {|state| hash[state] = "#{@school.name}: What Do Parents Say? | GreatSchools" }
-      %w(AZ).each {|state| hash[state] = "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools" }
-      %w(TX).each {|state| hash[state] = "#{@school.name} | Best School Ratings by GreatSchools" }
-      %w(NV).each {|state| hash[state] = "#{@school.name}: Everything You Need to Know | GreatSchools" }
+      %w(NC WA MD WI PA).each {|state| hash[state] = "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools" }
+      %w(OH LA).each {|state| hash[state] = "#{@school.name}: What Do Parents Say? | GreatSchools" }
+      %w(AZ IN).each {|state| hash[state] = "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools" }
+      %w(TX SD).each {|state| hash[state] = "#{@school.name} | Best School Ratings by GreatSchools" }
+      %w(NV SC).each {|state| hash[state] = "#{@school.name}: Everything You Need to Know | GreatSchools" }
       hash
     )
   end
@@ -176,7 +176,7 @@ class SchoolProfileController < SchoolController
     @_description_state_options ||= (
       hash = Hash.new(:default)
       %w(FL NC).each {|state| hash[state] = :option1 }
-      %w(UT WA).each {|state| hash[state] = :option2 }
+      %w(UT WA MI LA IN SD SC).each {|state| hash[state] = :option2 }
       %w(NY MD).each {|state| hash[state] = :option3 }
       %w(GA WI).each {|state| hash[state] = :option4 }
       %w(IL PA).each {|state| hash[state] = :option5 }
