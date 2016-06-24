@@ -124,7 +124,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/guidelines.page', as: :school_review_guidelines
     get '/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
-    get '/back-to-school/', as: :back_to_school
+    get '/gk/back-to-school/', as: :back_to_school
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
     get '/gk/emotional-smarts/', as: :emotional_smarts
@@ -138,13 +138,13 @@ LocalizedProfiles::Application.routes.draw do
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
     get '/official-school-profile/dashboard/', as: :osp_dashboard
-    get '/school-choice/school-choice/7055-choose-elementary-school-video.gs', as: :help_me_e_video
-    get '/school-choice/school-choice/7056-choose-middle-school-video.gs', as: :help_me_m_video
-    get '/school-choice/school-choice/7066-choose-high-school-video.gs', as: :help_me_h_video
+    get '/gk/videos/choose-elementary-school-video/', as: :help_me_e_video
+    get '/gk/videos/choose-middle-school-video/', as: :help_me_m_video
+    get '/gk/videos/choose-high-school-video/', as: :help_me_h_video
     get '/catalog/pdf/SpringSweepsRules.pdf', as: :sweepstakes_rules
     get '/understanding-common-core-state-standards.topic?content=7802', as: :common_core
     get '/healthy-kids.topic?content=2504', as: :health_and_wellness_article
-    get '/college/', as: :college_articles
+    get '/gk/road-to-college/', as: :college_articles
     get '/STEM.topic?content=8021', as: :stem_article
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/schools/cities/:state_long/:state_short', as: :city_list
@@ -154,13 +154,59 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/moving-with-kids/', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
     get '/gk/category/early-learning/', as: :early_learning
-    get '/summer-learning.topic?content=7082', as: :summer_planning
+    get '/gk/summer-learning/', as: :summer_planning
     get '/gk/summer-learning/', as: :summer_learning
     get '/OECDTestForSchools.page', as: :oecd_landing
     get '/gk/milestones/', as: :gk_milestones
     get '/gk/levels/high-school/', as: :gk_levels_high_school
     get '/gk/cue-cards/', as: :gk_cue_cards
     get '/gk/levels/high-school-es/', as: :gk_levels_high_school_es
+
+    get '/gk/articles/imagining-your-ideal-school-set-your-priorities/', as: :ideal_school
+    get '/gk/articles/redshirting-kindergarten/', as: :when_to_start_kindergarten
+    get '/gk/articles/switch-or-stay-schools-early-in-year/', as: :switch_schools
+    get '/gk/articles/skipping-a-grade-pros-and-cons/', as: :skipping_grades
+    get '/gk/articles/preschool-philosophies/', as: :preschool_philosophies
+    get '/gk/videos/second-language-education-video/', as: :second_language_video
+    get '/gk/videos/quick-guide-special-education-video-2/', as: :special_ed_video
+    get '/gk/articles/special-education-special-needs-learning-disabilities/', as: :special_needs_programs
+    get '/gk/articles/help-your-child-with-the-transition/', as: :moving_tips
+    get '/gk/articles/gifted-and-talented-education-and-program/', as: :gifted_education
+    get '/gk/articles/sizing-up-school-safety/', as: :school_safety
+    get '/gk/articles/public-private-charter-schools/', as: :public_private_charter
+    get '/gk/articles/school-choice-your-options/', as: :school_choice_options
+    get '/gk/articles/private-vs-public-schools/', as: :private_vs_public
+    get '/gk/articles/school-terminology/', as: :school_terminology
+    get '/gk/articles/public-school/', as: :public_school_facts
+    get '/gk/videos/what-is-charter-school-video/', as: :charter_school_video
+    get '/gk/articles/charter-schools-2/', as: :truth_about_charter
+    get '/gk/articles/seven-facts-about-charter-schools/', as: :seven_charter_facts
+    get '/gk/articles/charter-schools-better-than-traditional/', as: :charter_vs_traditional
+    get '/gk/videos/private-schools-video/', as: :private_schools_video
+    get '/gk/articles/private-schools-parochial-schools/', as: :private_school_facts
+    get '/gk/videos/school-test-scores-video/', as: :test_scores_video
+    get '/gk/articles/cultural-diversity-at-school/', as: :cultural_diversity
+    get '/gk/articles/class-size/', as: :class_size
+    get '/gk/articles/school-size/', as: :school_size
+    get '/preschool/slideshows/7268-why-preschool.gs', as: :why_preschool
+    get '/gk/articles/mistakes-choosing-preschool/', as: :mistakes_choosing_preschool
+    get '/gk/articles/mistakes-choosing-elementary/', as: :mistakes_choosing_elementary
+    get '/gk/articles/mistakes-choosing-middle-school/', as: :mistakes_choosing_middle
+    get '/gk/articles/mistake-choosing-highschool/', as: :mistakes_choosing_high
+    get '/gk/articles/the-school-visit-what-to-look-for-what-to-ask/', as: :school_visit
+    get '/gk/articles/choosing-a-school-from-a-distance/', as: :school_from_distance
+    get '/find-a-school/slideshows/3457-choosing-a-preschool.gs', as: :choose_preschool_slideshow
+    get '/gk/articles/insider-tricks-for-assessing-preschools/', as: :assessing_preschools
+    get '/gk/videos/choose-elementary-school-video/', as: :choose_elementary_video
+    get '/find-a-school/slideshows/3469-choosing-an-elementary-school.gs', as: :choose_elementary_slideshow
+    get '/gk/articles/insider-tricks-for-assessing-elementary-schools/', as: :assessing_elementary
+    get '/gk/videos/choose-middle-school-video/', as: :choose_middle_video
+    get '/find-a-school/slideshows/3436-choosing-a-middle-school.gs', as: :choose_middle_slideshow
+    get '/gk/articles/insider-tricks-for-assessing-middle-schools/', as: :assessing_middle
+    get '/gk/videos/choose-high-school-video/', as: :choose_high_video
+    get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
+    get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
+
     get '/status/error404.page'
   end
 
