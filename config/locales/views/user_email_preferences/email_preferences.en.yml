@@ -9,15 +9,15 @@ en:
       greatkidsnews_subtitle: Weekly essentials about your child's grade.
       greatschools_terms_of_use: GreatSchools Terms of Use.
       greatnews_title: GreatSchools weekly (preK-12)
-      greatnews_subtitle: A weekly round of our best articles, videos, and more.
-      heading: Manage my email preferences
+      greatnews_subtitle: A weekly roundup of our best articles, videos, and more.
+      heading: Manage your newsletter preferences
       newsletters_heading: Newsletters
       sponsor_title: From our partners
-      sponsor_subtitle: Special offers and info from GreatSchools carefully chosen partners
-      subheading_pt_1: Welcome! We're glad you're here
+      sponsor_subtitle: Special offers and info from GreatSchools' carefully chosen partners.
+      subheading_pt_1: Welcome!
       subheading_pt_2: Help us send you the most relevant information by updating your preferences below.
-      submit_label: Save my changes
-      keep_following_same_grade: 'No, I want to keep following the same grade next year (for now).'
+      submit_label: Save changes
+      keep_following_same_grade: 'No, I want to keep following the same grade next year.'
       terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
       privacy_policy: Privacy Policy.
 
