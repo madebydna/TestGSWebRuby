@@ -3,41 +3,59 @@ class UserEmailPreferencesController < ApplicationController
   include AccountHelper
 
   protect_from_forgery
-  before_action :verify_and_login_user
+  before_action only: [:show] do
+    token = params[:token]
+    login_user_from_token(token)
+  end
+  before_action :login_required, only: [:show, :update]
 
   layout 'application'
 
   def show
-    @page_name = 'User Email Preferences'
+    @page_name = 'User Email Preferences' # This is also hardcoded in email_preferences.js
     gon.pagename = @page_name
-
-    @subscriptions = UserSubscriptions.new(@current_user).get
-
+    @current_preferences = UserSubscriptions.new(@current_user).get
+    @current_preferences << :decline_auto_graduate if @current_user.specified_auto_graduate? && @current_user.opted_in_auto_graduate? == false
     account_meta_tags('My email preferences')
-
-    @display_grade_level_array = grade_array_pk_to_8
-    # selected_grade_level = @current_user.student_grade_levels
-    @selected_grade_level = @current_user.student_grade_levels.map(&:grade).join(",")
-
+    @current_grades = @current_user.student_grade_levels.map(&:grade)
+    @available_grades = available_grades
+    set_tracking_info
   end
 
+  def update
+    UserSubscriptionManager.new(@current_user).update(param_subscriptions)
+    UserGradeManager.new(@current_user).update(param_grades)
+    @current_user.update_auto_graduate(auto_graduate_value)
+    flash_notice t('controllers.user_email_preferences_controller.success')
+    redirect_to home_path
+  end
 
-  def verify_and_login_user
-    token = params[:id]
-    token = CGI.unescape(token) if token
-    begin
-      parsed_token = UserVerificationToken.parse(token)
-    rescue UserVerificationToken::ParseError => error
-      GSLogger.warn(:misc, error)
-      parsed_token = nil
-    end
+  def param_grades
+    params['grades'] || []
+    #['1','2','3','4']
+  end
 
-    if parsed_token && parsed_token.valid?
-      log_user_in UserVerificationToken.parse(token).user
-    else
-      redirect_to signin_url
+  def param_subscriptions
+    params['subscriptions'] || []
+  end
+
+  def auto_graduate_value
+    if params['decline_auto_graduate'] == 'true'
+      return 'false'
+    elsif params['decline_auto_graduate'] == nil
+      return 'true'
     end
   end
 
+  private
+
+  def login_user_from_token(token)
+    user = UserVerificationToken.user(token)
+    log_user_in(user) if user
+  end
+
+  def set_tracking_info
+    data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = 'GS:Email:Preferences'
+  end
 end
 

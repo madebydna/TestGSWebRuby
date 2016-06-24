@@ -82,7 +82,7 @@ gem 'draper', '~> 1.3.1'
 gem 'addressable'
 
 gem 'rack-mini-profiler', require: false
-gem 'rubocop', '= 0.20.1', require: false
+gem 'rubocop', '= 0.40.0', require: false
 gem 'rubocop-checkstyle_formatter', require: false
 
 gem 'protected_attributes'
@@ -122,6 +122,7 @@ group :development do
 end
 
 group :test do
+  gem 'rspec_junit_formatter', '~> 0.2.3'
   gem 'capybara-screenshot', '~> 1.0.11'
 
   # Mock external http requests for tests

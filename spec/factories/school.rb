@@ -11,7 +11,7 @@ FactoryGirl.define do
 
       id
       name 'Alameda High School'
-      city 'alameda'
+      city 'Alameda'
       state 'CA'
       collections { FactoryGirl.build_list :collection, 1 }
       created { Time.now.to_s }

@@ -65,4 +65,8 @@ module Subscriptions
     end
   end
 
+  def subscriptions_matching_lists(lists)
+    subscriptions.where(list: lists)
+  end
+
 end

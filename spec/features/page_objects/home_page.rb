@@ -4,9 +4,12 @@ require 'features/page_objects/modules/top_nav_section'
 
 
 class HomePage < SitePrism::Page
+
   include EmailJoinModal
   include FlashMessages
   include TopNavSection
+
+  set_url_matcher /localhost:\d+\/$/
 
   element :search_hero_section, 'h1', text: 'Welcome to GreatSchools'
   element :browse_by_city_header, 'h3', text: 'Browse by city'
