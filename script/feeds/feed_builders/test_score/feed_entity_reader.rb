@@ -18,9 +18,9 @@ module Feeds
       new(state, School, options)
     end
 
-    def each_batch_with_index
-      batches.each_with_index do |batch, index|
-        yield(objects_with_cache_data(batch), index)
+    def each(&block)
+      batches.each do |batch|
+        objects_with_cache_data(batch).each(&block)
       end
     end
 
@@ -35,8 +35,8 @@ module Feeds
       end
       query_results = query.query_and_use_cache_keys
       cache_results = cache_results_class.new(FEED_CACHE_KEYS, query_results)
-      schools_with_cache_results = cache_results.send("decorate_#{model.name.downcase}s", batch)
-      schools_with_cache_results.map do |entity|
+      objects_with_cache_results = cache_results.send("decorate_#{model.name.downcase}s", batch)
+      objects_with_cache_results.map do |entity|
         feed_decorator_class.decorate(entity)
       end
     end

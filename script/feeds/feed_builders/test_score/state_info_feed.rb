@@ -1,5 +1,5 @@
 module Feeds
-  class StateInfoBuilder
+  class StateInfoFeed
 
     include Feeds::FeedConstants
 
@@ -18,7 +18,7 @@ module Feeds
       TestDescriptionDecorator.new(test_description)
     end
 
-    def array_of_hashes
+    def to_hashes
       hashes = test_descriptions.map do |test_description|
         new_test_description_decorator(test_description).to_hash
       end

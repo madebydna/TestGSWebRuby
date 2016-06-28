@@ -14,7 +14,7 @@ module Feeds
       @test_data_set = test_data_set
     end
 
-    def proficiency_band_id(entity_level)
+    def proficiency_band_id
       # For proficient and above band id is always null in database
       test_data_set['proficiency_band_id']
     end
@@ -27,7 +27,7 @@ module Feeds
       end
     end
 
-    def subject_name
+    def subject
       @@test_data_subjects[test_data_set.subject_id].present? ? @@test_data_subjects[test_data_set.subject_id].name : ''
     end
 
@@ -40,7 +40,7 @@ module Feeds
       @@test_data_breakdowns[test_data_set.breakdown_id].present? ? @@test_data_breakdowns[test_data_set.breakdown_id].name : ''
     end
 
-    def number_tested(entity_level)
+    def number_tested
       test_data_set['number_students_tested']
     end
 
@@ -52,31 +52,14 @@ module Feeds
       state.upcase + test_data_set['data_type_id'].to_s.rjust(5, '0')
     end
 
-    def grade_name
+    def grade
       test_data_set['grade_name']
     end
 
-    def test_score(entity_level)
-      if entity_level == ENTITY_TYPE_STATE
-        # Get Score from Data which is in Active Record
-        test_data_set.state_value_text || test_data_set.state_value_float
-      else
-        if proficiency_band_name == PROFICIENT_AND_ABOVE_BAND
-          test_data_set['score']
-        else
-          test_data_set[proficiency_band_name+'_score']
-        end
-      end
+    def test_score
+      # Get Score from Data which is in Active Record
+      test_data_set.state_value_text || test_data_set.state_value_float
     end
 
-    def universal_id(entity = nil, entity_level)
-      if entity_level == ENTITY_TYPE_DISTRICT
-        '1' + state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
-      elsif entity_level == ENTITY_TYPE_SCHOOL
-        state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
-      else
-        state_fips[state.upcase]
-      end
-    end
   end
 end

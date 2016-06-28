@@ -1,5 +1,5 @@
 module Feeds
-  class FeedTestScoresCacheDecorator
+  class TestDataSetHashDecorator
     include Feeds::FeedConstants
 
     @@proficiency_bands = Hash[TestProficiencyBand.all.map { |pb| [pb.id, pb] }]
@@ -61,12 +61,9 @@ module Feeds
       end
     end
 
-    def universal_id(entity = nil, entity_level)
-      if entity_level == ENTITY_TYPE_DISTRICT
-        '1' + state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
-      elsif entity_level == ENTITY_TYPE_SCHOOL
-        state_fips[state.upcase] + entity.id.to_s.rjust(5, '0')
-      end
+    def universal_id
+      test_data_object.universal_id
     end
+
   end
 end
