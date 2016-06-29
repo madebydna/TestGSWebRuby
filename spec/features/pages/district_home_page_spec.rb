@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/district_home_page'
 require 'features/examples/page_examples'
 require 'features/examples/top_rated_schools_section_examples'
+require 'features/examples/footer_examples'
 
 describe 'District Home Page' do
   let!(:district) { create(:district, state: 'ca', city: 'Alameda', name: 'Alameda City Unified' ,home_page_url:'www.alameda.k12.ca.us') }
@@ -10,6 +11,7 @@ describe 'District Home Page' do
     visit district_path('california', 'alameda', 'alameda-city-unified')
     DistrictHomePage.new
   end
+  include_examples 'should have a footer'
   it { is_expected.to have_link('District website' ,href:"http://www.alameda.k12.ca.us")}
   context 'District website url with http'  do
     let(:district) { create(:district, state: 'ca', city: 'Alameda', name: 'Alameda City Unified' ,home_page_url:'http://www.alameda.k12.ca.us') }
