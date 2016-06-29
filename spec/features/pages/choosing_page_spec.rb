@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/city_home_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
+require 'features/examples/footer_examples'
 
 shared_examples_for 'it displays static and dynamic content' do |opts|
   let(:title) { opts[:title] }
@@ -29,11 +30,14 @@ describe 'Choosing Page' do
       FactoryGirl.create :important_events_collection_config
       visit '/michigan/detroit/choosing-schools/'
     end
+    subject do
+      CityHomePage.new
+    end
+
+    include_examples 'should have a footer'
 
     it_behaves_like 'it displays static and dynamic content', { title: 'Choosing a school in Detroit, MI' }
     describe 'breadcrumbs' do
-      subject { CityHomePage.new }
-
       it { is_expected.to have_breadcrumbs }
       its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
       its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
