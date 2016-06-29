@@ -20,6 +20,10 @@ describe 'OSP Registration page' do
 
   with_shared_context 'visit registration page with no state or school' do
     describe_mobile_and_desktop do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       include_example 'should have element with text', 'h4', 'To register for a school account, please select a school first'
       include_example 'should have link', 'select a school', '/official-school-profile'
     end
