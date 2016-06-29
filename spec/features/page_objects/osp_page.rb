@@ -1,4 +1,6 @@
+require 'features/page_objects/modules/footer'
 class OspPage < SitePrism::Page
+  include Footer
 
   section :osp_nav, ".js-ospNav" do
     elements :nav_buttons, ".js-submitTrigger"

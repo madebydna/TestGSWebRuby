@@ -7,6 +7,7 @@ require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
 require 'features/contexts/user_contexts'
 require 'features/examples/user_examples'
+require 'features/examples/footer_examples'
 
 describe 'OSP Registration page' do
   with_shared_context 'visit registration confirmation page' do
@@ -58,6 +59,10 @@ describe 'OSP Registration page' do
 
   with_shared_context 'Basic High School' do
     with_shared_context 'visit registration page with school state and school' do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       email = 'developer@greatschools.org'
       with_shared_context 'fill in OSP Registration with valid values', email do
         with_shared_context 'with both email opt-ins selected' do
