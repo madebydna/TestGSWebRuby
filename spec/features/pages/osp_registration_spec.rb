@@ -31,6 +31,10 @@ describe 'OSP Registration page' do
 
   with_shared_context 'Delaware public school' do
     with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       include_example 'should have element with text', 'h4', "Your school account has been created via the State Department of Education IMS portal."
       include_example 'should have link', 'Department of Education', 'https://login.doe.k12.de.us/'
       include_example 'should have link text on page', 'Select your school'
