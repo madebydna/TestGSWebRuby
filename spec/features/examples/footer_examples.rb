@@ -7,6 +7,7 @@ require 'features/page_objects/state_home_page'
 shared_examples_for 'should have a footer' do
   it { is_expected.to have_footer }
   it { is_expected.to_not have_selector('.js-shortFooter') }
+  it { is_expected.to_not have_selector('.rs-state-footer') }
 end
 
 shared_example 'should have the .home-footer element' do
@@ -26,7 +27,3 @@ end
 Will need to require the selector file to have this example work
 Todo: need to make the selectors shared across pages
 =end
-
-shared_example 'should have state footer' do
-  expect(subject).to have_state_footer
-end
