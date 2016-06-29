@@ -5,11 +5,7 @@ require 'features/page_objects/state_home_page'
 
 #Footer Shared Examples
 shared_examples_for 'should have a footer' do
-  include_example 'should have the .home-footer element'
-  with_shared_context 'Footer' do
-    include_example 'should have a language translation plugin'
-    include_example 'should have an about great schools section'
-  end
+  it { is_expected.to have_footer }
 end
 
 shared_example 'should have the .home-footer element' do

@@ -1,4 +1,7 @@
+require 'features/page_objects/modules/footer'
+
 class UserEmailPreferencesPage < SitePrism::Page
+  include Footer
 
   set_url_matcher /\/preferences/
 
