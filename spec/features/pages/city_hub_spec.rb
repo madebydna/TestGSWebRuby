@@ -1,7 +1,9 @@
 require 'spec_helper'
 require 'features/page_objects/city_home_page'
+require 'features/page_objects/city_hub_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
+require 'features/examples/footer_examples'
 
 describe 'City Hub Page' do
   let(:city_page_url) { '/michigan/detroit' }
@@ -19,6 +21,11 @@ describe 'City Hub Page' do
   after(:each) { clean_dbs :gs_schooldb }
 
   before(:each) { visit city_page_url }
+
+  describe 'footer' do
+    subject { CityHubPage.new }
+    include_examples 'should have a footer'
+  end
 
   describe 'search' do
     it 'displays sponsor information' do
