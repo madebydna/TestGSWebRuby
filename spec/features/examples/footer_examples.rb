@@ -6,6 +6,7 @@ require 'features/page_objects/state_home_page'
 #Footer Shared Examples
 shared_examples_for 'should have a footer' do
   it { is_expected.to have_footer }
+  it { is_expected.to_not have_selector('.js-shortFooter') }
 end
 
 shared_example 'should have the .home-footer element' do
