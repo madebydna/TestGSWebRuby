@@ -99,6 +99,13 @@ describe 'OSP Basic Page' do
           end
         end
 
+        with_shared_context 'click osp nav link element with text:', 'Extracurriculars' do
+          describe 'footer' do
+            subject { OspPage.new }
+            include_examples 'should have a footer'
+          end
+        end
+
         describe_mobile do
           with_shared_context 'click OSP mobile nav' do
             with_shared_context 'click osp nav link element with text:', 'Academics' do
