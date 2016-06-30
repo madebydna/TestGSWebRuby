@@ -1,13 +1,14 @@
 require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/modules/flash_messages'
 require 'features/page_objects/modules/top_nav_section'
-
+require 'features/page_objects/modules/footer'
 
 class HomePage < SitePrism::Page
 
   include EmailJoinModal
   include FlashMessages
   include TopNavSection
+  include Footer
 
   set_url_matcher /localhost:\d+\/$/
 
