@@ -92,6 +92,13 @@ describe 'OSP Basic Page' do
           include_example 'Before Care and Canoe buttons should be active'
         end
 
+        with_shared_context 'click osp nav link element with text:', 'Facilities' do
+          describe 'footer' do
+            subject { OspPage.new }
+            include_examples 'should have a footer'
+          end
+        end
+
         describe_mobile do
           with_shared_context 'click OSP mobile nav' do
             with_shared_context 'click osp nav link element with text:', 'Academics' do
