@@ -85,6 +85,10 @@ describe 'OSP Basic Page' do
 
         #testing that nav auto-submits form
         with_shared_context 'click osp nav link element with text:', 'Academics' do
+          describe 'footer' do
+            subject { OspPage.new }
+            include_examples 'should have a footer'
+          end
           include_example 'Before Care and Canoe buttons should be active'
         end
 
