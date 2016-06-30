@@ -68,6 +68,8 @@ describe 'Education Community Partner Page' do
 
     visit '/michigan/detroit/education-community/partner'
   end
+  subject { CityHomePage.new }
+  include_examples 'should have a footer'
 
   it 'sets meta tags based on the page and acro names' do
     meta_tags = page.all('meta', visible: false)
