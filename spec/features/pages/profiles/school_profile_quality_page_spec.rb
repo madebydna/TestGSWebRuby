@@ -3,6 +3,7 @@ require 'features/contexts/school_profile_contexts'
 require 'features/examples/page_examples'
 require 'features/page_objects/school_profile_quality_page'
 require 'features/examples/school_profile_header_examples'
+require 'features/examples/footer_examples'
 
 
 def expect_it_to_have_element(element)
@@ -23,6 +24,7 @@ describe 'School Profile Quality Page' do
 
   include_context 'Visit School Profile Quality'
   with_shared_context 'with Cristo Rey New York High School' do
+    include_examples 'should have a footer'
     include_example 'should be on the correct page'
     it_behaves_like 'a page with school profile header'
   end
