@@ -9,6 +9,7 @@ shared_examples_for 'should have a footer' do
   it { is_expected.to_not have_selector('.js-shortFooter') }
   it { is_expected.to_not have_selector('.rs-state-footer') }
   it { is_expected.to_not have_selector('.home-footer') }
+  it { is_expected.to_not have_selector('.rs-about-gs-footer') }
 end
 
 shared_example 'should have the .home-footer element' do

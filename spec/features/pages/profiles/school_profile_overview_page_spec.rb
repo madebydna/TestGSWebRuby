@@ -4,8 +4,8 @@ require 'features/examples/page_examples'
 require 'features/page_objects/school_profile_overview_page'
 require 'features/page_objects/school_profile_reviews_page'
 require 'features/page_objects/school_profile_quality_page'
-require 'features/examples/state_footer_examples'
 require 'features/examples/school_profile_header_examples'
+require 'features/examples/footer_examples'
 
 shared_context 'with an inactive school' do
   let!(:school) { FactoryGirl.create(:alameda_high_school, active: false) }
@@ -94,7 +94,7 @@ describe 'School Profile Overview Page' do
     with_shared_context 'with Alameda High School' do
       include_example 'should be on the correct page'
       it_behaves_like 'a page with school profile header'
-      it_behaves_like 'page with state footer features', short: 'CA', long: 'California'
+      include_examples 'should have a footer'
 
       its(:header) { is_expected.to_not have_in_english_link }
       its(:header) { is_expected.to have_in_spanish_link }
