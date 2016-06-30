@@ -5,6 +5,7 @@ require 'features/examples/page_examples'
 require 'features/examples/school_profile_reviews_examples'
 require 'features/page_objects/school_profile_reviews_page'
 require 'features/contexts/shared_contexts_for_signed_in_users'
+require 'features/examples/footer_examples'
 
 describe 'School Profile Reviews Page' do
   before do
@@ -32,6 +33,7 @@ describe 'School Profile Reviews Page' do
   with_shared_context 'Given basic school profile page', 'Reviews', js: true  do
     include_context 'with Alameda High School'
     with_shared_context 'Visit School Profile Reviews' do
+      include_examples 'should have a footer'
       include_example 'should be on the correct page'
       it { is_expected.to have_review_module }
 

@@ -3,14 +3,12 @@ require 'features/page_objects/modules/breadcrumbs'
 require 'features/page_objects/modules/gs_rating'
 require 'features/page_objects/modules/modals'
 require 'features/page_objects/modules/school_profile_page'
-require 'features/page_objects/modules/footer'
 
 class SchoolProfileOverviewPage < SitePrism::Page
   include Breadcrumbs
   include GSRating
   include Modals
   include SchoolProfilePage
-  include Footer
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
