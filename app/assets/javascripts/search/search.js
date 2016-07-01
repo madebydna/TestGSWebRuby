@@ -10,7 +10,9 @@ Array.prototype.contains = function(obj) {
 
 GS.search = GS.search || {};
 
-GS.search.stateAbbreviation = gon.state_abbr;
+if (typeof(gon) !== 'undefined' ) {
+  GS.search.stateAbbreviation = gon.state_abbr;
+}
 
 GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
