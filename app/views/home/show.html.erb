@@ -1,46 +1,12 @@
 <% content_for :head do %>
     <!-- This is because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags -->
     <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
+    
 <% end %>
+<h1>Guide your child to a great future</h1>
 
-<% content_for :javascript_includes do %>
-    <script>
-        $(function() {
-            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('home/homepage_hero.jpg')%>', mobileImage: '<%= image_path('home/hero_mobile.jpg')%>', classes:'scaling' });
-            GS.util.setupImages({ selector: '.is-scaled-banner', desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>', mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>', classes:'scaling' });
-        })
-    </script>
-<% end %>
+<script src="">
+    
+</script>
+<%= render partial: 'home/search_form' %>
 
-<% if @homepage_banner_prop == 'true' %>
-  <%= render 'search_hero_short' %>
-  <% #= render 'highschool_milestones_banner' %>
-  <%= render 'sel_banner_kung_fu' %>
-  <%# = render 'cue_card_banner' %>
-<% else %>
-  <%= render 'search_hero' %>
-<% end %>
-
-<% if @show_ads %>
-  <div class="row">
-    <div class="col-xs-12">
-      <%= render 'layouts/ad_layer', page: :Homepage, slot: :Custom, view: :desktop, visible_for: 'visible-lg visible-md'%>
-    </div>
-  </div>
-<% end %>
-
-<%= render 'browse_by_city' %>
-
-<%= render 'shared/email_signup' %>
-
-<%= render 'greatkids_articles' %>
-
-<%= render 'offers' %>
-
-<%= render 'quote' %>
-
-<%= render 'who_we_are' %>
-
-<%= render 'our_supporters' %>
-
-<%= render 'nav/home_footer' %>
