@@ -14,8 +14,7 @@ class CensusDataSetJsonView
         district_value: data_set.district_value,
         state_value: data_set.state_value,
         source: data_set.source,
-        year: data_set.year == 0 ?
-          data_set.school_modified.year : data_set.year
+        year: data_set.year == 0 ? data_set.school_modified.year : data_set.year
       }
     end
   end
