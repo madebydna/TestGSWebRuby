@@ -120,7 +120,7 @@ module UrlHelper
     "#{ENV_GLOBAL['catalog_server']}/#{path}".gsub('//','/').gsub('//','/').sub(':/', '://')
   end
 
-  %w(school school_details school_quality school_reviews school_user ).each do |helper_name|
+  %w(school school_details school_quality school_reviews school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
       if school == nil
         params = school_params_hash params_hash

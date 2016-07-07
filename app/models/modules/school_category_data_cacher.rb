@@ -23,10 +23,10 @@ module SchoolCategoryDataCacher
 
             if school_category_data
               puts "Got cached data for key #{key}"
-              return YAML::load(school_category_data.school_data)
+              return YAML.load(school_category_data.school_data)
             else
-              result = m.(*args, &block)
-              data_to_cache = YAML::dump(result)
+              result = m.call(*args, &block)
+              data_to_cache = YAML.dump(result)
               puts "Caching data for key #{key}"
               SchoolCategoryData.on_db(school.shard).create!(
                 school_id: school.id,

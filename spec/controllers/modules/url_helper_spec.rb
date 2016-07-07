@@ -304,7 +304,7 @@ describe UrlHelper do
     end
 
     let(:user) { FactoryGirl.build(:new_user) }
-    let(:parsed_url) { URI::parse(url_helper.create_reset_password_url(user)) }
+    let(:parsed_url) { URI.parse(url_helper.create_reset_password_url(user)) }
     subject { parsed_url }
 
     describe 'params' do
@@ -321,7 +321,7 @@ describe UrlHelper do
         expect(subject['date']).to eq(date)
       end
       context 'with a caller-specified s_cid' do
-        let(:parsed_url) { URI::parse(url_helper.create_reset_password_url(user, s_cid: 'baz')) }
+        let(:parsed_url) { URI.parse(url_helper.create_reset_password_url(user, s_cid: 'baz')) }
         subject { Rack::Utils.parse_query(parsed_url.query) }
         it 'should use the overridden s_cid param' do
           expect(subject['s_cid']).to eq('baz')
