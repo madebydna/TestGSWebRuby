@@ -28,9 +28,9 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
         var state_query = typeof state_abbr === "string" ? '&state=' + state_abbr : '';
         var autocomplete = GS.search.autocomplete;
         var markup = autocomplete.display;
-        var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: 'http://jwrobel.greatschools.org:3000/gsr/search/suggest/school?query=%QUERY' + state_query, sortFunction: false });
-        var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: 'http://jwrobel.greatschools.org:3000/gsr/search/suggest/city?query=%QUERY' + state_query, displayLimit: 5 });
-        var districts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: 'http://jwrobel.greatschools.org:3000/gsr/search/suggest/district?query=%QUERY' + state_query, displayLimit: 5 });
+        var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY' + state_query, sortFunction: false });
+        var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY' + state_query, displayLimit: 5 });
+        var districts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY' + state_query, displayLimit: 5 });
         $('.typeahead').typeahead({
             hint: true,
             highlight: true,
