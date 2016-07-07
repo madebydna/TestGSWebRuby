@@ -2,7 +2,7 @@ require 'spec_helper'
 
 shared_examples_for 'a controller that can save a review' do
 
-	describe '#save_review' do
+  describe '#save_review' do
     before { pending('TODO: remove these specs') }
     let(:current_user) { FactoryGirl.build(:user) }
     let(:existing_review) { FactoryGirl.build(:school_rating) }
@@ -98,7 +98,7 @@ shared_examples_for 'a controller that can save a review' do
       end
     end
 
-	end
+  end
 
   describe '#update_existing_review' do
     before { pending('TODO: remove these specs') }
