@@ -25,7 +25,7 @@ module SchoolCategoryDataCacher
               puts "Got cached data for key #{key}"
               return YAML::load(school_category_data.school_data)
             else
-              result = m.(*args, &block)
+              result = m.call(*args, &block)
               data_to_cache = YAML::dump(result)
               puts "Caching data for key #{key}"
               SchoolCategoryData.on_db(school.shard).create!(
