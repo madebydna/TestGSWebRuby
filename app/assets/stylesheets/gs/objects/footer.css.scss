@@ -1,14 +1,16 @@
 
 .footer {
-  font-family: $headings-font-family-robotoslab-light;
   padding-top: 40px;
-  background-color: #16314e;
-  color: #fff;
+  background-color: #15314E;
+  color: $white;
   a, p {
     font-size: $font-size-small;
   }
+  a > span.iconx16-footer-icons {
+    vertical-align: middle;
+    margin-bottom: 3px;
+  }
   .heading {
-    color: #fff;
     font-size: $font-size-large;
     margin-bottom: 5px;
   }

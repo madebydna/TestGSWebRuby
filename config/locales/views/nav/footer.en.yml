@@ -38,7 +38,7 @@ en:
         heading: Connect
         links:
           - url: http://www.facebook.com/greatschools
-            icon: fb
+            icon: facebook
             text: Facebook
           - url: http://www.twitter.com/greatschools
             icon: twitter
