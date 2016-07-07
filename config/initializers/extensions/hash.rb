@@ -46,7 +46,7 @@ class Hash
   def gs_recursive_each_with_clone(&blk)
     new_hash = clone
     each do |k, v|
-      if Hash === v
+      if v.is_a? Hash
         v.gs_recursive_each_with_clone(&blk)
         blk.call([new_hash, k, v])
       else
