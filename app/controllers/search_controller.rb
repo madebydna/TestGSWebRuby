@@ -599,12 +599,12 @@ class SearchController < ApplicationController
     gon.state_abbr = state_abbreviation
     gon.show_ads = @show_ads
     gon.city_name = if @city
-                  @city.name
-                elsif params[:city]
-                  params[:city]
-                else
-                  ''
-                end
+                      @city.name
+                    elsif params[:city]
+                      params[:city]
+                    else
+                      ''
+                    end
   end
 
   def add_filters_to_gtm_data_layer
