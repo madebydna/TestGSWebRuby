@@ -3,10 +3,54 @@
     <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
     
 <% end %>
-<h1>Guide your child to a great future</h1>
 
-<script src="">
-    
-</script>
-<%= render partial: 'home/search_form' %>
-<%= render partial: 'home/gk_content' %>
+<% content_for :javascript_includes do %>
+    <script>
+        $(function() {
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled',
+              desktopImage: '<%= image_path('home/homepage_hero.jpg')%>',
+              mobileImage: '<%= image_path('home/hero_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled-banner',
+              desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>',
+              mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+        });
+    </script>
+<% end %>
+
+<div id="home-page" class="gs-bootstrap container-fluid">
+  <%= render layout: 'hero' do %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-1">
+        <div class="mtxl hidden-xs"></div>
+        <div class="oa tac text_fff pal darken">
+          <h1 class="jumbo-header text_fff"><%= t('.heading') %></h1>
+          <div class="subtitle-lg ts"><%= t('.subheading') %></div>
+          <%= render partial: 'home/search_form' %>
+          <div class="mtm">
+            <%= render partial: 'home/gk_content' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+      <p class="mission-text">
+        We help millions of parents get a great education for their child.
+      </p>
+    </div>
+  </div>
+</div>
+

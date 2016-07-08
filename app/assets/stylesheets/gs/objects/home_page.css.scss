@@ -1,0 +1,29 @@
+#home-page {
+  .mission-text {
+    font-size: 40px;
+    color: $gray-darker;
+    padding: 30px;
+    @media (max-width: $screen-md-max) {
+      font-size: 32px;
+      color: $gray-darker;
+      padding: 30px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 24px;
+      color: $gray-darker;
+      padding: 30px;
+    }
+    @media (max-width: $screen-xs-max) {
+      font-size: 20px;
+      color: $gray-darker;
+      padding: 30px;
+    }
+  }
+  .darken {
+    background-image: linear-gradient(
+      rgba(0, 0, 0, 0.2),
+      rgba(0, 0, 0, 0.3)
+    );
+    overflow: visible;
+  }
+}
