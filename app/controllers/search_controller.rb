@@ -249,9 +249,9 @@ class SearchController < ApplicationController
     if sorting_by_fit? && filtering_search? && !hide_fit?
       setup_fit_scores(school_results, @params_hash)
       sort_by_fit(school_results)
-      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+      @schools = school_results[relative_offset..(relative_offset+@page_size-1)]
     else
-      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+      @schools = school_results[relative_offset..(relative_offset+@page_size-1)]
       setup_fit_scores(@schools, @params_hash) if filtering_search?
     end
 
@@ -260,7 +260,7 @@ class SearchController < ApplicationController
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
     relative_offset = @results_offset - solr_offset
-    @schools = school_results[relative_offset .. (relative_offset+@page_size-1)] || []
+    @schools = school_results[relative_offset..(relative_offset+@page_size-1)] || []
 
     if params[:limit]
       if params[:limit].to_i > 0
@@ -271,7 +271,7 @@ class SearchController < ApplicationController
     end
 
     (map_start, map_end) = calculate_map_range solr_offset
-    @map_schools = school_results[map_start .. map_end] || []
+    @map_schools = school_results[map_start..map_end] || []
     SchoolSearchResultReviewInfoAppender.add_review_info_to_school_search_results!(@map_schools)
 
     # mark the results that appear in the list so the map can handle them differently
@@ -599,12 +599,12 @@ class SearchController < ApplicationController
     gon.state_abbr = state_abbreviation
     gon.show_ads = @show_ads
     gon.city_name = if @city
-                  @city.name
-                elsif params[:city]
-                  params[:city]
-                else
-                  ''
-                end
+                      @city.name
+                    elsif params[:city]
+                      params[:city]
+                    else
+                      ''
+                    end
   end
 
   def add_filters_to_gtm_data_layer

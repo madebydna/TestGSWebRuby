@@ -19,6 +19,7 @@ class UserEmailPreferencesController < ApplicationController
     account_meta_tags('My email preferences')
     @current_grades = @current_user.student_grade_levels.map(&:grade)
     @available_grades = available_grades
+    set_tracking_info
   end
 
   def update
@@ -51,6 +52,10 @@ class UserEmailPreferencesController < ApplicationController
   def login_user_from_token(token)
     user = UserVerificationToken.user(token)
     log_user_in(user) if user
+  end
+
+  def set_tracking_info
+    data_layer_gon_hash[DataLayerConcerns::PAGE_NAME] = 'GS:Email:Preferences'
   end
 end
 

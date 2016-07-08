@@ -13,7 +13,7 @@ describe UserProfile do
 
       expect(user.user_profile.created).to be_present
       expect(user.user_profile.created).to be > Time.zone.parse('1970-01-01 00:00:00')
-      expect(user.user_profile.created).to be_within(1.minutes).of(Time.now)
+      expect(user.user_profile.created).to be_within(1.minute).of(Time.now)
     end
 
     it 'should not be changed when user is updated' do
@@ -39,7 +39,7 @@ describe UserProfile do
 
       expect(user.user_profile.updated).to be_present
       expect(user.user_profile.updated).to be > Time.zone.parse('1970-01-01 00:00:00')
-      expect(user.user_profile.updated).to be_within(1.minutes).of(Time.now)
+      expect(user.user_profile.updated).to be_within(1.minute).of(Time.now)
     end
 
     it 'should be changed when user is updated' do

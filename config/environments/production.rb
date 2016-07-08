@@ -93,7 +93,7 @@ LocalizedProfiles::Application.configure do
     'codemirror/themes/night.css'
   ]
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-  config.assets.precompile += %w[ *.png *.jpeg *.jpg *.gif ]
+  config.assets.precompile += %w(*.png *.jpeg *.jpg *.gif)
   config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
 
   # Disable delivery errors, bad email addresses will be ignored

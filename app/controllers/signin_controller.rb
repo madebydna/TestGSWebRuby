@@ -47,7 +47,7 @@ class SigninController < ApplicationController
 
   # handles registration and login
   def create
-     if joining?
+    if joining?
       user, error = register      # join
       flash_notice t('controllers.signin.create.success') unless error
     else

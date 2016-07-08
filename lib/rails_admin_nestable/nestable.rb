@@ -80,10 +80,10 @@ module RailsAdmin
 
               if @nestable_conf.tree?
                 @tree_nodes = if @options[:position_field].present?
-                  query.arrange(order: @options[:position_field])
-                else
-                  query.arrange
-                end
+                                query.arrange(order: @options[:position_field])
+                              else
+                                query.arrange
+                              end
               end
 
               if @nestable_conf.list?

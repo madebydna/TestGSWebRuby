@@ -15,7 +15,7 @@ FactoryGirl.define do
     factory :five_star_review do
 
       ignore do
-        answer_value (1..5).to_a.shuffle.first
+        answer_value (1..5).to_a.sample
       end
 
       association :question, factory: :overall_rating_question, strategy: :build
@@ -49,9 +49,7 @@ FactoryGirl.define do
     factory :teacher_effectiveness_review do
       ignore do
         answer_value 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
-              split(',').
-              shuffle.
-              first
+          split(',').sample
       end
       association :question, factory: :teacher_question, strategy: :build
       [:build, :stub, :create].each do |strategy|

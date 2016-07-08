@@ -105,33 +105,7 @@ class SchoolProfileController < SchoolController
                   :keywords =>  seo_meta_tags_keywords
   end
 
-  # def title_state_options
-  #   @_title_state_options ||= (
-  #     hash = Hash.new(:default)
-  #     %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = :option1 }
-  #     hash
-  #   )
-  # end
-
-  # def seo_meta_tags_title
-  #   option = title_state_options[@school.state]
-  #   option_enabled = action_name == 'overview'
-  #   if option_enabled && option == :option1
-  #     "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
-  #   elsif option_enabled && option == :option2
-  #     "#{@school.name}: What Do Parents Say? | GreatSchools"
-  #   elsif option_enabled && option == :option3
-  #     "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools"
-  #   elsif option_enabled && option == :option4
-  #     "#{@school.name} | Best School Ratings by GreatSchools"
-  #   elsif option_enabled && option == :option5
-  #     "#{@school.name}: Everything You Need to Know | GreatSchools"
-  #   else
-  #     seo_meta_tags_title_standard
-  #   end
-  # end
-
-  def seo_meta_tags_title ## FIX ME
+  def seo_meta_tags_title
     option = title_state_options[@school.state]
     option_enabled = action_name == 'overview'
     if option_enabled && option != :default
@@ -144,11 +118,11 @@ class SchoolProfileController < SchoolController
   def title_state_options
     @_title_state_options ||= (
       hash = Hash.new(:default)
-      %w(CA IA NJ NC WA MD WI PA).each {|state| hash[state] = "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools" }
-      %w(OH).each {|state| hash[state] = "#{@school.name}: What Do Parents Say? | GreatSchools" }
-      %w(AZ).each {|state| hash[state] = "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools" }
-      %w(TX).each {|state| hash[state] = "#{@school.name} | Best School Ratings by GreatSchools" }
-      %w(NV).each {|state| hash[state] = "#{@school.name}: Everything You Need to Know | GreatSchools" }
+      %w(NC WA MD WI PA).each {|state| hash[state] = "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools" }
+      %w(OH LA).each {|state| hash[state] = "#{@school.name}: What Do Parents Say? | GreatSchools" }
+      %w(AZ IN).each {|state| hash[state] = "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools" }
+      %w(TX SD).each {|state| hash[state] = "#{@school.name} | Best School Ratings by GreatSchools" }
+      %w(NV SC).each {|state| hash[state] = "#{@school.name}: Everything You Need to Know | GreatSchools" }
       hash
     )
   end
@@ -166,17 +140,11 @@ class SchoolProfileController < SchoolController
     return_title_str << ' - School ' + action_name
   end
 
-  #title logic
-  #Prune Hill Elementary School 2016 Ratings | Camas, WA | GreatSchools
-  # def seo_meta_tags_title_alt
-  #   "#{@school.name} #{Time.now.year} Ratings | #{@school.city}, #{@school.state} | GreatSchools"
-  # end
-
   def description_state_options
     @_description_state_options ||= (
       hash = Hash.new(:default)
       %w(FL NC).each {|state| hash[state] = :option1 }
-      %w(UT WA).each {|state| hash[state] = :option2 }
+      %w(UT WA MI LA IN SD SC).each {|state| hash[state] = :option2 }
       %w(NY MD).each {|state| hash[state] = :option3 }
       %w(GA WI).each {|state| hash[state] = :option4 }
       %w(IL PA).each {|state| hash[state] = :option5 }
