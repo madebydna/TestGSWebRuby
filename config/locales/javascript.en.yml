@@ -28,7 +28,7 @@ en:
       private: private
       public: public
     search_form:
-      long_placeholder: Enter city, zip code, address or school name
+      long_placeholder: Find a great school
       short_placeholder: City, zip, address or school
     saved_search_validation_error: Please name your search
     strong_fit: 'Strong fit'
