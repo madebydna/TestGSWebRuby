@@ -1,11 +1,13 @@
 require 'spec_helper'
 require 'features/contexts/shared_contexts_for_signed_in_users'
+require 'features/examples/footer_examples'
+require 'features/page_objects/account_page'
 
 feature 'Account management page' do
 
   subject do
     visit manage_account_path
-    page
+    AccountPage.new
   end
 
   after do
@@ -21,6 +23,8 @@ feature 'Account management page' do
 
   feature 'User is logged in' do
     include_context 'signed in verified user'
+
+    include_examples 'should have a footer'
 
     scenario 'It displays change password link' do
       change_password_div = subject.first('div', text: /\AChange Password\z/)

@@ -3,6 +3,7 @@ require 'features/page_objects/user_email_preferences_page'
 require 'features/page_objects/join_page'
 require 'features/page_objects/home_page'
 require 'features/page_objects/user_email_unsubscribes_page'
+require 'features/examples/footer_examples'
 
 describe 'unsubscribe page' do
 
@@ -24,6 +25,7 @@ describe 'unsubscribe page' do
     it { is_expected.to be_displayed }
     it { is_expected.to have_unsubscribe }
     it { is_expected.to have_manage_preferences }
+    include_examples 'should have a footer'
 
     when_I :unsubscribe_from_emails, js: true do
       it 'should display home page' do

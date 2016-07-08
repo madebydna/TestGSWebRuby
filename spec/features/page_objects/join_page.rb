@@ -1,7 +1,9 @@
 require 'features/page_objects/modules/flash_messages'
+require 'features/page_objects/modules/footer'
 
 class JoinPage < SitePrism::Page
   include FlashMessages
+  include Footer
 
   set_url_matcher /\/gsr\/login\//
 

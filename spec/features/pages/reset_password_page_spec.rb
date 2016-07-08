@@ -3,6 +3,7 @@ require 'features/page_objects/reset_password_page'
 require 'features/page_objects/join_page'
 require 'features/page_objects/account_page'
 require 'features/contexts/shared_contexts_for_signed_in_users'
+require 'features/examples/footer_examples.rb'
 
 describe 'Reset password page' do
 
@@ -15,6 +16,7 @@ describe 'Reset password page' do
       before do
         visit '/account/password/'
       end
+      include_examples 'should have a footer'
       it { is_expected.to be_displayed }
       it { is_expected.to have_heading }
       it { is_expected.to have_reset_password_form }

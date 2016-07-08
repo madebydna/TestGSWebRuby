@@ -103,6 +103,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/ajax/search/calculate_fit', as: :search_calculate_fit, to: 'search_ajax#calculate_school_fit'
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
   get '/gsr/ajax/community-scorecard/get-school-data', to: 'community_scorecards_ajax#get_school_data'
+  get '/gsr/footer', to: 'footer#show'
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
@@ -208,7 +209,13 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/videos/choose-high-school-video/', as: :choose_high_video
     get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
     get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
-
+    get '/gk/partners', as: :gk_partners
+    get '/gk/licensing', as: :gk_licensing
+    get '/gk/sponsorship', as: :sponsorship
+    get '/gk/advertising', as: :advertising
+    get '/gk/careers', as: :careers
+    get '/gk/funders', as: :funders
+    get '/gk/about', as: :about
     get '/status/error404.page'
   end
 

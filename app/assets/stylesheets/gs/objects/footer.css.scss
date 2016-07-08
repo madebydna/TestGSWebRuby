@@ -1,0 +1,32 @@
+
+.footer {
+  padding-top: 40px;
+  background-color: #15314E;
+  color: $white;
+  a, p {
+    font-size: $font-size-small;
+  }
+  a > span.iconx16-footer-icons {
+    vertical-align: middle;
+    margin-bottom: 3px;
+  }
+  .heading {
+    font-size: $font-size-large;
+    margin-bottom: 5px;
+  }
+  ul {
+    margin: 0px;
+    padding: 0px;
+    @media only screen and (max-width: $screen-sm-max) {
+      margin-bottom: 10px;
+      @include clearfix();
+    }
+  }
+  li {
+    list-style: none;
+    @media only screen and (max-width: $screen-sm-max) {
+      float: left;
+      padding-right: 15px;
+    }
+  }
+}
