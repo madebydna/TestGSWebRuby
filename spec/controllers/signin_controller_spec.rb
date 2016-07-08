@@ -735,7 +735,7 @@ describe SigninController do
     end
 
     context 'when date is yesterday' do
-      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.days.ago) }
+      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.day.ago) }
       it { is_expected.to be_token_valid }
     end
 

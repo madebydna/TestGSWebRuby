@@ -196,10 +196,6 @@ class School < ActiveRecord::Base
     HeldSchool.exists?(state: state, school_id: id)
   end
 
-  def neighbors
-    super.on_db(shard)
-  end
-
   def show_ads
     if collection.present?
       return collection.show_ads
