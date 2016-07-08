@@ -1,44 +1,56 @@
 <% content_for :head do %>
     <!-- This is because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags -->
     <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
+    
 <% end %>
 
 <% content_for :javascript_includes do %>
     <script>
         $(function() {
-            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('home/homepage_hero.jpg')%>', mobileImage: '<%= image_path('home/hero_mobile.jpg')%>', classes:'scaling' });
-            GS.util.setupImages({ selector: '.is-scaled-banner', desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>', mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>', classes:'scaling' });
-        })
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled',
+              desktopImage: '<%= image_path('home/homepage_hero.jpg')%>',
+              mobileImage: '<%= image_path('home/hero_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled-banner',
+              desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>',
+              mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+        });
     </script>
 <% end %>
 
-<% if @homepage_banner_prop == 'true' %>
-  <%= render 'search_hero_short' %>
-  <% #= render 'highschool_milestones_banner' %>
-  <%= render 'sel_banner_kung_fu' %>
-  <%# = render 'cue_card_banner' %>
-<% else %>
-  <%= render 'search_hero' %>
-<% end %>
+<div id="home-page" class="gs-bootstrap container-fluid">
+  <%= render layout: 'hero' do %>
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
+        <div class="mtxl hidden-xs"></div>
+        <div class="oa tac text_fff pal darken">
+          <h1 class="jumbo-text-sub text_fff"><%= t('.heading') %></h1>
+          <div class="subtitle ts"><%= t('.subheading') %></div>
+          <%= render partial: 'home/search_form' %>
+          <div class="mtm">
+            <%= render partial: 'home/gk_content' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-<% if @show_ads %>
+
   <div class="row">
-    <div class="col-xs-12">
-      <%= render 'layouts/ad_layer', page: :Homepage, slot: :Custom, view: :desktop, visible_for: 'visible-lg visible-md'%>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+      <p class="mission-text">
+        We help millions of parents get a great education for their child.
+      </p>
     </div>
   </div>
-<% end %>
+</div>
 
-<%= render 'browse_by_city' %>
-
-<%= render 'shared/email_signup' %>
-
-<%= render 'greatkids_articles' %>
-
-<%= render 'offers' %>
-
-<%= render 'quote' %>
-
-<%= render 'who_we_are' %>
-
-<%= render 'our_supporters' %>
