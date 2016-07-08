@@ -17,26 +17,30 @@ describe 'User visits Home Page' do
       it 'should should display search page' do
         pending('failing potentially because of javascript')
         fail
-        subject.user_fill_in_school_search
-        subject.click_school_search
-        expect(SearchPage.new).to be_displayed
+        # subject.user_fill_in_school_search
+        # subject.click_school_search
+        # expect(SearchPage.new).to be_displayed
       end
     end
   end
 
-  describe 'user can search for wordpress content', js: true do
+  describe 'user can navigate to wordpress content', js: true do
     context 'succesfully' do
       before do
-        pending('tests written but no code yet')
+        pending('failing potentially because of javascript')
         fail
       end
-      it { is_expected.to have_article_search_button }
-      it { is_expected.to have_article_search_field }
 
-      it 'should should display search page' do
-        subject.user_fill_in_article_search
-        subject.click_article_search
-        expect(SearchPage.new).to be_displayed
+      it { is_expected.to have_gk_link }
+
+      it 'should have links to gk content' do
+        subject.click_dropdown
+        expect(subject.gk_content_dropdown).to have_content_links
+      end
+
+      it 'should have a link to Parenting' do
+        subject.click_dropdown
+        expect(subject.gk_content_dropdown.content_links.first.text).to eq( "Parenting")
       end
     end
   end
