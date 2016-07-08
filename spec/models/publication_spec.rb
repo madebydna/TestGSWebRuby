@@ -24,7 +24,7 @@ describe Publication do
   end
 
   describe '#create_attributes_for' do
-  	subject(:publication) { FactoryGirl.build(:publication) }
+    subject(:publication) { FactoryGirl.build(:publication) }
     context 'when multiple attributes need to be created' do
       it 'should call create attribute multiple times' do
         expect(publication).to receive(:create_attribute).exactly(3).times

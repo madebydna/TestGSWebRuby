@@ -75,7 +75,7 @@ module SchoolProfileReviewsDecorator
 
       if topic.overall?
         label = h.t('decorators.school_profile_reviews_decorator.overall_response', count: label.to_i)
-      elsif
+      else
         label = h.db_t(label)
       end
 

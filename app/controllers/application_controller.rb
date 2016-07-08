@@ -86,9 +86,9 @@ class ApplicationController < ActionController::Base
 # by default preserve the "lang" paramter on all links
   def set_locale
     begin
-    I18n.locale = params[:lang] || I18n.default_locale
-      rescue
-        I18n.locale = I18n.default_locale
+      I18n.locale = params[:lang] || I18n.default_locale
+    rescue
+      I18n.locale = I18n.default_locale
     end
   end
 

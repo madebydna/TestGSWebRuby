@@ -4,7 +4,7 @@ class ExactTarget
   class SmsSoap
 
 
-    def exacttarget_login()
+    def exacttarget_login
       FuelSDK::Client.new (
                               {
                                   'client' => {
@@ -16,19 +16,19 @@ class ExactTarget
     end
 
     # SET DATA EXTENSION ROW
-    # myClient = FuelSDK::Client.new {'client' => { 'id' => CLIENTID, 'secret' => SECRET }}
+    # my_client = FuelSDK::Client.new {'client' => { 'id' => CLIENTID, 'secret' => SECRET }}
     # dataextensionrow = FuelSDK::DataExtension::Row.new
-    # dataextensionrow.authStub = myClient
+    # dataextensionrow.authStub = my_client
     # dataextensionrow.Name = 'ExampleDEName'
     # dataextensionrow.props = {"Name" => "ExampleNameValue", "OtherField" => "Some randon text for the other field"}
     # results = dataextensionrow.post
     # p results
 
     # GET DATA EXTENSION ROW
-    def get_data_extension_row_status()
-      myClient = exacttarget_login()
+    def get_data_extension_row_status
+      my_client = exacttarget_login
       dataextensionrow = FuelSDK::DataExtension::Row.new
-      dataextensionrow.authStub = myClient
+      dataextensionrow.authStub = my_client
       dataextensionrow.name = '_MobileSubscription'
       dataextensionrow.props = ['_OptInStatusID', '_MobileNumber', '_OptInDate']
       # dataextensionrow.props = ["phone" => 14421544554, "email" => "mseltzer@greatschools.org", 'subscriber_id'=> 12]
@@ -38,7 +38,7 @@ class ExactTarget
       # p response
       #
       # dataextension = FuelSDK::DataExtension::Row.new
-      # dataextension.authStub = myClient
+      # dataextension.authStub = my_client
       # dataextension.Name = 'Mobile Test'
       require 'pry'
       binding.pry
@@ -48,9 +48,9 @@ class ExactTarget
 
     # GET DATA EXTENSION ROW
     def get_data_extension_row_mobile_test
-      myClient = exacttarget_login()
+      my_client = exacttarget_login
       dataextensionrow = FuelSDK::DataExtension::Row.new
-      dataextensionrow.authStub = myClient
+      dataextensionrow.authStub = my_client
       dataextensionrow.name = 'Mobile Test'
       dataextensionrow.props = ['phone', 'messaging_join_date', 'email']
       # dataextensionrow.props = ["phone" => 14421544554, "email" => "mseltzer@greatschools.org", 'subscriber_id'=> 12]
@@ -60,7 +60,7 @@ class ExactTarget
       # p response
       #
       # dataextension = FuelSDK::DataExtension::Row.new
-      # dataextension.authStub = myClient
+      # dataextension.authStub = my_client
       # dataextension.Name = 'Mobile Test'
       # require 'pry'
       # binding.pry
@@ -69,9 +69,9 @@ class ExactTarget
 
     # SET DATA EXTENSION ROW
     def set_data_extension_row(person_info)
-      myClient = exacttarget_login()
+      my_client = exacttarget_login
       dataextensionrow = FuelSDK::DataExtension::Row.new
-      dataextensionrow.authStub = myClient
+      dataextensionrow.authStub = my_client
       dataextensionrow.name = 'Mobile Test'
       # dataextensionrow.props = ['phone', 'messaging_join_date', 'email']
       p = person_info[:phone]
@@ -84,7 +84,7 @@ class ExactTarget
       # p response
       #
       # dataextension = FuelSDK::DataExtension::Row.new
-      # dataextension.authStub = myClient
+      # dataextension.authStub = my_client
       # dataextension.Name = 'Mobile Test'
       # require 'pry'
       # binding.pry
@@ -92,17 +92,17 @@ class ExactTarget
 
     end
 
-    # myClient = FuelSDK::Client.new {'client' => { 'id' => CLIENTID, 'secret' => SECRET }}
+    # my_client = FuelSDK::Client.new {'client' => { 'id' => CLIENTID, 'secret' => SECRET }}
     # dataextensionrow = FuelSDK::DataExtension::Row.new
-    # dataextensionrow.authStub = myClient
+    # dataextensionrow.authStub = my_client
     # dataextensionrow.Name = 'ExampleDEName'
     # dataextensionrow.props = ['FirstName', 'LastName', 'AnotherColumnName']
     # response = dataextensionrow.get
     # p respon.props = ["Name"]
     def get_columns
       dataextensioncolumn = FuelSDK::DataExtension::Column.new
-      myClient = exacttarget_login()
-      dataextensioncolumn.authStub = myClient
+      my_client = exacttarget_login
+      dataextensioncolumn.authStub = my_client
       dataextensioncolumn.props = ["Name", "CustomerKey"]
       dataextensioncolumn.filter = {'Property' => 'CustomerKey', 'SimpleOperator' => 'equals', 'Value' => '[6A8A3ED9-CFBD-4728-ADE8-B5885427CB1D].[Subscriber_key]'}
       response = dataextensioncolumn.get
@@ -111,10 +111,10 @@ class ExactTarget
 
 
     # GET DATA EXTENSIONS
-    def get_data_extensions()
-      myClient = exacttarget_login()
+    def get_data_extensions
+      my_client = exacttarget_login
       dataextension = FuelSDK::DataExtension.new
-      dataextension.authStub = myClient
+      dataextension.authStub = my_client
       # dataextension.Name = 'Mobile Test'
       # ObjectID
       # PartnerKey
