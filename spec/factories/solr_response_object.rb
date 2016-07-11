@@ -32,4 +32,11 @@ FactoryGirl.define do
     initialize_with { attributes.stringify_keys }
   end
 
+  factory :solr_response_object_alameda_high_school, class:Hash do
+    responseHeader FactoryGirl.build(:solr_response_header)
+    response FactoryGirl.build(:solr_response_for_alameda_high_school)
+
+    initialize_with { attributes.stringify_keys }
+  end
+
 end

@@ -36,4 +36,13 @@ FactoryGirl.define do
     initialize_with { attributes.stringify_keys }
   end
 
+  #solr doc has for alameda high school results
+  factory :solr_response_for_alameda_high_school, class:Hash do
+    numFound 1
+    start 0
+    docs { FactoryGirl.build_list(:solr_alameda_high_school_result_hash, 1) }
+
+    initialize_with { attributes.stringify_keys }
+  end
+
 end

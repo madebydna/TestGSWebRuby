@@ -119,4 +119,78 @@ FactoryGirl.define do
     initialize_with { attributes.stringify_keys }
   end
 
+
+  factory :solr_alameda_high_school_result_hash, class:Hash do
+    contentKey "school#CA1"
+    document_type "school"
+    school_id 1
+    school_nces_code "060177000041"
+    school_active true
+    scorecard_school "scorecard_school"
+    school_name "Alameda High School"
+    school_name_untokenized "Alameda High School"
+    school_name_ordered "Alameda High School"
+    school_sortable_name "Alameda High School"
+    school_phone "(510) 337-7022"
+    school_fax "(510) 521-4740"
+    school_website "http://aus.alamedausd.ca.schoolloop.com/"
+    school_affiliation "None"
+    school_student_teacher_ratio 22
+    school_size 1853
+    street "2201 Encinal Avenue"
+    city "Alameda"
+    citykeyword "alameda"
+    state "ca"
+    zip "94501"
+    address "2201 Encinal Avenue \nAlameda CA 94501"
+    school_physical_state "ca"
+    school_grade_range "9-12"
+    school_latitude 37.76426696777344
+    school_longitude -122.24809265136719
+    school_county "Alameda"
+    school_type "public"
+    is_school_for_new_profile true
+    is_new_gs_rating true
+    school_autotext "Alameda's Alameda High School is a public school serving 1853 students in grades 9-12. "
+    school_profile_path "/california/alameda/1-Alameda-High-School/"
+    school_district_id 1
+    school_district_nces_code "0601770"
+    school_district_charter_only false
+    ratings_count 25
+    ratings_activities 4
+    ratings_parents 3
+    ratings_quality 4
+    ratings_safety 4
+    ratings_principal 4
+    ratings_teachers 4
+    community_rating 4
+    school_review_count 8
+    school_review_blurb "Students here do not reach out to others. Many cliques al"
+    school_review_count_ruby 21
+    overall_gs_rating 9
+    sorted_gs_rating_asc 9
+    indexedTimestamp "2016-07-09T08:20:22.558Z"
+    arts_performing_written ["drama", "dance"]
+    girls_sports ["cheerleading", "cross_country","golf", "softball","tennis", "track","volleyball", "water_polo","swimming", "basketball","soccer"]
+    school_grade_level ["h", "high"]
+    instructional_model ["individual_instruction", "gifted", "AP_courses"]
+    boys_sports ["baseball", "cheerleading", "cross_country", "football", "golf", "tennis", "track", "volleyball", "water_polo", "swimming", "basketball", "soccer"]
+    school_schooldistrict_autosuggest ["Alameda High School", "Alameda City Unified School District", "ACUSD"]
+    arts_music ["chorus", "band"]
+    sports ["baseball", "cheerleading", "cross_country", "football", "golf", "tennis", "track", "volleyball", "water_polo", "swimming", "basketball", "soccer", "cheerleading", "cross_country", "golf", "softball", "tennis", "track", "volleyball", "water_polo", "swimming", "basketball", "soccer"]
+    ell_level ["moderate"]
+    foreign_language ["cantonese", "french", "spanish"]
+    transportation ["none"]
+    school_district_name ["Alameda City Unified School District", "ACUSD"]
+    collection_id ["14", "15"]
+    school_autosuggest ["Alameda High School", "Alameda", "Alameda City Unified School District", "ACUSD"]
+    special_ed_programs ["developmental_delay", "blindness", "multiple"]
+    staff_resources ["assistant_principal", "music_teacher", "pe_instructor", "dance_teacher"]
+    grades ["9", "10", "11", "12"]
+    school_database_state ["ca", "California"]
+    dress_code ["dress_code"]
+    facilities ["computer"]
+
+    initialize_with { attributes.stringify_keys }
+  end
 end
