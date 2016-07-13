@@ -1,7 +1,7 @@
 <footer class="footer rs-new-footer pbm gs-bootstrap">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 prl">
+      <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 prl">
         <%= image_tag('nav/footer_logo.png', class: 'mbl', width: "120px") %>
         <p class="strong" style="font-size:larger"><%= t('.about_gs.heading') %></p>
         <p><%= t('.about_gs.body') %></p>
@@ -9,9 +9,9 @@
         <p><%= t('.support_greatschools') %> <%= link_to(t('.donate_now'), 'https://greatschools.networkforgood.com/', target: "_blank") %>
   </p>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+      <div class="col-xs-12 col-sm-6 col-md-7">
         <div class="row">
-          <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="col-xs-12 col-md-4">
             <div class="heading"><%= t('.link_list_1')[:heading] %></div>
             <ul>
               <% t('.link_list_1')[:links].each do |link| %>
@@ -21,7 +21,7 @@
               <% end %>
             </ul>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="col-xs-12 col-md-4">
             <div class="heading"><%= t('.link_list_2')[:heading] %></div>
             <ul>
               <% t('.link_list_2')[:links].each do |link| %>
@@ -31,7 +31,7 @@
               <% end %>
             </ul>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-4">
+          <div class="col-xs-12 col-md-4">
             <div class="heading"><%= t('.connect_links')[:heading] %></div>
             <ul>
               <% t('.connect_links')[:links].each do |link| %>
@@ -44,10 +44,6 @@
             </ul>
           </div>
         </div>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 mbl">
-        <div class="heading">Translate this screen</div>
-        <%= render 'nav/google_translate_selector' %>
       </div>
     </div>
   </div>
