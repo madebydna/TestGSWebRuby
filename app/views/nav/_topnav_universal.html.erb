@@ -1,5 +1,4 @@
 <style>
-
   body {
     background: #FFFFFF;
     font-size: 14px;
@@ -119,7 +118,10 @@
     color: #666;
     padding-left: 8px;
     border: 1px solid #b8b8b8;
-    border-radius: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
     vertical-align: middle;
   }
 
@@ -147,6 +149,8 @@
     font-size: 12px;
     line-height: 1.5;
     border-radius: 4px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
     -webkit-user-select: none;
   }
 
@@ -352,6 +356,30 @@
     vertical-align: middle;
   }
 
+  .mobile-toggle-button {
+    display: inline-block;
+    width: 50%;
+    height: 46px;
+    border: solid #b8b8b8;
+    border-width: 1px 1px 0px 0px;
+    background-color: white;
+    color: darkgrey;
+    padding-top: 10px;
+  }
+  .mobile-toggle-button:first-of-type {
+    border-left: 1px solid grey;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+  .mobile-toggle-button:last-of-type {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+  .mobile-toggle-button.active {
+    background-color: #1e77a7;
+    color: white;
+  }
+
   /* Media Queries
   --------------------------------------------- */
 
@@ -517,6 +545,13 @@
       width: 100%;
       text-align: center;
     }
+
+    .search_form_field {
+      border-top-left-radius: 0px;
+    }
+    .search_form_button {
+      border-top-right-radius: 0px;
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
@@ -531,6 +566,12 @@
     .search_form_field {
       /*width:200px;*/
 
+    }
+  }
+
+  @media (min-width: 768px) {
+    .mobile-toggle-button {
+      display: none;
     }
   }
 
@@ -579,19 +620,34 @@
       </div>
       <div class="search_bar tc search_hide_mobile" style="">
         <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" style="width:100%; margin-bottom:0;" action="http://www.greatschools.org/search/search.page" method="get">
-          <div class="search_bar_size" style=" ">
-            <input type="text"
-                   name="locationSearchString"
-                   value=""
-                   data-prev-search=""
-                   id=""
-                   class='typeahead search-text full-width pam search_form_field'
-                   style="width:100%"
-                   placeholder="Find schools">
+          <div class="mobile-toggle-button active font-size-medium tac tav js-choose-school-search">
+            Schools
+          </div><!-- nospace --></%!--><div id="" class="mobile-toggle-button font-size-medium tac tav js-choose-content-search">
+            Parenting Topics
+          </div>
+          <div class="search_bar_size js-nav-search-bar" style=" ">
+            <span class="js-nav-school-search-input">
+              <input type="text"
+                     name="locationSearchString"
+                     value=""
+                     data-prev-search=""
+                     class='js-nav-school-search-input typeahead search-text full-width pam search_form_field'
+                     style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                     placeholder="Find schools">
+            </span>
+            <span class="js-nav-content-search-input dn">
+              <input type="text"
+                     name="s"
+                     value=""
+                     data-prev-search=""
+                     class='js-nav-content-search-input full-width search-text pam search_form_field'
+                     style="width:100% border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                     placeholder="Search for parenting info">
+            </span>
             <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
           </div>
           <div class="search_bar_button ">
-            <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary">
+            <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
               <span class="search_icon_image"></span></button>
           </div>
 
@@ -769,4 +825,33 @@
   mobileNavMenu[0].addEventListener("click", toggleNav, false);
   var mobileNavSearch = document.getElementsByClassName("search_icon_image");
   mobileNavSearch[0].addEventListener("click", toggleSearch, false);
+
+  (function() {
+    var chooseSchoolSearchButton = document.getElementsByClassName('js-choose-school-search')[0];
+    var chooseContentSearchButton = document.getElementsByClassName('js-choose-content-search')[0];
+    var searchForm = document.getElementsByClassName('js-schoolResultsSearchForm')[0];
+    var schoolSearchInput = document.getElementsByClassName('js-nav-school-search-input')[0];
+    var contentSearchInput = document.getElementsByClassName('js-nav-content-search-input')[0];
+
+    chooseSchoolSearchButton.onclick = function(e) {
+      removeClass(chooseSchoolSearchButton, 'active');
+      removeClass(chooseContentSearchButton, 'active');
+      addClass(chooseSchoolSearchButton, 'active');
+      searchForm.action = '/search/search.page';
+      removeClass(schoolSearchInput, 'dn');
+      addClass(contentSearchInput, 'dn');
+      e.stopImmediatePropagation();
+    };
+    chooseContentSearchButton.onclick = function(e) {
+      removeClass(chooseSchoolSearchButton, 'active');
+      removeClass(chooseContentSearchButton, 'active');
+      addClass(chooseContentSearchButton, 'active');
+      searchForm.action = '/gk/';
+      removeClass(contentSearchInput, 'dn');
+      addClass(schoolSearchInput, 'dn');
+      e.stopImmediatePropagation();
+    };
+
+  })();
+
 </script>
