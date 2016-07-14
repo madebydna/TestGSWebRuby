@@ -402,6 +402,15 @@ class SearchController < ApplicationController
       filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
     end
 
+    if should_apply_filter?(:indypk) || params_hash.include?('indypk')
+      indypk_params = params_hash['indypk']
+      indypk_params = [*indypk_params]
+      filters[:indy_omwpk] = true if indypk_params.include?('omwpk')
+      filters[:indy_ccdf] = true if indypk_params.include?('ccdf')
+      filters[:indy_indypsp] = true if indypk_params.include?('indypsp')
+      filters[:indy_scholarships] = true if indypk_params.include?('scholarships')
+    end
+
     if should_apply_filter?(:gstq_rating) || params_hash.include?('gstq_rating')
       gstq_rating_params = [*params_hash['gstq_rating']]
       all_ratings = %w[1 2 3 4 5]
