@@ -54,7 +54,7 @@ class UserVerificationToken
   def user
     return @_user if defined?(@_user)
     @_user = (
-      @user = User.find_by_id(@user_id)
+      User.find_by_id(@user_id)
     )
   end
 
