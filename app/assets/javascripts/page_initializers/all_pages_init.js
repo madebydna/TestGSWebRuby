@@ -103,5 +103,5 @@ $(function() {
   GS.handlebars.registerHelpers();
   GS.I18n.initLanguageLinkListener();
   GS.modal.manager.attachDOMHandlers();
-
+  GS.googleMap.addToInitDependencyCallbacks(GS.util.wrapFunction(GS.search.schoolSearchForm.init, this, []));
 });
