@@ -14,7 +14,7 @@ if (typeof(gon) !== 'undefined' ) {
   GS.search.stateAbbreviation = gon.state_abbr;
 }
 
-GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
+GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function($) {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
@@ -22,6 +22,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
+    var mobileShortPlaceholder = 'City, zip, address or school';
+    var mobileLongPlaceholder = 'Find a great school';
 
     var init = function() {
         $('.js-findByLocationForm').submit(function() {
@@ -45,7 +47,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
         $('.js-schoolResultsSearchForm').submit(function() {
-
             var input = $(this).find(schoolResultsSearchSelector)[0];
             var valid = validateField(input, input['placeholder']);
           // forcing location search on home page button click.  Select will do direct linking.
@@ -530,10 +531,10 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 
     var placeholderMobile = function () {
         if ($(window).width() < 481) {
-            $('.js-mobile-placeholder').html(GS.I18n.t('search_form.short_placeholder'));
+            $('.js-mobile-placeholder').html(mobileShortPlaceholder);
         }
         else {
-            $('.js-mobile-placeholder').html(GS.I18n.t('search_form.long_placeholder'));
+            $('.js-mobile-placeholder').html(mobileLongPlaceholder);
         }
     };
 
@@ -564,4 +565,4 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         setupToolTip: setupToolTip,
         closeFilters: closeFilters
     };
-})();
+})(jQuery);

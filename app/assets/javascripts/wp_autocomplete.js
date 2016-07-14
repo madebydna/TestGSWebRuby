@@ -1,4 +1,5 @@
 //= require ./util/uri.js
+//= require ./util/i18n
 //= require ./resources/typeahead_modified.bundle
 //= require ./resources/handlebars-v4.0.2
 //= require ./autocomplete/search_autocomplete
