@@ -18,7 +18,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
-    var schoolResultsSearchSelector = 'input#js-schoolResultsSearch';
+    var schoolResultsSearchSelector = "input[name='locationSearchString']";
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
@@ -174,7 +174,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var submitByLocationSearch = function(geocodeCallbackFn) {
-        var searchQuery = getSearchQuery();
+        var self = this;
+        var searchQuery = getSearchQuery(self);
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
 
         if (searchQuery != '' &&
@@ -199,7 +200,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 //                    data['totalResults'] = geocodeResult['totalResults'];
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
-                    (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
+                    (geocodeCallbackFn || defaultGeocodeCallbackFn)(data, searchQuery);
                 } else {
                     if (GS.search.stateAbbreviation && getStateFullName(GS.search.stateAbbreviation)) {
                         alert("Location not found in " + getStateFullName(GS.search.stateAbbreviation) + ". Please enter a valid address, city, or ZIP.");
@@ -215,19 +216,19 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
-    var getSearchQuery = function() {
-        var searchQuery = $(GS.search.schoolSearchForm.findByLocationSelector).val();
+    var getSearchQuery = function(self) {
+        var searchQuery = $(self).find(GS.search.schoolSearchForm.findByLocationSelector).val();
         return searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
     };
 
-    var defaultGeocodeCallbackFn = function(geocodeResult) {
+    var defaultGeocodeCallbackFn = function(geocodeResult, searchQuery) {
         var searchOptions = jQuery.extend({}, geocodeResult);
         for (var urlParam in searchOptions) {
             if (searchOptions.hasOwnProperty(urlParam)) {
                 searchOptions[urlParam] = encodeURIComponent(searchOptions[urlParam]);
             }
         }
-        searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
+        searchOptions['locationSearchString'] = encodeURIComponent(searchQuery);
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
 
         // Not setting a timeout breaks back button
