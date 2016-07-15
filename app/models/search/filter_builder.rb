@@ -142,11 +142,11 @@ class FilterBuilder
         callback_type: 'cache_key',
         options: {
           value: 'ptq_rating_vouchers',
-          version: 1
+          version: 2
         }
       },
       ptq_rating_callback,
-      voucher_callback,
+      indy_extras_callback,
     ]
   end
 
@@ -239,6 +239,25 @@ class FilterBuilder
         enrollment: {
           label: t('Enrollment'), display_type: :title, name: :enrollment, filters: {
             filter1: { label: t('Accepts vouchers (private schools only)'), display_type: :basic_checkbox, name: :enrollment, value: :vouchers }
+          }
+        }
+      }
+    }
+  end
+
+  def indy_extras_callback
+    # Note that this callback is different than the rest because it needs to be combined
+    # with another. Regular callbacks should all include a cache_key component.
+    {
+      conditions: [{key: 'name', match: 'group3'},{key: 'display_type', match: 'filter_column_secondary'}], callback_type: 'append_to_children', options:
+      {
+        enrollment: {
+          label: t('Enrollment'), display_type: :title, name: :enrollment, filters: {
+            vouchers: { label: t('Accepts vouchers (private schools only)'), display_type: :basic_checkbox, name: :enrollment, value: :vouchers },
+            omwpk: { label: t('On My Way Pre-K'), display_type: :basic_checkbox, name: :indypk, value: :omwpk },
+            ccdf: { label: t('Child Care Development Fund (CCDF)'), display_type: :basic_checkbox, name: :indypk, value: :ccdf },
+            indypsp: { label: t('Indianapolis Preschool Scholarship Program (INDYPSP)'), display_type: :basic_checkbox, name: :indypk, value: :indypsp }
+            #scholarships: { label: t('Offers Scholarships (based on provider reports)'), display_type: :basic_checkbox, name: :indypk, value: :scholarships }
           }
         }
       }
