@@ -408,6 +408,29 @@ describe 'School Search Service' do
         expect(rval).to include('+great_start_to_quality_rating:(4 5)')
       end
     end
+
+    describe 'handles indy preschool filters' do
+      subject { SchoolSearchService.extract_hard_filters(filters) }
+      describe 'should include the omwpk filter' do
+        let (:filters) { {filters: {indy_omwpk: true}}}
+        it { should include('+omwpk_provider:true') }
+      end
+
+      describe 'should include the indypsp filter' do
+        let (:filters) { {filters: {indy_indypsp: true}}}
+        it { should include('+indypsp_provider:true') }
+      end
+
+      describe 'should include the ccdf filter' do
+        let (:filters) { {filters: {indy_ccdf: true}}}
+        it { should include('+ccdf_provider:true') }
+      end
+
+      describe 'should include the scholarships filter' do
+        let (:filters) { {filters: {indy_scholarships: true}}}
+        it { should include('+scholarships_offered:true') }
+      end
+    end
   end
 
   describe '.extract_by_location' do
