@@ -292,10 +292,61 @@
     background-color: #EEEEEE;
   }
 
-  li > a:after {
-    content: ' \25bc';
-    font-size: 8px;
+  li > label {
+    margin-bottom: 0px;
   }
+
+  li > a:after {
+    content: ' \25BC';
+    font-size: 8px;
+    color: #666;
+    vertical-align: middle;
+  }
+  li > a:hover:after {
+    color: #167ba5;
+  }
+
+  li li > a:after {
+    content: ' \203A';
+    font-size: 24px;
+    float: right;
+    color: #CCCCDD;
+  }
+
+  li.open li > a:hover:after {
+    font-size: 24px;
+    float: right;
+    color: #167ba5;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  nav > ul > li > a {
+    padding: 5px 20px;
+  }
+
+  li > label:after {
+    content: ' \203A';
+    font-size: 24px;
+    float: right;
+    color: #CCCCDD;
+  }
+
+
+  label.open:after {
+    font-size: 24px;
+    float: right;
+    <%# color: #167ba5; %>
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
 
   li > a:only-child:after {
     content: '';
@@ -316,7 +367,7 @@
     display: none;
     position: absolute;
     top: 25px;
-    border: 1px solid #555566;
+    border: 1px solid #EEEEEE;
     background-color: #FFFFFF;
     width: 150px;
     z-index: 1;
@@ -439,12 +490,16 @@
       font-size: 14px;
       line-height: 28px;
       text-decoration: none;
-      border: none;
+      <%# border: none; %>
       width: 100%;
     }
 
-    .toggle:hover {
-      background-color: #fff;
+    nav .toggle:hover {
+      background-color: #EEEEEE;
+      color: #167ba5;
+    }
+    nav .toggle:hover:after {
+      color: #167ba5;
     }
 
     [id^=drop]:checked + ul {
@@ -462,10 +517,13 @@
       position: relative;
       border-top: 1px solid #EEEEEE;
     }
+    nav ul li:last-of-type {
+      border-bottom: 1px solid #EEEEEE;
+    }
 
     nav ul ul .toggle,
     nav ul ul a {
-      padding: 5px 40px;
+      padding: 5px 20px 5px 40px;
       width: 100%;
     }
 
@@ -798,6 +856,11 @@
       el.className = el.className.replace(reg, ' ')
     }
   }
+  function toggleClass(el, className) {
+    if (el.classList) {
+      el.classList.toggle(className);
+    }
+  }
   function toggleSearch(evt) {
     console.log('here');
     var menu = document.getElementsByClassName('search_bar');
@@ -836,6 +899,17 @@
   mobileNavMenu[0].addEventListener("click", toggleNav, false);
   var mobileNavSearch = document.getElementsByClassName("search_icon_image");
   mobileNavSearch[0].addEventListener("click", toggleSearch, false);
+
+  (function() {
+    menuItems = document.querySelectorAll('nav > ul li label');
+    numberOfItems = menuItems.length;
+    for(var i = 0; i < numberOfItems; i++) {
+      menuItems[i].onclick = function(e) {
+        var item = e.target;
+        toggleClass(item, 'open');
+      }
+    }
+  })();
 
   (function() {
     var chooseSchoolSearchButton = document.getElementsByClassName('js-choose-school-search')[0];
