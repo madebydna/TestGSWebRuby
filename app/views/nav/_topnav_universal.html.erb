@@ -438,6 +438,83 @@
     color: white;
   }
 
+  .desktop-search-toggle {
+    vertical-align: middle;
+    padding: 0 10px;
+    position: relative;
+    border: 1px solid #b8b8b8;
+    min-width: 100px;
+      cursor: pointer;
+  }
+
+  .desktop-search-toggle a {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .desktop-search-toggle a:hover {
+    text-decoration: none;
+    color: #000;
+  }
+
+  .desktop-search-toggle:hover .desktop-search-menu{
+    display: inherit;
+    border-top: 0px;
+    }
+
+  .desktop-search-toggle:hover {
+    border-bottom-left-radius: 0;
+    border-bottom: none;
+  }
+
+  .desktop-toggle-search-arrow {
+    font-size: 8px;
+    position: absolute;
+    right: 10px;
+    top: 17px;
+  }
+
+  .desktop-search-menu  {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    z-index: 1000;
+    float: left;
+    min-width: 100px;
+    padding: 9px 0;
+    margin: 0 0;
+    height: 40px;
+    font-size: 1rem;
+    color: #000;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #b8b8b8;
+    border-radius: 0;
+  }
+
+  .desktop-search-menu:hover {
+    background-color: #eee;
+  }
+
+  .dropdown-item {
+    text-decoration: none; 
+    display: block;
+    width: 100%;
+    padding: 0 10px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+  }
+
   /* Media Queries
   --------------------------------------------- */
 
@@ -694,7 +771,14 @@
           </div><!-- nospace --></%!--><div id="" class="mobile-toggle-button font-size-medium tac tav js-choose-content-search">
             Parenting Topics
           </div>
-          <div class="search_bar_size js-nav-search-bar" style=" ">
+          <div class="search_hide_mobile desktop-search-toggle js-desktop-search-toggle">
+            <a class="js-desktop-search-toggle-link js-school-search"> Schools </a>
+            <span class="desktop-toggle-search-arrow">&#x25bc;</span>
+            <div class="desktop-search-menu js-desktop-search-menu">
+              <a class="dropdown-item js-desktop-search-dropdown-item">Parenting</a>
+            </div>
+          </div>
+          <div class="search_bar_size js-nav-search-bar">
             <span class="js-nav-school-search-input">
               <input type="text"
                      name="locationSearchString"
@@ -714,12 +798,10 @@
                      placeholder="Search for parenting info">
             </span>
             <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
-          </div>
-          <div class="search_bar_button ">
+          </div><div class="search_bar_button">
             <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
               <span class="search_icon_image"></span></button>
           </div>
-
         </form>
       </div>
       <div class="navigation tc">
@@ -895,6 +977,49 @@
     }
   }
   ;
+
+  function toggleDesktopSearchMenu(evt) {
+    var desktopSearchMenu = document.getElementsByClassName('js-desktop-search-menu')[0];
+      if (hasClass(desktopSearchMenu, 'dn')) {
+        removeClass(desktopSearchMenu, 'dn');
+      } else {
+        addClass(desktopSearchMenu, 'dn');
+      }
+  }
+  ;
+
+  function toggleDesktopSearchBar(evt) {
+    var toggleLink = document.getElementsByClassName('js-desktop-search-toggle-link')[0];
+    var dropdownItem = document.getElementsByClassName('js-desktop-search-dropdown-item')[0];
+    var schoolSearchText = 'Schools';
+    var contentText = 'Parenting';
+    var schoolSearchInput = document.getElementsByClassName('js-nav-school-search-input')[0];
+    var contentSearchInput = document.getElementsByClassName('js-nav-content-search-input')[0];
+
+    if (hasClass(toggleLink, 'js-school-search')) {
+      removeClass(toggleLink, 'js-school-search');
+      addClass(toggleLink, 'js-content-search');
+      toggleLink.innerHTML = contentText;
+      dropdownItem.innerHTML = schoolSearchText;
+      removeClass(contentSearchInput, 'dn');
+      addClass(schoolSearchInput, 'dn');
+    } else {
+      removeClass(toggleLink, 'js-content-search');
+      addClass(toggleLink, 'js-school-search');
+      toggleLink.innerHTML = schoolSearchText;
+      dropdownItem.innerHTML = contentText;
+      removeClass(schoolSearchInput, 'dn');
+      addClass(contentSearchInput, 'dn');
+    }
+  }
+  ;
+
+  var desktopSearchToggle = document.getElementsByClassName("js-desktop-search-toggle");
+  desktopSearchToggle[0].addEventListener("click", toggleDesktopSearchMenu, false);
+
+  var desktopSearchDropdownItem = document.getElementsByClassName("js-desktop-search-dropdown-item");
+  desktopSearchDropdownItem[0].addEventListener("click", toggleDesktopSearchBar, false);
+
   var mobileNavMenu = document.getElementsByClassName("menu-btn");
   mobileNavMenu[0].addEventListener("click", toggleNav, false);
   var mobileNavSearch = document.getElementsByClassName("search_icon_image");
