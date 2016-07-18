@@ -83,6 +83,10 @@
     display: inline;
   }
 
+  .un ul.menu li.dn {
+    display: none;
+  }
+
   .un ul.menu li.featured_visible_mobile {
     display: none;
   }
@@ -890,14 +894,14 @@
                 <a class="hidden-sm" href="https://greatschools.networkforgood.com/" target="_blank" style="color: #659714;">Donate</a>
               </li>
               <li class=""><a class="hidden-sm" href="#">En Espanol</a></li>
-              <li>
+              <li class="account_nav_out"><a class="hidden-sm" href="/gsr/login/">Sign in</a></li>
+              <li class="account_nav_in dn">
                 <label for="drop-7" class="toggle">My Account </label>
                 <a href="#">My Account </a>
                 <input type="checkbox" id="drop-7"/>
                 <ul>
-                  <li><a href="/gk/category/academics/reading-2/">My School List</a></li>
-                  <li><a href="/gk/category/academics/math-2/">Account Settings</a></li>
-                  <li><a href="/gk/category/academics/writing-2/">Sign Out</a></li>
+                  <li><a href="/account/">Account Settings</a></li>
+                  <li><a href="/logout/">Sign Out</a></li>
                 </ul>
               </li>
               <li class="featured_visible_mobile featured">
@@ -914,9 +918,10 @@
               </li>
             </ul>
           </nav>
-        </div>
       </div>
     </div>
+    </div>
+
   </div>
 </div>
   <div class="un" style="">
@@ -1053,7 +1058,32 @@
     }
   })();
 
+  function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  var isSignedIn = function () {
+    return readCookie('community_www') != null || readCookie('community_dev') != null;
+  };
+
   (function() {
+    if (isSignedIn()) {
+      var accountNavSignedIn = document.getElementsByClassName('account_nav_in')[0];
+      var accountNavSignedOut = document.getElementsByClassName('account_nav_out')[0];
+      removeClass(accountNavSignedIn, 'dn');
+      addClass(accountNavSignedOut, 'dn');
+    }
+
+  })();
+
+  (function () {
     var chooseSchoolSearchButton = document.getElementsByClassName('js-choose-school-search')[0];
     var chooseContentSearchButton = document.getElementsByClassName('js-choose-content-search')[0];
     var searchForm = document.getElementsByClassName('js-schoolResultsSearchForm')[0];
@@ -1074,7 +1104,6 @@
       removeClass(contentSearchForm, 'dn');
       addClass(schoolSearchForm, 'dn');
     };
-
   })();
 
 </script>
