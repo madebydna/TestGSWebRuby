@@ -31,6 +31,9 @@
     background-color: #FFFFFF;
   }
 
+  .univeral-navigation .dt {
+    display: table;
+  }
   .univeral-navigation .tr {
     display: table-row;
   }
@@ -46,7 +49,6 @@
   }
 
   .univeral-navigation .search_bar {
-    display: table-cell;
     width: 100%;
     /*background-color: #0000FF;*/
     padding: 2px 20px;
@@ -764,8 +766,8 @@
       <div class='search_icon' style="text-align:right; padding-right:10px; margin-top:10px;  vertical-align: middle;">
         <span class="search_icon_image"></span>
       </div>
-      <div class="search_bar tc search_hide_mobile" style="">
-        <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" style="width:100%; margin-bottom:0;" action="http://www.greatschools.org/search/search.page" method="get">
+      <div class="search_bar search_hide_mobile">
+        <div class="dt">
           <div class="mobile-toggle-button active font-size-medium tac tav js-choose-school-search">
             Schools
           </div><!-- nospace --></%!--><div id="" class="mobile-toggle-button font-size-medium tac tav js-choose-content-search">
@@ -778,31 +780,41 @@
               <a class="dropdown-item js-desktop-search-dropdown-item">Parenting</a>
             </div>
           </div>
-          <div class="search_bar_size js-nav-search-bar">
-            <span class="js-nav-school-search-input">
-              <input type="text"
-                     name="locationSearchString"
-                     value=""
-                     data-prev-search=""
-                     class='js-nav-school-search-input typeahead search-text full-width pam search_form_field'
-                     style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-                     placeholder="City, zip, address or school">
-            </span>
-            <span class="js-nav-content-search-input dn">
-              <input type="text"
-                     name="s"
-                     value=""
-                     data-prev-search=""
-                     class='js-nav-content-search-input full-width search-text pam search_form_field'
-                     style="width:100% border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-                     placeholder="Search for parenting info">
-            </span>
-            <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
-          </div><div class="search_bar_button">
-            <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-              <span class="search_icon_image"></span></button>
-          </div>
-        </form>
+          <form name="schoolResultsSearchForm" class="js-nav-school-search-from js-schoolResultsSearchForm" style="width: 100%; margin-bottom:0;" action="http://www.greatschools.org/search/search.page" method="get">
+            <div class="search_bar_size js-nav-search-bar">
+              <span class="js-nav-school-search-input">
+                <input type="text"
+                      name="locationSearchString"
+                      value=""
+                      data-prev-search=""
+                      class='js-nav-school-search-input typeahead search-text full-width pam search_form_field'
+                      style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                      placeholder="City, zip, address or school">
+              </span>
+              <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
+            </div><div class="search_bar_button">
+              <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                <span class="search_icon_image"></span></button>
+            </div>
+          </form>
+          <form name="contentResultsSearchForm" class="js-nav-content-search-form dn" style="width: 100%; margin-bottom:0;" action="/gk/" method="get">
+            <div class="search_bar_size js-nav-search-bar">
+              <span class="js-nav-content-search-input">
+                <input type="text"
+                      name="s"
+                      value=""
+                      data-prev-search=""
+                      class='js-nav-content-search-input full-width search-text pam search_form_field'
+                      style="width:100% border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                      placeholder="Search for parenting info">
+              </span>
+              <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
+            </div><div class="search_bar_button">
+              <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                <span class="search_icon_image"></span></button>
+            </div>
+          </form>
+        </div>
       </div>
       <div class="navigation tc">
         <nav class="tc">
@@ -899,6 +911,7 @@
           </ul>
         </nav>
       </div>
+      </div>
     </div>
 
   </div>
@@ -993,23 +1006,23 @@
     var dropdownItem = document.getElementsByClassName('js-desktop-search-dropdown-item')[0];
     var schoolSearchText = 'Schools';
     var contentText = 'Parenting';
-    var schoolSearchInput = document.getElementsByClassName('js-nav-school-search-input')[0];
-    var contentSearchInput = document.getElementsByClassName('js-nav-content-search-input')[0];
+    var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
+    var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
 
     if (hasClass(toggleLink, 'js-school-search')) {
       removeClass(toggleLink, 'js-school-search');
       addClass(toggleLink, 'js-content-search');
       toggleLink.innerHTML = contentText;
       dropdownItem.innerHTML = schoolSearchText;
-      removeClass(contentSearchInput, 'dn');
-      addClass(schoolSearchInput, 'dn');
+      removeClass(contentSearchForm, 'dn');
+      addClass(schoolSearchForm, 'dn');
     } else {
       removeClass(toggleLink, 'js-content-search');
       addClass(toggleLink, 'js-school-search');
       toggleLink.innerHTML = schoolSearchText;
       dropdownItem.innerHTML = contentText;
-      removeClass(schoolSearchInput, 'dn');
-      addClass(contentSearchInput, 'dn');
+      removeClass(schoolSearchForm, 'dn');
+      addClass(contentSearchForm, 'dn');
     }
   }
   ;
@@ -1040,26 +1053,22 @@
     var chooseSchoolSearchButton = document.getElementsByClassName('js-choose-school-search')[0];
     var chooseContentSearchButton = document.getElementsByClassName('js-choose-content-search')[0];
     var searchForm = document.getElementsByClassName('js-schoolResultsSearchForm')[0];
-    var schoolSearchInput = document.getElementsByClassName('js-nav-school-search-input')[0];
-    var contentSearchInput = document.getElementsByClassName('js-nav-content-search-input')[0];
+    var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
+    var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
 
     chooseSchoolSearchButton.onclick = function(e) {
       removeClass(chooseSchoolSearchButton, 'active');
       removeClass(chooseContentSearchButton, 'active');
       addClass(chooseSchoolSearchButton, 'active');
-      searchForm.action = '/search/search.page';
-      removeClass(schoolSearchInput, 'dn');
-      addClass(contentSearchInput, 'dn');
-      e.stopImmediatePropagation();
+      removeClass(schoolSearchForm, 'dn');
+      addClass(contentSearchForm, 'dn');
     };
     chooseContentSearchButton.onclick = function(e) {
       removeClass(chooseSchoolSearchButton, 'active');
       removeClass(chooseContentSearchButton, 'active');
       addClass(chooseContentSearchButton, 'active');
-      searchForm.action = '/gk/';
-      removeClass(contentSearchInput, 'dn');
-      addClass(schoolSearchInput, 'dn');
-      e.stopImmediatePropagation();
+      removeClass(contentSearchForm, 'dn');
+      addClass(schoolSearchForm, 'dn');
     };
 
   })();
