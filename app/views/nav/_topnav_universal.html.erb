@@ -20,6 +20,10 @@
     clear: both;
   }
 
+  .un div.dn {
+    display: none;
+  }
+
   .un .visible-xs {
     display: none !important;
   }
@@ -367,7 +371,6 @@
    .un nav ul ul {
     display: none;
     position: absolute;
-    top: 25px;
     border: 1px solid #EEEEEE;
     background-color: #FFFFFF;
     width: 150px;
@@ -394,9 +397,9 @@
    .un nav ul ul ul {
     position: absolute;
     /*background-color: #FFFFFF;*/
-    top: -42px;
-    left: 150px;
-    width: 150px;
+    top: -39px;
+    left: 148px;
+    width: 180px;
   }
 
    .un nav ul ul ul li:hover {
@@ -721,7 +724,12 @@
       width: 240px;
     }
     .un nav > ul > li > ul {
-      margin-left:-48px;
+      margin-left:-25px;
+      width: 145px;
+    }
+    .un nav > ul ul ul {
+      width: 145px;
+      left: 143px;
     }
 
     .un .search_form_field {
@@ -779,7 +787,7 @@
         <div class='search_icon' style="text-align:right; padding-right:10px; margin-top:10px;  vertical-align: middle;">
           <span class="search_icon_image"></span>
         </div>
-        <div class="search_bar search_hide_mobile">
+        <div class="search_bar search_hide_mobile dn">
           <div class="dt">
             <div class="mobile-toggle-button active font-size-medium tac tav js-choose-school-search">
               Schools
@@ -924,12 +932,12 @@
             </ul>
           </nav>
       </div>
-    </div>
+      <div class="tc" style="width:100%;"></div>
+      </div>
     </div>
 
   </div>
-</div>
-  <div class="un" style="">
+  <div class="js-featured un dn" style="">
     <div class="tc" style="text-align:left; width:1200px">
       <ul class="featured menu hidden-xs" style="">
         <li class="title"><span>FEATURED</span></li>
@@ -1109,6 +1117,23 @@
       removeClass(contentSearchForm, 'dn');
       addClass(schoolSearchForm, 'dn');
     };
+  })();
+
+  (function() {
+    var searchBar = document.querySelector('.un .search_bar');
+    var featuredSection = document.querySelector('.js-featured');
+    var pathsWithoutNavSearch = ['/'];
+    var i = pathsWithoutNavSearch.length;
+    var matchesAnyPaths = false;
+    while(i--) {
+      if (pathsWithoutNavSearch[i] == window.location.pathname) {
+        matchesAnyPaths = true;
+      }
+    }
+    if(matchesAnyPaths == false) {
+      removeClass(searchBar, 'dn');
+      removeClass(featuredSection, 'dn');
+    }
   })();
 
 </script>
