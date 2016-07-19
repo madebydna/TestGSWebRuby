@@ -6,7 +6,6 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
     var init = function(state_abbr) {
         Handlebars.registerHelper('addLangToUrl', function(url) {
           return GS.uri.Uri.copyParam('lang', GS.uri.Uri.getHref(), url);
-          return url;
         });
         attachAutocomplete(state_abbr);
         attachAutocompleteHandlers();
