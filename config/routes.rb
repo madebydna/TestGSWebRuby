@@ -207,6 +207,12 @@ LocalizedProfiles::Application.routes.draw do
     get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
     get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
 
+    ##todo: check to see if these routes are necessary
+    get '/gk/category/school-life/', as: :school_life
+    get '/gk/category/academics/reading/', as: :reading
+    get '/gk/category/academics/math/', as: :math
+
+
     get '/status/error404.page'
   end
 
