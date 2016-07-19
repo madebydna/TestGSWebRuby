@@ -96,7 +96,7 @@
   }
 
   .un ul.featured li a {
-    font-size: 12px;
+    font-size: 13px;
     padding-top: 14px;
     color: #26abe2;
     padding-right: 20px;
@@ -286,7 +286,7 @@
     display: block;
     padding: 0px 20px;
     color: #000;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 28px;
     text-decoration: none;
   }
@@ -329,6 +329,7 @@
 
    .un nav > ul > li > a {
     padding: 5px 20px;
+    text-transform: uppercase;
   }
 
    .un li > label:after {
@@ -353,13 +354,6 @@
 
    .un li > a:only-child:after {
     content: '';
-  }
-
-  .un .featured span {
-    padding: 3px 6px;
-    background-color: #fb960f;
-    border-radius: 3px;
-    color: white;
   }
 
    .un nav ul li ul li:hover {
@@ -531,7 +525,6 @@
   --------------------------------------------- */
 
   @media all and (max-width: 767px) {
-
     .un {
       display: block;
     }
@@ -616,7 +609,7 @@
     .un nav ul li {
       display: block;
       width: 100%;
-      font: 14px "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
+      font: 13px "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
       position: relative;
       border-top: 1px solid #EEEEEE;
     }
@@ -687,6 +680,10 @@
   }
 
   @media (max-width: 767px) {
+    .nav-padding {
+      padding-top: 49px;
+    }
+
     .un .visible-xs {
       display: block !important;
     }
@@ -981,6 +978,7 @@
     </div>
   </div>
 </div>
+<div class="nav-padding"></div>
 <script type="text/javascript">
 
   function hasClass(el, className) {
@@ -1172,7 +1170,7 @@
       removeClass(changeLanguageLink, 'hidden-sm');
       removeClass(donateLink, 'hidden-sm');
       addClass(jsNavExtraTableCell, 'hidden-sm');
-      navMenu.style.width = '400px';
+      navMenu.style.width = '450px';
     }
   })();
 
