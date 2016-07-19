@@ -216,6 +216,11 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/careers', as: :careers
     get '/gk/funders', as: :funders
     get '/gk/about', as: :about
+    get '/gk/category/school-life/', as: :school_life
+    get '/gk/category/academics/reading/', as: :reading
+    get '/gk/category/academics/math/', as: :math
+
+
     get '/status/error404.page'
   end
 

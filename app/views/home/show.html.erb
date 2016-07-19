@@ -10,8 +10,8 @@
           GS.util.setupImages(
             {
               selector: '.is-scaled',
-              desktopImage: '<%= image_path('home/homepage_hero.jpg')%>',
-              mobileImage: '<%= image_path('home/hero_mobile.jpg')%>',
+              desktopImage: '<%= image_path('home/slideshow/home_1600_6.jpg')%>',
+              mobileImage: '<%= image_path('home/slideshow/home_480_6.jpg')%>',
               classes: 'scaling'
             }
           );
@@ -28,29 +28,39 @@
 <% end %>
 
 <div id="home-page" class="gs-bootstrap container-fluid">
-  <div class="row">
+
   <%= render layout: 'hero' do %>
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
         <div class="mtxl hidden-xs"></div>
-        <div class="oa tac text_fff pal darken">
-          <h1 class="jumbo-text-sub text_fff"><%= t('.heading') %></h1>
-          <div class="subtitle ts"><%= t('.subheading') %></div>
+        <div class="oa text_fff pal darken">
+          <h1 class="text_fff"><%= t('.heading') %></h1>
+          <div class="subtitle ts uc mtl"><%= t('.subheading') %></div>
           <%= render partial: 'home/search_form' %>
-          <div class="mtm">
-            <%= render partial: 'home/gk_content' %>
+
+            <div class="parent-content uc">
+              <div class="subtitle ts mbm"><%= t('.subheading_content') %></div>
+              <%= link_to t('.raising_kids_html'), greatkids_home_url %>
+                <span class="phs">|</span>
+              <%= link_to t('.school_life_html'), school_life_url %>
+                <span class="phs">|</span>
+              <%= link_to t('.worksheets_html'), worksheets_and_activities_url %>
+              <%= link_to t('.reading_html'), reading_url %>
+                <span class="phs">|</span>
+              <%= link_to t('.math_html'), math_url %>
+                <span class="phs">|</span>
+              <%= link_to t('.emotional_smarts_html'), emotional_smarts_url %>
+
           </div>
         </div>
       </div>
     </div>
-  </div>
     <% end %>
-
 
   <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-      <p class="mission-text">We help millions of parents get a great education for their child.</p>
-      <p class="tac pbl"><a href="/gk/about/" class="font-size-xl">Learn more</a></p>
+      <p class="mission-text"><%= t('.mission-text') %></p>
+      <p class="tac pbl"><a href="/gk/about/" class="font-size-xl"><%= t('.learn-more') %></a></p>
     </div>
   </div>
 </div>

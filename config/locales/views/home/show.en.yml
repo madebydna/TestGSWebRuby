@@ -1,14 +1,9 @@
 en:
   home:
-    hero:
+    show:
       heading: Guide your child to a great future
       subheading: Find a great school
+      subheading_content: Explore parenting content
       mission-text: We help millions of parents get a great education for their child.
       learn-more: Learn more
-      subheading_content: Explore parenting content
-      raising_kids_html: Raising&nbsp;kids
       school_life_html: School&nbsp;life
-      worksheets_html: Worksheets
-      reading_html: Reading
-      math_html: Math
-      emotional_smarts_html: Emotional&nbsp;smarts

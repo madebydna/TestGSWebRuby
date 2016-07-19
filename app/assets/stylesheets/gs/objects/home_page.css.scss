@@ -20,10 +20,17 @@
     }
   }
   .darken {
-    background-image: linear-gradient(
-      rgba(0, 0, 0, 0.2),
-      rgba(0, 0, 0, 0.3)
-    );
     overflow: visible;
+    background: rgba(0, 0, 0, 0.65);
+  }
+  .parent-content {
+    margin-top: $spacing-large;
+    width: 350px;
+    @media (max-width: $screen-sm-min) {
+      width: 300px;
+      a {
+        font-size: $font-size-small;
+      }
+    }
   }
 }
