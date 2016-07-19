@@ -739,7 +739,6 @@
     .un .hidden-sm {
       display: none !important;
     }
-
     .un nav ul {
       width: 240px;
     }
@@ -937,10 +936,10 @@
                 </ul>
               </li>
               <li class="">
-                <a class="hidden-sm" href="https://greatschools.networkforgood.com/" target="_blank" style="color: #659714;">Donate</a>
+                <a class="js-donate-link hidden-sm" href="https://greatschools.networkforgood.com/" target="_blank" style="color: #659714;">Donate</a>
               </li>
               <li class=""><a class="hidden-sm jsChangeLanguageLink" href="#">En Espanol</a></li>
-              <li class="account_nav_out"><a class="hidden-sm" href="/gsr/login/">Sign in</a></li>
+              <li class="account_nav_out"><a href="/gsr/login/">Sign in</a></li>
               <li class="account_nav_in dn">
                 <label for="drop-7" class="toggle">My Account </label>
                 <a href="#">My Account </a>
@@ -964,7 +963,7 @@
             </ul>
           </nav>
       </div>
-      <div class="tc" style="width:100%;"></div>
+      <div class="tc js-nav-extra-table-cell" style="width:100%;"></div>
       </div>
     </div>
 
@@ -1157,6 +1156,10 @@
     var pathsWithoutNavSearch = ['/'];
     var i = pathsWithoutNavSearch.length;
     var matchesAnyPaths = false;
+    var changeLanguageLink = document.querySelector('.un .jsChangeLanguageLink');
+    var donateLink = document.querySelector('.un .js-donate-link');
+    var jsNavExtraTableCell = document.querySelector('.un .js-nav-extra-table-cell');
+    var navMenu = document.querySelector('.un nav ul.menu');
     while(i--) {
       if (pathsWithoutNavSearch[i] == window.location.pathname) {
         matchesAnyPaths = true;
@@ -1165,6 +1168,11 @@
     if(matchesAnyPaths == false) {
       removeClass(searchBar, 'dn');
       removeClass(featuredSection, 'dn');
+    } else {
+      removeClass(changeLanguageLink, 'hidden-sm');
+      removeClass(donateLink, 'hidden-sm');
+      addClass(jsNavExtraTableCell, 'hidden-sm');
+      navMenu.style.width = '400px';
     }
   })();
 
