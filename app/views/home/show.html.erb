@@ -30,28 +30,26 @@
 <div id="home-page" class="gs-bootstrap container-fluid">
 
   <%= render layout: 'hero' do %>
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
-        <div class="mtxl hidden-xs"></div>
-        <div class="oa text_fff pal darken">
-          <h1 class="text_fff"><%= t('.heading') %></h1>
-          <div class="subtitle ts uc mtl"><%= t('.subheading') %></div>
-          <%= render partial: 'home/search_form' %>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
+      <div class="mtxl hidden-xs"></div>
+      <div class="oa text_fff pal darken">
+        <h1 class="text_fff"><%= t('.heading') %></h1>
+        <div class="subtitle ts uc mtl"><%= t('.subheading') %></div>
+        <%= render partial: 'home/search_form' %>
 
-            <div class="parent-content uc">
-              <div class="subtitle ts mbm"><%= t('.subheading_content') %></div>
-              <%= link_to t('.raising_kids_html'), greatkids_home_url %>
-                <span class="phs">|</span>
-              <%= link_to t('.school_life_html'), school_life_url %>
-                <span class="phs">|</span>
-              <%= link_to t('.worksheets_html'), worksheets_and_activities_url %>
-              <%= link_to t('.reading_html'), reading_url %>
-                <span class="phs">|</span>
-              <%= link_to t('.math_html'), math_url %>
-                <span class="phs">|</span>
-              <%= link_to t('.emotional_smarts_html'), emotional_smarts_url %>
+        <div class="parent-content uc">
+          <div class="subtitle ts mbm"><%= t('.subheading_content') %></div>
+          <%= link_to t('.raising_kids_html'), greatkids_home_url %>
+          <span class="phs">|</span>
+          <%= link_to t('.school_life_html'), school_life_url %>
+          <span class="phs">|</span>
+          <%= link_to t('.worksheets_html'), worksheets_and_activities_url %>
+          <%= link_to t('.reading_html'), reading_url %>
+          <span class="phs">|</span>
+          <%= link_to t('.math_html'), math_url %>
+          <span class="phs">|</span>
+          <%= link_to t('.emotional_smarts_html'), emotional_smarts_url %>
 
-          </div>
         </div>
       </div>
     </div>
