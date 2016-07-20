@@ -95,8 +95,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function($) {
                 return false;
             }
         });
-        GS.search.schoolSearchForm.placeholderMobile();
-        GS.search.schoolSearchForm.checkGooglePlaceholderTranslate(); // all
         setUpCollapsibleTitle();
 
         GS.search.schoolSearchForm.closeFilters();
@@ -518,26 +516,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function($) {
         GS.search.setShowFiltersCookieHandler('.js-browseSchools'); //state hub browse city links
     };
 
-    var checkGooglePlaceholderTranslate = function () {
-        var placeholder = $('#js-schoolResultsSearch').attr('placeholder');
-        var translatedPlaceholder = $('.js-translate-placeholder').attr('font');
-        if (placeholder != translatedPlaceholder) {
-            $('#js-schoolResultsSearch').attr('placeholder', $('.js-translate-placeholder').text());
-            setTimeout(checkGooglePlaceholderTranslate, 1000);
-        } else {
-            setTimeout(checkGooglePlaceholderTranslate, 1000);
-        }
-    };
-
-    var placeholderMobile = function () {
-        if ($(window).width() < 481) {
-            $('.js-mobile-placeholder').html(mobileShortPlaceholder);
-        }
-        else {
-            $('.js-mobile-placeholder').html(mobileLongPlaceholder);
-        }
-    };
-
     var  closeFilters = function () {
         $('.js-close').click(function () {
             $(this).parent().fadeOut('fast');
@@ -558,8 +536,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function($) {
         searchType: searchType,
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
-        placeholderMobile: placeholderMobile,
-        checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
         updateFilterState: updateFilterState,
         setupToolTip: setupToolTip,
