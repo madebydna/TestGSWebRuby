@@ -4,6 +4,8 @@ GS.search.autocomplete = GS.search.autocomplete || {};
 
 GS.search.autocomplete.cityAutocomplete = GS.search.autocomplete.cityAutocomplete || (function() {
 
+    var typeAheadSelector = '.typeahead-city'
+
     var init = function(state_abbr) {
         attachAutocomplete(state_abbr);
     };
@@ -13,7 +15,7 @@ GS.search.autocomplete.cityAutocomplete = GS.search.autocomplete.cityAutocomplet
         var autocomplete = GS.search.autocomplete;
         var markup = autocomplete.display;
         var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY' + state_query, displayLimit: 5 });
-        $('.typeahead').typeahead({
+        $(typeAheadSelector).typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 1
@@ -32,7 +34,7 @@ GS.search.autocomplete.cityAutocomplete = GS.search.autocomplete.cityAutocomplet
     };
 
     var detachAutocomplete = function() {
-        $('.typeahead').typeahead('destroy');
+        $(typeAheadSelector).typeahead('destroy');
     };
 
     var setUserAccountStatePickerHandler = function() {
