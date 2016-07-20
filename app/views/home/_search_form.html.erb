@@ -10,11 +10,8 @@
               value="<%= @search_term %>"
               data-prev-search="<%= @search_term || '' %>"
               id=""
-              class='form-control typeahead tac search-text full-width pam <%= searchClass %>'
-              placeholder="Find a great school">
-
-            <label class="dn js-mobile-placeholder js-translate-placeholder"></label>
-
+              class='form-control typeahead search-text full-width pam <%= searchClass %>'
+              placeholder="<%= t('search.placeholder') %>">
         <div class="input-group-btn" style="vertical-align:top">
           <button type='submit' class="btn btn-primary" style="height: 46px;"><span class="iconx24-icons i-24-search-white"></span></button>
         </div>
