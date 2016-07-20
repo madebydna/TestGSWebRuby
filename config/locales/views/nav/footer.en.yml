@@ -21,19 +21,19 @@ en:
             text: Sponsorship
           - route: advertising
             text: Advertising
+          - route: careers
+            text: Careers
       link_list_2:
         heading: Learn more
         links:
-          - route: about
-            text: About Us
-          - route: careers
-            text: Careers
           - url: http://blog.greatschools.org/
             text: News & Updates
           - route: privacy
             text: Privacy Policy
           - route: terms_of_use
             text: Terms of Use
+          - route: about
+            text: About Us
       connect_links:
         heading: Connect
         links:
@@ -52,3 +52,4 @@ en:
           - url: http://www.instagram.com/greatschools/
             icon: instagram
             text: Instagram
+      newsletter: Newsletter
