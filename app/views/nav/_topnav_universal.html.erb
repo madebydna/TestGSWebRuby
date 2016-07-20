@@ -817,7 +817,7 @@
         <div class='search_icon' style="text-align:right; padding-right:10px; margin-top:10px;  vertical-align: middle;">
           <span class="search_icon_image"></span>
         </div>
-        <div class="search_bar search_hide_mobile dn">
+        <div class="search_bar search_hide_mobile">
           <div class="dt">
             <div class="mobile-toggle-button active font-size-medium tac tav js-choose-school-search">
               Schools
@@ -1149,28 +1149,17 @@
   })();
 
   (function() {
-    var searchBar = document.querySelector('.un .search_bar');
     var featuredSection = document.querySelector('.js-featured');
     var pathsWithoutNavSearch = ['/'];
     var i = pathsWithoutNavSearch.length;
     var matchesAnyPaths = false;
-    var changeLanguageLink = document.querySelector('.un .jsChangeLanguageLink');
-    var donateLink = document.querySelector('.un .js-donate-link');
-    var jsNavExtraTableCell = document.querySelector('.un .js-nav-extra-table-cell');
-    var navMenu = document.querySelector('.un nav ul.menu');
     while(i--) {
       if (pathsWithoutNavSearch[i] == window.location.pathname) {
         matchesAnyPaths = true;
       }
     }
     if(matchesAnyPaths == false) {
-      removeClass(searchBar, 'dn');
       removeClass(featuredSection, 'dn');
-    } else {
-      removeClass(changeLanguageLink, 'hidden-sm');
-      removeClass(donateLink, 'hidden-sm');
-      addClass(jsNavExtraTableCell, 'hidden-sm');
-      navMenu.style.width = '470px';
     }
   })();
 
