@@ -7,8 +7,6 @@
 <% rating_class = "gs-rating-#{size}" %>
 <% rating_level ||= DisplayRange.for_rating(value) unless not_rated %>
 
-<%# for now keep showing NR on profiles, which have subtext set %>
-<% if subtext || value != 'NR' %>
 <div class="<%= "#{rating_class} #{rating_level} #{css_class}" %>">
   <%# adding div with display inline block to keep the text in the rating icon from being underlined %> 
   <div class="dib">
@@ -24,4 +22,3 @@
     <% end %>
   </div>
 </div>
-<% end %>

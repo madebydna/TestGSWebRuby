@@ -21,11 +21,7 @@
         <tr>
           <td><%= truncate_with_popup(label, length: 26) %></td>
           <% if label == 'GreatSchools rating' %>
-              <% if @school.great_schools_rating == 'NR' %>
-                <% value = '' %>
-              <% else %>
-                <% value = render 'performance/gs_rating', value: @school.great_schools_rating, size: 'sm', css_class: 'ma' %>
-              <% end %>
+            <% value = render 'performance/gs_rating', value: @school.great_schools_rating, size: 'sm', css_class: 'ma' %>
           <% else %>
             <% value = datapoints[label] %>
           <% end %>
