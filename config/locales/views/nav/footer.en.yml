@@ -11,7 +11,7 @@ en:
           choose the right school, support learning at home, and guide their 
           children to great futures.
       link_list_1:
-        heading: Support our mission
+        heading: Join us
         links:
           - route: funders
             text: Supporters
@@ -27,13 +27,13 @@ en:
         heading: Learn more
         links:
           - url: http://blog.greatschools.org/
-            text: News & Updates
+            text: News & updates
           - route: privacy
-            text: Privacy Policy
+            text: Privacy policy
           - route: terms_of_use
-            text: Terms of Use
+            text: Terms of use
           - route: about
-            text: About Us
+            text: About us
       connect_links:
         heading: Connect
         links:
