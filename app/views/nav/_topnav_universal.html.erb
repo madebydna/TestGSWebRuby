@@ -1030,7 +1030,6 @@
   }
   ;
   function toggleNav(evt) {
-    console.log('here');
     var menu = document.getElementsByClassName('menu');
     var arrayLength = menu.length;
     for (var i = 0; i < arrayLength; i++) {
@@ -1038,8 +1037,7 @@
       if (hasClass(menu[i], 'menu_hide_mobile')) {
         console.log('if remove class');
         removeClass(menu[i], 'menu_hide_mobile')
-      }
-      else {
+      } else {
         console.log('if add class');
         addClass(menu[i], 'menu_hide_mobile')
       }
@@ -1047,55 +1045,153 @@
   }
   ;
 
-  function toggleDesktopSearchMenu(evt) {
+  GS = GS || {};
+
+  GS.navSearchBar = GS.navSearchBar || (function(){
+
+    var desktopSearchToggle = document.getElementsByClassName("js-desktop-search-toggle")[0];
     var desktopSearchMenu = document.getElementsByClassName('js-desktop-search-menu')[0];
+    var desktopSearchDropdownItem = document.getElementsByClassName("js-desktop-search-dropdown-item")[0];
+
+    var schoolSearchSelector = 'js-school-search';
+    var contentSearchSelector = 'js-content-search';
+
+    var toggleLink = document.getElementsByClassName('js-desktop-search-toggle-link')[0];
+    var dropdownItem = document.getElementsByClassName('js-desktop-search-dropdown-item')[0];
+    var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
+    var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
+
+    var schoolSearchMobileButton = document.getElementsByClassName('js-choose-school-search')[0];
+    var contentSearchMobileButton = document.getElementsByClassName('js-choose-content-search')[0];
+
+    var displaySearch = function(searchTypeSelector) {
+      var alternateSearchTypeSelector = getAlternateSearchTypeSelector(searchTypeSelector);
+      removeClass(toggleLink, alternateSearchTypeSelector);
+      addClass(toggleLink, searchTypeSelector);
+      toggleLinkAndDropdownItemText();
+      activateMobileSearchButton(searchTypeSelector);
+      toggleSearchForm(searchTypeSelector);
+    };
+
+    var toggleLinkAndDropdownItemText = function() {
+      var toggleText = toggleLink.innerHTML;
+      var dropdownItemText = dropdownItem.innerHTML;
+      toggleLink.innerHTML = dropdownItemText;
+      dropdownItem.innerHTML = toggleText;
+    };
+
+    var toggleSearchForm = function(searchTypeSelector) {
+      if(searchTypeSelector == schoolSearchSelector) {
+          removeClass(schoolSearchForm, 'dn');
+          addClass(contentSearchForm, 'dn');
+      } else {
+          removeClass(contentSearchForm, 'dn');
+          addClass(schoolSearchForm, 'dn');
+      }
+    };
+
+    var activateMobileSearchButton = function(searchTypeSelector) {
+      deactivateMobileSearchButtons();
+      if(searchTypeSelector === schoolSearchSelector) {
+        addClass(schoolSearchMobileButton, 'active');
+      } else {
+        addClass(contentSearchMobileButton, 'active');
+      }
+    };
+
+    var getAlternateSearchTypeSelector = function(searchTypeSelector) {
+      if(searchTypeSelector === schoolSearchSelector) {
+        return contentSearchSelector;
+      } else {
+        return schoolSearchSelector;
+      }
+    };
+
+    var deactivateMobileSearchButtons = function() {
+      removeClass(schoolSearchMobileButton, 'active');
+      removeClass(contentSearchMobileButton, 'active');
+    };
+
+    var toggleDesktopSearchMenu = function(evt) {
       if (hasClass(desktopSearchMenu, 'dn')) {
         removeClass(desktopSearchMenu, 'dn');
       } else {
         addClass(desktopSearchMenu, 'dn');
       }
-  }
-  ;
+    };
 
-  function toggleDesktopSearchBar(evt) {
-    var toggleLink = document.getElementsByClassName('js-desktop-search-toggle-link')[0];
-    var dropdownItem = document.getElementsByClassName('js-desktop-search-dropdown-item')[0];
-    var schoolSearchText = 'Schools';
-    var contentText = 'Parenting';
-    var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
-    var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
+    var toggleSearchBar= function(evt) {
+      if (hasClass(toggleLink, 'js-school-search')) {
+        displaySearch(contentSearchSelector);
+      } else {
+        displaySearch(schoolSearchSelector);
+      }
+    };
 
-    if (hasClass(toggleLink, 'js-school-search')) {
-      removeClass(toggleLink, 'js-school-search');
-      addClass(toggleLink, 'js-content-search');
-      toggleLink.innerHTML = contentText;
-      dropdownItem.innerHTML = schoolSearchText;
-      removeClass(contentSearchForm, 'dn');
-      addClass(schoolSearchForm, 'dn');
-    } else {
-      removeClass(toggleLink, 'js-content-search');
-      addClass(toggleLink, 'js-school-search');
-      toggleLink.innerHTML = schoolSearchText;
-      dropdownItem.innerHTML = contentText;
-      removeClass(schoolSearchForm, 'dn');
-      addClass(contentSearchForm, 'dn');
+    var setDesktopSearchToggleMenuHandler = function() {
+      desktopSearchToggle.addEventListener("click", toggleDesktopSearchMenu, false);
+    };
+
+    var setDesktopSearchBarToggleHandler = function() {
+      desktopSearchDropdownItem.addEventListener("click", toggleSearchBar, false);
+    };
+
+    var setMobileChooseSearchButtonHandler = function() {
+      schoolSearchMobileButton.addEventListener("click", toggleSearchBar, false);
+    };
+
+    var setMobileChooseContentButtonHandler = function() {
+      contentSearchMobileButton.addEventListener("click", toggleSearchBar, false);
+    };
+
+   var initializeSearchBar = function() {
+        var pathName = window.location.pathname;
+        if ( shouldDisplayContentSearch(pathName) ) {
+          displaySearch(contentSearchSelector);
+        }
+    };
+
+   var shouldDisplayContentSearch = function(pathName) {
+     var gkRegex = /\/gk\//;
+     var homePage= '/';
+     var contentSearchDefaultPages = [
+          gkRegex,
+          homePage
+        ];
+
+        return contentSearchDefaultPages.some(function(arrVal) {
+          if (typeof(arrVal) === 'string') {
+            return arrVal === pathName;
+          } else {
+          return arrVal.test(pathName);
+          }
+        });
+    };
+
+    var init = function() {
+      setDesktopSearchToggleMenuHandler();
+      setDesktopSearchBarToggleHandler();
+      setMobileChooseContentButtonHandler();
+      setMobileChooseSearchButtonHandler();
+      initializeSearchBar();
+    };
+
+    return {
+      init: init
     }
-  }
+
+  })()
   ;
 
-  var desktopSearchToggle = document.getElementsByClassName("js-desktop-search-toggle");
-  desktopSearchToggle[0].addEventListener("click", toggleDesktopSearchMenu, false);
+  GS.navSearchBar.init();
 
-  var desktopSearchDropdownItem = document.getElementsByClassName("js-desktop-search-dropdown-item");
-  desktopSearchDropdownItem[0].addEventListener("click", toggleDesktopSearchBar, false);
+var mobileNavMenu = document.getElementsByClassName("menu-btn");
+mobileNavMenu[0].addEventListener("click", toggleNav, false);
+var mobileNavSearch = document.getElementsByClassName("search_icon_image");
+mobileNavSearch[0].addEventListener("click", toggleSearch, false);
 
-  var mobileNavMenu = document.getElementsByClassName("menu-btn");
-  mobileNavMenu[0].addEventListener("click", toggleNav, false);
-  var mobileNavSearch = document.getElementsByClassName("search_icon_image");
-  mobileNavSearch[0].addEventListener("click", toggleSearch, false);
-
-  (function() {
-    menuItems = document.querySelectorAll('nav > ul li label');
+(function() {
+  menuItems = document.querySelectorAll('nav > ul li label');
     numberOfItems = menuItems.length;
     for(var i = 0; i < numberOfItems; i++) {
       menuItems[i].onclick = function(e) {
@@ -1128,29 +1224,6 @@
       addClass(accountNavSignedOut, 'dn');
     }
 
-  })();
-
-  (function () {
-    var chooseSchoolSearchButton = document.getElementsByClassName('js-choose-school-search')[0];
-    var chooseContentSearchButton = document.getElementsByClassName('js-choose-content-search')[0];
-    var searchForm = document.getElementsByClassName('js-schoolResultsSearchForm')[0];
-    var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
-    var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
-
-    chooseSchoolSearchButton.onclick = function(e) {
-      removeClass(chooseSchoolSearchButton, 'active');
-      removeClass(chooseContentSearchButton, 'active');
-      addClass(chooseSchoolSearchButton, 'active');
-      removeClass(schoolSearchForm, 'dn');
-      addClass(contentSearchForm, 'dn');
-    };
-    chooseContentSearchButton.onclick = function(e) {
-      removeClass(chooseSchoolSearchButton, 'active');
-      removeClass(chooseContentSearchButton, 'active');
-      addClass(chooseContentSearchButton, 'active');
-      removeClass(contentSearchForm, 'dn');
-      addClass(schoolSearchForm, 'dn');
-    };
   })();
 
   (function() {
