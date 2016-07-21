@@ -13,6 +13,7 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
 //
     var detachAutocomplete = function() {
         $('.typeahead').typeahead('destroy');
+        $('.typeahead-nav').typeahead('destroy');
     };
 
 //
@@ -30,6 +31,37 @@ GS.search.autocomplete.searchAutocomplete = GS.search.autocomplete.searchAutocom
         var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY' + state_query, sortFunction: false });
         var cities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY' + state_query, displayLimit: 5 });
         var districts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY' + state_query, displayLimit: 5 });
+        var navSchools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY', sortFunction: false });
+        var navCities = autocomplete.data.init({tokenizedAttribute: 'city_name', defaultUrl: '/gsr/search/suggest/city?query=%QUERY', displayLimit: 5 });
+        var navDistricts = autocomplete.data.init({tokenizedAttribute: 'district_name', defaultUrl: '/gsr/search/suggest/district?query=%QUERY', displayLimit: 5 });
+
+        $('.typeahead-nav').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        },
+          {
+            name: 'cities', //for generated css class name. Ex tt-dataset-cities
+            displayKey: 'city_name', //key whose value will be displayed in input
+            source: navCities.ttAdapter(),
+            clearBloodhound: navCities.ttAdapterClear(), //initialized Bloodhound clear method
+            templates: markup.cityResultsMarkup()
+          },
+          {
+            name: 'districts',
+            displayKey: 'district_name',
+            source: navDistricts.ttAdapter(),
+            clearBloodhound: navDistricts.ttAdapterClear(),
+            templates: markup.districtResultsMarkup()
+          },
+          {
+            name: 'schools',
+            displayKey: 'school_name',
+            source: navSchools.ttAdapter(),
+            clearBloodhound: navSchools.ttAdapterClear(),
+            templates: markup.schoolResultsMarkup()
+          }
+        );
         $('.typeahead').typeahead({
             hint: true,
             highlight: true,
