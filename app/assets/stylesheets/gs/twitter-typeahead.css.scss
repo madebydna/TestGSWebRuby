@@ -66,7 +66,7 @@
   background: #eee;
 }
 
-.typeahead, .typeahead-city {
+.typeahead, .typeahead-city, .typeahead-nav {
   background-color: #fff;
 }
 
@@ -74,7 +74,7 @@
   width: 100%;
 }
 
-.typeahead:focus {
+.typeahead:focus, .typeahead-city:focus, .typehead-nav {
   border: 2px solid #0097cf;
 }
 
