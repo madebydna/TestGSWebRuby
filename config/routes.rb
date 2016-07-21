@@ -209,8 +209,8 @@ LocalizedProfiles::Application.routes.draw do
 
     ##todo: check to see if these routes are necessary
     get '/gk/category/school-life/', as: :school_life
-    get '/gk/category/academics/reading/', as: :reading
-    get '/gk/category/academics/math/', as: :math
+    get '/gk/category/academics/reading-2/', as: :reading
+    get '/gk/category/academics/math-2/', as: :math
 
 
     get '/status/error404.page'
