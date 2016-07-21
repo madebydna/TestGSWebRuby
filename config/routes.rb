@@ -68,7 +68,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
-  get '/find-schools/', as: :default_search, to: 'search#default_search'
+  # get '/find-schools/', as: :default_search, to: 'search#default_search'
+  get '/find-schools/', as: :default_search, to: 'home#show'
 
 
   resources :user_preferences, only: [:edit]
@@ -105,7 +106,7 @@ LocalizedProfiles::Application.routes.draw do
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
 
-# Routes within this scope are pages not handled by Rails.
+  # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
