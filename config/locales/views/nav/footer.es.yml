@@ -1,41 +1,41 @@
 es:
   nav:
     footer:
-      support_greatschools: Support GreatSchools in this effort!
-      donate_now: Donate Now!
+      support_greatschools: ¡Apoye Greatschools en este gran esfuerzo!
+      donate_now: ¡Done Ahora!
       about_gs:
-        heading: Empowering parents
-        body: GreatSchools is the leading national nonprofit empowering parents
-          to improve educational opportunities for their children. We provide school
-          information and parenting resources to help millions of American families 
-          choose the right school, support learning at home, and guide their 
-          children to great futures.
+        heading: Empoderar a los padres
+        body: GreatSchools es el líder nacional sin fines de lucro empoderando a
+         los padres para que descubran oportunidades educativas para sus hijos.
+         Ofrecemos información de escuelas y recursos a padres para ayudar a
+         millones de familias estadounidenses a elegir la mejor escuela, apoyar
+         el aprendizaje en el hogar, y guiar a sus hijos a un mejor y gran futuro.
       link_list_1:
-        heading: Support our mission
+        heading: Únete a nosotros
         links:
           - route: funders
-            text: Supporters
+            text: Partidarios
           - route: gk_licensing
-            text: Licensing
+            text: Concesión de licencias
           - route: sponsorship
-            text: Sponsorship
+            text: Patrocinio
           - route: advertising
-            text: Advertising
+            text: Publicidad
           - route: careers
-            text: Careers
+            text: Empleos
       link_list_2:
-        heading: Learn more
+        heading: Aprende más
         links:
           - url: http://blog.greatschools.org/
-            text: News & Updates
+            text: Noticias y actualizaciones
           - route: privacy
-            text: Privacy Policy
+            text: Política de privacidad
           - route: terms_of_use
-            text: Terms of Use
+            text: Términos de uso
           - route: about
-            text: About Us
+            text: Sobre nosotros
       connect_links:
-        heading: Connect
+        heading:  Conéctate
         links:
           - url: http://www.facebook.com/greatschools
             icon: facebook
@@ -52,4 +52,4 @@ es:
           - url: http://www.instagram.com/greatschools/
             icon: instagram
             text: Instagram
-      newsletter: Newsletter
+      newsletter:  Boletín de noticias
