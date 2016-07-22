@@ -11,7 +11,6 @@
   <%= render 'school_profile/data_layouts/sticky_nearby_schools' %>
   <div class="js-modified-date mtl pll ptl" style="color:#999999"><%= t('.last_modified') %>: <%= l(@last_modified_date, format: '%B %e, %Y') %></div>
 </div>
-<%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 
 <%= render 'school_profile/rich_snippets/rich_snippets_school_info', school: @school, school_reviews: @school_reviews %>
 <%= render 'school_profile/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>

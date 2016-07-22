@@ -41,7 +41,7 @@
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
-<%= render 'nav/topnav', hub_params: @hub_params %>
+<%= render 'nav/topnav_universal', hub_params: @hub_params %>
 <%= render :partial => 'layouts/top_notification_bar' %>
 
 <div class="dn">
@@ -53,6 +53,8 @@
 <%=  render 'omniture/quantcast' %>
 
 <a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top mrm"></span><%= t('.top') %></a>
+
+<%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "post_load", :async => true %>

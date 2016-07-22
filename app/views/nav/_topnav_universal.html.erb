@@ -1,0 +1,1297 @@
+<style>
+   .un .clearfix:after {
+    content: " "; /* Older browser do not support empty content */
+    visibility: hidden;
+    display: block;
+    height: 0;
+    clear: both;
+  }
+
+  .un div.dn {
+    display: none;
+  }
+
+  .un .visible-xs {
+    display: none !important;
+  }
+
+  .un {
+    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    display: table;
+    margin: auto;
+    max-width: 1200px;
+    background-color: #FFFFFF;
+    font-size: 14px;
+    line-height: 28px;
+    color: #585859;
+  }
+
+  .un ul {
+    letter-spacing: normal;
+  }
+
+  .un .dt {
+    display: table;
+  }
+
+  .un .tr {
+    display: table-row;
+  }
+
+  .un .tc {
+    display: table-cell;
+  }
+
+  .un .logo {
+    /*background-color: #00FF00;*/
+    padding: 10px;
+    display: table-cell;
+  }
+
+   .un .logo_size {
+     width: 112px;
+     height: 47px;
+   }
+
+  .un .search_bar {
+    width: 100%;
+    /*background-color: #0000FF;*/
+    padding: 2px 20px;
+    vertical-align: middle;
+  }
+
+  .un .navigation {
+    display: table-cell;
+    /*background-color: #FF0000;*/
+    padding: 0px 20px;
+    vertical-align: middle;
+  }
+
+  .un .menu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-decoration: none;
+  }
+
+  .un .menu_hide_mobile {
+    display: block;
+  }
+
+  .un .search_hide_mobile {
+    display: table-cell;
+  }
+
+  .un ul.menu li {
+    margin: 0px;
+    display: inline;
+  }
+
+  .un ul.menu li.dn {
+    display: none;
+  }
+
+  .un ul.menu li.featured_visible_mobile {
+    display: none;
+  }
+
+  .un ul.menu li a {
+    text-decoration: none;
+  }
+
+  .un ul.featured li a {
+    font-size: 13px;
+    padding-top: 14px;
+    color: #26abe2;
+    font-weight: bold;
+    padding-right: 20px;
+  }
+
+  .un ul.featured li a:hover {
+    color: #666666;
+  }
+
+  .un ul.featured {
+    margin-left: 162px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
+
+  .un ul.featured .title {
+    padding-left: 10px;
+    font-size: 12px;
+    padding-top: 17px;
+    padding-right: 20px;
+  }
+
+  .un .search_form_field {
+    height: 46px;
+    font: normal 14px/20px 'opensans-regular', Arial, Helvetica, sans-serif;
+    color: #666;
+    padding-left: 8px;
+    vertical-align: middle;
+    border: 1px solid #b8b8b8;
+    border-left: none;
+  }
+
+  .un .search_form_button {
+    height: 44px;
+    vertical-align: middle;
+    color: white;
+    background-color: #26abe2;
+    border-color: #26abe2;;
+    border-bottom-width: 3px;
+    border-top: #26abe2;;
+    border-right: #26abe2;;
+    border-left: #26abe2;;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    white-space: nowrap;
+    padding: 8px 20px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -webkit-user-select: none;
+  }
+
+  .un .toggle, [id^=drop] {
+    display: none;
+  }
+
+  .un .header {
+    width: 100%;
+    background-color: #FFFFFF;
+  }
+
+  /* menu */
+
+  .un .header .menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+  }
+
+  /* menu icon */
+
+  .un .header .menu-icon {
+    cursor: pointer;
+    /*display: inline-block;*/
+    /*float: right;*/
+    padding: 0px;
+    vertical-align: middle;
+    position: absolute;
+    user-select: none;
+    height: 20px;
+    width: 20px;
+    top: 12px;
+  }
+
+  .un .header .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: 2px;
+    position: absolute;
+    transition: background .2s ease-out;
+    width: 18px;
+    top: 10px;
+  }
+
+  .un .header .menu-icon .navicon:before,
+  .un .header .menu-icon .navicon:after {
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+  }
+
+  .un .header .menu-icon .navicon:before {
+    top: 5px;
+  }
+
+  .un .header .menu-icon .navicon:after {
+    top: -5px;
+  }
+
+  /* menu btn */
+
+  .un .header .menu-btn {
+    display: none;
+  }
+
+  .un .header .menu-btn:checked ~ .menu {
+    max-height: 240px;
+  }
+
+  .un .header .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+  }
+
+  .un .header .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+  }
+
+  .un .header .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+  }
+
+  .un .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+  .un .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+  }
+
+  .un .search_bar_size {
+    width: 100%;
+  }
+
+  .un .search_icon {
+    display: none;
+  }
+
+   .un nav {
+    margin: 0;
+    padding: 0;
+    /*background-color: #FFFFFF;*/
+  }
+
+   .un nav:after {
+    content: "";
+    /*display: table;*/
+    clear: both;
+  }
+
+   .un nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    width: 470px;
+
+  }
+
+   .un nav ul li {
+    margin: 0px;
+    display: inline-block;
+    float: left;
+    /*background-color: #FFFFFF;*/
+  }
+
+   .un nav a {
+    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    display: block;
+    padding: 0px 20px;
+    color: #585859;
+    font-size: 14px;
+    line-height: 28px;
+    text-decoration: none;
+  }
+
+   .un nav a:hover {
+    background-color: #EEEEEE;
+  }
+
+  li > label {
+    margin-bottom: 0px;
+  }
+
+   .un li > a:after {
+    content: ' \25BC';
+    font-size: 8px;
+    color: #666;
+    vertical-align: middle;
+  }
+   .un li > a:hover:after {
+    color: #167ba5;
+  }
+
+   .un li li > a:after {
+    content: ' \203A';
+    font-size: 24px;
+    float: right;
+    color: #CCCCDD;
+  }
+
+   .un li.open li > a:hover:after {
+    font-size: 24px;
+    float: right;
+    color: #167ba5;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+   .un nav > ul > li > a {
+    padding: 5px 17px;
+    text-transform: uppercase;
+  }
+
+   .un li > label:after {
+    content: ' \203A';
+    font-size: 24px;
+    float: right;
+    color: #CCCCDD;
+  }
+
+
+  .un label.open:after {
+    font-size: 24px;
+    float: right;
+    <%# color: #167ba5; %>
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+
+   .un li > a:only-child:after {
+    content: '';
+  }
+
+   .un nav ul li ul li:hover {
+    background: #FFFFFF;
+  }
+
+   .un nav ul ul {
+    display: none;
+    position: absolute;
+    border: 1px solid #EEEEEE;
+    background-color: #FFFFFF;
+    width: 150px;
+     z-index: 5;
+    /*border-bottom: none;*/
+  }
+
+   .un nav ul ul a {
+    font-family: "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    padding: 5px 10px;
+  }
+
+   .un nav ul li:hover > ul {
+    display: inherit;
+  }
+
+   .un nav ul ul li {
+    width: 150px;
+    float: none;
+    display: list-item;
+    position: relative;
+    border-bottom: 1px solid #0000DD;
+  }
+
+   .un nav ul ul ul {
+    position: absolute;
+    /*background-color: #FFFFFF;*/
+    top: -39px;
+    left: 148px;
+    width: 180px;
+  }
+
+   .un nav ul ul ul li:hover {
+    background-color: #0000FF;
+    /*position: relative;*/
+    /*top: -60px;*/
+    /*left: 135px;*/
+  }
+
+  .un .search_bar_size {
+    display: table-cell;
+  }
+
+  .un .search_bar_button {
+    display: table-cell;
+    vertical-align: middle;
+  }
+
+  .un .mobile-toggle-button {
+    display: inline-block;
+    width: 50%;
+    height: 46px;
+    border: solid #b8b8b8;
+    border-width: 1px 1px 0px 0px;
+    background-color: white;
+    color: darkgrey;
+    padding-top: 10px;
+    border-top-right-radius: 4px;
+  }
+
+  .un .mobile-toggle-button:first-of-type {
+    border-left: 1px solid grey;
+    border-top-right-radius: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 0;
+  }
+
+  .un .mobile-toggle-button:last-of-type {
+    border-bottom-right-radius: 0px;
+  }
+
+  .un .mobile-toggle-button.active {
+    background-color: #1e77a7;
+    color: white;
+  }
+
+  .un .desktop-search-toggle {
+    vertical-align: middle;
+    padding: 0 10px;
+    position: relative;
+    border-right: 1px solid #b8b8b8;
+    border-left: 1px solid #b8b8b8;
+    border-top: 1px solid #b8b8b8;
+    border-bottom: 1px solid #b8b8b8;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    min-width: 100px;
+    cursor: pointer;
+  }
+
+  .un .desktop-search-toggle a,
+  .un .desktop-search-toggle a:hover {
+    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-decoration: none;
+    color: #585859;
+  }
+
+  .un .desktop-search-toggle:hover .desktop-search-menu{
+    display: inherit;
+    border-top: 0px;
+    }
+
+  .un .desktop-search-toggle:hover {
+    border-bottom-left-radius: 0;
+    border-bottom: none;
+  }
+
+  .un .desktop-toggle-search-arrow {
+    font-size: 8px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+
+  .un .desktop-search-menu  {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: -1px;
+    z-index: 1000;
+    float: left;
+    min-width: 100px;
+    padding: 9px 0;
+    margin: 0 0;
+    height: 40px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #b8b8b8;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  .un .desktop-search-menu:hover {
+    background-color: #eee;
+  }
+
+  .un .dropdown-item {
+    text-decoration: none; 
+    display: block;
+    width: 100%;
+    padding: 0 10px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: inherit;
+    white-space: nowrap;
+    background: 0 0;
+    border: 0;
+  }
+
+   .un .logo_size {
+     width: 95px;
+     height: 40px;
+   }
+
+  /* Media Queries
+  --------------------------------------------- */
+
+  @media all and (max-width: 767px) {
+    .un {
+      display: block;
+    }
+
+    .un .logo_size {
+      width: 60px;
+      height: 25px;
+    }
+
+    .un .tr {
+      display: block;
+    }
+
+    .un .tc {
+      display: block;
+    }
+
+    .un .menu_hide_mobile {
+      display: none;
+    }
+
+    .un .menu_layout_mobile {
+      padding-left: 10px;
+      width: 30px;
+      height: 5px;
+      text-align: left;
+      vertical-align: middle;
+      display: table-cell
+    }
+    .un .search_hide_mobile {
+      display: none;
+    }
+
+    .un .navigation {
+      /*float:left;*/
+      padding: 0px;
+      width: 100%;
+    }
+
+    .un .search_icon {
+      display: table-cell;
+      text-align: right;
+      padding-right: 10px;
+      padding-top: 10px;
+      vertical-align: middle;
+    }
+
+    .un nav {
+      margin: 0;
+      /*clear:both;*/
+    }
+
+    .un .toggle + a {
+      display: none;
+    }
+
+    .un .toggle {
+      display: block;
+      background-color: #FFFFFF;
+      padding: 5px 17px;
+      color: #585859;
+      font-size: 14px;
+      line-height: 28px;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .un nav .toggle:hover {
+      background-color: #EEEEEE;
+      color: #167ba5;
+    }
+
+    .un nav .toggle:hover:after {
+      color: #167ba5;
+    }
+
+    .un [id^=drop]:checked + ul {
+      display: block;
+    }
+
+    .un nav ul {
+      width: 100%;
+    }
+
+    .un nav ul li {
+      display: block;
+      width: 100%;
+      font: 13px "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
+      position: relative;
+      border-top: 1px solid #EEEEEE;
+    }
+    .un nav ul li:last-of-type {
+      border-bottom: 1px solid #EEEEEE;
+    }
+
+    .un nav ul ul .toggle,
+    .un nav ul ul a {
+      padding: 5px 20px 5px 40px;
+      width: 100%;
+    }
+
+    .un nav ul ul ul a {
+      background-color: #FFFFFF;
+      padding: 0 60px;
+    }
+
+    .un nav ul ul ul a:hover {
+      background-color: #fff;
+    }
+
+    .un nav ul li ul li .toggle,
+    .un nav ul ul a {
+      background-color: #FFFFFF;
+      position: relative;
+    }
+
+    .un nav ul ul {
+      float: none;
+      top: 0px;
+      border: none;
+      color: #ffffff;
+      position: relative;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .un nav ul ul li:hover > ul,
+    .un nav ul li:hover > ul {
+      display: none;
+    }
+
+    .un nav ul ul li {
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+
+    .un nav ul ul ul li {
+      /*position: static;*/
+      position: relative;
+
+    }
+
+    .un nav ul ul ul {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 48em) {
+    .un .header .menu-icon {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .nav-padding {
+      padding-top: 49px;
+    }
+
+    .un .visible-xs {
+      display: block !important;
+    }
+
+    .un .hidden-xs {
+      display: none !important;
+    }
+
+    /*.search_bar{width:auto; margin-bottom: 10px}*/
+    .un .search_form_field {
+      /*width:80%;*/
+
+    }
+
+    .un .header {
+      position: fixed;
+      background: #ffffff;
+      z-index: 4;
+      border-bottom: solid 1px #EEEEEE;
+    }
+
+    .un .search_bar {
+      width: auto;
+      padding-bottom: 10px;
+    }
+
+    .un ul.menu li.featured_visible_mobile {
+      display: inline;
+    }
+
+    .un .logo {
+      width: 100%;
+      text-align: center;
+      padding-left: 30px;
+    }
+
+    .un .search_form_field {
+      border: 1px solid #b8b8b8;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 4px;
+    }
+
+    .un .search_form_button {
+      border-top-right-radius: 0px;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    .un .hidden-sm {
+      display: none !important;
+    }
+    .un nav ul {
+      width: 270px;
+    }
+    .un nav > ul > li > ul {
+      margin-left:-25px;
+      width: 145px;
+    }
+    .un nav > ul ul ul {
+      width: 145px;
+      left: 143px;
+    }
+
+    .un .search_form_field {
+      /*width:200px;*/
+
+    }
+  }
+
+  @media (min-width: 768px) {
+    .un .mobile-toggle-button {
+      display: none;
+    }
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    .un .hidden-md {
+      display: none !important;
+    }
+
+    .un .search_form_field {
+      /*width:300px;*/
+
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .un .hidden-lg {
+      display: none !important;
+    }
+  }
+
+  .un .search_icon_image {
+    cursor: pointer;
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    background-repeat: no-repeat;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAnNwAAJzcBVAXW8gAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAHwSURBVEiJrdSxalRREAbgbzeboCSkUImNCViFDSSgKJhGbexVhDyAIBb6AIKt6BNYSKo0NoKIdcBWU0REdE1lEZCwqxKIcYVktTjnsmf33ru7YP5q5t45/8z5Z85U5DGBK7iIOUxjHzvYxDp+FpzLodLnn8MdnBxw5g9e4NUw8rHEvob7mOyL2cN4UkgNSziNd4PIa0nFt1GNfhNraGAXx3AWK1iIMZfxHc8HVT6Bh0nFb/EIXwUJ4AAtvIn2Yvw+j41YQA5VXNXVuImn+F16V17GArLz18sCq7iQ+GtDiDOsohPt83p710M+l/iNEYgJMnyL9nHMlJFPR3tPiXYl2E7sqTLy/WhPClMxKk4ldmlDd6JdEcZtFNQwG+1skgrJNxN/ZUTym8IIwwfd5ubI13XneQE3hhDX+2JelwWOoR0zL8Vvi8IEfUqSEqS4hbu6o9cRHlahLOniuic86QwdYdy2hebN6kqRoo3H+FxUeYaNWN18TFoRxvQMTvTFdvQusmXhjfTcoP9lfYxJpmK148m/A7zHM0GKZd3FlyX4IqwQ5Pd5f+KZmGg3VpVORR0P9L6NNp4I/SreCRF/hVf7A7+in6IlSFF0gy00B5GPgpYgxaWCBI3/JSdovCV/g/pRkJclODwq8ixBQ2j0IVb/Af8qaEu81sm3AAAAAElFTkSuQmCC);
+  }
+
+  .un .search_icon_image_white {
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 4px;
+    width: 22px;
+    height: 22px;
+    background-repeat: no-repeat;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAGbSURBVDiNrdPPKwRxGMfxz3dDLeIqchAHxc1hD0qJXJWLvwD/AKf9H7i5uLk5UA5KEi6ShJtcuMjPQmxYZN4OO7t999mZ3Sk+t2fmeV49M98ZKSLAKLAMXAJ5IADugG1gBkhHzYWzAioudgE71M41MJ4IBjLAUwLUT7YqDHTHoB/AAbAL3Mbg09XgvQhwFmgqDgRB4IAx4Nz0vgNdFTCFg7LoYJXDaQWOzcxSFLxsmubiUG+4B/jyZnJAg4UvzGM11oJDYMUsNODDKUkdXv+pc+49CSxp39S+o5Skeq9+S4hKUt7UZU+akvTg1X1BELiEcK+pH8oqCr+pn5FaIpAGrryZAGgJ75UOb8bAZ8WmKvC8mdn07pXgNHBjGo+A7phNF6jMiIVdWExIWjXOt6R1FU4/H77TSUltpu9L0pBz7rAI222yEZskzQuQKXsVBp+i8JMkyWcUHgmHeCewGDba/AAbwHCI2J4SHvvNAnWS+iW1S2qWdC/pxDmX83oykrYk+V/Rq6SxODdxYjZ//jMcg6/9C+zhj8A60PQLjXJp3pMHoJgAAAAASUVORK5CYII=);
+  }
+
+
+</style>
+<div class="un">
+  <div class="header">
+    <div class="un clearfix">
+      <div class="tr">
+        <div class="menu_layout_mobile">
+          <input class="menu-btn" type="checkbox" id="drop"/>
+          <label class="menu-icon toggle" for="drop"><span class="navicon"></span></label>
+        </div>
+        <div class="logo">
+          <a href="/">
+            <img class="logo_size" border="0" title="GreatSchools Logo" src='data:image/png;base64,
+            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'>
+
+         </a></div>
+        <div class='search_icon'>
+          <span class="search_icon_image"></span>
+        </div>
+        <div class="search_bar search_hide_mobile">
+          <div class="dt">
+            <div class="mobile-toggle-button active font-size-medium tac tav js-choose-school-search">
+              Schools
+            </div>
+            <div id="" class="mobile-toggle-button font-size-medium tac tav js-choose-content-search">
+              Parenting Topics
+            </div>
+            <div class="search_hide_mobile desktop-search-toggle js-desktop-search-toggle">
+              <a class="js-desktop-search-toggle-link js-school-search"> Schools </a>
+              <span class="desktop-toggle-search-arrow">&#x25bc;</span>
+              <div class="desktop-search-menu js-desktop-search-menu">
+                <a class="dropdown-item js-desktop-search-dropdown-item">Parenting</a>
+              </div>
+            </div>
+            <form name="schoolResultsSearchForm" class="js-nav-school-search-from js-schoolResultsSearchForm" style="width: 100%; margin-bottom:0;" action="http://www.greatschools.org/search/search.page" method="get">
+              <div class="search_bar_size js-nav-search-bar">
+                <span class="js-nav-school-search-input">
+                  <input type="text"
+                         name="locationSearchString"
+                         value=""
+                         data-prev-search=""
+                         class='js-nav-school-search-input typeahead-nav full-width pam search_form_field'
+                         style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                         placeholder="City, zip, address or school">
+                </span>
+              </div><div class="search_bar_button">
+                <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                  <span class="search_icon_image_white"></span></button>
+              </div>
+            </form>
+            <form name="contentResultsSearchForm" class="js-nav-content-search-form dn" style="width: 100%; margin-bottom:0;" action="/gk/" method="get">
+              <div class="search_bar_size js-nav-search-bar">
+                <span class="js-nav-content-search-input">
+                  <input type="text"
+                         name="s"
+                         value=""
+                         data-prev-search=""
+                         class='js-nav-content-search-input full-width pam search_form_field'
+                         style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                         placeholder="Articles, worksheets and more">
+                </span>
+              </div><div class="search_bar_button">
+                <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                  <span class="search_icon_image_white"></span></button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="navigation tc">
+          <nav class="tc">
+            <ul class="menu menu_hide_mobile">
+
+              <li class="">
+                <!-- First Tier Drop Down -->
+                <label for="drop-1" class="toggle">Parenting <span style="font-size:10px;"></span></label>
+                <a href="#">Parenting <span style="font-size:10px;"></span></a>
+                <input type="checkbox" id="drop-1"/>
+                <ul>
+                  <li>
+                    <label for="drop-2" class="toggle">Raising kids </label>
+                    <a href="#">Raising kids </a>
+                    <input type="checkbox" id="drop-2"/>
+                    <ul>
+                      <li><a href="/gk/category/dilemmas/">Parenting dilemmas</a></li>
+                      <li><a href="/gk/emotional-smarts/">Emotional smarts</a></li>
+                      <li><a href="/gk/category/health/">Health &amp; development</a></li>
+                      <li><a href="/gk/category/smart-strategies/">Smart strategies</a></li>
+                      <li><a href="/gk/category/early-learning/">Early learning</a></li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <label for="drop-3" class="toggle">Smart strategies </label>
+                    <a href="#">School life</a>
+                    <input type="checkbox" id="drop-3"/>
+                    <ul>
+                      <li><a href="/gk/category/find-a-school-skills/">Finding the right school</a></li>
+                      <li><a href="/gk/category/education-trends/">Education trends</a></li>
+                      <li><a href="/gk/road-to-college/">Road to college</a></li>
+                    </ul>
+                  </li>
+                  <li>
+                    <label for="drop-4" class="toggle">Academics </label>
+                    <a href="#">Academics </a>
+                    <input type="checkbox" id="drop-4"/>
+                    <ul>
+                      <li><a href="/gk/category/academics/reading-2/">Reading</a></li>
+                      <li><a href="/gk/category/academics/math-2/">Math</a></li>
+                      <li><a href="/gk/category/academics/writing-2/">Writing</a></li>
+                      <li><a href="/gk/category/academics/science/">Science</a></li>
+                      <li><a href="/gk/category/academics/arts/">Arts</a></li>
+                      <li><a href="/gk/category/academics/stem/">STEM</a></li>
+                      <li><a href="/gk/category/academics/social-studies/">Social studies</a></li>
+                      <li><a href="/gk/milestones/">Milestones</a></li>
+                      <li><a href="/gk/common-core-test-guide/">State Test Guide</a></li>
+                    </ul>
+                  </li>
+
+                  <li>
+                    <label for="drop-5" class="toggle">Learning issues </label>
+                    <a href="#">Learning issues </a>
+                    <input type="checkbox" id="drop-5"/>
+                    <ul>
+                      <li><a href="/gk/category/learning-disabilities/">Learning disabilities</a></li>
+                      <li><a href="/gk/category/gifted/">Gifted</a></li>
+                      <li><a href="/gk/category/attention-disorders/">Attention disorders</a></li>
+                      <li><a href="/gk/category/reading-disorders/">Reading disorders</a></li>
+                      <li><a href="/gk/category/special-needs/">Special needs</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="/gk/book-lists/">Book lists</a></li>
+                  <li><a href="/gk/worksheets/">Worksheets</a></li>
+                </ul>
+              </li>
+              <li class="">
+                <a class="js-donate-link hidden-sm" href="https://greatschools.networkforgood.com/" target="_blank" style="color: #659714;">Donate</a>
+              </li>
+              <li class=""><a class="hidden-sm jsChangeLanguageLink" href="#">En Español</a></li>
+              <li class="account_nav_out"><a href="/gsr/login/">Sign in</a></li>
+              <li class="account_nav_in dn">
+                <label for="drop-7" class="toggle">My Account </label>
+                <a href="#">My Account </a>
+                <input type="checkbox" id="drop-7"/>
+                <ul>
+                  <li><a href="/account/">Account Settings</a></li>
+                  <li><a href="/logout/">Sign Out</a></li>
+                </ul>
+              </li>
+              <li class="featured_visible_mobile featured">
+                <label for="drop-6" class="toggle"><span>Featured</span> </label>
+                <a href="#">Featured </a>
+                <input type="checkbox" id="drop-6"/>
+                <ul>
+                  <li><a href="/gk/back-to-school/">Back to school</a></li>
+                  <li><a href="/gk/book-lists/">Great reads</a></li>
+                  <li><a href="/gk/emotional-smarts/">Emotional smarts</a></li>
+                  <li><a class="hidden-sm" href="/gk/worksheets/">Worksheets</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+      </div>
+      <div class="tc js-nav-extra-table-cell" style="width:100%;"></div>
+      </div>
+    </div>
+
+  </div>
+  <div class="js-featured un dn" style="">
+    <div class="tc" style="text-align:left; width:1200px">
+      <ul class="featured menu hidden-xs" style="">
+        <li class="title"><span>FEATURED</span></li>
+        <li><a href="/gk/back-to-school/">Back to school</a></li>
+        <li><a href="/gk/book-lists/">Great reads</a></li>
+        <li><a href="/gk/emotional-smarts/">Emotional smarts</a></li>
+        <li><a class="hidden-sm" href="/gk/worksheets/">Worksheets</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="nav-padding"></div>
+<script type="text/javascript">
+
+  function hasClass(el, className) {
+    if (el.classList)
+      return el.classList.contains(className)
+    else
+      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'))
+  }
+
+  function addClass(el, className) {
+    if (el.classList)
+      el.classList.add(className)
+    else if (!hasClass(el, className)) el.className += " " + className
+  }
+
+  function removeClass(el, className) {
+    if (el.classList)
+      el.classList.remove(className)
+    else if (hasClass(el, className)) {
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)')
+      el.className = el.className.replace(reg, ' ')
+    }
+  }
+  function toggleClass(el, className) {
+    if (el.classList) {
+      el.classList.toggle(className);
+    }
+  }
+  function toggleSearch(evt) {
+    console.log('here');
+    var menu = document.getElementsByClassName('search_bar');
+    var arrayLength = menu.length;
+    for (var i = 0; i < arrayLength; i++) {
+      console.log('loop ' + i);
+      if (hasClass(menu[i], 'search_hide_mobile')) {
+        console.log('if remove class');
+        removeClass(menu[i], 'search_hide_mobile')
+      }
+      else {
+        console.log('if add class');
+        addClass(menu[i], 'search_hide_mobile')
+      }
+    }
+  }
+  ;
+  function toggleNav(evt) {
+    var menu = document.getElementsByClassName('menu');
+    var arrayLength = menu.length;
+    for (var i = 0; i < arrayLength; i++) {
+      console.log('loop ' + i);
+      if (hasClass(menu[i], 'menu_hide_mobile')) {
+        console.log('if remove class');
+        removeClass(menu[i], 'menu_hide_mobile')
+      } else {
+        console.log('if add class');
+        addClass(menu[i], 'menu_hide_mobile')
+      }
+    }
+  }
+  ;
+
+  GS = GS || {};
+
+  GS.navSearchBar = GS.navSearchBar || (function(){
+
+    var desktopSearchToggle = document.getElementsByClassName("js-desktop-search-toggle")[0];
+    var desktopSearchMenu = document.getElementsByClassName('js-desktop-search-menu')[0];
+    var desktopSearchDropdownItem = document.getElementsByClassName("js-desktop-search-dropdown-item")[0];
+
+    var schoolSearchSelector = 'js-school-search';
+    var contentSearchSelector = 'js-content-search';
+
+    var toggleLink = document.getElementsByClassName('js-desktop-search-toggle-link')[0];
+    var dropdownItem = document.getElementsByClassName('js-desktop-search-dropdown-item')[0];
+    var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
+    var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
+
+    var schoolSearchMobileButton = document.getElementsByClassName('js-choose-school-search')[0];
+    var contentSearchMobileButton = document.getElementsByClassName('js-choose-content-search')[0];
+
+    var displaySearch = function(searchTypeSelector) {
+      var alternateSearchTypeSelector = getAlternateSearchTypeSelector(searchTypeSelector);
+      removeClass(toggleLink, alternateSearchTypeSelector);
+      addClass(toggleLink, searchTypeSelector);
+      toggleLinkAndDropdownItemText();
+      activateMobileSearchButton(searchTypeSelector);
+      toggleSearchForm(searchTypeSelector);
+    };
+
+    var toggleLinkAndDropdownItemText = function() {
+      var toggleText = toggleLink.innerHTML;
+      var dropdownItemText = dropdownItem.innerHTML;
+      toggleLink.innerHTML = dropdownItemText;
+      dropdownItem.innerHTML = toggleText;
+    };
+
+    var toggleSearchForm = function(searchTypeSelector) {
+      if(searchTypeSelector == schoolSearchSelector) {
+          removeClass(schoolSearchForm, 'dn');
+          addClass(contentSearchForm, 'dn');
+      } else {
+          removeClass(contentSearchForm, 'dn');
+          addClass(schoolSearchForm, 'dn');
+      }
+    };
+
+    var activateMobileSearchButton = function(searchTypeSelector) {
+      deactivateMobileSearchButtons();
+      if(searchTypeSelector === schoolSearchSelector) {
+        addClass(schoolSearchMobileButton, 'active');
+      } else {
+        addClass(contentSearchMobileButton, 'active');
+      }
+    };
+
+    var getAlternateSearchTypeSelector = function(searchTypeSelector) {
+      if(searchTypeSelector === schoolSearchSelector) {
+        return contentSearchSelector;
+      } else {
+        return schoolSearchSelector;
+      }
+    };
+
+    var deactivateMobileSearchButtons = function() {
+      removeClass(schoolSearchMobileButton, 'active');
+      removeClass(contentSearchMobileButton, 'active');
+    };
+
+    var toggleDesktopSearchMenu = function(evt) {
+      if (hasClass(desktopSearchMenu, 'dn')) {
+        removeClass(desktopSearchMenu, 'dn');
+      } else {
+        addClass(desktopSearchMenu, 'dn');
+      }
+    };
+
+    var toggleSearchBar= function(evt) {
+      if (hasClass(toggleLink, 'js-school-search')) {
+        displaySearch(contentSearchSelector);
+      } else {
+        displaySearch(schoolSearchSelector);
+      }
+    };
+
+    var setDesktopSearchToggleMenuHandler = function() {
+      desktopSearchToggle.addEventListener("click", toggleDesktopSearchMenu, false);
+    };
+
+    var setDesktopSearchBarToggleHandler = function() {
+      desktopSearchDropdownItem.addEventListener("click", toggleSearchBar, false);
+    };
+
+    var setMobileChooseSearchButtonHandler = function() {
+      schoolSearchMobileButton.addEventListener("click", toggleSearchBar, false);
+    };
+
+    var setMobileChooseContentButtonHandler = function() {
+      contentSearchMobileButton.addEventListener("click", toggleSearchBar, false);
+    };
+
+   var initializeSearchBar = function() {
+        var pathName = window.location.pathname;
+        if ( shouldDisplayContentSearch(pathName) ) {
+          displaySearch(contentSearchSelector);
+        }
+    };
+
+   var shouldDisplayContentSearch = function(pathName) {
+     var gkRegex = /\/gk\//;
+     var homePage= '/';
+     var contentSearchDefaultPages = [
+          gkRegex,
+          homePage
+        ];
+
+        return contentSearchDefaultPages.some(function(arrVal) {
+          if (typeof(arrVal) === 'string') {
+            return arrVal === pathName;
+          } else {
+          return arrVal.test(pathName);
+          }
+        });
+    };
+
+    var init = function() {
+      setDesktopSearchToggleMenuHandler();
+      setDesktopSearchBarToggleHandler();
+      setMobileChooseContentButtonHandler();
+      setMobileChooseSearchButtonHandler();
+      initializeSearchBar();
+    };
+
+    return {
+      init: init
+    }
+
+  })()
+  ;
+
+  GS.navSearchBar.init();
+
+var mobileNavMenu = document.getElementsByClassName("menu-btn");
+mobileNavMenu[0].addEventListener("click", toggleNav, false);
+var mobileNavSearch = document.getElementsByClassName("search_icon_image");
+mobileNavSearch[0].addEventListener("click", toggleSearch, false);
+
+(function() {
+  menuItems = document.querySelectorAll('nav > ul li label');
+    numberOfItems = menuItems.length;
+    for(var i = 0; i < numberOfItems; i++) {
+      menuItems[i].onclick = function(e) {
+        var item = e.target;
+        toggleClass(item, 'open');
+      }
+    }
+  })();
+
+  function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  }
+
+  var isSignedIn = function () {
+    return readCookie('community_www') != null || readCookie('community_dev') != null;
+  };
+
+  (function() {
+    if (isSignedIn()) {
+      var accountNavSignedIn = document.getElementsByClassName('account_nav_in')[0];
+      var accountNavSignedOut = document.getElementsByClassName('account_nav_out')[0];
+      removeClass(accountNavSignedIn, 'dn');
+      addClass(accountNavSignedOut, 'dn');
+    }
+
+  })();
+
+  (function() {
+    var featuredSection = document.querySelector('.js-featured');
+    var pathsWithoutNavSearch = ['/'];
+    var i = pathsWithoutNavSearch.length;
+    var matchesAnyPaths = false;
+    while(i--) {
+      if (pathsWithoutNavSearch[i] == window.location.pathname) {
+        matchesAnyPaths = true;
+      }
+    }
+    if(matchesAnyPaths == false) {
+      removeClass(featuredSection, 'dn');
+    }
+  })();
+
+  var getQueryParam = function(key, uri) {
+      var href = uri ? uri : window.location.href;
+      var reg = new RegExp( '[?&]' + key + '=([^&#]*)', 'i' );
+      var string = reg.exec(href);
+      return string ? string[1] : null;
+  };
+
+  // Add / Update a key-value pair in the URL query parameters
+  function updateUrlParameter(uri, key, value) {
+    // remove the hash part before operating on the uri
+    var i = uri.indexOf('#');
+    var hash = i === -1 ? ''  : uri.substr(i);
+    uri = i === -1 ? uri : uri.substr(0, i);
+
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+
+    if (!value) {
+      // remove key-value pair if value is empty
+      uri = uri.replace(new RegExp("([&]?)" + key + "=.*?(&|$)", "i"), '');
+      if (uri.slice(-1) === '?') {
+        uri = uri.slice(0, -1);
+      }
+    } else if (uri.match(re)) {
+      uri = uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+      uri = uri + separator + key + "=" + value;
+    }
+    return uri + hash;
+  }
+
+  var initLanguageLinkListener = function() {
+    var changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
+    var lang = getQueryParam('lang');
+    if(lang == null || lang == 'en') {
+      changeLanguageLink.innerHTML = 'En Español';
+    } else {
+      changeLanguageLink.innerHTML = 'In English';
+    }
+
+    changeLanguageLink.onclick = function(e) {
+      var lang = getQueryParam('lang');
+      if(lang == null || lang == 'en') {
+        changeLanguageLink.href = updateUrlParameter(window.location.href, 'lang', 'es');
+      } else {
+        changeLanguageLink.href = updateUrlParameter(window.location.href, 'lang', '');
+      }
+      window.open(full_uri, '_self');
+    }
+  };
+  initLanguageLinkListener();
+
+</script>

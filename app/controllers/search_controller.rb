@@ -31,13 +31,7 @@ class SearchController < ApplicationController
 
 
   def default_search
-      gon.pagename = "DefaultSearchPage"
-      set_meta_tags title: 'Find a School In Your State | GreatSchools',
-                    description: 'Find and compare schools across the country by searching near an address or by name. Search for public, private, and charter schools, preschools, elementary, middle, and high schools.'
-
-      render 'search/default_search'
-
-
+    redirect_to "/", :status => 301
   end
 
 
@@ -400,6 +394,15 @@ class SearchController < ApplicationController
       path_to_quality_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if path_to_quality_ratings.present?
 
       filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
+    end
+
+    if should_apply_filter?(:indypk) || params_hash.include?('indypk')
+      indypk_params = params_hash['indypk']
+      indypk_params = [*indypk_params]
+      filters[:indy_omwpk] = true if indypk_params.include?('omwpk')
+      filters[:indy_ccdf] = true if indypk_params.include?('ccdf')
+      filters[:indy_indypsp] = true if indypk_params.include?('indypsp')
+      filters[:indy_scholarships] = true if indypk_params.include?('scholarships')
     end
 
     if should_apply_filter?(:gstq_rating) || params_hash.include?('gstq_rating')

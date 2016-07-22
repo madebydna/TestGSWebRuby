@@ -2,14 +2,16 @@
 
 <% gs_rating = @school.gs_rating || 'nr' %>
 <div class="js-ratings-vertical-rule row pr" style="height: 300px;">
-  <div class="col-xs-12 tac">
-    <a href="<%= school_quality_url(@school) %>#Ratings">
-      <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
-      <div class="dib">
-        <%= render 'performance/gs_rating', value: gs_rating, size: 'lg', subtext: true %>
-      </div>
-    </a>
-  </div>
+  <% if gs_rating.upcase != 'NR' %>
+    <div class="col-xs-12 tac">
+      <a href="<%= school_quality_url(@school) %>#Ratings">
+        <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
+        <div class="dib">
+          <%= render 'performance/gs_rating', value: gs_rating, size: 'lg', subtext: true %>
+        </div>
+      </a>
+    </div>
+  <% end %>
 
   <% ratings_array = [] %>
 

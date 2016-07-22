@@ -362,8 +362,8 @@ GS.uri.Uri.mergeObjectInto = function(obj1, obj2, overwrite) {
 
 GS.uri.Uri.addHiddenFieldsToForm = function(fieldNameAndValueMap, formObject) {
     for (var name in fieldNameAndValueMap) {
-        var input = $("<input>").attr("type", "hidden").attr("name", name).val(fieldNameAndValueMap[name]);
-        $(formObject).append(input);
+        var input = jQuery("<input>").attr("type", "hidden").attr("name", name).val(fieldNameAndValueMap[name]);
+        jQuery(formObject).append(input);
     }
     return formObject;
 };

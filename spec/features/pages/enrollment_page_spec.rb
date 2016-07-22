@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/city_home_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
+require 'features/examples/footer_examples'
 
 def setup(collection_id, nickname)
   FactoryGirl.create(:important_events_collection_config, collection_id: collection_id)
@@ -22,6 +23,8 @@ describe 'Enrollment Page' do
       FactoryGirl.create(:hub_city_mapping)
       visit '/michigan/detroit/enrollment'
     end
+
+    include_examples 'should have a footer'
 
     it 'includes a basic hub page layout' do
       # Header

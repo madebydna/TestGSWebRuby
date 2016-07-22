@@ -210,6 +210,58 @@ describe SearchController do
       end
     end
 
+    context 'When there are Indianapolis PreK filters selected' do
+      indypk_allows = Proc.new {
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:indypk).and_return(true)
+      }
+
+      context 'with nothing selected' do
+        let(:params_hash) { {'indypk' => ''}}
+        it 'should not set any filters' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({})
+        end
+      end
+
+      context 'with omwpk' do
+        let(:params_hash) { {'indypk' => 'omwpk'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_omwpk: true)
+        end
+      end
+
+      context 'with ccdf' do
+        let(:params_hash) { {'indypk' => 'ccdf'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_ccdf: true)
+        end
+      end
+
+      context 'with indy_psp' do
+        let(:params_hash) { {'indypk' => 'indypsp'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_indypsp: true)
+        end
+      end
+
+      context 'with all filters' do
+        let(:params_hash) { {'indypk' => %w(indypsp ccdf omwpk)}}
+        it 'should set the right filters' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_indypsp: true, indy_ccdf: true, indy_omwpk: true)
+        end
+      end
+    end
+
   end
 
   context 'When there is colorado_rating in filter params' do

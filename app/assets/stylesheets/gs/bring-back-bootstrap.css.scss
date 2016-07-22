@@ -1,8 +1,8 @@
 // Wrapper class that brings back Bootstrap's grid system as vanilla.
 // Essentially this adds back in gutters - the spaces between columns.
 
-$grid-gutter-width: 20px;
-$half-gutter-width: ($grid-gutter-width / 2);
+$grid-gutter-width: 30px;
+$half-gutter-width: ($grid-gutter-width);
 
 @mixin gs-make-grid-columns() {
   $list: '';
