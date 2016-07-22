@@ -17,8 +17,16 @@ $(function() {
       $('.js-user-preferences-form-container').on('click', '.js-greatkidsnews-grades-checkbox:not(.active)', function() {
         var $greatkidsnewsCheckbox = $('.js-greatkidsnews-checkbox');
         if (!($greatkidsnewsCheckbox.hasClass('active'))) {
-          $('.js-greatkidsnews-checkbox').trigger('click');
+          $greatkidsnewsCheckbox.trigger('click');
         }
-      })
+      });
+
+      $('.js-user-preferences-form-container').on('click', '.js-greatkidsnews-grades-checkbox.active', function () {
+        var $greatkidsnewsCheckbox = $('.js-greatkidsnews-checkbox');
+        var activeItems = $('.js-greatkidsnews-grades-checkbox.active');
+        if (activeItems.length < 2) {
+          $greatkidsnewsCheckbox.trigger('click');
+        }
+      });
     }
 });

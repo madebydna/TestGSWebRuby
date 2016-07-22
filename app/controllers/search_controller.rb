@@ -31,13 +31,7 @@ class SearchController < ApplicationController
 
 
   def default_search
-      gon.pagename = "DefaultSearchPage"
-      set_meta_tags title: 'Find a School In Your State | GreatSchools',
-                    description: 'Find and compare schools across the country by searching near an address or by name. Search for public, private, and charter schools, preschools, elementary, middle, and high schools.'
-
-      render 'search/default_search'
-
-
+    redirect_to "/", :status => 301
   end
 
 
