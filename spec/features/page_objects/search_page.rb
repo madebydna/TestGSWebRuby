@@ -1,4 +1,7 @@
+require 'features/page_objects/modules/footer'
+
 class SearchPage < SitePrism::Page
+  include Footer
 
   set_url_matcher /search\/search\.page/
 
