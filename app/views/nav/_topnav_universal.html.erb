@@ -1311,4 +1311,19 @@ mobileNavSearch[0].addEventListener("click", toggleSearch, false);
   };
   initLanguageLinkListener();
 
+  (function addLangToLinks() {
+    var navAnchors = document.querySelectorAll('body>.un a[href]');
+    var i = navAnchors.length;
+    while(i--) {
+      var anchor = navAnchors[i];
+      var href = anchor.href;
+      if(href != '#') {
+        var currentLangParam = getQueryParam('lang');
+        if (currentLangParam != null && currentLangParam != '' && currentLangParam != 'en') {
+          anchor.href = updateUrlParameter(href, 'lang', getQueryParam('lang'));
+        }
+      }
+    }
+  })();
+
 </script>
