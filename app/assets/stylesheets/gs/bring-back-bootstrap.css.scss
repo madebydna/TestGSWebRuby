@@ -2,7 +2,7 @@
 // Essentially this adds back in gutters - the spaces between columns.
 
 $grid-gutter-width: 30px;
-$half-gutter-width: ($grid-gutter-width);
+$half-gutter-width: ($grid-gutter-width / 2);
 
 @mixin gs-make-grid-columns() {
   $list: '';
@@ -19,8 +19,8 @@ $half-gutter-width: ($grid-gutter-width);
       min-height: 1px;
       // Inner gutter via padding
       // On mobile we make this space smaller than vanilla Bootstrap
-      padding-left:  $half-gutter-width / 2;
-      padding-right: $half-gutter-width / 2;
+      padding-left:  $half-gutter-width;
+      padding-right: $half-gutter-width;
       @include for-sm-and-up {
         // Inner gutter via padding
         padding-left:  $half-gutter-width;
@@ -55,7 +55,7 @@ $half-gutter-width: ($grid-gutter-width);
   .row {
     // Using the half-width here because the padding on our mobile columns is
     // a quarter of the gutter size
-    @include make-row($half-gutter-width);
+    @include make-row($grid-gutter-width);
     @include for-sm-and-up {
       @include make-row();
     }
