@@ -30,8 +30,9 @@
     letter-spacing: normal;
   }
 
-  .un .dt {
+   .un .dt-desktop {
     display: table;
+     width: 100%;
   }
 
   .un .tr {
@@ -167,14 +168,14 @@
     display: none;
   }
 
-  .un .header {
+   .header_un {
     width: 100%;
     background-color: #FFFFFF;
   }
 
   /* menu */
 
-  .un .header .menu {
+   .header_un .menu {
     clear: both;
     max-height: 0;
     transition: max-height .2s ease-out;
@@ -182,7 +183,7 @@
 
   /* menu icon */
 
-  .un .header .menu-icon {
+   .header_un .menu-icon {
     cursor: pointer;
     /*display: inline-block;*/
     /*float: right;*/
@@ -195,7 +196,7 @@
     top: 12px;
   }
 
-  .un .header .menu-icon .navicon {
+   .header_un .menu-icon .navicon {
     background: #333;
     display: block;
     height: 2px;
@@ -205,8 +206,8 @@
     top: 10px;
   }
 
-  .un .header .menu-icon .navicon:before,
-  .un .header .menu-icon .navicon:after {
+   .header_un .menu-icon .navicon:before,
+   .header_un .menu-icon .navicon:after {
     background: #333;
     content: '';
     display: block;
@@ -216,38 +217,37 @@
     width: 100%;
   }
 
-  .un .header .menu-icon .navicon:before {
+   .header_un .menu-icon .navicon:before {
     top: 5px;
   }
 
-  .un .header .menu-icon .navicon:after {
+   .header_un .menu-icon .navicon:after {
     top: -5px;
   }
 
   /* menu btn */
-
-  .un .header .menu-btn {
+   .header_un .menu-btn {
     display: none;
   }
 
-  .un .header .menu-btn:checked ~ .menu {
+   .header_un .menu-btn:checked ~ .menu {
     max-height: 240px;
   }
 
-  .un .header .menu-btn:checked ~ .menu-icon .navicon {
+   .header_un .menu-btn:checked ~ .menu-icon .navicon {
     background: transparent;
   }
 
-  .un .header .menu-btn:checked ~ .menu-icon .navicon:before {
+   .header_un .menu-btn:checked ~ .menu-icon .navicon:before {
     transform: rotate(-45deg);
   }
 
-  .un .header .menu-btn:checked ~ .menu-icon .navicon:after {
+   .header_un .menu-btn:checked ~ .menu-icon .navicon:after {
     transform: rotate(45deg);
   }
 
-  .un .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-  .un .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+   .header_un .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+   .header_un .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
     top: 0;
   }
 
@@ -589,13 +589,13 @@
 
     .un .toggle {
       display: block;
-      background-color: #FFFFFF;
+      /*background-color: #FFFFFF;*/
       padding: 5px 17px;
       color: #585859;
       font-size: 14px;
       line-height: 28px;
       text-decoration: none;
-      width: 100%;
+      /*width: 100%;*/
     }
 
     .un nav .toggle:hover {
@@ -683,7 +683,7 @@
   }
 
   @media (min-width: 48em) {
-    .un .header .menu-icon {
+    .header_un .menu-icon {
       display: none;
     }
   }
@@ -707,7 +707,7 @@
 
     }
 
-    .un .header {
+    .header_un {
       position: fixed;
       background: #ffffff;
       z-index: 4;
@@ -767,6 +767,10 @@
     .un .mobile-toggle-button {
       display: none;
     }
+
+    .un .search_bar_tc {
+      display: table-cell;
+    }
   }
 
   @media (min-width: 992px) and (max-width: 1199px) {
@@ -807,8 +811,8 @@
 
 
 </style>
-<div class="un">
-  <div class="header">
+<div class="">
+  <div class="header_un">
     <div class="un clearfix">
       <div class="tr">
         <div class="menu_layout_mobile">
@@ -825,7 +829,7 @@
           <span class="search_icon_image"></span>
         </div>
         <div class="search_bar search_hide_mobile">
-          <div class="dt">
+          <div class="dt-desktop">
             <div class="mobile-toggle-button active font-size-medium tac tav js-choose-school-search">
               Schools
             </div>
@@ -839,36 +843,42 @@
                 <a class="dropdown-item js-desktop-search-dropdown-item">Parenting</a>
               </div>
             </div>
-            <form name="schoolResultsSearchForm" class="js-nav-school-search-from js-schoolResultsSearchForm" style="width: 100%; margin-bottom:0;" action="http://www.greatschools.org/search/search.page" method="get">
-              <div class="search_bar_size js-nav-search-bar">
-                <span class="js-nav-school-search-input">
-                  <input type="text"
-                         name="locationSearchString"
-                         value=""
-                         data-prev-search=""
-                         class='js-nav-school-search-input typeahead-nav full-width pam search_form_field'
-                         style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-                         placeholder="City, zip, address or school">
-                </span>
-              </div><div class="search_bar_button">
-                <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-                  <span class="search_icon_image_white"></span></button>
+            <form name="schoolResultsSearchForm" class="js-nav-school-search-from js-schoolResultsSearchForm search_bar_tc" style="width: 100%; margin-bottom:0;" action="http://www.greatschools.org/search/search.page" method="get">
+              <div style="width: 100%; display: table">
+                <div class="search_bar_size js-nav-search-bar">
+                  <span class="js-nav-school-search-input">
+                    <input type="text"
+                           name="locationSearchString"
+                           value=""
+                           data-prev-search=""
+                           class='js-nav-school-search-input typeahead-nav full-width pam search_form_field'
+                           style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                           placeholder="City, zip, address or school">
+                  </span>
+                </div>
+                <div class="search_bar_button">
+                  <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                    <span class="search_icon_image_white"></span></button>
+                </div>
               </div>
             </form>
             <form name="contentResultsSearchForm" class="js-nav-content-search-form dn" style="width: 100%; margin-bottom:0;" action="/gk/" method="get">
-              <div class="search_bar_size js-nav-search-bar">
-                <span class="js-nav-content-search-input">
-                  <input type="text"
-                         name="s"
-                         value=""
-                         data-prev-search=""
-                         class='js-nav-content-search-input full-width pam search_form_field'
-                         style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
-                         placeholder="Articles, worksheets and more">
-                </span>
-              </div><div class="search_bar_button">
-                <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
-                  <span class="search_icon_image_white"></span></button>
+              <div style="width: 100%; display: table">
+                <div class="search_bar_size js-nav-search-bar">
+                  <span class="js-nav-content-search-input">
+                    <input type="text"
+                           name="s"
+                           value=""
+                           data-prev-search=""
+                           class='js-nav-content-search-input full-width pam search_form_field'
+                           style="width:100%; border-top-right-radius: 0px; border-bottom-right-radius: 0px;"
+                           placeholder="Articles, worksheets and more">
+                  </span>
+                </div>
+                <div class="search_bar_button">
+                  <button type='submit' class="search_form_button pull-right btn btn-lg btn-primary" style="height: 46px; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">
+                    <span class="search_icon_image_white"></span></button>
+                </div>
               </div>
             </form>
           </div>
@@ -967,7 +977,7 @@
             </ul>
           </nav>
       </div>
-      <div class="tc js-nav-extra-table-cell" style="width:100%;"></div>
+        <!--<div class="tc js-nav-extra-table-cell" style="width:100%;"></div>-->
       </div>
     </div>
 
@@ -1083,10 +1093,17 @@
 
     var toggleSearchForm = function(searchTypeSelector) {
       if(searchTypeSelector == schoolSearchSelector) {
-          removeClass(schoolSearchForm, 'dn');
+//          removeClass(schoolSearchForm, 'dn');
+//          addClass(contentSearchForm, 'dn');
+        ///////////////////////////////////////////////////////////////////
+        removeClass(contentSearchForm, 'search_bar_tc');
           addClass(contentSearchForm, 'dn');
+        removeClass(schoolSearchForm, 'dn');
+        addClass(schoolSearchForm, 'search_bar_tc');
       } else {
           removeClass(contentSearchForm, 'dn');
+        addClass(contentSearchForm, 'search_bar_tc');
+        removeClass(schoolSearchForm, 'search_bar_tc');
           addClass(schoolSearchForm, 'dn');
       }
     };
