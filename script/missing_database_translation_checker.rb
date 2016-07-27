@@ -1,35 +1,40 @@
 require 'optparse'
-require_relative '../lib/gs_i18n'
-
-OptionParser.new do |opts|
-  opts.banner = "Usage: i18n_database_check.rb [-f]"
-
-  opts.on('-f', '--file [FILE]', 'Write output to specified file') do |v|
-    $stdout.reopen(v, "w")
-    $stdout.sync = true
-  end
-
-  # Cannot use -h and --help since that will be interpreted by rails runner and spit out rails runner usage
-  opts.on_tail('-?', '--usage', 'Show this message') do
-    puts opts
-    exit
-  end
-end.parse!
+require_relative '../lib/i18n/manager.rb'
 
 
 # Example
 # DATABASE_URL=mysql2://USER:PASSWORD@rodb-qa.greatschools.org/gs_schooldb bundle exec rails runner script/missing_database_translation_checker.rb -f /tmp/missing_database_translation_checker_output.txt
 class MissingDatabaseTranslationChecker
 
-  def self.run
+  def self.report
     MissingDatabaseTranslationChecker.new.run
   end
 
-  def self.missing_translations_hash
+  def self.translate(table)
     hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
-    hash.each do |key, strings|
-      key = key.split('.')[1..-1].join('.')
-      ::GsI18n::I18nManager.translate_and_add_db_value(key, strings)
+    hash.select! { |key, _| key.start_with?(table) }
+    hash.each do |db_dot_table_dot_column, missing_strings|
+      table_dot_column = db_dot_table_dot_column.split('.')[1..-1].join('.')
+      ::GsI18n::Manager.translate_and_add_db_value(
+        table_dot_column,
+        missing_strings,
+        true
+      )
+    end
+  end
+
+  # Add keys and values for a table, but use the English text for all locales
+  # rather than using Google Translate to translate the text
+  def self.add(table)
+    hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
+    hash.select! { |key, _| key.start_with?(table) }
+    hash.each do |db_dot_table_dot_column, missing_strings|
+      table_dot_column = db_dot_table_dot_column.split('.')[1..-1].join('.')
+      ::GsI18n::Manager.translate_and_add_db_value(
+        table_dot_column,
+        missing_strings,
+        false
+      )
     end
   end
 
@@ -274,5 +279,40 @@ class MissingDatabaseTranslationChecker
   end
 end
 
-MissingDatabaseTranslationChecker.missing_translations_hash
-# MissingDatabaseTranslationChecker.run
+options = OpenStruct.new
+options.command = :report
+OptionParser.new do |opts|
+
+  opts.banner = "Usage: i18n_database_check.rb [-f]"
+
+  opts.on('-f', '--file [FILE]', 'Write output to specified file') do |v|
+    $stdout.reopen(v, "w")
+    $stdout.sync = true
+  end
+
+  opts.on('-tTABLE', '--translate=TABLE', 'Dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+    options.command = :translate
+    options.table = table
+  end
+
+  opts.on('-aTABLE', '--add=TABLE', 'Dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+    options.command = :add
+    options.table = table
+  end
+
+  # Cannot use -h and --help since that will be interpreted by rails runner and spit out rails runner usage
+  opts.on_tail('-?', '--usage', 'Show this message') do
+    puts args
+    exit
+  end
+  options
+end.parse!
+
+case options.command
+when :report
+  MissingDatabaseTranslationChecker.report
+when :translate
+  MissingDatabaseTranslationChecker.translate(options.table)
+when :add
+  MissingDatabaseTranslationChecker.add(options.table)
+end

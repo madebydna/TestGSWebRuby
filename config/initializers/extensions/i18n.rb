@@ -1,5 +1,5 @@
 module I18n
-  extend GsI18n
+  extend ::GsI18n
 
   def self.non_default_locale
     locale != default_locale && locale_available?(locale) ? locale.to_s : nil
