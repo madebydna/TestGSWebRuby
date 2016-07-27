@@ -6,9 +6,14 @@ module GsI18n
       GSLogger.warn(:i18n, nil, vars: [key] + args, message: 'db_t received blank key')
       return default || key
     end
+    cleansed_key = GsI18n.clean_key(key)
+    self.t(cleansed_key, *args)
+  end
+
+  def self.clean_key(key)
     cleansed_key = key.to_s.gsub('.', '').strip
     cleansed_key = cleansed_key.to_sym if key.is_a?(Symbol)
-    self.t(cleansed_key, *args)
+    cleansed_key
   end
 
   def translation_view_array
@@ -53,6 +58,18 @@ module GsI18n
 
     def files_grouped_by_name
       files.group_by(&:name_minus_locale)
+    end
+
+    def self.translate_and_add_db_value(table_dot_column, strings)
+      strings = [*strings]
+      manager = I18nManager.for_files_with_pattern(table_dot_column)
+      strings.each do |s|
+        manager.files_grouped_by_name.each_with_index do |(name, files), index|
+          file_group = I18nFileGroup.new(files)
+          file_group.add_new_key_and_value(GsI18n.clean_key(s), s)
+          file_group.write_each_if_dirty
+        end
+      end
     end
 
     def check_missing_translations
@@ -125,6 +142,21 @@ module GsI18n
       end
     end
 
+    def add_new_key_and_value(key, value)
+      files.each do |f|
+        translation = f.translation(key).presence
+        next if translation
+        locale = f.filename_locale
+        translation = get_translation(locale, value)
+        f.add_translation!(key, translation)
+      end
+    end
+
+    def get_translation(lang, value)
+      return value if lang == :en
+      return "FOO #{lang} BAR #{value}"
+    end
+
     def find_translation(key)
       files.each do |f|
         translation = f.translation(key).presence
@@ -185,7 +217,7 @@ module GsI18n
 
     def write
       f = File.open(filename, 'w')
-      f << YAML.dump(yaml_to_write)
+      f << YAML.dump(yaml_to_write, line_width: -1)
       f.close
       reset_memoizations
     end
@@ -211,7 +243,7 @@ module GsI18n
     end
 
     def add_translation!(key, value)
-      key = [filename_locale, key].join('.') unless key.start_with?(filename_locale)
+      key = [filename_locale, key].join('.') unless key.start_with?(filename_locale.to_s)
       scope = key.split('.')
       hash = scope.reverse.inject(value) { |a, n| { n => a } }
       before = yaml_to_write.to_s

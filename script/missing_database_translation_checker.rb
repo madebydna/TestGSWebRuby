@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require_relative '../config/environment'
 require 'optparse'
+require_relative '../lib/gs_i18n'
 
 OptionParser.new do |opts|
   opts.banner = "Usage: i18n_database_check.rb [-f]"
@@ -26,6 +27,14 @@ class MissingDatabaseTranslationChecker
     MissingDatabaseTranslationChecker.new.run
   end
 
+  def self.missing_translations_hash
+    hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
+    hash.each do |key, strings|
+      key = key.split('.')[1..-1].join('.')
+      ::GsI18n::I18nManager.translate_and_add_db_value(key, strings)
+    end
+  end
+
   def initialize
     @config = [
       {
@@ -48,23 +57,23 @@ class MissingDatabaseTranslationChecker
         table: :'gs_schooldb.ethnicity',
         column: :name
       },
-      {
-        table: :'gs_schooldb.hub_config',
-        column: :value,
-        filters: [
-          /^true$/,
-          /^false$/,
-          /\.jpg$/,
-          /\.png$/,
-          /\.gs$/,
-          /^https?:/,
-          /^([^a-zA-Z])+$/,
-          /^schools\/\?/,
-          /\#\d+$/,
-          /^\/[a-z\/-]+$/,
-          /Parent Portal .{3} doorway to answers/
-        ]
-      },
+      # {
+      #   table: :'gs_schooldb.hub_config',
+      #   column: :value,
+      #   filters: [
+      #     /^true$/,
+      #     /^false$/,
+      #     /\.jpg$/,
+      #     /\.png$/,
+      #     /\.gs$/,
+      #     /^https?:/,
+      #     /^([^a-zA-Z])+$/,
+      #     /^schools\/\?/,
+      #     /\#\d+$/,
+      #     /^\/[a-z\/-]+$/,
+      #     /Parent Portal .{3} doorway to answers/
+      #   ]
+      # },
       {
         table: :'localized_profiles.response_values',
         column: :response_label
@@ -140,6 +149,14 @@ class MissingDatabaseTranslationChecker
     end
   end
 
+  def missing_translations_hash
+    @config.inject({}) do |aggregate_hash, hash|
+      column_check = new_column_checker(hash[:table], hash[:column], hash)
+      aggregate_hash.merge!(column_check.missing_translations_hash)
+      aggregate_hash
+    end
+  end
+
   def print_report
     puts '=' * 75
     @missing_translation_messages.each do |message|
@@ -175,6 +192,12 @@ class MissingDatabaseTranslationChecker
 
     def missing_translation_messages
       missing_translations.map { |key| "Missing translation '#{key}' for #{table}.#{column}"}
+    end
+
+    def missing_translations_hash
+      {
+        "#{table}.#{column}" => missing_translations
+      }
     end
 
     def missing_translations
@@ -254,3 +277,4 @@ class MissingDatabaseTranslationChecker
 end
 
 MissingDatabaseTranslationChecker.run
+
