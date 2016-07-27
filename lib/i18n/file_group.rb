@@ -57,6 +57,10 @@ module GsI18n
     def write_each_if_dirty
       files.each(&:write_if_dirty)
     end
+
+    def write_each
+      files.each(&:write)
+    end
   end
 end
 
