@@ -32,6 +32,14 @@ module GsI18n
       files.group_by(&:name_minus_locale)
     end
 
+    def self.reformat(table_dot_column)
+      manager = Manager.for_files_with_pattern(table_dot_column)
+      manager.files_grouped_by_name.each_with_index do |(name, files), index|
+        file_group = GsI18n::FileGroup.new(files)
+        file_group.write_each
+      end
+    end
+
     def self.translate_and_add_db_value(table_dot_column, strings, translate = false)
       strings = [*strings]
       manager = Manager.for_files_with_pattern(table_dot_column)

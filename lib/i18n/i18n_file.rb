@@ -37,8 +37,9 @@ module GsI18n
     end
 
     def write
+      y = yaml_to_write
       f = File.open(filename, 'w')
-      f << YAML.dump(yaml_to_write, line_width: -1)
+      f << YAML.dump(y, line_width: -1)
       f.close
       reset_memoizations
     end

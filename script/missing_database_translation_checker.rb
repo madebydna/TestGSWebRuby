@@ -40,6 +40,15 @@ class MissingDatabaseTranslationChecker
     end
   end
 
+  def self.reformat(table)
+    hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
+    hash.select! { |key, _| key.start_with?(table) }
+    hash.each do |db_dot_table_dot_column, missing_strings|
+      table_dot_column = db_dot_table_dot_column.split('.')[1..-1].join('.')
+      ::GsI18n::Manager.reformat(table_dot_column)
+    end
+  end
+
   def initialize
     @config = [
       {
@@ -292,13 +301,18 @@ OptionParser.new do |opts|
     $stdout.sync = true
   end
 
-  opts.on('-tTABLE', '--translate=TABLE', 'Dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+  opts.on('-tTABLE', '--translate=TABLE', 'Google translate missing strings for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
     options.command = :translate
     options.table = table
   end
 
-  opts.on('-aTABLE', '--add=TABLE', 'Dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+  opts.on('-aTABLE', '--add=TABLE', 'Add English text for all locales for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
     options.command = :add
+    options.table = table
+  end
+
+  opts.on('-rTABLE', '--reformat=TABLE', 'Reformat files for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+    options.command = :reformat
     options.table = table
   end
 
@@ -317,4 +331,6 @@ when :translate
   MissingDatabaseTranslationChecker.translate(options.table)
 when :add
   MissingDatabaseTranslationChecker.add(options.table)
+when :reformat
+  MissingDatabaseTranslationChecker.reformat(options.table)
 end
