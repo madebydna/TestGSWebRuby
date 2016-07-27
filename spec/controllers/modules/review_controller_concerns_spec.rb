@@ -207,6 +207,24 @@ describe ReviewControllerConcerns::ReviewParams do
     end
   end
 
+  describe '#review_attributes' do
+    let(:user) { FactoryGirl.build(:verified_user) }
+    let(:review_params) do
+      {
+        state: 'ca',
+        school_id: 1,
+        review_question_id: 1,
+        comment: ("test \r\n" * 15)
+      }
+    end
+    subject do
+      ReviewControllerConcerns::ReviewParams.new(review_params, user).review_attributes
+    end
+    it "should remove carriage returns and leave newlines" do
+      expect(subject[:comment]).to eq("test \n" * 15)
+    end
+  end
+
   describe '#delete_account_pending_email_verification_flash_notice' do
     context 'with account_pending_email_verification_flash_notice already set' do
       let(:controller) { (Class.new { include ReviewControllerConcerns }).new }

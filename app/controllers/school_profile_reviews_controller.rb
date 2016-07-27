@@ -37,6 +37,7 @@ class SchoolProfileReviewsController < SchoolProfileController
     if logged_in?
       review, errors = build_review_params(review_params).save_new_review
       if errors
+        GSLogger.error(:reviews, nil, vars: review_params, message: 'Error trying to save a user\'s review: ' + errors.try(:first).to_s)
         status = :unprocessable_entity
         json_message = errors
       else
