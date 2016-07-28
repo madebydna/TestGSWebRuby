@@ -1,6 +1,9 @@
 Rails.application.config.assets.precompile += [
     'post_load.js',
     'post_load.css',
+    'deprecated_post_load.js',
+    'deprecated_post_load.css',
+    'deprecated_print.css',
     'footer.css',
     'print.css',
     'cm_athena_gs_v2.js',

@@ -9,7 +9,7 @@ class UserEmailPreferencesController < ApplicationController
   end
   before_action :login_required, only: [:show, :update]
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def show
     @page_name = 'User Email Preferences' # This is also hardcoded in email_preferences.js

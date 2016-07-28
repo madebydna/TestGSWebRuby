@@ -1,7 +1,7 @@
 class SchoolProfileQualityController < SchoolProfileController
   protect_from_forgery
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def quality
     #Set the pagename before setting other omniture props.

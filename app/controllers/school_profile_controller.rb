@@ -25,7 +25,7 @@ class SchoolProfileController < SchoolController
   before_action :set_state_school_id_gon_var
   # after_filter :set_last_modified_date
 
-  layout 'application'
+  layout 'deprecated_application'
 
   MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW = 4
 

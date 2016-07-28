@@ -8,7 +8,7 @@ class UserEmailUnsubscribesController < ApplicationController
   end
   before_action :login_required, only: [:new, :create]
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def new
     @page_name = 'User Email Unsubscribe'

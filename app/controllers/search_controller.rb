@@ -18,7 +18,7 @@ class SearchController < ApplicationController
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
   before_action :use_gs_bootstrap
 
-  layout 'application'
+  layout 'deprecated_application'
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program voucher_type spec_ed)

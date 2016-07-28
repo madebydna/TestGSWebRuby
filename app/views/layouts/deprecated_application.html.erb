@@ -3,11 +3,11 @@
 <head>
   <%= display_meta_tags %>
   <%= yield :stylesheet_includes %>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= stylesheet_link_tag    "print",       media: "print" %>
+  <%= stylesheet_link_tag    "deprecated_application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag    "deprecated_print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "deprecated_application", "data-turbolinks-track" => true %>
   <%= render 'optimizely/install' %>
 
   <%= csrf_meta_tags %>
@@ -57,8 +57,8 @@
 <%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
-<%= stylesheet_link_tag "post_load", :async => true %>
-<%= javascript_include_tag "post_load", :async => true %>
+<%= stylesheet_link_tag "deprecated_post_load", :async => true %>
+<%= javascript_include_tag "deprecated_post_load", :async => true %>
 <%= yield :javascript_includes %>
 </body>
 </html>

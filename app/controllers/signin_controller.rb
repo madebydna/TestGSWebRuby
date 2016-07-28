@@ -8,7 +8,7 @@ class SigninController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:destroy]
   skip_before_action :write_locale_session
 
-  layout 'application'
+  layout 'deprecated_application'
   public
 
   # store this join / login url only if another location isn't stored
