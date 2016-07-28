@@ -1,12 +1,10 @@
-<% school %>
 <% school_reviews %>
 
-<span class="dn" itemscope="" itemtype="http://data-vocabulary.org/Review-aggregate">
-  <span itemprop="itemreviewed"><%= school.name %></span>
-  <span itemprop="rating" itemscope itemtype="http://data-vocabulary.org/Rating">
+<span class="dn" itemscope="" itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating">
+  <span>
     Rating:
-    <span itemprop="average"><%= school_reviews.average_5_star_rating %></span> out of <span itemprop="best">5</span>
+    <span itemprop="ratingValue"><%= school_reviews.average_5_star_rating %></span> out of <span itemprop="bestRating">5</span>
    </span>
   based on
-  <span itemprop="count"><%= school_reviews.number_of_active_reviews %></span> reviews.
+  <span itemprop="reviewCount"><%= school_reviews.number_of_active_reviews %></span> reviews.
 </span>

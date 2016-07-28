@@ -25,7 +25,6 @@
           <%= render 'change_location', choose_state: @state_abbreviation   %>
         </div>
         <div class="search-bar col-xs-6 col-sm-5 form-group">
-          <span class="dn js-mobile-placeholder js-translate-placeholder"></span>
           <input  type="text"
                   name="locationSearchString"
                   value="<%= @search_term %>"
@@ -35,7 +34,7 @@
                   <% end %>
                     id="js-schoolResultsSearch"
                     class='typeahead form-control'
-                    placeholder="" />
+                    placeholder="<%= t('search.placeholder')  %>" />
 
         </div>
 

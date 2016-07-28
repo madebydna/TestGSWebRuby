@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'controllers/concerns/authentication_concerns_shared'
+require 'controllers/modules/authentication_concerns_shared'
 
 describe SigninController do
 
@@ -669,7 +669,7 @@ describe SigninController do
 
         it 'should log the user in' do
           controller.send :authenticate_token_and_redirect
-          expect(controller).to be_logged_in
+          expect(controller.send(:logged_in?)).to be_truthy
         end
       end
 
@@ -689,7 +689,7 @@ describe SigninController do
 
         it 'should not log the user in' do
           controller.send :authenticate_token_and_redirect
-          expect(controller).to_not be_logged_in
+          expect(controller.send(:logged_in?)).to be_falsey
         end
 
         it 'should flash an error message' do
@@ -735,7 +735,7 @@ describe SigninController do
     end
 
     context 'when date is yesterday' do
-      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.days.ago) }
+      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.day.ago) }
       it { is_expected.to be_token_valid }
     end
 

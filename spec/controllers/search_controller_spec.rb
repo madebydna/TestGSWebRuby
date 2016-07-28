@@ -18,17 +18,59 @@ describe SearchController do
   end
 
   describe '#search' do
+    subject {get :search, params_hash}
     context 'when only lat and lon params present' do
-      it 'should go to default search page' do
-        get :search, lat: '1', lon: '1'
-        expect(response).to redirect_to(default_search_url)
+      let (:params_hash) { {lat: '1', lon: '1'} }
+      before { expect(controller).not_to receive(:by_location) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when q is blank and state is present' do
+      let (:params_hash) { {state: 'CA', q: ''} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when no query parameters are specified' do
+      let (:params_hash) { {} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when the q parameter is blank' do
+      let (:params_hash) { {q: ''} }
+      before { expect(controller).not_to receive(:by_name) }
+      it { expect(subject).to redirect_to(default_search_url) }
+    end
+
+    context 'when query parameter and state is specified' do
+      let (:params_hash) { {q: 'query', state: 'ca'} }
+      it 'should render the search results page' do
+        allow(SchoolSearchService).to receive(:by_name).and_return(results: [], num_found: 0)
+        expect(subject).to render_template 'search_page'
       end
     end
-    context 'when only blank q and state params present' do
-      it 'should go to default search page' do
-        get :search, state: 'CA', q: ''
-        expect(response).to redirect_to(default_search_url)
+
+    context 'when given an invalid UTF-8 byte sequence' do
+      let (:params_hash) { {q: "here comes a really bad character: \xF4"}}
+      it 'redirects and subs out the bad characters' do
+        expect(subject.status).to eq(302)
       end
+    end
+  end
+
+  describe '#process_results' do
+    let (:results) { {num_found: 0, results: []}}
+    before do
+      controller.instance_variable_set(:@params_hash, {})
+      controller.instance_variable_set(:@results_offset, 0)
+      controller.instance_variable_set(:@page_size, 25)
+    end
+    it 'JT-927 regression: does not crash when map_schools is empty' do
+      # Crash occurred when results was empty and calculate_map_range returned a non-zero range
+      allow(controller).to receive(:calculate_map_range) { [1, 2] }
+      controller.process_results(results, 0)
+      expect(controller.instance_variable_get(:@map_schools)).not_to be_nil
     end
   end
 
@@ -83,12 +125,8 @@ describe SearchController do
 
     context 'When there is overall rating in filter params' do
       gs_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(true)
-        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(false)
       }
 
       context 'with only above_average filter' do
@@ -115,12 +153,8 @@ describe SearchController do
 
     context 'When there is path to quality rating in filter params' do
       path_to_quality_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(true)
-        allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(false)
       }
 
       context 'with a few ratings' do
@@ -144,11 +178,7 @@ describe SearchController do
 
     context 'When there is great start to quality rating in filter params' do
       gstq_rating_allows = Proc.new {
-        allow(controller).to receive(:should_apply_filter?).with(:st).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:grades).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:cgr).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:gs_rating).and_return(false)
-        allow(controller).to receive(:should_apply_filter?).with(:ptq_rating).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
         allow(controller).to receive(:should_apply_filter?).with(:gstq_rating).and_return(true)
       }
 
@@ -180,7 +210,90 @@ describe SearchController do
       end
     end
 
+    context 'When there are Indianapolis PreK filters selected' do
+      indypk_allows = Proc.new {
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:indypk).and_return(true)
+      }
+
+      context 'with nothing selected' do
+        let(:params_hash) { {'indypk' => ''}}
+        it 'should not set any filters' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({})
+        end
+      end
+
+      context 'with omwpk' do
+        let(:params_hash) { {'indypk' => 'omwpk'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_omwpk: true)
+        end
+      end
+
+      context 'with ccdf' do
+        let(:params_hash) { {'indypk' => 'ccdf'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_ccdf: true)
+        end
+      end
+
+      context 'with indy_psp' do
+        let(:params_hash) { {'indypk' => 'indypsp'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_indypsp: true)
+        end
+      end
+
+      context 'with all filters' do
+        let(:params_hash) { {'indypk' => %w(indypsp ccdf omwpk)}}
+        it 'should set the right filters' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_indypsp: true, indy_ccdf: true, indy_omwpk: true)
+        end
+      end
+    end
+
   end
+
+  context 'When there is colorado_rating in filter params' do
+    before do
+      allow(controller).to receive(:should_apply_filter?).and_return(false)
+      allow(controller).to receive(:should_apply_filter?).
+        with(:colorado_rating).and_return(true)
+    end
+
+    context 'with a few ratings' do
+      let(:params_hash) do
+        {'colorado_rating' => %w[A B]}
+      end
+      it "should set the right filter for ratings" do
+        filters = controller.send(:parse_filters, params_hash)
+        expect(filters).to eq(colorado_rating: %w[A B])
+      end
+    end
+
+    context 'with a all ratings' do
+      let(:params_hash) do
+        {'colorado_rating' => %w[A B C D F]}
+      end
+      it "should set all 4 ratings filters, so that only schools with ratings are displayed" do
+        filters = controller.send(:parse_filters, params_hash)
+        expect(filters).to eq(
+          colorado_rating: %w[A B C D F]
+        )
+      end
+    end
+  end
+
 
   describe '#ad_setTargeting_through_gon' do
     before do

@@ -71,6 +71,22 @@ class User < ActiveRecord::Base
     self.reviews_user_flagged.map(&:id).include? review.id
   end
 
+  def specified_auto_graduate?
+    child_age == 'true' || child_age == 'false'
+  end
+
+  def opted_in_auto_graduate?
+    child_age == 'true'
+  end
+
+  def update_auto_graduate(value)
+    unless value == 'true' || value == 'false' || value == nil
+      raise ArgumentError.new('Must provide true or false (as strings) or nil')
+    end
+    self.child_age = value
+    self.save
+  end
+
   protected
 
   def set_defaults

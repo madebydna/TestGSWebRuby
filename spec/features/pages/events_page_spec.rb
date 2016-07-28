@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/city_home_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
+require 'features/examples/footer_examples'
 
 describe 'Events Page' do
   let(:events_page_url) { 'http://localhost:3000/michigan/detroit/events' }
@@ -12,11 +13,14 @@ describe 'Events Page' do
     CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').create
     visit events_page_url
   end
+  subject { CityHomePage.new }
   after(:each) { clean_dbs :gs_schooldb }
 
   after(:each) do
     Timecop.return
   end
+
+  include_examples 'should have a footer'
 
   it 'shows basic layout and breadcrumbs' do
     expect(page).to have_text 'All events'

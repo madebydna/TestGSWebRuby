@@ -9,11 +9,9 @@
   <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
   <%= render 'school_profile/data_layouts/nearby_schools' %>
   <%= render 'school_profile/data_layouts/sticky_nearby_schools' %>
-  <div class="mtl pll ptl" style="color:#999999"><%= t('.last_modified') %>: <%= l(@last_modified_date, format: '%B %e, %Y') %></div>
+  <div class="js-modified-date mtl pll ptl" style="color:#999999"><%= t('.last_modified') %>: <%= l(@last_modified_date, format: '%B %e, %Y') %></div>
 </div>
-<%= render 'nav/school_profile_footer', state: @state, cities: @cities %>
 
-<%= render 'school_profile/rich_snippets/rich_snippets_school_info', school: @school %>
+<%= render 'school_profile/rich_snippets/rich_snippets_school_info', school: @school, school_reviews: @school_reviews %>
 <%= render 'school_profile/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
-<%= render 'school_profile/rich_snippets/rich_snippets_average_review_rating', school: @school, school_reviews: @school_reviews %>
 

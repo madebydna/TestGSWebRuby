@@ -1,0 +1,10 @@
+---
+en:
+  user_email_unsubscribes:
+    unsubscribe:
+      email_heading: Email address
+      header: We don't want to lose you!
+      manage_preferences: Manage your newsletter preferences.
+      manage_preferences_intro_text: We recently made some changes that allow us to send more customized emails based on your child's grade.
+      unsubscribe: Unsubscribe
+      unsubscribe_intro_text: But if you're sure you want nothing else from us...

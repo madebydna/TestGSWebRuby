@@ -3,9 +3,9 @@ describe ApplicationController do
 
 
   it 'should have methods for manipulating cookies' do
-    expect(controller).to respond_to(:write_cookie_value)
-    expect(controller).to respond_to(:read_cookie_value)
-    expect(controller).to respond_to(:delete_cookie)
+    expect(controller.respond_to?(:write_cookie_value, true)).to be_truthy
+    expect(controller.respond_to?(:read_cookie_value, true)).to be_truthy
+    expect(controller.respond_to?(:delete_cookie, true)).to be_truthy
   end
 
   describe '#write_cookie_value' do
@@ -288,7 +288,7 @@ describe ApplicationController do
 
   describe '#adapt_flash_messages_from_java' do
     it 'method should be defined' do
-      expect(controller).to respond_to :adapt_flash_messages_from_java
+      expect(controller.respond_to?(:adapt_flash_messages_from_java, true)).to be_truthy
     end
 
     it 'should handle the flash_notice cookie' do

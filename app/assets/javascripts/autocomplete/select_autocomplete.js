@@ -11,7 +11,7 @@ GS.search.autocomplete.selectAutocomplete = GS.search.autocomplete.selectAutocom
     var state_query = typeof state_abbr === "string" ? '&state=' + state_abbr : '';
     var autocomplete = GS.search.autocomplete;
     var schools = autocomplete.data.init({tokenizedAttribute: 'school_name', defaultUrl: '/gsr/search/suggest/school?query=%QUERY' + state_query, sortFunction: false });
-   $('.typeahead').typeahead({
+   $('.typeahead-school-picker').typeahead({
         hint: true,
         highlight: true,
         minLength: 1

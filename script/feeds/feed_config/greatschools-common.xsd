@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:element name="universal-id" type="xs:nonNegativeInteger"/>
+    <xs:element name="id" type="xs:nonNegativeInteger"/>
+    <xs:attribute name="universal-id" type="xs:nonNegativeInteger"/>
+    <xs:element name="universal-district-id" type="xs:nonNegativeInteger"/>
+
+    <xs:element name="level-code">
+        <xs:annotation>
+            <xs:documentation>A set of school levels (preschool, elementary, middle, high) spanned by an entity.
+                In the context of a school, a level code of 'e,m' implies that a school is both an elementary and middle school. Likewise, a level code of 'e' implies that school is an elementary school.
+                In the context of a district, a level code of 'e,m,h', implies there are elementary, middle, and high school(s) associated with that district.  Likewise, a level of code 'e' implies that there are only elementary school(s) associated with that district.
+                In the context of a test, a level code of 'e,m,h' implies that the test is administered to elementary, middle, and high schools.  Likewise, a level code of 'h' implies that a test is only administered to high schools.
+
+                The level code for schools or districts where the level is unknown ('UG') is either gleaned from the entity name or, if that cannot be determined, 'e,m,h'
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="p"/>
+                <xs:enumeration value="e"/>
+                <xs:enumeration value="m"/>
+                <xs:enumeration value="h"/>
+                <xs:enumeration value="p,e"/>
+                <xs:enumeration value="p,m"/>
+                <xs:enumeration value="p,h"/>
+                <xs:enumeration value="e,m"/>
+                <xs:enumeration value="e,h"/>
+                <xs:enumeration value="m,h"/>
+                <xs:enumeration value="e,m,h"/>
+                <xs:enumeration value="p,e,m"/>
+                <xs:enumeration value="p,e,h"/>
+                <xs:enumeration value="p,m,h"/>
+                <xs:enumeration value="p,e,m,h"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="description" type="Str50000">
+        <xs:annotation>
+            <xs:documentation>Description of the entity</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="Str50000">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="50000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="who">
+        <xs:annotation>
+            <xs:documentation>The person who submitted the review.
+                An empty string indicates that we do not know who submitted a review.
+                We did not collect the submitter type prior to mid year 2003.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value=""/>
+                <xs:enumeration value="parent"/>
+                <xs:enumeration value="teacher"/>
+                <xs:enumeration value="principal"/>
+                <xs:enumeration value="other"/>
+                <xs:enumeration value="student"/>
+                <xs:enumeration value="former student"/>
+                <xs:enumeration value="administrator"/>
+                <xs:enumeration value="staff"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="posted">
+        <xs:annotation>
+            <xs:documentation>The date a review was submitted</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="100"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="comments" type="Str50000">
+        <xs:annotation>
+            <xs:documentation>The review text</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:simpleType name="category-rating">
+        <xs:annotation>
+            <xs:documentation>A category rating.  A rating of 5 is the best and a rating of 1 is the worst.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="decline" />
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+            <xs:enumeration value="3" />
+            <xs:enumeration value="4" />
+            <xs:enumeration value="5" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="quality" type="category-rating">
+        <xs:annotation>
+            <xs:documentation>Overall quality rating given by one parent for a school.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:element name="review">
+        <xs:annotation>
+            <xs:documentation>A user submitted review</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element ref="id"/>
+                <xs:element ref="who" minOccurs="0"/>
+                <xs:element ref="posted"/>
+                <xs:element ref="comments"/>
+                <xs:element ref="quality" minOccurs="0" />
+                <xs:element name="url" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="survey-answer">
+        <xs:annotation>
+            <xs:documentation>A summary of survey answers.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element name="level" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="arts" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Arts programs available at the school.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="languages" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Language classes available at the school.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="sports" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Sports programs available at the school.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="ratings-summary">
+        <xs:annotation>
+            <xs:documentation>An average of the parent submitted ratings for a school in the following categories.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element name="count" type="xs:integer" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The number of ratings inspected to calculate averages.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-quality" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average overall quality rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-preschool-overall" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average preschool overall quality rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-principal" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average principal leadership rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-preschool-program" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average preschool program rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-teachers" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average teacher quality rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-preschool-teachers" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average preschool teachers rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-activities" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average extracurricular activities rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-preschool-facilities" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average preschool facilities rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-parents" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average parent involvement rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-preschool-parents" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average preschool parent involvement rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-safety" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average safety and discipline rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="avg-preschool-safety" type="category-rating" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Average preschool safety rating.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="school-summary" type="Str50000">
+        <xs:annotation>
+            <xs:documentation>Summary of the school as displayed on the profile overview page</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+ </xs:schema>

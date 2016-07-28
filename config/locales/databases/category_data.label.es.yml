@@ -83,11 +83,12 @@ es:
     de la escuela
   Child is receiving a high quality education: Niño está recibiendo una educación
     de alta calidad
+  Civil Rights Data Collection: Derechos de recopilación de datos Civil
   Clubs (misc): Clubes (misc.)
   Clubs - dance: Clubes - danza
   Clubs - language: Clubes - idioma
-  Coed / Single Gender: Coed / Single Gender
-  Coed/Single-gender: Coed / género individual
+  Coed / Single Gender:  Mixto / mismo sexo
+  Coed/Single-gender: Mixto / mismo sexo
   Collective Responsibility: Responsabilidad colectiva
   College name: Nombre del Colegio
   College preparation resources: Recursos de preparación de la universidad
@@ -109,7 +110,7 @@ es:
   Current principal's tenure (in years): Años de permanencia de el director
   Dates offered (end): Fechas ofrecidos (finales)
   Dates offered (start): Fechas ofrecidos (inicio)
-  Day or Boarding offered: De día o de embarque ofrecido
+  Day or Boarding offered: De día o internado
   Days offered: Días ofrecido
   Days open: Dias de apertura
   Disorder in hallways is rare: Desorden en los pasillos es rara
@@ -164,12 +165,12 @@ es:
   How can parents find out more about fees?: ¿Cómo pueden los padres saber más acerca
     de las tarifas?
   Human and Social Resources in the Community: Recursos Humanos y Sociales de la Comunidad
-  Instructional / curriculum models used: Modelos de Instrucción / curriculares utilizados
+  Instructional / curriculum models used: Modelos de instrucción y curriculares utilizados
   Is enrollment limited to students who attend the school?: ¿Es la inscripción limitada
     a los estudiantes que asisten a la escuela?
   Is financial aid available?: ¿Es la ayuda financiera disponible?
   Is there a fee for the program?: ¿Hay que pagar para el programa?
-  Learn more: Aprende más
+  Learn more: Infórmese más
   Learn more about this school's SchoolGradesorg rating: Más información sobre la 
     calificación de SchoolGrades.org de esta escuela
   Level of ESL/ELL programming: Nivel de ESL / ELL programación
@@ -196,6 +197,7 @@ es:
   'NULL': NULO
   Number of principals in the last 5 years: Número de directores en los últimos 5
     años
+  NCES: NCES
   Open Friday: Abierto viernes
   Open Monday: Abierto de lunes
   Open Saturday: Abrir Sábado
@@ -253,6 +255,7 @@ es:
     hijos
   School employees: Empleados de la escuela
   SchoolGradesorg rating: Calificación de SchoolGrades.org
+  SchoolGradesorg: SchoolGrades.org
   School has a positive sense of collaboration among school leadership and staff: La
     escuela tiene un sentido positivo de la colaboración entre el liderazgo escolar
     y el personal
@@ -343,6 +346,7 @@ es:
     que completen el primero año de universidad (24 créditos) en el tiempo
   Students with disabilities: Students with disabilities
   Summer program offered: Programa de verano ofrecido
+  TX Education Agency: Agencia de Educación de Texas
   Test scores for low-income students: Resultado de exámenes de estudiantes de bajos ingresos
   test_score_rating: Calificación de exámenes
   Teacher Influence: Influencia del profesor
@@ -406,3 +410,8 @@ es:
   World languages taught (misc): Idiomas enseñan (misc.)
   Year received: Año recibida
   label: label
+  IL State Board of Education: Junta de Educación de Illinois State
+  OH Dept of Education: Departamento de Educación de Ohio
+  NYSED: NYSED
+  IN Dept of Education: Departamento de Educación de IN
+  CO Dept of Education: Departamento de Educación de CO

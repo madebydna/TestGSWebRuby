@@ -77,7 +77,6 @@ def load_sample_data(name, env = 'test')
         values_string = values.join(",")
         values_string.gsub! "'NULL'", 'NULL'
 
-        puts "Inserting sample data for #{name}"
         sql = "insert into #{table}(#{column_names_string}) values(#{values_string})"
         begin
           # puts 'using sql: ' + sql

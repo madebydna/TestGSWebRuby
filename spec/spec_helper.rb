@@ -39,6 +39,7 @@ require 'support/factory_girl_extensions'
 require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
+require 'webmock/rspec'
 
 def disconnect_connection_pools(db)
   ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
@@ -83,6 +84,7 @@ RSpec.configure do |config|
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
   config.include WaitForAjax, type: :feature
+  WebMock.disable_net_connect!(allow_localhost: true)
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

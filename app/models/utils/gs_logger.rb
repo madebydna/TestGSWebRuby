@@ -4,14 +4,17 @@ class GSLogger
   INFO  = 'INFO'
 
   TAGS = Hash.new('MISC').merge({
-    osp: 'OSP',
-    reviews: 'REVIEWS',
-    i18n: 'I18N',
-    school_profiles: 'SCHOOL_PROFILES',
-    community_spotlight: 'COMMUNITY_SPOTLIGHT',
-    external_content_fetcher: 'EXTERNAL_CONTENT_FETCHER',
-    school_cache: 'SCHOOL_CACHE',
-    gk_action: 'GK_ACTION'
+                                    osp: 'OSP',
+                                    reviews: 'REVIEWS',
+                                    i18n: 'I18N',
+                                    school_profiles: 'SCHOOL_PROFILES',
+                                    community_spotlight: 'COMMUNITY_SPOTLIGHT',
+                                    external_content_fetcher: 'EXTERNAL_CONTENT_FETCHER',
+                                    school_cache: 'SCHOOL_CACHE',
+                                    gk_action: 'GK_ACTION',
+                                    shared_cache: 'SHARED_CACHE',
+                                    preferences: 'PREFERENCES',
+                                    unsubscribe: 'UNSUBSCRIBE'
   })
 
   class << self

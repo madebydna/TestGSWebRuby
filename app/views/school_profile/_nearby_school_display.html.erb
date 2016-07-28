@@ -15,7 +15,7 @@
           <h2 class="mvn"><%= title.html_safe %></h2>
         </div>
       </div>
-      <div class="row mtl">
+      <div class="js-nearby-schools-block row mtl">
         <% if version_with_ad %>
             <div class="pbm col-xs-12 col-md-4">
               <div class="pam full-width">
@@ -24,7 +24,7 @@
                 <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Nearby_Schools, view: :mobile, show_ad_text: false %>
               </div>
             </div>
-            <div class="pbm col-xs-12 col-md-8">
+            <div class="js-school-list pbm col-xs-12 col-md-8">
               <% schools.each do |school| %>
                   <%= render partial: 'school_profile/nearby_school',
                              locals: {school: school} %>

@@ -12,7 +12,7 @@
     <%= link_to t('.extracurriculars'), school_details_path(@school, anchor: 'Extracurriculars'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Extracurriculars'}) %>,
     <%= link_to t('.teachers'), school_details_path(@school, anchor: 'Teachers'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Teachers'}) %>
   </div>
-  <div><span class='open-sans_b'><%= t('.reviews') %></span>
+  <div class='pbm js-reviews-quicklinks'><span class='open-sans_b'><%= t('.reviews') %></span>
     <%= link_to t('.parent_reviews'), school_reviews_path(@school, anchor: 'com'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Parent Reviews'}) %>,
     <%= link_to t('.student_reviews'), school_reviews_path(@school, anchor: 'com'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Student Reviews'}) %>,
     <%= link_to t('.write_a_review'), school_reviews_path(@school, anchor: 'topicalReviewQuestionCarousel'), class: 'js-gaClick', data: ga_hash.merge({:'ga-click-label' => 'Write a review'}) %>

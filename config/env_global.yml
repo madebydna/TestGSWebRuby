@@ -7,10 +7,6 @@ gsweb_host: "localhost"
 gsweb_port: "8080"
 GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
 GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
-# The omniture account for production is stored in the config file on the server.
-omniture_account: "gsnetdev"
-omniture_server: "gms.greatschools.org"
-omniture_server_secure: "sgms.greatschools.org"
 facebook_app_id: "178930405559082"
 facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
 solr.ro.server.url: "http://omega.greatschools.org:8580/main/"
@@ -30,6 +26,10 @@ exacttarget_api_client_id_SMS: afievwrm4tz2tidnbg0458x0
 exacttarget_api_client_secret_SMS: zC8g7eGqud0oyTdbMl0IqwtH
 exacttarget_api_app_id_SMS: c1d444f8-087d-4921-927e-790a7bad1119
 
+exacttarget_v2_api_key: 12f1dx5e916tjkij5sajei5e
+exacttarget_v2_api_secret: Qrrgd4ITVtssAgiSZNqCwVyn
+exacttarget_v2_api_app_id: 33a5f73d-b3d3-4724-a50c-a21c1277a041
+
 connection_pooling_enabled: false
 search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
 
@@ -42,5 +42,10 @@ queue_daemon_update_order:
 #  - 3
   - 4
 #  - 5
-is_feed_builder: false
 # End configs for scripts
+# Start Config for Feeds
+is_feed_builder: false
+# The location of feed logs - Absolute Path if no property set the log will be generated at the location where the script is being run from
+feed_log_location : feeds_log.txt
+# The level of feed logs -If no Level set default is DEBUG  .  debug - 0 ,  info -1  , warn -2 ,error -3 , fatal-4 , unknown -5
+feed_log_level : 0

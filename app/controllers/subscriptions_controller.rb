@@ -9,7 +9,7 @@ class SubscriptionsController < ApplicationController
     set_omniture_cookies(subscription_params)
     if params.seek(:subscription,:email).present? || logged_in?
       attempt_sign_up(subscription_params)
-    elsif
+    else
       handle_not_logged_in(subscription_params)
     end
   end
@@ -21,7 +21,7 @@ class SubscriptionsController < ApplicationController
       params[:message] = 'You\'ve signed up to receive GreatSchools\'s newsletter'
       if logged_in?
         attempt_sign_up(params, home_path)
-      elsif 
+      else
         handle_not_logged_in(params)
       end
     else

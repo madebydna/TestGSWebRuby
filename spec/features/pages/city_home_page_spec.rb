@@ -4,6 +4,7 @@ require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
 require 'features/examples/top_rated_schools_section_examples'
 require 'features/contexts/shared_contexts_for_signed_in_users'
+require 'features/examples/footer_examples'
 
 describe 'City Home Page' do
   let!(:city) { create(:city, state: 'MN', name: 'St. Paul') }
@@ -13,6 +14,7 @@ describe 'City Home Page' do
     CityHomePage.new
   end
 
+  include_examples 'should have a footer'
   its(:current_path) { is_expected.to eq '/minnesota/st.-paul/' }
   it { is_expected.to have_email_signup_section }
 

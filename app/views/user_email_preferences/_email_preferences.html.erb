@@ -1,0 +1,124 @@
+<% greatnews = @current_preferences.include? :greatnews %>
+<% greatkidsnews = @current_preferences.include? :greatkidsnews %>
+<% sponsor = @current_preferences.include? :sponsor %>
+<% decline_auto_graduate = @current_preferences.include? :decline_auto_graduate %>
+
+<section class="row">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
+    <%= form_tag(user_preferences_update_path, method: :post) do |f| %>
+      <h1 class="tac"><%= t('.heading') %></h1>
+      <h2 class="tac open-sans font-size-large"><strong><%= t('.subheading_pt_1') %> </strong> <%= t('.subheading_pt_2') %></h2>
+
+      <p class="tac"><strong> <%= t('.email_heading') %>: </strong><%= @current_user.email if logged_in? %></p>
+
+      <h3><%= t('.newsletters_heading') %></h3>
+      <div>
+        <div class="fl prm mtm">
+          <div class="js-checkbox iconx16 js-icon <%= greatnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>" 
+               data-toggle="button" readonly="">
+            <input name="subscriptions[]"
+               disabled="true"
+               type="hidden"
+               value="greatnews">
+          </div>
+        </div>
+        <div style="overflow:hidden">
+          <div class="strong subtitle-md"><%= t('.greatnews_title') %></div>
+          <p><%= t('.greatnews_subtitle') %></p>
+        </div>
+      </div>
+
+
+      <div class="mtm">
+        <div class="fl prm mtm">
+          <div class="js-checkbox js-greatkidsnews-checkbox iconx16 js-icon <%= greatkidsnews ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>" 
+               data-toggle="button" readonly="">
+            <input name="subscriptions[]"
+               disabled="true"
+               type="hidden"
+               value="greatkidsnews">
+          </div>
+        </div>
+        <div style="overflow:hidden">
+          <div class="strong subtitle-md"><%= t('.greatkidsnews_title') %></div>
+          <p><%= t('.greatkidsnews_subtitle') %></p>
+          <div class="ma">
+            <p><%= t('.grades_label') %></p>
+            <% @available_grades.to_a.in_groups_of(6).each do |grade_group| %>
+              <div>
+              <% grade_group.compact.each do |grade, label| %>
+                <div class="pas js-greatkidsnews-grades-checkbox btn-checkbox fl js-disableTarget btn js-checkboxButton <%= 'active' if @current_grades.include?(grade) %>"
+                     style="min-width:30px"
+                     data-checkbox-button-key="grade[]"
+                     data-checkbox-button-value="<%= grade %>"
+                     data-toggle="button">
+                     <input name="grades[]" disabled="true" type="hidden" value="<%= grade %>"><%= label %>
+                </div>
+              <% end %>
+              </div>
+              <div class="clearfix"></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="well pam mtm">
+        <em><%= t('.auto_graduate_label') %></em>
+        <div class="mtm">
+          <div class="fl prm mts mbm">
+            <div class="js-checkbox iconx16 js-icon <%= decline_auto_graduate ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box'  %>" 
+                 data-toggle="button" readonly="">
+              <input name="decline_auto_graduate"
+                 disabled="true"
+                 type="hidden"
+                 value="true">
+            </div>
+          </div>
+          <%= t('.keep_following_same_grade') %>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+
+      <div class="mtm">
+        <div class="fl prm mtm">
+          <div class="js-checkbox iconx16 js-icon <%= sponsor ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box' %>" 
+               data-toggle="button" readonly="">
+            <input name="subscriptions[]"
+               disabled="true"
+               type="hidden"
+               value="sponsor">
+          </div>
+        </div>
+        <div style="overflow:hidden">
+          <div class="strong subtitle-md"><%= t('.sponsor_title') %></div>
+          <p><%= t('.sponsor_subtitle') %></p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+
+      <div class="tac">
+        <%= content_tag('button', type: 'submit', class: 'mtm mbm btn btn-lg btn-primary rs-submit') do %>
+          <span class="font-size-xl"><%= t('.submit_label') %></span>
+        <% end %>
+      </div>
+      <div class="tac"><%= link_to('Unsubscribe', unsubscribe_path) %></div>
+
+      <%# <div> %>
+        <%# link_to t('.privacy_policy'), privacy_url %>&nbsp;
+        <%# t('.terms_of_use_html',
+              terms_of_use_link: link_to(
+                      t('.greatschools_terms_of_use'),
+                      terms_of_use_url)
+            )
+        %>
+      <%# </div> %>
+
+    <% end %>
+  </div>
+</section>
+
+<script>
+</script>

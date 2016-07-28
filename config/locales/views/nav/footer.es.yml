@@ -1,0 +1,55 @@
+es:
+  nav:
+    footer:
+      support_greatschools: ¡Apoye Greatschools en este gran esfuerzo!
+      donate_now: ¡Done Ahora!
+      about_gs:
+        heading: Empoderar a los padres
+        body: GreatSchools es el líder nacional sin fines de lucro empoderando a
+         los padres para que descubran oportunidades educativas para sus hijos.
+         Ofrecemos información de escuelas y recursos a padres para ayudar a
+         millones de familias estadounidenses a elegir la mejor escuela, apoyar
+         el aprendizaje en el hogar, y guiar a sus hijos a un mejor y gran futuro.
+      link_list_1:
+        heading: Únete a nosotros
+        links:
+          - route: funders
+            text: Partidarios
+          - route: gk_licensing
+            text: Concesión de licencias
+          - route: sponsorship
+            text: Patrocinio
+          - route: advertising
+            text: Publicidad
+          - route: careers
+            text: Empleos
+      link_list_2:
+        heading: Aprende más
+        links:
+          - url: http://blog.greatschools.org/
+            text: Noticias y actualizaciones
+          - route: privacy
+            text: Política de privacidad
+          - route: terms_of_use
+            text: Términos de uso
+          - route: about
+            text: Sobre nosotros
+      connect_links:
+        heading:  Conéctate
+        links:
+          - url: http://www.facebook.com/greatschools
+            icon: facebook
+            text: Facebook
+          - url: http://www.twitter.com/greatschools
+            icon: twitter
+            text: Twitter
+          - url: http://pinterest.com/greatschools/
+            icon: pinterest
+            text: Pinterest
+          - url: http://www.youtube.com/greatschools
+            icon: youtube
+            text: YouTube
+          - url: http://www.instagram.com/greatschools/
+            icon: instagram
+            text: Instagram
+      newsletter:  Boletín de noticias

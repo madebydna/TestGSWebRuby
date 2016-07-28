@@ -1,3 +1,4 @@
+# Encoding: utf-8
 FactoryGirl.define do
   factory :homepage_features_external_content, class: ExternalContent do
     sequence(:id) { |n| n }
@@ -53,7 +54,7 @@ FactoryGirl.define do
         },
         'es' => {
             'first_feature' => {
-                'heading' => 'Establezca su hijo para el exito!',
+                'heading' => 'Prepare a su hijo para tener éxito',
                 'posts' => []
             }
         }
