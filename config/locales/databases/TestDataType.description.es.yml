@@ -40,12 +40,12 @@ es:
   DC-CAS: DC-CAS
   DE AIR: DE AIRE
   DE Comprehensive Assessment System: Sistema de evaluación global DE
-  ! 'Detroit Prek Rating: Administration and Management': ! 'Detroit Prek Clasificación: Administración y Gestión'
-  ! 'Detroit Prek Rating: Curriculum and Instruction': ! 'Detroit Prek Clasificación: Currículo e Instrucción'
-  ! 'Detroit Prek Rating: Environment': ! 'Detroit Valoración de Prek: Medio Ambiente'
-  ! 'Detroit Prek Rating: Family and Community Partnerships': ! 'Detroit Valoración de Prek: Asociaciones Familia y la Comunidad'
-  ! 'Detroit Prek Rating: Overall Rating': ! 'Detroit Valoración de Prek: Media'
-  ! 'Detroit Prek Rating: Staff Qualifications and Professional Development': ! 'Detroit Valoración de Prek: Calificaciones del Personal y Desarrollo Profesional'
+  'Detroit Prek Rating: Administration and Management': 'Detroit Prek Clasificación: Administración y Gestión'
+  'Detroit Prek Rating: Curriculum and Instruction': 'Detroit Prek Clasificación: Currículo e Instrucción'
+  'Detroit Prek Rating: Environment': 'Detroit Valoración de Prek: Medio Ambiente'
+  'Detroit Prek Rating: Family and Community Partnerships': 'Detroit Valoración de Prek: Asociaciones Familia y la Comunidad'
+  'Detroit Prek Rating: Overall Rating': 'Detroit Valoración de Prek: Media'
+  'Detroit Prek Rating: Staff Qualifications and Professional Development': 'Detroit Valoración de Prek: Calificaciones del Personal y Desarrollo Profesional'
   ESD Preschool Rating: Valoración de la EDS preescolar
   FL EOC: FL EOC
   FL FCAT2: FL FCAT2
@@ -88,7 +88,7 @@ es:
   LA Graduation Exit Examination: LA graduación del examen de salida
   LA The Partnership for Assessment of Readiness for College and Careers: LA La Asociación para la Evaluación de la Preparación para la universidad y carreras
   MA MCAS: MA MCAS
-  MA MCAS STE: MA MCAS 
+  MA MCAS STE: MA MCAS
   MA Partnership for the Assessment of Readiness of College and Careers: MA La Asociación para la Evaluación de la Preparación para la universidad y carreras
   MD High School Assessment: Evaluación de la Escuela Secundaria MD
   MD Maryland School Assessment: Evaluación MD Maryland School
