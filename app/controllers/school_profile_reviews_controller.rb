@@ -39,7 +39,7 @@ class SchoolProfileReviewsController < SchoolProfileController
       if errors
         GSLogger.error(:reviews, nil, vars: review_params, message: 'Error trying to save a user\'s review: ' + errors.try(:first).to_s)
         status = :unprocessable_entity
-        json_message = errors
+        json_message = errors.first
       else
         status = :created
         json_message = {

@@ -42,6 +42,11 @@ en:
   activerecord:
     errors:
       models:
+        review:
+          attributes:
+            comment:
+              too_long: Your comment can only be up to %{count} characters long.
+              too_short: Please use at least %{count} words in your comment.
         school_rating:
           attributes:
             comments:
