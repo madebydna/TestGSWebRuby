@@ -194,14 +194,14 @@ describe 'School Profile Overview Page' do
         end
       end
       context 'with less than max # of reviews on overview' do
-        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW - 1, school) }
+        before { create_reviews(DeprecatedSchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW - 1, school) }
         it { is_expected.to have_bar_chart }
         it { is_expected.to have_reviews }
         it { is_expected.to have_callout_text }
         it { is_expected.to have_callout_button }
       end
       context 'with max # of reviews on overview' do
-        before { create_reviews(SchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW, school) }
+        before { create_reviews(DeprecatedSchoolProfileController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW, school) }
         it { is_expected.to have_bar_chart }
         it { is_expected.to have_reviews }
         it { is_expected.to_not have_callout_text }

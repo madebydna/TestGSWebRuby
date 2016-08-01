@@ -1,0 +1,9 @@
+---
+es:
+  deprecated_school_profile:
+    reviews:
+      modules:
+        output:
+          have_a_voice:
+            have_your_say: ¡Denos su opinión!
+            let_others_know: Permita que otros sepan más sobre esta escuela.

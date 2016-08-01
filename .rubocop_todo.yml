@@ -715,7 +715,7 @@ Style/EachWithObject:
   Exclude:
     - 'app/controllers/admin/data_load_schedules_controller.rb'
     - 'app/controllers/saved_searches_controller.rb'
-    - 'app/controllers/school_profile_controller.rb'
+    - 'app/controllers/deprecated_school_profile_controller.rb'
     - 'app/controllers/search_controller.rb'
     - 'app/models/profile_config/category.rb'
     - 'app/models/profile_config/category_data_reader.rb'
@@ -1079,7 +1079,7 @@ Style/NestedParenthesizedCalls:
 # Offense count: 1
 Style/NestedTernaryOperator:
   Exclude:
-    - 'app/controllers/school_profile_controller.rb'
+    - 'app/controllers/deprecated_school_profile_controller.rb'
 
 # Offense count: 43
 # Cop supports --auto-correct.

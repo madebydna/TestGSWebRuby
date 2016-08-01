@@ -1,4 +1,4 @@
-class SchoolProfileReviewsController < SchoolProfileController
+class SchoolProfileReviewsController < DeprecatedSchoolProfileController
   protect_from_forgery
 
   include DeferredActionConcerns

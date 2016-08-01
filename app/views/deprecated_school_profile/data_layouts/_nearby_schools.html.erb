@@ -1,0 +1,20 @@
+<% begin %>
+  <%=
+    # The array format of nearby schools is deprecated. This code handles
+    # backwards compatibility and should be removed after R288 is live.
+    nearby_schools_cache = @school.cache_results.nearby_schools
+    schools = if nearby_schools_cache.is_a?(Array)
+                nearby_schools_cache
+              else
+                nearby_schools_cache[NearbySchoolsCaching::Methodologies::ClosestSchools::NAME]
+              end
+    render partial: 'deprecated_school_profile/nearby_school_display',
+      locals: {
+        title: t('.title'),
+        schools: schools
+      }
+  %>
+<% rescue => e %>
+  <%= log_view_error "Something went wrong while trying to display nearby schools", e %>
+  <% raise e if params[:debug] %>
+<% end %>

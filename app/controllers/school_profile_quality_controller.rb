@@ -1,4 +1,4 @@
-class SchoolProfileQualityController < SchoolProfileController
+class SchoolProfileQualityController < DeprecatedSchoolProfileController
   protect_from_forgery
 
   layout 'deprecated_application'

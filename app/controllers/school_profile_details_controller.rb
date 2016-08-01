@@ -1,4 +1,4 @@
-class SchoolProfileDetailsController < SchoolProfileController
+class SchoolProfileDetailsController < DeprecatedSchoolProfileController
   protect_from_forgery
 
 

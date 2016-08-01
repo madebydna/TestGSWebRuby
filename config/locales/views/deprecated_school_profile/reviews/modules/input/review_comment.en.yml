@@ -1,0 +1,16 @@
+---
+en:
+  deprecated_school_profile:
+    reviews:
+      modules:
+        input:
+          review_comment:
+            left_in_review: characters left.
+            max_length_error_message: "Sorry, we have a 2,500 character limit for reviews. Please
+            shorten your review to save it."
+            min_words_error_message: "Please be sure your story is 15 words or more in length."
+            required_comment_error_message: "Thanks for your opinion! Please share some thoughts
+            on this school in order to save your rating."
+            submit: Submit
+            submit_statement: Submit statement
+            submitted: Submitted

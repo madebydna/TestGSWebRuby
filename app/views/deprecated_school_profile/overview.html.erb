@@ -1,0 +1,17 @@
+<%= render 'qualaroo' %>
+
+<div class="mbl">
+  <%= render 'deprecated_school_profile/dark_header', school: @school, page_name: :overview %>
+</div>
+
+
+<div class="limit-width-1200">
+  <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
+  <%= render 'deprecated_school_profile/data_layouts/nearby_schools' %>
+  <%= render 'deprecated_school_profile/data_layouts/sticky_nearby_schools' %>
+  <div class="js-modified-date mtl pll ptl" style="color:#999999"><%= t('.last_modified') %>: <%= l(@last_modified_date, format: '%B %e, %Y') %></div>
+</div>
+
+<%= render 'deprecated_school_profile/rich_snippets/rich_snippets_school_info', school: @school, school_reviews: @school_reviews %>
+<%= render 'deprecated_school_profile/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
+

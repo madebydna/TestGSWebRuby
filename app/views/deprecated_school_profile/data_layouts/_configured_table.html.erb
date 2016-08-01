@@ -1,0 +1,62 @@
+<%
+  data # A +Hash+ containing data for this table to display
+  category_placement # The +CategoryPlacement+ that this table is for
+  category # The +Category+ belonging to this table's +CategoryPlacement+
+
+  data_config = category_placement.table_config
+
+  filtered_data = if data_config.config['breakdowns']
+                    filter_by_breakdowns(data_config.config['breakdowns'], data)
+                  else
+                    filter_for_all_students(data)
+                  end
+%>
+<%= debug filtered_data if params[:debug] %>
+<% table_data = TableData.new filtered_data %>
+
+<% table_data.sort!(data_config.config['sort']) if data_config.config['sort'] %>
+
+<%= render layout:'col', locals:{ css_class:'', category_placement: category_placement} do  %>
+
+    <a name="<%= category.code_name %>"></a>
+
+    <%= render "shared/section_header", category_placement:category_placement %>
+
+    <div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <% category_placement.table_config.columns_to_print(table_data).each do |column| %>
+                    <% if column['display_type'] == :data_and_header %>
+                        <th><%= db_t(column['label']) %></th>
+                    <% else %>
+                        <th>&nbsp;</th>
+                    <% end %>
+                <% end %>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% columns_to_print = data_config.columns_to_print(table_data) %>
+
+            <% table_data.rows.each do |hash| %>
+                <tr>
+                   <% data_config.row_values(columns_to_print, hash) do |label, value| %>
+                      <%= td db_t(label, default: label), db_t(value, default: value) %>
+                   <% end %>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+     </div>
+
+<% end %>
+
+<%= render partial: 'about_this_data',
+  locals: {
+    unique_id: category_placement.id,
+    descriptions: table_data.rows.map { |hash| hash[:description] }.uniq.compact
+  }
+%>
+
+<%= render 'deprecated_school_profile/see_footnotes_link', page_config: @page_config, school: @school, category: category %>

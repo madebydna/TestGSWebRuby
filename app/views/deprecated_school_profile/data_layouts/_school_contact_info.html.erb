@@ -1,0 +1,63 @@
+<% if @school %>
+  <% decorated_school = SchoolProfileDecorator.new(@school) %>
+  <%= render layout:'col', locals: { css_class:'phs', category_placement: category_placement } do %>
+    <div class="col-sm-4 col-md-4 col-lg-4 contact-content">
+      <% if (school_leader = @school.cache_results.school_leader) %>
+        <div>
+          <em><%= t('deprecated_school_profile.data_layouts.school_contact_info.school_leader') %>:</em>
+          &nbsp;<%= school_leader %>
+        </div>
+      <% end %>
+      <span class="notranslate"><%= @school.street %></span><br/>
+      <span class="notranslate"><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
+      <br/>
+      <% if @school.home_page_url.present? %>
+        <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank"><%= t('deprecated_school_profile.data_layouts.school_contact_info.school_website') %></a><br/>
+      <% end %>
+      <% if decorated_school.facebook_url.present? %>
+        <span class="iconx16 i-16-facebook vam"></span>
+        <a class="mls vam" target="_blank" href="<%= decorated_school.facebook_url %>">
+          <%= t('deprecated_school_profile.data_layouts.school_contact_info.facebook_page') %>
+        </a>
+        <br/>
+      <% end %>
+      <% if @school.phone.present? %>
+        <span class="iconx16 i-16-phone vam"></span><span class="mlm vam"><%= @school.phone %></span><br/>
+      <% end %>
+      <% if @school.fax.present? %>
+        <span class="iconx16 i-16-fax vam"></span><span class="mlm vam"><%= @school.fax %></span><br/>
+      <% end %>
+      <span class="iconx16 i-16-home vam"></span>
+      <%= link_to zillow_url(@school), class: 'contact-content vam pls', rel: 'nofollow', target: '_blank' do %>
+          <span><%= t('deprecated_school_profile.data_layouts.school_contact_info.nearby_homes') %></span>
+      <% end %>
+    </div>
+    <div class="col-sm-8 col-md-8 col-lg-8 pbl ">
+    <% level_value = 'h' %>
+    <% level_value = 'm' if @school.level_code_array.include? 'm' %>
+    <% level_value = 'e' if @school.level_code_array.include? 'e' %>
+    <% level_value = 'p' if @school.level_code_array.include? 'p' %>
+      <% if @school.district == '' %>
+        <% db_hash = {:level => level_value, :schoolId => @school.id, :state => @school.state} %>
+      <% else %>
+        <% db_hash = {:districtId => @school.district, :level => level_value, :schoolId => @school.id, :state => @school.state} %>
+      <% end %>
+      <a href="<%= district_boundary_path(db_hash) %>">
+        <div>
+          <%= t('deprecated_school_profile.data_layouts.school_contact_info.see_attendance_zone') %>
+        </div>
+        <%= image_tag('pixel.gif',
+                      class: 'contact-map-image js-contact_map_image pbm',
+                      alt: "Map of "+@school.name+" address."
+                    ) %>
+      </a>
+    </div>
+    <% if @show_ads %>
+      <div class="pbl mbl">
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Custom, defer_render: true, view: :desktop, visible_for: "visible-md visible-lg" %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :desktop, visible_for: "visible-sm" %>
+        <%= render 'layouts/ad_layer', page: @ad_page_name, slot: :Contact_Info, view: :mobile  %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

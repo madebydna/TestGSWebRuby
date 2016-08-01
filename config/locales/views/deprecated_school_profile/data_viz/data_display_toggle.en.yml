@@ -1,0 +1,9 @@
+---
+en:
+  deprecated_school_profile:
+    data_viz:
+      data_display_toggle:
+        ethnicity: Ethnicity
+        gender: Gender
+        grouped_by: Grouped by %{breakdown}
+        program: Socio-economics and programs

@@ -1,0 +1,8 @@
+---
+es:
+  deprecated_school_profile:
+    data_layouts:
+      comparison_rating:
+        description_text_html: "<span class='font-size-medium'>Escuelas que trabajan con poblaciones estudiantiles similares generalmente recibieron: <strong>%{value}</strong></span>"
+        #for ga event label
+        CA Similar Schools Comparison Predicted Rating: 'Similar schools predicted rating'

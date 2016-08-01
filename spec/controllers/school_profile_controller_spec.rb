@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe SchoolProfileController do
+describe DeprecatedSchoolProfileController do
   let(:school) { FactoryGirl.build(:school) }
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
