@@ -15,7 +15,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // REMOVE ME! We need to figure out @extend usage first though.
-@import "gs/variables";
+@import "gs/deprecated_variables";
 @import "resources/bootstrap/bootstrap";
 @import "gs/mixins";
 @import "sprites/*";
