@@ -4,7 +4,11 @@
 //= require jquery_ujs
 //= require wiselinks
 //= require ads
-//= require resources
+//= require resources/bootstrap_4
+//= require resources/typeahead_modified.bundle
+//= require resources/jquery.cookie
+//= require resources/jquery.touchSwipe
+//= require resources/fastclick
 //= require ./localized_profiles/search_results
 //= require util
 //= require search
