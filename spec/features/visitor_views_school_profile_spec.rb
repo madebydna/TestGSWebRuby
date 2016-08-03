@@ -75,4 +75,13 @@ describe 'Visitor' do
     visit school_path(school)
     expect(page).to have_content(school.phone)
   end
+
+  scenario 'sees a link to the school\'s website' do
+    school = create(:alameda_high_school, home_page_url: 'http://www.google.com')
+    visit school_path(school)
+    expect(SchoolProfilePage.new).to have_link(school.home_page_url,
+      href: school.home_page_url
+    )
+  end
+
 end
