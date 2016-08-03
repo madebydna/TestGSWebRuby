@@ -16,7 +16,7 @@ gem "kaminari", "= 0.16.1"
 gem 'codemirror-rails'
 
 # Authentication, used for rails-admin
-gem 'devise'
+gem "devise", "4.2.0"
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
