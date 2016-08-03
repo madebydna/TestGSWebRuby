@@ -170,6 +170,7 @@ group :development, :test do
 
   # JS testing runner
   gem 'teaspoon'
+  gem 'teaspoon-mocha'
 
   # Test coverage tool
   gem 'simplecov', '~> 0.8.0'
