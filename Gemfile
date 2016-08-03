@@ -9,7 +9,8 @@ gem 'jquery-cookie-rails'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
-gem 'rails_admin'
+gem "rails_admin", "= 0.6.6"
+gem "kaminari", "= 0.16.1"
 
 # We added this to rails-admin, as a way to edit json inline
 gem 'codemirror-rails'
