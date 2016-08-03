@@ -10,7 +10,7 @@ LocalizedProfiles::Application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
-  config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  # config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
 
   # Do not eager load code on boot.

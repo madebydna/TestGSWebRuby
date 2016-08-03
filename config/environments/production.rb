@@ -92,7 +92,7 @@ LocalizedProfiles::Application.configure do
     'codemirror/modes/css.js',
     'codemirror/themes/night.css'
   ]
-  config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  # config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
   config.assets.precompile += %w(*.png *.jpeg *.jpg *.gif)
   config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
 
