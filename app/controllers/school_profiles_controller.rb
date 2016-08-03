@@ -6,6 +6,7 @@ class SchoolProfilesController < ApplicationController
 
   def show
     @school = school
+    @school_profile = school_profile
   end
 
   private
@@ -13,6 +14,14 @@ class SchoolProfilesController < ApplicationController
   def school
     return @_school if defined?(@_school)
     @_school = School.find_by_state_and_id(school_params[:state_abbr], school_params[:id])
+  end
+
+  def school_profile
+    @_school_profile ||= (
+      OpenStruct.new.tap do |sp|
+        sp.hero = hero
+      end
+    )
   end
 
   def school_params
@@ -27,4 +36,11 @@ class SchoolProfilesController < ApplicationController
       render "error/school_not_found", layout: "error", status: 404
     end
   end
+
+  def hero
+    SchoolProfiles::Hero.new(
+      school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
+    )
+  end
+
 end
