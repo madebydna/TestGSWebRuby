@@ -4,7 +4,7 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
 
     delegate :gs_rating, to: :school_cache_data_reader
-    delegate :address, :type, to: :school, prefix: :school
+    delegate :address, :type, :phone, to: :school, prefix: :school
     delegate :district, to: :school
 
     # Makes has_district?,  has_address?, etc

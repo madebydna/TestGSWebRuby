@@ -69,4 +69,10 @@ describe 'Visitor' do
     visit school_path(school)
     expect(page).to have_content(district.name)
   end
+
+  scenario 'sees the school\'s phone number' do
+    school = create(:alameda_high_school, phone: '123-555-1234')
+    visit school_path(school)
+    expect(page).to have_content(school.phone)
+  end
 end
