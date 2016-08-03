@@ -7,7 +7,7 @@ module SchoolProfiles
     end
 
     def type
-      type.gs_capitalize_first
+      super.gs_capitalize_first
     end
 
     def address

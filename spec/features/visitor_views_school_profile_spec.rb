@@ -56,4 +56,17 @@ describe 'Visitor' do
     expect(page).to have_content(school.city)
     expect(page).to have_content(school.zipcode)
   end
+
+  scenario 'sees the school\'s type' do
+    school = create(:alameda_high_school, type: 'charter')
+    visit school_path(school)
+    expect(page).to have_content('Charter')
+  end
+
+  scenario 'sees the school\'s district name' do
+    district = create(:alameda_city_unified)
+    school = create(:alameda_high_school, district_id: district.id)
+    visit school_path(school)
+    expect(page).to have_content(district.name)
+  end
 end
