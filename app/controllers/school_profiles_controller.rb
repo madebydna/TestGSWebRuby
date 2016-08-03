@@ -39,6 +39,7 @@ class SchoolProfilesController < ApplicationController
 
   def hero
     SchoolProfiles::Hero.new(
+      school,
       school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
     )
   end

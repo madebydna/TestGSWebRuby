@@ -40,4 +40,20 @@ describe 'Visitor' do
     expect(page_object).to have_gs_rating
     expect(page_object).to have_gs_rating_of(5)
   end
+
+  scenario 'sees school address info' do
+    school = create(:alameda_high_school,
+      name: 'Foo bar school',
+      street: '123 yellow brick road',
+      city: 'Atlantis',
+      state: 'ca',
+      zipcode: '99999',
+    )
+
+    visit school_path(school)
+
+    expect(page).to have_content(school.street)
+    expect(page).to have_content(school.city)
+    expect(page).to have_content(school.zipcode)
+  end
 end
