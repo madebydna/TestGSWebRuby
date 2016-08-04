@@ -1,3 +1,7 @@
+@import "resources/bootstrap/bootstrap/variables";
+@import "resources/bootstrap/bootstrap/mixins/_clearfix";
 @import "gs/variables";
-@import "resources/bootstrap/bootstrap";
+@import "gs/mixins/sprites";
 @import "gs/objects/footer";
+@import "sprites/icons_16x16";
+@import "sprites/footer_icons_16x16";
