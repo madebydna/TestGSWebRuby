@@ -4,9 +4,9 @@ h6, .h6 { font-family: 'opensans-italic'; }
 h1.lg-roboto {
   font-size: 30px;
   font-family: 'RobotoSlab-Light';
-  @include media-breakpoint-up(sm) {
-      font-size: 50px;
-  }
+  // @include media-breakpoint-up(sm) {
+  //     font-size: 50px;
+  // }
 }
 
 strong { font-family: $font-family-base-bold; }
