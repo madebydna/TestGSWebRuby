@@ -1,6 +1,8 @@
 module SchoolProfiles
   class SchoolCacheDataReader
-    SCHOOL_CACHE_KEYS = %w(ratings)
+    # ratings - for gs rating
+    # characteristics - for enrollment
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics)
 
     attr_reader :school, :school_cache_keys
 
@@ -15,6 +17,10 @@ module SchoolProfiles
 
     def gs_rating
       decorated_school.great_schools_rating
+    end
+
+    def students_enrolled
+      decorated_school.students_enrolled
     end
 
     def school_cache_query

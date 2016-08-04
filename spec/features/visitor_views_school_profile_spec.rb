@@ -84,4 +84,32 @@ describe 'Visitor' do
     )
   end
 
+  context 'when the school has more than one grade' do
+    let!(:school) { create(:alameda_high_school, level: '4,5,6') }
+    scenario 'sees the school\'s grade range' do
+      visit school_path(school)
+      expect(page).to have_content('Grades')
+      expect(page).to have_content('4-6')
+    end
+  end
+
+  context 'when the school has only one grade' do
+    let!(:school) { create(:alameda_high_school, level: '6') }
+    scenario 'sees the school\'s grade range' do
+      visit school_path(school)
+      expect(page).to have_content('Grade')
+      expect(page).to_not have_content('Grades')
+      expect(page).to have_content('6')
+    end
+  end
+
+  scenario 'sees how many students are at the school' do
+    school = create(:alameda_high_school)
+    create(:cached_enrollment, state: 'ca', school_id: school.id)
+    visit school_path(school)
+    expect(page).to have_content('1,200')
+    expect(page).to_not have_content('1200.0')
+    expect(page).to_not have_content('1,200.0')
+  end
+
 end

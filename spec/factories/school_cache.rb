@@ -31,6 +31,22 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :cached_enrollment, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+      'Enrollment' => [
+        "year" => 2012,
+        "source" => "NCES",
+        "school_value" => 1200.0,
+        "district_average" => 3803.0,
+        "created" => "2014-05-02T08:42:51-07:00"
+      ]
+    }.to_json)
+    updated Time.now
+  end
+
   factory :school_cache_esp_responses, class: SchoolCache do
     name 'esp_responses'
     sequence(:school_id) { |n| n }
