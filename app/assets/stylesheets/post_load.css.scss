@@ -15,13 +15,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // REMOVE ME! We need to figure out @extend usage first though.
-// @import "gs/variables";
+@import "resources/bootstrap_4/bootstrap";
+@import "gs/variables";
 // @import "resources/bootstrap/bootstrap";
-// @import "gs/mixins";
+@import "gs/mixins/typography";
 // @import "sprites/*";
 // @import "gs/buttons";
 // @import "gs/spacing";
-// @import "gs/typography";
+@import "gs/typography";
 // @import "gs/form";
 // @import "resources/bootstrap/bootstrap/gs-variables";
 // @import "resources/bootstrap/bootstrap/variables";
@@ -62,10 +63,9 @@
 // @import "gs/objects/external_link_callout";
 // @import "gs/objects/rectangle_inset";
 // @import "gs/objects/home.css.scss";
-// @import "gs/fonts-opensans";
-// @import "gs/fonts-opensans-condbold";
-// @import "gs/fonts-amaticsc";
-// @import "gs/fonts-robotoslab-light";
-// @import "gs/objects/footer.css.scss";
-@import "resources/bootstrap_4/bootstrap";
+@import "gs/fonts-opensans";
+@import "gs/fonts-opensans-condbold";
+@import "gs/fonts-amaticsc";
+@import "gs/fonts-robotoslab-light";
+@import "gs/objects/footer.css.scss";
 

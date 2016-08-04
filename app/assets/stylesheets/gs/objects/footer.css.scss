@@ -1,6 +1,7 @@
 
 .footer {
   padding-top: 40px;
+  padding-bottom: $spacing-medium;
   background-color: #15314E;
   color: $white;
   a, p {
@@ -19,7 +20,7 @@
     padding: 0px;
     letter-spacing: normal;
     line-height: 1.5;
-    @media only screen and (max-width: $screen-sm-max) {
+    @media only screen and (max-width: 991px) {
       margin-bottom: 10px;
       @include clearfix();
     }
@@ -27,9 +28,14 @@
   li {
     list-style: none;
     padding-bottom: 0;
-    @media only screen and (max-width: $screen-sm-max) {
+    @media only screen and (max-width: 991px) {
       float: left;
       padding-right: 15px;
     }
   }
+
+ .copyright {
+  text-align: center;
+  margin-top: $spacing-medium;
+ }
 }
