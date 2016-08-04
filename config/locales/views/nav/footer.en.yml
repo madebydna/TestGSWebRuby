@@ -13,7 +13,7 @@ en:
       link_list_1:
         heading: Join us
         links:
-          - route: funders
+          - route: supporters
             text: Supporters
           - route: gk_licensing
             text: Licensing

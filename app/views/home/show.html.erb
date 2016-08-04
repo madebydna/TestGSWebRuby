@@ -32,13 +32,13 @@
   <%= render layout: 'hero' do %>
     <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
       <div class="mtxl hidden-xs"></div>
-      <div class="oa text_fff pal darken">
-        <h1 class="text_fff"><%= t('.heading') %></h1>
-        <div class="subtitle ts uc mtl"><%= t('.subheading') %></div>
+      <div class="oa text_fff pal darken brs">
+        <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('.heading') %></h1>
+        <div class="subtitle uc mtl"><%= t('.subheading') %></div>
         <%= render partial: 'home/search_form' %>
 
         <div class="parent-content uc">
-          <div class="subtitle ts mbm"><%= t('.subheading_content') %></div>
+          <div class="subtitle mbm"><%= t('.subheading_content') %></div>
           <%= link_to t('.raising_kids_html'), greatkids_home_url %>
           <span class="phs">|</span>
           <%= link_to t('.school_life_html'), school_life_url %>

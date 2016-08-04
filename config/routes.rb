@@ -124,9 +124,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/linkToUs.page', as: :widgets_and_tools
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
-    get '/terms/', as: :terms_of_use
+    get '/gk/terms/', as: :terms_of_use
     get '/about/guidelines.page', as: :school_review_guidelines
-    get '/privacy/', as: :privacy
+    get '/gk/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
     get '/gk/worksheets/', as: :worksheets_and_activities
@@ -215,7 +215,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/sponsorship', as: :sponsorship
     get '/gk/advertising', as: :advertising
     get '/gk/careers', as: :careers
-    get '/gk/funders', as: :funders
+    get '/gk/supporters', as: :supporters
     get '/gk/about', as: :about
     get '/gk/category/school-life/', as: :school_life
     get '/gk/category/academics/reading-2/', as: :reading
