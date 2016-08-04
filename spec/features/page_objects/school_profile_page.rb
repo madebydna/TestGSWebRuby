@@ -12,5 +12,6 @@ class SchoolProfilePage < SitePrism::Page
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
   element :gs_rating, '.rs-gs-rating'
+  element :five_star_rating, '.rs-five-star-rating'
 
 end

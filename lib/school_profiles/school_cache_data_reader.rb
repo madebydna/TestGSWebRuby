@@ -2,7 +2,8 @@ module SchoolProfiles
   class SchoolCacheDataReader
     # ratings - for gs rating
     # characteristics - for enrollment
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics)
+    # reviews_snapshot - for review info in the profile hero
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot)
 
     attr_reader :school, :school_cache_keys
 
@@ -21,6 +22,14 @@ module SchoolProfiles
 
     def students_enrolled
       decorated_school.students_enrolled
+    end
+
+    def five_star_rating
+      decorated_school.star_rating
+    end
+
+    def number_of_active_reviews
+      decorated_school.num_reviews
     end
 
     def school_cache_query

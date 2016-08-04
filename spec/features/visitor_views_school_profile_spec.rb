@@ -6,7 +6,15 @@ RSpec::Matchers.define :have_gs_rating_of do |expected_rating|
     actual.gs_rating.text == expected_rating.to_s
   end
   failure_message_for_should do |actual|
-    "expected a rating of #{expected} but got #{actual.gs_rating.text}"
+    "expected a GS rating of #{expected} but got #{actual.gs_rating.text}"
+  end
+end
+RSpec::Matchers.define :have_five_star_rating_of do |expected_rating|
+  match do |actual|
+    actual.five_star_rating.text == expected_rating.to_s
+  end
+  failure_message_for_should do |actual|
+    "expected a 5-star rating of #{expected} but got #{actual.five_star_rating.text}"
   end
 end
 
@@ -112,4 +120,12 @@ describe 'Visitor' do
     expect(page).to_not have_content('1,200.0')
   end
 
+  scenario 'sees the number of all reviews and the average 5-star rating' do
+    school = create(:alameda_high_school)
+    create(:cached_reviews_info, state: 'ca', school_id: school.id)
+    visit school_path(school)
+    page_object = SchoolProfilePage.new
+    expect(page_object).to have_content('348381') # reviews among all topics
+    expect(page_object).to have_five_star_rating_of(4)
+  end
 end

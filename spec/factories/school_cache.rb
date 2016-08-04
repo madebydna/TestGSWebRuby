@@ -47,6 +47,18 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :cached_reviews_info, class: SchoolCache do
+    name 'reviews_snapshot'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+      'num_reviews' => '348381',
+      'num_ratings' => '109991',
+      'avg_star_rating' => '4'
+    }.to_json)
+    updated Time.now
+  end
+
   factory :school_cache_esp_responses, class: SchoolCache do
     name 'esp_responses'
     sequence(:school_id) { |n| n }

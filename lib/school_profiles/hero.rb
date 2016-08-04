@@ -5,7 +5,7 @@ module SchoolProfiles
 
     attr_reader :school, :school_cache_data_reader
 
-    delegate :gs_rating, :students_enrolled, to: :school_cache_data_reader
+    delegate :gs_rating, :students_enrolled, :five_star_rating, :number_of_active_reviews, to: :school_cache_data_reader
     delegate :address, :type, :phone, :home_page_url, to: :school, prefix: :school
     delegate :district, to: :school
 
