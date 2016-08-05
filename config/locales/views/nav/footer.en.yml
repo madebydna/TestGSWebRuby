@@ -26,14 +26,14 @@ en:
       link_list_2:
         heading: Learn more
         links:
-          - url: http://blog.greatschools.org/
-            text: News & updates
           - route: privacy
             text: Privacy policy
           - route: terms_of_use
             text: Terms of use
           - route: about
             text: About us
+          - route: contact_us
+            text: Contact us
       connect_links:
         heading: Connect
         links:

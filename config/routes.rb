@@ -117,7 +117,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
-    get '/about/feedback.page', as: :contact_us
+    get '/gk/contact/', as: :contact_us
     get '/about/advertiserOpportunities.page', as: :advertise
     get '/about/partnerOpportunities.page', as: :partners
     get '/about/pressRoom.page', as: :media_room
