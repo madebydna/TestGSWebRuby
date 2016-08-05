@@ -43,6 +43,17 @@ namespace :gsweb do
     end
   end
 
+  task :use_jazz_db do
+    database_local = Rails.root.join('config', 'database_local.yml')
+    database_local_point_at_jazz =
+        Rails.root.join('config', 'database_local.point_at_jazz.yml')
+
+    File.open(database_local, 'a') do |f|
+      f << "\n"
+      f << File.read(database_local_point_at_jazz)
+    end
+  end
+
   task :use_omega_db do
     database_local = Rails.root.join('config', 'database_local.yml')
     database_local_point_at_omega=
