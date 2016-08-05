@@ -1,0 +1,70 @@
+<style>
+  .grid--borderBetween > [class*='col-']:before,
+  .grid--borderBetween > [class*='col-']:after {
+    background: #cad4df;
+    bottom: 0;
+    content: " ";
+    position: absolute;
+    width: 1px;
+    top: 0;
+  }
+
+  .grid--borderBetween > [class*='col-']:before {
+    left: 0;
+  }
+
+  .grid--borderBetween > [class*='col-']:after {
+    right: -1px;
+  }
+
+  .grid--borderBetween > [class*='col-']:first-child:before,
+  .grid--borderBetween > [class*='col-']:last-child:after {
+    display: none;
+  }
+
+  .toc_container_box {
+    margin: 30px auto;
+    border: solid 1px #dbe6eb;
+    padding: 30px;
+    background-color: #f6f9fa;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .grid--borderBetween > [class*='col-']:before,
+    .grid--borderBetween > [class*='col-']:after {
+      background: none;
+      bottom: 0;
+      content: " ";
+      position: absolute;
+      width: 0;
+      top: 0;
+    }
+
+    .grid--borderBetween > [class*='col-']:before {
+      left: 0;
+    }
+
+    .grid--borderBetween > [class*='col-']:after {
+      right: 0;
+    }
+  }
+</style>
+<div class="container toc_container_box">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="container">
+        <div class="row grid--borderBetween">
+          <div class="col-sm-12 col-md-4">
+            column 1<br/>column 1<br/>column 1
+          </div>
+          <div class="col-sm-12 col-md-4">
+            column 2<br/>column 2<br/>column 2<br/>column 2
+          </div>
+          <div class="col-sm-12 col-md-4 hidden-sm-down">
+            column 3<br/>column 3<br/>column 3
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
