@@ -2,3 +2,15 @@
 //
 // Copy variables from `_variables.scss` to this file to override default values
 // without modifying source files.
+//
+
+// Pixel value used to responsively scale all typography. Applied to the `<html>` element.
+$font-size-root: 14px !default;
+
+$container-max-widths: (
+sm: 1200px,
+md: 1200px,
+lg: 1200px,
+xl: 1200px
+) !default;
+
