@@ -6,10 +6,9 @@ es:
   Academic Status: Situación Académica
   Achievement - Indicators Met: Achievement - Indicators Met
   Achievement - Performance Index: Achievement - Performance Index
-  California Academic Performance Index (API) Score: Índice de Rendimiento Académico de California (API)
+  California Academic Performance Index (API) Score: "Índice de Rendimiento Académico de California (API)"
   Climate rating: Climate rating
-  College and Career Ready Performance Index: College and Career Ready Performance
-    Index
+  College and Career Ready Performance Index: College and Career Ready Performance Index
   College readiness rating: Calificación universitaria
   Colorado school grade: Calificacione de Escuela de Colorado
   ESD_url: ESD_url
@@ -29,7 +28,7 @@ es:
   State Rating: State Rating
   State Rating - OSSE Classification: Valoración de Estado - Clasificación OSSE
   Student growth rating: Calificación de crecimiento
-  Test score rating: 'Calificación de examenes'
+  Test score rating: Calificación de examenes
   footnote_climate: footnote_climate
   footnote_growth: footnote_growth
   footnote_psr: footnote_psr
@@ -62,3 +61,16 @@ es:
   whats_this_growth: whats_this_growth
   whats_this_psr: whats_this_psr
   whats_this_test_scores: whats_this_test_scores
+  Colorado Overall Achievement Grade: Grado de Colorado En general Logro
+  Colorado Reading Achievement Grade: Colorado Lectura Grado Logro
+  Colorado Math Achievement Grade: Colorado Matemáticas Grado Logro
+  Colorado Writing Achievement Grade: La escritura de Colorado Grado Logro
+  Colorado Overall Growth Grade: En general colorado crecimiento Grado
+  Colorado Reading Growth Grade: Colorado Lectura Crecimiento Grado
+  Colorado Math Growth Grade: Colorado Matemáticas Crecimiento Grado
+  Colorado Writing Growth Grade: La escritura de Colorado Crecimiento Grado
+  Colorado ELL Growth Grade: Colorado ELL Crecimiento Grado
+  Colorado Student Achievement Grade: Grado Logro Estudiantil de Colorado
+  Colorado Student Growth Trend: Estudiantes de Colorado crecimiento de la tendencia
+  Colorado Overall Three Year Trend: En general colorado Tres tendencia del año
+  about_colorado_school_grade: about_colorado_school_grade

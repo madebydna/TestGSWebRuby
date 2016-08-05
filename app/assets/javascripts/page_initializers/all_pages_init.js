@@ -32,8 +32,9 @@ $(function() {
   $.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 
   $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+    var appId = gon.facebook_app_id;
     FB.init({
-      appId: '178930405559082',
+      appId: appId,
       version    : 'v2.2',
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session

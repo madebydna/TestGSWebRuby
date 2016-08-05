@@ -7,9 +7,9 @@ es:
   ACT Reading: LEY Lectura
   ACT Science Reasoning: ACT Ciencia Razonamiento
   ACT Writing: Escritura ACT
-  Algebra (DEPRECATED, use id 7): Álgebra (DEPRECATED, uso Identificación 7)
-  Algebra I: Álgebra I
-  Algebra II: Álgebra II
+  Algebra (DEPRECATED, use id 7): "Álgebra (DEPRECATED, uso Identificación 7)"
+  Algebra I: "Álgebra I"
+  Algebra II: "Álgebra II"
   All: Todos
   American Literature: Literatura americana
   Analytic Geometry: Geometría Analítica
@@ -18,15 +18,13 @@ es:
   Biology I: Biología I
   Chemistry: Química
   Civics: Civismo
-  Communication Arts (DEPRECATED, use id 4): Artes de la Comunicación (en desuso,
-    el uso Identificación 4)
+  Communication Arts (DEPRECATED, use id 4): Artes de la Comunicación (en desuso, el uso Identificación 4)
   Coordinate Algebra: Coordinar Álgebra
   Earth Science: Ciencias de la Tierra
   Economics: Ciencias económicas
   English: Inglés
   English 2: Inglés 2
-  English I (DEPRECATED, use id 19): Inglés I (DEPRECATED, uso Identificación del
-    19)
+  English I (DEPRECATED, use id 19): Inglés I (DEPRECATED, uso Identificación del 19)
   English I Reading: Inglés I Lectura
   English I Writing: Inglés I Escritura
   English II Reading: Lectura Inglés II
@@ -35,10 +33,8 @@ es:
   English III Reading: Lectura Inglés III
   English III Writing: Escribir Inglés III
   English Language Arts: Inglés
-  English language arts (DEPRECATED, use id 4): Artes del lenguaje Inglés (DEPRECATED,
-    uso Identificación 4)
-  English/Language Arts (DEPRECATED, use id 4): Inglés / Artes del Lenguaje (DEPRECATED,
-    uso Identificación 4)
+  English language arts (DEPRECATED, use id 4): Artes del lenguaje Inglés (DEPRECATED, uso Identificación 4)
+  English/Language Arts (DEPRECATED, use id 4): Inglés / Artes del Lenguaje (DEPRECATED, uso Identificación 4)
   English Language Arts 2: Inglés II
   Foreign Language: Idioma extranjero
   French: Francés
@@ -48,19 +44,16 @@ es:
   Geometry: Geometría
   Global History and Geography: Historia Global y Geografía
   Government: Gobierno
-  High School (Summative) Mathematics (Grade 9-11): High School (sumativa) Matemáticas
-    (Grado 9-11)
-  History - Social Science Grade 8 Cumulative: Historia - Ciencias Sociales Grado
-    8 acumulativa
-  Integrated Algebra: Álgebra integrada
+  High School (Summative) Mathematics (Grade 9-11): High School (sumativa) Matemáticas (Grado 9-11)
+  History - Social Science Grade 8 Cumulative: Historia - Ciencias Sociales Grado 8 acumulativa
+  Integrated Algebra: "Álgebra integrada"
   Integrated Math 1: Matemáticas Integradas 1
   Integrated Math 2: Matemáticas Integradas 2
   Integrated Math 3: Matemáticas Integradas 3
   Integrated/Coordinated Science 1: Integrado / Ciencia Coordinada 1
   Italian: Italiano
   Language Mechanics: Mecánica del idioma
-  Language arts (DEPRECATED, use id 4): Artes del lenguaje (en desuso, el uso Identificación
-    4)
+  Language arts (DEPRECATED, use id 4): Artes del lenguaje (en desuso, el uso Identificación 4)
   Listening: Escuchando
   Math: Matemáticas
   Math Concepts: Conceptos de Matemáticas
@@ -76,8 +69,7 @@ es:
   Reading: Leyendo
   Reading Analysis/Interpretation: Análisis de lectura / Interpretación
   Reading Basic Understanding: Lectura de Comprensión Básica
-  Reading/Language Arts (DEPRECATED, use id 4): Lectura / lengua y literatura (en
-    desuso, el uso Identificación 4)
+  Reading/Language Arts (DEPRECATED, use id 4): Lectura / lengua y literatura (en desuso, el uso Identificación 4)
   Science: Ciencia
   Sequential Mathematics, Course III: Secuencial Matemáticas, Curso III
   Social Studies: Estudios Sociales
@@ -91,3 +83,6 @@ es:
   Writing: Escritura
   Writing Conventions: Normas de la escritura
   Writing Effectiveness: Efectividad Escribiendo
+  Calculus: Cálculo
+  English Language Arts 3: Artes del idioma inglés 3
+  English Language Arts 1: Artes del idioma inglés 1

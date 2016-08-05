@@ -1,5 +1,5 @@
 require_relative '../config/initializers/extensions/hash'
-require_relative 'gs_i18n'
+require_relative 'gs_i18n/gs_i18n'
 module I18nGsTasks
   include ::I18n::Tasks::Command::Collection
 
@@ -7,7 +7,7 @@ module I18nGsTasks
   def gs_missing_among_locales(opts={})
     arguments_hash = HashWithIndifferentAccess[opts[:arguments].map { |arg| arg.split('=') }]
     pattern = arguments_hash[:pattern].presence
-    i18n_manager = ::GsI18n::I18nManager.for_files_with_pattern(pattern)
+    i18n_manager = ::GsI18n::Manager.for_files_with_pattern(pattern)
     i18n_manager.check_missing_translations
   end
 
@@ -15,7 +15,7 @@ module I18nGsTasks
   def gs_copy_missing_translations(opts={})
     arguments_hash = HashWithIndifferentAccess[opts[:arguments].map { |arg| arg.split('=') }]
     pattern = arguments_hash[:pattern].presence
-    i18n_manager = ::GsI18n::I18nManager.for_files_with_pattern(pattern)
+    i18n_manager = ::GsI18n::Manager.for_files_with_pattern(pattern)
     i18n_manager.copy_missing_translations
     i18n_manager.sort!
   end
@@ -24,7 +24,7 @@ module I18nGsTasks
   def gs_sort(opts={})
     arguments_hash = HashWithIndifferentAccess[opts[:arguments].map { |arg| arg.split('=') }]
     pattern = arguments_hash[:pattern].presence
-    i18n_manager = ::GsI18n::I18nManager.for_files_with_pattern(pattern)
+    i18n_manager = ::GsI18n::Manager.for_files_with_pattern(pattern)
     i18n_manager.sort!
   end
 

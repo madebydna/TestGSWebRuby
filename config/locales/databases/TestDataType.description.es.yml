@@ -40,12 +40,12 @@ es:
   DC-CAS: DC-CAS
   DE AIR: DE AIRE
   DE Comprehensive Assessment System: Sistema de evaluación global DE
-  ! 'Detroit Prek Rating: Administration and Management': ! 'Detroit Prek Clasificación: Administración y Gestión'
-  ! 'Detroit Prek Rating: Curriculum and Instruction': ! 'Detroit Prek Clasificación: Currículo e Instrucción'
-  ! 'Detroit Prek Rating: Environment': ! 'Detroit Valoración de Prek: Medio Ambiente'
-  ! 'Detroit Prek Rating: Family and Community Partnerships': ! 'Detroit Valoración de Prek: Asociaciones Familia y la Comunidad'
-  ! 'Detroit Prek Rating: Overall Rating': ! 'Detroit Valoración de Prek: Media'
-  ! 'Detroit Prek Rating: Staff Qualifications and Professional Development': ! 'Detroit Valoración de Prek: Calificaciones del Personal y Desarrollo Profesional'
+  'Detroit Prek Rating: Administration and Management': 'Detroit Prek Clasificación: Administración y Gestión'
+  'Detroit Prek Rating: Curriculum and Instruction': 'Detroit Prek Clasificación: Currículo e Instrucción'
+  'Detroit Prek Rating: Environment': 'Detroit Valoración de Prek: Medio Ambiente'
+  'Detroit Prek Rating: Family and Community Partnerships': 'Detroit Valoración de Prek: Asociaciones Familia y la Comunidad'
+  'Detroit Prek Rating: Overall Rating': 'Detroit Valoración de Prek: Media'
+  'Detroit Prek Rating: Staff Qualifications and Professional Development': 'Detroit Valoración de Prek: Calificaciones del Personal y Desarrollo Profesional'
   ESD Preschool Rating: Valoración de la EDS preescolar
   FL EOC: FL EOC
   FL FCAT2: FL FCAT2
@@ -88,7 +88,7 @@ es:
   LA Graduation Exit Examination: LA graduación del examen de salida
   LA The Partnership for Assessment of Readiness for College and Careers: LA La Asociación para la Evaluación de la Preparación para la universidad y carreras
   MA MCAS: MA MCAS
-  MA MCAS STE: MA MCAS 
+  MA MCAS STE: MA MCAS
   MA Partnership for the Assessment of Readiness of College and Careers: MA La Asociación para la Evaluación de la Preparación para la universidad y carreras
   MD High School Assessment: Evaluación de la Escuela Secundaria MD
   MD Maryland School Assessment: Evaluación MD Maryland School
@@ -213,3 +213,49 @@ es:
   WY Wyoming Comprehensive Assessment System: Sistema de evaluación global de Wyoming WY
   adequate yearly progress: progreso anual adecuado
   total rating: Puntuación total de
+  AL ACT Aspire: AL ACT Aspire
+  AL ACT PLAN: PLAN AL ACT
+  RI The Partnership for Assessment of Readiness for College and Careers: RI La Asociación para la Evaluación de la Preparación para la universidad y carreras
+  IN Reading Evaluation and Determination: En la evaluación de lectura y Determinación
+  WV General Summative: WV general sumativa
+  Proportion of students enrolled in gifted and talented programs: Proporción de estudiantes inscritos en programas de talentos
+  Average number of high-level courses each high school student is taking: Promedio del número de cursos de alto nivel de cada estudiante de escuela secundaria está tomando
+  Proportion of high school students who took at least one AP course: Proporción de estudiantes de secundaria que tomaron al menos un curso de AP
+  CO Overall Growth Grade: En general CO Crecimiento Grado
+  CO Read Growth Grade: CO Leer Crecimiento Grado
+  CO Math Achievement Grade: CO Matemáticas Grado Logro
+  CO Writing Achievement Grade: CO Escritura Grado Logro
+  The proportion of high school students who passed at least one AP course: La proporción de estudiantes de secundaria que pasa por lo menos un curso de AP
+  The proportion of students in grades 7/8 who passed Algebra 1: La proporción de estudiantes en los grados 7/8 que pasaba Álgebra 1
+  Proportion of high school students sitting for the SAT/ACTs: Proporción de estudiantes de secundaria que se sientan para el SAT / ACT
+  The ratio of counselors to high school students: La proporción de consejeros a estudiantes de secundaria
+  The average number of competitive male-only sports each male high school student participates in: El número medio de deportes masculinos de sólo competitivos cada estudiante de escuela secundaria masculina participa en
+  The average number of competitive female-only sports each female high school student participates in: El número medio de los deportes competitivos de sólo hembras cada estudiante de preparatoria, participa en
+  The number of competitive male-only sports the school participates in: El número de competencia sólo para hombres deportivos de la escuela participa en
+  The number of competitive female-only sports the school participates in: El número de competencia sólo para mujeres se divierte la escuela participa en
+  'Rank: Students enrolled in gifted and talented programs': 'Rango: Los estudiantes inscritos en programas de talentos'
+  'Rank: Average number of high-level courses each high school student is taking': 'Rango: Número medio de cursos de alto nivel de cada estudiante de escuela secundaria está tomando'
+  'Rank: Proportion of high school students who took at least one AP course': 'Rango: Proporción de estudiantes de secundaria que tomaron al menos un curso de AP'
+  CO Overall Achievement Grade: Grado CO general Logro
+  CO Reading Achievement Grade: CO Lectura Grado Logro
+  CO Overall School Grade: CO general de la escuela primaria
+  CO School Rank: Rango de Escuela CO
+  'Rank: The proportion of high school students who passed at least one AP course': 'Rango: La proporción de estudiantes de secundaria que pasa por lo menos un curso de AP'
+  'Rank: The proportion of students in grades 7/8 who passed Algebra 1': 'Rango: El porcentaje de estudiantes en los grados 7/8 que pasaba Álgebra 1'
+  'Rank: Proportion of high school students sitting for the SAT/ACTs': 'Rango: Proporción de estudiantes de secundaria que se sientan para el SAT / ACT'
+  'Rank: The ratio of counselors to high school students': 'Rango: La proporción de consejeros a estudiantes de secundaria'
+  'Rank: The average number of competitive male-only sports each male high school student participates in': 'Rango: El número medio de deportes masculinos de sólo competitivos cada estudiante de escuela secundaria masculina participa en'
+  'Rank: The average number of competitive female-only sports each female high school student participates in': 'Rango: El número medio de los deportes competitivos de sólo hembras cada estudiante de preparatoria, participa en'
+  'Rank: The number of competitive male-only sports the school participates in': 'Rango: El número de competencia sólo para hombres Deportes participa en la escuela'
+  'Rank: The number of competitive female-only sports the school participates in': 'Rango: El número de competencia sólo para mujeres se divierte la escuela participa en'
+  'Rank: Percent of students enrolled in course': 'Rango: Porcentaje de alumnos matriculados en el curso'
+  Percent of students enrolled in course: Porcentaje de alumnos matriculados en el curso
+  Number of students enrolled in course: Número de alumnos matriculados en el curso
+  CO Math Growth Grade: CO Matemáticas Crecimiento Grado
+  CO Writing Growth Grade: CO Escritura Crecimiento Grado
+  CO ELL Growth Grade: CO ELL Crecimiento Grado
+  CO Student Achievement Trend: Tendencia Logro CO Estudiante
+  CO Student Growth Trend: CO Estudiante crecimiento de la tendencia
+  CO Overall Three Year Trend: En general CO tendencia tres años
+  IL The Partnership for Assessment of Readiness for College and Careers: IL La Asociación para la Evaluación de la Preparación para la universidad y carreras
+  NM Partnership for the Assessment of Readiness of College and Careers: Asociación NM para la Evaluación de la Preparación de Colegio y Carreras

@@ -73,7 +73,8 @@ module ReviewControllerConcerns
     end
 
     def review_attributes
-      params.merge(user:user,school: school )
+      params[:comment].gsub!("\r\n", "\n") if params[:comment]
+      params.merge(user:user, school: school)
     end
 
     def existing_review

@@ -8,8 +8,7 @@ en:
   Achievement - Performance Index: Achievement - Performance Index
   California Academic Performance Index (API) Score: California Academic Performance Index (API) Score
   Climate rating: Climate rating
-  College and Career Ready Performance Index: College and Career Ready Performance
-    Index
+  College and Career Ready Performance Index: College and Career Ready Performance Index
   College readiness rating: College readiness rating
   Colorado school grade: Colorado School Grade
   ESD_url: ESD_url
@@ -62,3 +61,16 @@ en:
   whats_this_growth: whats_this_growth
   whats_this_psr: whats_this_psr
   whats_this_test_scores: whats_this_test_scores
+  Colorado Overall Achievement Grade: Colorado Overall Achievement Grade
+  Colorado Reading Achievement Grade: Colorado Reading Achievement Grade
+  Colorado Math Achievement Grade: Colorado Math Achievement Grade
+  Colorado Writing Achievement Grade: Colorado Writing Achievement Grade
+  Colorado Overall Growth Grade: Colorado Overall Growth Grade
+  Colorado Reading Growth Grade: Colorado Reading Growth Grade
+  Colorado Math Growth Grade: Colorado Math Growth Grade
+  Colorado Writing Growth Grade: Colorado Writing Growth Grade
+  Colorado ELL Growth Grade: Colorado ELL Growth Grade
+  Colorado Student Achievement Grade: Colorado Student Achievement Grade
+  Colorado Student Growth Trend: Colorado Student Growth Trend
+  Colorado Overall Three Year Trend: Colorado Overall Three Year Trend
+  about_colorado_school_grade: about_colorado_school_grade
