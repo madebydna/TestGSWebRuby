@@ -1,0 +1,82 @@
+#hero {
+  background-color: #08497b;
+  color: white;
+  font-size: 12px;
+
+  .container {
+    flex-flow: nowrap;
+  }
+
+  a {
+    color: white;
+    font-size: 12px;
+  }
+
+  .school-name {
+    padding-top: 30px;
+    font-family: CaeciliaLTStd;
+    font-size: 36px;
+    font-weight: 900;
+  }
+
+  .row.school-info {
+    flex-shrink: 1;
+    flex-grow: 0;
+
+    @media only screen and (max-width: 767px) {
+      justify-content: center;
+    }
+  }
+
+  .row.school-info > div {
+    border-left: 1px solid rgba(255, 255, 255, .17);
+    white-space: nowrap;
+    flex-shrink: 1;
+    flex-grow: 0;
+  }
+
+  .row.school-info > div:first-of-type {
+    border-left: none;  
+  }
+
+  .row.school-info:nth-of-type(3) > div {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    flex-shrink: 1;
+    flex-grow: 0;
+    flex-basis: 9rem;
+  }
+
+  .school-info:nth-of-type(3) > div:first-of-type {
+    flex-basis: 14rem;
+    .row {
+      font-size: 16px;
+      flex-wrap: nowrap;
+      flex-shrink: 2;
+      .col-xs {
+        flex-shrink: 2;
+        flex-grow: 0;
+        text-align: left;
+      }
+    }
+  }
+
+  .label {
+    opacity: 0.6;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .gs-rating > div {
+    border-radius: 50%;
+    background-color: #367a1e;
+    height: 62px;
+    width: 62px;
+    text-align: center;
+    font-size: 38px;
+  }
+}
