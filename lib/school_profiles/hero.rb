@@ -6,11 +6,11 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
 
     delegate :gs_rating, :students_enrolled, :five_star_rating, :number_of_active_reviews, to: :school_cache_data_reader
-    delegate :address, :type, :phone, :home_page_url, to: :school, prefix: :school
+    delegate :name, :address, :type, :phone, :home_page_url, to: :school, prefix: :school
     delegate :district, to: :school
 
     # Makes has_district?,  has_school_address?, etc
-    def_has_predicates :grade_range, :school_home_page_url, :district, :school_address, :gs_rating
+    def_has_predicates :school_phone, :grade_range, :school_home_page_url, :district, :school_address, :gs_rating
 
     def initialize(school, school_cache_data_reader:)
       self.school = school

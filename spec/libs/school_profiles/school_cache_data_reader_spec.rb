@@ -12,7 +12,7 @@ describe SchoolProfiles::SchoolCacheDataReader do
         allow(s).to receive(:id).and_return(1)
       end
     end
-    subject { reader(school) }
+    subject { new_reader(school) }
     it { is_expected.to respond_to(:gs_rating) }
 
     describe '#school_cache_query' do
@@ -24,7 +24,6 @@ describe SchoolProfiles::SchoolCacheDataReader do
           allow(q).to receive(:include_cache_keys).and_return(q)
         end
       end
-
       let(:reader) { new_reader(school) }
       it 'makes a query using its school' do
         expect(SchoolCacheQuery).to receive(:for_school).with(school)

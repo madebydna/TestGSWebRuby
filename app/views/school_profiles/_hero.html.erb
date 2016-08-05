@@ -1,23 +1,140 @@
 <% hero %>
 
-<div>
-  <div>
-    GreatSchools rating
-    <span class="rs-gs-rating">
-      <%= hero.gs_rating %>
-    </span>
-    <%= hero.school_address %>
-    <%= hero.school_type %>
-    <%= hero.district_name %>
-    <%= hero.school_phone %>
-    <%= hero.school_home_page_link %>
-    <%= hero.grade_range_label %><%= hero.grade_range %>
-    <%= hero.students_enrolled %>
+<div id="hero">
+  <div class="container">
+    <div>
+      <h1 class="hidden-xs-down school-name"><%= hero.school_name %></h1>
+    </div>
 
-    <%= hero.number_of_active_reviews %>
-    <span class="rs-five-star-rating">
-      <%= hero.five_star_rating %>
-    </span>
+    <div id="hero-school-address-info" class="row">
+      <% if hero.has_school_address? %>
+        <div class="col-xs">
+          <%= hero.school_address %>
+        </div>
+      <% end %>
+      <% if hero.has_district? %>
+        <div class="col-xs">
+          <%= hero.district_name %>
+        </div>
+      <% end %>
+      <% if hero.has_school_phone? %>
+        <div class="col-xs">
+          <%= hero.school_phone %>
+        </div>
+      <% end %>
+      <% if hero.has_school_home_page_url? %>
+        <div class="col-xs">
+          <%= hero.school_home_page_link %>
+        </div>
+      <% end %>
+      <div class="col-xs">
+        More Contact
+      </div>
+    </div>
+
+    <div id="hero-school-other-info" class="row p-t-1 p-b-1">
+      <div class="col-xs">
+        <div class="row">
+          <div class="col-xs rs-gs-rating">
+            <div class="rs-gs-rating gs-rating">
+              <%= hero.gs_rating %>
+            </div>
+          </div>
+          <div class="col-xs p-l-0">
+            GreatSchools</br>Rating
+          </div>
+        </div>
+      </div>
+      <div class="col-xs">
+        <div class="label">Reviews</div>
+        <div>
+          <%= hero.number_of_active_reviews %>
+          <span class="rs-five-star-rating"><%= hero.five_star_rating %></span>
+        </div>
+      </div>
+      <div class="col-xs hidden-sm-down">
+        <div class="label"><%= hero.grade_range_label %></div>
+        <div><%= hero.grade_range %></div>
+      </div>
+      <div class="col-xs hidden-sm-down">
+        <div class="label">Students</div>
+        <div><%= hero.students_enrolled %></div>
+      </div>
+      <div class="col-xs hidden-sm-down">
+        <div class="label">Type</div>
+        <div><%= hero.school_type %></div>
+      </div>
+    </div>
+
   </div>
 </div>
+<style>
+  #hero {
+    background-color: #08497b;
+    color: white;
+    font-size: 12px;
+  }
+  #hero .container {
+    flex-flow: nowrap;
+  }
+  #hero a {
+    color: white;
+    font-size: 12px;
+  }
+  #hero .school-name {
+    padding-top: 30px;
+    font-family: CaeciliaLTStd;
+    font-size: 36px;
+    font-weight: 900;
+  }
+  #hero-school-address-info > div {
+    border-left: 1px solid rgba(255, 255, 255, .17);
+    line-height: 2;
+    white-space: nowrap;
+    flex-shrink: 1;
+    flex-grow: 0;
+  }
+  #hero-school-other-info > div {
+    border-left: 1px solid rgba(255, 255, 255, .17);
+    white-space: nowrap;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    flex-shrink: 1;
+    flex-grow: 0;
+    flex-basis: 9rem;
+  }
+  #hero-school-other-info > div:first-of-type {
+    flex-basis: 14rem;
+  }
+  #hero-school-other-info > div:first-of-type > .row {
+    font-size: 16px;
+    flex-wrap: nowrap;
+    flex-shrink: 2;
+  }
+  #hero-school-other-info > div:first-of-type > .row > .col-xs {
+    flex-shrink: 2;
+    flex-grow: 0;
+    text-align: left;
+  }
+  #hero .row > div:first-of-type {
+    border-left: none;  
+  }
+  #hero .label {
+    opacity: 0.6;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  #hero .gs-rating {
+    border-radius: 50%;
+    background-color: green;
+    height: 62px;
+    width: 62px;
+    text-align: center;
+    font-size: 38px;
+  }
 
+</style>
