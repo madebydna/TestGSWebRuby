@@ -1,67 +1,28 @@
-<style>
-  .grid--borderBetween > [class*='col-']:before,
-  .grid--borderBetween > [class*='col-']:after {
-    background: #cad4df;
-    bottom: 0;
-    content: " ";
-    position: absolute;
-    width: 1px;
-    top: 0;
-  }
-
-  .grid--borderBetween > [class*='col-']:before {
-    left: 0;
-  }
-
-  .grid--borderBetween > [class*='col-']:after {
-    right: -1px;
-  }
-
-  .grid--borderBetween > [class*='col-']:first-child:before,
-  .grid--borderBetween > [class*='col-']:last-child:after {
-    display: none;
-  }
-
-  .toc_container_box {
-    margin: 30px auto;
-    border: solid 1px #dbe6eb;
-    padding: 30px;
-    background-color: #f6f9fa;
-  }
-
-  @media only screen and (max-width: 767px) {
-    .grid--borderBetween > [class*='col-']:before,
-    .grid--borderBetween > [class*='col-']:after {
-      background: none;
-      bottom: 0;
-      content: " ";
-      position: absolute;
-      width: 0;
-      top: 0;
-    }
-
-    .grid--borderBetween > [class*='col-']:before {
-      left: 0;
-    }
-
-    .grid--borderBetween > [class*='col-']:after {
-      right: 0;
-    }
-  }
-</style>
-<div class="container toc_container_box">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="container">
-        <div class="row grid--borderBetween">
-          <div class="col-sm-12 col-md-4">
-            column 1<br/>column 1<br/>column 1
-          </div>
-          <div class="col-sm-12 col-md-4">
-            column 2<br/>column 2<br/>column 2<br/>column 2
-          </div>
-          <div class="col-sm-12 col-md-4 hidden-sm-down">
-            column 3<br/>column 3<br/>column 3
+<!--
+there is a partial for ratings called toc-entry-rating - need to figure out NR color.
+going to build a partial for badges.  it will use the name passed in to generate the sprite name
+-->
+<div id="toc">
+  <div class="container toc-container-box">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="container">
+          <div class="row grid-divider">
+            <div class="col-sm-12 col-md-4">
+              <%= render 'toc_entry_rating', rating: '8', title: 'Test Scores' %>
+              <%= render 'toc_entry_rating', rating: '7', title: 'Equity' %>
+              <%= render 'toc_entry_rating', rating: '6', title: 'College Readiness' %>
+            </div>
+            <div class="col-sm-12 col-md-4">
+              <%= render 'toc_entry_rating', rating: '', title: 'Elective Course Offering' %>
+              <%= render 'toc_entry_rating', rating: '5', title: 'Health and Safety' %>
+              <%= render 'toc_entry_rating', rating: '4', title: 'Demographics' %>
+            </div>
+            <div class="col-sm-12 col-md-4 hidden-sm-down">
+              <%= render 'toc_entry_rating', rating: '1', title: 'Teachers' %>
+              <%= render 'toc_entry_rating', rating: '2', title: 'School Resources' %>
+              <%= render 'toc_entry_rating', rating: '3', title: 'Sports' %>
+            </div>
           </div>
         </div>
       </div>
