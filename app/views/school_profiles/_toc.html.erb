@@ -1,6 +1,6 @@
 <!--
 there is a partial for ratings called toc-entry-rating - need to figure out NR color.
-going to build a partial for badges.  it will use the name passed in to generate the sprite name
+going to build a partial for badges.  it will use the name passed in to generate font accessor
 -->
 <div id="toc">
   <div class="container toc-container-box">
@@ -14,12 +14,12 @@ going to build a partial for badges.  it will use the name passed in to generate
               <%= render 'toc_entry_rating', rating: '6', title: 'College Readiness' %>
             </div>
             <div class="col-sm-12 col-md-4">
-              <%= render 'toc_entry_rating', rating: '', title: 'Elective Course Offering' %>
-              <%= render 'toc_entry_rating', rating: '5', title: 'Health and Safety' %>
+              <%= render 'toc_entry_rating', rating: '5', title: 'Elective Course Offering' %>
+              <%= render 'toc_entry_badge', icon: 'user', title: 'Teachers' %>
               <%= render 'toc_entry_rating', rating: '4', title: 'Demographics' %>
             </div>
             <div class="col-sm-12 col-md-4 hidden-sm-down">
-              <%= render 'toc_entry_rating', rating: '1', title: 'Teachers' %>
+              <%= render 'toc_entry_badge', icon: 'shield', title: 'Health and Safety' %>
               <%= render 'toc_entry_rating', rating: '2', title: 'School Resources' %>
               <%= render 'toc_entry_rating', rating: '3', title: 'Sports' %>
             </div>
