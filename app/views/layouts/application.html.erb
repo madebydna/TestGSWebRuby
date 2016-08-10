@@ -26,8 +26,8 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
-  <link rel="alternate" hreflang="en" href="<%= url_for(params.merge(lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
-  <link rel="alternate" hreflang="es" href="<%= url_for(params.merge(lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
 
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />
@@ -41,7 +41,7 @@
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
-<%= render 'nav/topnav', hub_params: @hub_params %>
+<%= render 'nav/topnav_universal', hub_params: @hub_params %>
 <%= render :partial => 'layouts/top_notification_bar' %>
 
 <div class="dn">
@@ -51,9 +51,10 @@
 <%= content_for?(:content) ? yield(:content) : yield %>
 
 <%=  render 'omniture/quantcast' %>
-<%=  render 'omniture/comscore' %>
 
 <a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top mrm"></span><%= t('.top') %></a>
+
+<%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "post_load", :async => true %>

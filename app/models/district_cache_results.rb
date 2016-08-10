@@ -61,8 +61,8 @@ class DistrictCacheResults
 
   def module_for_key(cache_key)
     case cache_key
-      when 'ratings'
-        CachedRatingsMethods
+      when 'feed_test_scores'
+        DistrictCachedFeedTestScoresMethods
     end
   end
 

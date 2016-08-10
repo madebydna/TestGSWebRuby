@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/city_home_page'
 require 'features/examples/page_examples'
 require 'features/contexts/state_home_contexts'
+require 'features/examples/footer_examples'
 
 describe 'Education Community Page' do
   after(:each) { clean_dbs :gs_schooldb }
@@ -14,9 +15,12 @@ describe 'Education Community Page' do
     CollectionConfig.where(quay: CollectionConfig::NICKNAME_KEY, collection_id: 1, value: 'Detroit').first_or_create
     visit '/michigan/detroit/education-community'
   end
-  describe 'breadcrumbs' do
-    subject { CityHomePage.new }
+  subject { CityHomePage.new }
 
+
+  include_examples 'should have a footer'
+
+  describe 'breadcrumbs' do
     it { is_expected.to have_breadcrumbs }
     its('first_breadcrumb.title') { is_expected.to have_text('Michigan') }
     its('first_breadcrumb') { is_expected.to have_link('Michigan', href: "/michigan/") }
@@ -64,6 +68,8 @@ describe 'Education Community Partner Page' do
 
     visit '/michigan/detroit/education-community/partner'
   end
+  subject { CityHomePage.new }
+  include_examples 'should have a footer'
 
   it 'sets meta tags based on the page and acro names' do
     meta_tags = page.all('meta', visible: false)

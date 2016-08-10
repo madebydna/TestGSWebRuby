@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'features/examples/footer_examples'
+require 'features/page_objects/guided_search'
 
 
 def setup(collection_id, nickname)
@@ -13,6 +15,11 @@ feature 'Guided Search Page' do
       setup(9, 'Delaware')
       FactoryGirl.create(:hub_city_mapping, city: nil, state: 'de', collection_id: 9, hasGuidedSearch: true)
       visit '/delaware/guided-search'
+    end
+
+    describe 'footer' do
+      subject { GuidedSearchPage.new }
+      include_examples 'should have a footer'
     end
 
     it 'includes a basic page layout with nav bar ' do

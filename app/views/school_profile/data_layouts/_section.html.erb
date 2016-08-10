@@ -8,6 +8,13 @@
     <% partial_collection_markup = render partial: 'category_placement', collection: children, as: :category_placement %>
     <% if partial_collection_markup.present? %>
       <% section_class << ' row' %>
+      <% section_title = category_placement.title %>
+      <% if section_title.present? %>
+        <% section_title = section_title.downcase.gsub(/\s+/, '_') %>
+        <% section_title_class = "js-#{section_title}-section" %>
+        <% section_class << ' ' << section_title_class %>
+      <% end %>
+
       <%= content_tag('div', class: section_class, id: section_id) do %>
         <%= render "shared/section_header", category_placement: category_placement %>
         <%= partial_collection_markup %>

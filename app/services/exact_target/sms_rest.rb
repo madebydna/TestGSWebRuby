@@ -1,70 +1,29 @@
-require 'net/http'
-require 'rubygems'
-require 'json'
+class ExactTarget
+  class SmsRest
+    attr_reader :auth_token_manager
+    def initialize
+      @sms_rest_calls = ExactTarget::SmsRestCalls.new
+      @auth_token_manager = ExactTarget::AuthTokenManager
+      ExactTarget::SmsRestCalls.instance_methods(false).each { |method_name|  SmsRest.define_rest_method(method_name) }
+    end
 
-class SmsRest
-
-  def contact_subscriptions(phone_numbers)
-    uri = full_path_uri('contacts/subscriptions')
-    # can take an array of numbers
-    mobile_contact = {"mobileNumber" => phone_numbers}
-    post_json_with_auth(uri, mobile_contact)
+    def self.define_rest_method(method_name)
+      define_method(method_name) do |*args|
+        access_token = auth_token_manager.fetch_access_token
+        begin
+          begin
+            result = @sms_rest_calls.send(method_name, access_token, *args)
+          rescue GsExactTargetAuthorizationError
+            access_token = auth_token_manager.fetch_new_access_token
+            result = @sms_rest_calls.send(method_name, access_token, *args)
+          end
+        rescue GsExactTargetAuthorizationError => e
+          vars = {method_name: method_name, args: args }
+          GSLogger.error(:misc, e, message: "Unable to make ExactTarget Sms Rest Call", vars: vars)
+          raise e
+        end
+        result
+      end
+    end
   end
-
-
-  private
-
-  def credentials_rest()
-    {
-        'clientId' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
-        'clientSecret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
-    }
-  end
-
-  # This gets the token if needed and returns a new token good for an hour
-  # v1/requestToken
-  def fetch_accesstoken
-    uri = access_token_uri
-    access_hash = post_json_get_auth(uri, credentials_rest())
-    access_hash['accessToken']
-  end
-
-  def access_token_uri
-    URI('https://auth.exacttargetapis.com/v1/requestToken')
-  end
-
-  def full_path_uri(uri)
-    URI('https://www.exacttargetapis.com/sms/v1/'+uri)
-  end
-
-  def post_json_with_auth(uri, send_hash)
-    req = Net::HTTP::Post.new(
-        uri.request_uri,
-        initheader = {
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' + fetch_accesstoken()
-        }
-    )
-    post_json(uri, send_hash, req)
-  end
-
-  def post_json_get_auth(uri, send_hash)
-    req = Net::HTTP::Post.new(
-        uri.request_uri,
-        initheader = {'Content-Type' => 'application/json'}
-    )
-    post_json(uri, send_hash, req)
-  end
-
-  def post_json(uri, send_hash, request)
-    request.body = send_hash.to_json
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    response = http.request(request)
-    # require 'pry'
-    # binding.pry
-    JSON.parse(response.body)
-  end
-
-
 end

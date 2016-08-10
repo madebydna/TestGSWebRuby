@@ -1,6 +1,8 @@
 require_relative 'modules/flash_messages'
+require 'features/page_objects/modules/footer'
 
 class ResetPasswordPage < SitePrism::Page
+  include Footer
 
   set_url_matcher /account\/password/
 

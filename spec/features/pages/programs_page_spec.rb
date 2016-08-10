@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'features/examples/footer_examples'
+require 'features/page_objects/programs_page'
 
 describe 'Programs Page' do
   before { FactoryGirl.create :hub_city_mapping }
@@ -13,6 +15,8 @@ describe 'Programs Page' do
     end
   end
 
+  subject { ProgramsPage.new }
+
   context 'by default' do
     before do
       FactoryGirl.create :programs_heading_config
@@ -23,6 +27,8 @@ describe 'Programs Page' do
       FactoryGirl.create :important_events_collection_config
       visit url
     end
+
+    include_examples 'should have a footer'
 
     describe 'heading and intro section' do
       it 'renders the search bar' do

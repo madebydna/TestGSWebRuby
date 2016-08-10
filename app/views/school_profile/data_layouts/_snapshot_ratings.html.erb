@@ -1,21 +1,31 @@
 <% category_placement # The +CategoryPlacement+ that is configured to show this layout %>
 
 <% gs_rating = @school.gs_rating || 'nr' %>
-<div class="row pr" style="height: 300px;">
-  <div class="col-xs-12 tac">
-    <a href="<%= school_quality_url(@school) %>#Ratings">
-      <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
-      <div class="dib">
-        <%= render 'performance/gs_rating', value: gs_rating, size: 'lg', subtext: true %>
-      </div>
-    </a>
-  </div>
+<div class="js-ratings-vertical-rule row pr" style="height: 300px;">
+  <% if gs_rating.upcase != 'NR' %>
+    <div class="col-xs-12 tac">
+      <a href="<%= school_quality_url(@school) %>#Ratings">
+        <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
+        <div class="dib">
+          <%= render 'performance/gs_rating', value: gs_rating, size: 'lg', subtext: true %>
+        </div>
+      </a>
+    </div>
+  <% end %>
 
   <% ratings_array = [] %>
 
 <% state_rating = @school.state_rating %>
 <% if state_rating %>
-    <% rating_text = (@school.state == 'CA' ? t('.api_score') : t('.state_rating')) %>
+
+    <% if @school.state == 'CA' %>
+      <% rating_text = t('.api_score') %>
+    <% elsif @school.state == 'CO' %>
+      <% rating_text = t('.colorado_school_grade') %>
+    <% else %>
+      <% rating_text = t('.state_rating') %>
+    <% end %>
+
     <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
 <% end %>
 
@@ -43,7 +53,7 @@
 <% end %>
 
 
-<div class="tac pa full-width"  style="bottom: 20px;" >
+<div class="js-tsr-block tac pa full-width"  style="bottom: 20px;" >
     <%= link_to t('.test_scores'), school_quality_url(@school, anchor:"Test_scores") %>&nbsp;|&nbsp;
     <%= link_to t('.ratings'), school_quality_url(@school, anchor:"Ratings") %>
 </div>

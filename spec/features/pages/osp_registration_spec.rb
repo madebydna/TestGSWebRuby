@@ -7,10 +7,15 @@ require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
 require 'features/contexts/user_contexts'
 require 'features/examples/user_examples'
+require 'features/examples/footer_examples'
 
 describe 'OSP Registration page' do
   with_shared_context 'visit registration confirmation page' do
     describe_mobile_and_desktop do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       include_example 'should have element with text', 'h2', 'Thanks for creating a school account!'
       include_example 'should have element with text', 'h4', "We've sent you a verification email, click the link in the verification email to begin editing your profile."
       include_example 'should have link text on page', "View your school's profile"
@@ -19,6 +24,10 @@ describe 'OSP Registration page' do
 
   with_shared_context 'visit registration page with no state or school' do
     describe_mobile_and_desktop do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       include_example 'should have element with text', 'h4', 'To register for a school account, please select a school first'
       include_example 'should have link', 'select a school', '/official-school-profile'
     end
@@ -26,6 +35,10 @@ describe 'OSP Registration page' do
 
   with_shared_context 'Delaware public school' do
     with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       include_example 'should have element with text', 'h4', "Your school account has been created via the State Department of Education IMS portal."
       include_example 'should have link', 'Department of Education', 'https://login.doe.k12.de.us/'
       include_example 'should have link text on page', 'Select your school'
@@ -58,6 +71,10 @@ describe 'OSP Registration page' do
 
   with_shared_context 'Basic High School' do
     with_shared_context 'visit registration page with school state and school' do
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
       email = 'developer@greatschools.org'
       with_shared_context 'fill in OSP Registration with valid values', email do
         with_shared_context 'with both email opt-ins selected' do

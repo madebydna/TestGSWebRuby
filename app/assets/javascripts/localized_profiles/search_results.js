@@ -628,7 +628,6 @@ GS.search.results = GS.search.results || (function(state_abbr) {
         searchSortingSelectTagHandler();
         setSearchFilterMenuMobileOffsetFromTop();
         compareSchools.init();
-        GS.search.autocomplete.searchAutocomplete.init(state_abbr);
         setShowFiltersHandler();
         setSavedSearchSubmitHandler();
         setSavedSearchOpenPopupHandler();

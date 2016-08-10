@@ -10,16 +10,20 @@ Array.prototype.contains = function(obj) {
 
 GS.search = GS.search || {};
 
-GS.search.stateAbbreviation = gon.state_abbr;
+if (typeof(gon) !== 'undefined' ) {
+  GS.search.stateAbbreviation = gon.state_abbr;
+}
 
-GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
+GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function($) {
     var SEARCH_PAGE_PATH = '/search/search.page';
     var findByNameSelector = 'input#js-findByNameBox';
     var findByLocationSelector = 'input#js-findByLocationBox';
-    var schoolResultsSearchSelector = 'input#js-schoolResultsSearch';
+    var schoolResultsSearchSelector = "input[name='locationSearchString']";
     var locationSelector = '.search-type-toggle div:first-child';
     var nameSelector = '.search-type-toggle div:last-child';
     var searchType = 'byName';
+    var mobileShortPlaceholder = 'City, zip, address or school';
+    var mobileLongPlaceholder = 'Find a great school';
 
     var init = function() {
         $('.js-findByLocationForm').submit(function() {
@@ -43,7 +47,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         });
 
         $('.js-schoolResultsSearchForm').submit(function() {
-
             var input = $(this).find(schoolResultsSearchSelector)[0];
             var valid = validateField(input, input['placeholder']);
           // forcing location search on home page button click.  Select will do direct linking.
@@ -75,6 +78,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                     var params = GS.uri.Uri.removeFromQueryString(window.location.search, 'page');
                     params = GS.uri.Uri.putParamObjectIntoQueryString(params, searchOptions);
                     var url = window.location.protocol + '//' + window.location.host + GS.uri.Uri.getPath() + params;
+                    url = GS.I18n.preserveLanguageParam(url);
                     GS.uri.Uri.goToPage(url);
                     return false
                 } else if (searchType == 'byLocation') {
@@ -91,8 +95,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
                 return false;
             }
         });
-        GS.search.schoolSearchForm.placeholderMobile();
-        GS.search.schoolSearchForm.checkGooglePlaceholderTranslate(); // all
         setUpCollapsibleTitle();
 
         GS.search.schoolSearchForm.closeFilters();
@@ -171,7 +173,8 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
     };
 
     var submitByLocationSearch = function(geocodeCallbackFn) {
-        var searchQuery = getSearchQuery();
+        var self = this;
+        var searchQuery = getSearchQuery(self);
         searchQuery = searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
 
         if (searchQuery != '' &&
@@ -196,7 +199,7 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
 //                    data['totalResults'] = geocodeResult['totalResults'];
                     data['city'] = geocodeResult['city'];
                     data['sortBy'] = 'DISTANCE';
-                    (geocodeCallbackFn || defaultGeocodeCallbackFn)(data);
+                    (geocodeCallbackFn || defaultGeocodeCallbackFn)(data, searchQuery);
                 } else {
                     if (GS.search.stateAbbreviation && getStateFullName(GS.search.stateAbbreviation)) {
                         alert("Location not found in " + getStateFullName(GS.search.stateAbbreviation) + ". Please enter a valid address, city, or ZIP.");
@@ -212,25 +215,29 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         return false;
     };
 
-    var getSearchQuery = function() {
-        var searchQuery = $(GS.search.schoolSearchForm.findByLocationSelector).val();
+    var getSearchQuery = function(self) {
+        var searchQuery = $(self).find(GS.search.schoolSearchForm.findByLocationSelector).val();
         return searchQuery.replace(/^\s*/, "").replace(/\s*$/, "");
     };
 
-    var defaultGeocodeCallbackFn = function(geocodeResult) {
+    var defaultGeocodeCallbackFn = function(geocodeResult, searchQuery) {
         var searchOptions = jQuery.extend({}, geocodeResult);
         for (var urlParam in searchOptions) {
             if (searchOptions.hasOwnProperty(urlParam)) {
                 searchOptions[urlParam] = encodeURIComponent(searchOptions[urlParam]);
             }
         }
-        searchOptions['locationSearchString'] = encodeURIComponent(getSearchQuery());
+        searchOptions['locationSearchString'] = encodeURIComponent(searchQuery);
         searchOptions['distance'] = $('#js-distance-select-box').val() || 5;
 
         // Not setting a timeout breaks back button
-        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
+        setTimeout(function() { 
+          var url = window.location.protocol + '//' + window.location.host +
             SEARCH_PAGE_PATH +
-            GS.uri.Uri.getQueryStringFromObject(searchOptions)); }, 1);
+            GS.uri.Uri.getQueryStringFromObject(searchOptions);
+          url = GS.I18n.preserveLanguageParam(url);
+          GS.uri.Uri.goToPage(url); 
+        }, 1);
     };
 
 
@@ -405,9 +412,13 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
             queryString.state = state;
         }
 
-        setTimeout(function() { GS.uri.Uri.goToPage(window.location.protocol + '//' + window.location.host +
-                SEARCH_PAGE_PATH +
-                GS.uri.Uri.getQueryStringFromObject(queryString)); }, 1);
+        setTimeout(function() {
+          var url = window.location.protocol + '//' + window.location.host +
+            SEARCH_PAGE_PATH +
+            GS.uri.Uri.getQueryStringFromObject(queryString);
+          url = GS.I18n.preserveLanguageParam(url);
+          GS.uri.Uri.goToPage(url);
+        }, 1);
         return false;
     };
 
@@ -505,26 +516,6 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         GS.search.setShowFiltersCookieHandler('.js-browseSchools'); //state hub browse city links
     };
 
-    var checkGooglePlaceholderTranslate = function () {
-        var placeholder = $('#js-schoolResultsSearch').attr('placeholder');
-        var translatedPlaceholder = $('.js-translate-placeholder').attr('font');
-        if (placeholder != translatedPlaceholder) {
-            $('#js-schoolResultsSearch').attr('placeholder', $('.js-translate-placeholder').text());
-            setTimeout(checkGooglePlaceholderTranslate, 1000);
-        } else {
-            setTimeout(checkGooglePlaceholderTranslate, 1000);
-        }
-    };
-
-    var placeholderMobile = function () {
-        if ($(window).width() < 481) {
-            $('.js-mobile-placeholder').html(GS.I18n.t('search_form.short_placeholder'));
-        }
-        else {
-            $('.js-mobile-placeholder').html(GS.I18n.t('search_form.long_placeholder'));
-        }
-    };
-
     var  closeFilters = function () {
         $('.js-close').click(function () {
             $(this).parent().fadeOut('fast');
@@ -545,11 +536,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function() {
         searchType: searchType,
         findByNameSelector: findByNameSelector,
         findByLocationSelector: findByLocationSelector,
-        placeholderMobile: placeholderMobile,
-        checkGooglePlaceholderTranslate: checkGooglePlaceholderTranslate,
         setShowFiltersCookieHandler: setShowFiltersCookieHandler,
         updateFilterState: updateFilterState,
         setupToolTip: setupToolTip,
         closeFilters: closeFilters
     };
-})();
+})(jQuery);

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+
+    <xs:include schemaLocation="greatschools-common.xsd"/>
+
+    <xs:element name="gs-test-feed">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="test" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="rank" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="test-result" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="rank-result" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="test">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" minOccurs="1" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="30"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="test-name">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="test-abbrv">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="30"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element ref="scale"/>
+                <xs:element name="most-recent-year" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="level-code" />
+                <xs:element ref="description"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rank">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" minOccurs="1" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="30"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="rank-name">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="scale"/>
+                <xs:element name="max-rank">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="year" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+                <xs:element ref="description"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="test-result">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element name="test-id" minOccurs="1" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="30"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="year" type="xs:nonNegativeInteger" minOccurs="1" maxOccurs="1" />
+                <xs:element name="subject-name">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="grade-name">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The grade associated with a test result.
+                            'All' means (school,district,or state)-wide
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="PK" />
+                            <xs:enumeration value="KG" />
+                            <xs:enumeration value="1" />
+                            <xs:enumeration value="2" />
+                            <xs:enumeration value="3" />
+                            <xs:enumeration value="4" />
+                            <xs:enumeration value="5" />
+                            <xs:enumeration value="6" />
+                            <xs:enumeration value="7" />
+                            <xs:enumeration value="8" />
+                            <xs:enumeration value="9" />
+                            <xs:enumeration value="10" />
+                            <xs:enumeration value="11" />
+                            <xs:enumeration value="12" />
+                            <xs:enumeration value="All" />
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="level-code-name" nillable="true" minOccurs="0">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="score">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="proficiency-band-id" nillable="true" type="xs:int" minOccurs="0"/>
+                <xs:element name="proficiency-band-name" nillable="true" minOccurs="0">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+		<xs:element name="number-tested" nillable="true" type="xs:string" minOccurs="0" maxOccurs="1" />
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="rank-result">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element name="rank-id" minOccurs="1" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="30"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="rank" minOccurs="0">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:minLength value="1"/>
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+
+                <xs:element name="year" type="xs:nonNegativeInteger" minOccurs="1" />
+                <xs:element ref="level-code" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="scale">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="500"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+</xs:schema>

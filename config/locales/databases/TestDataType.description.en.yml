@@ -44,6 +44,7 @@ en:
   CO Academic Performance Ratings: CO Academic Performance Ratings
   CO Student Assessment Program: CO Student Assessment Program
   CO TCAP: CO TCAP
+  Colorado Measures of Academic Success: Colorado Measures of Academic Success
   CT Connecticut Academic Performance Test: CT Connecticut Academic Performance Test
   CT Connecticut Mastery Test: CT Connecticut Mastery Test
   California Assessment of Student Performance and Progress: California Assessment
@@ -84,6 +85,7 @@ en:
   FL Norm Referenced Test: FL Norm Referenced Test
   FL School Grade: FL School Grade
   FL Test: FL Test
+  FL FSA: FL FSA
   GA CRCT: GA CRCT
   GA College and Career Ready Performance Index: GA College and Career Ready Performance
     Index
@@ -134,6 +136,7 @@ en:
     for Assessment of Readiness for College and Careers
   MA MCAS: MA MCAS
   MA MCAS STE: MA MCAS STE
+  MA Partnership for the Assessment of Readiness of College and Careers: MA Partnership for the Assessment of Readiness of College and Careers
   MD High School Assessment: MD High School Assessment
   MD Maryland School Assessment: MD Maryland School Assessment
   ME MHSA: ME MHSA
@@ -182,9 +185,11 @@ en:
   NJ Assessment of Skills and Knowledge: NJ Assessment of Skills and Knowledge
   NJ High school test: NJ High school test
   NJ Middle school test: NJ Middle school test
+  NJ The Partnership for Assessment of Readiness for College and Careers: NJ The Partnership for Assessment of Readiness for College and Careers
   NM High School Standards Assessment: NM High School Standards Assessment
   NM Standards Based Assessment: NM Standards Based Assessment
   NM Terra Nova: NM Terra Nova
+  NM PARCC: NM PARCC
   NV Analytic Writing Exam: NV Analytic Writing Exam
   NV Criterion Referenced Test: NV Criterion Referenced Test
   NV High School Proficiency Exam: NV High School Proficiency Exam
@@ -220,6 +225,8 @@ en:
   Ohio Graduation Tests (Private): Ohio Graduation Tests (Private)
   Ohio Performance Index Ratings: Ohio Performance Index Ratings
   Ohio Proficiency Test: Ohio Proficiency Test
+  OH The Partnership for Assessment of Readiness for College and Careers: OH The Partnership for Assessment of Readiness for College and Careers
+  Ohio Next Generation Assessment: Ohio Next Generation Assessment
   Overall Academic Rating: Overall Academic Rating
   PA Keystone End of Course: PA Keystone End of Course
   PA System of School Assessment: PA System of School Assessment

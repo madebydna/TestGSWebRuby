@@ -1,5 +1,0 @@
----
-en:
-  nav:
-    state_footer:
-      all_cities_in: 'All cities in %{state}:'

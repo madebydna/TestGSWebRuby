@@ -1,6 +1,6 @@
 var GS = GS || {};
 
-GS.I18n = GS.I18n || (function() {
+GS.I18n = GS.I18n || (function($) {
   var translationsHash;
   var defaultLocale = 'en';
 
@@ -71,4 +71,4 @@ GS.I18n = GS.I18n || (function() {
     preserveLanguageParam: preserveLanguageParam,
     initLanguageLinkListener: initLanguageLinkListener,
   }
-})();
+})(jQuery);

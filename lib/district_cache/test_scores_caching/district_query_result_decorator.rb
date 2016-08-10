@@ -65,16 +65,16 @@ class TestScoresCaching::DistrictQueryResultDecorator
     proficiency_band.name if proficiency_band
   end
 
+  def proficiency_band_id
+    self['proficiency_band_id'] if self['proficiency_band_id'].present?
+  end
+
   def school_value
     self['school_value_text'] || self['school_value_float']
   end
 
   def state_value
     self['state_value_text'] || self['state_value_float']
-  end
-
-  def data_type_id
-    self['data_type_id']
   end
 
   def breakdown_id

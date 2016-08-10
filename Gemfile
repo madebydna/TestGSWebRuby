@@ -82,12 +82,12 @@ gem 'draper', '~> 1.3.1'
 gem 'addressable'
 
 gem 'rack-mini-profiler', require: false
-gem 'rubocop', '= 0.20.1', require: false
+gem 'rubocop', '= 0.40.0', require: false
 gem 'rubocop-checkstyle_formatter', require: false
 
 gem 'protected_attributes'
 
-gem 'nokogiri', '= 1.6.1'
+gem 'nokogiri', '= 1.6.7'
 
 # SOAP client
 gem 'savon', '~> 2.6.0'
@@ -118,12 +118,16 @@ group :development do
   gem 'guard-rspec', '= 4.2.9'
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
-
-  gem 'pry-debugger'
+  gem 'byebug'
 end
 
 group :test do
+  gem 'rspec_junit_formatter', '~> 0.2.3'
   gem 'capybara-screenshot', '~> 1.0.11'
+
+  # Mock external http requests for tests
+  gem 'webmock'
+
 end
 
 group :development, :test do
@@ -178,7 +182,6 @@ group :development, :test do
 
   # Turn off assets logging in development
   gem 'quiet_assets'
-  gem 'debugger'
 
   gem 'yard'
 

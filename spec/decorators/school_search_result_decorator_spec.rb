@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'decorators/concerns/grade_level_concerns_shared'
+require 'decorators/modules/grade_level_concerns_shared'
 
 describe SchoolSearchResultDecorator do
   it_behaves_like 'a school that has grade levels' do

@@ -4,6 +4,7 @@ es:
     data_layouts:
       snapshot_ratings:
         api_score: Calificación API
+        colorado_school_grade: Calificacione de Escuela de Colorado
         esd_rating: Calificación ESD
         greatschool_rating: Calificación GreatSchools
         preschool_rating: Calificación Preescolar

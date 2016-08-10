@@ -8,4 +8,8 @@ if(gon.pagename == "Overview"){
   GS.syncHeight.syncHeights();
   GS.nearbySchools.initialize();
 
+  setTimeout(function() {
+    GS.schoolProfiles.showABTestAdsOnlyOnce();
+  }, 5000);
+
 };

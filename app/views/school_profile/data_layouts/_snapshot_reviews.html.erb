@@ -2,7 +2,7 @@
 <% reviews_count = @school_reviews.number_of_active_reviews %>
 <% school_reviews = @school_reviews %>
 
-<div class="tac" style="height:300px;">
+<div class="js-reviews-vertical-rule tac" style="height:300px;">
   <%= link_to school_reviews_url(@school) do %>
     <div class="link-darkgray tac pbl"><%= t('.community_rating') %></div>
   <% end %>
@@ -18,7 +18,6 @@
       </a>
     <% end %>
   </div>
-
   <div class="tac mtxl ptm">
     <% review = school_reviews.first %>
     <% review = SchoolProfileReviewDecorator.decorate(review) if review %>
@@ -38,7 +37,7 @@
     <% end %>
   </div>
 
-  <div class="tac pa full-width" style="bottom: 20px;">
+  <div class="js-reviews-link tac pa full-width" style="bottom: 20px;">
     <% if reviews_count > 0 %>
       <% # reviews_count_text = pluralize(reviews_count, 'Review', 'Reviews') %>
       <% reviews_count_text =  t('.reviews', count: reviews_count) %>

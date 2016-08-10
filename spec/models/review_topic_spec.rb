@@ -80,7 +80,7 @@ describe '.find_by_school' do
     describe '#questions' do
       it 'should return questions that match school' do
         mocked_review_questions = (1..4).map do |i|
-          truthiness = true if i % 2 == 0
+          truthiness = true if i.even?
           double(matches_school?: truthiness)
         end
         allow(subject.review_topic).to receive(:review_questions).and_return(mocked_review_questions)

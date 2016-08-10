@@ -49,3 +49,7 @@ rspec_runner.rb
 db/structure.sql
 
 log/queue_daemon_pid
+
+# byebug history
+
+.byebug_history

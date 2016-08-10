@@ -73,6 +73,8 @@ class SchoolCacheResults
         CachedProgressBarMethods
       when 'test_scores'
         CachedTestScoresMethods
+      when 'feed_test_scores'
+        CachedFeedTestScoresMethods
       when 'nearby_schools'
         CachedNearbySchoolsMethods
     end
