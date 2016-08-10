@@ -12,7 +12,7 @@ class SchoolProfileOverviewPage < SitePrism::Page
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
-  section :header, HeaderSection, '.navbar-static'
+  section :header, HeaderSection, '.header_un'
   element :write_a_review_button, 'button', text: 'Write a review'
   element :apply_now_button, 'button', text: 'Apply now'
 

@@ -10,5 +10,5 @@ class SchoolProfileQualityPage < SitePrism::Page
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/quality\/(#.*)?/
 
-  section :header, HeaderSection, '.navbar-static'
+  section :header, HeaderSection, '.header_un'
 end
