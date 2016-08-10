@@ -96,16 +96,25 @@ describe 'School Profile Overview Page' do
       it_behaves_like 'a page with school profile header'
       include_examples 'should have a footer'
 
-      its(:header) { is_expected.to_not have_in_english_link }
-      its(:header) { is_expected.to have_in_spanish_link }
-      context 'switch to spanish', js: true do
-        before { page_object.header.switch_to_spanish }
-        its(:header) { is_expected.to have_in_english_link }
-        context 'switch to english' do
-          before { page_object.header.switch_to_english }
-          its(:header) { is_expected.to have_in_spanish_link }
+
+      describe 'viewing in different languages', js: true do
+        before do
+          page_object.header.wait_for_in_spanish_link
+        end
+        its(:header) { is_expected.to have_in_spanish_link }
+        its(:header) { is_expected.to_not have_in_english_link }
+
+        context 'switch to spanish', js: true do
+          before { page_object.header.switch_to_spanish }
+          it 's' do
+            p = SchoolProfileOverviewPage.new
+            p.header.wait_for_in_english_link
+            screenshot_and_open_image
+            expect(p.header).to have_in_english_link
+          end
         end
       end
+
 
       describe 'breadcrumbs' do
         it { is_expected.to have_breadcrumbs }
