@@ -10,7 +10,7 @@ class SumValues < GS::ETL::Step
     if row.values.all? { |value| value.nil? }
       row[@output_column] = nil
     else
-      sum = @input_columns.inject(0) { |sum, column_value| sum + row[column_value].to_i }
+      sum = @input_columns.inject(0) { |sum, column_value| sum + row[column_value].to_f }
       row[@output_column] = sum
     end
     row
