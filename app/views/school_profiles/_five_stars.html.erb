@@ -1,0 +1,12 @@
+<% filled # number that are filled %>
+<% content = capture do %>
+  <% filled.times do %>
+    <span class="icon-star filled-star"></span>
+  <% end %>
+  <% (5-filled).times do %>
+    <span class="icon-star empty-star"></span>
+  <% end %>
+<% end %>
+
+<% # make sure no whitespace between closing/start span tags %>
+<%= content.gsub(/\>\s+\</, '><').html_safe %>

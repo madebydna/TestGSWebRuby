@@ -33,7 +33,6 @@
     white-space: nowrap;
     flex-shrink: 1;
     flex-grow: 0;
-    line-height: 24px;
   }
 
   .row.school-info > div:first-of-type {
@@ -93,6 +92,19 @@
     background-color: $background-color;
     display: inline-block;
     vertical-align: middle;
+  }
+
+  .five-star-rating {
+    &__stars > .filled-star {
+      vertical-align: middle;
+      font-size: 11px;
+      color: #ffc800;
+    }
+    &__stars > .empty-star {
+      vertical-align: middle;
+      font-size: 11px;
+      color: #65859f;
+    }
   }
 
   .gs-rating {

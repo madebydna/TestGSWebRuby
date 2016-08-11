@@ -45,10 +45,10 @@
       </div>
       <div class="col-xs">
         <div class="label">Reviews</div>
-        <div>
-          <%= hero.number_of_active_reviews %>
-          <span class="rs-five-star-rating"> <%= hero.five_star_rating %></span>stars
-        </div>
+        <%= render 'five_star_rating',
+          rating: hero.five_star_rating,
+          number_of_ratings: hero.number_of_active_reviews
+        %>
       </div>
       <div class="col-xs hidden-sm-down">
         <div class="label"><%= hero.grade_range_label %></div>
