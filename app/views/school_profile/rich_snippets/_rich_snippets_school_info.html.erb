@@ -1,6 +1,4 @@
-<% item_type = 'School' %>
-<% item_type = 'LocalBusiness' if school && school.state == 'MA' %>
-<div class="dn" itemscope="" itemtype="http://schema.org/<%= item_type %>">
+<div class="dn" itemscope="" itemtype="http://schema.org/School">
   <span itemprop="name"><%= school.name %></span>
   <div itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
     <span itemprop="streetAddress"><%= school.street %></span>,
