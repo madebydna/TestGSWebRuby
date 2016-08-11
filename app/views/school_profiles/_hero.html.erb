@@ -9,7 +9,7 @@
     <div class="row school-info p-t-1">
       <% if hero.has_school_address? %>
         <div class="col-xs">
-          <%= hero.school_address %>
+          <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
         </div>
       <% end %>
       <% if hero.has_district? %>
@@ -19,12 +19,12 @@
       <% end %>
       <% if hero.has_school_phone? %>
         <div class="col-xs">
-          <%= hero.school_phone %>
+          <%= render 'icon_and_content', icon: :phone, content: hero.school_phone %>
         </div>
       <% end %>
       <% if hero.has_school_home_page_url? %>
         <div class="col-xs">
-          <%= hero.school_home_page_link %>
+          <%= render 'icon_and_content', icon: :link, content: hero.school_home_page_link %>
         </div>
       <% end %>
       <div class="col-xs">
@@ -35,10 +35,8 @@
     <div class="row school-info p-t-2 p-b-1">
       <div class="col-xs">
         <div class="row">
-          <div class="col-xs gs-rating">
-            <div class="rs-gs-rating">
-              <%= hero.gs_rating %>
-            </div>
+          <div class="col-xs">
+            <div class="rs-gs-rating gs-rating rating_<%= hero.gs_rating %>"><%= hero.gs_rating %></div>
           </div>
           <div class="col-xs p-l-0">
             GreatSchools</br>Rating

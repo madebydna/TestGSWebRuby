@@ -33,6 +33,7 @@
     white-space: nowrap;
     flex-shrink: 1;
     flex-grow: 0;
+    line-height: 24px;
   }
 
   .row.school-info > div:first-of-type {
@@ -71,12 +72,39 @@
     text-transform: uppercase;
   }
 
-  .gs-rating > div {
+  @mixin gs-rating($size, $font-size, $color: #FFFFFF) {
     border-radius: 50%;
-    background-color: #367a1e;
-    height: 62px;
-    width: 62px;
+    height: $size;
+    width: $size;
     text-align: center;
-    font-size: 38px;
+    font-size: $font-size;
+    line-height: $size;
+    color: $color;
+  }
+
+  @mixin icon-badge($size, $background-color, $font-size: $size/2, $color: #FFFFFF) {
+    border-radius: 50%;
+    height: $size;
+    width: $size;
+    text-align: center;
+    font-size: $font-size;
+    line-height: $size;
+    color: $color;
+    background-color: $background-color;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .gs-rating {
+    @include gs-rating(62px, 38px);
+  }
+
+  .badge-and-content {
+    .badge {
+      @include icon-badge(24px, #002c47);
+    }
+    .content {
+      margin-left: 5px;
+    }
   }
 }
