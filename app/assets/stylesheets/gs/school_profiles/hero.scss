@@ -1,114 +1,117 @@
 #hero {
+  $rating-star-filled-color: #ffc800;
+  $rating-star-empty-color: #65859f;
+
   background-color: #08497b;
   color: white;
-  font-size: 12px;
-
-  .container {
-    flex-flow: nowrap;
-  }
+  font-size: $font-size-base;
 
   a {
     color: white;
-    font-size: 12px;
+    font-size: $font-size-base;
   }
 
-  .school-name {
+  h1 {
     padding-top: 30px;
-    font-family: CaeciliaLTStd;
-    font-size: 36px;
+    font-family: 'RobotoSlab-Bold';
+    font-size: $font-size-l7;
     font-weight: 900;
-  }
-
-  .row.school-info {
-    flex-shrink: 1;
-    flex-grow: 0;
-
     @media only screen and (max-width: 767px) {
-      justify-content: center;
+      text-align: center;
+      font-size: $font-size-l4;
     }
   }
 
-  .row.school-info > div {
-    border-left: 1px solid rgba(255, 255, 255, .17);
-    white-space: nowrap;
-    flex-shrink: 1;
-    flex-grow: 0;
+  .school-contact, .school-info {
+    @media only screen and (max-width: 767px) {
+      justify-content: center;
+    }
+
+    &__item {
+      border-left: 1px solid rgba(255, 255, 255, .17);
+      white-space: nowrap;
+    }
+
+    &__item:first-of-type {
+      border-left: none;  
+    }
   }
 
-  .row.school-info > div:first-of-type {
-    border-left: none;  
-  }
-
-  .row.school-info:nth-of-type(3) > div {
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-    flex-shrink: 1;
-    flex-grow: 0;
-    flex-basis: 9rem;
-  }
-
-  .school-info:nth-of-type(3) > div:first-of-type {
-    flex-basis: 14rem;
-    .row {
-      font-size: 16px;
-      flex-wrap: nowrap;
-      flex-shrink: 2;
-      .col-xs {
-        flex-shrink: 2;
-        flex-grow: 0;
-        text-align: left;
+  .school-contact {
+    &__item {
+      padding: 0 10px;
+    }
+    &__address > .badge-and-content > .badge {
+      @media only screen and (max-width: 767px) {
+        display:none;
       }
+    }
+  }
+
+  .school-info {
+    &__item {
+      padding: 0 30px;
+      @media only screen and (max-width: 767px) {
+        padding: 0 15px;
+      }
+      font-size: $font-size-l4;
+      font-family: 'opensans-bold';
+      text-align: center;
+    }
+
+    &__five-star-rating {
+      @media only screen and (max-width: 767px) {
+        font-size: $font-size-base;
+      }
+    }
+  }
+
+  .gs-rating-with-label {
+    text-transform: uppercase;
+    font-size: $font-size-l3;
+    @media only screen and (max-width: 767px) {
+      font-size: $font-size-base;
+    }
+    &__rating {
+      float: left;
+    }
+    &__label {
+      padding-left: 10px;
+      float: left;
+      text-align: left;
     }
   }
 
   .label {
     opacity: 0.6;
-    font-size: 13px;
+    font-size: $font-size-l1;
     font-weight: 600;
     line-height: 1.8;
     text-align: center;
     text-transform: uppercase;
   }
 
-  @mixin gs-rating($size, $font-size, $color: #FFFFFF) {
-    border-radius: 50%;
-    height: $size;
-    width: $size;
-    text-align: center;
-    font-size: $font-size;
-    line-height: $size;
-    color: $color;
-  }
-
-  @mixin icon-badge($size, $background-color, $font-size: $size/2, $color: #FFFFFF) {
-    border-radius: 50%;
-    height: $size;
-    width: $size;
-    text-align: center;
-    font-size: $font-size;
-    line-height: $size;
-    color: $color;
-    background-color: $background-color;
-    display: inline-block;
-    vertical-align: middle;
-  }
-
   .five-star-rating {
-    &__stars > .filled-star {
+    &__stars {
       vertical-align: middle;
       font-size: 11px;
-      color: #ffc800;
-    }
-    &__stars > .empty-star {
-      vertical-align: middle;
-      font-size: 11px;
-      color: #65859f;
+      @media only screen and (max-width: 767px) {
+        font-size: 9px;
+      }
+      .filled-star {
+        color: $rating-star-filled-color;
+      }
+      .empty-star {
+        color: $rating-star-empty-color;
+      }
     }
   }
 
   .gs-rating {
-    @include gs-rating(62px, 38px);
+    @include gs-rating(62px);
+    @media only screen and (max-width: 767px) {
+      @include gs-rating(38px);
+    }
   }
 
   .badge-and-content {

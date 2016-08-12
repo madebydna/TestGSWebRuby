@@ -1,0 +1,22 @@
+  @mixin gs-rating($size, $font-size: $size*.62, $color: #FFFFFF) {
+    border-radius: 50%;
+    height: $size;
+    width: $size;
+    text-align: center;
+    font-size: $font-size;
+    line-height: $size;
+    color: $color;
+  }
+
+  @mixin icon-badge($size, $background-color, $font-size: $size/2, $color: #FFFFFF) {
+    border-radius: 50%;
+    height: $size;
+    width: $size;
+    text-align: center;
+    font-size: $font-size;
+    line-height: $size;
+    color: $color;
+    background-color: $background-color;
+    display: inline-block;
+    vertical-align: middle;
+  }
