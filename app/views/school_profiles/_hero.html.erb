@@ -19,15 +19,25 @@
       <% end %>
       <% if hero.has_school_phone? %>
         <div class="col-xs">
-          <%= render 'icon_and_content', icon: :phone, content: hero.school_phone %>
+          <% content = capture do %>
+            <span class="hidden-xs-down"><%= hero.school_phone %></span>
+          <% end %>
+          <a href="tel:<%= hero.school_phone %>">
+            <%= render 'icon_and_content', icon: :phone, content: content %>
+          </a>
         </div>
       <% end %>
       <% if hero.has_school_home_page_url? %>
         <div class="col-xs">
-          <%= render 'icon_and_content', icon: :link, content: hero.school_home_page_link %>
+          <% content = capture do %>
+            <span class="hidden-xs-down"><%= hero.school_home_page_url %></span>
+          <% end %>
+          <%= link_to(hero.school_home_page_url) do %>
+            <% render 'icon_and_content', icon: :link, content: content %>
+          <% end %>
         </div>
       <% end %>
-      <div class="col-xs">
+      <div class="col-xs hidden-xs-down">
         More Contact
       </div>
     </div>
