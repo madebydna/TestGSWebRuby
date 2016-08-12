@@ -28,6 +28,8 @@
     }
 
     &__item {
+      flex-shrink: 1;
+      flex-grow: 0;
       border-left: 1px solid rgba(255, 255, 255, .17);
       white-space: nowrap;
     }
@@ -69,15 +71,17 @@
   .gs-rating-with-label {
     text-transform: uppercase;
     font-size: $font-size-l3;
+    // display: block;
+    flex-wrap: nowrap;
     @media only screen and (max-width: 767px) {
       font-size: $font-size-base;
     }
     &__rating {
-      float: left;
+      // float: left;
     }
     &__label {
-      padding-left: 10px;
-      float: left;
+      padding-left: 0px;
+      // float: left;
       text-align: left;
     }
   }
