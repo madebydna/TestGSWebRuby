@@ -1,6 +1,7 @@
 module SchoolProfiles
   class Hero
     include DefHasPredicates
+    include DefDefaults
     include ActionView::Helpers::UrlHelper
 
     attr_reader :school, :school_cache_data_reader
@@ -10,7 +11,8 @@ module SchoolProfiles
     delegate :district, to: :school
 
     # Makes has_district?,  has_school_address?, etc
-    def_has_predicates :school_phone, :grade_range, :school_home_page_url, :district, :school_address, :gs_rating
+    def_has_predicates :students_enrolled, :school_phone, :grade_range, :school_home_page_url, :district, :school_address, :gs_rating
+    default 'N/A', :students_enrolled
 
     def initialize(school, school_cache_data_reader:)
       self.school = school
