@@ -2,6 +2,7 @@ require "spec_helper"
 require "features/page_objects/school_profile_page"
 
 describe "Visitor" do
+  let(:page_object) { SchoolProfilePage.new }
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)

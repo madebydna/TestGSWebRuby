@@ -55,7 +55,7 @@ describe 'Visitor' do
       street: '123 yellow brick road',
       city: 'Atlantis',
       state: 'ca',
-      zipcode: '99999',
+      zipcode: '99999'
     )
 
     visit school_path(school)
