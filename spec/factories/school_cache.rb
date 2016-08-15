@@ -13,6 +13,48 @@ FactoryGirl.define do
     state 'ca'
     value :value
     updated Time.now
+
+    trait :with_gs_rating do
+      ignore do
+        gs_rating_value 5.0
+      end
+      before(:create) do |cached_ratings, evaluator|
+        cached_ratings.value = [
+          {
+            'data_type_id' => 174,
+            'year' => 2014,
+            'school_value_text' => nil,
+            'school_value_float' => evaluator.gs_rating_value,
+            'name' => 'GreatSchools rating'
+          }
+        ].to_json
+      end
+    end
+
+    trait :with_test_score_and_gs_rating do
+      ignore do
+        gs_rating_value 5.0
+        test_score_rating_value 6.0
+      end
+      before(:create) do |cached_ratings, evaluator|
+        cached_ratings.value = [
+          {
+            'data_type_id' => 174,
+            'year' => 2014,
+            'school_value_text' => nil,
+            'school_value_float' => evaluator.gs_rating_value,
+            'name' => 'GreatSchools rating'
+          },
+          {
+            'data_type_id' => 164,
+            'year' => 2014,
+            'school_value_text' => nil,
+            'school_value_float' => evaluator.test_score_rating_value,
+            'name' => 'Test score rating'
+          }
+        ].to_json
+      end
+    end
   end
 
   factory :cached_gs_rating, class: SchoolCache do

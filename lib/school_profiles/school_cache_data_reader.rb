@@ -32,6 +32,10 @@ module SchoolProfiles
       decorated_school.num_reviews
     end
 
+    def test_scores_rating
+      decorated_school.test_scores_rating
+    end
+
     def school_cache_query
       SchoolCacheQuery.for_school(school).tap do |query|
         query.include_cache_keys(school_cache_keys)
