@@ -1,0 +1,24 @@
+$light-gray: #f6f9fa;
+.rating-container {
+  @include make-row;
+  &__title {
+    text-align: center;
+    font-size: 20px;
+    text-transform: uppercase;
+    padding: 20px 0;
+  }
+
+  &__rating {
+    padding-left: 10px;
+    background: $light-gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    &__title {
+      padding-top: 0;
+    }
+  }
+}
+
