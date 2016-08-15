@@ -1,4 +1,5 @@
-  @mixin gs-rating($size, $font-size: $size*.62, $color: #FFFFFF) {
+  @mixin circle-rating($size, $font-size: $size*.62, $color: #FFFFFF) {
+    font-family: 'opensans-bold';
     border-radius: 50%;
     height: $size;
     width: $size;

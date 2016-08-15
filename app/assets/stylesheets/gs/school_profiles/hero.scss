@@ -111,13 +111,6 @@
     }
   }
 
-  .gs-rating {
-    @include gs-rating(62px);
-    @media only screen and (max-width: 767px) {
-      @include gs-rating(38px);
-    }
-  }
-
   .badge-and-content {
     .badge {
       @include icon-badge(24px, #002c47);

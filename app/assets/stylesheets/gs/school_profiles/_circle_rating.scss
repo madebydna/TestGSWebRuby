@@ -1,0 +1,41 @@
+// Ratings Colors
+$rating-colors: (
+NR: #777777,
+1: #F26B16,
+2: #E78818,
+3: #DCA21A,
+4: #D2B81B,
+5: #BDC01E,
+6: #A3BE1F,
+7: #86B320,
+8: #6BA822,
+9: #559F24,
+10: #439326);
+
+$rating-sizes: (
+  small: $font-size-small,
+  medium: 50px,
+  large: 62px);
+
+.circle-rating {
+  @include circle-rating($font-size-h1);
+
+  @each $size, $font-size in ($rating-sizes) {
+    &--#{$size} {
+      @include circle-rating($font-size)
+    }
+  }
+
+  @each $rating, $color in ($rating-colors) {
+    &--#{$rating} {
+      background-color: $color;
+    }
+  }
+
+  &--large-responsive {
+    @include circle-rating(62px);
+    @media only screen and (max-width: 767px) {
+      @include circle-rating(38px);
+    }
+  }
+}

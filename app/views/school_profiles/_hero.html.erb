@@ -46,7 +46,9 @@
       <div class="col-xs school-info__item school-info__gs-rating">
         <div class="row gs-rating-with-label">
           <div class="col-xs gs-rating-with-label__rating">
-            <div class="rs-gs-rating gs-rating rating_<%= hero.gs_rating %>"><%= hero.gs_rating %></div>
+            <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
+              <%= hero.gs_rating %>
+            </div>
           </div>
           <div class="col-xs gs-rating-with-label__label">
             GreatSchools</br>Rating
