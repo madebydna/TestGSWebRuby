@@ -1,5 +1,6 @@
 $light-gray: #f6f9fa;
-.rating-container {
+.rating-container,
+%rating-container {
   @include make-row;
   &__title {
     text-align: center;
@@ -22,3 +23,6 @@ $light-gray: #f6f9fa;
   }
 }
 
+.rating-container--test-scores {
+  @extend %rating-container;
+}

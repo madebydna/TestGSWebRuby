@@ -21,7 +21,9 @@ describe "Visitor" do
                          )
     visit school_path(school)
 
-    expect(page).to have_css ".test-scores-rating", text: '6'
+    within test_scores do
+      expect(page).to have_test_scores_rating('6')
+    end
   end
 
   scenario "sees test score rating in a enhanced rating state" do
@@ -35,6 +37,18 @@ describe "Visitor" do
 
     visit school_path(school)
 
-    expect(page).to have_css ".test-scores-rating", text: '5'
+    within test_scores do
+      expect(page).to  have_test_scores_rating('5')
+    end
+  end
+
+  private
+
+  def test_scores
+    '.rating-container--test-scores'
+  end
+
+  def have_test_scores_rating(rating)
+    have_css ".circle-rating--medium", text: rating
   end
 end
