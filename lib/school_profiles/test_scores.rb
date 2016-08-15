@@ -11,5 +11,16 @@ module SchoolProfiles
     def rating
       @school_cache_data_reader.test_scores_rating
     end
+
+    def subject_scores
+      scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236)
+      scores.map do |hash|
+        SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
+          rating_score_item.label = hash.subject
+          rating_score_item.score = hash.score
+          rating_score_item.state_average = hash.state_average
+        end
+      end
+    end
   end
 end

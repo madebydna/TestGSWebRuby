@@ -3,7 +3,7 @@ module SchoolProfiles
     # ratings - for gs rating
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores)
 
     attr_reader :school, :school_cache_keys
 
@@ -34,6 +34,19 @@ module SchoolProfiles
 
     def test_scores_rating
       decorated_school.test_scores_rating
+    end
+
+    def subject_scores_by_latest_year(data_type_id:, breakdown: 'All', grades: 'All', level_codes: 'e,m,h')
+      subject_hash = decorated_school.test_scores.seek(data_type_id.to_s, breakdown, 'grades', grades, 'level_code', level_codes)
+      return OpenStruct.new unless subject_hash.present?
+      subject_hash.inject([]) do |scores_array, (subject, year_hash)|
+        scores_array << OpenStruct.new({}.tap do |scores_hash|
+          latest_year = year_hash.keys.max_by { |year| year.to_i }
+          scores_hash.merge!(year_hash[latest_year.to_s])
+          scores_hash['subject'] = subject
+          scores_hash['year'] = latest_year
+        end)
+      end
     end
 
     def school_cache_query

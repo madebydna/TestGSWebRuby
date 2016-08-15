@@ -1,15 +1,23 @@
+<% test_scores %>
+<% title = 'Test Scores' %>
+<% rating = test_scores.rating %>
+<% score_items = test_scores.subject_scores %>
+
 <div class="rating-container--test-scores">
-  <div class="col-xs-12 col-lg-3">
-    <div class="rating-container__title">
-      Test Scores
-    </div>
-  </div>
-  <div class="col-xs-12 col-lg-9">
-    <div class="rating-container__rating">
-      <div class="rs-test-scores-rating circle-rating--<%= test_scores.rating %> circle-rating--medium">
-        <%= test_scores.rating %>
+  <div class="row">
+    <div class="col-xs-12 col-lg-3">
+      <div class="rating-container__title">
+        <%= title %>
       </div>
     </div>
+    <div class="col-xs-12 col-lg-9">
+      <div class="rating-container__rating">
+        <div class="rs-test-scores-rating circle-rating--<%= test_scores.rating %> circle-rating--medium">
+          <%= rating %>
+        </div>
+      </div>
+
+      <%= render partial: 'rating_score_item', collection: score_items, as: :score_data %>
+    </div>
   </div>
-</div>
 </div>

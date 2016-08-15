@@ -51,4 +51,35 @@ describe "Visitor" do
   def have_test_scores_rating(rating)
     have_css ".circle-rating--medium", text: rating
   end
+
+  scenario 'sees test scores by subject' do
+    school = create(:alameda_high_school, id: 3)
+    rating_cache = create(:cached_ratings,
+                          :with_gs_rating,
+                          id: 1,
+                          gs_rating_value: 6.0
+                         )
+    test_scores = create(:ca_caaspp_schoolwide_ela_2015, school_id: school.id)
+
+    visit school_path(school)
+
+    expect(page_object).to have_test_score_subject(label: 'English Language Arts', value: '42%')
+  end
+
+  context 'when there are multiple years of data' do
+    before do
+      @school = create(:alameda_high_school, id: 3)
+      create(:cached_ratings,
+                            :with_gs_rating,
+                            id: 1,
+                            gs_rating_value: 6.0
+                           )
+      create(:ca_caaspp_schoolwide_ela_2014and2015, school_id: @school.id)
+    end
+    scenario 'sees test scores by subject' do
+      visit school_path(@school)
+
+      expect(page_object).to have_test_score_subject(label: 'English Language Arts', value: '15%')
+    end
+  end
 end

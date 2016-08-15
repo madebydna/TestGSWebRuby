@@ -1,0 +1,15 @@
+.rating-score-item {
+  &__label {
+    line-height: 39px;
+    font-size: $font-size-l3;
+  }
+  &__score {
+    line-height: 39px;
+    font-size: $font-size-l5;
+    font-family: opensans-bold;
+    text-align: right;
+    @media only screen and (min-width: 991px) {
+      text-align: left;
+    }
+  }
+}

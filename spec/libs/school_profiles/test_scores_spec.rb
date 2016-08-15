@@ -10,4 +10,5 @@ describe SchoolProfiles::TestScores do
     )
   end
   it { is_expected.to respond_to(:rating) }
+  it { is_expected.to respond_to(:subject_ratings) }
 end

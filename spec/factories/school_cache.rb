@@ -89,6 +89,75 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :ca_caaspp_schoolwide_ela_2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "236" => {
+      "All" => {
+        "grades" => {
+          "All" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "English Language Arts" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 42.42,
+                      "state_average" => 44.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Assessment of Student Performance and Progress (CAASPP)",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
+  factory :ca_caaspp_schoolwide_ela_2014and2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "236" => {
+      "All" => {
+        "grades" => {
+          "All" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "English Language Arts" => {
+                  "2014" => {
+                      "number_students_tested" => 114, 
+                      "score" => 14.3,
+                      "state_average" => 28.6
+                  },
+                  "2015" => {
+                      "number_students_tested" => 115,
+                      "score" => 15.3,
+                      "state_average" => 30.6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Assessment of Student Performance and Progress (CAASPP)",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
   factory :cached_reviews_info, class: SchoolCache do
     name 'reviews_snapshot'
     sequence(:school_id) { |n| n }
