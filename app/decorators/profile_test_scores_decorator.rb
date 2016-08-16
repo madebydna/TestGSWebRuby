@@ -1,4 +1,4 @@
-class TestScoresDecorator < Draper::Decorator
+class ProfileTestScoresDecorator < Draper::Decorator
   decorates :hash
 
   def grades(test, breakdown = :All)
@@ -20,11 +20,11 @@ class TestScoresDecorator < Draper::Decorator
   def label(grade_hash)
     cached_label = grade_hash[:label]
     grade_number_regex_matches = cached_label.match /GRADE ([0-9]+)/
-    if !!grade_number_regex_matches
+    if grade_number_regex_matches.nil?
+      I18n.db_t(cached_label, scope: 'decorators.test_scores_decorator', default: cached_label)
+    else
       grade_number = grade_number_regex_matches[1]
       I18n.t('decorators.test_scores_decorator.grade', grade_number: grade_number).upcase
-    else
-      I18n.db_t(cached_label, scope: 'decorators.test_scores_decorator', default: cached_label)
     end
   end
 
@@ -37,7 +37,7 @@ class TestScoresDecorator < Draper::Decorator
       grades.each_with_index do |(grade, grade_hash), index_grade|
         h.concat(h.button_tag(
           id: test_button_dom_id(test, :All, grade),
-          class: "btn btn-default js_test_scores_grades#{index_grade == 0 ? ' active' : ''}"
+          class: "btn btn-default js_test_scores_grades#{index_grade.zero? ? ' active' : ''}"
         ) do
           label(grade_hash)
         end)
@@ -118,16 +118,16 @@ class TestScoresDecorator < Draper::Decorator
     content = ''
     grades(test, breakdown).each_with_index do |(grade,grade_hash), index_grade|
       css_class = "js_#{test}_grades"
-      css_class << ' dn' unless index_grade == 0 && breakdown == :All
+      css_class << ' dn' unless index_grade.zero? && breakdown == :All
       content << h.content_tag(:div, id: test_container_dom_id(test, breakdown, grade), class: css_class) do
         div_content = ''
         grade_hash[:level_code].each do |levelcode,value|
-          value.each_with_index do |(subject,value), index_subject|
+          value.each_with_index do |(subject,v), index_subject|
             div_id = TestScoresDecorator.bar_chart_div_id(test, breakdown, grade, subject)
             h.content_for(:head) do
-              h.raw bar_chart(value).script_tag(div_id)
+              h.raw bar_chart(v).script_tag(div_id)
             end
-            div_content << h.content_tag(:h4, class: (index_subject == 0 ? 'ptl' : '')) do
+            div_content << h.content_tag(:h4, class: (index_subject.zero? ? 'ptl' : '')) do
               I18n.db_t(subject.to_s.gsub('.', ''), default: subject.to_s).gs_capitalize_first
             end
             # TODO change this to test id

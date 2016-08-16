@@ -15,7 +15,7 @@
     <span class=""><%= t('deprecated_school_profile.data_layouts.test_scores.showing_results_for_html', test: test) %></span>
     <br/><br/>
 
-    <% decorator = TestScoresDecorator.decorate(data, context: { state: @school.state }) %>
+    <% decorator = ProfileTestScoresDecorator.decorate(data, context: { state: @school.state }) %>
     <div class="clearfix">
       <%= raw(decorator.tabs_for_test(test)) %>
     </div>
