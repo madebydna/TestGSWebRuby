@@ -12,5 +12,16 @@
 <%#   </div> %>
 <%# </div> %>
 <%= render 'hero', hero: @school_profile.hero %>
-<%= render 'toc' %>
-<%= render 'test_scores', test_scores: @school_profile.test_scores %>
+<!-- main content -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-lg-9">
+      <%= render 'toc' %>
+      <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+    </div>
+    <!-- right rail -->
+    <div class="col-md-4 col-lg-3">
+      <%= render 'cta' %>
+    </div>
+  </div>
+</div>
