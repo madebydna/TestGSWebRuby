@@ -1,0 +1,10 @@
+<% items %>
+
+<div class="show-more show-more--closed">
+  <div class="show-more__items" style="display:none;">
+    <%= render partial: 'rating_score_item', collection: items, as: :score_data %>
+  </div>
+  <div class="show-more__button">
+    Show more
+  </div>
+</div>

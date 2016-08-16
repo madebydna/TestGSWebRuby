@@ -21,7 +21,7 @@ $border-color: #dbe6eb;
 
   &__score-item {
     padding-bottom: 5px;
-    padding-top: 5px;
+    padding-top: 10px;
   }
   &__score-item ~ &__score-item {
     border-top: 1px solid $border-color;

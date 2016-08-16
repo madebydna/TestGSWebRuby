@@ -22,6 +22,11 @@ class SchoolProfilePage < SitePrism::Page
       element :score, '.rating-score-item__score'
       element :state_average, '.rating-score-item__state-average'
     end
+
+    section :show_more, '.show-more' do
+      element :more_button, '.show-more__button'
+      element :items, '.show-more__items', visible: false
+    end
   end
   
   element :gs_rating, '.rs-gs-rating'

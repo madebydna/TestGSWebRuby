@@ -4,6 +4,7 @@
 //= require jquery_ujs
 //= require wiselinks
 //= require ads
+//= require school_profiles
 //= require resources/bootstrap_4
 //= require resources/typeahead_modified.bundle
 //= require resources/jquery.cookie
@@ -22,5 +23,3 @@
 //= require modals
 //= require page_initializers
 //= require zillow
-
-

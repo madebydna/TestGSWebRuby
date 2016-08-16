@@ -1,7 +1,8 @@
 <% test_scores %>
 <% title = 'Test Scores' %>
 <% rating = test_scores.rating %>
-<% score_items = test_scores.subject_scores %>
+<% score_items = test_scores.subject_scores || [] %>
+<% initial_size = 1 %>
 
 <div class="rating-container--test-scores">
   <div class="row">
@@ -17,7 +18,13 @@
         </div>
       </div>
 
-      <%= render partial: 'rating_score_item', collection: score_items, as: :score_data %>
+      <%= render partial: 'rating_score_item', collection: score_items.take(initial_size), as: :score_data %>
+
+      <% if score_items.size > initial_size %>
+        <div class="rating_container__more-items">
+          <%= render 'show_more', items: score_items[initial_size..-1] %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

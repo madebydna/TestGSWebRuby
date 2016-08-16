@@ -158,6 +158,59 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :ca_caaspp_schoolwide_4subjects_2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "236" => {
+      "All" => {
+        "grades" => {
+          "All" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "English Language Arts" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 1,
+                      "state_average" => 10
+                  }
+                },
+                "Math" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 2,
+                      "state_average" => 20
+                  }
+                },
+                "Science" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 3,
+                      "state_average" => 30
+                  }
+                },
+                "Reading" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 4,
+                      "state_average" => 40
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Assessment of Student Performance and Progress (CAASPP)",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
   factory :cached_reviews_info, class: SchoolCache do
     name 'reviews_snapshot'
     sequence(:school_id) { |n| n }

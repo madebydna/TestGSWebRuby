@@ -83,4 +83,29 @@ describe "Visitor" do
       )
     end
   end
+
+  context 'when there are more than three scores' do
+    before do
+      @school = create(:alameda_high_school, id: 3)
+      create(
+        :cached_ratings,
+        :with_gs_rating,
+        id: 1,
+        gs_rating_value: 6.0
+      )
+      create(:ca_caaspp_schoolwide_4subjects_2015, school_id: @school.id)
+    end
+    scenario 'sees show more button' do
+      visit school_path(@school)
+      expect(page_object.test_scores).to have_show_more
+      expect(page_object.test_scores.show_more).to have_more_button
+    end
+    scenario 'can click show more to see more items', js: true do
+      visit school_path(@school)
+      page_object.test_scores.wait_for_show_more
+      expect(page_object.test_scores.show_more.items).to_not be_visible
+      page_object.test_scores.show_more.more_button.click
+      expect(page_object.test_scores.show_more.items).to be_visible
+    end
+  end
 end
