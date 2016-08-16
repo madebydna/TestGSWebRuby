@@ -7,16 +7,18 @@ $(function () {
 });
 
 function recaluculateOffsetForCTA() {
-  cta_profile_offset = $("#cta").offset().top + 30;
+  cta_profile_offset = $("#cta").parent().offset().top;
 }
 
 
 function manageFixedPositions() {
   var cta = $("#cta");
 
+  console.log("cta_profile_offset:" + cta_profile_offset);
+  console.log("scrolltop:" + $(window).scrollTop());
   if (cta_profile_offset <= $(window).scrollTop()) {
     // after cta is scrolled to the top
-    var ctaBottomOffset = cta.parent().height() - cta.height() - 60 + cta_profile_offset;
+    var ctaBottomOffset = cta.parent().height() - cta.height() + cta_profile_offset;
 
     if (ctaBottomOffset <= $(window).scrollTop()) {
       cta.removeClass('cta-fixed-top').removeClass('cta-non-fixed-top').addClass('cta-align-bottom');
