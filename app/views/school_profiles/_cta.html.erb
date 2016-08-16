@@ -1,8 +1,46 @@
-<div id="cta" class="btn-group" role="group" aria-label="CTA" style="margin-top: 30px;">
-  <button type="button" class="btn btn-secondary"><span class="icon-pencil" style="color: #2ba3dc"></span><br/>Review
-  </button>
-  <button type="button" class="btn btn-secondary"><span class="icon-heart" style="color: #2ba3dc"></span><br/>Save
-  </button>
-  <button type="button" class="btn btn-secondary"><span class="icon-copy" style="color: #2ba3dc"></span><br/>Compare
-  </button>
+<style>
+  .cta-fixed-top {
+    position: fixed;
+    top: 0;
+    margin-top: 0px;
+  }
+
+  .cta-non-fixed-top {
+    margin-top: 30px;
+    position: relative;
+  }
+
+  .cta-align-bottom {
+    position: absolute;
+    bottom: 0px;
+  }
+
+  .cta-container {
+    width: 299px;
+    height: 84px;
+    box-shadow: 0px 2px 5px 3px #ccc;
+  }
+
+  .cta-button {
+    width: 99px;
+    height: 84px;
+    float: left;
+    text-align: center;
+    padding-top: 19px;
+  }
+
+  .cta-button-border {
+    border-right: 1px solid #dbe6eb;
+  }
+</style>
+<div id="cta" class="cta-non-fixed-top cta-container">
+  <div class="cta-button cta-button-border">
+    <span class="icon-pencil" style="color: #2ba3dc"></span><br/>Review
+  </div>
+  <div class="cta-button cta-button-border">
+    <span class="icon-heart" style="color: #2ba3dc"></span><br/>Save
+  </div>
+  <div class="cta-button">
+    <span class="icon-copy" style="color: #2ba3dc"></span><br/>Compare
+  </div>
 </div>
