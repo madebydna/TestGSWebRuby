@@ -15,32 +15,34 @@ describe "Visitor" do
   scenario "sees test score rating in a non-enhanced rating state" do
     school = create(:alameda_high_school, id: 1)
     create(:cached_ratings,
-                          :with_gs_rating,
-                          school_id: school.id,
-                          gs_rating_value: 6.0
-                         )
+           :with_gs_rating,
+           school_id: school.id,
+           gs_rating_value: 6.0
+          )
     visit school_path(school)
 
-    expect(page_object.test_scores).to have_rating('6')
+    within test_scores do
+      expect(page).to have_test_scores_rating('6')
+      expect(page).to have_test_scores_rating_label('Average')
+    end
   end
 
   scenario "sees test score rating in a enhanced rating state" do
     school = create(:alameda_high_school, id: 2)
-    create(
-      :cached_ratings,
-      :with_test_score_and_gs_rating,
-      school_id: school.id,
-      gs_rating_value: 6.0,
-      test_score_rating_value: 5.0
-    )
+    rating_cache = create(:cached_ratings,
+                          :with_test_score_and_gs_rating,
+                          school_id: 2,
+                          gs_rating_value: 6.0,
+                          test_score_rating_value: 1.0
+                         )
 
     visit school_path(school)
 
-    expect(page_object.test_scores).to have_rating('5')
+    within test_scores do
+      expect(page).to  have_test_scores_rating('1')
+      expect(page).to  have_test_scores_rating_label('Weak')
+    end
   end
-
-  private
-
 
   scenario 'sees test scores by subject' do
     school = create(:alameda_high_school, id: 3)
@@ -60,12 +62,6 @@ describe "Visitor" do
   context 'when there are multiple years of data' do
     before do
       @school = create(:alameda_high_school, id: 3)
-      create(
-        :cached_ratings,
-        :with_gs_rating,
-        id: 1,
-        gs_rating_value: 6.0
-      )
       create(:ca_caaspp_schoolwide_ela_2014and2015, school_id: @school.id)
     end
     scenario 'sees test scores by subject' do
@@ -107,5 +103,18 @@ describe "Visitor" do
       page_object.test_scores.show_more.more_button.click
       expect(page_object.test_scores.show_more.items).to be_visible
     end
+  end
+  private
+
+  def test_scores
+    ".rating-container--test-scores"
+  end
+
+  def have_test_scores_rating(rating)
+    have_css ".circle-rating--medium", text: rating
+  end
+
+  def have_test_scores_rating_label(label)
+    have_css ".circle-rating-with-label__label", text: label
   end
 end

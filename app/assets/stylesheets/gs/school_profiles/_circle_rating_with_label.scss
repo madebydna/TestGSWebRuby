@@ -1,0 +1,17 @@
+.circle-rating-with-label {
+
+  &__circle {
+    display: inline-block;
+  }
+
+  @each $rating, $color in ($rating-colors) {
+    &__label--#{$rating} {
+      color: $color;
+      display: inline-block;
+      font-family: "opensans-bold";
+      font-size: 20px;
+      margin-left: 10px;
+      text-transform: uppercase;
+    }
+  }
+}
