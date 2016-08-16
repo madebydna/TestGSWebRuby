@@ -21,5 +21,9 @@ module SchoolProfiles
     def formatted_score
       "#{score.round}%"
     end
+
+    def formatted_state_average
+      "#{state_average.round}%"
+    end
   end
 end

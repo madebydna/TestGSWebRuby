@@ -1,15 +1,44 @@
 .rating-score-item {
   &__label {
-    line-height: 39px;
+    line-height: 24px;
     font-size: $font-size-l3;
+    font-weight: 600;
+  }
+  &__right-column {
+    text-align: right;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    @include media-breakpoint-up(lg) {
+      justify-content: flex-start;
+    }
   }
   &__score {
-    line-height: 39px;
+    flex-basis: 100%;
+    line-height: 24px;
     font-size: $font-size-l5;
     font-family: opensans-bold;
-    text-align: right;
-    @media only screen and (min-width: 991px) {
-      text-align: left;
+    @include media-breakpoint-up(sm) {
+      flex-basis: auto;
+      order: 2;
+    }
+    @include media-breakpoint-up(md) {
+      order: 1;
+    }
+  }
+  &__state-average {
+    flex-basis: 100%;
+    line-height: 30px;
+    font-size: $font-size-s1;
+    color: #71787e;
+    @include media-breakpoint-up(sm) {
+      flex-basis: auto;
+      order: 1;
+      padding:0 10px 0 0;
+    }
+    @include media-breakpoint-up(md) {
+      order: 2;
+      padding:0 0 0 10px;
     }
   }
 }
