@@ -1,6 +1,11 @@
 es:
   school_profiles:
     hero:
+      grade:
+        one: Grade
+        other: Grades
+      greatschools_rating: GreatSchools Rating
+      more_contact: More Contact
       reviews: Reviews
       school_type: Type
       students_enrolled: Students

@@ -27,11 +27,11 @@ module SchoolProfiles
     end
 
     def grade_range_label
-      return 'Grade' unless has_grade_range?
+      return I18n.t('school_profiles.hero.grade.one') unless has_grade_range?
       if grade_range.include?('-') || grade_range.include?(',')
-        'Grades'
+        I18n.t('school_profiles.hero.grade.other')
       else
-        'Grade'
+        I18n.t('school_profiles.hero.grade.one')
       end
     end
 
