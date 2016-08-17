@@ -14,23 +14,33 @@ function recaluculateOffsetForCTA() {
 function manageFixedPositions() {
   var cta = $("#cta");
 
-  console.log("cta_profile_offset:" + cta_profile_offset);
-  console.log("scrolltop:" + $(window).scrollTop());
+  // console.log("cta_profile_offset:" + cta_profile_offset);
+  // console.log("scrolltop:" + $(window).scrollTop());
+  cta.parent().height($("#cta").parent().parent().height());
   if (cta_profile_offset <= $(window).scrollTop()) {
     // after cta is scrolled to the top
+    // console.log("cta.parent().height():" + cta.parent().height());
+    // console.log("cta.height():" + cta.height());
+    // console.log("cta_profile_offset:" + cta_profile_offset);
     var ctaBottomOffset = cta.parent().height() - cta.height() + cta_profile_offset;
 
     if (ctaBottomOffset <= $(window).scrollTop()) {
-      cta.removeClass('cta-fixed-top').removeClass('cta-non-fixed-top').addClass('cta-align-bottom');
+      cta.removeClass('cta-fixed-top')
+      cta.removeClass('cta-non-fixed-top')
+      cta.addClass('cta-align-bottom');
     }
     else {
-      cta.removeClass('cta-non-fixed-top').removeClass('cta-align-bottom').addClass('cta-fixed-top');
+      cta.removeClass('cta-non-fixed-top')
+      cta.removeClass('cta-align-bottom')
+      cta.addClass('cta-fixed-top');
 
     }
   }
   else {
     // before cta is scrolled to the top
-    cta.removeClass('cta-fixed-top').removeClass('cta-align-bottom').addClass('cta-non-fixed-top');
+    cta.removeClass('cta-fixed-top')
+    cta.removeClass('cta-align-bottom')
+    cta.addClass('cta-non-fixed-top');
   }
 
 //  when we reach top most point for cta and ad - add a class to fix them.
