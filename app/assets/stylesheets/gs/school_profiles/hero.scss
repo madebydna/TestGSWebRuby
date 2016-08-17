@@ -118,30 +118,5 @@
     text-align: center;
     text-transform: uppercase;
   }
-
-  .five-star-rating {
-    &__stars {
-      vertical-align: middle;
-      font-size: 11px;
-      @media only screen and (max-width: 767px) {
-        font-size: 9px;
-      }
-      .filled-star {
-        color: $rating-star-filled-color;
-      }
-      .empty-star {
-        color: $rating-star-empty-color;
-      }
-    }
-  }
 }
 
-.badge-and-content {
-  .badge {
-    @include icon-badge(24px, #002c47);
-  }
-  .content {
-    margin-left: 5px;
-    overflow: hidden;
-  }
-}
