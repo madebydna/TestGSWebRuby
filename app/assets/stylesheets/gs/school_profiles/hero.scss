@@ -23,42 +23,67 @@
   }
 
   .school-contact, .school-info {
-    @media only screen and (max-width: 767px) {
-      justify-content: center;
-    }
+    display: block;
 
     &__item {
-      flex-shrink: 1;
-      flex-grow: 0;
-      border-left: 1px solid rgba(255, 255, 255, .17);
-      white-space: nowrap;
+      display: inline-block;
     }
 
     &__item:first-of-type {
-      border-left: none;  
+      padding-left: 0px;
+    }
+    &__item:last-of-type {
+      padding-right: 0px;
     }
   }
 
   .school-contact {
     &__item {
-      padding: 0 10px;
+      padding: 0 10px 0 0;
+      margin: 0 10px 0 0;
+      border-right: 1px solid rgba(255, 255, 255, .17);
+      @media only screen and (max-width: 543px) {
+        max-width: 290px;
+        margin: auto;
+        display: block;
+        text-align: center;
+        border-right: none;
+        overflow: hidden;
+      }
     }
-    &__address > .badge-and-content > .badge {
-      @media only screen and (max-width: 767px) {
-        display:none;
+    &__item:last-of-type {
+      border-right: none;
+    }
+    &__address, &__phone, &__home-page-url {
+      .badge {
+        display: none;
+        @include media-breakpoint-up(md) {
+          display: inline-block;
+        }
       }
     }
   }
 
   .school-info {
+    margin: auto;
+    width: 290px;
+    @include media-breakpoint-up(md) {
+      width: 100%;
+    }
+    
     &__item {
       padding: 0 30px;
+      border-left: 1px solid rgba(255, 255, 255, .17);
       @media only screen and (max-width: 767px) {
         padding: 0 15px;
       }
       font-size: $font-size-l4;
       font-family: 'opensans-bold';
       text-align: center;
+    }
+
+    &__item:first-of-type {
+      border-left: none;
     }
 
     &__five-star-rating {
@@ -71,18 +96,17 @@
   .gs-rating-with-label {
     text-transform: uppercase;
     font-size: $font-size-l3;
-    // display: block;
-    flex-wrap: nowrap;
     @media only screen and (max-width: 767px) {
       font-size: $font-size-base;
     }
     &__rating {
-      // float: left;
+      display: inline-block;
+      vertical-align: top;
     }
     &__label {
-      padding-left: 0px;
-      // float: left;
+      padding-left: 10px;
       text-align: left;
+      display: inline-block;
     }
   }
 
@@ -110,13 +134,14 @@
       }
     }
   }
+}
 
-  .badge-and-content {
-    .badge {
-      @include icon-badge(24px, #002c47);
-    }
-    .content {
-      margin-left: 5px;
-    }
+.badge-and-content {
+  .badge {
+    @include icon-badge(24px, #002c47);
+  }
+  .content {
+    margin-left: 5px;
+    overflow: hidden;
   }
 }

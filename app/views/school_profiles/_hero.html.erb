@@ -6,21 +6,21 @@
       <h1 class="school-name"><%= hero.school_name %></h1>
     </div>
 
-    <div class="row school-contact p-t-1">
+    <div class="school-contact p-t-1">
       <% if hero.has_school_address? %>
-        <div class="col-xs school-contact__item school-contact__address">
+        <div class="school-contact__item school-contact__address">
           <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
         </div>
       <% end %>
       <% if hero.has_district? %>
-        <div class="col-xs school-contact__item school-contact__district-name">
+        <div class="school-contact__item school-contact__district-name">
           <%= hero.district_name %>
         </div>
       <% end %>
       <% if hero.has_school_phone? %>
-        <div class="col-xs school-contact__item">
+        <div class="school-contact__item school-contact__phone">
           <% content = capture do %>
-            <span class="hidden-xs-down"><%= hero.school_phone %></span>
+            <span><%= hero.school_phone %></span>
           <% end %>
           <a href="tel:<%= hero.school_phone %>">
             <%= render 'icon_and_content', icon: :phone, content: content %>
@@ -28,49 +28,49 @@
         </div>
       <% end %>
       <% if hero.has_school_home_page_url? %>
-        <div class="col-xs school-contact__item">
+        <div class="school-contact__item school-contact__home-page-url">
           <% content = capture do %>
-            <span class="hidden-xs-down"><%= hero.school_home_page_url %></span>
+            <span><%= hero.school_home_page_url %></span>
           <% end %>
           <%= link_to(hero.school_home_page_url) do %>
             <% render 'icon_and_content', icon: :link, content: content %>
           <% end %>
         </div>
       <% end %>
-      <div class="col-xs school-contact__item hidden-xs-down">
+      <div class="school-contact__item hidden-xs-down">
         More Contact
       </div>
     </div>
 
-    <div class="row school-info p-t-2 p-b-1">
-      <div class="col-xs school-info__item school-info__gs-rating">
-        <div class="row gs-rating-with-label">
-          <div class="col-xs gs-rating-with-label__rating">
+    <div class="school-info p-t-2 p-b-1">
+      <div class="school-info__item school-info__gs-rating">
+        <div class="gs-rating-with-label">
+          <div class="gs-rating-with-label__rating">
             <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
               <%= hero.gs_rating %>
             </div>
           </div>
-          <div class="col-xs gs-rating-with-label__label">
+          <div class="gs-rating-with-label__label">
             GreatSchools</br>Rating
           </div>
         </div>
       </div>
-      <div class="col-xs school-info__item school-info__five-star-rating">
+      <div class="school-info__item school-info__five-star-rating">
         <div class="label">Reviews</div>
         <%= render 'five_star_rating',
           rating: hero.five_star_rating,
           number_of_ratings: hero.number_of_active_reviews
         %>
       </div>
-      <div class="col-xs school-info__item hidden-sm-down">
+      <div class="school-info__item hidden-sm-down">
         <div class="label"><%= hero.grade_range_label %></div>
         <div><%= hero.grade_range %></div>
       </div>
-      <div class="col-xs school-info__item hidden-sm-down">
+      <div class="school-info__item hidden-sm-down">
         <div class="label">Students</div>
         <div><%= hero.students_enrolled_or_default  %></div>
       </div>
-      <div class="col-xs school-info__item hidden-sm-down">
+      <div class="school-info__item hidden-sm-down">
         <div class="label">Type</div>
         <div><%= hero.school_type %></div>
       </div>
