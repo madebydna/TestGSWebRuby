@@ -7,12 +7,21 @@
         <%= score_data.label %>
       </div>
       <div class="col-xs-6 rating-score-item__right-column">
-        <span class="rating-score-item__score">
-          <%= score_data.formatted_score %>
-        </span>
-        <span class="rating-score-item__state-average">
-          State Avg: <%= score_data.formatted_state_average %>
-        </span>
+        <div clear="clearfix">
+          <span class="rating-score-item__score">
+            <%= score_data.formatted_score %>
+          </span>
+          <span class="rating-score-item__state-average">
+            State Avg: <%= score_data.formatted_state_average %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="rating-score-item__bar">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 offset-sm-6">
+          <%= render 'test_score_graph', score: score_data.score, state_score: score_data.state_average, score_rating: (score_data.score / 10).round %>
+        </div>
       </div>
     </div>
   </div>
