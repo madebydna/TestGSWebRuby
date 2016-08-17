@@ -3,6 +3,7 @@ $border-color: #dbe6eb;
 
 .rating-container,
 %rating-container {
+  padding: 0 0 20px 0;
   border-bottom: 1px solid $border-color;
 
   &__title {
@@ -31,6 +32,10 @@ $border-color: #dbe6eb;
     &__title {
       padding-top: 0;
     }
+  }
+
+  &__more-items .show-more--open {
+    border-top: 1px solid $border-color;
   }
 }
 
