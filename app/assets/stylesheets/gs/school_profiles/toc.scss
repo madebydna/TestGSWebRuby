@@ -23,6 +23,7 @@
     line-height: 22px;
     color: #FFF;
     float: left;
+    margin-right: 10px;
   }
 
   .gs-badge {
@@ -35,11 +36,11 @@
     color: #FFF;
     float: left;
     background-color: #2ba3dc;
+    margin-right: 10px;
   }
 
   .gs-link {
     float: left;
-    padding-left: 10px;
   }
 
   @media only screen and (min-width: 768px) {
@@ -71,15 +72,5 @@
     .toc-entry:last-child {
       padding-bottom: 10px;
     }
-
-    //.grid-divider > [class*='col-']:before,
-    //.grid-divider > [class*='col-']:after {
-    //  background: none;
-    //  width: 0;
-    //}
-    //
-    //.grid-divider > [class*='col-']:after {
-    //  right: 0;
-    //}
   }
 }

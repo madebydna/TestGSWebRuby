@@ -8,6 +8,9 @@
 <% title_link = title.gsub(" ", "_") %>
 
 <div class="clearfix toc-entry">
-  <div class="gs-badge"><span class="icon-<%= icon %>"></span></div>
-  <div class="gs-link"><a href="#<%= title_link %>"><%= title %></a></div>
+  <span class="gs-link">
+    <a href="#<%= title_link %>">
+      <span class="gs-badge"><span class="icon-<%= icon %>"></span></span><%= title %>
+    </a>
+  </span>
 </div>
