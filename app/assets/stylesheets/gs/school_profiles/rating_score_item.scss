@@ -6,38 +6,31 @@
   }
   &__right-column {
     text-align: right;
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
     @include media-breakpoint-up(lg) {
-      justify-content: flex-start;
     }
   }
   &__score {
-    flex-basis: 100%;
     line-height: 24px;
     font-size: $font-size-l5;
     font-family: opensans-bold;
+    display: block;
     @include media-breakpoint-up(sm) {
-      flex-basis: auto;
-      order: 2;
+      float: right;
+      display: inline-block;
     }
     @include media-breakpoint-up(md) {
-      order: 1;
+      float: left;
     }
   }
   &__state-average {
-    flex-basis: 100%;
     line-height: 30px;
     font-size: $font-size-s1;
     color: #71787e;
     @include media-breakpoint-up(sm) {
-      flex-basis: auto;
-      order: 1;
       padding:0 10px 0 0;
     }
     @include media-breakpoint-up(md) {
-      order: 2;
+      float: left;
       padding:0 0 0 10px;
     }
   }
