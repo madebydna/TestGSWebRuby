@@ -9,9 +9,13 @@
     vertical-align: top;
   }
   &__label {
-    padding-left: 10px;
+    margin-left: 10px;
     text-align: left;
     display: inline-block;
+    max-width: 90px;
+    @include media-breakpoint-up(md) {
+      max-width: 120px;
+    }
   }
 }
 
