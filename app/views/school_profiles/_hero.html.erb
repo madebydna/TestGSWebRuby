@@ -56,7 +56,7 @@
         </div>
       </div>
       <div class="school-info__item school-info__five-star-rating">
-        <div class="label">Reviews</div>
+        <div class="label"><%= t('.reviews') %></div>
         <%= render 'five_star_rating',
           rating: hero.five_star_rating,
           number_of_ratings: hero.number_of_active_reviews
@@ -67,11 +67,11 @@
         <div><%= hero.grade_range %></div>
       </div>
       <div class="school-info__item hidden-sm-down">
-        <div class="label">Students</div>
+        <div class="label"><%= t('.students_enrolled') %></div>
         <div><%= hero.students_enrolled_or_default  %></div>
       </div>
       <div class="school-info__item hidden-sm-down">
-        <div class="label">Type</div>
+        <div class="label"><%= t('.school_type') %></div>
         <div><%= hero.school_type %></div>
       </div>
     </div>
