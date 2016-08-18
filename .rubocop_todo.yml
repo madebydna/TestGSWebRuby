@@ -1358,12 +1358,6 @@ Style/SpaceBeforeBlockBraces:
 Style/SpaceBeforeComma:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceBeforeComment:
-  Exclude:
-    - 'app/controllers/modules/google_map_concerns.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
