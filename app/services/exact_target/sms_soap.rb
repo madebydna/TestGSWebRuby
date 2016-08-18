@@ -40,8 +40,6 @@ class ExactTarget
       # dataextension = FuelSDK::DataExtension::Row.new
       # dataextension.authStub = my_client
       # dataextension.Name = 'Mobile Test'
-      require 'pry'
-      binding.pry
       @response = dataextensionrow.get
     end
 
