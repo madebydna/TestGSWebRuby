@@ -32,4 +32,22 @@
   .cta-button-border {
     border-right: 1px solid #dbe6eb;
   }
+
+  @media only screen and (max-width: 767px) {
+    .cta-button {
+      width: 33%;
+      height: 34px;
+      float: left;
+      text-align: center;
+      padding-top: 10px;
+    }
+    &.cta-container {
+      width: 100%;
+      background-color: #FFFFFF;
+      height: 44px;
+      box-shadow: 0px 2px 5px 3px #ccc;
+      position: fixed;
+      bottom: 0px;
+    }
+  }
 }
