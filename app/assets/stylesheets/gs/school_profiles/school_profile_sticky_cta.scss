@@ -1,3 +1,7 @@
+$cta_background: #FFFFFF;
+$cta_shadow: #CCCCCC;
+$cta_button_border: #dbe6eb;
+
 #cta {
   &.fixed-top {
     position: fixed;
@@ -18,7 +22,8 @@
   &.cta-container {
     width: 299px;
     height: 84px;
-    box-shadow: 0px 2px 5px 3px #ccc;
+    background-color: $cta_background;
+    box-shadow: 0px 2px 5px 3px $cta_shadow;
   }
 
   .cta-button {
@@ -30,10 +35,10 @@
   }
 
   .cta-button-border {
-    border-right: 1px solid #dbe6eb;
+    border-right: 1px solid $cta_button_border;
   }
 
-  @media only screen and (max-width: 767px) {
+  @include media-breakpoint-down(sm) {
     .cta-button {
       width: 33%;
       height: 34px;
@@ -43,9 +48,7 @@
     }
     &.cta-container {
       width: 100%;
-      background-color: #FFFFFF;
       height: 44px;
-      box-shadow: 0px 2px 5px 3px #ccc;
       position: fixed;
       bottom: 0px;
     }

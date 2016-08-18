@@ -22,6 +22,6 @@
 //= require ./util/i18n
 //= require ./util/spinny_wheel
 //= require ./util/window.sizing
-//= require ./util/cta
+//= require util/school_profile_sticky_cta.js
 //= require ./localized_profiles/visualcharts
 //= require ./page_initializers/header_init
