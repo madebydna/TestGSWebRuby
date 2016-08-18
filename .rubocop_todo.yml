@@ -326,12 +326,6 @@ Performance/Sample:
   Exclude:
     - 'spec/factories/review.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Performance/Size:
-  Exclude:
-    - 'app/controllers/modules/search_meta_tags_concerns.rb'
-
 # Offense count: 67
 # Cop supports --auto-correct.
 Performance/StringReplacement:
