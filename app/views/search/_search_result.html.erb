@@ -106,19 +106,19 @@
     </div>
 
     <% if account_page == false %>
-        <div class="col-xs-12 visible-xs pbm phl font-size-small">
-          <div class="row">
-          <div class="col-xs-6 visible-xs tac">
-            <%= link_to zillow_url(school), class: 'btn btn-default zillow-button clearfix db phm', rel: 'nofollow', target: '_blank', style: 'white-space: normal;' do %>
-                <span class="iconx16 i-16-blue-home mrs vat"></span>
-                <span class="prl vat tac"><%= t('.homes_for_sale_html') %></span>
+      <div class="col-xs-12 visible-xs">
+        <div class="row">
+          <div class="fl tac mlm">
+            <%= link_to zillow_url(school), class: 'btn btn-default zillow-button clearfix db phm', rel: 'nofollow', target: '_blank' do %>
+              <span class="iconx16 i-16-blue-home mrs vat"></span>
+              <span class="prl vat tac"><%= t('.homes_for_sale_html') %></span>
             <% end %>
           </div>
-          <div class="col-xs-6 visible-xs">
+          <div class="fr">
             <%= render 'compare_schools_compare_button', school: school if @allow_compare %>
           </div>
-            </div>
         </div>
+      </div>
     <% end %>
 
   </div>
