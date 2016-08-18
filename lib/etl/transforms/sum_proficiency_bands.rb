@@ -1,25 +1,30 @@
+# create row "percent proficient and above" summed by ROW, use sum_values.rb to sum by COLUMN
+# this transform requires the following row keys to exist:
+# :district_name,:school_name,:state_id,:subject,:grade,:breakdown,:proficiency_band,:value_float
+# accepts an array of :proficiency_band values that need to be summed to get prof null
+# ex: ['Proficient','Advanced']
+
 require_relative '../source'
 
 class SumProficiencyBands < GS::ETL::Source
-  attr_accessor :group_by_fields, :join_fields
+  attr_accessor :column_values_to_select
 
-  def initialize(group_by_fields)
-    self.group_by_fields = group_by_fields
-    @rows = []
+  def initialize(column_values_to_select)
+    self.column_values_to_select = column_values_to_select
     @hash = {}
   end
 
   def process(row)
-    column_values_to_select = [
-      'level_3',
-      'level_4'
-    ]
+    group_by_fields=[:district_name,:school_name,:state_id,:subject,:grade,:breakdown]
     field_to_use = :proficiency_band
     column_to_aggregate = :value_float
 
     key = row.select { |r| group_by_fields.include?(r) }
+
     @hash[key] ||= {}
-    @hash[key][field_to_use] = row[column_to_aggregate]
+    if column_values_to_select.include? row[field_to_use]
+      @hash[key][row[field_to_use]] = row[column_to_aggregate]
+    end
 
     all_values_are_collected = column_values_to_select.all? do |fv|
       @hash[key].has_key?(fv)
@@ -27,8 +32,10 @@ class SumProficiencyBands < GS::ETL::Source
 
     if all_values_are_collected
       new_row = row.clone
-      new_row[field_to_use] = 'test'
-      new_row[column_to_aggregate] = @hash[key].values.inject(:+)
+      new_row[field_to_use] = 'null'
+      new_row[:proficiency_band_id] = 'null'
+      @hash[key].each { |k,val| @hash[key][k]=val.to_f }
+      new_row[column_to_aggregate] = @hash[key].values.inject(:+).round(2)
       [row, new_row]
     else
       row
