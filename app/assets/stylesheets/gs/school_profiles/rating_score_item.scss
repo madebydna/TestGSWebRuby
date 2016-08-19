@@ -1,37 +1,35 @@
 .rating-score-item {
   &__label {
-    line-height: 24px;
+    padding-top: 5px; // push label down to align with score/state avg
     font-size: $font-size-l3;
     font-weight: 600;
   }
-  &__right-column {
-    text-align: right;
-    @include media-breakpoint-up(lg) {
-    }
-  }
   &__score {
-    line-height: 24px;
+    text-align: right;
     font-size: $font-size-l5;
     font-family: opensans-bold;
     display: block;
-    @include media-breakpoint-up(sm) {
-      float: right;
-      display: inline-block;
-    }
     @include media-breakpoint-up(md) {
-      float: left;
+      float: right;
+      padding-left: 7px;
+    }
+    @include media-breakpoint-up(lg) {
+      float: none;
+      padding-left: 0px;
+      display: inline;
     }
   }
   &__state-average {
-    line-height: 30px;
+    text-align: right;
+    display: block;
     font-size: $font-size-s1;
     color: #71787e;
-    @include media-breakpoint-up(sm) {
-      padding:0 10px 0 0;
-    }
     @include media-breakpoint-up(md) {
-      float: left;
-      padding:0 0 0 10px;
+      padding: 15px 0 0 0;
+    }
+    @include media-breakpoint-up(lg) {
+      padding: 0 0 0 7px;
+      display: inline;
     }
   }
   &__bar {
