@@ -6,14 +6,12 @@
       <div class="col-xs-6 rating-score-item__label">
         <%= score_data.label %>
       </div>
-      <div class="col-xs-6 rating-score-item__right-column">
-        <div clear="clearfix">
-          <span class="rating-score-item__score">
-            <%= score_data.formatted_score %>
-          </span>
-          <span class="rating-score-item__state-average">
-            State Avg: <%= score_data.formatted_state_average %>
-          </span>
+      <div class="col-xs-6">
+        <div class="rating-score-item__score">
+          <%= score_data.formatted_score %>
+        </div>
+        <div class="rating-score-item__state-average">
+          State Avg: <%= score_data.formatted_state_average %>
         </div>
       </div>
     </div>

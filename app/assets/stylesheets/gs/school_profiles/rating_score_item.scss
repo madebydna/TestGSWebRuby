@@ -2,13 +2,11 @@
   &__label {
     padding-top: 5px; // push label down to align with score/state avg
     font-size: $font-size-l3;
-    font-weight: 600;
   }
   &__score {
     text-align: right;
     font-size: $font-size-l5;
     font-family: opensans-bold;
-    display: block;
     @include media-breakpoint-only(md) {
       float: right;
       padding-left: 7px;
@@ -19,7 +17,6 @@
   }
   &__state-average {
     text-align: right;
-    display: block;
     font-size: $font-size-s1;
     color: #71787e;
     @include media-breakpoint-only(md) {
