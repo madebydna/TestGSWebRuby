@@ -20,7 +20,7 @@
       <% if hero.has_school_phone? %>
         <div class="school-contact__item school-contact__phone">
           <% content = capture do %>
-            <span><%= hero.school_phone %></span>
+            <%= hero.school_phone %>
           <% end %>
           <a href="tel:<%= hero.school_phone %>">
             <%= render 'icon_and_content', icon: :phone, content: content %>
@@ -30,14 +30,14 @@
       <% if hero.has_school_home_page_url? %>
         <div class="school-contact__item school-contact__home-page-url">
           <% content = capture do %>
-            <span><%= hero.school_home_page_url %></span>
+            <%= hero.school_home_page_url %>
           <% end %>
           <%= link_to(hero.school_home_page_url) do %>
             <% render 'icon_and_content', icon: :link, content: content %>
           <% end %>
         </div>
       <% end %>
-      <div class="school-contact__item hidden-xs-down">
+      <div class="school-contact__item hidden-md-down">
         <%= t('.more_contact') %>
       </div>
     </div>
