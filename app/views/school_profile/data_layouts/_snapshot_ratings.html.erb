@@ -2,7 +2,7 @@
 
 <% gs_rating = @school.gs_rating || 'nr' %>
 <div class="js-ratings-vertical-rule row pr" style="height: 300px;">
-  <% if gs_rating.upcase != 'NR' %>
+  <% if gs_rating.to_s.upcase != 'NR' %>
     <div class="col-xs-12 tac">
       <a href="<%= school_quality_url(@school) %>#Ratings">
         <div class="link-darkgray pbs"><%= t('.greatschool_rating') %><br /></div>
