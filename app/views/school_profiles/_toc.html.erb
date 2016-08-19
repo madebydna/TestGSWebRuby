@@ -9,7 +9,7 @@ going to build a partial for badges.  it will use the name passed in to generate
         <div class="container">
           <div class="row grid-divider">
             <div class="col-sm-12 col-md-4">
-              <%= render 'toc_entry_rating', rating: '8', title: 'Test Scores' %>
+              <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: 'Test Scores' %>
               <%= render 'toc_entry_rating', rating: '7', title: 'Equity' %>
               <%= render 'toc_entry_rating', rating: '6', title: 'College Readiness' %>
             </div>
