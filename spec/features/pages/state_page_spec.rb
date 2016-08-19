@@ -19,10 +19,6 @@ describe 'State Page' do
       include_examples 'should have a footer'
     end
 
-    it 'has the navigation element' do
-      expect(page).to have_selector '.navbar-static'
-    end
-
     it 'has the search hero' do
       pending('PT-1213: TODO: Fix spec - need to selector for getting at hero image')
       expect(page).to have_selector '.hub-hero-bg'

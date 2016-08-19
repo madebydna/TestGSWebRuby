@@ -147,10 +147,6 @@ When /^(.*) within ([^:"]+):$/ do |step, scope, table_or_string|
   end
 end
 
-When /^show me the page$/ do
-  save_and_open_page
-end
-
 When 'I scroll halfway down the page' do
   page.execute_script 'window.scrollBy(0,document.body.scrollHeight/2)'
 end

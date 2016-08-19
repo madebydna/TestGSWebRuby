@@ -96,7 +96,7 @@ class Solr
     @connection.get "admin/ping"
   end
 
-private
+  private
 
   def cache_time
     LocalizedProfiles::Application.config.hub_mapping_cache_time.minutes.from_now

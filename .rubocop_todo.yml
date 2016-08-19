@@ -326,12 +326,6 @@ Performance/Sample:
   Exclude:
     - 'spec/factories/review.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Performance/Size:
-  Exclude:
-    - 'app/controllers/modules/search_meta_tags_concerns.rb'
-
 # Offense count: 67
 # Cop supports --auto-correct.
 Performance/StringReplacement:
@@ -1108,13 +1102,6 @@ Style/NonNilCheck:
     - 'features/step_definitions/web_steps.rb'
     - 'features/support/env.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Not:
-  Exclude:
-    - 'app/models/modules/lookup_data_preloading.rb'
-    - 'features/pages/gs_site_prism.rb'
-
 # Offense count: 81
 # Cop supports --auto-correct.
 Style/NumericLiterals:
@@ -1358,12 +1345,6 @@ Style/SpaceBeforeBlockBraces:
 Style/SpaceBeforeComma:
   Enabled: false
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceBeforeComment:
-  Exclude:
-    - 'app/controllers/modules/google_map_concerns.rb'
-
 # Offense count: 10
 # Cop supports --auto-correct.
 # Configuration parameters: AllowForAlignment.
@@ -1376,12 +1357,6 @@ Style/SpaceBeforeFirstArg:
     - 'spec/factories/osp_question.rb'
     - 'spec/features/pages/forgot_password_page_spec.rb'
     - 'spec/views/school_profile/_nearby_school_display.html.erb_spec.rb'
-
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceBeforeSemicolon:
-  Exclude:
-    - 'app/models/search/filter.rb'
 
 # Offense count: 520
 # Cop supports --auto-correct.

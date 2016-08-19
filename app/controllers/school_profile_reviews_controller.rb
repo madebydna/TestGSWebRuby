@@ -57,14 +57,14 @@ class SchoolProfileReviewsController < SchoolProfileController
     end
   end
 
-private
+  private
 
-# Based on SEO consultant's advice, reviews tab will rel canonical to overview
-# tab as when the overview is diaplaying all the textual reviews.
-# The review tab will rel canonical to itself when there is at least one 
-# review that is not shown on overview
+  # Based on SEO consultant's advice, reviews tab will rel canonical to overview
+  # tab as when the overview is displaying all the textual reviews.
+  # The review tab will rel canonical to itself when there is at least one
+  # review that is not shown on overview
 
-def canonical_url
+  def canonical_url
     rel_canonical_to_overview? ? school_url(@school) : school_reviews_url(@school)
   end
 
