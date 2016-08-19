@@ -30,13 +30,12 @@ class SumProficiencyBands < GS::ETL::Source
       @hash[key].has_key?(fv)
     end
 
-    if all_values_are_collected and @hash[key][:null_row_created]!=true
+    if all_values_are_collected and column_values_to_select.include? row[field_to_use]
       new_row = row.clone
       new_row[field_to_use] = 'null'
       new_row[:proficiency_band_id] = 'null'
       @hash[key].each { |k,val| @hash[key][k]=val.to_f }
       new_row[column_to_aggregate] = @hash[key].values.inject(:+).round(2)
-      @hash[key][:null_row_created]=true
       [row, new_row]
     else
       row
