@@ -15,15 +15,14 @@ GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
           $(window).on('resize', _.debounce(recalculateCTAResize, 100));
           // may also need to call this after ads load...
           recalculateCTAResize();
-        }
+    }
       };
 
       var recalculateCTAResize = function () {
         setCTAProfileOffset();
         if (isDesktopWidth()) {
           setCTARowHeightToParent();
-    }
-    else {
+        } else {
           setCTARowToDefault();
     }
         manageFixedPositions();
@@ -46,16 +45,13 @@ GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
           if (isScrollAboveTop()) {
             if (scrollBelowBottom()) {
               alignToBottom();
-        }
-        else {
+            } else {
               alignFixedTop();
         }
-          }
-          else {
+          } else {
             alignDefault();
           }
-        }
-        else {
+        } else {
           alignMobile();
         }
       };
