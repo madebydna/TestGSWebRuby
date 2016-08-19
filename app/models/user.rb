@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
   end
 
   def update_auto_graduate(value)
-    unless value == 'true' || value == 'false' || value == nil
+    unless value == 'true' || value == 'false' || value.nil?
       raise ArgumentError.new('Must provide true or false (as strings) or nil')
     end
     self.child_age = value
