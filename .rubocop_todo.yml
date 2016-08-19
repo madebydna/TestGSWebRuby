@@ -1358,12 +1358,6 @@ Style/SpaceBeforeFirstArg:
     - 'spec/features/pages/forgot_password_page_spec.rb'
     - 'spec/views/school_profile/_nearby_school_display.html.erb_spec.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/SpaceBeforeSemicolon:
-  Exclude:
-    - 'app/models/search/filter.rb'
-
 # Offense count: 520
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, SupportedStyles, EnforcedStyleForEmptyBraces, SpaceBeforeBlockParameters.
