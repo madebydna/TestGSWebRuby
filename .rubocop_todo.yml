@@ -1102,13 +1102,6 @@ Style/NonNilCheck:
     - 'features/step_definitions/web_steps.rb'
     - 'features/support/env.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Style/Not:
-  Exclude:
-    - 'app/models/modules/lookup_data_preloading.rb'
-    - 'features/pages/gs_site_prism.rb'
-
 # Offense count: 81
 # Cop supports --auto-correct.
 Style/NumericLiterals:
