@@ -21,6 +21,13 @@ class WITestProcessor2015BadgerWsas < GS::ETL::TestProcessor
     'Proficient' => 80,
     'Advanced' => 81
   }
+
+  # source("test.txt",[], col_sep: "\t") do |s|
+  #   s.transform("Create test_data_type, test_data_type_id cols", Fill, {test_data_type: "wsas", test_data_type_id: 160})
+  #   .transform("Rename prof column", MultiFieldRenamer, {test_result: :proficiency_band})
+  #   .transform("Lookup prof ids", HashLookup, :proficiency_band, wsas_prof_id_map, to: :proficiency_band_id)
+  # end
+
   source("wsas_current_2014-15_final.txt",[], col_sep: "\t") do |s|
     s.transform("Create test_data_type, test_data_type_id cols", Fill, {test_data_type: "wsas", test_data_type_id: 160})
     .transform("Rename prof column", MultiFieldRenamer, {test_result: :proficiency_band})
@@ -112,13 +119,9 @@ class WITestProcessor2015BadgerWsas < GS::ETL::TestProcessor
     end
     .transform("Fix rounding errors",WithBlock) do |row|
       row[:value_float]=100 if row[:value_float].to_f==100.01
+      row
     end
-      # .transform("",WithBlock) do |row|
-      #   require 'byebug'
-      #   byebug
-      #
-      #   row
-      # end
+
   end
 
   def config_hash
