@@ -1,0 +1,39 @@
+<% college_readiness %>
+<% title = t('.title') %>
+<% rating = college_readiness.rating %>
+<% data_values = college_readiness.data_values || [] %>
+<% initial_size = 1 %>
+
+<a name="College_Prep"></a>
+<div class="rating-container">
+  <div class="row">
+    <div class="col-xs-12 col-lg-3">
+      <div class="rating-container__title">
+        <%= title %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-lg-9">
+      <% unless rating.nil? %>
+        <div class="rating-container__rating">
+          <div class="circle-rating-with-label">
+            <div class="circle-rating-with-label__circle">
+              <div class="circle-rating--<%= rating %> circle-rating--medium">
+                <%= rating %>
+              </div>
+            </div>
+            <div class="circle-rating-with-label__label
+              circle-rating-with-label__label--<%= rating %>">
+              <%= college_readiness.rating_label  %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <% if data_values.size > initial_size %>
+        <div class="rating-container__more-items">
+          <%= render 'show_more', items: data_values[initial_size..-1] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

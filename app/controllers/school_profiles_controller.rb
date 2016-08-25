@@ -22,6 +22,7 @@ class SchoolProfilesController < ApplicationController
       OpenStruct.new.tap do |sp|
         sp.hero = hero
         sp.test_scores = test_scores
+        sp.college_readiness = college_readiness
       end
     )
   end
@@ -48,6 +49,13 @@ class SchoolProfilesController < ApplicationController
 
   def test_scores
     SchoolProfiles::TestScores.new(
+      school,
+      school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
+    )
+  end
+
+  def college_readiness
+    SchoolProfiles::CollegeReadiness.new(
       school,
       school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
     )
