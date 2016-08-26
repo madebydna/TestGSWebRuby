@@ -80,11 +80,10 @@ module CachedCharacteristicsMethods
 
   def college_readiness(display_and_key_type)
     @_college_readiness ||= (
-    display_and_key_type.collect_concat do | hash |
-      {:display_type => hash[:display_type], :data => characteristics[hash[:data_key]]}
-    end
+      display_and_key_type.map do | hash |
+        {:display_type => hash[:display_type], :data => characteristics[hash[:data_key]]}
+      end
     )
-
   end
 
   def graduates_high_school

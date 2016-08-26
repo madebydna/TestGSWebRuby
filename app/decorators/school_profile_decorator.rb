@@ -117,12 +117,12 @@ class SchoolProfileDecorator < Draper::Decorator
  end
 
   def get_all_students_data(hash)
-    # hash.each do |student_data|
-    #   require 'pry'
-    #   binding.pry
-    #   if student_data['breakdown'].to_s == 'All students'
-    #     return student_data
-    #   end
-    # end
+    hash.each do |student_data|
+      # require 'pry'
+      # binding.pry
+      # if student_data['breakdown'].to_s == 'All students'
+      #   return student_data
+      # end
+    end
   end
 end

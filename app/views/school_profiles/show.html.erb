@@ -20,6 +20,9 @@
       <br/><br/>
       <%= render 'test_scores', test_scores: @school_profile.test_scores %>
       <br/><br/>
+      <% colread = @school_profile.college_readiness.data_values_2 %>
+      <%= colread.inspect %>
+      <br/><br/>
       <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
       <br/><br/>
       <%  col_ready_vals = @school_profile.college_readiness.data_values_2 %>
