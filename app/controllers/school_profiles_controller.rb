@@ -8,6 +8,7 @@ class SchoolProfilesController < ApplicationController
     @school = school
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
+    @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
   end
 
   private
