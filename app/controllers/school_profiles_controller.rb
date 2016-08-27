@@ -41,23 +41,28 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
+  def school_cache_data_reader
+    @_school_cache_data_reader ||=
+      SchoolProfiles::SchoolCacheDataReader.new(school)
+  end
+
   def hero
     SchoolProfiles::Hero.new(
       school,
-      school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
+      school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def test_scores
     SchoolProfiles::TestScores.new(
       school,
-      school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
+      school_cache_data_reader: school_cache_data_reader 
     )
   end
 
   def college_readiness
     SchoolProfiles::CollegeReadiness.new(
-      school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
+      school_cache_data_reader: school_cache_data_reader 
     )
   end
 
