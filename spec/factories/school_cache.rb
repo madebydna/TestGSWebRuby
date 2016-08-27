@@ -211,6 +211,23 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :graduation_rate, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value (
+    {
+      "4-year high school graduation rate" => [
+        {
+          "breakdown" => "All students",
+          "school_value" => 80.6,
+          "state_average" => 42
+        }
+      ]
+    }.to_json)
+    updated Time.now
+  end
+
   factory :cached_reviews_info, class: SchoolCache do
     name 'reviews_snapshot'
     sequence(:school_id) { |n| n }

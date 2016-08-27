@@ -20,13 +20,9 @@
       <br/><br/>
       <%= render 'test_scores', test_scores: @school_profile.test_scores %>
       <br/><br/>
-      <% colread = @school_profile.college_readiness.data_values_2 %>
-      <%= colread.inspect %>
       <br/><br/>
       <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
       <br/><br/>
-      <%  col_ready_vals = @school_profile.college_readiness.data_values_2 %>
-      <%= @school_profile_decorator.get_all_students_data(col_ready_vals.first) %>
       <br/><br/>
 
       <%= render 'test_score_graph', score: 2, state_score: 54, score_rating: 1 %>

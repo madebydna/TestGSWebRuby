@@ -57,7 +57,6 @@ class SchoolProfilesController < ApplicationController
 
   def college_readiness
     SchoolProfiles::CollegeReadiness.new(
-      school,
       school_cache_data_reader: SchoolProfiles::SchoolCacheDataReader.new(school)
     )
   end

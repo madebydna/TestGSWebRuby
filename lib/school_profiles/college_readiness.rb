@@ -1,6 +1,6 @@
 module SchoolProfiles
   class CollegeReadiness
-    attr_reader :school, :school_cache_data_reader
+    attr_reader :school_cache_data_reader
 
     RATING_LABEL_MAP = {
         1 => 'Weak',
@@ -27,8 +27,7 @@ module SchoolProfiles
 
 
 
-    def initialize(school, school_cache_data_reader:)
-      @school = school
+    def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
     end
 
@@ -36,12 +35,23 @@ module SchoolProfiles
       (RATING_LABEL_MAP.keys & [@school_cache_data_reader.college_readiness_rating]).first
     end
 
-    def data_values_2
-      @school.cache_results.college_readiness(CHAR_CACHE_ACCESSORS)
+    def data_type_hashes 
+      hashes = school_cache_data_reader.characteristics_data('4-year high school graduation rate').map do |key, array|
+        hash = array.find { |h| h['breakdown'] == 'All students' }
+        hash['data_type'] = key
+        hash
+      end
+      return hashes
     end
 
     def data_values
-      []
+      data_type_hashes.map do |hash| 
+        RatingScoreItem.from_hash({
+          label: hash['data_type'],
+          score: hash['school_value'],
+          state_average: hash['state_average']     
+        })
+      end
     end
 
     def rating_label
