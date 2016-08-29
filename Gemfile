@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem 'rails', '4.2.1'
+gem 'rails', '4.1.1'
 
 gem 'mysql2', '0.3.13'
 
@@ -9,14 +9,13 @@ gem 'jquery-cookie-rails'
 
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
-gem "rails_admin", "= 0.6.6"
-gem "kaminari", "= 0.16.1"
+gem 'rails_admin'
 
 # We added this to rails-admin, as a way to edit json inline
 gem 'codemirror-rails'
 
 # Authentication, used for rails-admin
-gem "devise", "4.2.0"
+gem 'devise'
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
@@ -170,7 +169,6 @@ group :development, :test do
 
   # JS testing runner
   gem 'teaspoon'
-  gem 'teaspoon-mocha'
 
   # Test coverage tool
   gem 'simplecov', '~> 0.8.0'
@@ -199,7 +197,7 @@ end
 
 # gem 'sass-rails',   '~> 3.2.3'
 # Rails 4
-gem "sass-rails",   "~> 6.0.0.beta1"
+gem 'sass-rails',   '~> 4.0.1'
 
 # gem 'coffee-rails', '~> 3.2.1'
 # Rails 4
@@ -212,8 +210,9 @@ gem 'coffee-rails', '~> 4.0.1'
 gem 'uglifier', '>= 1.0.3'
 gem 'bootstrap-wysihtml5-rails'
 
+# gem 'css_splitter', '~> 0.1.1'
 # Rails 4
-gem "css_splitter", github: "jwrobes/css_splitter"
+gem 'css_splitter'
 
 gem "yui-compressor", "~> 0.12.0"
 
