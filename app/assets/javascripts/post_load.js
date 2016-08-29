@@ -5,11 +5,7 @@
 //= require wiselinks
 //= require ads
 //= require school_profiles
-//= require resources/bootstrap_4
-//= require resources/typeahead_modified.bundle
-//= require resources/jquery.cookie
-//= require resources/jquery.touchSwipe
-//= require resources/fastclick
+//= require resources
 //= require ./localized_profiles/search_results
 //= require util
 //= require search
