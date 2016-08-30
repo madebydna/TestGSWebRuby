@@ -1,0 +1,14 @@
+.person-bar {
+  width: 250px;
+  height: 38px;
+  background-color: #dbe6eb;
+}
+.person-bar .filled {
+  height: 100%;
+}
+.person-bar .background {
+  width: 250px;
+  height: 38px;
+  background-repeat: repeat-x;
+  background-image: image-url('transparent_person.png');
+}
