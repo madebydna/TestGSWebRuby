@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/page_objects/school_profile_page'
+require 'features/page_objects/deprecated_school_profile_page'
 
 describe 'Visitor' do
   after do

@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/page_objects/school_profile_page'
+require 'features/page_objects/deprecated_school_profile_page'
 
 RSpec::Matchers.define :have_gs_rating_of do |expected_rating|
   match do |actual|

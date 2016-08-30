@@ -4,7 +4,7 @@ require 'features/page_objects/modules/breadcrumbs'
 # require 'features/page_objects/modules/modals'
 # require 'features/page_objects/modules/school_profile_page'
 
-class SchoolProfilePage < SitePrism::Page
+class DeprecatedSchoolProfilePage < SitePrism::Page
   include Breadcrumbs
   # include GSRating
   # include Modals
