@@ -66,9 +66,18 @@
       line-height: 28px;
     }
   }
+
+  .school-contact__more {
+    display: none;
+    @media (min-width: 992px) {
+      display: inline-block;
+    }
+  }
+
   .school-contact__item:last-of-type {
     border-right: none;
   }
+
   .school-contact__address, .school-contact__phone, .school-contact__home-page-url {
     .badge {
       display: none;
@@ -88,6 +97,7 @@
     }
   }
 
+
   .school-info__item {
     display: inline-block;
     padding: 0 30px;
@@ -102,6 +112,12 @@
 
   .school-info__item:first-of-type {
     border-left: none;
+  }
+
+  .school-info__item:nth-last-of-type(-n+3) {
+    @media only screen and (max-width: 991px) {
+      display: none;
+    }
   }
 
   .school-info__five-star-rating {

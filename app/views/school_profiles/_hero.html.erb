@@ -37,7 +37,7 @@
           <% end %>
         </div>
       <% end %>
-      <div class="school-contact__item hidden-md-down">
+      <div class="school-contact__item school-contact__more">
         <%= t('.more_contact') %>
       </div>
     </div>
@@ -62,15 +62,15 @@
           number_of_ratings: hero.number_of_active_reviews
         %>
       </div>
-      <div class="school-info__item hidden-sm-down">
+      <div class="school-info__item">
         <div class="label"><%= hero.grade_range_label %></div>
         <div><%= hero.grade_range %></div>
       </div>
-      <div class="school-info__item hidden-sm-down">
+      <div class="school-info__item">
         <div class="label"><%= t('.students_enrolled') %></div>
         <div><%= hero.students_enrolled_or_default  %></div>
       </div>
-      <div class="school-info__item hidden-sm-down">
+      <div class="school-info__item">
         <div class="label"><%= t('.school_type') %></div>
         <div><%= hero.school_type %></div>
       </div>
