@@ -19,11 +19,11 @@ module SchoolProfiles
     end
 
     def formatted_score
-      score
+      score.format
     end
 
     def formatted_state_average
-      state_average
+      state_average.format
     end
   end
 end
