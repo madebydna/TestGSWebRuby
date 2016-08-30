@@ -18,37 +18,37 @@ module SchoolProfiles
     CHAR_CACHE_ACCESSORS = [
       {
         :data_key => '4-year high school graduation rate',
-        :display_type => 'people',
+        :visualization => :person_bar,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'Average SAT score',
-        :display_type => 'graph',
+        :visualization => :test_score_graph,
         :formatting => [:round]
       },
       {
         :data_key => 'SAT percent participation',
-        :display_type => 'people',
+        :visualization => :person_bar,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'Average ACT score',
-        :display_type => 'graph',
+        :visualization => :test_score_graph,
         :formatting => [:round]
       },
       {
         :data_key => 'ACT participation',
-        :display_type => 'people',
+        :visualization => :person_bar,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'AP Course Participation',
-        :display_type => 'people',
+        :visualization => :person_bar,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'Percent of students who meet UC/CSU entrance requirements',
-        :display_type => 'graph',
+        :visualization => :test_score_graph,
         :formatting => [:round, :percent]
       }
     ].freeze
@@ -75,6 +75,14 @@ module SchoolProfiles
       )
     end
 
+    def data_type_visualization_map
+      @_data_type_visualization_map ||= (
+        CHAR_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+          hash[mapping[:data_key]] = mapping[:visualization]
+        end
+      )
+    end
+
     def data_type_hashes 
       hashes = school_cache_data_reader.characteristics_data(
         *included_data_types
@@ -91,12 +99,14 @@ module SchoolProfiles
       Array.wrap(data_type_hashes).map do |hash| 
         data_type = hash['data_type']
         formatting = data_type_formatting_map[data_type]
+        visualization = data_type_visualization_map[data_type]
         RatingScoreItem.new.tap do |item|
           item.label = data_type
           item.score = SchoolProfiles::DataPoint.new(hash['school_value']).
             apply_formatting(*formatting)
           item.state_average = SchoolProfiles::DataPoint.new(hash['state_average']).
             apply_formatting(*formatting)
+          item.visualization = visualization
         end
       end
     end

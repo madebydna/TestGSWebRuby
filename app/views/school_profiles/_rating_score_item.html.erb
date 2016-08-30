@@ -15,10 +15,16 @@
         </div>
       </div>
     </div>
+
     <div class="rating-score-item__bar">
       <div class="row">
         <div class="col-xs-12 col-lg-6 offset-lg-6">
-          <%= render 'test_score_graph', score: score_data.score, state_score: score_data.state_average, score_rating: (score_data.score / 10).round %>
+          <%=
+            render "#{score_data.visualization}",
+              score: score_data.score,
+              state_score: score_data.state_average,
+              score_rating: (score_data.score / 10).round
+          %>
         </div>
       </div>
     </div>

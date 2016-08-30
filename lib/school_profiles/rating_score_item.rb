@@ -1,6 +1,6 @@
 module SchoolProfiles
   class RatingScoreItem
-    attr_accessor :label, :score, :state_average
+    attr_accessor :label, :score, :state_average, :visualization
 
     def self.from_hash(hash)
       self.new.tap do |obj|
@@ -16,6 +16,10 @@ module SchoolProfiles
         obj.score = hash.score
         obj.state_average = hash.state_average
       end
+    end
+
+    def initialize
+      @visualization = :test_score_graph
     end
 
     def formatted_score
