@@ -6,7 +6,7 @@
       <h1 class="school-name"><%= hero.school_name %></h1>
     </div>
 
-    <div class="school-contact p-t-1">
+    <div class="school-contact">
       <% if hero.has_school_address? %>
         <div class="school-contact__item school-contact__address">
           <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="school-info p-t-2 p-b-1">
+    <div class="school-info">
       <div class="school-info__item school-info__gs-rating">
         <div class="gs-rating-with-label">
           <div class="gs-rating-with-label__rating">
