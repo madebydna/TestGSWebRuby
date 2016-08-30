@@ -1,8 +1,8 @@
 require "spec_helper"
-require "features/page_objects/deprecated_school_profile_page"
+require "features/page_objects/school_profiles_page"
 
 describe "Visitor" do
-  let(:page_object) { SchoolProfilePage.new }
+  let(:page_object) { SchoolProfilesPage.new }
   after do
     clean_dbs(:gs_schooldb)
     clean_models(:ca, School)

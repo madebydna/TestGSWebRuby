@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/page_objects/deprecated_school_profile_page'
+require 'features/page_objects/school_profiles_page'
 
 describe 'Visitor' do
   after do
@@ -12,7 +12,7 @@ describe 'Visitor' do
 
     visit school_path(school)
 
-    page_object = SchoolProfilePage.new
+    page_object = SchoolProfilesPage.new
     expect(page_object).to have_breadcrumbs
   end
 end

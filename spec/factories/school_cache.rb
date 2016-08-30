@@ -256,9 +256,9 @@ FactoryGirl.define do
     sequence(:school_id) { |n| n }
     state 'ca'
     value ({
-      'num_reviews' => '348381',
-      'num_ratings' => '109991',
-      'avg_star_rating' => '4'
+      'num_reviews' => 348381,
+      'num_ratings' => 109991,
+      'avg_star_rating' => 4
     }.to_json)
     updated Time.now
   end

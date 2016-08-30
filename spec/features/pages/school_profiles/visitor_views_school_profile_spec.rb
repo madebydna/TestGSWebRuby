@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'features/page_objects/deprecated_school_profile_page'
+require 'features/page_objects/school_profiles_page'
 
 RSpec::Matchers.define :have_gs_rating_of do |expected_rating|
   match do |actual|
@@ -7,14 +7,6 @@ RSpec::Matchers.define :have_gs_rating_of do |expected_rating|
   end
   failure_message_for_should do |actual|
     "expected a GS rating of #{expected} but got #{actual.gs_rating.text}"
-  end
-end
-RSpec::Matchers.define :have_five_star_rating_of do |expected_rating|
-  match do |actual|
-    actual.five_star_rating.text == expected_rating.to_s
-  end
-  failure_message_for_should do |actual|
-    "expected a 5-star rating of #{expected} but got #{actual.five_star_rating.text}"
   end
 end
 
@@ -44,7 +36,7 @@ describe 'Visitor' do
 
     visit school_path(school)
 
-    page_object = SchoolProfilePage.new
+    page_object = SchoolProfilesPage.new
     expect(page_object).to have_gs_rating
     expect(page_object).to have_gs_rating_of(5)
   end
@@ -87,7 +79,7 @@ describe 'Visitor' do
   scenario 'sees a link to the school\'s website' do
     school = create(:alameda_high_school, home_page_url: 'http://www.google.com')
     visit school_path(school)
-    expect(SchoolProfilePage.new).to have_link(school.home_page_url,
+    expect(SchoolProfilesPage.new).to have_link(school.home_page_url,
       href: school.home_page_url
     )
   end
@@ -124,8 +116,8 @@ describe 'Visitor' do
     school = create(:alameda_high_school)
     create(:cached_reviews_info, state: 'ca', school_id: school.id)
     visit school_path(school)
-    page_object = SchoolProfilePage.new
+    page_object = SchoolProfilesPage.new
     expect(page_object).to have_content('348381') # reviews among all topics
-    expect(page_object).to have_five_star_rating_of(4)
+    expect(page_object).to have_star_rating_of(4)
   end
 end
