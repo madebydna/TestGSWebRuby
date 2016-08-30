@@ -1,5 +1,6 @@
 class School < ActiveRecord::Base
   include SchoolReviewConcerns
+  include SchoolRouteConcerns
 
   LEVEL_CODES = {
     primary: 'p',
@@ -17,7 +18,7 @@ class School < ActiveRecord::Base
   self.table_name='school'
   include StateSharding
 
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active
+  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
   attr_writer :collections
   has_many :school_metadatas
   belongs_to :district
