@@ -79,6 +79,20 @@ if (gon.advertising_enabled) {
               addSize([300, 600], [[300, 600], [300, 250]]).
               addSize([0, 0], [[300, 250]]).
               build(),
+      'box_or_tall': googletag.sizeMapping().
+              addSize([992, 300], [[300, 600], [300, 250]]).
+              addSize([768, 120], [[728, 90]]).
+              addSize([0, 0], [[300, 250]]).
+              build(),
+      'thin_banner': googletag.sizeMapping().
+              addSize([768, 120], [[728, 90]]).
+              addSize([0, 0], [[320, 50]]).
+              build(),
+      'thin_banner_or_box': googletag.sizeMapping().
+              addSize([992, 300], [[728, 90], [970, 250]]).
+              addSize([768, 120], [[728, 90]]).
+              addSize([0, 0], [[320, 50], [300, 250]]).
+              build()
     };
   };
 
