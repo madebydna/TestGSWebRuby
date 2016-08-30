@@ -20,15 +20,20 @@ describe "Visitor" do
     expect(page_object.college_readiness.title).to have_text('College Prep')
   end
 
-  scenario "sees graduation rate", js: true do
-    school = create(:alameda_high_school, id: 1)
-    create(:graduation_rate, school_id: school.id)
+  scenario "sees graduation rate" do
+    school = create(:alameda_high_school)
+    create(
+      :custom_characteristics_all_students_cache,
+      school_id: school.id,
+      data_type: '4-year high school graduation rate',
+      school_value: 50.6,
+      state_average: 60.4
+    )
     visit school_path(school)
     expect(page_object.college_readiness).to have_score_items
     expect(page_object.college_readiness.score_items.first.label).to have_text('4-year high school graduation rate')
-    expect(page_object.college_readiness.score_items.first.score).to have_text('81%')
-    expect(page_object.college_readiness.score_items.first.state_average).to have_text('42%')
+    expect(page_object.college_readiness.score_items.first.score).to have_text('51%')
+    expect(page_object.college_readiness.score_items.first.state_average).to have_text('60%')
   end
-
 
 end

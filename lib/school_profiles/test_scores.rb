@@ -30,8 +30,8 @@ module SchoolProfiles
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = hash.subject
-          rating_score_item.score = hash.score
-          rating_score_item.state_average = hash.state_average
+          rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
+          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
         end
       end
     end

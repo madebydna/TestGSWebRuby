@@ -26,4 +26,34 @@ describe SchoolProfiles::CollegeReadiness do
       end
     end
   end
+
+  describe '#data_values' do
+    it 'should return chosen data types if data present' do
+      expect(school_cache_data_reader).to receive(:characteristics_data) do
+        {
+          '4-year high school graduation rate' => [
+            {
+              'breakdown' => 'Asian',
+              'school_value' => 60,
+              'state_average' => 61
+            },
+            {
+              'breakdown' => 'All students',
+              'school_value' => 50,
+              'state_average' => 51
+            }
+          ]
+        }
+      end.exactly(4).times
+      expect(subject.data_values.size).to eq(1)
+      expect(subject.data_values.first.label).to eq('4-year high school graduation rate')
+      expect(subject.data_values.first.score).to eq(50)
+      expect(subject.data_values.first.state_average).to eq(51)
+    end
+
+    it 'should return empty array if no data' do
+      expect(school_cache_data_reader).to receive(:characteristics_data).once
+      expect(subject.data_values).to be_empty
+    end
+  end
 end

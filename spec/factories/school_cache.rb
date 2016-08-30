@@ -228,6 +228,29 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :custom_characteristics_all_students_cache, class: SchoolCache do
+    ignore do
+      data_type 'data type'
+      school_value 0.0
+      state_average 0.0
+    end
+    before(:create) do |data, evaluator|
+      data.value = (
+      {
+        evaluator.data_type => [
+          {
+            "breakdown" => "All students",
+            "school_value" => evaluator.school_value,
+            "state_average" => evaluator.state_average
+          }
+        ]
+      }.to_json)
+    end
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+  end
+
   factory :cached_reviews_info, class: SchoolCache do
     name 'reviews_snapshot'
     sequence(:school_id) { |n| n }
