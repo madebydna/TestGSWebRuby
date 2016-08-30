@@ -1,33 +1,33 @@
-.rating-score-item {
-  &__label {
-    padding-top: 5px; // push label down to align with score/state avg
-    font-size: $font-size-l3;
-  }
-  &__score {
-    text-align: right;
-    font-size: $font-size-l5;
-    font-family: opensans-bold;
-    @include media-breakpoint-only(md) {
-      float: right;
-      padding-left: 7px;
-    }
-    @include media-breakpoint-up(lg) {
-      display: inline;
-    }
-  }
-  &__state-average {
-    text-align: right;
-    font-size: $font-size-s1;
-    color: #71787e;
-    @include media-breakpoint-only(md) {
-      padding-top: 15px;
-    }
-    @include media-breakpoint-up(lg) {
-      padding-right: 7px;
-      display: inline;
-    }
-  }
-  &__bar {
-    padding: 10px 0;
-  }
+.rating-score-item__label {
+	padding-top: 5px; // push label down to align with score/state avg
+	font-size: $font-size-l3;
+}
+
+.rating-score-item__score {
+	text-align: right;
+	font-size: $font-size-l5;
+	font-family: opensans-bold;
+	@media (min-width: 750px) and (max-width: 970px) {
+		float: right;
+		padding-left: 7px;
+	}
+		@media (min-width: 970px) {
+		display: inline;
+	}
+}
+.rating-score-item__state-average {
+	text-align: right;
+	font-size: $font-size-s1;
+	color: #71787e;
+	@media (min-width: 970px) {
+		padding-top: 15px;
+	}
+	@media (min-width: 750px) {
+		padding-right: 7px;
+		display: inline;
+	}
+}
+
+.rating-score-item__bar {
+	padding: 10px 0;
 }

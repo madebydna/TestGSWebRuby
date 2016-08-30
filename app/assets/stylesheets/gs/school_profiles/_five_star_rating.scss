@@ -2,17 +2,19 @@ $rating-star-filled-color: #ffc800;
 $rating-star-empty-color: #65859f;
 
 .five-star-rating {
-  &__stars {
-    vertical-align: middle;
-    font-size: 11px;
-    @media only screen and (max-width: 767px) {
-      font-size: 9px;
-    }
-    .filled-star {
-      color: $rating-star-filled-color;
-    }
-    .empty-star {
-      color: $rating-star-empty-color;
-    }
+
+}
+
+.five-star-rating__stars {
+  vertical-align: middle;
+  font-size: 11px;
+  @media only screen and (max-width: 767px) {
+    font-size: 9px;
+  }
+  .filled-star {
+    color: $rating-star-filled-color;
+  }
+  .empty-star {
+    color: $rating-star-empty-color;
   }
 }

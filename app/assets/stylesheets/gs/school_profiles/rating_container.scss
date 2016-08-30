@@ -5,38 +5,38 @@ $border-color: #dbe6eb;
 %rating-container {
   padding: 0 0 20px 0;
   border-bottom: 1px solid $border-color;
+}
 
-  &__title {
-    text-align: center;
-    font-size: 20px;
-    text-transform: uppercase;
-    padding: 20px 0;
-  }
+.rating-container__title {
+  text-align: center;
+  font-size: 20px;
+  text-transform: uppercase;
+  padding: 20px 0;
+}
 
-  &__rating {
-    padding-left: 10px;
-    background: $light-gray;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
+.rating-container__rating {
+  padding-left: 10px;
+  background: $light-gray;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
-  &__score-item {
-    padding-bottom: 5px;
-    padding-top: 10px;
-  }
-  &__score-item ~ &__score-item {
-    border-top: 1px solid $border-color;
-  }
+.rating-container__score-item {
+  padding-bottom: 5px;
+  padding-top: 10px;
+}
+.rating-container__score-item ~ .rating-container__score-item {
+  border-top: 1px solid $border-color;
+}
 
-  @include media-breakpoint-up(lg) {
-    &__title {
-      padding-top: 0;
-    }
+@media (min-width: 970px) {
+  .rating-container__title {
+    padding-top: 0;
   }
+}
 
-  &__more-items .show-more--open {
-    border-top: 1px solid $border-color;
-  }
+.rating-container__more-items .show-more--open {
+  border-top: 1px solid $border-color;
 }
 
 .rating-container--test-scores {
