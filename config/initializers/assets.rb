@@ -1,6 +1,8 @@
 Rails.application.config.assets.precompile += [
     'post_load.js',
     'post_load.css',
+    'deprecated_application.css',
+    'deprecated_application.js',
     'deprecated_post_load.js',
     'deprecated_post_load.css',
     'deprecated_print.css',
