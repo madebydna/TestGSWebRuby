@@ -123,7 +123,7 @@ class ProfileTestScoresDecorator < Draper::Decorator
         div_content = ''
         grade_hash[:level_code].each do |levelcode,value|
           value.each_with_index do |(subject,v), index_subject|
-            div_id = TestScoresDecorator.bar_chart_div_id(test, breakdown, grade, subject)
+            div_id = ProfileTestScoresDecorator.bar_chart_div_id(test, breakdown, grade, subject)
             h.content_for(:head) do
               h.raw bar_chart(v).script_tag(div_id)
             end
