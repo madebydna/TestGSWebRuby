@@ -1,44 +1,23 @@
 <%= render 'breadcrumbs', breadcrumbs: @breadcrumbs %>
 <%= render 'hero', hero: @school_profile.hero %>
 <!-- main content -->
-<div class="static_container">
+<div class="static-container">
   <div class="right_rail">
     <%= render 'school_profile_sticky_cta' %>
   </div>
   <div class="content">
-    <%= render 'toc' %>
-    <br/><br/>
-    <%= render 'test_scores', test_scores: @school_profile.test_scores %>
-    <br/><br/>
-    <br/><br/>
-    <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner', width: 320, height: 50, css_class: 'mbl' %>
-    <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
-    <br/><br/>
-    <br/><br/>
-
-    <%= render 'test_score_graph', score: 2, state_score: 54, score_rating: 1 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 12, state_score: 84, score_rating: 2 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 22, state_score: 34, score_rating: 3 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 32, state_score: 54, score_rating: 4 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 42, state_score: 64, score_rating: 5 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 52, state_score: 74, score_rating: 6 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 62, state_score: 84, score_rating: 7 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 72, state_score: 14, score_rating: 8 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 82, state_score: 4, score_rating: 9 %>
-    <br/><br/>
-    <%= render 'test_score_graph', score: 92, state_score: 94, score_rating: 10 %>
-    <br/><br/>
-    <%= render 'person_bar', score: 92, state_score: 94, score_rating: 10 %>
-    <br/><br/>
-    <%= render 'person_bar', score: 44, state_score: 94, score_rating: 5 %>
+    <div>
+      <%= render 'toc' %>
+    </div>
+    <div>
+      <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+    </div>
+    <div>
+      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner', width: 320, height: 50, css_class: 'mbl' %>
+    </div>
+    <div>
+      <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+    </div>
   </div>
 </div>
 

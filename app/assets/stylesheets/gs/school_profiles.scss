@@ -8,3 +8,7 @@
 @import 'school_profiles/school_profile_sticky_cta';
 @import 'school_profiles/_person_bar';
 @import 'school_profiles/static_right_rail_container';
+
+.static-container .content > div {
+  padding-top: 15px;
+}
