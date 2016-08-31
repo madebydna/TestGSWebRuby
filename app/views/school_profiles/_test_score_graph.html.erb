@@ -2,11 +2,16 @@
 <% state_score %>
 <% score_rating %>
 <% grey_score = 100.to_f - score %>
+<% max_value = 100 %>
+<% score_percentage = 100.0 * (score.to_f / max_value) %> 
 
 <% #height maybe future  %>
 
-<div class="bar-graph ">
-  <div class="color-row rating_<%= score_rating %>" style="width:<%= score %>%"></div>
-  <div class="grey-row" style="width:<%= grey_score %>%"></div>
-  <div class="arrow-down" style="left:<%= state_score %>%"></div>
-</div>
+<% if (1..100).cover?(score_percentage) && (1..10).cover?(score_rating) %>
+  <div class="bar-graph ">
+    <div class="color-row rating_<%= score_rating %>"
+      style="width:<%= score_percentage %>%"></div>
+    <div class="grey-row" style="width:<%= grey_score %>%"></div>
+    <div class="arrow-down" style="left:<%= state_score %>%"></div>
+  </div>
+<% end %>

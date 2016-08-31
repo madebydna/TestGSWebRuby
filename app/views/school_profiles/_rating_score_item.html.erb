@@ -21,8 +21,8 @@
         <div class="col-xs-12 col-lg-6 offset-lg-6">
           <%=
             render "#{score_data.visualization}",
-              score: score_data.score,
-              state_score: score_data.state_average,
+              score: score_data.score.value,
+              state_score: score_data.state_average.value,
               score_rating: (score_data.score / 10).round
           %>
         </div>
