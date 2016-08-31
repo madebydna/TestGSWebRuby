@@ -1,9 +1,18 @@
+function viewport() {
+  var e = window, a = 'inner';
+  if (!('innerWidth' in window )) {
+    a = 'client';
+    e = document.documentElement || document.body;
+  }
+  return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+}
+
 GS.schoolProfiles = GS.schoolProfiles || {};
 
 GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
   var ctaProfileOffset;
   var cta;
-  var transitionToMobile = 767;
+  var transitionToMobile = 991;
 
   var init = function () {
     cta = $("#cta");
@@ -67,7 +76,7 @@ GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
   };
 
   var isDesktopWidth = function () {
-    return ($(window).width() > transitionToMobile);
+    return (viewport().width > transitionToMobile);
   };
 
   var scrollBelowBottom = function () {

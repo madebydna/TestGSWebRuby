@@ -1,0 +1,21 @@
+.static_container{
+  position: relative;
+  margin: auto;
+  padding: 0px 15px;
+  max-width: 1170px;
+
+  @media  (min-width: 992px) {
+    .right_rail {
+      position: absolute;
+      right: 0px;
+      width: 300px;
+      height: 100%;
+    }
+
+    .content {
+      position: relative;
+      // 300 for right rail and 15 for gutter
+      margin-right: 315px;
+    }
+  }
+}

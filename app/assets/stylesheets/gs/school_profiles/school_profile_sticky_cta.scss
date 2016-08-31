@@ -4,6 +4,7 @@ $cta_button_border: #dbe6eb;
 $cta_icon_color: #2ba3dc;
 
 #cta {
+  z-index : 1;
   &.fixed-top {
     position: fixed;
     top: 0;
@@ -11,7 +12,7 @@ $cta_icon_color: #2ba3dc;
   }
 
   &.non-fixed-top {
-    margin-top: 30px;
+
     position: relative;
   }
 
