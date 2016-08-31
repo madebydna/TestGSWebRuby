@@ -57,8 +57,7 @@ $cta_icon_color: #2ba3dc;
       margin:auto;
 
       > div {
-        float: left;
-        padding-left: 10px;
+        display:inline-block;
       }
     }
 
