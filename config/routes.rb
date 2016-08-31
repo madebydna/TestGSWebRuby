@@ -380,37 +380,31 @@ LocalizedProfiles::Application.routes.draw do
       end
     end
 
-    get '/:state/:city/:schoolId-:school_name', as: :school, to: 'school_profiles#show', constraints: {
-      format: false,
-      state: States.any_state_name_regex,
-      schoolId: /\d+/,
-      school_name: /.+/,
-      # This city regex allows for all characters except /
-      # http://guides.rubyonrails.org/routing.html#specifying-constraints
-      city: /[^\/]+/
-    }
-
     # Routes for school profile pages
     # This needs to go before the city routes because we want to capture the
     # ID-school_name pattern first and be looser about district names
-    # scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
-    #     format: false,
-    #     state: States.any_state_name_regex,
-    #     schoolId: /\d+/,
-    #     school_name: /.+/,
-    #     # This city regex allows for all characters except /
-    #     # http://guides.rubyonrails.org/routing.html#specifying-constraints
-    #     city: /[^\/]+/,
-    # } do
-    #   get 'quality', to: 'school_profile_quality#quality', as: :quality
-    #   get 'details', to: 'school_profile_details#details', as: :details
-    #   # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
-    #   resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
-    #   resources :reviews, only: [:create], controller: 'school_profile_reviews'
-    #   # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
-    #   resource :user, only: [:create], controller: 'school_user', action: 'create'
-    #   get '', to: 'school_profile_overview#overview'
-    # end
+    scope '/:state/:city/:schoolId-:school_name/', as: :school, constraints: {
+        format: false,
+        state: States.any_state_name_regex,
+        schoolId: /\d+/,
+        school_name: /[^\/]+/,
+        # This city regex allows for all characters except /
+        # http://guides.rubyonrails.org/routing.html#specifying-constraints
+        city: /[^\/]+/,
+      } do
+      get "(:path)", to: "school_profiles#show", constraints: Constraint::NewSchoolProfile.new
+
+#     Old Profile Routes
+      get 'quality', to: 'school_profile_quality#quality', as: :quality
+      get 'details', to: 'school_profile_details#details', as: :details
+      # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
+      resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+      resources :reviews, only: [:create], controller: 'school_profile_reviews'
+      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
+      resource :user, only: [:create], controller: 'school_user', action: 'create'
+      get "", to: 'school_profile_overview#overview'
+    end
+
 
     # Routes for city page
     scope '/:state/:city', as: :city, constraints: {

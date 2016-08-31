@@ -46,6 +46,13 @@ describe 'school profile routing' do
   end
 
   describe 'non-pk school scope' do
+
+    let(:route_params) do
+      {
+        school_name: "Alameda-High-School",
+        schoolId: "1",
+      }
+    end
     [
       ['overview', '', 'school'],
       ['reviews', 'reviews/', 'school_reviews'],
@@ -58,6 +65,9 @@ describe 'school profile routing' do
             ['two-word state', 'new-jersey', 'nj']
         ].each do |(state_description, state, state_abbr)|
           describe "In a #{state_description}" do
+          before do
+            route_params.merge!({state: state})
+          end
             {
                 'one-word city' => 'minneapolis',
                 'two-word city' => 'maple-grove',
@@ -67,22 +77,69 @@ describe 'school profile routing' do
             }.each do |city_description, city|
               describe "In a #{city_description}" do
                 before do
-                  @school = FactoryGirl.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'e,m,h')
-                  expect(@school).not_to be_preschool
+                  route_params.merge!({city: city.sub('%23',"#")})
                 end
-                it "has a route for #{action}" do
-                  expect( get "/#{state}/#{city}/1-Alameda-High-School/#{path}" ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
-                end
+                describe "for a school without new profile flag" do
+                  before do
+                    @school = FactoryGirl.build(:school,
+                                                state: state_abbr,
+                                                city: city.sub('%23', '#').sub('-', ' '),
+                                                id: 1,
+                                                name: 'alameda high school',
+                                                level_code: 'e,m,h'
+                                               )
+                    expect(@school).not_to be_preschool
+                    allow_any_instance_of(Constraint::NewSchoolProfile)
+                      .to receive(:matches?).and_return(false)
+                  end
+                  it "has a route for #{action}" do
+                    expect( get "/#{state}/#{city}/1-Alameda-High-School/#{path}" ).
+                        to route_to("school_profile_#{action}##{action}", route_params)
+                  end
 
-                it "has a path helper for #{action}" do
-                  expect( get(send("#{path_helper}_path", @school)) ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
-                end
+                  it "has a path helper for #{action}" do
+                    expect( get(send("#{path_helper}_path", @school)) ).
+                        to route_to("school_profile_#{action}##{action}", route_params)
+                  end
 
-                it "has a url helper for #{action}" do
-                  expect( get(send("#{path_helper}_url", @school)) ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                  it "has a url helper for #{action}" do
+                    expect( get(send("#{path_helper}_url", @school)) ).
+                        to route_to("school_profile_#{action}##{action}", route_params)
+                  end
+                end
+                describe "for a school with a new profile flag" do
+                  before do
+                    @school = FactoryGirl.build(:school_with_new_profile,
+                                                state: state_abbr,
+                                                city: city.sub('%23', '#').sub('-', ' '),
+                                                id: 1,
+                                                name: 'alameda high school',
+                                                level_code: 'e,m,h',
+                                                new_profile_school: 5
+                                               )
+                    allow_any_instance_of(Constraint::NewSchoolProfile)
+                      .to receive(:matches?).and_return(true)
+                    expect(@school).not_to be_preschool
+                    root_path = ""
+                    if ! (path == root_path)
+                      route_params.merge!({path: path.gsub("/","")})
+                    end
+                  end
+
+                  it "has a route for #{action}" do
+                    expect( get "/#{state}/#{city}/1-Alameda-High-School/#{path}" ).
+                      to route_to("school_profiles#show", route_params)
+                  end
+
+                  it "has a path helper for #{action}" do
+                      expect( get(send("#{path_helper}_path", @school)) ).
+                        to route_to("school_profiles#show", route_params )
+                  end
+
+                  it "has a url helper for #{action}" do
+                    expect( get(send("#{path_helper}_url", @school)) ).
+                      to route_to("school_profiles#show", route_params)
+                  end
                 end
               end
             end
