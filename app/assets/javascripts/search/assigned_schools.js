@@ -145,9 +145,8 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             $listItem.find('.js-review-count').hide();
             $listItem.find('.js-no-reviews').show();
         }
-        if (gsRating && gsRating > 0 && gsRating < 11) {
-          updateRatingIconInListItem($listItem, gsRating, school);
-        }
+
+        updateRatingIconInListItem($listItem, gsRating, school);
 
         var compareButton = $listItem.find('.js-compareSchoolButton');
         compareButton.attr('data-schoolid', schoolId);
@@ -215,6 +214,9 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var $ratingIcon = gsRatingLink.attr('href', qualityUrl).find('.js-gs-rating-icon');
         $ratingIcon.addClass(GS.rating.getRatingPerformanceLevel(newGSRating));
         $ratingIcon.find('div').html(newGSRating);
+      } else {
+          var $gsRatingLink = $listItem.find('.js-gs-rating-link');
+          $gsRatingLink.remove();
       }
     };
 

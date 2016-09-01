@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :add_configured_translations_to_js
   before_action :add_language_to_gtm_data_layer
+  before_action :add_fb_appid_to_gon
 
   after_filter :disconnect_connection_pools
 
@@ -186,5 +187,9 @@ class ApplicationController < ActionController::Base
 
   def set_uuid_cookie
     write_cookie_value(:gs_aid, SecureRandom.uuid) unless read_cookie_value(:gs_aid).present?
+  end
+
+  def add_fb_appid_to_gon
+    gon.facebook_app_id = ENV_GLOBAL['facebook_app_id']
   end
 end

@@ -21,7 +21,7 @@ module LookupDataPreloading
         object = klass.class_variable_get(:@@all_by_id)[id] unless id.nil?
       end
 
-      if not klass.class_variable_defined? :@@all_by_id
+      if ! klass.class_variable_defined? :@@all_by_id
         # Precache data from the DB
         all_vals = klass.all
 

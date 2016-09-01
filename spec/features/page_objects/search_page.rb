@@ -10,4 +10,8 @@ class SearchPage < SitePrism::Page
 
   elements :school_search_results, '.js-schoolSearchResultCompareErrorMessage'
 
+  sections :assigned_schools, '#js-assigned-school-elementary' do
+    element :gs_rating, '.js-gs-rating-link'
+  end
+
 end

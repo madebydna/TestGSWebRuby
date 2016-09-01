@@ -19,7 +19,7 @@ module SearchMetaTagsConcerns
 
     value = st_array.each { |st| break st if [*@params_hash['st']].include?(st)}
     value = nil unless st_array.include?(value)
-    text = text_map[value] if [*@params_hash['st']].count == 1
+    text = text_map[value] if [*@params_hash['st']].size == 1
     param = value.present? ? {'st' => value} : {}
 
     Struct.new(:param, :text).new(param, text)
@@ -36,7 +36,7 @@ module SearchMetaTagsConcerns
 
     value = lc_array.each { |lc| break lc if [*@params_hash['gradeLevels']].include?(lc)}
     value = nil unless lc_array.include?(value)
-    text = text_map[value] if [*@params_hash['gradeLevels']].count == 1
+    text = text_map[value] if [*@params_hash['gradeLevels']].size == 1
     school = value == 'p' ? 'Preschools ' : 'Schools '
     param = value.present? ? {'gradeLevels' => value} : {}
 

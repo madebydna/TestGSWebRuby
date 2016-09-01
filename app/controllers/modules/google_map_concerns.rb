@@ -5,7 +5,7 @@ module GoogleMapConcerns
     gon.map_points = @map_schools.map do |school|
       begin
         map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
-        map_points[:communityRatingStars] = school.community_rating.nil? ? '' : school.community_rating#(draw_stars_16 school.community_rating)
+        map_points[:communityRatingStars] = school.community_rating.nil? ? '' : school.community_rating #(draw_stars_16 school.community_rating)
         map_points[:profileUrl] = (school.profile_path.present?) ? school.profile_path : "/#{@state[:long]}/city/#{school.id}-school"
         map_points[:reviewUrl] = "#{map_points[:profileUrl]}/reviews"
         map_points[:zillowUrl] = zillow_url(school)
@@ -47,7 +47,7 @@ module GoogleMapConcerns
         map_points[:gradeRange] = decorated_school.grade_range
         map_points[:schoolType] = decorated_school.school_type
         map_points[:numReviews] = (decorated_school.review_count.nil? || decorated_school.community_rating.nil?) ? 0 : decorated_school.review_count
-        map_points[:communityRatingStars] = decorated_school.community_rating.nil? ? '' : decorated_school.community_rating#(draw_stars_16 school.community_rating)
+        map_points[:communityRatingStars] = decorated_school.community_rating.nil? ? '' : decorated_school.community_rating #(draw_stars_16 school.community_rating)
       end
 
       decorated_school.lat.nil? ? next : map_points[:lat] = decorated_school.lat

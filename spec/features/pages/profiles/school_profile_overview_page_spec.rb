@@ -99,6 +99,9 @@ describe 'School Profile Overview Page' do
       include_examples 'should have a footer'
 
       describe 'language switching', js:true do
+        before do
+          page_object.header.wait_for_in_spanish_link
+        end
         its(:header) { is_expected.to_not have_in_english_link }
         its(:header) { is_expected.to have_in_spanish_link }
         context 'switch to spanish', js: true do
@@ -110,6 +113,7 @@ describe 'School Profile Overview Page' do
           end
         end
       end
+
 
       describe 'breadcrumbs' do
         it { is_expected.to have_breadcrumbs }
@@ -164,15 +168,23 @@ describe 'School Profile Overview Page' do
   with_shared_context 'Given school profile page with school test guide module' do
    with_shared_context 'with elementary school in CA' do
       include_example 'should be on the correct page'
-      it { is_expected.to have_link('SBAC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
+      it 'should have the SBAC score report link' do
+        subject
+        link = page.find_link('SBAC score report')
+        expect(link['href']).to include('/gk/common-core-test-guide')
+      end
    end
    with_shared_context 'with Cristo Rey New York High School' do
       include_example 'should be on the correct page'
-      it { is_expected.to_not have_link('SBAC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
+      it { is_expected.to_not have_link('SBAC score report') }
    end
    with_shared_context 'with Cesar Chavez Academy Denver' do
       include_example 'should be on the correct page'
-      it { is_expected.to have_link('PARCC score report',href:'http://localhost:3001/gk/common-core-test-guide/') }
+      it 'should have the SBAC score report link' do
+        subject
+        link = page.find_link('PARCC score report')
+        expect(link['href']).to include('/gk/common-core-test-guide')
+      end
    end
   end
 

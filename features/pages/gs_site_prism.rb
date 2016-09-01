@@ -5,7 +5,7 @@
 # ----------------------------------------------------------------------------------
 class SitePrism::Page
 
-  raise 'SitePrism::Page not defined' if not defined? SitePrism::Page
+  raise 'SitePrism::Page not defined' if ! defined? SitePrism::Page
 
   public :element_exists?
   ElementData = Struct.new(:regex, :symbol, :selector, :find_args)

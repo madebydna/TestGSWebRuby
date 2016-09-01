@@ -24,7 +24,7 @@ feature 'Guided Search Page' do
 
     it 'includes a basic page layout with nav bar ' do
       # Header
-      expect(page).to have_selector('.navbar')
+      expect(page).to have_selector('.header_un')
     end
     it 'includes Help me find a school title module on page' do
       expect(page).to have_selector( 'h3', 'Discover schools that match your needs')
