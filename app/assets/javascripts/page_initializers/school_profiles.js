@@ -19,7 +19,7 @@ $(function() {
     var MINIMUM_HEIGHT_FOR_REFRESH = 1200;
     var AD_DIV_ID = 'Profiles_First_Ad';
     var REFRESH_LIMIT = 1;
-    var EVENT_NAME = 'scroll.adRefresh');
+    var EVENT_NAME = 'scroll.adRefresh';
     var refreshCount = 0;
 
     var setAdRefresh = function() {
