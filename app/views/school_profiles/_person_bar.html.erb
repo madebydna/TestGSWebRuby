@@ -1,12 +1,15 @@
 <% score %>
+<% state_score %>
 <% score_rating %>
 <% max_value = 100 %>
 <% score_percentage = 100.0 * (score.to_f / max_value) %> 
+<% state_average_percentage = 100.0 * (state_score.to_f / max_value) %> 
 
 <% if (1..100).cover?(score_percentage) && (1..10).cover?(score_rating) %>
   <div class="person-bar">
     <div class="filled rating_<%= score_rating %>"
       style="width:<%= score_percentage %>%">
+      <div class="arrow-down"><span style="left:<%= state_average_percentage %>%"></span></div>
       <div class="background"></div>
     </div>
   </div>
