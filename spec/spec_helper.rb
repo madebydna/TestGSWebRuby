@@ -71,6 +71,10 @@ Rails.application.routes.default_url_options[:trailing_slash] = true
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+Capybara::Webkit.configure do |config|
+  config.block_unknown_urls
+end
+
 RSpec.configure do |config|
   config.backtrace_exclusion_patterns = [
     /\/lib\d*\/ruby\//,
@@ -150,9 +154,6 @@ RSpec.configure do |config|
 
   # config.raise_errors_for_deprecations!
 
-  config.before(:each, js: true) do
-    page.driver.try(:block_unknown_urls)
-  end
 
     # use capybara-webkit
   unless ENV['SELENIUM']
