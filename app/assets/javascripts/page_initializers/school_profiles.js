@@ -20,6 +20,7 @@ $(function() {
     var AD_DIV_ID = 'Profiles_First_Ad';
     var REFRESH_LIMIT = 1;
     var EVENT_NAME = 'scroll.adRefresh';
+    var SCROLL_LISTEN_FREQUENCY = 500;
     var refreshCount = 0;
 
     var setAdRefresh = function() {
@@ -39,6 +40,6 @@ $(function() {
       }
     };
 
-    $(window).on(EVENT_NAME, _.throttle(setAdRefresh, 250));
+    $(window).on(EVENT_NAME, _.throttle(setAdRefresh, SCROLL_LISTEN_FREQUENCY));
   })();
 });
