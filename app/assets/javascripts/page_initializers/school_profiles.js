@@ -14,4 +14,31 @@ $(function() {
   else {
     GS.search.autocomplete.searchAutocomplete.init();
   }
+
+  (function() {
+    var MINIMUM_HEIGHT_FOR_REFRESH = 1200;
+    var AD_DIV_ID = 'Profiles_First_Ad';
+    var REFRESH_LIMIT = 1;
+    var EVENT_NAME = 'scroll.adRefresh');
+    var refreshCount = 0;
+
+    var setAdRefresh = function() {
+      var $container = $('.static-container');
+      var $window = $(window);
+      var contentHeight = $container.height();
+      var offset = $container.offset().top;
+      if (contentHeight >= MINIMUM_HEIGHT_FOR_REFRESH) {
+        var halfwayDown = offset + (contentHeight / 2);
+        if ($window.scrollTop() > halfwayDown) {
+          refreshCount += 1;
+          if (refreshCount >= REFRESH_LIMIT) {
+            $window.off(EVENT_NAME);
+          }
+          GS.ad.showAd(AD_DIV_ID);
+        }
+      }
+    };
+
+    $(window).on(EVENT_NAME, _.throttle(setAdRefresh, 250));
+  })();
 });

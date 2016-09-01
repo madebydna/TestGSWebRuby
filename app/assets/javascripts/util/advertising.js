@@ -4,6 +4,7 @@ GS.ad.shownArray = [];
 GS.ad.functionSlotDefinitionArray = [];
 GS.ad.functionAdShowArray = [];
 GS.ad.googleId = '/1002894/';
+GS.ad.slotTimers = {};
 
 if (gon.advertising_enabled) {
 //adobe audience manager code - copied and pasted
@@ -154,7 +155,11 @@ if (gon.advertising_enabled) {
       });
     }
     else {
-      googletag.pubads().refresh([GS.ad.slot[divId]]);
+      var lastRefreshedTime = GS.ad.slotTimers[divId];
+      if (lastRefreshedTime === undefined || (new Date().getTime() - lastRefreshedTime >= 1000)) {
+        GS.ad.slotTimers[divId] = new Date().getTime();
+        googletag.pubads().refresh([GS.ad.slot[divId]]);
+      }
     }
   };
 
