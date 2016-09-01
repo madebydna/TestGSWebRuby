@@ -546,10 +546,6 @@ class INTestProcessor2015ISTEPSubgroups < GS::ETL::TestProcessor
       end
       row
     end
-    .transform('',WithBlock) do |row|
-      require 'byebug'
-      byebug
-    end
     .transform('Rename district id and name columns', MultiFieldRenamer,
     {
       corporation_id: :district_id,
@@ -607,79 +603,74 @@ class INTestProcessor2015ISTEPSubgroups < GS::ETL::TestProcessor
      )
   end
 
-  #BAD DATA!!!!
-  # source("in_2015_subgroup_district_english_gender_combined_header.txt",[], col_sep: "\t") do |s|
-  #   s.transform('Set entity_level to district, parse out state results', WithBlock) do |row|
-  #     if row[:corporation_id] =~ /grand total/i
-  #       row[:corporation_id]='state'
-  #       row[:corporation_name]='state'``
-  #       row[:entity_level]='state'
-  #     else
-  #       row[:entity_level]='district'
-  #     end
-  #     row
-  #   end
-  #   .transform('Rename district id and name columns', MultiFieldRenamer,
-  #   {
-  #     corporation_id: :district_id,
-  #     corporation_name: :district_name
-  #   })
-  #   .transform('',WithBlock) do |row|
-  #     require 'byebug'
-  #     byebug
-  #   end
-  #   .transform('Transpose value columns', Transposer,
-  #      :grade_breakdown_subject,
-  #      :value_float,
-  #      :"8_asian_ela_pass_",
-  #      :"3_female_ela_pass_",
-  #      :"3_male_ela_pass_",
-  #      :"4_female_ela_pass_",
-  #      :"4_male_ela_pass_",
-  #      :"5_female_ela_pass_",
-  #      :"5_male_ela_pass_",
-  #      :"6_female_ela_pass_",
-  #      :"6_male_ela_pass_",
-  #      :"7_female_ela_pass_",
-  #      :"7_male_ela_pass_",
-  #      :"8_female_ela_pass_",
-  #      :"8_male_ela_pass_"
-  #    )
-  # end
-  #
-  # source("in_2015_subgroup_district_english_ses_combined_header.txt",[], col_sep: "\t") do |s|
-  #   s.transform('Set entity_level to district, parse out state results', WithBlock) do |row|
-  #     if row[:corporation_id] =~ /grand total/i
-  #       row[:corporation_id]='state'
-  #       row[:corporation_name]='state'
-  #       row[:entity_level]='state'
-  #     else
-  #       row[:entity_level]='district'
-  #     end
-  #     row
-  #   end
-  #   .transform('Rename district id and name columns', MultiFieldRenamer,
-  #   {
-  #     corporation_id: :district_id,
-  #     corporation_name: :district_name
-  #   })
-  #   .transform('Transpose value columns', Transposer,
-  #      :grade_breakdown_subject,
-  #      :value_float,
-  #      :"3_paid_meals_ela_pass_",
-  #      :"3_freereduced_price_meals_ela_pass_",
-  #      :"4_paid_meals_ela_pass_",
-  #      :"4_freereduced_price_meals_ela_pass_",
-  #      :"5_paid_meals_ela_pass_",
-  #      :"5_freereduced_price_meals_ela_pass_",
-  #      :"6_paid_meals_ela_pass_",
-  #      :"6_freereduced_price_meals_ela_pass_",
-  #      :"7_paid_meals_ela_pass_",
-  #      :"7_freereduced_price_meals_ela_pass_",
-  #      :"8_paid_meals_ela_pass_",
-  #      :"8_freereduced_price_meals_ela_pass_"
-  #    )
-  # end
+  source("in_2015_subgroup_district_english_gender_combined_header.txt",[], col_sep: "\t") do |s|
+    s.transform('Set entity_level to district, parse out state results', WithBlock) do |row|
+      if row[:corporation_id] =~ /grand total/i
+        row[:corporation_id]='state'
+        row[:corporation_name]='state'
+        row[:entity_level]='state'
+      else
+        row[:entity_level]='district'
+      end
+      row
+    end
+    .transform('Rename district id and name columns', MultiFieldRenamer,
+    {
+      corporation_id: :district_id,
+      corporation_name: :district_name
+    })
+    .transform('Transpose value columns', Transposer,
+       :grade_breakdown_subject,
+       :value_float,
+       :"8_asian_ela_pass_",
+       :"3_female_ela_pass_",
+       :"3_male_ela_pass_",
+       :"4_female_ela_pass_",
+       :"4_male_ela_pass_",
+       :"5_female_ela_pass_",
+       :"5_male_ela_pass_",
+       :"6_female_ela_pass_",
+       :"6_male_ela_pass_",
+       :"7_female_ela_pass_",
+       :"7_male_ela_pass_",
+       :"8_female_ela_pass_",
+       :"8_male_ela_pass_"
+     )
+  end
+
+  source("in_2015_subgroup_district_english_ses_combined_header.txt",[], col_sep: "\t") do |s|
+    s.transform('Set entity_level to district, parse out state results', WithBlock) do |row|
+      if row[:corporation_id] =~ /grand total/i
+        row[:corporation_id]='state'
+        row[:corporation_name]='state'
+        row[:entity_level]='state'
+      else
+        row[:entity_level]='district'
+      end
+      row
+    end
+    .transform('Rename district id and name columns', MultiFieldRenamer,
+    {
+      corporation_id: :district_id,
+      corporation_name: :district_name
+    })
+    .transform('Transpose value columns', Transposer,
+       :grade_breakdown_subject,
+       :value_float,
+       :"3_paid_meals_ela_pass_",
+       :"3_freereduced_price_meals_ela_pass_",
+       :"4_paid_meals_ela_pass_",
+       :"4_freereduced_price_meals_ela_pass_",
+       :"5_paid_meals_ela_pass_",
+       :"5_freereduced_price_meals_ela_pass_",
+       :"6_paid_meals_ela_pass_",
+       :"6_freereduced_price_meals_ela_pass_",
+       :"7_paid_meals_ela_pass_",
+       :"7_freereduced_price_meals_ela_pass_",
+       :"8_paid_meals_ela_pass_",
+       :"8_freereduced_price_meals_ela_pass_"
+     )
+  end
 
   source("in_2015_subgroup_district_math_ethnicity_combined_header.txt",[], col_sep: "\t") do |s|
     s.transform('Set entity_level to district, parse out state results', WithBlock) do |row|
@@ -1175,7 +1166,7 @@ end
       state: 'in',
       notes: 'DXT-1567: IN ISTEP 2015 Subgroups test load.',
       url: 'http://www.doe.in.gov/accountability/find-school-and-corporation-data-reports',
-      file: 'ok/2015/output/in.2015.2.public.charter.[level].txt',
+      file: 'in/2015/output/in.2015.1.public.charter.[level].txt',
       level: nil,
       school_type: 'public,charter'
     }

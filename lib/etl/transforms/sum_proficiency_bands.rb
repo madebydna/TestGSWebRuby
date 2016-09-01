@@ -34,8 +34,7 @@ class SumProficiencyBands < GS::ETL::Source
       new_row = row.clone
       new_row[field_to_use] = 'null'
       new_row[:proficiency_band_id] = 'null'
-      @hash[key].each { |k,val| @hash[key][k]=val.to_f }
-      new_row[column_to_aggregate] = @hash[key].values.inject(:+).round(2)
+      new_row[column_to_aggregate] = @hash[key].values.map(&:to_f).inject(:+).round(2)
       [row, new_row]
     else
       row
