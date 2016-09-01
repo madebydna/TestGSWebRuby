@@ -15,13 +15,12 @@ GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
   var transitionToMobile = 991;
 
   var init = function () {
-    cta = $("#cta");
+    cta = $('.js-profile-sticky');
     // only init when cta is on the page. :)
     if (isCTADefined()) {
-      $(window).on('scroll', _.throttle(manageFixedPositions, 50));
+      $(window).on('scroll', _.throttle(recalculateCTAResize, 50));
       $(window).on('resize', _.debounce(recalculateCTAResize, 100));
-      
-      // may also need to call this after ads load...
+
       recalculateCTAResize();
     }
   };
@@ -67,7 +66,7 @@ GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
   };
 
   var setCTARowToDefault = function () {
-    $("#cta").parent().height('auto');
+    cta.parent().height('auto');
   };
 
   // branching

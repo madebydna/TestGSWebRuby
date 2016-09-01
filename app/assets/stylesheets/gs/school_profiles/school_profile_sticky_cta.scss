@@ -3,8 +3,9 @@ $cta_shadow: #CCCCCC;
 $cta_button_border: #dbe6eb;
 $cta_icon_color: #2ba3dc;
 
-#cta {
+#profile-sticky-container {
   z-index : 1;
+
   &.fixed-top {
     position: fixed;
     top: 0;
@@ -20,14 +21,15 @@ $cta_icon_color: #2ba3dc;
     position: absolute;
     bottom: 0px;
   }
+}
+
+#cta {
 
   &.cta-container {
     width: 299px;
     height: 84px;
     background-color: $cta_background;
     box-shadow: 0px 2px 5px 3px $cta_shadow;
-
-
 
     > div:first-child,
     > div:nth-child(2) {
