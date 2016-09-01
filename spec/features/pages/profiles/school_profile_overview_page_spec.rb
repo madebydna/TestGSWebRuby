@@ -24,6 +24,13 @@ def expect_it_to_have_element(element)
   instance_exec(&proc)
 end
 
+RSpec::Matchers.define :have_link_with do |text, hash|
+  match do |actual|
+    l = page.find_link(text)
+    l && l['href'].include?(hash[:href])
+  end
+end
+
 def create_reviews(count, school)
   FactoryGirl.create_list(
     :five_star_review,
@@ -109,7 +116,6 @@ describe 'School Profile Overview Page' do
           it 's' do
             p = SchoolProfileOverviewPage.new
             p.header.wait_for_in_english_link
-            screenshot_and_open_image
             expect(p.header).to have_in_english_link
           end
         end
@@ -119,24 +125,24 @@ describe 'School Profile Overview Page' do
       describe 'breadcrumbs' do
         it { is_expected.to have_breadcrumbs }
         its('first_breadcrumb.title') { is_expected.to have_text('California') }
-        its('first_breadcrumb') { is_expected.to have_link('California', href: 'http://localhost:3001/california/') }
+        its('first_breadcrumb') { is_expected.to have_link_with('California', href: '/california/') }
         its('second_breadcrumb.title') { is_expected.to have_text('Alameda') }
-        its('second_breadcrumb') { is_expected.to have_link('Alameda', href: 'http://localhost:3001/california/alameda/') }
+        its('second_breadcrumb') { is_expected.to have_link_with('Alameda', href: '/california/alameda/') }
         its('third_breadcrumb.title') { is_expected.to have_text('Schools') }
-        its('third_breadcrumb') { is_expected.to have_link('Schools', href: 'http://localhost:3001/california/alameda/schools/') }
+        its('third_breadcrumb') { is_expected.to have_link_with('Schools', href: '/california/alameda/schools/') }
         its('fourth_breadcrumb.title') { is_expected.to have_text('Alameda High School') }
-        its('fourth_breadcrumb') { is_expected.to have_link('Alameda High School', subject.current_url) }
+        its('fourth_breadcrumb') { is_expected.to have_link_with('Alameda High School', href: subject.current_path) }
         its('fourth_breadcrumb') { is_expected.to have_breadcrumb_link }
 
         with_shared_context 'with a Washington, DC school' do
           its('first_breadcrumb.title') { is_expected.to have_text('District of Columbia') }
-          its('first_breadcrumb') { is_expected.to have_link('District of Columbia', href: 'http://localhost:3001/washington-dc/') }
+          its('first_breadcrumb') { is_expected.to have_link_with('District of Columbia', href: '/washington-dc/') }
           its('second_breadcrumb.title') { is_expected.to have_text('Washington, D.C.') }
-          its('second_breadcrumb') { is_expected.to have_link('Washington, D.C.', href: 'http://localhost:3001/washington-dc/washington/') }
+          its('second_breadcrumb') { is_expected.to have_link_with('Washington, D.C.', href: '/washington-dc/washington/') }
           its('third_breadcrumb.title') { is_expected.to have_text('Schools') }
-          its('third_breadcrumb') { is_expected.to have_link('Schools', href: 'http://localhost:3001/washington-dc/washington/schools/') }
+          its('third_breadcrumb') { is_expected.to have_link_with('Schools', href: '/washington-dc/washington/schools/') }
           its('fourth_breadcrumb.title') { is_expected.to have_text('Washington Dc Ps Head Start') }
-          its('fourth_breadcrumb') { is_expected.to have_link('Washington Dc Ps Head Start', subject.current_url) }
+          its('fourth_breadcrumb') { is_expected.to have_link_with('Washington Dc Ps Head Start', href: subject.current_path) }
           its('fourth_breadcrumb') { is_expected.to have_breadcrumb_link }
         end
       end
