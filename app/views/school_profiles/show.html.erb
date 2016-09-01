@@ -9,12 +9,13 @@
     <div>
       <%= render 'toc' %>
     </div>
+    <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+               width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
     <div>
       <%= render 'test_scores', test_scores: @school_profile.test_scores %>
     </div>
-    <div>
-      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner', width: 320, height: 50, css_class: 'mbl' %>
-    </div>
+    <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+               width: 320, height: 50, css_class: 'mbl' %>
     <div>
       <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
     </div>
