@@ -4,9 +4,14 @@ def log_in_user(user)
   host = Capybara.app_host ? URI(Capybara.app_host).host : '127.0.0.1'
   auth_token = UserAuthenticationToken.new(user).generate
 
-  page.driver.browser.set_cookie("auth_token=#{auth_token}; domain=#{host}")
-  page.driver.browser.set_cookie("MEMID=#{user.id}; domain=#{host}")
-  page.driver.browser.set_cookie("community_www=#{auth_token.gsub('=', '~')}; domain=#{host}")
+  if page.driver.class.name == 'Capybara::Webkit::Driver'
+    cookie_settable = page.driver
+  else
+    cookie_settable = page.driver.browser
+  end
+  cookie_settable.set_cookie("auth_token=#{auth_token}; domain=#{host}")
+  cookie_settable.set_cookie("MEMID=#{user.id}; domain=#{host}")
+  cookie_settable.set_cookie("community_www=#{auth_token.gsub('=', '~')}; domain=#{host}")
 end
 
 shared_context 'signed in verified user' do
