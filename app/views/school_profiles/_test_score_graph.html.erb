@@ -4,6 +4,7 @@
 <% grey_score = 100.to_f - score %>
 <% max_value = 100 %>
 <% score_percentage = 100.0 * (score.to_f / max_value) %> 
+<% state_average_percentage = 100.0 * (state_score.to_f / max_value) %> 
 
 <% #height maybe future  %>
 
@@ -12,6 +13,6 @@
     <div class="color-row rating_<%= score_rating %>"
       style="width:<%= score_percentage %>%"></div>
     <div class="grey-row" style="width:<%= grey_score %>%"></div>
-    <div class="arrow-down" style="left:<%= state_score %>%"></div>
+    <div class="arrow-down"><span style="left:<%= state_average_percentage %>%"></span></div>
   </div>
 <% end %>
