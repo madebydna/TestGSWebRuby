@@ -17,7 +17,7 @@
 // REMOVE ME! We need to figure out @extend usage first though.
 @import "resources/bootstrap/bootstrap";
 @import "gs/variables";
-@import "gs/gs_icon_font";
+@import "fonts/gs_icon_font";
 @import "gs/school_profiles";
 @import "gs/objects/breadcrumbs.scss";
 @import "gs/school_profiles/rating_container";
@@ -25,7 +25,7 @@
 @import "gs/school_profiles/_circle_rating_with_label";
 @import "gs/school_profiles/rating_score_item";
 @import "gs/objects/footer.css.scss";
-@import "gs/fonts-opensans";
+@import "fonts/fonts-opensans";
 @import "gs/mixins";
 @import "sprites/*";
 @import "gs/buttons";
@@ -67,7 +67,7 @@
 @import "gs/objects/external_link_callout";
 @import "gs/objects/rectangle_inset";
 @import "gs/objects/home.css.scss";
-@import "gs/fonts-opensans";
-@import "gs/fonts-opensans-semibold";
-@import "gs/fonts-robotoslab-bold";
+@import "fonts/fonts-opensans";
+@import "fonts/fonts-opensans-semibold";
+@import "fonts/fonts-robotoslab-bold";
 @import "gs/objects/footer.css.scss";
