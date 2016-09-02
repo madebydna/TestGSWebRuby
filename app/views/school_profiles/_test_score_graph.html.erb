@@ -9,7 +9,7 @@
 <% #height maybe future  %>
 
 <% if (1..100).cover?(score_percentage) && (1..10).cover?(score_rating) %>
-  <div class="bar-graph ">
+  <div class="single-bar-viz ">
     <div class="color-row rating_<%= score_rating %>"
       style="width:<%= score_percentage %>%"></div>
     <div class="grey-row" style="width:<%= grey_score %>%"></div>
