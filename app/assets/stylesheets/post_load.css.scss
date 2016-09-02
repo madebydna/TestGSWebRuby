@@ -14,7 +14,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// REMOVE ME! We need to figure out @extend usage first though.
 @import "resources/bootstrap/bootstrap";
 @import "gs/variables";
 @import "fonts/gs-icon-font";
@@ -29,7 +28,7 @@
 @import 'school_profiles/school_profile_sticky_cta';
 @import 'components/person-bar-viz';
 @import 'components/static-right-rail-container';
-@import "gs/objects/breadcrumbs.scss";
+@import "components/breadcrumbs";
 @import "components/rating-container";
 @import "components/circle-rating";
 @import "components/circle-rating-with-label";
