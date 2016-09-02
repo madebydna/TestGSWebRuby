@@ -18,37 +18,37 @@ module SchoolProfiles
     CHAR_CACHE_ACCESSORS = [
       {
         :data_key => '4-year high school graduation rate',
-        :visualization => :person_bar,
+        :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'Average SAT score',
-        :visualization => :test_score_graph,
+        :visualization => :single_bar_viz,
         :formatting => [:round]
       },
       {
         :data_key => 'SAT percent participation',
-        :visualization => :person_bar,
+        :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'Average ACT score',
-        :visualization => :test_score_graph,
+        :visualization => :single_bar_viz,
         :formatting => [:round]
       },
       {
         :data_key => 'ACT participation',
-        :visualization => :person_bar,
+        :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'AP Course Participation',
-        :visualization => :person_bar,
+        :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
         :data_key => 'Percent of students who meet UC/CSU entrance requirements',
-        :visualization => :test_score_graph,
+        :visualization => :single_bar_viz,
         :formatting => [:round, :percent]
       }
     ].freeze

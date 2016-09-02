@@ -5,12 +5,13 @@ describe 'school_profile/_nearby_school' do
   let(:valid_props) do
     {
       score: 1,
+      state_score: 1,
       score_rating: 1
     }
   end
 
   def render_partial(props)
-    render partial: 'school_profiles/person_bar', locals: props
+    render partial: 'school_profiles/person_bar_viz', locals: props
   end
 
   (1..10).to_a.each do |input|
