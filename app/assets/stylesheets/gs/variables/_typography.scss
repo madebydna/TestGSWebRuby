@@ -1,3 +1,5 @@
+// Typography
+// -------------------------
 $line-height-base: 1.5;
 $font-family-sans-serif:  "opensans-regular", Arial, "Helvetica Neue", Helvetica, sans-serif;
 $font-family-base:        $font-family-sans-serif;
@@ -34,3 +36,15 @@ $font-data-high-level: 36px $font-family-base-bold;
 $font-data-second-level: $font-size-h3 $font-family-base-bold;
 $font-data-third-level: $font-size-h5 $font-family-base-bold;
 $font-data-fourth-level: $font-size-h6 $font-family-base-bold;
+
+$font-size-base: 12px;
+$font-size-l7: ceil(($font-size-base * 3));
+$font-size-l6: ceil(($font-size-base * 2.6));
+$font-size-l5: ceil(($font-size-base * 2.15));
+$font-size-l4: ceil(($font-size-base * 1.7));
+$font-size-l3: ceil(($font-size-base * 1.32));
+$font-size-l2: ceil(($font-size-base * 1.13));
+$font-size-l1: ceil(($font-size-base * 1.05));
+$font-size-s1: ceil(($font-size-base * .95));
+$font-size-s2: ceil(($font-size-base * .87));
+$font-size-s3: ceil(($font-size-base * .75));
