@@ -19,7 +19,7 @@ module SchoolProfiles
     end
 
     def initialize
-      @visualization = :test_score_graph
+      @visualization = :single_bar_viz
     end
 
     def formatted_score
