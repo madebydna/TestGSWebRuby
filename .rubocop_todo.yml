@@ -1082,16 +1082,6 @@ Style/NestedTernaryOperator:
 Style/Next:
   Enabled: false
 
-# Offense count: 5
-# Cop supports --auto-correct.
-Style/NilComparison:
-  Exclude:
-    - 'app/controllers/modules/url_helper.rb'
-    - 'app/controllers/user_email_preferences_controller.rb'
-    - 'app/models/user.rb'
-    - 'script/feeds/feed_builders/test_score/test_score_feed_transformer.rb'
-    - 'script/http_archive_analyzer.rb'
-
 # Offense count: 6
 # Cop supports --auto-correct.
 # Configuration parameters: IncludeSemanticChanges.

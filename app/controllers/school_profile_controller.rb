@@ -123,6 +123,11 @@ class SchoolProfileController < SchoolController
       %w(AZ IN).each {|state| hash[state] = "#{@school.name}: The Latest School Ratings & Reviews | GreatSchools" }
       %w(TX SD).each {|state| hash[state] = "#{@school.name} | Best School Ratings by GreatSchools" }
       %w(NV SC).each {|state| hash[state] = "#{@school.name}: Everything You Need to Know | GreatSchools" }
+      %w(CT).each {|state| hash[state] = "What You Need To Know About #{@school.name} | GreatSchools" }
+      %w(MN).each {|state| hash[state] = "Everything (!) About #{@school.name} | GreatSchools" }
+      %w(AL).each {|state| hash[state] = "How Does #{@school.name} Compare? | GreatSchools" }
+      %w(NE).each {|state| hash[state] = "Updated! Every Stat About #{@school.name} | GreatSchools" }
+      %w(NM).each {|state| hash[state] = "Updated! Scores for #{@school.name} | GreatSchools" }
       hash
     )
   end

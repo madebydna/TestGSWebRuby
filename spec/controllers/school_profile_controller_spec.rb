@@ -161,6 +161,26 @@ describe SchoolProfileController do
         end
       end
 
+      describe 'State to title mappings' do
+        before do
+          allow(controller).to receive(:action_name).and_return 'overview'
+        end
+        [
+          ['CT', "What You Need To Know About Foo School | GreatSchools"],
+          ['MN', "Everything (!) About Foo School | GreatSchools"],
+          ['AL', "How Does Foo School Compare? | GreatSchools"],
+          ['NE', "Updated! Every Stat About Foo School | GreatSchools"],
+          ['NM', "Updated! Scores for Foo School | GreatSchools"]
+        ].each do |state, expected_title, school_name|
+          it "#{school_name} in #{state} should have title #{expected_title}" do
+            controller.instance_variable_set(:@school, school)
+            school.name = 'Foo School'
+            school.state = state
+            expect(subject).to eq(expected_title)
+          end
+        end
+      end
+
     end
 
     describe '#title_state_options' do

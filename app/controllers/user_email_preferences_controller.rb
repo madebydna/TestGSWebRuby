@@ -42,7 +42,7 @@ class UserEmailPreferencesController < ApplicationController
   def auto_graduate_value
     if params['decline_auto_graduate'] == 'true'
       return 'false'
-    elsif params['decline_auto_graduate'] == nil
+    elsif params['decline_auto_graduate'].nil?
       return 'true'
     end
   end

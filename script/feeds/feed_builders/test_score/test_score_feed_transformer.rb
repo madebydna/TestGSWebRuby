@@ -89,7 +89,7 @@ module Feeds
 
     def transpose_band_name(band)
       # For proficient and above band id is always null in database
-      band == nil ? PROFICIENT_AND_ABOVE_BAND:  band
+      band.nil? ? PROFICIENT_AND_ABOVE_BAND:  band
     end
 
     def transpose_band_id(band, data, entity_level)
