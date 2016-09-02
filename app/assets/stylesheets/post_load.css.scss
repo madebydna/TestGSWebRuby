@@ -15,17 +15,14 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "resources/bootstrap/bootstrap";
-@import "gs/variables";
+@import "gs/variables"; // deprecated
 @import "fonts/gs-icon-font";
-@import 'mixins/circle-rating';
-@import 'mixins/icon-badge';
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
 @import 'components/show-more';
 @import 'components/five-star-rating';
 @import 'components/badge-and-content';
 @import 'components/gs-rating-with-label';
-@import 'school_profiles/hero.scss';
-@import 'school_profiles/toc.scss';
-@import 'school_profiles/school_profile_sticky_cta';
 @import 'components/person-bar-viz';
 @import 'components/static-right-rail-container';
 @import "components/breadcrumbs";
@@ -35,7 +32,6 @@
 @import "components/rating-score-item";
 @import "gs/objects/footer.css.scss";
 @import "fonts/fonts-opensans";
-@import "gs/mixins";
 @import "sprites/*";
 @import "gs/buttons";
 @import "base/spacing";
@@ -80,3 +76,6 @@
 @import "fonts/fonts-opensans-semibold";
 @import "fonts/fonts-robotoslab-bold";
 @import "gs/objects/footer.css.scss";
+@import 'school_profiles/hero.scss';
+@import 'school_profiles/toc.scss';
+@import 'school_profiles/school_profile_sticky_cta';
