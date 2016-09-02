@@ -20,10 +20,10 @@
 @import "fonts/gs_icon_font";
 @import "gs/school_profiles";
 @import "gs/objects/breadcrumbs.scss";
-@import "gs/school_profiles/rating_container";
-@import "gs/school_profiles/_circle_rating";
-@import "gs/school_profiles/_circle_rating_with_label";
-@import "gs/school_profiles/rating_score_item";
+@import "components/rating-container";
+@import "components/circle-rating";
+@import "components/circle-rating-with-label";
+@import "components/rating-score-item";
 @import "gs/objects/footer.css.scss";
 @import "fonts/fonts-opensans";
 @import "gs/mixins";

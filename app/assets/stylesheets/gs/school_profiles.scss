@@ -1,14 +1,14 @@
 @import 'mixins/circle-rating';
 @import 'mixins/icon-badge';
-@import 'school_profiles/_show_more';
-@import 'school_profiles/_five_star_rating';
-@import 'school_profiles/_badge_and_content';
-@import 'school_profiles/_gs_rating_with_label';
+@import 'components/show-more';
+@import 'components/five-star-rating';
+@import 'components/badge-and-content';
+@import 'components/gs-rating-with-label';
 @import 'school_profiles/hero.scss';
 @import 'school_profiles/toc.scss';
 @import 'school_profiles/school_profile_sticky_cta';
-@import 'school_profiles/_person_bar';
-@import 'school_profiles/static_right_rail_container';
+@import 'components/person-bar';
+@import 'components/static-right-rail-container';
 
 .static-container .content > div {
   padding-top: 15px;
