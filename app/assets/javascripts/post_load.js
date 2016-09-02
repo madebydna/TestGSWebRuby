@@ -5,6 +5,6 @@
 //= require util/handlebars
 //= require util/url_params
 //= require page_initializers/school_profiles
-//= require school_profiles
+//= require components/show_more
 //= require util/school_profile_sticky_cta.js
 //= require ./util/advertising.js
