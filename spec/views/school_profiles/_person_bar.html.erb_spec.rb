@@ -17,7 +17,7 @@ describe 'school_profile/_nearby_school' do
     describe "when valid score_rating is #{input}" do
       it 'renders the visualization' do
         render_partial(valid_props.merge(score_rating: input))
-        expect(rendered).to have_css('.person-bar')
+        expect(rendered).to have_css('.person-bar-viz')
       end
     end
   end
@@ -35,7 +35,7 @@ describe 'school_profile/_nearby_school' do
     describe "when valid score is #{input}" do
       it 'renders the visualization' do
         render_partial(valid_props.merge(score: input))
-        expect(rendered).to have_css('.person-bar')
+        expect(rendered).to have_css('.person-bar-viz')
       end
     end
   end

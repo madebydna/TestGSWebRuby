@@ -1,4 +1,4 @@
-.person-bar {
+.person-bar-viz {
   .arrow-down {
     position: relative;
     left: -7px;
@@ -15,13 +15,15 @@
   width: 250px;
   height: 38px;
   background-color: #dbe6eb;
+
+  .filled {
+    height: 100%;
+  }
+  .background {
+    width: 250px;
+    height: 38px;
+    background-repeat: repeat-x;
+    background-image: image-url('transparent_person.png');
+  }
 }
-.person-bar .filled {
-  height: 100%;
-}
-.person-bar .background {
-  width: 250px;
-  height: 38px;
-  background-repeat: repeat-x;
-  background-image: image-url('transparent_person.png');
-}
+
