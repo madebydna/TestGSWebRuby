@@ -32,7 +32,7 @@
 
       <% if data_values.size > initial_size %>
         <div class="rating-container__more-items">
-          <%= render 'show_more', items: data_values[initial_size..-1] %>
+          <%= render 'drawer', items: data_values[initial_size..-1] %>
         </div>
       <% end %>
     </div>
