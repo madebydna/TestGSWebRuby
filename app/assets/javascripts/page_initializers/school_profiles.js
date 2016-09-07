@@ -16,30 +16,38 @@ $(function() {
   }
 
   (function() {
-    var MINIMUM_HEIGHT_FOR_REFRESH = 1200;
-    var AD_DIV_ID = 'Profiles_First_Ad';
-    var REFRESH_LIMIT = 1;
-    var EVENT_NAME = 'scroll.adRefresh';
-    var SCROLL_LISTEN_FREQUENCY = 500;
-    var refreshCount = 0;
+    /**
+     * Refreshes an ad exactly once when the user scrolls past 50% in some container.
+     * Requires the container to be at least minHeight. If the container ever grows
+     * to exceed minHeight, then the ad would immediately be eligible for refresh if
+     * the user is scrolled > 50% of the way down. Once the ad is refreshed once, there
+     * will be no further refreshes.
+     *
+     * @param adDivId div ID where the ad is defined.
+     * @param containerSelector Selector to identify the container
+     * @param minHeight Minimum height for the container
+     */
+    var refreshAdOnScroll = function(adDivId, containerSelector, minHeight) {
+      var eventName = 'scroll.adRefresh.' + adDivId;
+      var scrollListenFrequency = 500;
 
-    var setAdRefresh = function() {
-      var $container = $('.static-container');
-      var $window = $(window);
-      var contentHeight = $container.height();
-      var offset = $container.offset().top;
-      if (contentHeight >= MINIMUM_HEIGHT_FOR_REFRESH) {
-        var halfwayDown = offset + (contentHeight / 2);
-        if ($window.scrollTop() > halfwayDown) {
-          refreshCount += 1;
-          if (refreshCount >= REFRESH_LIMIT) {
-            $window.off(EVENT_NAME);
+      var refreshAdIfEligible = function() {
+        var $container = $(containerSelector);
+        var $window = $(window);
+        var contentHeight = $container.height();
+        var offset = $container.offset().top;
+        if (contentHeight >= minHeight) {
+          var halfwayDown = offset + (contentHeight / 2);
+          if ($window.scrollTop() > halfwayDown) {
+            $window.off(eventName);
+            GS.ad.showAd(adDivId);
           }
-          GS.ad.showAd(AD_DIV_ID);
         }
-      }
+      };
+
+      $(window).on(eventName, _.throttle(refreshAdIfEligible, scrollListenFrequency));
     };
 
-    $(window).on(EVENT_NAME, _.throttle(setAdRefresh, SCROLL_LISTEN_FREQUENCY));
+    refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   })();
 });
