@@ -17,7 +17,7 @@ describe 'Visitor' do
   end
 
   scenario 'views new school profile with valid school' do
-    school = create(:alameda_high_school, id: 1)
+    school = create(:school_with_new_profile, id: 1)
 
     visit school_path(school)
 
@@ -25,13 +25,13 @@ describe 'Visitor' do
   end
 
   scenario 'views new school profile invalid school' do
-    school = build(:alameda_high_school)
+    school = build(:school_with_new_profile)
     visit school_path(school)
     expect(page).to have_content('school could not be found')
   end
 
   scenario 'sees the school\'s GreatSchools rating' do
-    school = create(:alameda_high_school, name: 'Foo bar school')
+    school = create(:school_with_new_profile, name: 'Foo bar school')
     rating = create(:cached_gs_rating, state: 'ca', school_id: school.id)
 
     visit school_path(school)
@@ -42,7 +42,7 @@ describe 'Visitor' do
   end
 
   scenario 'sees school address info' do
-    school = create(:alameda_high_school,
+    school = create(:school_with_new_profile,
       name: 'Foo bar school',
       street: '123 yellow brick road',
       city: 'Atlantis',
@@ -58,26 +58,26 @@ describe 'Visitor' do
   end
 
   scenario 'sees the school\'s type' do
-    school = create(:alameda_high_school, type: 'charter')
+    school = create(:school_with_new_profile, type: 'charter')
     visit school_path(school)
     expect(page).to have_content('Charter')
   end
 
   scenario 'sees the school\'s district name' do
     district = create(:alameda_city_unified)
-    school = create(:alameda_high_school, district_id: district.id)
+    school = create(:school_with_new_profile, district_id: district.id)
     visit school_path(school)
     expect(page).to have_content(district.name)
   end
 
   scenario 'sees the school\'s phone number' do
-    school = create(:alameda_high_school, phone: '123-555-1234')
+    school = create(:school_with_new_profile, phone: '123-555-1234')
     visit school_path(school)
     expect(page).to have_content(school.phone)
   end
 
   scenario 'sees a link to the school\'s website' do
-    school = create(:alameda_high_school, home_page_url: 'http://www.google.com')
+    school = create(:school_with_new_profile, home_page_url: 'http://www.google.com')
     visit school_path(school)
     expect(SchoolProfilesPage.new).to have_link(school.home_page_url,
       href: school.home_page_url
@@ -85,7 +85,7 @@ describe 'Visitor' do
   end
 
   context 'when the school has more than one grade' do
-    let!(:school) { create(:alameda_high_school, level: '4,5,6') }
+    let!(:school) { create(:school_with_new_profile, level: '4,5,6') }
     scenario 'sees the school\'s grade range' do
       visit school_path(school)
       expect(page).to have_content('Grades')
@@ -94,7 +94,7 @@ describe 'Visitor' do
   end
 
   context 'when the school has only one grade' do
-    let!(:school) { create(:alameda_high_school, level: '6') }
+    let!(:school) { create(:school_with_new_profile, level: '6') }
     scenario 'sees the school\'s grade range' do
       visit school_path(school)
       expect(page).to have_content('Grade')
@@ -104,7 +104,7 @@ describe 'Visitor' do
   end
 
   scenario 'sees how many students are at the school' do
-    school = create(:alameda_high_school)
+    school = create(:school_with_new_profile)
     create(:cached_enrollment, state: 'ca', school_id: school.id)
     visit school_path(school)
     expect(page).to have_content('1,200')
@@ -113,7 +113,7 @@ describe 'Visitor' do
   end
 
   scenario 'sees the number of all reviews and the average 5-star rating' do
-    school = create(:alameda_high_school)
+    school = create(:school_with_new_profile)
     create(:cached_reviews_info, state: 'ca', school_id: school.id)
     visit school_path(school)
     page_object = SchoolProfilesPage.new

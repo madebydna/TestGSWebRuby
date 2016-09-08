@@ -13,7 +13,7 @@ describe "Visitor" do
   end
 
   scenario "sees test score rating in a non-enhanced rating state" do
-    school = create(:alameda_high_school, id: 1)
+    school = create(:school_with_new_profile, id: 1)
     create(:cached_ratings,
            :with_gs_rating,
            school_id: school.id,
@@ -28,7 +28,7 @@ describe "Visitor" do
   end
 
   scenario "sees test score rating in a enhanced rating state" do
-    school = create(:alameda_high_school, id: 2)
+    school = create(:school_with_new_profile, id: 2)
     rating_cache = create(:cached_ratings,
                           :with_test_score_and_gs_rating,
                           school_id: 2,
@@ -45,7 +45,7 @@ describe "Visitor" do
   end
 
   scenario 'sees test scores by subject' do
-    school = create(:alameda_high_school, id: 3)
+    school = create(:school_with_new_profile, id: 3)
     create(
       :cached_ratings,
       :with_gs_rating,
@@ -61,7 +61,7 @@ describe "Visitor" do
 
   context 'when there are multiple years of data' do
     before do
-      @school = create(:alameda_high_school, id: 3)
+      @school = create(:school_with_new_profile, id: 3)
       create(:ca_caaspp_schoolwide_ela_2014and2015, school_id: @school.id)
     end
     scenario 'sees test scores by subject' do
@@ -82,7 +82,7 @@ describe "Visitor" do
 
   context 'when there are more than three scores' do
     before do
-      @school = create(:alameda_high_school, id: 3)
+      @school = create(:school_with_new_profile, id: 3)
       create(
         :cached_ratings,
         :with_gs_rating,

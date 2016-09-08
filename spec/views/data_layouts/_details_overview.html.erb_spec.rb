@@ -24,7 +24,7 @@ describe '_details_overview.html.erb' do
   before do
     view.extend(UrlHelper)
     assign(:school, FactoryGirl.build(:alameda_high_school))
-    render 'school_profile/data_layouts/details_overview', data: data
+    render 'deprecated_school_profile/data_layouts/details_overview', data: data
   end
 
   context 'when given a hash with school details data' do

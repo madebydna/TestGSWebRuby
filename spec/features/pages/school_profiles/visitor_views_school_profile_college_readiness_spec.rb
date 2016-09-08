@@ -13,7 +13,7 @@ describe "Visitor" do
   end
 
   scenario "sees college readiness section" do
-    school = create(:alameda_high_school, id: 1)
+    school = create(:school_with_new_profile, id: 1)
     visit school_path(school)
 
     expect(page_object).to have_college_readiness
@@ -21,7 +21,7 @@ describe "Visitor" do
   end
 
   scenario "sees graduation rate" do
-    school = create(:alameda_high_school)
+    school = create(:school_with_new_profile)
     create(
       :custom_characteristics_all_students_cache,
       school_id: school.id,

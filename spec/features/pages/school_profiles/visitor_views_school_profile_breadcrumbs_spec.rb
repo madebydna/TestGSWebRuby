@@ -8,7 +8,7 @@ describe 'Visitor' do
   end
   
   scenario 'sees breadcrumbs' do
-    school = create(:alameda_high_school, id: 1)
+    school = create(:school_with_new_profile, id: 1)
 
     visit school_path(school)
 
