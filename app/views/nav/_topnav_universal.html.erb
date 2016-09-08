@@ -863,7 +863,7 @@
             <form name="contentResultsSearchForm" class="js-nav-content-search-form dn" style="width: 100%; margin-bottom:0;" action="/gk/" method="get">
               <div style="width: 100%; display: table">
                 <div class="search_bar_size js-nav-search-bar">
-                  <span class="js-nav-content-search-input">
+                  <span>
                     <input type="text"
                            name="s"
                            value=""
@@ -1070,6 +1070,8 @@
     var schoolSearchForm = document.getElementsByClassName('js-nav-school-search-from')[0];
     var contentSearchForm = document.getElementsByClassName('js-nav-content-search-form')[0];
 
+
+    var contentSearchInput = document.querySelector('.js-nav-content-search-input');
     var schoolSearchMobileButton = document.getElementsByClassName('js-choose-school-search')[0];
     var contentSearchMobileButton = document.getElementsByClassName('js-choose-content-search')[0];
 
@@ -1184,11 +1186,68 @@
         });
     };
 
+    var setContentSearchBarSubmitHandler = function () {
+      contentSearchForm.addEventListener("submit", submitContentSearch, false);
+    };
+
+    var submitContentSearch = function (e) {
+      e.preventDefault();
+      var contentSearchText = contentSearchInput.value;
+      var sanitizedSearch = sanitizeString(contentSearchText);
+      window.location.href = '/gk/?s='+ sanitizedSearch;
+    };
+
+    var sanitizeString = function (string) {
+      var searchQuery = string;
+      var searchQueryTokenized = searchQuery.split(' ');
+      var sanitizedTokens = [];
+      for (var i = 0; i < searchQueryTokenized.length; i++) {
+        var tokenString = searchQueryTokenized[i];
+        sanitizedTokens.push(relevanssiRemovePunct(tokenString));
+      }
+      return sanitizedTokens.join('+');
+    };
+
+    var relevanssiRemovePunct  = function (contentSearchString) {
+
+      var searchString = contentSearchString;
+      searchString = searchString.replace(/<[^>]*>/, ' ');
+      searchString = searchString.replace("\r", '');    // --- replace with empty space
+      searchString = searchString.replace("\n", ' ');   // --- replace with space
+      searchString = searchString.replace("\t", ' ');   // --- replace with space
+      searchString = searchString.replace(/\\/g, '');   // --- replace backslash with nothing
+
+      searchString = searchString.replace('ß', 'ss');
+      searchString = searchString.replace("·", '');
+      searchString = searchString.replace("…", '');
+      searchString = searchString.replace("€", '');
+      searchString = searchString.replace("&shy;", '');
+      searchString = searchString.replace("&nbsp;", ' ');
+      searchString = searchString.replace('&#8217;', ' ');
+      searchString = searchString.replace("'", '');
+      searchString = searchString.replace("’", ' ');
+      searchString = searchString.replace("‘", ' ');
+      searchString = searchString.replace("”", ' ');
+      searchString = searchString.replace("“", ' ');
+      searchString = searchString.replace("„", ' ');
+      searchString = searchString.replace("´", ' ');
+      searchString = searchString.replace("—", ' ');
+      searchString = searchString.replace("–", ' ');
+      searchString = searchString.replace("×", ' ');
+      searchString = searchString.replace("×", ' ');
+      searchString = searchString.replace(/[!"\#$%&'()*+\-./:;<>\[\\\]^_`{|}~]+/,""); // remove punctuation as best to mimic relevanssi punct
+      searchString = searchString.replace(/[ \t\r\n\v\f]/, " ");
+      searchString = searchString.trim();
+
+      return searchString;
+    };
+
     var init = function() {
       setDesktopSearchToggleMenuHandler();
       setDesktopSearchBarToggleHandler();
       setMobileChooseContentButtonHandler();
       setMobileChooseSearchButtonHandler();
+      setContentSearchBarSubmitHandler();
       initializeSearchBar();
     };
 
