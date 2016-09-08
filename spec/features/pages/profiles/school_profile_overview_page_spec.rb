@@ -117,11 +117,6 @@ describe 'School Profile Overview Page' do
           context 'switch to english' do
             before { page_object.header.switch_to_english }
             its(:header) { is_expected.to have_in_spanish_link }
-            it 's' do
-              p = SchoolProfileOverviewPage.new
-              p.header.wait_for_in_english_link
-              expect(p.header).to have_in_english_link
-            end
           end
         end
       end
