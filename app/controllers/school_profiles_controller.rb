@@ -24,6 +24,7 @@ class SchoolProfilesController < ApplicationController
         sp.hero = hero
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
+        sp.reviews = reviews
       end
     )
   end
@@ -64,6 +65,10 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::CollegeReadiness.new(
       school_cache_data_reader: school_cache_data_reader 
     )
+  end
+
+  def reviews
+    SchoolProfiles::Reviews.new(school)
   end
 
   def breadcrumbs

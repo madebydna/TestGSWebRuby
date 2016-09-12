@@ -1,0 +1,4 @@
+<% reviews %>
+<div class="review-list">
+  <%= render partial: "review", collection: reviews.having_comments, as: :review %>
+</div>

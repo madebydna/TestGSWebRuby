@@ -1,0 +1,15 @@
+<% review = SchoolProfileReviewDecorator.decorate(review) %>
+<div class="review">
+  <div class="review__user-type">
+    <%= review.user_type %>
+  </div>
+  <div class="review__header">
+    <%= review.topic_label %>
+  </div>
+  <div class="review__text">
+    <%= review.comment %>
+  </div>
+  <div class="review__date">
+    <%= review.posted %>
+  </div>
+</div>
