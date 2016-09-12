@@ -1,15 +1,31 @@
 <% review = SchoolProfileReviewDecorator.decorate(review) %>
 <div class="review">
-  <div class="review__user-type">
-    <%= review.user_type %>
-  </div>
-  <div class="review__header">
-    <%= review.topic_label %>
-  </div>
-  <div class="review__text">
-    <%= review.comment %>
-  </div>
-  <div class="review__date">
-    <%= review.posted %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-2 review__user-info">
+      <div class="review__user-type">
+        <%= review.user_type_label %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-10 review__content">
+      <div class="review__header">
+        <%= review.topic_label %>
+      </div>
+
+      <div class="review__answer">
+        <% if review.five_star_rating? %>
+          <%= render 'five_stars', filled: review.star_rating %>
+        <% else %>
+          <%= review.answer_value %>
+        <% end %>
+      </div>
+
+      <div class="review__text">
+        <%= review.comment %>
+      </div>
+
+      <div class="review__date">
+        <%= review.posted %>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,65 @@
+.review {
+  $gray-text-color: #71787e;
+  font-size: $font-size-l2;
+  text-align: center;
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+
+  .review__user-info {
+    padding-right: 5px;
+    @media (min-width: 768px) {
+      text-align: left;
+    }
+  }
+
+  .review__user-type {
+    color: $gray-text-color;
+    margin-top: 5px;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+
+  .review__header {
+    font-family: opensans-bold;
+    margin-top: 5px;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+      display: inline-block;
+    }
+  }
+
+  .review__answer {
+    margin-top: 5px;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+      padding-left: 10px;
+      display: inline-block;
+    }
+    .five-stars {
+      font-size: $font-size-l2;
+      .empty-star {
+        color: #dbe6eb;
+      }
+    }
+  }
+
+  .review__date {
+    margin-top: 5px;
+    color: $gray-text-color;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+
+  .review__text {
+    text-align: left;
+    margin-top: 5px;
+    line-height: 1.7;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+
+}

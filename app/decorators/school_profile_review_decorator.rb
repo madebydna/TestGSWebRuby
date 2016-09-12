@@ -5,6 +5,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   decorates :review
   delegate_all
 
+  def five_star_rating?
+    review.question.review_topic.id == 1
+  end
+
   def answer_markup
     default_text = t('decorators.school_profile_review_decorator.no_rating') # non five-star ratings must have answer specified, no always use 'no rating'
     if review.question.overall?
@@ -61,6 +65,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     else
       h.db_t(review.school_user_or_default.user_type)
     end
+  end
+
+  def user_type_label
+    "A #{user_type}"
   end
 
   def has_comment?
