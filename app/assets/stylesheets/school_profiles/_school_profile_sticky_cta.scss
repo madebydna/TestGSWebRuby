@@ -1,7 +1,9 @@
 $cta_background: #FFFFFF;
 $cta_shadow: #CCCCCC;
 $cta_button_border: #dbe6eb;
-$cta_icon_color: #2ba3dc;
+$cta_icon_color: #2ba3dc; // Regular GS Blue
+$cta_icon_hover_color: #55b5e3; // Light GS Blue
+$cta_icon_active_color: #2282b0; // Medium GS Blue
 
 #profile-sticky-container {
   z-index : 1;
@@ -44,8 +46,25 @@ $cta_icon_color: #2ba3dc;
     text-align: center;
     padding-top: 19px;
 
-    > div:first-child{
-      color: $cta_icon_color;
+    a {
+      color: inherit;
+      font: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      > div:first-child{
+        color: $cta_icon_color;
+      }
+
+      > div:first-child:hover {
+        color: $cta_icon_hover_color;
+      }
+
+      > div:first-child:active {
+        color: $cta_icon_active_color;
+      }
     }
   }
 
