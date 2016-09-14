@@ -2,11 +2,11 @@ module SchoolProfiles
   class Reviews
     USER_TYPE_AVATARS = {
       'parent' => 1,
-      'teacher' => 2,
-      'student' => 3,
-      'principal' => 4,
-      'community member' => 5,
-      'unknown' => 5
+      'student' => 2,
+      'principal' => 5,
+      'teacher' => 4,
+      'community member' => 3,
+      'unknown' => 3
     }.freeze
 
     attr_reader :reviews
