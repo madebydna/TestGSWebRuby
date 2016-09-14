@@ -19,6 +19,7 @@ module SchoolProfiles
       UserReviews.
         make_instance_for_each_user(reviews.having_comments).
         sort_by { |r| r.most_recent_date }.
+        reverse.
         map { |user_reviews| build_user_reviews_struct(user_reviews) }
     end
 
