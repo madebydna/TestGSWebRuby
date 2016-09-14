@@ -10,6 +10,7 @@
   }
 
   .user-info-column {
+    padding-top: 10px;
     padding-right: 5px;
     @media (min-width: 768px) {
       text-align: left;
@@ -17,12 +18,17 @@
   }
 
   .review-list-column {
+    padding-top: 5px;
     .topical-review {
       padding-top: 20px;
     }
   }
 
-  > .user-type {
+  .avatar {
+    margin: auto;
+  }
+  .user-type {
+    text-align: center;
     color: $gray-text-color;
     margin-top: 5px;
     @media (min-width: 768px) {
@@ -42,10 +48,9 @@
 
 .five-star-review {
   .header {
+    font-size: $font-size-l3;
     font-family: opensans-bold;
-    margin-top: 5px;
     @media (min-width: 768px) {
-      margin-top: 10px;
       display: inline-block;
     }
   }

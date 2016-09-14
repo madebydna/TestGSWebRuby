@@ -3,13 +3,13 @@
 <% topical_reviews = user_reviews.topical_reviews %>
 <% user_type_label = user_reviews.user_type_label %>
 <% most_recent_date = user_reviews.most_recent_date %>
+<% avatar = user_reviews.avatar %>
 
 <div class="user-reviews-container">
   <div class="row">
     <div class="col-xs-12 col-sm-2 user-info-column">
-      <div class="user-type">
-        <%= user_type_label %>
-      </div>
+      <div class="avatar icon-avatar-<%= avatar %>"></div>
+      <div class="user-type"><%= user_type_label %></div>
     </div>
     <div class="col-xs-12 col-sm-10 review-list-column">
       <% if five_star_review %>
