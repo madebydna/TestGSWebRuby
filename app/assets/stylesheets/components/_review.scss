@@ -108,15 +108,15 @@
   }
 
   .strongly-disagree {
-    @extend .icon-caret-down;
+    @extend .icon-dislike;
     color: $strongly-disagree-color;
   }
   .disagree {
-    @extend .icon-caret-down;
+    @extend .icon-dislike;
     color: $disagree-color;
   }
   .neutral {
-    @extend .icon-mail;
+    @extend .icon-neutral;
     color: $neutral-color;
   }
   .agree {
