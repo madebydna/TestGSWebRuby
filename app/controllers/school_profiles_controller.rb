@@ -68,7 +68,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def reviews
-    SchoolProfiles::Reviews.new(school)
+    SchoolProfiles::Reviews.new(school.reviews)
   end
 
   def breadcrumbs
