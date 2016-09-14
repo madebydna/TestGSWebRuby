@@ -1,0 +1,33 @@
+<% review_question %>
+<% question_number %>
+
+  <div class="review-question clearfix">
+    <div>
+      <div class="review-counter"><span><%= question_number %></span></div>
+    </div>
+    <div>
+      <div>
+        <%= review_question.question %>
+      </div>
+      <div class="clearfix">
+        <ul class="review-selector clearfix">
+          <li class="strongly-disagree"><span class="icon-up"></span></li>
+          <li class="disagree"><span class="icon-up"></span></li>
+          <li class="neutral"><span class="icon-up"></span></li>
+          <li class="agree"><span class="icon-up"></span></li>
+          <li class="strongly-agree"><span class="icon-up"></span></li>
+        </ul>
+        <ul class="review-select-name">
+          <li>strongly disagree</li>
+          <li>disagree</li>
+          <li>neutral</li>
+          <li>agree</li>
+          <li>strongly agree</li>
+        </ul>
+      </div>
+      <div class="tell-us-why">
+        <div class="tell-us-link"><span class="icon-pencil"></span> Tell us why&hellip;</div>
+        <div class="tell-us-text"><textarea></textarea></div>
+      </div>
+    </div>
+  </div>

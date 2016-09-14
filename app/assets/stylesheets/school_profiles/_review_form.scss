@@ -1,0 +1,169 @@
+.review-form {
+  ul.review-selector {
+    border: 1px solid #c1d2d9;
+    list-style-type: none;
+    margin: 0 0 5px 0;
+    padding: 0;
+    clear: both;
+
+    li {
+      font-size: 18px;
+      padding: 2px 4px;
+      text-align: center;
+      border-right: 1px solid #c1d2d9;
+      width: 20%;
+      float: left;
+
+      &:hover {
+        background-color: #EEEEEE;
+        color: #555555;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+
+      //button color changes for on and active
+      &.active {
+        span {
+          color: #FFFFFF;
+        }
+        &.strongly-disagree {
+          background-color: #F26B16;
+        }
+        &.disagree {
+          background-color: #DCA21A;
+        }
+        &.neutral {
+          background-color: #A3BE1F;
+        }
+        &.agree {
+          background-color: #6BA822;
+        }
+        &.strongly-agree {
+          background-color: #439326;
+        }
+      }
+      &.strongly-disagree {
+        color: #F26B16;
+      }
+      &.disagree {
+        color: #DCA21A;
+      }
+      &.neutral {
+        color: #A3BE1F;
+      }
+      &.agree {
+        color: #6BA822;
+      }
+      &.strongly-agree {
+        color: #439326;
+      }
+    }
+  }
+  ul.review-select-name {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      text-align: center;
+      width: 20%;
+      float: left;
+      text-transform: uppercase;
+      font-size: 12px;
+
+
+    }
+  }
+
+  .review-counter {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    color: #FFF;
+    background-color: #777777;
+
+    &.complete {
+      background-color: #559F24;
+    }
+  }
+
+  .review-question {
+    padding-bottom: 50px; // this is temporary, just wanted some room at the bottom
+
+    > div:first-child {
+      float: left;
+      width: 30px;
+
+      > div:first-child {
+        font-size: large;
+        padding-bottom: 15px;
+      }
+    }
+
+    > div:last-child {
+      margin-left: 40px;
+
+      > div:first-child {
+        font-size: large;
+        padding-bottom: 15px;
+      }
+    }
+  }
+
+  .tell-us-why {
+    display:none;
+    padding-top: 20px;
+
+    > div:first-child {
+      color: #00b3ee;
+    }
+
+    > div:last-child {
+      display:none;
+      textarea {
+        width: 100%; height: 60px;
+      }
+    }
+  }
+
+  @media  (max-width: 991px) {
+    ul.review-selector {
+      border: none;
+      float:left;
+      height:auto;
+      padding-right: 20px;
+      list-style-type: none;
+      margin: 0;
+
+      li{
+        display: block;
+        float: none;
+        width: auto;
+        height:auto;
+        margin-bottom: 3px;
+        border:  1px solid #c1d2d9;
+        &:last-child {
+          border-right: 1px solid #c1d2d9;
+        }
+      }
+    }
+
+    ul.review-select-name {
+      float:left;
+      text-align: left;
+
+      li {
+        display: block;
+        float: none;
+        padding: 9px 0px;
+        width: auto;
+        text-align: left;
+      }
+    }
+  }
+}

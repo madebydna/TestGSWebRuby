@@ -25,6 +25,7 @@ class SchoolProfilesController < ApplicationController
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
         sp.reviews = reviews
+        sp.review_questions = review_questions
       end
     )
   end
@@ -69,6 +70,10 @@ class SchoolProfilesController < ApplicationController
 
   def reviews
     SchoolProfiles::Reviews.new(school.reviews)
+  end
+
+  def review_questions
+    SchoolProfiles::ReviewQuestions.new.questions
   end
 
   def breadcrumbs
