@@ -1,4 +1,7 @@
-.review {
+
+
+
+.user-reviews-container {
   $gray-text-color: #71787e;
   font-size: $font-size-l2;
   text-align: center;
@@ -6,14 +9,20 @@
     text-align: left;
   }
 
-  .review__user-info {
+  .user-info-column {
     padding-right: 5px;
     @media (min-width: 768px) {
       text-align: left;
     }
   }
 
-  .review__user-type {
+  .review-list-column {
+    .topical-review {
+      padding-top: 20px;
+    }
+  }
+
+  > .user-type {
     color: $gray-text-color;
     margin-top: 5px;
     @media (min-width: 768px) {
@@ -21,7 +30,18 @@
     }
   }
 
-  .review__header {
+  .date {
+    margin-top: 20px;
+    color: $gray-text-color;
+  }
+
+  .topical-review {
+    padding-top: 20px;
+  }
+}
+
+.five-star-review {
+  .header {
     font-family: opensans-bold;
     margin-top: 5px;
     @media (min-width: 768px) {
@@ -30,7 +50,7 @@
     }
   }
 
-  .review__answer {
+  .answer {
     margin-top: 5px;
     @media (min-width: 768px) {
       margin-top: 10px;
@@ -45,15 +65,7 @@
     }
   }
 
-  .review__date {
-    margin-top: 5px;
-    color: $gray-text-color;
-    @media (min-width: 768px) {
-      margin-top: 10px;
-    }
-  }
-
-  .review__text {
+  .comment {
     text-align: left;
     margin-top: 5px;
     line-height: 1.7;
@@ -61,5 +73,53 @@
       margin-top: 10px;
     }
   }
+}
 
+.topical-review {
+  $strongly-disagree-color: #F26B16;
+  $disagree-color: #DCA21A;
+  $neutral-color: #BDC01E;
+  $agree-color: #86B320;
+  $strongly-agree-color: #559F24;
+
+  @include clearfix;
+  text-align: left;
+
+  > .average-rating-column {
+    float: left;
+    width: 30px;
+  }
+  > .text-column {
+    margin-left: 30px
+  }
+  .answer {
+    font-family: opensans-bold;
+  }
+  .comment {
+    padding-top: 5px;
+  }
+  .answer-icon {
+    font-family: icon-greatscrool;
+  }
+
+  .strongly-disagree {
+    @extend .icon-caret-down;
+    color: $strongly-disagree-color;
+  }
+  .disagree {
+    @extend .icon-caret-down;
+    color: $disagree-color;
+  }
+  .neutral {
+    @extend .icon-mail;
+    color: $neutral-color;
+  }
+  .agree {
+    @extend .icon-like;
+    color: $agree-color;
+  }
+  .strongly-agree {
+    @extend .icon-like;
+    color: $strongly-agree-color;
+  }
 }

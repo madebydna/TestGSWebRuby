@@ -20,6 +20,7 @@ FactoryGirl.define do
     end
 
     factory :teacher_question do
+      id 2
       association :review_topic, factory: :teachers_topic, strategy: :build
       question 'How effective do you feel the teachers are at this school?'
       principal_question 'Please share how your school develops effective teachers.'

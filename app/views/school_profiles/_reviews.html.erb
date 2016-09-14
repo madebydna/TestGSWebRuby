@@ -1,5 +1,5 @@
 <% reviews %>
 <a name="Reviews"></a>
 <div class="review-list">
-  <%= render partial: "review", collection: reviews.having_comments, as: :review %>
+  <%= render partial: "review", collection: reviews.reviews_list, as: :user_reviews %>
 </div>

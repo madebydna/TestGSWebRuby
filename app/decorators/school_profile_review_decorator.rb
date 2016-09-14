@@ -109,6 +109,15 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     text.html_safe
   end
 
+  def answer_label
+    question_answer_text = 
+      review.question.question[0].downcase + 
+      review.question.question[1..-2]
+
+    prefix = answer.downcase == "neutral" ? "#{answer} about" : "#{answer} that"
+    "#{prefix} #{question_answer_text}"
+  end
+
   def created
     I18n.l(review.created, format: "%B %d, %Y")
   end

@@ -1,30 +1,24 @@
-<% review = SchoolProfileReviewDecorator.decorate(review) %>
-<div class="review">
+<% user_reviews %>
+<% five_star_review = user_reviews.five_star_review %>
+<% topical_reviews = user_reviews.topical_reviews %>
+<% user_type_label = user_reviews.user_type_label %>
+<% most_recent_date = user_reviews.most_recent_date %>
+
+<div class="user-reviews-container">
   <div class="row">
-    <div class="col-xs-12 col-sm-2 review__user-info">
-      <div class="review__user-type">
-        <%= review.user_type_label %>
+    <div class="col-xs-12 col-sm-2 user-info-column">
+      <div class="user-type">
+        <%= user_type_label %>
       </div>
     </div>
-    <div class="col-xs-12 col-sm-10 review__content">
-      <div class="review__header">
-        <%= review.topic_label %>
-      </div>
+    <div class="col-xs-12 col-sm-10 review-list-column">
+      <% if five_star_review %>
+        <%= render 'five_star_review', review: five_star_review %>
+      <% end %>
+      <%= render partial: 'topical_review', collection: topical_reviews, as: :review %>
 
-      <div class="review__answer">
-        <% if review.five_star_rating? %>
-          <%= render 'five_stars', filled: review.star_rating %>
-        <% else %>
-          <%= review.answer_value %>
-        <% end %>
-      </div>
-
-      <div class="review__text">
-        <%= review.comment %>
-      </div>
-
-      <div class="review__date">
-        <%= review.posted %>
+      <div class="date">
+        <%= most_recent_date %>
       </div>
     </div>
   </div>
