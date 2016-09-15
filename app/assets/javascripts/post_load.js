@@ -6,6 +6,7 @@
 //= require util/url_params
 //= require page_initializers/school_profiles
 //= require components/drawer
+//= require components/shortened_text
 //= require util/school_profile_sticky_cta.js
 //= require util/review_form.js
 //= require ./util/advertising.js
