@@ -8,7 +8,7 @@
   </div>
 
   <div class="answer">
-    <%= render 'five_stars', filled: review.star_rating %>
+    <%= render 'five_stars', filled: review.star_rating if review.star_rating %>
   </div>
 
   <div class="comment">
