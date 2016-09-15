@@ -17,7 +17,9 @@ describe "Visitor" do
                               state: school.state
                              )
     review_created_time = Time.parse("2016-09-09 07:00:00 -0700")
+    five_star_review_question = create(:overall_rating_question, id: 1)
     five_star_review_with_comment = create(:five_star_review,
+                                           review_question_id: five_star_review_question.id,
                                            answer_value: 5,
                                            active: 1,
                                            comment: review_comment,
