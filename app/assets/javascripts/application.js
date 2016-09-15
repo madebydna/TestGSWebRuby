@@ -14,6 +14,3 @@
 //= require lodash
 //= require ./util/util
 //= require ./util/uri
-//= require react
-//= require react_ujs
-//= require components
