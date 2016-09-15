@@ -39,6 +39,7 @@ module SchoolProfiles
     end
 
     def format
+      return nil if value.nil?
       @formatters.reduce(value) { |a, e| Formatters.method(e).call(a) }
     end
 
