@@ -1,5 +1,10 @@
 <% reviews %>
+<% initial_size = 3 %>
 <a name="Reviews"></a>
 <div class="review-list">
-  <%= render partial: "review", collection: reviews.reviews_list, as: :user_reviews %>
+  <% rs = reviews.reviews_list %>
+  <%= render partial: "review", collection: rs.take(initial_size), as: :user_reviews %>
+  <%= render layout:'drawer' do %>
+    <% render partial: "review", collection: rs[initial_size..-1], as: :user_reviews %>
+  <% end %>
 </div>
