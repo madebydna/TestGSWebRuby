@@ -9,6 +9,7 @@ class SchoolProfilesController < ApplicationController
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
     @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
+    school_gon_obj(@school)
   end
 
   private
@@ -84,5 +85,14 @@ class SchoolProfilesController < ApplicationController
       t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
+  end
+
+  def school_gon_obj(school)
+    if school.present?
+      gon.school = {
+          :id => school.id,
+          :state => school.state
+      }
+    end
   end
 end
