@@ -1,5 +1,23 @@
 <% reviews %>
 <a name="Reviews"></a>
 <div class="review-list">
-  <%= render partial: "review", collection: reviews.reviews_list, as: :user_reviews %>
+  <%# render partial: "review", collection: reviews.reviews_list, as: :user_reviews %>
+  <% rs = [] %>
+  <% reviews.reviews_list.each do |user_reviews| %>
+    <% rs << {
+        fiveStarReview: { 
+          comment: user_reviews.five_star_review.comment,
+          topicLabel: SchoolProfileReviewDecorator.decorate(user_reviews.five_star_review).topic_label
+        },
+        fiveStarReviewRating: user_reviews.five_star_review ? SchoolProfileReviewDecorator.decorate(user_reviews.five_star_review).star_rating : nil,
+        topicalReviews: user_reviews.topical_reviews.map { |r| {comment: r.comment, answerLabel: r.answer_label, answer: r.answer.downcase.gsub(' ', '-')  } },
+        mostRecentDate: user_reviews.most_recent_date,
+        userTypeLabel: user_reviews.user_type_label,
+        avatar: user_reviews.avatar
+      }
+    %>
+  <% end %>
+
+  <%= react_component('ReviewsList', reviews: rs) %>
 </div>
+

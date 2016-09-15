@@ -17,6 +17,8 @@ gem 'codemirror-rails'
 # Authentication, used for rails-admin
 gem 'devise'
 
+gem 'react-rails', '~> 1.8', '>= 1.8.1'
+
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
 
