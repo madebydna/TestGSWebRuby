@@ -7,4 +7,4 @@ $(function() {
       $text.html($text.html() + extraText);
     });
   });
-})();
+});
