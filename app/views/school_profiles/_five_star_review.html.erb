@@ -11,10 +11,7 @@
     <%= render 'five_stars', filled: review.star_rating if review.star_rating %>
   </div>
 
-  <% shortened_comment = review.comment.split(' ')[0..30].join(' ') %>
-  <% rest_of_comment = review.comment.split(' ')[30..-1].try(:join,' ') %>
-  <div class="comment js-shortened-text" data-shortened-text-rest=" <%= rest_of_comment %>">
-    <%= shortened_comment %><% if rest_of_comment.present? %>... <a href="javascript:void(0);">More</a>
-    <% end %>
+  <div class="comment">
+    <%= render 'shortened_text', text: review.comment, length: 200 %>
   </div>
 </div>
