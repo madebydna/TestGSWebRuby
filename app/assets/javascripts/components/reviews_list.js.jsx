@@ -13,6 +13,7 @@ class ReviewsList extends React.Component {
 
   renderOneUsersReviews(userReviews) {
     return(<UserReviews
+      key = {userReviews.id}
       five_star_review = {userReviews.five_star_review}
       topical_reviews = {userReviews.topical_reviews}
       most_recent_date = {userReviews.most_recent_date}

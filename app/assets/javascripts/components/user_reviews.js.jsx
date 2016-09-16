@@ -6,11 +6,11 @@ class UserReviews extends React.Component {
   fiveStars(numberFilled) {
     var filled = [];
     for (var i=0; i < numberFilled; i++) {
-      filled.push(<span className="icon-star filled-star"></span>);
+      filled.push(<span className="icon-star filled-star" key={i}></span>);
     }
     var empty = [];
     for (i=numberFilled; i < 5; i++) {
-      empty.push(<span className="icon-star empty-star"></span>);
+      empty.push(<span className="icon-star empty-star" key={i}></span>);
     }
     return(
       <span className="five-stars">
@@ -22,7 +22,7 @@ class UserReviews extends React.Component {
 
   topicalReview(review) {
     return(
-      <div className="topical-review">
+      <div className="topical-review" key={review.id}>
         <div className="average-rating-column">
           <span className={"answer-icon " + review.answer }></span>
         </div>
@@ -39,31 +39,30 @@ class UserReviews extends React.Component {
   }
 
   topicalReviews() {
-    if(!this.props.topical_reviews) {
-      return "";
+    if(this.props.topical_reviews) {
+      return this.props.topical_reviews.map(this.topicalReview);
     }
-    return this.props.topical_reviews.map(this.topicalReview);
   }
 
   fiveStarReview() {
     var review = this.props.five_star_review;
-    if (review === undefined) {
-      return "";
+    if(review !== undefined) {
+      return(
+        <div className="five-star-review" key={review.id}>
+          <div className="header">
+            { review.topic_label }
+          </div>
+          <div className="answer">
+            { this.fiveStars(review.answer) }
+          </div>
+          <div className="comment">
+            <ShortenText text={review.comment} length={200} key={review.text} />
+          </div>
+        </div>
+      );
     }
-    return(
-      <div className="five-star-review">
-        <div className="header">
-          { review.topic_label }
-        </div>
-        <div className="answer">
-          { this.fiveStars(review.answer) }
-        </div>
-        <div className="comment">
-          { review.comment }
-        </div>
-      </div>
-    );
   }
+
 
   render() {
     return (
