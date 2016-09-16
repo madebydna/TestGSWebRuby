@@ -1,24 +1,31 @@
 .review-summary {
-  @include clearfix;
   line-height: 1;
+  position: relative;
+  margin-top: 20px;
 
   color: #fff;
   font-family: 'RobotoSlab-Bold';
 
   .review-sumary__info {
-    padding: 20px 30px 20px 30px;
+    padding: 30px 30px 30px 30px;
     text-align: center;
-    width: 100%;
     background-color: #08497b;
     @media (min-width: 450px) {
-      float: left;
       width: 182px;
+      height: 200px;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 
   .review-summary__distribution {
-    padding: 20px 30px 20px 30px;
-    width: 100%;
+    height: 200px;
+    border: 1px solid #dbe6eb;
+    padding: 30px 30px 30px 30px;
+    @media (min-width: 450px) {
+      margin-left: 182px;
+    }
   }
 
   .number-of-reviews {
@@ -43,5 +50,28 @@
   .five-stars {
     display: block;
     margin-top: 15px;
+  }
+
+  .star-rating-bar-viz {
+    .icon-star {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .number-of-stars {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+    .bar {
+      display: inline-block;
+      height: 15px;
+      margin-left: 10px;
+    }
+    .answer-count {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+  }
+  .star-rating-bar-viz ~ .star-rating-bar-viz {
+    margin-top: 13px;
   }
 }

@@ -22,6 +22,8 @@ module SchoolProfiles
         struct.number_of_reviews_label = reviews.size == 1 ? 'Review' : 'Reviews'
         struct.average_five_star_rating = 
           reviews.five_star_rating_reviews.average_score.round
+        struct.number_of_five_star_rating_reviews = reviews.five_star_rating_reviews.size
+        struct.distribution = reviews.five_star_rating_reviews.score_distribution
       end
     end
 
