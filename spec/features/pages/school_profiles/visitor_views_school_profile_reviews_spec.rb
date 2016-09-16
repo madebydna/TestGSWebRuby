@@ -97,6 +97,7 @@ describe "Visitor" do
     expect(page_object.review_summary.number_of_reviews_label.text).to eq('Review')
     expect(page_object.review_summary).to have_five_stars
     expect(page_object.review_summary.five_stars.filled).to eq(4)
+    expect(page_object.review_summary.root_element).to have_text('4 out of 5 stars')
   end
 
   def review_list
