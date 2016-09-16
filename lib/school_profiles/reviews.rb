@@ -34,15 +34,25 @@ module SchoolProfiles
     end
 
     def build_user_reviews_struct(user_reviews)
-      OpenStruct.new.tap do |struct|
+      {}.tap do |hash|
         five_star_review, topical_reviews = user_reviews.partition
-        struct.five_star_review = five_star_review
-        struct.topical_reviews = topical_reviews
+        hash['five_star_review'] = review_to_hash(five_star_review) if five_star_review
+        hash['topical_reviews'] = topical_reviews.map { |r| review_to_hash(r) }
         date = user_reviews.most_recent_date
-        struct.most_recent_date = I18n.l(date, format: "%B %d, %Y")
-        struct.user_type_label = "A #{user_reviews.user_type}"
-        struct.avatar = USER_TYPE_AVATARS[user_reviews.user_type]
+        hash['most_recent_date'] = I18n.l(date, format: "%B %d, %Y")
+        hash['user_type_label'] = "A #{user_reviews.user_type}"
+        hash['avatar'] = USER_TYPE_AVATARS[user_reviews.user_type]
       end
+    end
+
+    def review_to_hash(review)
+      review = SchoolProfileReviewDecorator.decorate(review)
+      {
+        comment: review.comment,
+        topic_label: review.topic_label,
+        answer: review.answer.downcase,
+        answer_label: review.answer_label
+      }
     end
   end
 

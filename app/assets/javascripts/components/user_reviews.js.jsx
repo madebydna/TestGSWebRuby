@@ -1,5 +1,9 @@
-var UserReviews = React.createClass({
-  fiveStars: function(numberFilled) {
+class UserReviews extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  fiveStars(numberFilled) {
     var filled = [];
     for (var i=0; i < numberFilled; i++) {
       filled.push(<span className="icon-star filled-star"></span>);
@@ -14,9 +18,9 @@ var UserReviews = React.createClass({
         { empty }
       </span>
     )
-  },
+  }
 
-  topicalReview: function(review) {
+  topicalReview(review) {
     return(
       <div className="topical-review">
         <div className="average-rating-column">
@@ -24,7 +28,7 @@ var UserReviews = React.createClass({
         </div>
         <div className="text-column">
           <div className="answer">
-            { review.answerLabel }
+            { review.answer_label }
           </div>
           <div className="comment">
             { review.comment }
@@ -32,51 +36,52 @@ var UserReviews = React.createClass({
         </div>
       </div>
     )
-  },
+  }
 
-  topicalReviews: function() {
-    return this.props.topicalReviews.map(function(review) {
-      return this.topicalReview(review);
-    }.bind(this));
-  },
+  topicalReviews() {
+    if(!this.props.topical_reviews) {
+      return "";
+    }
+    return this.props.topical_reviews.map(this.topicalReview);
+  }
 
-  fiveStarReview: function() {
-    var review = this.props.fiveStarReview;
+  fiveStarReview() {
+    var review = this.props.five_star_review;
     if (review === undefined) {
       return "";
     }
     return(
       <div className="five-star-review">
         <div className="header">
-          { review.topicLabel }
+          { review.topic_label }
         </div>
         <div className="answer">
-          { this.fiveStars(this.props.fiveStarReviewRating) }
+          { this.fiveStars(review.answer) }
         </div>
         <div className="comment">
           { review.comment }
         </div>
       </div>
     );
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="user-reviews-container">
         <div className="row">
           <div className="col-xs-12 col-sm-2 user-info-column">
             <div className={"avatar icon-avatar-" + this.props.avatar}></div>
-            <div className="user-type">{ this.props.userTypeLabel }</div>
+            <div className="user-type">{ this.props.user_type_label }</div>
           </div>
           <div className="col-xs-12 col-sm-10 review-list-column">
             { this.fiveStarReview() }
             { this.topicalReviews() }
             <div className="date">
-              { this.props.mostRecentDate }
+              { this.props.most_recent_date}
             </div>
           </div>
         </div>
       </div>
     );
   }
-});
+}
