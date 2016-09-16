@@ -31,7 +31,7 @@ class UserReviews extends React.Component {
             { review.answer_label }
           </div>
           <div className="comment">
-            { review.comment }
+            <ShortenText text={review.comment} length={200} key={review.text} />
           </div>
         </div>
       </div>
