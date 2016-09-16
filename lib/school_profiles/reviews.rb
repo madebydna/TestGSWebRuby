@@ -1,5 +1,6 @@
 module SchoolProfiles
   class Reviews
+
     USER_TYPE_AVATARS = {
       'parent' => 1,
       'student' => 2,
@@ -13,6 +14,15 @@ module SchoolProfiles
 
     def initialize(reviews)
        @reviews = reviews
+    end
+
+    def summary
+      OpenStruct.new.tap do |struct|
+        struct.number_of_reviews = reviews.size
+        struct.number_of_reviews_label = reviews.size == 1 ? 'Review' : 'Reviews'
+        struct.average_five_star_rating = 
+          reviews.five_star_rating_reviews.average_score.round
+      end
     end
 
     def reviews_list

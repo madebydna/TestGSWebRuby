@@ -12,6 +12,6 @@
   </div>
 
   <div class="comment">
-    <%= review.comment %>
+    <%= render 'shortened_text', text: review.comment, length: 200 %>
   </div>
 </div>

@@ -32,7 +32,9 @@
 
       <% if data_values.size > initial_size %>
         <div class="rating-container__more-items">
-          <%= render 'drawer', items: data_values[initial_size..-1] %>
+          <%= render layout:'drawer' do %>
+            <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+          <% end %>
         </div>
       <% end %>
     </div>

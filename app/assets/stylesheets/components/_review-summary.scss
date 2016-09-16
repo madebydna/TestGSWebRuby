@@ -1,0 +1,41 @@
+.review-summary {
+  @include clearfix;
+  line-height: 1;
+
+  color: #fff;
+  font-family: 'RobotoSlab-Bold';
+
+  .review-sumary__info {
+    padding: 20px 10px 20px 20px;
+    text-align: center;
+    width: 100%;
+    background-color: #08497b;
+    @media (min-width: 450px) {
+      float: left;
+      width: 182px;
+    }
+  }
+
+  .review-summary__distribution {
+    padding: 20px 20px 20px 10px;
+    width: 100%;
+  }
+
+  .number-of-reviews {
+    background-color: #08497b;
+
+    .count {
+      display: block;
+      font-size: 62px;
+    }
+    .label {
+      display: block;
+      font-size: $font-size-l2;
+    }
+  }
+
+  .five-stars {
+    display: block;
+    margin-top: 15px;
+  }
+}

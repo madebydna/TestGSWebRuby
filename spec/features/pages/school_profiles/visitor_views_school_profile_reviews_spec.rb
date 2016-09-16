@@ -7,6 +7,8 @@ describe "Visitor" do
     clean_models(:ca, School)
   end
 
+  let(:page_object) { SchoolProfilesPage.new }
+
   scenario "sees an overall review from community member" do
     review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
     school = create(:school_with_new_profile, id: 1)
@@ -17,7 +19,9 @@ describe "Visitor" do
                               state: school.state
                              )
     review_created_time = Time.parse("2016-09-09 07:00:00 -0700")
+    five_star_review_question = create(:overall_rating_question, id: 1)
     five_star_review_with_comment = create(:five_star_review,
+                                           review_question_id: five_star_review_question.id,
                                            answer_value: 5,
                                            active: 1,
                                            comment: review_comment,
@@ -66,6 +70,33 @@ describe "Visitor" do
       expect(page).to have_css ".topical-review .comment", text: review_comment
       expect(page).to have_css ".user-reviews-container .date", text: "September 09, 2016"
     end
+  end
+
+  scenario "sees a review summary section" do
+    review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
+    school = create(:school_with_new_profile, id: 1)
+    user = create(:verified_user, id: 1)
+    community_member = create(:community_school_user,
+                              member_id: user.id,
+                              school_id: school.id,
+                              state: school.state
+                             )
+    review_created_time = Time.parse("2016-09-09 07:00:00 -0700")
+    five_star_review_with_comment = create(:five_star_review,
+                                           answer_value: 4,
+                                           active: 1,
+                                           comment: review_comment,
+                                           created: review_created_time,
+                                           user: user,
+                                           state: school.state,
+                                           school_id: school.id,
+                                           id: 1)
+    visit school_path(school)
+    expect(page_object).to have_review_summary
+    expect(page_object.review_summary.number_of_reviews.text).to eq('1')
+    expect(page_object.review_summary.number_of_reviews_label.text).to eq('Review')
+    expect(page_object.review_summary).to have_five_stars
+    expect(page_object.review_summary.five_stars.filled).to eq(4)
   end
 
   def review_list

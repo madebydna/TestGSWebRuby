@@ -29,11 +29,24 @@ class SchoolProfilesPage < SitePrism::Page
       element :items, '.show-more__items', visible: false
     end
   end
+
+  class FiveStars < SitePrism::Section
+    def filled
+      root_element.all('.filled-star').count
+    end
+  end
+
+  class ReviewSummary < SitePrism::Section
+    element :number_of_reviews, '.number-of-reviews .count'
+    element :number_of_reviews_label, '.number-of-reviews .label'
+    section :five_stars, FiveStars, '.five-stars'
+  end
   
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
   section :test_scores, RatingContainer, '.rating-container--test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
+  section :review_summary, ReviewSummary, '.rs-review-summary'
 
   def has_star_rating_of?(star_rating)
     five_star_rating.find_css('.filled-star').size == star_rating
