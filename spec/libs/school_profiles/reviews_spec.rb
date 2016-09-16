@@ -78,9 +78,14 @@ describe SchoolProfiles::Reviews do
       ]
     end
     subject do
-      SchoolProfiles::Reviews.new(reviews).build_user_reviews_struct(SchoolProfiles::UserReviews.new(reviews))
+      OpenStruct.new(
+        SchoolProfiles::Reviews.new(reviews).
+        build_user_reviews_struct(SchoolProfiles::UserReviews.new(reviews))
+      )
     end
-    its(:five_star_review) { is_expected.to be(reviews[0]) }
+    its(:five_star_review) do
+      is_expected.to be_a(Hash)
+    end
     its('topical_reviews.size') { is_expected.to eq(2) }
     its(:most_recent_date) { is_expected.to eq("January 01, 2013") }
   end
