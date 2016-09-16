@@ -6,7 +6,7 @@
   font-family: 'RobotoSlab-Bold';
 
   .review-sumary__info {
-    padding: 20px 10px 20px 20px;
+    padding: 20px 30px 20px 30px;
     text-align: center;
     width: 100%;
     background-color: #08497b;
@@ -17,13 +17,14 @@
   }
 
   .review-summary__distribution {
-    padding: 20px 20px 20px 10px;
+    padding: 20px 30px 20px 30px;
     width: 100%;
   }
 
   .number-of-reviews {
+    border-bottom: 1px solid rgba(255, 255, 255, .17);
+    padding-bottom: 5px;
     background-color: #08497b;
-
     .count {
       display: block;
       font-size: 62px;
@@ -32,6 +33,11 @@
       display: block;
       font-size: $font-size-l2;
     }
+  }
+
+  .n-out-of-5-stars {
+    margin-top: 5px;
+    font-family: 'opensans-regular';
   }
 
   .five-stars {

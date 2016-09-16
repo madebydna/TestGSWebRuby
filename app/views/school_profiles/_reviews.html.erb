@@ -6,12 +6,12 @@
 
 <div class="review-summary rs-review-summary">
   <div class="review-sumary__info">
-    <span class="number-of-reviews">
+    <div class="number-of-reviews">
       <span class="count"><%= summary.number_of_reviews %></span>
       <span class="label"><%= summary.number_of_reviews_label %></span>
-    </span>
+    </div>
     <%= render 'five_stars', filled: summary.average_five_star_rating %>
-    <span><%= summary.average_five_star_rating %> out of 5 stars</span>
+    <div class="n-out-of-5-stars"><%= summary.average_five_star_rating %> out of 5 stars</div>
   </div>
   <div class="review-summary__distribution">
   </div>
