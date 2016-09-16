@@ -9,7 +9,7 @@ describe "Visitor" do
 
   let(:page_object) { SchoolProfilesPage.new }
 
-  scenario "sees an overall review from community member" do
+  scenario "sees an overall review from community member", js: true do
     review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
     school = create(:school_with_new_profile, id: 1)
     user = create(:verified_user, id: 1)
@@ -42,7 +42,7 @@ describe "Visitor" do
     end
   end
 
-  scenario "sees a topical review from community member" do
+  scenario "sees a topical review from community member", js:true do
     review_comment = "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum."
     school = create(:school_with_new_profile)
     user = create(:verified_user)
@@ -72,7 +72,7 @@ describe "Visitor" do
     end
   end
 
-  scenario "sees a review summary section" do
+  scenario "sees a review summary section", js:true do
     review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
     school = create(:school_with_new_profile, id: 1)
     user = create(:verified_user, id: 1)
