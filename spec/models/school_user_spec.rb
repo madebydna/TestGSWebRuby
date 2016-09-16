@@ -196,7 +196,7 @@ describe SchoolUser do
 
     it 'should return the first unanswered topic' do
       allow(user).to receive(:reviews_for_school).and_return(reviews)
-      allow(ReviewTopic).to receive(:all).and_return(topics)
+      allow(ReviewTopic).to receive(:active).and_return(topics)
       expect(subject).to eq(topics[1])
     end
   end

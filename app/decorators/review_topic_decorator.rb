@@ -3,43 +3,57 @@ class ReviewTopicDecorator < Draper::Decorator
   decorates :review_topic
   delegate_all
 
+  def valid_topic_config?
+    topic_key[id.to_s].present?
+  end
+
   def header
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:header]
   end
 
   def subheading
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:subheading]
   end
 
   def sample_review 
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:sample_review]
   end
 
   def sample_review_school
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:sample_review_school]
   end
 
   def sample_review_city_and_state
+    return nil unless valid_topic_config?
     "#{topic_key[id.to_s][:city]}, #{topic_key[id.to_s][:state]}"
   end
 
   def sample_review_intro
+    return nil unless valid_topic_config?
     "A #{ student? ? 'student' : 'parent' }  at <a class='link-darkgray' href='#{school_url}'><span class='open-sans_b'>#{sample_review_school}</span></a> in #{sample_review_city_and_state} said:"
   end
 
   def city
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:city]
   end
 
   def state_name
+    return nil unless valid_topic_config?
     States.state_name(topic_key[id.to_s][:state])
   end
 
   def school_id
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:school_id]
   end
 
   def student?
+    return nil unless valid_topic_config?
     topic_key[id.to_s][:student]
   end
 
@@ -135,7 +149,19 @@ class ReviewTopicDecorator < Draper::Decorator
         sample_review: "I would like to thank the school secretary for her warm smile and
           welcoming personality. She brightens my day...",
         school_id: 2715
-      }
+      },
+      '9' => {
+        city: 'Jersey City',
+        state: 'NJ',
+        header: I18n.t('decorators.review_topic_decorator.topic_2_header'),
+        subheading: I18n.t('decorators.review_topic_decorator.topic_2_subheading'),
+        sample_review_school: 'M E T S Charter School',
+        sample_review: "... when it comes to my son, I like that he's held
+             accountable for his actions. Every mother wants to raise an honest
+             child with integrity.",
+        school_id: 7114
+      },
+
     }
 
     end

@@ -166,10 +166,9 @@ class MissingDatabaseTranslationChecker
   end
 
   def missing_translations_hash
-    @config.inject({}) do |aggregate_hash, hash|
+    @config.each_with_object({}) do |hash, aggregate_hash|
       column_check = new_column_checker(hash[:table], hash[:column], hash)
       aggregate_hash.merge!(column_check.missing_translations_hash)
-      aggregate_hash
     end
   end
 

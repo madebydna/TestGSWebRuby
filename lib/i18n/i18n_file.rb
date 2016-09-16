@@ -67,10 +67,10 @@ module GsI18n
     def add_translation!(key, value)
       key = [filename_locale, key].join('.') unless key.start_with?(filename_locale.to_s)
       scope = key.split('.')
-      hash = scope.reverse.inject(value) { |a, n| { n => a } }
+      hash = scope.reverse.inject(value) { |a, e| { e => a } }
       before = yaml_to_write.to_s
 
-      self.yaml_to_write = yaml_to_write.deep_merge(hash) { |key, left, right| left }
+      self.yaml_to_write = yaml_to_write.deep_merge(hash) { |_, left, right| left }
       if yaml_to_write.to_s == before
         "Could not add key \"#{key}\" with value \"#{value}\", probably due to key hierarchy"
       else

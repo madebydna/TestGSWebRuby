@@ -133,7 +133,7 @@ class SchoolUser < ActiveRecord::Base
 
   # Does not consider active vs inactive reviews
   def first_unanswered_topic
-    (ReviewTopic.all.to_a - reviews.map(&:topic)).first
+    (ReviewTopic.active.to_a - reviews.map(&:topic)).first
   end
 
 end

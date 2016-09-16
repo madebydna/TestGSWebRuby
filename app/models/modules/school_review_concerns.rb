@@ -24,7 +24,7 @@ module SchoolReviewConcerns
 
   # returns Topics with questions for school
   def topical_review_question_hash
-    filtered_topics = ReviewTopic.includes(:review_questions).find_by_school(self)
+    filtered_topics = ReviewTopic.active.includes(:active_review_questions).find_by_school(self)
     filtered_topics.each_with_object({}) do |topic, hash|
       hash[topic.name] = topic.build_questions_display_array(self)
     end
