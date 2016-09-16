@@ -28,7 +28,7 @@ module DeferredActionConcerns
     action, params = get_deferred_action
 
     if ALLOWED_DEFERRED_ACTIONS.include?(action)
-      if action.present? && self.respond_to?(action) && ALLOWED_DEFERRED_ACTIONS.include?(action)
+      if action.present? && self.respond_to?(action, true) && ALLOWED_DEFERRED_ACTIONS.include?(action)
         begin
           Rails.logger.debug("Executing deferred action: #{action}")
           success = self.send action, params
