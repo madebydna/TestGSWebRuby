@@ -25,7 +25,7 @@ class ShortenText extends React.Component {
   }
 
   render() {
-    if(this.state.showFullText) {
+    if(this.props.text.length <= this.props.length || this.state.showFullText) {
       return this.renderFullText();
     } else {
       return this.renderShortenedText();
