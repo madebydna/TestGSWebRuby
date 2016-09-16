@@ -1,6 +1,21 @@
 <% reviews %>
+<% summary = reviews.summary %>
+
 <% initial_size = 3 %>
 <a name="Reviews"></a>
+
+<div class="review-summary rs-review-summary">
+  <div class="review-sumary__info">
+    <span class="number-of-reviews">
+      <span class="count"><%= summary.number_of_reviews %></span>
+      <span class="label"><%= summary.number_of_reviews_label %></span>
+    </span>
+    <%= render 'five_stars', filled: summary.average_five_star_rating %>
+  </div>
+  <div class="review-summary__distribution">
+  </div>
+</div>
+
 <div class="review-list">
   <% rs = reviews.reviews_list %>
   <%= render partial: "review", collection: rs.take(initial_size), as: :user_reviews %>
