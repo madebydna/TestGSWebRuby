@@ -74,7 +74,7 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 Capybara::Webkit.configure do |config|
   # config.debug = true
-  # config.block_unknown_urls # doesnt seem to block urls in all cases
+  config.block_unknown_urls # doesnt seem to block urls in all cases
   config.block_url "http://www.google-analytics.com"
   config.block_url "https://stats.g.doubleclick.net"
   config.block_url "http://pixel.quantserve.com"
