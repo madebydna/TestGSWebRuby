@@ -17,6 +17,10 @@ class SchoolProfileDecorator < Draper::Decorator
     "#{street} #{city}, #{state} #{zipcode}"
   end
 
+  def full_address_markup
+    "<span itemprop=\"address\" itemscope=\"\" itemtype=\"http://schema.org/PostalAddress\"><span itemprop=\"streetAddress\" content=\"#{street}\">#{street}</span> <span itemprop=\"addressLocality\" content=\"#{city}\">#{city}</span>, <span itemprop=\"addressRegion\">#{state}</span> <span itemprop=\"postalCode\">#{zipcode}</span></span>".html_safe
+  end
+
   def city_state
     [city, state].join(', ')
   end

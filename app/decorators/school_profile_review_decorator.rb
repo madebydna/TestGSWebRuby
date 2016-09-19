@@ -20,6 +20,15 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     end
   end
 
+  def numeric_answer_value
+    v = answer_value
+    return v if v.nil? || v.to_i > 0
+    # This assumes the comma-separated list of reviews answers
+    # are ordered from strongly disagree to strongly agree, which is currently
+    # true
+    question.responses.split(',').map(&:downcase).index(v.downcase) + 1
+  end
+
   def topic
     review.question.review_topic
   end
