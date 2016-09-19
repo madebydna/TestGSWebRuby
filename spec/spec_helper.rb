@@ -89,6 +89,10 @@ Capybara::Webkit.configure do |config|
   config.block_url "http://csi.gstatic.com"
   config.block_url "https://securepubads.g.doubleclick.net"
   config.block_url "http://cdn.optimizely.com"
+  config.block_url "connect.facebook.net"
+  config.block_url "maps.googleapis.com"
+  config.block_url "www.googletagservices.com"
+  config.block_url "tpc.googlesyndication.com"
 end
 
 RSpec.configure do |config|
