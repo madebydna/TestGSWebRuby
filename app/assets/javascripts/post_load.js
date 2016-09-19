@@ -8,8 +8,8 @@
 //= require components/drawer
 //= require components/shortened_text
 //= require util/school_profile_sticky_cta.js
-//= require util/review_form.js
 //= require ./util/advertising.js
 //= require react
 //= require components
+//= require util/review_form.js
 //= require react_ujs

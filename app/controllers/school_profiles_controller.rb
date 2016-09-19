@@ -74,7 +74,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def review_questions
-    SchoolProfiles::ReviewQuestions.new.questions
+    SchoolProfiles::ReviewQuestions.new
   end
 
   def breadcrumbs

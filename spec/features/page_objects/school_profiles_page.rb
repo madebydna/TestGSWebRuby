@@ -41,12 +41,22 @@ class SchoolProfilesPage < SitePrism::Page
     element :number_of_reviews_label, '.number-of-reviews .label'
     section :five_stars, FiveStars, '.five-stars'
   end
-  
+
+  class ReviewQuestions < SitePrism::Section
+    element :five_star_question, ".five-star-review-question"
+    elements :stars, ".star"
+  end
+
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
   section :test_scores, RatingContainer, '.rating-container--test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
   section :review_summary, ReviewSummary, '.rs-review-summary'
+  section :review_questions, ReviewQuestions, '.review-form'
+
+  def choose_five_star_response
+    review_questions.stars.first.click
+  end
 
   def has_star_rating_of?(star_rating)
     five_star_rating.find_css('.filled-star').size == star_rating

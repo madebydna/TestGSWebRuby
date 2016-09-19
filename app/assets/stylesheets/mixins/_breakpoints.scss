@@ -1,0 +1,33 @@
+$min-screen-size: $screen-xs-min;
+
+@mixin media-breakpoint-up($size) {
+  @if $size == 'lg' {
+    $min-screen-size: $screen-lg-min;
+  } @else if $size == 'md' {
+    $min-screen-size: $screen-md-min;
+  } @else if $size == 'sm' {
+    $min-screen-size: $screen-sm-min;
+  } @else if $size == 'xs' {
+    $min-screen-size: $screen-xs-min;
+  }
+  @media (min-width: $min-screen-size) {
+    @content;
+  }
+}
+//
+// @mixin media-breakpoint-down($size) {
+//   @media (max-width: $size) {
+//     @content;
+//   }
+// }
+//
+// @mixin media-breakpoint-only($size) {
+//   @media (max-width: $size) {
+//     @content;
+//   }
+// }
+//
+//
+//
+//
+//

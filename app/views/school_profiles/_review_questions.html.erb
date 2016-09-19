@@ -1,7 +1,4 @@
-<% questions %>
-
-<div class="review-form">
-  <% questions.each_with_index  do |q, i| %>
-    <%= render 'review_question',  review_question: q, question_number: i+1 %>
-  <% end %>
+<% questions = review_questions.questions %>
+<div class="review-form-container">
+  <%= react_component('ReviewForm', questions: questions) %>
 </div>

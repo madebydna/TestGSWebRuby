@@ -18,3 +18,9 @@ $rating-star-empty-color: #65859f;
     color: $rating-star-empty-color;
   }
 }
+
+.five-star-rating__stars--med {
+  @extend .five-star-rating__stars;
+  font-size: 18px;
+}
+

@@ -14,6 +14,14 @@ class ReviewQuestion < ActiveRecord::Base
 
   alias_method :topic, :review_topic
 
+  FIVE_STAR_LABEL_ARRAY = [
+    "Terrible",
+    "Bad",
+    "Average",
+    "Good",
+    "Great",
+  ].freeze
+
   def overall?
     layout == 'overall_stars'
   end
@@ -25,6 +33,11 @@ class ReviewQuestion < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def five_star_label_array
+    return nil unless topic.overall?
+    FIVE_STAR_LABEL_ARRAY
   end
 
   def response_label_array
