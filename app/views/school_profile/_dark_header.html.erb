@@ -33,7 +33,7 @@
         (t('students', scope: t_scope, count: enrollment) if enrollment)
       ].compact,
       [
-        school.full_address.truncate(truncate_length),
+        school.full_address_markup,
         contact_info_link
       ].compact
     ],
