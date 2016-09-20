@@ -30,7 +30,7 @@ module SchoolProfileReviewsDecorator
     end
     h.t('decorators.school_profile_reviews_decorator.review_answer_summary_html',
          count: distribution.first.last,
-         top_response_text: h.t(top_response_text)
+         top_response_text: h.t(top_response_text.strip)
        )
   end
 

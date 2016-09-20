@@ -42,9 +42,9 @@ describe SchoolProfileReviewsDecorator, type: :view do
     context 'when it is not an overall topic' do
       let(:score_distribution) do
         {
-            foo: 2,
-            bar: 6,
-            baz: 3
+            'foo' => 2,
+            'bar' => 6,
+            'baz' => 3
         }
       end
       before do

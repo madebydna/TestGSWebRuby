@@ -1,21 +1,9 @@
 <% school_reviews %>
-
-<% if @school.state == 'CO' %>
-  <span class="dn" itemscope="" itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating">
-    <span>
-      Rating:
-      <span itemprop="ratingValue"><%= school_reviews.average_5_star_rating %></span> out of <span itemprop="bestRating">5</span>
-     </span>
-    based on
-    <span itemprop="reviewCount"><%= school_reviews.number_of_active_reviews %></span> reviews.
-  </span>
-<% else %>
+<% if school_reviews.number_of_active_reviews > 0 %>
   <span itemscope="" itemprop="aggregateRating" itemtype="http://schema.org/AggregateRating">
     <meta itemprop="ratingValue" content="<%= school_reviews.average_5_star_rating %>">
     <meta itemprop="bestRating" content="5">
     <meta itemprop="reviewCount" content="<%= school_reviews.number_of_active_reviews %>">
-    <% if @school.state != 'MA' %>
-      <meta itemprop="ratingCount" content="<%= school_reviews.number_of_5_star_ratings %>">
-    <% end %>
+    <meta itemprop="ratingCount" content="<%= school_reviews.number_of_5_star_ratings %>">
   </span>
 <% end %>

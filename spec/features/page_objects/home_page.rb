@@ -8,11 +8,11 @@ class HomePage < SitePrism::Page
 
   element :header, 'h1', text: 'Guide your child to a great future'
   element :school_search_button, 'button.pull-right.btn.btn-primary'
-  element :school_search_field, "input#js-schoolResultsSearch"
+  element :search_field, "input[name=locationSearchString]"
   element :gk_link, ".gk_article_dropdown"
 
   def user_fill_in_school_search
-    school_search_field.set('Alameda high school')
+    search_field.set('Alameda high school')
   end
 
   def click_school_search

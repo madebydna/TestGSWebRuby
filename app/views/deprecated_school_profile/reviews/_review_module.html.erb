@@ -13,14 +13,14 @@
 <% end %>
 <hr />
 <% if (review.school_user && review.school_user.principal?) %>
-    <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
+    <div class="row mam cuc_review">
       <div class="rs-review-value mbs">
         <span class="open-sans_i"><%= review.topic_markup || t('.school_leader_message') %></span>
       </div>
       <div class="open-sans_cb mbs"><%= t('.school_leader') %></div>
       <div class="open-sans"> <%= review.comment %></div>
       <div class="clearfix">
-        <div class="rs-review-posted mts fr"><%= t('.posted') %> <%= review.posted %></div>
+        <div content="<%= review.created %>" class="rs-review-posted mts fr"><%= t('.posted') %> <%= review.posted %></div>
       </div>
       <%= render 'deprecated_school_profile/reviews/report_and_helpful_review_buttons', review: review %>
       <div style="display:none;">
@@ -28,28 +28,35 @@
       </div>
     </div>
 <% else %>
-    <div class="row mam cuc_review" itemscope="" itemtype="http://data-vocabulary.org/Review">
-      <% if include_rich_snippets %>
-          <span itemprop="itemreviewed" class="dn"><%= @school.name %></span>
-          <time itemprop="dtreviewed" class="dn" datetime="<%= review.posted %>"></time>
-          <span itemprop="rating" class="dn"><%= review.star_rating %></span>
-      <% end %>
-
+    <% if include_rich_snippets %>
+      <div class="row mam cuc_review" itemprop="review" itemscope="" itemtype="http://schema.org/Review">
+    <% else %>
+      <div class="row mam cuc_review">
+    <% end %>
       <%= div_tag sizes: {xs: 12, sm: 4, md: 3, lg: 3}, class: 'pbm' do %>
           <div class="open-sans_i rs-review-value">
             <%= review.topic_markup %>
-            <span class="open-sans_cb">
+            <% if include_rich_snippets && review.numeric_answer_value %>
+              <span class="open-sans_cb" itemprop="reviewRating" itemscope="" itemtype="http://schema.org/Rating">
+                <meta itemprop="ratingValue" content="<%= review.numeric_answer_value %>" />
                 <%= review.answer_markup %>
-            </span>
+              </span>
+            <% else %>
+              <span class="open-sans_cb"><%= review.answer_markup %></span>
+            <% end %>
           </div>
-          <br/><span class="rs-review-posted"><%= t('.posted') %> <%= review.posted %></span><br/>
+          <% if include_rich_snippets %>
+            <br/><span itemprop="datePublished" content="<%= review.created %>" class="rs-review-posted"><%= t('.posted') %> <%= review.posted %></span><br/>
+          <% else %>
+            <br/><span class="rs-review-posted"><%= t('.posted') %> <%= review.posted %></span><br/>
+          <% end %>
           <%= t('.user_type_html', user_type: review.user_type)  %>
       <% end %>
 
       <%= div_tag sizes: {xs: 12, sm: 8, md: 9, lg: 9} do %>
         <% if review.comment.present? %>
           <% if include_rich_snippets %>
-            <span itemprop="description"><%= review.comment %></span>
+            <span itemprop="reviewBody"><%= review.comment %></span>
           <% else %>
             <%= review.comment %>
           <% end %>
