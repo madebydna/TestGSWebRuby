@@ -26,7 +26,9 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     # This assumes the comma-separated list of reviews answers
     # are ordered from strongly disagree to strongly agree, which is currently
     # true
-    question.responses.split(',').map(&:downcase).index(v.downcase) + 1
+    index = question.responses.split(',').map(&:downcase).index(v.downcase)
+    return nil if index.nil?
+    return index + 1
   end
 
   def topic
