@@ -1,24 +1,41 @@
 require "spec_helper"
 
 describe SchoolProfiles::ReviewQuestions do
-  after do
+  after(:each) do
     clean_dbs(:gs_schooldb)
   end
 
-  describe "#five_star_review_question" do
-    it "should return five star review question" do
-      five_star_review_question = create(:overall_rating_question, id: 1)
-      expect(subject.five_star_review_question).to eq(five_star_review_question)
+  describe "#questions" do
+    it "should return array of hashes for only active questions" do
+      five_star_review_question = create(:overall_rating_question, active: 1)
+      teacher_question = create(:review_question, active: 1)
+      inactive_question = create(:review_question, active: 0)
+
+      expect(subject.questions.count).to eq(2)
+      expect(subject.questions.map.all?{ |q| q.is_a?(Hash)}).to eq(true)
     end
-  end
 
-  describe "#topical_questions" do
-    it "not should return five star review question" do
-      five_star_review_question = create(:overall_rating_question, id: 1, active: 1)
-      teacher_question = create(:teacher_question, id: 2, active: 1)
+    it "should return correct hash for five star review question" do
+      five_star_question = create(:overall_rating_question, active: 1)
+      five_star_response_labels = %w(Terrible Bad Average Good Great)
+      result_hash = {
+        response_values: five_star_question.response_array,
+        response_labels: five_star_response_labels,
+        title: five_star_question.question,
+        id: five_star_question.id,
+      }
+      expect(subject.questions.first).to eq(result_hash)
+    end
 
-      expect(subject.topical_questions.count).to eq(1)
-      expect(subject.topical_questions.first).to eq(teacher_question)
+    it "should return correct hash for question where response labels match the values" do
+      topical_review_question = create(:review_question, active: 1)
+      result_hash = {
+        response_values: topical_review_question.response_array,
+        response_labels: topical_review_question.response_array,
+        title: topical_review_question.question,
+        id: topical_review_question.id,
+      }
+      expect(subject.questions.first).to eq(result_hash)
     end
   end
 end

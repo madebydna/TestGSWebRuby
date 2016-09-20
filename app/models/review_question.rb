@@ -42,7 +42,12 @@ class ReviewQuestion < ActiveRecord::Base
 
   def response_label_array
     return response_array unless topic.overall?
-    response_array.map do |response| 
+    return FIVE_STAR_LABEL_ARRAY
+  end
+
+  def chart_response_label_array
+    return response_array unless topic.overall?
+    response_array.map do |response|
       I18n.t('models.review_answer.stars_label', count: response.to_i)
     end
   end

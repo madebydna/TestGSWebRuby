@@ -8,9 +8,7 @@ module SchoolProfiles
       @_questions.map{ |q| question_to_hash(q) }
     end
 
-    # def five_star_review_question
-    #   question_to_hash(questions.find(&:overall?))
-    # end
+    private
 
     def question_to_hash(question)
       {
@@ -18,11 +16,7 @@ module SchoolProfiles
         response_labels: question.response_label_array,
         title: question.question,
         id: question.id,
-      }.stringify_keys
+      }
     end
-
-    # def topical_questions
-    #   questions.reject(&:overall?)
-    # end
   end
 end

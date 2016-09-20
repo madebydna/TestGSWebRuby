@@ -27,14 +27,24 @@ describe ReviewQuestion do
    end
  end
 
- describe '#response_label_array' do
-   it 'should return array with response values when not for overall topic' do
+ describe "response_label_array" do
+   it "should return array with response values when not for overall topic" do
      expect(teacher_question.response_label_array).to eq(teacher_question.response_array)
+   end
+   it "should return array with star labels for overall topic" do
+     expect(overall_question.response_label_array).
+       to eq(ReviewQuestion::FIVE_STAR_LABEL_ARRAY)
+   end
+ end
+
+ describe '#chart_response_label_array' do
+   it 'should return array with response values when not for overall topic' do
+     expect(teacher_question.chart_response_label_array).to eq(teacher_question.response_array)
    end
 
    it 'should return array with star labels for overall topic' do
      label_array = (2..5).map {|n| n.to_s + ' stars'}.unshift('1 star')
-     expect(overall_question.response_label_array).to eq(label_array)
+     expect(overall_question.chart_response_label_array).to eq(label_array)
    end
  end
 
