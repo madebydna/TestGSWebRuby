@@ -16,10 +16,10 @@ class FiveStarQuestionCTA extends React.Component {
   // consistify the grabbing of the selected value 
   renderStarResponse(label, index) {
     return(
-      <div key={index} className="five-star-question__response-container">
+      <div key={index} className="five-star-question-cta__response-container">
         <div onClick={this.handleStarResponseClick(index+1)}>
-          <div className="icon-star five-star-question__star"></div>
-          <div className="five-star-question__response-label">{label}</div>
+          <div className="icon-star five-star-question-cta__star"></div>
+          <div className="five-star-question-cta__response-label">{label}</div>
         </div>
       </div>
     );
@@ -27,14 +27,14 @@ class FiveStarQuestionCTA extends React.Component {
 
   render() {
     return (
-      <div  className="five-star-question">
+      <div  className="five-star-question-cta">
         <div className="row">
           <div className="col-xs-12 col-sm-2">
-            <div className="five-star-question__avatar icon-avatar-1"></div>
-            <div className="five-star-question__user-type">You</div>
+            <div className="five-star-question-cta__avatar icon-avatar-1"></div>
+            <div className="five-star-question-cta__user-type">You</div>
           </div>
-          <div className="col-xs-12 col-sm-10 five-star-question__container">
-            <div className="five-star-question__title">
+          <div className="col-xs-12 col-sm-10 five-star-question-cta__container">
+            <div className="five-star-question-cta__title">
               { this.props.title }
             </div>
             { this.renderStarResponses() }

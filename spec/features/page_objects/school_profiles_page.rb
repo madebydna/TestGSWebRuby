@@ -42,9 +42,9 @@ class SchoolProfilesPage < SitePrism::Page
     section :five_stars, FiveStars, '.five-stars'
   end
 
-  class ReviewQuestions < SitePrism::Section
-    element :five_star_question, ".five-star-question"
-    elements :stars, ".five-star-question__star"
+  class ReviewForm < SitePrism::Section
+    element :five_star_question_cta, ".five-star-question-cta"
+    elements :cta_stars, ".five-star-question-cta__star"
     element :completed_five_star_question, ".review-question > div > .five-star-rating"
     elements :questions, ".review-question"
   end
@@ -54,10 +54,10 @@ class SchoolProfilesPage < SitePrism::Page
   section :test_scores, RatingContainer, '.rating-container--test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
   section :review_summary, ReviewSummary, '.rs-review-summary'
-  section :review_questions, ReviewQuestions, '.review-form'
+  section :review_form, ReviewForm, '.review-form'
 
-  def choose_five_star_response
-    review_questions.stars.first.click
+  def choose_five_star_cta_response
+    review_form.cta_stars.first.click
   end
 
   def has_star_rating_of?(star_rating)
@@ -65,7 +65,7 @@ class SchoolProfilesPage < SitePrism::Page
   end
 
   def has_all_review_questions?
-    review_questions.questions.count == 2
+    review_form.questions.count == 2
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)
