@@ -24,7 +24,7 @@ class FiveStarReviewQuestion extends React.Component {
 
   render() {
     return (
-      <div className="five-star-questionreview-form">
+      <div className="five-star-question">
         <div>{this.initialReviews()}</div>
       </div>
     )

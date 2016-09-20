@@ -64,7 +64,10 @@ module SchoolProfiles
     def self.make_instance_for_each_user(reviews)
       reviews.group_by { |review| review.member_id }.
         values.
-        map { |user_reviews| self.new(user_reviews) }
+        map do |user_reviews|
+          user_reviews.extend(ReviewScoping).extend(ReviewCalculations)
+          self.new(user_reviews)
+      end
     end
 
     def initialize(reviews)
@@ -84,11 +87,8 @@ module SchoolProfiles
     # Returns five_star_review, rest of reviews
     # five_star_review may return as nil
     def partition
-      five_star_reviews, other_reviews = 
-        reviews.partition do |r|
-          # TODO: review should be able to tell you if it is a five-star review
-          r.review_question_id.to_s == '1'
-        end
+      five_star_reviews = reviews.five_star_rating_reviews
+      other_reviews = reviews.non_five_star_rating_reviews
       raise 'User has multiple five-star reviews' if five_star_reviews.size > 1
       return five_star_reviews.first, Array.wrap(other_reviews)
     end

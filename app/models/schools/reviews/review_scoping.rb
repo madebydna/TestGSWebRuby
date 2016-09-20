@@ -48,6 +48,10 @@ module ReviewScoping
     by_topic[FIVE_STAR_RATING_TOPIC_NAME]
   end
 
+  def non_five_star_rating_reviews
+    reject{ |review| review.question.overall? }
+  end
+
   %w[parent student principal].each do |user_type|
     define_method("#{user_type}_reviews") do
       by_user_type[user_type] || empty_extended_array

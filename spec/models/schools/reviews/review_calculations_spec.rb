@@ -114,14 +114,14 @@ describe ReviewCalculations do
         expect(subject.score_distribution).to be_a(Hash)
       end
       it 'should return hash with keys for each value' do
-        expect(subject.score_distribution).to have_key(4)
-        expect(subject.score_distribution).to have_key(3)
-        expect(subject.score_distribution).to have_key(1)
+        expect(subject.score_distribution).to have_key("4")
+        expect(subject.score_distribution).to have_key("3")
+        expect(subject.score_distribution).to have_key("1")
       end
       it 'should return hash with correct count of review for each value' do
-        expect(subject.score_distribution[4]).to eq(1)
-        expect(subject.score_distribution[3]).to eq(2)
-        expect(subject.score_distribution[1]).to eq(1)
+        expect(subject.score_distribution["4"]).to eq(1)
+        expect(subject.score_distribution["3"]).to eq(2)
+        expect(subject.score_distribution["1"]).to eq(1)
       end
     end
 
