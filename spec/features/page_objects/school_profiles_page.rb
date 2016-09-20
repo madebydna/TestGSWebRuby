@@ -43,8 +43,10 @@ class SchoolProfilesPage < SitePrism::Page
   end
 
   class ReviewQuestions < SitePrism::Section
-    element :five_star_question, ".five-star-review-question"
-    elements :stars, ".star"
+    element :five_star_question, ".five-star-question"
+    elements :stars, ".five-star-question__star"
+    element :completed_five_star_question, ".review-question > div > .five-star-rating"
+    elements :questions, ".review-question"
   end
 
   element :gs_rating, '.rs-gs-rating'
@@ -60,6 +62,10 @@ class SchoolProfilesPage < SitePrism::Page
 
   def has_star_rating_of?(star_rating)
     five_star_rating.find_css('.filled-star').size == star_rating
+  end
+
+  def has_all_review_questions?
+    review_questions.questions.count == 2
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)

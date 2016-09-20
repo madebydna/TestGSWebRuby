@@ -9,8 +9,6 @@ describe "Signed in and verified user" do
     end
 
     scenario "views five star review question", js: true do
-      pending("Get working with React components")
-      fail
       school = create(:school_with_new_profile, id: 1)
       page_object = SchoolProfilesPage.new
       five_star_question_text = "How would you rate your experience at this school?"
@@ -25,17 +23,16 @@ describe "Signed in and verified user" do
     end
 
     scenario "selects a star response", js: true do
-      pending("Get working with React components")
-      fail
       school = create(:school_with_new_profile, id: 1)
       page_object = SchoolProfilesPage.new
-      five_star_review_question = create(:overall_rating_question, id: 1, active: 1)
+      five_star_review_question = create(:overall_rating_question, active: 1)
+      topical_review_question = create(:review_question, active: 1)
 
       visit school_path(school)
       page_object.choose_five_star_response
 
-      expect(page_object).to have_completed_five_star_question
-      expect(page_object).to have_topical_review_questions
+      expect(page_object.review_questions).to have_completed_five_star_question
+      expect(page_object).to have_all_review_questions
     end
   end
 end
