@@ -84,3 +84,11 @@ class UserReviews extends React.Component {
     );
   }
 }
+
+UserReviews.propTypes = {
+  five_star_review: React.PropTypes.object,
+  topical_reviews: React.PropTypes.array,
+  most_recent_date: React.PropTypes.string,
+  user_type_label: React.PropTypes.string,
+  avatar: React.PropTypes.number
+}

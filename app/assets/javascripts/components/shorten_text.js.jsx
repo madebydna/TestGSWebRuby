@@ -38,3 +38,8 @@ class ShortenText extends React.Component {
     return text.substring(0, pos);
   }
 }
+
+ShortenText.propTypes = {
+  text: React.PropTypes.string.isRequired,
+  length: React.PropTypes.number.isRequired
+}
