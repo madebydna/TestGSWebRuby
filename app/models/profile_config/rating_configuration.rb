@@ -65,6 +65,10 @@ class RatingConfiguration
     configuration['description_key']
   end
 
+  def level_code
+    overall['level_code']
+  end
+
   def data_type_id
     overall['data_type_id'] || star_rating['data_type_id']
   end
@@ -98,7 +102,10 @@ class RatingConfiguration
     if use_gs_rating?
       rating = school.school_metadata.overallRating
     else
-      data_set = results.detect { |tds| tds['data_type_id'] == data_type_id }
+      data_set = results.detect do |tds|
+        tds['data_type_id'] == data_type_id &&
+        tds['level_code'] == level_code
+      end
       rating = school_value(data_set) if data_set
     end
     if use_gs_rating? && rating.blank? && !school.preschool?

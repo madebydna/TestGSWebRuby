@@ -52,6 +52,9 @@ class SchoolProfileOverviewPage < SitePrism::Page
   section :gs_rating , 'overall-gs-rating' do
 
   end
+  section :state_rating , '.rs-state-rating' do
+
+  end
 
 
   element :zillow_header, 'h2', text:'Nearby homes and rentals'

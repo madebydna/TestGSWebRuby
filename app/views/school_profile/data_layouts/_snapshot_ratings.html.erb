@@ -26,7 +26,7 @@
       <% rating_text = t('.state_rating') %>
     <% end %>
 
-    <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
+    <% ratings_array << "<div class='rs-state-rating'>" + (render(rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text)) + "</div>" %>
 <% end %>
 
 <% local_rating = @school.local_rating %>

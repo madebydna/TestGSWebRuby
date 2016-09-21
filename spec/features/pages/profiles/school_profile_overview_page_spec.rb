@@ -51,6 +51,42 @@ describe 'School Profile Overview Page' do
 
   with_shared_context 'Given school profile page with GS Rating Snapshot module' do
     with_shared_context 'with Alameda High School' do
+      context 'when configured to get state rating from school cache' do
+        before do
+          create(:school_cache_state_rating_configuration)
+          create(:cached_state_rating, school_id: school.id, state: school.state)
+        end
+        describe 'state rating' do
+          it { is_expected.to have_state_rating }
+          its("state_rating.rating_value") { is_expected.to eq('C') } # 5 is hardcoded in factory for now
+        end
+      end
+      context 'when configured to get elementary state rating from school cache' do
+        before do
+          create(:school_cache_state_elementary_rating_configuration)
+        end
+        describe 'state rating w/o level code' do
+          before do
+            create(:cached_state_rating, school_id: school.id, state: school.state)
+          end
+          it { is_expected.to_not have_state_rating }
+        end
+        describe 'state rating with level code' do
+          before do
+            create(:cached_state_rating_with_elementary_level, school_id: school.id, state: school.state)
+          end
+          it { is_expected.to have_state_rating }
+        end
+      end
+      context 'when state rating configured w/o level_code from school cache' do
+        describe 'state rating with level code' do
+          before do
+            create(:school_cache_state_rating_configuration)
+            create(:cached_state_rating_with_elementary_level, school_id: school.id, state: school.state)
+          end
+          it { is_expected.to_not have_state_rating }
+        end
+      end
       context 'when configured to get GS rating from school cache' do
         before do
           FactoryGirl.create(:school_cache_gs_rating_configuration)

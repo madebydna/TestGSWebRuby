@@ -15,6 +15,39 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :cached_state_rating_with_elementary_level, class: SchoolCache do
+    name 'ratings'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ([
+      {
+        'data_type_id' => 188,
+        'year' => 2014,
+        'level_code' => 'e',
+        'school_value_text' => 'C',
+        'school_value_float' => nil,
+        'name' => 'State rating'
+      }
+    ].to_json)
+    updated Time.now
+  end
+
+  factory :cached_state_rating, class: SchoolCache do
+    name 'ratings'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ([
+      {
+        'data_type_id' => 188,
+        'year' => 2014,
+        'school_value_text' => 'C',
+        'school_value_float' => nil,
+        'name' => 'State rating'
+      }
+    ].to_json)
+    updated Time.now
+  end
+
   factory :cached_gs_rating, class: SchoolCache do
     name 'ratings'
     sequence(:school_id) { |n| n }
