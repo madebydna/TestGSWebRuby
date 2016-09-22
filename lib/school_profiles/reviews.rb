@@ -42,7 +42,7 @@ module SchoolProfiles
         hash['topical_reviews'] = topical_reviews.map { |r| review_to_hash(r) }
         date = user_reviews.most_recent_date
         hash['most_recent_date'] = I18n.l(date, format: "%B %d, %Y")
-        hash['user_type_label'] = "A #{user_reviews.user_type}"
+        hash['user_type_label'] = user_reviews.user_type.gs_capitalize_first
         hash['avatar'] = USER_TYPE_AVATARS[user_reviews.user_type]
         hash['id'] = user_reviews.hash
       end
