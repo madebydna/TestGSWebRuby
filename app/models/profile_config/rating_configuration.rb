@@ -87,7 +87,7 @@ class RatingConfiguration
     methodology_url = methodology_url(school)
     if rating_hash.present?
       Array.wrap(rating_hash).each do |rh|
-        if subrating_hash
+        if subrating_hash.present?
           rh['rating_breakdowns'] = subrating_hash
         end
         if rh['overall_rating'] && methodology_url
@@ -115,7 +115,7 @@ class RatingConfiguration
       else
         data_set = results.detect do |tds|
           tds['data_type_id'] == data_type_id &&
-          tds['level_code'] == level_code
+            (level_code.nil? || tds['level_code'] == level_code)
         end
         rating = school_value(data_set) if data_set
       end
@@ -143,7 +143,7 @@ class RatingConfiguration
     rating_breakdowns.each do |key, breakdown_hash|
       matching_data_set = breakdown_data_sets.detect do |data_set|
         data_set['data_type_id'] == breakdown_hash['data_type_id'] &&
-        data_set['level_code'] == breakdown_hash['level_code']
+          (breakdown_hash['level_code'].nil? || data_set['level_code'] == breakdown_hash['level_code'])
       end
       next if matching_data_set.nil?
 
