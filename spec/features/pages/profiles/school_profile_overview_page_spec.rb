@@ -84,7 +84,7 @@ describe 'School Profile Overview Page' do
             create(:school_cache_state_rating_configuration)
             create(:cached_state_rating_with_elementary_level, school_id: school.id, state: school.state)
           end
-          it { is_expected.to_not have_state_rating }
+          it { is_expected.to have_state_rating }
         end
       end
       context 'when configured to get GS rating from school cache' do
