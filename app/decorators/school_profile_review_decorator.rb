@@ -124,9 +124,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     question_answer_text = 
       review.question.question[0].downcase + 
       review.question.question[1..-2]
-
-    prefix = answer.downcase == "neutral" ? "#{answer} about" : "#{answer} that"
-    "#{prefix} #{question_answer_text}"
+    t("#{answer} that #{question_answer_text}")
   end
 
   def created
