@@ -173,6 +173,7 @@ class Cacher
           year: 'year',
           school_value_text: 'school_value_text',
           school_value_float: 'school_value_float',
+          level_code: 'level_code',
           test_data_type_display_name: 'name'
       }
       results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)

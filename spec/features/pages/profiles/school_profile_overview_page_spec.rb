@@ -51,6 +51,42 @@ describe 'School Profile Overview Page' do
 
   with_shared_context 'Given school profile page with GS Rating Snapshot module' do
     with_shared_context 'with Alameda High School' do
+      context 'when configured to get state rating from school cache' do
+        before do
+          create(:school_cache_state_rating_configuration)
+          create(:cached_state_rating, school_id: school.id, state: school.state)
+        end
+        describe 'state rating' do
+          it { is_expected.to have_state_rating }
+          its("state_rating.root_element") { is_expected.to have_text('FOO') } # 5 is hardcoded in factory for now
+        end
+      end
+      context 'when configured to get elementary state rating from school cache' do
+        before do
+          create(:school_cache_state_elementary_rating_configuration)
+        end
+        describe 'state rating w/o level code' do
+          before do
+            create(:cached_state_rating, school_id: school.id, state: school.state)
+          end
+          it { is_expected.to_not have_state_rating }
+        end
+        describe 'state rating with elementary level code only' do
+          before do
+            create(:cached_state_rating_with_elementary_level, school_id: school.id, state: school.state)
+          end
+          it { is_expected.to have_state_rating }
+        end
+      end
+      context 'when state rating configured w/o level_code from school cache' do
+        describe 'state rating with level code' do
+          before do
+            create(:school_cache_state_rating_configuration)
+            create(:cached_state_rating_with_elementary_level, school_id: school.id, state: school.state)
+          end
+          it { is_expected.to have_state_rating }
+        end
+      end
       context 'when configured to get GS rating from school cache' do
         before do
           FactoryGirl.create(:school_cache_gs_rating_configuration)
@@ -82,6 +118,40 @@ describe 'School Profile Overview Page' do
         end
       end
     end
+    with_shared_context 'with Cesar Chavez Academy Denver' do
+      context 'when configured to get elementary state rating from school cache' do
+        before do
+          create(:school_cache_state_elementary_rating_configuration, state: school.state)
+        end
+        describe 'state rating with elementary and middle level codes' do
+          before do
+            create(:cached_state_rating_with_e_and_m_levels, school_id: school.id, state: school.state)
+          end
+          its("state_rating.labels.size") { is_expected.to eq(1) }
+          its("state_rating.labels.first") { is_expected.to have_text('Grades K-5') }
+        end
+      end
+      context 'when configured to get elementary and middle state ratings from school cache' do
+        before do
+          create(:school_cache_state_elementary_and_middle_rating_configuration, state: school.state)
+        end
+        describe 'state rating with elementary and middle level codes' do
+          before do
+            create(:cached_state_rating_with_e_and_m_levels, school_id: school.id, state: school.state)
+          end
+          its("state_rating.labels.size") { is_expected.to eq(2) }
+          its("state_rating.labels.first") { is_expected.to have_text('Grades K-5') }
+          its("state_rating.labels.last") { is_expected.to have_text('Grades 6-8') }
+        end
+        describe 'state rating with elementary and middle level codes' do
+          before do
+            create(:cached_state_rating_with_elementary_level, school_id: school.id, state: school.state)
+          end
+          its("state_rating.labels.size") { is_expected.to eq(1) }
+          its("state_rating.labels.first") { is_expected.to have_text('Grades K-5') }
+        end
+      end
+    end
   end
 
   with_shared_context 'Given school profile page with Reviews Snapshot module' do
@@ -105,7 +175,8 @@ describe 'School Profile Overview Page' do
       it_behaves_like 'a page with school profile header'
       include_examples 'should have a footer'
 
-      describe 'language switching', js:true do
+
+      describe 'viewing in different languages', js: true do
         before do
           page_object.header.wait_for_in_spanish_link
         end
@@ -120,7 +191,6 @@ describe 'School Profile Overview Page' do
           end
         end
       end
-
 
       describe 'breadcrumbs' do
         it { is_expected.to have_breadcrumbs }
