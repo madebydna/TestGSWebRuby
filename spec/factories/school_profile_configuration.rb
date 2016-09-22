@@ -17,13 +17,37 @@ FactoryGirl.define do
     state 'ca'
     configuration_key 'state_rating'
     value({
-      "overall" => {
+      "overall" => [{
         "data_type_id" => 188,
         "level_code" => 'e',
+        "label" => 'Grades K-5',
         "use_school_value_float" => "false",
         "description_key" => "what_is_basic_state_rating_summary",
         "methodology_url_key" => "colorado_rating_url"
-      }
+      }]
+    }.to_json)
+  end
+  factory :school_cache_state_elementary_and_middle_rating_configuration, class: SchoolProfileConfiguration do
+    state 'ca'
+    configuration_key 'state_rating'
+    value({
+      "overall" => [
+        {
+          "data_type_id" => 188,
+          "level_code" => 'e',
+          "label" => 'Grades K-5',
+          "use_school_value_float" => "false",
+          "description_key" => "what_is_basic_state_rating_summary",
+          "methodology_url_key" => "colorado_rating_url"
+        },{
+          "data_type_id" => 188,
+          "level_code" => 'm',
+          "label" => 'Grades 6-8',
+          "use_school_value_float" => "false",
+          "description_key" => "what_is_basic_state_rating_summary",
+          "methodology_url_key" => "colorado_rating_url"
+        }
+      ]
     }.to_json)
   end
 

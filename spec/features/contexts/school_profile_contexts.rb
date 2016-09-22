@@ -105,6 +105,12 @@ shared_context 'Given school profile page with school test guide module' do |pag
   end
 end
 
+shared_context 'with Cesar Chavez Academy Denver' do
+  let!(:school) { FactoryGirl.create(:cesar_chavez_academy_denver) }
+  after do
+    clean_models School
+  end
+end
 shared_context 'with Alameda High School' do
   let!(:school) { FactoryGirl.create(:alameda_high_school) }
   after do

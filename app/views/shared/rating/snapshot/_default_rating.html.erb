@@ -1,4 +1,20 @@
-<div class="tac">
+<% if rating.is_a?(Array) %>
+  <div class="tac">
+    <div class="link-darkgray pbs"><%= supporting_text %></div>
+    <% rating.each do |r| %>
+      <% rating_value = r["overall_rating"] %>
+      <% rating_label = r["label"] %>
+
+      <div class="dib tac mhm">
+        <div class="default_rating_circle ma">
+          <div class="ptm text_000"><%= rating_value %></div>
+        </div>
+        <div class="rs-rating-label"><%= rating_label %></div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+      <div class="tac">
         <div class="link-darkgray pbs"><%= supporting_text %></div>
         <% if rating.to_s.length < 3 %>
             <div class="default_rating_circle ma">
@@ -11,3 +27,4 @@
 
         <% end %>
     </div>
+<% end %>

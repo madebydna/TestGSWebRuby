@@ -144,7 +144,9 @@ module SchoolProfileDataDecorator
   end
 
   def state_rating
-    rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
+    Array.wrap(rating_data.fetch('state_rating',{})).map do |rating|
+      rating
+    end
   end
 
   def pcsb_rating
