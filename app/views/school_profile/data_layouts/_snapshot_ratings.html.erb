@@ -16,7 +16,9 @@
   <% ratings_array = [] %>
 
 <% state_rating = @school.state_rating %>
-<% if state_rating && state_rating.first['overall_rating'] %>
+<% state_rating = state_rating.select { |r| r['overall_rating'] } %>
+
+<% if state_rating && state_rating.is_a?(Array) && state_rating.size > 0 && state_rating.first['overall_rating'] %>
 
     <% if @school.state == 'CA' %>
       <% rating_text = t('.api_score') %>
@@ -26,9 +28,7 @@
       <% rating_text = t('.state_rating') %>
     <% end %>
 
-    <% if @school.state == 'CO' %>
-      <% state_rating = state_rating.select { |r| r['overall_rating'] } %>
-    <% else %>
+    <% unless @school.state == 'CO' %>
       <% state_rating = state_rating.first['overall_rating'] %>
     <% end %>
 

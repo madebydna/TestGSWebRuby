@@ -1,4 +1,4 @@
-<% if rating.is_a?(Array) %>
+<% if rating.is_a?(Array) && rating.size > 0 %>
   <div class="tac">
     <div class="link-darkgray pbs"><%= supporting_text %></div>
     <% rating.each do |r| %>
