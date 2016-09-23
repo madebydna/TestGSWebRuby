@@ -15,12 +15,13 @@ def bay_area_promo
   }
 end
 
+# For performance reasons, only test a representative sample of data types
 def bay_area_scorecard_fields
   [
     { data_type: :school_info, partial: :school_info },
-    { data_type: :caaspp_math, partial: :percent_value, year: 2015 },
-    { data_type: :caaspp_english, partial: :percent_value, year: 2015 },
-    { data_type: :graduation_rate, partial: :percent_value, year: 2014 },
+    # { data_type: :caaspp_math, partial: :percent_value, year: 2015 },
+    # { data_type: :caaspp_english, partial: :percent_value, year: 2015 },
+    # { data_type: :graduation_rate, partial: :percent_value, year: 2014 },
     { data_type: :a_through_g, partial: :percent_value, year: 2014 },
   ]
 end
@@ -36,18 +37,19 @@ def bay_area_scorecard_params
   }
 end
 
+# For performance reasons, only test a representative sample of subgroups
 def bay_area_scorecard_subgroups_list
   [
     :all_students,
-    :african_american,
-    :asian,
-    :filipino,
+    # :african_american,
+    # :asian,
+    # :filipino,
     :hispanic,
-    :multiracial,
-    :native_american_or_native_alaskan,
-    :pacific_islander,
-    :white,
-    :economically_disadvantaged,
-    :limited_english_proficient,
+    # :multiracial,
+    # :native_american_or_native_alaskan,
+    # :pacific_islander,
+    # :white,
+    # :economically_disadvantaged,
+    # :limited_english_proficient,
   ]
 end
