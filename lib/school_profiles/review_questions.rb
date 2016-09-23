@@ -14,6 +14,7 @@ module SchoolProfiles
       {
         response_values: question.response_array,
         response_labels: question.response_label_array,
+        layout: question.layout,
         title: question.question,
         id: question.id,
       }

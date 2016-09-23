@@ -10,14 +10,15 @@ class FiveStarQuestionCTA extends React.Component {
   }
 
   handleStarResponseClick(value) {
-    return () => this.props.fiveStarQuestionSelect(value);
+    return () => this.props.fiveStarQuestionSelect(value, this.props.id);
   }
 
   // consistify the grabbing of the selected value 
   renderStarResponse(label, index) {
+    let starValue = index + 1;
     return(
       <div key={index} className="five-star-question-cta__response-container">
-        <div onClick={this.handleStarResponseClick(index+1)}>
+        <div onClick={this.handleStarResponseClick(starValue)}>
           <div className="icon-star five-star-question-cta__star"></div>
           <div className="five-star-question-cta__response-label">{label}</div>
         </div>

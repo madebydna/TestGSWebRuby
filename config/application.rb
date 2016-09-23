@@ -115,5 +115,7 @@ module LocalizedProfiles
     config.middleware.use ::AjaxFlashMessagesMiddleware
 
     config.active_record.schema_format = :sql
+
+    config.react.addons = true
   end
 end

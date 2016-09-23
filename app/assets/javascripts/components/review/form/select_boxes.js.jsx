@@ -10,18 +10,11 @@ class SelectBoxes extends React.Component {
   }
 
   selectBoxes(value) {
-    let values = [
-      "Strongly disagree",
-      "Disagree",
-      "Neutral",
-      "Agree",
-      "Strongly agree"
-    ];
     boxes = [];
-    for (var index= 0; index < values.length; index++) {
-      let selectionValue = values[index];
+    for (var index= 0; index < this.props.responseValues.length; index++) {
+      let selectionValue = this.props.responseValues[index];
       let classNames = this.convertValueToClassName(selectionValue);
-      if ( value === selectionValue) {
+      if (value === selectionValue) {
         classNames += " active";
       }
       boxes.push(<li className={classNames} onClick={this.handleBoxClick(selectionValue)}><span className={this.convertIndexToIconClass(index)}></span></li>);
@@ -50,17 +43,23 @@ class SelectBoxes extends React.Component {
    return value.replace(' ','-').toLowerCase();
   }
 
+  renderResponseLabels() {
+    labels = [];
+    this.props.responseLabels.forEach(function(label) {
+      labels.push(<li>{label}</li>);
+    });
+    return(
+      <ul className="review-select-name">
+        { labels }
+      </ul>
+    );
+  }
+
   render() {
     return (
       <div className="clearfix">
-        {this.selectBoxes(this.props.selectedValue)}
-        <ul className="review-select-name">
-          <li>strongly disagree</li>
-          <li>disagree</li>
-          <li>neutral</li>
-          <li>agree</li>
-          <li>strongly agree</li>
-        </ul>
+        {this.selectBoxes(this.props.value)}
+        {this.renderResponseLabels()}
       </div>
     )
   }

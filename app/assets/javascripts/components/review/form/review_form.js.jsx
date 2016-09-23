@@ -5,6 +5,7 @@ class ReviewForm extends React.Component {
     this.responseSelected = this.responseSelected.bind(this);
     this.cancelForm = this.cancelForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
+    this.textValueChanged = this.textValueChanged.bind(this);
     this.state = {
       displayCTA: true,
       displayAllQuestion: false,
@@ -24,16 +25,27 @@ class ReviewForm extends React.Component {
     />)
   }
 
-  fiveStarQuestionSelect(fiveStarResponse) {
-    let selectedResponses = this.state.selectedResponses;
-    selectedResponses["1"] = fiveStarResponse;
+  showQuestions() {
     this.setState(
       {
         displayCTA: false,
-        displayAllQuestions: true,
-        selectedResponses: selectedResponses
+        displayAllQuestions: true
       }
     );
+  }
+
+  hideQuestions() {
+    this.setState(
+      {
+        displayCTA: true,
+        displayAllQuestions: false
+      }
+    );
+  }
+
+  fiveStarQuestionSelect(value, id) {
+    this.showQuestions();
+    this.responseSelected(value, id);
   }
 
   responseSelected(value, id) {
@@ -47,21 +59,24 @@ class ReviewForm extends React.Component {
     );
   }
 
-  cancelForm() {
+  textValueChanged(value, id) {
+    let selectedResponses = this.state.selectedResponses;
+    let questionId = 'comment'+ id.toString();
+    selectedResponses[questionId] = value;
     this.setState(
       {
-        displayCTA: true,
-        displayAllQuestions: false
+        selectedResponses: selectedResponses
       }
     );
   }
 
+  cancelForm() {
+    this.hideQuestions();
+  }
+
   submitForm() {
-    this.setState(
-      {
-        displayAllQuestions: false
-      }
-    );
+
+    this.setState( { displayAllQuestions: false } );
   }
 
   renderFormActions() {
@@ -78,6 +93,7 @@ class ReviewForm extends React.Component {
       questions = {this.props.questions}
       selectedResponses = {this.state.selectedResponses}
       responseSelected = {this.responseSelected}
+      textValueChanged = {this.textValueChanged}
      />);
   }
 
