@@ -35,7 +35,7 @@ describe "Visitor" do
     visit school_path(school)
     within review_list do
       expect(page).to have_css ".five-star-review .header", text: "Overall experience"
-      expect(page).to have_css ".user-reviews-container .user-type", text: "community member"
+      expect(page).to have_css ".user-reviews-container .user-type", text: "Community member"
       expect(page).to have_css ".user-reviews-container .avatar"
       expect(page).to have_css ".five-star-review .comment", text: review_comment
       expect(page).to have_css ".user-reviews-container .date", text: "September 09, 2016"
@@ -65,7 +65,7 @@ describe "Visitor" do
     visit school_path(school)
     within review_list do
       expect(page).to have_css ".topical-review", text: review.question.question[1..-2]
-      expect(page).to have_css ".user-reviews-container .user-type", text: "community member"
+      expect(page).to have_css ".user-reviews-container .user-type", text: "Community member"
       expect(page).to have_css ".user-reviews-container .avatar"
       expect(page).to have_css ".topical-review .comment", text: review_comment
       expect(page).to have_css ".user-reviews-container .date", text: "September 09, 2016"
