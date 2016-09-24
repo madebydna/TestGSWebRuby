@@ -3,31 +3,19 @@
 <% modal_css_class %>
 <div class="modal join-and-login fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
   <div class="gs-modal-dialog modal-dialog" >
-    <div <div class="shim-100 hidden-xs"></div>
-      <div class="bg-white brs">
-        <div class="title row">
-          <div class="col-xs-11"><%= header %></div>
-          <div class="col-xs-1">
-            <button type="button" class="close-inverse" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
+    <button class="close" data-dismiss="modal" aria-label="Close">
+      <span>&times;</span>
+    </button>
+    <div class="modal-body">
+      <div class="title"><%= header %></div>
+      <div class="subheading"><%= subheading %></div>
+      <% @active_tab ||= 'join' %>
+      <div class="body tab-content">
+        <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
+          <%= render 'signin/login_form', ajax: true %>
         </div>
-        <div class="subheading"><%= subheading %></div>
-        <% @active_tab ||= 'join' %>
-        <div class="signin_">
-          <div class="row limit-width-1200 signin-content_">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-              <div class="tab-content well">
-                <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
-                  <%= render 'signin/login_form', ajax: true %>
-                </div>
-                <div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
-                  <%= render 'signin/join_form', ajax: true %>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
+          <%= render 'signin/join_form', ajax: true %>
         </div>
       </div>
     </div>

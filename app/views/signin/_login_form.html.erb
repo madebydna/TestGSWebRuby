@@ -1,51 +1,47 @@
 <% ajax %>
-<div class="bg-white brs pal tac">
+<div>
   <%= form_tag authenticate_user_path, method: :post, remote: ajax,
               id: '',
               class: 'js-signin-form',
               'data-parsley-namespace' => "data-parsley-" do %>
     <%= token_tag form_authenticity_token %>
-    <fieldset>
-          <p class="<%= 'active' if @active_tab == 'join' %> header"><%= t('.no_account_label') %>
-            <a href="#join" data-toggle="tab" id="js_join_tab"> <%= t('.signup_tab') %></a>
-          </p>
-          <div class="form-group">
-            <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-facebook-signin js-button-link full-width">
-              <%= t('.facebook_signin_button') %>
-            </button>
-            <p class="js-facebook-signin-errors help-block"></p>
-          </div>
-          <p class="">- <%= t('.or') %> -</p>
+        <p class="<%= 'active' if @active_tab == 'join' %>"><%= t('.no_account_label') %>
+          <a href="#join" data-toggle="tab" id="js_join_tab"> <%= t('.signup_tab') %></a>
+        </p>
 
-          <div class="form-group tal">
-            <!-- Email -->
-            <label class="control-label" for="email"><%= t('.email_label') %></label>
-            <%= email_field_tag(
-                  :email,
-                  nil,
-                  {
-                    id: "email",
-                    placeholder: "",
-                    class: 'form-control input-xlarge js-signin-email',
-                    'data-parsley-required' => "true",
-                    'data-parsley-type' => "email",
-                    'data-parsley-required-message' => t('.email_required_error'),
-                    'data-parsley-error-container' => ".js-signin-email-errors"
-                  }
-                ) %>
-              <p class="js-signin-email-errors help-block"></p>
-          </div>
-          <div class="form-group tal mbs">
-            <!-- Password-->
-            <label class="control-label" for="password"><%= t('.password_label') %></label>
-            <input type="password" id="password" name="password" placeholder="" class="form-control" 
-            data-parsley-required="true"
-            data-parsley-error-container=".js-signin-password-errors">
-            <p class="js-signin-password-errors help-block"></p>
-           <p><%= link_to t('.forgot_password_link'), forgot_password_url, class: 'small' %> </p>
-          </div>
-          <!-- Button -->
-          <button class="btn btn-primary js-join-login-submit-button"><%= t('.login_button') %></button>
-    </fieldset>
+        <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn-facebook js-facebook-signin js-button-link">
+          <span class="icon-facebook"></span><%= t('.facebook_signin_button') %>
+        </button>
+        <p class="js-facebook-signin-errors help-block"></p>
+
+        <div class="divider">
+          <p class="line"><span><%= t('.or') %></span></p>
+          <p>Log in with your email</p>
+        </div>
+
+        <%= email_field_tag(
+              :email,
+              nil,
+              {
+                id: "email",
+                placeholder: "#{t('.email_label')}",
+                class: 'js-signin-email',
+                'data-parsley-required' => "true",
+                'data-parsley-type' => "email",
+                'data-parsley-required-message' => t('.email_required_error'),
+                'data-parsley-error-container' => ".js-signin-email-errors"
+              }
+            ) %>
+          <p class="js-signin-email-errors help-block"></p>
+
+        <input type="password" id="password" name="password" placeholder="<%= t('.password_label') %>" data-parsley-required="true" data-parsley-error-container=".js-signin-password-errors">
+        <p class="js-signin-password-errors help-block"></p>
+
+        <div class="terms-and-privacy">
+          <span><%= link_to t('.forgot_password_link'), forgot_password_url %></span>
+          <p class="js-join-terms-errors help-block"></p>
+        </div>
+
+        <button class="submit js-join-login-submit-button"><%= t('.login_button') %></button>
   <% end %>
 </div>
