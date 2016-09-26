@@ -6,17 +6,12 @@
       id: 'signup-school-form',
       'data-parsley-namespace'=>"data-parsley-" do %>
       <%= token_tag form_authenticity_token %>
-      <div class="shim-100 hidden-xs"></div>
-      <div class="bg-white brs">
-        <div class="title row">
-          <div class="col-xs-11"><%= header %></div>
-          <div class="col-xs-1">
-            <button type="button" class="close-inverse" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </div>
-        <div class="pal">
+      <button class="close" data-dismiss="modal" aria-label="Close">
+        <span>&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="title"><%= header %></div>
+        <div class="body">
           <div class="js-signup-success alert alert-success dn"><%= t('.signup_success') %></div>
           <%= t('.body_html') %>
           <div class="form-group controls">
