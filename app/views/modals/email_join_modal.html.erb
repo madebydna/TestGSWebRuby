@@ -5,60 +5,55 @@
                  id: 'signup-school-form',
                  'data-parsley-namespace'=>"data-parsley-" do %>
       <%= token_tag form_authenticity_token %>
-      <div class="shim-100 hidden-xs"></div>
-      <div class="bg-white brs">
-        <div class="title row">
-          <div class="col-xs-11"><%= t('.header') %></div>
-          <div class="col-xs-1">
-            <button type="button" class="close-inverse" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </div>
-        <div class="pal">
-          <%= t('.body_html') %>
-          <div class="form-group controls">
-            <p> <%= check_box_tag('sponsors_list', 'true') %>
-              <%= t('.sponsors_signup') %>
-            </p>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-              <div class="form-group controls row">
-                <div class="input-group">
-                  <%= email_field_tag(
-                    :email,
-                    nil,
-                    {
-                      id: "signup-email",
-                      placeholder: t('.email_placeholder'),
-                      class: 'form-control js-signup-email parsley-error pam', 
-                      data: { 'parsley-required' => "true",
-                      'parsley-type' => "email",
-                      'parsley-required-message' => "Please enter an email address.",
-                      'parsley-error-container' => ".js-signup-email-errors" }
-                    }
-                  ) %>
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary js-modal-submit-button modal-signup-button" type="submit" data-disable-with="Signing up">
-                      <%= t('.signup_button') %>
-                    </button>
-                  </span>
+      <button class="close" data-dismiss="modal" aria-label="Close">
+        <span>&times;</span>
+      </button>
+        <div class="modal-body">
+          <div class="title"><%= t('.header') %></div>
+          <div class="body">
+            <%= t('.body_html') %>
+            <div class="form-group controls">
+              <p> <%= check_box_tag('sponsors_list', 'true') %>
+                <%= t('.sponsors_signup') %>
+              </p>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <div class="form-group controls row">
+                  <div class="input-group">
+                    <%= email_field_tag(
+                      :email,
+                      nil,
+                      {
+                        id: "signup-email",
+                        placeholder: t('.email_placeholder'),
+                        class: 'form-control js-signup-email parsley-error pam', 
+                        data: { 'parsley-required' => "true",
+                        'parsley-type' => "email",
+                        'parsley-required-message' => "Please enter an email address.",
+                        'parsley-error-container' => ".js-signup-email-errors" }
+                      }
+                    ) %>
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary js-modal-submit-button modal-signup-button" type="submit" data-disable-with="Signing up">
+                        <%= t('.signup_button') %>
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
+              <p class="tac">
+                <%= link_to t('.privacy_policy'), privacy_url %>&nbsp;
+                <%= t('.terms_of_use_html',
+                      terms_of_use_link: link_to(
+                        t('.greatschools_terms_of_use'),
+                        terms_of_use_url )
+                    )
+                %>
+              </p>
           </div>
-          <p class="tac">
-            <%= link_to t('.privacy_policy'), privacy_url %>&nbsp;
-            <%= t('.terms_of_use_html',
-                  terms_of_use_link: link_to(
-                    t('.greatschools_terms_of_use'),
-                    terms_of_use_url )
-                )
-            %>
-          </p>
         </div>
-      </div>
     <% end %>
   </div>
 </div>
