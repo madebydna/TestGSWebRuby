@@ -21,6 +21,7 @@ describe SchoolProfiles::ReviewQuestions do
       result_hash = {
         response_values: five_star_question.response_array,
         response_labels: five_star_response_labels,
+        layout: five_star_question.layout,
         title: five_star_question.question,
         id: five_star_question.id,
       }
@@ -32,6 +33,7 @@ describe SchoolProfiles::ReviewQuestions do
       result_hash = {
         response_values: topical_review_question.response_array,
         response_labels: topical_review_question.response_array,
+        layout: topical_review_question.layout,
         title: topical_review_question.question,
         id: topical_review_question.id,
       }

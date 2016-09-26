@@ -65,7 +65,7 @@ class SchoolProfilesPage < SitePrism::Page
   end
 
   def has_all_review_questions?
-    review_form.questions.count == 2
+    review_form.questions.count == 3
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)
