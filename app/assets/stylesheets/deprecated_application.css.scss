@@ -15,6 +15,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 @import "variables/variables";
+@import "mixins/*";
 @import "gs/mixins";
 @import "resources/bootstrap/bootstrap";
 @import "gs/twitter-typeahead";
@@ -27,4 +28,5 @@
 @import "gs/objects/search_area_layout";
 @import "gs/objects/search_page";
 @import "gs/objects/home_page";
+@import "components/join-form";
 

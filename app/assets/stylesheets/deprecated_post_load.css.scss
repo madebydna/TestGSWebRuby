@@ -17,6 +17,7 @@
 // REMOVE ME! We need to figure out @extend usage first though.
 @import "variables/variables";
 @import "resources/bootstrap/bootstrap";
+@import "mixins/*";
 @import "gs/mixins";
 @import "sprites/*";
 @import "gs/buttons";
