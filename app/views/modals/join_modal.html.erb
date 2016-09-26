@@ -1,15 +1,14 @@
 <% modal_css_class = params[:modal_css_class] %>
-<div class="modal fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
+<div class="modal join-and-login fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
   <div class="gs-modal-dialog modal-dialog" >
     <% @active_tab ||= 'login' %>
-    <div class="signin_">
-      <div class="row limit-width-1200 signin-content_">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-          <div class="tab-content well">
-            <h3 class="ptl tac"><%= t('.header') %></h3>
-            <%= render '/signin/join_and_login_forms' %>
-          </div>
-        </div>
+    <button class="close" data-dismiss="modal" aria-label="Close">
+      <span>&times;</span>
+    </button>
+    <div class="modal-body">
+      <div class="title"><%= t('.header') %></div>
+      <div class="body tab-content">
+        <%= render '/signin/join_and_login_forms' %>
       </div>
     </div>
   </div>
