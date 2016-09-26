@@ -2,13 +2,16 @@
   en:
     modals:
       email_join_modal:
-        body_html: <p>Get our best articles, worksheets, and more delivered weekly to your inbox</p>
+        body_html: Get our best articles, worksheets, and more delivered weekly to your inbox
+        email_label: Email address
+        email_required_error: Please enter an email address.
         header: Get our best articles, worksheets, and more delivered weekly to your inbox.
         signup_button: Sign up
         signup_success: Thanks! You're now signed up.
         sponsors_signup: Please send me parenting information and special promotions from GreatSchools' carefully chosen partners.
         terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
         greatschools_terms_of_use: GreatSchools Terms of Use.
-        privacy_policy: Privacy Policy.
+        privacy_policy: Privacy Policy
         email_placeholder: Please enter your email address
-
+        parsley_required_message: "Please enter an email address."
+        parsley_remote_message_html: "Looks like you already have an account. <a href='#login' data-toggle='tab'>Log in</a>."

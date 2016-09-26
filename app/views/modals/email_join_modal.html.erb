@@ -1,5 +1,5 @@
 <% modal_css_class = params[:modal_css_class] %>
-<div class="modal fade js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
+<div class="modal fade js-gsModal join-and-login <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
   <div class="gs-modal-dialog modal-dialog" >
     <%= form_tag register_email_path, method: :post, remote: true,
                  id: 'signup-school-form',
@@ -10,48 +10,46 @@
       </button>
         <div class="modal-body">
           <div class="title"><%= t('.header') %></div>
+          <div class="subheading"><%= t('.body_html') %></div>
           <div class="body">
-            <%= t('.body_html') %>
-            <div class="form-group controls">
-              <p> <%= check_box_tag('sponsors_list', 'true') %>
-                <%= t('.sponsors_signup') %>
+            <div class="terms-and-privacy">
+              <p>
+              <%= check_box_tag('sponsors_list', 'true', true, class:'checkbox') %>
+              <label style="font-size:14px;width: 90%;text-align:left;"><%= t('.sponsors_signup') %></label>
               </p>
             </div>
-            <div class="row">
-              <div class="col-xs-12 col-sm-8 col-sm-offset-2">
-                <div class="form-group controls row">
-                  <div class="input-group">
-                    <%= email_field_tag(
-                      :email,
-                      nil,
-                      {
-                        id: "signup-email",
-                        placeholder: t('.email_placeholder'),
-                        class: 'form-control js-signup-email parsley-error pam', 
-                        data: { 'parsley-required' => "true",
-                        'parsley-type' => "email",
-                        'parsley-required-message' => "Please enter an email address.",
-                        'parsley-error-container' => ".js-signup-email-errors" }
-                      }
-                    ) %>
-                    <span class="input-group-btn">
-                      <button class="btn btn-primary js-modal-submit-button modal-signup-button" type="submit" data-disable-with="Signing up">
-                        <%= t('.signup_button') %>
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              </div>
+
+            <div>
+              <%= email_field_tag(
+                  :email,
+                  nil,
+                  {
+                    id: "join-email",
+                    placeholder: "#{t('.email_label')}",
+                    class: 'js-join-email',
+                    'data-parsley-required' => "true",
+                    'data-parsley-type' => "email",
+                    'data-parsley-trigger' => "change",
+                    'data-parsley-required-message' => t('.parsley_required_message'),
+                    'data-parsley-error-container' => ".js-join-email-errors",
+                    'data-parsley-remote' => '/gsr/validations/need_to_signin',
+                    'data-parsley-remote-options' => '{ "type": "GET"}',
+                    'data-parsley-remote-message' => t(".parsley_remote_message_html")
+                  }
+                ) %>
+              <p class="js-join-email-errors help-block"></p>
             </div>
-              <p class="tac">
-                <%= link_to t('.privacy_policy'), privacy_url %>&nbsp;
-                <%= t('.terms_of_use_html',
-                      terms_of_use_link: link_to(
-                        t('.greatschools_terms_of_use'),
-                        terms_of_use_url )
-                    )
-                %>
-              </p>
+
+            <div class="terms-and-privacy">
+              <label>
+                <%= t('.terms_of_use_html', terms_of_use_link: link_to(t('.greatschools_terms_of_use'), terms_of_use_url)) %>
+              </label>
+              <span><%= link_to t('.privacy_policy'), privacy_url %></span>
+              <p class="js-join-terms-errors help-block"></p>
+            </div>
+
+            <button class="submit js-join-login-submit-button"><%= t('.signup_button') %></button>
+
           </div>
         </div>
     <% end %>
