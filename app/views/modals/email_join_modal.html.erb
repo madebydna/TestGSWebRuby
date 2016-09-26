@@ -12,7 +12,7 @@
           <div class="title"><%= t('.header') %></div>
           <div class="subheading"><%= t('.body_html') %></div>
           <div class="body">
-            <div class="terms-and-privacy">
+            <div class="checkbox-and-label">
               <p>
               <%= check_box_tag('sponsors_list', 'true', true, class:'checkbox') %>
               <label style="font-size:14px;width: 90%;text-align:left;"><%= t('.sponsors_signup') %></label>
@@ -40,7 +40,7 @@
               <p class="js-join-email-errors help-block"></p>
             </div>
 
-            <div class="terms-and-privacy">
+            <div class="checkbox-and-label">
               <label>
                 <%= t('.terms_of_use_html', terms_of_use_link: link_to(t('.greatschools_terms_of_use'), terms_of_use_url)) %>
               </label>
