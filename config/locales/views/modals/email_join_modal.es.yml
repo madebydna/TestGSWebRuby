@@ -3,6 +3,8 @@
     modals:
       email_join_modal:
         body_html: ¡Lo mejor de artículos, hojas de trabajo, y más entregados semanalmente a su bandeja de entrada
+        email_label: Dirección de correo electrónico
+        email_required_error: Por favor introduzca una dirección de correo eléctronico.
         header: Recibe actualizaciones en esta escuela.
         signup_button: Ingresar
         signup_success: Gracias! Ahora estás registrado.
