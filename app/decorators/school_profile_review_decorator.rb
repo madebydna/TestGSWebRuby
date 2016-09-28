@@ -121,6 +121,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def answer_label
+    return nil if five_star_rating?
     question_answer_text = 
       review.question.question[0].downcase + 
       review.question.question[1..-2]
