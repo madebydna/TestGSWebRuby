@@ -13,7 +13,6 @@ FactoryGirl.define do
     end
 
     factory :teachers_topic do
-      id 2
       name 'Teachers'
       label 'Teacher effectiveness'
     end
