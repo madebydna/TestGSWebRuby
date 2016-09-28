@@ -10,7 +10,6 @@
   }
 
   .user-info-column {
-    padding-top: 10px;
     padding-right: 5px;
     @media (min-width: 768px) {
       text-align: left;
@@ -18,7 +17,9 @@
   }
 
   .review-list-column {
-    padding-top: 5px;
+    @include media-breakpoint-up(sm) {
+      margin-top: -10px;
+    }
     .topical-review {
       padding-top: 20px;
     }

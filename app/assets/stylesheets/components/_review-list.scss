@@ -1,8 +1,9 @@
 .review-list {
   .user-reviews-container {
-    padding: 20px 0 20px 0;
+    padding-bottom: 20px;
   }
   .user-reviews-container ~ .user-reviews-container {
     border-top: 1px solid #dbe6eb;
+    padding-top: 20px;
   }
 }

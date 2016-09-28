@@ -1,4 +1,18 @@
 <% questions = review_questions.questions %>
-<div class="review-form-container">
-  <%= react_component('ReviewForm', questions: questions) %>
+
+<a name="Reviews"></a>
+
+<div class="rating-container">
+  <div class="row">
+    <div class="col-xs-12 col-lg-3">
+      <div class="rating-container__title">
+        <%= t('school_profiles.Review this school') %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-lg-9">
+      <div class="review-form-container">
+        <%= react_component('ReviewForm', questions: questions) %>
+      </div>
+    </div>
+  </div>
 </div>

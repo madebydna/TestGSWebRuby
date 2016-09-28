@@ -33,6 +33,7 @@ describe "Visitor" do
 
 
     visit school_path(school)
+    expect(page).to have_text "RECENT COMMENTS"
     within review_list do
       expect(page).to have_css ".five-star-review .header", text: "Overall experience"
       expect(page).to have_css ".user-reviews-container .user-type", text: "Community member"
