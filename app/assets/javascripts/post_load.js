@@ -1,6 +1,8 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
-//= require resources/bootstrap
+//= require resources/fastclick
+//= require resources/tipso
+//= require resources/remodal
 //= require auth/auth
 //= require auth/facebook_auth
 //= require util/gs_bind
@@ -23,6 +25,8 @@
 //= require components
 //= require util/review_form.js
 //= require react_ujs
+
+
 
 $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
     var appId = gon.facebook_app_id;

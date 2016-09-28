@@ -4,7 +4,7 @@
 
     <p class="<%= 'active' if @active_tab == 'login' %>"><%= t('.have_an_account_label') %>
 
-    <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
+    <a href="#login" data-toggle="tab" class="js_login_tab"><%= t('.login_tab') %></a></p>
 
     <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn-facebook js-facebook-signin js-button-link">
       <span class="icon-facebook"></span><%= t('.facebook_signup_button') %>

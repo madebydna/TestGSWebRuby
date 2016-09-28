@@ -6,7 +6,7 @@
               'data-parsley-namespace' => "data-parsley-" do %>
     <%= token_tag form_authenticity_token %>
         <p class="<%= 'active' if @active_tab == 'join' %>"><%= t('.no_account_label') %>
-          <a href="#join" data-toggle="tab" id="js_join_tab"> <%= t('.signup_tab') %></a>
+          <a href="#join" data-toggle="tab" class="js_join_tab"> <%= t('.signup_tab') %></a>
         </p>
 
         <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn-facebook js-facebook-signin js-button-link">
