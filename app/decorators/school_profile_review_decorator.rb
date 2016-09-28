@@ -6,7 +6,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   delegate_all
 
   def five_star_rating?
-    review.question.review_topic.id == 1
+    review.question.question == 'How would you rate your experience at this school?'
   end
 
   def answer_markup

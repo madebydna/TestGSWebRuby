@@ -26,10 +26,11 @@ describe 'Review School Chooser Page' do
 
   with_shared_context 'Visit Review School Chooser Page for topic 8' do
     subject(:page_object) { ReviewSchoolChooserPage.new }
-    it { is_expected.to have_gratitude_topic_review_school_chooser_header}
+    it { is_expected.to have_overall_topic_review_school_chooser_header }
+    it { is_expected.to_not have_gratitude_topic_review_school_chooser_header}
     it { is_expected.to have_review_highlight }
     it { is_expected.to have_review_school_chooser }
-    it { is_expected.to have_greater_good_logo_link }
+    it { is_expected.to_not have_greater_good_logo_link }
 
     with_subject :recent_reviews do
       it { is_expected.to have_recent_reviews_header }
