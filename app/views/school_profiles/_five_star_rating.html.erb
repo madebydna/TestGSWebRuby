@@ -1,11 +1,11 @@
-<% number_of_ratings %>
+<% number_of_reviews %>
 <% rating %>
 
 <div class="five-star-rating">
   <span class="five-star-rating__number">
-    <%= number_of_ratings > 0 ? number_of_ratings : 'n/a' %>
+    <%= number_of_reviews > 0 ? number_of_reviews : 'n/a' %>
   </span>
-  <% if number_of_ratings > 0 %>
+  <% if number_of_reviews > 0 %>
     <span class="rs-five-star-rating five-star-rating__stars">
       <%= render 'five_stars', filled: rating %>
     </span>
