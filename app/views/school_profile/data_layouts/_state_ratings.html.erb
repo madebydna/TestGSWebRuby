@@ -22,7 +22,7 @@
   <div class="row mbm pam">
   <div class="col-xs-12 col-sm-3 col-md-2 col-lg-2">
     <% rating_hash.each do |rh| %>
-      <div class="dib tac mhm mbm">
+      <div class="dib tac mhs mbm small" style="width:100px">
         <div class="ma">
           <%= render(state_partial(@school.state), page:'quality', rating: rh["overall_rating"]) %>
         </div>
