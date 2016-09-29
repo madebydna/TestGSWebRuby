@@ -17,9 +17,9 @@ class ReviewsList extends React.Component {
 
   reviewReportedCallback(reviewId) {
     if (reviewId) {
-      var reportedMap = this.state.currentUserReportedMap;
-      reportedMap[reviewId] = true;
-      this.setState({currentUserReportedMap: reportedMap});
+      var newAttr = {};
+      newAttr[reviewId] = true;
+      this.setState({currentUserReportedMap: Object.assign({}, this.state.currentUserReportedMap, newAttr)});
     }
   }
 
