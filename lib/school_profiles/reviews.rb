@@ -1,5 +1,6 @@
 module SchoolProfiles
   class Reviews
+    include Rails.application.routes.url_helpers
 
     USER_TYPE_AVATARS = {
       'parent' => 1,
@@ -55,7 +56,10 @@ module SchoolProfiles
         topic_label: review.topic_label,
         answer: review.answer.try(:downcase),
         answer_label: review.answer_label,
-        id: review.id
+        id: review.id,
+        links: {
+          flag: flag_review_path(review.id)
+        }
       }
     end
   end
