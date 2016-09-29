@@ -13,7 +13,11 @@ class ReportReview extends React.Component {
   }
 
   handleSubmitClick(event) {
-    this.props.reportedCallback(this.props.review.id);
+    if (this.props.review) {
+      this.props.reportedCallback(this.props.review.id);
+    } else {
+      this.props.cancelCallback();
+    }
     event.preventDefault();
   }
 

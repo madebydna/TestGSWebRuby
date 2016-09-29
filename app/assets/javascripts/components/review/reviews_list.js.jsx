@@ -24,6 +24,10 @@ class ReviewsList extends React.Component {
   }
 
   renderOneUsersReviews(userReviews) {
+    var user_reported = false;
+    if (userReviews && userReviews.five_star_review) {
+      user_reported = !!this.state.currentUserReportedMap[userReviews.five_star_review.id];
+    }
     return(<UserReviews
       key = {userReviews.id}
       five_star_review = {userReviews.five_star_review}
@@ -31,7 +35,7 @@ class ReviewsList extends React.Component {
       most_recent_date = {userReviews.most_recent_date}
       user_type_label = {userReviews.user_type_label}
       avatar = {userReviews.avatar}
-      current_user_has_reported={!!this.state.currentUserReportedMap[userReviews.five_star_review.id]}
+      current_user_has_reported={user_reported}
       review_reported_callback={this.reviewReportedCallback}
     />)
   }
