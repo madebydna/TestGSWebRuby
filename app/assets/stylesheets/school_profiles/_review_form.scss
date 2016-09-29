@@ -120,9 +120,14 @@
     // display:none;
     padding-top: 20px;
 
-    > div:first-child {
+    > span > div:first-child {
       color: #00b3ee;
       font-size: 14px;
+    }
+
+    > span > div > span {
+      margin-right: 5px;
+      color: #999999;
     }
 
     > div:last-child {

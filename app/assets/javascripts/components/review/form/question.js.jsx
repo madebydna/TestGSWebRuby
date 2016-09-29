@@ -48,12 +48,9 @@ class Question extends React.Component {
   }
 
   renderTellUsLink() {
-    let pencilColor = {
-      color: '#999999'
-    };
     return(
       <div className="tell-us-link" onClick={this.displayTextArea}>
-        <span className="icon-pencil"  style={pencilColor}></span>
+        <span className="icon-pencil"></span>
         Tell us why&hellip;
        </div>
     );
