@@ -1,14 +1,26 @@
 class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
+    var currentUserReportedMap = {};
+    // TODO: This needs to be hooked up somewhere. Maybe from props?
+    this.state = {currentUserReportedMap: currentUserReportedMap};
+    this.reviewReportedCallback = this.reviewReportedCallback.bind(this);
   }
 
   initialReviews() {
-    return this.props.reviews.slice(0,3).map(this.renderOneUsersReviews);
+    return this.props.reviews.slice(0,3).map(this.renderOneUsersReviews.bind(this));
   }
 
   drawerReviews() {
-    return this.props.reviews.slice(3).map(this.renderOneUsersReviews);
+    return this.props.reviews.slice(3).map(this.renderOneUsersReviews.bind(this));
+  }
+
+  reviewReportedCallback(reviewId) {
+    if (reviewId) {
+      var reportedMap = this.state.currentUserReportedMap;
+      reportedMap[reviewId] = true;
+      this.setState({currentUserReportedMap: reportedMap});
+    }
   }
 
   renderOneUsersReviews(userReviews) {
@@ -19,6 +31,8 @@ class ReviewsList extends React.Component {
       most_recent_date = {userReviews.most_recent_date}
       user_type_label = {userReviews.user_type_label}
       avatar = {userReviews.avatar}
+      current_user_has_reported={!!this.state.currentUserReportedMap[userReviews.five_star_review.id]}
+      review_reported_callback={this.reviewReportedCallback}
     />)
   }
 
@@ -40,4 +54,4 @@ ReviewsList.propTypes = {
     user_type_label: React.PropTypes.string,
     avatar: React.PropTypes.number
   }))
-}
+};

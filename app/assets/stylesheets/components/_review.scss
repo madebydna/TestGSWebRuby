@@ -45,6 +45,50 @@
   .topical-review {
     padding-top: 20px;
   }
+
+  $color-report-flag: #d94373;
+  $color-button-border: #c1d2d9;
+  $color-button-hover-border: rgba(113, 120, 126, 0.5);
+  $color-button-active-border: rgba(113, 120, 126, 0.8);
+  $color-dark-gray-text: #2e3438;
+  $color-gradient-button-dark: #f4f5f6;
+  $color-gradient-button-active: #edf3f5;
+  $color-button-reported: rgba(217, 67, 115, 0.1);
+
+  .review-button-bar {
+    margin-top: $spacing-large;
+
+    .icon-flag {
+      color: #d94373;
+    }
+
+    > .button {
+      border-radius: 2px;
+      border: solid 1px $color-button-border;
+      background-image: linear-gradient(to bottom, #fff, $color-gradient-button-dark);
+      font-size: $font-size-l1;
+      font-family: opensans-bold;
+      padding: $spacing-small $spacing-medium;
+      color: $color-dark-gray-text;
+      margin-right: $spacing-small;
+      cursor: pointer;
+
+      &:hover {
+        border: solid 1px $color-button-hover-border;
+      }
+
+      &:active {
+        border: solid 1px $color-button-active-border;
+        background: $color-gradient-button-active none;
+      }
+    }
+
+    > .button.reported {
+      background: $color-button-reported none;
+      border: none;
+      cursor: default;
+    }
+  }
 }
 
 .five-star-review {

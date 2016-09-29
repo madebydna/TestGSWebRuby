@@ -1,0 +1,65 @@
+.report-review {
+  $color-gray-text: #71787e;
+  $color-dark-gray-text: #2e3438;
+  $color-button-border: #c1d2d9;
+  $color-button-hover-border: rgba(113, 120, 126, 0.5);
+  $color-button-active-border: rgba(113, 120, 126, 0.8);
+  $color-gs-blue: #2ba3dc;
+  $color-gs-blue-hover: #55b5e3;
+  $color-gs-blue-active: #2282b0;
+
+  margin-top: $spacing-large;
+
+  p {
+    font-size: $font-size-l2;
+    color: $color-gray-text;
+  }
+
+  .header {
+    font-family: opensans-bold;
+    color: $color-dark-gray-text;
+  }
+
+  textarea {
+    width: 100%;
+    margin-bottom: $spacing-large;
+  }
+
+  .form-buttons {
+    text-align: right;
+  }
+
+  .button {
+    border-radius: 2px;
+    border: solid 1px $color-button-border;
+    padding: $spacing-medium $spacing-large;
+    color: $color-dark-gray-text;
+    cursor: pointer;
+    font-size: $font-size-base;
+
+    &:hover {
+      border: solid 1px $color-button-hover-border;
+    }
+
+    &:active {
+      border: solid 1px $color-button-active-border;
+    }
+  }
+
+  .button.cta {
+    border: solid 1px $color-gs-blue;
+    background-color: $color-gs-blue;
+    color: #fff;
+
+    &:hover {
+      border: solid 1px $color-gs-blue-hover;
+      background-color: $color-gs-blue-hover;
+    }
+
+    &:active {
+      border: solid 1px $color-gs-blue-active;
+      background-color: $color-gs-blue-active;
+    }
+  }
+
+}
