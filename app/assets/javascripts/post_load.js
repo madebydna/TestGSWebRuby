@@ -8,6 +8,7 @@
 //= require util/gs_bind
 //= require util/session
 //= require util/i18n
+//= require util/review_flags
 //= require autocomplete
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars

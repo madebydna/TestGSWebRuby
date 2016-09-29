@@ -127,21 +127,39 @@ module ReviewControllerConcerns
           review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
           review_flag.user = current_user
           if review_flag.save
-            flash_success t('actions.report_review.reported')
+            if request.xhr?
+              render json: {}, status: :ok
+            else
+              flash_success t('actions.report_review.reported')
+            end
           else
             GSLogger.error(:reviews, nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
-            flash_error t('actions.generic_error')
+            if request.xhr?
+              render json: {}, status: :internal_server_error
+            else
+              flash_error t('actions.generic_error')
+            end
           end
         else
-          flash_error t('actions.generic_error')
+          if request.xhr?
+            render json: {}, status: :internal_server_error
+          else
+            flash_error t('actions.generic_error')
+          end
         end
       rescue => e
         Rails.logger.debug e
-        flash_error t('actions.generic_error')
+        if request.xhr?
+          render json: {}, status: :internal_server_error
+        else
+          flash_error t('actions.generic_error')
+        end
       end
     end
 
-    redirect_to reviews_page_for_last_school
+    unless request.xhr?
+      redirect_to reviews_page_for_last_school
+    end
   end
 
 end

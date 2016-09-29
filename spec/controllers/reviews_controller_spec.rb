@@ -9,6 +9,8 @@ describe ReviewsController do
       expect(controller).to_not receive :flag_review_and_redirect
       put :flag, id: 1
       expect(response).to redirect_to request.env['HTTP_REFERER']
+      xhr :put, :flag, id: 1, format: :json
+      expect(response.status).to eq(422)
     end
 
     it 'should save deferred action if not logged in' do
@@ -18,6 +20,15 @@ describe ReviewsController do
       expect(controller).to_not receive :flag_review_and_redirect
       put :flag, id: 1, review_flag: { comment: 'any reason' }
       expect(response).to redirect_to controller.signin_url
+    end
+
+    it 'should return 403 for xhr requests if user not logged in' do
+      allow(controller).to receive(:logged_in?).and_return false
+      allow(controller).to receive(:current_user).and_return current_user
+      allow(current_user).to receive(:provisional?).and_return false
+      expect(controller).to_not receive :flag_review_and_redirect
+      xhr :put, :flag, id: 1, review_flag: { comment: 'any reason' }, format: :json
+      expect(response.status).to eq(403)
     end
 
     it 'should flash error, save deferred action and redirect back if logged in and provisional' do
@@ -30,6 +41,16 @@ describe ReviewsController do
       expect(response).to redirect_to request.env['HTTP_REFERER']
     end
 
+    it 'should return 403 for xhr requests if user is provisional' do
+      request.env['HTTP_REFERER'] = 'www.greatschools.org/blah'
+      allow(controller).to receive(:logged_in?).and_return true
+      allow(controller).to receive(:current_user).and_return current_user
+      allow(current_user).to receive(:provisional?).and_return true
+      expect(controller).to_not receive :flag_review_and_redirect
+      xhr :put, :flag, id: 1, review_flag: { comment: 'any reason' }, format: :json
+      expect(response.status).to eq(403)
+    end
+
     it 'should report review and redirect' do
       allow(controller).to receive(:current_user).and_return current_user
       allow(current_user).to receive(:provisional?).and_return false
@@ -37,6 +58,16 @@ describe ReviewsController do
       allow(controller).to receive(:flag_review_and_redirect) { controller.redirect_to 'blah' }
       put :flag, id: 1, review_flag: { comment: 'any reason' }
       expect(response).to redirect_to 'blah'
+    end
+
+    it 'should report review and return 200 for xhr requests' do
+      allow(controller).to receive(:current_user).and_return current_user
+      allow(current_user).to receive(:provisional?).and_return false
+      allow(controller).to receive(:logged_in?).and_return true
+      allow(Review).to receive(:find).and_return(double(id:1).as_null_object)
+      allow_any_instance_of(ReviewFlag).to receive(:save).and_return(true)
+      xhr :put, :flag, id: 1, review_flag: { comment: 'any reason' }
+      expect(response.status).to eq(200)
     end
   end
 
