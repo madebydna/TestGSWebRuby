@@ -201,4 +201,25 @@ describe SchoolUser do
     end
   end
 
+  describe "#find_active_review_by_question_id" do
+    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:school) { FactoryGirl.create(:a_high_school) }
+    let(:reviews) { FactoryGirl.create_list(:review, 5) }
+    let(:review_questions) { FactoryGirl.create_list(:review_question, 5) }
+    before do
+      (0..4).to_a.each do |n|
+        reviews[n].question = review_questions[n]
+        reviews[n].user = user
+        reviews[n].school = school
+        reviews[n].save
+      end
+    end
+    after do
+      clean_models User, School, Review, ReviewQuestion, ReviewTopic
+    end
+    it 'should return only the review for current user, given school, matching review question' do
+      expect(subject.find_active_review_by_question_id(review_questions[3].id))
+        .to eq(reviews[3])
+    end
+  end
 end
