@@ -89,6 +89,7 @@ class Question extends React.Component {
             transitionLeaveTimeout={100}>
             { this.state.shouldDisplayTextArea ? this.renderTextArea() : null }
           </ReactCSSTransitionGroup>
+          { this.props.errorMessage ? this.renderErrorMessage() : null }
         </div>
       </div>
     );
@@ -120,7 +121,6 @@ class Question extends React.Component {
             transitionLeaveTimeout={400}>
             { (this.props.value && this.props.shouldDisplayTextArea) ? this.renderTellUsWhy() : null }
           </ReactCSSTransitionGroup>
-          { this.props.errorMessage ? this.renderErrorMessage() : null }
         </div>
       </div>
     )
