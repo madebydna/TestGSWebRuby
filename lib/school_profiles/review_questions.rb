@@ -1,11 +1,25 @@
 module SchoolProfiles
   class ReviewQuestions
 
+    attr_reader :school
+
+    def initialize(school)
+      @school = school
+    end
+
     def questions
       @_questions ||= (
         ReviewQuestion.active
       )
       @_questions.map{ |q| question_to_hash(q) }
+    end
+
+    def school_id
+      school.id
+    end
+
+    def state
+      school.state
     end
 
     private

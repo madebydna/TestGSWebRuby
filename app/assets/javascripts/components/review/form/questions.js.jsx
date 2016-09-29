@@ -10,7 +10,10 @@ class Questions extends React.Component {
 
   layoutComponentForQuestion(question) {
     let responseKey = question.id.toString();
-    let selectedValue = this.props.selectedResponses[responseKey]
+    let selectedValue;
+    if (this.props.selectedResponses[responseKey]) {
+      selectedValue = this.props.selectedResponses[responseKey].answerValue;
+    }
     let component;
     if (question.layout == 'overall_stars') {
       component = (<FiveStarRating
@@ -22,7 +25,7 @@ class Questions extends React.Component {
       />)
     } else {
       component = (<SelectBoxes
-        value = {this.props.selectedResponses[responseKey]}
+        value = {selectedValue}
         responseValues = {question.response_values}
         responseLabels = {question.response_labels}
         question_id = {question.id}
@@ -56,7 +59,6 @@ class Questions extends React.Component {
 
   renderQuestion(question, index) {
     let responseKey = question.id.toString();
-    let commentResponseKey = 'comment' + responseKey;
     let layoutComponent = this.layoutComponentForQuestion(question);
     let shouldDisplayTextArea =this.shouldQuestionDisplayTextArea(question);
     return(<Question

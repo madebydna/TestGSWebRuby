@@ -51,7 +51,11 @@ class ReviewForm extends React.Component {
   responseSelected(value, id) {
     let selectedResponses = this.state.selectedResponses;
     let questionId = id.toString()
-    selectedResponses[questionId] = value;
+    if (selectedResponses[questionId]) {
+      selectedResponses[questionId].answerValue = value;
+    } else {
+      selectedResponses[questionId] = {answerValue: value};
+    }
     this.setState(
       {
         selectedResponses: selectedResponses
@@ -61,8 +65,12 @@ class ReviewForm extends React.Component {
 
   textValueChanged(value, id) {
     let selectedResponses = this.state.selectedResponses;
-    let questionId = 'comment'+ id.toString();
-    selectedResponses[questionId] = value;
+    let questionId = id.toString();
+    if (selectedResponses[questionId]) {
+      selectedResponses[questionId].comment = value;
+    } else {
+      selectedResponses[questionId] = {comment: value};
+    }
     this.setState(
       {
         selectedResponses: selectedResponses
@@ -74,9 +82,45 @@ class ReviewForm extends React.Component {
     this.hideQuestions();
   }
 
-  submitForm() {
+  buildFormData() {
+    let responses = this.state.selectedResponses;
+    let formData = {
+      state: this.props.state,
+      school_id: this.props.schoolId,
+      reviews_params: this.buildReviewsData()
+    };
+    return formData;
+  }
 
-    this.setState( { displayAllQuestions: false } );
+  buildReviewsData() {
+    let selectedResponses = this.state.selectedResponses;
+    let reviewsData = [];
+    _.forOwn(selectedResponses, function (reviewResponse, questionId) {
+      reviewsData.push(
+        {
+          review_question_id: questionId,
+          comment: reviewResponse.comment,
+          answer_value: reviewResponse.answerValue
+        }
+        );
+    });
+    return JSON.stringify(reviewsData);
+  }
+
+  submitForm() {
+    let data = this.buildFormData();
+    $.ajax({
+      url: "/gsr/reviews",
+      method: 'POST',
+      data: data,
+      dataType: 'json',
+      success: function (xhr) {
+        this.setState( { displayAllQuestions: false } );
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log(xhr.responseText);
+      }.bind(this)
+    });
   }
 
   renderFormActions() {

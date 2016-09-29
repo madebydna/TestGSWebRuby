@@ -1,4 +1,6 @@
 <% questions = review_questions.questions %>
+<% school_id = review_questions.school_id %>
+<% state = review_questions.state %>
 
 <a name="Reviews"></a>
 
@@ -11,7 +13,7 @@
     </div>
     <div class="col-xs-12 col-lg-9">
       <div class="review-form-container">
-        <%= react_component('ReviewForm', questions: questions) %>
+        <%= react_component('ReviewForm', state: state, schoolId: school_id, questions: questions) %>
       </div>
     </div>
   </div>

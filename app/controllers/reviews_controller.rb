@@ -5,6 +5,27 @@ class ReviewsController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, if: proc { |c| c.request.xhr? }
 
+  def create
+    if logged_in?
+      @reviews_form = ReviewsForm.new(
+        reviews_form_params.merge({user: current_user})
+      )
+      if @reviews_form.save
+        response_hash = @reviews_form.hash_result
+        status = :ok
+      else
+        response_hash = @reviews_form.errors.to_json
+        status = :unprocessable_entity
+      end
+    else
+      status = :unprocessable_entity
+      response_hash = {redirect_url: join_url}
+    end
+    respond_to do |format|
+      format.json { render json: response_hash, status: status}
+    end
+  end
+
   def flag
     review_id = params[:id]
     comment = params.fetch(:review_flag, {})[:comment]
@@ -45,4 +66,9 @@ class ReviewsController < ApplicationController
     end
   end
 
+  private
+
+  def reviews_form_params
+      params.permit(:school_id, :state, :reviews_params)
+  end
 end
