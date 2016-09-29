@@ -9,8 +9,14 @@ class TextArea extends React.Component {
   }
 
   render() {
+    let textareaClass;
+    if (this.props.errorMessage) {
+      textareaClass = "review-error";
+    }
     return(
-      <textarea className="js-comment" onChange={this.handleTextBoxChange}></textarea>
+      <div className={textareaClass}>
+        <textarea  onChange={this.handleTextBoxChange}></textarea>
+      </div>
     );
   }
 }

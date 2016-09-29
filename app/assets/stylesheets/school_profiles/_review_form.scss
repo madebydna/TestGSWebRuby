@@ -114,10 +114,15 @@
         padding-bottom: 15px;
       }
     }
+
+    .subtext {
+      font-family: "opensans-regular";
+      font-size: 12px;
+      color: #71787e;
+    }
   }
 
   .tell-us-why {
-    // display:none;
     padding-top: 20px;
 
     > span > div:first-child {
@@ -180,6 +185,16 @@
         }
       }
     }
+  }
+
+  .review-error > textarea {
+    border-color: #db0000;
+  }
+
+  .error-message {
+    font-family: "opensans-regular";
+    margin-top: 5px 0;
+    color: #db0000;
   }
 }
 

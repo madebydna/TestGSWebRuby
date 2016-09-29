@@ -36,10 +36,27 @@ class Question extends React.Component {
     }
   }
 
-  renderTextArea() {
+  renderErrorMessage() {
     return(
-      <textarea className="js-comment" onBlur={this.handleTextBlur} autoFocus={true} onChange={this.handleTextBoxChange}></textarea>
+      <div className="error-message">
+        { this.props.errorMessage }
+      </div>
     );
+  }
+
+  renderTextArea() {
+    let textClass;
+    if (this.props.errorMessage) {
+      textClass = "review-error";
+      }
+    return(
+      <div className={textClass}>
+        <textarea onBlur={this.handleTextBlur}
+          autoFocus={true}
+          onChange={this.handleTextBoxChange}>
+        </textarea>
+      </div>
+      );
   }
 
   handleTextBoxChange(event) {
@@ -77,6 +94,14 @@ class Question extends React.Component {
     );
   }
 
+  renderSubtext() {
+    return (
+      <div className="subtext">
+        { this.props.subtext }
+      </div>
+    );
+  }
+
   render() {
     return (
       <div className="review-question clearfix">
@@ -86,14 +111,16 @@ class Question extends React.Component {
         <div>
           <div>
             { this.props.title }
+            { this.props.subtext ? this.renderSubtext() : null }
           </div>
           { this.renderLayout() }
           <ReactCSSTransitionGroup
             transitionName="textarea"
             transitionEnterTimeout={400}
             transitionLeaveTimeout={400}>
-          { (this.props.value && this.props.shouldDisplayTextArea) ? this.renderTellUsWhy() : null }
-        </ReactCSSTransitionGroup>
+            { (this.props.value && this.props.shouldDisplayTextArea) ? this.renderTellUsWhy() : null }
+          </ReactCSSTransitionGroup>
+          { this.props.errorMessage ? this.renderErrorMessage() : null }
         </div>
       </div>
     )

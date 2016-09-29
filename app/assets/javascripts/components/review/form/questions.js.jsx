@@ -47,13 +47,16 @@ class Questions extends React.Component {
     let layoutComponent = (<TextArea
       question_id = {question.id}
       onTextValueChanged = {this.props.textValueChanged}
+      errorMessage = { this.props.errorMessages[question.id] }
     />)
     return(<Question
       id = {question.id}
+      subtext = { "Required" }
       questionCounter = {this.props.questions.length + 1}
       title = {question.title}
       layout = {layoutComponent}
       shouldDisplayTextArea = {false}
+      errorMessage = { this.props.errorMessages[question.id] }
     />)
   }
 
@@ -71,6 +74,7 @@ class Questions extends React.Component {
       layout = {layoutComponent}
       shouldDisplayTextArea = {shouldDisplayTextArea}
       textValueChanged = {this.props.textValueChanged}
+      errorMessage = { this.props.errorMessages[responseKey] }
     />)
   }
 

@@ -93,8 +93,8 @@ class ReviewsForm
     valid = true
     error_messages = reviews.each_with_object({}) do |review, hash|
       review.disable_unique_active_reviews_validation_temporarily
-      valid = valid && review.valid?
-      hash[review.review_question_id] = review.errors.messages
+      valid = review.valid? && valid
+      hash[review.review_question_id] = review.errors.full_messages.first
     end
     unless valid
       errors.add(:reviews, error_messages)

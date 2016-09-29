@@ -10,6 +10,7 @@ class ReviewForm extends React.Component {
       displayCTA: true,
       displayAllQuestion: false,
       selectedResponses: {},
+      errorMessages: {},
       selectedFiveStarResponse: null
     };
   }
@@ -114,13 +115,49 @@ class ReviewForm extends React.Component {
       method: 'POST',
       data: data,
       dataType: 'json',
-      success: function (xhr) {
-        this.setState( { displayAllQuestions: false } );
+      success: function (xhr, status) {
+        this.handleSuccessfulSubmit(xhr);
       }.bind(this),
       error: function (xhr, status, err) {
-        console.log(xhr.responseText);
+        this.handleFailSubmit(xhr, status, err);
       }.bind(this)
     });
+  }
+
+  handleFailSubmit(xhr, status, err) {
+    let formErrors = JSON.parse(xhr.responseText);
+    let reviewsErrors = formErrors.reviews[0];
+    if (reviewsErrors) {
+      this.updateReviewFormErrors(reviewsErrors);
+    }
+  }
+
+  handleSuccessfulSubmit(xhr) {
+    let reviews = xhr;
+    let reviewsErrors = this.reviewsErrors(reviews);
+    if (reviewsErrors) {
+      this.updateReviewFormErrors(reviewsErrors);
+    } else {
+      this.setState( { displayAllQuestions: false } );
+    }
+  }
+
+  updateReviewFormErrors(reviewsErrors) {
+    this.setState ( { errorMessages: reviewsErrors });
+  }
+
+  reviewsErrors(reviews) {
+    let reviewsErrors = {};
+    _.forOwn(reviews, function (review, questionId) {
+      if (review.error_messages) {
+        reviewsErrors[questionId] = review.error_messages[0];
+      }
+    });
+    if (Object.keys(reviewsErrors).length > 0) {
+      return reviewsErrors;
+    } else {
+      return false;
+    }
   }
 
   renderFormActions() {
@@ -137,6 +174,7 @@ class ReviewForm extends React.Component {
       questions = {this.props.questions}
       selectedResponses = {this.state.selectedResponses}
       responseSelected = {this.responseSelected}
+      errorMessages = {this.state.errorMessages}
       textValueChanged = {this.textValueChanged}
      />);
   }
