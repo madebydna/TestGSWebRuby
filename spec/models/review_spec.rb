@@ -495,6 +495,23 @@ describe Review do
         end.to_not raise_error
       end
     end
+    it "when unique validation disabled second active review should be valid only once" do
+      first_active_review = create(:five_star_review,
+                                   active: true,
+                                   review_question_id: 1,
+                                   school: school,
+                                   user: user)
+      second_active_review = build(:five_star_review,
+                                   review_question_id: 1,
+                                   active: true,
+                                   school: school,
+                                   user: user)
+      
+      second_active_review.disable_unique_active_reviews_validation_temporarily
+      expect(second_active_review.valid?).to eq(true)
+      expect(second_active_review.valid?).to eq(false)
+      expect(second_active_review.save).to eq(false)
+    end
   end
 
   describe '#comment' do
