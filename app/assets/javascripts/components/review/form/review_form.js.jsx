@@ -54,8 +54,13 @@ class ReviewForm extends React.Component {
     this.responseSelected(value, id);
   }
 
+  cloneSelectedResponses() {
+  let selectedResponses = JSON.parse(JSON.stringify(this.state.selectedResponses));
+  return selectedResponses;
+  }
+
   responseSelected(value, id) {
-    let selectedResponses = this.state.selectedResponses;
+    let selectedResponses = this.cloneSelectedResponses();
     let questionId = id.toString()
     if (selectedResponses[questionId]) {
       selectedResponses[questionId].answerValue = value;
@@ -70,7 +75,7 @@ class ReviewForm extends React.Component {
   }
 
   textValueChanged(value, id) {
-    let selectedResponses = this.state.selectedResponses;
+    let selectedResponses = this.cloneSelectedResponses();
     let questionId = id.toString();
     if (selectedResponses[questionId]) {
       selectedResponses[questionId].comment = value;
