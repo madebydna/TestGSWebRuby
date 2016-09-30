@@ -26,6 +26,10 @@
 //= require components
 //= require util/review_form.js
 //= require react_ujs
+//= require util/content
+//= require util/tooltip
+//= require util/remodal
+
 
 
 
