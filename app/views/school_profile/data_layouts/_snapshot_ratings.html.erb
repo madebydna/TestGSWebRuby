@@ -16,7 +16,9 @@
   <% ratings_array = [] %>
 
 <% state_rating = @school.state_rating %>
-<% if state_rating %>
+<% state_rating = state_rating.select { |r| r['overall_rating'] } %>
+
+<% if state_rating && state_rating.is_a?(Array) && state_rating.size > 0 && state_rating.first['overall_rating'] %>
 
     <% if @school.state == 'CA' %>
       <% rating_text = t('.api_score') %>
@@ -26,7 +28,11 @@
       <% rating_text = t('.state_rating') %>
     <% end %>
 
-    <% ratings_array << (render rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text) %>
+    <% unless @school.state == 'CO' %>
+      <% state_rating = state_rating.first['overall_rating'] %>
+    <% end %>
+
+    <% ratings_array << "<div class='rs-state-rating'>" + (render(rating_partial_for_snapshot(@school.state), page:'overview', rating: state_rating, supporting_text: rating_text)) + "</div>" %>
 <% end %>
 
 <% local_rating = @school.local_rating %>

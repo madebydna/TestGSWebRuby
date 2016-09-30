@@ -40,6 +40,7 @@ require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
 require 'webmock/rspec'
+# require 'rspec_profiler'
 
 def disconnect_connection_pools(db)
   ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
@@ -72,7 +73,26 @@ Rails.application.routes.default_url_options[:trailing_slash] = true
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 Capybara::Webkit.configure do |config|
-  config.block_unknown_urls
+  # config.debug = true
+  config.block_unknown_urls # doesnt seem to block urls in all cases
+  config.block_url "http://www.google-analytics.com"
+  config.block_url "https://stats.g.doubleclick.net"
+  config.block_url "http://pixel.quantserve.com"
+  config.block_url "http://bs.serving-sys.com"
+  config.block_url "http://partner.googleadservices.com"
+  config.block_url "https://www.dsply.com"
+  config.block_url "http://gateway.answerscloud.com"
+  config.block_url "https://www.google.com"
+  config.block_url "http://staticxx.facebook.com"
+  config.block_url "https://www.facebook.com"
+  config.block_url "http://www.googletagmanager.com"
+  config.block_url "http://csi.gstatic.com"
+  config.block_url "https://securepubads.g.doubleclick.net"
+  config.block_url "http://cdn.optimizely.com"
+  config.block_url "connect.facebook.net"
+  config.block_url "maps.googleapis.com"
+  config.block_url "www.googletagservices.com"
+  config.block_url "tpc.googlesyndication.com"
 end
 
 RSpec.configure do |config|
@@ -89,6 +109,8 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include WaitForAjax, type: :feature
   WebMock.disable_net_connect!(allow_localhost: true)
+
+  # config.reporter.register_listener RSpecProfiler.new, :start, :example_started, :example_passed, :example_failed
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -177,4 +199,5 @@ RSpec.configure do |config|
   # This needs to be done after we've loaded an ActiveRecord strategy above
   monkey_patch_database_cleaner
   YAML::ENGINE.yamler = 'syck'
+
 end

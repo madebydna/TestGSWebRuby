@@ -15,7 +15,7 @@ shared_examples 'community spotlight assertions' do |collection_config|
   context "with default params: #{scorecard_params}" do
 
     with_shared_context 'setup community spotlight' do
-      include_examples 'basic spotlight assertions', collection_config, scorecard_params
+      include_examples 'basic spotlight assertions', scorecard_params
       context 'the page with interactions' do
         all_param_values(collection_config).each do |param_hash|
           param_hash.each do |param, value|
@@ -23,14 +23,16 @@ shared_examples 'community spotlight assertions' do |collection_config|
             scurcard_params[as_query_param(param).to_sym] = value
             data_attribute = "data-#{param.to_s.gsub('_', '-')}"
 
-            describe_desktop do
-              with_shared_context 'click .js-drawTable element with', data_attribute, value.to_s do
-                desktop_assertions(collection_config, scurcard_params)
+            context "element #{data_attribute}=#{value}" do
+              describe_desktop do
+                with_shared_context 'click .js-drawTable element with', data_attribute, value.to_s do
+                  desktop_assertions(scurcard_params)
+                end
               end
-            end
-            describe_mobile do
-              with_shared_context 'click .js-drawTable element with', data_attribute, value.to_s do
-                mobile_assertions(collection_config, scurcard_params)
+              describe_mobile do
+                with_shared_context 'click .js-drawTable element with', data_attribute, value.to_s do
+                  mobile_assertions(scurcard_params)
+                end
               end
             end
           end
@@ -41,7 +43,7 @@ shared_examples 'community spotlight assertions' do |collection_config|
       context "with query params: #{query_params}" do
         scurcard_params = scorecard_params.deep_dup.merge(query_params)
         with_shared_context 'setup community spotlight', query_params do
-          include_examples 'basic spotlight assertions', collection_config, scurcard_params
+          include_examples 'basic spotlight assertions', scurcard_params
         end
       end
     end
@@ -53,19 +55,25 @@ shared_example 'should highlight column' do |data_type|
   expect(community_spotlight_page.desktop_scorecard.table[:class]).to include("highlight#{index}")
 end
 
-shared_examples 'basic spotlight assertions' do |collection_config, scorecard_params|
+shared_examples 'basic spotlight assertions' do |scorecard_params|
   describe_desktop do
-    desktop_assertions(collection_config, scorecard_params)
+    desktop_assertions(scorecard_params)
   end
   describe_mobile do
-    mobile_assertions(collection_config, scorecard_params)
+    mobile_assertions(scorecard_params)
   end
 end
 
-def desktop_assertions(collection_config, scorecard_params)
-  include_example 'should highlight column', scorecard_params[:sortBy]
-  include_example 'should have selectpicker with selected value', SUBGROUP_SELECT_DESKTOP_SELECTOR, expected_subgroup_selection(scorecard_params)
-  it 'should have the correct query string' do
+def desktop_assertions(scorecard_params)
+  it 'the page should reflect the parameters correctly' do
+    # Should highlight column
+    index = highlight_column_for(scorecard_params[:sortBy])
+    expect(community_spotlight_page.desktop_scorecard.table[:class]).to include("highlight#{index}")
+
+    # Should have selectpicker with selected value
+    expect(page.find(SUBGROUP_SELECT_DESKTOP_SELECTOR)[:title]).to eq(expected_subgroup_selection(scorecard_params))
+
+    # Should have the correct query string
     expected_query_params(scorecard_params).each do |key, value|
       expect_query_param(as_query_param(key), value) # snake_case => snakeCase
     end
@@ -76,9 +84,12 @@ def as_query_param(key)
   key.to_s.camelize(:lower)
 end
 
-def mobile_assertions(collection_config, scorecard_params)
-  include_example 'should have selectpicker with selected value', SUBGROUP_SELECT_MOBILE_SELECTOR, expected_subgroup_selection(scorecard_params)
-  include_example 'should have selectpicker with selected value', DATA_TYPE_SELECT_MOBILE_SELECTOR, expected_datatype_selection(scorecard_params)
+def mobile_assertions(scorecard_params)
+  it 'the page should reflect the parameters correctly' do
+    # Should have selectpickers with the selected values
+    expect(page.find(SUBGROUP_SELECT_MOBILE_SELECTOR)[:title]).to eq(expected_subgroup_selection(scorecard_params))
+    expect(page.find(DATA_TYPE_SELECT_MOBILE_SELECTOR)[:title]).to eq(expected_datatype_selection(scorecard_params))
+  end
 end
 
 def highlight_column_for(data_type)
@@ -130,5 +141,5 @@ def all_param_values(collection_config)
   param_values += collection_config[:scorecard_subgroups_list].map do |sub|
     { sort_breakdown: sub }
   end
-  param_values += [:asc, :desc].map { |sort| { sort_asc_or_desc: sort } }
+  param_values + [:desc].map { |sort| { sort_asc_or_desc: sort } }
 end

@@ -3,7 +3,7 @@ en:
   school_profile:
     data_layouts:
       snapshot_reviews:
-        community_rating: Community rating
+        community_rating: Community review
         help_others: Help others find their GreatSchool!
         rate_and_review: Rate and review this school now!
         reviews:

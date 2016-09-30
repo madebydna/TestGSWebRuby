@@ -15,6 +15,7 @@ describe 'School Profile Reviews Page' do
 
   after do
     clean_dbs :gs_schooldb
+    clean_dbs :profile_config
     clean_models School
   end
 

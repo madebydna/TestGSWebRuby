@@ -266,10 +266,10 @@ describe SigninController do
       expect(controller.send :authenticate).to eq([ user, nil ])
     end
 
-    it 'should return an existing user and error message to sign up for an account if the account has no password' do
+    it 'should return an existing user and error message to set password if the account has no password' do
       expect(User).to receive(:with_email).and_return(user)
       expect(user).to receive(:has_password?).and_return(false)
-      expect(I18n).to receive(:t).with('controllers.signin.create.email_without_password_error_html', anything).and_return('account without password error message')
+      expect(I18n).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password error message')
       expect(controller.send :authenticate).to eq([ user, 'account without password error message' ])
     end
 

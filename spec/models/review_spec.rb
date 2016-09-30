@@ -41,10 +41,10 @@ describe Review do
     expect(review).to be_valid
   end
 
-  it 'should only allow up to 2400 characters' do
-    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15'.ljust 2400, '_'
+  it 'should only allow up to 2800 characters' do
+    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15'.ljust 2800, '_'
     expect(review).to be_valid
-    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15'.ljust 2401, '_'
+    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15'.ljust 2801, '_'
     expect(review).to_not be_valid
   end
 

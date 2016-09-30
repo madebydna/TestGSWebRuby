@@ -55,7 +55,7 @@ class Review < ActiveRecord::Base
   validates_presence_of :school
   validates_presence_of :user
   validates :comment, length: {
-      maximum: 2400,
+      maximum: 2800,
   }
   validate :comment_minimum_length, unless: '@moderated == true'
 
