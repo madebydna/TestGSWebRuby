@@ -6,6 +6,11 @@ class ReviewForm extends React.Component {
     this.cancelForm = this.cancelForm.bind(this);
     this.submitForm = this.submitForm.bind(this);
     this.textValueChanged = this.textValueChanged.bind(this);
+    this.sendReviewPost = this.sendReviewPost.bind(this);
+    this.updateReviewFormErrors = this.updateReviewFormErrors.bind(this);
+    this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
+    this.handleFailSubmit = this.handleFailSubmit.bind(this);
+
     this.state = {
       displayCTA: true,
       displayAllQuestion: false,
@@ -109,19 +114,27 @@ class ReviewForm extends React.Component {
   }
 
   submitForm() {
+    if (GS.session.isSignedIn()) {
+      this.sendReviewPost();
+    } else {
+      GS.modal.manager.showModal(GS.modal.SubmitReviewModal)
+        .done(this.sendReviewPost)
+        .fail(function() {
+          this.updateReviewFormErrors({
+            '1': 'Something went wrong logging you in'
+          });
+        }.bind(this));
+    }
+  }
+
+  sendReviewPost() {
     let data = this.buildFormData();
-    $.ajax({
+    return $.ajax({
       url: "/gsr/reviews",
       method: 'POST',
       data: data,
-      dataType: 'json',
-      success: function (xhr, status) {
-        this.handleSuccessfulSubmit(xhr);
-      }.bind(this),
-      error: function (xhr, status, err) {
-        this.handleFailSubmit(xhr, status, err);
-      }.bind(this)
-    });
+      dataType: 'json'
+    }).done(this.handleSuccessfulSubmit).fail(this.handleFailSubmit);
   }
 
   handleFailSubmit(xhr, status, err) {
