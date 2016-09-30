@@ -7,18 +7,13 @@
 // big idea is to use a react component for templating. Then just pass in vars to set its state. :)  
 
 GS.content = GS.content || {};
-var counter = 0;
 GS.content.contentManager = function(ele) {
 
   // return content based on element data values or gon or ajax
 
   var contentType = ele.data('content-type');
-  counter += 1;
-  if(counter % 2 == 0){
-    return  '<div>I love you! '+ contentType +'</div>';
-  }
-  else{
-    return  '<div>You love me! '+ contentType +'</div>';
-  }
+
+  // this is just an example of returned content
+  return  '<div>I love you! '+ contentType +'</div>';
 
 };
