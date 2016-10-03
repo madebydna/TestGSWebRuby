@@ -10,7 +10,7 @@
 <% end %>
 
 
-<% if rating_hash.present? && rating_hash.is_a?(Array) && rating_hash.reject(&:empty?).size > 0 %>
+<% if rating_hash.present? && rating_hash.is_a?(Array) && rating_hash.select {|r| r['overall_rating'] }.size > 0 %>
   <% rating_hash = rating_hash.select { |r| r['overall_rating'] } %>
   <% methodology_url = rating_hash.first['methodology_url'] %>
   <% label = rating_hash.first['label'] %>
