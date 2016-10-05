@@ -5,6 +5,7 @@
 //= require wiselinks
 //= require ads
 //= require resources
+//= require resources/remodal
 //= require ./localized_profiles/search_results
 //= require util
 //= require search
