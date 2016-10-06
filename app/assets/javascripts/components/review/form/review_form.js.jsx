@@ -179,8 +179,10 @@ class ReviewForm extends React.Component {
   }
 
   renderFormActions() {
+    let guidelinesLink = gon.links.school_review_guidelines;
     return(
       <div className="form-actions clearfix">
+        <a href={guidelinesLink} target="_blank">Review Guidelines</a>
         <button className="submit" onClick={this.submitForm}>Submit</button>
         <button className="cancel" onClick={this.cancelForm}>Cancel</button>
       </div>

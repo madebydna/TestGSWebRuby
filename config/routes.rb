@@ -127,7 +127,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/gk/terms/', as: :terms_of_use
-    get '/about/guidelines.page', as: :school_review_guidelines
+    get '/gk/review-guidelines', as: :school_review_guidelines
     get '/gk/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
