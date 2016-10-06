@@ -80,16 +80,12 @@ _.assign(GS.modal.BaseModal.prototype, {
     // if(this.$getModal().hasClass('no-modal'))
     this.remodal = this.$getModal().remodal({appendTo: this.$getModalContainer()});
     this.remodal.open();
-    console.log("this.remodal:"+this.remodal.getState());
     this.trackEvent('show');
     return this.deferred.promise();
   },
 
   hide: function hide() {
-    console.log("this.isShown():"+this.isShown());
-    console.log("this.remodal:"+this.remodal.getState());
     if(this.isShown()) {
-      console.log("this.remodal:"+this.remodal.getState());
       this.remodal.close();
     }
   },
