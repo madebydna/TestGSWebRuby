@@ -6,7 +6,7 @@ describe SigninController do
   before { request.host = 'localhost'; request.port = 3000 }
   it { should respond_to :new }
 
-  it_behaves_like 'controller with authentication'
+  # it_behaves_like 'controller with authentication'
 
   describe '#store_location' do
     it 'should store_location when #new method called on controller' do
@@ -58,14 +58,44 @@ describe SigninController do
 
     describe 'authenticate' do
       it 'should call authenticate if post contained password info' do
-        expect(controller).to receive(:authenticate).and_return([nil, 'reject'])
+        expect(controller).to receive(:authenticate).and_return([nil, 'err_msg'])
         get :create, password: 'abc'
+      end
+
+      context 'using xhr' do
+        it 'when xhr should return an error' do
+          expect(controller).to receive(:authenticate).and_return([nil, 'err_msg'])
+          xhr :post, :create, password: 'abc'
+          expect(response.status).to eq(422)
+        end
+
+        context 'successful login' do
+          after do
+            clean_dbs :gs_schooldb
+          end
+
+          it 'should log the user in' do
+            user = instance_double(User)
+            expect(controller).to receive(:authenticate).and_return([user, nil])
+            expect(controller).to receive(:log_user_in).with(user)
+            xhr :post, :create, password: 'abc'
+          end
+
+          it 'should render user data' do
+            user = create(:verified_user, password: 'password')
+            xhr :post, :create, format: :json, email: user.email, password: 'password'
+            expect(response.status).to eq(200)
+            json = response.body
+            # hash = JSON.parse(response.body)
+            # expect(hash).to have_key('user')
+          end
+        end
       end
 
       context 'authentication error' do
         before do
-          expect(controller).to receive(:authenticate).and_return([nil, 'reject'])
-          expect(controller).to receive(:flash_error).with('reject')
+          expect(controller).to receive(:authenticate).and_return([nil, 'err_msg'])
+          expect(controller).to receive(:flash_error).with('err_msg')
         end
 
         it 'should flash the error if one occurs' do
@@ -135,8 +165,8 @@ describe SigninController do
 
       context 'registration error' do
         before do
-          expect(controller).to receive(:register).and_return([nil, 'reject'])
-          expect(controller).to receive(:flash_error).with('reject')
+          expect(controller).to receive(:register).and_return([nil, 'err_msg'])
+          expect(controller).to receive(:flash_error).with('err_msg')
         end
 
         it 'should flash the error if one occurs' do

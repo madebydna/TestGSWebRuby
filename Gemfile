@@ -104,6 +104,8 @@ gem 'rest_client', '1.8.1'
 
 gem 'binding_of_caller', '~> 0.7.2'
 
+gem 'jbuilder'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
