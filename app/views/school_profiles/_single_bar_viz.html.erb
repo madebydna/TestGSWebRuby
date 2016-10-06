@@ -13,6 +13,8 @@
     <div class="color-row rating_<%= score_rating %>"
       style="width:<%= score_percentage %>%"></div>
     <div class="grey-row" style="width:<%= grey_score %>%"></div>
-    <div class="arrow-down"><span style="left:<%= state_average_percentage %>%"></span></div>
+    <% unless state_score.nil? %>
+      <div class="arrow-down"><span style="left:<%= state_average_percentage %>%"></span></div>
+    <% end %>
   </div>
 <% end %>

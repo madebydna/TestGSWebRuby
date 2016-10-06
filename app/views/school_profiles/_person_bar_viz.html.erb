@@ -7,9 +7,11 @@
 
 <% if (1..100).cover?(score_percentage) && (1..10).cover?(score_rating) %>
   <div class="person-bar-viz">
-    <div class="arrow-down">
-      <span style="left:<%= state_average_percentage %>%"></span>
-    </div>
+    <% unless state_score.nil? %>
+      <div class="arrow-down">
+        <span style="left:<%= state_average_percentage %>%"></span>
+      </div>
+    <% end %>
     <div class="filled rating_<%= score_rating %>" style="width:<%= score_percentage %>%">
       <div class="background"></div>
     </div>
