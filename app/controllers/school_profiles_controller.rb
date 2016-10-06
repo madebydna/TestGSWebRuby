@@ -10,6 +10,7 @@ class SchoolProfilesController < ApplicationController
     @school_profile = school_profile
     @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
     school_gon_obj(@school)
+    add_gon_links
   end
 
   private
@@ -94,5 +95,12 @@ class SchoolProfilesController < ApplicationController
           :state => school.state
       }
     end
+  end
+
+  def add_gon_links
+    gon.links = {
+        terms_of_use: terms_of_use_path,
+        school_review_guidelines: school_review_guidelines_path
+    }
   end
 end

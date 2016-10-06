@@ -23,11 +23,16 @@ class ReportReview extends React.Component {
 
   render() {
     if (this.props.open === true) {
+      var termsLink = gon.links.terms_of_use;
+      var guidelinesLink = gon.links.school_review_guidelines;
       return (
           <div className="report-review">
             <form>
               <p className="header">Report this review as inappropriate</p>
-              <p>Please explain how this review may have violated our terms of use or school review guidelines</p>
+              <p>Please explain how this review may have violated
+                our <a href={termsLink} target="_blank">terms of use
+                </a> or <a href={guidelinesLink} target="_blank">school review guidelines</a>
+              </p>
               <textarea value={this.state.value} onChange={this.handleChange}/>
               <div className="form-buttons">
                 <span className="button" onClick={this.handleCancelClick}>Cancel</span>
