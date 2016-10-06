@@ -4,6 +4,13 @@ describe SchoolProfiles::ReviewQuestions do
   after(:each) do
     clean_dbs(:gs_schooldb)
   end
+  let(:alameda_high_school) { FactoryGirl.create(:alameda_high_school) }
+  subject do
+    SchoolProfiles::ReviewQuestions.new(alameda_high_school)
+  end
+  after do
+    clean_dbs :ca
+  end
 
   describe "#questions" do
     it "should return array of hashes for only active questions" do
