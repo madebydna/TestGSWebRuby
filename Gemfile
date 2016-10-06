@@ -130,19 +130,6 @@ group :test do
   # Mock external http requests for tests
   gem 'webmock'
 
-end
-
-group :development, :test do
-  # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
-  #gem 'awesome_print', :require => 'ap'
-
-  # Supporting Gem for Rails Panel for Chrome
-  # gem 'meta_request'
-
-  # execute  "rails_best_practices -f html ."  on the command line to generate an html report
-  # beware of false positives for things like unused methods
-  gem 'rails_best_practices'
-
   # gem for setting up ruby objects as test data
   # gem 'factory_girl_rails', '~> 4.2.1'
   # Rails 4
@@ -153,9 +140,6 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.5.0'
   gem 'cucumber', '~> 1.3.8'
   gem 'cucumber-rails', '~> 1.4.0', :require => false
-
-  # Use haml for template engine. Also specified in application.rb
-  gem 'haml-rails'
 
   # DSL for page object pattern, used for cucumber testing
   gem 'site_prism'
@@ -171,6 +155,22 @@ group :development, :test do
 
   # JS testing runner
   gem 'teaspoon'
+
+end
+
+group :development, :test do
+  # dev tool - print nicely formatted / colorful output of an object's structure. e.g. "ap my_obj"
+  #gem 'awesome_print', :require => 'ap'
+
+  # Supporting Gem for Rails Panel for Chrome
+  # gem 'meta_request'
+
+  # execute  "rails_best_practices -f html ."  on the command line to generate an html report
+  # beware of false positives for things like unused methods
+  gem 'rails_best_practices'
+
+  # Use haml for template engine. Also specified in application.rb
+  gem 'haml-rails'
 
   # Test coverage tool
   gem 'simplecov', '~> 0.8.0'

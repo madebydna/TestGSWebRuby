@@ -333,10 +333,6 @@ describe 'School Profile Overview Page' do
     it {is_expected.to have_zillow_content }
   end
   describe 'quick links module' do
-    before do
-      pending("the school profile reviews page test is with Cristo New York High School is expected to ahve review module is causing this test to fail")
-      fail
-    end
     include_context 'Given school profile page with quick links'
     include_context 'with Alameda High School'
     it { is_expected.to have_quick_links }
