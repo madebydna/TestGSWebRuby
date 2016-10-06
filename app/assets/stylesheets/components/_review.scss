@@ -59,8 +59,13 @@
   .topical-review-button-bar {
     margin-top: $spacing-small;
 
+    .topical-review-report {
+      display: inline-block;
+    }
+
     a {
       color: $color-reported;
+      display: block;
     }
 
     .reported {
