@@ -71,7 +71,7 @@ describe ReviewsForm do
             comment = ("test this " * 15).strip
             school = create(:alameda_high_school, id: 1)
             verified_user = create(:verified_user)
-            existing_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1)
+            existing_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1, review_question_id: 2)
             reviews_params = build_reviews_params(review_question_id: "2")
             reviews_form = build_reviews_form(reviews_params: reviews_params, user: verified_user)
 
