@@ -87,11 +87,11 @@ describe ReviewCalculations do
 
     context 'with non overall reviews' do
       example_distribution = [
-        {count: 3, percentage: '30',label: 'Very effective' },
-        {count: 1, percentage: '10',label: 'Effective' },
-        {count: 5, percentage: '50', label: 'Moderately effective' },
-        {count: 0, percentage: '0',label: 'Ineffective' },
-        {count: 1, percentage: '10', label: 'Very ineffective' },
+        {count: 3, percentage: '30',label: 'Highly disagree' },
+        {count: 1, percentage: '10',label: 'Disagree' },
+        {count: 5, percentage: '50', label: 'Neutral' },
+        {count: 0, percentage: '0',label: 'Agree' },
+        {count: 1, percentage: '10', label: 'Highly agree' },
       ]
 
       it 'should have correct values for non overall reviews' do
@@ -100,9 +100,7 @@ describe ReviewCalculations do
             reviews_array << FactoryGirl.build(:teacher_effectiveness_review, answer_value: hash[:label])
           end
         end
-        subject.score_distribution_with_percentage.each_with_index do |hash, index|
-          expect(hash).to eq(example_distribution[index])
-        end
+        expect(example_distribution - subject.score_distribution_with_percentage).to eq([])
       end
 
     end
