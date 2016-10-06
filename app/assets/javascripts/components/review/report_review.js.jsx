@@ -8,16 +8,12 @@ class ReportReview extends React.Component {
   }
 
   handleCancelClick(event) {
-    this.props.cancelCallback(event);
+    this.props.cancelCallback();
     event.preventDefault();
   }
 
   handleSubmitClick(event) {
-    if (this.props.review) {
-      this.props.reportedCallback(this.props.review.id);
-    } else {
-      this.props.cancelCallback();
-    }
+    this.props.reportedCallback();
     event.preventDefault();
   }
 
@@ -47,7 +43,6 @@ class ReportReview extends React.Component {
 
 ReportReview.propTypes = {
   open: React.PropTypes.bool,
-  review: React.PropTypes.object,
   cancelCallback: React.PropTypes.func,
   reportedCallback: React.PropTypes.func
 };

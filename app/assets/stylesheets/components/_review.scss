@@ -47,19 +47,35 @@
   }
 
   $color-report-flag: #d94373;
+  $color-report-flag-reported: #fff;
+  $color-reported: #d94373;
   $color-button-border: #c1d2d9;
   $color-button-hover-border: rgba(113, 120, 126, 0.5);
   $color-button-active-border: rgba(113, 120, 126, 0.8);
   $color-dark-gray-text: #2e3438;
   $color-gradient-button-dark: #f4f5f6;
   $color-gradient-button-active: #edf3f5;
-  $color-button-reported: rgba(217, 67, 115, 0.1);
+
+  .topical-review-button-bar {
+    margin-top: $spacing-small;
+
+    a {
+      color: $color-reported;
+    }
+
+    .reported {
+      background-color: $color-reported;
+      color: white;
+      padding: $spacing-small $spacing-medium;
+      font-size: $font-size-l1;
+    }
+  }
 
   .review-button-bar {
     margin-top: $spacing-large;
 
     .icon-flag {
-      color: #d94373;
+      color: $color-report-flag;
     }
 
     > .button {
@@ -84,9 +100,15 @@
     }
 
     > .button.reported {
-      background: $color-button-reported none;
+      background: $color-reported none;
+      font-family: opensans-regular;
+      color: white;
       border: none;
       cursor: default;
+
+      .icon-flag {
+        color: $color-report-flag-reported;
+      }
     }
   }
 }

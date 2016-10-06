@@ -1,8 +1,18 @@
 class UserReviews extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {reportReviewOpen: false};
-    this.handleReportReviewClick = this.handleReportReviewClick.bind(this);
+    var reportReviewState = {};
+    var fiveStarReview = this.props.five_star_review;
+    if (fiveStarReview) {
+      reportReviewState[fiveStarReview.id] = {open: false};
+    }
+    if (this.props.topical_reviews) {
+      for (var i=0; i < this.props.topical_reviews.length; i++) {
+        var topicalReview = this.props.topical_reviews[i];
+        reportReviewState[topicalReview.id] = {open: false}
+      }
+    }
+    this.state = {reportReviewState: reportReviewState};
   }
 
   fiveStars(numberFilled) {
@@ -22,6 +32,19 @@ class UserReviews extends React.Component {
     )
   }
 
+  topicalReviewReportLink(reviewId) {
+    var isReported = this.props.current_user_reported_reviews.includes(reviewId);
+    if (isReported) {
+      return (
+          <span className="reported">Review Reported</span>
+      )
+    } else {
+      return (
+          <a href="#" onClick={this.handleReportReviewClick.bind(this, reviewId)}>Report</a>
+      )
+    }
+  }
+
   topicalReview(review) {
     return(
       <div className="topical-review" key={review.id}>
@@ -35,6 +58,15 @@ class UserReviews extends React.Component {
           <div className="comment">
             <ShortenText text={review.comment} length={200} key={review.text} />
           </div>
+          <div className="topical-review-button-bar">
+            <span className="topical-review-report">
+              { this.topicalReviewReportLink(review.id) }
+            </span>
+          </div>
+          <ReportReview open={this.state.reportReviewState[review.id].open}
+                        cancelCallback={ this.handleCancelReportReviewClick.bind(this, review.id) }
+                        reportedCallback={ this.handleReviewReported.bind(this, review.id) }
+          />
         </div>
       </div>
     )
@@ -42,7 +74,7 @@ class UserReviews extends React.Component {
 
   topicalReviews() {
     if(this.props.topical_reviews) {
-      return this.props.topical_reviews.map(this.topicalReview);
+      return this.props.topical_reviews.map(this.topicalReview.bind(this));
     }
   }
 
@@ -65,45 +97,66 @@ class UserReviews extends React.Component {
     }
   }
 
-  reportReviewMobileLabel() {
-    if (this.props.current_user_has_reported) {
+  reportReviewMobileLabel(review) {
+    if (this.props.current_user_reported_reviews.includes(review.id)) {
       return (
           <span className="visible-xs-inline pls">Reported</span>
       )
     }
   }
 
-  buttonBar() {
-    var alreadyReported = this.props.current_user_has_reported;
-    const desktopLabel = alreadyReported ? 'Review Reported' : 'Report Review';
-    return (
-        <div className="review-button-bar">
-          <span className={'button' + (alreadyReported ? ' reported' : '')} onClick={this.handleReportReviewClick}>
+  buttonBar(review) {
+    if (review !== undefined) {
+      var alreadyReported = this.props.current_user_reported_reviews.includes(review.id);
+      const desktopLabel = alreadyReported ? 'Review Reported' : 'Report Review';
+      return (
+          <div className="review-button-bar">
+          <span className={'button' + (alreadyReported ? ' reported' : '')} onClick={this.handleReportReviewClick.bind(this, review.id)}>
             <span className="icon-flag"></span>
             <span className="hidden-xs-inline pls">{desktopLabel}</span>
-            { this.reportReviewMobileLabel() }
+            { this.reportReviewMobileLabel(review) }
           </span>
-        </div>
-    )
-  }
-
-  handleReportReviewClick() {
-    if (!this.props.current_user_has_reported) {
-      this.setState({reportReviewOpen: !this.state.reportReviewOpen});
+          </div>
+      )
     }
   }
 
-  handleCancelReportReviewClick() {
-    this.setState({reportReviewOpen: false});
+  reportFiveStarReview() {
+    var review = this.props.five_star_review;
+    if (review !== undefined) {
+      return (
+          <ReportReview open={this.state.reportReviewState[review.id].open}
+                        cancelCallback={ this.handleCancelReportReviewClick.bind(this, review.id) }
+                        reportedCallback={ this.handleReviewReported.bind(this, review.id) }
+          />
+      );
+    }
+  }
+
+  handleReportReviewClick(reviewId, event) {
+    if (!this.props.current_user_reported_reviews.includes(reviewId)) {
+      var newAttr = {};
+      var currentState = this.state.reportReviewState[reviewId].open;
+      newAttr[reviewId] = {open: !currentState};
+      var newReportReviewState = Object.assign({}, this.state.reportReviewState, newAttr);
+      this.setState({reportReviewState: newReportReviewState});
+    }
+    event.preventDefault();
+  }
+
+  handleCancelReportReviewClick(reviewId) {
+    var newAttr = {};
+    newAttr[reviewId] = {open: false};
+    var newReportReviewState = Object.assign({}, this.state.reportReviewState, newAttr);
+    this.setState({reportReviewState: newReportReviewState});
   }
 
   handleReviewReported(reviewId) {
-    this.setState({reportReviewOpen: false});
+    this.handleCancelReportReviewClick(reviewId);
     this.props.review_reported_callback(reviewId);
   }
 
   render() {
-    var review = this.props.five_star_review;
     return (
       <div className="user-reviews-container">
         <div className="row">
@@ -117,11 +170,8 @@ class UserReviews extends React.Component {
             <div className="date">
               { this.props.most_recent_date}
             </div>
-            { this.buttonBar() }
-            <ReportReview open={this.state.reportReviewOpen} review={review}
-                          cancelCallback={ this.handleCancelReportReviewClick.bind(this) }
-                          reportedCallback={ this.handleReviewReported.bind(this) }
-            />
+            { this.buttonBar(this.props.five_star_review) }
+            { this.reportFiveStarReview() }
           </div>
         </div>
       </div>
@@ -135,6 +185,6 @@ UserReviews.propTypes = {
   most_recent_date: React.PropTypes.string,
   user_type_label: React.PropTypes.string,
   avatar: React.PropTypes.number,
-  current_user_has_reported: React.PropTypes.bool,
   review_reported_callback: React.PropTypes.func,
+  current_user_reported_reviews: React.PropTypes.array,
 };

@@ -1,9 +1,9 @@
 class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
-    var currentUserReportedMap = {};
+    var currentUserReportedReviews = [];
     // TODO: This needs to be hooked up somewhere. Maybe from props?
-    this.state = {currentUserReportedMap: currentUserReportedMap};
+    this.state = {currentUserReportedReviews: currentUserReportedReviews};
     this.reviewReportedCallback = this.reviewReportedCallback.bind(this);
   }
 
@@ -17,17 +17,13 @@ class ReviewsList extends React.Component {
 
   reviewReportedCallback(reviewId) {
     if (reviewId) {
-      var newAttr = {};
-      newAttr[reviewId] = true;
-      this.setState({currentUserReportedMap: Object.assign({}, this.state.currentUserReportedMap, newAttr)});
+      var reportedReviews = this.state.currentUserReportedReviews.slice();
+      reportedReviews.push(reviewId);
+      this.setState({currentUserReportedReviews: reportedReviews});
     }
   }
 
   renderOneUsersReviews(userReviews) {
-    var user_reported = false;
-    if (userReviews && userReviews.five_star_review) {
-      user_reported = !!this.state.currentUserReportedMap[userReviews.five_star_review.id];
-    }
     return(<UserReviews
       key = {userReviews.id}
       five_star_review = {userReviews.five_star_review}
@@ -35,7 +31,7 @@ class ReviewsList extends React.Component {
       most_recent_date = {userReviews.most_recent_date}
       user_type_label = {userReviews.user_type_label}
       avatar = {userReviews.avatar}
-      current_user_has_reported={user_reported}
+      current_user_reported_reviews={this.state.currentUserReportedReviews}
       review_reported_callback={this.reviewReportedCallback}
     />)
   }
