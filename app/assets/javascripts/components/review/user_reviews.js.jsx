@@ -24,7 +24,7 @@ class UserReviews extends React.Component {
   topicalReviews() {
     if(this.props.topical_reviews) {
       return this.props.topical_reviews.map(function (review) {
-        var userAlreadyReported = this.props.current_user_reported_reviews.includes(review.id);
+        var userAlreadyReported = this.props.current_user_reported_reviews.indexOf(review.id) >= 0;
         return (<TopicalReview review={review} key={review.id}
                                reportedCallback={this.handleReviewReported.bind(this, review.id)}
                                userAlreadyReported={userAlreadyReported}
@@ -53,7 +53,7 @@ class UserReviews extends React.Component {
   }
 
   reportReviewMobileLabel(review) {
-    if (this.props.current_user_reported_reviews.includes(review.id)) {
+    if (this.props.current_user_reported_reviews.indexOf(review.id) >= 0) {
       return (
           <span className="visible-xs-inline pls">Reported</span>
       )
@@ -62,7 +62,7 @@ class UserReviews extends React.Component {
 
   buttonBar(review) {
     if (review !== undefined) {
-      var alreadyReported = this.props.current_user_reported_reviews.includes(review.id);
+      var alreadyReported = this.props.current_user_reported_reviews.indexOf(review.id) >= 0;
       const desktopLabel = alreadyReported ? 'Review Reported' : 'Report Review';
       return (
           <div className="review-button-bar">
@@ -89,7 +89,7 @@ class UserReviews extends React.Component {
   }
 
   handleReportReviewClick(reviewId, event) {
-    if (!this.props.current_user_reported_reviews.includes(reviewId)) {
+    if (!this.props.current_user_reported_reviews.indexOf(reviewId) >= 0) {
       this.setState({reportReviewOpen: !this.state.reportReviewOpen});
     }
     event.preventDefault();
