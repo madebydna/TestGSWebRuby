@@ -100,7 +100,8 @@ class SchoolProfilesController < ApplicationController
   def add_gon_links
     gon.links = {
         terms_of_use: terms_of_use_path,
-        school_review_guidelines: school_review_guidelines_path
+        school_review_guidelines: school_review_guidelines_path,
+        session: api_session_path
     }
   end
 end

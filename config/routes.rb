@@ -227,6 +227,10 @@ LocalizedProfiles::Application.routes.draw do
     get '/status/error404.page'
   end
 
+  namespace :api, controller: 'api', path:'/gsr/api' do
+    resource :session
+  end
+
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     get '/omniture-test', to: :omniture_test, as: :omniture_test
     get '/info', to: :info
