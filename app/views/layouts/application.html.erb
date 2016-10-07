@@ -35,6 +35,22 @@
     <% Rails.logger.warn "Warning: Page #{request.original_url} has no rel canonical set" %>
   <% end %>
   <%= yield :head %>
+
+  <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "GreatSchools",
+        "url": "http://www.greatschools.org/",
+        "sameAs": [
+          "https://www.facebook.com/greatschools",
+          "https://www.twitter.com/greatschools",
+          "https://pinterest.com/greatschools/",
+          "https://www.youtube.com/GreatSchools",
+          "https://www.instagram.com/greatschools/"
+        ]
+      }
+    </script>
 </head>
 <body class="open-sans">
 
