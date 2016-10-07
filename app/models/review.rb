@@ -58,6 +58,7 @@ class Review < ActiveRecord::Base
       maximum: 2800,
   }
   validate :comment_minimum_length, unless: '@moderated == true'
+  validates_presence_of :comment, if: 'overall? == true'
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
   before_save :remove_answers_for_principals, unless: '@moderated == true'
@@ -87,6 +88,10 @@ class Review < ActiveRecord::Base
     if comment.present? && comment.split(' ').length < 15
       errors.add(:comment, "comment is too short (minimum is 15 words)")
     end
+  end
+
+  def overall?
+    question && question.overall?
   end
 
   def comment

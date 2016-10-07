@@ -34,6 +34,12 @@ describe Review do
     expect(review).to be_valid
   end
 
+  it 'five star review should not be valid with no comment' do
+    five_star_review = FactoryGirl.build(:five_star_review, active: true,
+                                         school: school, user: user, comment: nil)
+    expect(five_star_review).to_not be_valid
+  end
+
   it 'should require at least 15 words if it is not empty' do
     review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
     expect(review).to_not be_valid
