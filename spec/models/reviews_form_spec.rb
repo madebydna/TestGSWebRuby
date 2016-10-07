@@ -162,7 +162,7 @@ describe ReviewsForm do
         valid_reviews = [saved_review]
         allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
         hash_result = {
-          "#{saved_review.topic.id}" => {
+          "#{saved_review.review_question_id}" => {
             comment: saved_review.comment,
             answer: saved_review.answer,
           }
@@ -183,7 +183,7 @@ describe ReviewsForm do
         allow(reviews_form).to receive(:saved_reviews).and_return(invalid_reviews)
         review_question_id = saved_review.review_question_id
         hash_result = {
-          "#{saved_review.topic.id}" => {
+          "#{saved_review.review_question_id}" => {
             comment: saved_review.comment,
             answer: saved_review.answer,
             errors: ["comment is too short (minimum is 15 words)"]
