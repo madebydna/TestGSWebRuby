@@ -7,12 +7,18 @@
   $color-gs-blue: #2ba3dc;
   $color-gs-blue-hover: #55b5e3;
   $color-gs-blue-active: #2282b0;
+  $color-error: #d94373;
 
   margin-top: $spacing-large;
+  padding-bottom: $spacing-small;
 
   p {
     font-size: $font-size-l2;
     color: $color-gray-text;
+  }
+
+  p.error {
+    color: $color-error;
   }
 
   .header {
@@ -22,10 +28,11 @@
 
   textarea {
     width: 100%;
-    margin-bottom: $spacing-large;
+    margin-bottom: $spacing-small;
   }
 
   .form-buttons {
+    padding: $spacing-medium 0;
     text-align: right;
   }
 
@@ -62,4 +69,8 @@
     }
   }
 
+}
+
+.spinny-wheel-container > .report-review {
+  opacity: 0.2;
 }

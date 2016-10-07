@@ -53,6 +53,7 @@ class TopicalReview extends React.Component {
             </div>
             </div>
             <ReportReview open={this.state.reportReviewOpen}
+                          review={review}
                           cancelCallback={ this.handleCancelClick.bind(this) }
                           reportedCallback={ this.handleReviewReported.bind(this, review.id) }
             />
@@ -63,7 +64,7 @@ class TopicalReview extends React.Component {
 }
 
 ReportReview.propTypes = {
-  review: React.PropTypes.object,
+  review: React.PropTypes.object.isRequired,
   reportedCallback: React.PropTypes.func,
   userAlreadyReported: React.PropTypes.bool,
 };

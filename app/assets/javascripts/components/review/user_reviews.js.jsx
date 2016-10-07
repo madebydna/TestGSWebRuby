@@ -81,6 +81,7 @@ class UserReviews extends React.Component {
     if (review !== undefined) {
       return (
           <ReportReview open={this.state.reportReviewOpen}
+                        review={review}
                         cancelCallback={ this.handleCancelReportReviewClick.bind(this) }
                         reportedCallback={ this.handleReviewReported.bind(this, review.id) }
           />
