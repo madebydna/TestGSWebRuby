@@ -89,7 +89,7 @@ class UserReviews extends React.Component {
   }
 
   handleReportReviewClick(reviewId, event) {
-    if (!this.props.current_user_reported_reviews.indexOf(reviewId) >= 0) {
+    if (!(this.props.current_user_reported_reviews.indexOf(reviewId) >= 0)) {
       this.setState({reportReviewOpen: !this.state.reportReviewOpen});
     }
     event.preventDefault();
