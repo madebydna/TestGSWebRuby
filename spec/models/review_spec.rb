@@ -504,11 +504,11 @@ describe Review do
     it "when unique validation disabled second active review should be valid only once" do
       first_active_review = create(:five_star_review,
                                    active: true,
-                                   review_question_id: 1,
+                                   review_question_id: question.id,
                                    school: school,
                                    user: user)
       second_active_review = build(:five_star_review,
-                                   review_question_id: 1,
+                                   review_question_id: question.id,
                                    active: true,
                                    school: school,
                                    user: user)
