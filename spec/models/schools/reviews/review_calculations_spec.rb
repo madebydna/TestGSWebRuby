@@ -190,6 +190,61 @@ describe ReviewCalculations do
     end
   end
 
+  describe '#count_by_topic' do
+    context 'with no topical reviews' do
+      it 'should return empty hash' do
+        expect(subject.count_by_topic).to be_empty
+      end
+    end
+    context 'with topical reviews' do
+      it 'should return a hash with the correct count of topical reviews per topic' do
+        result_hash = {
+            'Teachers' => 2,
+            'Homework' => 1
+        }
+        topic_1_review = build(:teacher_effectiveness_review)
+        topic_2_review = build(:homework_review)
+        topic_3_review = build(:teacher_effectiveness_review)
+        subject << topic_1_review
+        subject << topic_2_review
+        subject << topic_3_review
+        expect(subject.count_by_topic).to eq(result_hash)
+      end
+    end
+  end
+
+  describe '#average_score_by_topic' do
+    it 'should return a hash with the correct average response per topic' do
+      result_hash = {
+          'Teachers' => 2.5,
+          'Homework' => 1
+      }
+      topic_1_review = build(:teacher_effectiveness_review, answer_value: 'Neutral')
+      topic_2_review = build(:homework_review, answer_value: 'Strongly disagree')
+      topic_3_review = build(:teacher_effectiveness_review, answer_value: 'Disagree')
+      subject << topic_1_review
+      subject << topic_2_review
+      subject << topic_3_review
+      expect(subject.average_score_by_topic).to eq(result_hash)
+    end
+  end
+
+  describe '#topical_review_summary' do
+    it 'should return the correct average text response and the total number of responses per topic' do
+      result_hash = {
+          'Teachers' => {:count => 2, :average => 'Neutral'},
+          'Homework' => {:count => 1, :average => 'Disagree'}
+      }
+      topic_1_review = build(:teacher_effectiveness_review, answer_value: 'Neutral')
+      topic_2_review = build(:homework_review, answer_value: 'Strongly disagree')
+      topic_3_review = build(:teacher_effectiveness_review, answer_value: 'Disagree')
+      subject << topic_1_review
+      subject << topic_2_review
+      subject << topic_3_review
+      expect(subject.topical_review_summary).to eq(result_hash)
+    end
+  end
+
   describe '#having numeric answer' do
     context 'with empty array' do
       it 'it should return empty array' do

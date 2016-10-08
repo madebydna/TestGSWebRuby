@@ -72,4 +72,51 @@ module ReviewCalculations
     score_distribution.values.reverse
   end
 
+  def count_by_topic
+    by_topic.map{ |k, v| [k, v.length] }.to_h.except('Overall')
+  end
+
+  def topic_answers_to_numeric
+    {
+        'Strongly disagree' => 1,
+        'Disagree' => 2,
+        'Neutral' => 3,
+        'Agree' => 4,
+        'Strongly agree' => 5
+    }
+  end
+
+  def numeric_topic_answer_grouping
+    {
+        1 => 'Disagree',
+        2 => 'Disagree',
+        3 => 'Neutral',
+        4 => 'Agree',
+        5 => 'Agree'
+    }
+  end
+
+  def average_score_by_topic
+    hash = {}
+    by_topic.each do |topic, reviews|
+      next if topic == 'Overall'
+      topic_answer_values = []
+      reviews.each do |review|
+        topic_answer_values << topic_answers_to_numeric[review.answer] unless topic_answers_to_numeric[review.answer].nil?
+      end
+      hash[topic] = (topic_answer_values.sum.to_f / topic_answer_values.length)
+      end
+    hash
+  end
+
+  def topical_review_summary
+    topical_hash = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
+    count_by_topic.each do |topic, topic_count|
+      topical_hash[topic][:count] = topic_count
+    end
+    average_score_by_topic.each do |topic, average_score|
+      topical_hash[topic][:average] = numeric_topic_answer_grouping[average_score.round.to_i]
+    end
+    topical_hash
+  end
 end

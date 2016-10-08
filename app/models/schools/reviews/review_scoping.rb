@@ -44,6 +44,19 @@ module ReviewScoping
     )
   end
 
+  def by_topic_answers
+    @by_topic_answers ||= (
+      hash = Hash.new { empty_extended_array }.merge(
+        group_by { |review| review.answer }
+      )
+      hash.values.each do |array|
+        array.extend ReviewScoping
+        array.extend ReviewCalculations
+      end
+      hash.freeze
+    )
+  end
+
   def five_star_rating_reviews
     by_topic[FIVE_STAR_RATING_TOPIC_NAME]
   end

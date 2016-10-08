@@ -25,6 +25,8 @@ module SchoolProfiles
           reviews.five_star_rating_reviews.average_score.round
         struct.number_of_five_star_rating_reviews = reviews.five_star_rating_reviews.size
         struct.distribution = reviews.five_star_rating_reviews.score_distribution
+        struct.topical_distribution = reviews.count_by_topic
+        struct.topical_review_summary = reviews.topical_review_summary
       end
     end
 
