@@ -17,7 +17,7 @@ class SchoolProfilesController < ApplicationController
 
   def school
     return @_school if defined?(@_school)
-    @_school = School.find_by_state_and_id(school_params[:state_abbr], school_params[:id])
+    @_school = School.find_by_state_and_id(get_school_params[:state_abbr], get_school_params[:id])
   end
 
   def school_profile
@@ -32,7 +32,7 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
-  def school_params
+  def get_school_params
     params.permit(:schoolId, :school_id, :state)
     params[:id] = params[:schoolId] || params[:school_id]
     params[:state_abbr] = States.abbreviation(params[:state])

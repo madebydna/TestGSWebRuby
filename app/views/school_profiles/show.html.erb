@@ -31,4 +31,10 @@
       </div>
     </div>
   </div>
+  <div>
+    <%= render 'nearby_schools',
+      nearby_schools: @school.nearby_schools_for_list(
+        'closest_top_then_top_nearby_schools'
+      ) %>
+  </div>
 </div>

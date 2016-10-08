@@ -1,0 +1,83 @@
+.nearby-schools {
+  $border-color: #dbe6eb;
+  margin-top: 20px;
+  .title {
+    font-family: 'Robotoslab-Bold';
+    margin-bottom: 20px;
+    font-size: 26px;
+  }
+
+  > div {
+    @include media-breakpoint-up(md) {
+      display: table;
+    }
+  }
+
+  .nearby-school {
+    display:block;
+    overflow: hidden;
+    @include media-breakpoint-up(md) {
+      display: table-cell;
+      width: 33%;
+      margin: auto;
+    }
+  }
+
+  .nearby-school + .nearby-school {
+    @include media-breakpoint-up(xs) {
+      margin: 15px 0 0 0;
+      border-top: 1px solid $border-color;
+      padding: 15px 0 0 0;
+    }
+    @include media-breakpoint-up(md) {
+      margin: 0 0 0 15px;
+      border-left: 1px solid $border-color;
+      border-top: none;
+      padding: 0 0 0 15px;
+    }
+  }
+}
+
+.nearby-school {
+  $font-color: #71787e;
+  $link-color: #2ba3dc;
+  color: $font-color;
+  font-size: 13px;
+  vertical-align: top;
+
+  .circle-rating {
+    margin: auto;
+  }
+  .icon-star {
+    font-size: 9px;
+  }
+
+  > div {
+    display: inline-block;
+  }
+  .rating {
+    width: 50px;
+    vertical-align: top;
+    text-align: center;
+    margin: auto;
+  }
+  .rating + div {
+    padding-left: 15px;
+    width: -moz-calc(100% - 55px);
+    width: -webkit-calc(100% - 55px);
+    width: calc(100% - 55px);
+  }
+
+  a {
+    color: $link-color;
+    font-size: 16px;
+    font-family: 'opensans-bold';
+  }
+  .school-info {
+    span + span {
+      border-left: 1px solid $border-color;
+      margin-left: 5px;
+      padding-left: 5px;
+    }
+  }
+}
