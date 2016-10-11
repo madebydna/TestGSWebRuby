@@ -19,23 +19,17 @@
     <div class="modal-body">
       <div class="title">Tell me your relationship to schools</div>
       <%= form_for SchoolUser.new, remote: true, url: school_user_path(@school) do |f| %>
-
-        <% member_roles.each do |value, display_value| %>
-          <% if value == 'principal' %>
-            <div class="clearfix visible-xs hidden-sm hidden-md hidden-lg "></div>
-          <% end %>
-          <div class="<%= value == 'parent' ? 'col-sm-offset-1 ' : '' %>col-xs-4 col-sm-2 dib mbs">
-            <div>
-              <div><%= f.radio_button(:user_type, value, class: 'js-topicalRadioButton') %></div>
-              <div> <%= display_value %> </div>
+        <%= f.hidden_field(:user_type, class: 'js-schoolUserValue') %>
+        <div class="select-button-container">
+          <% member_roles.each do |value, display_value| %>
+            <div data-school-user="<%= value %>" class="js-schoolUserSelect select-button">
+              <div class="avatar icon-33-avatar-<%= value.gsub(' ','-') %>"></div>
+              <div class="user-type"><%= display_value %></div>
             </div>
-          </div>
-        <% end %>
-    <div>
-      <button class="btn btn-primary mvl"><%= t('.submit') %></button>
-    </div>
-  <% end %>
+          <% end %>
+        </div>
+        <button class="submit-button"><%= t('.submit') %></button>
+      <% end %>
     </div>
   </div>
 </div>
-

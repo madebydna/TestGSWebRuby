@@ -27,6 +27,22 @@ _.assign(GS.modal.SchoolUserModal.prototype, {
     return url;
   },
 
+  selectSchoolUserValue: function(e) {
+    var selectButton = $(e.target).closest('.js-schoolUserSelect')[0];
+    var value = selectButton.dataset.schoolUser;
+    $('.js-schoolUserValue').attr('value', value);
+    $('.select-button.active').removeClass('active');
+    $(selectButton).addClass('active');
+  },
+
+  $getSchoolUserSelectButtons: function() {
+    return this.$getSchoolUserForm().find('.js-schoolUserSelect');
+  },
+
+  setSelectSchoolUserHandler: function() {
+    this.$getSchoolUserSelectButtons().on('click',this.selectSchoolUserValue);
+  },
+
   $getSchoolUserForm: function $getSchoolUserForm() {
     return this.$getFirstForm();
   },
@@ -48,6 +64,10 @@ _.assign(GS.modal.SchoolUserModal.prototype, {
     this.getDeferred().rejectWith(this, [jqXHR]);
   },
 
+  removeActiveSelection: function() {
+    $('.select-button .active').removeClass('active');
+  },
+
   initializeForm: function initializeForm() {
     return this.$getSchoolUserForm().
       on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
@@ -56,6 +76,7 @@ _.assign(GS.modal.SchoolUserModal.prototype, {
 
   initialize: function initialize() {
     this.initializeShowHideBehavior();
+    this.setSelectSchoolUserHandler();
     this.initializeForm();
   }
 

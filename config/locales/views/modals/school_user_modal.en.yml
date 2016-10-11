@@ -7,5 +7,6 @@ en:
       parent: parent
       role_question: 'WHAT''S YOUR RELATIONSHIP TO THIS SCHOOL?'
       school_official: school official
-      submit: Submit
+      submit: Submit review
       teacher: teacher
+      title: Tell me your relationship to schools
