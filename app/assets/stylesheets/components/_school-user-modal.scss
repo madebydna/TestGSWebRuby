@@ -1,35 +1,41 @@
+$user-type-padding: 15px;
+$color-gs-blue: #2ba3dc;
+$white: #ffffff;
+$color-button-border: #c1d2d9;
+$color-gradient-button-dark: #f4f5f6;
+$gs-active-green: #08c569;
+$title-font-size: 22px;
+
 .school-user-modal {
 
   .title {
     font-family: 'RobotoSlab-Bold';
-    font-size: 22px;
-    line-height: 1.27;
+    font-size: $title-font-size;
     text-align: center;
-    color: #0c243d;
-    margin-bottom: 40px;
+    margin-bottom: $spacing-extra-large;
   }
 
   form {
-    margin: 10px auto;
+    margin: $spacing-medium auto;
     max-width: 422px;
   }
 
   .avatar {
-    margin-left: 15px;
-    margin-top: 10px;
+    margin-left: $spacing-large;
+    margin-top: $spacing-medium;
     float: left;
   }
 
   .user-type {
     float: left;
-    padding-left: 20px;
-    padding-top: 15px;
+    padding-left: $spacing-large;
+    padding-top: $user-type-padding;
     height: 22px;
+
     font-family: "opensans-regular";
-    font-size: 16px;
+    font-size: $font-size-l3;
     line-height: 1.38;
     text-transform: capitalize;
-    color: #28292a;
     cursor: default;
   }
 
@@ -39,35 +45,36 @@
     width: 100%;
     height: 54px;
     border-radius: 2px;
-    background-image: linear-gradient(to bottom, #ffffff, #f4f5f6);
-    border: solid 1px #c1d2d9;
+    background-image: linear-gradient(to bottom, $white, $color-gradient-button-dark);
+    border: solid 1px $color-button-border;
     border-bottom: none;
   }
 
   .select-button:last-child {
-    border-bottom: solid 1px #c1d2d9;
+    border-bottom: solid 1px $color-button-border;
   }
 
   .active {
-    background-image: linear-gradient(#08c569, #08c569), linear-gradient(to bottom, #ffffff, #f4f5f6);
+    background-image: linear-gradient($gs-active-green, $gs-active-green), linear-gradient(to bottom, $white, $color-gradient-button-dark);
     .user-type {
-      color: #fff;
+      color: $white;
     }
   }
 
   .submit-button {
     margin: auto;
     width: 100%;
-    margin-top: 35px;
+    margin-top: $spacing-extra-large;
     border-radius: 3px;
     height: 65px;
-    background-color: #2ba3dc;
+    background-color: $color-gs-blue;
+    border: none;
 
     font-family: 'opensans-bold';
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #fff;
-    font-size: 14px;
+    color: $white;
+    font-size: $font-size-l2;
   }
 
 }

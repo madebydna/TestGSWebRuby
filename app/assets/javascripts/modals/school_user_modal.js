@@ -10,6 +10,10 @@ GS.modal.SchoolUserModal = function($, options) {
   this.cssClass = options.cssClass || 'js-school-user-modal';
   this.modalUrl = '/gsr/modals/school_user_modal';
 
+  this.schoolUserForm;
+  this.selectButtons;
+  this.schoolUserValue;
+  var schoolUserValue;
 };
 
 GS.modal.SchoolUserModal.prototype = _.create(GS.modal.BaseModal.prototype, {
@@ -27,24 +31,15 @@ _.assign(GS.modal.SchoolUserModal.prototype, {
     return url;
   },
 
-  selectSchoolUserValue: function(e) {
-    var selectButton = $(e.target).closest('.js-schoolUserSelect')[0];
-    var value = selectButton.dataset.schoolUser;
-    $('.js-schoolUserValue').attr('value', value);
-    $('.select-button.active').removeClass('active');
-    $(selectButton).addClass('active');
-  },
-
-  $getSchoolUserSelectButtons: function() {
-    return this.$getSchoolUserForm().find('.js-schoolUserSelect');
+  selectSchoolUserValue: function() {
+    var value = this.dataset.schoolUser;
+    schoolUserValue.attr('value', value);
+    $(this).siblings().removeClass('active');
+    $(this).addClass('active');
   },
 
   setSelectSchoolUserHandler: function() {
-    this.$getSchoolUserSelectButtons().on('click',this.selectSchoolUserValue);
-  },
-
-  $getSchoolUserForm: function $getSchoolUserForm() {
-    return this.$getFirstForm();
+    this.selectButtons.on('click',this.selectSchoolUserValue);
   },
 
   submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
@@ -64,17 +59,21 @@ _.assign(GS.modal.SchoolUserModal.prototype, {
     this.getDeferred().rejectWith(this, [jqXHR]);
   },
 
-  removeActiveSelection: function() {
-    $('.select-button .active').removeClass('active');
-  },
-
   initializeForm: function initializeForm() {
-    return this.$getSchoolUserForm().
+    return this.schoolUserForm.
       on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
       on('ajax:error', this.submitFailHandler.gs_bind(this));
   },
 
+  initializeVariables: function initializeVariables(){
+    this.schoolUserForm = this.$getFirstForm();
+    this.selectButtons = this.schoolUserForm.find('.js-schoolUserSelect');
+    this.schoolUserValue = this.schoolUserForm.find('.js-schoolUserValue');
+    schoolUserValue = this.schoolUserValue;
+  },
+
   initialize: function initialize() {
+    this.initializeVariables();
     this.initializeShowHideBehavior();
     this.setSelectSchoolUserHandler();
     this.initializeForm();
