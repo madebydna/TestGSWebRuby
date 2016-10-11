@@ -1,0 +1,11 @@
+---
+es:
+  modals:
+    school_user_modal:
+      community_member: miembro de la comunidad
+      current_student: estudiante actual
+      parent: padre
+      role_question: '¿CUÁL ES TU RELACIÓN CON ESTA ESCUELA?'
+      school_official: funcionario de la escuela
+      submit: Enviar
+      teacher: profesor

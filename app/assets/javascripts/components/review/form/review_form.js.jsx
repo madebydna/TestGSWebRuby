@@ -7,7 +7,9 @@ class ReviewForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.textValueChanged = this.textValueChanged.bind(this);
     this.sendReviewPost = this.sendReviewPost.bind(this);
+    this.getSchoolUser = this.getSchoolUser.bind(this);
     this.updateReviewFormErrors = this.updateReviewFormErrors.bind(this);
+    this.noSchoolUserExists = this.noSchoolUserExists.bind(this);
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
     this.handleFailSubmit = this.handleFailSubmit.bind(this);
 
@@ -120,10 +122,10 @@ class ReviewForm extends React.Component {
 
   submitForm() {
     if (GS.session.isSignedIn()) {
-      this.sendReviewPost();
+      GS.session.getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
     } else {
       GS.modal.manager.showModal(GS.modal.SubmitReviewModal)
-        .done(this.sendReviewPost)
+        .done(this.getSchoolUser)
         .fail(function() {
           this.updateReviewFormErrors({
             '1': 'Something went wrong logging you in'
@@ -132,7 +134,27 @@ class ReviewForm extends React.Component {
     }
   }
 
-  sendReviewPost() {
+  getSchoolUser(data) {
+    let schoolUserModalOptions =  { state: this.props.state, schoolId: this.props.schoolId.toString() };
+    let schoolUsers = data.user.school_users;
+    if(this.noSchoolUserExists(schoolUsers)) {
+      GS.modal.manager.showModal( GS.modal.SchoolUserModal, schoolUserModalOptions )
+        .done(this.sendReviewPost).fail(this.sendReviewPost);
+    } else {
+      this.sendReviewPost();
+    }
+  }
+
+  noSchoolUserExists(schoolUsers) {
+    let state = this.props.state;
+    let schoolId= this.props.schoolId;
+    let matchingSchoolUsers = schoolUsers.filter(function(schoolUser) {
+      return schoolUser.state === state && schoolUser.school_id === schoolId;
+    });
+    return matchingSchoolUsers.length === 0;
+  }
+
+  sendReviewPost(modalData) {
     let data = this.buildFormData();
     return $.ajax({
       url: "/gsr/reviews",

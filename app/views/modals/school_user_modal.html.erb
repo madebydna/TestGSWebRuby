@@ -1,0 +1,41 @@
+<% modal_css_class = params[:modal_css_class] %>
+<%
+    member_roles = {
+  'parent' => t('.parent'),
+  'student' => t('.current_student'),
+  'teacher' => t('.teacher'),
+  'principal' => t('.school_official'),
+  'community member' => t('.community_member')
+}
+%>
+
+<div class="modal remodal school-user-modal js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog"
+  aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
+  <div class="gs-modal-dialog modal-dialog" >
+    <button aria-label="Close" class="remodal-cancel close"
+     data-remodal-action="cancel" style="background-color: #ffffff;">
+      <span>&times;</span>
+    </button>
+    <div class="modal-body">
+      <div class="title">Tell me your relationship to schools</div>
+      <%= form_for SchoolUser.new, remote: true, url: school_user_path(@school) do |f| %>
+
+        <% member_roles.each do |value, display_value| %>
+          <% if value == 'principal' %>
+            <div class="clearfix visible-xs hidden-sm hidden-md hidden-lg "></div>
+          <% end %>
+          <div class="<%= value == 'parent' ? 'col-sm-offset-1 ' : '' %>col-xs-4 col-sm-2 dib mbs">
+            <div>
+              <div><%= f.radio_button(:user_type, value, class: 'js-topicalRadioButton') %></div>
+              <div> <%= display_value %> </div>
+            </div>
+          </div>
+        <% end %>
+    <div>
+      <button class="btn btn-primary mvl"><%= t('.submit') %></button>
+    </div>
+  <% end %>
+    </div>
+  </div>
+</div>
+

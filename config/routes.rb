@@ -307,7 +307,9 @@ LocalizedProfiles::Application.routes.draw do
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
 
   get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
+  get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
+
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
