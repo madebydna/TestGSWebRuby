@@ -54,7 +54,7 @@ describe "Visitor" do
 
     review_created_time = Time.parse("2016-09-09 07:00:00 -0700")
     review = create(:teacher_effectiveness_review,
-                                           answer_value: 5,
+                                           answer_value: 'Agree',
                                            active: 1,
                                            comment: review_comment,
                                            created: review_created_time,
