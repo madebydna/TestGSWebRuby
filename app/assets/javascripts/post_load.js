@@ -24,7 +24,6 @@
 //= require util/gs_parsley_validations
 //= require react
 //= require components
-//= require util/review_form.js
 //= require react_ujs
 //= require util/content
 //= require util/tooltip
