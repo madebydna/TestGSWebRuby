@@ -11,6 +11,7 @@ class SchoolProfilesController < ApplicationController
     @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
     school_gon_obj(@school)
     add_gon_links
+    add_gon_ethnicity
   end
 
   private
@@ -28,6 +29,7 @@ class SchoolProfilesController < ApplicationController
         sp.college_readiness = college_readiness
         sp.reviews = reviews
         sp.review_questions = review_questions
+        sp.ethnicity = ethnicity
       end
     )
   end
@@ -70,6 +72,12 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
+  def ethnicity
+    SchoolProfiles::EthnicityData.new(
+        school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
   def reviews
     SchoolProfiles::Reviews.new(school.reviews)
   end
@@ -95,6 +103,10 @@ class SchoolProfilesController < ApplicationController
           :state => school.state
       }
     end
+  end
+
+  def add_gon_ethnicity
+    gon.ethnicity = ethnicity.data_values
   end
 
   def add_gon_links

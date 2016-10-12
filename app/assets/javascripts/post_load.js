@@ -1,5 +1,7 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
+//= require util/cached_script
+//= require graphs/ethnicity_pie_chart
 //= require resources/fastclick
 //= require resources/tipso
 //= require resources/remodal
@@ -28,7 +30,6 @@
 //= require util/content
 //= require util/tooltip
 //= require util/remodal
-
 
 
 
