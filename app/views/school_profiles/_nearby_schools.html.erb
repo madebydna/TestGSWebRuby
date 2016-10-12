@@ -8,7 +8,9 @@
           <div class="circle-rating circle-rating--<%= nearby_school.gs_rating %> circle-rating--small">
             <%= nearby_school.gs_rating %>
           </div>
-          <%= render 'five_stars', filled: 4 %> <!-- TODO get stars from nearby schools-->
+          <% if nearby_school.five_star_rating %>
+            <%= render 'five_stars', filled: nearby_school.five_star_rating %>
+          <% end %>
         </div>
         <div>
           <%= link_to(
