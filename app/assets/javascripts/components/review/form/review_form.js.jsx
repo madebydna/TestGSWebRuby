@@ -223,10 +223,12 @@ class ReviewForm extends React.Component {
 
   render() {
     return (
-      <div className="review-form">
-        { this.state.displayCTA ? this.renderFiveStarQuestionCTA() : null }
-        { this.state.displayAllQuestions ? this.renderQuestions() : null }
-        { this.state.displayAllQuestions ? this.renderFormActions() : null }
+      <div className="review-form-container">
+        <div className="review-form">
+          { this.state.displayCTA ? this.renderFiveStarQuestionCTA() : null }
+          { this.state.displayAllQuestions ? this.renderQuestions() : null }
+          { this.state.displayAllQuestions ? this.renderFormActions() : null }
+        </div>
       </div>
     );
   }

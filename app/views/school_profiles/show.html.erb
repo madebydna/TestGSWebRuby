@@ -24,10 +24,13 @@
         <%= render 'review_summary', reviews: @school_profile.reviews %>
       </div>
       <div>
-        <%= render 'review_questions', review_questions: @school_profile.review_questions %>
+
       </div>
       <div>
-        <%= render 'reviews', reviews: @school_profile.reviews %>
+        <%= render 'reviews',
+          review_questions: @school_profile.review_questions,
+          reviews: @school_profile.reviews
+        %>
       </div>
     </div>
   </div>
