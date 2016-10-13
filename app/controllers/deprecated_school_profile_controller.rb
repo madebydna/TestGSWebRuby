@@ -276,11 +276,16 @@ class DeprecatedSchoolProfileController < SchoolController
       google_apis_path = GoogleSignedImages::STATIC_MAP_URL
       address = GoogleSignedImages.google_formatted_street_address(@school)
       school_rating = @school.gs_rating
-      map_pin_url = view_context.image_url("icons/google_map_pins/map_icon_#{school_rating}.png")
+      if school_rating && (1..10).cover?(school_rating.to_i)
+        map_pin_url = view_context.image_url("icons/google_map_pins/map_icon_#{school_rating}.png")
+        icon_param = "icon:#{map_pin_url}|"
+      else
+        icon_param = ''
+      end
 
       sizes.inject({}) do |sized_maps, (label, size)|
         sized_maps[label] = GoogleSignedImages.sign_url(
-          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=icon:#{map_pin_url}|#{address}&sensor=false"
+          "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{icon_param}#{address}&sensor=false"
         )
         sized_maps
       end
