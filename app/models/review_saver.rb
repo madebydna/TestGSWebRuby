@@ -15,8 +15,10 @@ class ReviewSaver
     old_review = existing_review
     if old_review
       existing_review.deactivate
-      if ! existing_review.save
-        return existing_review
+      unless existing_review.save
+        GSLogger.error(:reviews, nil, vars: existing_review.attributes,
+                       message: "Unable to deactivate existing review: #{existing_review.errors.first}")
+        return false, existing_review
       end
     end
     return review.save, review
