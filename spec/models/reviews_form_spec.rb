@@ -37,7 +37,7 @@ describe ReviewsForm do
 
     reviews_params = build_reviews_params(comment: invalid_comment)
 
-    error_messages_result = [{1=> "comment is too short (minimum is 15 words)"}]
+    error_messages_result = [{1=> "comment is too short (minimum is 7 words)"}]
     reviews_form = build_reviews_form(reviews_params: reviews_params)
     expect(reviews_form).to be_invalid
     expect(reviews_form.errors[:reviews]).to eq(error_messages_result)
@@ -199,7 +199,7 @@ describe ReviewsForm do
           "#{saved_review.review_question_id}" => {
             comment: saved_review.comment,
             answer: saved_review.answer,
-            errors: ["comment is too short (minimum is 15 words)"]
+            errors: ["comment is too short (minimum is 7 words)"]
           }
         }
 
