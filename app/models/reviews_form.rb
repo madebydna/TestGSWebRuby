@@ -72,6 +72,17 @@ class ReviewsForm
   end
 
   def hash_result
+    {
+      reviews: reviews_hash,
+      message: reviews_saving_message
+    }
+  end
+
+  def reviews_saving_message
+    ReviewSavingMessenger.new(user, saved_reviews).run
+  end
+
+  def reviews_hash
     if saved_reviews
       result_reviews = saved_reviews
     else

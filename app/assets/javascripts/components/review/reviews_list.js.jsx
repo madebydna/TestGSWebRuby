@@ -5,6 +5,21 @@ class ReviewsList extends React.Component {
     // TODO: This needs to be hooked up somewhere. Maybe from props?
     this.state = {currentUserReportedReviews: currentUserReportedReviews};
     this.reviewReportedCallback = this.reviewReportedCallback.bind(this);
+    this.renderReviewSubmitMessage = this.renderReviewSubmitMessage.bind(this);
+  }
+
+  renderReviewSubmitMessage() {
+    if ( this.props.reviewSubmitMessage.message ) {
+      let reviewMessageClass = "submit-review-message";
+      if (this.props.reviewSubmitMessage.active ) {
+       reviewMessageClass += " active";
+      }
+      return(
+        <div className={reviewMessageClass}>
+          { this.props.reviewSubmitMessage.message }
+        </div>
+      );
+     }
   }
 
   initialReviews() {
@@ -39,6 +54,7 @@ class ReviewsList extends React.Component {
   render() {
     return (
       <div className="review-list">
+        <div>{this.renderReviewSubmitMessage()}</div>
         <div>{this.initialReviews()}</div>
         <Drawer content={this.drawerReviews()} />
       </div>
@@ -52,6 +68,7 @@ ReviewsList.propTypes = {
     topical_reviews: React.PropTypes.array,
     most_recent_date: React.PropTypes.string,
     user_type_label: React.PropTypes.string,
-    avatar: React.PropTypes.number
+    avatar: React.PropTypes.number,
+    reviewSubmitMessage: React.PropTypes.object
   }))
 };

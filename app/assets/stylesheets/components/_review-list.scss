@@ -1,3 +1,6 @@
+$gs-success-green: #DEF3EA;
+$gs-pending-peach: #FEE9D1;
+
 .review-list {
   .user-reviews-container {
     padding-bottom: 20px;
@@ -6,4 +9,16 @@
     border-top: 1px solid #dbe6eb;
     padding-top: 20px;
   }
+
+  .submit-review-message {
+    background-color: $gs-pending-peach;
+    margin-bottom: $spacing-extra-large;
+    font-size: $font-size-l3;
+    padding: 15px $spacing-large;
+  }
+
+  .active {
+    background-color: $gs-success-green;
+  }
+
 }

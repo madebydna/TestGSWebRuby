@@ -3,8 +3,9 @@ class Reviews extends React.Component {
     super(props);
     var currentUserReportedMap = {};
     // TODO: This needs to be hooked up somewhere. Maybe from props?
-    this.state = {currentUserReportedMap: currentUserReportedMap};
+    this.state = { reviewSubmitMessage: {}}
     this.renderReviewLayout = this.renderReviewLayout.bind(this);
+    this.handleReviewSubmitMessage = this.handleReviewSubmitMessage.bind(this);
     this.renderReviewForm = this.renderReviewForm.bind(this);
     this.renderReviewsList = this.renderReviewsList.bind(this);
   }
@@ -12,7 +13,12 @@ class Reviews extends React.Component {
   renderReviewsList() {
     return(<ReviewsList
       reviews = { this.props.reviews }
+      reviewSubmitMessage = { this.state.reviewSubmitMessage }
     />);
+  }
+
+  handleReviewSubmitMessage(messageObject) {
+    this.setState({ reviewSubmitMessage: messageObject });
   }
 
   renderReviewForm() {
@@ -20,6 +26,7 @@ class Reviews extends React.Component {
       state = { this.props.state }
       schoolId = { this.props.schoolId }
       questions = { this.props.questions }
+      handleReviewSubmitMessage = { this.handleReviewSubmitMessage }
     />);
   }
 

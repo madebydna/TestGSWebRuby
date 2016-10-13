@@ -153,6 +153,19 @@ describe ReviewsForm do
   end
 
   describe "#hash_result" do
+    it "should return hash with reviews hash and reviews saving message" do
+      reviews_form = build_reviews_form
+      allow(reviews_form).to receive(:reviews_hash).and_return('reviews_hash')
+      allow(reviews_form).to receive(:reviews_saving_message).and_return('message')
+      result_hash  = {
+        reviews: 'reviews_hash',
+        message: 'message'
+      }
+      expect(reviews_form.hash_result).to eq(result_hash)
+    end
+  end
+
+  describe "#reviews_hash" do
     context "with no errors in saved questions" do
       it "should return reviews hash without errors" do
         school = create(:alameda_high_school, id: 1)
@@ -168,7 +181,7 @@ describe ReviewsForm do
           }
         }
 
-        expect(reviews_form.hash_result).to eq(hash_result)
+        expect(reviews_form.reviews_hash).to eq(hash_result)
       end
     end
     context "with one review with error" do
@@ -190,7 +203,7 @@ describe ReviewsForm do
           }
         }
 
-        expect(reviews_form.hash_result).to eq(hash_result)
+        expect(reviews_form.reviews_hash).to eq(hash_result)
       end
     end
   end
