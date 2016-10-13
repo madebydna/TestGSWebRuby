@@ -6,7 +6,7 @@ describe Cacher do
   describe '#cachers_for_data_type' do
     {
       esp_response: [EspResponsesCaching::EspResponsesCacher, ProgressBarCaching::ProgressBarCacher],
-      school_reviews: [ReviewsCaching::ReviewsSnapshotCacher, NearbySchoolsCaching::NearbySchoolsCacher, ProgressBarCaching::ProgressBarCacher],
+      school_reviews: [ReviewsCaching::ReviewsSnapshotCacher, ProgressBarCaching::ProgressBarCacher],
       school_media: [ProgressBarCaching::ProgressBarCacher],
       school_location: [NearbySchoolsCaching::NearbySchoolsCacher],
       census: [CharacteristicsCaching::CharacteristicsCacher],

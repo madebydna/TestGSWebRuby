@@ -12,7 +12,6 @@ class NearbySchoolsCaching::QueryResultDecorator < Draper::Decorator
               city: city,
           distance: try(:distance),
          gs_rating: gs_rating,
-  five_star_rating: average_5_star_rating,
                 id: id,
              level: process_level,
        methodology: methodology,
