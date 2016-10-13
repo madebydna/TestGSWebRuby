@@ -47,7 +47,7 @@ describe ReviewSaver do
         expect(review_save_boolean).to eq(false)
         expect(unsaved_review).to eq(review)
         expect(unsaved_review.errors.full_messages)
-          .to eq(["comment is too short (minimum is 15 words)"])
+          .to eq(["comment is too short (minimum is 7 words)"])
       end
     end
   end

@@ -85,8 +85,8 @@ class Review < ActiveRecord::Base
 
   def comment_minimum_length
     # TODO: Internationalize the error string
-    if comment.present? && comment.split(' ').length < 15
-      errors.add(:comment, "comment is too short (minimum is 15 words)")
+    if comment.present? && comment.split(' ').length < 7
+      errors.add(:comment, "comment is too short (minimum is 7 words)")
     end
   end
 

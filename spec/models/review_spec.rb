@@ -40,10 +40,10 @@ describe Review do
     expect(five_star_review).to_not be_valid
   end
 
-  it 'should require at least 15 words if it is not empty' do
-    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
+  it 'should require at least 7 words if it is not empty' do
+    review.comment = '1 2 3 4 5 6'
     expect(review).to_not be_valid
-    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15'
+    review.comment = '1 2 3 4 5 6 7'
     expect(review).to be_valid
   end
 
