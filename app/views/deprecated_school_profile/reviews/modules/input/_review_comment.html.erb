@@ -10,7 +10,7 @@
                              onkeyup: "GS.topicalReview.characterCount.init(this)",
                              rows: "8",
                              placeholder: placeholder_text,
-                             'data-parsley-minwords'=>'15',
+                             'data-parsley-minwords'=>'7',
                              'data-parsley-required'=>"#{options[:comment_required] ? 'true' : 'false'}",
                              'data-parsley-errors-container' => "##{parsley_error_id}",
                              'data-parsley-minwords-message'=>t('.min_words_error_message'),

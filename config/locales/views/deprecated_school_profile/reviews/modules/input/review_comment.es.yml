@@ -9,7 +9,7 @@ es:
             max_length_error_message: "Lo sentimos, tenemos un límite de 2.500
             caracteres por comentarios.  Por favor, acortar su comentario para
             poder guardar."
-            min_words_error_message: "Por favor, asegúrese de que su comentario sea de 15
+            min_words_error_message: "Por favor, asegúrese de que su comentario sea de 7
             palabras o más de longitud."
             required_comment_error_message: "¡Gracias por su opinión! Por favor,
             comparta algunas ideas sobre esta escuela para poder guardar su
