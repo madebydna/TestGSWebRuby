@@ -124,8 +124,15 @@ module ReviewControllerConcerns
 
         review = Review.find review_id rescue nil
         if review
-          review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
-          review_flag.user = current_user
+          existing_flag = ReviewFlag.find_by(member_id: current_user.id, review_id: review.id, active: 1)
+          if existing_flag.present?
+            review_flag = existing_flag
+            review_flag.comment = comment
+            review_flag.created = Time.now
+          else
+            review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
+            review_flag.user = current_user
+          end
           if review_flag.save
             if request.xhr?
               render json: {}, status: :ok
@@ -148,7 +155,7 @@ module ReviewControllerConcerns
           end
         end
       rescue => e
-        Rails.logger.debug e
+        GSLogger.error(:reviews, e, message: 'Unable to save ReviewFlag')
         if request.xhr?
           render json: {}, status: :internal_server_error
         else

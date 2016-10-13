@@ -83,6 +83,10 @@ describe ReviewsController do
       expect(controller).to receive(:redirect_to).with(@reviews_page)
     end
 
+    after do
+      clean_models ReviewFlag
+    end
+
     it 'should do nothing if not logged in' do
       allow(controller).to receive(:logged_in?).and_return(false)
       expect(Review).to_not receive :find
@@ -98,6 +102,25 @@ describe ReviewsController do
     it 'should bail and redirect if flagged review not found' do
       allow(Review).to receive(:find).and_return nil
       controller.send :flag_review_and_redirect, review_id: @review_id, comment: @comment
+    end
+
+    it 'should update existing flag if present' do
+      review = Review.new
+      review.id=@review_id
+      allow(Review).to receive(:find).and_return review
+      flag = ReviewFlag.new
+      flag.comment = 'old'
+      flag.review=review
+      flag.user=current_user
+      allow(ReviewFlag).to receive(:find_by).and_return flag
+
+      expect(controller).to receive(:flash_success)
+
+      controller.send :flag_review_and_redirect,
+                      review_id: @review_id,
+                      comment: @comment
+
+      expect(flag.comment).to eq(@comment)
     end
 
     it 'should save review flag if review exists' do
