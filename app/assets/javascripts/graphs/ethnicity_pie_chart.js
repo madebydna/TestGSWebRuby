@@ -20,7 +20,6 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
   };
 
   var generateEthnicityChart = function () {
-    console.log("I am here");
     if (gon.ethnicity) {
       $.cachedScript("https://code.highcharts.com/highcharts.js").done(function () {
         var ethnicityData = buildEthnicityDataFromGon();
@@ -50,6 +49,11 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
             name: 'percentage',
             data: ethnicityData
           }]
+        });
+        var ethnicityChartForHighlight = $(ethnicityGraph).highcharts();
+        $('.js-highlightPieChart').on("mouseenter mouseleave", function(){
+          sliceId = $(this).data('slice-id');
+          ethnicityChartForHighlight.series[0].data[sliceId].select();
         });
       });
     }

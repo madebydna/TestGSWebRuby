@@ -22,9 +22,9 @@
         </div>
         <div class="col-xs-12 col-sm-4">
           <% ethnicity.data_values.each_with_index do |val, index |  %>
-            <div class="legend-separator">
-            <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
-            <div class="legend-title"><%= val['breakdown'] %></div>
+            <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
+              <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
+              <div class="legend-title"><%= val['breakdown'] %></div>
             </div>
           <% end %>
         </div>

@@ -7,12 +7,20 @@
     height:12px;
     display:inline-block;
     margin-right: 10px;
+    //cursor: pointer;
   }
   .legend-title{
     display: inline-block;
     font-size: 12px;
+    //cursor: pointer;
   }
   .legend-separator{
-    padding: 10px 0; border-bottom: 1px solid #EEEEEE;
+    padding: 10px 0;
+    border-bottom: 1px solid #EEEEEE;
+    cursor: pointer;
+
+    &:hover{
+      background-color: #f9f9f9;
+    }
   }
 }
