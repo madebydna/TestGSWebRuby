@@ -3,7 +3,7 @@ require "spec_helper"
 describe SchoolProfiles::CollegeReadiness do
   let(:school) { double("school") }
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
-  subject(:hero) do
+  subject(:college_readiness) do
     SchoolProfiles::CollegeReadiness.new(
       school_cache_data_reader: school_cache_data_reader
     )
