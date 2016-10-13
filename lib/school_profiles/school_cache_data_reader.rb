@@ -40,6 +40,10 @@ module SchoolProfiles
       decorated_school.college_readiness_rating
     end
 
+    def ethnicity_data
+      decorated_school.ethnicity_data
+    end
+
     def characteristics_data(*keys)
       decorated_school.characteristics.slice(*keys)
     end

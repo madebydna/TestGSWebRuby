@@ -2,6 +2,7 @@ $(function() {
 
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
+  GS.graphs.ethnicityPieChart.generateEthnicityChart();
 
   // When search bar added to universal nav, was required to init autocomplete on all pages
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
@@ -50,4 +51,6 @@ $(function() {
 
     refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   })();
+
+
 });

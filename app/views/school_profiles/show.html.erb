@@ -7,6 +7,7 @@
       <%= render 'school_profile_sticky_cta' %>
     </div>
     <div class="content">
+
       <div>
         <%= render 'toc' %>
       </div>
@@ -19,6 +20,9 @@
                  width: 320, height: 50, css_class: 'mbl' %>
       <div>
         <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+      </div>
+      <div>
+        <%= render 'ethnicity', ethnicity: @school_profile.ethnicity %>
       </div>
       <div>
         <%= render 'review_summary', reviews: @school_profile.reviews %>
@@ -34,6 +38,7 @@
       </div>
     </div>
   </div>
+
   <div>
     <%= render 'nearby_schools',
       nearby_schools: @school.nearby_schools_for_list(
