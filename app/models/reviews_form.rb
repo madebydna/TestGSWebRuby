@@ -74,8 +74,13 @@ class ReviewsForm
   def hash_result
     {
       reviews: reviews_hash,
-      message: reviews_saving_message
+      message: reviews_saving_message,
+      user_reviews: user_reviews
     }
+  end
+
+  def user_reviews
+    UserReviews.new(saved_reviews, school).build_struct
   end
 
   def reviews_saving_message

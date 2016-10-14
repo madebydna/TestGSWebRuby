@@ -11,14 +11,14 @@ describe ReviewsForm do
   end
 
   it "validates presence of state" do
-    reviews_form = build_reviews_form(state: '')
+    reviews_form = build_reviews_form(state: "")
 
     expect(reviews_form).to be_invalid
     expect(reviews_form.errors[:state]).to eq(["Must provide school state"])
   end
 
   it "validates presence of school id" do
-    reviews_form = build_reviews_form(school_id: '')
+    reviews_form = build_reviews_form(school_id: "")
 
     expect(reviews_form).to be_invalid
     expect(reviews_form.errors[:school_id]).to eq(["Must provide school id"])
@@ -129,7 +129,7 @@ describe ReviewsForm do
     end
   end
 
-  describe '#review_params' do
+  describe "#review_params" do
     it "should return review and answer params" do
       reviews_form = build_reviews_form
       comment = ("test this " * 15).strip
@@ -155,13 +155,28 @@ describe ReviewsForm do
   describe "#hash_result" do
     it "should return hash with reviews hash and reviews saving message" do
       reviews_form = build_reviews_form
-      allow(reviews_form).to receive(:reviews_hash).and_return('reviews_hash')
-      allow(reviews_form).to receive(:reviews_saving_message).and_return('message')
+      allow(reviews_form).to receive(:reviews_hash).and_return("reviews_hash")
+      allow(reviews_form).to receive(:reviews_saving_message).and_return("message")
+      allow(reviews_form).to receive(:user_reviews).and_return("user_reviews")
       result_hash  = {
-        reviews: 'reviews_hash',
-        message: 'message'
+        reviews: "reviews_hash",
+        message: "message",
+        user_reviews: "user_reviews"
       }
       expect(reviews_form.hash_result).to eq(result_hash)
+    end
+  end
+
+  describe "#user_reviews" do
+    it "should return user reviews struct" do
+      school = create(:alameda_high_school, id: 1)
+      verified_user = create(:verified_user)
+      saved_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1)
+      reviews_form = build_reviews_form
+      valid_reviews = [saved_review]
+      allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
+
+      expect(reviews_form.user_reviews).to be_a(Hash)
     end
   end
 
@@ -208,8 +223,8 @@ describe ReviewsForm do
     end
   end
 
-  def build_reviews_form(state: 'CA',
-                         school_id: '1',
+  def build_reviews_form(state: "CA",
+                         school_id: "1",
                          user: create(:verified_user),
                          reviews_params: [])
     params = {
