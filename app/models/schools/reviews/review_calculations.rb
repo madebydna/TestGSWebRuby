@@ -72,10 +72,10 @@ module ReviewCalculations
     score_distribution.values.reverse
   end
 
-  def count_by_topic
-    by_topic.map{ |k, v| [k, v.length] }.to_h.except('Overall')
-  end
+  ## Topic 'Overall' is skipped in the topical review summary
+  TOPIC_TO_SKIP = 'Overall'
 
+  ## Topics answers are assigned numeric values to calculate average response
   def topic_answers_to_numeric
     {
         'Strongly disagree' => 1,
@@ -86,37 +86,17 @@ module ReviewCalculations
     }
   end
 
-  def numeric_topic_answer_grouping
-    {
-        1 => 'Disagree',
-        2 => 'Disagree',
-        3 => 'Neutral',
-        4 => 'Agree',
-        5 => 'Agree'
-    }
-  end
-
-  def average_score_by_topic
-    hash = {}
+  def topical_review_summary
+    hash = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
     by_topic.each do |topic, reviews|
-      next if topic == 'Overall'
+      next if topic == TOPIC_TO_SKIP || reviews.empty?
       topic_answer_values = []
       reviews.each do |review|
         topic_answer_values << topic_answers_to_numeric[review.answer] unless topic_answers_to_numeric[review.answer].nil?
       end
-      hash[topic] = (topic_answer_values.sum.to_f / topic_answer_values.length)
-      end
+      hash[topic][:average] = topic_answers_to_numeric.invert[(topic_answer_values.sum.to_f / topic_answer_values.length).round.to_i] unless topic_answer_values.empty?
+      hash[topic][:count] = reviews.length
+    end
     hash
-  end
-
-  def topical_review_summary
-    topical_hash = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
-    count_by_topic.each do |topic, topic_count|
-      topical_hash[topic][:count] = topic_count
-    end
-    average_score_by_topic.each do |topic, average_score|
-      topical_hash[topic][:average] = numeric_topic_answer_grouping[average_score.round.to_i]
-    end
-    topical_hash
   end
 end
