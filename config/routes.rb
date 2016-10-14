@@ -229,6 +229,7 @@ LocalizedProfiles::Application.routes.draw do
 
   namespace :api, controller: 'api', path:'/gsr/api' do
     resource :session
+    resource :school_user_digest
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do

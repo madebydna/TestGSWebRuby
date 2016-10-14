@@ -7,7 +7,7 @@ GS.session = GS.session || (function(gon) {
 
   // returns a jQuery promise
   var getCurrentSession = function() {
-    uri = gon.links.session;
+    var uri = gon.links.session;
     if (uri === undefined) {
       throw new Error('uri is undefined in getCurrentSession');
     }
@@ -19,9 +19,30 @@ GS.session = GS.session || (function(gon) {
     );
   };
 
+  var getSchoolUserDigest = function() {
+    var uri = gon.links.school_user_digest;
+    var schoolData =  {
+        state: gon.school.state,
+        school_id: gon.school.id
+    };
+    var memoizeId = 'gs_school_user_digest' + schoolData.state + schoolData.school_id;
+
+    if (uri === undefined) {
+      throw new Error('uri is undefined in getCurrentSession');
+    }
+    
+    return GS.util.memoizeAjaxRequest(
+      memoizeId,
+      function() {
+        return $.get(uri, schoolData, 'json')
+      }
+    );
+  };
+
   return {
     isSignedIn: isSignedIn,
-    getCurrentSession: getCurrentSession
+    getCurrentSession: getCurrentSession,
+    getSchoolUserDigest: getSchoolUserDigest
   };
 
 })(gon);
