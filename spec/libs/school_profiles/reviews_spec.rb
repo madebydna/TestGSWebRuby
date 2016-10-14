@@ -66,19 +66,24 @@ describe SchoolProfiles::Reviews do
   end
 
   describe '#build_user_reviews_struct' do
+    let(:school) { build(:school) }
     let(:reviews) do
       [
-        build(:five_star_review, created: Date.parse('2012-01-01')),
-        build(:teacher_effectiveness_review, created: Date.parse('2011-01-01')),
-        build(:homework_review, created: Date.parse('2013-01-01')),
+        build(:five_star_review, created: Date.parse('2012-01-01'), school: school),
+        build(:teacher_effectiveness_review, school: school, created: Date.parse('2011-01-01')),
+        build(:homework_review, school: school, created: Date.parse('2013-01-01')),
       ].extend(ReviewScoping).
       extend(ReviewCalculations)
     end
     subject do
       OpenStruct.new(
-        SchoolProfiles::Reviews.new(reviews).
+        SchoolProfiles::Reviews.new(school).
         build_user_reviews_struct(SchoolProfiles::UserReviews.new(reviews))
       )
+    end
+    before do
+      # check if this working 
+      allow(subject).to receive(:school_user_digest).and_return('dfd')
     end
     its(:five_star_review) do
       is_expected.to be_a(Hash)

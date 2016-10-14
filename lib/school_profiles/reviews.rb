@@ -11,10 +11,11 @@ module SchoolProfiles
       'unknown' => 3
     }.freeze
 
-    attr_reader :reviews
+    attr_reader :reviews, :school
 
-    def initialize(reviews)
-       @reviews = reviews
+    def initialize(school)
+      @school = school
+      @reviews = school.reviews
     end
 
     def summary
@@ -41,6 +42,7 @@ module SchoolProfiles
     def build_user_reviews_struct(user_reviews)
       {}.tap do |hash|
         five_star_review, topical_reviews = user_reviews.partition
+        hash['school_user_digest'] = school_user_digest(user_reviews.member_id)
         hash['five_star_review'] = review_to_hash(five_star_review) if five_star_review
         hash['topical_reviews'] = topical_reviews.map { |r| review_to_hash(r) }
         date = user_reviews.most_recent_date
@@ -64,6 +66,11 @@ module SchoolProfiles
         }
       }
     end
+
+    def school_user_digest(user_id)
+      user = User.find_by_id(user_id)
+      SchoolUserDigest.new(user, school).create
+    end
   end
 
   class UserReviews
@@ -78,6 +85,10 @@ module SchoolProfiles
 
     def initialize(reviews)
       @reviews = reviews
+    end
+
+    def member_id
+      reviews.first[:member_id]
     end
 
     def user_type

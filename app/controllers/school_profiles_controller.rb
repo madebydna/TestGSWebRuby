@@ -62,13 +62,13 @@ class SchoolProfilesController < ApplicationController
   def test_scores
     SchoolProfiles::TestScores.new(
       school,
-      school_cache_data_reader: school_cache_data_reader 
+      school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def college_readiness
     SchoolProfiles::CollegeReadiness.new(
-      school_cache_data_reader: school_cache_data_reader 
+      school_cache_data_reader: school_cache_data_reader
     )
   end
 
@@ -79,7 +79,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def reviews
-    SchoolProfiles::Reviews.new(school.reviews)
+    SchoolProfiles::Reviews.new(school)
   end
 
   def review_questions
