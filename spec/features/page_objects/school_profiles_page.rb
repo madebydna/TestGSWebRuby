@@ -47,6 +47,21 @@ class SchoolProfilesPage < SitePrism::Page
     elements :cta_stars, ".five-star-question-cta__star"
     element :completed_five_star_question, ".review-question > div > .five-star-rating"
     elements :questions, ".review-question"
+    elements :text_areas, "textarea"
+    element :submit, ".submit"
+    def submit_form
+        submit.click
+    end
+  end
+
+  class ReviewList < SitePrism::Section
+    element :five_star_review_comment, ".five-star-review .comment"
+    element :five_star_review
+    section :five_stars, FiveStars, '.five-stars'
+
+    def has_five_star_comment?(comment)
+      five_star_review_comment.text == comment
+    end
   end
 
   element :gs_rating, '.rs-gs-rating'
@@ -55,9 +70,18 @@ class SchoolProfilesPage < SitePrism::Page
   section :college_readiness, RatingContainer, '.rs-college-readiness'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
+  section :review_list, ReviewList, '.review-list'
 
-  def choose_five_star_cta_response
-    review_form.cta_stars.first.click
+
+  element :five_star_review_comment, ".five-star-review .comment"
+
+  def choose_five_star_cta_response(star_select = 1)
+    index = star_select - 1
+    review_form.cta_stars[index].click
+  end
+
+  def fill_in_five_star_rating_comment(comment)
+    review_form.text_areas.last.set comment
   end
 
   def has_star_rating_of?(star_rating)

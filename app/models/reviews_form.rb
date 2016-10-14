@@ -79,8 +79,20 @@ class ReviewsForm
     }
   end
 
+  def existing_reviews_not_updated
+    existing_reviews = school_user.reviews.having_comments.select(&:active)
+    review_question_ids_updated = saved_reviews.map(&:review_question_id)
+    existing_reviews.reject do |review|
+      review_question_ids_updated.include?(review.review_question_id)
+    end
+  end
+
+  def all_active_reviews
+    saved_reviews + existing_reviews_not_updated
+  end
+
   def user_reviews
-    UserReviews.new(saved_reviews, school).build_struct
+    UserReviews.new(all_active_reviews, school).build_struct
   end
 
   def reviews_saving_message

@@ -59,7 +59,7 @@ class UserReviews
     {
       comment: review.comment,
       topic_label: review.topic_label,
-      answer: review.answer.try(:downcase),
+      answer: review.answer.to_s.try(:downcase),
       answer_label: review.answer_label,
       id: review.id,
       links: {

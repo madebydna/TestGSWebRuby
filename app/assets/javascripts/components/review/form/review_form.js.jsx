@@ -175,12 +175,14 @@ class ReviewForm extends React.Component {
   handleSuccessfulSubmit(xhr) {
     let reviews = xhr.reviews;
     let reviewSaveMessage = xhr.message;
+    let userReviews = xhr.user_reviews;
     let reviewsErrors = this.reviewsErrors(reviews);
     if (reviewsErrors) {
       this.updateReviewFormErrors(reviewsErrors);
     } else {
       this.props.handleReviewSubmitMessage(reviewSaveMessage);
-      this.setState( { displayAllQuestions: false } );
+      this.props.handleUpdateOfReviews(userReviews);
+      this.hideQuestions();
     }
   }
 
