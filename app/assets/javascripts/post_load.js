@@ -1,22 +1,47 @@
 // This combined file will be loaded after load complete by js.
-//= require auth
+// NEW PROFILES POST_LOAD
+//= require util/cached_script
+//= require graphs/ethnicity_pie_chart
+//= require resources/fastclick
+//= require resources/tipso
+//= require resources/remodal
+//= require auth/auth
+//= require auth/facebook_auth
+//= require util/gs_bind
+//= require util/session
+//= require util/i18n
+//= require util/review_flags
 //= require autocomplete
-//= require jquery_ujs
-//= require wiselinks
-//= require ads
-//= require resources
-//= require ./localized_profiles/search_results
-//= require util
-//= require search
-//= require google_maps
-//= require localized_profiles
-//= require topical_reviews
-//= require guided_search
-//= require account_management
-//= require community_scorecards
-//= require dropzone.min
+//= require resources/typeahead_modified.bundle
+//= require util/handlebars
+//= require util/url_params
+//= require page_initializers/school_profiles
+//= require components/drawer
+//= require components/shortened_text
+//= require util/school_profile_sticky_cta.js
+//= require ./util/advertising.js
 //= require modals
-//= require page_initializers
-//= require zillow
+//= require resources/parsley.remote
+//= require resources/parsley.es.js
+//= require util/gs_parsley_validations
+//= require react
+//= require components
+//= require react_ujs
+//= require util/content
+//= require util/tooltip
+//= require util/remodal
 
+
+
+$.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+    var appId = gon.facebook_app_id;
+    FB.init({
+      appId: appId,
+      version    : 'v2.2',
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true  // parse XFBML
+    });
+    GS.facebook.init();
+  });
 

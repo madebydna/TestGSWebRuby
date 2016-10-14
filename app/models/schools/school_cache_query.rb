@@ -5,6 +5,13 @@ class SchoolCacheQuery
     @school_ids_per_state = {}
   end
 
+  def self.for_school(school)
+    raise ArgumentError.new('School must not be nil') if school.nil?
+    new.tap do |cache_query|
+      cache_query.include_schools(school.state, school.id)
+    end
+  end
+
   def include_cache_keys(cache_keys)
     @cache_keys += Array.wrap(cache_keys)
     @cache_keys.uniq

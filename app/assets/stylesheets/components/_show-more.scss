@@ -1,0 +1,27 @@
+.show-more__items {
+  display: none;
+}
+
+.show-more__button {
+  display: block;
+  height: 50px;
+  padding-top: 14px;
+  text-transform: uppercase;
+  background-image: linear-gradient(to bottom, #fbfdfd, #edf3f5);
+  border: solid 1px #dbe6eb;
+  text-align: center;
+  color: #71787e;
+  font-size: $font-size-s1;
+}
+
+.show-more__button::after {
+  content: '\25BE';
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.show-more--open .show-more__button::after {
+  padding: 0 5px;
+  transform: rotate(180deg);
+  vertical-align: middle;
+}

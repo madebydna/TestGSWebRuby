@@ -1,0 +1,17 @@
+<% review %>
+
+<% review = SchoolProfileReviewDecorator.decorate(review) %>
+
+<div class="five-star-review">
+  <div class="header">
+    <%= review.topic_label %>
+  </div>
+
+  <div class="answer">
+    <%= render 'five_stars', filled: review.star_rating if review.star_rating %>
+  </div>
+
+  <div class="comment">
+    <%= render 'shortened_text', text: review.comment, length: 200 %>
+  </div>
+</div>

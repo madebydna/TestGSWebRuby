@@ -1,0 +1,30 @@
+.ethnicity-container{
+
+  .subtitle-placement{
+    padding: 14px 20px;
+    margin-bottom: 10px;
+    background-color: #f6f9fa;
+  }
+
+  .legend-square{
+    width:12px;
+    height:12px;
+    display:inline-block;
+    margin-right: 10px;
+  }
+
+  .legend-title{
+    display: inline-block;
+    font-size: 12px;
+  }
+
+  .legend-separator{
+    padding: 10px 0;
+    border-bottom: 1px solid #EEEEEE;
+    cursor: pointer;
+
+    &:hover{
+      background-color: #f9f9f9;
+    }
+  }
+}

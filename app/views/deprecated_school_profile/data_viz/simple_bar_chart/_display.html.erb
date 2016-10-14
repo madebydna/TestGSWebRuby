@@ -1,0 +1,18 @@
+
+<% bar_chart_data  %>
+<%# 
+  sample_data = [
+  {count: 5, percentage: '100',label: '5 stars' },
+  {count: 4, percentage: '80', label: '4 stars' },
+  {count: 5, percentage: '100', label: '3 stars' },
+  {count: 2, percentage: '40', label: '2 stars' },
+  {count: 1, percentage: '20', label: '1 stars' },
+]
+%>
+
+<div class="horizontal-bar-chart">
+  <% bar_chart_data.each do |data_point| %>
+    <%= render partial: "deprecated_school_profile/data_viz/simple_bar_chart/bar",
+      locals: {data_point: data_point } %>
+  <% end %>
+</div>

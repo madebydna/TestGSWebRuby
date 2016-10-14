@@ -1,0 +1,33 @@
+.icon-sprite, .icon-avatar-1, .icon-avatar-2, .icon-avatar-3, .icon-avatar-4, .icon-avatar-5 {
+  background: image-url('icons/avatars.png') no-repeat;
+}
+
+.icon-avatar-1 {
+  background-position: 0 0;
+  height: 65px;
+  width: 65px;
+}
+
+.icon-avatar-2 {
+  background-position: 0 -65px;
+  height: 65px;
+  width: 65px;
+}
+
+.icon-avatar-3 {
+  background-position: 0 -260px;
+  height: 65px;
+  width: 65px;
+}
+
+.icon-avatar-4 {
+  background-position: 0 -195px;
+  height: 65px;
+  width: 65px;
+}
+
+.icon-avatar-5 {
+  background-position: 0 -130px;
+  height: 65px;
+  width: 65px;
+}

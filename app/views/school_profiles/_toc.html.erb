@@ -1,0 +1,29 @@
+<!--
+there is a partial for ratings called toc-entry-rating - need to figure out NR color.
+going to build a partial for badges.  it will use the name passed in to generate font accessor
+-->
+<div id="toc">
+  <div class="toc-container-box">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row grid-divider">
+          <div class="col-xs-12 col-sm-4">
+            <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: 'Test Scores' %>
+            <%= render 'toc_entry_rating', rating: '7', title: 'Equity' %>
+            <%= render 'toc_entry_rating', rating: '6', title: 'College Readiness' %>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <%= render 'toc_entry_rating', rating: '5', title: 'Elective Course Offering' %>
+            <%= render 'toc_entry_badge', icon: 'user', title: 'Teachers' %>
+            <%= render 'toc_entry_rating', rating: '4', title: 'Demographics' %>
+          </div>
+          <div class="col-xs-12 col-sm-4 hidden-sm-down">
+            <%= render 'toc_entry_badge', icon: 'shield', title: 'Health and Safety' %>
+            <%= render 'toc_entry_rating', rating: '2', title: 'School Resources' %>
+            <%= render 'toc_entry_rating', rating: '3', title: 'Sports' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

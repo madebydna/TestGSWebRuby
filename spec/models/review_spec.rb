@@ -34,10 +34,16 @@ describe Review do
     expect(review).to be_valid
   end
 
-  it 'should require at least 15 words if it is not empty' do
-    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14'
+  it 'five star review should not be valid with no comment' do
+    five_star_review = FactoryGirl.build(:five_star_review, active: true,
+                                         school: school, user: user, comment: nil)
+    expect(five_star_review).to_not be_valid
+  end
+
+  it 'should require at least 7 words if it is not empty' do
+    review.comment = '1 2 3 4 5 6'
     expect(review).to_not be_valid
-    review.comment = '1 2 3 4 5 6 7 8 9 10 11 12 13 14 15'
+    review.comment = '1 2 3 4 5 6 7'
     expect(review).to be_valid
   end
 
@@ -494,6 +500,23 @@ describe Review do
           review.save!
         end.to_not raise_error
       end
+    end
+    it "when unique validation disabled second active review should be valid only once" do
+      first_active_review = create(:five_star_review,
+                                   active: true,
+                                   review_question_id: question.id,
+                                   school: school,
+                                   user: user)
+      second_active_review = build(:five_star_review,
+                                   review_question_id: question.id,
+                                   active: true,
+                                   school: school,
+                                   user: user)
+      
+      second_active_review.disable_unique_active_reviews_validation_temporarily
+      expect(second_active_review.valid?).to eq(true)
+      expect(second_active_review.valid?).to eq(false)
+      expect(second_active_review.save).to eq(false)
     end
   end
 

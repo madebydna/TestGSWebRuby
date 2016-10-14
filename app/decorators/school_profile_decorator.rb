@@ -124,4 +124,14 @@ class SchoolProfileDecorator < Draper::Decorator
  def facebook_url
    cache_results.values_for(EspKeys::FACEBOOK_URL).first || metadata.facebook_url
  end
+
+  def get_all_students_data(hash)
+    hash.each do |student_data|
+      # require 'pry'
+      # binding.pry
+      # if student_data['breakdown'].to_s == 'All students'
+      #   return student_data
+      # end
+    end
+  end
 end

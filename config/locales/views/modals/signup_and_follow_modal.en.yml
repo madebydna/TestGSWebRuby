@@ -11,4 +11,7 @@
         sponsors_signup: Please send me parenting information and special promotions from GreatSchools' carefully chosen partners.
         terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
         greatschools_terms_of_use: GreatSchools Terms of Use.
-        privacy_policy: Privacy Policy.
+        privacy_policy: Privacy Policy
+        email_label: Email address
+        email_required_error: Please enter an email address.
+        parsley_required_message: "Please enter an email address."

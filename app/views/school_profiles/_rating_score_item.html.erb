@@ -1,0 +1,34 @@
+<% score_data %>
+
+<div class="rating-container__score-item">
+  <div class="rating-score-item">
+    <div class="row">
+      <div class="col-xs-6 rating-score-item__label">
+        <%= score_data.label %>
+      </div>
+      <div class="col-xs-6">
+        <div class="rating-score-item__score">
+          <%= score_data.formatted_score %>
+        </div>
+        <% unless score_data.formatted_state_average.nil? %>
+          <div class="rating-score-item__state-average">
+            State Avg: <%= score_data.formatted_state_average %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="rating-score-item__bar">
+      <div class="row">
+        <div class="col-xs-12 col-md-6 col-md-offset-6">
+          <%=
+            render "#{score_data.visualization}",
+              score: score_data.score.value,
+              state_score: score_data.state_average.value,
+              score_rating: (score_data.score / 10).round
+          %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

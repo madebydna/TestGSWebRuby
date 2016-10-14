@@ -1,0 +1,239 @@
+
+
+
+.user-reviews-container {
+  $gray-text-color: #71787e;
+  font-size: $font-size-l2;
+  text-align: center;
+  @media (min-width: 768px) {
+    text-align: left;
+  }
+
+  .user-info-column {
+    padding-right: 5px;
+    @media (min-width: 768px) {
+      text-align: left;
+    }
+  }
+
+  .review-list-column {
+    @include media-breakpoint-up(sm) {
+      margin-top: -10px;
+    }
+    .topical-review {
+      padding-top: 20px;
+    }
+  }
+
+  .avatar {
+    margin: auto;
+  }
+  .user-type {
+    text-align: center;
+    color: $gray-text-color;
+    margin-top: 5px;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+
+  .date {
+    margin-top: 20px;
+    color: $gray-text-color;
+  }
+
+  .topical-review {
+    padding-top: 20px;
+  }
+
+  $color-report-flag: #d94373;
+  $color-report-flag-reported: #fff;
+  $color-reported: #d94373;
+  $color-button-border: #c1d2d9;
+  $color-button-hover-border: rgba(113, 120, 126, 0.5);
+  $color-button-active-border: rgba(113, 120, 126, 0.8);
+  $color-dark-gray-text: #2e3438;
+  $color-gradient-button-dark: #f4f5f6;
+  $color-gradient-button-active: #edf3f5;
+
+  .topical-review-button-bar {
+    margin-top: $spacing-small;
+
+    .topical-review-report {
+      display: inline-block;
+    }
+
+    a {
+      color: $color-reported;
+      display: block;
+    }
+
+    .reported {
+      background-color: $color-reported;
+      color: white;
+      padding: $spacing-small $spacing-medium;
+      font-size: $font-size-l1;
+    }
+  }
+
+  .review-button-bar {
+    margin-top: $spacing-large;
+
+    .icon-flag {
+      color: $color-report-flag;
+    }
+
+    > .button {
+      border-radius: 2px;
+      border: solid 1px $color-button-border;
+      background-image: linear-gradient(to bottom, #fff, $color-gradient-button-dark);
+      font-size: $font-size-l1;
+      font-family: opensans-bold;
+      padding: $spacing-small $spacing-medium;
+      color: $color-dark-gray-text;
+      margin-right: $spacing-small;
+      cursor: pointer;
+
+      &:hover {
+        border: solid 1px $color-button-hover-border;
+      }
+
+      &:active {
+        border: solid 1px $color-button-active-border;
+        background: $color-gradient-button-active none;
+      }
+    }
+
+    > .button.reported {
+      background: $color-reported none;
+      font-family: opensans-regular;
+      color: white;
+      border: none;
+      cursor: default;
+
+      .icon-flag {
+        color: $color-report-flag-reported;
+      }
+    }
+  }
+}
+
+.five-star-review {
+  .header {
+    font-size: $font-size-l3;
+    font-family: opensans-bold;
+    @media (min-width: 768px) {
+      display: inline-block;
+    }
+  }
+
+  .answer {
+    margin-top: 5px;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+      padding-left: 10px;
+      display: inline-block;
+    }
+    .five-stars {
+      font-size: $font-size-l2;
+      .empty-star {
+        color: #dbe6eb;
+      }
+    }
+  }
+
+  .comment {
+    text-align: left;
+    margin-top: 5px;
+    line-height: 1.7;
+    @media (min-width: 768px) {
+      margin-top: 10px;
+    }
+  }
+}
+
+.topical-review {
+  $strongly-disagree-color: #F26B16;
+  $disagree-color: #DCA21A;
+  $neutral-color: #BDC01E;
+  $agree-color: #86B320;
+  $strongly-agree-color: #559F24;
+
+  @include clearfix;
+  text-align: left;
+
+  > .topical-review-summary {
+    $text_color: #2e3438;
+    padding: 20px 0 20px 0;
+    font-size: 12px;
+    font-family: 'opensans-regular';
+    //color: $text_color; //might need to be in elements instead
+
+    .topical-title {
+      text-align: center;
+      font-size: 20px;
+      padding: 20px 0;
+      text-transform: uppercase;
+      font-family: 'opensans-semibold';
+      @include media-breakpoint-up(sm) {
+        text-align: left;
+      }
+    }
+
+    .topical_item {
+      padding: 5px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      margin: 5px;
+      float: left;
+    }
+
+    .topic-icon {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .topic-details {
+      display: inline-block;
+      padding-left: 5px;
+      vertical-align: middle;
+    }
+  }
+
+  > .average-rating-column {
+    float: left;
+    width: 30px;
+  }
+  > .text-column {
+    margin-left: 30px
+  }
+  .answer {
+    font-family: opensans-bold;
+  }
+  .comment {
+    padding-top: 5px;
+  }
+  .answer-icon {
+    font-family: icon-greatscrool;
+  }
+
+  .strongly-disagree {
+    @extend .icon-dislike;
+    color: $strongly-disagree-color;
+  }
+  .disagree {
+    @extend .icon-dislike;
+    color: $disagree-color;
+  }
+  .neutral {
+    @extend .icon-neutral;
+    color: $neutral-color;
+  }
+  .agree {
+    @extend .icon-like;
+    color: $agree-color;
+  }
+  .strongly-agree {
+    @extend .icon-like;
+    color: $strongly-agree-color;
+  }
+}

@@ -7,6 +7,7 @@ GS.modal.BaseModal = function($, options) {
   // all modals will have these properties, and some should be overwritten within each modal's constructor function
   options = options || {};
   this.cssClass = null;
+  this.remodal = null;
   this.modalUrl = null;
   this.deferred = $.Deferred();
   this.$modalContainer = GS.modal.manager.getModalContainer(); // would probably be better to pass modalContainer into constructor
@@ -76,19 +77,22 @@ _.assign(GS.modal.BaseModal.prototype, {
   },
 
   show: function show() {
-    this.$getModal().modal('show');
+    // if(this.$getModal().hasClass('no-modal'))
+    this.remodal = this.$getModal().remodal({appendTo: this.$getModalContainer()});
+    this.remodal.open();
     this.trackEvent('show');
     return this.deferred.promise();
   },
 
   hide: function hide() {
     if(this.isShown()) {
-      this.$getModal().modal('hide');
+      this.remodal.close();
     }
   },
 
   isShown: function isShown() {
-    return (this.$getModal().data('bs.modal') || {}).isShown;
+    // return (this.$getModal().data('bs.modal') || {}).isShown;
+    return (this.remodal.getState() == 'opened')
   },
 
   $getFirstForm: function $getFirstForm() {
@@ -102,6 +106,7 @@ _.assign(GS.modal.BaseModal.prototype, {
   },
 
   initializeShowHideBehavior: function initializeShowHideBehavior() {
+    this.$getModal().on('closed', this.rejectIfPending.gs_bind(this));
     this.$getModal().on('hidden.bs.modal', this.rejectIfPending.gs_bind(this));
     this.deferred.always(this.hide.gs_bind(this));
   },

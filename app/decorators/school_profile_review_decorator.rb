@@ -5,6 +5,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   decorates :review
   delegate_all
 
+  def five_star_rating?
+    review.question.question == 'How would you rate your experience at this school?'
+  end
+
   def answer_markup
     default_text = t('decorators.school_profile_review_decorator.no_rating') # non five-star ratings must have answer specified, no always use 'no rating'
     if review.question.overall?
@@ -74,6 +78,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     end
   end
 
+  def user_type_label
+    "A #{user_type}"
+  end
+
   def has_comment?
     review.comment.present?
   end
@@ -110,6 +118,14 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     text = t('decorators.school_profile_review_decorator.you_selected_html')
     text << h.content_tag('span', submitted_value, class: 'open-sans_cb')
     text.html_safe
+  end
+
+  def answer_label
+    return nil if five_star_rating?
+    question_answer_text = 
+      review.question.question[0].downcase + 
+      review.question.question[1..-2]
+    t("#{answer} that #{question_answer_text}")
   end
 
   def created

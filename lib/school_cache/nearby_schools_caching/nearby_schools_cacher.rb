@@ -16,7 +16,7 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
   end
 
   def self.listens_to?(data_type)
-    :school_location == data_type
+    [:school_location, :ratings].include? data_type
   end
 
   protected

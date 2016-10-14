@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe SchoolProfileController do
+describe DeprecatedSchoolProfileController do
   let(:school) { FactoryGirl.build(:school) }
   let(:page) { FactoryGirl.build(:page) }
   let(:page_config) { double(PageConfig) }
@@ -9,7 +9,6 @@ describe SchoolProfileController do
     expect(controller.action_methods - []).to eq(Set.new)
   end  
 
-  # TODO: I think these specs are modifying the factory object in place. If so that is Very Bad and must be fixed.
   describe 'Check SEO for school profile page' do
     describe '#seo_meta_tags_title' do
       let (:subject) { controller.send(:seo_meta_tags_title) }
@@ -50,137 +49,6 @@ describe SchoolProfileController do
           expect(subject).to eq('Amazing Life Games Pre-School - Washington, DC - School overview')
         end
       end
-
-      describe 'for option 1' do
-        let (:option_map) { {'CA' => "#{school.name} #{Time.now.year} Ratings | #{school.city}, #{school.state} | GreatSchools" } }
-
-        before do
-          allow(controller).to receive(:title_state_options).and_return(option_map)
-        end
-
-        it 'should have correctly formatted title' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'overview'
-          expect(subject).to eq 'Alameda High School 2016 Ratings | Alameda, CA | GreatSchools'
-        end
-
-        it 'should not pull default title when page is not overview' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'quality'
-          expect(subject)
-              .to eq 'Alameda High School - Alameda, California - CA - School quality'
-        end
-      end
-
-      describe 'for option 2' do
-        let (:option_map) { {'CA' => "#{school.name}: What Do Parents Say? | GreatSchools"} }
-
-        before do
-          allow(controller).to receive(:title_state_options).and_return(option_map)
-        end
-
-
-        it 'should have correctly formatted title' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'overview'
-          expect(subject)
-              .to eq 'Alameda High School: What Do Parents Say? | GreatSchools'
-        end
-
-        it 'should not pull default title when page is not overview' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'quality'
-          expect(subject)
-              .to eq 'Alameda High School - Alameda, California - CA - School quality'
-        end
-      end
-
-      describe 'for option 3' do
-        let (:option_map) { {'CA' => "#{school.name}: The Latest School Ratings & Reviews | GreatSchools"} }
-
-        before do
-          allow(controller).to receive(:title_state_options).and_return(option_map)
-        end
-
-        it 'should have correctly formatted title' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'overview'
-          expect(subject)
-              .to eq 'Alameda High School: The Latest School Ratings & Reviews | GreatSchools'
-        end
-
-        it 'should not pull default title when page is not overview' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'quality'
-          expect(subject)
-              .to eq 'Alameda High School - Alameda, California - CA - School quality'
-        end
-      end
-
-      describe 'for option 4' do
-        let (:option_map) { {'CA' => "#{school.name} | Best School Ratings by GreatSchools"} }
-
-        before do
-          allow(controller).to receive(:title_state_options).and_return(option_map)
-        end
-
-        it 'should have correctly formatted title' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'overview'
-          expect(subject)
-              .to eq 'Alameda High School | Best School Ratings by GreatSchools'
-        end
-
-        it 'should not pull default title when page is not overview' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'quality'
-          expect(subject)
-              .to eq 'Alameda High School - Alameda, California - CA - School quality'
-        end
-      end
-
-      describe 'for option 5' do
-        let (:option_map) { {'CA' => "#{school.name}: Everything You Need to Know | GreatSchools"} }
-
-        before do
-          allow(controller).to receive(:title_state_options).and_return(option_map)
-        end
-
-        it 'should have correctly formatted title' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'overview'
-          expect(subject)
-              .to eq 'Alameda High School: Everything You Need to Know | GreatSchools'
-        end
-
-        it 'should not pull default title when page is not overview' do
-          controller.instance_variable_set(:@school, school)
-          allow(controller).to receive(:action_name).and_return 'quality'
-          expect(subject)
-              .to eq 'Alameda High School - Alameda, California - CA - School quality'
-        end
-      end
-
-      describe 'State to title mappings' do
-        before do
-          allow(controller).to receive(:action_name).and_return 'overview'
-        end
-        [
-          ['CT', "What You Need To Know About Foo School | GreatSchools"],
-          ['MN', "Everything (!) About Foo School | GreatSchools"],
-          ['AL', "How Does Foo School Compare? | GreatSchools"],
-          ['NE', "Updated! Every Stat About Foo School | GreatSchools"],
-          ['NM', "Updated! Scores for Foo School | GreatSchools"]
-        ].each do |state, expected_title, school_name|
-          it "#{school_name} in #{state} should have title #{expected_title}" do
-            controller.instance_variable_set(:@school, school)
-            school.name = 'Foo School'
-            school.state = state
-            expect(subject).to eq(expected_title)
-          end
-        end
-      end
-
     end
 
     describe '#title_state_options' do
@@ -235,83 +103,6 @@ describe SchoolProfileController do
           school.city = 'Washington'
           expect(subject).to eq('Amazing Life Games Pre-School in Washington, Washington DC (DC). Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.')
         end
-      end
-
-      describe 'for option 1' do
-        let (:option_map) { {'CA' => :option1 } }
-
-        it 'should have correctly formatted description' do
-          controller.instance_variable_set(:@school, school)
-          school.level_code = 'h'
-          school.name = 'Alameda High School'
-          school.state = 'CA'
-          school.city = 'Alameda'
-          expect(subject).to eq('Newly updated test scores, student-teacher ratio, & diversity stats - Alameda High School reviews & ratings from parents and students.')
-        end
-      end
-
-      describe 'for option 2' do
-        let (:option_map) { {'CA' => :option2 } }
-
-        it 'should have correctly formatted description' do
-          controller.instance_variable_set(:@school, school)
-          school.level_code = 'h'
-          school.name = 'Alameda High School'
-          school.state = 'CA'
-          school.city = 'Alameda'
-          expect(subject).to eq('Read the latest reviews & ratings from parents and students about Alameda High School. Make the best decision for your child.')
-        end
-      end
-
-      describe 'for option 3' do
-        let (:option_map) { {'CA' => :option3 } }
-
-        it 'should have correctly formatted description' do
-          controller.instance_variable_set(:@school, school)
-          school.level_code = 'h'
-          school.name = 'Alameda High School'
-          school.state = 'CA'
-          school.city = 'Alameda'
-          expect(subject).to eq('Up-to-date test scores & in-depth statistics about Alameda High School. Read reviews & ratings from parents and students.')
-        end
-      end
-
-      describe 'for option 4' do
-        let (:option_map) { {'CA' => :option4 } }
-
-        it 'should have correctly formatted description' do
-          controller.instance_variable_set(:@school, school)
-          school.level_code = 'h'
-          school.name = 'Alameda High School'
-          school.state = 'CA'
-          school.city = 'Alameda'
-          expect(subject).to eq('Submit your rating for Alameda High School. Read reviews, newly-updated school & district test scores, and in-depth school report cards.')
-        end
-      end
-
-      describe 'for option 5' do
-        let (:option_map) { {'CA' => :option5 } }
-
-        it 'should have correctly formatted description' do
-          controller.instance_variable_set(:@school, school)
-          school.level_code = 'h'
-          school.name = 'Alameda High School'
-          school.state = 'CA'
-          school.city = 'Alameda'
-          expect(subject).to eq('What do other parents think of Alameda High School? Read the largest review site for Alameda High School at GreatSchools.org.')
-        end
-      end
-    end
-
-    describe '#description_state_options' do
-      let (:subject) { controller.send(:description_state_options) }
-
-      it 'should return a Hash' do
-        expect(subject.class).to eq(Hash)
-      end
-
-      it 'should have a default value of :default' do
-        expect(subject[:Atlantis]).to eq(:default)
       end
     end
 

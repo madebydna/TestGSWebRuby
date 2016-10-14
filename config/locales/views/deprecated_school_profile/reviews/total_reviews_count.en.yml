@@ -1,0 +1,10 @@
+---
+en: 
+  deprecated_school_profile:
+    reviews:
+      total_reviews_count:
+        no_reviews_text: There aren't any reviews yet.
+        no_reviews_link: Share your opinions!
+        total_reviews_text_prefix: There are
+        total_reviews_text_suffix: about all of the school topics.
+        total_reviews_link: "%{count} reviews"

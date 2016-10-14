@@ -9,18 +9,9 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//
 //= require jquery
+//= require jquery_ujs
 //= require jquery.cookie.js
-//= require dataTables/jquery.dataTables
 //= require lodash
 //= require ./util/util
-//= require ./util/expand_toggle
-//= require ./util/tracking
-//= require ./util/responsive_images
 //= require ./util/uri
-//= require ./util/i18n
-//= require ./util/spinny_wheel
-//= require ./util/window.sizing
-//= require ./localized_profiles/visualcharts
-//= require ./page_initializers/header_init

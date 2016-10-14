@@ -1,0 +1,22 @@
+<% item_type = 'School' %>
+<% item_type = 'LocalBusiness' if school && school.state == 'MA' %>
+<div class="dn" itemscope="" itemtype="http://schema.org/<%= item_type %>">
+  <span itemprop="name"><%= school.name %></span>
+  <div itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress">
+    <span itemprop="streetAddress"><%= school.street %></span>,
+    <span itemprop="addressLocality"><%= school.city %></span>,
+    <span itemprop="addressRegion"><%= school.state.upcase %></span>&nbsp;
+    <span itemscope="postalCode"><%= school.zipcode %></span>
+  </div>
+
+  <% if school_reviews && school_reviews.average_5_star_rating > 0 %>
+      <%= render 'deprecated_school_profile/rich_snippets/rich_snippets_average_review_rating', school_reviews: school_reviews %>
+  <% end %>
+  <% if school.phone.present? %>
+    <span itemprop="telephone"><%= school.phone %></span>
+  <% end %>
+  <% if school.home_page_url.present? %>
+    <a href="<%= school.home_page_url %>" itemprop="url"><%= school.home_page_url %></a>
+  <% end %>
+</div>
+

@@ -1,10 +1,10 @@
-class SchoolProfileReviewsController < SchoolProfileController
+class SchoolProfileReviewsController < DeprecatedSchoolProfileController
   protect_from_forgery
 
   include DeferredActionConcerns
   include ReviewControllerConcerns
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def reviews
     @school_reviews.add_number_of_votes_method_to_each

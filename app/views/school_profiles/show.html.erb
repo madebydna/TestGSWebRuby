@@ -1,0 +1,48 @@
+<div class="school-profile">
+  <%= render 'breadcrumbs', breadcrumbs: @breadcrumbs %>
+  <%= render 'hero', hero: @school_profile.hero %>
+  <!-- main content -->
+  <div class="static-container">
+    <div class="right_rail">
+      <%= render 'school_profile_sticky_cta' %>
+    </div>
+    <div class="content">
+
+      <div>
+        <%= render 'toc' %>
+      </div>
+      <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+                 width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
+      <div>
+        <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+      </div>
+      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
+      <div>
+        <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+      </div>
+      <div>
+        <%= render 'ethnicity', ethnicity: @school_profile.ethnicity %>
+      </div>
+      <div>
+        <%= render 'review_summary', reviews: @school_profile.reviews %>
+      </div>
+      <div>
+
+      </div>
+      <div>
+        <%= render 'reviews',
+          review_questions: @school_profile.review_questions,
+          reviews: @school_profile.reviews
+        %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <%= render 'nearby_schools',
+      nearby_schools: @school.nearby_schools_for_list(
+        'closest_top_then_top_nearby_schools'
+      ) %>
+  </div>
+</div>

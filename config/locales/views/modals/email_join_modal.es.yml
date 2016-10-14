@@ -2,16 +2,17 @@
   es:
     modals:
       email_join_modal:
-        body_html: <p>¡Entérate sobre resultados de las pruebas, revisiones o actualizaciones de perfiles. Sólo le
-                   enviaremos por correo electrónico cuando hay ¡algo nuevo!</p>
-                   <p class="open-sans_sb">Además, el Boletín GreatSchools!</p>
-                   <p>Nuestros mejores artículos, hojas de trabajo libres y más entregados semanalmente.</p>
+        body_html: ¡Lo mejor de artículos, hojas de trabajo, y más entregados semanalmente a su bandeja de entrada
+        email_label: Dirección de correo electrónico
+        email_required_error: Por favor introduzca una dirección de correo eléctronico.
         header: Recibe actualizaciones en esta escuela.
         signup_button: Ingresar
         signup_success: Gracias! Ahora estás registrado.
         sponsors_signup: Por favor, envíenme la crianza de información y promociones especiales de los socios cuidadosamente escogidos GreatSchools.
         terms_of_use_html: Al suscribirse, acepto los %{terms_of_use_link}
         greatschools_terms_of_use: GreatSchools Términos de Uso.
-        privacy_policy: Política de privacidad.
+        privacy_policy: Política de privacidad
         email_placeholder: Please enter your email address
+        parsley_required_message: Por favor introduzca una dirección de correo eléctronico.
+        parsley_remote_message_html: "Parece que ya tiene una cuenta. <a href='#login' data-toggle='tab'>Iniciar sesión</a>."
 

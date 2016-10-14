@@ -16,7 +16,7 @@ describe 'state ratings partial' do
       }
     }
 
-    render :partial => 'school_profile/data_layouts/state_ratings', locals: {
+    render :partial => 'deprecated_school_profile/data_layouts/state_ratings', locals: {
       data: rating_data, category_placement: category_placement
     }
 
@@ -29,13 +29,13 @@ describe 'state ratings partial' do
     rating_data = {
       'state_data' => nil
     }
-    render :partial => 'school_profile/data_layouts/state_ratings', locals: {
+    render :partial => 'deprecated_school_profile/data_layouts/state_ratings', locals: {
       data: rating_data, category_placement: category_placement
     }
     expect(rendered.strip).to eq ''
 
     rating_data = {}
-    render :partial => 'school_profile/data_layouts/state_ratings', locals: {
+    render :partial => 'deprecated_school_profile/data_layouts/state_ratings', locals: {
       data: rating_data, category_placement: category_placement
     }
     expect(rendered.strip).to eq ''

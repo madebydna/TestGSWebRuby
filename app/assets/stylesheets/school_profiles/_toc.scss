@@ -1,0 +1,77 @@
+#toc {
+  .toc-container-box {
+    margin: 30px auto;
+    border: solid 1px #dbe6eb;
+    padding: 30px;
+    background-color: #f6f9fa;
+  }
+
+  .toc-entry {
+    padding-left: 15px;
+    padding-bottom: 10px;
+  }
+
+  .toc-entry:last-child {
+    padding-bottom: 0px;
+  }
+
+  .gs-rating {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 22px;
+    color: #FFF;
+    float: left;
+    margin-right: 10px;
+  }
+
+  .gs-badge {
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    color: #FFF;
+    float: left;
+    background-color: #2ba3dc;
+    margin-right: 10px;
+  }
+
+  .gs-link {
+    float: left;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .grid-divider > [class*='col-']:before,
+    .grid-divider > [class*='col-']:after {
+      background: #cad4df;
+      bottom: 0;
+      content: " ";
+      position: absolute;
+      width: 1px;
+      top: 0;
+    }
+
+    .grid-divider > [class*='col-']:before {
+      left: 0;
+    }
+
+    .grid-divider > [class*='col-']:after {
+      right: -1px;
+    }
+
+    .grid-divider > [class*='col-']:first-child:before,
+    .grid-divider > [class*='col-']:last-child:after {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .toc-entry:last-child {
+      padding-bottom: 10px;
+    }
+  }
+}

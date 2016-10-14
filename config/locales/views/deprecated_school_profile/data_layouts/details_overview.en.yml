@@ -1,0 +1,6 @@
+---
+en:
+  deprecated_school_profile:
+    data_layouts:
+      details_overview:
+        student_demographics: ! 'Student Demographics:'

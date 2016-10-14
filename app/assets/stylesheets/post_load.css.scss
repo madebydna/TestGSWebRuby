@@ -14,22 +14,39 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// REMOVE ME! We need to figure out @extend usage first though.
-@import "gs/variables";
 @import "resources/bootstrap/bootstrap";
-@import "gs/mixins";
+@import "variables/variables";
+@import "fonts/gs-icon-font";
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
+@import "school-profile";
+@import 'components/show-more';
+@import 'components/five-star-rating';
+@import 'components/badge-and-content';
+@import 'components/gs-rating-with-label';
+@import 'components/person-bar-viz';
+@import 'components/static-right-rail-container';
+@import "components/breadcrumbs";
+@import "components/rating-container";
+@import "components/circle-rating";
+@import "components/circle-rating-with-label";
+@import "components/rating-score-item";
+@import "components/five-stars";
+@import "components/review-list";
+@import "components/review";
+@import "components/review-summary";
+@import "components/report-review";
+@import "components/five-star-question-cta";
+@import "components/join-form";
+@import "components/nearby-schools";
+@import "components/school-user-modal";
+@import "gs/objects/footer.css.scss";
+@import "fonts/fonts-opensans";
 @import "sprites/*";
 @import "gs/buttons";
-@import "gs/fonts-opensans";
-@import "gs/fonts-opensans-condbold";
-@import "gs/fonts-amaticsc";
-@import "gs/fonts-robotoslab-light";
-@import "gs/spacing";
-@import "gs/typography";
+@import "base/spacing";
+@import "base/typography";
 @import "gs/form";
-//@import "resources/bootstrap/bootstrap/gs-variables";
-//@import "resources/bootstrap/bootstrap/variables";
-//@import "resources/bootstrap/bootstrap/mixins";
 @import "gs/tables";
 @import "resources/tables";
 @import "resources/galleria.classic";
@@ -65,4 +82,17 @@
 @import "gs/objects/external_link_callout";
 @import "gs/objects/rectangle_inset";
 @import "gs/objects/home.css.scss";
-@import "gs/objects/footer.css.scss";
+@import "gs/objects/spinny_wheel.css.scss";
+@import "fonts/fonts-opensans";
+@import "fonts/fonts-opensans-semibold";
+@import "fonts/fonts-robotoslab-bold";
+@import 'school_profiles/hero.scss';
+@import 'school_profiles/toc.scss';
+@import 'school_profiles/school_profile_sticky_cta';
+@import 'school_profiles/review_form';
+@import 'school_profiles/ethnicity_container';
+@import 'resources/tipso';
+@import 'resources/remodal';
+@import 'resources/remodal-default-theme';
+@import 'resources/animate';
+

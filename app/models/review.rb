@@ -8,7 +8,7 @@ class Review < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'reviews'
 
-  attr_accessible :member_id, :user, :school_id, :school, :state, :review_question_id, :comment, :answers_attributes
+  attr_accessible :member_id, :user, :school_id, :school, :state, :review_question_id, :comment, :answers_attributes, :run_unique_active_reviews_validation
   alias_attribute :school_state, :state
   attr_writer :moderated
 
@@ -45,12 +45,12 @@ class Review < ActiveRecord::Base
   scope :five_star_review, -> { joins(question: :review_topic).where('review_topics.id = 1') }
 
   # TODO: i18n this message
-  validates_uniqueness_of(
-    :member_id,
+  validates_uniqueness_of( :member_id,
     scope: [:school_id, :state, :review_question_id, :active],
     conditions: -> { where(active: 1) },
-    message: 'You have already submitted a review for this topic.'
-  )
+    message: 'You have already submitted a review for this topic.',
+   if: :should_run_unique_active_reviews?)
+
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
   validates_presence_of :school
   validates_presence_of :user
@@ -58,6 +58,7 @@ class Review < ActiveRecord::Base
       maximum: 2800,
   }
   validate :comment_minimum_length, unless: '@moderated == true'
+  validates_presence_of :comment, if: 'overall? == true && active'
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
   before_save :remove_answers_for_principals, unless: '@moderated == true'
@@ -67,15 +68,30 @@ class Review < ActiveRecord::Base
     log_review_changed(state, school_id, member_id)
   end
 
+  def should_run_unique_active_reviews?
+    unique = @run_unique_active_reviews_validation
+    @run_unique_active_reviews_validation = true
+    return true if unique == nil
+    return unique
+  end
+
+  def disable_unique_active_reviews_validation_temporarily
+    @run_unique_active_reviews_validation = false
+  end
+
   def status
     active? ? :active : :inactive
   end
 
   def comment_minimum_length
     # TODO: Internationalize the error string
-    if comment.present? && comment.split(' ').length < 15
-      errors.add(:comment, "comment is too short (minimum is 15 words")
+    if comment.present? && comment.split(' ').length < 7
+      errors.add(:comment, "comment is too short (minimum is 7 words)")
     end
+  end
+
+  def overall?
+    question && question.overall?
   end
 
   def comment

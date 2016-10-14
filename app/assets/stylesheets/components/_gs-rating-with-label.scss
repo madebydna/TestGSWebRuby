@@ -1,0 +1,22 @@
+.gs-rating-with-label {
+  text-transform: uppercase;
+  font-size: $font-size-l3;
+  @media only screen and (max-width: 767px) {
+    font-size: $font-size-base;
+  }
+}
+
+.gs-rating-with-label__rating {
+  display: inline-block;
+  vertical-align: top;
+}
+.gs-rating-with-label__label {
+  margin-left: 10px;
+  text-align: left;
+  display: inline-block;
+  max-width: 90px;
+  @media (min-width: 750px) {
+    max-width: 120px;
+  }
+}
+

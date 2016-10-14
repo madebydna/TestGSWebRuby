@@ -1,0 +1,9 @@
+/*
+ * This is a manifest file that'll be compiled into print.css, which will include all the files
+ * listed below.
+ */
+
+@import "resources/bootstrap/bootstrap/variables";
+@import "resources/bootstrap/bootstrap/mixins/grid-framework";
+@import "resources/bootstrap/bootstrap/mixins/responsive-visibility";
+@import "gs/print/*";

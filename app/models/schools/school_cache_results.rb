@@ -13,7 +13,7 @@ class SchoolCacheResults
 
   def decorate_schools(schools)
     [*schools].map do |school|
-      decorated = SchoolCacheDecorator.new(school, @school_data[[school.state, school.id]] || {})
+      decorated = SchoolCacheDecorator.new(school, @school_data[[school.state.upcase, school.id]] || {})
       @cache_keys.each do |key|
         if module_for_key(key)
           decorated.send(:extend, (module_for_key(key)))
@@ -30,7 +30,7 @@ class SchoolCacheResults
   end
 
   def get_cache_object_for_school(state, school_id)
-    hash = @school_data[[state, school_id]]
+    hash = @school_data[[state.upcase, school_id]]
     if hash
       hash.send(:extend, HashWithSchoolCacheData)
       hash.keys.each do |key|
@@ -53,8 +53,8 @@ class SchoolCacheResults
       cache_key = result[:name]
       cache_value = begin JSON.parse(result.value) rescue {} end
 
-      @school_data[[state, school_id]] ||= {}
-      @school_data[[state, school_id]][result.name] = cache_value
+      @school_data[[state.upcase, school_id]] ||= {}
+      @school_data[[state.upcase, school_id]][result.name] = cache_value
     end
     @school_data
   end

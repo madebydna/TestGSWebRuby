@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   before_action :data_layer_through_gon
   before_action :set_login_redirect
 
-  layout 'application'
+  layout "deprecated_application"
 
   def show
     @show_ads = PropertyConfig.advertising_enabled?

@@ -17,6 +17,8 @@ gem 'codemirror-rails'
 # Authentication, used for rails-admin
 gem 'devise'
 
+gem 'react-rails', '~> 1.8', '>= 1.8.1'
+
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
 
@@ -101,6 +103,8 @@ gem 'prawn-table', '~> 0.1.2'
 gem 'rest_client', '1.8.1'
 
 gem 'binding_of_caller', '~> 0.7.2'
+
+gem 'jbuilder'
 
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools

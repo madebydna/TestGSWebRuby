@@ -87,11 +87,11 @@ describe ReviewCalculations do
 
     context 'with non overall reviews' do
       example_distribution = [
-        {count: 3, percentage: '30',label: 'Very effective' },
-        {count: 1, percentage: '10',label: 'Effective' },
-        {count: 5, percentage: '50', label: 'Moderately effective' },
-        {count: 0, percentage: '0',label: 'Ineffective' },
-        {count: 1, percentage: '10', label: 'Very ineffective' },
+        {count: 3, percentage: '30',label: 'Highly disagree' },
+        {count: 1, percentage: '10',label: 'Disagree' },
+        {count: 5, percentage: '50', label: 'Neutral' },
+        {count: 0, percentage: '0',label: 'Agree' },
+        {count: 1, percentage: '10', label: 'Highly agree' },
       ]
 
       it 'should have correct values for non overall reviews' do
@@ -100,9 +100,7 @@ describe ReviewCalculations do
             reviews_array << FactoryGirl.build(:teacher_effectiveness_review, answer_value: hash[:label])
           end
         end
-        subject.score_distribution_with_percentage.each_with_index do |hash, index|
-          expect(hash).to eq(example_distribution[index])
-        end
+        expect(example_distribution - subject.score_distribution_with_percentage).to eq([])
       end
 
     end
@@ -114,14 +112,14 @@ describe ReviewCalculations do
         expect(subject.score_distribution).to be_a(Hash)
       end
       it 'should return hash with keys for each value' do
-        expect(subject.score_distribution).to have_key(4)
-        expect(subject.score_distribution).to have_key(3)
-        expect(subject.score_distribution).to have_key(1)
+        expect(subject.score_distribution).to have_key("4")
+        expect(subject.score_distribution).to have_key("3")
+        expect(subject.score_distribution).to have_key("1")
       end
       it 'should return hash with correct count of review for each value' do
-        expect(subject.score_distribution[4]).to eq(1)
-        expect(subject.score_distribution[3]).to eq(2)
-        expect(subject.score_distribution[1]).to eq(1)
+        expect(subject.score_distribution["4"]).to eq(1)
+        expect(subject.score_distribution["3"]).to eq(2)
+        expect(subject.score_distribution["1"]).to eq(1)
       end
     end
 
@@ -189,6 +187,22 @@ describe ReviewCalculations do
         average_of_3_and_4 = 3.5
         expect(subject.average_score).to eq(average_of_3_and_4)
       end
+    end
+  end
+
+  describe '#topical_review_summary' do
+    it 'should return the correct average text response and the total number of responses per topic' do
+      result_hash = {
+          'Teachers' => {:count => 2, :average => 'Neutral'},
+          'Homework' => {:count => 1, :average => 'Strongly disagree'}
+      }
+      topic1review1 = build(:teacher_effectiveness_review, answer_value: 'Neutral')
+      topic2review1 = build(:homework_review, answer_value: 'Strongly disagree')
+      topic1review2 = build(:teacher_effectiveness_review, answer_value: 'Disagree')
+      subject << topic1review1
+      subject << topic1review2
+      subject << topic2review1
+      expect(subject.topical_review_summary).to eq(result_hash)
     end
   end
 

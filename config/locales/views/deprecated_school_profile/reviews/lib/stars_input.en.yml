@@ -1,0 +1,13 @@
+---
+en:
+  deprecated_school_profile:
+    reviews:
+      lib:
+        stars_input:
+          average: Average
+          bad: Bad
+          good: Good
+          great: Great
+          required_vote_error_message: Thanks for sharing your story! Please vote
+            in order to save your comments.
+          terrible: Terrible

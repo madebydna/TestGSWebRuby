@@ -7,4 +7,5 @@
 //= require ./save_search_modal
 //= require ./report_review_modal
 //= require ./review_vote_modal
+//= require ./school_user_modal
 //= require ./modal

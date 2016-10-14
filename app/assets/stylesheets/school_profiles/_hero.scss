@@ -1,0 +1,138 @@
+#hero {
+  $rating-star-filled-color: #ffc800;
+  $rating-star-empty-color: #65859f;
+  $hero-background-color: #08497b;
+  $hero-font-color: white;
+
+  background-color: $hero-background-color;
+  color: $hero-font-color;
+  font-size: $font-size-base;
+
+  a {
+    color: $hero-font-color;
+    font-size: $font-size-base;
+  }
+
+  h1 {
+    padding-top: 30px;
+    font-family: 'RobotoSlab-Bold';
+    font-size: $font-size-l7;
+    font-weight: 900;
+    @media (min-width: 0px) and (max-width: 991px) {
+      text-align: center;
+      font-size: $font-size-l4;
+    }
+  }
+
+  .school-contact, .school-info {
+    display: block;
+  }
+
+  .school-contact {
+    padding-top: 1rem;
+  }
+
+
+  .school-contact__item:first-of-type {
+    padding-left: 0px;
+  }
+  .school-contact__item:last-of-type {
+    padding-right: 0px;
+  }
+
+  .school-info {
+    padding: 15px 0 10px 0;
+  }
+
+  .school-info__item:first-of-type {
+    padding-left: 0px;
+  }
+  .school-info__item:last-of-type {
+    padding-right: 0px;
+  }
+
+  .school-contact__item {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    @media(min-width: 750px) {
+      display: inline-block;
+      padding: 0 10px 0 0;
+      margin: 0 10px 0 0;
+      border-right: 1px solid rgba(255, 255, 255, .17);
+      text-align: left;
+      max-width: none;
+      line-height: 28px;
+    }
+  }
+
+  .school-contact__more {
+    display: none;
+    @media (min-width: 992px) {
+      display: inline-block;
+    }
+  }
+
+  .school-contact__item:last-of-type {
+    border-right: none;
+  }
+
+  .school-contact__address, .school-contact__phone, .school-contact__home-page-url {
+    .badge {
+      display: none;
+      @media(min-width: 750px) {
+        display: inline-block;
+      }
+    }
+  }
+
+  .school-info {
+    margin: auto;
+    width: 290px;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    @media(min-width: 750px) {
+      width: 100%;
+    }
+  }
+
+
+  .school-info__item {
+    display: inline-block;
+    padding: 0 30px;
+    border-left: 1px solid rgba(255, 255, 255, .17);
+    @media only screen and (max-width: 767px) {
+      padding: 0 15px;
+    }
+    font-size: $font-size-l4;
+    font-family: 'opensans-bold';
+    text-align: center;
+  }
+
+  .school-info__item:first-of-type {
+    border-left: none;
+  }
+
+  .school-info__item:nth-last-of-type(-n+3) {
+    @media only screen and (max-width: 991px) {
+      display: none;
+    }
+  }
+
+  .school-info__five-star-rating {
+    @media only screen and (max-width: 767px) {
+      font-size: $font-size-base;
+    }
+  }
+
+  .label {
+    opacity: 0.6;
+    font-size: $font-size-l1;
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+

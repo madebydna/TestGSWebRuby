@@ -1,0 +1,25 @@
+<div id="profile-sticky-container" class="js-profile-sticky">
+  <div id="cta" class="non-fixed-top cta-container">
+    <div class="cta-button">
+      <a href="#Reviews">
+        <div class="icon-pencil"></div>
+        <div>Review</div>
+      </a>
+    </div>
+    <div class="cta-button">
+      <a href="#" onclick="return false;">
+        <div class="icon-heart"></div>
+        <div>Save</div>
+      </a>
+    </div>
+    <div class="cta-button">
+      <a href="#" onclick="return false;">
+        <div class="icon-copy"></div>
+        <div>Compare</div>
+      </a>
+    </div>
+  </div>
+  <div class="clearfloat mbl"></div>
+  <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+             width: 300, height: 250, css_class: 'hidden-xs hidden-sm' %>
+</div>

@@ -157,11 +157,9 @@ describe SchoolProfileReviewsDecorator, type: :view do
     let(:reviews) do
       FactoryGirl.build_list(:teacher_effectiveness_review, 2, question: question1)
     end
-    before do
-    end
-    it 'should do something' do
+    it 'should have the right question text' do
       allow(subject).to receive_message_chain(:first_topic, :first_question).and_return (question1)
-      expect(subject.question_text).to eq("How effective do you feel the teachers are at this school?")
+      expect(subject.question_text).to eq(question1.question)
     end
   end
 end

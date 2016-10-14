@@ -1,4 +1,4 @@
-class SchoolUserController < SchoolProfileController
+class SchoolUserController < DeprecatedSchoolProfileController
 
   def create
     json_message = {}

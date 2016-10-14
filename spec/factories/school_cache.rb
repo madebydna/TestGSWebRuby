@@ -13,6 +13,48 @@ FactoryGirl.define do
     state 'ca'
     value :value
     updated Time.now
+
+    trait :with_gs_rating do
+      ignore do
+        gs_rating_value 5.0
+      end
+      before(:create) do |cached_ratings, evaluator|
+        cached_ratings.value = [
+          {
+            'data_type_id' => 174,
+            'year' => 2014,
+            'school_value_text' => nil,
+            'school_value_float' => evaluator.gs_rating_value,
+            'name' => 'GreatSchools rating'
+          }
+        ].to_json
+      end
+    end
+
+    trait :with_test_score_and_gs_rating do
+      ignore do
+        gs_rating_value 5.0
+        test_score_rating_value 6.0
+      end
+      before(:create) do |cached_ratings, evaluator|
+        cached_ratings.value = [
+          {
+            'data_type_id' => 174,
+            'year' => 2014,
+            'school_value_text' => nil,
+            'school_value_float' => evaluator.gs_rating_value,
+            'name' => 'GreatSchools rating'
+          },
+          {
+            'data_type_id' => 164,
+            'year' => 2014,
+            'school_value_text' => nil,
+            'school_value_float' => evaluator.test_score_rating_value,
+            'name' => 'Test score rating'
+          }
+        ].to_json
+      end
+    end
   end
 
   factory :cached_state_rating_with_e_and_m_levels, class: SchoolCache do
@@ -85,6 +127,196 @@ FactoryGirl.define do
         'name' => 'GreatSchools rating'
       }
     ].to_json)
+    updated Time.now
+  end
+
+  factory :cached_enrollment, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+      'Enrollment' => [
+        "year" => 2012,
+        "source" => "NCES",
+        "school_value" => 1200.0,
+        "district_average" => 3803.0,
+        "created" => "2014-05-02T08:42:51-07:00"
+      ]
+    }.to_json)
+    updated Time.now
+  end
+
+  factory :ca_caaspp_schoolwide_ela_2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "236" => {
+      "All" => {
+        "grades" => {
+          "All" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "English Language Arts" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 42.42,
+                      "state_average" => 44.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Assessment of Student Performance and Progress (CAASPP)",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
+  factory :ca_caaspp_schoolwide_ela_2014and2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "236" => {
+      "All" => {
+        "grades" => {
+          "All" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "English Language Arts" => {
+                  "2014" => {
+                      "number_students_tested" => 114, 
+                      "score" => 14.3,
+                      "state_average" => 28.6
+                  },
+                  "2015" => {
+                      "number_students_tested" => 115,
+                      "score" => 15.3,
+                      "state_average" => 30.6
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Assessment of Student Performance and Progress (CAASPP)",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
+  factory :ca_caaspp_schoolwide_4subjects_2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "236" => {
+      "All" => {
+        "grades" => {
+          "All" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "English Language Arts" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 1,
+                      "state_average" => 10
+                  }
+                },
+                "Math" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 2,
+                      "state_average" => 20
+                  }
+                },
+                "Science" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 3,
+                      "state_average" => 30
+                  }
+                },
+                "Reading" => {
+                  "2015" => {
+                      "number_students_tested" => 500,
+                      "score" => 4,
+                      "state_average" => 40
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Assessment of Student Performance and Progress (CAASPP)",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
+  factory :graduation_rate, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value (
+    {
+      "4-year high school graduation rate" => [
+        {
+          "breakdown" => "All students",
+          "school_value" => 80.6,
+          "state_average" => 42
+        }
+      ]
+    }.to_json)
+    updated Time.now
+  end
+
+  factory :custom_characteristics_all_students_cache, class: SchoolCache do
+    ignore do
+      data_type 'data type'
+      school_value 0.0
+      state_average 0.0
+    end
+    before(:create) do |data, evaluator|
+      data.value = (
+      {
+        evaluator.data_type => [
+          {
+            "breakdown" => "All students",
+            "school_value" => evaluator.school_value,
+            "state_average" => evaluator.state_average
+          }
+        ]
+      }.to_json)
+    end
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+  end
+
+  factory :cached_reviews_info, class: SchoolCache do
+    name 'reviews_snapshot'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+      'num_reviews' => 348381,
+      'num_ratings' => 109991,
+      'avg_star_rating' => 4
+    }.to_json)
     updated Time.now
   end
 

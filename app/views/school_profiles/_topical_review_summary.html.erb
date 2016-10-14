@@ -1,0 +1,26 @@
+<% reviews %>
+<% title = t('.title') %>
+<% topical_review_summary = reviews.summary.topical_review_summary %>
+
+<% if topical_review_summary.present? %>
+  <a name="Topical_Review_Summary"></a>
+  <div class="topical-review">
+    <div class="topical-review-summary">
+      <div class="row">
+        <div class="col-xs-12 col-lg-3">
+          <div class="topical-title">
+            <%= title %>
+          </div>
+        </div>
+        <div class="col-xs-12 col-lg-9">
+          <% topical_review_summary.keys.sort.each do |topic| %>
+            <div class="topical_item">
+              <span class="answer-icon topic-icon <%= topical_review_summary[topic][:average].downcase.gsub(' ', '-') %>"></span>
+              <span class="topic-details"><%= topic %>&nbsp;(<%= topical_review_summary[topic][:count] %>)</span>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

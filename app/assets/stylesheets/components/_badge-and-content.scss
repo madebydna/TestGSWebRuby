@@ -1,0 +1,9 @@
+.badge-and-content {
+  .badge {
+    @include icon-badge(24px, #002c47);
+  }
+  .content {
+    margin-left: 5px;
+    overflow: hidden;
+  }
+}

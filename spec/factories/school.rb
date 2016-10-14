@@ -26,6 +26,16 @@ FactoryGirl.define do
         notes 'GREATSCHOOLS_DEMO_SCHOOL_PROFILE'
       end
 
+      factory :school_with_new_profile do
+        name 'A demo school'
+        city 'Alameda'
+        state 'CA'
+        level_code 'h'
+        type 'public'
+        active false
+        new_profile_school 5
+      end
+
       factory :alameda_high_school do
         name 'Alameda High School'
         city 'Alameda'

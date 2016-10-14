@@ -1,0 +1,74 @@
+<div itemscope="" itemtype="http://schema.org/LocalBusiness">
+  <%= render 'qualaroo' %>
+<div class="mbl">
+  <%= render 'deprecated_school_profile/dark_header', school: @school, page_name: :reviews %>
+</div>
+<div class="row limit-width-1200">
+    <% if @school_reviews.blank? %>
+      <div class="col-xs-12 mtl"  style="z-index: 1;">
+        <% if @show_ads %>
+          <div class="pvl">
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+            <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
+          </div>
+        <% end %>
+        <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
+        <%= render 'deprecated_school_profile/reviews/review_no_ratings' %>
+        <%= render 'deprecated_school_profile/reviews/topical_review_section' %>
+        <%= render 'deprecated_school_profile/reviews/total_reviews_count' %>
+      </div>
+    <% else %>
+        <div class="col-xs-12 ptl"  style="z-index: 1;">
+            <% if @show_ads %>
+              <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :desktop  %>
+              <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Content_Top'.to_sym, view: :mobile  %>
+            <% end %>
+          <%= render 'principal_review', review: @school_reviews.principal_review if @school_reviews.has_principal_review? %>
+          <%= render 'deprecated_school_profile/reviews/topical_review_section' %>
+          <%= render 'deprecated_school_profile/reviews/total_reviews_count' %>
+
+          <% if @show_ads %>
+              <div class="row">
+                <div class="col-xs-12">
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :desktop  %>
+                  <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'Text'.to_sym, view: :mobile  %>
+                </div>
+              </div>
+            <% end %>
+
+            <%= render 'review_list_header', reviews: @school_reviews %>
+
+            <div class="js_reviewsList">
+                <%= render partial: 'deprecated_school_profile/reviews/review_module',
+                           collection: @school_reviews.having_comments.take(10), as: :review, locals: { include_rich_snippets: true } %>
+            </div>
+
+          <%= button_tag(
+                t('.read_more'),
+                class: "mtm col-xs-12 btn btn-default js_reviewsGetNextTen #{'dn' unless @school_reviews.number_of_reviews_with_comments > 10}",
+                style: 'z-index: 1;',
+                data: {
+                   'total-count' => @school_reviews.number_of_reviews_with_comments,
+                   'all-count' => @school_reviews.number_of_reviews_with_comments,
+                   'parent-count' => @school_reviews.parent_reviews.having_comments.count,
+                   'student-count' => @school_reviews.student_reviews.having_comments.count,
+                   'offset' => @reviews_page_size,
+                   'limit' => @reviews_page_size
+                }) %>
+
+
+        </div>
+    <% end %>
+</div>
+
+<div class="gs-bootstrap">
+  <div class="limit-width-1200">
+    <%= render partial: 'category_placement', collection: @page_config.root_placements_with_data, as: :category_placement %>
+    <%= render 'deprecated_school_profile/data_layouts/sticky_nearby_schools' %>
+  </div>
+</div>
+<%= render 'deprecated_school_profile/data_layouts/nearby_schools' %>
+
+<%= render 'deprecated_school_profile/rich_snippets/rich_snippets_average_review_rating', school_reviews: @school_reviews %>
+<%= render 'deprecated_school_profile/rich_snippets/rich_snippets_profile_page', last_modified_date: @last_modified_date %>
+</div>

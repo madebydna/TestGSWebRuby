@@ -1,9 +1,0 @@
----
-es:
-  school_profile:
-    reviews:
-      modules:
-        output:
-          submitted_review_module:
-            manage_review: Administrar opinión
-            pending_activation: En espera de activación

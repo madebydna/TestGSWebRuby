@@ -1,0 +1,111 @@
+.join-and-login {
+  text-align: center;
+  div.well {
+    background-color: #fff;
+  }
+  li {
+    text-align: left;
+  }
+
+  .parsley-errors-list {
+    margin: 0;
+    padding: 0px;
+  }
+
+  button {
+    height: 55px;
+    background-color: #2ba3dc;
+    border: 1px solid white;
+    border-radius: 4px;
+    color: #ffffff;
+    width: 100%;
+    @include media-breakpoint-up(sm) {
+      height: 60px;
+    }
+  }
+
+  .btn-facebook {
+    font-size: $font-size-l3;
+    background-color: #4b6ea8;
+    .icon-facebook {
+      margin-right: 10px;
+    }
+  }
+
+  button.submit {
+    text-transform: uppercase;
+    font-size: $font-size-l1;
+    margin-top: 15px;
+  }
+
+  input {
+    margin-top: 10px;
+    height: 55px;
+    background-color: #edf3f5;
+    border: 1px solid #dbe6eb;
+    webkit-box-shadow: none;
+    box-shadow: none;
+    display: block;
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 3px;
+    @include media-breakpoint-up(sm) {
+      height: 60px;
+    }
+  }
+
+  input.checkbox {
+    height: 16px;
+    width: 16px;
+    margin: 2px 7px 0 0;
+  }
+
+  .checkbox-and-label {
+    @extend .clearfix;
+    margin-top: 20px;
+    font-size: $font-size-base;
+    a {
+      font-size: $font-size-base;
+    }
+    input, label {
+      float: left;
+    }
+    span {
+      float: right;
+      @include media-breakpoint-only(xs) {
+        width: 100%;
+      }
+    }
+  }
+
+  .divider {
+    margin: 20px 0 20px 0;
+    text-align: center;
+  }
+
+  .line {
+    line-height: 0.5;
+    text-align: center;
+  }
+  .line span {
+    display: inline-block;
+    position: relative;  
+  }
+  .line span:before,
+  .line span:after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    border-bottom: 1px solid #dbe6eb;
+    top: 0;
+    width: 100px;
+  }
+  .line span:before {
+    right: 100%;
+    margin-right: 15px;
+  }
+  .line span:after {
+    left: 100%;
+    margin-left: 15px;
+  }
+}

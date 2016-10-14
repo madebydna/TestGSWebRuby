@@ -23,6 +23,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
 
+  
+
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
   # Routes for search pages
@@ -125,7 +127,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
     get '/gk/terms/', as: :terms_of_use
-    get '/about/guidelines.page', as: :school_review_guidelines
+    get '/gk/review-guidelines', as: :school_review_guidelines
     get '/gk/privacy/', as: :privacy
     get '/about/gsFaq.page', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
@@ -225,6 +227,11 @@ LocalizedProfiles::Application.routes.draw do
     get '/status/error404.page'
   end
 
+  namespace :api, controller: 'api', path:'/gsr/api' do
+    resource :session
+    resource :school_user_digest
+  end
+
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     get '/omniture-test', to: :omniture_test, as: :omniture_test
     get '/info', to: :info
@@ -280,6 +287,7 @@ LocalizedProfiles::Application.routes.draw do
   end
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
+  post '/gsr/reviews/', to: 'reviews#create', as: :create_reviews
   post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
   post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
   get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
@@ -300,7 +308,9 @@ LocalizedProfiles::Application.routes.draw do
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
 
   get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
+  get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
+
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
@@ -381,15 +391,18 @@ LocalizedProfiles::Application.routes.draw do
     # Routes for school profile pages
     # This needs to go before the city routes because we want to capture the
     # ID-school_name pattern first and be looser about district names
-    scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
+    scope '/:state/:city/:schoolId-:school_name/', as: :school, constraints: {
         format: false,
         state: States.any_state_name_regex,
         schoolId: /\d+/,
-        school_name: /.+/,
+        school_name: /[^\/]+/,
         # This city regex allows for all characters except /
         # http://guides.rubyonrails.org/routing.html#specifying-constraints
         city: /[^\/]+/,
-    } do
+      } do
+      get "(:path)", to: "school_profiles#show", constraints: Constraint::NewSchoolProfile.new
+
+#     Old Profile Routes
       get 'quality', to: 'school_profile_quality#quality', as: :quality
       get 'details', to: 'school_profile_details#details', as: :details
       # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
@@ -397,8 +410,9 @@ LocalizedProfiles::Application.routes.draw do
       resources :reviews, only: [:create], controller: 'school_profile_reviews'
       # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
       resource :user, only: [:create], controller: 'school_user', action: 'create'
-      get '', to: 'school_profile_overview#overview'
+      get "", to: 'school_profile_overview#overview'
     end
+
 
     # Routes for city page
     scope '/:state/:city', as: :city, constraints: {

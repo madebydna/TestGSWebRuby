@@ -1,0 +1,11 @@
+---
+es:
+  deprecated_school_profile:
+    data_layouts:
+      test_scores:
+        about_the_test: Sobre el examen
+        advanced: Avanzado
+        proficient: Competente
+        proficient_or_better: Competente o mejor
+        showing_results_for_html: Mostrando resultados de todos los estudiantes de <span class="open-sans_sb js_button-filter-title-%{test}"></span>
+        source: Fuente

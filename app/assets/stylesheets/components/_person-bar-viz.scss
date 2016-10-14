@@ -1,0 +1,29 @@
+.person-bar-viz {
+  .arrow-down {
+    position: relative;
+    left: -7px;
+    > span {
+      position: absolute;
+      top: -10px;
+      width: 0;
+      height: 0;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 9px solid #b2b2b2;
+    }
+  }
+  width: 250px;
+  height: 38px;
+  background-color: #dbe6eb;
+
+  .filled {
+    height: 100%;
+  }
+  .background {
+    width: 250px;
+    height: 38px;
+    background-repeat: repeat-x;
+    background-image: image-url('transparent_person.png');
+  }
+}
+
