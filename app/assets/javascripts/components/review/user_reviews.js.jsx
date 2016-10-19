@@ -14,7 +14,8 @@ class UserReviews extends React.Component {
       empty.push(<span className="icon-star empty-star" key={i}></span>);
     }
     return(
-      <span className="five-stars">
+      <span className="five-stars"
+            itemProp="ratingValue" content={numberFilled}>
         { filled }
         { empty }
       </span>
@@ -37,14 +38,17 @@ class UserReviews extends React.Component {
     var review = this.props.five_star_review;
     if(review !== undefined) {
       return(
-        <div className="five-star-review" key={review.id}>
+        <div className="five-star-review" key={review.id}
+             itemProp="review" itemScope itemType="http://schema.org/Review">
+          <meta itemProp="datePublished" content={review.date_published}/>
           <div className="header">
             { review.topic_label }
           </div>
-          <div className="answer">
+          <div className="answer"
+               itemProp="reviewRating" itemScope itemType="http://schema.org/Rating">
             { this.fiveStars(review.answer) }
           </div>
-          <div className="comment">
+          <div className="comment" itemProp="reviewBody">
             <ShortenText text={review.comment} length={200} key={review.text} />
           </div>
         </div>

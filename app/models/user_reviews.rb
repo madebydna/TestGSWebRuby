@@ -61,6 +61,8 @@ class UserReviews
       topic_label: review.topic_label,
       answer: review.answer.to_s.try(:downcase),
       answer_label: review.answer_label,
+      answer_value: review.numeric_answer_value,
+      date_published: review.created,
       id: review.id,
       links: {
         flag: flag_review_path(review.id)
