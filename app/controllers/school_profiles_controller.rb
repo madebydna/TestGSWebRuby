@@ -8,6 +8,7 @@ class SchoolProfilesController < ApplicationController
   def show
     @school = school
     set_seo_meta_tags
+    set_hreflang
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
     @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
@@ -173,6 +174,13 @@ class SchoolProfilesController < ApplicationController
       return_keywords_str << ', ' + name + ' overview'
     end
     return_keywords_str
+  end
+
+  def set_hreflang
+    @hreflang = {}
+    @hreflang[:en] = remove_query_params_from_url(school_url(@school), [:lang])
+    @hreflang[:es] = add_query_params_to_url(school_url(@school), true, {lang: :es})
+    @hreflang
   end
 
   def redirect_to_canonical_url
