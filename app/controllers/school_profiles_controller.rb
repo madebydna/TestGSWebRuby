@@ -34,6 +34,7 @@ class SchoolProfilesController < ApplicationController
         sp.reviews = reviews
         sp.review_questions = review_questions
         sp.ethnicity = ethnicity
+        sp.last_modified_date = last_modified_date
       end
     )
   end
@@ -83,7 +84,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def reviews
-    SchoolProfiles::Reviews.new(school)
+    @_reviews ||= SchoolProfiles::Reviews.new(school)
   end
 
   def review_questions
@@ -197,5 +198,12 @@ class SchoolProfilesController < ApplicationController
                       request.query_parameters
                   ), status: :moved_permanently
     end
+  end
+
+  def last_modified_date
+    reviews_list = reviews.reviews
+    review_date = reviews_list.present? ? reviews_list.first.created : nil
+    school_date = school.modified.present? ? school.modified.to_date : nil
+    [review_date, school_date].compact.max
   end
 end

@@ -45,4 +45,10 @@
         'closest_top_then_top_nearby_schools'
       ) %>
   </div>
+
+  <% if @school_profile.last_modified_date.present? %>
+    <div class="pll ptl" style="color:#999999">
+      <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
+    </div>
+  <% end %>
 </div>
