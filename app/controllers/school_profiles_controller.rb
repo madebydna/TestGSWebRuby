@@ -7,6 +7,7 @@ class SchoolProfilesController < ApplicationController
 
   def show
     @school = school
+    @canonical_url = school_url(@school)
     set_seo_meta_tags
     set_hreflang
     @breadcrumbs = breadcrumbs
