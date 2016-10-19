@@ -1,6 +1,7 @@
 class SchoolProfilesController < ApplicationController
   protect_from_forgery
   before_filter :require_school
+  before_action :redirect_to_canonical_url
 
   layout "application"
 
@@ -172,5 +173,20 @@ class SchoolProfilesController < ApplicationController
       return_keywords_str << ', ' + name + ' overview'
     end
     return_keywords_str
+  end
+
+  def redirect_to_canonical_url
+    # this prevents an endless redirect loop for the profile pages
+    # because of ApplicationController::url_options
+    canonical_path = remove_query_params_from_url( school_path(school), [:lang] )
+
+    # Add a trailing slash to the request path, only if one doesn't already exist.
+    unless canonical_path == with_trailing_slash(request.path)
+      redirect_to add_query_params_to_url(
+                      canonical_path,
+                      true,
+                      request.query_parameters
+                  ), status: :moved_permanently
+    end
   end
 end
