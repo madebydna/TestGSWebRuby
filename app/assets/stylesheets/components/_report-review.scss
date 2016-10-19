@@ -8,6 +8,7 @@
   $color-gs-blue-hover: #55b5e3;
   $color-gs-blue-active: #2282b0;
   $color-error: #d94373;
+  $color-notice: #36C767;
 
   margin-top: $spacing-large;
   padding-bottom: $spacing-small;
@@ -19,6 +20,10 @@
 
   p.error {
     color: $color-error;
+  }
+
+  p.notice {
+    color: $color-notice;
   }
 
   .header {

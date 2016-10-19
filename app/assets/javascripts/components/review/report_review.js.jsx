@@ -1,7 +1,7 @@
 class ReportReview extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', error: null, disabled: false};
+    this.state = {value: '', error: null, notice: null, disabled: false};
     this.postReviewReport = this.postReviewReport.bind(this);
     this.handleCancelClick = this.handleCancelClick.bind(this);
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
@@ -20,8 +20,15 @@ class ReportReview extends React.Component {
   }
 
   handleFailedSubmit(data) {
-    if (data && data.responseJSON && data.responseJSON.flash && data.responseJSON.flash.error) {
-      this.setState({error: data.responseJSON.flash.error});
+    if (data && data.responseJSON && data.responseJSON.flash) {
+      let flash_response = data.responseJSON.flash;
+      if (flash_response.error) {
+        this.setState({error: data.responseJSON.flash.error});
+      } else if (flash_response.notice) {
+        this.setState({notice: data.responseJSON.flash.notice});
+      } else {
+        this.setState({error: "Something went wrong. Please try again later or contact us directly."})
+      }
     } else {
       this.setState({error: "Something went wrong. Please try again later or contact us directly."})
     }
@@ -53,7 +60,7 @@ class ReportReview extends React.Component {
     }
 
     if (this.state.value) {
-      this.setState({error: null});
+      this.setState({error: null, notice: null});
 
       if (GS.session.isSignedIn()) {
         this.postReviewReport();
@@ -79,6 +86,12 @@ class ReportReview extends React.Component {
     }
   }
 
+  renderNotice() {
+    if (this.state.notice) {
+      return (<p className="notice">{this.state.notice}</p>);
+    }
+  }
+
   static overlayWithSpinny(element) {
     return (
         <div className="spinny-wheel-container">
@@ -101,6 +114,7 @@ class ReportReview extends React.Component {
                 our <a href={termsLink} target="_blank">terms of use
                 </a> or <a href={guidelinesLink} target="_blank">school review guidelines</a>
               </p>
+              { this.renderNotice() }
               { this.renderError() }
               <textarea value={this.state.value} onChange={this.handleChange}/>
               <div className="form-buttons">
