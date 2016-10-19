@@ -1,4 +1,4 @@
-<div class="school-profile">
+<div class="school-profile" itemscope itemtype="http://schema.org/LocalBusiness">
   <%= render 'breadcrumbs', breadcrumbs: @breadcrumbs %>
   <%= render 'hero', hero: @school_profile.hero %>
   <!-- main content -->
@@ -47,8 +47,10 @@
   </div>
 
   <% if @school_profile.last_modified_date.present? %>
-    <div class="pll ptl" style="color:#999999">
-      <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
+    <div class="pll ptl" style="color:#999999" itemscope itemtype="http://www.schema.org/ProfilePage">
+      <span itemprop="dateModified" content="<%= l(@school_profile.last_modified_date, format: '%Y-%m-%d')%>">
+        <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
+      </span>
     </div>
   <% end %>
 </div>

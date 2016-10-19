@@ -32,6 +32,10 @@ module SchoolProfiles
       decorated_school.num_reviews
     end
 
+    def num_ratings
+      decorated_school.num_ratings
+    end
+
     def test_scores_rating
       decorated_school.test_scores_rating
     end

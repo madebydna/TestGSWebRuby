@@ -1,12 +1,17 @@
 <% number_of_reviews %>
+<% number_of_ratings %>
 <% rating %>
 
-<div class="five-star-rating">
-  <span class="five-star-rating__number">
+<div class="five-star-rating"
+     itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+  <span class="five-star-rating__number"
+        itemprop="reviewCount" content="<%= number_of_reviews %>">
     <%= number_of_reviews > 0 ? number_of_reviews : 'n/a' %>
   </span>
+  <meta itemprop="ratingCount" content="<%= number_of_ratings %>"/>
   <% if number_of_reviews > 0 %>
-    <span class="rs-five-star-rating five-star-rating__stars">
+    <span class="rs-five-star-rating five-star-rating__stars"
+          itemprop="ratingValue" content="<%= rating %>">
       <%= render 'five_stars', filled: rating %>
     </span>
   <% end %>

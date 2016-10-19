@@ -6,7 +6,7 @@ module SchoolProfiles
 
     attr_reader :school, :school_cache_data_reader
 
-    delegate :gs_rating, :students_enrolled, :five_star_rating, :number_of_active_reviews, to: :school_cache_data_reader
+    delegate :gs_rating, :students_enrolled, :five_star_rating, :number_of_active_reviews, :num_ratings, to: :school_cache_data_reader
     delegate :name, :address, :type, :phone, :home_page_url, to: :school, prefix: :school
     delegate :district, to: :school
 
@@ -17,6 +17,14 @@ module SchoolProfiles
     def initialize(school, school_cache_data_reader:)
       self.school = school
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def marked_up_address
+      "<span itemprop=\"address\" itemscope=\"\" itemtype=\"http://schema.org/PostalAddress\">" \
+        "<span itemprop=\"streetAddress\">#{@school.street}</span> " \
+        "<span itemprop=\"addressLocality\">#{@school.city}</span>, " \
+        "<span itemprop=\"addressRegion\">#{@school.state}</span> " \
+        "<span itemprop=\"postalCode\">#{@school.zipcode}</span></span>".html_safe
     end
 
     def school=(school)
