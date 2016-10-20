@@ -4,6 +4,15 @@ $(function() {
   GS.handlebars.registerHelpers();
   GS.graphs.ethnicityPieChart.generateEthnicityChart();
 
+  $('.js-nearby-toggle').find('button').on('click', function() {
+    var $this = $(this);
+    $this.addClass('active');
+    $this.siblings().removeClass('active');
+
+    var $contentPane = $('.js-nearby-content');
+    $contentPane.children().addClass('dn').filter('[data-target="' + $this.data('target') + '"]').removeClass('dn');
+  });
+
   // When search bar added to universal nav, was required to init autocomplete on all pages
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
   // if state abbreviation is NOT set will init autocomplete without state.
