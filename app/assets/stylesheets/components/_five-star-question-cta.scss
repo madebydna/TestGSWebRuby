@@ -4,9 +4,9 @@ $label-gray: #2e3438;
 
 .five-star-question-cta {
   background-color: #fff;
-  padding: 20px 0px;
   @include media-breakpoint-up('sm') {
     border: 1px solid $star-gray;
+    padding: 20px 0px;
   }
 }
 
