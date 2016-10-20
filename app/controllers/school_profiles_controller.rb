@@ -34,6 +34,7 @@ class SchoolProfilesController < ApplicationController
         sp.reviews = reviews
         sp.review_questions = review_questions
         sp.ethnicity = ethnicity
+        sp.nearby_schools = nearby_schools
         sp.last_modified_date = last_modified_date
       end
     )
@@ -89,6 +90,10 @@ class SchoolProfilesController < ApplicationController
 
   def review_questions
     SchoolProfiles::ReviewQuestions.new(school)
+  end
+
+  def nearby_schools
+    SchoolProfiles::NearbySchools.new(school_cache_data_reader: school_cache_data_reader)
   end
 
   def breadcrumbs

@@ -14,6 +14,7 @@ describe SchoolProfiles::SchoolCacheDataReader do
     end
     subject { new_reader(school) }
     it { is_expected.to respond_to(:gs_rating) }
+    it { is_expected.to respond_to(:nearby_schools) }
 
     describe '#school_cache_query' do
       before do
