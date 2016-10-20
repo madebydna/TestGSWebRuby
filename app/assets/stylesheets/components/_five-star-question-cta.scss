@@ -4,10 +4,9 @@ $label-gray: #2e3438;
 
 .five-star-question-cta {
   background-color: #fff;
-  padding: 20px 20px;
-  border: 1px solid $star-gray;
+  padding: 20px 0px;
   @include media-breakpoint-up('sm') {
-    padding: 20px 0px;
+    border: 1px solid $star-gray;
   }
 }
 
@@ -25,7 +24,7 @@ $label-gray: #2e3438;
 
 .five-star-question-cta__container {
   text-align: center;
-  padding: 0 10px;
+  padding: 0 0px;
   @include media-breakpoint-up('sm') {
     padding: 0 20px;
     text-align: left;
