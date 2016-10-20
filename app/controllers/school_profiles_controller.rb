@@ -36,6 +36,7 @@ class SchoolProfilesController < ApplicationController
         sp.ethnicity = ethnicity
         sp.nearby_schools = nearby_schools
         sp.last_modified_date = last_modified_date
+        sp.equity = equity
       end
     )
   end
@@ -80,7 +81,13 @@ class SchoolProfilesController < ApplicationController
 
   def ethnicity
     SchoolProfiles::EthnicityData.new(
-        school_cache_data_reader: school_cache_data_reader
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def equity
+    SchoolProfiles::Equity.new(
+      school_cache_data_reader: school_cache_data_reader
     )
   end
 
