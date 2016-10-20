@@ -167,6 +167,62 @@ describe ReviewsForm do
     end
   end
 
+  describe "existing_reviews" do
+
+
+  end
+
+  describe "existing_reviews_with_comments_not_updated" do
+    context "with user having existing reviews for school" do
+      it "it should return only existing reviews not being updated by form" do
+        school = create(:alameda_high_school, id: 1)
+        verified_user = create(:verified_user)
+        existing_review = create(:homework_review, user: verified_user, school_id: school.id)
+        saved_review = build(:teacher_effectiveness_review, user: verified_user, school_id: school.id)
+        reviews_form = build_reviews_form(user: verified_user)
+        valid_reviews = [saved_review]
+        allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
+
+        expect(reviews_form.existing_reviews_with_comments_not_updated).to eq([existing_review])
+      end
+    end
+    context "with no existing reviews" do
+      it "should return empty array" do
+        school = create(:alameda_high_school, id: 1)
+        verified_user = create(:verified_user)
+        saved_review = build(:teacher_effectiveness_review, user: verified_user, school_id: school.id)
+        reviews_form = build_reviews_form(user: verified_user)
+        valid_reviews = [saved_review]
+        allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
+
+        expect(reviews_form.existing_reviews_with_comments_not_updated).to eq([])
+      end
+    end
+  end
+
+  describe "all_active_reviews_with_comments" do
+    context "with no existing reviews for school" do
+      context "with form saving one review w/ comment and one w/out comment" do
+        it "should return array only with review w/ comment" do
+          reviews_form = build_reviews_form
+          review_no_comment = build(:review, comment: nil)
+          review_with_comment = build(:review)
+          saved_reviews = [
+            review_no_comment,
+            review_with_comment
+          ]
+          allow(reviews_form).to receive(:saved_reviews)
+            .and_return(saved_reviews)
+          allow(reviews_form).
+            to receive(:existing_reviews_with_comments_not_updated).and_return([])
+
+          expect(reviews_form.all_active_reviews_with_comments)
+            .to eq([review_with_comment])
+        end
+      end
+    end
+  end
+
   describe "#user_reviews" do
     it "should return user reviews struct" do
       school = create(:alameda_high_school, id: 1)
