@@ -36,44 +36,11 @@
     margin-bottom: $spacing-small;
   }
 
-  .form-buttons {
+  .form-actions {
+    @include review-form-buttons;
     padding: $spacing-medium 0;
     text-align: right;
   }
-
-  .button {
-    border-radius: 2px;
-    border: solid 1px $color-button-border;
-    padding: $spacing-medium $spacing-large;
-    color: $color-dark-gray-text;
-    cursor: pointer;
-    font-size: $font-size-base;
-
-    &:hover {
-      border: solid 1px $color-button-hover-border;
-    }
-
-    &:active {
-      border: solid 1px $color-button-active-border;
-    }
-  }
-
-  .button.cta {
-    border: solid 1px $color-gs-blue;
-    background-color: $color-gs-blue;
-    color: #fff;
-
-    &:hover {
-      border: solid 1px $color-gs-blue-hover;
-      background-color: $color-gs-blue-hover;
-    }
-
-    &:active {
-      border: solid 1px $color-gs-blue-active;
-      background-color: $color-gs-blue-active;
-    }
-  }
-
 }
 
 .spinny-wheel-container > .report-review {
