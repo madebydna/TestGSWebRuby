@@ -103,7 +103,7 @@ class ReportReview extends React.Component {
               </p>
               { this.renderError() }
               <textarea value={this.state.value} onChange={this.handleChange}/>
-              <div className="form-buttons">
+              <div className="form-actions">
                 <span className="button" onClick={this.handleCancelClick}>Cancel</span>
                 <span className="button cta" onClick={this.handleSubmitClick}>Submit</span>
               </div>

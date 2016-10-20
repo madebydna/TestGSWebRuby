@@ -205,8 +205,8 @@ class ReviewForm extends React.Component {
     return(
       <div className="form-actions clearfix">
         <a href={guidelinesLink} target="_blank">Review Guidelines</a>
-        <button className="submit" onClick={this.submitForm}>Submit</button>
-        <button className="cancel" onClick={this.cancelForm}>Cancel</button>
+        <button className="button" onClick={this.cancelForm}>Cancel</button>
+        <button className="button cta" onClick={this.submitForm}>Submit</button>
       </div>
     );
   }
