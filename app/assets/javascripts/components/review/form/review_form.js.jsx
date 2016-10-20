@@ -172,6 +172,15 @@ class ReviewForm extends React.Component {
     }
   }
 
+  scrollToTopOfReviews() {
+    var offsetTop = 90;
+    var reviewListOffset = $('.review-list').offset().top;
+    var offset = reviewListOffset - offsetTop;
+    $('html, body').animate({
+      scrollTop: offset
+    }, 1000);
+  }
+
   handleSuccessfulSubmit(xhr) {
     let reviews = xhr.reviews;
     let reviewSaveMessage = xhr.message;
@@ -183,6 +192,7 @@ class ReviewForm extends React.Component {
       this.props.handleReviewSubmitMessage(reviewSaveMessage);
       this.props.handleUpdateOfReviews(userReviews);
       this.hideQuestions();
+      this.scrollToTopOfReviews();
     }
   }
 
