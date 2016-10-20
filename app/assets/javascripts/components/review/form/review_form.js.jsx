@@ -12,14 +12,24 @@ class ReviewForm extends React.Component {
     this.noSchoolUserExists = this.noSchoolUserExists.bind(this);
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
     this.handleFailSubmit = this.handleFailSubmit.bind(this);
+    this.promptUserWhenNavigatingAway = this.promptUserWhenNavigatingAway.bind(this);
+    window.onbeforeunload = this.promptUserWhenNavigatingAway; 
 
     this.state = {
       displayCTA: true,
       displayAllQuestion: false,
       selectedResponses: {},
       errorMessages: {},
-      selectedFiveStarResponse: null
+      selectedFiveStarResponse: null,
+      unsavedChanges: false,
     };
+  }
+
+  promptUserWhenNavigatingAway(e) {
+    if (this.state.unsavedChanges) {
+      e.returnValue = 'Your review has not been saved.';
+      return e.returnValue;
+    }
   }
 
   renderFiveStarQuestionCTA() {
@@ -57,8 +67,8 @@ class ReviewForm extends React.Component {
   }
 
   cloneSelectedResponses() {
-  let selectedResponses = JSON.parse(JSON.stringify(this.state.selectedResponses));
-  return selectedResponses;
+    let selectedResponses = JSON.parse(JSON.stringify(this.state.selectedResponses));
+    return selectedResponses;
   }
 
   responseSelected(value, id) {
@@ -71,7 +81,8 @@ class ReviewForm extends React.Component {
     }
     this.setState(
       {
-        selectedResponses: selectedResponses
+        selectedResponses: selectedResponses,
+        unsavedChanges: true
       }
     );
   }
@@ -86,12 +97,16 @@ class ReviewForm extends React.Component {
     }
     this.setState(
       {
-        selectedResponses: selectedResponses
+        selectedResponses: selectedResponses,
+        unsavedChanges: true
       }
     );
   }
 
   cancelForm() {
+    this.setState({
+      unsavedChanges: false
+    });
     this.hideQuestions();
   }
 
@@ -194,6 +209,9 @@ class ReviewForm extends React.Component {
       this.hideQuestions();
       this.scrollToTopOfReviews();
     }
+    this.setState({
+      unsavedChanges: false
+    });
   }
 
   updateReviewFormErrors(reviewsErrors) {
