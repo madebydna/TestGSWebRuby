@@ -40,8 +40,7 @@
   </div>
 
   <div>
-    <%= render 'nearby_schools',
-      nearby_schools: @school_profile.nearby_schools.closest_top_then_top_nearby_schools %>
+    <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
   </div>
 
   <% if @school_profile.last_modified_date.present? %>

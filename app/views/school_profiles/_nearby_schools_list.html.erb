@@ -1,0 +1,38 @@
+<% school_list %>
+<% name %>
+
+<div data-target="<%= name %>">
+  <% school_list.take(3).each do |nearby_school| %>
+      <% nearby_school = OpenStruct.new(nearby_school) %>
+      <div class="nearby-school">
+        <% if (1..10).map(&:to_s).include?(nearby_school.gs_rating) || nearby_school.five_star_rating %>
+        <div class="rating">
+          <div class="circle-rating circle-rating--<%= nearby_school.gs_rating %> circle-rating--small">
+            <%= nearby_school.gs_rating %>
+          </div>
+          <% if nearby_school.five_star_rating %>
+              <%= render 'five_stars', filled: nearby_school.five_star_rating %>
+          <% end %>
+        </div>
+        <% end %>
+        <div>
+          <%= link_to(
+                  nearby_school.name,
+                  school_path(
+                      nil,
+                      state_name: States.state_name(nearby_school.state),
+                      city: nearby_school.city,
+                      name: nearby_school.name,
+                      id: nearby_school.id
+                  )
+              ) %>
+          <div class="school-info">
+            <span><%= nearby_school.type %></span>
+            <span><%= nearby_school.level %></span>
+            <span><%= "#{nearby_school.city}, #{nearby_school.state}" %></span>
+          </div>
+          <div><%= (nearby_school.distance.try(:round,2).to_s + ' miles') if nearby_school.distance %></div>
+        </div>
+      </div>
+  <% end %>
+</div>
