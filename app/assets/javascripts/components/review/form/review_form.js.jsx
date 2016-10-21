@@ -22,6 +22,7 @@ class ReviewForm extends React.Component {
       errorMessages: {},
       selectedFiveStarResponse: null,
       unsavedChanges: false,
+      disabled: false
     };
   }
 
@@ -136,6 +137,7 @@ class ReviewForm extends React.Component {
   }
 
   submitForm() {
+    this.setState({disabled: true});
     if (GS.session.isSignedIn()) {
       GS.session.getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
     } else {
@@ -185,6 +187,7 @@ class ReviewForm extends React.Component {
     if (reviewsErrors) {
       this.updateReviewFormErrors(reviewsErrors);
     }
+    this.setState({disabled: false});
   }
 
   scrollToTopOfReviews() {
@@ -206,6 +209,7 @@ class ReviewForm extends React.Component {
     } else {
       this.props.handleReviewSubmitMessage(reviewSaveMessage);
       this.props.handleUpdateOfReviews(userReviews);
+      this.setState({disabled: false});
       this.hideQuestions();
       this.scrollToTopOfReviews();
     }
@@ -234,11 +238,21 @@ class ReviewForm extends React.Component {
 
   renderFormActions() {
     let guidelinesLink = gon.links.school_review_guidelines;
+    let submitText;
+    if (this.state.disabled) {
+     submitText = 'Submitting';
+    } else {
+      submitText = 'Submit';
+    }
     return(
       <div className="form-actions clearfix">
         <a href={guidelinesLink} target="_blank">Review Guidelines</a>
         <button className="button" onClick={this.cancelForm}>Cancel</button>
-        <button className="button cta" onClick={this.submitForm}>Submit</button>
+        <button className="button cta"
+          disabled= {this.state.disabled}
+          onClick={this.submitForm}>
+          {submitText}
+        </button>
       </div>
     );
   }
@@ -254,7 +268,7 @@ class ReviewForm extends React.Component {
   }
 
   render() {
-    return (
+    let reviewForm = (
       <div className="review-form-container">
         <div className="review-form">
           { this.state.displayCTA ? this.renderFiveStarQuestionCTA() : null }
@@ -263,5 +277,15 @@ class ReviewForm extends React.Component {
         </div>
       </div>
     );
+
+    if(this.state.disabled) {
+      return(<SpinnyWheel
+        backgroundPosition = { 'bottom' }
+        content = { reviewForm }
+      />);
+    } else {
+      return reviewForm;
+    }
+    return null;
   }
 }

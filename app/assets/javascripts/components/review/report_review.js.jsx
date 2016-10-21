@@ -126,7 +126,10 @@ class ReportReview extends React.Component {
       );
 
       if (this.state.disabled) {
-        return ReportReview.overlayWithSpinny(reportForm)
+        return(<SpinnyWheel
+          content = { reportForm }
+        />);
+        // return ReportReview.overlayWithSpinny(reportForm)
       }
       return reportForm;
     }
