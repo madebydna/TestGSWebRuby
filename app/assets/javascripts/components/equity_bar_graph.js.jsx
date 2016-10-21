@@ -17,13 +17,15 @@ class EquityBarGraph extends React.Component {
     let seriesData = this.seriesData();
 
     return [{
-        name: 'School value',
-        showInLegend: false,
-        data: seriesData.schoolSeriesData
+      name: 'School value',
+      showInLegend: false,
+      data: seriesData.schoolSeriesData,
+      dataLabels: { format: '{y}%' }
     }, {
-        name: 'State average',
-        color: 'lightgrey',
-        data: seriesData.stateAverageSeriesData
+      name: 'State average',
+      color: 'lightgrey',
+      data: seriesData.stateAverageSeriesData,
+      dataLabels: { format: '{y}%' }
     }];
   }
 
