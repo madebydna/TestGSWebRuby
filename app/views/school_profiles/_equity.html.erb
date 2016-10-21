@@ -48,3 +48,11 @@
 
 <div style="font-size: large; padding:50px">EQUITY</div>
 <%= react_component('Equity', equity: equity ) %>
+<div>
+  <%= equity.test_scores_by_ethnicity.to_json %>
+  <% if equity.test_scores_by_ethnicity.present? %>
+    <div class="rs-equity">
+      <%= react_component('EquityBarGraph', data: equity.test_scores_by_ethnicity) %>
+    </div>
+  <% end %>
+</div>

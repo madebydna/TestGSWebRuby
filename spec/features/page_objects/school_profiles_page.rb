@@ -71,7 +71,9 @@ class SchoolProfilesPage < SitePrism::Page
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'
+  section :equity, '.rs-equity' do
 
+  end
 
   element :five_star_review_comment, ".five-star-review .comment"
 
