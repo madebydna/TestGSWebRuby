@@ -50,8 +50,7 @@ class UserReviews
   end
 
   def school_user_digest(user_id)
-    user = User.find_by_id(user_id)
-    SchoolUserDigest.new(user, school).create
+    SchoolUserDigest.new(user_id, school).create
   end
 
   def review_to_hash(review)
