@@ -17,7 +17,7 @@ class SelectBoxes extends React.Component {
       if (value === selectionValue) {
         classNames += " active";
       }
-      boxes.push(<li className={classNames} onClick={this.handleBoxClick(selectionValue)}><span className={this.convertIndexToIconClass(index)}></span></li>);
+      boxes.push(<li key={index} className={classNames} onClick={this.handleBoxClick(selectionValue)}><span className={this.convertIndexToIconClass(index)}></span></li>);
     }
 
     return(
@@ -45,8 +45,8 @@ class SelectBoxes extends React.Component {
 
   renderResponseLabels() {
     labels = [];
-    this.props.responseLabels.forEach(function(label) {
-      labels.push(<li>{label}</li>);
+    this.props.responseLabels.forEach(function(label, index) {
+      labels.push(<li key={index}>{label}</li>);
     });
     return(
       <ul className="review-select-name">

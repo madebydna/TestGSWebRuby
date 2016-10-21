@@ -48,7 +48,7 @@ class SchoolProfilesPage < SitePrism::Page
     element :completed_five_star_question, ".review-question > div > .five-star-rating"
     elements :questions, ".review-question"
     elements :text_areas, "textarea"
-    element :submit, ".submit"
+    element :submit, ".button.cta"
     def submit_form
         submit.click
     end

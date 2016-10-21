@@ -68,6 +68,7 @@ class Questions extends React.Component {
       response_values = {question.response_values}
       response_labels = {question.response_labels}
       id = {question.id}
+      key = {question.id}
       questionCounter = {index + 1}
       title = {question.title}
       value = {this.props.selectedResponses[responseKey]}
