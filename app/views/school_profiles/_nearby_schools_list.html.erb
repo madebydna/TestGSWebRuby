@@ -14,6 +14,8 @@
               <%= render 'five_stars', filled: nearby_school.five_star_rating %>
           <% end %>
         </div>
+        <% else %>
+          <div class="no-rating"></div>
         <% end %>
         <div>
           <%= link_to(
