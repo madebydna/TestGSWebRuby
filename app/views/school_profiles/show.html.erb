@@ -22,7 +22,7 @@
         <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
       </div>
       <div>
-        <%= render 'equity', equity: @school_profile.ethnicity %>
+        <%= render 'equity', equity: @school_profile.equity %>
       </div>
       <div>
         <%= render 'ethnicity', ethnicity: @school_profile.ethnicity %>
@@ -38,9 +38,6 @@
           review_questions: @school_profile.review_questions,
           reviews: @school_profile.reviews
         %>
-      </div>
-      <div>
-        <%= render 'equity', equity: @school_profile.equity %>
       </div>
     </div>
   </div>

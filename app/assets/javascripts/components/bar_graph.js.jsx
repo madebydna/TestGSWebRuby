@@ -59,13 +59,13 @@ class BarGraph extends React.Component {
   }
 
   drawChart() {
-    $.cachedScript("https://code.highcharts.com/highcharts.js").done(function () {
+    // $.cachedScript("https://code.highcharts.com/highcharts.js").done(function () {
         $(function() {
           config = this.config();
           config = _.merge(config, { series: this.props.series });
           $('#' + this.props.graphId).highcharts(config);
         }.bind(this));
-    });
+    // });
   }
 
   render() {

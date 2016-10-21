@@ -1,4 +1,4 @@
-<% equity = [
+<% equity_config = [
     [
         {
             tab_name: 'tab 1', content: [
@@ -47,9 +47,8 @@
 
 
 <div style="font-size: large; padding:50px">EQUITY</div>
-<%= react_component('Equity', equity: equity ) %>
+<%= react_component('Equity', equity: equity_config ) %>
 <div>
-  <%= equity.test_scores_by_ethnicity.to_json %>
   <% if equity.test_scores_by_ethnicity.present? %>
     <div class="rs-equity">
       <%= react_component('EquityBarGraph', data: equity.test_scores_by_ethnicity) %>
