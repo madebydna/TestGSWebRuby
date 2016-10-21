@@ -20,7 +20,7 @@ class Questions extends React.Component {
         value = {selectedValue}
         responseValues = {question.response_values}
         responseLabels = {question.response_labels}
-        question_id = {question.id}
+        questionId = {question.id}
         onClick = {this.props.responseSelected}
       />)
     } else {
@@ -28,7 +28,7 @@ class Questions extends React.Component {
         value = {selectedValue}
         responseValues = {question.response_values}
         responseLabels = {question.response_labels}
-        question_id = {question.id}
+        questionId = {question.id}
         onClick = {this.props.responseSelected}
       />)
     }
@@ -45,7 +45,7 @@ class Questions extends React.Component {
 
   renderFiveStarCommentQuestion(question) {
     let layoutComponent = (<TextArea
-      question_id = {question.id}
+      questionId = {question.id}
       onTextValueChanged = {this.props.textValueChanged}
       errorMessage = { this.props.errorMessages[question.id] }
     />)
@@ -65,8 +65,6 @@ class Questions extends React.Component {
     let layoutComponent = this.layoutComponentForQuestion(question);
     let shouldDisplayTextArea =this.shouldQuestionDisplayTextArea(question);
     return(<Question
-      response_values = {question.response_values}
-      response_labels = {question.response_labels}
       id = {question.id}
       key = {question.id}
       questionCounter = {index + 1}
@@ -88,3 +86,17 @@ class Questions extends React.Component {
     )
   }
 }
+
+Questions.propTypes = {
+  questions: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    title: React.PropTypes.string.isRequired,
+    layout: React.PropTypes.string.isRequired,
+    response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  })).isRequired,
+  selectedResponses: React.PropTypes.object.isRequired,
+  responseSelected: React.PropTypes.func.isRequired,
+  errorMessages: React.PropTypes.object.isRequired,
+  textValueChanged: React.PropTypes.func
+};

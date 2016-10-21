@@ -126,3 +126,14 @@ class Question extends React.Component {
     )
   }
 }
+
+Question.propTypes = {
+  id: React.PropTypes.number.isRequired,
+  questionCounter: React.PropTypes.number.isRequired,
+  title: React.PropTypes.string.isRequired,
+  subtext: React.PropTypes.string,
+  layout: React.PropTypes.object.isRequired,
+  shouldDisplayTextArea: React.PropTypes.bool,
+  textValueChanged: React.PropTypes.func,
+  errorMessage: React.PropTypes.string
+};

@@ -5,7 +5,7 @@ class TextArea extends React.Component {
   }
 
   handleTextBoxChange(event) {
-    this.props.onTextValueChanged(event.target.value, this.props.question_id)
+    this.props.onTextValueChanged(event.target.value, this.props.questionId)
   }
 
   renderErrorMessage() {
@@ -28,4 +28,10 @@ class TextArea extends React.Component {
       </div>
     );
   }
+}
+
+TextArea.propTypes = {
+  questionId: React.PropTypes.number.isRequired,
+  onTextValueChanged: React.PropTypes.func.isRequired,
+  errorMessage: React.PropTypes.string
 }

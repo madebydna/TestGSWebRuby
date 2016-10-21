@@ -36,11 +36,11 @@ class ReviewForm extends React.Component {
   renderFiveStarQuestionCTA() {
     let fiveStarQuestion = this.props.questions[0];
     return(<FiveStarQuestionCTA
-      response_values = {fiveStarQuestion.response_values}
-      response_labels = {fiveStarQuestion.response_labels}
+      responseValues = {fiveStarQuestion.response_values}
+      responseLabels = {fiveStarQuestion.response_labels}
       id = {fiveStarQuestion.id}
       title = {fiveStarQuestion.title}
-      fiveStarQuestionSelect = {this.fiveStarQuestionSelect }
+      fiveStarQuestionSelect = {this.fiveStarQuestionSelect}
     />)
   }
 
@@ -289,3 +289,17 @@ class ReviewForm extends React.Component {
     return null;
   }
 }
+
+ReviewForm.propTypes = {
+  state: React.PropTypes.string.isRequired,
+  schoolId: React.PropTypes.number.isRequired,
+  questions: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    title: React.PropTypes.string.isRequired,
+    layout: React.PropTypes.string.isRequired,
+    response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  })).isRequired,
+  handleReviewSubmitMessage: React.PropTypes.func.isRequired,
+  handleUpdateOfReviews: React.PropTypes.func.isRequired
+};

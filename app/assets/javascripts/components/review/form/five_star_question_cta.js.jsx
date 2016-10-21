@@ -6,7 +6,7 @@ class FiveStarQuestionCTA extends React.Component {
   }
 
   renderStarResponses() {
-    return this.props.response_labels.map(this.renderStarResponse);
+    return this.props.responseLabels.map(this.renderStarResponse);
   }
 
   handleStarResponseClick(value) {
@@ -15,7 +15,7 @@ class FiveStarQuestionCTA extends React.Component {
 
   // consistify the grabbing of the selected value 
   renderStarResponse(label, index) {
-    let starValue = index + 1;
+    let starValue = this.props.responseValues[index];
     return(
       <div key={index} className="five-star-question-cta__response-container">
         <div onClick={this.handleStarResponseClick(starValue)}>
@@ -45,3 +45,11 @@ class FiveStarQuestionCTA extends React.Component {
     )
   }
 }
+
+FiveStarQuestionCTA.propTypes = {
+  responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  id: React.PropTypes.number.isRequired,
+  title: React.PropTypes.string.isRequired,
+  fiveStarQuestionSelect: React.PropTypes.func.isRequired
+};

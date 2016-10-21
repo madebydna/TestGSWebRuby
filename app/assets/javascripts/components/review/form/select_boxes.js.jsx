@@ -6,7 +6,7 @@ class SelectBoxes extends React.Component {
   }
 
   handleBoxClick(value) {
-    return () => this.props.onClick(value, this.props.question_id)
+    return () => this.props.onClick(value, this.props.questionId)
   }
 
   selectBoxes(value) {
@@ -64,3 +64,11 @@ class SelectBoxes extends React.Component {
     )
   }
 }
+
+SelectBoxes.propTypes = {
+  value: React.PropTypes.string,
+  responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  questionId: React.PropTypes.number.isRequired,
+  onClick: React.PropTypes.func.isRequired
+};
