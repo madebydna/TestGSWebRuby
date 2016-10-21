@@ -1,4 +1,50 @@
-<div>
-  <% #equity.test_scores_by_ethnicity.to_json %>
+<% equity = [
+    [
+        {
+            tab_name: 'tab 1', content: [
+                {
+                    tab_name: 'tab 1A', content:{hello: 'hello1A'}
+                },
+                {
+                    tab_name: 'tab 1B', content:{hello: 'hello1B'}
+                }
+            ]
+        },
+        {
+            tab_name: 'tab 2', content: [
+                {
+                    tab_name: 'tab 2A', content:{hello: 'hello2A'}
+                },
+                {
+                    tab_name: 'tab 2B', content:{hello: 'hello2B'}
+                }
+            ]
+        },
+    ],
+      [
+          {
+              tab_name: 'tab 3', content: [
+                  {
+                      tab_name: 'tab 3A', content:{hello: 'hello3A'}
+                  },
+                  {
+                      tab_name: 'tab 3B', content:{hello: 'hello3B'}
+                  }
+              ]
+          },
+          {
+              tab_name: 'tab 4', content: [
+                  {
+                      tab_name: 'tab 4A', content:{hello: 'hello4A'}
+                  },
+                  {
+                      tab_name: 'tab 4B', content:{hello: 'hello4B'}
+                  }
+              ]
+          },
+      ]
+  ] %>
 
-</div>
+
+<div style="font-size: large; padding:50px">EQUITY</div>
+<%= react_component('Equity', equity: equity ) %>
