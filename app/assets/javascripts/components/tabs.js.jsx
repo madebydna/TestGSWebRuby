@@ -8,30 +8,26 @@ class Tabs extends React.Component {
   }
 
   initializeTabs() {
-    // console.log("Peace Out my brother 1:"+this.props.tabs);
     return JSON.parse(JSON.stringify(this.props.tabs));
   }
 
   render() {
-    // console.log("Peace Out my brother 2:"+this.state.tabs);
     return <div>
-      <TabsSwitcher items={this.state.tabs} active={this.state.active} onTabClick={this.handleTabClick.bind()}/>
+      <TabsSwitcher items={this.state.tabs} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
       <TabsContent items={this.state.tabs} active={this.state.active}/>
     </div>;
   }
 
   handleTabClick(index) {
-    console.log("handleTabClick:"+index +"   this:"+this)
     this.setState({active: index})
   }
 };
 
 class TabsSwitcher extends React.Component {
   render(){
-    // console.log(this.props.items);
     var active = this.props.active;
     var items = this.props.items.map(function(item, index) {
-      return <a href="#"
+      return <a href="javascript:void(0)"
                 className={'tab ' + (active === index ? 'tab_selected' : '')}
                 onClick={this.onClick.bind(this, index)}>
         {item.tab_name}
@@ -48,9 +44,11 @@ class TabsSwitcher extends React.Component {
 class TabsContent extends React.Component {
   render(){
     var active = this.props.active;
-    // var items = this.props.items.map(function(item, index) {
-      // return <div key={index} className={'tabs-panel ' + (active === index ? 'tabs-panel_selected' : '')}>{item}</div>;
-    // });
-    return <div>{this.props.items.content}</div>;
+    var items = this.props.items.map(function(item, index) {
+      return <div key={index} className={'tabs-panel ' + (active === index ? 'tabs-panel_selected' : '')}>{ <TabToggle
+          tabs={ item["content"] }
+      /> }</div>;
+    });
+    return <div>{items}</div>;
   }
 };
