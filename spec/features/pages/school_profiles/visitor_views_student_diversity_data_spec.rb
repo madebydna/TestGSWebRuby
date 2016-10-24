@@ -1,0 +1,67 @@
+require "spec_helper"
+require "features/page_objects/school_profiles_page"
+
+describe "Visitor" do
+  let(:page_object) { SchoolProfilesPage.new }
+  after do
+    clean_dbs(:gs_schooldb)
+    clean_models(:ca, School)
+  end
+  before do
+    clean_dbs(:gs_schooldb)
+    clean_models(:ca, School)
+  end
+
+  scenario "sees student diversity section" do
+    school = create(:school_with_new_profile, id: 1)
+    visit school_path(school)
+
+    expect(page_object).to have_student_diversity
+    expect(page_object.student_diversity.title).to have_text('StudentDiversity')
+  end
+
+  scenario "sees ethnicity data" do
+    # school = create(:school_with_new_profile)
+    # create(
+    #   :custom_characteristics_all_students_cache,
+    #   school_id: school.id,
+    #   data_type: '4-year high school graduation rate',
+    #   school_value: 50.6,
+    #   state_average: 60.4
+    # )
+    # visit school_path(school)
+
+    # expect(page_object.student_diversity).to have_subgroup_data, text: "50.6"
+  end
+
+  scenario "sees subgroup data", js: true do
+    school = create(:school_with_new_profile)
+    create(
+      :custom_characteristics_all_students_cache,
+      school_id: school.id,
+      data_type: 'English learners',
+      school_value: 50.6,
+      state_average: 60.4
+    )
+    visit school_path(school)
+
+    expect(page_object.student_diversity).to have_subgroup_data
+    expect(page_object.student_diversity.subgroup_data.first).to have_text("50.6")
+  end
+
+  scenario "sees gender data" do
+    school = create(:school_with_new_profile)
+    create(
+      :custom_characteristics_all_students_cache,
+      school_id: school.id,
+      data_type: 'Male',
+      school_value: 50.6,
+      state_average: 60.4
+    )
+
+    visit school_path(school)
+    
+    expect(page_object.student_diversity).to have_gender_data
+    expect(page_object.student_diversity.gender_data).to have_text("50.6")
+  end
+end

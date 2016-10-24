@@ -1,4 +1,4 @@
-<% ethnicity %>
+<% ethnicity_data = student_diversity.ethnicity_data %>
 
 <% title = t('.title_html') %>
 <% subtitle = t('.subtitle_html') %>
@@ -7,7 +7,7 @@
 <% ethnicity_colors = %w(#184a7d #2ba3dc #08c569 #dca21a #d94373 #fdda46 #0e6ac9 #999EFF) %>
 
 <a name="Student_Diversity"></a>
-<div class="ethnicity-container">
+<div class="student-diversity-container">
   <div class="row">
     <div class="col-xs-12 col-lg-3">
       <div class="rating-container__title">
@@ -21,13 +21,16 @@
           <div id="ethnicity-graph"></div>
         </div>
         <div class="col-xs-12 col-sm-4">
-          <% ethnicity.data_values.each_with_index do |val, index |  %>
+          <% ethnicity_data.each_with_index do |val, index |  %>
             <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
               <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
               <div class="legend-title"><%= val['breakdown'] %></div>
             </div>
           <% end %>
         </div>
+      </div>
+      <div class="subgroup">
+        <div class="row"></div>
       </div>
     </div>
   </div>
