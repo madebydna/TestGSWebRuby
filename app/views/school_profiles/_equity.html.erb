@@ -72,7 +72,7 @@
 <div>
   <% if equity.test_scores_by_ethnicity.present? %>
     <div class="rs-equity">
-      <%= react_component('EquityBarGraph', data: equity.test_scores_by_ethnicity) %>
+      <%= react_component('EquityBarGraph', test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment) %>
     </div>
   <% end %>
 </div>

@@ -8,5 +8,10 @@ module SchoolProfiles
     def test_scores_by_ethnicity
       @school_cache_data_reader.test_scores[@data_type_id]
     end
+
+    def enrollment
+      enrollment_string = @school_cache_data_reader.students_enrolled
+      return enrollment_string.gsub(',','').to_i if enrollment_string
+    end
   end
 end

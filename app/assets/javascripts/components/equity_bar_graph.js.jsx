@@ -5,12 +5,58 @@ class EquityBarGraph extends React.Component {
     this.seriesData = this.seriesData.bind(this);
     this.categories = this.categories.bind(this);
     this.mapColor = this.mapColor.bind(this);
+    this.testDataWithEnrollment = this.testDataWithEnrollment.bind(this);
     this.state = {
       subject: 'English Language Arts',
       grade: 'All',
       levelCode: 'e,m,h',
-      year: '2015'
+      year: '2015',
     }
+  }
+
+  ethnicity() {
+    // I dont like that we're reaching out to grab data from outside this
+    // component. Would rather have this component's user map 
+    // gon.ethnicity to a React prop
+    return gon.ethnicity;
+  }
+
+  // filter out data that doesn't match ethnicity breakdowns
+  testDataMatchingEthnicities() {
+    let array = _.map(this.ethnicity(), function(data) {
+      let ethnicity = data.breakdown;
+      let value = this.props.test_scores[ethnicity];
+      if(value) {
+        return _.merge(value, {
+          ethnicity: ethnicity,
+          percentOfStudentBody: data.school_value
+        });
+      }
+    }.bind(this));
+    return _.reject(array, obj => obj === undefined);
+  }
+
+  // Take filtered test data, and make a new flatter structure
+  // that contains state averages, school values, ethnicity, and percent
+  // of student body
+  testDataWithEnrollment() {
+    let mapTestDataToNewObj = function(data) {
+      let ethnicity = data.ethnicity;
+      let testValues = this.testValues(data);
+      return _.merge(testValues, _.pick(data, ['ethnicity','percentOfStudentBody']));
+    }.bind(this);
+
+    let data =_.map(this.testDataMatchingEthnicities(), mapTestDataToNewObj);
+    if(this.props.test_scores['All']) {
+      data.unshift(mapTestDataToNewObj(
+        _.merge(
+          this.props.test_scores['All'], {
+            ethnicity: 'All students'
+          }
+        )
+      ));
+    }
+    return data;
   }
 
   series() {
@@ -29,23 +75,30 @@ class EquityBarGraph extends React.Component {
     }];
   }
 
+  // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    let values = [];
-    _.forOwn(this.props.data, function(value, key) {
-      values.push(
-        key + '<br/><span style="font-size:smaller">' +
-        this.testValues(value).score + ' students tested</span>'
-      );
+    return _.map(this.testDataWithEnrollment(), function(data) {
+      let ethnicity = data.ethnicity;
+      let percent = data.percentOfStudentBody;
+      let subLabel = '';
+      if (ethnicity == 'All students' && this.props.enrollment) {
+        subLabel = this.props.enrollment.toLocaleString() + ' students';
+      } else if(percent) {
+        subLabel = Math.round(percent) + '% of population</span>';
+      }
+      return ethnicity + '<br/><span style="font-size:smaller">' + subLabel
     }.bind(this));
-    return values;
   }
 
+  // helper method to index into hierarchical test score data
+  // and grab test values for a given grade, level, subject, and year
   testValues(testDataForBreakdown) {
     return testDataForBreakdown.
       grades[this.state.grade].
       level_code[this.state.levelCode][this.state.subject][this.state.year];
   }
 
+  // helper method to map a score to a color for bars
   mapColor(value) {
     return {
       1: '#F26B16',
@@ -64,10 +117,12 @@ class EquityBarGraph extends React.Component {
   seriesData() {
     let schoolSeries = [];
     let stateAverageSeries = [];
-    _.forOwn(this.props.data, function(value, key) {
-      let testValues = this.testValues(value);
-      let stateAverage = this.testValues(value).state_average;
-      let schoolScore = this.testValues(value).score;
+    _.forEach(this.testDataWithEnrollment(), function(value) {
+      if(!value) {
+        return;
+      }
+      let stateAverage = value.state_average;
+      let schoolScore = value.score;
       schoolSeries.push({
         color: this.mapColor(schoolScore),
         y: schoolScore
