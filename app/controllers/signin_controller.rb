@@ -185,7 +185,7 @@ class SigninController < ApplicationController
         end
         @is_new_user = is_new_user
         @user = user
-        render 'show' unless already_redirecting
+        render 'show' unless already_redirecting?
       end
     rescue => e
       flash_error t('actions.generic_error')
