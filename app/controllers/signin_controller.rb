@@ -189,7 +189,7 @@ class SigninController < ApplicationController
       end
     rescue => e
       flash_error t('actions.generic_error')
-      GSLogger.error(e, :misc, message:'Error authenticating with Facebook')
+      GSLogger.error(:misc, e, message:'Error authenticating with Facebook')
       render json: {}, status: 422
     end
   end
