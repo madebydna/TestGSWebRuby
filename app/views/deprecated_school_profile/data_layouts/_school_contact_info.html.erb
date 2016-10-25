@@ -12,11 +12,13 @@
       <span class="notranslate"><%= "#{@school.city}, #{@school.state} #{@school.zipcode}" %></span><br/>
       <br/>
       <% if @school.home_page_url.present? %>
-        <span class="iconx16 i-16-computer-screen vam"></span><a class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>' target="_blank"><%= t('deprecated_school_profile.data_layouts.school_contact_info.school_website') %></a><br/>
+        <span class="iconx16 i-16-computer-screen vam"></span><a
+    class="mlm vam contact-content" href='<%= prepend_http(@school.home_page_url) %>'
+    target="_blank" itemprop="sameAs"><%= t('deprecated_school_profile.data_layouts.school_contact_info.school_website') %></a><br/>
       <% end %>
       <% if decorated_school.facebook_url.present? %>
         <span class="iconx16 i-16-facebook vam"></span>
-        <a class="mls vam" target="_blank" href="<%= decorated_school.facebook_url %>">
+        <a class="mls vam" target="_blank" href="<%= decorated_school.facebook_url %>" itemprop="sameAs">
           <%= t('deprecated_school_profile.data_layouts.school_contact_info.facebook_page') %>
         </a>
         <br/>
