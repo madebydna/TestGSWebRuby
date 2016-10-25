@@ -143,3 +143,8 @@ class EquityBarGraph extends React.Component {
     return (<BarGraph graphId="equity-bar-graph" categories={this.categories()} series={this.series()} />);
   }
 }
+
+EquityBarGraph.propTypes = {
+  test_scores: React.PropTypes.object.isRequired,
+  enrollment: React.PropTypes.object.isRequired
+}
