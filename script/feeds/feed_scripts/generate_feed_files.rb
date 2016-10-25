@@ -26,7 +26,7 @@ module Feeds
         begin
           Feeds::FeedLog.log.debug "Starting Feed Generation for state #{state}"
           generate_all_feeds(arguments.district_ids, arguments.school_ids, arguments.batch_size,state,arguments.feed_names,
-                             arguments.locations,arguments.names)
+                             arguments.location,arguments.names)
           Feeds::FeedLog.log.debug "Ending Feed Generation for state #{state}"
         rescue => e
           Feeds::FeedLog.log.error e
@@ -34,13 +34,13 @@ module Feeds
       end
     end
 
-    def generate_all_feeds(district_ids,school_ids,batch_size,state,feed_names,locations,names)
+    def generate_all_feeds(district_ids,school_ids,batch_size,state,feed_names,location,names)
       feed_names.each_with_index do |feed, index|
             begin
             feed_opts = {state: state,
                          school_ids: school_ids,
                          district_ids: district_ids,
-                         feed_file: get_feed_name(feed, index,locations,names,state),
+                         feed_file: get_feed_name(feed, index,location,names,state),
                          batch_size: batch_size,
                          schema: FEED_TO_SCHEMA_MAPPING[feed],
                          root_element: FEED_TO_ROOT_ELEMENT_MAPPING[feed],

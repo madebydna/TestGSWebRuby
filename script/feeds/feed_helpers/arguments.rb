@@ -3,7 +3,7 @@ require_relative '../feed_config/feed_constants'
 module Feeds
   class Arguments
     include Feeds::FeedConstants
-    attr_accessor :states, :feed_names, :batch_size, :school_ids, :district_ids,:locations ,:names
+    attr_accessor :states, :feed_names, :batch_size, :school_ids, :district_ids,:location ,:names
 
     def initialize
       arguments = parse_arguments
@@ -26,7 +26,7 @@ module Feeds
        if ARGV[0] == 'all' && ARGV[1].nil?
          options_for_generating_all_feeds
        else
-         feed_names, states, school_ids, district_ids, locations, names, batch_size= ARGV[0].try(:split, ':')
+         feed_names, states, school_ids, district_ids, location, names, batch_size= ARGV[0].try(:split, ':')
          states = states == 'all' ? all_states : split_argument(states)
          feed_names = feed_names == 'all' ? all_feeds : split_argument(feed_names)
          return false unless (feed_names-all_feeds).empty?
@@ -36,7 +36,7 @@ module Feeds
                :feed_names => feed_names,
                :school_ids => split_argument(school_ids),
                :district_ids => split_argument(district_ids),
-               :locations => split_argument(locations),
+               :location => location,
                :names => split_argument(names),
                :batch_size => batch_size.present? ? batch_size : DEFAULT_BATCH_SIZE
           }
