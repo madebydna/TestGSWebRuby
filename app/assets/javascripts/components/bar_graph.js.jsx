@@ -2,13 +2,14 @@ class BarGraph extends React.Component {
   constructor(props) {
     super(props);
     this.drawChart = this.drawChart.bind(this);
+    this.config = this.config.bind(this);
     this.drawChart();
   }
 
   config() {
     return {
       chart: {
-        type: 'bar',
+        type: this.props.type,
         height: 50 + (50 * this.props.categories.length)
       },
       title: {
@@ -76,6 +77,10 @@ class BarGraph extends React.Component {
   render() {
     return (<div id={this.props.graphId}></div>);
   }
+}
+
+BarGraph.defaultProps = {
+  type: 'bar'
 }
 
 BarGraph.propTypes = {

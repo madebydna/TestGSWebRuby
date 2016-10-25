@@ -1,11 +1,11 @@
-class EquityBarGraph extends React.Component {
+class LowIncomeBarGraph extends React.Component {
   constructor(props) {
     super(props);
     this.series = this.series.bind(this);
     this.seriesData = this.seriesData.bind(this);
     this.categories = this.categories.bind(this);
     this.mapColor = this.mapColor.bind(this);
-    this.testDataWithEnrollment = this.testDataWithEnrollment.bind(this);
+    this.formattedData = this.formattedData.bind(this);
     this.state = {
       subject: 'English Language Arts',
       grade: 'All',
@@ -21,42 +21,25 @@ class EquityBarGraph extends React.Component {
     return gon.ethnicity;
   }
 
-  // filter out data that doesn't match ethnicity breakdowns
-  testDataMatchingEthnicities() {
-    let array = _.map(this.ethnicity(), function(data) {
-      let ethnicity = data.breakdown;
-      let value = this.props.test_scores[ethnicity];
-      if(value) {
-        return _.merge(value, {
-          ethnicity: ethnicity,
-          percentOfStudentBody: data.school_value
-        });
-      }
-    }.bind(this));
-    return _.reject(array, obj => obj === undefined);
+  // filter and flatten data a bit
+  filteredData() {
+    return _.pick(
+      this.props.test_scores,
+      [
+        'Economically disadvantaged',
+        'Not economically disadvantaged'
+      ]
+    );
   }
 
   // Take filtered test data, and make a new flatter structure
   // that contains state averages, school values, ethnicity, and percent
   // of student body
-  testDataWithEnrollment() {
-    let mapTestDataToNewObj = function(data) {
-      let ethnicity = data.ethnicity;
-      let testValues = this.testValues(data);
-      return _.merge(testValues, _.pick(data, ['ethnicity','percentOfStudentBody']));
-    }.bind(this);
-
-    let data =_.map(this.testDataMatchingEthnicities(), mapTestDataToNewObj);
-    if(this.props.test_scores['All']) {
-      data.unshift(mapTestDataToNewObj(
-        _.merge(
-          this.props.test_scores['All'], {
-            ethnicity: 'All students'
-          }
-        )
-      ));
-    }
-    return data;
+  formattedData() {
+    return _.map(
+      this.filteredData(),
+      (data, breakdown) => _.merge(this.testValues(data), {breakdown: breakdown})
+    );
   }
 
   series() {
@@ -77,17 +60,7 @@ class EquityBarGraph extends React.Component {
 
   // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    return _.map(this.testDataWithEnrollment(), function(data) {
-      let ethnicity = data.ethnicity;
-      let percent = data.percentOfStudentBody;
-      let subLabel = '';
-      if (ethnicity == 'All students' && this.props.enrollment) {
-        subLabel = this.props.enrollment.toLocaleString() + ' students';
-      } else if(percent) {
-        subLabel = Math.round(percent) + '% of population</span>';
-      }
-      return ethnicity + '<br/><span style="font-size:smaller">' + subLabel
-    }.bind(this));
+    return _.map(this.formattedData(), data => data.breakdown);
   }
 
   // helper method to index into hierarchical test score data
@@ -117,7 +90,7 @@ class EquityBarGraph extends React.Component {
   seriesData() {
     let schoolSeries = [];
     let stateAverageSeries = [];
-    _.forEach(this.testDataWithEnrollment(), function(value) {
+    _.forEach(this.formattedData(), function(value, breakdown) {
       if(!value) {
         return;
       }
@@ -147,11 +120,11 @@ class EquityBarGraph extends React.Component {
   }
 }
 
-EquityBarGraph.defaultProps = {
+LowIncomeBarGraph.defaultProps = {
   type: 'bar'
 }
 
-EquityBarGraph.propTypes = {
+LowIncomeBarGraph.propTypes = {
   test_scores: React.PropTypes.object.isRequired,
   enrollment: React.PropTypes.object.isRequired,
   graphId: React.PropTypes.string.isRequired
