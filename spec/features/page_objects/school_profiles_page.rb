@@ -56,6 +56,7 @@ class SchoolProfilesPage < SitePrism::Page
 
   class StudentDiversity < RatingContainer
     element :ethnicity_graph, "#ethnicity-graph"
+    element :subgroup_container, '.subgroups'
     elements :subgroup_data, ".subgroup"
     element :gender_data, ".gender"
   end

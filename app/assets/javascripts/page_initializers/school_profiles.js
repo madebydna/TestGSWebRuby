@@ -3,6 +3,7 @@ $(function() {
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
   GS.graphs.ethnicityPieChart.generateEthnicityChart();
+  GS.graphs.subgroupCharts.generateSubgroupPieCharts();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
     var $this = $(this);

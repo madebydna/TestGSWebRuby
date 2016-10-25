@@ -2,6 +2,7 @@
 // NEW PROFILES POST_LOAD
 //= require util/cached_script
 //= require graphs/ethnicity_pie_chart
+//= require graphs/subgroup_charts
 //= require resources/fastclick
 //= require resources/tipso
 //= require resources/remodal

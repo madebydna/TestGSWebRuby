@@ -16,6 +16,7 @@ class SchoolProfilesController < ApplicationController
     school_gon_obj(@school)
     add_gon_links
     add_gon_ethnicity
+    add_gon_subgroup
   end
 
   private
@@ -124,6 +125,10 @@ class SchoolProfilesController < ApplicationController
 
   def add_gon_ethnicity
     gon.ethnicity = student_diversity.ethnicity_data
+  end
+
+  def add_gon_subgroup
+    gon.subgroup = student_diversity.subgroups_data
   end
 
   def add_gon_links
