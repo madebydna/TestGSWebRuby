@@ -2,7 +2,10 @@ class Equity extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      equityContent: this.initializeEquity()
+      equityContent: this.initializeEquity(),
+      test_scores: this.initializeTestScores(),
+      enrollment: this.initializeEnrollment(),
+      ethnicity: this.initializeEthnicity()
     }
   }
 
@@ -18,17 +21,35 @@ class Equity extends React.Component {
         <div>
           <a name="Equity"></a>
           { tabSets }
-          {/*<Tabs*/}
-            {/*tabs={ this.state.equityContent[0] }*/}
-        {/*/>*/}
         </div>
     );
   }
+
+  // render() {
+  //   let tabs = [
+  //       <Equity
+  //   ]
+  //
+  //   firstTab = <Tabs tabs={} />
+  // }
 
   initializeEquity() {
     // console.log("Love Love Love 2");
     return JSON.parse(JSON.stringify(this.props.equity));
   }
+  initializeTestScores() {
+    // console.log("Love Love Love 2");
+    return JSON.parse(JSON.stringify(this.props.test_scores));
+  }
+  initializeEnrollment() {
+    // console.log("Love Love Love 2");
+    return JSON.parse(JSON.stringify(this.props.enrollment));
+  }
+  initializeEthnicity() {
+    // console.log("Love Love Love 2");
+    return gon.ethnicity;
+  }
+
 };
 
 // Equity.propTypes = {
@@ -39,7 +60,12 @@ class Equity extends React.Component {
 // };
 
 
-<div>
-  #equity.test_scores_by_ethnicity.to_json
-
-</div>
+//   Equity.propTypes = {
+//     data: React.PropTypes.object.isRequired
+//   }
+//
+//
+// <div>
+//   #equity.test_scores_by_ethnicity.to_json
+//
+// </div>

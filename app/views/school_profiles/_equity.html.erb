@@ -22,44 +22,46 @@
 <% equity_config = [
     [
         {
-            tab_name: 'tab 1', content: [
+            tab_name: 'Test Scores', content: [
                 {
-                    tab_name: 'tab 1A', content:{hello: 'hello1A'}
+                    tab_name: 'Math', content:{component: 'EquityBarGraph',
+                     data: { test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment}}
                 },
                 {
-                    tab_name: 'tab 1B', content:{hello: 'hello1B'}
+                    tab_name: 'English', content:{component: 'hello1B', data: '1b'}
                 }
             ]
         },
         {
-            tab_name: 'tab 2', content: [
+            tab_name: 'Graduation Rates', content: [
                 {
-                    tab_name: 'tab 2A', content:{hello: 'hello2A'}
+                    tab_name: 'Math', content:{component: 'hello2A', data: '2a'}
                 },
                 {
-                    tab_name: 'tab 2B', content:{hello: 'hello2B'}
+                    tab_name: 'English', content:{component: 'hello2b', data: '2b'}
                 }
             ]
         },
     ],
       [
           {
-              tab_name: 'tab 3', content: [
+              tab_name: 'Test Scores', content: [
                   {
-                      tab_name: 'tab 3A', content:{hello: 'hello3A'}
+                      tab_name: 'Math', content:{component: 'EquityBarGraph',
+                       data: { test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment}}
                   },
                   {
-                      tab_name: 'tab 3B', content:{hello: 'hello3B'}
+                      tab_name: 'English', content:{component: 'hello3B', data: '3b'}
                   }
               ]
           },
           {
-              tab_name: 'tab 4', content: [
+              tab_name: 'Graduation Rates', content: [
                   {
-                      tab_name: 'tab 4A', content:{hello: 'hello4A'}
+                      tab_name: 'Math', content:{component: 'hello4A', data: '4a'}
                   },
                   {
-                      tab_name: 'tab 4B', content:{hello: 'hello4B'}
+                      tab_name: 'English', content:{component: 'hello4B', data: '4b'}
                   }
               ]
           },
@@ -68,11 +70,12 @@
 
 
 <div style="font-size: large; padding:50px">EQUITY</div>
-<%= react_component('Equity', equity: equity_config ) %>
+<%= react_component('Equity', equity: equity_config, test_scores:  equity.test_scores_by_ethnicity,  enrollment:
+    equity.enrollment) %>
 <div>
   <% if equity.test_scores_by_ethnicity.present? %>
     <div class="rs-equity">
-      <%= react_component('EquityBarGraph', test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment) %>
+    <!--react_component('EquityBarGraph', test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment) %>-->
     </div>
   <% end %>
 </div>

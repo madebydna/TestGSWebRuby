@@ -11,10 +11,28 @@ class Tabs extends React.Component {
     return JSON.parse(JSON.stringify(this.props.tabs));
   }
 
+  renderAnArrayOfTabContents() {
+    var items = _.map(this.state.tabs, function(item, index) {
+      let tabToggle = <TabToggle tabs={ item["content"] } />;
+      if(tabToggle != '') {
+        return <div className={'tabs-panel ' + (this.state.active === index ? 'tabs-panel_selected' : '')}>{ tabToggle }</div>;
+      }
+    }.bind(this));
+    return items;
+  }
+
   render() {
+    myTabTitles = this.state.tabs;
+    myContentPanes = this.renderAnArrayOfTabContents();
+    for(var i=0; i < myContentPanes.length; i++){
+      if(myContentPanes[i] == undefined){
+        myTabTitles[i] = undefined;
+      }
+    }
+
     return <div>
-      <TabsSwitcher items={this.state.tabs} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
-      <TabsContent items={this.state.tabs} active={this.state.active}/>
+      <TabsSwitcher items={myTabTitles} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      <TabsContent items={myContentPanes}/>
     </div>;
   }
 
@@ -26,14 +44,15 @@ class Tabs extends React.Component {
 class TabsSwitcher extends React.Component {
   render(){
     var active = this.props.active;
-    var items = this.props.items.map(function(item, index) {
+
+    var items = _.map(this.props.items, function(item, index) {
       return <a href="javascript:void(0)"
                 className={'tab ' + (active === index ? 'tab_selected' : '')}
                 onClick={this.onClick.bind(this, index)}>
         {item.tab_name}
       </a>;
     }.bind(this));
-    return <div>{items}</div>;
+    if(items != undefined ) return <div>{items}</div>;
   }
 
   onClick(index) {
@@ -43,12 +62,6 @@ class TabsSwitcher extends React.Component {
 //
 class TabsContent extends React.Component {
   render(){
-    var active = this.props.active;
-    var items = this.props.items.map(function(item, index) {
-      return <div key={index} className={'tabs-panel ' + (active === index ? 'tabs-panel_selected' : '')}>{ <TabToggle
-          tabs={ item["content"] }
-      /> }</div>;
-    });
-    return <div>{items}</div>;
+    if(this.props.items != undefined ) return <div>{this.props.items}</div>;
   }
 };
