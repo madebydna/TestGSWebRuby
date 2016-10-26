@@ -25,6 +25,7 @@
 //= require resources/parsley.remote
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations
+//= require util/test_scores_helpers
 //= require react
 //= require components
 //= require react_ujs
@@ -32,3 +33,4 @@
 //= require util/tooltip
 //= require util/remodal
 //= require loaders/facebook
+

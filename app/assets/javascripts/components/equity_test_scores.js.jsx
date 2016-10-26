@@ -6,9 +6,71 @@ class EquityTestScores extends React.Component {
     }
   }
 
+  dataCriteria() {
+    return {
+      subject: this.state.subject,
+      grade: 'All',
+      level_code: 'e,m,h',
+      year: '2015' 
+    };
+  }
+
+  formattedTestScoreData() {
+    return GS.testScoresHelpers.filter(
+      GS.testScoresHelpers.flatten(this.props.test_scores),
+      this.dataCriteria()
+    );
+  }
+
+  incomeLevelTestScoreData() {
+    return GS.testScoresHelpers.incomeLevelTestScoreData(
+      this.formattedTestScoreData()
+    )
+  }
+
+  ethnicityTestScoreData() {
+    return this.addEnrollmentIntoTestData(
+      GS.testScoresHelpers.testDataMatchingEthnicities(
+        this.formattedTestScoreData(),
+        gon.ethnicity
+      )
+    )
+  }
+
+  addEnrollmentIntoTestData(testData) {
+    // this is an O(n^2) operation
+    return _.map(testData,
+      function(testData) {
+        let newObj = _.merge(
+          {}, testData, {
+            percentOfStudentBody: (_.find(
+              gon.ethnicity,
+              ethnicityData => ethnicityData.breakdown === testData.breakdown
+            ) || {}).school_value
+          }
+        );
+        if (testData.breakdown == 'All') {
+          newObj.numberOfStudents = this.props.enrollment;
+        }
+        return newObj;
+      }.bind(this)
+    );
+  }
+
+  ethnicities() {
+    return _.map(gon.ethnicity, obj => obj.breakdown);
+  }
+
   render() {
-    graph = <EquityBarGraph test_scores={this.props.test_scores} enrollment={this.props.enrollment} graphId="test-scores-bar-graph" />
-    graph = <LowIncomeBarGraph test_scores={this.props.test_scores} enrollment={this.props.enrollment} type="column" graphId="low-income-bar-graph" />
+    graph = <EquityBarGraph
+      test_scores={this.ethnicityTestScoreData()}
+      graphId="test-scores-bar-graph" />
+
+    graph2 = <LowIncomeBarGraph
+      test_scores={this.incomeLevelTestScoreData()}
+      type="column"
+      graphId="low-income-bar-graph" />
+
     let text = undefined;
     if(this.state.subject == 'Math') {
       text = 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.'
