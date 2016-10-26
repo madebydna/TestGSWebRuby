@@ -6,8 +6,8 @@ class EquitySection extends React.Component {
     }
   }
 
-  selectSectionContent() {
-    let item = this.props.equity_config[this.state.active];
+  selectSectionContent(section_content) {
+    let item = section_content[this.state.active];
     return <div className={'tabs-panel tabs-panel_selected'}>
       <SubSectionToggle
           equity_config={item["content"]}
@@ -16,9 +16,12 @@ class EquitySection extends React.Component {
   }
 
   render() {
-    return <div>
-      <SectionNavigation items={this.props.equity_config} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
-      {this.selectSectionContent()};
+    let section_info = this.props.equity_config["section_info"];
+    let section_content = this.props.equity_config["section_content"];
+    return <div className="equity_section">
+      <div className="title_bar">{section_info.title} </div>
+      <SectionNavigation items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      {this.selectSectionContent(section_content)}
     </div>
   }
 
@@ -29,7 +32,7 @@ class EquitySection extends React.Component {
 
 Equity.propTypes = {
   equity_config: React.PropTypes.arrayOf(React.PropTypes.object({
-    section_title: React.PropTypes.string,
-    content: React.PropTypes.object
+    section_info: React.PropTypes.object,
+    section_content: React.PropTypes.object
   }))
 };
