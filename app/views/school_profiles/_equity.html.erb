@@ -20,52 +20,60 @@
 </style>
 
 <% equity_config = [
-    [
-        {
-            tab_name: 'Test Scores', content: [
+    {
+        section_info:{
+
+        },
+        section_content:[
+          {
+            section_title: 'Test Scores', content: [
                 {
-                    tab_name: 'Math', content:{component: 'EquityBarGraph',
-                     data: { test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment}}
+                    subject: 'English Language Arts', component: 'LowIncomeBarGraph'
                 },
                 {
-                    tab_name: 'English', content:{component: 'hello1B', data: '1b'}
+                    subject: 'Math', component: 'EquityBarGraph'
                 }
             ]
+          },
+          {
+              section_title: 'Graduation Rates', content: [
+                  {
+                      subject: 'Math', component: 'hello2A'
+                  },
+                  {
+                      subject: 'English', component: 'hello2b'
+                  }
+              ]
+          }
+        ]
+    },
+    {
+        section_info:{
+
         },
-        {
-            tab_name: 'Graduation Rates', content: [
+        section_content:[
+            {
+                section_title: 'Test Scores', content: [
                 {
-                    tab_name: 'Math', content:{component: 'hello2A', data: '2a'}
+                    subject: 'Math', component: 'nothing'
                 },
                 {
-                    tab_name: 'English', content:{component: 'hello2b', data: '2b'}
+                    subject: 'English Language Arts', component: 'nothing'
                 }
             ]
-        },
-    ],
-      [
-          {
-              tab_name: 'Test Scores', content: [
-                  {
-                      tab_name: 'Math', content:{component: 'EquityBarGraph',
-                       data: { test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment}}
-                  },
-                  {
-                      tab_name: 'English', content:{component: 'hello3B', data: '3b'}
-                  }
-              ]
-          },
-          {
-              tab_name: 'Graduation Rates', content: [
-                  {
-                      tab_name: 'Math', content:{component: 'hello4A', data: '4a'}
-                  },
-                  {
-                      tab_name: 'English', content:{component: 'hello4B', data: '4b'}
-                  }
-              ]
-          },
-      ]
+            },
+            {
+                section_title: 'Graduation Rates', content: [
+                {
+                    subject: 'Math', component: 'hello2A'
+                },
+                {
+                    subject: 'English', component: 'hello2b'
+                }
+            ]
+            }
+        ]
+    }
   ] %>
 
 

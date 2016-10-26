@@ -2,6 +2,9 @@ class EquityContentPane extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      // active: this.props.active
+    }
   }
 
   render() {
