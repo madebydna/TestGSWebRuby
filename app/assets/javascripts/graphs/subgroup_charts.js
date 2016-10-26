@@ -4,6 +4,10 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
   //
   var subgroupSliceColor = '#34A4DA';
   var defaultPieColor = '#eef3f5';
+  var colorMap = {
+    'Female': '#21C36C',
+    'Male': '#34A4DA'
+  }
   var titleMap = {
     'students-participating-in-free-or-reduced-price-lunch-program': 'Students from low income familes',
     'english-learners': 'Students learning english'
@@ -13,21 +17,50 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     var otherValue = 100 - parseFloat(parsedData.schoolValueFloat);
     var subgroupData = [
       {
-        name: parsedData.name, 
+        name: parsedData.name,
         y:parsedData.schoolValueFloat,
         color: subgroupSliceColor
       },
       {
-        name:'Other',
-        y:otherValue,
+        name: 'Other',
+        y: otherValue,
         color: defaultPieColor
       }
     ]
     return subgroupData;
   };
 
+  var buildGenderData = function(parsedGenderData) {
+    var genderData = _.map(parsedGenderData, function(data) {
+      var returnValue = {
+        name: data.name,
+          y: data.schoolValueFloat,
+          color: colorMap[data.name]
+      };
+      return returnValue;
+    })
+    return genderData;
+  }
+
   var subgroupNameToChartId = function(subgroupName) {
     return subgroupName.toLowerCase().replace(/ /g,'-');
+  };
+
+  var parseGenderCharacteristicsData = function(genderData) {
+    var validParsedGenderData = true;
+    var parsedGenderData = [];
+   _.forOwn(genderData, function (data, key) {
+     var parsedData = parseCharacteristicsCache(data, key)
+     if (! validParsedData(parsedData) ) {
+        validParsedGenderData = null;
+     }
+     parsedGenderData.push(parsedData);
+   });
+     if ( validParsedGenderData ) {
+       return parsedGenderData;
+     } else {
+      return null;
+     }
   };
 
   var parseCharacteristicsCache = function(data, key) {
@@ -37,17 +70,12 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     }
     var schoolValue = cacheData['school_value'];
     var schoolValuePercent = Math.round(schoolValue).toString() + '%';
-    var chartId = subgroupNameToChartId(key);
-    var chartTitle = titleMap[chartId];
     parsedData = {
       name: key,
-      chartId: chartId,
-      chartTitle: chartTitle,
       schoolValueFloat: schoolValue,
       stateAverage: cacheData['state_average_2012'].toString() + '%',
       schoolValuePercent: schoolValuePercent
     };
-
     if (validParsedData(parsedData)) {
       return parsedData;
     } else {
@@ -64,15 +92,98 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
   };
 
   var generateSubgroupContainer = function(parsedData) {
-    var containerHtml = "<div class='subgroup col-xs-6 col-md-4'><div class='title'>" + parsedData.chartTitle + "</div><div id='" + parsedData.chartId + "'></div><div class='state-avg'>State avg. " + parsedData.stateAverage +  "</div></div>";
+    var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title'>" + parsedData.chartTitle + "</div><div id='" + parsedData.chartId + "'></div><div class='state-avg'>State avg. " + parsedData.stateAverage +  "</div></div>";
     $('.subgroups > .row').append(containerHtml);
   };
 
-  var renderChart = function(data, key) {
+  var generateGenderContainer = function(parsedGenderData) {
+    var chartTitle = 'Gender';
+    var chartId = 'gender';
+    var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title gender'>" + chartTitle + "</div><div id='" + chartId + "'></div></div>";
+    $('.subgroups > .row').append(containerHtml);
+  }
+
+  var renderGenderChart = function(data, key) {
+    var parsedGenderData = parseGenderCharacteristicsData(data, key);
+    if ( ! parsedGenderData) {
+      return null;
+    }
+    var genderData = buildGenderData(parsedGenderData);
+    generateGenderContainer(parsedGenderData);
+    var chartId = 'gender';
+    var chart = new Highcharts.Chart({
+      chart: {
+        renderTo: chartId,
+        type: 'pie',
+        height: '175',
+        spacing: [10,10,10,10],
+        margin: [10,5,30,5]
+      },
+      credits: {
+        enabled: false
+      },
+      legend: {
+        enabled: true,
+        itemDistance: 2,
+        margin: 0
+      },
+      title: {
+        text: null
+      },
+      tooltip: {
+        enabled: false
+      },
+      plotOptions: {
+        series: {
+          states: {
+            hover: {
+              enabled:false
+            }
+          },
+        },
+        pie: {
+          innerSize: '33%',
+          dataLabels: {
+            enabled: true,
+            formatter: function () {
+              return "<div class='open-sans'>" + Math.round(this.percentage) + "%</div>";
+            },
+            color: 'black',
+            useHTML: true,
+            style: {
+              fontSize: '14px',
+              textShadow: false,
+              fontWeight: "regular"
+            },
+            distance: -20,
+          },
+          allowPointSelect: false,
+          minSize: 140,
+          showInLegend: true,
+          point: {
+            events: {
+              legendItemClick: function () {
+                console.log('d');
+                return false; // <== returning false will cancel the default action
+              }
+            }
+          }
+        }
+      },
+      series: [{
+        name: 'percentage',
+        data: genderData
+      }]
+    });
+  };
+
+  var renderSubgroupChart = function(data, key) {
     var parsedData = parseCharacteristicsCache(data, key);
     if ( ! parsedData) {
       return null;
     }
+    parsedData.chartId = subgroupNameToChartId(parsedData.name);
+    parsedData.chartTitle = titleMap[parsedData.chartId];
     var subgroupData = buildSubgroupData(parsedData);
     generateSubgroupContainer(parsedData);
     var chart = new Highcharts.Chart({
@@ -118,14 +229,13 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
   var generateSubgroupPieCharts = function () {
     if (gon.subgroup) {
       var subgroupData = gon.subgroup;
-      var callback = function() {
-        _.forOwn(subgroupData, renderChart);
-      };
-      if(window.Highcharts) {
-        callback();
-      } else {
-        $.cachedScript("https://code.highcharts.com/highcharts.js").done(callback);
-      }
+      $.cachedScript("https://code.highcharts.com/highcharts.js").done(function () {
+        _.forOwn(subgroupData, renderSubgroupChart);
+        if (gon.gender) {
+          var genderData = gon.gender;
+          renderGenderChart(genderData);
+        }
+      });
     }
   };
 
