@@ -56,7 +56,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
      }
      parsedGenderData.push(parsedData);
    });
-     if ( validParsedGenderData ) {
+     if ( validParsedGenderData && parsedGenderData.length > 0 ) {
        return parsedGenderData;
      } else {
       return null;
