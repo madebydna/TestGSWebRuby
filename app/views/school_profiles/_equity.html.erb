@@ -78,6 +78,7 @@
     <!--react_component('EquityBarGraph', test_scores: equity.test_scores_by_ethnicity, enrollment: equity.enrollment) %>-->
       <%= react_component('EquityTestScores',
                           test_scores: equity.test_scores_by_ethnicity,
+                          graduation_rate_data: equity.graduation_rate_data,
                           enrollment: equity.enrollment,
                           subject: 'English Language Arts') %>
     </div>

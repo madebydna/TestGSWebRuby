@@ -37,6 +37,13 @@ class EquityTestScores extends React.Component {
     )
   }
 
+  graduationRateData() {
+    return GS.testScoresHelpers.testDataMatchingEthnicities(
+      this.props.graduation_rate_data,
+      gon.ethnicity
+    );
+  }
+
   addEnrollmentIntoTestData(testData) {
     // this is an O(n^2) operation
     return _.map(testData,
@@ -70,6 +77,11 @@ class EquityTestScores extends React.Component {
       test_scores={this.incomeLevelTestScoreData()}
       type="column"
       graphId="low-income-bar-graph" />
+
+    graph3 = <LowIncomeBarGraph
+      test_scores={this.graduationRateData()}
+      type="bar"
+      graphId="graduation-rate-bar-graph" />
 
     let text = undefined;
     if(this.state.subject == 'Math') {

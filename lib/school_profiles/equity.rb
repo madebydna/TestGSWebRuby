@@ -13,5 +13,9 @@ module SchoolProfiles
       enrollment_string = @school_cache_data_reader.students_enrolled
       return enrollment_string.gsub(',','').to_i if enrollment_string
     end
+
+    def graduation_rate_data
+      @school_cache_data_reader.graduation_rate_data
+    end
   end
 end

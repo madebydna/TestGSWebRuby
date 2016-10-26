@@ -21,7 +21,7 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
 
   var generateEthnicityChart = function () {
     if (gon.ethnicity) {
-      $.cachedScript("https://code.highcharts.com/highcharts.js").done(function () {
+      var callback = function () {
         var ethnicityData = buildEthnicityDataFromGon();
         $(ethnicityGraph).highcharts({
           chart: {
@@ -55,7 +55,13 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
           sliceId = $(this).data('slice-id');
           ethnicityChartForHighlight.series[0].data[sliceId].select();
         });
-      });
+      };
+
+      if(window.Highcharts) {
+        callback();
+      } else {
+        $.cachedScript("https://code.highcharts.com/highcharts.js").done(callback);
+      }
     }
   };
   return {

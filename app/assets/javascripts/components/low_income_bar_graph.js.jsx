@@ -7,6 +7,17 @@ class LowIncomeBarGraph extends React.Component {
     this.mapColor = this.mapColor.bind(this);
   }
 
+  testScores() {
+    return this._testScores || (
+      this._testScores = _.reject(
+        this.props.test_scores, 
+        function(obj){
+          return (obj.score || obj.school_value) === undefined;
+        }
+      )
+    );
+  }
+
   series() {
     let seriesData = this.seriesData();
 
@@ -25,7 +36,7 @@ class LowIncomeBarGraph extends React.Component {
 
   // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    return _.map(this.props.test_scores, data => data.breakdown);
+    return _.map(this.testScores(), data => data.breakdown);
   }
 
   // helper method to map a score to a color for bars
@@ -45,34 +56,34 @@ class LowIncomeBarGraph extends React.Component {
   }
 
   mapDataObjectToSchoolDataPoint(obj) {
-    let score = obj.score;
+    let score = obj.score || obj.school_value;
     return {
-      color: this.mapColor(obj.score),
-      y: score
+      color: this.mapColor(score),
+      y: Math.round(score)
     };
   }
 
   mapDataObjectToStateAverageDataPoint(obj) {
     let score = obj.state_average;
     return {
-      color: this.mapColor(obj.state_average),
-      y: score
+      color: 'lightgrey',
+      y: Math.round(score)
     };
   }
 
   seriesData() {
     let schoolSeries = _.map(
-      this.props.test_scores,
+      this.testScores(),
       this.mapDataObjectToSchoolDataPoint.bind(this)
     );
     let stateAverageSeries = _.map(
-      this.props.test_scores,
+      this.testScores(),
       this.mapDataObjectToStateAverageDataPoint.bind(this)
     );
 
     return {
-      stateAverageSeriesData: stateAverageSeries,
-      schoolSeriesData: schoolSeries
+      schoolSeriesData: schoolSeries,
+      stateAverageSeriesData: stateAverageSeries
     };
   }
 

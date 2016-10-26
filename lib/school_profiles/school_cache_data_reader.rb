@@ -61,6 +61,10 @@ module SchoolProfiles
       decorated_school.test_scores
     end
 
+    def graduation_rate_data
+      decorated_school.characteristics['4-year high school graduation rate']
+    end
+
     def subject_scores_by_latest_year(data_type_id:, breakdown: 'All', grades: 'All', level_codes: 'e,m,h')
       subject_hash = decorated_school.test_scores.seek(data_type_id.to_s, breakdown, 'grades', grades, 'level_code', level_codes)
       return OpenStruct.new unless subject_hash.present?
