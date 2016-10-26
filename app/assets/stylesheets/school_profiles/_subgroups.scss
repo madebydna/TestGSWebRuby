@@ -1,17 +1,58 @@
 .subgroups {
  $gray-border-color: #e0e4e8; 
  $state-avg-color: #71787e;
-  margin-top: $spacing-extra-large;
-  .subgroup{
-    display: inline-block;
+  margin-top: 30px;
+
+  div.row > div:first-child {
+    border-left: none;
+  }
+// Style the third subgroup chart to have no left border when stacked 
+// third subgroup will have a right border when stacked b/c there is no fourth
+// subgroup chart yet
+  div.row > div:nth-child(3) {
+    border-left: none;
+    margin-left: 1px;
     border-right: solid 1px $gray-border-color;
+    border-bottom: none;
+    @include media-breakpoint-only(sm) {
+      border-right: none;
+      border-left: solid 1px $gray-border-color;
+      margin-left: 0;
+    }
+    @include media-breakpoint-up(lg) {
+      border-right: none;
+      border-left: solid 1px $gray-border-color;
+      margin-left: 0;
+    }
+  }
+  .subgroup{
+    height: 235px;
+    border-left: solid 1px $gray-border-color;
+    border-bottom: solid 1px $gray-border-color;
+    @include media-breakpoint-only(sm) {
+      border-bottom: none;
+    }
+    @include media-breakpoint-up(lg) {
+      border-bottom: none;
+    }
 
     .title {
+      margin-top: 10px;
       padding: 0 $spacing-large;
       font-family: 'opensans-semibold';
       text-align: center;
       font-size: $font-size-l2;
       min-height: $spacing-extra-large;
+    }
+
+    .title.gender {
+      min-height: 30px;
+      @include media-breakpoint-up(sm) {
+        margin-bottom: 8px;
+      }
+      @include media-breakpoint-up(lg) {
+        margin-bottom: 6px;
+      }
     }
 
     .state-avg {
