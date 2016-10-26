@@ -99,6 +99,5 @@ EquityBarGraph.defaultProps = {
 
 EquityBarGraph.propTypes = {
   test_scores: React.PropTypes.array.isRequired,
-  enrollment: React.PropTypes.object.isRequired,
   graphId: React.PropTypes.string.isRequired
 }
