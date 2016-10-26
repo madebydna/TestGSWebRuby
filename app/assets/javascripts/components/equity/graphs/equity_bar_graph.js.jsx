@@ -32,7 +32,7 @@ class EquityBarGraph extends React.Component {
       } else if(data.percentOfStudentBody) {
         subLabel = Math.round(data.percentOfStudentBody) + '% of population</span>';
       }
-      return data.breakdown + '<br/><span style="font-size:smaller">' + subLabel
+      return data.breakdown + '<br/><span style="font-size:smaller">' + subLabel + '</span>';
     }.bind(this));
   }
 

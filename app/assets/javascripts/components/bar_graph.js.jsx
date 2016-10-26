@@ -3,7 +3,6 @@ class BarGraph extends React.Component {
     super(props);
     this.drawChart = this.drawChart.bind(this);
     this.config = this.config.bind(this);
-    this.drawChart();
   }
 
   config() {
@@ -72,6 +71,14 @@ class BarGraph extends React.Component {
     } else {
       $.cachedScript("https://code.highcharts.com/highcharts.js").done(callback);
     }
+  }
+
+  componentDidMount() {
+    this.drawChart();
+  }
+
+  componentDidUpdate() {
+    this.drawChart();
   }
 
   render() {
