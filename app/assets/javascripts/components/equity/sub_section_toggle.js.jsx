@@ -2,19 +2,15 @@ class SubSectionToggle extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 1
+      active: 0
     }
   }
 
   renderContent() {
-    var items = _.map(this.props.equity_config, function(item, index) {
-      if(this.state.active === index) {
+        let item = this.props.equity_config[this.state.active];
         return <div className={'tabs-panel tabs-panel_selected'}>
-          <EquityContentPane key={item["component"]} graph={this.props.graph[item["component"]]} text={this.props.explanation[item["subject"]]} />
+          <EquityContentPane graph={item["component"]} text={item["explanation"]} />
         </div>
-      }
-    }.bind(this));
-    return items;
   }
 
   render() {
@@ -27,4 +23,12 @@ class SubSectionToggle extends React.Component {
   handleTabClick(index) {
     this.setState({active: index})
   }
+};
+
+Equity.propTypes = {
+  equity_config: React.PropTypes.arrayOf(React.PropTypes.object({
+        subject: React.PropTypes.string,
+        component: React.PropTypes.object,
+        explanation: React.PropTypes.string
+  }))
 };
