@@ -10,7 +10,7 @@ going to build a partial for badges.  it will use the name passed in to generate
           <div class="col-xs-12 col-sm-4">
             <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: 'Test Scores' %>
             <%= render 'toc_entry_rating', rating: '7', title: 'Equity' %>
-            <%= render 'toc_entry_rating', rating: '6', title: 'College Readiness' %>
+            <%= render 'toc_entry_rating', rating: @school_profile.college_readiness.rating, title: 'College Readiness' %>
           </div>
           <div class="col-xs-12 col-sm-4">
             <%= render 'toc_entry_rating', rating: '5', title: 'Elective Course Offering' %>
