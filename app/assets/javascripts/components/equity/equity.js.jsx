@@ -26,7 +26,7 @@ class Equity extends React.Component {
                 subject: 'English Language Arts',
                 component: <BarGraphWithEnrollmentInLabel
                     test_scores={this.ethnicityTestScoreData('English Language Arts')}
-                    graphId="test-scores-math-bar-graph" />,
+                    graphId="test-scores-ela-bar-graph" />,
                 explanation: 'This shows results across different races/ethnicities on an English test given to' +
                 ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
               },
