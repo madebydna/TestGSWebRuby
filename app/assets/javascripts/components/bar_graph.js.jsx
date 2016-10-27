@@ -9,7 +9,10 @@ class BarGraph extends React.Component {
   config() {
     height = 200;
     if(this.props.type == 'bar') {
-      height = Math.max(50 + (50 * this.props.categories.length), 200);
+      height = Math.max(
+        50 + (25 * this.props.series.length * this.props.categories.length),
+        150
+      );
     }
     return {
       chart: {
