@@ -44,10 +44,16 @@ class Questions extends React.Component {
   }
 
   renderFiveStarCommentQuestion(question) {
+    let responseKey = question.id.toString();
+    let commentValue;
+    if (this.props.selectedResponses[responseKey]) {
+      commentValue = this.props.selectedResponses[responseKey].comment;
+    }
     let layoutComponent = (<TextArea
       questionId = {question.id}
       onTextValueChanged = {this.props.textValueChanged}
       errorMessage = { this.props.errorMessages[question.id] }
+      textValue = { commentValue }
     />)
     return(<Question
       id = {question.id}
@@ -64,6 +70,10 @@ class Questions extends React.Component {
     let responseKey = question.id.toString();
     let layoutComponent = this.layoutComponentForQuestion(question);
     let shouldDisplayTextArea =this.shouldQuestionDisplayTextArea(question);
+    let commentValue;
+    if (this.props.selectedResponses[responseKey]) {
+      commentValue = this.props.selectedResponses[responseKey].comment;
+    }
     return(<Question
       id = {question.id}
       key = {question.id}
@@ -74,6 +84,7 @@ class Questions extends React.Component {
       shouldDisplayTextArea = {shouldDisplayTextArea}
       textValueChanged = {this.props.textValueChanged}
       errorMessage = { this.props.errorMessages[responseKey] }
+      textValue = { commentValue }
     />)
   }
 

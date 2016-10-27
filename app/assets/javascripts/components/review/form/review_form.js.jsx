@@ -279,7 +279,7 @@ class ReviewForm extends React.Component {
     );
 
     if(this.state.disabled) {
-      return(<SpinnyWheel
+      return (<SpinnyWheel
         backgroundPosition = { 'bottom' }
         content = { reviewForm }
       />);

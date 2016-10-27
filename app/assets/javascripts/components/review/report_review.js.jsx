@@ -92,15 +92,6 @@ class ReportReview extends React.Component {
     }
   }
 
-  static overlayWithSpinny(element) {
-    return (
-        <div className="spinny-wheel-container">
-          <div className="spinny-wheel"></div>
-          {element}
-        </div>
-    );
-  }
-
   render() {
     if (this.props.open === true) {
       let termsLink = gon.links.terms_of_use;
@@ -129,7 +120,6 @@ class ReportReview extends React.Component {
         return(<SpinnyWheel
           content = { reportForm }
         />);
-        // return ReportReview.overlayWithSpinny(reportForm)
       }
       return reportForm;
     }

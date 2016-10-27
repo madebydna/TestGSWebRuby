@@ -6,11 +6,11 @@ class Question extends React.Component {
     this.displayTextArea = this.displayTextArea.bind(this);
     this.handleTextBoxChange = this.handleTextBoxChange.bind(this);
     this.handleTextBlur = this.handleTextBlur.bind(this);
+    this.handleTellUsWhyClick = this.handleTellUsWhyClick.bind(this);
     this.state = {
-      shouldDisplayTextArea: false,
-      shouldDisplayTellUsLink: true,
-      textValue: '',
-      textFocus: true
+      shouldDisplayTextArea: (this.props.textValue && this.props.textValue != ''),
+      shouldDisplayTellUsLink: !(this.props.textValue && this.props.textValue != ''),
+      textFocus: false
     };
   }
 
@@ -27,7 +27,7 @@ class Question extends React.Component {
   }
 
   handleTextBlur() {
-    if (this.state.textValue === '') {
+    if (! this.props.textValue || this.props.textValue == '') {
       this.setState(
         {
           shouldDisplayTextArea: false,
@@ -44,19 +44,21 @@ class Question extends React.Component {
     );
   }
 
+  handleTellUsWhyClick() {
+   this.setState({ textFocus: true})
+   this.displayTextArea();
+  }
+
   renderTextArea() {
-    let textClass;
-    if (this.props.errorMessage) {
-      textClass = "review-error";
-      }
-    return(
-      <div className={textClass}>
-        <textarea onBlur={this.handleTextBlur}
-          autoFocus={true}
-          onChange={this.handleTextBoxChange}>
-        </textarea>
-      </div>
-      );
+    return(<TextArea
+      questionId = {this.props.id}
+      onTextValueChanged = {this.props.textValueChanged}
+      handleTextBlur = { this.handleTextBlur }
+      autoFocus = { this.state.textFocus }
+      errorMessage = { this.props.errorMessage }
+      textValue = { this.props.textValue }
+    />);
+    this.setState({ textFocus: false});
   }
 
   handleTextBoxChange(event) {
@@ -66,7 +68,7 @@ class Question extends React.Component {
 
   renderTellUsLink() {
     return(
-      <div className="tell-us-link" onClick={this.displayTextArea}>
+      <div className="tell-us-link" onClick={this.handleTellUsWhyClick}>
         <span className="icon-pencil"></span>
         Tell us why&hellip;
        </div>
@@ -89,7 +91,6 @@ class Question extends React.Component {
             transitionLeaveTimeout={100}>
             { this.state.shouldDisplayTextArea ? this.renderTextArea() : null }
           </ReactCSSTransitionGroup>
-          { this.props.errorMessage ? this.renderErrorMessage() : null }
         </div>
       </div>
     );
