@@ -3,12 +3,12 @@ class SectionSubNavigation extends React.Component {
     var active = this.props.active;
     var items = this.props.items.map(function(item, index) {
       return <a href="javascript:void(0)"
-                className={'tab ' + (active === index ? 'tab_selected' : '')}
+                className={'sub-nav-item ' + (active === index ? 'sub-tab-selected' : '')}
                 onClick={this.onClick.bind(this, index)}>
         {item.subject}
       </a>;
     }.bind(this));
-    return <div>{items}</div>;
+    return <div className="sub-nav-group">{items}</div>;
   }
 
   onClick(index) {

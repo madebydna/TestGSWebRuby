@@ -15,7 +15,9 @@ class SubSectionToggle extends React.Component {
 
   render() {
     return <div>
-      <SectionSubNavigation items={this.props.equity_config} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      <div className="sub-section-navigation">
+        <SectionSubNavigation items={this.props.equity_config} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      </div>
       {this.renderContent()}
     </div>
   }

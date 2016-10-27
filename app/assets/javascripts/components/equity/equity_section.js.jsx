@@ -18,10 +18,10 @@ class EquitySection extends React.Component {
   render() {
     let section_info = this.props.equity_config["section_info"];
     let section_content = this.props.equity_config["section_content"];
-    return <div className="equity_section">
-      <div className="title_bar">{section_info.title} </div>
+    return <div className="equity-section">
+      <div className="title-bar">{section_info.title} </div>
       <SectionNavigation items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
-      {this.selectSectionContent(section_content)}
+      <div className="bg-white pam top-tab-panel">{this.selectSectionContent(section_content)}</div>
     </div>
   }
 
