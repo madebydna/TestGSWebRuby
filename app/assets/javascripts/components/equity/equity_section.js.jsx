@@ -10,6 +10,7 @@ class EquitySection extends React.Component {
     let item = section_content[this.state.active];
     return <div className={'tabs-panel tabs-panel_selected'}>
       <SubSectionToggle
+          key={this.state.active}
           equity_config={item["content"]}
       />
     </div>

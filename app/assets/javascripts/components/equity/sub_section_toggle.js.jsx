@@ -9,7 +9,7 @@ class SubSectionToggle extends React.Component {
   renderContent() {
         let item = this.props.equity_config[this.state.active];
         return <div className={'tabs-panel tabs-panel_selected'}>
-          <EquityContentPane graph={item["component"]} text={item["explanation"]} />
+          <EquityContentPane key={this.state.active} graph={item["component"]} text={item["explanation"]} />
         </div>
   }
 
