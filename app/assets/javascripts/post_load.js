@@ -27,6 +27,7 @@
 //= require util/gs_parsley_validations
 //= require util/test_scores_helpers
 //= require react
+//= require components/equity/graphs/equity_bar_graph
 //= require components
 //= require react_ujs
 //= require util/content

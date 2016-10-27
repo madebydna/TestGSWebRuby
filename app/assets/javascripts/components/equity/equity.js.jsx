@@ -24,7 +24,7 @@ class Equity extends React.Component {
             content: [
               {
                 subject: 'English Language Arts',
-                component: <EquityBarGraph
+                component: <BarGraphWithEnrollmentInLabel
                     test_scores={this.ethnicityTestScoreData('English Language Arts')}
                     graphId="test-scores-math-bar-graph" />,
                 explanation: 'This shows results across different races/ethnicities on an English test given to' +
@@ -32,7 +32,7 @@ class Equity extends React.Component {
               },
               {
                 subject: 'Math',
-                component: <EquityBarGraph
+                component: <BarGraphWithEnrollmentInLabel
                   test_scores={this.ethnicityTestScoreData('Math')}
                   graphId="test-scores-math-bar-graph" />,
                 explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
@@ -45,7 +45,7 @@ class Equity extends React.Component {
             content: [
               {
                 subject: 'Graduation rates',
-                component: <LowIncomeBarGraph
+                component: <EquityBarGraph
                     test_scores={this.graduationRateData()}
                     type="bar"
                     graphId="graduation-rates-graph" />,
@@ -53,7 +53,7 @@ class Equity extends React.Component {
               },
               {
                 subject: 'UC/CSU Eligibility',
-                component: <LowIncomeBarGraph
+                component: <EquityBarGraph
                     test_scores={this.entranceRequirementData()}
                     type="bar"
                     graphId="entrance-requirement-graph" />,
@@ -74,7 +74,7 @@ class Equity extends React.Component {
             content: [
               {
                 subject: 'English Language Arts',
-                component: <LowIncomeBarGraph
+                component: <EquityBarGraph
                     test_scores={this.incomeLevelTestScoreData('English Language Arts')}
                     type="column"
                     graphId="low-income-ela-bar-graph" />,
@@ -83,7 +83,7 @@ class Equity extends React.Component {
               },
               {
                 subject: 'Math',
-                component: <LowIncomeBarGraph
+                component: <EquityBarGraph
                   test_scores={this.incomeLevelTestScoreData('Math')}
                   type="column"
                   graphId="low-income-math-bar-graph" />,

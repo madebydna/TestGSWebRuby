@@ -7,33 +7,40 @@ class EquityBarGraph extends React.Component {
     this.mapColor = this.mapColor.bind(this);
   }
 
+  testScores() {
+    return (
+      _.reject(
+        this.props.test_scores, 
+        function(obj){
+          return (obj.score || obj.school_value) === undefined;
+        }
+      )
+    );
+  }
+
   series() {
     let seriesData = this.seriesData();
-
-    return [{
-      name: 'School value',
-      showInLegend: false,
-      data: seriesData.schoolSeriesData,
-      dataLabels: { format: '{y}%' }
-    }, {
-      name: 'State average',
-      color: 'lightgrey',
-      data: seriesData.stateAverageSeriesData,
-      dataLabels: { format: '{y}%' }
-    }];
+    let seriesArray = [];
+    if (_.without(seriesData.schoolSeriesData, undefined).length > 0) {
+      seriesArray.push({
+        name: 'School value',
+        showInLegend: false,
+        data: seriesData.schoolSeriesData
+      });
+    }
+    if (_.without(seriesData.stateAverageSeriesData, undefined).length > 0) {
+      seriesArray.push({
+        name: 'State average',
+        color: 'lightgrey',
+        data: seriesData.stateAverageSeriesData
+      });
+    }
+    return seriesArray;
   }
 
   // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    return _.map(this.props.test_scores, function(data) {
-      let subLabel = '';
-      if (data.numberOfStudents) {
-        subLabel = data.numberOfStudents.toLocaleString() + ' students';
-      } else if(data.percentOfStudentBody) {
-        subLabel = Math.round(data.percentOfStudentBody) + '% of population</span>';
-      }
-      return data.breakdown + '<br/><span style="font-size:smaller">' + subLabel + '</span>';
-    }.bind(this));
+    return _.map(this.testScores(), data => data.breakdown);
   }
 
   // helper method to map a score to a color for bars
@@ -52,28 +59,41 @@ class EquityBarGraph extends React.Component {
     }[Math.ceil(value/10)]
   }
 
-  seriesData() {
-    let schoolSeries = [];
-    let stateAverageSeries = [];
-    _.forEach(this.props.test_scores, function(value) {
-      if(!value) {
-        return;
-      }
-      let stateAverage = value.state_average;
-      let schoolScore = value.score;
-      schoolSeries.push({
-        color: this.mapColor(schoolScore),
-        y: schoolScore
-      });
-      stateAverageSeries.push({
+  mapDataObjectToSchoolDataPoint(obj) {
+    let score = obj.score || obj.school_value;
+    if (score) {
+      return {
+        color: this.mapColor(score),
+        y: Math.round(score),
+        dataLabels: { format: '{y}%' }
+      };
+    }
+  }
+
+  mapDataObjectToStateAverageDataPoint(obj) {
+    let score = obj.state_average;
+    if(score) {
+      return {
         color: 'lightgrey',
-        y: stateAverage
-      });
-    }.bind(this));
+        y: Math.round(score),
+        dataLabels: { format: '{y}%' }
+      };
+    }
+  }
+
+  seriesData() {
+    let schoolSeries = _.map(
+      this.testScores(),
+      this.mapDataObjectToSchoolDataPoint.bind(this)
+    );
+    let stateAverageSeries = _.map(
+      this.testScores(),
+      this.mapDataObjectToStateAverageDataPoint.bind(this)
+    );
 
     return {
-      stateAverageSeriesData: stateAverageSeries,
-      schoolSeriesData: schoolSeries
+      schoolSeriesData: schoolSeries,
+      stateAverageSeriesData: stateAverageSeries
     };
   }
 
