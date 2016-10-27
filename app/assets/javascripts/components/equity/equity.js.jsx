@@ -17,6 +17,7 @@ class Equity extends React.Component {
       {
         section_info:{
           title: 'Race/Ethnicity',
+          rating: '',
           icon_classes: ''
         },
         section_content:[{
@@ -66,6 +67,7 @@ class Equity extends React.Component {
       {
         section_info:{
           title: 'Low Income Students',
+          rating: this.lowIncomeRating(),
           icon_classes: ''
         },
         section_content:[
@@ -188,6 +190,10 @@ class Equity extends React.Component {
     );
   }
 
+  lowIncomeRating(){
+    return this.props.rating_low_income
+  }
+
   ethnicities() {
     return _.map(gon.ethnicity, obj => obj.breakdown);
   }
@@ -211,5 +217,7 @@ class Equity extends React.Component {
 
 Equity.propTypes = {
   test_scores: React.PropTypes.object,
-  enrollment: React.PropTypes.object
+  enrollment: React.PropTypes.object,
+  characteristics: React.PropTypes.object,
+  rating_low_income: React.PropTypes.object
 };

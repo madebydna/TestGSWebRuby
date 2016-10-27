@@ -3,6 +3,8 @@
   .top-tab-panel {
     margin-top:-1px;
     border: 1px solid #F0f0f0;
+    background-color: #FFFFFF;
+    padding: 10px;
   }
   .tabs-panel {
     display: none;
@@ -29,6 +31,12 @@
     padding-bottom: 20px;
     font-size: 20px;
     font-weight: bold;
+
+    .rating-layout {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
   }
   .sub-section-navigation{
     padding: 20px;
