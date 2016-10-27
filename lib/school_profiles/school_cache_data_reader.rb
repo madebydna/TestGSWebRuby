@@ -50,7 +50,7 @@ module SchoolProfiles
         breakdown_results = decorated_school.performance['GreatSchools rating'].select { |bd|
           bd['breakdown'] == breakdown
         }
-        if breakdown_results.is_a?
+        if breakdown_results.is_a? Array
                breakdown_results.first['school_value']
         end
       end
