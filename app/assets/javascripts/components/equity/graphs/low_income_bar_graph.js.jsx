@@ -8,8 +8,8 @@ class LowIncomeBarGraph extends React.Component {
   }
 
   testScores() {
-    return this._testScores || (
-      this._testScores = _.reject(
+    return (
+      _.reject(
         this.props.test_scores, 
         function(obj){
           return (obj.score || obj.school_value) === undefined;

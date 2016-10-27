@@ -14,8 +14,11 @@ module SchoolProfiles
       return enrollment_string.gsub(',','').to_i if enrollment_string
     end
 
-    def graduation_rate_data
-      @school_cache_data_reader.graduation_rate_data
+    def characteristics
+      @school_cache_data_reader.characteristics.slice(
+        '4-year high school graduation rate',
+        'Percent of students who meet UC/CSU entrance requirements'
+      )
     end
   end
 end

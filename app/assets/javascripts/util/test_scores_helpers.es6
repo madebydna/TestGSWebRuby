@@ -65,6 +65,7 @@ GS.testScoresHelpers = {
       obj => obj.breakdown
     );
     ethnicities.push('All');
+    ethnicities.push('All students');
 
     return _.select(
       testScoreDataArray, obj => _.include(ethnicities, obj.breakdown)

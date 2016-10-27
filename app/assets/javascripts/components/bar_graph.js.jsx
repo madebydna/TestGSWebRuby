@@ -62,7 +62,7 @@ class BarGraph extends React.Component {
     callback = function() {
       $(function() {
         config = this.config();
-        config = _.merge(config, { series: this.props.series });
+        config = _.merge({}, config, { series: this.props.series });
         $('#' + this.props.graphId).highcharts(config);
       }.bind(this));
     }.bind(this);

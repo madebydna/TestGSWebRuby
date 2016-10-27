@@ -36,14 +36,6 @@ class EquityBarGraph extends React.Component {
     }.bind(this));
   }
 
-  // helper method to index into hierarchical test score data
-  // and grab test values for a given grade, level, subject, and year
-  testValues(testDataForBreakdown) {
-    return testDataForBreakdown.
-      grades[this.state.grade].
-      level_code[this.state.levelCode][this.state.subject][this.state.year];
-  }
-
   // helper method to map a score to a color for bars
   mapColor(value) {
     return {

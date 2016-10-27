@@ -24,18 +24,17 @@ class Equity extends React.Component {
             content: [
               {
                 subject: 'English Language Arts',
-                component: <LowIncomeBarGraph
-                    test_scores={this.incomeLevelTestScoreData('English Language Arts')}
-                    type="column"
-                    graphId="low-income-bar-graph" />,
+                component: <EquityBarGraph
+                    test_scores={this.ethnicityTestScoreData('English Language Arts')}
+                    graphId="test-scores-math-bar-graph" />,
                 explanation: 'This shows results across different races/ethnicities on an English test given to' +
                 ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
               },
               {
                 subject: 'Math',
                 component: <EquityBarGraph
-                  test_scores={this.incomeLevelTestScoreData('Math')}
-                  graphId="test-scores-bar-graph" />,
+                  test_scores={this.ethnicityTestScoreData('Math')}
+                  graphId="test-scores-math-bar-graph" />,
                 explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
                 ' differences may suggest that some student groups are not getting the support they need to succeed.'
               }
@@ -45,14 +44,20 @@ class Equity extends React.Component {
             section_title: 'Graduation Rates',
             content: [
               {
-                subject: 'Math',
-                component: 'hello2A',
-                explanation: 'Life is a long road'
+                subject: 'Graduation rates',
+                component: <LowIncomeBarGraph
+                    test_scores={this.graduationRateData()}
+                    type="bar"
+                    graphId="graduation-rates-graph" />,
+                explanation: 'This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.'
               },
               {
-                subject: 'English',
-                component: 'hello2b',
-                explanation: 'Life is a long road'
+                subject: 'UC/CSU Eligibility',
+                component: <LowIncomeBarGraph
+                    test_scores={this.entranceRequirementData()}
+                    type="bar"
+                    graphId="entrance-requirement-graph" />,
+                explanation: 'This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. Find out more about these requirements.'
               }
             ]
           }
@@ -68,14 +73,22 @@ class Equity extends React.Component {
             section_title: 'Test Scores',
             content: [
               {
-                subject: 'Math',
-                component: 'nothing',
-                explanation: 'Life is a long road'
+                subject: 'English Language Arts',
+                component: <LowIncomeBarGraph
+                    test_scores={this.incomeLevelTestScoreData('English Language Arts')}
+                    type="column"
+                    graphId="low-income-ela-bar-graph" />,
+                explanation: 'This shows results across different races/ethnicities on an English test given to' +
+                ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
               },
               {
-                subject: 'English Language Arts',
-                component: 'nothing',
-                explanation: 'Life is a long road'
+                subject: 'Math',
+                component: <LowIncomeBarGraph
+                  test_scores={this.incomeLevelTestScoreData('Math')}
+                  type="column"
+                  graphId="low-income-math-bar-graph" />,
+                explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
+                ' differences may suggest that some student groups are not getting the support they need to succeed.'
               }
             ]
           },
@@ -119,6 +132,20 @@ class Equity extends React.Component {
             gon.ethnicity
         )
     )
+  }
+
+  graduationRateData() {
+    return GS.testScoresHelpers.testDataMatchingEthnicities(
+      this.props.characteristics['4-year high school graduation rate'],
+      gon.ethnicity
+    );
+  }
+  
+  entranceRequirementData() {
+    return GS.testScoresHelpers.testDataMatchingEthnicities(
+      this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
+      gon.ethnicity
+    );
   }
 
   addEnrollmentIntoTestData(testData) {
