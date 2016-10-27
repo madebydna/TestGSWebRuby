@@ -39,7 +39,10 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
               dataLabels: {
                 enabled: true,
                 formatter: function () {
-                  return Math.round(this.percentage) + ' %';
+                  if(this.percentage < 1){
+                    return '<1%';
+                  }
+                  return Math.round(this.percentage) + '%';
                 },
                 distance: 15
               }
