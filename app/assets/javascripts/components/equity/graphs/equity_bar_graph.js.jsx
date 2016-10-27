@@ -25,14 +25,20 @@ class EquityBarGraph extends React.Component {
       seriesArray.push({
         name: 'School value',
         showInLegend: false,
-        data: seriesData.schoolSeriesData
+        data: seriesData.schoolSeriesData,
+        dataLabels: {
+          allowOverlap: true
+        }
       });
     }
     if (_.without(seriesData.stateAverageSeriesData, undefined).length > 0) {
       seriesArray.push({
         name: 'State average',
         color: 'lightgrey',
-        data: seriesData.stateAverageSeriesData
+        data: seriesData.stateAverageSeriesData,
+        dataLabels: {
+          allowOverlap: true
+        }
       });
     }
     return seriesArray;

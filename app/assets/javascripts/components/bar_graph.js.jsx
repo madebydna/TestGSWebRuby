@@ -3,6 +3,7 @@ class BarGraph extends React.Component {
     super(props);
     this.drawChart = this.drawChart.bind(this);
     this.config = this.config.bind(this);
+    this.state = {};
   }
 
   config() {
