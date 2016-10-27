@@ -42,8 +42,6 @@ class BarGraph extends React.Component {
           layout: 'horizontal',
           align: 'center',
           verticalAlign: 'bottom',
-          //x: -40,
-          //y: 80,
           floating: false,
           borderWidth: 0,
           backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),

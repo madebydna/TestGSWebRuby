@@ -104,9 +104,12 @@ class Equity extends React.Component {
                 explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
               },
               {
-                subject: 'English',
-                component: 'hello2b',
-                explanation: 'Life is a long road'
+                subject: 'UC/CSU Eligibility',
+                component: <EquityBarGraph
+                    test_scores={this.entranceRequirementByIncomeLevelData()}
+                    type="bar"
+                    graphId="entrance-requirement-by-income-level-graph" />,
+                explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
               }
             ]
           }
@@ -153,6 +156,13 @@ class Equity extends React.Component {
   
   entranceRequirementData() {
     return GS.testScoresHelpers.testDataMatchingEthnicities(
+      this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
+      gon.ethnicity
+    );
+  }
+
+  entranceRequirementByIncomeLevelData() {
+    return GS.testScoresHelpers.incomeLevelTestScoreData(
       this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
       gon.ethnicity
     );
