@@ -46,7 +46,7 @@ class Equity extends React.Component {
               {
                 subject: 'Graduation rates',
                 component: <EquityBarGraph
-                    test_scores={this.graduationRateData()}
+                    test_scores={this.graduationRateDataByEthnicity()}
                     type="bar"
                     graphId="graduation-rates-graph" />,
                 explanation: 'This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.'
@@ -96,9 +96,12 @@ class Equity extends React.Component {
             section_title: 'Graduation Rates',
             content: [
               {
-                subject: 'Math',
-                component: 'hello2A',
-                explanation: 'Life is a long road'
+                subject: 'Graduation rates',
+                component: <EquityBarGraph
+                    test_scores={this.graduationRateDataByIncomeLevel()}
+                    type="bar"
+                    graphId="graduation-rates-by-income-level-graph" />,
+                explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
               },
               {
                 subject: 'English',
@@ -134,8 +137,15 @@ class Equity extends React.Component {
     )
   }
 
-  graduationRateData() {
+  graduationRateDataByEthnicity() {
     return GS.testScoresHelpers.testDataMatchingEthnicities(
+      this.props.characteristics['4-year high school graduation rate'],
+      gon.ethnicity
+    );
+  }
+
+  graduationRateDataByIncomeLevel() {
+    return GS.testScoresHelpers.incomeLevelTestScoreData(
       this.props.characteristics['4-year high school graduation rate'],
       gon.ethnicity
     );
