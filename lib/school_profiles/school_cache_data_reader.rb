@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance)
 
     attr_reader :school, :school_cache_keys
 
@@ -43,6 +43,17 @@ module SchoolProfiles
 
     def college_readiness_rating
       decorated_school.college_readiness_rating
+    end
+
+    def equity_ratings_breakdown(breakdown)
+      if decorated_school.performance && decorated_school.performance['GreatSchools rating']
+        breakdown_results = decorated_school.performance['GreatSchools rating'].select { |bd|
+          bd['breakdown'] == breakdown
+        }
+        if breakdown_results.is_a?
+               breakdown_results.first['school_value']
+        end
+      end
     end
 
     def ethnicity_data

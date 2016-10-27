@@ -77,6 +77,8 @@ class SchoolCacheResults
         CachedFeedTestScoresMethods
       when 'nearby_schools'
         CachedNearbySchoolsMethods
+      when 'performance'
+        CachedPerformanceMethods
     end
   end
 

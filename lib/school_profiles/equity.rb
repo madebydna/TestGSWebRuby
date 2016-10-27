@@ -20,5 +20,9 @@ module SchoolProfiles
         'Percent of students who meet UC/CSU entrance requirements'
       )
     end
+
+    def rating_low_income
+      @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
+    end
   end
 end
