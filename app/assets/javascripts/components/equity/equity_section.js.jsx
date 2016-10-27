@@ -15,7 +15,7 @@ class EquitySection extends React.Component {
       />
     </div>
   }
-  createRatingCircle(rating) {
+  createRatingCircle(rating, icon) {
     let rating_html = '';
     if (rating != '') {
       let circleClassName = 'circle-rating--medium rating-layout circle-rating--'+rating;
@@ -23,7 +23,7 @@ class EquitySection extends React.Component {
     }
     else{
       let circleClassName = 'circle-rating--medium rating-layout circle-rating--equity-blue';
-      rating_html = <div className={circleClassName}><span className="icon-shield"></span></div>;
+      rating_html = <div className={circleClassName}><span className={icon}></span></div>;
     }
     return rating_html
   }
@@ -31,7 +31,7 @@ class EquitySection extends React.Component {
   render() {
     let section_info = this.props.equity_config["section_info"];
     let section_content = this.props.equity_config["section_content"];
-    let rating = this.createRatingCircle(section_info.rating);
+    let rating = this.createRatingCircle(section_info.rating, section_info.icon_classes);
 
     return <div className="equity-section">
       <div className="title-bar">{rating}{section_info.title}</div>

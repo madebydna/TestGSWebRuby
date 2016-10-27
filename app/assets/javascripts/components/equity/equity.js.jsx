@@ -18,7 +18,7 @@ class Equity extends React.Component {
         section_info:{
           title: 'Race/Ethnicity',
           rating: '',
-          icon_classes: ''
+          icon_classes: 'icon-shield'
         },
         section_content:[{
             section_title: 'Test Scores',
