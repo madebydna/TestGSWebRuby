@@ -92,7 +92,11 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
   };
 
   var generateSubgroupContainer = function(parsedData) {
-    var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title'>" + parsedData.chartTitle + "</div><div id='" + parsedData.chartId + "'></div><div class='state-avg'>State avg. " + parsedData.stateAverage +  "</div></div>";
+    var stateAvgHtml = "";
+    if (parsedData.stateAverage) {
+      stateAvgHtml =  "<div class='state-avg'>State avg. " + parsedData.stateAverage +  "</div>";
+    }
+    var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title'>" + parsedData.chartTitle + "</div><div id='" + parsedData.chartId + "'></div>" + stateAvgHtml + "</div>";
     $('.subgroups > .row').append(containerHtml);
   };
 
