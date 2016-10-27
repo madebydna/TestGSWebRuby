@@ -13,6 +13,8 @@ describe "Visitor" do
   end
 
   scenario "does not see equity section if no data present" do
+    pending('How do we know when to hide equity section?') # TODO
+    fail('equity section is always displayed currently')
     school = create(:school_with_new_profile, id: 1)
     visit school_path(school)
     expect(page_object).to_not have_equity
