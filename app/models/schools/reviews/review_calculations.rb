@@ -87,7 +87,7 @@ module ReviewCalculations
   end
 
   def topical_review_summary
-    hash = Hash.new { |hash, key| hash[key] = Hash.new(&hash.default_proc) }
+    hash = Hash.new { |h, key| h[key] = Hash.new(&h.default_proc) }
     by_topic.each do |topic, reviews|
       next if topic == TOPIC_TO_SKIP || reviews.empty?
       topic_answer_values = []

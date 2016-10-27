@@ -104,6 +104,7 @@ describe "Visitor" do
       expect(page_object.test_scores.show_more.items).to be_visible
     end
   end
+
   private
 
   def test_scores

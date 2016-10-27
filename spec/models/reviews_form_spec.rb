@@ -294,8 +294,7 @@ describe ReviewsForm do
 
   def build_reviews_params(review_question_id: "1",
                            comment: ("test this " * 15).strip,
-                           answer_value: "5"
-                          )
+                           answer_value: "5")
     [{
       "review_question_id"=>review_question_id,
       "comment"=> comment,

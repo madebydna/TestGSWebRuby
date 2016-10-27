@@ -11,7 +11,7 @@ describe UserReviews do
       school = build(:school)
       reviews = build_list(:review, 3, school: school)
 
-      five_star_review, _ = UserReviews.new(reviews, school).partition
+      five_star_review, = UserReviews.new(reviews, school).partition
       expect(five_star_review).to be_nil
     end
 

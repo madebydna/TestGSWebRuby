@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
   after_filter :disconnect_connection_pools
 
   layout "deprecated_application"
+
   protected
 
   rescue_from Exception, :with => :exception_handler

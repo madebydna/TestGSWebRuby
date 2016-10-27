@@ -7,7 +7,7 @@ describe Constraint::NewSchoolProfile do
   end
   describe "#matches?" do
     it "should return true for school with new profile flag" do
-      new_profile_school_request = double()
+      new_profile_school_request = double
       new_profile_school_request.stub(:parameters) do
         {state: "california", schoolId: "1"}
       end
@@ -18,7 +18,7 @@ describe Constraint::NewSchoolProfile do
     end
 
     it "should return false for school without a new profile flag" do
-      school_profile_request = double()
+      school_profile_request = double
       school_profile_request.stub(:parameters) do
         {state: "california", schoolId: "1"}
       end
@@ -29,7 +29,7 @@ describe Constraint::NewSchoolProfile do
     end
 
     it "should return false with no school found" do
-      school_profile_request = double()
+      school_profile_request = double
       school_profile_request.stub(:parameters) do
         {state: "california", schoolId: "1"}
       end
@@ -39,7 +39,7 @@ describe Constraint::NewSchoolProfile do
     end
 
     it "should return true with a school with new profile flag in a two word state" do
-      new_profile_school_request = double()
+      new_profile_school_request = double
       new_profile_school_request.stub(:parameters) do
         {state: "new-jersey", schoolId: "1"}
       end
