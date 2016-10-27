@@ -33,6 +33,7 @@ class BarGraph extends React.Component {
       },
       yAxis: {
           min: 0,
+          max: 100,
           title: {
               text: '',
               align: 'high'
