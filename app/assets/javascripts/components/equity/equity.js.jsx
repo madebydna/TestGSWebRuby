@@ -203,6 +203,7 @@ class Equity extends React.Component {
     var equitySections = [];
     for (var i = 0; i < equityConfig.length; i++) {
       equitySections.push(<EquitySection
+          key={i}
           equity_config={ equityConfig[i]}
 
       />)

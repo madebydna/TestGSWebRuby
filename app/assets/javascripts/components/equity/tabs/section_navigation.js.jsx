@@ -4,6 +4,7 @@ class SectionNavigation extends React.Component {
 
     var items = _.map(this.props.items, function(item, index) {
       return <a href="javascript:void(0)"
+                key={index}
                 className={'nav-title ' + (active === index ? 'tab_selected' : '')}
                 onClick={this.onClick.bind(this, index)}>
         {item.section_title}
