@@ -48,6 +48,17 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
               }
             }
           },
+          tooltip: {
+            pointFormatter: function() {
+              var val;
+              if (this.percentage < 1) {
+                val = "<1";
+              } else {
+                val = Math.round(this.percentage)
+              }
+              return '<span style="color:' + this.color + ';">\u25CF</span> percentage: <b>' + val + '</b>';
+            }
+          },
           series: [{
             name: 'percentage',
             data: ethnicityData
