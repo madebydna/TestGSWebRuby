@@ -80,7 +80,7 @@
         position: absolute;
         top: 50px;
         left: 50px;
-        background-color: white; //TODO: why does this need to be explicit?
+        background-color: #FFFFFF;
         @include media-breakpoint-down(xs) {
           max-width: 300px;
           position: relative;
