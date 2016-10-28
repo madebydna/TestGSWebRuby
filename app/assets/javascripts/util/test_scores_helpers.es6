@@ -17,7 +17,8 @@ GS.testScoresHelpers = {
                     grade: grade,
                     level_code: level_code,
                     subject: subject,
-                    year: year
+                    year: year,
+                    school_value: obj.score
                   }
                 )
               )
@@ -68,9 +69,10 @@ GS.testScoresHelpers = {
     ethnicities.push('All');
     ethnicities.push('All students');
 
-    return _.select(
+    let result = _.select(
       testScoreDataArray, obj => _.include(ethnicities, obj.breakdown)
     );
+    return result;
   }
 
 };
