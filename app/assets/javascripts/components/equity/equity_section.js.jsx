@@ -17,7 +17,7 @@ class EquitySection extends React.Component {
   }
   drawRatingCircle(rating, icon) {
     let rating_html = '';
-    if (rating != '') {
+    if (rating && rating != '') {
       let circleClassName = 'circle-rating--medium rating-layout circle-rating--'+rating;
       rating_html = <div className={circleClassName}>{rating}</div>;
     }

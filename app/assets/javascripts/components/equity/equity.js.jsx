@@ -68,7 +68,7 @@ class Equity extends React.Component {
         section_info:{
           title: 'Low Income Students',
           rating: this.lowIncomeRating(),
-          icon_classes: ''
+          icon_classes: 'icon-shield'
         },
         section_content:[
           {
