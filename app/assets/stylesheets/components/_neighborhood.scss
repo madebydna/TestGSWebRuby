@@ -1,0 +1,131 @@
+.neighborhood {
+  $link-text-color: #2ba3dc;
+  $contact-icon-color: #c1d2d9;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px 15px;
+  max-width: 1200px;
+
+  .title {
+    font-family: 'Robotoslab-Bold';
+    font-size: 26px;
+    text-align: left;
+    @include media-breakpoint-down(xs) {
+      text-align: center;
+    }
+  }
+
+  .attendance-zone {
+    text-align: right;
+    vertical-align: bottom;
+    @include media-breakpoint-down(xs) {
+      text-align: center;
+    }
+  }
+
+  & a {
+    color: $link-text-color;
+  }
+
+  & span {
+    vertical-align: middle;
+    white-space: nowrap;
+
+  }
+
+  .homes-for-sale {
+    button {
+      cursor: pointer;
+      border-radius: 2px;
+      width: 134px;
+      height: 32px;
+      padding: 5px 10px;
+      margin-top: 10px;
+      color: white;
+      background-color: $link-text-color;
+      font-size: 12px;
+      text-align: center;
+      font-family: "opensans-regular";
+    }
+  }
+
+  .map-container {
+    position: relative;
+    min-height: 450px;
+    max-width: 1200px;
+    padding-bottom: 30px;
+    margin: auto;
+    @include media-breakpoint-down(xs) {
+      float: none;
+      min-height: 400px;
+    }
+  }
+
+    .static-map {
+      width: 100%;
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+    }
+
+    .map-overlay {
+
+      .overlay-container {
+        max-width: 380px;
+        font-family: "opensans-regular";
+        box-shadow: 0 27px 26px 0 rgba(0, 0, 0, 0.14);
+        margin-left: 20px;
+        padding: 20px;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        background-color: white; //TODO: why does this need to be explicit?
+        @include media-breakpoint-down(xs) {
+          max-width: 300px;
+          position: relative;
+          margin: auto;
+          padding: 24px 0;
+          top: 0;
+          left: 0;
+        }
+        .contact-address {
+          font-size: 24px;
+          float: left;
+          margin: 20px;
+          @include media-breakpoint-down(xs) {
+            margin: auto;
+            padding: 0 30px;
+            float: none;
+          }
+        }
+        .contact-item {
+          font-size: 14px;
+          margin: 20px;
+        .contact-row{
+          margin-bottom: 5px;
+          vertical-align: middle;
+        }
+        .contact-icon-box {
+          width: 20px;
+          float: left;
+          margin-right: 20px;
+          text-align: center;
+          @include media-breakpoint-down(xs) {
+            margin-right: 10px;
+          }
+         }
+        .school-leader {
+          font-family: "opensans-semibold";
+         }
+        .contact-icon {
+          color: $contact-icon-color;
+          vertical-align: middle;
+        }
+        & a {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}

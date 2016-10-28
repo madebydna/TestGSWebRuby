@@ -18,6 +18,7 @@ class SchoolProfilesController < ApplicationController
     add_gon_ethnicity
     add_gon_subgroup
     add_gon_gender
+    @static_google_maps = static_google_maps
   end
 
   private
@@ -227,5 +228,41 @@ class SchoolProfilesController < ApplicationController
     review_date = reviews_list.present? ? reviews_list.first.created : nil
     school_date = school.modified.present? ? school.modified.to_date : nil
     [review_date, school_date].compact.max
+  end
+
+  def static_google_maps
+    @_static_google_maps ||= begin
+      sizes = {
+         # 'xs'     => [319, 150],
+          'sm'     => [767, 450],
+          'md'     => [991, 450],
+          'lg' => [1264, 450]
+      }
+
+      google_apis_path = GoogleSignedImages::STATIC_MAP_URL
+      address = GoogleSignedImages.google_formatted_street_address(@school)
+      school_rating = nil #@school.gs_rating
+      #school_rating = school_cache_data_reader.gs_rating
+      if school_rating && (1..10).cover?(school_rating.to_i)
+        map_pin_url = view_context.image_url("icons/google_map_pins/map_icon_#{school_rating}.png")
+        icon_param = "icon:#{map_pin_url}|"
+      else
+        icon_param = ''
+      end
+
+      sizes.inject({}) do |sized_maps, (label, size)|
+        sized_maps[label] = GoogleSignedImages.sign_url(
+            "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{icon_param}#{address}&sensor=false"
+        )
+        sized = sized_maps
+        sized
+      end
+      # sizes.each_with_object({}) do |sized_maps, (label, size)|
+      #   sized_maps[label] = GoogleSignedImages.sign_url(
+      #       "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{icon_param}#{address}&sensor=false"
+      #   )
+      #   sized_maps
+      # end
+    end
   end
 end

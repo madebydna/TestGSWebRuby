@@ -61,6 +61,10 @@ module CachedCharacteristicsMethods
     census_value('Head official name')
   end
 
+  def school_leader_email
+    census_value('Head official email address')
+  end
+
   def ethnicity_data
     characteristics['Ethnicity'] || []
   end
