@@ -39,6 +39,10 @@ $title-font-size: 22px;
     cursor: default;
   }
 
+  .icon-checkmark {
+    display: none;
+  }
+
   .select-button {
     text-align: left;
     margin: auto;
@@ -57,6 +61,14 @@ $title-font-size: 22px;
   .active {
     background-image: linear-gradient($gs-active-green, $gs-active-green), linear-gradient(to bottom, $white, $color-gradient-button-dark);
     .user-type {
+      color: $white;
+    }
+    .icon-checkmark {
+      padding-top: $user-type-padding;
+      padding-right: $spacing-large;
+      font-size: $font-size-l3;
+      float: right;
+      display: block;
       color: $white;
     }
   }
