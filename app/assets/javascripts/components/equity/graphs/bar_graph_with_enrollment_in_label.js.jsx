@@ -22,6 +22,8 @@ BarGraphWithEnrollmentInLabel.defaultProps = {
 }
 
 BarGraphWithEnrollmentInLabel.propTypes = {
-  test_scores: React.PropTypes.array.isRequired,
+  test_scores: React.PropTypes.arrayOf(React.PropTypes.shape({
+    breakdown: React.PropTypes.string.isRequired
+  })).isRequired,
   graphId: React.PropTypes.string.isRequired
 }
