@@ -9,11 +9,14 @@ class EquityBarGraph extends React.Component {
 
   testScores() {
     return (
-      _.reject(
-        this.props.test_scores, 
-        function(obj){
-          return (obj.score || obj.school_value) === undefined;
-        }
+      _.sortBy(
+        _.reject(
+          this.props.test_scores, 
+          function(obj){
+            return (obj.score || obj.school_value) === undefined;
+          }
+        ),
+        obj => obj.breakdown
       )
     );
   }

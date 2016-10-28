@@ -49,7 +49,8 @@ GS.testScoresHelpers = {
     arrayOfEthnicityCharacteristicsObjects) {
 
     let testScoreBreakdownsToEthnicityBreakdowns = {
-      'African American': 'Black'
+      'African American': 'Black',
+      'All': 'All students'
     };
 
     testScoreDataArray = _.map(

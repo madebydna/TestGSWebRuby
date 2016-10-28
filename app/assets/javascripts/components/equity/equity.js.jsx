@@ -182,7 +182,7 @@ class Equity extends React.Component {
                 ) || {}).school_value
               }
           );
-          if (testData.breakdown == 'All') {
+          if (testData.breakdown == 'All students') {
             newObj.numberOfStudents = this.props.enrollment;
           }
           return newObj;
