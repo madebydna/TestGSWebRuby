@@ -25,7 +25,7 @@ class ReviewSavingMessenger
   end
 
   def unregistered?
-    ! user.email_verified
+    !user.email_verified
   end
 
   def one_review_active?

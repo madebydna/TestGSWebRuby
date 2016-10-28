@@ -1,0 +1,118 @@
+.equity-container {
+
+  .top-tab-panel {
+    margin-top:-1px;
+    border: 1px solid #F0f0f0;
+    background-color: #FFFFFF;
+    padding: 10px;
+  }
+  .tabs-panel {
+    display: none;
+  }
+
+  .tabs-panel_selected {
+    display: block;
+  }
+
+  .tab-selected {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+
+  .equity-section {
+    background-color: #f6f9fa;
+    padding: 10px;
+    margin-bottom: 30px;
+  }
+  .title-bar {
+    padding-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+
+    .rating-layout {
+      display: inline-block;
+      margin-right: 10px;
+      vertical-align: middle;
+      font-size: 24px;
+    }
+  }
+  .sub-section-navigation{
+    padding: 20px;
+    text-align: center;
+
+    .sub-nav-item {
+      padding: 5px 10px;
+      border: 1px solid #c1d2d9;
+      font-size: 12px;
+      font-weight: normal;
+      text-decoration: none;
+      background-color: #F0FAFB;
+      color: #28292a;
+
+      &:not(:first-child) {
+        margin-left: -1px;
+      }
+
+      &:last-child{
+        border-top-right-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+
+      &:first-child{
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+    }
+
+    .sub-tab-selected {
+      text-decoration: none;
+      color: #fff;
+      background-color: #2ba3dc;
+    }
+  }
+
+  .nav-title {
+    font-size: 12px;
+    float: left;
+    padding: 10px 20px;
+    color: #71787e;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+
+    &.tab_selected {
+      background: #fff;
+      font-weight: bold;
+      color: #2e3438;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
+      border-top: 1px solid #F0f0f0;
+      border-right: 1px solid #F0f0f0;
+      border-left: 1px solid #F0f0f0;
+    }
+  }
+
+
+
+
+
+  //label .fa {
+  //  font-size: 1.3em;
+  //  margin: 0 0.4em 0 0;
+  //}
+
+
+  /*Content Animation*/
+  //@keyframes fadeInScale {
+  //  0% {
+  //    transform: scale(0.9);
+  //    opacity: 0;
+  //  }
+  //
+  //  100% {
+  //    transform: scale(1);
+  //    opacity: 1;
+  //  }
+  //}
+}

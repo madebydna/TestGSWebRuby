@@ -8,6 +8,7 @@
   $color-gs-blue-hover: #55b5e3;
   $color-gs-blue-active: #2282b0;
   $color-error: #d94373;
+  $color-notice: #36C767;
 
   margin-top: $spacing-large;
   padding-bottom: $spacing-small;
@@ -21,6 +22,10 @@
     color: $color-error;
   }
 
+  p.notice {
+    color: $color-notice;
+  }
+
   .header {
     font-family: opensans-bold;
     color: $color-dark-gray-text;
@@ -31,44 +36,11 @@
     margin-bottom: $spacing-small;
   }
 
-  .form-buttons {
+  .form-actions {
+    @include review-form-buttons;
     padding: $spacing-medium 0;
     text-align: right;
   }
-
-  .button {
-    border-radius: 2px;
-    border: solid 1px $color-button-border;
-    padding: $spacing-medium $spacing-large;
-    color: $color-dark-gray-text;
-    cursor: pointer;
-    font-size: $font-size-base;
-
-    &:hover {
-      border: solid 1px $color-button-hover-border;
-    }
-
-    &:active {
-      border: solid 1px $color-button-active-border;
-    }
-  }
-
-  .button.cta {
-    border: solid 1px $color-gs-blue;
-    background-color: $color-gs-blue;
-    color: #fff;
-
-    &:hover {
-      border: solid 1px $color-gs-blue-hover;
-      background-color: $color-gs-blue-hover;
-    }
-
-    &:active {
-      border: solid 1px $color-gs-blue-active;
-      background-color: $color-gs-blue-active;
-    }
-  }
-
 }
 
 .spinny-wheel-container > .report-review {

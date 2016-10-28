@@ -36,15 +36,19 @@ class TopicalReview extends React.Component {
   render() {
     const review = this.props.review;
     return(
-        <div className="topical-review" key={review.id}>
-          <div className="average-rating-column">
-            <span className={"answer-icon " + review.answer }></span>
+        <div className="topical-review" key={review.id}
+             itemProp="review" itemScope itemType="http://schema.org/Review">
+          <meta itemProp="datePublished" content={review.date_published}/>
+          <div className="average-rating-column"
+               itemProp="reviewRating" itemScope itemType="http://schema.org/Rating">
+            <span className={"answer-icon " + review.answer }
+                  itemProp="ratingValue" content={review.answer_value}></span>
           </div>
           <div className="text-column">
             <div className="answer">
               { review.answer_label }
             </div>
-            <div className="comment">
+            <div className="comment" itemProp="reviewBody">
               <ShortenText text={review.comment} length={200} key={review.text} />
             </div>
             <div className="topical-review-button-bar">

@@ -72,6 +72,14 @@ class SchoolProfileReviewsController < DeprecatedSchoolProfileController
     @school_reviews.number_of_reviews_with_comments <= MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW
   end
 
+  def set_hreflang
+    url = school_reviews_url(@school)
+    @hreflang ||= {}
+    @hreflang[:en] = remove_query_params_from_url(url, [:lang])
+    @hreflang[:es] = add_query_params_to_url(url, true, {lang: :es})
+    @hreflang
+  end
+
   def review_params
     params.
       require(:review).

@@ -12,6 +12,7 @@ class Reviews extends React.Component {
     this.renderReviewForm = this.renderReviewForm.bind(this);
     this.reorderForCurrentUser = this.reorderForCurrentUser.bind(this);
     this.renderReviewsList = this.renderReviewsList.bind(this);
+    this.handleUpdateOfReviews = this.handleUpdateOfReviews.bind(this);
   }
 
   componentWillMount() {
@@ -45,6 +46,18 @@ class Reviews extends React.Component {
       this.setState( { reviewsList: reviews });
   }
 
+  // TODO: refactor reorder For CurrentUser and HandleUpdateOfReviews to remove
+  // duplication
+
+  handleUpdateOfReviews(userReviews) {
+    let newUserReviews = userReviews;
+    let reviews = JSON.parse(JSON.stringify(this.state.reviewsList));
+    let schoolUserDigest = newUserReviews.school_user_digest
+    let existingUserReviews = this.findRemoveUserReview(schoolUserDigest, reviews);
+    reviews.unshift(newUserReviews);
+    this.setState( { reviewsList: reviews });
+  }
+
   findRemoveUserReview(schoolUserDigest, reviews) {
     var result;
     for(i = 0; i < reviews.length; i++) {
@@ -66,6 +79,7 @@ class Reviews extends React.Component {
       schoolId = { this.props.schoolId }
       questions = { this.props.questions }
       handleReviewSubmitMessage = { this.handleReviewSubmitMessage }
+      handleUpdateOfReviews = { this.handleUpdateOfReviews }
     />);
   }
 

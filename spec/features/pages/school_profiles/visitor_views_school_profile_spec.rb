@@ -5,7 +5,7 @@ RSpec::Matchers.define :have_gs_rating_of do |expected_rating|
   match do |actual|
     actual.gs_rating.text == expected_rating.to_s
   end
-  failure_message_for_should do |actual|
+  failure_message do |actual|
     "expected a GS rating of #{expected} but got #{actual.gs_rating.text}"
   end
 end

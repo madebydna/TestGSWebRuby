@@ -47,17 +47,51 @@ class SchoolProfilesPage < SitePrism::Page
     elements :cta_stars, ".five-star-question-cta__star"
     element :completed_five_star_question, ".review-question > div > .five-star-rating"
     elements :questions, ".review-question"
+    elements :text_areas, "textarea"
+    element :submit, ".button.cta"
+    def submit_form
+        submit.click
+    end
+  end
+
+  class StudentDiversity < RatingContainer
+    element :ethnicity_graph, "#ethnicity-graph"
+    element :subgroup_container, '.subgroups'
+    elements :subgroup_data, ".subgroup"
+    element :gender_data, ".gender"
+  end
+
+  class ReviewList < SitePrism::Section
+    element :five_star_review_comment, ".five-star-review .comment"
+    element :five_star_review
+    section :five_stars, FiveStars, '.five-stars'
+
+    def has_five_star_comment?(comment)
+      five_star_review_comment.text == comment
+    end
   end
 
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
   section :test_scores, RatingContainer, '.rating-container--test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
+  section :student_diversity, StudentDiversity, '.student-diversity-container'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
+  section :review_list, ReviewList, '.review-list'
+  section :equity, '.rs-equity' do
 
-  def choose_five_star_cta_response
-    review_form.cta_stars.first.click
+  end
+
+  element :five_star_review_comment, ".five-star-review .comment"
+
+  def choose_five_star_cta_response(star_select = 1)
+    index = star_select - 1
+    review_form.cta_stars[index].click
+  end
+
+  def fill_in_five_star_rating_comment(comment)
+    review_form.text_areas.last.set comment
   end
 
   def has_star_rating_of?(star_rating)

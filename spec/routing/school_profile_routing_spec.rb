@@ -120,8 +120,8 @@ describe 'school profile routing' do
                     allow_any_instance_of(Constraint::NewSchoolProfile)
                       .to receive(:matches?).and_return(true)
                     expect(@school).not_to be_preschool
-                    root_path = ""
-                    if ! (path == root_path)
+                    root_path = ''
+                    unless path == root_path
                       route_params.merge!({path: path.gsub("/","")})
                     end
                   end

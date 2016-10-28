@@ -11,14 +11,14 @@ describe ReviewsForm do
   end
 
   it "validates presence of state" do
-    reviews_form = build_reviews_form(state: '')
+    reviews_form = build_reviews_form(state: "")
 
     expect(reviews_form).to be_invalid
     expect(reviews_form.errors[:state]).to eq(["Must provide school state"])
   end
 
   it "validates presence of school id" do
-    reviews_form = build_reviews_form(school_id: '')
+    reviews_form = build_reviews_form(school_id: "")
 
     expect(reviews_form).to be_invalid
     expect(reviews_form.errors[:school_id]).to eq(["Must provide school id"])
@@ -129,7 +129,7 @@ describe ReviewsForm do
     end
   end
 
-  describe '#review_params' do
+  describe "#review_params" do
     it "should return review and answer params" do
       reviews_form = build_reviews_form
       comment = ("test this " * 15).strip
@@ -155,13 +155,84 @@ describe ReviewsForm do
   describe "#hash_result" do
     it "should return hash with reviews hash and reviews saving message" do
       reviews_form = build_reviews_form
-      allow(reviews_form).to receive(:reviews_hash).and_return('reviews_hash')
-      allow(reviews_form).to receive(:reviews_saving_message).and_return('message')
+      allow(reviews_form).to receive(:reviews_hash).and_return("reviews_hash")
+      allow(reviews_form).to receive(:reviews_saving_message).and_return("message")
+      allow(reviews_form).to receive(:user_reviews).and_return("user_reviews")
       result_hash  = {
-        reviews: 'reviews_hash',
-        message: 'message'
+        reviews: "reviews_hash",
+        message: "message",
+        user_reviews: "user_reviews"
       }
       expect(reviews_form.hash_result).to eq(result_hash)
+    end
+  end
+
+  describe "existing_reviews" do
+
+
+  end
+
+  describe "existing_reviews_with_comments_not_updated" do
+    context "with user having existing reviews for school" do
+      it "it should return only existing reviews not being updated by form" do
+        school = create(:alameda_high_school, id: 1)
+        verified_user = create(:verified_user)
+        existing_review = create(:homework_review, user: verified_user, school_id: school.id)
+        saved_review = build(:teacher_effectiveness_review, user: verified_user, school_id: school.id)
+        reviews_form = build_reviews_form(user: verified_user)
+        valid_reviews = [saved_review]
+        allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
+
+        expect(reviews_form.existing_reviews_with_comments_not_updated).to eq([existing_review])
+      end
+    end
+    context "with no existing reviews" do
+      it "should return empty array" do
+        school = create(:alameda_high_school, id: 1)
+        verified_user = create(:verified_user)
+        saved_review = build(:teacher_effectiveness_review, user: verified_user, school_id: school.id)
+        reviews_form = build_reviews_form(user: verified_user)
+        valid_reviews = [saved_review]
+        allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
+
+        expect(reviews_form.existing_reviews_with_comments_not_updated).to eq([])
+      end
+    end
+  end
+
+  describe "all_active_reviews_with_comments" do
+    context "with no existing reviews for school" do
+      context "with form saving one review w/ comment and one w/out comment" do
+        it "should return array only with review w/ comment" do
+          reviews_form = build_reviews_form
+          review_no_comment = build(:review, comment: nil)
+          review_with_comment = build(:review)
+          saved_reviews = [
+            review_no_comment,
+            review_with_comment
+          ]
+          allow(reviews_form).to receive(:saved_reviews)
+            .and_return(saved_reviews)
+          allow(reviews_form).
+            to receive(:existing_reviews_with_comments_not_updated).and_return([])
+
+          expect(reviews_form.all_active_reviews_with_comments)
+            .to eq([review_with_comment])
+        end
+      end
+    end
+  end
+
+  describe "#user_reviews" do
+    it "should return user reviews struct" do
+      school = create(:alameda_high_school, id: 1)
+      verified_user = create(:verified_user)
+      saved_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1)
+      reviews_form = build_reviews_form
+      valid_reviews = [saved_review]
+      allow(reviews_form).to receive(:saved_reviews).and_return(valid_reviews)
+
+      expect(reviews_form.user_reviews).to be_a(Hash)
     end
   end
 
@@ -208,8 +279,8 @@ describe ReviewsForm do
     end
   end
 
-  def build_reviews_form(state: 'CA',
-                         school_id: '1',
+  def build_reviews_form(state: "CA",
+                         school_id: "1",
                          user: create(:verified_user),
                          reviews_params: [])
     params = {
@@ -223,8 +294,7 @@ describe ReviewsForm do
 
   def build_reviews_params(review_question_id: "1",
                            comment: ("test this " * 15).strip,
-                           answer_value: "5"
-                          )
+                           answer_value: "5")
     [{
       "review_question_id"=>review_question_id,
       "comment"=> comment,

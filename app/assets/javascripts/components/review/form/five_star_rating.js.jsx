@@ -5,7 +5,7 @@ class FiveStarRating extends React.Component {
   }
 
   handleStarResponseClick(value) {
-    return () => this.props.onClick(value, this.props.question_id)
+    return () => this.props.onClick(value, this.props.questionId)
   }
 
   fiveStars(numberFilled) {
@@ -36,3 +36,11 @@ class FiveStarRating extends React.Component {
     )
   }
 }
+
+FiveStarRating.propTypes = {
+  value: React.PropTypes.string,
+  responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  questionId: React.PropTypes.number.isRequired,
+  onClick: React.PropTypes.func.isRequired
+};

@@ -71,7 +71,7 @@ class Review < ActiveRecord::Base
   def should_run_unique_active_reviews?
     unique = @run_unique_active_reviews_validation
     @run_unique_active_reviews_validation = true
-    return true if unique == nil
+    return true if unique.nil?
     return unique
   end
 

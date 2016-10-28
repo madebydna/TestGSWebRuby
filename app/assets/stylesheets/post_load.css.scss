@@ -39,6 +39,7 @@
 @import "components/five-star-question-cta";
 @import "components/join-form";
 @import "components/nearby-schools";
+@import "components/neighborhood";
 @import "components/school-user-modal";
 @import "gs/objects/footer.css.scss";
 @import "fonts/fonts-opensans";
@@ -91,8 +92,10 @@
 @import 'school_profiles/school_profile_sticky_cta';
 @import 'school_profiles/review_form';
 @import 'school_profiles/ethnicity_container';
+@import 'school_profiles/subgroups';
 @import 'resources/tipso';
 @import 'resources/remodal';
 @import 'resources/remodal-default-theme';
 @import 'resources/animate';
+@import 'gs/equity';
 

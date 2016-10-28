@@ -72,13 +72,13 @@ describe ReviewSaver do
         existing_review = create(:homework_review,
                                  school_id: school.id,
                                  user: verified_user,
-                                 review_question_id: 2,
+                                 review_question_id: 2
                                 )
 
         new_review = build(:homework_review,
                        school_id: school.id,
                        user: verified_user,
-                       review_question_id: 2,
+                       review_question_id: 2
                       )
 
         expect{ReviewSaver.new(new_review, school_user).save}

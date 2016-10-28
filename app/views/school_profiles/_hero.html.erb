@@ -3,13 +3,13 @@
 <div id="hero">
   <div class="container">
     <div>
-      <h1 class="school-name"><%= hero.school_name %></h1>
+      <h1 class="school-name" itemprop="name"><%= hero.school_name %></h1>
     </div>
 
     <div class="school-contact">
       <% if hero.has_school_address? %>
         <div class="school-contact__item school-contact__address">
-          <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
+          <%= render 'icon_and_content', icon: :location, content: hero.marked_up_address %>
         </div>
       <% end %>
       <% if hero.has_district? %>
@@ -59,7 +59,8 @@
         <div class="label"><%= t('.reviews') %></div>
         <%= render 'five_star_rating',
           rating: hero.five_star_rating,
-          number_of_reviews: hero.number_of_active_reviews
+          number_of_reviews: hero.number_of_active_reviews,
+          number_of_ratings: hero.num_ratings
         %>
       </div>
       <div class="school-info__item">

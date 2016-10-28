@@ -1,15 +1,52 @@
 .nearby-schools {
   $border-color: #dbe6eb;
+  $color-toggle-button-border: #c1d2d9;
+  $color-toggle-button-gradient: #f4f5f6;
+  $color-toggle-button-active: #2ba3dc;
+  $color-toggle-button-text: #28292a;
   margin-top: 20px;
+
+  .title-bar {
+    text-align: center;
+    @include media-breakpoint-up(sm) {
+      text-align: right;
+    }
+  }
+
   .title {
     font-family: 'Robotoslab-Bold';
     margin-bottom: 20px;
     font-size: 26px;
+
+    @include media-breakpoint-up(sm) {
+      float: left;
+    }
   }
 
-  > div {
-    @include media-breakpoint-up(md) {
-      display: table;
+  .button-bar {
+    button {
+      cursor: pointer;
+      border-radius: 2px;
+      background-image: linear-gradient(to bottom, #fff, $color-toggle-button-gradient);
+      border: solid 1px $color-toggle-button-border;
+      padding: $spacing-small $spacing-medium;
+      color: $color-toggle-button-text;
+      font-size: 12px;
+      text-align: center;
+
+      &.active {
+        border: solid 1px $color-toggle-button-border;
+        background: $color-toggle-button-active none;
+        color: #fff;
+      }
+
+      &:first-of-type {
+        border-right: none;
+      }
+
+      &:last-of-type {
+        border-left: none;
+      }
     }
   }
 
@@ -33,7 +70,7 @@
       margin: 0 0 0 15px;
       border-left: 1px solid $border-color;
       border-top: none;
-      padding: 0 0 0 15px;
+      padding: 0 15px;
     }
   }
 }
@@ -61,11 +98,21 @@
     text-align: center;
     margin: auto;
   }
+  .no-rating {
+    display: none;
+  }
   .rating + div {
     padding-left: 15px;
     width: -moz-calc(100% - 55px);
     width: -webkit-calc(100% - 55px);
     width: calc(100% - 55px);
+  }
+  .no-rating + div {
+    padding-left: 68px;
+    @include media-breakpoint-up(md) {
+      padding-left: 40px;
+      padding-right: 25px;
+    }
   }
 
   a {

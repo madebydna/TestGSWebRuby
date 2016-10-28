@@ -12,6 +12,7 @@ module Constraint
     end
 
     private
+
     def school_for_request(request)
       state_abbr = state_abbr(request)
       school_id = request.parameters[:schoolId]

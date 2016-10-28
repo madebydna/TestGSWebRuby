@@ -1,0 +1,84 @@
+<% school %>
+<a name="Neighborhood"></a>
+<div class="neighborhood">
+  <div class="title">
+    <%= t('.title') %>
+  </div>
+  <% level_value = 'p' %>
+  <% level_value = 'e' if @school.level_code_array.include? 'e' %>
+  <% level_value = 'm' if @school.level_code_array.include? 'm' %>
+  <% level_value = 'h' if @school.level_code_array.include? 'h' %>
+  <% if @school.district == '' %>
+      <% db_hash = {:level => level_value, :schoolId => @school.id, :state => @school.state} %>
+  <% else %>
+      <% db_hash = {:districtId => @school.district, :level => level_value, :schoolId => @school.id, :state => @school.state} %>
+  <% end %>
+  <div class="map-container">
+    <div class="attendance-zone">
+      <a href="<%= district_boundary_path(db_hash) %>"><%= t('.attendance_zone')%></a>
+    </div>
+    <div class="map-overlay">
+      <div class="overlay-container">
+        <div class="contact-address">
+          <span><%= school.street %></span><br/>
+          <span><%= "#{school.city}, #{school.state} #{school.zipcode}" %></span>
+        </div>
+        <div class="contact-item">
+          <% if (school_leader = school.cache_results.school_leader) %>
+            <div class ="contact-row">
+              <div class="contact-icon-box">
+                <span class="icon-user contact-icon"></span>
+              </div>
+              <div class="dib"> <!-- also add word wrap? -->
+              <span class="school-leader"><%= school_leader %></span>
+              <span> - <%= t('.school_leader_label').titleize %></span>
+              </div>
+            </div>
+          <% end %>
+          <% if school.phone.present? %>
+            <div class="contact-row">
+              <div class="contact-icon-box">
+                <span class="icon-phone contact-icon"></span>
+              </div>
+              <span><a class="" href="tel:<%= school.phone %>"><%= school.phone %></a></span>
+            </div>
+          <% end %>
+          <% if school.fax.present? %>
+            <div class="contact-row">
+              <div class="contact-icon-box">
+                <span class="icon-fax contact-icon"></span>
+              </div>
+              <span><%= school.fax %></span>
+            </div>
+          <% end %>
+          <% if school.facebook_url.present? %>
+            <div class="contact-row">
+              <div class="contact-icon-box"><span class="icon-facebook contact-icon"></span></div><a target="_blank" href="<%=school.facebook_url %>"><%= t('.facebook').titleize %></a>
+            </div>
+          <% end %>
+          <% if school.cache_results.school_leader_email.present? %>
+              <div class="contact-row">
+                <div class="contact-icon-box"><span class="icon-mail contact-icon"></span></div><a target="_blank" href="mailto:<%=school.cache_results.school_leader_email %>"><%= t('.school_leader_email').titleize %></a>
+              </div>
+          <% end %>
+          <% if school.home_page_url.present? %>
+            <div>
+              <div class="contact-icon-box"><span class="icon-globe contact-icon"></span></div><a target="_blank" href="<%= school.home_page_url %>"><%= t('.school_website').titleize %></a>
+            </div>
+          <% end %>
+          <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school) %>'>
+            <button><%= t('.nearby_homes').upcase %></button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% ['sm','md','lg'].each do |size| %>
+      <%= image_tag(@static_google_maps[size],
+        class: "static-map visible-#{size}",
+        alt: "Map of #{school.name} address."
+      )
+      %>
+    <% end %>
+  </div>
+  <div class="row"></div>
+</div>

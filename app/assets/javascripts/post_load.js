@@ -2,6 +2,7 @@
 // NEW PROFILES POST_LOAD
 //= require util/cached_script
 //= require graphs/ethnicity_pie_chart
+//= require graphs/subgroup_charts
 //= require resources/fastclick
 //= require resources/tipso
 //= require resources/remodal
@@ -24,24 +25,13 @@
 //= require resources/parsley.remote
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations
+//= require util/test_scores_helpers
 //= require react
+//= require components/equity/graphs/equity_bar_graph
 //= require components
 //= require react_ujs
 //= require util/content
 //= require util/tooltip
 //= require util/remodal
-
-
-
-$.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-    var appId = gon.facebook_app_id;
-    FB.init({
-      appId: appId,
-      version    : 'v2.2',
-      status     : true, // check login status
-      cookie     : true, // enable cookies to allow the server to access the session
-      xfbml      : true  // parse XFBML
-    });
-    GS.facebook.init();
-  });
+//= require loaders/facebook
 

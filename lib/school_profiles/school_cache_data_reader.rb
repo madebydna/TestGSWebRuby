@@ -3,7 +3,8 @@ module SchoolProfiles
     # ratings - for gs rating
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores)
+    # nearby_schools - for nearby schools module
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance)
 
     attr_reader :school, :school_cache_keys
 
@@ -32,6 +33,10 @@ module SchoolProfiles
       decorated_school.num_reviews
     end
 
+    def num_ratings
+      decorated_school.num_ratings
+    end
+
     def test_scores_rating
       decorated_school.test_scores_rating
     end
@@ -40,12 +45,39 @@ module SchoolProfiles
       decorated_school.college_readiness_rating
     end
 
+    def equity_ratings_breakdown(breakdown)
+      if decorated_school.performance && decorated_school.performance['GreatSchools rating']
+        breakdown_results = decorated_school.performance['GreatSchools rating'].select { |bd|
+          bd['breakdown'] == breakdown
+        }
+        if breakdown_results.is_a?(Array) && !breakdown_results.empty?
+               breakdown_results.first['school_value']
+        end
+      end
+    end
+
     def ethnicity_data
       decorated_school.ethnicity_data
     end
 
     def characteristics_data(*keys)
       decorated_school.characteristics.slice(*keys)
+    end
+
+    def nearby_schools
+      decorated_school.nearby_schools
+    end
+
+    def test_scores
+      decorated_school.test_scores
+    end
+
+    def graduation_rate_data
+      decorated_school.characteristics['4-year high school graduation rate']
+    end
+
+    def characteristics
+      decorated_school.characteristics
     end
 
     def subject_scores_by_latest_year(data_type_id:, breakdown: 'All', grades: 'All', level_codes: 'e,m,h')

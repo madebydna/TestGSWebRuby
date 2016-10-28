@@ -185,11 +185,11 @@ class SigninController < ApplicationController
         end
         @is_new_user = is_new_user
         @user = user
-        render 'show' unless already_redirecting
+        render 'show' unless already_redirecting?
       end
     rescue => e
       flash_error t('actions.generic_error')
-      GSLogger.error(e, :misc, message:'Error authenticating with Facebook')
+      GSLogger.error(:misc, e, message:'Error authenticating with Facebook')
       render json: {}, status: 422
     end
   end

@@ -11,25 +11,39 @@ class ReviewForm extends React.Component {
     this.updateReviewFormErrors = this.updateReviewFormErrors.bind(this);
     this.noSchoolUserExists = this.noSchoolUserExists.bind(this);
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleFailSubmit = this.handleFailSubmit.bind(this);
-
+    this.promptUserWhenNavigatingAway = this.promptUserWhenNavigatingAway.bind(this);
+    this.validateResponse = this.validateResponse.bind(this)
+    window.onbeforeunload = this.promptUserWhenNavigatingAway;
+    
     this.state = {
       displayCTA: true,
       displayAllQuestion: false,
       selectedResponses: {},
+      formErrors: false,
       errorMessages: {},
-      selectedFiveStarResponse: null
+      selectedFiveStarResponse: null,
+      unsavedChanges: false,
+      disabled: false
     };
+  }
+
+  promptUserWhenNavigatingAway(e) {
+    if (this.state.unsavedChanges) {
+      e.returnValue = 'Your review has not been saved.';
+      return e.returnValue;
+    }
   }
 
   renderFiveStarQuestionCTA() {
     let fiveStarQuestion = this.props.questions[0];
     return(<FiveStarQuestionCTA
-      response_values = {fiveStarQuestion.response_values}
-      response_labels = {fiveStarQuestion.response_labels}
+      responseValues = {fiveStarQuestion.response_values}
+      responseLabels = {fiveStarQuestion.response_labels}
       id = {fiveStarQuestion.id}
       title = {fiveStarQuestion.title}
-      fiveStarQuestionSelect = {this.fiveStarQuestionSelect }
+      fiveStarQuestionSelect = {this.fiveStarQuestionSelect}
     />)
   }
 
@@ -57,8 +71,8 @@ class ReviewForm extends React.Component {
   }
 
   cloneSelectedResponses() {
-  let selectedResponses = JSON.parse(JSON.stringify(this.state.selectedResponses));
-  return selectedResponses;
+    let selectedResponses = JSON.parse(JSON.stringify(this.state.selectedResponses));
+    return selectedResponses;
   }
 
   responseSelected(value, id) {
@@ -71,7 +85,8 @@ class ReviewForm extends React.Component {
     }
     this.setState(
       {
-        selectedResponses: selectedResponses
+        selectedResponses: selectedResponses,
+        unsavedChanges: true
       }
     );
   }
@@ -86,12 +101,16 @@ class ReviewForm extends React.Component {
     }
     this.setState(
       {
-        selectedResponses: selectedResponses
+        selectedResponses: selectedResponses,
+        unsavedChanges: true
       }
     );
   }
 
   cancelForm() {
+    this.setState({
+      unsavedChanges: false
+    });
     this.hideQuestions();
   }
 
@@ -120,7 +139,98 @@ class ReviewForm extends React.Component {
     return JSON.stringify(reviewsData);
   }
 
+  minWordsValidator(string) {
+    if (! string) {
+      return null;
+    }
+    var numberWords = string
+      .replace( /(^\s*)|(\s*$)/gi, "" )
+      .replace( /[ ]{2,}/gi, " " )
+      .replace( /\n /, "\n" )
+      .split(' ').length;
+    if (7 > numberWords) {
+      return "Please be sure your story is 7 words or more in length";
+    } else {
+      return null;
+    }
+  }
+
+  requiredCommentValidator(string) {
+    if ( !string || string.length == 0) {
+      return "Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.";
+    } else {
+      return null;
+    }
+  }
+
+  maxCharactersValidator(string) {
+    if (string && string.legnth != 0 && string.length > 2400) {
+      return "Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.";
+    } else {
+      return null;
+    }
+  }
+
+  clearErrors() {
+    this.setState({
+      errorMessages: {},
+      formErrors: false
+    });
+  }
+
+  getValidationsForQuestion(questionId) {
+   validationFuncs = [];
+    switch(questionId) {
+      case "1": validationFuncs.push(this.requiredCommentValidator);
+      default: validationFuncs.push(this.minWordsValidator);
+              validationFuncs.push( this.maxCharactersValidator);
+    }
+    return validationFuncs;
+   }
+
+  errorMessageForQuestion(validationFuncs, comment) {
+    var error;
+    _.each(validationFuncs, function(func) {
+      var message = func(comment);
+      if (message) {
+        error = message;
+        return false;
+      }
+    });
+    return error;
+  }
+
+  validateResponse(errorMessages, response, questionId) {
+    var comment = response.comment;
+    var validationFuncs = this.getValidationsForQuestion(questionId);
+    var message = this.errorMessageForQuestion(validationFuncs, comment);
+    if (message) {
+      errorMessages[questionId] = message;
+    }
+    return errorMessages;
+  }
+
+  validateForm() {
+   var selectedResponses = this.state.selectedResponses;
+   var errorMessages = _.reduce(selectedResponses, this.validateResponse, {});
+   var formValid = _.isEmpty(errorMessages);
+    this.setState ({
+      errorMessages: errorMessages,
+      formErrors: !formValid
+    });
+    return formValid;
+  }
+
+  onSubmit() {
+    this.clearErrors();
+    var formValid = this.validateForm();
+    if (formValid) {
+      this.submitForm();
+    }
+  }
+
   submitForm() {
+    this.setState({disabled: true});
     if (GS.session.isSignedIn()) {
       GS.session.getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
     } else {
@@ -170,18 +280,35 @@ class ReviewForm extends React.Component {
     if (reviewsErrors) {
       this.updateReviewFormErrors(reviewsErrors);
     }
+    this.setState({disabled: false});
+  }
+
+  scrollToTopOfReviews() {
+    var offsetTop = 90;
+    var reviewListOffset = $('.review-list').offset().top;
+    var offset = reviewListOffset - offsetTop;
+    $('html, body').animate({
+      scrollTop: offset
+    }, 1000);
   }
 
   handleSuccessfulSubmit(xhr) {
     let reviews = xhr.reviews;
     let reviewSaveMessage = xhr.message;
+    let userReviews = xhr.user_reviews;
     let reviewsErrors = this.reviewsErrors(reviews);
     if (reviewsErrors) {
       this.updateReviewFormErrors(reviewsErrors);
     } else {
       this.props.handleReviewSubmitMessage(reviewSaveMessage);
-      this.setState( { displayAllQuestions: false } );
+      this.props.handleUpdateOfReviews(userReviews);
+      this.setState({disabled: false});
+      this.hideQuestions();
+      this.scrollToTopOfReviews();
     }
+    this.setState({
+      unsavedChanges: false
+    });
   }
 
   updateReviewFormErrors(reviewsErrors) {
@@ -202,13 +329,30 @@ class ReviewForm extends React.Component {
     }
   }
 
+  renderFormErrorMessage() {
+  return(
+    <div className='form-error'>Errors in Form</div>
+  );
+  }
+
   renderFormActions() {
     let guidelinesLink = gon.links.school_review_guidelines;
+    let submitText;
+    if (this.state.disabled) {
+     submitText = 'Submitting';
+    } else {
+      submitText = 'Submit';
+    }
     return(
       <div className="form-actions clearfix">
         <a href={guidelinesLink} target="_blank">Review Guidelines</a>
-        <button className="submit" onClick={this.submitForm}>Submit</button>
-        <button className="cancel" onClick={this.cancelForm}>Cancel</button>
+        <button className="button" onClick={this.cancelForm}>Cancel</button>
+        <button className="button cta"
+          disabled= {this.state.disabled}
+          onClick={this.onSubmit}>
+          {submitText}
+        </button>
+        {/* { this.state.formErrors ? this.renderFormErrorMessage() : null } */}
       </div>
     );
   }
@@ -224,7 +368,7 @@ class ReviewForm extends React.Component {
   }
 
   render() {
-    return (
+    let reviewForm = (
       <div className="review-form-container">
         <div className="review-form">
           { this.state.displayCTA ? this.renderFiveStarQuestionCTA() : null }
@@ -233,5 +377,29 @@ class ReviewForm extends React.Component {
         </div>
       </div>
     );
+
+    if(this.state.disabled) {
+      return (<SpinnyWheel
+        backgroundPosition = { 'bottom' }
+        content = { reviewForm }
+      />);
+    } else {
+      return reviewForm;
+    }
+    return null;
   }
 }
+
+ReviewForm.propTypes = {
+  state: React.PropTypes.string.isRequired,
+  schoolId: React.PropTypes.number.isRequired,
+  questions: React.PropTypes.arrayOf(React.PropTypes.shape({
+    id: React.PropTypes.number.isRequired,
+    title: React.PropTypes.string.isRequired,
+    layout: React.PropTypes.string.isRequired,
+    response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+  })).isRequired,
+  handleReviewSubmitMessage: React.PropTypes.func.isRequired,
+  handleUpdateOfReviews: React.PropTypes.func.isRequired
+};
