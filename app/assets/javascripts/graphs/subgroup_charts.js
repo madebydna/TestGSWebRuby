@@ -73,7 +73,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     parsedData = {
       name: key,
       schoolValueFloat: schoolValue,
-      stateAverage: cacheData['state_average_2012'].toString() + '%',
+      // stateAverage: cacheData['state_average_2012'].toString() + '%',
       schoolValuePercent: schoolValuePercent
     };
     if (validParsedData(parsedData)) {
