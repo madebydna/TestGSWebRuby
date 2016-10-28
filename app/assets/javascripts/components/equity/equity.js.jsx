@@ -66,7 +66,7 @@ class Equity extends React.Component {
               test_scores={this.entranceRequirementData()}
               type="bar"
               graphId="entrance-requirement-graph" />,
-          explanation: 'This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. Find out more about these requirements.'
+          explanation: <div>This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
         }
       )
     }
@@ -116,7 +116,7 @@ class Equity extends React.Component {
               test_scores={this.graduationRateDataByIncomeLevel()}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
+          explanation: 'This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed'
         }
       )
     }
@@ -130,7 +130,9 @@ class Equity extends React.Component {
               test_scores={this.entranceRequirementByIncomeLevelData()}
               type="bar"
               graphId="entrance-requirement-by-income-level-graph" />,
-          explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
+          explanation: <div>This shows the percentages of graduates, by 
+            family income level, who have taken the A-G required classes needed 
+            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
         }
       )
     }
