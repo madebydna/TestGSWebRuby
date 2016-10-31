@@ -89,7 +89,14 @@ module SchoolProfiles
       )
       return [] if hashes.blank?
       hashes.map do |key, array|
-        hash = array.find { |h| h['breakdown'] == 'All students' }
+        values = array.select { |h| h['breakdown'] == 'All students' }
+        values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
+        GSLogger.error(:misc, nil,
+                       message:"Failed to find unique data point for data type #{key} in the characteristics cache",
+                       vars: {school: {state: @school_cache_data_reader.school.state,
+                                       id: @school_cache_data_reader.school.id}
+                       }) if values.size > 1
+        hash = values.first
         hash['data_type'] = key
         hash
       end
