@@ -30,6 +30,9 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
           title: {
             text: null
           },
+          credits: {
+            enabled: false
+          },
           plotOptions: {
             pie: {
               innerSize: 90,
