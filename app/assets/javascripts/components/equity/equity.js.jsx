@@ -15,30 +15,30 @@ class Equity extends React.Component {
   section1Tabs() {
     let tabs = [[],[]];
 
-    let data = this.ethnicityTestScoreData('English Language Arts');
+    let data = this.ethnicityTestScoreData('Math');
     if(data && data.length > 0) {
       tabs[0].push(
-        {
-          subject: 'English Language Arts',
-          component: <BarGraphWithEnrollmentInLabel
-              test_scores={this.ethnicityTestScoreData('English Language Arts')}
-              graphId="test-scores-ela-bar-graph" />,
-          explanation: 'This shows results across different races/ethnicities on an English test given to' +
-          ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
-        }
+          {
+            subject: 'Math',
+            component: <BarGraphWithEnrollmentInLabel
+                test_scores={data}
+                graphId="test-scores-math-bar-graph" />,
+            explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
+            ' differences may suggest that some student groups are not getting the support they need to succeed.'
+          }
       );
     }
 
-    data = this.ethnicityTestScoreData('Math');
+    data = this.ethnicityTestScoreData('English Language Arts');
     if(data && data.length > 0) {
       tabs[0].push(
         {
-          subject: 'Math',
+          subject: 'English',
           component: <BarGraphWithEnrollmentInLabel
-            test_scores={this.ethnicityTestScoreData('Math')}
-            graphId="test-scores-math-bar-graph" />,
-          explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
-          ' differences may suggest that some student groups are not getting the support they need to succeed.'
+              test_scores={data}
+              graphId="test-scores-ela-bar-graph" />,
+          explanation: 'This shows results across different races/ethnicities on an English test given to' +
+          ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
         }
       );
     }
@@ -49,7 +49,7 @@ class Equity extends React.Component {
         {
           subject: 'Graduation rates',
           component: <EquityBarGraph
-              test_scores={this.graduationRateDataByEthnicity()}
+              test_scores={data}
               type="bar"
               graphId="graduation-rates-graph" />,
           explanation: 'This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.'
@@ -63,7 +63,7 @@ class Equity extends React.Component {
         {
           subject: 'UC/CSU Eligibility',
           component: <EquityBarGraph
-              test_scores={this.entranceRequirementData()}
+              test_scores={data}
               type="bar"
               graphId="entrance-requirement-graph" />,
           explanation: <div>This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
@@ -77,13 +77,28 @@ class Equity extends React.Component {
   section2Tabs() {
     let tabs = [[],[]];
 
-    let data = this.incomeLevelTestScoreData('English Language Arts');
+    let data = this.incomeLevelTestScoreData('Math');
+    if(data && data.length > 0) {
+      tabs[0].push(
+          {
+            subject: 'Math',
+            component: <EquityBarGraph
+                test_scores={data}
+                type="column"
+                graphId="low-income-math-bar-graph" />,
+            explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
+            ' differences may suggest that some student groups are not getting the support they need to succeed.'
+          }
+      );
+    }
+
+    data = this.incomeLevelTestScoreData('English Language Arts');
     if(data && data.length > 0) {
       tabs[0].push(
         {
-          subject: 'English Language Arts',
+          subject: 'English',
           component: <EquityBarGraph
-              test_scores={this.incomeLevelTestScoreData('English Language Arts')}
+              test_scores={data}
               type="column"
               graphId="low-income-ela-bar-graph" />,
           explanation: 'This shows results across different races/ethnicities on an English test given to' +
@@ -92,20 +107,6 @@ class Equity extends React.Component {
       )
     }
 
-    data = this.incomeLevelTestScoreData('Math');
-    if(data && data.length > 0) {
-      tabs[0].push(
-        {
-          subject: 'Math',
-          component: <EquityBarGraph
-            test_scores={this.incomeLevelTestScoreData('Math')}
-            type="column"
-            graphId="low-income-math-bar-graph" />,
-          explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
-          ' differences may suggest that some student groups are not getting the support they need to succeed.'
-        }
-      );
-    }
 
     data = this.graduationRateDataByIncomeLevel();
     if(data && data.length > 0) {
@@ -113,7 +114,7 @@ class Equity extends React.Component {
         {
           subject: 'Graduation rates',
           component: <EquityBarGraph
-              test_scores={this.graduationRateDataByIncomeLevel()}
+              test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
           explanation: 'This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed'
@@ -127,7 +128,7 @@ class Equity extends React.Component {
         {
           subject: 'UC/CSU Eligibility',
           component: <EquityBarGraph
-              test_scores={this.entranceRequirementByIncomeLevelData()}
+              test_scores={data}
               type="bar"
               graphId="entrance-requirement-by-income-level-graph" />,
           explanation: <div>This shows the percentages of graduates, by 
