@@ -5,7 +5,7 @@
 <% score_percentage = 100.0 * (score.to_f / max_value) %> 
 <% state_average_percentage = 100.0 * (state_score.to_f / max_value) %> 
 
-<% if (1..100).cover?(score_percentage) && (1..10).cover?(score_rating) %>
+<% if (0..100).cover?(score_percentage) && (1..10).cover?(score_rating) %>
   <div class="person-bar-viz">
     <% unless state_score.nil? %>
       <div class="arrow-down">

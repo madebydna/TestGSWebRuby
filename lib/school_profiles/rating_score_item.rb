@@ -29,5 +29,13 @@ module SchoolProfiles
     def formatted_state_average
       state_average.format
     end
+
+    def score_rating
+      return 1 if @score <= 1 # 0 gets a 1
+      return 10 if @score >= 99 # 100 gets a 10
+      # (0..9.9) gets a (0+1) == 1
+      # (90..99.9) gets a (9+1) == 10
+      (@score / 10.0).truncate + 1
+    end
   end
 end

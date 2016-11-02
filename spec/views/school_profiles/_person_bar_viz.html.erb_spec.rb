@@ -1,4 +1,3 @@
-
 require 'spec_helper'
 
 describe 'school_profile/_nearby_school' do
@@ -32,7 +31,7 @@ describe 'school_profile/_nearby_school' do
     end
   end
 
-  (1..100).to_a.each do |input|
+  (0..100).to_a.each do |input|
     describe "when valid score is #{input}" do
       it 'renders the visualization' do
         render_partial(valid_props.merge(score: input))
@@ -41,7 +40,7 @@ describe 'school_profile/_nearby_school' do
     end
   end
 
-  [-1, 0, 101].each do |input|
+  [-1, 101].each do |input|
     describe "when invalid score is #{input}" do
       it 'renders nothing' do
         render_partial(valid_props.merge(score: input))
