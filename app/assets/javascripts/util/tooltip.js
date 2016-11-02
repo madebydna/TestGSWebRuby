@@ -1,24 +1,29 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
 
 $(function() {
-  $('.gs-tipso').tipso({
-    onBeforeShow: function(ele, tipso) {
-      // disable modal
-      var temp =  ele.data('remodal-target');
-      ele.attr('data-remodal-target-disabled', temp);
-      ele.removeAttr('data-remodal-target');
+  if(!('ontouchstart' in window)) {
+    $('.gs-tipso').tipso({
+      onBeforeShow: function (ele, tipso) {
+        // disable modal
+        var temp = ele.data('remodal-target');
+        ele.attr('data-remodal-target-disabled', temp);
+        ele.removeAttr('data-remodal-target');
+        console.log("temp:" + temp);
 
-      // update content
-      var content = GS.content.contentManager(ele);
-      $('.gs-tipso').tipso('update', 'content', content);
-    },
-    onHide: function(ele, tipso) {
-      // enable modal
-      var temp =  ele.data('remodal-target-disabled');
-      ele.attr('data-remodal-target', temp);
-      ele.removeAttr('data-remodal-target-disabled');
-    }
-  });
+
+        // update content
+        var content = GS.content.contentManager(ele);
+        $('.gs-tipso').tipso('update', 'content', content);
+      },
+      onHide: function (ele, tipso) {
+        // enable modal
+        var temp = ele.data('remodal-target-disabled');
+        ele.attr('data-remodal-target', temp);
+        ele.removeAttr('data-remodal-target-disabled');
+        console.log("temp:" + temp);
+      }
+    });
+  }
 });
 
 
