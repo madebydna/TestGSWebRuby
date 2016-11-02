@@ -8,8 +8,6 @@ $(function() {
         var temp = ele.data('remodal-target');
         ele.attr('data-remodal-target-disabled', temp);
         ele.removeAttr('data-remodal-target');
-        console.log("temp:" + temp);
-
 
         // update content
         var content = GS.content.contentManager(ele);
@@ -20,7 +18,6 @@ $(function() {
         var temp = ele.data('remodal-target-disabled');
         ele.attr('data-remodal-target', temp);
         ele.removeAttr('data-remodal-target-disabled');
-        console.log("temp:" + temp);
       }
     });
   }
