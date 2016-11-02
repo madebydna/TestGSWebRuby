@@ -23,7 +23,6 @@ describe "Visitor" do
 
     within test_scores do
       expect(page).to have_test_scores_rating('6')
-      expect(page).to have_test_scores_rating_label('Average')
     end
   end
 
@@ -40,7 +39,6 @@ describe "Visitor" do
 
     within test_scores do
       expect(page).to  have_test_scores_rating('1')
-      expect(page).to  have_test_scores_rating_label('Weak')
     end
   end
 
