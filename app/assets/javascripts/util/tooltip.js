@@ -1,7 +1,7 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
 
 $(function() {
-  $('.tooltip').tipso({
+  $('.gs-tipso').tipso({
     onBeforeShow: function(ele, tipso) {
       // disable modal
       var temp =  ele.data('remodal-target');
@@ -10,7 +10,7 @@ $(function() {
 
       // update content
       var content = GS.content.contentManager(ele);
-      $('.tooltip').tipso('update', 'content', content);
+      $('.gs-tipso').tipso('update', 'content', content);
     },
     onHide: function(ele, tipso) {
       // enable modal
