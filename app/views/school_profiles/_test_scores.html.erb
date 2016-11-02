@@ -20,10 +20,6 @@
               <%= rating %>
             </div>
           </div>
-          <div class="circle-rating-with-label__label
-            circle-rating-with-label__label--<%= test_scores.rating %>">
-            <%= test_scores.rating_label  %>
-          </div>
         </div>
       </div>
       <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>

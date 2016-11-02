@@ -2,19 +2,6 @@ module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
 
-    RATING_LABEL_MAP = {
-        1 => 'Weak',
-        2 => 'Weak',
-        3 => 'Below Average',
-        4 => 'Below Average',
-        5 => 'Average',
-        6 => 'Average',
-        7 => 'Good',
-        8 => 'Good',
-        9 => 'Excellent',
-        10 => 'Excellent',
-    }.freeze
-
     CHAR_CACHE_ACCESSORS = [
       {
         :data_key => '4-year high school graduation rate',
@@ -59,7 +46,7 @@ module SchoolProfiles
     end
 
     def rating
-      (RATING_LABEL_MAP.keys & [@school_cache_data_reader.college_readiness_rating]).first
+      ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
     end
 
     def included_data_types
@@ -116,10 +103,6 @@ module SchoolProfiles
           item.visualization = visualization
         end
       end
-    end
-
-    def rating_label
-      RATING_LABEL_MAP[rating]
     end
   end
 end
