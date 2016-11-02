@@ -54,6 +54,8 @@ class SchoolProfilesController < ApplicationController
   def require_school
     if school.blank?
       render "error/school_not_found", layout: "error", status: 404
+    elsif !school.active?
+      redirect_to city_path(city_params(school.state_name, school.city)), status: :moved_permanently
     end
   end
 

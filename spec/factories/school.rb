@@ -36,6 +36,15 @@ FactoryGirl.define do
         new_profile_school 5
       end
 
+      factory :inactive_school do
+        name 'Inactive School'
+        city 'Alameda'
+        state 'CA'
+        level_code 'h'
+        type 'public'
+        active false
+      end
+
       factory :alameda_high_school do
         name 'Alameda High School'
         city 'Alameda'
