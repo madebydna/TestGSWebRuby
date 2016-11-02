@@ -97,6 +97,7 @@ module ReviewCalculations
       hash[topic][:average] = topic_answers_to_numeric.invert[(topic_answer_values.sum.to_f / topic_answer_values.length).round.to_i] unless topic_answer_values.empty?
       hash[topic][:count] = reviews.length
     end
-    hash
+    # Topics without a computed average contain only invalid answers, so remove them
+    hash.select { |_,v| v.has_key?(:average) }
   end
 end
