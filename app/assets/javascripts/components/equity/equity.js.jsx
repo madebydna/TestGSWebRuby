@@ -7,8 +7,7 @@ class Equity extends React.Component {
     return {
       subject: subject,
       grade: 'All',
-      level_code: 'e,m,h',
-      year: '2015'
+      level_code: 'e,m,h'
     };
   }
 
@@ -211,9 +210,13 @@ class Equity extends React.Component {
   }
 
   formattedTestScoreData(subject) {
+    let flattenedTestScoreData = 
+        GS.testScoresHelpers.flatten(this.props.test_scores);
+    let filterCriteria = this.dataCriteria(subject);
+    let maxYear = _.max(_.map(flattenedTestScoreData, obj => obj.year));
+    filterCriteria.year = maxYear;
     return GS.testScoresHelpers.filter(
-        GS.testScoresHelpers.flatten(this.props.test_scores),
-        this.dataCriteria(subject)
+      flattenedTestScoreData, filterCriteria
     );
   }
 
@@ -261,6 +264,7 @@ class Equity extends React.Component {
   }
 
   addEnrollmentIntoTestData(testData) {
+    let maxTestScoresYear = _.max(_.map(testData, obj => obj.year));
     // this is an O(n^2) operation
     return _.map(testData,
         function(testData) {
@@ -269,7 +273,7 @@ class Equity extends React.Component {
                 percentOfStudentBody: (_.find(
                     gon.ethnicity,
                     ethnicityData => ethnicityData.breakdown === testData.breakdown
-                ) || {}).school_value
+                ) || {})['school_value_' + maxTestScoresYear]
               }
           );
           if (testData.breakdown == 'All students') {

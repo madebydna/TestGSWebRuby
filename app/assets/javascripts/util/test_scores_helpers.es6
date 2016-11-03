@@ -74,6 +74,5 @@ GS.testScoresHelpers = {
     );
     return result;
   }
-
 };
 
