@@ -12,6 +12,10 @@ module SchoolProfiles
       @school_cache_data_reader.test_scores_rating
     end
 
+    def info_text
+      I18n.t('lib.test_scores.info_text')
+    end
+
     def subject_scores
       scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236)
       scores.map do |hash|
