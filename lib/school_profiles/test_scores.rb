@@ -1,19 +1,6 @@
 module SchoolProfiles
   class TestScores
 
-    RatingLabelMap = {
-      1 => "Weak",
-      2 => "Weak",
-      3 => "Below Average",
-      4 => "Below Average",
-      5 => "Average",
-      6 => "Average",
-      7 => "Good",
-      8 => "Good",
-      9 => "Excellent",
-      10 => "Excellent",
-    }.freeze
-
     attr_reader :school, :school_cache_data_reader
 
     def initialize(school, school_cache_data_reader:)
@@ -34,10 +21,6 @@ module SchoolProfiles
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
         end
       end
-    end
-
-    def rating_label
-      RatingLabelMap[rating]
     end
   end
 end

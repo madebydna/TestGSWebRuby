@@ -11,22 +11,6 @@ describe SchoolProfiles::CollegeReadiness do
   it { is_expected.to respond_to(:rating) }
   it { is_expected.to respond_to(:data_values) }
 
-  describe "::RatingLabelMap" do
-    it "should have 10 items" do
-      expect(SchoolProfiles::CollegeReadiness::RATING_LABEL_MAP.count).to eq(10)
-    end
-  end
-
-  describe "#rating_label" do
-    SchoolProfiles::CollegeReadiness::RATING_LABEL_MAP
-      .each do |rating, label|
-      it "returns correct #{label} for rating score: #{rating}" do
-        allow(subject).to receive(:rating).and_return(rating.to_i)
-        expect(subject.rating_label).to eq(SchoolProfiles::CollegeReadiness::RATING_LABEL_MAP[rating])
-      end
-    end
-  end
-
   describe '#data_values' do
     before do
       allow(school_cache_data_reader).to receive(:school).and_return(school)

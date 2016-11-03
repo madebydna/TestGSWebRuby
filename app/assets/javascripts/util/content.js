@@ -10,10 +10,13 @@ GS.content = GS.content || {};
 GS.content.contentManager = function(ele) {
 
   // return content based on element data values or gon or ajax
-
+  var content = '';
   var contentType = ele.data('content-type');
+  if(contentType == 'info_box'){
+    content = ele.data('content-html');
+  }
 
   // this is just an example of returned content
-  return  '<div>I love you! '+ contentType +'</div>';
+  return  content;
 
 };
