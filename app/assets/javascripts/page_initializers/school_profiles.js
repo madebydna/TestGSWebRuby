@@ -26,6 +26,12 @@ $(function() {
     GS.search.autocomplete.searchAutocomplete.init();
   }
 
+  $('.js-followThisSchool').on('click', function () {
+    var state = GS.stateAbbreviationFromUrl();
+    var schoolId = GS.schoolIdFromUrl();
+    GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+  });
+
   (function() {
     /**
      * Refreshes an ad exactly once when the user scrolls past 50% in some container.

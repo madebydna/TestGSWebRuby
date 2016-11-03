@@ -35,4 +35,8 @@
 //= require util/tooltip
 //= require util/remodal
 //= require loaders/facebook
+//= require util/states
+//= require util/notifications
+//= require util/subscription
+//= require util/send_updates
 
