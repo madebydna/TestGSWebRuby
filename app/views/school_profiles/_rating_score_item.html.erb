@@ -5,6 +5,9 @@
     <div class="row">
       <div class="col-xs-6 rating-score-item__label">
         <%= score_data.label %>
+        <% if score_data.info_text %>
+          <%= render 'info_circle', content: score_data.info_text %>
+        <% end %>
       </div>
       <div class="col-xs-6">
         <div class="rating-score-item__score">

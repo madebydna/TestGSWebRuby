@@ -51,8 +51,22 @@ module SchoolProfiles
       ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
     end
 
+    def info_text
+      I18n.t('lib.college_readiness.info_text')
+    end
+
+    def data_label(key)
+      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.college_readiness')
+    end
+
+    def data_label_info_text(key)
+      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.college_readiness.data_point_info_texts')
+    end
+
     def included_data_types
-      @_included_data_types ||= 
+      @_included_data_types ||=
         CHAR_CACHE_ACCESSORS.map { |mapping| mapping[:data_key] }
     end
 
@@ -106,7 +120,8 @@ module SchoolProfiles
         visualization = data_type_visualization_map[data_type]
         range = data_type_range_map[data_type]
         RatingScoreItem.new.tap do |item|
-          item.label = data_type
+          item.label = data_label(data_type)
+          item.info_text = data_label_info_text(data_type)
           item.score = SchoolProfiles::DataPoint.new(hash['school_value']).
             apply_formatting(*formatting)
           item.state_average = SchoolProfiles::DataPoint.new(hash['state_average']).

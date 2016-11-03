@@ -1,6 +1,6 @@
 module SchoolProfiles
   class RatingScoreItem
-    attr_accessor :label, :score, :state_average, :visualization, :range
+    attr_accessor :label, :score, :state_average, :visualization, :range, :info_text
 
     def self.from_hash(hash)
       self.new.tap do |obj|
