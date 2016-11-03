@@ -1,6 +1,6 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
-
-$(function() {
+GS.tooltip = GS.tooltip || {};
+GS.tooltip.initialize = function() {
   if(!('ontouchstart' in window)) {
     $('.gs-tipso').tipso({
       onBeforeShow: function (ele, tipso) {
@@ -22,17 +22,22 @@ $(function() {
       }
     });
   }
+};
 
-  // function testPointerFunction(e){
-  //   document.getElementById( "o" ).innerHTML = "that was a " +
-  //       e.pointerType + " " + e.type + " on a "+ e.target.nodeName;
-  // }
-  //
-  // var classname = document.getElementsByClassName("gs-tipso");
-  // for (var i = 0; i < classname.length; i++) {
-  //   classname[i].addEventListener('pointerover', testPointerFunction, false);
-  // }
+$(function() {
+  GS.tooltip.initialize();
 });
+
+
+// function testPointerFunction(e){
+//   document.getElementById( "o" ).innerHTML = "that was a " +
+//       e.pointerType + " " + e.type + " on a "+ e.target.nodeName;
+// }
+//
+// var classname = document.getElementsByClassName("gs-tipso");
+// for (var i = 0; i < classname.length; i++) {
+//   classname[i].addEventListener('pointerover', testPointerFunction, false);
+// }
 
 
 // document.getElementsByClassName( "gs-tipso" ).addEventListener( "pointerenter", function( e ) {
