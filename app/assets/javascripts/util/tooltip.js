@@ -1,8 +1,8 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
 
 $(function() {
+  if(!('ontouchstart' in window)) {
     $('.gs-tipso').tipso({
-
       onBeforeShow: function (ele, tipso) {
         // disable modal
         var temp = ele.data('remodal-target');
@@ -21,7 +21,7 @@ $(function() {
         ele.removeAttr('data-remodal-target-disabled');
       }
     });
-
+  }
 
   // function testPointerFunction(e){
   //   document.getElementById( "o" ).innerHTML = "that was a " +
