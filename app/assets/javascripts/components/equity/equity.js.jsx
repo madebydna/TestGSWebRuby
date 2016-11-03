@@ -186,8 +186,7 @@ class Equity extends React.Component {
       config.push({
         section_info:{
           title: 'Race/Ethnicity',
-          rating: '',
-          icon_classes: 'icon-shield'
+          rating: ''
         },
         section_content: section1Content
       });
