@@ -11,9 +11,8 @@
 <% title_link = title.gsub(" ", "_") %>
 
 <div class="clearfix toc-entry">
-  <span class="gs-link">
-    <a href="#<%= title_link %>">
-      <span class="gs-rating rating_<%= rating %>"><%= rating %></span><%= title %>
-    </a>
-  </span>
+  <a href="#<%= title_link %>">
+    <span class="dib"><%= title %></span> <!--was gs-link-text-->
+    <span class="gs-rating dib rating_<%= rating %>"><%= rating %></span>
+  </a>
 </div>
