@@ -76,6 +76,7 @@ describe SchoolProfiles::CollegeReadiness do
       expect(data_points).to be_present
       expect(data_points.score).to eq(1600)
       expect(data_points.state_average).to eq(1400)
+      expect(data_points.range).to eq((600..2400))
     end
 
     it 'should pull from the "All students" breakdown' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe 'school_profile/_person_bar_viz' do
-  let(:visualization_class) { '.person-bar-viz' }
+describe 'school_profiles/_single_bar_viz' do
+  let(:visualization_class) { '.single-bar-viz' }
   let(:state_visualization_class) { '.arrow-down' }
   let(:valid_props) do
     {
@@ -11,11 +11,11 @@ describe 'school_profile/_person_bar_viz' do
   end
 
   def render_partial(props)
-    render partial: 'school_profiles/person_bar_viz', locals: props
+    render partial: 'school_profiles/single_bar_viz', locals: props
   end
 
   describe 'score' do
-    [0,1,14,37,50,88,99,100].each do |input|
+    [0,1,25,32,50,70,99,100].to_a.each do |input|
       describe "when valid score is #{input}" do
         it 'renders the visualization' do
           render_partial(valid_props.merge(score: input))

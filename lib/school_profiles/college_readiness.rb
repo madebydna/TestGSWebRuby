@@ -11,7 +11,8 @@ module SchoolProfiles
       {
         :data_key => 'Average SAT score',
         :visualization => :single_bar_viz,
-        :formatting => [:round]
+        :formatting => [:round],
+        :range => (600..2400)
       },
       {
         :data_key => 'SAT percent participation',
@@ -21,7 +22,8 @@ module SchoolProfiles
       {
         :data_key => 'Average ACT score',
         :visualization => :single_bar_viz,
-        :formatting => [:round]
+        :formatting => [:round],
+        :range => (1..36)
       },
       {
         :data_key => 'ACT participation',
@@ -70,6 +72,14 @@ module SchoolProfiles
       )
     end
 
+    def data_type_range_map
+      @_data_type_range_map ||= (
+      CHAR_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+        hash[mapping[:data_key]] = mapping[:range] || (0..100)
+      end
+      )
+    end
+
     def data_type_hashes 
       hashes = school_cache_data_reader.characteristics_data(
         *included_data_types
@@ -94,6 +104,7 @@ module SchoolProfiles
         data_type = hash['data_type']
         formatting = data_type_formatting_map[data_type]
         visualization = data_type_visualization_map[data_type]
+        range = data_type_range_map[data_type]
         RatingScoreItem.new.tap do |item|
           item.label = data_type
           item.score = SchoolProfiles::DataPoint.new(hash['school_value']).
@@ -101,6 +112,7 @@ module SchoolProfiles
           item.state_average = SchoolProfiles::DataPoint.new(hash['state_average']).
             apply_formatting(*formatting)
           item.visualization = visualization
+          item.range = range
         end
       end
     end
