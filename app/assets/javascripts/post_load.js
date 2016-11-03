@@ -4,7 +4,7 @@
 //= require graphs/ethnicity_pie_chart
 //= require graphs/subgroup_charts
 //= require resources/fastclick
-//= require resources/pep
+// require resources/pep
 //= require resources/tipso
 //= require resources/remodal
 //= require auth/auth
