@@ -2,7 +2,6 @@
 // NEW PROFILES POST_LOAD
 //= require util/cached_script
 //= require graphs/ethnicity_pie_chart
-//= require graphs/subgroup_charts
 //= require resources/fastclick
 // require resources/pep
 //= require resources/tipso
@@ -17,7 +16,6 @@
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars
 //= require util/url_params
-//= require page_initializers/school_profiles
 //= require components/drawer
 //= require components/shortened_text
 //= require util/school_profile_sticky_cta.js
@@ -34,9 +32,10 @@
 //= require util/content
 //= require util/tooltip
 //= require util/remodal
+//= require graphs/subgroup_charts
 //= require loaders/facebook
 //= require util/states
 //= require util/notifications
 //= require util/subscription
 //= require util/send_updates
-
+//= require page_initializers/school_profiles

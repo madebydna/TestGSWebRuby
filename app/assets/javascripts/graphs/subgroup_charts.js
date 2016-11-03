@@ -9,8 +9,13 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     'Male': '#34A4DA'
   }
   var titleMap = {
-    'students-participating-in-free-or-reduced-price-lunch-program': 'Students from low income familes',
-    'english-learners': 'Students learning english'
+    'students-participating-in-free-or-reduced-price-lunch-program': 'Students from low-income familes',
+    'english-learners': 'Students learning English'
+  };
+
+  var infoTextMap = {
+    'students-participating-in-free-or-reduced-price-lunch-program': 'The students from low-income families designation is based on the percentage of students at this school who are eligible for free or reduced-price lunch.',
+    'english-learners': 'This group includes all students classified as English language learners.'
   };
 
   var buildSubgroupData = function (parsedData) {
@@ -96,9 +101,14 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     if (parsedData.stateAverage) {
       stateAvgHtml =  "<div class='state-avg'>State avg. " + parsedData.stateAverage +  "</div>";
     }
-    var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title'>" + parsedData.chartTitle + "</div><div id='" + parsedData.chartId + "'></div>" + stateAvgHtml + "</div>";
+    var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title'> " + parsedData.chartTitle + generateInfoCircle(parsedData.infoText) +  "</div><div id='" + parsedData.chartId + "'></div>" + stateAvgHtml + "</div>";
     $('.subgroups > .row').append(containerHtml);
   };
+
+  generateInfoCircle = function(content) {
+   var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)">I</a>'
+    return infoCircleHtml;
+  }
 
   var generateGenderContainer = function(parsedGenderData) {
     var chartTitle = 'Gender';
@@ -188,6 +198,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     }
     parsedData.chartId = subgroupNameToChartId(parsedData.name);
     parsedData.chartTitle = titleMap[parsedData.chartId];
+    parsedData.infoText = infoTextMap[parsedData.chartId];
     var subgroupData = buildSubgroupData(parsedData);
     generateSubgroupContainer(parsedData);
     var chart = new Highcharts.Chart({
@@ -238,6 +249,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
         if (gon.gender) {
           var genderData = gon.gender;
           renderGenderChart(genderData);
+          GS.tooltip.initialize();
         }
       });
     }
