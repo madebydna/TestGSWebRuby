@@ -1,7 +1,6 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
 
 $(function() {
-  $('.gs-tipso')
   if(!('ontouchstart' in window)) {
     $('.gs-tipso').tipso({
       onBeforeShow: function (ele, tipso) {
