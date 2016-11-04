@@ -24,6 +24,17 @@ class EquitySection extends React.Component {
     return rating_html
   }
 
+  drawInfoCircle(infoText) {
+    if (infoText) {
+      return(<InfoCircle
+        content={infoText}
+      />
+      );
+    } else {
+      return null;
+    }
+  }
+
   linkName(name){
     return name.split(' ').join('_');
   }
@@ -32,11 +43,12 @@ class EquitySection extends React.Component {
     let section_info = this.props.equity_config["section_info"];
     let section_content = this.props.equity_config["section_content"];
     let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
+    let infoCircle = this.drawInfoCircle(section_info.info_text);
     let link_name = this.linkName(section_info.title);
 
     return <div className="equity-section">
           <a name={link_name}></a>
-      <div className="title-bar">{rating}{section_info.title}</div>
+      <div className="title-bar">{rating}{section_info.title}&nbsp;{infoCircle}</div>
       <SectionNavigation key="sectionNavigation" items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
     </div>

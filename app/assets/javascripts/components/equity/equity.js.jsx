@@ -64,7 +64,7 @@ class Equity extends React.Component {
     if(data && data.length > 0 && !this.areAllZero(data)) {
       tabs[1].push(
         {
-          subject: 'UC/CSU Eligibility',
+          subject: 'UC/CSU eligibility',
           component: <EquityBarGraph
               test_scores={data}
               type="bar"
@@ -120,7 +120,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: 'This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed'
+          explanation: 'This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed.'
         }
       )
     }
@@ -129,7 +129,7 @@ class Equity extends React.Component {
     if(data && data.length > 0 && !this.areAllZero(data)) {
       tabs[1].push(
         {
-          subject: 'UC/CSU Eligibility',
+          subject: 'UC/CSU eligibility',
           component: <EquityBarGraph
               test_scores={data}
               type="bar"
@@ -154,7 +154,7 @@ class Equity extends React.Component {
     if(section1Tabs[0].length > 0) {
       section1Content.push(
         {
-          section_title: 'Test Scores',
+          section_title: 'Test scores',
           content: section1Tabs[0]
         }
       );
@@ -171,7 +171,7 @@ class Equity extends React.Component {
     if(section2Tabs[0].length > 0) {
       section2Content.push(
         {
-          section_title: 'Test Scores',
+          section_title: 'Test scores',
           content: section2Tabs[0]
         }
       );
@@ -188,8 +188,9 @@ class Equity extends React.Component {
     if(section1Content.length > 0) {
       config.push({
         section_info:{
-          title: 'Race/Ethnicity',
-          rating: ''
+          title: 'Race/ethnicity',
+          rating: '',
+          info_text: 'This section gives a picture of test scores, graduation rates, and other measures for students across different races/ethnicities.'
         },
         section_content: section1Content
       });
@@ -198,9 +199,10 @@ class Equity extends React.Component {
     if(section2Content.length > 0) {
       config.push({
         section_info:{
-          title: 'Low Income Students',
+          title: 'Low-income students',
           rating: this.lowIncomeRating(),
-          icon_classes: 'icon-shield'
+          icon_classes: 'icon-shield',
+          info_text: 'This rating reflects English, math, and science test scores for students who qualifty for free or reduced-price lunch compared to all students in the state.'
         },
         section_content: section2Content
       });
