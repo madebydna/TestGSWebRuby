@@ -190,7 +190,8 @@ class Equity extends React.Component {
         section_info:{
           title: 'Race/ethnicity',
           rating: '',
-          info_text: 'This section gives a picture of test scores, graduation rates, and other measures for students across different races/ethnicities.'
+          info_text: 'This section gives a picture of test scores, graduation rates, and other measures for students across different races/ethnicities.',
+          sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity'
         },
         section_content: section1Content
       });
@@ -202,7 +203,8 @@ class Equity extends React.Component {
           title: 'Low-income students',
           rating: this.lowIncomeRating(),
           icon_classes: 'icon-shield',
-          info_text: 'This rating reflects English, math, and science test scores for students who qualifty for free or reduced-price lunch compared to all students in the state.'
+          info_text: 'This rating reflects English, math, and science test scores for students who qualifty for free or reduced-price lunch compared to all students in the state.',
+          sourceHref: '/gk/ca-high-schools/#Equity-Low-Income'
         },
         section_content: section2Content
       });

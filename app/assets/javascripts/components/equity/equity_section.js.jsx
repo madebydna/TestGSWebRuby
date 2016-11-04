@@ -51,6 +51,7 @@ class EquitySection extends React.Component {
       <div className="title-bar">{rating}{section_info.title}&nbsp;{infoCircle}</div>
       <SectionNavigation key="sectionNavigation" items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
+      <span>Source: <a href={section_info.sourceHref}>See notes</a></span>
     </div>
   }
 

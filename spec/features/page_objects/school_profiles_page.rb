@@ -14,6 +14,7 @@ class SchoolProfilesPage < SitePrism::Page
   class RatingContainer < SitePrism::Section
     element :title, '.module-header .title'
     element :rating, '.circle-rating--medium'
+    element :source_link, 'a', text: 'see notes'
     def has_rating?(r)
       rating.text == r
     end

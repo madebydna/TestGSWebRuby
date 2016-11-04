@@ -103,6 +103,18 @@ describe "Visitor" do
     end
   end
 
+  scenario "sees anchor for data source" do
+    school = create(:school_with_new_profile, id: 3)
+    create(
+      :cached_ratings,
+      :with_gs_rating,
+      id: 1,
+      gs_rating_value: 6.0
+    )
+    visit school_path(school)
+    expect(page_object.test_scores).to have_source_link
+  end
+
   private
 
   def test_scores
