@@ -109,6 +109,20 @@ class UserReviews extends React.Component {
     this.props.review_reported_callback(reviewId);
   }
 
+  userTypeAndDate() {
+    let userType = this.props.user_type_label;
+    let userTypeSentence = 'Submitted ';
+    if (userType) {
+      userTypeSentence += 'by a ' + userType.toLowerCase() + ' \u00B7 ';
+    }
+    return (
+        <div className="type-and-date">
+          { userTypeSentence }
+          { this.props.most_recent_date }
+        </div>
+    )
+  }
+
   render() {
     return (
       <div className="user-reviews-container">
@@ -120,9 +134,7 @@ class UserReviews extends React.Component {
           <div className="col-xs-12 col-sm-10 review-list-column">
             { this.fiveStarReview() }
             { this.topicalReviews() }
-            <div className="date">
-              { this.props.most_recent_date}
-            </div>
+            { this.userTypeAndDate() }
             { this.buttonBar(this.props.five_star_review) }
             { this.reportFiveStarReview() }
           </div>
