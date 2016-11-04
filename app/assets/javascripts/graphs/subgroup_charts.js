@@ -139,7 +139,8 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
       legend: {
         enabled: true,
         itemDistance: 2,
-        margin: 0
+        margin: 0,
+        reversed: true
       },
       title: {
         text: null
