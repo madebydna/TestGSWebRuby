@@ -317,7 +317,7 @@ class Equity extends React.Component {
 
 Equity.propTypes = {
   test_scores: React.PropTypes.object,
-  enrollment: React.PropTypes.object,
+  enrollment: React.PropTypes.number,
   characteristics: React.PropTypes.object,
-  rating_low_income: React.PropTypes.object
+  rating_low_income: React.PropTypes.number
 };
