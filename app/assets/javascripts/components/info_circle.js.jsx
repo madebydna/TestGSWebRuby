@@ -13,7 +13,8 @@ class InfoCircle extends React.Component {
         data-content-type="info_box"
         data-content-html={this.props.content}
         className="gs-tipso info-circle"
-        href="javascript:void(0)">I
+        href="javascript:void(0)">
+          <span className="icon-hint"></span>
       </a>
     )
   };

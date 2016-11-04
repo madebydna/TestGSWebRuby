@@ -2,13 +2,19 @@
   $info-gray: #c1d2d9;
   $white: #fff;
 
-  @include circle-rating(18px);
+  @include circle-rating(16px);
   color: $white;
   background-color: $info-gray;
   vertical-align: middle;
+  .icon-hint {
+    font-size: $font-size-s3;
+  }
 }
-
 a:hover.info-circle {
+  text-decoration: none;
+  color: $white;
+}
+a:focus.info-circle {
   text-decoration: none;
   color: $white;
 }

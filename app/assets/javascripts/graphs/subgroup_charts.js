@@ -106,7 +106,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
   };
 
   generateInfoCircle = function(content) {
-   var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)">I</a>'
+   var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)"><span class="icon-hint"></a>'
     return infoCircleHtml;
   }
 

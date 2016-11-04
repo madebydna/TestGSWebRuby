@@ -3,6 +3,7 @@ GS.tooltip = GS.tooltip || {};
 GS.tooltip.initialize = function() {
   if(!('ontouchstart' in window)) {
     $('.gs-tipso').tipso({
+      width: 300,
       onBeforeShow: function (ele, tipso) {
         // disable modal
         var temp = ele.data('remodal-target');
