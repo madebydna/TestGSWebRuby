@@ -267,20 +267,23 @@ class Equity extends React.Component {
     let maxTestScoresYear = _.max(_.map(testData, obj => obj.year));
     // this is an O(n^2) operation
     return _.map(testData,
-        function(testData) {
-          let newObj = _.merge(
-              {}, testData, {
-                percentOfStudentBody: (_.find(
-                    gon.ethnicity,
-                    ethnicityData => ethnicityData.breakdown === testData.breakdown
-                ) || {})['school_value_' + maxTestScoresYear]
-              }
-          );
-          if (testData.breakdown == 'All students') {
-            newObj.numberOfStudents = this.props.enrollment;
+      function(testData) {
+        let matchingEthnicity = _.find(
+          gon.ethnicity,
+          ethnicityData => ethnicityData.original_breakdown === testData.breakdown
+        ) || {};
+        let newObj = _.merge(
+          {}, testData, {
+            percentOfStudentBody: matchingEthnicity['school_value_' + maxTestScoresYear],
+            breakdown: matchingEthnicity['breakdown'] || testData.breakdown
           }
-          return newObj;
-        }.bind(this)
+        );
+        if (testData.breakdown == 'All') {
+          newObj.breakdown = 'All students';
+          newObj.numberOfStudents = this.props.enrollment;
+        }
+        return newObj;
+      }.bind(this)
     );
   }
 

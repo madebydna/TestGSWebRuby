@@ -49,23 +49,11 @@ GS.testScoresHelpers = {
     testScoreDataArray,
     arrayOfEthnicityCharacteristicsObjects) {
 
-    let testScoreBreakdownsToEthnicityBreakdowns = {
-      'African American': 'Black',
-      'All': 'All students'
-    };
-
-    testScoreDataArray = _.map(
-      testScoreDataArray, obj => _.merge(
-        {}, obj, {
-          breakdown: testScoreBreakdownsToEthnicityBreakdowns[obj.breakdown] || obj.breakdown
-        }
-      )
-    )
-
     let ethnicities = _.map(
       arrayOfEthnicityCharacteristicsObjects,
-      obj => obj.breakdown
+      obj => obj.original_breakdown
     );
+
     ethnicities.push('All');
     ethnicities.push('All students');
 

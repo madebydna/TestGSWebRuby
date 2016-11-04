@@ -11,7 +11,7 @@ class EquityBarGraph extends React.Component {
     return (
       _.sortBy(
         this.props.test_scores.filter(obj => obj.school_value !== undefined),
-        obj => obj.breakdown
+        obj => obj.breakdown == 'All students' ? '' : obj.breakdown
       )
     );
   }
