@@ -46,8 +46,3 @@ $border-color: #dbe6eb;
 .rating-container__more-items .show-more--open {
   border-top: 1px solid $border-color;
 }
-
-.rating-container--test-scores {
-  @extend %rating-container;
-}
-
