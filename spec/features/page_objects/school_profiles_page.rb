@@ -81,7 +81,7 @@ class SchoolProfilesPage < SitePrism::Page
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'
   section :equity, '.rs-equity' do
-
+    element :source_link, 'a', text: 'see notes'
   end
 
   element :five_star_review_comment, ".five-star-review .comment"
