@@ -57,7 +57,7 @@ module SchoolProfiles
 
     def data_label(key)
       key.to_sym
-      I18n.t(key.to_sym, scope: 'lib.college_readiness')
+      I18n.t(key.to_sym, scope: 'lib.college_readiness', default: key)
     end
 
     def data_label_info_text(key)
@@ -114,7 +114,7 @@ module SchoolProfiles
     end
 
     def data_values
-      Array.wrap(data_type_hashes).map do |hash| 
+      Array.wrap(data_type_hashes).map do |hash|
         data_type = hash['data_type']
         formatting = data_type_formatting_map[data_type]
         visualization = data_type_visualization_map[data_type]

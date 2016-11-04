@@ -16,11 +16,16 @@ module SchoolProfiles
       I18n.t('lib.test_scores.info_text')
     end
 
+    def data_label(key)
+      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.test_scores', default: key)
+    end
+
     def subject_scores
       scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236)
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-          rating_score_item.label = hash.subject
+          rating_score_item.label = data_label(hash.subject)
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
         end

@@ -54,7 +54,7 @@ describe "Visitor" do
 
     visit school_path(school)
 
-    expect(page_object).to have_test_score_subject(label: 'English Language Arts', score: '42%')
+    expect(page_object).to have_test_score_subject(label: 'English', score: '42%')
   end
 
   context 'when there are multiple years of data' do
@@ -65,14 +65,14 @@ describe "Visitor" do
     scenario 'sees test scores by subject' do
       visit school_path(@school)
       expect(page_object).to have_test_score_subject(
-        label: 'English Language Arts',
+        label: 'English',
         score: '15%'
       )
     end
     scenario 'sees state average' do
       visit school_path(@school)
       expect(page_object).to have_test_score_subject(
-        label: 'English Language Arts',
+        label: 'English',
         state_average: '31%'
       )
     end
