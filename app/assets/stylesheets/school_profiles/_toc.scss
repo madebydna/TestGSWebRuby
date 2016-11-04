@@ -1,18 +1,30 @@
 #toc {
   .toc-container-box {
     margin: 30px auto;
-    border: solid 1px #dbe6eb;
     padding: 30px;
-    background-color: #f6f9fa;
+  }
+
+  .toc-section-title {
+    font-size: 20px;
+    padding-left: 15px;
+    padding-bottom: 0px;
+    @include media-breakpoint-up(sm) {
+      padding-bottom: 26px;
+    }
   }
 
   .toc-entry {
-    padding-left: 15px;
-    padding-bottom: 10px;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #dbe6eb;
+    padding-bottom: 5px;
+    vertical-align: middle;
+    line-height: 1.71;
   }
 
   .toc-entry:last-child {
     padding-bottom: 0px;
+    border-bottom: none;
   }
 
   .gs-rating {
@@ -23,7 +35,7 @@
     font-size: 12px;
     line-height: 22px;
     color: #FFF;
-    float: left;
+    float: right;
     margin-right: 10px;
   }
 
@@ -35,12 +47,15 @@
     font-size: 12px;
     line-height: 24px;
     color: #FFF;
-    float: left;
     background-color: #2ba3dc;
     margin-right: 10px;
   }
 
   .gs-link {
+    float: right;
+  }
+
+  .gs-link-text {
     float: left;
   }
 

@@ -30,6 +30,9 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
           title: {
             text: null
           },
+          credits: {
+            enabled: false
+          },
           plotOptions: {
             pie: {
               innerSize: 90,
@@ -46,6 +49,17 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
                 },
                 distance: 15
               }
+            }
+          },
+          tooltip: {
+            pointFormatter: function() {
+              var val;
+              if (this.percentage < 1) {
+                val = "<1";
+              } else {
+                val = Math.round(this.percentage)
+              }
+              return '<span style="color:' + this.color + ';">\u25CF</span> percentage: <b>' + val + '</b>';
             }
           },
           series: [{

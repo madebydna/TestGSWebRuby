@@ -1,0 +1,19 @@
+en:
+  lib:
+    college_readiness:
+      info_text: "This measure reflects measures linked to college and career readiness."
+      '4-year high school graduation rate': '4-year high school graduation rate'
+      'Average SAT score': 'Average SAT score'
+      'SAT percent participation': 'SAT participation rate'
+      'Average ACT score': 'Average ACT score'
+      'ACT participation':  'ACT participation rate'
+      'AP Course Participation': 'AP course participation'
+      'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
+      data_point_info_texts:
+        '4-year high school graduation rate': 'Graduation rates are calculated based on how many students graduate within 4 years.'
+        'Average SAT score': 'The SAT is a college admissions test with a total of 2400 possible points. This score reflects the average SAT score for students at this school.'
+        'SAT percent participation': 'The SAT participation rate reflects the percentage of 12th graders taking this college admissions test.'
+        'Average ACT score': 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
+        'ACT participation':  'The ACT participation rate reflects the percentage of 12th graders taking this college admissions test.'
+        'AP Course Participation': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
+        'Percent of students who meet UC/CSU entrance requirements': 'This is the percentage of graduates from this school who completed the A-G courses required for eligibility at University of California and California State University schools.'

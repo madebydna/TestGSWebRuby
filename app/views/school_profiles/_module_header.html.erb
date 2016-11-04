@@ -1,0 +1,15 @@
+ <% circle_color_modifier %>
+ <% circle_content  %>
+ <% title %>
+ <% info_text %>
+ <div class="module-header">
+   <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
+     <%= circle_content %>
+   </div>
+   <span class="title">
+     <%= title %>
+   </span>
+   <% if info_text %>
+     <%= render 'info_circle', content: info_text %>
+   <% end %>
+ </div>

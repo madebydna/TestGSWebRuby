@@ -50,12 +50,15 @@
               <%= hero.gs_rating %>
             </div>
           </div>
+
           <div class="gs-rating-with-label__label">
             <%= t('.greatschools_rating') %>
+            <% content=t('.gs_rating_info_text') %>
+            <%= render 'info_circle', content: t('.gs_rating_info_text') %>
           </div>
         </div>
       </div>
-      <div class="school-info__item school-info__five-star-rating">
+      <div class="school-info__item school-info__five-star-rating" onclick="window.location.href='#Reviews';">
         <div class="label"><%= t('.reviews') %></div>
         <%= render 'five_star_rating',
           rating: hero.five_star_rating,

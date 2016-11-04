@@ -7,123 +7,216 @@ class Equity extends React.Component {
     return {
       subject: subject,
       grade: 'All',
-      level_code: 'e,m,h',
-      year: '2015'
+      level_code: 'e,m,h'
     };
   }
 
+  areAllZero(data) {
+    return data.filter(obj => obj.school_value !== 0).length == 0;
+  }
+
+  section1Tabs() {
+    let tabs = [[],[]];
+
+    let data = this.ethnicityTestScoreData('Math');
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[0].push(
+          {
+            subject: 'Math',
+            component: <BarGraphWithEnrollmentInLabel
+                test_scores={data}
+                graphId="test-scores-math-bar-graph" />,
+            explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
+            ' differences may suggest that some student groups are not getting the support they need to succeed.'
+          }
+      );
+    }
+
+    data = this.ethnicityTestScoreData('English Language Arts');
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[0].push(
+        {
+          subject: 'English',
+          component: <BarGraphWithEnrollmentInLabel
+              test_scores={data}
+              graphId="test-scores-ela-bar-graph" />,
+          explanation: 'This shows results across different races/ethnicities on an English test given to' +
+          ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
+        }
+      );
+    }
+
+    data = this.graduationRateDataByEthnicity();
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[1].push(
+        {
+          subject: 'Graduation rates',
+          component: <EquityBarGraph
+              test_scores={data}
+              type="bar"
+              graphId="graduation-rates-graph" />,
+          explanation: 'This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.'
+        }
+      );
+    }
+
+    data = this.entranceRequirementData();
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[1].push(
+        {
+          subject: 'UC/CSU Eligibility',
+          component: <EquityBarGraph
+              test_scores={data}
+              type="bar"
+              graphId="entrance-requirement-graph" />,
+          explanation: <div>This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
+        }
+      )
+    }
+
+    return tabs;
+  }
+
+  section2Tabs() {
+    let tabs = [[],[]];
+
+    let data = this.incomeLevelTestScoreData('Math');
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[0].push(
+          {
+            subject: 'Math',
+            component: <EquityBarGraph
+                test_scores={data}
+                type="column"
+                graphId="low-income-math-bar-graph" />,
+            explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
+            ' differences may suggest that some student groups are not getting the support they need to succeed.'
+          }
+      );
+    }
+
+    data = this.incomeLevelTestScoreData('English Language Arts');
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[0].push(
+        {
+          subject: 'English',
+          component: <EquityBarGraph
+              test_scores={data}
+              type="column"
+              graphId="low-income-ela-bar-graph" />,
+          explanation: 'This shows results across different races/ethnicities on an English test given to' +
+          ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
+        }
+      )
+    }
+
+
+    data = this.graduationRateDataByIncomeLevel();
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[1].push(
+        {
+          subject: 'Graduation rates',
+          component: <EquityBarGraph
+              test_scores={data}
+              type="bar"
+              graphId="graduation-rates-by-income-level-graph" />,
+          explanation: 'This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed'
+        }
+      )
+    }
+    
+    data = this.entranceRequirementByIncomeLevelData();
+    if(data && data.length > 0 && !this.areAllZero(data)) {
+      tabs[1].push(
+        {
+          subject: 'UC/CSU Eligibility',
+          component: <EquityBarGraph
+              test_scores={data}
+              type="bar"
+              graphId="entrance-requirement-by-income-level-graph" />,
+          explanation: <div>This shows the percentages of graduates, by 
+            family income level, who have taken the A-G required classes needed 
+            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
+        }
+      )
+    }
+
+    return tabs;
+  }
+
   equityConfiguration(){
-    return [
-      {
+    let section1Content = [];
+    let section2Content = [];
+    let section1Tabs = this.section1Tabs();
+    let section2Tabs = this.section2Tabs();
+    config = [];
+
+    if(section1Tabs[0].length > 0) {
+      section1Content.push(
+        {
+          section_title: 'Test Scores',
+          content: section1Tabs[0]
+        }
+      );
+    }
+    if(section1Tabs[1].length > 0) {
+      section1Content.push(
+        {
+          section_title: 'Graduation rates',
+          content: section1Tabs[1]
+        }
+      );
+    }
+
+    if(section2Tabs[0].length > 0) {
+      section2Content.push(
+        {
+          section_title: 'Test Scores',
+          content: section2Tabs[0]
+        }
+      );
+    }
+    if(section2Tabs[1].length > 0) {
+      section2Content.push(
+        {
+          section_title: 'Graduation rates',
+          content: section2Tabs[1]
+        }
+      );
+    }
+
+    if(section1Content.length > 0) {
+      config.push({
         section_info:{
           title: 'Race/Ethnicity',
-          rating: '',
-          icon_classes: 'icon-shield'
+          rating: ''
         },
-        section_content:[{
-            section_title: 'Test Scores',
-            content: [
-              {
-                subject: 'English Language Arts',
-                component: <BarGraphWithEnrollmentInLabel
-                    test_scores={this.ethnicityTestScoreData('English Language Arts')}
-                    graphId="test-scores-ela-bar-graph" />,
-                explanation: 'This shows results across different races/ethnicities on an English test given to' +
-                ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
-              },
-              {
-                subject: 'Math',
-                component: <BarGraphWithEnrollmentInLabel
-                  test_scores={this.ethnicityTestScoreData('Math')}
-                  graphId="test-scores-math-bar-graph" />,
-                explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
-                ' differences may suggest that some student groups are not getting the support they need to succeed.'
-              }
-            ]
-          },
-          {
-            section_title: 'Graduation Rates',
-            content: [
-              {
-                subject: 'Graduation rates',
-                component: <EquityBarGraph
-                    test_scores={this.graduationRateDataByEthnicity()}
-                    type="bar"
-                    graphId="graduation-rates-graph" />,
-                explanation: 'This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.'
-              },
-              {
-                subject: 'UC/CSU Eligibility',
-                component: <EquityBarGraph
-                    test_scores={this.entranceRequirementData()}
-                    type="bar"
-                    graphId="entrance-requirement-graph" />,
-                explanation: 'This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. Find out more about these requirements.'
-              }
-            ]
-          }
-        ]
-      },
-      {
+        section_content: section1Content
+      });
+    }
+
+    if(section2Content.length > 0) {
+      config.push({
         section_info:{
           title: 'Low Income Students',
           rating: this.lowIncomeRating(),
-          icon_classes: ''
+          icon_classes: 'icon-shield'
         },
-        section_content:[
-          {
-            section_title: 'Test Scores',
-            content: [
-              {
-                subject: 'English Language Arts',
-                component: <EquityBarGraph
-                    test_scores={this.incomeLevelTestScoreData('English Language Arts')}
-                    type="column"
-                    graphId="low-income-ela-bar-graph" />,
-                explanation: 'This shows results across different races/ethnicities on an English test given to' +
-                ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
-              },
-              {
-                subject: 'Math',
-                component: <EquityBarGraph
-                  test_scores={this.incomeLevelTestScoreData('Math')}
-                  type="column"
-                  graphId="low-income-math-bar-graph" />,
-                explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
-                ' differences may suggest that some student groups are not getting the support they need to succeed.'
-              }
-            ]
-          },
-          {
-            section_title: 'Graduation Rates',
-            content: [
-              {
-                subject: 'Graduation rates',
-                component: <EquityBarGraph
-                    test_scores={this.graduationRateDataByIncomeLevel()}
-                    type="bar"
-                    graphId="graduation-rates-by-income-level-graph" />,
-                explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
-              },
-              {
-                subject: 'UC/CSU Eligibility',
-                component: <EquityBarGraph
-                    test_scores={this.entranceRequirementByIncomeLevelData()}
-                    type="bar"
-                    graphId="entrance-requirement-by-income-level-graph" />,
-                explanation: 'Donec id elit non mi porta gravida at eget metus. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Nullam id dolor id nibh ultricies vehicula ut id elit.'
-              }
-            ]
-          }
-        ]
-      }
-    ];
+        section_content: section2Content
+      });
+    }
+
+    return config;
   }
 
   formattedTestScoreData(subject) {
+    let flattenedTestScoreData = 
+        GS.testScoresHelpers.flatten(this.props.test_scores);
+    let filterCriteria = this.dataCriteria(subject);
+    let maxYear = _.max(_.map(flattenedTestScoreData, obj => obj.year));
+    filterCriteria.year = maxYear;
     return GS.testScoresHelpers.filter(
-        GS.testScoresHelpers.flatten(this.props.test_scores),
-        this.dataCriteria(subject)
+      flattenedTestScoreData, filterCriteria
     );
   }
 
@@ -171,22 +264,26 @@ class Equity extends React.Component {
   }
 
   addEnrollmentIntoTestData(testData) {
+    let maxTestScoresYear = _.max(_.map(testData, obj => obj.year));
     // this is an O(n^2) operation
     return _.map(testData,
-        function(testData) {
-          let newObj = _.merge(
-              {}, testData, {
-                percentOfStudentBody: (_.find(
-                    gon.ethnicity,
-                    ethnicityData => ethnicityData.breakdown === testData.breakdown
-                ) || {}).school_value
-              }
-          );
-          if (testData.breakdown == 'All') {
-            newObj.numberOfStudents = this.props.enrollment;
+      function(testData) {
+        let matchingEthnicity = _.find(
+          gon.ethnicity,
+          ethnicityData => ethnicityData.original_breakdown === testData.breakdown
+        ) || {};
+        let newObj = _.merge(
+          {}, testData, {
+            percentOfStudentBody: matchingEthnicity['school_value_' + maxTestScoresYear],
+            breakdown: matchingEthnicity['breakdown'] || testData.breakdown
           }
-          return newObj;
-        }.bind(this)
+        );
+        if (testData.breakdown == 'All') {
+          newObj.breakdown = 'All students';
+          newObj.numberOfStudents = this.props.enrollment;
+        }
+        return newObj;
+      }.bind(this)
     );
   }
 
@@ -203,6 +300,7 @@ class Equity extends React.Component {
     var equitySections = [];
     for (var i = 0; i < equityConfig.length; i++) {
       equitySections.push(<EquitySection
+          key={i}
           equity_config={ equityConfig[i]}
 
       />)

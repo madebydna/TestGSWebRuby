@@ -1,6 +1,7 @@
 <% college_readiness %>
 <% title = t('.title') %>
 <% rating = college_readiness.rating %>
+<% info_text = college_readiness.info_text  %>
 <% data_values = college_readiness.data_values || [] %>
 <% initial_size = 3 %>
 
@@ -15,28 +16,23 @@
     <div class="col-xs-12 col-lg-9">
       <% unless rating.nil? %>
         <div class="rating-container__rating">
-          <div class="circle-rating-with-label">
-            <div class="circle-rating-with-label__circle">
-              <div class="circle-rating--<%= rating %> circle-rating--medium">
-                <%= rating %>
-              </div>
-            </div>
-            <div class="circle-rating-with-label__label
-              circle-rating-with-label__label--<%= rating %>">
-              <%= college_readiness.rating_label  %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+          <%= render "module_header",
+            circle_color_modifier: rating,
+            circle_content: rating,
+            title: title,
+            info_text: info_text
+          %>
+      </div>
+    <% end %>
+    <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
 
-      <% if data_values.size > initial_size %>
-        <div class="rating-container__more-items">
-          <%= render layout:'drawer' do %>
-            <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
-          <% end %>
-        </div>
-      <% end %>
+    <% if data_values.size > initial_size %>
+      <div class="rating-container__more-items">
+        <%= render layout:'drawer' do %>
+          <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+        <% end %>
+      </div>
+    <% end %>
     </div>
   </div>
 </div>

@@ -2,14 +2,15 @@
 <% closest_top = nearby_schools.closest_top_then_top_nearby_schools %>
 <% other_nearby = nearby_schools.closest_schools %>
 
+<a name="NearbySchools"></a>
 <div class="nearby-schools">
   <div class="title-bar">
-    <div class="title">Nearby schools</div>
+    <div class="title"><%= t('.title') %></div>
     <div class="button-bar js-nearby-toggle">
       <% unless closest_top.empty? %><button class="active" data-target="high-performing">
-          Closest High Performing
+          <%= t('.nearest-high')  %>
         </button><% end %><% unless other_nearby.empty? %><button data-target="nearby-schools">
-          Nearby Schools
+          <%= t('.nearby')  %>
         </button><% end %>
     </div>
   </div>

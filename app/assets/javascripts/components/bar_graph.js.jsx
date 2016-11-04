@@ -39,7 +39,7 @@ class BarGraph extends React.Component {
               align: 'high'
           },
           labels: {
-              overflow: 'justify'
+            overflow: 'justify'
           }
       },
       legend: {
@@ -54,10 +54,15 @@ class BarGraph extends React.Component {
       tooltip: false,
       plotOptions: {
           bar: {
-              dataLabels: {
-                  enabled: true
-              }
+            dataLabels: {
+              enabled: true
+            }
           },
+          column: {
+            dataLabels: {
+              enabled: true
+            }
+          }
       },
       credits: {
           enabled: false

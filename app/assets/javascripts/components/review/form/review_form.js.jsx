@@ -11,14 +11,17 @@ class ReviewForm extends React.Component {
     this.updateReviewFormErrors = this.updateReviewFormErrors.bind(this);
     this.noSchoolUserExists = this.noSchoolUserExists.bind(this);
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.handleFailSubmit = this.handleFailSubmit.bind(this);
     this.promptUserWhenNavigatingAway = this.promptUserWhenNavigatingAway.bind(this);
-    window.onbeforeunload = this.promptUserWhenNavigatingAway; 
-
+    this.validateResponse = this.validateResponse.bind(this)
+    window.onbeforeunload = this.promptUserWhenNavigatingAway;
+    
     this.state = {
       displayCTA: true,
       displayAllQuestion: false,
       selectedResponses: {},
+      formErrors: false,
       errorMessages: {},
       selectedFiveStarResponse: null,
       unsavedChanges: false,
@@ -136,6 +139,96 @@ class ReviewForm extends React.Component {
     return JSON.stringify(reviewsData);
   }
 
+  minWordsValidator(string) {
+    if (! string) {
+      return null;
+    }
+    var numberWords = string
+      .replace( /(^\s*)|(\s*$)/gi, "" )
+      .replace( /[ ]{2,}/gi, " " )
+      .replace( /\n /, "\n" )
+      .split(' ').length;
+    if (7 > numberWords) {
+      return "Please be sure your story is 7 words or more in length";
+    } else {
+      return null;
+    }
+  }
+
+  requiredCommentValidator(string) {
+    if ( !string || string.length == 0) {
+      return "Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.";
+    } else {
+      return null;
+    }
+  }
+
+  maxCharactersValidator(string) {
+    if (string && string.legnth != 0 && string.length > 2400) {
+      return "Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.";
+    } else {
+      return null;
+    }
+  }
+
+  clearErrors() {
+    this.setState({
+      errorMessages: {},
+      formErrors: false
+    });
+  }
+
+  getValidationsForQuestion(questionId) {
+   validationFuncs = [];
+    switch(questionId) {
+      case "1": validationFuncs.push(this.requiredCommentValidator);
+      default: validationFuncs.push(this.minWordsValidator);
+              validationFuncs.push( this.maxCharactersValidator);
+    }
+    return validationFuncs;
+   }
+
+  errorMessageForQuestion(validationFuncs, comment) {
+    var error;
+    _.each(validationFuncs, function(func) {
+      var message = func(comment);
+      if (message) {
+        error = message;
+        return false;
+      }
+    });
+    return error;
+  }
+
+  validateResponse(errorMessages, response, questionId) {
+    var comment = response.comment;
+    var validationFuncs = this.getValidationsForQuestion(questionId);
+    var message = this.errorMessageForQuestion(validationFuncs, comment);
+    if (message) {
+      errorMessages[questionId] = message;
+    }
+    return errorMessages;
+  }
+
+  validateForm() {
+   var selectedResponses = this.state.selectedResponses;
+   var errorMessages = _.reduce(selectedResponses, this.validateResponse, {});
+   var formValid = _.isEmpty(errorMessages);
+    this.setState ({
+      errorMessages: errorMessages,
+      formErrors: !formValid
+    });
+    return formValid;
+  }
+
+  onSubmit() {
+    this.clearErrors();
+    var formValid = this.validateForm();
+    if (formValid) {
+      this.submitForm();
+    }
+  }
+
   submitForm() {
     this.setState({disabled: true});
     if (GS.session.isSignedIn()) {
@@ -236,6 +329,12 @@ class ReviewForm extends React.Component {
     }
   }
 
+  renderFormErrorMessage() {
+  return(
+    <div className='form-error'>Errors in Form</div>
+  );
+  }
+
   renderFormActions() {
     let guidelinesLink = gon.links.school_review_guidelines;
     let submitText;
@@ -250,9 +349,10 @@ class ReviewForm extends React.Component {
         <button className="button" onClick={this.cancelForm}>Cancel</button>
         <button className="button cta"
           disabled= {this.state.disabled}
-          onClick={this.submitForm}>
+          onClick={this.onSubmit}>
           {submitText}
         </button>
+        {/* { this.state.formErrors ? this.renderFormErrorMessage() : null } */}
       </div>
     );
   }

@@ -216,6 +216,12 @@
       margin-right: $spacing-medium;
       font-size: $font-size-s1;
     }
+    .form-error {
+      text-align: center;
+      font-family: "opensans-regular";
+      margin-top: 5px 0;
+      color: #db0000;
+    }
   }
 }
 

@@ -17,7 +17,8 @@ GS.testScoresHelpers = {
                     grade: grade,
                     level_code: level_code,
                     subject: subject,
-                    year: year
+                    year: year,
+                    school_value: obj.score
                   }
                 )
               )
@@ -48,29 +49,18 @@ GS.testScoresHelpers = {
     testScoreDataArray,
     arrayOfEthnicityCharacteristicsObjects) {
 
-    let testScoreBreakdownsToEthnicityBreakdowns = {
-      'African American': 'Black'
-    };
-
-    testScoreDataArray = _.map(
-      testScoreDataArray, obj => _.merge(
-        {}, obj, {
-          breakdown: testScoreBreakdownsToEthnicityBreakdowns[obj.breakdown] || obj.breakdown
-        }
-      )
-    )
-
     let ethnicities = _.map(
       arrayOfEthnicityCharacteristicsObjects,
-      obj => obj.breakdown
+      obj => obj.original_breakdown
     );
+
     ethnicities.push('All');
     ethnicities.push('All students');
 
-    return _.select(
+    let result = _.select(
       testScoreDataArray, obj => _.include(ethnicities, obj.breakdown)
     );
+    return result;
   }
-
 };
 

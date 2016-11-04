@@ -15,27 +15,29 @@ class EquitySection extends React.Component {
       />
     </div>
   }
-  createRatingCircle(rating, icon) {
+  drawRatingCircle(rating, icon) {
     let rating_html = '';
-    if (rating != '') {
+    if (rating && rating != '') {
       let circleClassName = 'circle-rating--medium rating-layout circle-rating--'+rating;
       rating_html = <div className={circleClassName}>{rating}</div>;
     }
-    else{
-      let circleClassName = 'circle-rating--medium rating-layout circle-rating--equity-blue';
-      rating_html = <div className={circleClassName}><span className={icon}></span></div>;
-    }
     return rating_html
+  }
+
+  linkName(name){
+    return name.split(' ').join('_');
   }
 
   render() {
     let section_info = this.props.equity_config["section_info"];
     let section_content = this.props.equity_config["section_content"];
-    let rating = this.createRatingCircle(section_info.rating, section_info.icon_classes);
+    let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
+    let link_name = this.linkName(section_info.title);
 
     return <div className="equity-section">
+          <a name={link_name}></a>
       <div className="title-bar">{rating}{section_info.title}</div>
-      <SectionNavigation items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      <SectionNavigation key="sectionNavigation" items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
     </div>
   }
@@ -46,7 +48,7 @@ class EquitySection extends React.Component {
 };
 
 Equity.propTypes = {
-  equity_config: React.PropTypes.arrayOf(React.PropTypes.object({
+  equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
     section_info: React.PropTypes.object,
     section_content: React.PropTypes.object
   }))

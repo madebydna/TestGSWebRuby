@@ -1,0 +1,14 @@
+.info-circle {
+  $info-gray: #c1d2d9;
+  $white: #fff;
+
+  @include circle-rating(18px);
+  color: $white;
+  background-color: $info-gray;
+  vertical-align: middle;
+}
+
+a:hover.info-circle {
+  text-decoration: none;
+  color: $white;
+}

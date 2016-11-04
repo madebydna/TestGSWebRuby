@@ -9,11 +9,9 @@ class EquityBarGraph extends React.Component {
 
   testScores() {
     return (
-      _.reject(
-        this.props.test_scores, 
-        function(obj){
-          return (obj.score || obj.school_value) === undefined;
-        }
+      _.sortBy(
+        this.props.test_scores.filter(obj => obj.school_value !== undefined),
+        obj => obj.breakdown == 'All students' ? '' : obj.breakdown
       )
     );
   }
@@ -66,8 +64,8 @@ class EquityBarGraph extends React.Component {
   }
 
   mapDataObjectToSchoolDataPoint(obj) {
-    let score = obj.score || obj.school_value;
-    if (score) {
+    let score = obj.school_value;
+    if (score !== undefined) {
       return {
         color: this.mapColor(score),
         y: Math.round(score),
@@ -78,7 +76,7 @@ class EquityBarGraph extends React.Component {
 
   mapDataObjectToStateAverageDataPoint(obj) {
     let score = obj.state_average;
-    if(score) {
+    if(score !== undefined) {
       return {
         color: 'lightgrey',
         y: Math.round(score),
@@ -114,8 +112,9 @@ class EquityBarGraph extends React.Component {
 EquityBarGraph.defaultProps = {
   type: 'bar'
 }
-
 EquityBarGraph.propTypes = {
-  test_scores: React.PropTypes.array.isRequired,
+  test_scores: React.PropTypes.arrayOf(React.PropTypes.shape({
+    breakdown: React.PropTypes.string.isRequired
+  })).isRequired,
   graphId: React.PropTypes.string.isRequired
 }

@@ -287,6 +287,10 @@ class School < ActiveRecord::Base
     collection.schools
   end
 
+  def facebook_url
+    cache_results.values_for(EspKeys::FACEBOOK_URL).first || metadata.facebook_url
+  end
+
   def demo_school?
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
   end
