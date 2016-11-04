@@ -10,6 +10,7 @@ going to build a partial for badges.  it will use the name passed in to generate
           <div class="col-xs-12 col-sm-4">
             <div class="toc-section-title">
               <%= t('school_profiles.toc.section_title_academics').upcase %>
+              <%= render 'info_circle', content: t('.info_texts.academics_html') %>
             </div>
             <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: t('school_profiles.toc.test_scores') %>
             <%= render 'toc_entry_rating', rating: @school_profile.college_readiness.rating, title: t('school_profiles.toc.college_readiness') %>
@@ -17,6 +18,7 @@ going to build a partial for badges.  it will use the name passed in to generate
           <div class="col-xs-12 col-sm-4">
             <div class="toc-section-title">
               <%= t('school_profiles.toc.section_title_equity').upcase %>
+              <%= render 'info_circle', content: t('.info_texts.equity_html') %>
             </div>
             <%= render 'toc_entry_badge', icon: 'shield', title: t('school_profiles.toc.race_ethnicity') %>
             <%= render 'toc_entry_rating', rating: @school_profile.equity.rating_low_income.to_f.round,
@@ -25,6 +27,7 @@ going to build a partial for badges.  it will use the name passed in to generate
           <div class="col-xs-12 col-sm-4 hidden-sm-down">
             <div class="toc-section-title">
               <%= t('school_profiles.toc.section_title_environment').upcase %>
+              <%= render 'info_circle', content: t('.info_texts.environment_html') %>
             </div>
             <%= render 'toc_entry_badge', icon: 'shield', title: t('school_profiles.toc.students') %>
             <%= render 'toc_entry_badge', icon: 'location', title: t('school_profiles.toc.neighborhood') %>

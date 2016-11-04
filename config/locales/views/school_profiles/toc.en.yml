@@ -6,7 +6,11 @@ en:
       college_readiness: College readiness
       section_title_equity: Equity
       race_ethnicity: Race/ethnicity
-      low_income: Low income students
+      low_income: Low-income students
       section_title_environment: Environment
       students: Students
       neighborhood: Neighborhood
+      info_texts:
+        academics_html: <strong>Academics</strong> includes state test scores, graduation rates, SAT/ACT scores, and more.
+        environment_html: <strong>Environment</strong> includes information about the school’s student body, the surrounding neighborhood, and more.
+        equity_html: <strong>Equity</strong> gives a snapshot of test scores and college readiness for different student groups. Low ratings indicate low test scores, which may mean certain student groups are not getting the support they need.
