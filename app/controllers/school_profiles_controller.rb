@@ -2,6 +2,7 @@ class SchoolProfilesController < ApplicationController
   protect_from_forgery
   before_filter :require_school
   before_action :redirect_to_canonical_url
+  before_action :add_dependencies_to_gon
 
   layout "application"
 
@@ -266,5 +267,10 @@ class SchoolProfilesController < ApplicationController
       #   sized_maps
       # end
     end
+  end
+
+  def add_dependencies_to_gon
+    gon.dependencies ||= {}
+    gon.dependencies[:highcharts] = ActionController::Base.helpers.asset_path('highcharts.js')
   end
 end

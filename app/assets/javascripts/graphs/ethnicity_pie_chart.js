@@ -77,7 +77,7 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
       if(window.Highcharts) {
         callback();
       } else {
-        GS.dependency.getScript("/assets/highcharts.js").done(callback);
+        GS.dependency.getScript(gon.dependencies['highcharts']).done(callback);
       }
     }
   };
