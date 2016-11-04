@@ -104,11 +104,19 @@ class Reviews extends React.Component {
   }
 
   render() {
+    let reviewFormContent = null;
+    let recentComments = null;
+    if(this.props.reviews.length > 0) {
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, 'Review this school');
+      recentComments = this.renderReviewLayout(this.renderReviewsList, 'Recent Comments');
+    } else {
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, 'Be the first to review this school');
+    }
     return (
       <div>
         <a name="Reviews"></a>
-        { this.renderReviewLayout(this.renderReviewForm, 'Review this school') }
-        { this.renderReviewLayout(this.renderReviewsList, 'Recent Comments') }
+        { reviewFormContent }
+        { recentComments }
       </div>
     );
   }
