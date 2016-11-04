@@ -13,14 +13,25 @@
       </div>
       <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                  width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
-      <div>
-        <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+
+      <a name="Academics"></a>
+      <div class="academics-container">
+        <div class="row">
+          <div class="col-xs-12 col-lg-3">
+            <div class="rating-container__title">
+              <%= t('.academics') %>
+            </div>
+          </div>
+          <div class="col-xs-12 col-lg-9">
+            <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+            <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+          </div>
+        </div>
       </div>
+
       <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
                  width: 320, height: 50, css_class: 'mbl' %>
-      <div>
-        <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
-      </div>
+
       <div>
         <%= render 'equity', equity: @school_profile.equity %>
       </div>

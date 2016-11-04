@@ -1,36 +1,28 @@
 <% test_scores %>
-<% title = "Test Scores" %>
+<% title = t('.title') %>
 <% rating = test_scores.rating %>
 <% info_text = test_scores.info_text  %>
 <% data_values = test_scores.subject_scores || [] %>
 <% initial_size = 3 %>
 
-<a name="Test_Scores"></a>
-<div class="rating-container--test-scores">
-  <div class="row">
-    <div class="col-xs-12 col-lg-3">
-      <div class="rating-container__title">
-        <%= title %>
-      </div>
-    </div>
-    <div class="col-xs-12 col-lg-9">
-      <div class="rating-container__rating">
-        <%= render "module_header",
-          circle_color_modifier: rating,
-          circle_content: rating,
-          title: title,
-          info_text: info_text
-        %>
-    </div>
-    <%= render partial: "rating_score_item", collection: data_values.take(initial_size), as: :score_data %>
+<div class="rating-container">
+  <a name="Test_Scores"></a>
+  <div class="rating-container__rating">
+    <%= render "module_header",
+      circle_color_modifier: rating,
+      circle_content: rating,
+      title: title,
+      info_text: info_text
+    %>
+  </div>
 
-      <% if data_values.size > initial_size %>
-        <div class="rating-container__more-items">
-          <%= render layout:"drawer" do %>
-            <% render partial: "rating_score_item", collection: data_values[initial_size..-1], as: :score_data %>
-          <% end %>
-        </div>
+  <%= render partial: "rating_score_item", collection: data_values.take(initial_size), as: :score_data %>
+
+  <% if data_values.size > initial_size %>
+    <div class="rating-container__more-items">
+      <%= render layout:"drawer" do %>
+        <% render partial: "rating_score_item", collection: data_values[initial_size..-1], as: :score_data %>
       <% end %>
     </div>
-  </div>
+  <% end %>
 </div>
