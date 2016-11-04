@@ -1,5 +1,5 @@
 es:
   school_profiles:
-    student_diversity:
-      title_html: Student<br />Diversity
+    students:
+      title_html: Students
       subtitle_html: Studies show that diversity in school leads to long-term benefits for students. <a href="/gk/articles/why-diversity-in-classrooms-matters/" target="_blank">Discover why!</a>

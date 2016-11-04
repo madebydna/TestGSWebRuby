@@ -36,7 +36,7 @@ class SchoolProfilesController < ApplicationController
         sp.college_readiness = college_readiness
         sp.reviews = reviews
         sp.review_questions = review_questions
-        sp.student_diversity = student_diversity
+        sp.students = students
         sp.nearby_schools = nearby_schools
         sp.last_modified_date = last_modified_date
         sp.equity = equity
@@ -84,8 +84,8 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
-  def student_diversity
-    SchoolProfiles::StudentDiversity.new(
+  def students
+    SchoolProfiles::Students.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
@@ -128,15 +128,15 @@ class SchoolProfilesController < ApplicationController
   end
 
   def add_gon_ethnicity
-    gon.ethnicity = student_diversity.ethnicity_data
+    gon.ethnicity = students.ethnicity_data
   end
 
   def add_gon_subgroup
-    gon.subgroup = student_diversity.subgroups_data
+    gon.subgroup = students.subgroups_data
   end
 
   def add_gon_gender
-    gon.gender = student_diversity.gender_data
+    gon.gender = students.gender_data
   end
 
   def add_gon_links

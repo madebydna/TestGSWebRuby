@@ -1,5 +1,5 @@
 module SchoolProfiles
-  class StudentDiversity
+  class Students
 
     OTHER_BREAKDOWN_KEYS = [
       "English learners",

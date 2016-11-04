@@ -17,7 +17,7 @@ describe "Visitor" do
     visit school_path(school)
 
     expect(page_object).to have_student_diversity
-    expect(page_object.student_diversity.title).to have_text('StudentDiversity')
+    expect(page_object.student_diversity.title).to have_text('Environment')
   end
 
   scenario "sees ethnicity data" do

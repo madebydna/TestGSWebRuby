@@ -54,7 +54,7 @@ class SchoolProfilesPage < SitePrism::Page
     end
   end
 
-  class StudentDiversity < RatingContainer
+  class Students < RatingContainer
     element :ethnicity_graph, "#ethnicity-graph"
     element :subgroup_container, '.subgroups'
     elements :subgroup_data, ".subgroup"
@@ -75,7 +75,7 @@ class SchoolProfilesPage < SitePrism::Page
   element :five_star_rating, '.rs-five-star-rating'
   section :test_scores, RatingContainer, '.rating-container--test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
-  section :student_diversity, StudentDiversity, '.student-diversity-container'
+  section :student_diversity, Students, '.students-container'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'
