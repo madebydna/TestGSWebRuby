@@ -1,6 +1,8 @@
 var GS = GS || {}
 GS.util = GS.util || {};
 
+var _kiq = _kiq || [];
+
 GS.util.log = function (msg) {
     if (window.console) {
         console.log(msg);
