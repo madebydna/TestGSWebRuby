@@ -106,7 +106,7 @@ describe "Visitor" do
   private
 
   def test_scores
-    ".rating-container--test-scores"
+    '.rs-test-scores'
   end
 
   def have_test_scores_rating(rating)

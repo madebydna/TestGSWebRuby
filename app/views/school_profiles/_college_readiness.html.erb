@@ -7,16 +7,14 @@
 
 <div class="rating-container rs-college-readiness">
   <a name="College_Readiness"></a>
-  <% unless rating.nil? %>
-    <div class="rating-container__rating">
-      <%= render "module_header",
-        circle_color_modifier: rating,
-        circle_content: rating,
-        title: title,
-        info_text: info_text
-      %>
-    </div>
-  <% end %>
+  <div class="rating-container__rating">
+    <%= render "module_header",
+      circle_color_modifier: rating,
+      circle_content: rating,
+      title: title,
+      info_text: info_text
+    %>
+  </div>
 
   <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
 

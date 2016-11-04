@@ -12,7 +12,7 @@ class SchoolProfilesPage < SitePrism::Page
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
   class RatingContainer < SitePrism::Section
-    element :title, '.rating-container__title'
+    element :title, '.module-header .title'
     element :rating, '.circle-rating--medium'
     def has_rating?(r)
       rating.text == r
@@ -73,7 +73,7 @@ class SchoolProfilesPage < SitePrism::Page
 
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
-  section :test_scores, RatingContainer, '.rating-container--test-scores'
+  section :test_scores, RatingContainer, '.rs-test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
   section :student_diversity, Students, '.students-container'
   section :review_summary, ReviewSummary, '.rs-review-summary'
