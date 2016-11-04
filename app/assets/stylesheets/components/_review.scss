@@ -21,7 +21,7 @@
       margin-top: -10px;
     }
     .topical-review {
-      padding-top: 20px;
+      padding-top: 15px;
     }
   }
 
@@ -42,12 +42,9 @@
     color: $gray-text-color;
   }
 
-  .topical-review {
-    padding-top: 20px;
-  }
-
   $color-report-flag: #d94373;
   $color-report-flag-reported: #fff;
+  $color-link: #666;
   $color-reported: #d94373;
   $color-button-border: #c1d2d9;
   $color-button-hover-border: rgba(113, 120, 126, 0.5);
@@ -64,8 +61,10 @@
     }
 
     a {
-      color: $color-reported;
+      color: $color-link;
       display: block;
+      font-size: $font-size-s1;
+      font-style: italic;
     }
 
     .reported {
