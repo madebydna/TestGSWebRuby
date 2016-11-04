@@ -52,11 +52,12 @@ class ReviewsList extends React.Component {
   }
 
   render() {
+    let drawerReviews = this.drawerReviews();
     return (
       <div className="review-list">
         <div>{this.renderReviewSubmitMessage()}</div>
         <div>{this.initialReviews()}</div>
-        <Drawer content={this.drawerReviews()} />
+        {drawerReviews.length > 0 && <Drawer content={this.drawerReviews()}/>}
       </div>
     )
   }
