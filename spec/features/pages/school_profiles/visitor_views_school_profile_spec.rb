@@ -38,7 +38,7 @@ describe 'Visitor' do
 
     page_object = SchoolProfilesPage.new
     expect(page_object).to have_gs_rating
-    expect(page_object).to have_gs_rating_of(5)
+    expect(page_object).to have_gs_rating_of('5/10')
   end
 
   scenario 'sees school address info' do
