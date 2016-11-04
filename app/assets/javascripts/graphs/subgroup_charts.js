@@ -244,7 +244,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
   var generateSubgroupPieCharts = function () {
     if (gon.subgroup) {
       var subgroupData = gon.subgroup;
-      $.cachedScript("https://code.highcharts.com/highcharts.js").done(function () {
+      GS.dependency.getScript("/assets/highcharts.js").done(function () {
         _.forOwn(subgroupData, renderSubgroupChart);
         if (gon.gender) {
           var genderData = gon.gender;

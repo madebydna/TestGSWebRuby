@@ -19,5 +19,6 @@ Rails.application.config.assets.precompile += [
     'galleria.classic.js',
     'main.css', #for style-guide
     'main.js', #for style-guide
-    'picturefill.min.js' #for style-guide
+    'picturefill.min.js', #for style-guide
+    'highcharts.js'
 ]

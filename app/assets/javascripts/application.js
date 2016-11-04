@@ -15,3 +15,4 @@
 //= require lodash
 //= require ./util/util
 //= require ./util/uri
+//= require ./util/dependency.js

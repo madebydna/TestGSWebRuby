@@ -81,7 +81,7 @@ class BarGraph extends React.Component {
     if(window.Highcharts) {
       callback();
     } else {
-      $.cachedScript("https://code.highcharts.com/highcharts.js").done(callback);
+      GS.dependency.getScript("/assets/highcharts.js").done(callback);
     }
   }
 
