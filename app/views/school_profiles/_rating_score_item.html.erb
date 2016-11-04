@@ -15,7 +15,7 @@
         </div>
         <% unless score_data.formatted_state_average.nil? %>
           <div class="rating-score-item__state-average">
-            State Avg: <%= score_data.formatted_state_average %>
+            <%= t('.state_average') %>: <%= score_data.formatted_state_average %>
           </div>
         <% end %>
       </div>
