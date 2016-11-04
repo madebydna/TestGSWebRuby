@@ -17,7 +17,7 @@ describe "Visitor" do
     visit school_path(school)
 
     expect(page_object).to have_student_diversity
-    expect(page_object.student_diversity.title).to have_text('Environment')
+    expect(page_object.student_diversity.title).to have_text('Students')
   end
 
   scenario "sees ethnicity data" do
@@ -68,5 +68,11 @@ describe "Visitor" do
     
     expect(page_object.student_diversity).to have_gender_data
     expect(page_object.student_diversity.gender_data).to have_text("50.6")
+  end
+
+  scenario "sees anchor for data source" do
+    school = create(:school_with_new_profile, id: 1)
+    visit school_path(school)
+    expect(page_object.student_diversity).to have_source_link
   end
 end

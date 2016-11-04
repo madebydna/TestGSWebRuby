@@ -16,6 +16,8 @@
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars
 //= require util/url_params
+//= require util/tooltip
+//= require util/remodal
 //= require components/drawer
 //= require components/shortened_text
 //= require util/school_profile_sticky_cta.js
@@ -30,8 +32,6 @@
 //= require components
 //= require react_ujs
 //= require util/content
-//= require util/tooltip
-//= require util/remodal
 //= require graphs/subgroup_charts
 //= require loaders/facebook
 //= require util/states

@@ -2,3 +2,5 @@ es:
   school_profiles:
     test_scores:
       title: Test scores
+      source: Source
+      see notes: see notes

@@ -27,10 +27,10 @@ class SubSectionToggle extends React.Component {
   }
 };
 
-Equity.propTypes = {
-  equity_config: React.PropTypes.arrayOf(React.PropTypes.object({
-        subject: React.PropTypes.string,
-        component: React.PropTypes.object,
-        explanation: React.PropTypes.string
+SubSectionToggle.propTypes = {
+  equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
+    subject: React.PropTypes.string,
+    component: React.PropTypes.object,
+    explanation: React.PropTypes.string
   }))
 };

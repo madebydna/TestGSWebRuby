@@ -53,7 +53,10 @@
           <% end %>
           <% if school.facebook_url.present? %>
             <div class="contact-row">
-              <div class="contact-icon-box"><span class="icon-facebook contact-icon"></span></div><a target="_blank" href="<%=school.facebook_url %>"><%= t('.facebook').titleize %></a>
+              <div class="contact-icon-box">
+                <span class="icon-facebook contact-icon"></span>
+              </div>
+              <a target="_blank" href="<%= prepend_http(school.facebook_url) %>"><%= t('.facebook').titleize %></a>
             </div>
           <% end %>
           <% if school.cache_results.school_leader_email.present? %>
@@ -63,7 +66,10 @@
           <% end %>
           <% if school.home_page_url.present? %>
             <div>
-              <div class="contact-icon-box"><span class="icon-globe contact-icon"></span></div><a target="_blank" href="<%= school.home_page_url %>"><%= t('.school_website').titleize %></a>
+              <div class="contact-icon-box">
+                <span class="icon-globe contact-icon"></span>
+              </div>
+              <a target="_blank" href="<%= prepend_http(school.home_page_url) %>"><%= t('.school_website').titleize %></a>
             </div>
           <% end %>
           <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school) %>'>

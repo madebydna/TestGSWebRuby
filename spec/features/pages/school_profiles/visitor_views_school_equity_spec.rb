@@ -30,4 +30,13 @@ describe "Visitor" do
     expect(page_object).to have_equity
   end
 
+  scenario "sees anchor for data source" do
+    school = create(:school_with_new_profile, id: 1)
+    create(
+      :ca_caaspp_schoolwide_ela_2015
+    )
+    visit school_path(school)
+    expect(page_object.equity).to have_source_link
+  end
+
 end
