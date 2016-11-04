@@ -9,25 +9,25 @@ going to build a partial for badges.  it will use the name passed in to generate
         <div class="row">
           <div class="col-xs-12 col-sm-4">
             <div class="toc-section-title">
-              Academics
+              <%= t('school_profiles.toc.section_title_academics').upcase %>
             </div>
-            <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: 'Test Scores' %>
-            <%= render 'toc_entry_rating', rating: @school_profile.college_readiness.rating, title: 'College Readiness' %>
+            <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: t('school_profiles.toc.test_scores') %>
+            <%= render 'toc_entry_rating', rating: @school_profile.college_readiness.rating, title: t('school_profiles.toc.college_readiness') %>
           </div>
           <div class="col-xs-12 col-sm-4">
             <div class="toc-section-title">
-              Equity
+              <%= t('school_profiles.toc.section_title_equity').upcase %>
             </div>
-            <%= render 'toc_entry_badge', icon: 'shield', title: 'Equity' %>
+            <%= render 'toc_entry_badge', icon: 'shield', title: t('school_profiles.toc.race_ethnicity') %>
             <%= render 'toc_entry_rating', rating: @school_profile.equity.rating_low_income.to_f.round,
-                       title: 'Low Income Students' %>
+                       title: t('school_profiles.toc.low_income') %>
           </div>
           <div class="col-xs-12 col-sm-4 hidden-sm-down">
             <div class="toc-section-title">
-              Environment
+              <%= t('school_profiles.toc.section_title_environment').upcase %>
             </div>
-            <%= render 'toc_entry_badge', icon: 'shield', title: 'Students' %>
-            <%= render 'toc_entry_badge', icon: 'location', title: 'Neighborhood' %>
+            <%= render 'toc_entry_badge', icon: 'shield', title: t('school_profiles.toc.students') %>
+            <%= render 'toc_entry_badge', icon: 'location', title: t('school_profiles.toc.neighborhood') %>
           </div>
         </div>
       </div>

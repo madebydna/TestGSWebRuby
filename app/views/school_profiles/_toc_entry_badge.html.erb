@@ -2,13 +2,11 @@
 <% icon %>
 <% title %>
 
-
-
 <!-- this needs to be done as a helper function -->
 <% title_link = title.gsub(" ", "_") %>
 
 <div class="clearfix toc-entry">
   <a href="#<%= title_link %>">
-    <span class="dib"><%= title %></span>
+    <span><%= title %></span>
   </a>
 </div>
