@@ -36,23 +36,7 @@
   <% end %>
   <%= yield :head %>
 
-  <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "GreatSchools",
-        "url": "http://www.greatschools.org/",
-        "logo": "http://www.greatschools.org/images/greatschools-logo.png",
-        "sameAs": [
-          "https://www.facebook.com/greatschools",
-          "https://www.twitter.com/greatschools",
-          "https://pinterest.com/greatschools/",
-          "https://www.youtube.com/GreatSchools",
-          "https://www.instagram.com/greatschools/",
-          "https://en.wikipedia.org/wiki/GreatSchools"
-        ]
-      }
-    </script>
+  <script type="application/ld+json"><%= raw json_ld_hash.to_json %></script>
 </head>
 <body class="open-sans">
 

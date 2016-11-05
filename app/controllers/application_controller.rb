@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   include TrailingSlashConcerns
   include CityParamsConcerns
   include StateParamsConcerns
+  include StructuredMarkup::ControllerConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -40,6 +41,7 @@ class ApplicationController < ActionController::Base
 
   # helper :all
   helper_method :logged_in?, :current_user, :url_for, :state_param_safe
+  helper_method :json_ld_hash
 
   # methods for getting request URL / path info
 

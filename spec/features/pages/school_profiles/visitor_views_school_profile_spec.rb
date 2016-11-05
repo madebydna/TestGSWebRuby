@@ -120,4 +120,16 @@ describe 'Visitor' do
     expect(page_object).to have_content('348381') # reviews among all topics
     expect(page_object).to have_star_rating_of(4)
   end
+
+  describe 'structured markup' do
+    scenario 'organization schema' do
+      school = create(:school_with_new_profile)
+      visit school_path(school)
+      script = all('script', visible: false).find do |s|
+        s[:type] == 'application/ld+json'
+      end
+      expect(script).to_not be_nil
+      expect(script.native.text).to have_text(StructuredMarkup.organization_hash.to_json, visible: false)
+    end
+  end
 end
