@@ -79,7 +79,7 @@ describe 'Visitor' do
   scenario 'sees a link to the school\'s website' do
     school = create(:school_with_new_profile, home_page_url: 'http://www.google.com')
     visit school_path(school)
-    expect(SchoolProfilesPage.new).to have_link(school.home_page_url,
+    expect(SchoolProfilesPage.new).to have_link('School website',
       href: school.home_page_url
     )
   end
