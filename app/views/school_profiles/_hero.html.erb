@@ -30,7 +30,7 @@
       <% if hero.has_school_home_page_url? %>
         <div class="school-contact__item school-contact__home-page-url">
           <% content = t('.school_website') %>
-          <%= link_to(hero.school_home_page_url, :target => '_blank') do %>
+          <%= link_to(prepend_http(hero.school_home_page_url), :target => '_blank') do %>
             <% render 'icon_and_content', icon: :link, content: content %>
           <% end %>
         </div>
