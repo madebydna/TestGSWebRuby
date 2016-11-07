@@ -36,7 +36,9 @@
   <% end %>
   <%= yield :head %>
 
-  <script type="application/ld+json"><%= raw json_ld_hash.to_json %></script>
+  <% json_ld_hash.each do |hash| %>
+    <script type="application/ld+json"><%= raw hash.to_json %></script>
+  <% end %>
 </head>
 <body class="open-sans">
 

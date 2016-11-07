@@ -9,7 +9,7 @@
     <div class="school-contact">
       <% if hero.has_school_address? %>
         <div class="school-contact__item school-contact__address">
-          <%= render 'icon_and_content', icon: :location, content: hero.marked_up_address %>
+          <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
         </div>
       <% end %>
       <% if hero.has_district? %>

@@ -8,6 +8,7 @@ class SchoolProfilesController < ApplicationController
 
   def show
     @school = school
+    add_profile_structured_markup
     @canonical_url = school_url(@school)
     set_seo_meta_tags
     set_hreflang
@@ -23,6 +24,10 @@ class SchoolProfilesController < ApplicationController
   end
 
   private
+
+  def add_profile_structured_markup
+    add_json_ld(StructuredMarkup.school_hash(school))
+  end
 
   def school
     return @_school if defined?(@_school)

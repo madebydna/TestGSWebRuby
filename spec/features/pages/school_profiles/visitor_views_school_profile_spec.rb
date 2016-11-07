@@ -125,11 +125,50 @@ describe 'Visitor' do
     scenario 'organization schema' do
       school = create(:school_with_new_profile)
       visit school_path(school)
-      script = all('script', visible: false).find do |s|
+      scripts = all('script', visible: false).select do |s|
         s[:type] == 'application/ld+json'
       end
+      expect(scripts).to_not be_blank
+      script = scripts.find do |s|
+        s.native.text.include?(StructuredMarkup.organization_hash.to_json)
+      end
       expect(script).to_not be_nil
-      expect(script.native.text).to have_text(StructuredMarkup.organization_hash.to_json, visible: false)
+    end
+
+    scenario 'school schema' do
+      school = create(
+        :school_with_new_profile,
+        name: 'Alameda High School',
+        street: '123 main st',
+        city: 'Alameda',
+        state: 'CA',
+        zipcode: '12345',
+        home_page_url: 'http://www.foo.bar'
+      )
+
+      expected_markup = {
+        "@context" => "http://schema.org",
+        "@type" => "School",
+        "name" => "Alameda High School",
+        "address" => {
+          "streetAddress" => "123 main st",
+          "addressLocality" => "Alameda",
+          "addressRegion" => "CA",
+          "postalCode" => "12345"
+        },
+        "sameAs" => [
+          "http://www.foo.bar"
+        ]
+      }.to_json
+
+      visit school_path(school)
+      scripts = all('script', visible: false).select do |s|
+        s[:type] == 'application/ld+json'
+      end
+      expect(scripts).to_not be_blank
+      script = scripts.find { |s| s.native.text.include?(expected_markup) }
+      expect(script).to_not be_nil
     end
   end
+
 end
