@@ -33,7 +33,9 @@ $(function() {
   });
 
   try {
-    $('img[data-src]').unveil(300);
+    $('.neighborhood img[data-src]').unveil(300, function() {
+      $(this).width('100%')
+    });
   } catch (e) {}
 
   (function() {
