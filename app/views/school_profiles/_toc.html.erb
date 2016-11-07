@@ -2,36 +2,29 @@
 there is a partial for ratings called toc-entry-rating - need to figure out NR color.
 going to build a partial for badges.  it will use the name passed in to generate font accessor
 -->
+<% content = @school_profile.toc.content %>
+
 <div id="toc">
   <div class="toc-container-box">
     <div class="row">
       <div class="col-xs-12">
         <div class="row">
-          <div class="col-xs-12 col-sm-4">
-            <div class="toc-section-title">
-              <%= t('school_profiles.toc.section_title_academics').upcase %>
-              <%= render 'info_circle', content: t('.info_texts.academics_html') %>
-            </div>
-            <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: t('school_profiles.toc.test_scores') %>
-            <%= render 'toc_entry_rating', rating: @school_profile.college_readiness.rating, title: t('school_profiles.toc.college_readiness') %>
-          </div>
-          <div class="col-xs-12 col-sm-4">
-            <div class="toc-section-title">
-              <%= t('school_profiles.toc.section_title_equity').upcase %>
-              <%= render 'info_circle', content: t('.info_texts.equity_html') %>
-            </div>
-            <%= render 'toc_entry_badge', icon: 'shield', title: t('school_profiles.toc.race_ethnicity') %>
-            <%= render 'toc_entry_rating', rating: @school_profile.equity.rating_low_income.to_f.round,
-                       title: t('school_profiles.toc.low_income') %>
-          </div>
-          <div class="col-xs-12 col-sm-4 hidden-sm-down">
-            <div class="toc-section-title">
-              <%= t('school_profiles.toc.section_title_environment').upcase %>
-              <%= render 'info_circle', content: t('.info_texts.environment_html') %>
-            </div>
-            <%= render 'toc_entry_badge', icon: 'shield', title: t('school_profiles.toc.students') %>
-            <%= render 'toc_entry_badge', icon: 'location', title: t('school_profiles.toc.neighborhood') %>
-          </div>
+          <% content.each do |section| %>
+            <% section.each do |column,data| %>
+              <div class="col-xs-12 col-sm-4"> <!-- last one (for environment) was also hidden-sm-down -->
+                <div class="toc-section-title">
+                  <%= column.upcase %>
+                </div>
+                <% data.each do |hash| %>
+                  <% unless hash[:rating].nil? %>
+                    <%= render 'toc_entry_rating', rating: hash[:rating], title: hash[:label], anchor: hash[:anchor] %>
+                  <% else %>
+                    <%= render 'toc_entry_badge', icon: nil, title: hash[:label], anchor: hash[:anchor] %>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>

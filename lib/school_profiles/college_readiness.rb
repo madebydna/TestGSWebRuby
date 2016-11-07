@@ -131,5 +131,9 @@ module SchoolProfiles
         end
       end
     end
+
+    def visible?
+      !data_values.blank?
+    end
   end
 end

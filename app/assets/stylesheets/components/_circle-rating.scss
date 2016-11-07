@@ -15,6 +15,7 @@ $rating10: #439326;
 
 // Ratings Sizes
 // --------------------------
+$xtra-small: 26px;
 $small: 38px;
 $medium: 50px;
 $large: 62px;
@@ -72,6 +73,10 @@ $large: 62px;
 
 .circle-rating--equity-blue {
   background-color: #22a4dd;
+}
+
+.circle-rating--xtra-small {
+  @include circle-rating($xtra-small)
 }
 
 .circle-rating--small {

@@ -26,5 +26,9 @@ module SchoolProfiles
     def subgroups_data
       @school_cache_data_reader.characteristics_data(*OTHER_BREAKDOWN_KEYS)
     end
+
+    def visible?
+      !ethnicity_data.empty? || !gender_data.empty? || subgroups_data.empty?
+    end
   end
 end

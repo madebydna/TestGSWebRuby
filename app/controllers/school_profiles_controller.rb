@@ -46,6 +46,7 @@ class SchoolProfilesController < ApplicationController
         sp.nearby_schools = nearby_schools
         sp.last_modified_date = last_modified_date
         sp.equity = equity
+        sp.toc = toc
       end
     )
   end
@@ -75,6 +76,10 @@ class SchoolProfilesController < ApplicationController
       school,
       school_cache_data_reader: school_cache_data_reader
     )
+  end
+
+  def toc
+    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students)
   end
 
   def test_scores

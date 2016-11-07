@@ -24,5 +24,17 @@ module SchoolProfiles
     def rating_low_income
       @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
     end
+
+    def ethnicity_visible?
+      !test_scores_by_ethnicity.blank?
+    end
+
+    def low_income_visible?
+      if test_scores_by_ethnicity.blank?
+        false
+      else
+        test_scores_by_ethnicity.has_key?('Economically disadvantaged')
+      end
+    end
   end
 end

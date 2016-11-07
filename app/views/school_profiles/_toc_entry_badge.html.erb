@@ -1,12 +1,12 @@
-<!-- need to pass in a rating and title -->
 <% icon %>
 <% title %>
+<% anchor %>
 
 <!-- this needs to be done as a helper function -->
 <% title_link = title.gsub(" ", "_") %>
 
 <div class="clearfix toc-entry">
-  <a href="#<%= title_link %>">
+  <a href="#<%= anchor %>">
     <span><%= title %></span>
   </a>
 </div>

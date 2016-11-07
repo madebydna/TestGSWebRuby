@@ -1,6 +1,7 @@
 <!-- need to pass in a rating and title -->
 <% rating %>
 <% title %>
+<% anchor %>
 
 <!-- this is to support the no NR currently -->
 <% if rating == 'NR' || rating == 'nr' %>
@@ -11,8 +12,10 @@
 <% title_link = title.gsub(" ", "_") %>
 
 <div class="clearfix toc-entry">
-  <a href="#<%= title_link %>">
+  <a href="#<%= anchor %>">
     <span><%= title %></span>
-    <span class="gs-rating dib rating_<%= rating %>"><%= rating %></span>
+    <span class="gs-rating circle-rating--<%= rating %> circle-rating--xtra-small">
+      <%= rating %><span>/10</span>
+    </span>
   </a>
 </div>
