@@ -8,16 +8,11 @@
 
   .remodal-close {
     position: absolute;
-    top: 2px;
-    right: 4px;
+    top: -5px;
+    right: 0px;
 
     display: block;
     overflow: visible;
-
-    width: 16px;
-    height: 16px;
-    margin: 0;
-    padding: 0;
 
     cursor: pointer;
     -webkit-transition: color 0.2s;
