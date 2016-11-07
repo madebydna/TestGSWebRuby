@@ -19,14 +19,6 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
     end
 
-    def marked_up_address
-      "<span itemprop=\"address\" itemscope=\"\" itemtype=\"http://schema.org/PostalAddress\">" \
-        "<span itemprop=\"streetAddress\">#{@school.street}</span> " \
-        "<span itemprop=\"addressLocality\">#{@school.city}</span>, " \
-        "<span itemprop=\"addressRegion\">#{@school.state}</span> " \
-        "<span itemprop=\"postalCode\">#{@school.zipcode}</span></span>".html_safe
-    end
-
     def school=(school)
       raise ArgumentError('School must be provided') if school.nil?
       SchoolProfiles::SchoolPresentationMethods.extend(school)

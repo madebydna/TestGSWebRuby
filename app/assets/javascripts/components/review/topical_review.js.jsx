@@ -37,7 +37,6 @@ class TopicalReview extends React.Component {
     const review = this.props.review;
     return(
         <div className="topical-review" key={review.id}>
-          <meta itemProp="datePublished" content={review.date_published}/>
           <div className="average-rating-column">
             <span className={"answer-icon " + review.answer }></span>
           </div>
@@ -45,7 +44,7 @@ class TopicalReview extends React.Component {
             <div className="answer">
               { review.answer_label }
             </div>
-            <div className="comment" itemProp="reviewBody">
+            <div className="comment">
               <ShortenText text={review.comment} length={200} key={review.text} />
             </div>
             <div className="topical-review-button-bar">

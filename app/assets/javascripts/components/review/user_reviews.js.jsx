@@ -14,8 +14,7 @@ class UserReviews extends React.Component {
       empty.push(<span className="icon-star empty-star" key={i}></span>);
     }
     return(
-      <span className="five-stars"
-            itemProp="ratingValue" content={numberFilled}>
+      <span className="five-stars">
         { filled }
         { empty }
       </span>
@@ -45,7 +44,7 @@ class UserReviews extends React.Component {
           <div className="answer">
             { this.fiveStars(review.answer) }
           </div>
-          <div className="comment" itemProp="reviewBody">
+          <div className="comment">
             <ShortenText text={review.comment} length={200} key={review.text} />
           </div>
         </div>
