@@ -79,9 +79,10 @@
       </div>
     </div>
     <% ['sm','md','lg'].each do |size| %>
-      <%= image_tag(@static_google_maps[size],
+      <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
         class: "static-map visible-#{size}",
-        alt: "Map of #{school.name} address."
+        alt: "Map of #{school.name} address.",
+        data: { src: @static_google_maps[size]}
       )
       %>
     <% end %>

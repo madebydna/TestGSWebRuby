@@ -32,6 +32,10 @@ $(function() {
     GS.sendUpdates.signupAndFollowSchool(state, schoolId);
   });
 
+  try {
+    $('img[data-src]').unveil(300);
+  } catch (e) {}
+
   (function() {
     /**
      * Refreshes an ad exactly once when the user scrolls past 50% in some container.
