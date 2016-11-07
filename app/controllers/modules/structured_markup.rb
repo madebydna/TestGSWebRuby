@@ -87,10 +87,10 @@ module StructuredMarkup
     same_as << school.home_page_url if school.home_page_url
     hash['sameAs'] = same_as unless same_as.empty?
 
-    if school_reviews && school_reviews.five_star_rating_reviews.present?
+    if school_reviews && school_reviews.number_of_5_star_ratings > 0
       hash['aggregateRating'] = aggregate_rating_hash(school_reviews)
     end
-    if school_reviews && school_reviews.having_comments.present?
+    if school_reviews && school_reviews.number_of_active_reviews > 0
       hash['review'] = reviews_array(school_reviews)
     end
 
