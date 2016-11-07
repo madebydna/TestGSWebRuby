@@ -14,7 +14,7 @@
       <% end %>
       <% if hero.has_district? %>
         <div class="school-contact__item school-contact__district-name">
-          <%= hero.district_name %>
+          <%= link_to(hero.district_name, city_district_path(district_params_from_district(hero.district))) %>
         </div>
       <% end %>
       <% if hero.has_school_phone? %>
