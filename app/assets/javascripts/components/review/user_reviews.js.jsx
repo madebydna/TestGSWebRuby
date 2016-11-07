@@ -38,14 +38,11 @@ class UserReviews extends React.Component {
     var review = this.props.five_star_review;
     if(review !== undefined) {
       return(
-        <div className="five-star-review" key={review.id}
-             itemProp="review" itemScope itemType="http://schema.org/Review">
-          <meta itemProp="datePublished" content={review.date_published}/>
+        <div className="five-star-review" key={review.id}>
           <div className="header">
             { review.topic_label }
           </div>
-          <div className="answer"
-               itemProp="reviewRating" itemScope itemType="http://schema.org/Rating">
+          <div className="answer">
             { this.fiveStars(review.answer) }
           </div>
           <div className="comment" itemProp="reviewBody">

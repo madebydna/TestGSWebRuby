@@ -12,8 +12,12 @@ module StructuredMarkup
       @_json_ld_hash = hash
     end
 
-    def add_json_ld(hash)
-      json_ld_hash << hash
+    def add_json_ld(array_or_other_obj)
+      if array_or_other_obj.is_a?(Array)
+        json_ld_hash.concat(array_or_other_obj)
+      else
+        json_ld_hash.push(array_or_other_obj)
+      end
     end
 
     def default_json_ld_hash
@@ -39,7 +43,35 @@ module StructuredMarkup
     }
   end
 
-  def self.school_hash(school)
+  def self.aggregate_rating_hash(school_reviews)
+    {
+      "@type" => "AggregateRating",
+      "ratingValue" => school_reviews.average_5_star_rating,
+      "bestRating" => 5,
+      "worstRating" => 1,
+      "reviewCount" => school_reviews.number_of_active_reviews,
+      "ratingCount" => school_reviews.number_of_5_star_ratings
+    }
+  end
+
+  def self.reviews_array(school_reviews)
+    school_reviews.having_comments.map do |review|
+      review = SchoolProfileReviewDecorator.decorate(review)
+      {
+        "@type" => "Review",
+        "datePublished" => review.created,
+        "reviewBody" => review.comment,
+        "reviewRating" => {
+          "@type" => "Rating",
+          "bestRating" => "5",
+          "ratingValue" => review.numeric_answer_value,
+          "worstRating" => "1"
+        }   
+      }
+    end
+  end
+
+  def self.school_hash(school, school_reviews = nil)
     hash = {}
     hash["@context"] = "http://schema.org"
     hash["@type"] = "School"
@@ -54,6 +86,14 @@ module StructuredMarkup
     same_as << school.facebook_url if school.facebook_url
     same_as << school.home_page_url if school.home_page_url
     hash['sameAs'] = same_as unless same_as.empty?
+
+    if school_reviews && school_reviews.five_star_rating_reviews.present?
+      hash['aggregateRating'] = aggregate_rating_hash(school_reviews)
+    end
+    if school_reviews && school_reviews.having_comments.present?
+      hash['review'] = reviews_array(school_reviews)
+    end
+
     hash
   end
 end

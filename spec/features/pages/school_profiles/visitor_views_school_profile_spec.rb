@@ -159,7 +159,7 @@ describe 'Visitor' do
         "sameAs" => [
           "http://www.foo.bar"
         ]
-      }.to_json
+      }.to_json[1..-2]
 
       visit school_path(school)
       scripts = all('script', visible: false).select do |s|
@@ -169,6 +169,80 @@ describe 'Visitor' do
       script = scripts.find { |s| s.native.text.include?(expected_markup) }
       expect(script).to_not be_nil
     end
+
+    describe 'aggregateRating schema' do
+      scenario 'with 3 five star reviews' do
+        school = create(:school_with_new_profile)
+        [1,2,3].map do |n|
+          create(:five_star_review, answer_value: n, school_id: school.id, state: school.state)
+        end
+
+        expected_markup = {
+          "@type" => "AggregateRating",
+          "ratingValue" => 2,
+          "bestRating" => 5,
+          "worstRating" => 1,
+          "reviewCount" => 3,
+          "ratingCount" => 3 
+        }.to_json
+
+        visit school_path(school)
+        scripts = all('script', visible: false).select do |s|
+          s[:type] == 'application/ld+json'
+        end
+        expect(scripts).to_not be_blank
+        script = scripts.find do |s|
+          s.native.text.include?(expected_markup)
+        end
+        expect(script).to_not be_nil
+      end
+
+      scenario 'with 3 five star reviews and 2 other reviews' do
+        school = create(:school_with_new_profile)
+        [1,2,3].map do |n|
+          create(:five_star_review, answer_value: n, school_id: school.id, state: school.state, comment: ('foo ' * 15))
+        end
+        [1,2].map do |n|
+          create(:teacher_effectiveness_review, school_id: school.id, state: school.state, comment: ('foo ' * 15) )
+        end
+
+        expected_markup = {
+          "@type" => "AggregateRating",
+          "ratingValue" => 2,
+          "bestRating" => 5,
+          "worstRating" => 1,
+          "reviewCount" => 5,
+          "ratingCount" => 3 
+        }.to_json
+
+        visit school_path(school)
+        scripts = all('script', visible: false).select do |s|
+          s[:type] == 'application/ld+json'
+        end
+        expect(scripts).to_not be_blank
+        script = scripts.find do |s|
+          s.native.text.include?(expected_markup)
+        end
+        expect(script).to_not be_nil
+      end
+
+      scenario 'with 0 five star reviews and 2 other reviews' do
+        school = create(:school_with_new_profile)
+        [1,2].map do |n|
+          create(:teacher_effectiveness_review, school_id: school.id, state: school.state, comment: ('foo ' * 15) )
+        end
+
+        visit school_path(school)
+        scripts = all('script', visible: false).select do |s|
+          s[:type] == 'application/ld+json'
+        end
+
+        scripts.each do |s|
+          expect(s.native.text).to_not have_text('AggregateRating')
+        end
+      end
+    end
+
   end
 
 end
