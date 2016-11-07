@@ -57,12 +57,10 @@ describe Constraint::NewSchoolProfile do
       new_profile_school_request = double
       new_profile_school_request.stub(:parameters) do
         {lang: 'es', state: 'california', schoolId: '1'}
-        school_with_flag = create(:school_with_new_profile, state: 'CA', id: 1)
-
-        expect(Constraint::NewSchoolProfile.new.matches?(new_profile_school_request)).to eq(false)
       end
+      create(:school_with_new_profile, state: 'CA', id: 1)
+
+      expect(Constraint::NewSchoolProfile.new.matches?(new_profile_school_request)).to eq(false)
     end
   end
 end
-
-
