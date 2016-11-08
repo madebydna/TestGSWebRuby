@@ -14,13 +14,14 @@
   }
 
   h1 {
-    padding-top: 30px;
+    padding-top: 10px;
     font-family: 'RobotoSlab-Bold';
     font-size: $font-size-l7;
     font-weight: 900;
-    @media (min-width: 0px) and (max-width: 991px) {
+    @include media-breakpoint-down(sm) {
       text-align: center;
       font-size: $font-size-l4;
+      padding-top: 0;
     }
   }
 
@@ -57,9 +58,10 @@
     white-space: nowrap;
     text-align: center;
     vertical-align: middle;
+    padding: 5px 0;
     @media(min-width: 750px) {
       display: inline-block;
-      padding: 0 10px 0 0;
+      padding: 0 10px 5px 0;
       margin: 0 10px 0 0;
       border-right: 1px solid rgba(255, 255, 255, .17);
       text-align: left;
