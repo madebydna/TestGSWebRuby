@@ -1,4 +1,5 @@
 module StructuredMarkup
+
   module ControllerConcerns
     extend ActiveSupport::Concern
 
@@ -69,6 +70,51 @@ module StructuredMarkup
         }   
       }
     end
+  end
+
+  def self.state_breadcrumb_text(state)
+    if state == 'DC'
+      'District of Columbia'
+    else
+      States.state_name(state).gs_capitalize_words
+    end
+  end
+
+  def self.breadcrumbs_hash(school)
+    urlHelperMethods = Class.new
+      .include(Rails.application.routes.url_helpers)
+      .include(UrlHelper)
+      .new
+
+    crumbs = [
+      [
+        state_breadcrumb_text(school.state),
+        urlHelperMethods.send(:state_url, urlHelperMethods.send(:state_params, school.state)),
+      ],
+      [
+        school.city,
+        urlHelperMethods.send(:city_url, urlHelperMethods.send(:city_params, school.state, school.city))
+      ],
+      [
+        'Schools',
+        urlHelperMethods.send(:search_city_browse_url, urlHelperMethods.send(:city_params, school.state, school.city))
+      ]
+    ].map.with_index do |(name, url), index|
+      {
+        "@type" => "ListItem",
+        "position" => index + 1,
+        "item" => {
+          "@id" => url,
+          "name" => name,
+          "image" => url 
+        }
+      }
+    end
+    {
+      "@context" => "http://schema.org",
+      "@type" => "BreadcrumbList",
+      "itemListElement" => crumbs
+    }
   end
 
   def self.school_hash(school, school_reviews = nil)

@@ -26,6 +26,7 @@ class SchoolProfilesController < ApplicationController
 
   def add_profile_structured_markup
     add_json_ld(StructuredMarkup.school_hash(school, school.reviews_with_calculations))
+    add_json_ld(StructuredMarkup.breadcrumbs_hash(school))
   end
 
   def page_view_metadata

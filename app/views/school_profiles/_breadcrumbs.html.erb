@@ -7,11 +7,7 @@
         <% if url.nil? %>
           <span><%= text %></span>
         <% else %>
-          <span itemscope itemtype="http://data-vocabulary.org/Breadcrumb">
-            <%= link_to url, itemprop:'url' do
-            %><span itemprop="title"><%= text %></span><%
-            end %>
-          </span>
+          <span><%= link_to text, url %></span>
         <% end %>
       <% end %>
     </div>
