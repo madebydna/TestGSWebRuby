@@ -2,13 +2,15 @@
 <% header %>
 <div class="modal remodal js-gsModal join-and-login <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
   <div class="gs-modal-dialog modal-dialog">
-    <%= form_tag register_email_path, method: :post, remote: true,
-      id: 'signup-school-form',
-      'data-parsley-namespace'=>"data-parsley-" do %>
+    <%= form_tag register_email_path,
+                 method: :post,
+                 remote: true,
+                 id: 'signup-school-form',
+                 'data-parsley-namespace'=>"data-parsley-" do %>
       <%= token_tag form_authenticity_token %>
-      <button class="remodal-cancel close" aria-label="Close" data-remodal-action="" style="background-color: #ffffff">
+      <span class="remodal-cancel close" aria-label="Close" data-remodal-action="cancel" style="background-color: #ffffff">
         <span>&times;</span>
-      </button>
+      </span>
       <div class="modal-body">
 
         <div class="title"><%= header %></div>
@@ -34,19 +36,7 @@
                     'data-parsley-trigger' => "change",
                     'data-parsley-required-message' => "Please enter an email address.",
                     'data-parsley-error-container' => ".js-signup-email-errors",
-                    # 'data-parsley-remote' => '/gsr/validations/need_to_signin',
-                    # 'data-parsley-remote-options' => '{ "type": "GET"}',
-                    # 'data-parsley-remote-message' => t(".parsley_remote_message_html")
                 }
-                # {
-                #   id: "signup-email",
-                #   placeholder: "#{t('.email_label')}",
-                #   class: 'form-control js-signup-email parsley-error pam',
-                #   data: { 'parsley-required' => "true",
-                #           'parsley-type' => "email",
-                #           'parsley-required-message' => "Please enter an email address.",
-                #           'parsley-error-container' => ".js-signup-email-errors" }
-                # }
               ) %>
             <p class="js-signup-email-errors danger-color"></p>
           </div>

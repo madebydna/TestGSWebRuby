@@ -26,7 +26,7 @@ GS.modal.JoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 _.assign(GS.modal.JoinModal.prototype, {
 
     $getJoinSubmitButton: function $getJoinSubmitButton() {
-        return this.$getJoinForm().find('button');
+        return this.$getJoinForm().find('button[type="submit"]');
     },
 
     $getSigninSubmitButton: function $getSigninSubmitButton() {

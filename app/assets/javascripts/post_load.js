@@ -23,6 +23,7 @@
 //= require util/school_profile_sticky_cta.js
 //= require ./util/advertising.js
 //= require modals
+// require ./resources/parsley
 //= require resources/parsley.remote
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations

@@ -87,6 +87,8 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
   },
 
   initializeForm: function initializeForm() {
+    this.$getJoinForm().parsley();
+
     return this.$getJoinForm().
       on('submit', this.preventInteractions.gs_bind(this)).
       on('ajax:success', this.submitSuccessHandler.gs_bind(this)).
