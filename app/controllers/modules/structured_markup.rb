@@ -98,6 +98,10 @@ module StructuredMarkup
       [
         'Schools',
         urlHelperMethods.send(:search_city_browse_url, urlHelperMethods.send(:city_params, school.state, school.city))
+      ],
+      [
+        school.name,
+        urlHelperMethods.send(:school_url, school)
       ]
     ].map.with_index do |(name, url), index|
       {
