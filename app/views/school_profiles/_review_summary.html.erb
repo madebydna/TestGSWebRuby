@@ -15,7 +15,7 @@
     <div class="review-summary__distribution" style="color:grey">
       <% ['5','4','3','2','1'].each do |number_of_stars| %>
         <% answer_count = distribution[number_of_stars] || 0 %>
-        <% percentage_of_total = ((answer_count / number_of_five_star_rating_reviews.to_f) * 100).round %>
+        <% percentage_of_total = ((answer_count / number_of_five_star_rating_reviews.to_f) * 85).round %>
         <% color_value = (number_of_stars.to_i * 2) - 1 %>
 
         <div class="star-rating-bar-viz">
