@@ -5,6 +5,7 @@ class SchoolProfilesController < ApplicationController
   before_action :add_dependencies_to_gon
 
   layout "application"
+  PAGE_NAME = "GS:SchoolProfile:SinglePage"
 
   def show
     @school = school
@@ -20,6 +21,7 @@ class SchoolProfilesController < ApplicationController
     add_gon_ethnicity
     add_gon_subgroup
     add_gon_gender
+    data_layer_through_gon
     @static_google_maps = static_google_maps
   end
 
@@ -27,6 +29,22 @@ class SchoolProfilesController < ApplicationController
 
   def add_profile_structured_markup
     add_json_ld(StructuredMarkup.school_hash(school, school.reviews_with_calculations))
+  end
+
+  def page_view_metadata
+    @page_view_metadata ||= (
+      school_gs_rating = school_cache_data_reader.gs_rating.to_s
+      number_of_reviews_with_comments = school.reviews.having_comments.count
+      SchoolProfiles::PageViewMetadata.new(@school,
+                                           PAGE_NAME,
+                                           school_gs_rating,
+                                           number_of_reviews_with_comments)
+        .hash
+    )
+  end
+
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
   end
 
   def school
