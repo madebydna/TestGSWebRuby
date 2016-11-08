@@ -74,6 +74,7 @@ class SchoolProfilesPage < SitePrism::Page
 
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
+  element :sign_in, '.account_nav_out > a'
   section :test_scores, RatingContainer, '.rs-test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
   section :student_diversity, Students, '.students-container'
