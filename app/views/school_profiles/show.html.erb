@@ -62,8 +62,8 @@
   </div>
 
   <% if @school_profile.last_modified_date.present? %>
-    <div class="pll ptl" style="color:#999999" itemscope itemtype="http://www.schema.org/ProfilePage">
-      <span itemprop="dateModified" content="<%= l(@school_profile.last_modified_date, format: '%Y-%m-%d')%>">
+    <div class="pll ptl" style="color:#999999">
+      <span>
         <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
       </span>
     </div>
