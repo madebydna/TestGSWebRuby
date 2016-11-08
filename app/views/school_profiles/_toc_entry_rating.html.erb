@@ -12,7 +12,10 @@
 <% title_link = title.gsub(" ", "_") %>
 
 <div class="clearfix toc-entry">
-  <a href="#<%= anchor %>">
+  <a href="#<%= anchor %>"
+     data-ga-click-category='Profile'
+     data-ga-click-action='ToC Clicked'
+     data-ga-click-label='<%= title %>'>
     <span><%= title %></span>
     <span class="gs-rating circle-rating--<%= rating %> circle-rating--xtra-small">
       <%= rating %><span>/10</span>
