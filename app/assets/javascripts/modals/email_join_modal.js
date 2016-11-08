@@ -37,7 +37,7 @@ GS.modal.EmailJoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 _.assign(GS.modal.EmailJoinModal.prototype, {
 
   $getSubmitButton: function $getSubmitButton() {
-    return this.$getJoinForm().find('button');
+    return this.$getJoinForm().find('button[type="submit"]');
   },
 
   $getJoinForm: function $getJoinForm() {
