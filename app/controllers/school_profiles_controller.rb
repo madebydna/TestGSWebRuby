@@ -12,16 +12,11 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     @canonical_url = school_url(@school)
     set_seo_meta_tags
+    build_gon_object
     set_hreflang
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
     @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
-    school_gon_obj(@school)
-    add_gon_links
-    add_gon_ethnicity
-    add_gon_subgroup
-    add_gon_gender
-    data_layer_through_gon
     @static_google_maps = static_google_maps
   end
 
@@ -41,10 +36,6 @@ class SchoolProfilesController < ApplicationController
                                            number_of_reviews_with_comments)
         .hash
     )
-  end
-
-  def data_layer_through_gon
-    data_layer_gon_hash.merge!(page_view_metadata)
   end
 
   def school
@@ -147,13 +138,32 @@ class SchoolProfilesController < ApplicationController
     }
   end
 
-  def school_gon_obj(school)
+  def build_gon_object
+    add_gon_school_obj
+    add_gon_links
+    add_gon_ethnicity
+    add_gon_subgroup
+    add_gon_gender
+    data_layer_through_gon
+    add_gon_ad_set_targeting
+  end
+
+  def add_gon_school_obj
     if school.present?
       gon.school = {
-          :id => school.id,
-          :state => school.state
+        :id => school.id,
+        :state => school.state
       }
     end
+  end
+
+  def add_gon_links
+    gon.links = {
+      terms_of_use: terms_of_use_path,
+      school_review_guidelines: school_review_guidelines_path,
+      session: api_session_path,
+      school_user_digest: api_school_user_digest_path
+    }
   end
 
   def add_gon_ethnicity
@@ -168,13 +178,18 @@ class SchoolProfilesController < ApplicationController
     gon.gender = students.gender_data
   end
 
-  def add_gon_links
-    gon.links = {
-        terms_of_use: terms_of_use_path,
-        school_review_guidelines: school_review_guidelines_path,
-        session: api_session_path,
-        school_user_digest: api_school_user_digest_path
-    }
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
+  end
+
+  def add_gon_ad_set_targeting
+    if school.show_ads
+      # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
+      # @school.city.delete(' ').slice(0,10)
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
+    end
   end
 
   def set_seo_meta_tags
