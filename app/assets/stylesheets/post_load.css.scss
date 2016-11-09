@@ -19,7 +19,6 @@
 @import "fonts/gs-icon-font";
 @import "mixins/*";
 @import "gs/mixins"; // deprecated
-@import "gs/school_profile";
 @import 'components/show-more';
 @import 'components/five-star-rating';
 @import 'components/badge-and-content';
@@ -56,7 +55,6 @@
 @import "resources/bootstrap/social-buttons";
 @import "resources/bootstrap-select";
 @import "resources/slick";
-@import "gs/school_profile";
 @import "gs/objects/performance";
 @import "gs/objects/rating_background";
 @import "gs/objects/box_group";
@@ -76,6 +74,7 @@
 @import "gs/objects/cc_promo_banner";
 @import "gs/bring-back-bootstrap";
 @import "gs/data-viz";
+@import "gs/school_profile";
 @import "gs/objects/partner_promos";
 @import "gs/nav-guided-search";
 @import "gs/nav-osp";
@@ -101,4 +100,5 @@
 @import 'resources/animate';
 @import 'gs/equity';
 @import 'gs/modal_tooltip';
+@import "school_profiles/school_profile";
 
