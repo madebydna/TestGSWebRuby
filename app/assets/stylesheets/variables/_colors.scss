@@ -51,3 +51,21 @@ $light-blue-background:   #e6ebf5;
 $gray-link-color:         $light-ash-gray;
 $gray-link-hover-color:   darken($light-ash-gray, 15%);
 $white:                   #FFFFFF;
+
+//Review module
+// -------------------------
+$review-red: #db0000;
+
+//Review.scss uses these
+// -------------------------
+$color-report-flag: #d94373;
+$color-report-flag-reported: #fff;
+$color-link: #666;
+$color-reported: #d94373;
+$color-button-border: #c1d2d9;
+$color-button-hover-border: rgba(113, 120, 126, 0.5);
+$color-button-active-border: rgba(113, 120, 126, 0.8);
+$color-dark-gray-text: #2e3438;
+$color-gradient-button-dark: #f4f5f6;
+$color-gradient-button-active: #edf3f5;
+

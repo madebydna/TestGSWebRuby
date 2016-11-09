@@ -71,7 +71,7 @@
 
   .school-contact__more {
     display: none;
-    @media (min-width: 992px) {
+    @include media-breakpoint-up(sm){
       display: inline-block;
     }
   }
@@ -80,7 +80,9 @@
     border-right: none;
   }
 
-  .school-contact__address, .school-contact__phone, .school-contact__home-page-url {
+  .school-contact__address,
+  .school-contact__phone,
+  .school-contact__home-page-url {
     .badge {
       display: inline-block;
     }
@@ -101,7 +103,7 @@
     display: inline-block;
     padding: 0 30px;
     border-left: 1px solid rgba(255, 255, 255, .17);
-    @media only screen and (max-width: 767px) {
+    @include media-breakpoint-down(xs)  {
       padding: 0 15px;
     }
     font-size: $font-size-l4;
@@ -114,14 +116,14 @@
   }
 
   .school-info__item:nth-last-of-type(-n+3) {
-    @media only screen and (max-width: 991px) {
+    @include media-breakpoint-down(sm) {
       display: none;
     }
   }
 
   .school-info__five-star-rating {
     cursor: pointer;
-    @media only screen and (max-width: 767px) {
+    @include media-breakpoint-down(xs) {
       font-size: $font-size-base;
     }
   }

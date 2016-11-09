@@ -43,17 +43,6 @@
     font-size: $font-size-s1;
   }
 
-  $color-report-flag: #d94373;
-  $color-report-flag-reported: #fff;
-  $color-link: #666;
-  $color-reported: #d94373;
-  $color-button-border: #c1d2d9;
-  $color-button-hover-border: rgba(113, 120, 126, 0.5);
-  $color-button-active-border: rgba(113, 120, 126, 0.8);
-  $color-dark-gray-text: #2e3438;
-  $color-gradient-button-dark: #f4f5f6;
-  $color-gradient-button-active: #edf3f5;
-
   .topical-review-button-bar {
     margin-top: $spacing-small;
 
@@ -153,11 +142,6 @@
 }
 
 .topical-review {
-  $strongly-disagree-color: #F26B16;
-  $disagree-color: #DCA21A;
-  $neutral-color: #BDC01E;
-  $agree-color: #86B320;
-  $strongly-agree-color: #559F24;
 
   @include clearfix;
   text-align: left;
@@ -218,22 +202,22 @@
 
   .strongly-disagree {
     @extend .icon-dislike;
-    color: $strongly-disagree-color;
+    color: $color-5-scale-strongly-disagree;
   }
   .disagree {
     @extend .icon-dislike;
-    color: $disagree-color;
+    color: $color-5-scale-disagree;
   }
   .neutral {
     @extend .icon-neutral;
-    color: $neutral-color;
+    color: $color-5-scale-neutral;
   }
   .agree {
     @extend .icon-like;
-    color: $agree-color;
+    color: $color-5-scale-agree;
   }
   .strongly-agree {
     @extend .icon-like;
-    color: $strongly-agree-color;
+    color: $color-5-scale-strongly-agree;
   }
 }

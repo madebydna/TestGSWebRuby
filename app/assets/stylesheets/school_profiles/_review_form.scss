@@ -31,35 +31,35 @@
           color: #FFFFFF;
         }
         &.strongly-disagree {
-          background-color: #F26B16;
+          background-color: $color-5-scale-strongly-disagree;
         }
         &.disagree {
-          background-color: #DCA21A;
+          background-color: $color-5-scale-disagree;
         }
         &.neutral {
-          background-color: #A3BE1F;
+          background-color: $color-5-scale-neutral;
         }
         &.agree {
-          background-color: #6BA822;
+          background-color: $color-5-scale-agree;
         }
         &.strongly-agree {
-          background-color: #439326;
+          background-color: $color-5-scale-strongly-agree;
         }
       }
       &.strongly-disagree {
-        color: #F26B16;
+        color: $color-5-scale-strongly-disagree;
       }
       &.disagree {
-        color: #DCA21A;
+        color: $color-5-scale-disagree;
       }
       &.neutral {
-        color: #A3BE1F;
+        color: $color-5-scale-neutral;
       }
       &.agree {
-        color: #6BA822;
+        color: $color-5-scale-agree;
       }
       &.strongly-agree {
-        color: #439326;
+        color: $color-5-scale-strongly-agree;
       }
     }
   }
@@ -142,7 +142,7 @@
     }
   }
 
-  @media  (max-width: 991px) {
+  @include media-breakpoint-down(sm)  {
     ul.review-selector {
       border: none;
       float:left;
@@ -188,13 +188,13 @@
   }
 
   .review-error > textarea {
-    border-color: #db0000;
+    border-color: $review-red;
   }
 
   .error-message {
     font-family: "opensans-regular";
     margin-top: 5px 0;
-    color: #db0000;
+    color: $review-red;
   }
 }
 
@@ -220,7 +220,7 @@
       text-align: center;
       font-family: "opensans-regular";
       margin-top: 5px 0;
-      color: #db0000;
+      color: $review-red;
     }
   }
 }

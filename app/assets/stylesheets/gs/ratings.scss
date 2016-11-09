@@ -55,3 +55,19 @@ $rating10: #439326;
 .rating_10 {
   background-color: $rating10;
 }
+
+.rating_scale-5_1 {
+  background-color: $color-5-scale-strongly-disagree;
+}
+.rating_scale-5_2 {
+  background-color: $color-5-scale-disagree;
+}
+.rating_scale-5_3 {
+  background-color: $color-5-scale-neutral;
+}
+.rating_scale-5_4 {
+  background-color: $color-5-scale-agree;
+}
+.rating_scale-5_5 {
+  background-color: $color-5-scale-strongly-agree;
+}
