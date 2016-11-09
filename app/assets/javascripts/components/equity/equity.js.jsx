@@ -191,7 +191,8 @@ class Equity extends React.Component {
           title: 'Race/ethnicity',
           rating: '',
           info_text: 'This section gives a picture of test scores, graduation rates, and other measures for students across different races/ethnicities.',
-          sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity'
+          sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity',
+          icon_classes: 'icon-shield'
         },
         section_content: section1Content
       });
