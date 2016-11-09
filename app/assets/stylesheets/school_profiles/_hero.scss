@@ -121,6 +121,12 @@
     }
   }
 
+  .school-info__gs-rating {
+    .icon-hint {
+      margin-left: -1px; 
+    }
+  }
+
   .school-info__five-star-rating {
     cursor: pointer;
     @include media-breakpoint-down(xs) {
