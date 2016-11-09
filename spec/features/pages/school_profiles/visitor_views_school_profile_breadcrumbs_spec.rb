@@ -12,7 +12,6 @@ describe 'Visitor' do
 
     visit school_path(school)
 
-    page_object = SchoolProfilesPage.new
-    expect(page_object).to have_breadcrumbs
+    expect(page).to have_css('.breadcrumbs')
   end
 end
