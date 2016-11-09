@@ -26,8 +26,8 @@ class Equity extends React.Component {
             component: <BarGraphWithEnrollmentInLabel
                 test_scores={data}
                 graphId="test-scores-math-bar-graph" />,
-            explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
-            ' differences may suggest that some student groups are not getting the support they need to succeed.'
+            explanation: <div>This shows results across different races/ethnicities on a Math test given to juniors once a year. Big
+              differences may suggest that some student groups are not getting the support they need to succeed.</div>
           }
       );
     }
@@ -40,8 +40,8 @@ class Equity extends React.Component {
           component: <BarGraphWithEnrollmentInLabel
               test_scores={data}
               graphId="test-scores-ela-bar-graph" />,
-          explanation: 'This shows results across different races/ethnicities on an English test given to' +
-          ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
+          explanation: <div>This shows results across different races/ethnicities on an English test given to
+            juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.</div>
         }
       );
     }
@@ -55,7 +55,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-graph" />,
-          explanation: 'This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.'
+          explanation: <div>This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.</div>
         }
       );
     }
@@ -89,8 +89,8 @@ class Equity extends React.Component {
                 test_scores={data}
                 type="column"
                 graphId="low-income-math-bar-graph" />,
-            explanation: 'This shows results across different races/ethnicities on a Math test given to juniors once a year. Big' +
-            ' differences may suggest that some student groups are not getting the support they need to succeed.'
+            explanation: <div>This shows results across different races/ethnicities on a Math test given to juniors once a year. Big
+              differences may suggest that some student groups are not getting the support they need to succeed.</div>
           }
       );
     }
@@ -104,8 +104,8 @@ class Equity extends React.Component {
               test_scores={data}
               type="column"
               graphId="low-income-ela-bar-graph" />,
-          explanation: 'This shows results across different races/ethnicities on an English test given to' +
-          ' juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.'
+          explanation: <div>This shows results across different races/ethnicities on an English test given to
+            juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.</div>
         }
       )
     }
@@ -120,7 +120,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: 'This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed.'
+          explanation: <div>This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed.</div>
         }
       )
     }

@@ -21,5 +21,5 @@ class EquityContentPane extends React.Component {
 
 EquityContentPane.propTypes = {
   graph: React.PropTypes.object.isRequired,
-  text: React.PropTypes.string.isRequired
-}
+  text: React.PropTypes.element.isRequired
+};

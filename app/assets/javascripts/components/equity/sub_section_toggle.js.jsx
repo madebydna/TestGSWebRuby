@@ -25,12 +25,12 @@ class SubSectionToggle extends React.Component {
   handleTabClick(index) {
     this.setState({active: index})
   }
-};
+}
 
 SubSectionToggle.propTypes = {
   equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
     subject: React.PropTypes.string,
     component: React.PropTypes.object,
-    explanation: React.PropTypes.string
+    explanation: React.PropTypes.element
   }))
 };
