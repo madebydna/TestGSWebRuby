@@ -38,7 +38,7 @@ class FiveStarRating extends React.Component {
 }
 
 FiveStarRating.propTypes = {
-  value: React.PropTypes.string,
+  value: React.PropTypes.number,
   responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   questionId: React.PropTypes.number.isRequired,
