@@ -63,6 +63,7 @@ class SchoolProfilesController < ApplicationController
         sp.students = students
         sp.nearby_schools = nearby_schools
         sp.last_modified_date = last_modified_date
+        sp.neighborhood = neighborhood
         sp.equity = equity
         sp.toc = toc
       end
@@ -131,6 +132,10 @@ class SchoolProfilesController < ApplicationController
 
   def review_questions
     SchoolProfiles::ReviewQuestions.new(school)
+  end
+
+  def neighborhood
+    SchoolProfiles::Neighborhood.new(school, school_cache_data_reader)
   end
 
   def nearby_schools

@@ -1,4 +1,8 @@
-<% school %>
+<% school = neighborhood.school %>
+<% static_google_maps = neighborhood.static_google_maps %>
+<% street_address_css_class = neighborhood.school_address_css_class %>
+<% school_city_state_zip = neighborhood.school_city_state_zip %>
+<% max_chars_length = neighborhood.max_chars %>
 <a name="Neighborhood"></a>
 <div class="neighborhood">
   <div class="title">
@@ -19,10 +23,16 @@
     </div>
     <div class="map-overlay">
       <div class="overlay-container">
-        <div class="contact-address">
-          <span><%= school.street %></span><br/>
-          <span><%= "#{school.city}, #{school.state} #{school.zipcode}" %></span>
-        </div>
+        <div class="contact-address<%= street_address_css_class %>">
+          <%= render 'info_box_for_truncation',
+            content: school.street,
+            truncation_count: max_chars_length
+            %><br/>
+          <%= render 'info_box_for_truncation',
+            content: school_city_state_zip,
+            truncation_count: max_chars_length
+          %>
+      </div>
         <div class="contact-item">
           <% if (school_leader = school.cache_results.school_leader) %>
             <div class ="contact-row">
@@ -82,7 +92,7 @@
       <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
         class: "static-map visible-#{size}",
         alt: "Map of #{school.name} address.",
-        data: { src: @static_google_maps[size]}
+        data: { src: static_google_maps[size]}
       )
       %>
     <% end %>
