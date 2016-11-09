@@ -9,7 +9,7 @@ GS.graphs.subgroupCharts = GS.graphs.subgroupCharts || (function($) {
     'Male': '#34A4DA'
   }
   var titleMap = {
-    'students-participating-in-free-or-reduced-price-lunch-program': 'Students from low-income familes',
+    'students-participating-in-free-or-reduced-price-lunch-program': 'Students from low-income families',
     'english-learners': 'Students learning English'
   };
 
