@@ -8,7 +8,7 @@
   color: $hero-font-color;
   font-size: $font-size-base;
 
-  a {
+  a:not(.info-circle) {
     color: $hero-font-color;
     font-size: $font-size-base;
   }
