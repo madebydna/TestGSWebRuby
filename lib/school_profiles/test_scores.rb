@@ -22,7 +22,8 @@ module SchoolProfiles
     end
 
     def subject_scores
-      scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236)
+      scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236) +
+               @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 18, grades: '10', subjects: ['Science'])
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash.subject)

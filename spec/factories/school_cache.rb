@@ -178,6 +178,38 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :ca_cst_10th_grade_science_2015, class: SchoolCache do
+    name 'test_scores'
+    sequence(:school_id) { |n| n }
+    state 'ca'
+    value ({
+    "18" => {
+      "All" => {
+        "grades" => {
+          "10" => {
+            "label" => "School-wide",
+            "level_code" => {
+              "e,m,h" => {
+                "Science" => {
+                  "2015" => {
+                      "number_students_tested" => 600,
+                      "score" => 99.9,
+                      "state_average" => 98.1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "lowest_grade" => 0,
+        "test_description" => "A description of the test",
+        "test_label" => "California Standards Test",
+        "test_source" => "CA Dept. of Education"
+      }
+    }}.to_json)
+    updated Time.now
+  end
+
   factory :ca_caaspp_schoolwide_ela_2014and2015, class: SchoolCache do
     name 'test_scores'
     sequence(:school_id) { |n| n }
