@@ -3,7 +3,7 @@
  <% title %>
  <% info_text = info_text || nil %>
  <div class="module-header">
-   <% unless circle_content.nil? %>
+   <% unless circle_content.nil? || circle_content == 'NR' %>
      <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
        <%= circle_content %><span>/10</span>
      </div>
@@ -15,3 +15,4 @@
      <%= render 'info_circle', content: info_text %>
    <% end %>
  </div>
+g
