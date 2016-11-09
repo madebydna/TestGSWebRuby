@@ -1,5 +1,6 @@
 $(function() {
 
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
   GS.graphs.ethnicityPieChart.generateEthnicityChart();

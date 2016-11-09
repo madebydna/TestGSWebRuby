@@ -188,6 +188,14 @@ if (gon.advertising_enabled) {
     }
   };
 
+  GS.ad.addCompfilterToGlobalAdTargetingGon = function () {
+    var randomCompFilterValue = _.random(1,4).toString();
+    if (!gon.ad_set_targeting) {
+      gon.ad_set_targeting = {};
+    }
+    gon.ad_set_targeting['compfilter'] = randomCompFilterValue;
+  }
+
   window.addEventListener('message', GS.ad.handleGhostTextMessages, false);
 
 ///// examples

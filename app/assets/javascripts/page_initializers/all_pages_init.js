@@ -110,6 +110,7 @@ $(function() {
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
   // if state abbreviation is NOT set will init autocomplete without state.
   // All page specific initializing of autocomplete was removed
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
 
   if (gon.state_abbr) {
     GS.search.autocomplete.searchAutocomplete.init(gon.state_abbr);
