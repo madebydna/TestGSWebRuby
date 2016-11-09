@@ -7,13 +7,13 @@ var Drawer = React.createClass({
 
   handleClick: function() {
     if(this.state.open) {
-      analyticsEvent(this.props.trackingCategory, 'Show', 'Less');
+      analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' Less');
       // this.props.onClose.call();
 
       this.setState({open: false});
     } else {
       // this.props.onOpen.call();
-      analyticsEvent(this.props.trackingCategory, 'Show', 'More');
+      analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' More' );
       this.setState({open: true});
     }
   },

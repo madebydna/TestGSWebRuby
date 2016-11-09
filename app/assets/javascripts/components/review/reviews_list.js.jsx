@@ -57,7 +57,7 @@ class ReviewsList extends React.Component {
       <div className="review-list">
         <div>{this.renderReviewSubmitMessage()}</div>
         <div>{this.initialReviews()}</div>
-        {drawerReviews.length > 0 && <Drawer content={this.drawerReviews()} trackingCategory='Profile Reviews' />}
+        {drawerReviews.length > 0 && <Drawer content={this.drawerReviews()} trackingCategory='Profile' trackingAction='Reviews Show' />}
       </div>
     )
   }
