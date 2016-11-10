@@ -6,9 +6,9 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
       // write the graph to this location in html
   var ethnicityGraph = '#ethnicity-graph';
 
-  var buildEthnicityDataFromGon = function () {
+  var buildEthnicityDataFromGon = function (data) {
     var returnvalue = [];
-    $.each(gon.ethnicity, function (index, value) {
+    $.each(data, function (index, value) {
       returnvalue.push({
         name: value['breakdown'],
         legendIndex: index,
@@ -19,15 +19,15 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
     return returnvalue;
   };
 
-  var generateEthnicityChart = function () {
-    if (gon.ethnicity) {
+  var generateEthnicityChart = function (data) {
+    if (data) {
       var callback = function () {
         var chart = $(ethnicityGraph);
         var chart_height = 400;
         if(chart.width() < 400) {
           chart_height = chart.width() - 40;
         }
-        var ethnicityData = buildEthnicityDataFromGon();
+        var ethnicityData = buildEthnicityDataFromGon(data);
         chart.highcharts({
 
           chart: {
