@@ -14,7 +14,6 @@ class UserSubscriptionManager
   def unsubscribe
     begin
       delete_subscriptions(get_subscriptions)
-      # @user.subscriptions.destroy_all
     rescue
       GSLogger.error(:unsubscribe, nil, message: 'User unsubscribe failed', vars: {
           member_id: @user.id

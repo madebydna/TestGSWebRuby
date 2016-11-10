@@ -51,7 +51,7 @@ class EquitySection extends React.Component {
     let link_name = this.linkName(section_info.title);
 
     return <div className="equity-section">
-          <a name={link_name}></a>
+          <a className="anchor-mobile-offset" name={link_name}></a>
       <div className="title-bar">{rating}{section_info.title}&nbsp;{infoCircle}</div>
       <SectionNavigation key="sectionNavigation" items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
