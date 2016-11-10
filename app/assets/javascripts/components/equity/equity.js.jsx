@@ -204,7 +204,7 @@ class Equity extends React.Component {
           title: 'Low-income students',
           rating: this.lowIncomeRating(),
           icon_classes: 'icon-pie',
-          info_text: 'This rating reflects English, math, and science test scores for students who qualifty for free or reduced-price lunch compared to all students in the state.',
+          info_text: 'This rating reflects English, math, and science test scores for students who qualify for free or reduced-price lunch compared to all students in the state.',
           sourceHref: '/gk/ca-high-schools/#Equity-Low-Income'
         },
         section_content: section2Content
