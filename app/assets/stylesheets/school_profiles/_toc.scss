@@ -1,25 +1,44 @@
 #toc {
   .toc-container-box {
-    margin: 30px auto;
-    padding: 0px 30px;
+    margin: 53px auto 88px auto;
+    @include media-breakpoint-up(sm) {
+      margin-right: 0px;
+    }
+  }
+
+  //.toc-container-box {
+  //  margin: 30px auto;
+  //}
+
+  .info-circle {
+    margin-bottom: 3px;
   }
 
   .toc-section-title {
     font-size: 20px;
-    padding-left: 15px;
+    font-family: opensans-semibold;
     padding-bottom: 0px;
+    vertical-align: middle;
     @include media-breakpoint-up(sm) {
       padding-bottom: 26px;
     }
   }
 
   .toc-entry {
-    margin-left: 15px;
+    margin-right: 30px;
     margin-bottom: 5px;
     border-bottom: solid 1px #dbe6eb;
     padding-bottom: 5px;
     vertical-align: middle;
-    min-height: 30px;
+    line-height: 34px;
+    @include media-breakpoint-down(xs) {
+      margin-right: 0px;
+    }
+
+    a {
+      color: $brand-primary;
+      font-family: opensans-semibold;
+    }
   }
 
   .toc-entry:last-child {
@@ -29,11 +48,11 @@
 
   .gs-rating {
     border-radius: 50%;
-    height: 24px;
-    width: 24px;
+    height: 34px;
+    width: 34px;
     text-align: center;
-    font-size: 12px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 32px;
     color: #FFF;
     float: right;
     margin-right: 10px;
@@ -41,8 +60,8 @@
 
   .gs-badge {
     border-radius: 50%;
-    height: 24px;
-    width: 24px;
+    height: 34px;
+    width: 34px;
     text-align: center;
     font-size: 12px;
     line-height: 24px;
@@ -57,31 +76,6 @@
 
   .gs-link-text {
     float: left;
-  }
-
-  @media only screen and (min-width: 768px) {
-    .grid-divider > [class*='col-']:before,
-    .grid-divider > [class*='col-']:after {
-      background: #cad4df;
-      bottom: 0;
-      content: " ";
-      position: absolute;
-      width: 1px;
-      top: 0;
-    }
-
-    .grid-divider > [class*='col-']:before {
-      left: 0;
-    }
-
-    .grid-divider > [class*='col-']:after {
-      right: -1px;
-    }
-
-    .grid-divider > [class*='col-']:first-child:before,
-    .grid-divider > [class*='col-']:last-child:after {
-      display: none;
-    }
   }
 
   @media only screen and (max-width: 768px) {

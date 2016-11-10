@@ -34,7 +34,7 @@ module SchoolProfiles
     end
 
     def visible?
-      !subject_scores.blank?
+      subject_scores.present?
     end
   end
 end

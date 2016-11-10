@@ -21,20 +21,33 @@ module SchoolProfiles
       )
     end
 
+    def characteristics_low_income_visible?
+      visible = false
+      characteristics.each do |data_type, data_hashes|
+        data_hashes.each do |data|
+          if data['breakdown'] == 'Economically disadvantaged'
+            visible = true
+            break
+          end
+        end
+      end
+      visible
+    end
+
+    def test_low_income
+      @school_cache_data_reader.test_scores_breakdown('Economically disadvantaged')
+    end
+
     def rating_low_income
       @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
     end
 
     def ethnicity_visible?
-      !test_scores_by_ethnicity.blank?
+      test_scores_by_ethnicity.present? || characteristics['4-year high school graduation rate'].length > 1 || characteristics['Percent of students who meet UC/CSU entrance requirements'].length > 1
     end
 
     def low_income_visible?
-      if test_scores_by_ethnicity.blank?
-        false
-      else
-        test_scores_by_ethnicity.has_key?('Economically disadvantaged')
-      end
+      characteristics_low_income_visible? || test_scores_by_ethnicity.key?('Economically disadvantaged')
     end
   end
 end

@@ -133,7 +133,7 @@ module SchoolProfiles
     end
 
     def visible?
-      !data_values.blank?
+      data_values.present?
     end
   end
 end

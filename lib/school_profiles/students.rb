@@ -28,7 +28,7 @@ module SchoolProfiles
     end
 
     def visible?
-      !ethnicity_data.empty? || !gender_data.empty? || subgroups_data.empty?
+      ethnicity_data.present? || gender_data.present? || subgroups_data.present?
     end
   end
 end
