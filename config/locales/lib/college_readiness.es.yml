@@ -1,7 +1,7 @@
 es:
   lib:
     college_readiness:
-      info_text: "This measure reflects measures linked to college and career readiness."
+      info_text: "This reflects measures linked to college and career readiness."
       '4-year high school graduation rate': '4-year high school graduation rate'
       'Average SAT score': 'Average SAT score'
       'SAT percent participation': 'SAT participation rate'

@@ -26,7 +26,7 @@ class Equity extends React.Component {
             component: <BarGraphWithEnrollmentInLabel
                 test_scores={data}
                 graphId="test-scores-math-bar-graph" />,
-            explanation: <div>This shows results across different races/ethnicities on a Math test given to juniors once a year. Big
+            explanation: <div>This shows results across different races/ethnicities on a math test given to juniors once a year. Big
               differences may suggest that some student groups are not getting the support they need to succeed.</div>
           }
       );
@@ -89,7 +89,7 @@ class Equity extends React.Component {
                 test_scores={data}
                 type="column"
                 graphId="low-income-math-bar-graph" />,
-            explanation: <div>This shows results across different races/ethnicities on a Math test given to juniors once a year. Big
+            explanation: <div>This shows results across different races/ethnicities on a math test given to juniors once a year. Big
               differences may suggest that some student groups are not getting the support they need to succeed.</div>
           }
       );

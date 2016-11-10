@@ -41,7 +41,7 @@
               </div>
               <div class="dib"> <!-- also add word wrap? -->
               <span class="school-leader"><%= school_leader %></span>
-              <span> - <%= t('.school_leader_label').titleize %></span>
+              <span> - <%= t('.school_leader_label') %></span>
               </div>
             </div>
           <% end %>
@@ -66,12 +66,12 @@
               <div class="contact-icon-box">
                 <span class="icon-facebook contact-icon"></span>
               </div>
-              <a target="_blank" href="<%= prepend_http(school.facebook_url) %>"><%= t('.facebook').titleize %></a>
+              <a target="_blank" href="<%= prepend_http(school.facebook_url) %>"><%= t('.facebook') %></a>
             </div>
           <% end %>
           <% if school.cache_results.school_leader_email.present? %>
               <div class="contact-row">
-                <div class="contact-icon-box"><span class="icon-mail contact-icon"></span></div><a target="_blank" href="mailto:<%=school.cache_results.school_leader_email %>"><%= t('.school_leader_email').titleize %></a>
+                <div class="contact-icon-box"><span class="icon-mail contact-icon"></span></div><a target="_blank" href="mailto:<%=school.cache_results.school_leader_email %>"><%= t('.school_leader_email') %></a>
               </div>
           <% end %>
           <% if school.home_page_url.present? %>
@@ -79,7 +79,7 @@
               <div class="contact-icon-box">
                 <span class="icon-globe contact-icon"></span>
               </div>
-              <a target="_blank" href="<%= prepend_http(school.home_page_url) %>"><%= t('.school_website').titleize %></a>
+              <a target="_blank" href="<%= prepend_http(school.home_page_url) %>"><%= t('.school_website') %></a>
             </div>
           <% end %>
           <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school) %>'>
