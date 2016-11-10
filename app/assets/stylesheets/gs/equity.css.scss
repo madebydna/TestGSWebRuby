@@ -27,8 +27,12 @@
   }
   .title-bar {
     padding-bottom: 20px;
-    font-size: 20px;
+    font-size: 18px;
     font-family: opensans-semibold;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 20px;
+    }
 
     .rating-layout {
       display: inline-block;
