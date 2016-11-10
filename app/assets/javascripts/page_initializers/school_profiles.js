@@ -3,7 +3,7 @@ $(function() {
   GS.ad.addCompfilterToGlobalAdTargetingGon();
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
-  GS.graphs.ethnicityPieChart.generateEthnicityChart();
+  GS.graphs.ethnicityPieChart.generateEthnicityChart(gon.ethnicity);
   GS.graphs.subgroupCharts.generateSubgroupPieCharts();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
