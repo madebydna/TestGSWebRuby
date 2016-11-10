@@ -49,6 +49,8 @@
       text-decoration: none;
       background-color: #F0FAFB;
       color: #28292a;
+      white-space: nowrap;
+      overflow: hidden;
 
       &:not(:first-child) {
         margin-left: -1px;
