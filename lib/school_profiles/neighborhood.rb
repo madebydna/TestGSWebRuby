@@ -57,7 +57,11 @@ module SchoolProfiles
     end
 
     def school_rating_valid?
+      #   the google_maps_icon_param function is not working because image_url helper
+      #   does not provide proper path to icon. Ticket filed for fix but forcing
+      #   the icon_param to be empty string
       school_rating && (1..10).cover?(school_rating.to_i)
+      false
     end
   end
 end
