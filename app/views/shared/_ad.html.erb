@@ -15,7 +15,7 @@
 
   <% iddef = "#{slot_name}#{id_counter}_Ad" %>
   <div class="js-<%= iddef %>-wrapper hidden-print <%= css_class %>">
-    <div class="gs_ad_slot tac" id="<%= iddef %>" data-ad-size="<%= dimensions %>"
+    <div class="gs_ad_slot ad-slot tac" id="<%= iddef %>" data-ad-size="<%= dimensions %>"
          data-dfp="<%= slot %>" data-ad-setting="<%= size_mapping %>"></div>
     <% if show_ad_text %>
         <%= render partial: '/shared/advertising_word' %>
