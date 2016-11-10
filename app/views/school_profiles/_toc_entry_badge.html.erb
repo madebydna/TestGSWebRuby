@@ -2,9 +2,6 @@
 <% title %>
 <% anchor %>
 
-<!-- this needs to be done as a helper function -->
-<% title_link = title.gsub(" ", "_") %>
-
 <div class="clearfix toc-entry">
   <a href="#<%= anchor %>"
      class="js-gaClick"
@@ -12,5 +9,6 @@
      data-ga-click-action='TOC Clicked'
      data-ga-click-label='<%= title %>'>
     <span><%= title %></span>
+    <span class="icon-chevron-right"></span>
   </a>
 </div>

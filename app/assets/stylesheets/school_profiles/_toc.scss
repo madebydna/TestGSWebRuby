@@ -1,4 +1,6 @@
 #toc {
+  $chevron_color: #c1d2d9;
+
   .toc-container-box {
     margin: 53px auto 88px auto;
     @include media-breakpoint-up(sm) {
@@ -8,6 +10,16 @@
 
   .info-circle {
     margin-bottom: 3px;
+  }
+
+  .icon-chevron-right {
+    color: $chevron_color;
+    float: right;
+    font-size: 10px;
+  }
+
+  .denominator {
+    font-size: 7px;
   }
 
   .toc-section-title {
@@ -52,7 +64,7 @@
     line-height: 32px;
     color: #FFF;
     float: right;
-    margin-right: 10px;
+    margin-right: 7px;
   }
 
   .gs-badge {
