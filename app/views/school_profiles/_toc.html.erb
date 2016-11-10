@@ -15,7 +15,7 @@ going to build a partial for badges.  it will use the name passed in to generate
         <% section.each do |column,data| %>
           <div class="col-xs-12 col-sm-4"> <!-- last one (for environment) was also hidden-sm-down -->
             <div class="toc-section-title">
-              <%= column.to_s.upcase %>&nbsp;<a data-remodal-target="modal_info_box"
+              <%= t(".#{column.to_s.upcase}") %>&nbsp;<a data-remodal-target="modal_info_box"
                                      data-content-type="info_box"
                                      data-content-html="<%= t(tooltips_info[column.to_s.upcase]) %>"
                                      class="gs-tipso info-circle"
@@ -25,9 +25,9 @@ going to build a partial for badges.  it will use the name passed in to generate
             </div>
             <% data.each do |hash| %>
               <% unless hash[:rating].nil? %>
-                <%= render 'toc_entry_rating', rating: hash[:rating], title: hash[:label], anchor: hash[:anchor] %>
+                <%= render 'toc_entry_rating', rating: hash[:rating], title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
               <% else %>
-                <%= render 'toc_entry_badge', icon: nil, title: hash[:label], anchor: hash[:anchor] %>
+                <%= render 'toc_entry_badge', icon: nil, title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
               <% end %>
             <% end %>
           </div>

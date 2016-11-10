@@ -1,13 +1,13 @@
 en:
   school_profiles:
     toc:
-      section_title_academics: Academics
+      ACADEMICS: ACADEMICS
       test_scores: Test scores
       college_readiness: College readiness
-      section_title_equity: Equity
+      EQUITY: EQUITY
       race_ethnicity: Race/ethnicity
       low_income: Low-income students
-      section_title_environment: Environment
+      ENVIRONMENT: ENVIRONMENT
       students: Students
       neighborhood: Neighborhood
       info_texts:
