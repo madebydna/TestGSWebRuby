@@ -72,7 +72,11 @@ $large: 62px;
 }
 
 .circle-rating--equity-blue {
+  @include circle-rating($medium);
   background-color: #22a4dd;
+  span {
+    font-size: $medium * .5;
+  }
 }
 
 .circle-rating--xtra-small {

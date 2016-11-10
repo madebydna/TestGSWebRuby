@@ -1,9 +1,24 @@
-
 .five-star-rating__stars {
   vertical-align: middle;
   font-size: 11px;
   @media only screen and (max-width: 767px) {
     font-size: 9px;
+  }
+}
+
+.five-star-rating.cta {
+  .subtext {
+    display: block;
+    font-size: 11px;
+    font-family: "opensans-regular", sans-serif;
+    opacity: 0.6;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .em {
+    color: #88D5FF;
   }
 }
 

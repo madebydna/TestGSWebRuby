@@ -4,11 +4,7 @@ $border-color: #dbe6eb;
 .rating-container,
 %rating-container {
   // padding: 0 0 20px 0;
-}
-
-.rating-container + .rating-container {
-  // border-top: 1px solid $border-color;
-  margin-top: $spacing-extra-large;
+  margin-bottom: $spacing-extra-large;
 }
 
 .rating-container__title {
