@@ -114,7 +114,7 @@ class Reviews extends React.Component {
     }
     return (
       <div>
-        <a name="Reviews"></a>
+        <a className="anchor-mobile-offset" name="Reviews"></a>
         { reviewFormContent }
         { recentComments }
       </div>
