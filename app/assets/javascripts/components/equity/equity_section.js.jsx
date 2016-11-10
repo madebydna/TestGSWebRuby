@@ -19,7 +19,7 @@ class EquitySection extends React.Component {
     let rating_html = '';
     if (rating && rating != '') {
       let circleClassName = 'circle-rating--medium rating-layout circle-rating--'+rating;
-      rating_html = <div className={circleClassName}>{rating}<span>/10</span></div>;
+      rating_html = <div className={circleClassName}>{rating}<span className="rating-circle-small">/10</span></div>;
     }
     else{
       let circleClassName = 'rating-layout circle-rating--equity-blue';
