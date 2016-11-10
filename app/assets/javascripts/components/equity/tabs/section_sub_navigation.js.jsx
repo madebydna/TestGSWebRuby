@@ -8,7 +8,7 @@ class SectionSubNavigation extends React.Component {
                 onClick={this.onClick.bind(this, index)}
                 data-ga-click-category='Profile'
                 data-ga-click-action='Equity Ethnicity Button'
-                data-ga-click-label={item.subject.replace( '/', ' ' )}>
+                data-ga-click-label={item.subject}>
         {item.subject}
       </a>;
     }.bind(this));

@@ -22,10 +22,17 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
   var generateEthnicityChart = function () {
     if (gon.ethnicity) {
       var callback = function () {
+        var chart = $(ethnicityGraph);
+        var chart_height = 400;
+        if(chart.width() < 400) {
+          chart_height = chart.width() - 40;
+        }
         var ethnicityData = buildEthnicityDataFromGon();
-        $(ethnicityGraph).highcharts({
+        chart.highcharts({
+
           chart: {
-            type: 'pie'
+            type: 'pie',
+            height: chart_height
           },
           title: {
             text: null
