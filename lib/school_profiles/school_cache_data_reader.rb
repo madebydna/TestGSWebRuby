@@ -18,7 +18,7 @@ module SchoolProfiles
     end
 
     def gs_rating
-      decorated_school.great_schools_rating
+      ((1..10).to_a & [decorated_school.great_schools_rating]).first
     end
 
     def students_enrolled

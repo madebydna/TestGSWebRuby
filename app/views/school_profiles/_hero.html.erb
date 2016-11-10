@@ -61,21 +61,22 @@
     </div>
 
     <div class="school-info">
-      <div class="school-info__item school-info__gs-rating">
-        <div class="gs-rating-with-label">
-          <div class="gs-rating-with-label__rating">
-            <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
-              <%= hero.gs_rating %><span>/10</span>
+      <% if hero.gs_rating %>
+        <div class="school-info__item school-info__gs-rating">
+          <div class="gs-rating-with-label">
+            <div class="gs-rating-with-label__rating">
+              <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
+                <%= hero.gs_rating %><span>/10</span>
+              </div>
+            </div>
+
+            <div class="gs-rating-with-label__label">
+              <%= t('.greatschools_rating') %>
+              <%= render 'info_circle', content: t('.gs_rating_info_text_html') %>
             </div>
           </div>
-
-          <div class="gs-rating-with-label__label">
-            <%= t('.greatschools_rating') %>
-            <% content=t('.gs_rating_info_text_html') %>
-            <%= render 'info_circle', content: t('.gs_rating_info_text_html') %>
-          </div>
         </div>
-      </div>
+      <% end %>
       <div class="school-info__item school-info__five-star-rating"
            onclick="analyticsEvent('Profile', 'Review CTA Clicked','Hero stars'); window.location.href='#Reviews';">
         <div class="label"><%= t('.reviews') %></div>
