@@ -30,7 +30,7 @@
     border-bottom: solid 1px #dbe6eb;
     padding-bottom: 5px;
     vertical-align: middle;
-    line-height: 34px;
+
     @include media-breakpoint-down(xs) {
       margin-right: 0px;
     }
@@ -38,6 +38,7 @@
     a {
       color: $brand-primary;
       font-family: opensans-semibold;
+      line-height: 34px;
     }
   }
 
