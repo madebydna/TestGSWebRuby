@@ -219,7 +219,7 @@ class SchoolProfilesController < ApplicationController
     else
       return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
     end
-    return_title_str << ' - School overview'
+    return_title_str << ' | GreatSchools'
   end
 
   def seo_meta_tags_description
