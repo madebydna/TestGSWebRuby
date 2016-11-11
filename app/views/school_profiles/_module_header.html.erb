@@ -1,0 +1,17 @@
+ <% circle_color_modifier %>
+ <% circle_content  %>
+ <% title %>
+ <% info_text = info_text || nil %>
+ <div class="module-header">
+   <% unless circle_content.nil? || circle_content == 'NR' %>
+     <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
+       <%= circle_content %><span class="rating-circle-small">/10</span>
+     </div>
+   <% end %>
+   <span class="title">
+     <%= title %>
+   </span>
+   <% if info_text %>
+     <%= render 'info_circle', content: info_text %>
+   <% end %>
+ </div>

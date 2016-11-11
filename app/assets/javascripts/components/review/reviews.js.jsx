@@ -5,7 +5,7 @@ class Reviews extends React.Component {
     // TODO: This needs to be hooked up somewhere. Maybe from props?
     this.state = {
       reviewSubmitMessage: {},
-      reviewsList: this.initializeReviewsList()
+      reviews: this.initializeReviewsList()
     };
     this.renderReviewLayout = this.renderReviewLayout.bind(this);
     this.handleReviewSubmitMessage = this.handleReviewSubmitMessage.bind(this);
@@ -25,7 +25,7 @@ class Reviews extends React.Component {
 
   renderReviewsList() {
     return(<ReviewsList
-      reviews = { this.state.reviewsList }
+      reviews = { this.state.reviews }
       reviewSubmitMessage = { this.state.reviewSubmitMessage }
     />);
   }
@@ -38,12 +38,12 @@ class Reviews extends React.Component {
 
   reorderForCurrentUser(xhr) {
       let schoolUserDigest = xhr.school_user_digest;
-      let reviews = JSON.parse(JSON.stringify(this.state.reviewsList));
+      let reviews = JSON.parse(JSON.stringify(this.state.reviews));
       let userReview = this.findRemoveUserReview(schoolUserDigest, reviews);
       if (userReview) {
         reviews.unshift(userReview);
       }
-      this.setState( { reviewsList: reviews });
+      this.setState( { reviews: reviews });
   }
 
   // TODO: refactor reorder For CurrentUser and HandleUpdateOfReviews to remove
@@ -51,11 +51,11 @@ class Reviews extends React.Component {
 
   handleUpdateOfReviews(userReviews) {
     let newUserReviews = userReviews;
-    let reviews = JSON.parse(JSON.stringify(this.state.reviewsList));
+    let reviews = JSON.parse(JSON.stringify(this.state.reviews));
     let schoolUserDigest = newUserReviews.school_user_digest
     let existingUserReviews = this.findRemoveUserReview(schoolUserDigest, reviews);
     reviews.unshift(newUserReviews);
-    this.setState( { reviewsList: reviews });
+    this.setState( { reviews: reviews });
   }
 
   findRemoveUserReview(schoolUserDigest, reviews) {
@@ -104,11 +104,19 @@ class Reviews extends React.Component {
   }
 
   render() {
+    let reviewFormContent = null;
+    let recentComments = null;
+    if(this.state.reviews.length > 0) {
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, 'Review this school');
+      recentComments = this.renderReviewLayout(this.renderReviewsList, 'Recent Comments');
+    } else {
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, 'Be the first to review this school');
+    }
     return (
       <div>
-        <a name="Reviews"></a>
-        { this.renderReviewLayout(this.renderReviewForm, 'Review this school') }
-        { this.renderReviewLayout(this.renderReviewsList, 'Recent Comments') }
+        <a className="anchor-mobile-offset" name="Reviews"></a>
+        { reviewFormContent }
+        { recentComments }
       </div>
     );
   }

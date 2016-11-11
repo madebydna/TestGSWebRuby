@@ -11,20 +11,5 @@ describe SchoolProfiles::TestScores do
   end
   it { is_expected.to respond_to(:rating) }
   it { is_expected.to respond_to(:subject_scores) }
-
-  describe "::RatingLabelMap" do
-    it "should have 10 items" do
-      expect(SchoolProfiles::TestScores::RatingLabelMap.count).to eq(10)
-    end
-  end
-
-  describe "#rating_label" do
-    SchoolProfiles::TestScores::RatingLabelMap
-      .each do |rating, label|
-      it "returns correct #{label} for rating score: #{rating}" do
-        allow(subject).to receive(:rating).and_return(rating.to_i)
-        expect(subject.rating_label).to eq(SchoolProfiles::TestScores::RatingLabelMap[rating])
-      end
-    end
-  end
 end
+

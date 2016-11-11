@@ -39,7 +39,7 @@ describe "Visitor" do
       expect(page).to have_css ".user-reviews-container .user-type", text: "Community member"
       expect(page).to have_css ".user-reviews-container .avatar"
       expect(page).to have_css ".five-star-review .comment", text: review_comment
-      expect(page).to have_css ".user-reviews-container .date", text: "September 09, 2016"
+      expect(page).to have_css ".user-reviews-container .type-and-date", text: "September 09, 2016"
     end
   end
 
@@ -69,7 +69,7 @@ describe "Visitor" do
       expect(page).to have_css ".user-reviews-container .user-type", text: "Community member"
       expect(page).to have_css ".user-reviews-container .avatar"
       expect(page).to have_css ".topical-review .comment", text: review_comment
-      expect(page).to have_css ".user-reviews-container .date", text: "September 09, 2016"
+      expect(page).to have_css ".user-reviews-container .type-and-date", text: "September 09, 2016"
     end
   end
 

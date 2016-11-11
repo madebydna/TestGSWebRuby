@@ -1,0 +1,51 @@
+<% ethnicity_data = students.ethnicity_data %>
+<% section_title = t('.section_title')  %>
+<% title = t('.title') %>
+<% subtitle = t('.subtitle_html') %>
+
+<% # If you change these colors they need to be changed in ethnicity_pie_chart.js %>
+<% ethnicity_colors = %w(#184a7d #2ba3dc #08c569 #dca21a #d94373 #fdda46 #0e6ac9 #999EFF) %>
+
+<a class="anchor-mobile-offset" name="Students"></a>
+<div class="students-container">
+  <div class="row">
+    <div class="col-xs-12 col-lg-3">
+      <div class="rating-container__title">
+        <%= section_title %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-lg-9">
+      <div class="rating-container__rating">
+        <div class="module-header">
+          <div class="circle-rating--equity-blue circle-rating--medium">
+            <span class="icon-users"></span>
+          </div>
+          <div class="title-container">
+            <span class="title"><%= title %></span></br>
+            <span><%= subtitle %></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8">
+          <div id="ethnicity-graph"></div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <% ethnicity_data.each_with_index do |val, index |  %>
+            <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
+              <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
+              <div class="legend-title"><%= val['breakdown'] %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="subgroups">
+        <div class="row">
+
+        </div>
+      </div>
+      <div class="gender"> </div>
+      <div class="source-link"><%= t('.source') %>: <a href="/gk/ca-high-schools/#Students" target="_blank"><%= t('.see notes') %></a></div>
+    </div>
+  </div>
+</div>

@@ -19,7 +19,6 @@ module AdvertisingConcerns
     gon.advertising_enabled = @advertising_enabled
 
     if @advertising_enabled
-      ad_targeting_gon_hash[ 'compfilter'] = (1 + rand(4)).to_s # 1-4   Allows ad server to serve 1 ad/page when required by advertiser
       ad_targeting_gon_hash['env']         = ENV_GLOBAL['advertising_env'] # alpha, dev, product, omega?
     end
   end

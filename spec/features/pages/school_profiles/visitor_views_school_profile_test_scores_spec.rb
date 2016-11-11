@@ -23,7 +23,6 @@ describe "Visitor" do
 
     within test_scores do
       expect(page).to have_test_scores_rating('6')
-      expect(page).to have_test_scores_rating_label('Average')
     end
   end
 
@@ -40,7 +39,6 @@ describe "Visitor" do
 
     within test_scores do
       expect(page).to  have_test_scores_rating('1')
-      expect(page).to  have_test_scores_rating_label('Weak')
     end
   end
 
@@ -56,7 +54,7 @@ describe "Visitor" do
 
     visit school_path(school)
 
-    expect(page_object).to have_test_score_subject(label: 'English Language Arts', score: '42%')
+    expect(page_object).to have_test_score_subject(label: 'English', score: '42%')
   end
 
   context 'when there are multiple years of data' do
@@ -67,14 +65,14 @@ describe "Visitor" do
     scenario 'sees test scores by subject' do
       visit school_path(@school)
       expect(page_object).to have_test_score_subject(
-        label: 'English Language Arts',
+        label: 'English',
         score: '15%'
       )
     end
     scenario 'sees state average' do
       visit school_path(@school)
       expect(page_object).to have_test_score_subject(
-        label: 'English Language Arts',
+        label: 'English',
         state_average: '31%'
       )
     end
@@ -105,10 +103,34 @@ describe "Visitor" do
     end
   end
 
+  scenario "sees anchor for data source" do
+    school = create(:school_with_new_profile, id: 3)
+    create(
+      :cached_ratings,
+      :with_gs_rating,
+      id: 1,
+      gs_rating_value: 6.0
+    )
+    visit school_path(school)
+    expect(page_object.test_scores).to have_source_link
+  end
+
+  scenario 'sees science included in test scores' do
+    school = create(:school_with_new_profile)
+    create(
+      :cached_ratings,
+      school_id: school.id
+    )
+    create(:ca_cst_10th_grade_science_2015, school_id: school.id)
+    visit school_path(school)
+
+    expect(page_object).to have_test_score_subject(label: 'Science', score: '100%')
+  end
+
   private
 
   def test_scores
-    ".rating-container--test-scores"
+    '.rs-test-scores'
   end
 
   def have_test_scores_rating(rating)

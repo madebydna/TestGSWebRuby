@@ -38,7 +38,7 @@ describe 'Visitor' do
 
     page_object = SchoolProfilesPage.new
     expect(page_object).to have_gs_rating
-    expect(page_object).to have_gs_rating_of(5)
+    expect(page_object).to have_gs_rating_of('5/10')
   end
 
   scenario 'sees school address info' do
@@ -79,7 +79,7 @@ describe 'Visitor' do
   scenario 'sees a link to the school\'s website' do
     school = create(:school_with_new_profile, home_page_url: 'http://www.google.com')
     visit school_path(school)
-    expect(SchoolProfilesPage.new).to have_link(school.home_page_url,
+    expect(SchoolProfilesPage.new).to have_link('School website',
       href: school.home_page_url
     )
   end
@@ -120,4 +120,129 @@ describe 'Visitor' do
     expect(page_object).to have_content('348381') # reviews among all topics
     expect(page_object).to have_star_rating_of(4)
   end
+
+  describe 'structured markup' do
+    scenario 'organization schema' do
+      school = create(:school_with_new_profile)
+      visit school_path(school)
+      scripts = all('script', visible: false).select do |s|
+        s[:type] == 'application/ld+json'
+      end
+      expect(scripts).to_not be_blank
+      script = scripts.find do |s|
+        s.native.text.include?(StructuredMarkup.organization_hash.to_json)
+      end
+      expect(script).to_not be_nil
+    end
+
+    scenario 'school schema' do
+      school = create(
+        :school_with_new_profile,
+        name: 'Alameda High School',
+        street: '123 main st',
+        city: 'Alameda',
+        state: 'CA',
+        zipcode: '12345',
+        home_page_url: 'http://www.foo.bar'
+      )
+
+      expected_markup = {
+        "@context" => "http://schema.org",
+        "@type" => "School",
+        "name" => "Alameda High School",
+        "address" => {
+          "streetAddress" => "123 main st",
+          "addressLocality" => "Alameda",
+          "addressRegion" => "CA",
+          "postalCode" => "12345"
+        },
+        "sameAs" => [
+          "http://www.foo.bar"
+        ]
+      }.to_json[1..-2]
+
+      visit school_path(school)
+      scripts = all('script', visible: false).select do |s|
+        s[:type] == 'application/ld+json'
+      end
+      expect(scripts).to_not be_blank
+      script = scripts.find { |s| s.native.text.include?(expected_markup) }
+      expect(script).to_not be_nil
+    end
+
+    describe 'aggregateRating schema' do
+      scenario 'with 3 five star reviews' do
+        school = create(:school_with_new_profile)
+        [1,2,3].map do |n|
+          create(:five_star_review, answer_value: n, school_id: school.id, state: school.state)
+        end
+
+        expected_markup = {
+          "@type" => "AggregateRating",
+          "ratingValue" => 2,
+          "bestRating" => 5,
+          "worstRating" => 1,
+          "reviewCount" => 3,
+          "ratingCount" => 3 
+        }.to_json
+
+        visit school_path(school)
+        scripts = all('script', visible: false).select do |s|
+          s[:type] == 'application/ld+json'
+        end
+        expect(scripts).to_not be_blank
+        script = scripts.find do |s|
+          s.native.text.include?(expected_markup)
+        end
+        expect(script).to_not be_nil
+      end
+
+      scenario 'with 3 five star reviews and 2 other reviews' do
+        school = create(:school_with_new_profile)
+        [1,2,3].map do |n|
+          create(:five_star_review, answer_value: n, school_id: school.id, state: school.state, comment: ('foo ' * 15))
+        end
+        [1,2].map do |n|
+          create(:teacher_effectiveness_review, school_id: school.id, state: school.state, comment: ('foo ' * 15) )
+        end
+
+        expected_markup = {
+          "@type" => "AggregateRating",
+          "ratingValue" => 2,
+          "bestRating" => 5,
+          "worstRating" => 1,
+          "reviewCount" => 5,
+          "ratingCount" => 3 
+        }.to_json
+
+        visit school_path(school)
+        scripts = all('script', visible: false).select do |s|
+          s[:type] == 'application/ld+json'
+        end
+        expect(scripts).to_not be_blank
+        script = scripts.find do |s|
+          s.native.text.include?(expected_markup)
+        end
+        expect(script).to_not be_nil
+      end
+
+      scenario 'with 0 five star reviews and 2 other reviews' do
+        school = create(:school_with_new_profile)
+        [1,2].map do |n|
+          create(:teacher_effectiveness_review, school_id: school.id, state: school.state, comment: ('foo ' * 15) )
+        end
+
+        visit school_path(school)
+        scripts = all('script', visible: false).select do |s|
+          s[:type] == 'application/ld+json'
+        end
+
+        scripts.each do |s|
+          expect(s.native.text).to_not have_text('AggregateRating')
+        end
+      end
+    end
+
+  end
+
 end

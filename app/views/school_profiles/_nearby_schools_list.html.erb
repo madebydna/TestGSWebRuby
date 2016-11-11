@@ -8,7 +8,7 @@
         <% if (1..10).map(&:to_s).include?(nearby_school.gs_rating) || nearby_school.five_star_rating %>
         <div class="rating">
           <div class="circle-rating circle-rating--<%= nearby_school.gs_rating %> circle-rating--small">
-            <%= nearby_school.gs_rating %>
+            <%= nearby_school.gs_rating %><span class="rating-circle-small">/10</span>
           </div>
           <% if nearby_school.five_star_rating %>
               <%= render 'five_stars', filled: nearby_school.five_star_rating %>

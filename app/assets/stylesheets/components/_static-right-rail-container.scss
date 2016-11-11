@@ -1,8 +1,11 @@
 .static-container{
   position: relative;
   margin: auto;
-  padding: 0px 15px;
+  padding: 0px 10px;
   max-width: 1170px;
+  @include media-breakpoint-up(sm) {
+    padding: 0px 15px;
+  }
 
   @media  (min-width: 992px) {
     .right_rail {

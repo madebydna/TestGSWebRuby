@@ -368,7 +368,7 @@ describe SearchController do
     end
     with_shared_context 'when ads are enabled' do
       include_example 'sets at least one google ad targeting attribute'
-      include_examples 'sets specific google ad targeting attributes', %w[compfilter env]
+      include_examples 'sets specific google ad targeting attributes', %w[env]
     end
   end
 

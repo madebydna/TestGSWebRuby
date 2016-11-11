@@ -181,27 +181,21 @@ class DeprecatedSchoolProfileController < SchoolController
     @last_modified_date = review_date ? (review_date > school_date) ? review_date : school_date : school_date
   end
 
+  def profile_page_name
+    @_page_name ||=(
+    page_name = 'GS:'+ ad_page_name.to_s
+    page_name.sub!('_', 'Profile:')
+    )
+  end
+
   def page_view_metadata
     @page_view_metadata ||= (
-    page_view_metadata = {}
-
-    page_name_base = 'GS:'+ @ad_page_name.to_s
-
-    page_view_metadata['page_name']   = page_name_base.sub! '_','Profile:'
-    page_view_metadata['City']        = @school.city
-    page_view_metadata['county']      = @school.county # county name?
-    page_view_metadata['gs_rating']   = @school.gs_rating
-    page_view_metadata['level']       = @school.level_code # p,e,m,h
-    page_view_metadata['school_id']   = @school.id.to_s
-    page_view_metadata['State']       = @school.state # abbreviation
-    page_view_metadata['type']        = @school.type  # private, public, charter
-    page_view_metadata['zipcode']     = @school.zipcode
-    page_view_metadata['district_id'] = @school.district.present? ? @school.district.id.to_s : ""
-    page_view_metadata['template']    = "SchoolProf"
-    page_view_metadata['collection_ids']  = @school.collection_ids
-    page_view_metadata['number_of_reviews_with_comments'] =  @_school_reviews.present? ? @_school_reviews.number_of_reviews_with_comments : "0"
-    page_view_metadata
-
+      gs_rating = @school.gs_rating
+      number_of_reviews_with_comments = school_reviews.having_comments.count
+      SchoolProfiles::PageViewMetadata.new(@school,
+                                           profile_page_name,
+                                           gs_rating,
+                                           number_of_reviews_with_comments).hash
     )
   end
 
@@ -242,7 +236,9 @@ class DeprecatedSchoolProfileController < SchoolController
   end
 
   def ad_page_name
-    ('School_' + @page_config.name).to_sym
+    @_ad_page_name ||=(
+    ('School_' + @page_config.name).to_sym if @page_config
+    )
   end
 
   def set_noindex_meta_tags

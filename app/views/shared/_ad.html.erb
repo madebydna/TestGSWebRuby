@@ -1,22 +1,24 @@
-<% slot %>
-<% width ||= 300 %>
-<% height ||= 250 %>
-<% size_mapping ||= '' # Size mapping key. See GS.ad.getSizeMappings in advertising.js %>
-<% css_class ||= '' # CSS class to apply to container %>
-<% id_counter ||= '' # If multiple ads with the same slot name appear on a page %>
+<% if AdsSwitch.ads_enabled_for_current_request? %>
+  <% slot %>
+  <% width ||= 300 %>
+  <% height ||= 250 %>
+  <% size_mapping ||= '' # Size mapping key. See GS.ad.getSizeMappings in advertising.js %>
+  <% css_class ||= '' # CSS class to apply to container %>
+  <% id_counter ||= '' # If multiple ads with the same slot name appear on a page %>
 
-<% unless defined?(show_ad_text) %>
-    <% show_ad_text = true %>
-<% end %>
-
-<% slot_name = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>
-<% dimensions = [width, height] %>
-
-<% iddef = "#{slot_name}#{id_counter}_Ad" %>
-<div class="js-<%= iddef %>-wrapper hidden-print <%= css_class %>">
-  <div class="gs_ad_slot tac" id="<%= iddef %>" data-ad-size="<%= dimensions %>"
-       data-dfp="<%= slot %>" data-ad-setting="<%= size_mapping %>"></div>
-  <% if show_ad_text %>
-      <%= render partial: '/shared/advertising_word' %>
+  <% unless defined?(show_ad_text) %>
+      <% show_ad_text = true %>
   <% end %>
-</div>
+
+  <% slot_name = slot.to_s.gs_capitalize_words.gsub(' ', '_').to_sym %>
+  <% dimensions = [width, height] %>
+
+  <% iddef = "#{slot_name}#{id_counter}_Ad" %>
+  <div class="js-<%= iddef %>-wrapper hidden-print <%= css_class %>">
+    <div class="gs_ad_slot ad-slot tac" id="<%= iddef %>" data-ad-size="<%= dimensions %>"
+         data-dfp="<%= slot %>" data-ad-setting="<%= size_mapping %>"></div>
+    <% if show_ad_text %>
+        <%= render partial: '/shared/advertising_word' %>
+    <% end %>
+  </div>
+<% end %>

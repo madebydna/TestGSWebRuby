@@ -21,9 +21,9 @@
   var pluginName = "tipso",
     defaults = {
       speed             : 400,          //Animation speed
-      background        : '#55b555',
+      background        : '#FFFFFF',
       titleBackground   : '#333333',
-      color             : '#ffffff',
+      color             : '#000000',
       titleColor        : '#ffffff',
       titleContent      : '',           //Content of the title bar
       showArrow         : true,

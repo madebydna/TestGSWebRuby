@@ -4,16 +4,20 @@ GS.notifications = GS.notifications || (function($) {
     return $('#js-top-notification-bar');
   };
 
-  var closeNotificationMessage = function(wait){
-      $getNotificationContainer().children().each(function () {
-          var $this = $(this);
-              setTimeout(function () {
-                  if ($this.hasClass("alert")) {
-                      $this.alert('close');
-                  }
-              }, wait);
-      });
-  }
+  $getNotificationContainer().on('click', '.close', function () {
+    $(this).closest('.alert').remove();
+  });
+
+  var closeNotificationMessage = function (wait) {
+    $getNotificationContainer().children().each(function () {
+      var $this = $(this);
+      setTimeout(function () {
+        if ($this.hasClass("alert")) {
+          $this.remove();
+        }
+      }, wait);
+    });
+  };
 
   var error = function(message) {
 

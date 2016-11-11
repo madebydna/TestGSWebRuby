@@ -1,5 +1,9 @@
-<% school %>
-<a name="Neighborhood"></a>
+<% school = neighborhood.school %>
+<% static_google_maps = neighborhood.static_google_maps %>
+<% street_address_css_class = neighborhood.school_address_css_class %>
+<% school_city_state_zip = neighborhood.school_city_state_zip %>
+<% max_chars_length = neighborhood.max_chars %>
+<a class="anchor-mobile-offset" name="Neighborhood"></a>
 <div class="neighborhood">
   <div class="title">
     <%= t('.title') %>
@@ -19,10 +23,16 @@
     </div>
     <div class="map-overlay">
       <div class="overlay-container">
-        <div class="contact-address">
-          <span><%= school.street %></span><br/>
-          <span><%= "#{school.city}, #{school.state} #{school.zipcode}" %></span>
-        </div>
+        <div class="contact-address<%= street_address_css_class %>">
+          <%= render 'info_box_for_truncation',
+            content: school.street,
+            truncation_count: max_chars_length
+            %><br/>
+          <%= render 'info_box_for_truncation',
+            content: school_city_state_zip,
+            truncation_count: max_chars_length
+          %>
+      </div>
         <div class="contact-item">
           <% if (school_leader = school.cache_results.school_leader) %>
             <div class ="contact-row">
@@ -31,7 +41,7 @@
               </div>
               <div class="dib"> <!-- also add word wrap? -->
               <span class="school-leader"><%= school_leader %></span>
-              <span> - <%= t('.school_leader_label').titleize %></span>
+              <span> - <%= t('.school_leader_label') %></span>
               </div>
             </div>
           <% end %>
@@ -53,17 +63,23 @@
           <% end %>
           <% if school.facebook_url.present? %>
             <div class="contact-row">
-              <div class="contact-icon-box"><span class="icon-facebook contact-icon"></span></div><a target="_blank" href="<%=school.facebook_url %>"><%= t('.facebook').titleize %></a>
+              <div class="contact-icon-box">
+                <span class="icon-facebook contact-icon"></span>
+              </div>
+              <a target="_blank" href="<%= prepend_http(school.facebook_url) %>"><%= t('.facebook') %></a>
             </div>
           <% end %>
           <% if school.cache_results.school_leader_email.present? %>
               <div class="contact-row">
-                <div class="contact-icon-box"><span class="icon-mail contact-icon"></span></div><a target="_blank" href="mailto:<%=school.cache_results.school_leader_email %>"><%= t('.school_leader_email').titleize %></a>
+                <div class="contact-icon-box"><span class="icon-mail contact-icon"></span></div><a target="_blank" href="mailto:<%=school.cache_results.school_leader_email %>"><%= t('.school_leader_email') %></a>
               </div>
           <% end %>
           <% if school.home_page_url.present? %>
             <div>
-              <div class="contact-icon-box"><span class="icon-globe contact-icon"></span></div><a target="_blank" href="<%= school.home_page_url %>"><%= t('.school_website').titleize %></a>
+              <div class="contact-icon-box">
+                <span class="icon-globe contact-icon"></span>
+              </div>
+              <a target="_blank" href="<%= prepend_http(school.home_page_url) %>"><%= t('.school_website') %></a>
             </div>
           <% end %>
           <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school) %>'>
@@ -73,9 +89,10 @@
       </div>
     </div>
     <% ['sm','md','lg'].each do |size| %>
-      <%= image_tag(@static_google_maps[size],
+      <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
         class: "static-map visible-#{size}",
-        alt: "Map of #{school.name} address."
+        alt: "Map of #{school.name} address.",
+        data: { src: static_google_maps[size]}
       )
       %>
     <% end %>

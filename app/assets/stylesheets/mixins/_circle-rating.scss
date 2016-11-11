@@ -1,5 +1,5 @@
-@mixin circle-rating($size, $font-size: $size*.62, $color: #FFFFFF) {
-  font-family: 'opensans-bold';
+@mixin circle-rating($size, $font-size: $size*.50, $color: #FFFFFF) {
+  font-family: 'robotoslab-bold';
   border-radius: 50%;
   height: $size;
   width: $size;
@@ -7,4 +7,10 @@
   font-size: $font-size;
   line-height: $size;
   color: $color;
+  display: inline-block;
+  vertical-align: middle;
+  span {
+    font-size: .4em;
+    opacity: 0.7;
+  }
 }

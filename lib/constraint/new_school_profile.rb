@@ -3,6 +3,7 @@ module Constraint
     NEW_PROFILE_KEY = 5
 
     def matches?(request)
+      return false if request.parameters[:lang] == 'es'
       school = school_for_request(request)
       if school.nil?
         return false

@@ -2,13 +2,15 @@
 <% header %>
 <div class="modal remodal js-gsModal join-and-login <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
   <div class="gs-modal-dialog modal-dialog">
-    <%= form_tag register_email_path, method: :post, remote: true,
-      id: 'signup-school-form',
-      'data-parsley-namespace'=>"data-parsley-" do %>
+    <%= form_tag register_email_path,
+                 method: :post,
+                 remote: true,
+                 id: 'signup-school-form',
+                 'data-parsley-namespace'=>"data-parsley-" do %>
       <%= token_tag form_authenticity_token %>
-      <button class="remodal-cancel close" aria-label="Close" data-remodal-action="cancel" style="background-color: #ffffff">
+      <span class="remodal-cancel close" aria-label="Close" data-remodal-action="cancel" style="background-color: #ffffff">
         <span>&times;</span>
-      </button>
+      </span>
       <div class="modal-body">
 
         <div class="title"><%= header %></div>
@@ -26,13 +28,14 @@
                 :email,
                 nil,
                 {
-                  id: "signup-email",
-                  placeholder: "#{t('.email_label')}",
-                  class: 'form-control js-signup-email parsley-error pam',
-                  data: { 'parsley-required' => "true",
-                          'parsley-type' => "email",
-                          'parsley-required-message' => "Please enter an email address.",
-                          'parsley-error-container' => ".js-signup-email-errors" }
+                    id: "signup-email",
+                    placeholder: "#{t('.email_label')}",
+                    class: 'js-signup-email pam',
+                    'data-parsley-required' => "true",
+                    'data-parsley-type' => "email",
+                    'data-parsley-trigger' => "change",
+                    'data-parsley-required-message' => "Please enter an email address.",
+                    'data-parsley-error-container' => ".js-signup-email-errors",
                 }
               ) %>
             <p class="js-signup-email-errors danger-color"></p>
@@ -46,7 +49,7 @@
             <p class="js-join-terms-errors help-block"></p>
           </div>
 
-          <button class="submit js-modal-signup-button modal-signup-button" data-disable-with="Signing up">
+          <button type="submit" class="submit js-modal-signup-button modal-signup-button" data-disable-with="Signing up">
             <%= t('.signup_button') %>
           </button>
         </div>

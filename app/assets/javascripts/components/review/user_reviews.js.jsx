@@ -14,8 +14,7 @@ class UserReviews extends React.Component {
       empty.push(<span className="icon-star empty-star" key={i}></span>);
     }
     return(
-      <span className="five-stars"
-            itemProp="ratingValue" content={numberFilled}>
+      <span className="five-stars">
         { filled }
         { empty }
       </span>
@@ -38,17 +37,14 @@ class UserReviews extends React.Component {
     var review = this.props.five_star_review;
     if(review !== undefined) {
       return(
-        <div className="five-star-review" key={review.id}
-             itemProp="review" itemScope itemType="http://schema.org/Review">
-          <meta itemProp="datePublished" content={review.date_published}/>
+        <div className="five-star-review" key={review.id}>
           <div className="header">
             { review.topic_label }
           </div>
-          <div className="answer"
-               itemProp="reviewRating" itemScope itemType="http://schema.org/Rating">
+          <div className="answer">
             { this.fiveStars(review.answer) }
           </div>
-          <div className="comment" itemProp="reviewBody">
+          <div className="comment">
             <ShortenText text={review.comment} length={200} key={review.text} />
           </div>
         </div>
@@ -109,6 +105,20 @@ class UserReviews extends React.Component {
     this.props.review_reported_callback(reviewId);
   }
 
+  userTypeAndDate() {
+    let userType = this.props.user_type_label;
+    let userTypeSentence = 'Submitted ';
+    if (userType) {
+      userTypeSentence += 'by a ' + userType.toLowerCase() + ' \u00B7 ';
+    }
+    return (
+        <div className="type-and-date">
+          { userTypeSentence }
+          { this.props.most_recent_date }
+        </div>
+    )
+  }
+
   render() {
     return (
       <div className="user-reviews-container">
@@ -120,9 +130,7 @@ class UserReviews extends React.Component {
           <div className="col-xs-12 col-sm-10 review-list-column">
             { this.fiveStarReview() }
             { this.topicalReviews() }
-            <div className="date">
-              { this.props.most_recent_date}
-            </div>
+            { this.userTypeAndDate() }
             { this.buttonBar(this.props.five_star_review) }
             { this.reportFiveStarReview() }
           </div>

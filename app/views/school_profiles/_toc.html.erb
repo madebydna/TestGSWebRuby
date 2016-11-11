@@ -2,30 +2,37 @@
 there is a partial for ratings called toc-entry-rating - need to figure out NR color.
 going to build a partial for badges.  it will use the name passed in to generate font accessor
 -->
+<% content = @school_profile.toc.content %>
+<% tooltips_info = {} %>
+<% tooltips_info['ACADEMICS'] = '.info_texts.academics_html'  %>
+<% tooltips_info['EQUITY'] = '.info_texts.equity_html'  %>
+<% tooltips_info['ENVIRONMENT'] = '.info_texts.environment_html'  %>
+
 <div id="toc">
   <div class="toc-container-box">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="row grid-divider">
-          <div class="col-xs-12 col-sm-4">
-            <%= render 'toc_entry_rating', rating: @school_profile.test_scores.rating, title: 'Test Scores' %>
-            <%= render 'toc_entry_rating', rating: '7', title: 'Equity' %>
-            <%= render 'toc_entry_rating', rating: @school_profile.college_readiness.rating, title: 'College Readiness' %>
+      <% content.each do |section| %>
+        <% section.each do |column,data| %>
+          <div class="col-xs-12 col-sm-4"> <!-- last one (for environment) was also hidden-sm-down -->
+            <div class="toc-section-title">
+              <%= t(".#{column.to_s.upcase}") %>&nbsp;<a data-remodal-target="modal_info_box"
+                                     data-content-type="info_box"
+                                     data-content-html="<%= t(tooltips_info[column.to_s.upcase]) %>"
+                                     class="gs-tipso info-circle"
+                                     href="javascript:void(0)"><span class="icon-hint"></span>
+            </a>
+
+            </div>
+            <% data.each do |hash| %>
+              <% unless hash[:rating].nil? %>
+                <%= render 'toc_entry_rating', rating: hash[:rating], title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
+              <% else %>
+                <%= render 'toc_entry_badge', icon: nil, title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
+              <% end %>
+            <% end %>
           </div>
-          <div class="col-xs-12 col-sm-4">
-            <%= render 'toc_entry_rating', rating: @school_profile.equity.rating_low_income.to_f.round,
-                       title: 'Low Income Students' %>
-            <%= render 'toc_entry_badge', icon: 'shield', title: 'Race/Ethnicity' %>
-            <%= render 'toc_entry_rating', rating: '4', title: 'Demographics' %>
-          </div>
-          <div class="col-xs-12 col-sm-4 hidden-sm-down">
-            <%= render 'toc_entry_badge', icon: 'shield', title: 'Health and Safety' %>
-            <%= render 'toc_entry_rating', rating: '2', title: 'School Resources' %>
-            <%= render 'toc_entry_rating', rating: '3', title: 'Sports' %>
-            <%= render 'toc_entry_badge', icon: 'location', title: 'Neighborhood' %>
-          </div>
-        </div>
-      </div>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </div>

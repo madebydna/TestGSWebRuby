@@ -12,6 +12,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.cookie.js
+//= require resources/jquery.unveil.js
 //= require lodash
 //= require ./util/util
 //= require ./util/uri
+//= require ./util/dependency.js

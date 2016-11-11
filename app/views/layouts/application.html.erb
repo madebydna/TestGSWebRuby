@@ -36,22 +36,9 @@
   <% end %>
   <%= yield :head %>
 
-  <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "GreatSchools",
-        "url": "http://www.greatschools.org/",
-        "logo": "http://www.greatschools.org/images/greatschools-logo.png",
-        "sameAs": [
-          "https://www.facebook.com/greatschools",
-          "https://www.twitter.com/greatschools",
-          "https://pinterest.com/greatschools/",
-          "https://www.youtube.com/GreatSchools",
-          "https://www.instagram.com/greatschools/"
-        ]
-      }
-    </script>
+  <% json_ld_hash.each do |hash| %>
+    <script type="application/ld+json"><%= raw hash.to_json %></script>
+  <% end %>
 </head>
 <body class="open-sans">
 
@@ -77,5 +64,6 @@
 <%= stylesheet_link_tag "post_load", :async => true %>
 <%= javascript_include_tag "post_load", :async => true %>
 <%= yield :javascript_includes %>
+<div class="remodal modal modal_info_box" data-remodal-id="modal_info_box">Add Spinny</div>
 </body>
 </html>

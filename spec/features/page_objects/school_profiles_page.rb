@@ -12,8 +12,9 @@ class SchoolProfilesPage < SitePrism::Page
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
   class RatingContainer < SitePrism::Section
-    element :title, '.rating-container__title'
+    element :title, '.module-header .title'
     element :rating, '.circle-rating--medium'
+    element :source_link, 'a', text: 'see notes'
     def has_rating?(r)
       rating.text == r
     end
@@ -54,7 +55,7 @@ class SchoolProfilesPage < SitePrism::Page
     end
   end
 
-  class StudentDiversity < RatingContainer
+  class Students < RatingContainer
     element :ethnicity_graph, "#ethnicity-graph"
     element :subgroup_container, '.subgroups'
     elements :subgroup_data, ".subgroup"
@@ -73,14 +74,15 @@ class SchoolProfilesPage < SitePrism::Page
 
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
-  section :test_scores, RatingContainer, '.rating-container--test-scores'
+  element :sign_in, '.account_nav_out > a'
+  section :test_scores, RatingContainer, '.rs-test-scores'
   section :college_readiness, RatingContainer, '.rs-college-readiness'
-  section :student_diversity, StudentDiversity, '.student-diversity-container'
+  section :student_diversity, Students, '.students-container'
   section :review_summary, ReviewSummary, '.rs-review-summary'
   section :review_form, ReviewForm, '.review-form'
   section :review_list, ReviewList, '.review-list'
   section :equity, '.rs-equity' do
-
+    element :source_link, 'a', text: 'see notes'
   end
 
   element :five_star_review_comment, ".five-star-review .comment"

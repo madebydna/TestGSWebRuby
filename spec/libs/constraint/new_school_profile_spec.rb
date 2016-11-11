@@ -52,7 +52,15 @@ describe Constraint::NewSchoolProfile do
       expect(Constraint::NewSchoolProfile.new.matches?(new_profile_school_request))
         .to eq(true)
     end
+
+    it 'should return false for Spanish requests' do
+      new_profile_school_request = double
+      new_profile_school_request.stub(:parameters) do
+        {lang: 'es', state: 'california', schoolId: '1'}
+      end
+      create(:school_with_new_profile, state: 'CA', id: 1)
+
+      expect(Constraint::NewSchoolProfile.new.matches?(new_profile_school_request)).to eq(false)
+    end
   end
 end
-
-

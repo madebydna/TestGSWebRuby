@@ -18,7 +18,7 @@ module SchoolProfiles
     end
 
     def gs_rating
-      decorated_school.great_schools_rating
+      ((1..10).to_a & [decorated_school.great_schools_rating]).first
     end
 
     def students_enrolled
@@ -80,9 +80,10 @@ module SchoolProfiles
       decorated_school.characteristics
     end
 
-    def subject_scores_by_latest_year(data_type_id:, breakdown: 'All', grades: 'All', level_codes: 'e,m,h')
+    def subject_scores_by_latest_year(data_type_id:, breakdown: 'All', grades: 'All', level_codes: 'e,m,h', subjects: nil)
       subject_hash = decorated_school.test_scores.seek(data_type_id.to_s, breakdown, 'grades', grades, 'level_code', level_codes)
-      return OpenStruct.new unless subject_hash.present?
+      return [] unless subject_hash.present?
+      subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
       subject_hash.inject([]) do |scores_array, (subject, year_hash)|
         scores_array << OpenStruct.new({}.tap do |scores_hash|
           latest_year = year_hash.keys.max_by { |year| year.to_i }

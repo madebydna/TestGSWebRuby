@@ -25,7 +25,7 @@ describe "Signed in and verified user" do
       visit school_path(school)
       within review_list do
         expect(page).to have_css ".five-star-review .comment", text: user_old_comment
-        expect(page).to have_css ".user-reviews-container .date", text: "January 01, 2012"
+        expect(page).to have_css ".user-reviews-container .type-and-date", text: "January 01, 2012"
       end
     end
   end

@@ -1,8 +1,9 @@
 $(function() {
 
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
-  GS.graphs.ethnicityPieChart.generateEthnicityChart();
+  GS.graphs.ethnicityPieChart.generateEthnicityChart(gon.ethnicity);
   GS.graphs.subgroupCharts.generateSubgroupPieCharts();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
@@ -25,6 +26,18 @@ $(function() {
   else {
     GS.search.autocomplete.searchAutocomplete.init();
   }
+
+  $('.js-followThisSchool').on('click', function () {
+    var state = GS.stateAbbreviationFromUrl();
+    var schoolId = GS.schoolIdFromUrl();
+    GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+  });
+
+  try {
+    $('.neighborhood img[data-src]').unveil(300, function() {
+      $(this).width('100%')
+    });
+  } catch (e) {}
 
   (function() {
     /**

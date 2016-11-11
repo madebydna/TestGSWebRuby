@@ -4,11 +4,7 @@ $border-color: #dbe6eb;
 .rating-container,
 %rating-container {
   // padding: 0 0 20px 0;
-}
-
-.rating-container + .rating-container {
-  // border-top: 1px solid $border-color;
-  // padding-top: 20px;
+  margin-bottom: $spacing-extra-large;
 }
 
 .rating-container__title {
@@ -46,8 +42,3 @@ $border-color: #dbe6eb;
 .rating-container__more-items .show-more--open {
   border-top: 1px solid $border-color;
 }
-
-.rating-container--test-scores {
-  @extend %rating-container;
-}
-

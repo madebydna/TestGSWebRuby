@@ -1,26 +1,51 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
+GS.tooltip = GS.tooltip || {};
+GS.tooltip.initialize = function() {
+  if(!('ontouchstart' in window)) {
+    $('.gs-tipso').tipso({
+      width: 300,
+      onBeforeShow: function (ele, tipso) {
+        // disable modal
+        var temp = ele.data('remodal-target');
+        ele.attr('data-remodal-target-disabled', temp);
+        ele.removeAttr('data-remodal-target');
+
+        // update content
+        var content = GS.content.contentManager(ele);
+        $('.gs-tipso').tipso('update', 'content', content);
+      },
+      tooltipHover: true,
+      onHide: function (ele, tipso) {
+        // enable modal
+        var temp = ele.data('remodal-target-disabled');
+        ele.attr('data-remodal-target', temp);
+        ele.removeAttr('data-remodal-target-disabled');
+      }
+    });
+  }
+};
 
 $(function() {
-  $('.tooltip').tipso({
-    onBeforeShow: function(ele, tipso) {
-      // disable modal
-      var temp =  ele.data('remodal-target');
-      ele.attr('data-remodal-target-disabled', temp);
-      ele.removeAttr('data-remodal-target');
-
-      // update content
-      var content = GS.content.contentManager(ele);
-      $('.tooltip').tipso('update', 'content', content);
-    },
-    onHide: function(ele, tipso) {
-      // enable modal
-      var temp =  ele.data('remodal-target-disabled');
-      ele.attr('data-remodal-target', temp);
-      ele.removeAttr('data-remodal-target-disabled');
-    }
-  });
+  GS.tooltip.initialize();
 });
 
+
+// function testPointerFunction(e){
+//   document.getElementById( "o" ).innerHTML = "that was a " +
+//       e.pointerType + " " + e.type + " on a "+ e.target.nodeName;
+// }
+//
+// var classname = document.getElementsByClassName("gs-tipso");
+// for (var i = 0; i < classname.length; i++) {
+//   classname[i].addEventListener('pointerover', testPointerFunction, false);
+// }
+
+
+// document.getElementsByClassName( "gs-tipso" ).addEventListener( "pointerenter", function( e ) {
+//   console.log("e.pointerType"+e.pointerType);
+//   document.getElementById( "o" ).innerHTML = "that was a " +
+//       e.pointerType + " " + e.type + " on a "+ e.target.nodeName;
+// } );
 
 // examples
 

@@ -23,12 +23,16 @@
   .equity-section {
     background-color: #f6f9fa;
     padding: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
   }
   .title-bar {
     padding-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 18px;
+    font-family: opensans-semibold;
+
+    @include media-breakpoint-up(sm) {
+      font-size: 20px;
+    }
 
     .rating-layout {
       display: inline-block;
@@ -49,6 +53,8 @@
       text-decoration: none;
       background-color: #F0FAFB;
       color: #28292a;
+      white-space: nowrap;
+      overflow: hidden;
 
       &:not(:first-child) {
         margin-left: -1px;
@@ -93,26 +99,7 @@
     }
   }
 
-
-
-
-
-  //label .fa {
-  //  font-size: 1.3em;
-  //  margin: 0 0.4em 0 0;
-  //}
-
-
-  /*Content Animation*/
-  //@keyframes fadeInScale {
-  //  0% {
-  //    transform: scale(0.9);
-  //    opacity: 0;
-  //  }
-  //
-  //  100% {
-  //    transform: scale(1);
-  //    opacity: 1;
-  //  }
-  //}
+  .right_content {
+    padding: 10px 20px;
+  }
 }

@@ -1,0 +1,29 @@
+.school-profile {
+  .content > div {
+    margin-top: 30px;
+  }
+
+  .nearby-schools {
+    position: relative;
+    margin: auto;
+    padding: 30px 15px;
+    max-width: 1170px;
+  }
+
+  .source-link {
+    text-align: center;
+    padding-top: 5px;
+    @include media-breakpoint-up(sm) {
+      text-align: left;
+    }
+  }
+  @include media-breakpoint-down(xs) {
+    .anchor-mobile-offset {
+      display: block;
+      height: 50px; /*same height as header*/
+      margin-top: -50px; /*same height as header*/
+      visibility: hidden;
+    }
+  }
+}
+

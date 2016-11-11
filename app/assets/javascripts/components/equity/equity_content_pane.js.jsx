@@ -11,7 +11,9 @@ class EquityContentPane extends React.Component {
     return(
       <div className="row">
         <div className="col-xs-12 col-sm-6">{this.props.graph}</div>
-        <div className="col-xs-12 col-sm-6">{this.props.text}</div>
+        <div className="col-xs-12 col-sm-6">
+          <div className="right_content">{this.props.text}</div>
+        </div>
       </div>
     )
   }
@@ -19,5 +21,5 @@ class EquityContentPane extends React.Component {
 
 EquityContentPane.propTypes = {
   graph: React.PropTypes.object.isRequired,
-  text: React.PropTypes.string.isRequired
-}
+  text: React.PropTypes.element.isRequired
+};

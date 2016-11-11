@@ -1,6 +1,6 @@
 module SchoolProfiles
   class RatingScoreItem
-    attr_accessor :label, :score, :state_average, :visualization
+    attr_accessor :label, :score, :state_average, :visualization, :range, :info_text
 
     def self.from_hash(hash)
       self.new.tap do |obj|
@@ -20,6 +20,7 @@ module SchoolProfiles
 
     def initialize
       @visualization = :single_bar_viz
+      @range = (0..100)
     end
 
     def formatted_score

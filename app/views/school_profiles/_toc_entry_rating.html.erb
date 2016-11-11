@@ -1,19 +1,23 @@
 <!-- need to pass in a rating and title -->
 <% rating %>
 <% title %>
+<% anchor %>
 
 <!-- this is to support the no NR currently -->
 <% if rating == 'NR' || rating == 'nr' %>
   <% rating = '' %>
 <% end %>
 
-<!-- this needs to be done as a helper function -->
-<% title_link = title.gsub(" ", "_") %>
-
 <div class="clearfix toc-entry">
-  <span class="gs-link">
-    <a href="#<%= title_link %>">
-      <span class="gs-rating rating_<%= rating %>"><%= rating %></span><%= title %>
-    </a>
-  </span>
+  <a href="#<%= anchor %>"
+     class="js-gaClick"
+     data-ga-click-category='Profile'
+     data-ga-click-action='TOC Clicked'
+     data-ga-click-label='<%= title %>'>
+    <span><%= title %></span>
+    <span class="icon-chevron-right"></span>
+    <span class="gs-rating circle-rating--<%= rating %> circle-rating--xtra-small">
+      <%= rating %><span class="denominator">/10</span>
+    </span>
+  </a>
 </div>

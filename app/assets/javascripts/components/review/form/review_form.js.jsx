@@ -66,6 +66,7 @@ class ReviewForm extends React.Component {
   }
 
   fiveStarQuestionSelect(value, id) {
+    analyticsEvent('Profile', 'Reviews Star Rated');
     this.showQuestions();
     this.responseSelected(value, id);
   }

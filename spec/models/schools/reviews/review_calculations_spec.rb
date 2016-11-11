@@ -191,17 +191,29 @@ describe ReviewCalculations do
   end
 
   describe '#topical_review_summary' do
+    let (:teacher_effectiveness_1) { build(:teacher_effectiveness_review, answer_value: 'Neutral') }
+    let (:teacher_effectiveness_2) { build(:teacher_effectiveness_review, answer_value: 'Disagree') }
+    let (:homework_1) { build(:homework_review, answer_value: 'Strongly disagree') }
+    let (:homework_bad) { build(:homework_review, answer_value: nil) }
+
     it 'should return the correct average text response and the total number of responses per topic' do
       result_hash = {
           'Teachers' => {:count => 2, :average => 'Neutral'},
           'Homework' => {:count => 1, :average => 'Strongly disagree'}
       }
-      topic1review1 = build(:teacher_effectiveness_review, answer_value: 'Neutral')
-      topic2review1 = build(:homework_review, answer_value: 'Strongly disagree')
-      topic1review2 = build(:teacher_effectiveness_review, answer_value: 'Disagree')
-      subject << topic1review1
-      subject << topic1review2
-      subject << topic2review1
+      subject << teacher_effectiveness_1
+      subject << teacher_effectiveness_2
+      subject << homework_1
+      expect(subject.topical_review_summary).to eq(result_hash)
+    end
+
+    it 'should handle reviews with no valid answers' do
+      result_hash = {
+          'Teachers' => {:count => 2, :average => 'Neutral'}
+      }
+      subject << teacher_effectiveness_1
+      subject << teacher_effectiveness_2
+      subject << homework_bad
       expect(subject.topical_review_summary).to eq(result_hash)
     end
   end

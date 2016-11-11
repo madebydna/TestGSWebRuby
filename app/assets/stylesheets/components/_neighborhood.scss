@@ -63,7 +63,6 @@
   }
 
     .static-map {
-      width: 100%;
       @include media-breakpoint-down(sm) {
         display: none;
       }
@@ -98,6 +97,9 @@
             padding: 0 30px;
             float: none;
           }
+        }
+        .contact-address.small-text {
+          font-size: 14px;
         }
         .contact-item {
           font-size: 14px;

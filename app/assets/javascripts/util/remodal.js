@@ -4,5 +4,7 @@
 $('body').on('click', '[data-remodal-target]',function(){
   var temp = $(this).data('remodal-target');
   var modal_to_get_content = $('[data-remodal-id='+temp+']');
-  modal_to_get_content.html(GS.content.contentManager($(this)));
+  var content = '<button data-remodal-action="close" class="remodal-close"></button>';
+  content += '<div class="remodal-content">'+GS.content.contentManager($(this))+'</div>';
+  modal_to_get_content.html(content);
 });

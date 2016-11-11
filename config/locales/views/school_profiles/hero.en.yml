@@ -5,9 +5,11 @@ en:
         one: Grade
         other: Grades
       greatschools_rating: GreatSchools Rating
-      more_contact: More Contact
+      more_contact: More contact
       reviews: Reviews
       school_type: Type
+      school_website: School website
       students_enrolled: Students
+      gs_rating_info_text_html: "This rating reflects English, math, and science scores on annual standardized state tests given to 10th or 11th graders compared with scores statewide. <div class='source-link'>Source: <a href='/gk/ca-high-schools/#GS-rating' target='_blank'>see notes</a></div>"
     
 

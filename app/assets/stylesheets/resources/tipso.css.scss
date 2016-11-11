@@ -5,21 +5,22 @@
 	box-sizing:         border-box;
 }
 .tipso_bubble {
-    position: absolute;
-	text-align: center;
-	border-radius: 6px;
-	z-index: 9999;
+  position: absolute;
+  text-align: center;
+  border-radius: 3px;
+  z-index: 9999;
+  box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
 }
 .tipso_style{
-	cursor: help;
-	border-bottom: 1px dotted;
+	cursor: pointer;
+	//border-bottom: 1px dotted;
 }
 .tipso_title {
 	border-radius: 6px 6px 0 0;
 }
 .tipso_content {
   	word-wrap: break-word;
-	padding: 0.5em;
+	padding: 20px;
 }
 
 /* Tipso Bubble size classes - Similar to Foundation's syntax*/

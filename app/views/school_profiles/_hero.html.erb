@@ -3,18 +3,23 @@
 <div id="hero">
   <div class="container">
     <div>
-      <h1 class="school-name" itemprop="name"><%= hero.school_name %></h1>
+      <h1 class="school-name"><%= hero.school_name %></h1>
     </div>
 
     <div class="school-contact">
       <% if hero.has_school_address? %>
         <div class="school-contact__item school-contact__address">
-          <%= render 'icon_and_content', icon: :location, content: hero.marked_up_address %>
+          <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
         </div>
       <% end %>
       <% if hero.has_district? %>
         <div class="school-contact__item school-contact__district-name">
-          <%= hero.district_name %>
+          <%= link_to(hero.district_name, city_district_path(district_params_from_district(hero.district)),
+                      :class => 'js-gaClick',
+                      :data => { 'ga-click-category'=>'Profile',
+                                 'ga-click-action'=>'Hero links',
+                                 'ga-click-label'=>'District'}
+              ) %>
         </div>
       <% end %>
       <% if hero.has_school_phone? %>
@@ -22,40 +27,58 @@
           <% content = capture do %>
             <%= hero.school_phone %>
           <% end %>
-          <a href="tel:<%= hero.school_phone %>">
+          <a href="tel:<%= hero.school_phone %>"
+             class="js-gaClick"
+             data-ga-click-category='Profile'
+             data-ga-click-action='Hero links'
+             data-ga-click-label='Phone'>
             <%= render 'icon_and_content', icon: :phone, content: content %>
           </a>
         </div>
       <% end %>
       <% if hero.has_school_home_page_url? %>
         <div class="school-contact__item school-contact__home-page-url">
-          <% content = capture do %>
-            <%= hero.school_home_page_url %>
-          <% end %>
-          <%= link_to(hero.school_home_page_url, :target => '_blank') do %>
+          <% content = t('.school_website') %>
+          <%= link_to(prepend_http(hero.school_home_page_url),
+                      :target => '_blank',
+                      :class => 'js-gaClick',
+                      :data => { 'ga-click-category'=>'Profile',
+                                 'ga-click-action'=>'Hero links',
+                                 'ga-click-label'=>'Website'}
+              ) do %>
             <% render 'icon_and_content', icon: :link, content: content %>
           <% end %>
         </div>
       <% end %>
       <div class="school-contact__item school-contact__more">
-        <%= t('.more_contact') %>
+        <%= link_to(t('.more_contact'), '#Neighborhood',
+                    :class => 'js-gaClick',
+                    :data => { 'ga-click-category'=>'Profile',
+                               'ga-click-action'=>'Hero links',
+                               'ga-click-label'=>'More Contact'}
+            ) %>
       </div>
     </div>
 
     <div class="school-info">
-      <div class="school-info__item school-info__gs-rating">
-        <div class="gs-rating-with-label">
-          <div class="gs-rating-with-label__rating">
-            <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
-              <%= hero.gs_rating %>
+      <% if hero.gs_rating %>
+        <div class="school-info__item school-info__gs-rating">
+          <div class="gs-rating-with-label">
+            <div class="gs-rating-with-label__rating">
+              <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
+                <%= hero.gs_rating %><span class="rating-circle-small">/10</span>
+              </div>
+            </div>
+
+            <div class="gs-rating-with-label__label">
+              <%= t('.greatschools_rating') %>
+              <%= render 'info_circle', content: t('.gs_rating_info_text_html') %>
             </div>
           </div>
-          <div class="gs-rating-with-label__label">
-            <%= t('.greatschools_rating') %>
-          </div>
         </div>
-      </div>
-      <div class="school-info__item school-info__five-star-rating">
+      <% end %>
+      <div class="school-info__item school-info__five-star-rating"
+           onclick="analyticsEvent('Profile', 'Review CTA Clicked','Hero stars'); window.location.href='#Reviews';">
         <div class="label"><%= t('.reviews') %></div>
         <%= render 'five_star_rating',
           rating: hero.five_star_rating,

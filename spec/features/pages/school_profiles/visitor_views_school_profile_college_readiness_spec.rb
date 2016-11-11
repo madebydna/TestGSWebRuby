@@ -17,7 +17,13 @@ describe "Visitor" do
     visit school_path(school)
 
     expect(page_object).to have_college_readiness
-    expect(page_object.college_readiness.title).to have_text('College Prep')
+    expect(page_object.college_readiness.title).to have_text('College readiness')
+  end
+
+  scenario "sees anchor for data source" do
+    school = create(:school_with_new_profile, id: 1)
+    visit school_path(school)
+    expect(page_object.college_readiness).to have_source_link
   end
 
   scenario "sees graduation rate" do

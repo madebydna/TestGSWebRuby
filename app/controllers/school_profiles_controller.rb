@@ -2,26 +2,49 @@ class SchoolProfilesController < ApplicationController
   protect_from_forgery
   before_filter :require_school
   before_action :redirect_to_canonical_url
+  before_action :add_dependencies_to_gon
+  before_action :set_last_school_visited
 
   layout "application"
+  PAGE_NAME = "GS:SchoolProfile:SinglePage"
 
   def show
     @school = school
+    set_last_school_visited
+    add_profile_structured_markup
     @canonical_url = school_url(@school)
     set_seo_meta_tags
+    build_gon_object
     set_hreflang
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
     @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
-    school_gon_obj(@school)
-    add_gon_links
-    add_gon_ethnicity
-    add_gon_subgroup
-    add_gon_gender
-    @static_google_maps = static_google_maps
   end
 
   private
+
+  def add_profile_structured_markup
+    add_json_ld(StructuredMarkup.school_hash(school, school.reviews_with_calculations))
+    add_json_ld(StructuredMarkup.breadcrumbs_hash(school))
+    add_json_ld({
+      "@context" => "http://schema.org",
+      "@type" => "ProfilePage",
+      "dateModified" => l(school_profile.last_modified_date, format: '%Y-%m-%d'),
+      "description" => SchoolProfileDecorator.decorate(school).description
+    })
+  end
+
+  def page_view_metadata
+    @page_view_metadata ||= (
+      school_gs_rating = school_cache_data_reader.gs_rating.to_s
+      number_of_reviews_with_comments = school.reviews.having_comments.count
+      SchoolProfiles::PageViewMetadata.new(@school,
+                                           PAGE_NAME,
+                                           school_gs_rating,
+                                           number_of_reviews_with_comments)
+        .hash
+    )
+  end
 
   def school
     return @_school if defined?(@_school)
@@ -36,10 +59,12 @@ class SchoolProfilesController < ApplicationController
         sp.college_readiness = college_readiness
         sp.reviews = reviews
         sp.review_questions = review_questions
-        sp.student_diversity = student_diversity
+        sp.students = students
         sp.nearby_schools = nearby_schools
         sp.last_modified_date = last_modified_date
+        sp.neighborhood = neighborhood
         sp.equity = equity
+        sp.toc = toc
       end
     )
   end
@@ -54,6 +79,8 @@ class SchoolProfilesController < ApplicationController
   def require_school
     if school.blank?
       render "error/school_not_found", layout: "error", status: 404
+    elsif !school.active?
+      redirect_to city_path(city_params(school.state_name, school.city)), status: :moved_permanently
     end
   end
 
@@ -69,6 +96,10 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
+  def toc
+    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students)
+  end
+
   def test_scores
     SchoolProfiles::TestScores.new(
       school,
@@ -82,8 +113,8 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
-  def student_diversity
-    SchoolProfiles::StudentDiversity.new(
+  def students
+    SchoolProfiles::Students.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
@@ -102,6 +133,10 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::ReviewQuestions.new(school)
   end
 
+  def neighborhood
+    SchoolProfiles::Neighborhood.new(school, school_cache_data_reader)
+  end
+
   def nearby_schools
     SchoolProfiles::NearbySchools.new(school_cache_data_reader: school_cache_data_reader)
   end
@@ -116,34 +151,58 @@ class SchoolProfilesController < ApplicationController
     }
   end
 
-  def school_gon_obj(school)
+  def build_gon_object
+    add_gon_school_obj
+    add_gon_links
+    add_gon_ethnicity
+    add_gon_subgroup
+    add_gon_gender
+    data_layer_through_gon
+    add_gon_ad_set_targeting
+  end
+
+  def add_gon_school_obj
     if school.present?
       gon.school = {
-          :id => school.id,
-          :state => school.state
+        :id => school.id,
+        :state => school.state
       }
     end
   end
 
+  def add_gon_links
+    gon.links = {
+      terms_of_use: terms_of_use_path,
+      school_review_guidelines: school_review_guidelines_path,
+      session: api_session_path,
+      school_user_digest: api_school_user_digest_path
+    }
+  end
+
   def add_gon_ethnicity
-    gon.ethnicity = student_diversity.ethnicity_data
+    gon.ethnicity = students.ethnicity_data
   end
 
   def add_gon_subgroup
-    gon.subgroup = student_diversity.subgroups_data
+    gon.subgroup = students.subgroups_data
   end
 
   def add_gon_gender
-    gon.gender = student_diversity.gender_data
+    gon.gender = students.gender_data
   end
 
-  def add_gon_links
-    gon.links = {
-        terms_of_use: terms_of_use_path,
-        school_review_guidelines: school_review_guidelines_path,
-        session: api_session_path,
-        school_user_digest: api_school_user_digest_path
-    }
+  def data_layer_through_gon
+    data_layer_gon_hash.merge!(page_view_metadata)
+  end
+
+  def add_gon_ad_set_targeting
+    if school.show_ads
+      # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
+      # @school.city.delete(' ').slice(0,10)
+      page_view_metadata.each do |key, value|
+        ad_targeting_gon_hash[key] = value
+      end
+    end
   end
 
   def set_seo_meta_tags
@@ -160,7 +219,7 @@ class SchoolProfilesController < ApplicationController
     else
       return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
     end
-    return_title_str << ' - School overview'
+    return_title_str << ' | GreatSchools'
   end
 
   def seo_meta_tags_description
@@ -230,39 +289,8 @@ class SchoolProfilesController < ApplicationController
     [review_date, school_date].compact.max
   end
 
-  def static_google_maps
-    @_static_google_maps ||= begin
-      sizes = {
-         # 'xs'     => [319, 150],
-          'sm'     => [767, 450],
-          'md'     => [991, 450],
-          'lg' => [1264, 450]
-      }
-
-      google_apis_path = GoogleSignedImages::STATIC_MAP_URL
-      address = GoogleSignedImages.google_formatted_street_address(@school)
-      school_rating = nil #@school.gs_rating
-      #school_rating = school_cache_data_reader.gs_rating
-      if school_rating && (1..10).cover?(school_rating.to_i)
-        map_pin_url = view_context.image_url("icons/google_map_pins/map_icon_#{school_rating}.png")
-        icon_param = "icon:#{map_pin_url}|"
-      else
-        icon_param = ''
-      end
-
-      sizes.inject({}) do |sized_maps, (label, size)|
-        sized_maps[label] = GoogleSignedImages.sign_url(
-            "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{icon_param}#{address}&sensor=false"
-        )
-        sized = sized_maps
-        sized
-      end
-      # sizes.each_with_object({}) do |sized_maps, (label, size)|
-      #   sized_maps[label] = GoogleSignedImages.sign_url(
-      #       "#{google_apis_path}?size=#{size[0]}x#{size[1]}&center=#{address}&markers=#{icon_param}#{address}&sensor=false"
-      #   )
-      #   sized_maps
-      # end
-    end
+  def add_dependencies_to_gon
+    gon.dependencies ||= {}
+    gon.dependencies[:highcharts] = ActionController::Base.helpers.asset_path('highcharts.js')
   end
 end

@@ -55,12 +55,20 @@ class BarGraph extends React.Component {
       plotOptions: {
           bar: {
             dataLabels: {
-              enabled: true
+              enabled: true,
+              shadow: false,
+              style: {
+                textShadow: '0px'
+              }
             }
           },
           column: {
             dataLabels: {
-              enabled: true
+              enabled: true,
+              shadow: false,
+              style: {
+                textShadow: '0px'
+              }
             }
           }
       },
@@ -81,7 +89,7 @@ class BarGraph extends React.Component {
     if(window.Highcharts) {
       callback();
     } else {
-      $.cachedScript("https://code.highcharts.com/highcharts.js").done(callback);
+      GS.dependency.getScript(gon.dependencies['highcharts']).done(callback);
     }
   }
 

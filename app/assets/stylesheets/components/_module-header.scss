@@ -1,0 +1,13 @@
+.module-header {
+  .title {
+    font-family: opensans-semibold;
+    font-size: 18px;
+    margin-left: $spacing-medium;
+    @include media-breakpoint-up(sm) {
+      font-size: 20px;
+    }
+  }
+  .info-circle {
+    vertical-align: text-top;
+  }
+}

@@ -1,42 +1,30 @@
 <% college_readiness %>
 <% title = t('.title') %>
 <% rating = college_readiness.rating %>
+<% info_text = college_readiness.info_text  %>
 <% data_values = college_readiness.data_values || [] %>
 <% initial_size = 3 %>
 
-<a name="College_Prep"></a>
 <div class="rating-container rs-college-readiness">
-  <div class="row">
-    <div class="col-xs-12 col-lg-3">
-      <div class="rating-container__title">
-        <%= title %>
-      </div>
-    </div>
-    <div class="col-xs-12 col-lg-9">
-      <% unless rating.nil? %>
-        <div class="rating-container__rating">
-          <div class="circle-rating-with-label">
-            <div class="circle-rating-with-label__circle">
-              <div class="circle-rating--<%= rating %> circle-rating--medium">
-                <%= rating %>
-              </div>
-            </div>
-            <div class="circle-rating-with-label__label
-              circle-rating-with-label__label--<%= rating %>">
-              <%= college_readiness.rating_label  %>
-            </div>
-          </div>
-        </div>
-      <% end %>
-      <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
-
-      <% if data_values.size > initial_size %>
-        <div class="rating-container__more-items">
-          <%= render layout:'drawer' do %>
-            <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+  <a class="anchor-mobile-offset" name="College_readiness"></a>
+  <div class="rating-container__rating">
+    <%= render "module_header",
+      circle_color_modifier: rating,
+      circle_content: rating,
+      title: title,
+      info_text: info_text
+    %>
   </div>
+
+  <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+
+  <% if data_values.size > initial_size %>
+    <div class="rating-container__more-items">
+      <%= render layout:'drawer' do %>
+        <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="source-link"><%= t('.source') %>: <a href="/gk/ca-high-schools/#College-readiness" target="_blank"><%= t('.see notes') %></a></div>
 </div>
