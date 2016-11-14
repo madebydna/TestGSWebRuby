@@ -2,7 +2,9 @@ module SchoolProfiles
   class Neighborhood
     include ActionView::Helpers::AssetUrlHelper
 
-    MAX_CHARS_LENGTH = 38
+    MAX_CHARS_LENGTH = 37
+    MIN_LONG_ADDRESS_CHAR_COUNT = 22
+
     MAP_SIZES = {
       "sm" => [767, 450],
       "md" => [991, 450],
@@ -24,10 +26,16 @@ module SchoolProfiles
     end
 
     def school_address_css_class
-      street_char_length = school.street.length
       css_class = ""
-      css_class = " small-text" if street_char_length > MAX_CHARS_LENGTH
+      css_class = " small-text" if long_address?
       css_class
+    end
+
+    def long_address?
+      street_char_length = school.street.length
+      school_city_state_char_length = school_city_state_zip.length
+      street_char_length > MIN_LONG_ADDRESS_CHAR_COUNT ||
+        school_city_state_char_length > MIN_LONG_ADDRESS_CHAR_COUNT
     end
 
     def static_google_maps
