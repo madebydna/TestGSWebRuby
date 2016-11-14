@@ -3,7 +3,6 @@ class SchoolProfilesController < ApplicationController
   before_filter :require_school
   before_action :redirect_to_canonical_url
   before_action :add_dependencies_to_gon
-  before_action :set_last_school_visited
 
   layout "application"
   PAGE_NAME = "GS:SchoolProfile:SinglePage"
