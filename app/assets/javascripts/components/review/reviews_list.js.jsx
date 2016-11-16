@@ -1,11 +1,19 @@
 class ReviewsList extends React.Component {
+
   constructor(props) {
     super(props);
+    this.REVIEW_CHUNK_SIZE = 5;
     var currentUserReportedReviews = [];
+
     // TODO: This needs to be hooked up somewhere. Maybe from props?
-    this.state = {currentUserReportedReviews: currentUserReportedReviews};
+    this.state = {
+      currentUserReportedReviews: currentUserReportedReviews,
+      pageNumber: 1
+    };
     this.reviewReportedCallback = this.reviewReportedCallback.bind(this);
     this.renderReviewSubmitMessage = this.renderReviewSubmitMessage.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleCloseAllClick = this.handleCloseAllClick.bind(this);
   }
 
   renderReviewSubmitMessage() {
@@ -22,13 +30,25 @@ class ReviewsList extends React.Component {
      }
   }
 
-  initialReviews() {
-    return this.props.reviews.slice(0,3).map(this.renderOneUsersReviews.bind(this));
+  displayReviews() {
+    return this.props.reviews.slice(0,this.countToDisplay()).map(this.renderOneUsersReviews.bind(this));
   }
 
-  drawerReviews() {
-    return this.props.reviews.slice(3).map(this.renderOneUsersReviews.bind(this));
+  countToDisplay(){
+    let last_to_show = this.currentMaxValue();
+    if(this.lastPage()) last_to_show = this.props.reviews.length;
+    return last_to_show;
   }
+
+  currentMaxValue() {
+    return (this.REVIEW_CHUNK_SIZE * this.state.pageNumber - 1);
+  }
+  //boolean
+  lastPage(){
+    let last_to_show = this.currentMaxValue();
+    return this.props.reviews.length < last_to_show
+  }
+
 
   reviewReportedCallback(reviewId) {
     if (reviewId) {
@@ -51,13 +71,40 @@ class ReviewsList extends React.Component {
     />)
   }
 
+  handleClick() {
+    // analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' Less');
+    let pageToOpen = this.state.pageNumber + 1;
+    this.setState({pageNumber: pageToOpen});
+  }
+
+  handleCloseAllClick() {
+    this.setState({pageNumber: 1});
+    GS.reviewHelpers.scrollToReviewSummary();
+  }
+
+  showMoreButton(){
+    if(!this.lastPage()) {
+      return (<div className="show-more__button" onClick={this.handleClick}>
+        Show more
+      </div>);
+    }
+  }
+
+  closeAllButton(){
+    if(this.state.pageNumber != 1) {
+      return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
+        Close All
+      </a></div>);
+    }
+  }
+
   render() {
-    let drawerReviews = this.drawerReviews();
     return (
       <div className="review-list">
         <div>{this.renderReviewSubmitMessage()}</div>
-        <div>{this.initialReviews()}</div>
-        {drawerReviews.length > 0 && <Drawer content={this.drawerReviews()} trackingCategory='Profile' trackingAction='Reviews Show' />}
+        <div>{this.displayReviews()}</div>
+        {this.showMoreButton()}
+        {this.closeAllButton()}
       </div>
     )
   }
