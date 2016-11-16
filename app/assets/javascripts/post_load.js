@@ -39,4 +39,5 @@
 //= require util/notifications
 //= require util/subscription
 //= require util/send_updates
+//= require util/back_to_top
 //= require page_initializers/school_profiles

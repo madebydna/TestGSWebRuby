@@ -5,6 +5,7 @@ $(function() {
   GS.handlebars.registerHelpers();
   GS.graphs.ethnicityPieChart.generateEthnicityChart(gon.ethnicity);
   GS.graphs.subgroupCharts.generateSubgroupPieCharts();
+  GS.util.BackToTop.init();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
     var $this = $(this);
