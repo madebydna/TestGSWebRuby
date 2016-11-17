@@ -39,6 +39,12 @@ module SchoolProfiles
         school_city_state_char_length > MIN_LONG_ADDRESS_CHAR_COUNT
     end
 
+    def google_maps_url
+      GoogleSignedImages.google_maps_url(
+        GoogleSignedImages.google_formatted_street_address(school)
+      )
+    end
+
     def static_google_maps
       @_static_google_maps ||= begin
         google_apis_path = GoogleSignedImages::STATIC_MAP_URL

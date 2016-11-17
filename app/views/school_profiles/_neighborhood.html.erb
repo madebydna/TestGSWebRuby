@@ -89,11 +89,11 @@
       </div>
     </div>
     <% ['sm','md','lg'].each do |size| %>
-      <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+      <%= link_to(image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
         class: "static-map visible-#{size}",
         alt: "Map of #{school.name} address.",
-        data: { src: static_google_maps[size]}
-      )
+        data: { src: static_google_maps[size] }
+      ), neighborhood.google_maps_url, target: '_blank')
       %>
     <% end %>
   </div>
