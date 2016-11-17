@@ -34,7 +34,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def page_view_metadata
-    @page_view_metadata ||= (
+    @_page_view_metadata ||= (
       school_gs_rating = school_cache_data_reader.gs_rating.to_s
       number_of_reviews_with_comments = school.reviews.having_comments.count
       SchoolProfiles::PageViewMetadata.new(@school,
