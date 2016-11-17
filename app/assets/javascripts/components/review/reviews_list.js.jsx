@@ -41,12 +41,15 @@ class ReviewsList extends React.Component {
   }
 
   currentMaxValue() {
+    // this returns the slice position in an array, hence the -1
     return (this.REVIEW_CHUNK_SIZE * this.state.pageNumber - 1);
   }
-  //boolean
+
+  //returns a boolean
   lastPage(){
-    let last_to_show = this.currentMaxValue();
-    return this.props.reviews.length < last_to_show
+    // need to add a +1 to compensate for array shift
+    let last_to_show = this.currentMaxValue() + 1;
+    return (this.props.reviews.length <= last_to_show);
   }
 
 
