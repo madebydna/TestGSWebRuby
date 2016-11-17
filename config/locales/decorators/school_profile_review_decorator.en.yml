@@ -14,34 +14,36 @@ en:
         one: '%{count} star'
         other: '%{count} stars'
       you_selected_html: 'You selected:&nbsp;'
-  Agree that this school has an effective approach to homework: Agree that this school has an effective approach to homework
-  Agree that teachers at this school are effective: Agree that teachers at this school are effective
-  Agree that leadership at this school is effective: Agree that leadership at this school is effective
-  Agree that this school develops strong character in its students, like integrity, compassion and respect: Agree that this school develops strong character in its students, like integrity, compassion and respect
-  Agree that this school effectively supports students with learning differences: Agree that this school effectively supports students with learning differences
-  Agree that this school effectively deals with bullying: Agree that this school effectively deals with bullying
-  Disagree that this school has an effective approach to homework: Disagree that this school has an effective approach to homework
-  Disagree that teachers at this school are effective: Disagree that teachers at this school are effective
-  Disagree that leadership at this school is effective: Disagree that leadership at this school is effective
-  Disagree that this school develops strong character in its students, like integrity, compassion and respect: Disagree that this school develops strong character in its students, like integrity, compassion and respect
-  Disagree that this school effectively supports students with learning differences: Disagree that this school effectively supports students with learning differences
-  Disagree that this school effectively deals with bullying: Disagree that this school effectively deals with bullying
-  Neutral that this school has an effective approach to homework: Neutral that this school has an effective approach to homework
-  Neutral that teachers at this school are effective: Neutral that teachers at this school are effective
-  Neutral that leadership at this school is effective: Neutral that leadership at this school is effective
-  Neutral that this school develops strong character in its students, like integrity, compassion and respect: Neutral that this school develops strong character in its students, like integrity, compassion and respect
-  Neutral that this school effectively supports students with learning differences: Neutral that this school effectively supports students with learning differences
-  Neutral that this school effectively deals with bullying: Neutral that this school effectively deals with bullying
-  Strongly agree that this school has an effective approach to homework: Strongly agree that this school has an effective approach to homework
-  Strongly agree that teachers at this school are effective: Strongly agree that teachers at this school are effective
-  Strongly agree that leadership at this school is effective: Strongly agree that leadership at this school is effective
-  Strongly agree that this school develops strong character in its students, like integrity, compassion and respect: Strongly agree that this school develops strong character in its students, like integrity, compassion and respect
-  Strongly agree that this school effectively supports students with learning differences: Strongly agree that this school effectively supports students with learning differences
-  Strongly agree that this school effectively deals with bullying: Strongly agree that this school effectively deals with bullying
-  Strongly disagree that this school has an effective approach to homework: Strongly disagree that this school has an effective approach to homework
-  Strongly disagree that teachers at this school are effective: Strongly disagree that teachers at this school are effective
-  Strongly disagree that leadership at this school is effective: Strongly disagree that leadership at this school is effective
-  Strongly disagree that this school develops strong character in its students, like integrity, compassion and respect: Strongly disagree that this school develops strong character in its students, like integrity, compassion and respect
-  Strongly disagree that this school effectively supports students with learning differences: Strongly disagree that this school effectively supports students with learning differences
-  Strongly disagree that this school effectively deals with bullying: Strongly disagree that this school effectively deals with bullying
+  Agree that this school has an effective approach to homework_html: <span class="bold">AGREE:</span> that this school has an effective approach to <span class="review-title-blue">homework</span>
+  Agree that teachers at this school are effective_html: <span class="bold">AGREE:</span> that <span class="review-title-blue">teachers</span> at this school are effective
+  Agree that leadership at this school is effective_html: <span class="bold">AGREE:</span> that <span class="review-title-blue">leadership</span> at this school is effective
+  Agree that this school develops strong character in its students, like integrity, compassion and respect_html: <span class="bold">AGREE:</span> that this school develops strong <span class="review-title-blue">character</span> in its students, like integrity, compassion and respect
+  Agree that this school effectively supports students with learning differences_html: <span class="bold">AGREE:</span> that this school effectively supports students with <span class="review-title-blue">learning differences</span>
+  Agree that this school effectively deals with bullying_html: <span class="bold">AGREE:</span> that this school effectively deals with <span class="review-title-blue">bullying</span>
+  Disagree that this school has an effective approach to homework_html: <span class="bold">DISAGREE:</span> that this school has an effective approach to <span class="review-title-blue">homework</span>
+  Disagree that teachers at this school are effective_html: <span class="bold">DISAGREE:</span> that <span class="review-title-blue">teachers</span> at this school are effective
+  Disagree that leadership at this school is effective_html: <span class="bold">DISAGREE:</span> that <span class="review-title-blue">leadership</span> at this school is effective
+  Disagree that this school develops strong character in its students, like integrity, compassion and respect_html: <span class="bold">DISAGREE:</span> that this school develops strong <span class="review-title-blue">character</span> in its students, like integrity, compassion and respect
+  Disagree that this school effectively supports students with learning differences_html: <span class="bold">DISAGREE:</span> that this school effectively supports students with <span class="review-title-blue">learning differences</span>
+  Disagree that this school effectively deals with bullying_html: <span class="bold">DISAGREE:</span> that this school effectively deals with <span class="review-title-blue">bullying</span>
+  Neutral that this school has an effective approach to homework_html: <span class="bold">NEUTRAL:</span> that this school has an effective approach to <span class="review-title-blue">homework</span>
+  Neutral that teachers at this school are effective_html: <span class="bold">NEUTRAL:</span> that <span class="review-title-blue">teachers</span> at this school are effective
+  Neutral that leadership at this school is effective_html: <span class="bold">NEUTRAL:</span> that <span class="review-title-blue">leadership</span> at this school is effective
+  Neutral that this school develops strong character in its students, like integrity, compassion and respect_html: <span class="bold">NEUTRAL:</span> that this school develops strong <span class="review-title-blue">character</span> in its students, like integrity, compassion and respect
+  Neutral that this school effectively supports students with learning differences_html: <span class="bold">NEUTRAL:</span> that this school effectively supports students with <span class="review-title-blue">learning differences</span>
+  Neutral that this school effectively deals with bullying_html: '<span class="bold">NEUTRAL:</span> that this school effectively deals with <span class="review-title-blue">bullying</span>'
+  Strongly agree that this school has an effective approach to homework_html: <span class="bold">STRONGLY AGREE:</span> that this school has an effective approach to <span class="review-title-blue">homework</span>
+  Strongly agree that teachers at this school are effective_html: <span class="bold">STRONGLY AGREE:</span> that <span class="review-title-blue">teachers</span> at this school are effective
+  Strongly agree that leadership at this school is effective_html: <span class="bold">STRONGLY AGREE:</span> that <span class="review-title-blue">leadership</span> at this school is effective
+  Strongly agree that this school develops strong character in its students, like integrity, compassion and respect_html: <span class="bold">STRONGLY AGREE:</span> that this school develops strong <span class="review-title-blue">character</span> in its students, like integrity, compassion and respect
+  Strongly agree that this school effectively supports students with learning differences_html: <span class="bold">STRONGLY AGREE:</span> that this school effectively supports students with <span class="review-title-blue">learning differences</span>
+  Strongly agree that this school effectively deals with bullying_html: <span class="bold">STRONGLY AGREE:</span> that this school effectively deals with <span class="review-title-blue">bullying</span>
+  Strongly disagree that this school has an effective approach to homework_html: <span class="bold">STRONGLY DISAGREE:</span> that this school has an effective approach to <span class="review-title-blue">homework</span>
+  Strongly disagree that teachers at this school are effective_html: <span class="bold">STRONGLY DISAGREE:</span> that <span class="review-title-blue">teachers</span> at this school are effective
+  Strongly disagree that leadership at this school is effective_html: <span class="bold">STRONGLY DISAGREE:</span> that <span class="review-title-blue">leadership</span> at this school is effective
+  Strongly disagree that this school develops strong character in its students, like integrity, compassion and respect_html: <span class="bold">STRONGLY DISAGREE:</span> that this school develops strong <span class="review-title-blue">character</span> in its students, like integrity, compassion and respect
+  Strongly disagree that this school effectively supports students with learning differences_html: <span class="bold">STRONGLY DISAGREE:</span> that this school effectively supports students with <span class="review-title-blue">learning differences</span>
+  Strongly disagree that this school effectively deals with bullying_html: <span class="bold">STRONGLY DISAGREE:</span> that this school effectively deals with <span class="review-title-blue">bullying</span>
+
+
 

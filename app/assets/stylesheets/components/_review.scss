@@ -190,7 +190,13 @@
     margin-left: 30px
   }
   .answer {
-    font-family: opensans-semibold;
+    font-family: opensans-regular;
+    .bold{
+      font-family: opensans-semibold;
+    }
+    .review-title-blue{
+      color: $brand-primary;
+    }
   }
   .comment {
     padding-top: 5px;

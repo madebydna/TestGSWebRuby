@@ -41,9 +41,8 @@ class TopicalReview extends React.Component {
             <span className={"answer-icon " + review.answer }></span>
           </div>
           <div className="text-column">
-            <div className="answer">
-              { review.answer_label }
-            </div>
+            <div className="answer" dangerouslySetInnerHTML={{__html: review.answer_label}} />
+
             <div className="comment">
               <ShortenText text={review.comment} length={200} key={review.text} />
             </div>
