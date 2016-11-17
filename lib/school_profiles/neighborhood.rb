@@ -18,7 +18,8 @@ module SchoolProfiles
     end
 
     def school_city_state_zip
-      "#{school.city}, #{school.state} #{school.zipcode}"
+      zipcode = school.zipcode.to_s[0..4]
+      "#{school.city}, #{school.state} #{zipcode}"
     end
 
     def max_chars
