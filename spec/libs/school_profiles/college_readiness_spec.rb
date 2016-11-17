@@ -95,9 +95,32 @@ describe SchoolProfiles::CollegeReadiness do
       expect(data_points.state_average).to eq(24)
     end
 
+    it 'should return chosen data types in configured order' do
+      expect(school_cache_data_reader).to receive(:characteristics_data) do
+        sample_data
+      end
+      ordered_data_types = subject.ordered_data_types
+      data_value_labels = subject.data_values.map(&:label)
+
+      # start with full set of ordered data types, then remove items
+      # that are not in the resulting data_value_labels. Expression should
+      # yield an array that is in same order as data_value_labels
+      expect(ordered_data_types & data_value_labels).to eq(data_value_labels)
+    end
+
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:characteristics_data).once
       expect(subject.data_values).to be_empty
+    end
+  end
+
+  describe '#ordered_data_types' do
+    it 'should return configured data types in correct order' do
+      config = [
+        { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
+      ].shuffle
+      stub_const('SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS', config)
+      expect(subject.ordered_data_types).to eq(config.map { |o| o[:data_key] } )
     end
   end
 end
