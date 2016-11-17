@@ -104,30 +104,31 @@
         .contact-item {
           font-size: 14px;
           margin: 20px;
-        .contact-row{
-          margin-bottom: 5px;
-          vertical-align: middle;
-        }
-        .contact-icon-box {
-          width: 20px;
-          float: left;
-          margin-right: 20px;
-          text-align: center;
-          @include media-breakpoint-down(xs) {
-            margin-right: 10px;
+          clear: left;
+          .contact-row {
+            margin-bottom: 5px;
+            vertical-align: middle;
           }
-         }
-        .school-leader {
-          font-family: "opensans-semibold";
-         }
-        .contact-icon {
-          color: $contact-icon-color;
-          vertical-align: middle;
+          .contact-icon-box {
+            width: 20px;
+            float: left;
+            margin-right: 20px;
+            text-align: center;
+            @include media-breakpoint-down(xs) {
+              margin-right: 10px;
+            }
+          }
+          .school-leader {
+            font-family: "opensans-semibold";
+          }
+          .contact-icon {
+            color: $contact-icon-color;
+            vertical-align: middle;
+          }
+          & a {
+            vertical-align: middle;
+          }
         }
-        & a {
-          vertical-align: middle;
-        }
-      }
     }
   }
 }
