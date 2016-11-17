@@ -17,7 +17,6 @@ class SchoolProfilesController < ApplicationController
     set_hreflang
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
-    @school_profile_decorator = SchoolProfileDecorator.decorate(@school)
   end
 
   private
