@@ -37,6 +37,7 @@ describe SchoolProfiles::ReviewQuestions do
 
     it "should return correct hash for question where response labels match the values" do
       topical_review_question = create(:review_question, active: 1)
+      expect(I18n).to receive(:t).with(topical_review_question.question, anything).and_return(topical_review_question.question)
       result_hash = {
         response_values: topical_review_question.response_array,
         response_labels: topical_review_question.response_array,
