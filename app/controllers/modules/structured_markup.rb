@@ -62,6 +62,7 @@ module StructuredMarkup
         "@type" => "Review",
         "datePublished" => review.created,
         "reviewBody" => review.comment,
+        "author" => review.user_type,
         "reviewRating" => {
           "@type" => "Rating",
           "bestRating" => "5",
