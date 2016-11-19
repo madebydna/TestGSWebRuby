@@ -140,11 +140,11 @@ class SchoolProfilesController < ApplicationController
   end
 
   def breadcrumbs
-    school = SchoolProfileDecorator.decorate(@school)
+    decorated_school = SchoolProfileDecorator.decorate(school)
     {
-      school.state_breadcrumb_text => state_url(state_params(school.state)),
-      school.city_breadcrumb_text => city_url(city_params(school.state, school.city)),
-      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
+      decorated_school.state_breadcrumb_text => state_url(state_params(decorated_school.state)),
+      decorated_school.city_breadcrumb_text => city_url(city_params(decorated_school.state, decorated_school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(decorated_school.state, decorated_school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end
@@ -211,48 +211,48 @@ class SchoolProfilesController < ApplicationController
 
   def seo_meta_tags_title
     return_title_str = ''
-    return_title_str << @school.name + ' - '
-    if @school.state.downcase == 'dc'
+    return_title_str << school.name + ' - '
+    if school.state.downcase == 'dc'
       return_title_str << 'Washington, DC'
     else
-      return_title_str << @school.city + ', ' + @school.state_name.capitalize + ' - ' + @school.state
+      return_title_str << school.city + ', ' + school.state_name.capitalize + ' - ' + school.state
     end
     return_title_str << ' | GreatSchools'
   end
 
   def seo_meta_tags_description
     return_description_str = ''
-    return_description_str << @school.name
-    state_name_local = @school.state_name.capitalize
-    if @school.state.downcase == 'dc'
+    return_description_str << school.name
+    state_name_local = school.state_name.capitalize
+    if school.state.downcase == 'dc'
       state_name_local = 'Washington DC'
     end
-    if @school.preschool?
-      return_description_str << ' in ' + @school.city + ', ' + state_name_local + ' (' + @school.state + ')'
+    if school.preschool?
+      return_description_str << ' in ' + school.city + ', ' + state_name_local + ' (' + school.state + ')'
       return_description_str << ". Read parent reviews and get the scoop on the school environment, teachers,"
       return_description_str << " students, programs and services available from this preschool."
     else
-      return_description_str << ' located in ' + @school.city + ', ' + state_name_local + ' - ' + @school.state
-      return_description_str << '. Find ' +  @school.name + ' test scores, student-teacher ratio, parent reviews and teacher stats.'
+      return_description_str << ' located in ' + school.city + ', ' + state_name_local + ' - ' + school.state
+      return_description_str << '. Find ' +  school.name + ' test scores, student-teacher ratio, parent reviews and teacher stats.'
     end
     return_description_str
   end
 
   def seo_meta_tags_keywords
-    name = @school.name.clone
+    name = school.name.clone
     return_keywords_str  =''
     return_keywords_str << name
-    if @school.preschool?
+    if school.preschool?
       if name.downcase.end_with? 'pre-school'
         return_keywords_str << ', ' + name.gsub(/\ (pre-school)$/i, ' preschool').gs_capitalize_words
       elsif name.downcase.end_with? 'preschool'
         return_keywords_str << ', ' + name.gsub(/\ (preschool)$/i, ' pre-school').gs_capitalize_words
       end
     else
-      return_keywords_str << ', ' + name + ' ' + @school.city
-      return_keywords_str << ', ' + name + ' ' + @school.city + ' ' +  @school.state_name.capitalize
-      return_keywords_str << ', ' + name + ' ' + @school.city + ' ' + @school.state
-      return_keywords_str << ', ' + name + ' ' + @school.state_name.capitalize
+      return_keywords_str << ', ' + name + ' ' + school.city
+      return_keywords_str << ', ' + name + ' ' + school.city + ' ' +  school.state_name.capitalize
+      return_keywords_str << ', ' + name + ' ' + school.city + ' ' + school.state
+      return_keywords_str << ', ' + name + ' ' + school.state_name.capitalize
       return_keywords_str << ', ' + name + ' overview'
     end
     return_keywords_str
