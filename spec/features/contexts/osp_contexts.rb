@@ -12,6 +12,7 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 
   after do
+    log_out_user
     clean_models :gs_schooldb, User, EspMembership
   end
 end
@@ -24,6 +25,7 @@ shared_context 'signed in approved superuser for school' do |state, school_id|
   end
 
   after do
+    log_out_user
     clean_models :gs_schooldb, User, UserProfile, EspMembership, MemberRole, Role
   end
 end
