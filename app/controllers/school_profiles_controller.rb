@@ -288,7 +288,8 @@ class SchoolProfilesController < ApplicationController
   end
 
   def add_dependencies_to_gon
-    gon.dependencies ||= {}
-    gon.dependencies[:highcharts] = ActionController::Base.helpers.asset_path('highcharts.js')
+    gon.dependencies = {
+        highcharts: ActionController::Base.helpers.asset_path('highcharts.js')
+    }
   end
 end
