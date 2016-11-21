@@ -11,10 +11,8 @@ class SchoolProfilesController < ApplicationController
     @school = school
     set_last_school_visited
     add_profile_structured_markup
-    @canonical_url = school_url(@school)
     set_seo_meta_tags
     build_gon_object
-    @hreflang = hreflang
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
   end
@@ -36,7 +34,7 @@ class SchoolProfilesController < ApplicationController
     @_page_view_metadata ||= (
       school_gs_rating = school_cache_data_reader.gs_rating.to_s
       number_of_reviews_with_comments = school.reviews.having_comments.count
-      SchoolProfiles::PageViewMetadata.new(@school,
+      SchoolProfiles::PageViewMetadata.new(school,
                                            PAGE_NAME,
                                            school_gs_rating,
                                            number_of_reviews_with_comments)
@@ -204,65 +202,16 @@ class SchoolProfilesController < ApplicationController
   end
 
   def set_seo_meta_tags
-    set_meta_tags :title => seo_meta_tags_title,
-                  :description => seo_meta_tags_description,
-                  :keywords =>  seo_meta_tags_keywords
-  end
-
-  def seo_meta_tags_title
-    return_title_str = ''
-    return_title_str << school.name + ' - '
-    if school.state.downcase == 'dc'
-      return_title_str << 'Washington, DC'
-    else
-      return_title_str << school.city + ', ' + school.state_name.capitalize + ' - ' + school.state
-    end
-    return_title_str << ' | GreatSchools'
-  end
-
-  def seo_meta_tags_description
-    return_description_str = ''
-    return_description_str << school.name
-    state_name_local = school.state_name.capitalize
-    if school.state.downcase == 'dc'
-      state_name_local = 'Washington DC'
-    end
-    if school.preschool?
-      return_description_str << ' in ' + school.city + ', ' + state_name_local + ' (' + school.state + ')'
-      return_description_str << ". Read parent reviews and get the scoop on the school environment, teachers,"
-      return_description_str << " students, programs and services available from this preschool."
-    else
-      return_description_str << ' located in ' + school.city + ', ' + state_name_local + ' - ' + school.state
-      return_description_str << '. Find ' +  school.name + ' test scores, student-teacher ratio, parent reviews and teacher stats.'
-    end
-    return_description_str
-  end
-
-  def seo_meta_tags_keywords
-    name = school.name.clone
-    return_keywords_str  =''
-    return_keywords_str << name
-    if school.preschool?
-      if name.downcase.end_with? 'pre-school'
-        return_keywords_str << ', ' + name.gsub(/\ (pre-school)$/i, ' preschool').gs_capitalize_words
-      elsif name.downcase.end_with? 'preschool'
-        return_keywords_str << ', ' + name.gsub(/\ (preschool)$/i, ' pre-school').gs_capitalize_words
-      end
-    else
-      return_keywords_str << ', ' + name + ' ' + school.city
-      return_keywords_str << ', ' + name + ' ' + school.city + ' ' +  school.state_name.capitalize
-      return_keywords_str << ', ' + name + ' ' + school.city + ' ' + school.state
-      return_keywords_str << ', ' + name + ' ' + school.state_name.capitalize
-      return_keywords_str << ', ' + name + ' overview'
-    end
-    return_keywords_str
-  end
-
-  def hreflang
-    {
-        en: remove_query_params_from_url(school_url(@school), [:lang]),
-        es: add_query_params_to_url(school_url(@school), true, {lang: :es})
-    }
+    meta_tags = SchoolProfileMetaTags.new(school)
+    canonical_url = school_url(school)
+    set_meta_tags title: meta_tags.title,
+                  description: meta_tags.description,
+                  keywords: meta_tags.keywords,
+                  canonical: canonical_url,
+                  alternate: {
+                      en: remove_query_params_from_url(canonical_url, [:lang]),
+                      es: add_query_params_to_url(canonical_url, true, {lang: :es})
+                  }
   end
 
   def redirect_to_canonical_url

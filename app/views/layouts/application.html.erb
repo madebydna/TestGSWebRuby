@@ -26,14 +26,6 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
-  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
-  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
-
-  <% if @canonical_url.present? %>
-    <link rel="canonical" href="<%= @canonical_url %>" />
-  <% else %>
-    <% Rails.logger.warn "Warning: Page #{request.original_url} has no rel canonical set" %>
-  <% end %>
   <%= yield :head %>
 
   <% json_ld_hash.each do |hash| %>
@@ -45,7 +37,7 @@
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
-<%= render 'nav/topnav_universal', hub_params: @hub_params %>
+<%= render 'nav/topnav_universal' %>
 <%= render :partial => 'layouts/top_notification_bar' %>
 
 <div class="dn">
