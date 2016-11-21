@@ -14,7 +14,7 @@ class SchoolProfilesController < ApplicationController
     @canonical_url = school_url(@school)
     set_seo_meta_tags
     build_gon_object
-    set_hreflang
+    @hreflang = hreflang
     @breadcrumbs = breadcrumbs
     @school_profile = school_profile
   end
@@ -258,11 +258,11 @@ class SchoolProfilesController < ApplicationController
     return_keywords_str
   end
 
-  def set_hreflang
-    @hreflang = {}
-    @hreflang[:en] = remove_query_params_from_url(school_url(@school), [:lang])
-    @hreflang[:es] = add_query_params_to_url(school_url(@school), true, {lang: :es})
-    @hreflang
+  def hreflang
+    {
+        en: remove_query_params_from_url(school_url(@school), [:lang]),
+        es: add_query_params_to_url(school_url(@school), true, {lang: :es})
+    }
   end
 
   def redirect_to_canonical_url
