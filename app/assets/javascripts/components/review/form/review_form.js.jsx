@@ -107,6 +107,7 @@ class ReviewForm extends React.Component {
         unsavedChanges: true
       }
     );
+    this.validateForm();
   }
 
   cancelForm() {
