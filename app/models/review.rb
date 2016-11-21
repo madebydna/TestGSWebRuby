@@ -277,7 +277,12 @@ class Review < ActiveRecord::Base
   end
 
   def answer
-    answers.first.value if answers.first
+    if answers.first
+      answer_response = answers.first.value
+    else
+      answer_response = 'Neutral'
+    end
+    answer_response
   end
 
   def answer_label
