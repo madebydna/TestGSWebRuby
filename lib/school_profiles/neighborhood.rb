@@ -8,7 +8,7 @@ module SchoolProfiles
     MAP_SIZES = {
       "sm" => [767, 450],
       "md" => [991, 450],
-      "lg" => [1264, 450]
+      "lg" => [1264, 480]
     }.freeze
     attr_reader :school, :school_rating
 
