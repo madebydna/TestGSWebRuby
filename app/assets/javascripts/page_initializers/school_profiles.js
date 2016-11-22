@@ -39,6 +39,9 @@ $(function() {
       $(this).width('100%')
     });
   } catch (e) {}
+  try {
+    $('.innovate-logo').unveil(300);
+  } catch (e) {}
 
   (function() {
     /**
