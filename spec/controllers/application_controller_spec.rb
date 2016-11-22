@@ -8,6 +8,31 @@ describe ApplicationController do
     expect(controller.respond_to?(:delete_cookie, true)).to be_truthy
   end
 
+  describe '#executed_deferred_action' do 
+    before do
+      controller.extend DeferredActionConcerns
+    end
+    context 'when the deferred action exists' do
+      it 'invokes the deferred action method' do
+        controller.send(:save_deferred_action, 'create_subscription_deferred', foo: 123)
+        expect(controller).to receive(:create_subscription_deferred).
+          with(foo: 123).and_return(nil)
+        controller.send(:executed_deferred_action)
+      end
+    end
+
+    context 'when the deferred action does not exist' do
+      before do
+        stub_const('DeferredActionConcerns::ALLOWED_DEFERRED_ACTIONS', [])
+      end
+      it 'does not try to invoke the deferred action method' do
+        controller.send(:save_deferred_action, 'create_subscription_deferred', foo: 123)
+        expect(controller).to_not receive(:create_subscription_deferred)
+        controller.send(:executed_deferred_action)
+      end
+    end
+  end
+
   describe '#write_cookie_value' do
     before { subject.class::COOKIE_CONFIG[:test_cookie] = {} }
     after { subject.class::COOKIE_CONFIG.delete :test_cookie }
