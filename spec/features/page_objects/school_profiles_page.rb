@@ -84,6 +84,9 @@ class SchoolProfilesPage < SitePrism::Page
   section :equity, '.rs-equity' do
     element :source_link, 'a', text: 'see notes'
   end
+  section :nearby_schools, '.nearby-schools' do
+    element :title, '.title'
+  end
 
   element :five_star_review_comment, ".five-star-review .comment"
 
