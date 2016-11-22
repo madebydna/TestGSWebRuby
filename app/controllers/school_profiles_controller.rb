@@ -25,7 +25,7 @@ class SchoolProfilesController < ApplicationController
       "@context" => "http://schema.org",
       "@type" => "ProfilePage",
       "dateModified" => l(school_profile.last_modified_date, format: '%Y-%m-%d'),
-      "description" => SchoolProfileDecorator.decorate(school).description
+      "description" => StructuredMarkup.description(school: school, gs_rating: school_cache_data_reader.gs_rating.to_s)
     })
   end
 

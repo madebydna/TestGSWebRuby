@@ -157,4 +157,17 @@ module StructuredMarkup
 
     hash
   end
+
+  def self.description(school:, gs_rating:)
+    snippet ||= "#{school.name} is a #{school.type} school" unless school.name.empty? || school.type.empty?
+    if snippet
+      levels_str = GradeLevelConcerns.human_readable_level(school.level)
+      if levels_str && !levels_str.include?('Ungraded')
+        levels_description = levels_str.length > 2 ? "grades #{levels_str}" : "grade #{levels_str}"
+        snippet << " that serves #{levels_description}"
+      end
+      snippet << ". It has received a GreatSchools rating of #{gs_rating} out of 10 based on academic quality." unless gs_rating.nil?
+    end
+    snippet.presence
+  end
 end
