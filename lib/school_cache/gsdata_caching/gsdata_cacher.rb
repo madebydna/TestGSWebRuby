@@ -1,7 +1,7 @@
 # cache data for schools from the gsdata database
 class GsdataCaching::GsdataCacher < Cacher
   CACHE_KEY = 'gsdata'.freeze
-  DATA_TYPE_IDS = [95, 119, 149].freeze
+  DATA_TYPE_IDS = [51, 91, 35, 95, 119, 149].freeze
 
   def build_hash_for_cache
     cache_hash = {}
