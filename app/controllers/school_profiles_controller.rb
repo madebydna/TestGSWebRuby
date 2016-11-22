@@ -13,7 +13,6 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     set_seo_meta_tags
     build_gon_object
-    @breadcrumbs = breadcrumbs
     @school_profile = school_profile
   end
 
@@ -61,6 +60,7 @@ class SchoolProfilesController < ApplicationController
         sp.neighborhood = neighborhood
         sp.equity = equity
         sp.toc = toc
+        sp.breadcrumbs = breadcrumbs
       end
     )
   end
