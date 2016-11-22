@@ -102,4 +102,21 @@
   .right_content {
     padding: 10px 20px;
   }
+
+  img.innovate-logo {
+    @include media-breakpoint-up(xs) {
+      width: 89px;
+      position: absolute;
+      right: 0px;
+    }
+    @include media-breakpoint-up(sm) {
+      width: 160px;
+      float: right;
+      position: static;
+    }
+    @include media-breakpoint-up(lg) {
+      width: 220px;
+      display: block;
+    }
+  }
 }
