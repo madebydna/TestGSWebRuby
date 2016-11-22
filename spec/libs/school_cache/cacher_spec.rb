@@ -10,7 +10,8 @@ describe Cacher do
       school_media: [ProgressBarCaching::ProgressBarCacher],
       school_location: [NearbySchoolsCaching::NearbySchoolsCacher],
       census: [CharacteristicsCaching::CharacteristicsCacher],
-      test_scores: [TestScoresCaching::BreakdownsCacher, FeedTestScoresCacher]
+      test_scores: [TestScoresCaching::BreakdownsCacher, FeedTestScoresCacher],
+      gsdata: [GsdataCaching::GsdataCacher],
     }.each do |data_type, cacher_list|
       it "handles the data type #{data_type}" do
         rval = Cacher.cachers_for_data_type data_type
