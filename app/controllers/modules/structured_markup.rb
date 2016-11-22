@@ -81,6 +81,16 @@ module StructuredMarkup
     end
   end
 
+  def self.city_breadcrumb_text(state:, city:)
+    text =
+      if state == 'DC'
+        'Washington, D.C.'
+      else
+        city
+      end
+    text.gs_capitalize_words
+  end
+
   def self.breadcrumbs_hash(school)
     urlHelperMethods = Class.new
       .include(Rails.application.routes.url_helpers)
@@ -93,7 +103,7 @@ module StructuredMarkup
         urlHelperMethods.send(:state_url, urlHelperMethods.send(:state_params, school.state)),
       ],
       [
-        school.city,
+        city_breadcrumb_text(state: school.state, city: school.city),
         urlHelperMethods.send(:city_url, urlHelperMethods.send(:city_params, school.state, school.city))
       ],
       [

@@ -53,6 +53,7 @@ class SchoolProfileDecorator < Draper::Decorator
     address.gsub(/\s+/,'+').gsub(/'/,'')
   end
 
+  # DEPRECATED -- please use StructuredMarkup
   def state_breadcrumb_text
     text =
       if state == 'DC'
@@ -62,6 +63,7 @@ class SchoolProfileDecorator < Draper::Decorator
       end
   end
 
+  # DEPRECATED -- please use StructuredMarkup
   def city_breadcrumb_text
     text =
       if state == 'DC'

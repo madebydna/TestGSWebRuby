@@ -138,11 +138,10 @@ class SchoolProfilesController < ApplicationController
   end
 
   def breadcrumbs
-    decorated_school = SchoolProfileDecorator.decorate(school)
     {
-      decorated_school.state_breadcrumb_text => state_url(state_params(decorated_school.state)),
-      decorated_school.city_breadcrumb_text => city_url(city_params(decorated_school.state, decorated_school.city)),
-      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(decorated_school.state, decorated_school.city)),
+      StructuredMarkup.state_breadcrumb_text(school.state) => state_url(state_params(school.state)),
+      StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city) => city_url(city_params(school.state, school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end
