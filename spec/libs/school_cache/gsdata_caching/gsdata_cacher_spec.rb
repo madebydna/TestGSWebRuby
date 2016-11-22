@@ -85,7 +85,7 @@ describe GsdataCaching::GsdataCacher do
       stub_const('DataValue', data_values)
 
       expect(data_values)
-        .to receive(:value_for_school_and_data_type_by_breakdown)
+        .to receive(:find_by_school_and_data_types)
         .with(school, GsdataCaching::GsdataCacher::DATA_TYPE_IDS)
       gsdb_cacher.school_results
     end
@@ -107,7 +107,7 @@ describe GsdataCaching::GsdataCacher do
       )
       state_values = [state_value]
 
-      allow(data_values).to receive(:value_for_state_by_breakdown)
+      allow(data_values).to receive(:find_by_state_and_data_types)
         .with(school.state, GsdataCaching::GsdataCacher::DATA_TYPE_IDS)
         .and_return(state_values)
       results = {
@@ -136,7 +136,7 @@ describe GsdataCaching::GsdataCacher do
       district_values = [district_value]
 
       allow(DataValue).to receive(:establish_connection)
-      allow(DataValue).to receive(:value_for_district_by_breakdown)
+      allow(DataValue).to receive(:find_by_district_and_data_types)
         .with(school.state,
               school.district_id,
               GsdataCaching::GsdataCacher::DATA_TYPE_IDS)
