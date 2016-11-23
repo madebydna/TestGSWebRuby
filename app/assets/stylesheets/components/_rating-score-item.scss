@@ -11,7 +11,7 @@
 		float: right;
 		padding-left: 7px;
 	}
-  @media (min-width: 992px) {
+  @include media-breakpoint-up(md) {
 		display: inline;
 	}
 }
@@ -22,7 +22,7 @@
 	@media (min-width: 768px) and (max-width: 991px) {
 		padding-top: 15px;
 	}
-	@media (min-width: 992px) {
+  @include media-breakpoint-up(md) {
 		padding-right: 7px;
 		display: inline;
 	}
