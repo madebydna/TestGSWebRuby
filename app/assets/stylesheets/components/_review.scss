@@ -4,13 +4,13 @@
 .user-reviews-container {
   font-size: $font-size-l2;
   text-align: center;
-  @media (min-width: 768px) {
+  @include media-breakpoint-up(sm) {
     text-align: left;
   }
 
   .user-info-column {
     padding-right: 5px;
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(sm) {
       text-align: left;
     }
   }
@@ -31,7 +31,7 @@
     text-align: center;
     color: $gray-text-color;
     margin-top: 5px;
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(sm) {
       margin-top: 10px;
     }
   }
@@ -110,14 +110,14 @@
   .header {
     font-size: $font-size-l3;
     font-family: opensans-semibold;
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(sm) {
       display: inline-block;
     }
   }
 
   .answer {
     margin-top: 5px;
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(sm) {
       margin-top: 10px;
       padding-left: 10px;
       display: inline-block;
@@ -134,7 +134,7 @@
     text-align: left;
     margin-top: 5px;
     line-height: 1.7;
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(sm) {
       margin-top: 10px;
     }
   }
