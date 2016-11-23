@@ -6,6 +6,10 @@ module GradeLevelConcerns
 # Breaks in grade sequence is separated by a comma
 # UG if alone will be written as Ungraded if at the end of a series append as "& Ungraded"
   def process_level
+    GradeLevelConcerns.human_readable_level(level)
+  end
+
+  def self.human_readable_level(level)
     level.is_a?(String) ? level_array = level.split(',') : level_array = level
     if level_array.blank?
       return nil

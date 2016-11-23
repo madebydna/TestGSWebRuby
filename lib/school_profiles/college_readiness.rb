@@ -2,10 +2,16 @@ module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
 
+    # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
       {
         :data_key => '4-year high school graduation rate',
         :visualization => :person_bar_viz,
+        :formatting => [:round, :percent]
+      },
+      {
+        :data_key => 'Percent of students who meet UC/CSU entrance requirements',
+        :visualization => :single_bar_viz,
         :formatting => [:round, :percent]
       },
       {
@@ -34,14 +40,8 @@ module SchoolProfiles
         :data_key => 'AP Course Participation',
         :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
-      },
-      {
-        :data_key => 'Percent of students who meet UC/CSU entrance requirements',
-        :visualization => :single_bar_viz,
-        :formatting => [:round, :percent]
       }
     ].freeze
-
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
@@ -94,12 +94,16 @@ module SchoolProfiles
       )
     end
 
+    def ordered_data_types
+      @_ordered_data_types ||= CHAR_CACHE_ACCESSORS.map { |c| c[:data_key] }
+    end
+
     def data_type_hashes 
       hashes = school_cache_data_reader.characteristics_data(
         *included_data_types
       )
       return [] if hashes.blank?
-      hashes.map do |key, array|
+      hashes = hashes.map do |key, array|
         values = array.select { |h| h['breakdown'] == 'All students' }
         values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
         GSLogger.error(:misc, nil,
@@ -111,6 +115,7 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
+      hashes.sort_by { |o| ordered_data_types.index( o['data_type']) }
     end
 
     def data_values

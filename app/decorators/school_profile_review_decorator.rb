@@ -125,7 +125,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     question_answer_text = 
       review.question.question[0].downcase + 
       review.question.question[1..-2]
-    t("#{answer} that #{question_answer_text}")
+      t("#{answer} that #{question_answer_text}_html")
   end
 
   def created

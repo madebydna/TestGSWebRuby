@@ -1,6 +1,7 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
 //= require util/cached_script
+//= require util/review_helpers
 //= require graphs/ethnicity_pie_chart
 //= require resources/fastclick
 // require resources/pep
@@ -39,4 +40,5 @@
 //= require util/notifications
 //= require util/subscription
 //= require util/send_updates
+//= require util/back_to_top
 //= require page_initializers/school_profiles

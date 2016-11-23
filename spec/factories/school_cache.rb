@@ -540,6 +540,22 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :nearby_schools, class: SchoolCache do
+    name :nearby_schools
+    school_id 1
+    state 'CA'
+    value ({
+        "closest_schools" => [
+          {"city" => "Oakland","distance" => 1.50340,"gs_rating" => "3","id" => 17573,"level" => "9-12","methodology" => "closest_schools","name" => "Arise High School","school_media" => nil, "state" => "CA","type" => "Public charter"}
+        ],
+        "closest_top_then_top_nearby_schools" => [
+          {"city" => "Alameda","distance" => 2.06758,"gs_rating" => "10","id" => 14052,"level" => "9-12","methodology" => "closest_top_schools","name" => "Alameda Science And Technology Institute","school_media" => nil, "state" => "CA","type" => "Public district"},
+          {"city" => "Oakland","distance" => 2.66094,"gs_rating" => "10","id" => 17494,"level" => "9-12","methodology" => "top_nearby_schools","name" => "Oakland Charter High School","school_media" => nil, "state" => "CA","type" => "Public charter"}
+        ]
+      }.to_json
+    )
+    updated Time.now
+  end
 
 
 

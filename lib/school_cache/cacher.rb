@@ -10,6 +10,7 @@ class Cacher
   # :school_media
   # :esp_response
   # :feed_test_scores
+  # :gsdata
 
   def initialize(school)
     @school = school
@@ -61,7 +62,8 @@ class Cacher
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
         nearby_schools:   NearbySchoolsCaching::NearbySchoolsCacher,
-        feed_test_scores: FeedTestScoresCacher
+        feed_test_scores: FeedTestScoresCacher,
+        gsdata: GsdataCaching::GsdataCacher
     }[key.to_s.to_sym]
   end
 
@@ -87,7 +89,8 @@ class Cacher
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
       NearbySchoolsCaching::NearbySchoolsCacher,
-      FeedTestScoresCacher
+      FeedTestScoresCacher,
+      GsdataCaching::GsdataCacher
     ]
   end
 

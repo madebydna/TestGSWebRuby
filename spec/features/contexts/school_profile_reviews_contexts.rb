@@ -57,6 +57,7 @@ shared_context 'with signing into a verified account' do
     current_url
   end
   after do
+    log_out_user
     clean_models User
   end
 end
@@ -74,6 +75,7 @@ shared_context 'with signing into a verified account without role for school' do
     current_url
   end
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end
@@ -97,6 +99,7 @@ shared_context 'with signing into a verified account with role for school' do
     current_url
   end
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end
@@ -114,6 +117,7 @@ shared_context 'signed in verified user with role for school' do
   end
 
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end
@@ -131,6 +135,7 @@ shared_context 'with signed in as principal for school' do
   end
 
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end

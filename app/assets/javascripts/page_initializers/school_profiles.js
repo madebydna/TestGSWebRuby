@@ -5,6 +5,7 @@ $(function() {
   GS.handlebars.registerHelpers();
   GS.graphs.ethnicityPieChart.generateEthnicityChart(gon.ethnicity);
   GS.graphs.subgroupCharts.generateSubgroupPieCharts();
+  GS.util.BackToTop.init();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
     var $this = $(this);
@@ -37,6 +38,9 @@ $(function() {
     $('.neighborhood img[data-src]').unveil(300, function() {
       $(this).width('100%')
     });
+  } catch (e) {}
+  try {
+    $('.innovate-logo').unveil(300);
   } catch (e) {}
 
   (function() {

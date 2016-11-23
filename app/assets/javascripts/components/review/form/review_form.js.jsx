@@ -63,6 +63,7 @@ class ReviewForm extends React.Component {
         displayAllQuestions: false
       }
     );
+    GS.reviewHelpers.scrollToReviewSummary();
   }
 
   fiveStarQuestionSelect(value, id) {
@@ -106,6 +107,7 @@ class ReviewForm extends React.Component {
         unsavedChanges: true
       }
     );
+    this.validateForm();
   }
 
   cancelForm() {

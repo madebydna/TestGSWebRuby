@@ -38,8 +38,6 @@ describe "Signed in and verified user" do
       end
 
       scenario "submits a new five star rating with comment", js: true do
-        pending('Fails inconsistently')
-        fail
         school = create(:school_with_new_profile, id: 1)
         school_user = create(:school_user, user: user, school: school)
         page_object = SchoolProfilesPage.new

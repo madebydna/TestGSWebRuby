@@ -7,4 +7,4 @@ es:
         posted: Publicado
         school_leader: LÍDER DE LA ESCUELA
         school_leader_message: Mensaje a las familias
-        user_type_html: '- un <span class="cuc_posted-by">%{user_type}</span>'
+        user_type_html: '- un <span itemprop="author" class="cuc_posted-by">%{user_type}</span>'

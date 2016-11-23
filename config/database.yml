@@ -55,6 +55,12 @@ mysql_rw_server_to_use_in_development: &mysql_rw_server_to_use_in_development
 mysql_ro_server_to_use_in_development: &mysql_ro_server_to_use_in_development
   <<: *mysql_localhost_ro
 
+mysql_development_gsdata: &mysql_development_gsdata
+  <<: *mysql
+  host: dev-gsdata.greatschools.org
+  username: gsdata
+  password: yAKuECCBRdEu8MaI
+
 development: &development
   <<: *mysql_rw_server_to_use_in_development
   database: LocalizedProfiles_development
@@ -114,6 +120,10 @@ development: &development
     <<: *mysql_ro_server_to_use_in_development
     database: gscms_pub
     legacy: true
+  gsdata:
+    <<: *mysql_development_gsdata
+    database: gsdata
+    legacy: false
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

@@ -8,7 +8,7 @@ module SchoolProfiles
     MAP_SIZES = {
       "sm" => [767, 450],
       "md" => [991, 450],
-      "lg" => [1264, 450]
+      "lg" => [1264, 480]
     }.freeze
     attr_reader :school, :school_rating
 
@@ -18,7 +18,8 @@ module SchoolProfiles
     end
 
     def school_city_state_zip
-      "#{school.city}, #{school.state} #{school.zipcode}"
+      zipcode = school.zipcode.to_s[0..4]
+      "#{school.city}, #{school.state} #{zipcode}"
     end
 
     def max_chars
@@ -36,6 +37,12 @@ module SchoolProfiles
       school_city_state_char_length = school_city_state_zip.length
       street_char_length > MIN_LONG_ADDRESS_CHAR_COUNT ||
         school_city_state_char_length > MIN_LONG_ADDRESS_CHAR_COUNT
+    end
+
+    def google_maps_url
+      GoogleSignedImages.google_maps_url(
+        GoogleSignedImages.google_formatted_street_address(school)
+      )
     end
 
     def static_google_maps

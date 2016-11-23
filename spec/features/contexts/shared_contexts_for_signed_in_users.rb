@@ -14,6 +14,15 @@ def log_in_user(user)
   cookie_settable.set_cookie("community_www=#{auth_token.gsub('=', '~')}; domain=#{host}")
 end
 
+def log_out_user
+  if page.driver.class.name == 'Capybara::Webkit::Driver'
+    cookie_settable = page.driver
+  else
+    cookie_settable = page.driver.browser
+  end
+  cookie_settable.clear_cookies
+end
+
 shared_context 'signed in verified user' do
   let(:user) do
     FactoryGirl.create(:verified_user)
@@ -25,6 +34,7 @@ shared_context 'signed in verified user' do
   end
 
   after do
+    log_out_user
     clean_models User
   end
 end
@@ -40,6 +50,7 @@ shared_context 'signed in provisional user' do
   end
 
   after do
+    log_out_user
     clean_models User
   end
 end

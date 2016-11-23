@@ -1,6 +1,7 @@
 class GoogleSignedImages
   STREET_VIEW_URL = 'http://maps.googleapis.com/maps/api/streetview'
   STATIC_MAP_URL =  'http://maps.googleapis.com/maps/api/staticmap'
+  GOOGLE_MAPS_URL = 'http://www.google.com/maps/place/'
 
   def self.street_view_url(height, width, address)
     url = STREET_VIEW_URL.clone
@@ -8,6 +9,10 @@ class GoogleSignedImages
     url << "&size=#{height}x#{width}"
     url << "&location=#{address}"
     url << "&sensor=false"
+  end
+
+  def self.google_maps_url(address)
+    GOOGLE_MAPS_URL + address
   end
 
   def self.url_safe_base64_decode(base64_string)

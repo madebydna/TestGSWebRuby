@@ -112,7 +112,7 @@ class Question extends React.Component {
         </div>
         <div>
           <div>
-            { this.props.title }
+            <div dangerouslySetInnerHTML={{__html: this.props.title }} />
             { this.props.subtext ? this.renderSubtext() : null }
           </div>
           { this.renderLayout() }

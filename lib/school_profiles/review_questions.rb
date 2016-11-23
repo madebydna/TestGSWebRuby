@@ -29,7 +29,7 @@ module SchoolProfiles
         response_values: question.response_array,
         response_labels: question.response_label_array,
         layout: question.layout,
-        title: question.question,
+        title: I18n.t(question.question, scope: 'lib.review_questions'),
         id: question.id,
       }
     end

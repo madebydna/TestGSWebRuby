@@ -209,9 +209,9 @@ describe ReviewScoping do
       it 'should return array' do
         expect(subject.having_answers).to be_a(Array)
       end
-      it 'should return an array with two reviews' do
-        expect(subject.having_answers.count).to eq(2)
-        expect(subject.having_answers).to eq([review_with_answer, review_with_answer2])
+      it 'should return an array with three reviews' do
+        expect(subject.having_answers.count).to eq(3)
+        expect(subject.having_answers).to eq([review_with_answer, review_with_answer2, review_without_answer])
       end
       it 'should extend the array with ReviewScoping and ReviewCalculations modules' do
         expect(subject.having_answers).to respond_to(:five_star_rating_reviews, :has_principal_review?, :score_distribution)

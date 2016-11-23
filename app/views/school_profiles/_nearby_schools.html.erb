@@ -2,26 +2,28 @@
 <% closest_top = nearby_schools.closest_top_then_top_nearby_schools %>
 <% other_nearby = nearby_schools.closest_schools %>
 
-<a class="anchor-mobile-offset" name="NearbySchools"></a>
-<div class="nearby-schools">
-  <div class="title-bar">
-    <div class="title"><%= t('.title') %></div>
-    <div class="button-bar js-nearby-toggle">
-      <% unless closest_top.empty? %><button class="active" data-target="high-performing">
-          <%= t('.nearest-high')  %>
-        </button><% end %><% unless other_nearby.empty? %><button data-target="nearby-schools">
-          <%= t('.nearby')  %>
-        </button><% end %>
+<% if closest_top.present? || other_nearby.present? %>
+  <a class="anchor-mobile-offset" name="NearbySchools"></a>
+  <div class="nearby-schools">
+    <div class="title-bar">
+      <div class="title"><%= t('.title') %></div>
+      <div class="button-bar js-nearby-toggle">
+        <% unless closest_top.empty? %><button class="active" data-target="high-performing">
+            <%= t('.nearest-high')  %>
+          </button><% end %><% unless other_nearby.empty? %><button data-target="nearby-schools">
+            <%= t('.nearby')  %>
+          </button><% end %>
+      </div>
+    </div>
+    <div class="content js-nearby-content">
+      <% unless closest_top.empty? %>
+        <%= render 'nearby_schools_list', school_list: closest_top, name: 'high-performing' %>
+      <% end %>
+      <% unless other_nearby.empty? %>
+        <div class="dn" data-target="nearby-schools">
+          <%= render 'nearby_schools_list', school_list: other_nearby, name: 'nearby-schools' %>
+        </div>
+      <% end %>
     </div>
   </div>
-  <div class="content js-nearby-content">
-    <% unless closest_top.empty? %>
-      <%= render 'nearby_schools_list', school_list: closest_top, name: 'high-performing' %>
-    <% end %>
-    <% unless other_nearby.empty? %>
-      <div class="dn" data-target="nearby-schools">
-        <%= render 'nearby_schools_list', school_list: other_nearby, name: 'nearby-schools' %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<% end %>
