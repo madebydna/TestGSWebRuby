@@ -13,6 +13,7 @@ class GsdataCaching::GsdataCacher < Cacher
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
     school_results.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
+      validate_result_hash(result_hash, result.data_type_id)
       cache_hash[result.name] << result_hash
     end
   end
@@ -52,20 +53,41 @@ class GsdataCaching::GsdataCacher < Cacher
   private
 
   def result_to_hash(result)
-    result_hash = {
-      school_value: result.value,
-      breakdowns: result.breakdowns,
-      source_name: result.source_name,
-      source_year: result.date_valid.year,
-      state_value: state_value(result),
-      district_value: district_value(result)
-    }
+    breakdowns = result.breakdowns
+    state_value = state_value(result)
+    district_value = district_value(result)
     display_range = display_range(result)
-    result_hash[:display_range] = display_range if display_range
-    result_hash
+    {}.tap do |h|
+      h[:breakdowns] = breakdowns if breakdowns
+      h[:school_value] = result.value
+      h[:source_year] = result.date_valid.year
+      h[:state_value] = state_value if state_value
+      h[:district_value] = district_value if district_value
+      h[:display_range] = district_value if display_range
+      h[:source_name] = result.source_name
+    end
   end
 
+  def validate_result_hash(result_hash, data_type_id)
+    required_keys = [:school_value, :source_year, :source_name]
+    missing_keys = required_keys - result_hash.keys
+    if missing_keys.count > 0
+      GSLogger.error(
+        :school_cache,
+        message: "Gsdata cache missing required keys",
+        vars: { school: school.id,
+                state: school.state,
+                data_type_id: data_type_id,
+                breakdowns: result_hash.breakdowns,
+        }
+      )
+    end
+  end
+
+
   def district_value(result)
+    #   will not have district values if school is private
+    return nil if school.private_school?
     district_results_hash[result.datatype_breakdown_year]
   end
 
