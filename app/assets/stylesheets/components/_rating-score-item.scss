@@ -7,7 +7,7 @@
 	text-align: right;
 	font-size: $font-size-l5;
 	font-family: opensans-semibold;
-	@media (min-width: 768px) and (max-width: 991px) {
+  @include media-breakpoint-only(sm) {
 		float: right;
 		padding-left: 7px;
 	}
@@ -19,7 +19,7 @@
 	text-align: right;
 	font-size: $font-size-s1;
 	color: #71787e;
-	@media (min-width: 768px) and (max-width: 991px) {
+  @include media-breakpoint-only(sm) {
 		padding-top: 15px;
 	}
   @include media-breakpoint-up(md) {
