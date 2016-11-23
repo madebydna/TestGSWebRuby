@@ -9,6 +9,14 @@
   color: $color;
   display: inline-block;
   vertical-align: middle;
+  a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+  }
   span {
     font-size: .4em;
     opacity: 0.7;
