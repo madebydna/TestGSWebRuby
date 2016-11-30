@@ -222,4 +222,42 @@ describe SchoolUser do
         .to eq(reviews[3])
     end
   end
+
+  describe '.make_from_esp_membership' do
+    context 'when school user already exists for esp membership' do
+      it 'saves a new SchoolUser with user type principal' do
+        esp_membership = double(
+          member_id: 1,
+          state: 'ca',
+          school_id: 1
+        )
+        school_user = double(
+          new_record?: false
+        )
+        expect(SchoolUser).to receive(:find_by).and_return(school_user)
+        expect(school_user).to_not receive(:'user_type=')
+        expect(school_user).to receive(:save!)
+        SchoolUser.make_from_esp_membership(esp_membership)
+      end
+    end
+    context 'when school user does not exist for esp membership' do
+      it 'saves a new SchoolUser with user type principal' do
+        esp_membership = double(
+          member_id: 1,
+          state: 'ca',
+          school_id: 1
+        )
+        school_user = double(
+          new_record?: true
+        )
+        expect(SchoolUser).to receive(:find_by).and_return(nil)
+        expect(SchoolUser).to receive(:new).and_return(school_user)
+        expect(school_user).to receive(:'user_type=').with('principal')
+        expect(school_user).to receive(:save!)
+        SchoolUser.make_from_esp_membership(esp_membership)
+      end
+
+    end
+
+  end
 end
