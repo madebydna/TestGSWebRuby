@@ -236,12 +236,12 @@ describe SchoolUser do
         )
         expect(SchoolUser).to receive(:find_by).and_return(school_user)
         expect(school_user).to_not receive(:'user_type=')
-        expect(school_user).to receive(:save!)
+        expect(school_user).to_not receive(:save!)
         SchoolUser.make_from_esp_membership(esp_membership)
       end
     end
     context 'when school user does not exist for esp membership' do
-      it 'saves a new SchoolUser with user type principal' do
+      it 'does not set user type or save the school user' do
         esp_membership = double(
           member_id: 1,
           state: 'ca',
