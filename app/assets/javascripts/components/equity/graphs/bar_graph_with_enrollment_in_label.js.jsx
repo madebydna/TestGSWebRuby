@@ -10,9 +10,9 @@ class BarGraphWithEnrollmentInLabel extends EquityBarGraph {
       if (data.numberOfStudents) {
         subLabel = data.numberOfStudents.toLocaleString() + ' students';
       } else if(data.percentOfStudentBody) {
-        subLabel = Math.round(data.percentOfStudentBody) + '% of students</span>';
+        subLabel = Math.round(data.percentOfStudentBody) + '% of students';
       }
-      return data.breakdown + '<br/><span style="font-size:smaller">' + subLabel + '</span>';
+      return data.breakdown + ' <span style="font-size:smaller;font-family:opensans-regular;color:#71787e;">(' + subLabel + ')</span>';
     }.bind(this));
   }
 }

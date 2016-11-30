@@ -29,6 +29,13 @@ class BarGraph extends React.Component {
           categories: this.props.categories,
           title: {
               text: null
+          },
+          labels: {
+            style: {
+              fontFamily: 'opensans-semibold',
+              fontSize: '10px',
+              color: '#28292a'
+            }
           }
       },
       yAxis: {
