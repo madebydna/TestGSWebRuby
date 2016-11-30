@@ -12,14 +12,18 @@ module SchoolHelper
     draw_stars 48, on_star_count
   end
 
-  def zillow_url(school)
+  def zillow_url(school, campaign=nil)
+    campaign ||= (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
+    tracking_codes = "?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{campaign}"
     # test that values needed are populated
-    if (school.present? && school.zipcode.present?)
-      "http://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode.split("-")[0]}?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
+    if school.present? && school.zipcode.present?
+      url = "http://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode.split("-")[0]}"
     else
-      "http://www.zillow.com/?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{(zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')}"
+      url = 'http://www.zillow.com/'
     end
+    "#{url}#{tracking_codes}"
   end
+
   # this is the single place to reference naming for school type
   def school_type_display(type)
     school_types_map = {

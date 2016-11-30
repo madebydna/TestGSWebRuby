@@ -82,7 +82,7 @@
               <a target="_blank" href="<%= prepend_http(school.home_page_url) %>"><%= t('.school_website') %></a>
             </div>
           <% end %>
-          <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school) %>'>
+          <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school, 'localoverview') %>'>
             <button><%= t('.nearby_homes').upcase %></button>
           </a>
         </div>
