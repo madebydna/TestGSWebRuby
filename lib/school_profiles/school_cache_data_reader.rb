@@ -17,6 +17,10 @@ module SchoolProfiles
       @_decorated_school ||= decorate_school(school)
     end
 
+    def cache_updated_dates
+      decorated_school.cache_data.select { |k, _| k.match(/^_.*_updated$/) }.values.compact
+    end
+
     def gs_rating
       ((1..10).to_a & [decorated_school.great_schools_rating]).first
     end
