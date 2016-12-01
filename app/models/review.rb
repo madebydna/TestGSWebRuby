@@ -312,4 +312,23 @@ class Review < ActiveRecord::Base
     end
   end
 
+  def self.average_five_star_rating(state, school_ids)
+    result = Review.connection.execute(Review.five_star_review_sql(state, school_ids))
+    result.each_with_object({}) do |array, hash|
+      hash[array.first] = OpenStruct.new.tap do |struct|
+        struct.number_of_reviews = array[1]
+        struct.average_rating = array[2]
+      end
+    end
+  end
+
+  def self.five_star_review_sql(state, school_ids)
+    "select school_id, count(*) as num_reviews, round(avg(answer_value)) as rating from reviews r " +
+    "inner join review_answers ra on r.id=ra.review_id " +
+    "where state='" +  state + "' and school_id in (" + school_ids.join(',') + ") " +
+    "and r.active=1 and r.review_question_id=1 " +
+    "and answer_value between 1 and 5 "+
+    "group by school_id";
+  end
+
 end
