@@ -34,7 +34,9 @@ class SchoolCacheResults
     if hash
       hash.send(:extend, HashWithSchoolCacheData)
       hash.keys.each do |key|
-        hash.send(:extend, (module_for_key(key)))
+        if module_for_key(key)
+          hash.send(:extend, (module_for_key(key)))
+        end
       end
     end
     hash
