@@ -1,19 +1,18 @@
-class Api::TopPerformingNearbySchoolsController < ApplicationController
+class Api::NearbySchoolsController < ApplicationController
   DEFAULT_LIMIT = 4
   MAX_LIMIT = 4
-  MINIMUM_RATING = 8
 
   before_filter :require_school
 
   def show
     array_of_nearby_school_hashes =
-      NearbySchoolsCaching::Methodologies::ClosestTopSchools.results(
+      NearbySchoolsCaching::Methodologies::ClosestSchools.results(
         school,
-        limit: limit,
-        ratings: ratings_config,
-        minimum: MINIMUM_RATING,
+        limit: limit
       )
-    add_review_data_to_nearby_school_hashes(array_of_nearby_school_hashes)
+    if array_of_nearby_school_hashes.present?
+      add_review_data_to_nearby_school_hashes(array_of_nearby_school_hashes)
+    end
 
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
   end
@@ -32,19 +31,6 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   def limit
     return DEFAULT_LIMIT unless params[:limit]
     [params[:limit].to_i, MAX_LIMIT].min
-  end
-
-  def ratings_config
-    [
-      {
-        data_type_id:174,
-        breakdown_id:1
-      },
-      {
-        data_type_id:174,
-        breakdown_id:9
-      }
-    ]
   end
 
   def school

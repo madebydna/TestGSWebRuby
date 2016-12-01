@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe Api::TopPerformingNearbySchoolsController do
+describe Api::NearbySchoolsController do
   render_views
 
   it { is_expected.to respond_to(:show) }
@@ -9,7 +9,7 @@ describe Api::TopPerformingNearbySchoolsController do
       clean_dbs :gs_schooldb, :ca
     end
 
-    context 'with no top performing schools' do
+    context 'with no schools' do
       it 'should return an empty response' do
         school = FactoryGirl.create(:school)
         get :show, state: school.state, id: school.id
@@ -22,41 +22,31 @@ describe Api::TopPerformingNearbySchoolsController do
       expect(response.status).to be(404)
     end
 
-    context 'with top performing nearby schools schools' do
+    context 'with nearby schools' do
       let(:schools) do
         [
           FactoryGirl.create(
-            :school_with_rating,
+            :school,
             name: 'school a',
             lat: 37.7647364,
-            lon: -122.2470357, 
-            ratings: [
-              { data_type_id: 174, breakdown_id: 1, value_float: 10 }
-            ]
+            lon: -122.2470357
           ),
           FactoryGirl.create(
-            :school_with_rating,
+            :school,
             name: 'school b',
             lat: 37.7647365,
-            lon: -122.2470358, 
-            ratings: [
-              { data_type_id: 174, breakdown_id: 1, value_float: 10 }
-            ]
+            lon: -122.2470358
           ),
           FactoryGirl.create(
-            :school_with_rating,
+            :school,
             name: 'school c',
             lat: 37.7647366,
-            lon: -122.2470359, 
-            ratings: [
-              { data_type_id: 174, breakdown_id: 1, value_float: 10 }
-            ]
+            lon: -122.2470359
           )
         ]
       end
       let(:nearby_schools) { schools[1..-1] }
       let(:school) { schools.first }
-      before { make_nearby_schools(school, nearby_schools) }
 
       it 'should return a 200 status code' do
         get :show, state: school.state, id: school.id
@@ -72,8 +62,8 @@ describe Api::TopPerformingNearbySchoolsController do
           expect(
             response_array.find do |hash|
               {
-                'name' => 'school b',
-                'state' => 'CA'
+                'name' => nearby_school.name,
+                'state' => nearby_school.state
               }.to_a - hash.to_a
             end
           ).to be_present
@@ -87,7 +77,7 @@ describe Api::TopPerformingNearbySchoolsController do
       end
 
       it 'obeys the max limit' do
-        stub_const('Api::TopPerformingNearbySchoolsController::MAX_LIMIT', 1)
+        stub_const('Api::NearbySchoolsController::MAX_LIMIT', 1)
         get :show, state: school.state, id: school.id, limit: 2
         response_array = JSON.parse(response.body)
         expect(response_array.size).to eq(1)
@@ -125,31 +115,6 @@ describe Api::TopPerformingNearbySchoolsController do
         school_id: s.id,
         review_question_id: 1,
         answer_value: 5
-      )
-    end
-  end
-
-  # Not useful yet since the code that gets nearby top performing schools
-  # Goes directly to TestDataSet tables
-  def give_schools_good_ratings(schools, rating: 8)
-    schools.each do |nearby_school|
-      FactoryGirl.create(
-        :cached_ratings,
-        :with_gs_rating,
-        school_id: nearby_school.id,
-        state: nearby_school.state,
-        gs_rating_value: rating
-      )
-    end
-  end
-
-  def make_nearby_schools(target, nearby_schools)
-    nearby_schools.each_with_index do |nearby, index|
-      FactoryGirl.create(
-        :nearby_school,
-        school: target,
-        neighbor: nearby,
-        distance: index + 1
       )
     end
   end
