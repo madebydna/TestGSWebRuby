@@ -146,6 +146,10 @@ class SchoolProfilesController < ApplicationController
     }
   end
 
+  def teacher_staff
+    SchoolProfiles::TeacherStaff.new(school_cache_data_reader)
+  end
+
   def build_gon_object
     add_gon_school_obj
     add_gon_links

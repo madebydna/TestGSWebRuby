@@ -81,6 +81,8 @@ class SchoolCacheResults
         CachedNearbySchoolsMethods
       when 'performance'
         CachedPerformanceMethods
+      when 'gsdata'
+        CachedGsdataMethods
     end
   end
 
