@@ -56,10 +56,20 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
       ratings: ratings,
       school_ids_to_exclude: school_ids_to_exclude,
     }
+    top_nearby_schools = methodologies::TopNearbySchools.results(school, top_nearby_opts)
+    add_review_data_to_nearby_school_hashes(top_nearby_schools) if top_nearby_schools.present?
     (
-      closest_top_schools +
-      methodologies::TopNearbySchools.results(school, top_nearby_opts)
+      closest_top_schools + top_nearby_schools
     )
+  end
+
+  def add_review_data_to_nearby_school_hashes(hashes)
+    school_ids = hashes.map { |h| h[:id] }
+    review_datas = Review.average_five_star_rating(school.state, school_ids)
+    hashes.each do |hash|
+      review_data_for_school = review_datas[hash[:id]]
+      hash.merge!(review_data_for_school.to_h) if review_data_for_school
+    end
   end
 
   def radius_based_on_level
