@@ -17,12 +17,6 @@ module SchoolProfiles
         :formatting => [:round, :percent]
       },
       {
-        :cache => :gsdata,
-        :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
-        :visualization => :single_bar_viz,
-        :formatting => [:to_f, :round, :percent]
-      },
-      {
         :cache => :characteristics,
         :data_key => 'Average SAT score',
         :visualization => :single_bar_viz,
@@ -53,6 +47,12 @@ module SchoolProfiles
         :data_key => 'AP Course Participation',
         :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
+      },
+      {
+          :cache => :gsdata,
+          :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
+          :visualization => :single_bar_viz,
+          :formatting => [:to_f, :round, :percent]
       }
     ].freeze
 
