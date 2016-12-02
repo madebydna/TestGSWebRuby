@@ -51,7 +51,7 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
     closest_top_schools = methodologies::ClosestTopSchools.results(school, closest_top_opts)
     school_ids_to_exclude = closest_top_schools.map { |s| s[:id] }.join(',')
     top_nearby_opts = {
-      limit: 4,
+      limit: 6,
       radius: radius_based_on_level, # miles
       ratings: ratings,
       school_ids_to_exclude: school_ids_to_exclude,
