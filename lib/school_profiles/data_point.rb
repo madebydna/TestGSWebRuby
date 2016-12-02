@@ -8,6 +8,10 @@ module SchoolProfiles
       def self.percent(value)
         "#{value}%"
       end
+
+      def self.to_f(value)
+        value.to_f
+      end
     end
 
     attr_reader :value

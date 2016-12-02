@@ -5,38 +5,51 @@ module SchoolProfiles
     # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
       {
+        :cache => :characteristics,
         :data_key => '4-year high school graduation rate',
         :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
+        :cache => :characteristics,
         :data_key => 'Percent of students who meet UC/CSU entrance requirements',
         :visualization => :single_bar_viz,
         :formatting => [:round, :percent]
       },
       {
+        :cache => :gsdata,
+        :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
+        :visualization => :single_bar_viz,
+        :formatting => [:to_f, :round, :percent]
+      },
+      {
+        :cache => :characteristics,
         :data_key => 'Average SAT score',
         :visualization => :single_bar_viz,
         :formatting => [:round],
         :range => (600..2400)
       },
       {
+        :cache => :characteristics,
         :data_key => 'SAT percent participation',
         :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
+        :cache => :characteristics,
         :data_key => 'Average ACT score',
         :visualization => :single_bar_viz,
         :formatting => [:round],
         :range => (1..36)
       },
       {
+        :cache => :characteristics,
         :data_key => 'ACT participation',
         :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
       },
       {
+        :cache => :characteristics,
         :data_key => 'AP Course Participation',
         :visualization => :person_bar_viz,
         :formatting => [:round, :percent]
@@ -65,9 +78,9 @@ module SchoolProfiles
       I18n.t(key.to_sym, scope: 'lib.college_readiness.data_point_info_texts')
     end
 
-    def included_data_types
-      @_included_data_types ||=
-        CHAR_CACHE_ACCESSORS.map { |mapping| mapping[:data_key] }
+    def included_data_types(cache = nil)
+      config_for_cache = CHAR_CACHE_ACCESSORS.select { |c| cache.nil? || c[:cache] == cache }
+      config_for_cache.map { |mapping| mapping[:data_key] }
     end
 
     def data_type_formatting_map
@@ -94,20 +107,21 @@ module SchoolProfiles
       )
     end
 
-    def ordered_data_types
-      @_ordered_data_types ||= CHAR_CACHE_ACCESSORS.map { |c| c[:data_key] }
-    end
-
-    def data_type_hashes 
-      hashes = school_cache_data_reader.characteristics_data(
-        *included_data_types
-      )
+    def data_type_hashes
+      hashes = school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+      hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(:gsdata)))
       return [] if hashes.blank?
       hashes = hashes.map do |key, array|
-        values = array.select { |h| h['breakdown'] == 'All students' }
+        values = array.select do |h|
+          # If it has no breakdown keys, that's good (gsdata)
+          (!h.has_key?('breakdowns') && !h.has_key?('breakdown')) ||
+          # otherwise the breakdown better be 'All students' (characteristics)
+              h['breakdown'] == 'All students'
+        end
+        # This is for characteristics
         values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
         GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type #{key} in the characteristics cache",
+                       message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
                        vars: {school: {state: @school_cache_data_reader.school.state,
                                        id: @school_cache_data_reader.school.id}
                        }) if values.size > 1
@@ -115,7 +129,7 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
-      hashes.sort_by { |o| ordered_data_types.index( o['data_type']) }
+      hashes.sort_by { |o| included_data_types.index( o['data_type']) }
     end
 
     def data_values
@@ -129,7 +143,8 @@ module SchoolProfiles
           item.info_text = data_label_info_text(data_type)
           item.score = SchoolProfiles::DataPoint.new(hash['school_value']).
             apply_formatting(*formatting)
-          item.state_average = SchoolProfiles::DataPoint.new(hash['state_average']).
+          state_average = hash['state_average'] || hash['state_value']
+          item.state_average = SchoolProfiles::DataPoint.new(state_average).
             apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range
