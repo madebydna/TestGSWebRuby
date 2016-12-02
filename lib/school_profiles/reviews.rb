@@ -10,6 +10,7 @@ module SchoolProfiles
     end
 
     def summary
+      @_summary ||= (
       OpenStruct.new.tap do |struct|
         struct.number_of_reviews = reviews.size
         struct.number_of_reviews_label = reviews.size == 1 ? 'Review' : 'Reviews'
@@ -18,7 +19,10 @@ module SchoolProfiles
         struct.number_of_five_star_rating_reviews = reviews.five_star_rating_reviews.size
         struct.distribution = reviews.five_star_rating_reviews.score_distribution
         struct.topical_review_summary = reviews.topical_review_summary
-      end
+        struct.topical_review_distributions = reviews.by_topic.each_with_object({}) do |(topic, topical_reviews), hash|
+          hash[topic] = topical_reviews.extend(ReviewCalculations).score_distribution
+        end
+      end)
     end
 
     def reviews_list
