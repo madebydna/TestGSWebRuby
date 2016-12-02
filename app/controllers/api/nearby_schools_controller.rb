@@ -8,7 +8,8 @@ class Api::NearbySchoolsController < ApplicationController
     array_of_nearby_school_hashes =
       NearbySchoolsCaching::Methodologies::ClosestSchools.results(
         school,
-        limit: limit
+        limit: limit,
+        offset: params[:offset].to_i
       )
     if array_of_nearby_school_hashes.present?
       add_review_data_to_nearby_school_hashes(array_of_nearby_school_hashes)

@@ -76,6 +76,21 @@ describe Api::NearbySchoolsController do
         expect(response_array.size).to eq(1)
       end
 
+      it 'obeys the offset param' do
+        get :show, state: school.state, id: school.id, offset: 1
+        response_array = JSON.parse(response.body)
+        expect(response_array.size).to eq(1)
+        expected_nearby_school = nearby_schools.last
+        expect(
+          response_array.find do |hash|
+            {
+              'name' => expected_nearby_school.name,
+              'state' => expected_nearby_school.state 
+            }.to_a - hash.to_a
+          end
+        ).to be_present
+      end
+
       it 'obeys the max limit' do
         stub_const('Api::NearbySchoolsController::MAX_LIMIT', 1)
         get :show, state: school.state, id: school.id, limit: 2
