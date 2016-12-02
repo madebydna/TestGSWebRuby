@@ -7,29 +7,18 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   def show
     nearby_school_cache_hash =
       SchoolCacheDataReader.new(school).nearby_schools
+    array_of_nearby_school_hashes = []
 
     if nearby_school_cache_hash.present?
       array_of_nearby_school_hashes =
         nearby_school_cache_hash['closest_top_then_top_nearby_schools'] || []
       array_of_nearby_school_hashes = array_of_nearby_school_hashes.take(limit)
-      if array_of_nearby_school_hashes.present?
-        add_review_data_to_nearby_school_hashes(array_of_nearby_school_hashes)
-      end
     end
 
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
   end
 
   protected 
-
-  def add_review_data_to_nearby_school_hashes(hashes)
-    school_ids = hashes.map { |h| h['id'] }
-    review_datas = Review.average_five_star_rating(school.state, school_ids)
-    hashes.each do |hash|
-      review_data_for_school = review_datas[hash['id']]
-      hash.merge!(review_data_for_school.to_h) if review_data_for_school
-    end
-  end
 
   def limit
     return DEFAULT_LIMIT unless params[:limit]

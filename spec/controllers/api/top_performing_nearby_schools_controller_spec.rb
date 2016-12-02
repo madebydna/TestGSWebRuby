@@ -86,20 +86,18 @@ describe Api::TopPerformingNearbySchoolsController do
         expect(response_array.size).to eq(1)
       end
 
-      context 'when schools have reviews' do
-        before { give_reviews_to_schools(schools) }
-        it 'contain number_of_reviews and average_rating in each response' do
-          get :show, state: school.state, id: school.id
-          response_array = JSON.parse(response.body)
-          expect(response_array).to be_present
-          response_array.each do |hash|
-            expect(hash).to have_key('number_of_reviews')
-            expect(hash).to have_key('average_rating')
-            expect(hash['number_of_reviews']).to be(2)
-            expect(hash['average_rating']).to be(3.0)
-          end
+      it 'contain number_of_reviews and average_rating in each response' do
+        get :show, state: school.state, id: school.id
+        response_array = JSON.parse(response.body)
+        expect(response_array).to be_present
+        response_array.each do |hash|
+          expect(hash).to have_key('number_of_reviews')
+          expect(hash).to have_key('average_rating')
+          expect(hash['number_of_reviews']).to be(2)
+          expect(hash['average_rating']).to be(3.0)
         end
       end
+      
     end
   end
 
@@ -111,7 +109,9 @@ describe Api::TopPerformingNearbySchoolsController do
           "distance" => index,
           "id" => s.id,
           "name" => s.name,
-          "state" => s.state
+          "state" => s.state,
+          "number_of_reviews" => 2,
+          "average_rating" => 3.0
         }
       end
     FactoryGirl.create(
