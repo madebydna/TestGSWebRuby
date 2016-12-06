@@ -230,4 +230,32 @@
     @extend .icon-like;
     color: $color-5-scale-strongly-agree;
   }
+  .rating-bar-viz {
+    overflow: visible;
+    white-space: nowrap;
+    font-size: 12px;
+
+    .answer-icon {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .title {
+      vertical-align: top;
+      margin-left: 10px;
+      width: 100px;
+      display: inline-block;
+    }
+    .bar {
+      display: inline-block;
+      height: 15px;
+      margin-left: 10px;
+    }
+    .answer-count {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+  }
+  .rating-bar-viz ~ .rating-bar-viz {
+    margin-top: 5px;
+  }
 }

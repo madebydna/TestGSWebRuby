@@ -20,7 +20,7 @@ module SchoolProfiles
         struct.distribution = reviews.five_star_rating_reviews.score_distribution
         struct.topical_review_summary = reviews.topical_review_summary
         struct.topical_review_distributions = reviews.by_topic.each_with_object({}) do |(topic, topical_reviews), hash|
-          hash[topic] = topical_reviews.extend(ReviewCalculations).score_distribution
+          hash[I18n.db_t(topic)] = topical_reviews.extend(ReviewCalculations).score_distribution
         end
       end)
     end
