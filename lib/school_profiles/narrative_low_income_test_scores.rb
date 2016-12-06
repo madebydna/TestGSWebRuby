@@ -1,5 +1,5 @@
 module SchoolProfiles
-  class NarrativeLowIncome
+  class NarrativeLowIncomeTestScores
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
@@ -13,15 +13,14 @@ module SchoolProfiles
         hash = hash_for_calculation '236', subject
         if hash['li'].present?
           year_to_use = year_to_use_from_hash hash
-
           yml_key = key_for_yml hash, year_to_use
           if year_to_use.present?
             write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
-          else
-            bu_year_to_use = year_to_use_fall_back(hash)
-            if bu_year_to_use.present?
-              write_to_test_score_hash '236', '0_0', subject, write_location, bu_year_to_use
-            end
+          # else
+          #   bu_year_to_use = year_to_use_fall_back(hash)
+          #   if bu_year_to_use.present?
+          #     write_to_test_score_hash '236', '0_0', subject, write_location, bu_year_to_use
+          #   end
           end
         end
       end
@@ -53,11 +52,11 @@ module SchoolProfiles
     end
 
     # this is to write the default to if economically disadvantaged exists
-    def year_to_use_fall_back(hash)
-      if hash['li'].present? && hash['li'].keys.present?
-        hash['li'].keys.max
-      end
-    end
+    # def year_to_use_fall_back(hash)
+    #   if hash['li'].present? && hash['li'].keys.present?
+    #     hash['li'].keys.max
+    #   end
+    # end
 
     def calculate_column(hash, year_to_use)
       st_li_moe  = 1

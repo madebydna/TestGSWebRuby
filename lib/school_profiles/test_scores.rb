@@ -6,7 +6,7 @@ module SchoolProfiles
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
-      SchoolProfiles::NarrativeLowIncome.new(
+      SchoolProfiles::NarrativeLowIncomeTestScores.new(
           school_cache_data_reader: school_cache_data_reader
       )
     end

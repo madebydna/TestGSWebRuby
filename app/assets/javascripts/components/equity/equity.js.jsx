@@ -103,7 +103,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="column"
               graphId="low-income-ela-bar-graph" />,
-          explanation: <div>{data[1].narrative}</div>
+          explanation: <div>{data[1]['narrative']}</div>
         }
       )
     }
@@ -118,7 +118,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: <div>This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed.</div>
+          explanation: <div>{data[0]['narrative']}</div>
         }
       )
     }
@@ -132,9 +132,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-by-income-level-graph" />,
-          explanation: <div>This shows the percentages of graduates, by 
-            family income level, who have taken the A-G required classes needed 
-            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
+          explanation: <div>{data[0]['narrative']}</div>
         }
       )
     }
