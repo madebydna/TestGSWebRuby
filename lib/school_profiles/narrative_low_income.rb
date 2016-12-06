@@ -11,15 +11,17 @@ module SchoolProfiles
       write_location = 'Economically disadvantaged'
       subjects.each do |subject|
         hash = hash_for_calculation '236', subject
-        year_to_use = year_to_use_from_hash hash
+        if hash['li'].present?
+          year_to_use = year_to_use_from_hash hash
 
-        yml_key = key_for_yml hash, year_to_use
-        if year_to_use.present?
-          write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
-        else
-          bu_year_to_use = year_to_use_fall_back(hash)
-          if bu_year_to_use.present?
-            write_to_test_score_hash '236', '0_0', subject, write_location, bu_year_to_use
+          yml_key = key_for_yml hash, year_to_use
+          if year_to_use.present?
+            write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
+          else
+            bu_year_to_use = year_to_use_fall_back(hash)
+            if bu_year_to_use.present?
+              write_to_test_score_hash '236', '0_0', subject, write_location, bu_year_to_use
+            end
           end
         end
       end

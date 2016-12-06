@@ -13,85 +13,85 @@ en:
             This shows results for low-income students on a %{subject} test given to juniors once a year.
             Big differences may suggest that some student groups are not getting the support they need to succeed.
           '1_1_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are far below the state
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are far below the state
             average. <span class="negative">This is very concerning.</span></p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to help students who are behind.</span>
           '1_2_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are far below the state
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are far below the state
             average. <span class="negative">This is very concerning.</span></p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to help students who are behind.</span>
           '1_3_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are
             <span class="negative">far below state average for low-income kids</span> and there’s a
             <span class="negative">large gap between how low-income kids</span> are doing compared to their classmates
             with more financial resources. <span class="negative">This is very concerning.</span></p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing to help all
             students learn</span> – especially the ones who are behind.</p>
           '2_1_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are about the same
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are about the same
             as the state average for low-income kids, but they’re still below the state average for
             all kids. <span class="negative">This is worrisome.</span></p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to help students who are behind.</p>
           '2_2_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are about the same as
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are about the same as
             the state average for low-income kids, but they’re still behind the state average for all kids.
             <span class="negative">This is worrisome.</span></p>
-            <p class="emphasis">What’s more, there’s a <span class="negative">gap between how low-income kids</span>
+            <p class="narrative-content">What’s more, there’s a <span class="negative">gap between how low-income kids</span>
             are doing compared to their classmates with more financial resources.</p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to help students who are behind.</p>
           '2_3_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school
+            <p class="narrative-content">The %{subject} scores of low-income students at this school
             <span class="positive">are about the same as the state average for low-income kids</span>,
             but there’s a <span class="negative">large gap between how low-income kids</span> are doing compared
             to their classmates with more financial resources. <span class="negative">This is worrisome.</span>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing to help
             all students learn</span> – especially the ones who are behind.</p>
           '3_1_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are above the
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are above the
             state average for low-income kids, <span class="positive">which is a promising sign</span>,
             but they’re still below the state average for all kids.</p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to accelerate progress for students who are behind.</p>
           '3_2_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are above the
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are above the
             state average for low-income kids, <span class="positive">which is a promising sign</span>,
             but there’s still a <span class="negative">gap between how low-income kids</span> are doing
             compared to their classmates with more financial resources.</p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to help accelerate progress for students who are behind.</p>
           '3_3_html': >
-            <p class="emphasis">The %{subject} scores of low-income students at this school are
+            <p class="narrative-content">The %{subject} scores of low-income students at this school are
             <span class="positive">above the state average for low-income kids, which is a promising sign</span>,
             but there’s a <span class="negative">large gap between how low-income kids</span> are doing compared
             to their classmates with more financial resources.</p>
             <p class="footnote"><span class="emphasis">Parents should ask</span>
             the school what it’s doing to help all students succeed.</p>
           '4_1_html': >
-            <p class="emphasis"><span class="positive">A positive sign!</span> The %{subject} scores of low-income
+            <p class="narrative-content"><span class="positive">A positive sign!</span> The %{subject} scores of low-income
             students at this school are above the state average for all kids,
             suggesting that this school is doing a good job of teaching low-income students.</p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what else it can do</span>
             to support low-income students.</p>
           '4_2_html': >
-            <p class="emphasis"><span class="positive">A positive sign!</span> The %{subject} scores of low-income
+            <p class="narrative-content"><span class="positive">A positive sign!</span> The %{subject} scores of low-income
             students at this school are above the state average for all kids, however, there’s still a
             <span class="negative">gap between how low-income kids</span>
             are doing compared to their classmates with more financial resources.</p>
             <p class="footnote"><span class="emphasis">Parents should ask the school</span>
             how it plans to continue to support low-income students.</p>
           '4_3_html': >
-             <p class="emphasis"><span class="positive">A positive sign!</span>
+             <p class="narrative-content"><span class="positive">A positive sign!</span>
              The %{subject} scores of low-income students at this school are above the state average for all kids.
              Still, there's a <span class="negative">large gap between how low-income kids</span>
              are doing compared to their classmates with more financial resources.</p>
              <p class="footnote"><span class="emphasis">Parents should ask</span>
              the school what it’s doing to help all students succeed.</p>
           '5_1_html': >
-            <p class="emphasis">
+            <p class="narrative-content">
             <span class="positive">An excellent sign!</span>
             Low-income students at this school perform well above the state average in math/English, which is a
             great sign that the school supports students equitably.</p>
@@ -100,16 +100,15 @@ en:
             <a href="http://www.greatschools.org/gk/levels/high-school/">Are they learning essential skills like these?</a>
             </p>
           '5_2_html': >
-            <p class="emphasis"><span class="positive">An excellent sign!</span>
+            <p class="narrative-content"><span class="positive">An excellent sign!</span>
             Low-income students at this school perform well above the state average in %{subject}, a sign that
             the school supports students equitably.</p>
             <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
             to help all students succeed.
           '5_3_html': >
-            <p class="emphasis"><span class="positive">An excellent sign!</span>
+            <p class="narrative-content"><span class="positive">An excellent sign!</span>
             Low-income students at this school perform well above the state average in %{subject}.
             Still, there’s a <span class="negative">large gap between how low-income kids</span>
             are doing compared to their classmates with more financial resources.</p>
             <p class="footnote"><span class="emphasis">Parents should ask</span> the school what it’s doing to help
             all students succeed.</p>
-
