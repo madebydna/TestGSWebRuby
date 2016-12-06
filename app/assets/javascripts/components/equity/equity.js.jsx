@@ -89,8 +89,7 @@ class Equity extends React.Component {
                 test_scores={data}
                 type="column"
                 graphId="low-income-math-bar-graph" />,
-            explanation: <div>This shows results for low-income students on a math test given to juniors once a year.
-              Big differences may suggest that some student groups are not getting the support they need to succeed.</div>
+            explanation: <div>{data[1]['narrative']}</div>
           }
       );
     }
@@ -104,9 +103,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="column"
               graphId="low-income-ela-bar-graph" />,
-          explanation: <div>This shows results for low-income students on an English test given to juniors once a year.
-            Big differences can reflect high numbers of students still learning English.
-            They also may suggest that some students are not getting the support they need to succeed.</div>
+          explanation: <div>{data[1].narrative}</div>
         }
       )
     }
