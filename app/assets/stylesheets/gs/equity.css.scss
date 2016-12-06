@@ -101,6 +101,22 @@
 
   .right_content {
     padding: 10px 20px;
+    .narrative-content {
+      font-family: opensans-semibold;
+      font-size: 16px;
+      .negative {
+        color: #ff9900;
+      }
+      .positive{
+        color: #6aa84f;
+      }
+    }
+    .footnote {
+      font-size: 12px;
+      .emphasis {
+        font-family: opensans-semibold;
+      }
+    }
   }
 
   img.innovate-logo {

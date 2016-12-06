@@ -67,6 +67,10 @@ class EquitySection extends React.Component {
 EquitySection.propTypes = {
   equity_config: React.PropTypes.shape({
     section_info: React.PropTypes.object,
-    section_content: React.PropTypes.arrayOf(React.PropTypes.object)
+    section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
+      subject: React.PropTypes.string,
+      component: React.PropTypes.object,
+      explanation: React.PropTypes.element
+    }))
   })
 };

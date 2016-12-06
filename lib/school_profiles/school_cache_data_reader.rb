@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata)
 
     attr_reader :school, :school_cache_keys
 
@@ -15,6 +15,10 @@ module SchoolProfiles
 
     def decorated_school
       @_decorated_school ||= decorate_school(school)
+    end
+
+    def cache_updated_dates
+      decorated_school.cache_data.select { |k, _| k.match(/^_.*_updated$/) }.values.compact
     end
 
     def gs_rating
@@ -78,6 +82,10 @@ module SchoolProfiles
 
     def characteristics
       decorated_school.characteristics
+    end
+
+    def gsdata_data(*keys)
+      decorated_school.gsdata.slice(*keys)
     end
 
     def subject_scores_by_latest_year(data_type_id:, breakdown: 'All', grades: 'All', level_codes: 'e,m,h', subjects: nil)

@@ -146,6 +146,10 @@ class SchoolProfilesController < ApplicationController
     }
   end
 
+  def teacher_staff
+    SchoolProfiles::TeacherStaff.new(school_cache_data_reader)
+  end
+
   def build_gon_object
     add_gon_school_obj
     add_gon_links
@@ -232,7 +236,7 @@ class SchoolProfilesController < ApplicationController
     reviews_list = reviews.reviews
     review_date = reviews_list.present? ? reviews_list.first.created : nil
     school_date = school.modified.present? ? school.modified.to_date : nil
-    [review_date, school_date].compact.max
+    [review_date, school_date, *(school_cache_data_reader.cache_updated_dates)].compact.max
   end
 
   def add_dependencies_to_gon

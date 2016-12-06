@@ -53,7 +53,7 @@ describe 'school_profile/_person_bar_viz' do
     }.each do |score, expected_rating|
       it "renders #{expected_rating} when score is #{score}" do
         render_partial(valid_props.merge(score: score))
-        expect(rendered).to have_css(".rating_#{expected_rating}")
+        expect(rendered).to have_css(".rating_color_#{expected_rating}")
       end
     end
   end

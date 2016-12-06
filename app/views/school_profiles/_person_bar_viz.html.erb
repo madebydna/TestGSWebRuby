@@ -11,13 +11,22 @@
 
 <% if (0..100).cover?(score_percentage) && (1..10).cover?(score_rating) && !score.nil? %>
   <div class="person-bar-viz">
-    <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
-      <div class="arrow-down">
-        <span style="left:<%= state_average_percentage %>%"></span>
+    <div class="person-progress">
+      <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+        <div class="arrow-down">
+          <span style="left:<%= state_average_percentage %>%"></span>
+        </div>
+      <% end %>
+      <div class="background">
+        <% 10.times do %>
+          <span class="icon-person"></span>
+        <% end %>
       </div>
-    <% end %>
-    <div class="filled rating_<%= score_rating %>" style="width:<%= score_percentage %>%">
-      <div class="background"></div>
+      <div class="foreground rating_color_<%= score_rating %>" style="width:<%= score_percentage %>%">
+        <% 10.times do %>
+          <span class="icon-person"></span>
+        <% end %>
+      </div>
     </div>
   </div>
 <% else

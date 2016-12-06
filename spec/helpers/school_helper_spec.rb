@@ -43,4 +43,55 @@ describe SchoolHelper do
     end
   end
 
+  shared_examples_for 'produces a correct zillow campaign code' do
+    {
+        show: 'schoolsearch',
+        city_browse: 'schoolsearch',
+        district_browse: 'schoolsearch',
+        search: 'schoolsearch',
+        overview: 'localoverview',
+        reviews: 'localreviews',
+        quality: 'localquality',
+        details: 'localdetails',
+        unknown: 'gstrackingpagefail'
+    }.each do |action, default_campaign|
+      it "should use #{default_campaign} for #{action} action" do
+        allow(helper).to receive(:action_name).and_return(action.to_s)
+        expect(subject).to eq("#{expected_url}#{default_campaign}")
+      end
+    end
+
+    describe 'with a campaign parameter' do
+      let (:campaign) { 'spec' }
+      subject { helper.zillow_url(school, campaign) }
+
+      it 'should use provided campaign parameter regardless of action' do
+        allow(helper).to receive(:action_name).and_return('show')
+        expect(subject).to eq("#{expected_url}#{campaign}")
+      end
+    end
+  end
+
+  describe '#zillow_url' do
+    subject { helper.zillow_url(school) }
+
+    describe 'without a school' do
+      it_behaves_like 'produces a correct zillow campaign code' do
+        let (:school) { nil }
+        let (:expected_url) { 'http://www.zillow.com/?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=' }
+      end
+    end
+
+    describe 'with a school' do
+      it_behaves_like 'produces a correct zillow campaign code' do
+        let (:school) { double }
+        let (:expected_url) { 'http://www.zillow.com/CA-94611?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=' }
+
+        before do
+          allow(school).to receive(:zipcode).and_return('94611-1234')
+          allow(school).to receive(:state).and_return('ca')
+        end
+      end
+    end
+  end
 end

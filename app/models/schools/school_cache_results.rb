@@ -34,7 +34,9 @@ class SchoolCacheResults
     if hash
       hash.send(:extend, HashWithSchoolCacheData)
       hash.keys.each do |key|
-        hash.send(:extend, (module_for_key(key)))
+        if module_for_key(key)
+          hash.send(:extend, (module_for_key(key)))
+        end
       end
     end
     hash
@@ -50,11 +52,11 @@ class SchoolCacheResults
     @query_results.each do |result|
       school_id = result[:school_id]
       state = result[:state]
-      cache_key = result[:name]
       cache_value = begin JSON.parse(result.value) rescue {} end
 
       @school_data[[state.upcase, school_id]] ||= {}
       @school_data[[state.upcase, school_id]][result.name] = cache_value
+      @school_data[[state.upcase, school_id]]["_#{result.name}_updated"] = result.updated
     end
     @school_data
   end
@@ -79,6 +81,8 @@ class SchoolCacheResults
         CachedNearbySchoolsMethods
       when 'performance'
         CachedPerformanceMethods
+      when 'gsdata'
+        CachedGsdataMethods
     end
   end
 
