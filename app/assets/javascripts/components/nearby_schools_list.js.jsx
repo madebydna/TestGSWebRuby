@@ -8,6 +8,7 @@ class NearbySchoolsList extends React.Component {
     }
     this.pageLeft = this.pageLeft.bind(this);
     this.pageRight = this.pageRight.bind(this);
+    this.trackPagination = this.trackPagination.bind(this);
   }
 
   schools() {
@@ -36,6 +37,10 @@ class NearbySchoolsList extends React.Component {
     }
   }
 
+  trackPagination(label) {
+    window.analyticsEvent('Profile', this.props.nearbySchoolsType, label);
+  }
+
   // componentWillReceiveProps(nextProps) {
   //   if(nextProps.visible === true && this.props.schools === undefined) {
   //     this.getInitialSchools();
@@ -62,6 +67,7 @@ class NearbySchoolsList extends React.Component {
     this.setState({
       offset: this.state.offset - this.state.pageSize
     });
+    this.trackPagination('Previous');
   }
 
   pageRight() {
@@ -71,6 +77,7 @@ class NearbySchoolsList extends React.Component {
     this.setState({
       offset: this.state.offset + this.state.pageSize
     });
+    this.trackPagination('Next');
   }
 
   // true if on 2nd-to-last OR last page

@@ -3,7 +3,8 @@ var NearbySchoolsByDistanceList = ReactRedux.connect(
     return {
       schools: state.nearbySchools.byDistance,
       allSchoolsLoaded: state.nearbySchools.allNearbySchoolsLoaded,
-      school: state.school
+      school: state.school,
+      nearbySchoolsType: 'All nearby'
     };
   },
   function(dispatch, ownProps) { // dispatch can be invoked with action creator

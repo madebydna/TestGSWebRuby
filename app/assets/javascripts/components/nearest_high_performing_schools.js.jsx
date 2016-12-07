@@ -15,6 +15,16 @@ class NearestHighPerformingSchools extends React.Component {
     }.bind(this);
   }
 
+  trackTabChanged() {
+    window.analyticsEvent('Profile', 'Nearby Schools Toggle', this.state.tabNames[this.state.tabIndex]);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevState.tabIndex !== this.state.tabIndex) {
+      this.trackTabChanged();
+    }
+  }
+
   renderTabs() {
     let tabIndex = this.state.tabIndex;
     return this.state.tabNames.map(function(tabName, i) {
@@ -29,8 +39,16 @@ class NearestHighPerformingSchools extends React.Component {
   tabContentPanes() {
     let i = this.state.tabIndex;
     return [
-      <TopPerformingNearbySchoolsList store={window.store} key={0} visible={i == 0}/>,
-      <NearbySchoolsByDistanceList store={window.store} key={1} visible={i == 1} />
+      <TopPerformingNearbySchoolsList
+        store={window.store}
+        key={0}
+        visible={i == 0}
+      />,
+      <NearbySchoolsByDistanceList
+        store={window.store}
+        key={1}
+        visible={i == 1}
+      />
     ];
   }
 

@@ -3,7 +3,8 @@ var TopPerformingNearbySchoolsList = ReactRedux.connect(
     return {
       schools: state.nearbySchools.topPerforming,
       school: state.school,
-      allSchoolsLoaded: state.nearbySchools.allTopPerformingSchoolsLoaded
+      allSchoolsLoaded: state.nearbySchools.allTopPerformingSchoolsLoaded,
+      nearbySchoolsType: 'Nearest high-performing'
     };
   },
   function(dispatch, ownProps) { // dispatch can be invoked with action creator
