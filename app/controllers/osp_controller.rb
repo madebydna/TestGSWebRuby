@@ -47,6 +47,9 @@ class OspController < ApplicationController
     end
     approve_all_images_for_member(params[:membership_id])
     # only java is receiving this html, does not matter that it renders blank page
+    EspMembership.find_by(id: params[:membership_id], status: 'approved', active: true).tap do |em|
+      SchoolUser.make_from_esp_membership(em) if em
+    end
     render text: ''
   end
 
