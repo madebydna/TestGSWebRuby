@@ -22,8 +22,15 @@ module SchoolProfiles
     end
 
     def key_for_yml(hash, year_to_use)
-      column = calculate_column hash, year_to_use
-      row = calculate_row hash, year_to_use
+      st_nli_avg = hash['nli'][year_to_use]['state_average']
+      st_li_avg = hash['li'][year_to_use]['state_average']
+      sch_nli_avg = hash['nli'][year_to_use]['score']
+      sch_li_avg = hash['li'][year_to_use]['score']
+      st_all_avg = hash['all'][year_to_use]['state_average']
+
+      nf = SchoolProfiles::NarrationFormula.new
+      column = nf.low_income_test_scores_calculate_column st_nli_avg, st_li_avg, sch_li_avg, st_all_avg
+      row = nf.low_income_test_scores_calculate_row st_nli_avg, st_li_avg, sch_li_avg, sch_nli_avg
 
       if year_to_use.present? && column.present? && row.present?
         (column << '_' << row)
@@ -43,46 +50,6 @@ module SchoolProfiles
     def year_to_use_from_hash(hash)
       if hash['li'].present? && hash['nli'].present? && hash['all'].present? && hash['li'].keys.max == hash['nli'].keys.max && hash['li'].keys.max == hash['all'].keys.max
         hash['li'].keys.max
-      end
-    end
-
-    def calculate_column(hash, year_to_use)
-      st_li_moe  = 1
-      st_all_moe = 1
-      st_nli_moe = 1
-      st_all_avg = hash['all'][year_to_use]['state_average']
-      st_nli_avg = hash['nli'][year_to_use]['state_average']
-      st_li_avg = hash['li'][year_to_use]['state_average']
-      sch_li_avg = hash['li'][year_to_use]['score']
-
-      # Column logic
-      if (sch_li_avg - (st_li_avg - st_li_moe) < 0)
-        '1'
-      elsif ((sch_li_avg - (st_li_avg - st_li_moe) >= 0) && (sch_li_avg - (st_li_avg + st_li_moe) <= 0))
-        '2'
-      elsif ((sch_li_avg - (st_li_avg + st_li_moe) > 0) && (sch_li_avg - (st_all_avg - st_all_moe) < 0))
-        '3'
-      elsif ((sch_li_avg - (st_all_avg - st_all_moe) >= 0) && (sch_li_avg - (st_nli_avg - st_nli_moe) <= 0))
-        '4'
-      elsif (sch_li_avg - (st_nli_avg - st_nli_moe) >= 0)
-        '5'
-      end
-    end
-
-    def calculate_row(hash, year_to_use)
-      st_diff_moe = 1
-      st_nli_avg = hash['nli'][year_to_use]['state_average']
-      st_li_avg = hash['li'][year_to_use]['state_average']
-      sch_nli_avg = hash['nli'][year_to_use]['score']
-      sch_li_avg = hash['li'][year_to_use]['score']
-
-      #   Row logic
-      if ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) - st_diff_moe) < 0)
-        '1'
-      elsif (((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) - st_diff_moe) >= 0) && ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) + st_diff_moe) <= 0))
-        '2'
-      elsif ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) + st_diff_moe) > 0)
-        '3'
       end
     end
 
