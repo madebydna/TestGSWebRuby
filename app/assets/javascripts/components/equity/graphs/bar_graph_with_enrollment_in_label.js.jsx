@@ -5,7 +5,7 @@ class BarGraphWithEnrollmentInLabel extends EquityBarGraph {
 
   // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    return _.map(this.props.test_scores, function(data) {
+    return _.map(this.testScores(), function(data) {
       let subLabel = '';
       if (data.numberOfStudents) {
         subLabel = data.numberOfStudents.toLocaleString() + ' students';
