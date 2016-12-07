@@ -27,18 +27,26 @@
   }
   .title-bar {
     padding-bottom: 20px;
-    font-size: 18px;
-    font-family: opensans-semibold;
 
-    @include media-breakpoint-up(sm) {
-      font-size: 20px;
+    .title-container {
+      overflow: hidden;
+    }
+    .title {
+      font-size: 18px;
+      font-family: opensans-semibold;
+      @include media-breakpoint-up(sm) {
+        font-size: 20px;
+      }
+      a {
+        margin-left: $spacing-small;
+      }
     }
 
     .rating-layout {
-      display: inline-block;
       margin-right: 10px;
       vertical-align: middle;
       font-size: 24px;
+      float: left;
     }
   }
   .sub-section-navigation{

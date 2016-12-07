@@ -145,7 +145,7 @@ class Equity extends React.Component {
     let section2Content = [];
     let section1Tabs = this.section1Tabs();
     let section2Tabs = this.section2Tabs();
-    config = [];
+    let config = [];
 
     if(section1Tabs[0].length > 0) {
       section1Content.push(
@@ -185,6 +185,7 @@ class Equity extends React.Component {
       config.push({
         section_info:{
           title: 'Race/ethnicity',
+          subtitle: <span>Achievement gaps between different student groups are common but not insurmountable. Find out <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">how to start a conversation</a> at your child's school about the best ways to help all kids succeed.</span>,
           rating: '',
           info_text: 'This section gives a picture of test scores, graduation rates, and other measures for students across different races/ethnicities.',
           sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity',
@@ -198,6 +199,7 @@ class Equity extends React.Component {
       config.push({
         section_info:{
           title: 'Low-income students',
+          subtitle: <span>Which schools successfully serve kids from low-income families? Check out these <a href="/gk/articles/top-15-bay-area-high-schools-for-students-from-low-income-families/">California schools that are beating the odds</a>.</span>,
           rating: this.lowIncomeRating(),
           icon_classes: 'icon-pie',
           info_text: 'This rating reflects English, math, and science test scores for students who qualify for free or reduced-price lunch compared to all students in the state.',
