@@ -16,11 +16,6 @@ module SchoolProfiles
           yml_key = key_for_yml hash, year_to_use
           if year_to_use.present?
             write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
-          # else
-          #   bu_year_to_use = year_to_use_fall_back(hash)
-          #   if bu_year_to_use.present?
-          #     write_to_test_score_hash '236', '0_0', subject, write_location, bu_year_to_use
-          #   end
           end
         end
       end
@@ -50,13 +45,6 @@ module SchoolProfiles
         hash['li'].keys.max
       end
     end
-
-    # this is to write the default to if economically disadvantaged exists
-    # def year_to_use_fall_back(hash)
-    #   if hash['li'].present? && hash['li'].keys.present?
-    #     hash['li'].keys.max
-    #   end
-    # end
 
     def calculate_column(hash, year_to_use)
       st_li_moe  = 1
