@@ -144,8 +144,10 @@ class SchoolUser < ActiveRecord::Base
         school_id: esp_membership.school_id
       }
       school_user = SchoolUser.find_by(criteria) || SchoolUser.new(criteria, without_protection: true)
-      school_user.user_type = 'principal' if school_user.new_record?
-      school_user.save! if school_user.new_record?
+      if school_user.new_record?
+        school_user.user_type = 'principal'
+        school_user.save!
+      end
     else
       raise 'given esp_membership cannot be nil'
     end

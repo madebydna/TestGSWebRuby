@@ -225,7 +225,7 @@ describe SchoolUser do
 
   describe '.make_from_esp_membership' do
     context 'when school user already exists for esp membership' do
-      it 'saves a new SchoolUser with user type principal' do
+      it 'does not overwrite existing school_user' do
         esp_membership = double(
           member_id: 1,
           state: 'ca',
