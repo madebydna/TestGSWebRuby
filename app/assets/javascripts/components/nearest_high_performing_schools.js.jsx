@@ -3,8 +3,8 @@ class NearestHighPerformingSchools extends React.Component {
     super(props);
     this.state = {
       tabIndex: this.props.tabIndex || 0,
-      tabNames: ['Nearest high-performing', 'All nearby'],
     }
+    this.tabNames = ['Nearest high-performing', 'All nearby']
   }
 
   createTabClickHandler(index) {
@@ -16,7 +16,7 @@ class NearestHighPerformingSchools extends React.Component {
   }
 
   trackTabChanged() {
-    window.analyticsEvent('Profile', 'Nearby Schools Toggle', this.state.tabNames[this.state.tabIndex]);
+    window.analyticsEvent('Profile', 'Nearby Schools Toggle', this.tabNames[this.state.tabIndex]);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -27,7 +27,7 @@ class NearestHighPerformingSchools extends React.Component {
 
   renderTabs() {
     let tabIndex = this.state.tabIndex;
-    return this.state.tabNames.map(function(tabName, i) {
+    return this.tabNames.map(function(tabName, i) {
       return (
         <button className={tabIndex == i ? 'active' : ''} onClick={this.createTabClickHandler(i)} key={i}>
           {tabName}

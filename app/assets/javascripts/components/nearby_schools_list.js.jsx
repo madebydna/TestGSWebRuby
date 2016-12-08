@@ -3,16 +3,16 @@ class NearbySchoolsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      offset: 0,
-      pageSize: 3
+      offset: 0
     }
     this.pageLeft = this.pageLeft.bind(this);
     this.pageRight = this.pageRight.bind(this);
     this.trackPagination = this.trackPagination.bind(this);
+    this.pageSize = 3;
   }
 
   schools() {
-    return this.props.schools.slice(this.state.offset, this.state.offset + this.state.pageSize);
+    return this.props.schools.slice(this.state.offset, this.state.offset + this.pageSize);
   }
 
   getSchools(count) {
@@ -23,7 +23,7 @@ class NearbySchoolsList extends React.Component {
       this.props.school.state,
       this.props.school.id,
       (this.props.schools || []).length,
-      (count || this.state.pageSize)
+      (count || this.pageSize)
     );
   }
 
@@ -67,7 +67,7 @@ class NearbySchoolsList extends React.Component {
 
   pageLeft() {
     this.setState({
-      offset: this.state.offset - this.state.pageSize
+      offset: this.state.offset - this.pageSize
     });
     this.trackPagination('Previous');
   }
@@ -77,29 +77,29 @@ class NearbySchoolsList extends React.Component {
       this.getSchools();
     }
     this.setState({
-      offset: this.state.offset + this.state.pageSize
+      offset: this.state.offset + this.pageSize
     });
     this.trackPagination('Next');
   }
 
   // true if on 2nd-to-last OR last page
   onPenultimateOrLastPage() {
-    return this.state.offset >= (this.props.schools.length - (2 * this.state.pageSize));
+    return this.state.offset >= (this.props.schools.length - (2 * this.pageSize));
   }
 
   shouldGetMoreSchools() {
     return (
       this.props.schools !== undefined && 
-      (this.state.offset + this.state.pageSize >= this.props.schools.length - this.state.pageSize)
+      (this.state.offset + this.pageSize >= this.props.schools.length - this.pageSize)
     );
   }
 
   canPageLeft() {
-    return this.state.offset >= this.state.pageSize;
+    return this.state.offset >= this.pageSize;
   }
 
   canPageRight() {
-    return this.state.offset + this.state.pageSize < this.props.schools.length;
+    return this.state.offset + this.pageSize < this.props.schools.length;
   }
 
   pageLeftButton() {
