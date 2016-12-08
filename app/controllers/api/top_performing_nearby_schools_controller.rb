@@ -16,6 +16,7 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
     end
 
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
+    render 'api/nearby_schools/show'
   end
 
   protected 

@@ -86,6 +86,13 @@ describe Api::TopPerformingNearbySchoolsController do
         expect(response_array.size).to eq(1)
       end
 
+      it 'contains the school\'s url' do
+        get :show, state: school.state, id: school.id, limit: 2
+        response_array = JSON.parse(response.body)
+        expect(response_array.first).to have_key('links')
+        expect(response_array.first['links']['show']).to be_present
+      end
+
       it 'contain number_of_reviews and average_rating in each response' do
         get :show, state: school.state, id: school.id
         response_array = JSON.parse(response.body)
