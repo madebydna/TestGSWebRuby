@@ -61,6 +61,7 @@ class SchoolProfilesController < ApplicationController
         sp.equity = equity
         sp.toc = toc
         sp.breadcrumbs = breadcrumbs
+        sp.teachers_staff = teachers_staff
       end
     )
   end
@@ -146,8 +147,8 @@ class SchoolProfilesController < ApplicationController
     }
   end
 
-  def teacher_staff
-    SchoolProfiles::TeacherStaff.new(school_cache_data_reader)
+  def teachers_staff
+    SchoolProfiles::TeachersStaff.new(school_cache_data_reader)
   end
 
   def build_gon_object

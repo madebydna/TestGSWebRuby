@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe SchoolProfiles::TeacherStaff do
+describe SchoolProfiles::TeachersStaff do
   let(:school) { double("school") }
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
   subject(:teacher_staff) do
-    SchoolProfiles::TeacherStaff.new(school_cache_data_reader)
+    SchoolProfiles::TeachersStaff.new(school_cache_data_reader)
   end
 
   describe '#data_values' do
@@ -73,7 +73,7 @@ describe SchoolProfiles::TeacherStaff do
       config = [
           { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
       ].shuffle
-      stub_const('SchoolProfiles::TeacherStaff::CHAR_CACHE_ACCESSORS', config)
+      stub_const('SchoolProfiles::TeachersStaff::GSDATA_CACHE_ACCESSORS', config)
       expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } )
     end
   end
