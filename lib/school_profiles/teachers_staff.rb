@@ -7,22 +7,22 @@ module SchoolProfiles
         {
             :data_key => 'Ratio of teacher salary to total number of teachers',
             :visualization => :dollar_viz, #something that means number
-            :formatting => [:round, :dollars]
+            :formatting => [:to_f, :round, :dollars]
         },
         {
             :data_key => 'Percentage of full time teachers who are certified',
             :visualization => :single_bar_viz, #something that means number
-            :formatting => [:round, :percent]
+            :formatting => [:to_f, :round, :percent]
         },
         {
             :data_key => 'Ratio of students to full time counselors',
             :visualization => :ratio_viz, #something that means number
-            :formatting => [:round]
+            :formatting => [:to_f, :round]
         },
         {
             :data_key => 'Ratio of students to full time teachers',
             :visualization => :ratio_viz, #something that means number
-            :formatting => [:round]
+            :formatting => [:to_f, :round]
         }
     ].freeze
 
@@ -107,9 +107,8 @@ module SchoolProfiles
           item.info_text = data_label_info_text(data_type)
           item.score = SchoolProfiles::DataPoint.new(hash['school_value'].to_f).
               apply_formatting(*formatting)
-          # item.state_average = SchoolProfiles::DataPoint.new(hash['state_average']).
-          #     apply_formatting(*formatting)
-          # item.state_average = '1000'
+          item.state_average = SchoolProfiles::DataPoint.new(hash['state_value']).
+              apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range
         end

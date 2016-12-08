@@ -20,6 +20,9 @@
         <% unless score_data.formatted_state_average.nil? %>
           <div class="rating-score-item__state-average">
             <%= t('.state_average') %>: <%= score_data.formatted_state_average %>
+            <% if score_data.visualization == :ratio_viz %>
+                <span class="ratio-viz-state-avg">:1</span>
+            <% end %>
           </div>
         <% end %>
       </div>
