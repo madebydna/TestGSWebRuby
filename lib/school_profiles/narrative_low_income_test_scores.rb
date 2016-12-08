@@ -3,10 +3,9 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
-      auto_narrative
     end
 
-    def auto_narrative
+    def auto_narrative_calculate_and_add
       subjects = ['English Language Arts', 'Math']
       write_location = 'Economically disadvantaged'
       subjects.each do |subject|

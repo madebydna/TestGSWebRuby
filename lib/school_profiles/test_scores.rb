@@ -8,7 +8,8 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
       SchoolProfiles::NarrativeLowIncomeTestScores.new(
           school_cache_data_reader: school_cache_data_reader
-      )
+      ).auto_narrative_calculate_and_add
+
     end
 
     def rating

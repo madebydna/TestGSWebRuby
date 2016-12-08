@@ -121,6 +121,9 @@
     }
     .footnote {
       font-size: 12px;
+      a {
+        font-size: 12px;
+      }
       .emphasis {
         font-family: opensans-semibold;
       }
