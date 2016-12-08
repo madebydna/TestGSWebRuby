@@ -5,11 +5,12 @@ module SchoolProfiles
 
     attr_accessor :content
 
-    def initialize(test_scores, college_readiness, equity, students)
+    def initialize(test_scores, college_readiness, equity, students, teacher_staff)
       @test_scores = test_scores
       @college_readiness = college_readiness
       @equity = equity
       @students = students
+      @teacher_staff = teacher_staff
     end
 
     def academics
@@ -43,6 +44,9 @@ module SchoolProfiles
       arr = []
       if @students.visible?
         arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
+      end
+      if @teacher_staff.visible?
+        arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}
       end
       arr << {column: 'Environment', label: 'neighborhood', present: true, rating: nil, anchor: 'Neighborhood'}
       hash[:environment] = arr

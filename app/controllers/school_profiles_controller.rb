@@ -94,7 +94,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teachers_staff)
   end
 
   def test_scores

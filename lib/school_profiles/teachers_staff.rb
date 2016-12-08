@@ -63,6 +63,10 @@ module SchoolProfiles
       I18n.t('lib.teachers_staff.info_text')
     end
 
+    def visible?
+      data_values.present?
+    end
+
     def data_label(key)
       key.to_sym
       I18n.t(key.to_sym, scope: 'lib.teachers_staff', default: key)
