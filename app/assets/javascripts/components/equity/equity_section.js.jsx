@@ -68,7 +68,11 @@ class EquitySection extends React.Component {
     return <div className="equity-section">
           <a className="anchor-mobile-offset" name={link_name}></a>
       <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
-      <SectionNavigation key="sectionNavigation" items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      <SectionNavigation key="sectionNavigation"
+                         items={section_content}
+                         active={this.state.active}
+                         google_tracking={section_info.title}
+                         onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
       <div className="source-link">Source: <a href={section_info.sourceHref} target="_blank">see notes</a></div>
     </div>
