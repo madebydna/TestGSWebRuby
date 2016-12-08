@@ -1,8 +1,4 @@
 <% teachers_staff %>
-<% title = 'Teachers & staff' %>
-<% info_text = 'blah blah blah' %>
-<% rating = '9' %>
-<% subtitle = 'Parents often value small class sizes because they know that teachers are the most important factor on their child’s education, but the truth is more complicated.' %>
 <% data_values = teachers_staff.data_values %>
 <% initial_size = 3 %>
 
@@ -17,8 +13,8 @@
               <span class="icon-user" style="font-size: 26px"></span>
             </div>
             <div class="title-container">
-              <span class="title"><%= title %></span></br>
-              <span><%= subtitle %></span>
+              <span class="title"><%= t('.title') %></span></br>
+              <span><%= t('.subtitle_html') %></span>
             </div>
           </div>
         </div>
