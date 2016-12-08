@@ -5,24 +5,29 @@ module SchoolProfiles
 
     GSDATA_CACHE_ACCESSORS = [
         {
-            :data_key => 'Ratio of teacher salary to total number of teachers',
-            :visualization => :dollar_viz, #something that means number
-            :formatting => [:to_f, :round, :dollars]
-        },
-        {
-            :data_key => 'Percentage of full time teachers who are certified',
-            :visualization => :single_bar_viz, #something that means number
-            :formatting => [:to_f, :round, :percent]
+            :data_key => 'Ratio of students to full time teachers',
+            :visualization => :ratio_viz,
+            :formatting => [:to_f, :round]
         },
         {
             :data_key => 'Ratio of students to full time counselors',
-            :visualization => :ratio_viz, #something that means number
+            :visualization => :ratio_viz,
             :formatting => [:to_f, :round]
         },
         {
-            :data_key => 'Ratio of students to full time teachers',
-            :visualization => :ratio_viz, #something that means number
-            :formatting => [:to_f, :round]
+            :data_key => 'Percentage of teachers with less than three years experience',
+            :visualization => :single_bar_viz,
+            :formatting => [:to_f, :round, :percent]
+        },
+        {
+            :data_key => 'Percentage of full time teachers who are certified',
+            :visualization => :single_bar_viz,
+            :formatting => [:to_f, :round, :percent]
+        },
+        {
+            :data_key => 'Ratio of teacher salary to total number of teachers',
+            :visualization => :dollar_viz,
+            :formatting => [:to_f, :round, :dollars]
         }
     ].freeze
 
@@ -92,8 +97,6 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
-      # Are we really ordering alphabetically????  doesn't seem right.
-      # hashes.sort_by { |o| included_data_types.index( o[:data_key]) }
     end
 
     def data_values
