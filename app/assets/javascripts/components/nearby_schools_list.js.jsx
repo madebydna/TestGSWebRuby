@@ -11,11 +11,7 @@ class NearbySchoolsList extends React.Component {
     this.pageSize = 3;
   }
 
-  schools() {
-    return this.props.schools.slice(this.state.offset, this.state.offset + this.pageSize);
-  }
-
-  getSchools(count) {
+  requestSchools(count) {
     if(this.props.allSchoolsLoaded) {
       return;
     }
@@ -28,7 +24,7 @@ class NearbySchoolsList extends React.Component {
   }
 
   getInitialSchools() {
-    this.getSchools(6);
+    this.requestSchools(6);
   }
 
   componentDidMount(nextProps) {
@@ -41,14 +37,12 @@ class NearbySchoolsList extends React.Component {
     window.analyticsEvent('Profile', this.props.nearbySchoolsType, label);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if(nextProps.visible === true && this.props.schools === undefined) {
-  //     this.getInitialSchools();
-  //   }
-  // }
+  visibleSchools() {
+    return this.props.schools.slice(this.state.offset, this.state.offset + this.pageSize);
+  }
 
   renderNearbySchools() {
-    return this.schools().map(function(school,i) {
+    return this.visibleSchools().map(function(school,i) {
       return (<NearbySchool
         key={i}
         GSRating={school.gs_rating}
@@ -74,7 +68,7 @@ class NearbySchoolsList extends React.Component {
 
   pageRight() {
     if(this.onPenultimateOrLastPage()) {
-      this.getSchools();
+      this.requestSchools();
     }
     this.setState({
       offset: this.state.offset + this.pageSize
