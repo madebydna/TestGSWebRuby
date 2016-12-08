@@ -69,12 +69,24 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-graph" />,
-          explanation: <div>This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
+          explanation: this.narrationContentTestScores(4)
         }
       )
     }
 
     return tabs;
+  }
+
+  narrationContentTestScores(id){
+    let narration_str;
+    switch(id){
+      case 4: { narration_str = 'This shows the percentages of graduates who have taken the A-G required classes needed to ' +
+          'be eligible for University of CA and CA state schools. ' +
+          '<a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> ' +
+          'about these requirements.</div>'; break;}
+    }
+
+    return <div dangerouslySetInnerHTML={{__html: narration_str}} />;
   }
 
   section2Tabs() {
