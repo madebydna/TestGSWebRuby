@@ -9,11 +9,12 @@ GS.fixToTopWhenBelowY = function($elem, startYFunc, endYFunc, conditionCallback)
     shouldFixToTop = shouldFixToTop && (
       YValueOfTopOfViewport > startY && YValueOfTopOfViewport < endY
     )
+    var defaultWidth = $elem.width();
 
     if(shouldFixToTop) {
-      $elem.css({position: 'fixed', top: '20px'});
+      $elem.css({position: 'fixed', top: '20px', width: defaultWidth});
     } else {
-      $elem.css({position: 'static', top: undefined});
+      $elem.css({position: 'static', top: undefined, width: 'auto'});
     }
   }
 

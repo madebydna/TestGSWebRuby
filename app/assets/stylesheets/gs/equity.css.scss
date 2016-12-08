@@ -160,6 +160,7 @@
   .rating-container__title a {
     @include media-breakpoint-up(lg) {
       display: block;
+      height: 120px;
     }
   }
 }

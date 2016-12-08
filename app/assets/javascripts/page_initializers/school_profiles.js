@@ -99,7 +99,7 @@ $(function() {
           return $elem.parent().offset().top - 20;
         },
         function($elem){
-          return $elem.parent().offset().top + $elem.parent().parent().parent().height() - 80;
+          return $elem.parent().offset().top + $elem.parent().parent().parent().height() - 50 - $elem.height();
         },
         function() {
           return viewport().width >= minWidth;
