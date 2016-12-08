@@ -12,10 +12,11 @@
       <div class="col-xs-6">
         <div class="rating-score-item__score">
           <%= score_data.formatted_score %>
+          <% if score_data.visualization == :ratio_viz %>
+            <span class="ratio-viz">:1</span>
+          <% end %>
         </div>
-        <% if score_data.visualization == :ratio_viz %>
-          <span class="ratio-viz">:1</span>
-        <% end %>
+
         <% unless score_data.formatted_state_average.nil? %>
           <div class="rating-score-item__state-average">
             <%= t('.state_average') %>: <%= score_data.formatted_state_average %>
