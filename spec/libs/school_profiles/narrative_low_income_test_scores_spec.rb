@@ -6,7 +6,8 @@ describe SchoolProfiles::NarrativeLowIncomeTestScores do
     it "should change test score hash correctly" do
       school_cache_data_reader = mock_school_cache_data_reader
 
-      SchoolProfiles::NarrativeLowIncomeTestScores.new(school_cache_data_reader: school_cache_data_reader)
+      narrativeLowIncomeTestScores = SchoolProfiles::NarrativeLowIncomeTestScores.new(school_cache_data_reader: school_cache_data_reader)
+      narrativeLowIncomeTestScores.auto_narrative_calculate_and_add
 
       expect(school_cache_data_reader.test_scores).to eq(result_hash)
     end
