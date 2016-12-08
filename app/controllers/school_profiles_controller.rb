@@ -69,7 +69,7 @@ class SchoolProfilesController < ApplicationController
   def get_school_params
     params.permit(:schoolId, :school_id, :state)
     params[:id] = params[:schoolId] || params[:school_id]
-    params[:state_abbr] = States.abbreviation(params[:state])
+    params[:state_abbr] = States.abbreviation(params[:state].gsub('-', ' '))
     params
   end
 
