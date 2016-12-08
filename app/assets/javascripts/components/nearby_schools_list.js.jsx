@@ -59,8 +59,10 @@ class NearbySchoolsList extends React.Component {
         city={school.city}
         state={school.state}
         distance={school.distance}
+        schoolUrl={school.links.show}
+        nearbySchoolsType={this.props.nearbySchoolsType}
         />);
-    });
+    }.bind(this));
   }
 
   pageLeft() {

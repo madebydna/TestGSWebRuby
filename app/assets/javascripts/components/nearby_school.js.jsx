@@ -60,7 +60,12 @@ class NearbySchool extends React.Component {
       <div className="nearby-school">
         {this.renderRating()}
         <div>
-          <a>{this.props.schoolName}</a>
+          <a href={this.props.schoolUrl}
+            data-ga-click-category='Profile'
+            data-ga-click-action={this.props.nearbySchoolsType}
+            data-ga-click-label={this.props.schoolUrl}>
+            {this.props.schoolName}
+          </a>
           <div className="school-info">
             <span>{this.props.schoolType}</span>
             <span>{this.props.gradeRange}</span>
@@ -81,5 +86,7 @@ NearbySchool.propTypes = {
   gradeRange: React.PropTypes.string,
   city: React.PropTypes.string,
   state: React.PropTypes.string,
-  distance: React.PropTypes.number
+  distance: React.PropTypes.number,
+  schoolUrl: React.PropTypes.string,
+  nearbySchoolsType: React.PropTypes.string
 }
