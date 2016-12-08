@@ -7,7 +7,7 @@ module SchoolProfiles
         {
             :data_key => 'Ratio of teacher salary to total number of teachers',
             :visualization => :person_bar_viz, #something that means number
-            :formatting => [:whoknows]
+            :formatting => [:round]
         },
         {
             :data_key => 'Percentage of full time teachers who are certified',
