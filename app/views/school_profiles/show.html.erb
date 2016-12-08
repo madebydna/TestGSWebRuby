@@ -41,6 +41,10 @@
       <div>
         <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
       </div>
+
+      <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
+
       <div>
         <%= render 'review_summary', reviews: @school_profile.reviews %>
       </div>
@@ -63,6 +67,10 @@
   <div>
     <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
   </div>
+
+  <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+             width: 320, height: 50, css_class: 'mbl' %>
+
 
   <% if @school_profile.last_modified_date.present? %>
     <div class="pll ptl" style="color:#999999">
