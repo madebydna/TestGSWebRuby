@@ -123,11 +123,12 @@ class SchoolProfilesController < ApplicationController
   end
 
   def reviews
-    @_reviews ||= SchoolProfiles::Reviews.new(school)
+    # This needs ReviewQuestions for the topical distribution popup
+    @_reviews ||= SchoolProfiles::Reviews.new(school, review_questions)
   end
 
   def review_questions
-    SchoolProfiles::ReviewQuestions.new(school)
+    @_review_questions ||= SchoolProfiles::ReviewQuestions.new(school)
   end
 
   def neighborhood

@@ -230,6 +230,15 @@
     @extend .icon-like;
     color: $color-5-scale-strongly-agree;
   }
+  &.review-distribution {
+    h4 {
+      margin: 0 0 $spacing-large;
+      line-height: 1.44;
+    }
+    .blue-highlight {
+      color: $brand-primary;
+    }
+  }
   .rating-bar-viz {
     overflow: visible;
     white-space: nowrap;

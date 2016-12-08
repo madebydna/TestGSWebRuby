@@ -22,7 +22,8 @@ class ReviewDistribution extends React.Component {
   }
 
   render() {
-    var topicMap = this.props.distribution;
+    var topicMap = this.props.distribution.dist;
+    var question = this.props.distribution.question;
     var stronglyAgree = topicMap['Strongly agree'] || 0;
     var agree = topicMap['Agree'] || 0;
     var neutral = topicMap['Neutral'] || 0;
@@ -31,7 +32,8 @@ class ReviewDistribution extends React.Component {
     var max = Math.max(stronglyAgree, agree, neutral, disagree, stronglyDisagree);
     max = max + 1; // never fill a bar up all the way
     return (
-        <div className="topical-review">
+        <div className="topical-review review-distribution">
+          <h4 dangerouslySetInnerHTML={ {__html: question} }/>
           { this.renderBar('Strongly agree', 5, stronglyAgree, max) }
           { this.renderBar('Agree', 4, agree, max) }
           { this.renderBar('Neutral', 3, neutral, max) }

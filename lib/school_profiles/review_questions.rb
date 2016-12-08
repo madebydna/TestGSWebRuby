@@ -7,6 +7,7 @@ module SchoolProfiles
       @school = school
     end
 
+    # The SchoolProfiles::Reviews class uses this
     def questions
       @_questions ||= (
         ReviewQuestion.active
@@ -24,6 +25,7 @@ module SchoolProfiles
 
     private
 
+    # The SchoolProfiles::Reviews class uses this so any structural changes should be reflected there
     def question_to_hash(question)
       {
         response_values: question.response_array,
