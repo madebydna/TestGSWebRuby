@@ -89,7 +89,7 @@ class Equity extends React.Component {
                 test_scores={data}
                 type="column"
                 graphId="low-income-math-bar-graph" />,
-            explanation: <div>{this.narrrationContent(data)}</div>
+            explanation: this.narrrationContent(data)
           }
       );
     }
@@ -103,7 +103,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="column"
               graphId="low-income-ela-bar-graph" />,
-          explanation: <div>{this.narrrationContent(data)}</div>
+          explanation: this.narrrationContent(data)
         }
       )
     }
@@ -118,7 +118,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: <div>{this.narrrationContent(data)}</div>
+          explanation: this.narrrationContent(data)
         }
       )
     }
@@ -132,7 +132,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-by-income-level-graph" />,
-          explanation: <div>{this.narrrationContent(data)}</div>
+          explanation: this.narrrationContent(data)
         }
       )
     }
@@ -144,7 +144,7 @@ class Equity extends React.Component {
     let l = data.length;
     for(var i=0; i < l; i++){
       if(data[i].breakdown == 'Economically disadvantaged'){
-        return data[i]['narrative'];
+        return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }
   }
