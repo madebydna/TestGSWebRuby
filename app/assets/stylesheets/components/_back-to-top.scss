@@ -1,0 +1,46 @@
+$back-to-top-active-gray: #9BA0A4;
+$back-top-top-gray: #b8bbbe;
+
+.back-to-top {
+  position: fixed;
+  bottom: 6em;
+  right: 0px;
+  text-decoration: none;
+  display: none;
+  color: $white;
+  background-color: $back-top-top-gray;
+  border-radius: 32px 0 0 32px;
+  padding-left: 17px;
+  padding-right: 20px;
+  font-size: 22px;
+  height: 47px;
+  line-height: 45px;
+  z-index: 10;
+  .top-icon {
+    display: inline-block;
+    line-height: normal;
+  }
+  .top-text {
+    display: none;
+    font-size: 16px;
+    font-family: "opensans-regular";
+    color: $white;
+    padding-left: 10px;
+    // the way to vertically align the top text to the top icon
+    vertical-align: 11%;
+  }
+}
+
+a.back-to-top:hover {
+  color: $white;
+  text-decoration: none;
+  .top-text {
+    display: inline-block;
+    line-height: normal;
+  }
+  display: none;
+}
+
+a.back-to-top:active {
+  background-color: $back-to-top-active-gray;
+}
