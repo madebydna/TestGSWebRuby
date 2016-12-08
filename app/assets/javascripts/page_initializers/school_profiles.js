@@ -89,5 +89,23 @@ $(function() {
     refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   })();
 
+  $(function() {
+    $('.rating-container__title').each(function() {
+      var $elem = $(this);
+      var minWidth = 1200;
+      GS.fixToTopWhenBelowY(
+        $elem,
+        function($elem){
+          return $elem.parent().offset().top - 20;
+        },
+        function($elem){
+          return $elem.parent().offset().top + $elem.parent().parent().parent().height() - 80;
+        },
+        function() {
+          return viewport().width >= minWidth;
+        }
+      );
+    });
+  });
 
 });

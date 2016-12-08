@@ -47,4 +47,5 @@
 //= require util/subscription
 //= require util/send_updates
 //= require util/back_to_top
+//= require util/fix_to_top_when_below_y
 //= require page_initializers/school_profiles
