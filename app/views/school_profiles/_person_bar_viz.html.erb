@@ -18,14 +18,10 @@
         </div>
       <% end %>
       <div class="background">
-        <% 10.times do %>
-          <span class="icon-person"></span>
-        <% end %>
+        <%= render 'ten_person_icons' %>
       </div>
       <div class="foreground rating_color_<%= score_rating %>" style="width:<%= score_percentage %>%">
-        <% 10.times do %>
-          <span class="icon-person"></span>
-        <% end %>
+        <%= render 'ten_person_icons' %>
       </div>
     </div>
   </div>

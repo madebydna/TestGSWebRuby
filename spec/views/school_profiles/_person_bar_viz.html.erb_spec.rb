@@ -11,6 +11,7 @@ describe 'school_profile/_person_bar_viz' do
   end
 
   def render_partial(props)
+    stub_template "_ten_person_icons.html.erb" => "persons"
     render partial: 'school_profiles/person_bar_viz', locals: props
   end
 

@@ -1,4 +1,6 @@
 .person-bar-viz {
+  $people-height: 75px;
+  font-family: 'icon-greatscools';
   $background-gray: #dbe6eb;
   .arrow-down {
     position: relative;
@@ -16,8 +18,10 @@
   .person-progress {
     position: relative;
     white-space: nowrap;
-    font-size: 40px;
+    font-size: $people-height;
+    line-height: $people-height;
     display: inline-block;
+    height: $people-height;
   }
   .person-progress > .background {
     color: $background-gray;
