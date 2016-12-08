@@ -39,11 +39,16 @@
         <%= render 'students', students: @school_profile.students %>
       </div>
       <div>
+        <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+      </div>
+
+      <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
+
+      <div>
         <%= render 'review_summary', reviews: @school_profile.reviews %>
       </div>
-      <div>
 
-      </div>
       <div>
         <%= render 'reviews',
           review_questions: @school_profile.review_questions,
@@ -52,6 +57,9 @@
       </div>
     </div>
   </div>
+
+  <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+             width: 320, height: 50, css_class: 'mbl' %>
 
   <div>
     <%= render 'neighborhood', neighborhood: @school_profile.neighborhood %>

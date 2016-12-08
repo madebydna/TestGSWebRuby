@@ -8,15 +8,15 @@
 
     <div class="school-contact">
       <% if hero.has_school_address? %>
-        <a href="#Neighborhood"
-           class="js-gaClick"
-           data-ga-click-category='Profile'
-           data-ga-click-action='Hero links'
-           data-ga-click-label='Neighborhood'>
-          <div class="school-contact__item school-contact__address">
+        <div class="school-contact__item school-contact__address">
+          <a href="#Neighborhood"
+             class="js-gaClick"
+             data-ga-click-category='Profile'
+             data-ga-click-action='Hero links'
+             data-ga-click-label='Neighborhood'>
             <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
-          </div>
-        </a>
+          </a>
+        </div>
       <% end %>
       <% if hero.has_district? %>
         <div class="school-contact__item school-contact__district-name">

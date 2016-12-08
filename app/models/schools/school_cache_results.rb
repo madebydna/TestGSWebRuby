@@ -56,7 +56,8 @@ class SchoolCacheResults
 
       @school_data[[state.upcase, school_id]] ||= {}
       @school_data[[state.upcase, school_id]][result.name] = cache_value
-      @school_data[[state.upcase, school_id]]["_#{result.name}_updated"] = result.updated
+      # This breaks SchoolCacheDecorator::merged_data
+      #@school_data[[state.upcase, school_id]]["_#{result.name}_updated"] = result.updated
     end
     @school_data
   end

@@ -1,5 +1,6 @@
 <% test_scores %>
 <% title = t('.title') %>
+<% subtitle = t('.subtitle_html') %>
 <% rating = test_scores.rating %>
 <% info_text = test_scores.info_text  %>
 <% data_values = test_scores.subject_scores || [] %>
@@ -12,6 +13,7 @@
       circle_color_modifier: rating,
       circle_content: rating,
       title: title,
+      subtitle: subtitle,
       info_text: info_text
     %>
   </div>

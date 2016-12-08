@@ -5,14 +5,14 @@ class BarGraphWithEnrollmentInLabel extends EquityBarGraph {
 
   // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    return _.map(this.props.test_scores, function(data) {
+    return _.map(this.testScores(), function(data) {
       let subLabel = '';
       if (data.numberOfStudents) {
         subLabel = data.numberOfStudents.toLocaleString() + ' students';
       } else if(data.percentOfStudentBody) {
-        subLabel = Math.round(data.percentOfStudentBody) + '% of students</span>';
+        subLabel = Math.round(data.percentOfStudentBody) + '% of students';
       }
-      return data.breakdown + '<br/><span style="font-size:smaller">' + subLabel + '</span>';
+      return data.breakdown + ' <span style="font-size:smaller;font-family:opensans-regular;color:#71787e;">(' + subLabel + ')</span>';
     }.bind(this));
   }
 }

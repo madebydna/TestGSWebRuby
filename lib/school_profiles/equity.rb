@@ -66,24 +66,13 @@ module SchoolProfiles
       sch_avg = data['school_value']
       st_avg = data['state_average']
       st_moe = 1
+      nf = SchoolProfiles::NarrationFormula.new
       if data_type_name == 'Percent of students who meet UC/CSU entrance requirements'
         very_low = 20
-        narration_formula(sch_avg, st_avg, st_moe, very_low)
+        nf.low_income_grad_rate_and_entrance_requirements sch_avg, st_avg, st_moe, very_low
       elsif data_type_name == '4-year high school graduation rate'
         very_low = 10
-        narration_formula(sch_avg, st_avg, st_moe, very_low)
-      end
-    end
-
-    def narration_formula(sch_avg, st_avg, st_moe, very_low)
-      if (st_avg - st_moe) - sch_avg > very_low
-        '1'
-      elsif (((st_avg - st_moe) - sch_avg <= very_low) && ((st_avg - st_moe) - sch_avg > 0))
-        '2'
-      elsif (((st_avg - st_moe) - sch_avg <= 0) && ((st_avg + st_moe) - sch_avg >= 0))
-        '3'
-      elsif ((st_avg + st_moe) - sch_avg < 0)
-        '4'
+        nf.low_income_grad_rate_and_entrance_requirements sch_avg, st_avg, st_moe, very_low
       end
     end
 

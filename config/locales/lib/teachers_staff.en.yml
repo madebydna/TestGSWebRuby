@@ -1,0 +1,10 @@
+en:
+  lib:
+    teachers_staff:
+      info_text: 'info_text'
+      'Ratio of teacher salary to total number of teachers': 'Average teacher salary'
+      'Percentage of full time teachers who are certified': '% of full time teachers who are certified'
+      'Ratio of students to full time counselors': 'Students per counselor'
+      'Ratio of students to full time teachers': 'Students per teacher'
+      data_point_info_texts:
+

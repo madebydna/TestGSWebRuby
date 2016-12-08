@@ -280,6 +280,13 @@ describe OspController do
       expect(UpdateQueue.count).to eql 3
     end
 
+    it 'should tell SchoolUser to make a SchoolUser' do
+      membership = double
+      expect(EspMembership).to receive(:find_by).and_return(membership)
+      expect(SchoolUser).to receive(:make_from_esp_membership).with(membership)
+      controller.approve_provisional_osp_user_data
+    end
+
     context 'osp_form_responses and update_queue' do
       it 'should have the same blob' do
         controller.approve_provisional_osp_user_data

@@ -1,0 +1,39 @@
+<% teachers_staff %>
+<% title = 'Teachers & staff' %>
+<% info_text = 'blah blah blah' %>
+<% rating = '9' %>
+<% subtitle = 'Parents often value small class sizes because they know that teachers are the most important factor on their child’s education, but the truth is more complicated.' %>
+<% data_values = teachers_staff.data_values %>
+<% initial_size = 3 %>
+
+<a class="anchor-mobile-offset" name="Teachers_staff"></a>
+<div class="students-container">
+  <div class="row">
+    <div class="col-xs-12 col-lg-3"></div>
+      <div class="col-xs-12 col-lg-9">
+        <div class="rating-container__rating">
+          <div class="module-header">
+            <div class="circle-rating--equity-blue circle-rating--medium">
+              <span class="icon-user" style="font-size: 26px"></span>
+            </div>
+            <div class="title-container">
+              <span class="title"><%= title %></span></br>
+              <span><%= subtitle %></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="col-xs-12 col-lg-3"></div>
+    <div class="col-xs-12 col-lg-9">
+      <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+
+      <% if data_values.size > initial_size %>
+          <div class="rating-container__more-items">
+            <%= render layout:'drawer' do %>
+                <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+            <% end %>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
