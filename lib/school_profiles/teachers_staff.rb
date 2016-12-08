@@ -7,7 +7,7 @@ module SchoolProfiles
         {
             :data_key => 'Ratio of teacher salary to total number of teachers',
             :visualization => :person_bar_viz, #something that means number
-            :formatting => [:round]
+            :formatting => [:round, :dollars]
         },
         {
             :data_key => 'Percentage of full time teachers who are certified',
@@ -88,7 +88,8 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
-      hashes.sort_by { |o| included_data_types.index( o[:data_key]) }
+      # Are we really ordering alphabetically????  doesn't seem right.
+      # hashes.sort_by { |o| included_data_types.index( o[:data_key]) }
     end
 
     def data_values
