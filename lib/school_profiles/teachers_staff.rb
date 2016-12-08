@@ -6,7 +6,7 @@ module SchoolProfiles
     GSDATA_CACHE_ACCESSORS = [
         {
             :data_key => 'Ratio of teacher salary to total number of teachers',
-            :visualization => :person_bar_viz, #something that means number
+            :visualization => :dollar_viz, #something that means number
             :formatting => [:round, :dollars]
         },
         {
