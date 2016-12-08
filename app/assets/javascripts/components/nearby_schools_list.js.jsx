@@ -132,9 +132,19 @@ class NearbySchoolsList extends React.Component {
     return (<div><SpinnyWheel content={content}/></div>);
   }
 
+  waitingForInitialSchools() {
+    return this.props.schools === undefined;
+  }
+
+  noSchoolsFound() {
+    return this.props.allSchoolsLoaded && this.props.schools.length === 0;
+  }
+
   render() {
-    if(this.props.schools === undefined || this.props.school.length == 0) {
+    if(this.waitingForInitialSchools()) {
       return this.renderSpinny();
+    } else if (this.noSchoolsFound()) {
+      return <div style={{'text-align':'center'}}>No schools found</div>
     }
     return (
       <div className="slider">
