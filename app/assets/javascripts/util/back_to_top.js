@@ -35,6 +35,11 @@ GS.util.BackToTop = GS.util.BackToTop || (function() {
       $('html, body').animate({scrollTop: 0}, scroll_duration);
       return false;
     });
+    $('.back-to-top').hover(function(event) {
+      event.preventDefault();
+      $('.back-to-top > .top-text').stop().toggle('400ms');
+      return false;
+    });
   };
 
   return {
