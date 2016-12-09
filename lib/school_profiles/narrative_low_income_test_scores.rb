@@ -8,6 +8,7 @@ module SchoolProfiles
     def auto_narrative_calculate_and_add
       subjects = ['English Language Arts', 'Math']
       write_location = 'Economically disadvantaged'
+      return nil unless valid_school_cache_data_reader?
       subjects.each do |subject|
         hash = hash_for_calculation '236', subject
         if hash['li'].present?
@@ -61,6 +62,13 @@ module SchoolProfiles
       full_key = 'lib.test_scores.narrative.low_income.' << key << '_html'
       subject_tran = I18n.t(subject_key)
       I18n.t(full_key, subject: subject_tran)
+    end
+
+    private
+
+    def valid_school_cache_data_reader?
+      @school_cache_data_reader.respond_to?(:test_scores) &&
+        @school_cache_data_reader.test_scores.is_a?(Hash)
     end
   end
 end
