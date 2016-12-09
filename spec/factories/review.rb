@@ -34,12 +34,13 @@ FactoryGirl.define do
           end
           strategy = :build_stubbed if strategy == :stub
           answer_value = evaluator.answer_value.to_s
+
           answer = evaluator[:answer] || send(strategy, :review_answer, review: review, answer_value: answer_value )
-          # review.answers << answer
           answer.review = review
 
           # Add back the ID that the factory generated
           unless strategy == :create
+            review.answers << answer
             review.id = id
           end
         end
