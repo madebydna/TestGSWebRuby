@@ -6,7 +6,10 @@
   .nearby-schools {
     position: relative;
     margin: auto;
-    padding: 30px 15px;
+    padding: 30px 0px;
+    @include media-breakpoint-up(sm) {
+      padding: 30px 15px;
+    }
     max-width: 1170px;
   }
 

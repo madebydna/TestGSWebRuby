@@ -69,12 +69,24 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-graph" />,
-          explanation: <div>This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
+          explanation: this.narrationContentTestScores(4)
         }
       )
     }
 
     return tabs;
+  }
+
+  narrationContentTestScores(id){
+    let narration_str;
+    switch(id){
+      case 4: { narration_str = 'This shows the percentages of graduates who have taken the A-G required classes needed to ' +
+          'be eligible for University of CA and CA state schools. ' +
+          '<a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> ' +
+          'about these requirements.</div>'; break;}
+    }
+
+    return <div dangerouslySetInnerHTML={{__html: narration_str}} />;
   }
 
   section2Tabs() {
@@ -89,8 +101,7 @@ class Equity extends React.Component {
                 test_scores={data}
                 type="column"
                 graphId="low-income-math-bar-graph" />,
-            explanation: <div>This shows results for low-income students on a math test given to juniors once a year.
-              Big differences may suggest that some student groups are not getting the support they need to succeed.</div>
+            explanation: this.narrrationContent(data)
           }
       );
     }
@@ -104,9 +115,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="column"
               graphId="low-income-ela-bar-graph" />,
-          explanation: <div>This shows results for low-income students on an English test given to juniors once a year.
-            Big differences can reflect high numbers of students still learning English.
-            They also may suggest that some students are not getting the support they need to succeed.</div>
+          explanation: this.narrrationContent(data)
         }
       )
     }
@@ -121,7 +130,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: <div>This shows how graduation rates differ by family income level. Big differences may suggest that some students are not getting the support they need to succeed.</div>
+          explanation: this.narrrationContent(data)
         }
       )
     }
@@ -135,9 +144,7 @@ class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-by-income-level-graph" />,
-          explanation: <div>This shows the percentages of graduates, by 
-            family income level, who have taken the A-G required classes needed 
-            to be eligible for University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.</div>
+          explanation: this.narrrationContent(data)
         }
       )
     }
@@ -145,12 +152,21 @@ class Equity extends React.Component {
     return tabs;
   }
 
+  narrrationContent(data){
+    let l = data.length;
+    for(var i=0; i < l; i++){
+      if(data[i].breakdown == 'Economically disadvantaged'){
+        return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
+      }
+    }
+  }
+
   equityConfiguration(){
     let section1Content = [];
     let section2Content = [];
     let section1Tabs = this.section1Tabs();
     let section2Tabs = this.section2Tabs();
-    config = [];
+    let config = [];
 
     if(section1Tabs[0].length > 0) {
       section1Content.push(
@@ -190,6 +206,7 @@ class Equity extends React.Component {
       config.push({
         section_info:{
           title: 'Race/ethnicity',
+          subtitle: <span>Achievement gaps between different student groups are common but not insurmountable. Find out <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">how to start a conversation</a> at your child's school about the best ways to help all kids succeed.</span>,
           rating: '',
           info_text: 'This section gives a picture of test scores, graduation rates, and other measures for students across different races/ethnicities.',
           sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity',
@@ -203,6 +220,7 @@ class Equity extends React.Component {
       config.push({
         section_info:{
           title: 'Low-income students',
+          subtitle: <span>Which schools successfully serve kids from low-income families? Check out these <a href="/gk/articles/top-15-bay-area-high-schools-for-students-from-low-income-families/">California schools that are beating the odds</a>.</span>,
           rating: this.lowIncomeRating(),
           icon_classes: 'icon-pie',
           info_text: 'This rating reflects English, math, and science test scores for students who qualify for free or reduced-price lunch compared to all students in the state.',

@@ -8,7 +8,7 @@ class SectionNavigation extends React.Component {
                 className={'nav-title js-gaClick' + (active === index ? ' tab_selected' : '')}
                 onClick={this.onClick.bind(this, index)}
                 data-ga-click-category='Profile'
-                data-ga-click-action='Equity Ethnicity Tabs'
+                data-ga-click-action={this.googleTrackingAction()}
                 data-ga-click-label={item.section_title}>
         {item.section_title}
       </a>;
@@ -18,5 +18,9 @@ class SectionNavigation extends React.Component {
 
   onClick(index) {
     this.props.onTabClick(index);
+  }
+
+  googleTrackingAction(){
+    return 'Equity '+this.props.google_tracking+' Tabs'
   }
 };

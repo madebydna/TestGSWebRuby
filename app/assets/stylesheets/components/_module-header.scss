@@ -1,8 +1,17 @@
 .module-header {
+  min-height: 50px;
+
+  .circle-rating--medium {
+    float: left;
+  }
+  .title-container {
+    padding: 0 $spacing-medium;
+    overflow: hidden;
+  }
+
   .title {
     font-family: opensans-semibold;
     font-size: 18px;
-    margin-left: $spacing-medium;
     @include media-breakpoint-up(sm) {
       font-size: 20px;
     }

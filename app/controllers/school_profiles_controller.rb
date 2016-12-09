@@ -61,6 +61,7 @@ class SchoolProfilesController < ApplicationController
         sp.equity = equity
         sp.toc = toc
         sp.breadcrumbs = breadcrumbs
+        sp.teachers_staff = teachers_staff
       end
     )
   end
@@ -68,7 +69,7 @@ class SchoolProfilesController < ApplicationController
   def get_school_params
     params.permit(:schoolId, :school_id, :state)
     params[:id] = params[:schoolId] || params[:school_id]
-    params[:state_abbr] = States.abbreviation(params[:state])
+    params[:state_abbr] = States.abbreviation(params[:state].gsub('-', ' '))
     params
   end
 
@@ -93,7 +94,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teachers_staff)
   end
 
   def test_scores
@@ -122,11 +123,12 @@ class SchoolProfilesController < ApplicationController
   end
 
   def reviews
-    @_reviews ||= SchoolProfiles::Reviews.new(school)
+    # This needs ReviewQuestions for the topical distribution popup
+    @_reviews ||= SchoolProfiles::Reviews.new(school, review_questions)
   end
 
   def review_questions
-    SchoolProfiles::ReviewQuestions.new(school)
+    @_review_questions ||= SchoolProfiles::ReviewQuestions.new(school)
   end
 
   def neighborhood
@@ -144,6 +146,10 @@ class SchoolProfilesController < ApplicationController
       t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
+  end
+
+  def teachers_staff
+    SchoolProfiles::TeachersStaff.new(school_cache_data_reader)
   end
 
   def build_gon_object
@@ -232,7 +238,7 @@ class SchoolProfilesController < ApplicationController
     reviews_list = reviews.reviews
     review_date = reviews_list.present? ? reviews_list.first.created : nil
     school_date = school.modified.present? ? school.modified.to_date : nil
-    [review_date, school_date].compact.max
+    [review_date, school_date, *(school_cache_data_reader.cache_updated_dates)].compact.max
   end
 
   def add_dependencies_to_gon

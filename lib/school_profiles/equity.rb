@@ -3,6 +3,9 @@ module SchoolProfiles
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
       @data_type_id = '236'
+      SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
+          school_cache_data_reader: school_cache_data_reader
+      ).auto_narrative_calculate_and_add
     end
 
     def test_scores_by_ethnicity
@@ -35,6 +38,8 @@ module SchoolProfiles
       end
       visible
     end
+
+
 
     def rating_low_income
       @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')

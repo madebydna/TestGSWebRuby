@@ -26,8 +26,7 @@ $border-color: #dbe6eb;
 }
 
 .rating-container__score-item {
-  padding-bottom: 5px;
-  padding-top: 10px;
+  padding: 10px 10px 5px 10px;
 }
 .rating-container__score-item ~ .rating-container__score-item {
   border-top: 1px solid $border-color;

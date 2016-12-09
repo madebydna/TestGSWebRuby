@@ -28,7 +28,7 @@ module SchoolProfiles
     end
 
     def formatted_state_average
-      state_average.format
+      state_average.try(:format)
     end
   end
 end

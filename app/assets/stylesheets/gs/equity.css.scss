@@ -27,18 +27,26 @@
   }
   .title-bar {
     padding-bottom: 20px;
-    font-size: 18px;
-    font-family: opensans-semibold;
 
-    @include media-breakpoint-up(sm) {
-      font-size: 20px;
+    .title-container {
+      overflow: hidden;
+    }
+    .title {
+      font-size: 18px;
+      font-family: opensans-semibold;
+      @include media-breakpoint-up(sm) {
+        font-size: 20px;
+      }
+      a {
+        margin-left: $spacing-small;
+      }
     }
 
     .rating-layout {
-      display: inline-block;
       margin-right: 10px;
       vertical-align: middle;
       font-size: 24px;
+      float: left;
     }
   }
   .sub-section-navigation{
@@ -101,6 +109,25 @@
 
   .right_content {
     padding: 10px 20px;
+    .narrative-content {
+      font-family: opensans-semibold;
+      font-size: 16px;
+      .negative {
+        color: #ff9900;
+      }
+      .positive{
+        color: #6aa84f;
+      }
+    }
+    .footnote {
+      font-size: 12px;
+      a {
+        font-size: 12px;
+      }
+      .emphasis {
+        font-family: opensans-semibold;
+      }
+    }
   }
 
   img.innovate-logo {
@@ -127,6 +154,13 @@
     @include media-breakpoint-up(lg) {
       width: 205px;
       display: block;
+    }
+  }
+
+  .rating-container__title a {
+    @include media-breakpoint-up(lg) {
+      display: block;
+      height: 120px;
     }
   }
 }

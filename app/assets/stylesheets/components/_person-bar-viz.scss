@@ -1,4 +1,7 @@
 .person-bar-viz {
+  $people-height: 50px;
+  font-family: 'icon-greatscools';
+  $background-gray: #dbe6eb;
   .arrow-down {
     position: relative;
     left: -7px;
@@ -12,18 +15,26 @@
       border-top: 9px solid #b2b2b2;
     }
   }
-  width: 250px;
-  height: 38px;
-  background-color: #dbe6eb;
-
-  .filled {
-    height: 100%;
+  .person-progress {
+    position: relative;
+    white-space: nowrap;
+    font-size: $people-height;
+    line-height: $people-height;
+    display: inline-block;
+    height: $people-height;
   }
-  .background {
-    width: 250px;
-    height: 38px;
-    background-repeat: repeat-x;
-    background-image: image-url('transparent_person.png');
+  .person-progress > .background {
+    color: $background-gray;
+    display: inline-block;
+  }
+  .person-progress span {
+    display: inline-block;
+  }
+  .person-progress > .foreground {
+   position: absolute;
+   top: 0;
+   left: 0;
+   overflow: hidden;
   }
 }
 

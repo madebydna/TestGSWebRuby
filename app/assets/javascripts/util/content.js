@@ -14,9 +14,18 @@ GS.content.contentManager = function(ele) {
   var contentType = ele.data('content-type');
   if(contentType == 'info_box'){
     content = ele.data('content-html');
+  } else if (contentType == 'react') {
+    var componentName = ele.data('react-component');
+    var containerId = ele.data('react-container-id');
+    var props = ele.data('react-props');
+
+    if (window[componentName] && window.ReactDOM) {
+      var component = React.createElement(window[componentName], props);
+      ReactDOM.render(component, document.getElementById(containerId));
+      content = document.getElementById(containerId).innerHTML;
+    }
   }
 
   // this is just an example of returned content
-  return  content;
-
+  return content;
 };

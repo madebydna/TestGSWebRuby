@@ -8,6 +8,14 @@ module SchoolProfiles
       def self.percent(value)
         "#{value}%"
       end
+
+      def self.to_f(value)
+        value.to_f
+      end
+
+      def self.dollars(value)
+        ActiveSupport::NumberHelper.number_to_currency(value, precision:0)
+      end
     end
 
     attr_reader :value

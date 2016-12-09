@@ -16,6 +16,16 @@ $(function() {
     $contentPane.children().addClass('dn').filter('[data-target="' + $this.data('target') + '"]').removeClass('dn');
   });
 
+  $('.js-send-me-updates-button-footer').on('click', function () {
+    if (GS.schoolNameFromUrl() === undefined || GS.stateAbbreviationFromUrl() === undefined ) {
+      GS.sendUpdates.signupAndGetNewsletter();
+    } else {
+      var state = GS.stateAbbreviationFromUrl();
+      var schoolId = GS.schoolIdFromUrl();
+      GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+    }
+  });
+
   // When search bar added to universal nav, was required to init autocomplete on all pages
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
   // if state abbreviation is NOT set will init autocomplete without state.
@@ -79,5 +89,23 @@ $(function() {
     refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   })();
 
+  $(function() {
+    $('.rating-container__title').each(function() {
+      var $elem = $(this);
+      var minWidth = 1200;
+      GS.fixToTopWhenBelowY(
+        $elem,
+        function($elem){
+          return $elem.parent().offset().top - 20;
+        },
+        function($elem){
+          return $elem.parent().offset().top + $elem.parent().parent().parent().height() - 50 - $elem.height();
+        },
+        function() {
+          return viewport().width >= minWidth;
+        }
+      );
+    });
+  });
 
 });

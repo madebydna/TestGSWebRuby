@@ -43,6 +43,8 @@
 @import "components/school-user-modal";
 @import "components/info-circle";
 @import "components/module-header";
+@import "components/ratio-viz";
+@import "components/back-to-top";
 @import "gs/objects/footer.css.scss";
 @import "sprites/*";
 @import "gs/buttons";
@@ -94,6 +96,7 @@
 @import 'school_profiles/review_form';
 @import 'school_profiles/students_container';
 @import 'school_profiles/subgroups';
+@import 'school_profiles/teachers_staff';
 @import 'resources/tipso';
 @import 'resources/remodal';
 @import 'resources/remodal-default-theme';

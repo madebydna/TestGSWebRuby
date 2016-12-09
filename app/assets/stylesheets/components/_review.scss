@@ -168,6 +168,9 @@
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
       margin: 5px;
       float: left;
+      font-size: 12px;
+      text-decoration: none;
+      color: #333;
     }
 
     .topic-icon {
@@ -226,5 +229,42 @@
   .strongly-agree {
     @extend .icon-like;
     color: $color-5-scale-strongly-agree;
+  }
+  &.review-distribution {
+    h4 {
+      margin: 0 0 $spacing-large;
+      line-height: 1.44;
+    }
+    .blue-highlight {
+      color: $brand-primary;
+    }
+  }
+  .rating-bar-viz {
+    overflow: visible;
+    white-space: nowrap;
+    font-size: 12px;
+
+    .answer-icon {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .title {
+      vertical-align: top;
+      margin-left: 10px;
+      width: 100px;
+      display: inline-block;
+    }
+    .bar {
+      display: inline-block;
+      height: 15px;
+      margin-left: 10px;
+    }
+    .answer-count {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+  }
+  .rating-bar-viz ~ .rating-bar-viz {
+    margin-top: 5px;
   }
 }

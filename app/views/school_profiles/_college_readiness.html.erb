@@ -1,5 +1,6 @@
 <% college_readiness %>
 <% title = t('.title') %>
+<% subtitle = t('.subtitle_html') %>
 <% rating = college_readiness.rating %>
 <% info_text = college_readiness.info_text  %>
 <% data_values = college_readiness.data_values || [] %>
@@ -12,6 +13,7 @@
       circle_color_modifier: rating,
       circle_content: rating,
       title: title,
+      subtitle: subtitle,
       info_text: info_text
     %>
   </div>

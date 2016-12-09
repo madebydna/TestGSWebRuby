@@ -43,17 +43,36 @@ class EquitySection extends React.Component {
     return name.split(' ').join('_');
   }
 
+  sectionTitle(sectionInfo) {
+    var subtitle = '';
+    if (sectionInfo.subtitle) {
+      subtitle = sectionInfo.subtitle;
+    }
+    return (
+        <div className="title-container">
+          <div className="title">
+            {sectionInfo.title}
+            {this.drawInfoCircle(sectionInfo.info_text)}
+          </div>
+          {subtitle}
+        </div>
+    )
+  }
+
   render() {
     let section_info = this.props.equity_config["section_info"];
     let section_content = this.props.equity_config["section_content"];
     let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
-    let infoCircle = this.drawInfoCircle(section_info.info_text);
     let link_name = this.linkName(section_info.title);
 
     return <div className="equity-section">
           <a className="anchor-mobile-offset" name={link_name}></a>
-      <div className="title-bar">{rating}{section_info.title}&nbsp;{infoCircle}</div>
-      <SectionNavigation key="sectionNavigation" items={section_content} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+      <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
+      <SectionNavigation key="sectionNavigation"
+                         items={section_content}
+                         active={this.state.active}
+                         google_tracking={section_info.title}
+                         onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
       <div className="source-link">Source: <a href={section_info.sourceHref} target="_blank">see notes</a></div>
     </div>
@@ -67,6 +86,10 @@ class EquitySection extends React.Component {
 EquitySection.propTypes = {
   equity_config: React.PropTypes.shape({
     section_info: React.PropTypes.object,
-    section_content: React.PropTypes.arrayOf(React.PropTypes.object)
+    section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
+      subject: React.PropTypes.string,
+      component: React.PropTypes.object,
+      explanation: React.PropTypes.element
+    }))
   })
 };

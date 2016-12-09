@@ -150,6 +150,14 @@
 .icon-chevron-right:before {
   content: "\e913";
 }
+.icon-chevron-left:before {
+  content: "\e913";
+  display: block; 
+  -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
+  -o-transform: matrix(-1, 0, 0, 1, 0, 0);
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+}
 .icon-user:before {
   content: "\e912";
 }

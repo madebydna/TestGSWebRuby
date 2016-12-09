@@ -50,8 +50,48 @@
     }
   }
 
+  .slider {
+    display: table-row;
+  }
+  .slider-body {
+    display: table-cell;
+    width: 100%;
+    @include media-breakpoint-only(xs) {
+      padding: 15px 0px;
+    }
+  }
+  .prev, .next {
+    display: table-cell;
+    cursor: auto;
+    vertical-align: middle;
+    padding: 0px 5px;
+    font-size: 20px;
+    span {
+      color: #c1d2d9;
+    }
+    @include media-breakpoint-only(xs) {
+      background-color: #F6F6F6;
+    }
+    &.active {
+      cursor: pointer;
+      span {
+        color: #7a8488;
+      }
+    }
+  }
+  .prev {
+    @include media-breakpoint-up(sm) {
+      padding-right: 10px;
+    }
+  }
+  .next {
+    @include media-breakpoint-up(sm) {
+      padding-left: 10px;
+    }
+  }
+
   .nearby-school {
-    display:block;
+    display: block;
     overflow: hidden;
     @include media-breakpoint-up(md) {
       display: table-cell;
@@ -84,6 +124,7 @@
 
   .circle-rating {
     margin: auto;
+    margin-bottom: 5px;
   }
   .icon-star {
     font-size: 9px;
