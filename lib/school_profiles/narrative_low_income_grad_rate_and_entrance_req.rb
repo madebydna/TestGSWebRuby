@@ -16,8 +16,10 @@ module SchoolProfiles
     def characteristics_low_income_narrative(data_type_name)
       if characteristics.present? && characteristics[data_type_name].present?
         data = characteristics[data_type_name].find do |data| data['breakdown'] == 'Economically disadvantaged' end
-        key_value = narration_calculation data_type_name, data
-        data['narrative'] = low_income_narration key_value, data_type_name
+        if data.present?
+          key_value = narration_calculation data_type_name, data
+          data['narrative'] = low_income_narration key_value, data_type_name
+        end
       end
     end
 
