@@ -18,7 +18,7 @@ module SchoolProfiles
         data = characteristics[data_type_name].find do |data| data['breakdown'] == 'Economically disadvantaged' end
         if data.present?
           key_value = narration_calculation data_type_name, data
-          data['narrative'] = low_income_narration key_value, data_type_name
+          data['narrative'] = low_income_narration key_value, data_type_name if key_value.present?
         end
       end
     end
