@@ -40,10 +40,12 @@ describe SchoolProfiles::TeachersStaff do
     it 'should return chosen data types if data present' do
       expect(school_cache_data_reader).to receive(:gsdata_data) do
         sample_data
-      end.exactly(2).times
-      expect(subject.data_type_hashes.size).to eq(3)
+      end.at_least(:once)
+      sample_data.keys.each do |data_type|
+        expect(subject).to receive(:data_label).with(data_type).and_return(data_type).at_least(:once)
+      end
+      expect(subject.data_values.size).to eq(3)
       data_points = subject.data_values.find {|item| item.label == 'Percentage of full time teachers who are certified' }
-      puts data_points.inspect
       expect(data_points).to be_present
       expect(data_points.score).to eq(60)
       expect(data_points.state_average.value).to eq(80)
@@ -53,6 +55,9 @@ describe SchoolProfiles::TeachersStaff do
       expect(school_cache_data_reader).to receive(:gsdata_data) do
         sample_data
       end.exactly(1).times
+      sample_data.keys.each do |data_type|
+        expect(subject).to receive(:data_label).with(data_type).and_return(data_type).at_least(:once)
+      end
       ordered_data_types = subject.included_data_types
       data_value_labels = subject.data_values.map(&:label)
       expect(ordered_data_types & data_value_labels).to eq(data_value_labels)
