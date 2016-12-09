@@ -35,12 +35,21 @@
       <div>
         <%= render 'equity', equity: @school_profile.equity %>
       </div>
-      <div>
-        <%= render 'students', students: @school_profile.students %>
+
+      <div class="environment-container">
+        <div class="row">
+          <div class="col-xs-12 col-lg-3">
+            <div class="rating-container__title">
+              <%= t('.environment') %>
+            </div>
+          </div>
+          <div class="col-xs-12 col-lg-9">
+            <%= render 'students', students: @school_profile.students %>
+            <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+          </div>
+        </div>
       </div>
-      <div>
-        <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
-      </div>
+
 
       <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
                  width: 320, height: 50, css_class: 'mbl' %>
