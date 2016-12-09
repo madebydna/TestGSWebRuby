@@ -97,6 +97,7 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
+      hashes.sort_by { |o| included_data_types.index( o['data_type']) }
     end
 
     def data_values
