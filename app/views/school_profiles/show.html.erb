@@ -45,7 +45,7 @@
           </div>
           <div class="col-xs-12 col-lg-9">
             <%= render 'students', students: @school_profile.students %>
-            <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+            <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff if @school_profile.teachers_staff.visible? %>
           </div>
         </div>
       </div>
