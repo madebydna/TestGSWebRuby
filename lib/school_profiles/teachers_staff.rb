@@ -16,7 +16,7 @@ module SchoolProfiles
         },
         {
             :data_key => 'Percentage of teachers with less than three years experience',
-            :visualization => :single_bar_viz,
+            :visualization => :single_bar_viz_inverted,
             :formatting => [:to_f, :round, :percent]
         },
         {
