@@ -227,3 +227,5 @@ end
 
 # ExactTarget API
 gem 'fuelsdk', '~> 0.1.11'
+
+gem 'mini_racer', platforms: :ruby

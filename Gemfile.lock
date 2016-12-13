@@ -242,6 +242,7 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.2)
       addressable (~> 2.3)
+    libv8 (5.3.332.38.3)
     listen (2.8.5)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -272,6 +273,8 @@ GEM
       hashie
       rest_client
     mini_portile2 (2.0.0)
+    mini_racer (0.1.7)
+      libv8 (~> 5.3)
     minitest (5.5.1)
     multi_json (1.10.1)
     multi_test (0.1.1)
@@ -580,6 +583,7 @@ DEPENDENCIES
   mechanize
   meta-tags
   mini_fb
+  mini_racer
   mysql2 (= 0.3.13)
   nokogiri (= 1.6.7)
   paper_trail
