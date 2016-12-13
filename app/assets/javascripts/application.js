@@ -17,3 +17,6 @@
 //= require ./util/util
 //= require ./util/uri
 //= require ./util/dependency.js
+// /= require resources/react-redux
+// /= require configure_redux
+//= require webpack-bundle
