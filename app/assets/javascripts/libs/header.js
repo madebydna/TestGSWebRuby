@@ -57,7 +57,7 @@
 }
   ;
 
-  GS = GS || {};
+  var GS = GS || {};
 
   GS.navSearchBar = GS.navSearchBar || (function(){
 
