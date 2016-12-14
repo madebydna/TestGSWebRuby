@@ -1,4 +1,4 @@
-export default function nearbySchoolsReducer(state, action) {
+export default (state, action) => {
   if (typeof state === 'undefined') {
     return {
       topPerforming: undefined,

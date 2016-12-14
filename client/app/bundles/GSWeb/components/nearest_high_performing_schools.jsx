@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Provider } from 'react-redux';
-import configureStore from '../store/gsWebStore';
 import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list';
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
 
-class DumbNearestHighPerformingSchools extends React.Component {
+class NearestHighPerformingSchools extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -87,14 +86,20 @@ class DumbNearestHighPerformingSchools extends React.Component {
   }
 }
 
-DumbNearestHighPerformingSchools.propTypes = {
+NearestHighPerformingSchools.propTypes = {
   tabIndex: React.PropTypes.number
 };
 
-const NearestHighPerformingSchools = function(props, _railsContext) {
-  return(<Provider store={configureStore(props)}>
-    <DumbNearestHighPerformingSchools  />
-  </Provider>);
-}
+// const NearestHighPerformingSchools = function(props, _railsContext) {
+//   return(<Provider store={appStore}>
+//     <NearestHighPerformingSchools  />
+//   </Provider>);
+// }
 
-export default NearestHighPerformingSchools;
+export default () => {
+  return (
+    <Provider store={window.store}>
+      <NearestHighPerformingSchools />
+    </Provider>
+  );
+}

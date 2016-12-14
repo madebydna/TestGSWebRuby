@@ -1,4 +1,4 @@
-export default function schoolReducer(state, action) {
+export default (state, action) => {
   if (typeof state === 'undefined') {
     return {
       state: null,

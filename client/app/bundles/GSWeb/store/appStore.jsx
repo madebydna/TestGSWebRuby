@@ -1,15 +1,13 @@
 import { createStore, applyMiddleware } from 'redux';
-import gsWebReducer from '../reducers/gsWebReducer';
+import appReducer from '../reducers/app_reducer';
 import NearbySchoolsMiddleware from '../middlewares/nearby_schools';
 
-const configureStore = (railsProps) => {
-  let initialState = Object.assign({}, railsProps, {school: gon.school});
-
+const configureStore = (initialState = {}) => {
   let middlewareApplier = applyMiddleware(NearbySchoolsMiddleware);
 
   let createStoreWithMiddleware = middlewareApplier(createStore);
 
-  return createStoreWithMiddleware(gsWebReducer, initialState);
+  return createStoreWithMiddleware(appReducer, initialState);
 };
 
 export default configureStore;
