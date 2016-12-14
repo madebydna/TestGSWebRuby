@@ -1,9 +1,12 @@
-var ReduxMiddlewares = ReduxMiddlewares || {};
+import {
+  getTopPerformingNearbySchools,
+  getNearbySchoolsByDistance
+} from '../api_clients/nearby_schools';
 
-ReduxMiddlewares.nearbySchools = store => next => action => {
+const NearbySchoolsMiddleware = store => next => action => {
   switch (action.type) {
     case 'GET_TOP_PERFORMING_NEARBY_SCHOOLS':
-      GS.getTopPerformingNearbySchools(
+      getTopPerformingNearbySchools(
         action.state,
         action.schoolId
       ).done(function(data) {
@@ -15,7 +18,7 @@ ReduxMiddlewares.nearbySchools = store => next => action => {
       });
       return next(action); // invoke the next middleware with this action
     case 'GET_NEARBY_SCHOOLS_BY_DISTANCE':
-      GS.getNearbySchoolsByDistance(
+      getNearbySchoolsByDistance(
         action.state,
         action.schoolId,
         action.offset,
@@ -34,3 +37,5 @@ ReduxMiddlewares.nearbySchools = store => next => action => {
       return next(action); // invoke the next middleware with this action
   }
 };
+
+export default NearbySchoolsMiddleware;

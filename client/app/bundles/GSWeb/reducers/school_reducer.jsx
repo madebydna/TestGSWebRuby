@@ -1,6 +1,4 @@
-var ReduxReducers = ReduxReducers || {};
-
-ReduxReducers.school = function(state, action) {
+export default function schoolReducer(state, action) {
   if (typeof state === 'undefined') {
     return {
       state: null,
@@ -13,4 +11,3 @@ ReduxReducers.school = function(state, action) {
       return state;
   }
 };
-

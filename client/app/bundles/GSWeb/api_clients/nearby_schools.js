@@ -1,6 +1,4 @@
-var GS = GS || {};
-
-GS.getNearbySchoolsByDistance = GS.getNearbySchoolsByDistance || function(state, schoolId, offset, limit) {
+export function getNearbySchoolsByDistance(state, schoolId, offset, limit) {
   var uri = '/gsr/api/nearby_schools/';
   return $.get(
     uri,
@@ -15,7 +13,7 @@ GS.getNearbySchoolsByDistance = GS.getNearbySchoolsByDistance || function(state,
   );
 }
 
-GS.getTopPerformingNearbySchools = GS.getTopPerformingNearbySchools || function(state, schoolId) {
+export function getTopPerformingNearbySchools(state, schoolId) {
   var uri = '/gsr/api/top_performing_nearby_schools/';
   return $.get(
     uri,

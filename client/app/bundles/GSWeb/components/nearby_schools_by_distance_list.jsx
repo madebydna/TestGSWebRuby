@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import NearbySchoolsList from './nearby_schools_list';
 
-var NearbySchoolsByDistanceList = connect(
+const NearbySchoolsByDistanceList = connect(
   function(state, ownProps) { // state is global redux store, ownProps are the passed-in props
     return {
       schools: state.nearbySchools.byDistance,

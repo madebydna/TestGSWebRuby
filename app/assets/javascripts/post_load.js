@@ -13,7 +13,6 @@
 //= require util/session
 //= require util/i18n
 //= require util/review_flags
-//= require util/nearby_schools
 //= require autocomplete
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars

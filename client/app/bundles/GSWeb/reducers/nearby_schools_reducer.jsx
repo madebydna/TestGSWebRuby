@@ -1,6 +1,4 @@
-var ReduxReducers = ReduxReducers || {};
-
-ReduxReducers.nearbySchools = function(state, action) {
+export default function nearbySchoolsReducer(state, action) {
   if (typeof state === 'undefined') {
     return {
       topPerforming: undefined,
@@ -38,4 +36,3 @@ ReduxReducers.nearbySchools = function(state, action) {
       return state;
   }
 };
-

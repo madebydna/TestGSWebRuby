@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import NearbySchool from './nearby_school';
+import SpinnyWheel from './spinny_wheel';
 
 class NearbySchoolsList extends React.Component {
 
@@ -164,3 +165,5 @@ NearbySchoolsList.propTypes = {
   nearbySchoolsType: React.PropTypes.string.isRequired,
   getSchools: React.PropTypes.func.isRequired
 };
+
+export default NearbySchoolsList;

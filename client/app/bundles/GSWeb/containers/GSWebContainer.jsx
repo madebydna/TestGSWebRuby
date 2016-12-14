@@ -2,9 +2,6 @@
 
 import { connect } from 'react-redux';
 import GSWeb from '../components/GSWeb';
-import Equity from '../components/equity/equity';
-
-
 import * as actions from '../actions/gsWebActionCreators';
 
 // Which part of the Redux global state does our component want to receive as props?
