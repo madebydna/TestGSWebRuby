@@ -33,7 +33,7 @@ const config = {
       'process.env': {
         NODE_ENV: JSON.stringify(nodeEnv),
       },
-    }),
+    })
   ],
   module: {
     loaders: [
