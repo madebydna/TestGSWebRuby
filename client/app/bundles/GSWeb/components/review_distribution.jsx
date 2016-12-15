@@ -1,4 +1,6 @@
-class ReviewDistribution extends React.Component {
+import React, { PropTypes } from 'react';
+
+export default class ReviewDistribution extends React.Component {
   constructor(props) {
     super(props);
   }

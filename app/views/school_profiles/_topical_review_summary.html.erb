@@ -14,12 +14,12 @@
         </div>
         <div class="col-xs-12 col-lg-9">
           <% topical_review_summary.keys.sort.each do |topic| %>
-            <a class="topical_item gs-tipso"
+            <a class="js-react-on-rails-component topical_item gs-tipso"
                data-remodal-target="modal_info_box"
                data-content-type="react"
-               data-react-component="ReviewDistribution"
-               data-react-props="<%= {distribution: reviews.summary.topical_review_distributions[topic]}.to_json %>"
-               data-react-container-id="js-topical-review-distribution"
+               data-component-name="ReviewDistribution"
+               data-props="<%= {distribution: reviews.summary.topical_review_distributions[topic]}.to_json %>"
+               data-dom-id="js-topical-review-distribution"
                href="javascript:void(0)">
               <span class="answer-icon topic-icon <%= topical_review_summary[topic][:average].downcase.gsub(' ', '-') %>"></span>
               <span class="topic-details"><%= topic %>&nbsp;(<%= topical_review_summary[topic][:count] %>)</span>

@@ -15,13 +15,12 @@ GS.content.contentManager = function(ele) {
   if(contentType == 'info_box'){
     content = ele.data('content-html');
   } else if (contentType == 'react') {
-    var componentName = ele.data('react-component');
-    var containerId = ele.data('react-container-id');
-    var props = ele.data('react-props');
+    var componentName = ele.data('component-name');
+    var containerId = ele.data('dom-id');
+    var props = ele.data('props');
 
-    if (window[componentName] && window.ReactDOM) {
-      var component = React.createElement(window[componentName], props);
-      ReactDOM.render(component, document.getElementById(containerId));
+    if (window.ReactOnRails && ReactOnRails.getComponent(componentName)) {
+      ReactOnRails.render(componentName, props, containerId);
       content = document.getElementById(containerId).innerHTML;
     }
   }
