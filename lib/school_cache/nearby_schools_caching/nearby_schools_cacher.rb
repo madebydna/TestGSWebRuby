@@ -57,10 +57,9 @@ class NearbySchoolsCaching::NearbySchoolsCacher < Cacher
       school_ids_to_exclude: school_ids_to_exclude,
     }
     top_nearby_schools = methodologies::TopNearbySchools.results(school, top_nearby_opts)
-    add_review_data_to_nearby_school_hashes(top_nearby_schools) if top_nearby_schools.present?
-    (
-      closest_top_schools + top_nearby_schools
-    )
+    unified_list = (closest_top_schools + top_nearby_schools).compact
+    add_review_data_to_nearby_school_hashes(unified_list) if unified_list.present?
+    unified_list
   end
 
   def add_review_data_to_nearby_school_hashes(hashes)

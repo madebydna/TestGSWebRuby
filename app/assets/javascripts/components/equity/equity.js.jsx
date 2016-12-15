@@ -12,7 +12,7 @@ class Equity extends React.Component {
   }
 
   areAllZero(data) {
-    return data.filter(obj => obj.school_value !== 0).length == 0;
+    return data.filter(obj => (obj.school_value !== 0 && obj.school_value)).length == 0;
   }
 
   section1Tabs() {
@@ -122,7 +122,7 @@ class Equity extends React.Component {
 
 
     data = this.graduationRateDataByIncomeLevel();
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.areAllZero(data)){
       tabs[1].push(
         {
           subject: 'Graduation rates',
@@ -156,6 +156,11 @@ class Equity extends React.Component {
     let l = data.length;
     for(var i=0; i < l; i++){
       if(data[i].breakdown == 'Economically disadvantaged'){
+        return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
+      }
+    }
+    for(var i=0; i < l; i++){
+      if(data[i].breakdown == 'Not economically disadvantaged'){
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }

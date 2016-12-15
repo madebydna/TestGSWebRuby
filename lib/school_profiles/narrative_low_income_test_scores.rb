@@ -21,6 +21,8 @@ module SchoolProfiles
           else
             write_to_test_score_hash '236', '0_0', subject, write_location, hash['li'].keys.max
           end
+        elsif hash['nli'].present?
+          write_to_test_score_hash '236', '0_0', subject, 'Not economically disadvantaged', hash['nli'].keys.max
         end
       end
     end
