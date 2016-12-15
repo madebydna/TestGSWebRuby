@@ -1,6 +1,7 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
 //= require webpack-bundle
+//= require components/drawer
 //= require util/cached_script
 //= require util/review_helpers
 //= require graphs/ethnicity_pie_chart
