@@ -1,6 +1,15 @@
 import React, { PropTypes } from 'react';
 
 export default class SpinnyWheel extends React.Component {
+
+  static defaultProps = {
+    backgroundPosition: 'center'
+  }
+
+  static propTypes = {
+    backgroundPosition: React.PropTypes.string
+  }
+
   constructor(props) {
     super(props);
   }
@@ -16,12 +25,4 @@ export default class SpinnyWheel extends React.Component {
       </div>
     );
   }
-}
-
-SpinnyWheel.defaultProps = {
-  backgroundPosition: 'center'
-}
-
-SpinnyWheel.propTypes = {
-  backgroundPosition: React.PropTypes.string
 }

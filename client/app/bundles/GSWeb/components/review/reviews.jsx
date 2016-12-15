@@ -3,6 +3,22 @@ import ReviewsList from './reviews_list';
 import ReviewForm from './form/review_form';
 
 export default class Reviews extends React.Component {
+
+  static propTypes = {
+    reviews: React.PropTypes.arrayOf(React.PropTypes.shape({
+      five_star_review: React.PropTypes.object,
+      user_review_digest: React.PropTypes.string,
+      topical_reviews: React.PropTypes.array,
+      most_recent_date: React.PropTypes.string,
+      user_type_label: React.PropTypes.string,
+      avatar: React.PropTypes.number,
+      reviewSubmitMessage: React.PropTypes.object
+    })),
+    state: React.PropTypes.string,
+    schoolId: React.PropTypes.number,
+    questions: React.PropTypes.arrayOf(React.PropTypes.object)
+  };
+
   constructor(props) {
     super(props);
     var currentUserReportedMap = {};
@@ -125,18 +141,3 @@ export default class Reviews extends React.Component {
     );
   }
 }
-
-Reviews.propTypes = {
-  reviews: React.PropTypes.arrayOf(React.PropTypes.shape({
-    five_star_review: React.PropTypes.object,
-    user_review_digest: React.PropTypes.string,
-    topical_reviews: React.PropTypes.array,
-    most_recent_date: React.PropTypes.string,
-    user_type_label: React.PropTypes.string,
-    avatar: React.PropTypes.number,
-    reviewSubmitMessage: React.PropTypes.object
-  })),
-  state: React.PropTypes.string,
-  schoolId: React.PropTypes.number,
-  questions: React.PropTypes.arrayOf(React.PropTypes.object)
-};

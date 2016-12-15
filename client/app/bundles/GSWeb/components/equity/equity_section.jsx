@@ -4,6 +4,18 @@ import SectionNavigation from './tabs/section_navigation';
 import SubSectionToggle from './sub_section_toggle';
 
 export default class EquitySection extends React.Component {
+
+  static propTypes = {
+    equity_config: React.PropTypes.shape({
+      section_info: React.PropTypes.object,
+      section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
+        subject: React.PropTypes.string,
+        component: React.PropTypes.object,
+        explanation: React.PropTypes.element
+      }))
+    })
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -86,15 +98,4 @@ export default class EquitySection extends React.Component {
   handleTabClick(index) {
     this.setState({active: index})
   }
-};
-
-EquitySection.propTypes = {
-  equity_config: React.PropTypes.shape({
-    section_info: React.PropTypes.object,
-    section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
-      subject: React.PropTypes.string,
-      component: React.PropTypes.object,
-      explanation: React.PropTypes.element
-    }))
-  })
 };

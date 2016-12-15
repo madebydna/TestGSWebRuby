@@ -2,6 +2,18 @@ import React, { PropTypes } from 'react';
 import BarGraph from '../../bar_graph';
 
 export default class EquityBarGraph extends React.Component {
+
+  static defaultProps = {
+    type: 'bar'
+  }
+
+  static propTypes = {
+    test_scores: React.PropTypes.arrayOf(React.PropTypes.shape({
+      breakdown: React.PropTypes.string.isRequired
+    })).isRequired,
+    graphId: React.PropTypes.string.isRequired
+  }
+
   constructor(props) {
     super(props);
     this.series = this.series.bind(this);
@@ -112,12 +124,3 @@ export default class EquityBarGraph extends React.Component {
   }
 }
 
-EquityBarGraph.defaultProps = {
-  type: 'bar'
-}
-EquityBarGraph.propTypes = {
-  test_scores: React.PropTypes.arrayOf(React.PropTypes.shape({
-    breakdown: React.PropTypes.string.isRequired
-  })).isRequired,
-  graphId: React.PropTypes.string.isRequired
-}

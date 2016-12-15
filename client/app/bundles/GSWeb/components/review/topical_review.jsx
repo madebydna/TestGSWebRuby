@@ -3,6 +3,13 @@ import ReportReview from './report_review';
 import ShortenText from '../shorten_text';
 
 export default class TopicalReview extends React.Component {
+
+  static propTypes = {
+    review: React.PropTypes.object.isRequired,
+    reportedCallback: React.PropTypes.func,
+    userAlreadyReported: React.PropTypes.bool,
+  };
+
   constructor(props) {
     super(props);
     this.state = {reportReviewOpen: false}
@@ -65,9 +72,3 @@ export default class TopicalReview extends React.Component {
     )
   }
 }
-
-ReportReview.propTypes = {
-  review: React.PropTypes.object.isRequired,
-  reportedCallback: React.PropTypes.func,
-  userAlreadyReported: React.PropTypes.bool,
-};

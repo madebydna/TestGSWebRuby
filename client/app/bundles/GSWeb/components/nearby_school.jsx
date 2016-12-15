@@ -1,6 +1,20 @@
 import React, { PropTypes } from 'react';
 
 export default class NearbySchool extends React.Component {
+
+  static propTypes = {
+    GSRating: React.PropTypes.string,
+    averageRating: React.PropTypes.number,
+    schoolName: React.PropTypes.string,
+    schoolType: React.PropTypes.string,
+    gradeRange: React.PropTypes.string,
+    city: React.PropTypes.string,
+    state: React.PropTypes.string,
+    distance: React.PropTypes.number,
+    schoolUrl: React.PropTypes.string,
+    nearbySchoolsType: React.PropTypes.string
+  }
+
   constructor(props) {
     super(props);
   }
@@ -78,17 +92,4 @@ export default class NearbySchool extends React.Component {
       </div>
     )
   }
-}
-
-NearbySchool.propTypes = {
-  GSRating: React.PropTypes.string,
-  averageRating: React.PropTypes.number,
-  schoolName: React.PropTypes.string,
-  schoolType: React.PropTypes.string,
-  gradeRange: React.PropTypes.string,
-  city: React.PropTypes.string,
-  state: React.PropTypes.string,
-  distance: React.PropTypes.number,
-  schoolUrl: React.PropTypes.string,
-  nearbySchoolsType: React.PropTypes.string
 }

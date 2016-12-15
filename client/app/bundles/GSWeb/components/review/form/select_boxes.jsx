@@ -1,6 +1,15 @@
 import React, { PropTypes } from 'react';
 
 export default class SelectBoxes extends React.Component {
+
+  static propTypes = {
+    value: React.PropTypes.string,
+    responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    questionId: React.PropTypes.number.isRequired,
+    onClick: React.PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.handleBoxClick = this.handleBoxClick.bind(this);
@@ -66,11 +75,3 @@ export default class SelectBoxes extends React.Component {
     )
   }
 }
-
-SelectBoxes.propTypes = {
-  value: React.PropTypes.string,
-  responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  questionId: React.PropTypes.number.isRequired,
-  onClick: React.PropTypes.func.isRequired
-};

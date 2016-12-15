@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 
 export default class ReviewDistribution extends React.Component {
+
+  static propTypes = {
+    distribution: React.PropTypes.object.isRequired
+  };
+
   constructor(props) {
     super(props);
   }
@@ -45,7 +50,3 @@ export default class ReviewDistribution extends React.Component {
     );
   }
 }
-
-ReviewDistribution.propTypes = {
-  distribution: React.PropTypes.object.isRequired
-};

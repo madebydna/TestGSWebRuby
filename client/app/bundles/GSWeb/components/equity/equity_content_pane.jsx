@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react';
 
 export default class EquityContentPane extends React.Component {
 
+  static propTypes = {
+    graph: React.PropTypes.object.isRequired,
+    text: React.PropTypes.element.isRequired
+  };
+
   constructor(props) {
     super(props);
   }
@@ -20,8 +25,3 @@ export default class EquityContentPane extends React.Component {
     )
   }
 }
-
-EquityContentPane.propTypes = {
-  graph: React.PropTypes.object.isRequired,
-  text: React.PropTypes.element.isRequired
-};

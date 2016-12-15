@@ -4,6 +4,18 @@ import SpinnyWheel from './spinny_wheel';
 
 class NearbySchoolsList extends React.Component {
 
+  static propTypes = {
+    visible: React.PropTypes.bool.isRequired,
+    school: React.PropTypes.shape({
+      state: React.PropTypes.string,
+      id: React.PropTypes.number
+    }).isRequired,
+    schools: React.PropTypes.array,
+    allSchoolsLoaded: React.PropTypes.bool.isRequired,
+    nearbySchoolsType: React.PropTypes.string.isRequired,
+    getSchools: React.PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -153,17 +165,5 @@ class NearbySchoolsList extends React.Component {
     )
   }
 }
-
-NearbySchoolsList.propTypes = {
-  visible: React.PropTypes.bool.isRequired,
-  school: React.PropTypes.shape({
-    state: React.PropTypes.string,
-    id: React.PropTypes.number
-  }).isRequired,
-  schools: React.PropTypes.array,
-  allSchoolsLoaded: React.PropTypes.bool.isRequired,
-  nearbySchoolsType: React.PropTypes.string.isRequired,
-  getSchools: React.PropTypes.func.isRequired
-};
 
 export default NearbySchoolsList;

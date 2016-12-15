@@ -4,6 +4,11 @@ import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
 
 class NearestHighPerformingSchools extends React.Component {
+
+  static propTypes = {
+    tabIndex: React.PropTypes.number
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -85,10 +90,6 @@ class NearestHighPerformingSchools extends React.Component {
     </div>);
   }
 }
-
-NearestHighPerformingSchools.propTypes = {
-  tabIndex: React.PropTypes.number
-};
 
 // const NearestHighPerformingSchools = function(props, _railsContext) {
 //   return(<Provider store={appStore}>

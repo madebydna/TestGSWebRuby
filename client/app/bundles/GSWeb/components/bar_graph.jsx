@@ -1,6 +1,16 @@
 import React, { PropTypes } from 'react';
 
 export default class BarGraph extends React.Component {
+  static defaultProps = {
+    type: 'bar'
+  }
+
+  static propTypes = {
+    graphId: React.PropTypes.string.isRequired,
+    categories: React.PropTypes.array.isRequired,
+    series: React.PropTypes.array.isRequired
+  }
+
   constructor(props) {
     super(props);
     this.drawChart = this.drawChart.bind(this);
@@ -113,14 +123,4 @@ export default class BarGraph extends React.Component {
   render() {
     return (<div id={this.props.graphId}></div>);
   }
-}
-
-BarGraph.defaultProps = {
-  type: 'bar'
-}
-
-BarGraph.propTypes = {
-  graphId: React.PropTypes.string.isRequired,
-  categories: React.PropTypes.array.isRequired,
-  series: React.PropTypes.array.isRequired
 }

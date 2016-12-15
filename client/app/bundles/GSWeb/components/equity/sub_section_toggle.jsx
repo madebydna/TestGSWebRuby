@@ -3,6 +3,15 @@ import SectionSubNavigation from './tabs/section_sub_navigation';
 import EquityContentPane from './equity_content_pane';
 
 export default class SubSectionToggle extends React.Component {
+
+  static propTypes = {
+    equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
+      subject: React.PropTypes.string,
+      component: React.PropTypes.object,
+      explanation: React.PropTypes.element
+    }))
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -30,11 +39,3 @@ export default class SubSectionToggle extends React.Component {
     this.setState({active: index})
   }
 }
-
-SubSectionToggle.propTypes = {
-  equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
-    subject: React.PropTypes.string,
-    component: React.PropTypes.object,
-    explanation: React.PropTypes.element
-  }))
-};

@@ -2,6 +2,14 @@ import React, { PropTypes } from 'react';
 import EquityBarGraph from './equity_bar_graph';
 
 export default class BarGraphWithEnrollmentInLabel extends EquityBarGraph {
+
+  static propTypes = {
+    test_scores: React.PropTypes.arrayOf(React.PropTypes.shape({
+      breakdown: React.PropTypes.string.isRequired
+    })).isRequired,
+    graphId: React.PropTypes.string.isRequired
+  }
+
   constructor(props) {
     super(props);
   }
@@ -22,11 +30,4 @@ export default class BarGraphWithEnrollmentInLabel extends EquityBarGraph {
 
 BarGraphWithEnrollmentInLabel.defaultProps = {
   type: 'bar'
-}
-
-BarGraphWithEnrollmentInLabel.propTypes = {
-  test_scores: React.PropTypes.arrayOf(React.PropTypes.shape({
-    breakdown: React.PropTypes.string.isRequired
-  })).isRequired,
-  graphId: React.PropTypes.string.isRequired
 }

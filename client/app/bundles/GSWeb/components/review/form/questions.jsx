@@ -5,6 +5,21 @@ import SelectBoxes from './select_boxes';
 import TextArea from './text_area';
 
 export default class Questions extends React.Component {
+
+  static propTypes = {
+    questions: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      title: React.PropTypes.string.isRequired,
+      layout: React.PropTypes.string.isRequired,
+      response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+      response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    })).isRequired,
+    selectedResponses: React.PropTypes.object.isRequired,
+    responseSelected: React.PropTypes.func.isRequired,
+    errorMessages: React.PropTypes.object.isRequired,
+    textValueChanged: React.PropTypes.func
+  };
+
   constructor(props) {
     super(props);
     this.renderQuestion = this.renderQuestion.bind(this);
@@ -103,17 +118,3 @@ export default class Questions extends React.Component {
     )
   }
 }
-
-Questions.propTypes = {
-  questions: React.PropTypes.arrayOf(React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.isRequired,
-    layout: React.PropTypes.string.isRequired,
-    response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-  })).isRequired,
-  selectedResponses: React.PropTypes.object.isRequired,
-  responseSelected: React.PropTypes.func.isRequired,
-  errorMessages: React.PropTypes.object.isRequired,
-  textValueChanged: React.PropTypes.func
-};

@@ -4,6 +4,17 @@ import ShortenText from '../shorten_text';
 import ReportReview from './report_review.jsx';
 
 export default class UserReviews extends React.Component {
+
+  static propTypes = {
+    five_star_review: React.PropTypes.object,
+    topical_reviews: React.PropTypes.array,
+    most_recent_date: React.PropTypes.string,
+    user_type_label: React.PropTypes.string,
+    avatar: React.PropTypes.number,
+    review_reported_callback: React.PropTypes.func,
+    current_user_reported_reviews: React.PropTypes.array,
+  };
+
   constructor(props) {
     super(props);
     this.state = {reportReviewOpen: false};
@@ -144,13 +155,3 @@ export default class UserReviews extends React.Component {
     );
   }
 }
-
-UserReviews.propTypes = {
-  five_star_review: React.PropTypes.object,
-  topical_reviews: React.PropTypes.array,
-  most_recent_date: React.PropTypes.string,
-  user_type_label: React.PropTypes.string,
-  avatar: React.PropTypes.number,
-  review_reported_callback: React.PropTypes.func,
-  current_user_reported_reviews: React.PropTypes.array,
-};

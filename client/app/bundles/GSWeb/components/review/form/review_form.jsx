@@ -4,6 +4,21 @@ import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
 
 export default class ReviewForm extends React.Component {
+
+  static propTypes = {
+    state: React.PropTypes.string.isRequired,
+    schoolId: React.PropTypes.number.isRequired,
+    questions: React.PropTypes.arrayOf(React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      title: React.PropTypes.string.isRequired,
+      layout: React.PropTypes.string.isRequired,
+      response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+      response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    })).isRequired,
+    handleReviewSubmitMessage: React.PropTypes.func.isRequired,
+    handleUpdateOfReviews: React.PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.fiveStarQuestionSelect = this.fiveStarQuestionSelect.bind(this);
@@ -397,17 +412,3 @@ export default class ReviewForm extends React.Component {
     return null;
   }
 }
-
-ReviewForm.propTypes = {
-  state: React.PropTypes.string.isRequired,
-  schoolId: React.PropTypes.number.isRequired,
-  questions: React.PropTypes.arrayOf(React.PropTypes.shape({
-    id: React.PropTypes.number.isRequired,
-    title: React.PropTypes.string.isRequired,
-    layout: React.PropTypes.string.isRequired,
-    response_values: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-    response_labels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
-  })).isRequired,
-  handleReviewSubmitMessage: React.PropTypes.func.isRequired,
-  handleUpdateOfReviews: React.PropTypes.func.isRequired
-};

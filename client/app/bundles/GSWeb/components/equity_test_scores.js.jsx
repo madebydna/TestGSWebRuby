@@ -1,4 +1,11 @@
 class EquityTestScores extends React.Component {
+
+  static propTypes = {
+    test_scores: React.PropTypes.object.isRequired,
+    enrollment: React.PropTypes.object.isRequired,
+    subject: React.PropTypes.string
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -93,10 +100,4 @@ class EquityTestScores extends React.Component {
       <EquityContentPane graph={graph} text={text} />
     )
   }
-}
-
-EquityTestScores.propTypes = {
-  test_scores: React.PropTypes.object.isRequired,
-  enrollment: React.PropTypes.object.isRequired,
-  subject: React.PropTypes.string
 }

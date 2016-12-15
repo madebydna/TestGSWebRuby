@@ -3,6 +3,18 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import TextArea from './text_area';
 
 export default class Question extends React.Component {
+
+  static propTypes = {
+    id: React.PropTypes.number.isRequired,
+    questionCounter: React.PropTypes.number.isRequired,
+    title: React.PropTypes.string.isRequired,
+    subtext: React.PropTypes.string,
+    layout: React.PropTypes.object.isRequired,
+    shouldDisplayTextArea: React.PropTypes.bool,
+    textValueChanged: React.PropTypes.func,
+    errorMessage: React.PropTypes.string
+  };
+
   constructor(props) {
     super(props);
     this.displayTextArea = this.displayTextArea.bind(this);
@@ -129,14 +141,3 @@ export default class Question extends React.Component {
     )
   }
 }
-
-Question.propTypes = {
-  id: React.PropTypes.number.isRequired,
-  questionCounter: React.PropTypes.number.isRequired,
-  title: React.PropTypes.string.isRequired,
-  subtext: React.PropTypes.string,
-  layout: React.PropTypes.object.isRequired,
-  shouldDisplayTextArea: React.PropTypes.bool,
-  textValueChanged: React.PropTypes.func,
-  errorMessage: React.PropTypes.string
-};

@@ -1,6 +1,15 @@
 import React, { PropTypes } from 'react';
 
 export default class FiveStarQuestionCTA extends React.Component {
+
+  static propTypes = {
+    responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    id: React.PropTypes.number.isRequired,
+    title: React.PropTypes.string.isRequired,
+    fiveStarQuestionSelect: React.PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.handleStarResponseClick = this.handleStarResponseClick.bind(this);
@@ -47,11 +56,3 @@ export default class FiveStarQuestionCTA extends React.Component {
     )
   }
 }
-
-FiveStarQuestionCTA.propTypes = {
-  responseValues: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  responseLabels: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  id: React.PropTypes.number.isRequired,
-  title: React.PropTypes.string.isRequired,
-  fiveStarQuestionSelect: React.PropTypes.func.isRequired
-};

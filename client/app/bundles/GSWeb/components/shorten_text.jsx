@@ -1,6 +1,12 @@
 import React, { PropTypes } from 'react';
 
 export default class ShortenText extends React.Component {
+
+  static propTypes = {
+    text: React.PropTypes.string.isRequired,
+    length: React.PropTypes.number.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -40,8 +46,3 @@ export default class ShortenText extends React.Component {
     return text.substring(0, pos);
   }
 }
-
-ShortenText.propTypes = {
-  text: React.PropTypes.string.isRequired,
-  length: React.PropTypes.number.isRequired
-};

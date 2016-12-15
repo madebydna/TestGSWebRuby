@@ -1,6 +1,20 @@
 import React, { PropTypes } from 'react';
 
 export default class TextArea extends React.Component {
+
+  static propTypes = {
+    questionId: React.PropTypes.number.isRequired,
+    onTextValueChanged: React.PropTypes.func.isRequired,
+    handleTextBlur: React.PropTypes.func,
+    errorMessage: React.PropTypes.string,
+    textValue: React.PropTypes.string,
+    autoFocus: React.PropTypes.bool
+  }
+
+  static defaultProps = {
+    autoFocus: false
+  }
+
   constructor(props) {
     super(props);
     this.handleTextBoxChange = this.handleTextBoxChange.bind(this);
@@ -33,17 +47,4 @@ export default class TextArea extends React.Component {
       </div>
     );
   }
-}
-
-TextArea.propTypes = {
-  questionId: React.PropTypes.number.isRequired,
-  onTextValueChanged: React.PropTypes.func.isRequired,
-  handleTextBlur: React.PropTypes.func,
-  errorMessage: React.PropTypes.string,
-  textValue: React.PropTypes.string,
-  autoFocus: React.PropTypes.bool
-}
-
-TextArea.defaultProps = {
-  autoFocus: false
 }

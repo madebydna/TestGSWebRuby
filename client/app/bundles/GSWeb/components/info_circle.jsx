@@ -1,6 +1,11 @@
 import React, { PropTypes } from 'react';
 
 export default class InfoCircle extends React.Component {
+
+  static propTypes = {
+    content: React.PropTypes.string.isRequired
+  };
+
   constructor(props) {
     super(props);
   }
@@ -23,7 +28,3 @@ export default class InfoCircle extends React.Component {
     )
   };
 }
-
-InfoCircle.propTypes = {
-  content: React.PropTypes.string.isRequired
-};

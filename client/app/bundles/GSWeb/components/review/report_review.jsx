@@ -2,6 +2,14 @@ import React, { PropTypes } from 'react';
 import SpinnyWheel from '../spinny_wheel';
 
 export default class ReportReview extends React.Component {
+
+  static propTypes = {
+    review: React.PropTypes.object.isRequired,
+    open: React.PropTypes.bool,
+    cancelCallback: React.PropTypes.func.isRequired,
+    reportedCallback: React.PropTypes.func.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {value: '', error: null, notice: null, disabled: false};
@@ -129,10 +137,3 @@ export default class ReportReview extends React.Component {
     return null;
   }
 }
-
-ReportReview.propTypes = {
-  review: React.PropTypes.object.isRequired,
-  open: React.PropTypes.bool,
-  cancelCallback: React.PropTypes.func.isRequired,
-  reportedCallback: React.PropTypes.func.isRequired
-};

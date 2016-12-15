@@ -3,6 +3,17 @@ import UserReviews from './user_reviews';
 
 export default class ReviewsList extends React.Component {
 
+  static propTypes = {
+    reviews: React.PropTypes.arrayOf(React.PropTypes.shape({
+      five_star_review: React.PropTypes.object,
+      topical_reviews: React.PropTypes.array,
+      most_recent_date: React.PropTypes.string,
+      user_type_label: React.PropTypes.string,
+      avatar: React.PropTypes.number,
+      reviewSubmitMessage: React.PropTypes.object
+    }))
+  };
+
   constructor(props) {
     super(props);
     this.REVIEW_CHUNK_SIZE = 5;
@@ -115,14 +126,3 @@ export default class ReviewsList extends React.Component {
     )
   }
 }
-
-ReviewsList.propTypes = {
-  reviews: React.PropTypes.arrayOf(React.PropTypes.shape({
-    five_star_review: React.PropTypes.object,
-    topical_reviews: React.PropTypes.array,
-    most_recent_date: React.PropTypes.string,
-    user_type_label: React.PropTypes.string,
-    avatar: React.PropTypes.number,
-    reviewSubmitMessage: React.PropTypes.object
-  }))
-};
