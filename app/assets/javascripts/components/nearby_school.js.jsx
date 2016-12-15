@@ -15,7 +15,7 @@ class NearbySchool extends React.Component {
   }
 
   fiveStars(numberFilled) {
-    if (numberFilled === undefined) {
+    if (numberFilled === undefined || numberFilled == null) {
       return null;
     }
 
