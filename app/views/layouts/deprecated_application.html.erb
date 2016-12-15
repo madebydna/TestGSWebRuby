@@ -59,20 +59,9 @@
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
-<div id="universal_header"></div>
-<script type="application/javascript">
-  jQuery(function() {
-    jQuery.ajax({
-      type: 'GET',
-      url: "/gsr/header",
-      dataType: 'html',
-      async: false
-    }).done(function (data) {
-      $('#universal_header').append(data);
-    });
-  });
-</script>
-<% # render 'nav/topnav_universal', hub_params: @hub_params %>
+
+<%= render 'header/ajax_loading' %>
+
 <%= render :partial => 'layouts/top_notification_bar' %>
 
 <div class="dn">

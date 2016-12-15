@@ -11,7 +11,7 @@ class Equity extends React.Component {
     };
   }
 
-  areAllZero(data) {
+  allSchoolValueInvalid(data) {
     return data.filter(obj => (obj.school_value !== 0 && obj.school_value)).length == 0;
   }
 
@@ -19,7 +19,7 @@ class Equity extends React.Component {
     let tabs = [[],[]];
 
     let data = this.ethnicityTestScoreData('Math');
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[0].push(
           {
             subject: 'Math',
@@ -33,7 +33,7 @@ class Equity extends React.Component {
     }
 
     data = this.ethnicityTestScoreData('English Language Arts');
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[0].push(
         {
           subject: 'English',
@@ -47,7 +47,7 @@ class Equity extends React.Component {
     }
 
     data = this.graduationRateDataByEthnicity();
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
           subject: 'Graduation rates',
@@ -61,7 +61,7 @@ class Equity extends React.Component {
     }
 
     data = this.entranceRequirementData();
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
           subject: 'UC/CSU eligibility',
@@ -93,7 +93,7 @@ class Equity extends React.Component {
     let tabs = [[],[]];
 
     let data = this.incomeLevelTestScoreData('Math');
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[0].push(
           {
             subject: 'Math',
@@ -107,7 +107,7 @@ class Equity extends React.Component {
     }
 
     data = this.incomeLevelTestScoreData('English Language Arts');
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[0].push(
         {
           subject: 'English',
@@ -122,7 +122,7 @@ class Equity extends React.Component {
 
 
     data = this.graduationRateDataByIncomeLevel();
-    if(data && data.length > 0 && !this.areAllZero(data)){
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)){
       tabs[1].push(
         {
           subject: 'Graduation rates',
@@ -136,7 +136,7 @@ class Equity extends React.Component {
     }
     
     data = this.entranceRequirementByIncomeLevelData();
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
           subject: 'UC/CSU eligibility',
@@ -153,13 +153,13 @@ class Equity extends React.Component {
   }
 
   narrrationContent(data){
-    let l = data.length;
-    for(var i=0; i < l; i++){
+    let len = data.length;
+    for(var i=0; i < len; i++){
       if(data[i].breakdown == 'Economically disadvantaged'){
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }
-    for(var i=0; i < l; i++){
+    for(var i=0; i < len; i++){
       if(data[i].breakdown == 'Not economically disadvantaged'){
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
