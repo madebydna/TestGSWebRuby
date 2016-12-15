@@ -12,7 +12,7 @@ class Equity extends React.Component {
   }
 
   areAllZero(data) {
-    return data.filter(obj => obj.school_value !== 0).length == 0;
+    return data.filter(obj => (obj.school_value !== 0 && obj.school_value)).length == 0;
   }
 
   section1Tabs() {
@@ -122,7 +122,7 @@ class Equity extends React.Component {
 
 
     data = this.graduationRateDataByIncomeLevel();
-    if(data && data.length > 0 && !this.areAllZero(data)) {
+    if(data && data.length > 0 && !this.areAllZero(data)){
       tabs[1].push(
         {
           subject: 'Graduation rates',

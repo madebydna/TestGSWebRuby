@@ -39,11 +39,11 @@ module SchoolProfiles
 
       #   Row logic
       if ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) - st_diff_moe) < 0)
-        '1'
+        '3'
       elsif (((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) - st_diff_moe) >= 0) && ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) + st_diff_moe) <= 0))
         '2'
       elsif ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) + st_diff_moe) > 0)
-        '3'
+        '1'
       end
     end
 
