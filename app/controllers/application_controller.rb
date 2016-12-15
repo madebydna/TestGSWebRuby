@@ -35,6 +35,11 @@ class ApplicationController < ActionController::Base
 
   layout "deprecated_application"
 
+  def url_options
+    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
+    super
+  end
+
   protected
 
   rescue_from Exception, :with => :exception_handler
@@ -95,11 +100,6 @@ class ApplicationController < ActionController::Base
     rescue
       I18n.locale = I18n.default_locale
     end
-  end
-
-  def url_options
-    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
-    super
   end
 
   def path_w_query_string (do_not_append, page_name)
