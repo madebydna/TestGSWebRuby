@@ -8,7 +8,7 @@ import InfoCircle from '../info_circle';
 export default class Equity extends React.Component {
   static propTypes = {
     test_scores: React.PropTypes.object,
-    enrollment: React.PropTypes.string,
+    enrollment: React.PropTypes.number,
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number
   };
