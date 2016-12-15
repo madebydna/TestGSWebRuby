@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import FiveStarQuestionCTA from './five_star_question_cta';
+import Questions from './questions';
+import SpinnyWheel from '../../spinny_wheel';
 
 export default class ReviewForm extends React.Component {
   constructor(props) {
@@ -185,14 +187,14 @@ export default class ReviewForm extends React.Component {
   }
 
   getValidationsForQuestion(questionId) {
-   validationFuncs = [];
+    let validationFuncs = [];
     switch(questionId) {
       case "1": validationFuncs.push(this.requiredCommentValidator);
       default: validationFuncs.push(this.minWordsValidator);
               validationFuncs.push( this.maxCharactersValidator);
     }
     return validationFuncs;
-   }
+  }
 
   errorMessageForQuestion(validationFuncs, comment) {
     var error;

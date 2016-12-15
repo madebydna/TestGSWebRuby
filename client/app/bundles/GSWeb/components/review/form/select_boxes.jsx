@@ -12,7 +12,7 @@ export default class SelectBoxes extends React.Component {
   }
 
   selectBoxes(value) {
-    boxes = [];
+    let boxes = [];
     for (var index= 0; index < this.props.responseValues.length; index++) {
       let selectionValue = this.props.responseValues[index];
       let classNames = this.convertValueToClassName(selectionValue);
@@ -46,7 +46,7 @@ export default class SelectBoxes extends React.Component {
   }
 
   renderResponseLabels() {
-    labels = [];
+    let labels = [];
     this.props.responseLabels.forEach(function(label, index) {
       labels.push(<li key={index}>{label}</li>);
     });

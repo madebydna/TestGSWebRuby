@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import TextArea from './text_area';
 
 export default class Question extends React.Component {
   constructor(props) {

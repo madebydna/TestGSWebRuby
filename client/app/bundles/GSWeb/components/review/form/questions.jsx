@@ -1,4 +1,8 @@
 import React, { PropTypes } from 'react';
+import Question from './question';
+import FiveStarRating from './five_star_rating';
+import SelectBoxes from './select_boxes';
+import TextArea from './text_area';
 
 export default class Questions extends React.Component {
   constructor(props) {
