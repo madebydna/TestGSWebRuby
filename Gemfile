@@ -23,7 +23,7 @@ gem 'rails_admin'
 gem 'codemirror-rails'
 
 # Authentication, used for rails-admin
-gem 'devise'
+gem 'devise', '4.2.0'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
