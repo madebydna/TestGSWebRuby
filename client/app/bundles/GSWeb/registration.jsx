@@ -15,3 +15,5 @@ ReactOnRails.register({
   Reviews,
   NearestHighPerformingSchools
 });
+
+ReactOnRails.reactOnRailsPageLoaded();

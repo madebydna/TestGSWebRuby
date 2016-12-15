@@ -17,4 +17,3 @@
 //= require ./util/util
 //= require ./util/uri
 //= require ./util/dependency.js
-//= require webpack-bundle
