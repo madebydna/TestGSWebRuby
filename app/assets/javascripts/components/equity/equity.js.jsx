@@ -159,6 +159,11 @@ class Equity extends React.Component {
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }
+    for(var i=0; i < l; i++){
+      if(data[i].breakdown == 'Not economically disadvantaged'){
+        return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
+      }
+    }
   }
 
   equityConfiguration(){
