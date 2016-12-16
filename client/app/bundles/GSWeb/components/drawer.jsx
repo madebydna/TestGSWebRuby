@@ -1,4 +1,6 @@
-var Drawer = React.createClass({
+import React, { PropTypes } from 'react';
+
+const Drawer = React.createClass({
   getInitialState: function() {
     return {
       open: false
@@ -41,3 +43,5 @@ var Drawer = React.createClass({
     )
   }
 });
+
+export default Drawer;
