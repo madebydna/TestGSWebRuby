@@ -60,6 +60,7 @@ gem 'to_regexp'
 
 # This module provides common interface to HMAC functionality. HMAC is a kind of "Message Authentication Code" (MAC) algorithm whose standard is documented in RFC2104.
 # USED: By Google static maps api. See GoogleSignedImages::sign_url
+# TODO: Switch to OpenSSL::HMAC (See http://blog.nathanielbibler.com/post/63031273/opensslhmac-vs-ruby-hmac-benchmarks)
 gem 'ruby-hmac', '~> 0.4.0', :require => 'hmac-sha1'
 
 # Adds composite primary key support to ActiveRecord. Use minimally
