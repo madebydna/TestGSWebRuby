@@ -13,12 +13,6 @@ class ReportedEntity < ActiveRecord::Base
 
   alias_attribute :type, :reported_entity_type
 
-  def active
-    read_attribute(:active) == "\x01" ? true : false
-  end
-  def active?
-    active == true
-  end
   def inactive?
     !active?
   end

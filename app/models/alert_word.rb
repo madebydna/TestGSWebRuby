@@ -1,6 +1,5 @@
 class AlertWord < ActiveRecord::Base
   db_magic :connection => :community
-  attribute :really_bad, Type::Boolean.new
 
   class AlertWordSearchResult < Struct.new(:alert_words, :really_bad_words)
     def any?
@@ -14,14 +13,6 @@ class AlertWord < ActiveRecord::Base
     def has_really_bad_words?
       really_bad_words.present?
     end
-  end
-
-  def really_bad
-    read_attribute(:really_bad) == "\x01" ? true : false
-  end
-
-  def really_bad?
-    really_bad
   end
 
   def self.all_words
