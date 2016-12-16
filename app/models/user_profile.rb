@@ -1,7 +1,8 @@
 class UserProfile < ActiveRecord::Base
   self.table_name = 'user_profile'
   db_magic :connection => :gs_schooldb
-
+  attribute :private, Type::Boolean.new
+  attribute :active, Type::Boolean.new
   belongs_to :user, foreign_key: 'member_id'
 
   before_save :update_timestamps

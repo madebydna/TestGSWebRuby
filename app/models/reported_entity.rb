@@ -1,6 +1,7 @@
 class ReportedEntity < ActiveRecord::Base
   db_magic :connection => :community
   self.table_name = 'reported_entity'
+  attribute :active, Type::Boolean.new
 
   scope :active, -> { where(active: 1) }
 

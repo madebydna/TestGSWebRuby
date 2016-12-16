@@ -1,5 +1,6 @@
 class AlertWord < ActiveRecord::Base
   db_magic :connection => :community
+  attribute :really_bad, Type::Boolean.new
 
   class AlertWordSearchResult < Struct.new(:alert_words, :really_bad_words)
     def any?
