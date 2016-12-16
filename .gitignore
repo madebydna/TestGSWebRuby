@@ -57,3 +57,6 @@ node_modules
 
 # Generated js bundles
 # /app/assets/webpack/*
+
+# tmp output from mocha-webpack library
+client/.tmp/
