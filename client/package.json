@@ -9,7 +9,9 @@
   "scripts": {
     "build:test": "webpack --config webpack.config.js",
     "build:production": "NODE_ENV=production webpack --optimize-dedupe --optimize-minimize --optimize-occurrence-order --config webpack.config.js",
-    "build:development": "webpack -w --config webpack.config.js"
+    "build:development": "webpack -w --config webpack.config.js",
+    "test": "mocha-webpack",
+    "test:watch": "npm run test -- --watch"
   },
   "cacheDirectories": [
     "node_modules",
@@ -36,5 +38,13 @@
     "redux": "^3.3.1",
     "webpack": "^1.12.14"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "enzyme": "^2.6.0",
+    "mocha": "^3.2.0",
+    "mocha-webpack": "^0.7.0",
+    "react-addons-test-utils": "^15.4.1",
+    "sinon": "^1.17.6",
+    "webpack-node-externals": "^1.5.4"
+  }
 }
