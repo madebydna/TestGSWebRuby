@@ -3,7 +3,6 @@ $(function() {
   GS.ad.addCompfilterToGlobalAdTargetingGon();
   GS.handlebars.registerPartials();
   GS.handlebars.registerHelpers();
-  GS.graphs.ethnicityPieChart.generateEthnicityChart(gon.ethnicity);
   GS.graphs.subgroupCharts.generateSubgroupPieCharts();
   GS.util.BackToTop.init();
 

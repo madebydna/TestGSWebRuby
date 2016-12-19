@@ -1,12 +1,11 @@
-var GS = GS || {}
-GS.graphs = GS.graphs || {};
-GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
-      //  If you change these colors they need to be changed in _ethnicity.html.erb 
-  var ethnicityColors = ['#184a7d', '#2ba3dc', '#08c569', '#dca21a', '#d94373', '#fdda46', '#0e6ac9', '#999EFF'];
-      // write the graph to this location in html
-  var ethnicityGraph = '#ethnicity-graph';
+// TODO: import $
 
-  var buildEthnicityDataFromGon = function (data) {
+      //  If you change these colors they need to be changed in _ethnicity.html.erb 
+  const ethnicityColors = ['#184a7d', '#2ba3dc', '#08c569', '#dca21a', '#d94373', '#fdda46', '#0e6ac9', '#999EFF'];
+      // write the graph to this location in html
+  const ethnicityGraph = '#ethnicity-graph';
+
+  const buildEthnicityDataFromGon = function (data) {
     var returnvalue = [];
     $.each(data, function (index, value) {
       returnvalue.push({
@@ -19,7 +18,7 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
     return returnvalue;
   };
 
-  var generateEthnicityChart = function (data) {
+  const generateEthnicityChart = function (data) {
     if (data) {
       var callback = function () {
         var chart = $(ethnicityGraph);
@@ -88,7 +87,5 @@ GS.graphs.ethnicityPieChart = GS.graphs.ethnicityPieChart || (function($) {
       }
     }
   };
-  return {
-    generateEthnicityChart: generateEthnicityChart
-  };
-})(jQuery);
+
+  export { generateEthnicityChart };

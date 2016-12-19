@@ -3,7 +3,6 @@
 //= require webpack-bundle
 //= require util/cached_script
 //= require util/review_helpers
-//= require graphs/ethnicity_pie_chart
 //= require resources/fastclick
 // require resources/pep
 //= require resources/tipso
