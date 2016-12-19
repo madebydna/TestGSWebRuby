@@ -15,7 +15,7 @@ describe 'City Home Page' do
   end
 
   include_examples 'should have a footer'
-  its(:current_path) { is_expected.to eq '/minnesota/st.-paul/' }
+  its(:current_path) { pending; is_expected.to eq '/minnesota/st.-paul/' }
   it { is_expected.to have_email_signup_section }
 
   context 'when I click the "sign up for email updates" button', js: true do
@@ -109,7 +109,7 @@ describe 'City Home Page' do
       with_subject :largest_districts_section do
         its('districts.length') { is_expected.to eq(3) }
         its('first_district') { is_expected.to have_district_link }
-        its('first_district.href') { is_expected.to include('/minnesota/st.-paul/foo/') }
+        its('first_district.href') {  pending; is_expected.to include('/minnesota/st.-paul/foo/') }
         its('first_district.city_state.text') { is_expected.to eq('St. Paul, MN') }
         its('first_district.text') { is_expected.to include('3 schools') }
         its('second_district.text') { is_expected.to include('2 schools') }
