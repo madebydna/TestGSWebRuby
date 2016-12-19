@@ -69,12 +69,14 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def user_type
-    if review.school_user_or_default.unknown?
+    school_user = review.school_user || SchoolUser.new
+
+    if school_user.unknown?
       t('decorators.school_profile_review_decorator.community_member')
-    elsif review.school_user_or_default.principal?
+    elsif school_user.principal?
       t('decorators.school_profile_review_decorator.school_leader')
     else
-      h.db_t(review.school_user_or_default.user_type)
+      h.db_t(school_user.user_type)
     end
   end
 
