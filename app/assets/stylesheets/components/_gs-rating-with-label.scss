@@ -1,7 +1,7 @@
 .gs-rating-with-label {
   text-transform: uppercase;
   font-size: $font-size-l3;
-  @media only screen and (max-width: 767px) {
+  @include media-breakpoint-only(xs) {
     font-size: $font-size-base;
   }
 }
