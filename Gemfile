@@ -279,11 +279,6 @@ gem 'coffee-rails', '~> 4.0.1'
 # TODO: Are we still using this?
 gem 'uglifier', '>= 1.0.3'
 
-# A Ruby interface to YUI Compressor for minifying JavaScript and CSS assets.
-# USED: Not that I can find
-# TODO: Verify not being used and delete
-gem "yui-compressor", "~> 0.12.0"
-
 group :profile do
   gem 'ruby-prof'
 end
