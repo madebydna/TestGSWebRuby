@@ -279,12 +279,6 @@ gem 'coffee-rails', '~> 4.0.1'
 # TODO: Are we still using this?
 gem 'uglifier', '>= 1.0.3'
 
-# Gem for splitting up stylesheets that go beyond the IE limit of 4095 selectors, for Rails 3.1+ apps using the Asset Pipeline.
-# Rails 4
-# USED: According to docs, this does not appear to be used (requires a filename with suffix _splitN where N is a number)
-# TODO: Verify not being used and delete
-gem 'css_splitter'
-
 # A Ruby interface to YUI Compressor for minifying JavaScript and CSS assets.
 # USED: Not that I can find
 # TODO: Verify not being used and delete
