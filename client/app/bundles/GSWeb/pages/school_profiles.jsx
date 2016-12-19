@@ -4,6 +4,7 @@ import Equity from '../components/equity/equity';
 import ReviewDistribution from '../components/review_distribution';
 import Reviews from '../components/review/reviews';
 import NearestHighPerformingSchools from '../components/nearest_high_performing_schools';
+import { makeDrawersWithSelector } from '../util/drawer';
 
 window.store = configureStore({
   school: gon.school
@@ -17,3 +18,7 @@ ReactOnRails.register({
 });
 
 ReactOnRails.reactOnRailsPageLoaded();
+
+$(function() {
+  makeDrawersWithSelector($('.js-drawer'));
+});

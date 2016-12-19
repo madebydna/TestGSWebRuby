@@ -1,7 +1,7 @@
-var GS = GS || {}
-GS.components = GS.components || {};
+import checkRequiredProps from './checkRequiredProps';
+import log from './log';
 
-GS.components.Toggle = GS.components.Toggle || function($container) {
+const Toggle = function($container) {
   this.$container = $container;
   this.targetSelector = ".js-toggle-target";
   this.buttonSelector = ".js-toggle-button";
@@ -12,28 +12,10 @@ GS.components.Toggle = GS.components.Toggle || function($container) {
   return this;
 }
 
-GS.util = GS.util || {};
-
-GS.util.checkRequiredProps = function() {
-  if (!this.requiredProps) {
-    return;
-  }
-  for(var i = 0; i < this.requiredProps.length; i++) {
-    prop = this.requiredProps[i];
-    if (!this.hasOwnProperty(prop) || this[prop] == undefined) {
-      var error = prop + " is required but is undefined";
-      this.log([error, this]);
-      throw error;
-      return;
-    }
-  }
-  return this;
-}
-
-_.assign(GS.components.Toggle.prototype, {
+_.assign(Toggle.prototype, {
   $: jQuery,
 
-  log: GS.util.log,
+  log: log,
 
   requiredProps: [
     '$container',
@@ -41,7 +23,7 @@ _.assign(GS.components.Toggle.prototype, {
     'targetSelector'
   ],
 
-  checkRequiredProps: GS.util.checkRequiredProps,
+  checkRequiredProps: checkRequiredProps,
 
   $button: function $button() {
     return this.$container.find(this.buttonSelector);
@@ -105,24 +87,4 @@ _.assign(GS.components.Toggle.prototype, {
   }
 });
 
-GS.components.makeDrawer = function($container) {
-  var toggle = _.assign(new GS.components.Toggle($container));
-  toggle.effect = "slideToggle";
-  toggle.addCallback(
-    toggle.updateButtonTextCallback('Show Less', 'Show More')
-  );
-  toggle.addCallback(
-    toggle.updateContainerClassCallback('show-more--open','show-more--closed')
-  );
-  return toggle.init();
-}
-
-GS.components.makeDrawersWithSelector = function(selector) {
-  $(selector).each(function() {
-    GS.components.makeDrawer($(this)).add_onclick();
-  });
-};
-
-$(function() {
-  GS.components.makeDrawersWithSelector($('.js-drawer'));
-});
+export default Toggle;
