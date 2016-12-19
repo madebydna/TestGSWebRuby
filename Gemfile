@@ -41,10 +41,6 @@ gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails
 # TODO: to decide if we need this, we would have to examine the column names for all ActiveRecord models
 gem 'safe_attributes'
 
-# paper_trail allows implementing versioning to models
-# Docs indicate this is used via "has_paper_trail" which does not exist in the checkout.
-# TODO: Delete this gem
-gem 'paper_trail'
 # allows use of .haml (see _form.html.haml)
 # USED: rails admin
 gem 'haml', '4.0.3'

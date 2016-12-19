@@ -291,9 +291,6 @@ GEM
       shellany (~> 0.0)
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
-    paper_trail (3.0.2)
-      activerecord (>= 3.0, < 5.0)
-      activesupport (>= 3.0, < 5.0)
     parser (2.3.1.2)
       ast (~> 2.2)
     pdf-core (0.2.5)
@@ -584,7 +581,6 @@ DEPENDENCIES
   mini_fb
   mysql2 (= 0.3.13)
   nokogiri (= 1.6.7)
-  paper_trail
   pdf-reader
   prawn
   prawn-table (~> 0.1.2)
@@ -630,4 +626,4 @@ DEPENDENCIES
   yui-compressor (~> 0.12.0)
 
 BUNDLED WITH
-   1.12.5
+   1.13.1
