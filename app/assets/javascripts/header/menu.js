@@ -1,6 +1,8 @@
 // var GS = GS || {}
 // GS.navMenu = GS.navMenu || (function(){
 
+
+$(function(){
 var mobileNavMenu = document.getElementsByClassName("menu-btn");
 mobileNavMenu[0].addEventListener("click", toggleNav, false);
 var mobileNavSearch = document.getElementsByClassName("search_icon_image");
@@ -16,6 +18,7 @@ mobileNavSearch[0].addEventListener("click", toggleSearch, false);
     }
   }
 })();
+});
 
 (function() {
   if (isSignedIn()) {
