@@ -1,6 +1,6 @@
-var GS = GS || {}
+var GS = GS || {};
 
-GS.nav = GS.nav || {}
+GS.nav = GS.nav || {};
 
 GS.nav.menu = GS.nav.menu || (function() {
 

@@ -1,6 +1,6 @@
-var GS = GS || {}
+var GS = GS || {};
 
-GS.nav = GS.nav || {}
+GS.nav = GS.nav || {};
 
 GS.nav.featured = GS.nav.featured || (function(){
   var init = function() {

@@ -1,6 +1,6 @@
-var GS = GS || {}
+var GS = GS || {};
 
-GS.nav = GS.nav || {}
+GS.nav = GS.nav || {};
 
 GS.nav.queryParamsUtils = GS.nav.queryParamsUtils || (function() {
 

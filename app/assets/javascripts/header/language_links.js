@@ -1,6 +1,6 @@
-var GS = GS || {}
+var GS = GS || {};
 
-GS.nav = GS.nav || {}
+GS.nav = GS.nav || {};
 
 GS.nav.language = GS.nav.language || (function(){
   var initLanguageLinkListener = function() {
