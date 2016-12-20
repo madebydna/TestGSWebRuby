@@ -1,0 +1,35 @@
+/*!
+ * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+// Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// GS Remove gutters by overriding grid mixins
+@import "bootstrap/mixins/gs-remove-gutters";
+
+// Reset and dependencies
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+
+// Components
+@import "bootstrap/labels";
+@import "bootstrap/badges"; // TODO: remove, but need to fix profile badge icons
+@import "bootstrap/alerts"; // used by notification bar message
+@import "bootstrap/close"; // styles close button on modals
+
+// Components w/ JavaScript
+@import "bootstrap/modals"; // signin modal etc
+
+// Utility classes
+@import "bootstrap/utilities"; //removing breaks review form layout
+@import "bootstrap/responsive-utilities"; // profile school map depends on this
