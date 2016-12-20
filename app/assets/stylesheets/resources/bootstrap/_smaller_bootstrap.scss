@@ -12,12 +12,11 @@
 @import "bootstrap/mixins/gs-remove-gutters";
 
 // Reset and dependencies
-@import "bootstrap/normalize";
 @import "bootstrap/print";
 
 // Core CSS
 @import "bootstrap/scaffolding"; // applies styles to html, body, inputs, etc
-@import "bootstrap/type"; // applies tons of typography styles to h tags, p tag, defines text alignment classes, etc
+@import "bootstrap/smaller_type"; // applies tons of typography styles to h tags, p tag, defines text alignment classes, etc
 @import "bootstrap/grid"; // used everywhere
 
 // Components

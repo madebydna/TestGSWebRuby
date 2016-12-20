@@ -14,6 +14,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import "resources/normalize";
 @import "resources/bootstrap/smaller_bootstrap";
 @import "variables/variables";
 @import "fonts/gs-icon-font";
@@ -45,9 +46,15 @@
 @import "components/module-header";
 @import "components/ratio-viz";
 @import "components/back-to-top";
-@import "gs/objects/footer.css.scss";
-@import "sprites/*";
-@import "gs/buttons";
+
+// for footer
+@import "gs/objects/footer";
+@import "sprites/icons_16x16";
+@import "sprites/footer_icons_16x16";
+
+
+@import "sprites/avatars_33x33";
+@import "sprites/avatars_65x65";
 @import "base/spacing";
 @import "base/typography";
 @import "gs/form";
