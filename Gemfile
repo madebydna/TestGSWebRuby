@@ -280,8 +280,3 @@ gem 'uglifier', '>= 1.0.3'
 group :profile do
   gem 'ruby-prof'
 end
-
-# ExactTarget API
-# USED: referenced under services/exact_target, but code paths are not used
-# TODO: Delete references and gem
-gem 'fuelsdk', '~> 0.1.11'
