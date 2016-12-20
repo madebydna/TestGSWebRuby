@@ -1,15 +1,23 @@
 var GS = GS || {}
-GS.navFeatured = GS.navFeatured || (function(){
-  var featuredSection = document.querySelector('.js-featured');
-  var pathsWithoutNavSearch = ['/'];
-  var i = pathsWithoutNavSearch.length;
-  var matchesAnyPaths = false;
-  while(i--) {
-    if (pathsWithoutNavSearch[i] == window.location.pathname) {
-      matchesAnyPaths = true;
+
+GS.nav = GS.nav || {}
+
+GS.nav.featured = GS.nav.featured || (function(){
+  var init = function() {
+    var featuredSection = document.querySelector('.js-featured');
+    var pathsWithoutNavSearch = ['/'];
+    var i = pathsWithoutNavSearch.length;
+    var matchesAnyPaths = false;
+    while (i--) {
+      if (pathsWithoutNavSearch[i] == window.location.pathname) {
+        matchesAnyPaths = true;
+      }
+    }
+    if (matchesAnyPaths == false) {
+      GS.navMenu.utils.removeClass(featuredSection, 'dn');
     }
   }
-  if(matchesAnyPaths == false) {
-    removeClass(featuredSection, 'dn');
-  }
+  return {
+    init: init
+  };
 })();

@@ -1,31 +1,43 @@
-// var GS = GS || {}
-// GS.navMenu = GS.navMenu || (function(){
+var GS = GS || {}
 
+GS.nav = GS.nav || {}
 
-$(function(){
-var mobileNavMenu = document.getElementsByClassName("menu-btn");
-mobileNavMenu[0].addEventListener("click", toggleNav, false);
-var mobileNavSearch = document.getElementsByClassName("search_icon_image");
-mobileNavSearch[0].addEventListener("click", toggleSearch, false);
+GS.nav.menu = GS.nav.menu || (function() {
 
-(function() {
-  menuItems = document.querySelectorAll('nav > ul li label');
-  numberOfItems = menuItems.length;
-  for(var i = 0; i < numberOfItems; i++) {
-    menuItems[i].onclick = function(e) {
-      var item = e.target;
-      toggleClass(item, 'open');
+  var initMobileMenuEvents = function() {
+    var mobilenav = document.getElementsByClassName("menu-btn");
+    mobilenav[0].addEventListener("click", GS.nav.utils.toggleNav, false);
+    var mobileNavSearch = document.getElementsByClassName("search_icon_image");
+    mobileNavSearch[0].addEventListener("click", GS.nav.utils.toggleSearch, false);
+  };
+
+  var initDropdown = function() {
+    let menuItems = document.querySelectorAll('nav > ul li label');
+    let numberOfItems = menuItems.length;
+    for(var i = 0; i < numberOfItems; i++) {
+      menuItems[i].onclick = function(e) {
+        var item = e.target;
+        GS.nav.utils.toggleClass(item, 'open');
+      }
     }
-  }
-})();
-});
+  };
 
-(function() {
-  if (isSignedIn()) {
-    var accountNavSignedIn = document.getElementsByClassName('account_nav_in')[0];
-    var accountNavSignedOut = document.getElementsByClassName('account_nav_out')[0];
-    removeClass(accountNavSignedIn, 'dn');
-    addClass(accountNavSignedOut, 'dn');
-  }
+  var initSignInState = function() {
+    if (GS.nav.utils.isSignedIn()) {
+      var accountNavSignedIn = document.getElementsByClassName('account_nav_in')[0];
+      var accountNavSignedOut = document.getElementsByClassName('account_nav_out')[0];
+      GS.nav.utils.removeClass(accountNavSignedIn, 'dn');
+      GS.nav.utils.addClass(accountNavSignedOut, 'dn');
+    }
+  };
 
+  var init = function() {
+    initMobileMenuEvents();
+    initDropdown();
+    initSignInState();
+  };
+
+  return {
+    init: init,
+  };
 })();

@@ -1,6 +1,8 @@
 var GS = GS || {};
 
-GS.navSearchBar = GS.navSearchBar || (function(){
+GS.nav = GS.nav || {};
+
+GS.nav.searchBar = GS.nav.searchBar || (function(){
 
   var desktopSearchToggle = document.getElementsByClassName("js-desktop-search-toggle")[0];
   var desktopSearchMenu = document.getElementsByClassName('js-desktop-search-menu')[0];
@@ -21,8 +23,8 @@ GS.navSearchBar = GS.navSearchBar || (function(){
 
   var displaySearch = function(searchTypeSelector) {
     var alternateSearchTypeSelector = getAlternateSearchTypeSelector(searchTypeSelector);
-    removeClass(toggleLink, alternateSearchTypeSelector);
-    addClass(toggleLink, searchTypeSelector);
+    GS.nav.utils.removeClass(toggleLink, alternateSearchTypeSelector);
+    GS.nav.utils.addClass(toggleLink, searchTypeSelector);
     toggleLinkAndDropdownItemText();
     activateMobileSearchButton(searchTypeSelector);
     toggleSearchForm(searchTypeSelector);
@@ -40,24 +42,24 @@ GS.navSearchBar = GS.navSearchBar || (function(){
 //          removeClass(schoolSearchForm, 'dn');
 //          addClass(contentSearchForm, 'dn');
       ///////////////////////////////////////////////////////////////////
-      removeClass(contentSearchForm, 'search_bar_tc');
-      addClass(contentSearchForm, 'dn');
-      removeClass(schoolSearchForm, 'dn');
-      addClass(schoolSearchForm, 'search_bar_tc');
+      GS.nav.utils.removeClass(contentSearchForm, 'search_bar_tc');
+      GS.nav.utils.addClass(contentSearchForm, 'dn');
+      GS.nav.utils.removeClass(schoolSearchForm, 'dn');
+      GS.nav.utils.addClass(schoolSearchForm, 'search_bar_tc');
     } else {
-      removeClass(contentSearchForm, 'dn');
-      addClass(contentSearchForm, 'search_bar_tc');
-      removeClass(schoolSearchForm, 'search_bar_tc');
-      addClass(schoolSearchForm, 'dn');
+      GS.nav.utils.removeClass(contentSearchForm, 'dn');
+      GS.nav.utils.addClass(contentSearchForm, 'search_bar_tc');
+      GS.nav.utils.removeClass(schoolSearchForm, 'search_bar_tc');
+      GS.nav.utils.addClass(schoolSearchForm, 'dn');
     }
   };
 
   var activateMobileSearchButton = function(searchTypeSelector) {
     deactivateMobileSearchButtons();
     if(searchTypeSelector === schoolSearchSelector) {
-      addClass(schoolSearchMobileButton, 'active');
+      GS.nav.utils.addClass(schoolSearchMobileButton, 'active');
     } else {
-      addClass(contentSearchMobileButton, 'active');
+      GS.nav.utils.addClass(contentSearchMobileButton, 'active');
     }
   };
 
@@ -70,20 +72,20 @@ GS.navSearchBar = GS.navSearchBar || (function(){
   };
 
   var deactivateMobileSearchButtons = function() {
-    removeClass(schoolSearchMobileButton, 'active');
-    removeClass(contentSearchMobileButton, 'active');
+    GS.nav.utils.removeClass(schoolSearchMobileButton, 'active');
+    GS.nav.utils.removeClass(contentSearchMobileButton, 'active');
   };
 
   var toggleDesktopSearchMenu = function(evt) {
-    if (hasClass(desktopSearchMenu, 'dn')) {
-      removeClass(desktopSearchMenu, 'dn');
+    if (GS.nav.utils.hasClass(desktopSearchMenu, 'dn')) {
+      GS.nav.utils.removeClass(desktopSearchMenu, 'dn');
     } else {
-      addClass(desktopSearchMenu, 'dn');
+      GS.nav.utils.addClass(desktopSearchMenu, 'dn');
     }
   };
 
   var toggleSearchBar= function(evt) {
-    if (hasClass(toggleLink, 'js-school-search')) {
+    if (GS.nav.utils.hasClass(toggleLink, 'js-school-search')) {
       displaySearch(contentSearchSelector);
     } else {
       displaySearch(schoolSearchSelector);
@@ -201,4 +203,3 @@ GS.navSearchBar = GS.navSearchBar || (function(){
 
 })();
 
-GS.navSearchBar.init();

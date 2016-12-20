@@ -1,71 +1,89 @@
-function hasClass(el, className) {
-  if (el.classList)
-    return el.classList.contains(className);
-  else
-    return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
-}
+var GS = GS || {}
 
-function addClass(el, className) {
-  if (el.classList) {
-    el.classList.add(className);
-  }
-  else if (!hasClass(el, className)){
-    el.className += " " + className;
-  }
-}
+GS.nav = GS.nav || {}
 
-function removeClass(el, className) {
-  if (el.classList) {
-    el.classList.remove(className);
-  }
-  else if (hasClass(el, className)) {
-    var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
-    el.className = el.className.replace(reg, ' ');
-  }
-}
+GS.nav.utils = GS.nav.utils || (function() {
 
-function toggleClass(el, className) {
-  if (el.classList) {
-    el.classList.toggle(className);
-  }
-}
+  var hasClass = function(el, className) {
+    if (el.classList)
+      return el.classList.contains(className);
+    else
+      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'));
+  };
 
-function toggleSearch(evt) {
-  var menu = document.getElementsByClassName('search_bar');
-  var arrayLength = menu.length;
-  for (var i = 0; i < arrayLength; i++) {
-    if (hasClass(menu[i], 'search_hide_mobile')) {
-      removeClass(menu[i], 'search_hide_mobile')
+  var addClass = function(el, className) {
+    if (el.classList) {
+      el.classList.add(className);
     }
-    else {
-      addClass(menu[i], 'search_hide_mobile')
+    else if (!hasClass(el, className)){
+      el.className += " " + className;
     }
-  }
-}
+  };
 
-function toggleNav(evt) {
-  var menu = document.getElementsByClassName('menu');
-  var arrayLength = menu.length;
-  for (var i = 0; i < arrayLength; i++) {
-    if (hasClass(menu[i], 'menu_hide_mobile')) {
-      removeClass(menu[i], 'menu_hide_mobile');
-    } else {
-      addClass(menu[i], 'menu_hide_mobile');
+  var removeClass = function(el, className) {
+    if (el.classList) {
+      el.classList.remove(className);
     }
-  }
-}
+    else if (hasClass(el, className)) {
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)');
+      el.className = el.className.replace(reg, ' ');
+    }
+  };
 
-function readCookie(name) {
-  var nameEQ = name + "=";
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-  }
-  return null;
-}
+  var toggleClass = function(el, className) {
+    if (el.classList) {
+      el.classList.toggle(className);
+    }
+  };
 
-var isSignedIn = function () {
-  return readCookie('community_www') != null || readCookie('community_dev') != null;
-};
+  var toggleSearch = function(evt) {
+    var menu = document.getElementsByClassName('search_bar');
+    var arrayLength = menu.length;
+    for (var i = 0; i < arrayLength; i++) {
+      if (hasClass(menu[i], 'search_hide_mobile')) {
+        removeClass(menu[i], 'search_hide_mobile')
+      }
+      else {
+        addClass(menu[i], 'search_hide_mobile')
+      }
+    }
+  };
+
+  var  toggleNav = function(evt) {
+    var menu = document.getElementsByClassName('menu');
+    var arrayLength = menu.length;
+    for (var i = 0; i < arrayLength; i++) {
+      if (hasClass(menu[i], 'menu_hide_mobile')) {
+        removeClass(menu[i], 'menu_hide_mobile');
+      } else {
+        addClass(menu[i], 'menu_hide_mobile');
+      }
+    }
+  };
+
+  var readCookie = function(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+  };
+
+  var isSignedIn = function () {
+    return readCookie('community_www') != null || readCookie('community_dev') != null;
+  };
+
+  return {
+    isSignedIn: isSignedIn,
+    readCookie:readCookie,
+    toggleNav: toggleNav,
+    toggleSearch: toggleSearch,
+    removeClass: removeClass,
+    addClass: addClass,
+    hasClass: hasClass,
+    toggleClass: toggleClass
+  };
+})();
