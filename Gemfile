@@ -264,10 +264,12 @@ end
 
 # Sass adapter for the Rails asset pipeline.
 # Rails 4
+# USED: Rails automatically adds the sass-rails gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'sass-rails',   '~> 4.0.1'
 
 # CoffeeScript adapter for the Rails asset pipeline.
 # Rails 4
+# USED: Rails automatically adds the coffee-rails gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'coffee-rails', '~> 4.0.1'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -276,7 +278,7 @@ gem 'coffee-rails', '~> 4.0.1'
 #gem 'compass-rails', '~> 2.0.alpha.0'
 
 # Uglifier minifies JavaScript files by wrapping UglifyJS to be accessible in Ruby
-# TODO: Are we still using this?
+# USED: Rails automatically adds the uglifier gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'uglifier', '>= 1.0.3'
 
 group :profile do
