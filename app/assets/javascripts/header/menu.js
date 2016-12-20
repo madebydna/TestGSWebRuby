@@ -12,8 +12,8 @@ GS.nav.menu = GS.nav.menu || (function() {
   };
 
   var initDropdown = function() {
-    let menuItems = document.querySelectorAll('nav > ul li label');
-    let numberOfItems = menuItems.length;
+    var menuItems = document.querySelectorAll('nav > ul li label');
+    var numberOfItems = menuItems.length;
     for(var i = 0; i < numberOfItems; i++) {
       menuItems[i].onclick = function(e) {
         var item = e.target;
