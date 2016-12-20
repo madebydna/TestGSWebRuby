@@ -121,13 +121,6 @@ gem 'draper', '~> 1.3.1'
 # USED: in application_controller, url_helper, user_mailer
 gem 'addressable'
 
-# Ruby code style checking tool.
-# USED: Manually and by Jenkins
-# TODO: Move these to dev/test environments?
-gem 'rubocop', '= 0.40.0', require: false
-# A formatter for rubocop that outputs in checkstyle format
-gem 'rubocop-checkstyle_formatter', require: false
-
 # Protect attributes from mass-assignment in ActiveRecord models.
 # USED: All over. Search for attr_accessible
 gem 'protected_attributes'
@@ -259,6 +252,12 @@ group :development, :test do
   
   #  translation tasks gem
   gem 'i18n-tasks', '~> 0.8.3'
+
+  # Ruby code style checking tool.
+  # USED: Manually and by Jenkins
+  gem 'rubocop', '= 0.40.0', require: false
+  # A formatter for rubocop that outputs in checkstyle format
+  gem 'rubocop-checkstyle_formatter', require: false
 end
 
 # Sass adapter for the Rails asset pipeline.
