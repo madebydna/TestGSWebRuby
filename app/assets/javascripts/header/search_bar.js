@@ -25,16 +25,18 @@ GS.nav.searchBar = GS.nav.searchBar || (function(){
     var alternateSearchTypeSelector = getAlternateSearchTypeSelector(searchTypeSelector);
     GS.nav.utils.removeClass(toggleLink, alternateSearchTypeSelector);
     GS.nav.utils.addClass(toggleLink, searchTypeSelector);
-    toggleLinkAndDropdownItemText();
+    toggleLinkAndDropdownItemText(searchTypeSelector);
     activateMobileSearchButton(searchTypeSelector);
     toggleSearchForm(searchTypeSelector);
   };
 
-  var toggleLinkAndDropdownItemText = function() {
+  var toggleLinkAndDropdownItemText = function(searchTypeSelector) {
     var toggleText = toggleLink.innerHTML;
     var dropdownItemText = dropdownItem.innerHTML;
-    toggleLink.innerHTML = dropdownItemText;
-    dropdownItem.innerHTML = toggleText;
+    if(!(searchTypeSelector == contentSearchSelector && toggleText == 'Parenting')){
+      toggleLink.innerHTML = dropdownItemText;
+      dropdownItem.innerHTML = toggleText;
+    }
   };
 
   var toggleSearchForm = function(searchTypeSelector) {
