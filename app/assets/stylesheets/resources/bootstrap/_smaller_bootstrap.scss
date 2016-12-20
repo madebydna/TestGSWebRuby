@@ -16,13 +16,12 @@
 @import "bootstrap/print";
 
 // Core CSS
-@import "bootstrap/scaffolding";
-@import "bootstrap/type";
-@import "bootstrap/code";
-@import "bootstrap/grid";
+@import "bootstrap/scaffolding"; // applies styles to html, body, inputs, etc
+@import "bootstrap/type"; // applies tons of typography styles to h tags, p tag, defines text alignment classes, etc
+@import "bootstrap/grid"; // used everywhere
 
 // Components
-@import "bootstrap/labels";
+@import "bootstrap/labels"; // TODO: remove, but need to fix labels in profile hero, and one in review summary box
 @import "bootstrap/badges"; // TODO: remove, but need to fix profile badge icons
 @import "bootstrap/alerts"; // used by notification bar message
 @import "bootstrap/close"; // styles close button on modals
