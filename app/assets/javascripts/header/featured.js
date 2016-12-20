@@ -14,7 +14,7 @@ GS.nav.featured = GS.nav.featured || (function(){
       }
     }
     if (matchesAnyPaths == false) {
-      GS.navMenu.utils.removeClass(featuredSection, 'dn');
+      GS.nav.utils.removeClass(featuredSection, 'dn');
     }
   }
   return {
