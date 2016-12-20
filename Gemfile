@@ -49,11 +49,6 @@ gem 'haml', '4.0.3'
 # USED: primarily Hashie::Mash all over the place.
 gem 'hashie'
 
-# safe way to convert strings to regexps
-# USED: Only by feature specs?? See gs_page.rb
-# TODO: Move to test env
-gem 'to_regexp'
-
 # This module provides common interface to HMAC functionality. HMAC is a kind of "Message Authentication Code" (MAC) algorithm whose standard is documented in RFC2104.
 # USED: By Google static maps api. See GoogleSignedImages::sign_url
 # TODO: Switch to OpenSSL::HMAC (See http://blog.nathanielbibler.com/post/63031273/opensslhmac-vs-ruby-hmac-benchmarks)
@@ -213,6 +208,9 @@ group :test do
   # JS testing runner
   gem 'teaspoon'
 
+  # safe way to convert strings to regexps
+  # USED: Only by feature specs. See gs_page.rb
+  gem 'to_regexp'
 end
 
 group :development, :test do
