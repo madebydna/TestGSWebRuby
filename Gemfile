@@ -121,11 +121,6 @@ gem 'draper', '~> 1.3.1'
 # USED: in application_controller, url_helper, user_mailer
 gem 'addressable'
 
-# Profiling toolkit for Rack applications with Rails integration.
-# USED: in development env. See config/initializers/rack_profiler.rb
-# TODO: Consider moving the gem to development environment?
-gem 'rack-mini-profiler', require: false
-
 # Ruby code style checking tool.
 # USED: Manually and by Jenkins
 # TODO: Move these to dev/test environments?
@@ -186,6 +181,10 @@ group :development do
   gem 'guard-livereload'
   gem 'spring-commands-rspec'
   gem 'byebug'
+
+  # Profiling toolkit for Rack applications with Rails integration.
+  # USED: in development env. See config/initializers/rack_profiler.rb
+  gem 'rack-mini-profiler', require: false
 end
 
 group :test do
