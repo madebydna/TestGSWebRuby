@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+# WARNING: Before upgrading rails version check the following extension to the
+# Rails ActionDispatch::HTTP::URL.url_for 
 gem 'rails', '4.2.7'
 
 gem 'mysql2', '0.3.13'
