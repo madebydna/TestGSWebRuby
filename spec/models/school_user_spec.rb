@@ -15,33 +15,18 @@ describe SchoolUser do
   end
 
   describe '#user_type' do
-    context 'when user is not esp member' do
-      {
-        nil => :unknown,
-        'unknown' => :unknown,
-        'parent' => :parent,
-        'community member' => :'community member',
-        'foo' => :unknown
-      }.each_pair do |value_from_db, expected_value|
-        with_shared_context 'when user type has value', value_from_db do
-          its(:user_type) { is_expected.to eq expected_value }
-        end
-      end
+    before do
+      expect(subject).to_not receive(:approved_osp_user?)
     end
-    context 'when user is an esp member' do
-      before do
-        allow(subject).to receive(:approved_osp_user?).and_return true
-      end
-      {
-        nil => :principal,
-        'unknown' => :principal,
-        'community member' => :'community member',
-        'parent' => :parent,
-        'foo' => :principal
-      }.each_pair do |value_from_db, expected_value|
-        with_shared_context 'when user type has value', value_from_db do
-          its(:user_type) { is_expected.to eq expected_value }
-        end
+    {
+      nil => :unknown,
+      'unknown' => :unknown,
+      'parent' => :parent,
+      'community member' => :'community member',
+      'foo' => :unknown
+    }.each_pair do |value_from_db, expected_value|
+      with_shared_context 'when user type has value', value_from_db do
+        its(:user_type) { is_expected.to eq expected_value }
       end
     end
   end

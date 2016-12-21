@@ -173,6 +173,12 @@ class SigninController < ApplicationController
   end
 
   def facebook_auth
+    unless params['email'] && params['facebook_signed_request']
+      flash_error t('actions.generic_error')
+      GSLogger.error(:misc, nil, message:'facebook_auth request with missing params (either email or facebook_signed_request', vars: {params: params})
+      render json: {}, status: 422
+      return
+    end
     begin
       authentication_command = FacebookSignedRequestSigninCommand.new_from_request_params(params)
       authentication_command.join_or_signin do |user, error, is_new_user|
@@ -189,7 +195,7 @@ class SigninController < ApplicationController
       end
     rescue => e
       flash_error t('actions.generic_error')
-      GSLogger.error(:misc, e, message:'Error authenticating with Facebook')
+      GSLogger.error(:misc, e, message:'Error authenticating with Facebook', vars: {params: params})
       render json: {}, status: 422
     end
   end
@@ -300,7 +306,9 @@ class SigninController < ApplicationController
     end
 
     def valid_request?
-      @_valid_request ||= MiniFB.verify_signed_request(app_secret, signed_request)
+      @_valid_request ||= (
+        signed_request.nil? ? false : MiniFB.verify_signed_request(app_secret, signed_request)
+      )
     end
 
     def find_or_create_user

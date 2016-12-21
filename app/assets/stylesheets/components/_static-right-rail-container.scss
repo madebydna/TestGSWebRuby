@@ -7,7 +7,7 @@
     padding: 0px 15px;
   }
 
-  @media  (min-width: 992px) {
+  @include media-breakpoint-up(md) {
     .right_rail {
       position: absolute;
       right: 0px;

@@ -18,7 +18,8 @@ module SchoolProfiles
         data = characteristics[data_type_name].find do |data| data['breakdown'] == 'Economically disadvantaged' end
         if data.present?
           key_value = narration_calculation data_type_name, data
-          data['narrative'] = low_income_narration key_value, data_type_name if key_value.present?
+          key_value = '0' if key_value.blank?
+          data['narrative'] = low_income_narration key_value, data_type_name
         end
       end
     end
@@ -29,16 +30,18 @@ module SchoolProfiles
     end
 
     def narration_calculation(data_type_name, data)
-      sch_avg = data['school_value']
-      st_avg = data['state_average']
-      st_moe = 1
-      nf = SchoolProfiles::NarrationFormula.new
-      if data_type_name == 'Percent of students who meet UC/CSU entrance requirements' && sch_avg.present? && st_avg.present?
-        very_low = 20
-        nf.low_income_grad_rate_and_entrance_requirements sch_avg, st_avg, st_moe, very_low
-      elsif data_type_name == '4-year high school graduation rate' && sch_avg.present? && st_avg.present?
-        very_low = 10
-        nf.low_income_grad_rate_and_entrance_requirements sch_avg, st_avg, st_moe, very_low
+      if data.present?
+        sch_avg = data['school_value']
+        st_avg = data['state_average']
+        st_moe = 1
+        nf = SchoolProfiles::NarrationFormula.new
+        if data_type_name == 'Percent of students who meet UC/CSU entrance requirements' && sch_avg.present? && st_avg.present?
+          very_low = 20
+          nf.low_income_grad_rate_and_entrance_requirements sch_avg, st_avg, st_moe, very_low
+        elsif data_type_name == '4-year high school graduation rate' && sch_avg.present? && st_avg.present?
+          very_low = 10
+          nf.low_income_grad_rate_and_entrance_requirements sch_avg, st_avg, st_moe, very_low
+        end
       end
     end
   end

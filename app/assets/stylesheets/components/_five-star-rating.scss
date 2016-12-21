@@ -1,7 +1,7 @@
 .five-star-rating__stars {
   vertical-align: middle;
   font-size: 11px;
-  @media only screen and (max-width: 767px) {
+  @include media-breakpoint-only(xs) {
     font-size: 9px;
   }
 }

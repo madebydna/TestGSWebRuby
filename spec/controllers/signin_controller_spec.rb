@@ -577,6 +577,25 @@ describe SigninController do
       it_should_behave_like 'something went wrong'
     end
 
+    describe '#facebook_auth' do
+      it 'renders 422 when required parameters are missing' do
+        xhr :post, :facebook_auth
+        expect(response.status).to eq(422)
+      end
+
+      it 'does something when provided parameters' do
+        command = double
+        email = 'aroy@greatschools.org'
+        signed = '1234'
+        expect(SigninController::FacebookSignedRequestSigninCommand).
+            to receive(:new).
+                with(signed, email, hash_excluding(:email, :facebook_signed_request)).
+                and_return(command)
+        expect(command).to receive(:join_or_signin)
+        allow(controller).to receive(:params).and_return 'email' => email, 'facebook_signed_request' => signed
+        controller.facebook_auth
+      end
+    end
   end
 
   describe SigninController::FacebookSignedRequestSigninCommand do
@@ -599,6 +618,13 @@ describe SigninController do
       end
       it 'raises an exception' do
         expect { SigninController::FacebookSignedRequestSigninCommand.new_from_request_params(params) }.to raise_error
+      end
+    end
+
+    context 'when signed request is missing' do
+      it 'raises an exception' do
+        expect(MiniFB).to_not receive(:verify_signed_request)
+        expect { SigninController::FacebookSignedRequestSigninCommand.new_from_request_params({}) }.to raise_error('Facebook signed request invalid')
       end
     end
 

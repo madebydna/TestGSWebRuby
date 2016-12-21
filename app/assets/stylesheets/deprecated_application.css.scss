@@ -24,9 +24,9 @@
 @import "gs/objects/spinny_wheel";
 @import "base/spacing";
 @import "gs/navigation";
-@import "base/typography";
+@import "base/deprecated_typography";
 @import "gs/objects/search_area_layout";
 @import "gs/objects/search_page";
 @import "gs/objects/home_page";
 @import "components/join-form";
-
+@import "header";

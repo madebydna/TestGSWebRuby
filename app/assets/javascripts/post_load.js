@@ -1,6 +1,7 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
 //= require webpack-bundle
+//= require header
 //= require util/cached_script
 //= require util/review_helpers
 //= require resources/fastclick
