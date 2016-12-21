@@ -25,6 +25,9 @@ module ActionDispatch
             #   path.sub!(/[^\/]\z|\A\z/, '\&/')
           end
           path.sub!(/[^\/]\z|\A\z/, '\&/')
+          path.sub! /\.gs\/(\?|$)/, '.gs\1'
+          path.sub! /\.topic\/(\?|$)/, '.topic\1'
+          path.sub! /\.page\/(\?|$)/, '.page\1'
           path
         end
       end
