@@ -1,5 +1,5 @@
 import checkRequiredProps from '../util/checkRequiredProps';
-import Toggle from '../util/toggle';
+import Toggle from './toggle';
 // TODO: import lodash assign
 // TODO: import jquery
 

@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import Drawer from '../app/bundles/GSWeb/components/drawer.jsx';
+import Drawer from '../app/bundles/GSWeb/react_components/drawer.jsx';
 
 describe('<Drawer />', function() {
   it('when given content it says "Show more"', function() {

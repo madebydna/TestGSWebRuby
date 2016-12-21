@@ -1,5 +1,5 @@
-import checkRequiredProps from './checkRequiredProps';
-import log from './log';
+import checkRequiredProps from '../util/checkRequiredProps';
+import log from '../util/log';
 
 const Toggle = function($container) {
   this.$container = $container;
