@@ -18,7 +18,6 @@
 //= require util/handlebars
 //= require util/url_params
 //= require util/remodal
-//= require util/school_profile_sticky_cta.js
 //= require ./util/advertising.js
 //= require modals
 // require ./resources/parsley

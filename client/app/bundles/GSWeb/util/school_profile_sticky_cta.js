@@ -1,110 +1,96 @@
-function viewport() {
-  var e = window, a = 'inner';
-  if (!('innerWidth' in window )) {
-    a = 'client';
-    e = document.documentElement || document.body;
+import { viewport } from './viewport';
+//TODO: import jQuery
+
+var ctaProfileOffset;
+var cta;
+var transitionToMobile = 991;
+
+var init = function () {
+  cta = $('.js-profile-sticky');
+  // only init when cta is on the page. :)
+  if (isCTADefined()) {
+    $(window).on('scroll', _.throttle(recalculateCTAResize, 50));
+    $(window).on('resize', _.debounce(recalculateCTAResize, 100));
+
+    recalculateCTAResize();
   }
-  return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
-}
+};
 
-GS.schoolProfiles = GS.schoolProfiles || {};
+var recalculateCTAResize = function () {
+  setCTAProfileOffset();
+  if (isDesktopWidth()) {
+    setCTARowHeightToParent();
+  } else {
+    setCTARowToDefault();
+  }
+  manageFixedPositions();
+};
 
-GS.schoolProfiles.CTA = GS.schoolProfiles.CTA || (function ($) {
-  var ctaProfileOffset;
-  var cta;
-  var transitionToMobile = 991;
-
-  var init = function () {
-    cta = $('.js-profile-sticky');
-    // only init when cta is on the page. :)
-    if (isCTADefined()) {
-      $(window).on('scroll', _.throttle(recalculateCTAResize, 50));
-      $(window).on('resize', _.debounce(recalculateCTAResize, 100));
-
-      recalculateCTAResize();
-    }
-  };
-
-  var recalculateCTAResize = function () {
-    setCTAProfileOffset();
-    if (isDesktopWidth()) {
-      setCTARowHeightToParent();
-    } else {
-      setCTARowToDefault();
-    }
-    manageFixedPositions();
-  };
-
-  var manageFixedPositions = function () {
-    if (isDesktopWidth()) {
-      if (isScrollAboveTop()) {
-        if (scrollBelowBottom()) {
-          alignToBottom();
-        } else {
-          alignFixedTop();
-        }
+var manageFixedPositions = function () {
+  if (isDesktopWidth()) {
+    if (isScrollAboveTop()) {
+      if (scrollBelowBottom()) {
+        alignToBottom();
       } else {
-        alignDefault();
+        alignFixedTop();
       }
     } else {
-      alignMobile();
+      alignDefault();
     }
-  };
-  
-  // is cta is defined on page
-  var isCTADefined = function () {
-    return (cta.val() !== undefined);
-  };
-  
-  // setters
-  var setCTAProfileOffset = function () {
-    ctaProfileOffset = cta.parent().offset().top + 30;
-  };
+  } else {
+    alignMobile();
+  }
+};
 
-  var setCTARowHeightToParent = function () {
-    cta.parent().height(cta.parent().parent().height());
-  };
+// is cta is defined on page
+var isCTADefined = function () {
+  return (cta.val() !== undefined);
+};
 
-  var setCTARowToDefault = function () {
-    cta.parent().height('auto');
-  };
+// setters
+var setCTAProfileOffset = function () {
+  ctaProfileOffset = cta.parent().offset().top + 30;
+};
 
-  // branching
-  var isScrollAboveTop = function () {
-    return (ctaProfileOffset <= $(window).scrollTop());
-  };
+var setCTARowHeightToParent = function () {
+  cta.parent().height(cta.parent().parent().height());
+};
 
-  var isDesktopWidth = function () {
-    return (viewport().width > transitionToMobile);
-  };
+var setCTARowToDefault = function () {
+  cta.parent().height('auto');
+};
 
-  var scrollBelowBottom = function () {
-    var ctaBottomOffset = cta.parent().height() - cta.height() + ctaProfileOffset - 30;
-    return (ctaBottomOffset <= $(window).scrollTop());
-  };
-  
-  // align cta for each case
-  var alignToBottom = function () {
-    cta.removeClass('fixed-top').removeClass('non-fixed-top').addClass('align-bottom');
-  };
+// branching
+var isScrollAboveTop = function () {
+  return (ctaProfileOffset <= $(window).scrollTop());
+};
 
-  var alignFixedTop = function () {
-    cta.removeClass('non-fixed-top').removeClass('align-bottom').addClass('fixed-top');
-  };
+var isDesktopWidth = function () {
+  return (viewport().width > transitionToMobile);
+};
 
-  var alignDefault = function () {
-    cta.removeClass('fixed-top').removeClass('align-bottom').addClass('non-fixed-top');
-  };
+var scrollBelowBottom = function () {
+  var ctaBottomOffset = cta.parent().height() - cta.height() + ctaProfileOffset - 30;
+  return (ctaBottomOffset <= $(window).scrollTop());
+};
 
-  var alignMobile = function () {
-    cta.removeClass('fixed-top').removeClass('align-bottom').removeClass('non-fixed-top');
-  };
+// align cta for each case
+var alignToBottom = function () {
+  cta.removeClass('fixed-top').removeClass('non-fixed-top').addClass('align-bottom');
+};
 
-  return {
-    init: init
-  };
-})(jQuery);
+var alignFixedTop = function () {
+  cta.removeClass('non-fixed-top').removeClass('align-bottom').addClass('fixed-top');
+};
 
-$(function () {
-  GS.schoolProfiles.CTA.init();
-});
+var alignDefault = function () {
+  cta.removeClass('fixed-top').removeClass('align-bottom').addClass('non-fixed-top');
+};
+
+var alignMobile = function () {
+  cta.removeClass('fixed-top').removeClass('align-bottom').removeClass('non-fixed-top');
+};
+
+export { init };
+
+

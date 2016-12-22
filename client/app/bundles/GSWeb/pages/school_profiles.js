@@ -9,6 +9,8 @@ import { generateEthnicityChart } from '../components/ethnicity_pie_chart';
 import { fixToTopWhenBelowY } from '../util/fix_to_top_when_below_y';
 import * as tooltips from '../util/tooltip';
 import { generateSubgroupPieCharts } from '../util/subgroup_charts';
+import * as stickyCTA from '../util/school_profile_sticky_cta';
+import { viewport } from '../util/viewport';
 
 window.store = configureStore({
   school: gon.school
@@ -28,6 +30,7 @@ $(function() {
   makeDrawersWithSelector($('.js-drawer'));
   tooltips.initialize();
   generateSubgroupPieCharts();
+  stickyCTA.init();
 
   $('.rating-container__title').each(function() {
     var $elem = $(this);
