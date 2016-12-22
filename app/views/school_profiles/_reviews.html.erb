@@ -3,9 +3,9 @@
 <% school_id = review_questions.school_id %>
 <% state = review_questions.state %>
 
-<%= react_component('Reviews',
+<%= react_component('Reviews', props: {
                     reviews: reviews.reviews_list,
                     state: state,
                     schoolId: school_id,
                     questions: questions
-                   ) %>
+}) %>

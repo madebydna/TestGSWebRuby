@@ -27,7 +27,7 @@ gem 'devise'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
-gem 'react-rails', '~> 1.8', '>= 1.8.1'
+gem 'react_on_rails', '~> 6'
 
 # Add database sharding support to Active Record
 # gem 'ar-octopus', '0.6.0' <-- evil
@@ -256,6 +256,9 @@ group :development, :test do
   gem 'rubocop', '= 0.40.0', require: false
   # A formatter for rubocop that outputs in checkstyle format
   gem 'rubocop-checkstyle_formatter', require: false
+
+  # Minimal embedded v8 engine for Ruby
+  gem 'mini_racer', platforms: :ruby
 end
 
 # Sass adapter for the Rails asset pipeline.
@@ -280,3 +283,4 @@ gem 'uglifier', '>= 1.0.3'
 group :profile do
   gem 'ruby-prof'
 end
+

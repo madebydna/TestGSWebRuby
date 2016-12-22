@@ -17,10 +17,10 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <%= react_component('Equity', test_scores:  equity.test_scores_by_ethnicity,
+      <%= react_component('Equity', props: {test_scores:  equity.test_scores_by_ethnicity,
                           enrollment: equity.enrollment,
                           characteristics: equity.characteristics,
-                          rating_low_income: equity.rating_low_income)  %>
+                          rating_low_income: equity.rating_low_income})  %>
     </div>
   </div>
 </div>
