@@ -1,7 +1,6 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
 //= require resources/tipso
-//= require webpack-bundle
 //= require header
 //= require util/cached_script
 //= require util/review_helpers
@@ -30,3 +29,4 @@
 //= require util/send_updates
 //= require util/back_to_top
 //= require page_initializers/school_profiles
+//= require webpack-bundle
