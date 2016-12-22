@@ -1,6 +1,5 @@
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
-GS.tooltip = GS.tooltip || {};
-GS.tooltip.initialize = function() {
+export function initialize() {
   if(!('ontouchstart' in window)) {
     $('.gs-tipso').tipso({
       width: 300,
@@ -24,11 +23,6 @@ GS.tooltip.initialize = function() {
     });
   }
 };
-
-$(function() {
-  GS.tooltip.initialize();
-});
-
 
 // function testPointerFunction(e){
 //   document.getElementById( "o" ).innerHTML = "that was a " +

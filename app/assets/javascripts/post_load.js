@@ -1,12 +1,12 @@
 // This combined file will be loaded after load complete by js.
 // NEW PROFILES POST_LOAD
+//= require resources/tipso
 //= require webpack-bundle
 //= require header
 //= require util/cached_script
 //= require util/review_helpers
 //= require resources/fastclick
 // require resources/pep
-//= require resources/tipso
 //= require resources/remodal
 //= require auth/auth
 //= require auth/facebook_auth
@@ -17,7 +17,6 @@
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars
 //= require util/url_params
-//= require util/tooltip
 //= require util/remodal
 //= require util/school_profile_sticky_cta.js
 //= require ./util/advertising.js
@@ -27,12 +26,10 @@
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations
 //= require util/content
-//= require graphs/subgroup_charts
 //= require loaders/facebook
 //= require util/states
 //= require util/notifications
 //= require util/subscription
 //= require util/send_updates
 //= require util/back_to_top
-//= require util/fix_to_top_when_below_y
 //= require page_initializers/school_profiles

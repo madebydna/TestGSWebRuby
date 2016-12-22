@@ -1,6 +1,6 @@
-var GS = GS || {};
+//TODO: import $
 
-GS.fixToTopWhenBelowY = function($elem, startYFunc, endYFunc, conditionCallback) {
+export function fixToTopWhenBelowY($elem, startYFunc, endYFunc, conditionCallback) {
   var updateElementPosition = function() {
     var startY = startYFunc($elem);
     var endY = endYFunc($elem);
