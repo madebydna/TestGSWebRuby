@@ -80,7 +80,7 @@ export default class Reviews extends React.Component {
 
   findRemoveUserReview(schoolUserDigest, reviews) {
     var result;
-    for(i = 0; i < reviews.length; i++) {
+    for(var i = 0; i < reviews.length; i++) {
       if ( reviews[i].school_user_digest == schoolUserDigest ) {
         result = reviews.splice(i,1)[0];
         break;
