@@ -58,6 +58,9 @@ export default class ReviewForm extends React.Component {
 
   renderFiveStarQuestionCTA() {
     let fiveStarQuestion = this.props.questions[0];
+    if(fiveStarQuestion === undefined) {
+      return undefined;
+    }
     return(<FiveStarQuestionCTA
       responseValues = {fiveStarQuestion.response_values}
       responseLabels = {fiveStarQuestion.response_labels}
