@@ -17,14 +17,12 @@
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars
 //= require util/url_params
-//= require util/remodal
 //= require ./util/advertising.js
 //= require modals
 // require ./resources/parsley
 //= require resources/parsley.remote
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations
-//= require util/content
 //= require loaders/facebook
 //= require util/states
 //= require util/notifications
