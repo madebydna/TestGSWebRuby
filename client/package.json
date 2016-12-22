@@ -11,7 +11,8 @@
     "build:production": "NODE_ENV=production webpack --optimize-dedupe --optimize-minimize --optimize-occurrence-order --config webpack.config.js",
     "build:development": "webpack -w --config webpack.config.js",
     "test": "mocha-webpack",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "rspec": "rm ../app/assets/webpack/webpack-bundle.js && NODE_ENV=production webpack --optimize-dedupe --optimize-minimize --optimize-occurrence-order --config webpack.config.js"
   },
   "cacheDirectories": [
     "node_modules",
