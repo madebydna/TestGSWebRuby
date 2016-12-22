@@ -1,3 +1,4 @@
+import { getScript } from '../util/dependency';
 // TODO: import $
 
       //  If you change these colors they need to be changed in _ethnicity.html.erb 
@@ -83,7 +84,7 @@
       if(window.Highcharts) {
         callback();
       } else {
-        GS.dependency.getScript(gon.dependencies['highcharts']).done(callback);
+        getScript(gon.dependencies['highcharts']).done(callback);
       }
     }
   };

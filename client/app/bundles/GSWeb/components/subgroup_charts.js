@@ -1,4 +1,5 @@
 import * as tooltips from '../util/tooltip';
+import { getScript } from '../util/dependency';
 //TODO: import jQuery
 
 var subgroupSliceColor = '#34A4DA';
@@ -244,7 +245,7 @@ var renderSubgroupChart = function(data, key) {
 var generateSubgroupPieCharts = function () {
   if (gon.subgroup) {
     var subgroupData = gon.subgroup;
-    GS.dependency.getScript(gon.dependencies['highcharts']).done(function () {
+    getScript(gon.dependencies['highcharts']).done(function () {
       _.forOwn(subgroupData, renderSubgroupChart);
       if (gon.gender) {
         var genderData = gon.gender;

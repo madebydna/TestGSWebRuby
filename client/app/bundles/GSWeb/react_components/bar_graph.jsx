@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { getScript } from '../util/dependency';
 
 export default class BarGraph extends React.Component {
   static defaultProps = {
@@ -108,7 +109,7 @@ export default class BarGraph extends React.Component {
     if(window.Highcharts) {
       callback();
     } else {
-      GS.dependency.getScript(gon.dependencies['highcharts']).done(callback);
+      getScript(gon.dependencies['highcharts']).done(callback);
     }
   }
 
