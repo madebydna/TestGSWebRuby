@@ -1,4 +1,4 @@
-import { viewport } from './viewport';
+import { viewport } from '../util/viewport';
 //TODO: import jQuery
 
 var ctaProfileOffset;

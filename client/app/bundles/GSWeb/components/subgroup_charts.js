@@ -1,4 +1,4 @@
-import * as tooltips from './tooltip';
+import * as tooltips from '../util/tooltip';
 //TODO: import jQuery
 
 var subgroupSliceColor = '#34A4DA';
