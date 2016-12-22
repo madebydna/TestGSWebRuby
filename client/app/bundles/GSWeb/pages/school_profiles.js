@@ -11,6 +11,7 @@ import * as tooltips from '../util/tooltip';
 import { generateSubgroupPieCharts } from '../util/subgroup_charts';
 import * as stickyCTA from '../util/school_profile_sticky_cta';
 import { viewport } from '../util/viewport';
+import * as remodal from '../util/remodal';
 
 window.store = configureStore({
   school: gon.school
@@ -29,6 +30,7 @@ $(function() {
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
   tooltips.initialize();
+  remodal.init();
   generateSubgroupPieCharts();
   stickyCTA.init();
 

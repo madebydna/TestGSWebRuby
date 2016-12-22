@@ -1,3 +1,5 @@
+import { contentManager } from './content';
+
 // this is to control modal ( so no modal when a tooltip is launched ) and to populate content in the tooltip.
 export function initialize() {
   if(!('ontouchstart' in window)) {
@@ -10,7 +12,7 @@ export function initialize() {
         ele.removeAttr('data-remodal-target');
 
         // update content
-        var content = GS.content.contentManager(ele);
+        var content = contentManager(ele);
         $('.gs-tipso').tipso('update', 'content', content);
       },
       tooltipHover: true,
