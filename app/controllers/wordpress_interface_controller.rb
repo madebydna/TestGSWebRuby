@@ -1,12 +1,11 @@
-# require 'fuelsdk'
 class WordpressInterfaceController < ApplicationController
 
   layout false
   skip_before_filter :verify_authenticity_token, :only => [:call_from_wordpress]
 
   # These arrays are for white listing
-  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'message_signup', 'email_cuecardscenario',
-                       'get_like_count', 'post_like', 'sms_sign_up_word_day']
+  SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'email_cuecardscenario',
+                       'get_like_count', 'post_like']
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
   NEWSLETTER_HOW = 'wp_newsletter'
@@ -110,34 +109,6 @@ class WordpressInterfaceController < ApplicationController
     total_like_count = likes_scope.count
 
     { total_like_count: total_like_count }
-  end
-
-  def sms_sign_up_word_day(wp_params)
-    product = word_of_the_day_product
-    language = language_obj(lang)
-    user_id = create_sms_user(wp_params['cellphone'], wp_params['email'])
-
-    grades = wp_params['grade']
-    if grades.present?
-      # remove duplicates
-      grades_uniq = grades.uniq
-      grades_uniq.each do |grade|
-        if grade.present? && SUPPORTED_GRADES.include?(grade)
-          grade_obj = Grade.find_by_name_shorter(grade)
-          unless UserProductGradeLanguageMaps.where(:sms_user_id => user_id, :product_id => product.id,
-                                                    :grade_id => grade_obj.id, :language_id => language.id).first_or_create
-            GSLogger.error(:gk_action, nil, message: 'WP UserProductGradeLanguageMaps failed to save', vars: {
-                                         user_id: user_id,
-                                         product_id: product.id,
-                                         grade_id: grade_obj.id,
-                                         language_id: language.id
-
-                                     })
-          end
-        end
-      end
-    end
-    manage_entry_for_exact_target(user_id)
   end
 
   def email_cuecardscenario(wp_params)
@@ -253,52 +224,6 @@ class WordpressInterfaceController < ApplicationController
     user.id
   end
 
-  def create_sms_user(phone, email)
-    phone_user = SmsUsers.find_by_phone(phone)
-    email_user = SmsUsers.find_by_email(email)
-    if (phone_user.present? && email_user.present?)
-      if (phone_user == email_user)
-        return phone_user.id
-      else
-        phone_user.email = email
-        email_user.destroy
-        return sms_user_save(phone_user)
-      end
-    end
-
-    if (phone_user.present? && email_user.blank?)
-      phone_user.email = email
-      return sms_user_save(phone_user)
-    end
-
-    if (phone_user.blank? && email_user.present?)
-      email_user.phone = phone
-      return sms_user_save(email_user)
-    end
-
-    if (phone_user.blank? && email_user.blank?)
-      user = SmsUsers.new
-      user.email = email
-      user.phone = phone
-      return sms_user_save(user)
-    end
-
-  end
-
-  def sms_user_save(user)
-    unless user.save!
-      GSLogger.error(:gk_action, nil, message: 'WP SMS user failed to save', vars: {
-                                   email: email,
-                                   cellphone: phone
-                               })
-    end
-    user.id
-  end
-
-  def word_of_the_day_product
-    Products.find(PRODUCT_ID_WORD_OF_THE_DAY)
-  end
-
   def language_obj(lang)
     if (lang.blank?)
       lang = 'English'
@@ -316,22 +241,4 @@ class WordpressInterfaceController < ApplicationController
     # loop through all entries in the mapping table for this user_id and either insert or update on exact target.
     # If unsubscribed from sms - resubscribe them
   end
-
-  # phone_number.gsub(/\D/, '')
-  # def create_data_extension_row_for_user(email, cellphone)
-  #   client = FuelSDK::Client.new (
-  #       client: {
-  #           'id' => ENV_GLOBAL['exacttarget_api_client_id_SMS'],
-  #           'secret' => ENV_GLOBAL['exacttarget_api_client_secret_SMS']
-  #       }
-  #   )
-  #   request = FuelSDK::List.new
-  #   request.client = client
-  #   response = list.get
-  #   p response
-  #   # ENV_GLOBAL['exacttarget_api_client_id_SMS']
-  #   # ENV_GLOBAL['exacttarget_api_client_secret_SMS']
-  #   # ENV_GLOBAL['exacttarget_api_app_id_SMS']
-  # end
-
 end

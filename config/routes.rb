@@ -23,6 +23,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
 
+
   
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
@@ -107,6 +108,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
   get '/gsr/ajax/community-scorecard/get-school-data', to: 'community_scorecards_ajax#get_school_data'
   get '/gsr/footer', to: 'footer#show'
+  get '/gsr/header', to: 'header#show'
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'

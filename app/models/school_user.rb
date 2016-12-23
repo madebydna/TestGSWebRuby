@@ -108,9 +108,6 @@ class SchoolUser < ActiveRecord::Base
   def user_type
     type = read_attribute(:user_type).try(:to_sym)
     type = Affiliation::UNKNOWN unless VALID_AFFILIATIONS.include?(type)
-    if type == Affiliation::UNKNOWN
-      type = Affiliation::PRINCIPAL if approved_osp_user?
-    end
     type
   end
 

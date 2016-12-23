@@ -7,6 +7,7 @@ describe SchoolProfiles::NarrativeLowIncomeTestScores do
       school_cache_data_reader = mock_school_cache_data_reader
 
       narrativeLowIncomeTestScores = SchoolProfiles::NarrativeLowIncomeTestScores.new(school_cache_data_reader: school_cache_data_reader)
+      allow(narrativeLowIncomeTestScores).to receive(:key_for_yml).and_return '4_3'
       narrativeLowIncomeTestScores.auto_narrative_calculate_and_add
 
       expect(school_cache_data_reader.test_scores).to eq(result_hash)

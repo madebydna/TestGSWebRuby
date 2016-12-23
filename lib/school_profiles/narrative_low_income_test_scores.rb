@@ -89,6 +89,7 @@ module SchoolProfiles
     end
 
     def write_to_test_score_hash(data_id, yml_key, subject, write_location, year_to_use)
+
       @school_cache_data_reader.test_scores[data_id][write_location]['grades']['All']['level_code']['e,m,h'][subject][year_to_use]['narrative'] = low_income_text(yml_key, subject)
     end
 

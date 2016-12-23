@@ -9,7 +9,7 @@ module UserReviewConcerns
     has_many :answers, through: :reviews
 
     # Reviews that this User authored, that are published now
-    has_many :published_reviews, -> { published }, class: 'Review', foreign_key: 'member_id'
+    has_many :published_reviews, -> { published }, class_name: 'Review', foreign_key: 'member_id'
 
     # Reviews that this User authored, that are flagged now
     has_many :flagged_reviews, -> { reported }, class_name: 'Review', foreign_key: 'member_id'

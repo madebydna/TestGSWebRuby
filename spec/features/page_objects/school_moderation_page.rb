@@ -8,7 +8,7 @@ class SchoolModerationPage < SitePrism::Page
 
   section :school_search_form, '.rs-school-search-form' do
     element :state_dropdown, 'select'
-    element :school_id_box, 'input'
+    element :school_id_box, 'input#school_id'
     element :search_button, 'button'
   end
 
