@@ -78,14 +78,14 @@ describe SchoolHelper do
     describe 'without a school' do
       it_behaves_like 'produces a correct zillow campaign code' do
         let (:school) { nil }
-        let (:expected_url) { 'http://www.zillow.com/?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=' }
+        let (:expected_url) { 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=' }
       end
     end
 
     describe 'with a school' do
       it_behaves_like 'produces a correct zillow campaign code' do
         let (:school) { double }
-        let (:expected_url) { 'http://www.zillow.com/CA-94611?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=' }
+        let (:expected_url) { 'https://www.zillow.com/CA-94611?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=' }
 
         before do
           allow(school).to receive(:zipcode).and_return('94611-1234')
