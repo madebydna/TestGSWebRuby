@@ -6,11 +6,15 @@ import nodeExternals from 'webpack-node-externals';
 export default {
   target: 'node',
   externals: [nodeExternals()],
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
   module: {
     loaders: [
       {
         test: /\.jsx$/,
-        loader: "babel-loader"
+        loader: "babel-loader",
+        exclude: /node_modules/
       }
     ]
   }
