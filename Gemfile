@@ -1,6 +1,8 @@
 source "https://rubygems.org"
 
-gem 'rails', '4.1.1'
+# WARNING: Before upgrading rails version check the following extension to the
+# Rails ActionDispatch::HTTP::URL.url_for 
+gem 'rails', '4.2.7'
 
 gem 'mysql2', '0.3.13'
 
@@ -23,7 +25,7 @@ gem 'rails_admin'
 gem 'codemirror-rails'
 
 # Authentication, used for rails-admin
-gem 'devise'
+gem 'devise', '4.2.0'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
