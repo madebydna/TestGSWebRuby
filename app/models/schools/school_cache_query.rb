@@ -28,17 +28,31 @@ class SchoolCacheQuery
 
   def matching_schools_clause
     arel = SchoolCache.arel_table
-    q ||= arel[:id].eq('0') # id = 0 d prevents needing to special-case code below
-    @school_ids_per_state.each_pair do |state, school_ids_for_state|
-      q = q.or(
-        q.grouping(
-          arel[:state].eq(state).
-          and(
-            arel[:school_id].in(school_ids_for_state)
-          )
+    q = arel.project(Arel.star)
+    if @school_ids_per_state.values.flatten.present?
+      q = q.grouping(
+        arel[:state].eq(@school_ids_per_state.first[0]).
+        and(
+          arel[:school_id].in(@school_ids_per_state.first[1])
         )
       )
+      if @school_ids_per_state.size > 1
+        @school_ids_per_state.to_a[1..-1].each do |(state, school_ids_for_state)|
+          next if school_ids_for_state.blank?
+          q = q.or(
+            q.grouping(
+              arel[:state].eq(state).
+              and(
+                arel[:school_id].in(school_ids_for_state)
+              )
+            )
+          )
+        end
+      end
+    else
+      q.limit = 0
     end
+
     q.to_sql
   end
 
