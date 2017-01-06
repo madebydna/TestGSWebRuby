@@ -117,6 +117,11 @@ LocalizedProfiles::Application.routes.draw do
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
+  
+  get '/widget/', :to => 'widget#show'
+  post '/widget/', :to => 'widget#create'
+  match '/widget/map' => 'widget#map', via: [:get, :post]
+  match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
 
   # Routes within this scope are pages not handled by Rails.
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
