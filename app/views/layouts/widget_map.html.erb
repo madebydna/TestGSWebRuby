@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+  <%= display_meta_tags %>
+  <%= render 'google_tag_manager/init_data_layer' %>
+  <%= include_gon %>
+  <%= javascript_include_tag 'widget_map', 'data-turbolinks-track' => true %>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+</head>
+<body class="open-sans">
+
+<%= render 'google_tag_manager/push_to_data_layer' %>
+
+<%= render 'google_tag_manager/install' %>
+
+<%=  render 'omniture/quantcast' %>
+
+</body>
+</html>
