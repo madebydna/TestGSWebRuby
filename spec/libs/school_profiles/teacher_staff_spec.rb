@@ -18,48 +18,49 @@ describe SchoolProfiles::TeachersStaff do
       {
           'Ratio of teacher salary to total number of teachers' => [
               {
-                  'school_value' => 1600
+                  'school_value' => 1600,
+                  'state_value' => 2000
               }
           ],
           'Percentage of full time teachers who are certified' => [
               {
-                  'school_value' => 60
+                  'school_value' => 60,
+                  'state_value' => 80,
               }
           ],
-          'Average ACT score' => [
+          'Percentage of teachers with less than three years experience' => [
               {
-                  'school_value' => 20
+                  'school_value' => 60,
+                  'state_value' => 80,
               }
           ]
       }
     end
 
     it 'should return chosen data types if data present' do
-      pending
-      # expect(school_cache_data_reader).to receive(:gsdata_data) do
-      #   sample_data
-      # end.exactly(2).times
-      allow(school_cache_data_reader).to receive(:gsdata_data).and_return(sample_data)
-      expect(subject.data_type_hashes.size).to eq(2)
-      # data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
-      # expect(data_points).to be_present
-      # expect(data_points.score).to eq(1600)
-      # expect(data_points.state_average).to eq(1400)
-      # expect(data_points.range).to eq((600..2400))
+      expect(school_cache_data_reader).to receive(:gsdata_data) do
+        sample_data
+      end.at_least(:once)
+      sample_data.keys.each do |data_type|
+        expect(subject).to receive(:data_label).with(data_type).and_return(data_type).at_least(:once)
+      end
+      expect(subject.data_values.size).to eq(3)
+      data_points = subject.data_values.find {|item| item.label == 'Percentage of full time teachers who are certified' }
+      expect(data_points).to be_present
+      expect(data_points.score).to eq(60)
+      expect(data_points.state_average.value).to eq(80)
     end
 
     it 'should return chosen data types in configured order' do
-      pending
-      expect(school_cache_data_reader).to receive(:gsdata_data_data) do
+      expect(school_cache_data_reader).to receive(:gsdata_data) do
         sample_data
+      end.exactly(1).times
+      sample_data.keys.each do |data_type|
+        expect(subject).to receive(:data_label).with(data_type).and_return(data_type).at_least(:once)
       end
-      # included_data_types = subject.included_data_types
-      # data_value_labels = subject.data_values.map(&:label)
-
-      # start with full set of ordered data types, then remove items
-      # that are not in the resulting data_value_labels. Expression should
-      # yield an array that is in same order as data_value_labels
-      # expect(included_data_types & data_value_labels).to eq(data_value_labels)
+      ordered_data_types = subject.included_data_types
+      data_value_labels = subject.data_values.map(&:label)
+      expect(ordered_data_types & data_value_labels).to eq(data_value_labels)
     end
 
     it 'should return empty array if no data' do

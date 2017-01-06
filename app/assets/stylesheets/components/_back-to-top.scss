@@ -10,35 +10,30 @@ $back-top-top-gray: #b8bbbe;
   color: $white;
   background-color: $back-top-top-gray;
   border-radius: 32px 0 0 32px;
-  padding-left: 17px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 28px;
   font-size: 22px;
   height: 47px;
   line-height: 45px;
   z-index: 10;
-  .top-icon {
-    display: inline-block;
-    line-height: normal;
+  .top-icon, .iconx16 {
+    position: fixed;
   }
+
   .top-text {
     display: none;
     font-size: 16px;
     font-family: "opensans-regular";
     color: $white;
-    padding-left: 10px;
+    padding-left: 28px;
     // the way to vertically align the top text to the top icon
-    vertical-align: 11%;
+    vertical-align: 8%;
   }
 }
 
 a.back-to-top:hover {
   color: $white;
   text-decoration: none;
-  .top-text {
-    display: inline-block;
-    line-height: normal;
-  }
-  display: none;
 }
 
 a.back-to-top:active {

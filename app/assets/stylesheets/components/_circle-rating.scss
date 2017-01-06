@@ -26,7 +26,7 @@ $large: 62px;
 
 .circle-rating--large-responsive {
   @include circle-rating(62px);
-  @media only screen and (max-width: 767px) {
+  @include media-breakpoint-only(xs) {
     @include circle-rating(38px);
   }
 }

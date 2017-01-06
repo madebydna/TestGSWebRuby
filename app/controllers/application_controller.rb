@@ -35,24 +35,18 @@ class ApplicationController < ActionController::Base
 
   layout "deprecated_application"
 
+  def url_options
+    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
+    super
+  end
+
   protected
 
   rescue_from Exception, :with => :exception_handler
 
   # helper :all
-  helper_method :logged_in?, :current_user, :url_for, :state_param_safe
+  helper_method :logged_in?, :current_user, :state_param_safe
   helper_method :json_ld_hash
-
-  # methods for getting request URL / path info
-
-  def url_for(*args, &block)
-    url = super(*args, &block)
-    url.sub! /\.gs\/(\?|$)/, '.gs\1'
-    url.sub! /\.topic\/(\?|$)/, '.topic\1'
-    url.sub! /\.page\/(\?|$)/, '.page\1'
-    url
-  end
-  ApplicationController.send :public, :url_for
 
   def disconnect_connection_pools
     # This used to be done with the rack_after_reply gem.
@@ -95,11 +89,6 @@ class ApplicationController < ActionController::Base
     rescue
       I18n.locale = I18n.default_locale
     end
-  end
-
-  def url_options
-    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
-    super
   end
 
   def path_w_query_string (do_not_append, page_name)

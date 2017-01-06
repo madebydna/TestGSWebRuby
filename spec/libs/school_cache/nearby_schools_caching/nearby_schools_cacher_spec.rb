@@ -65,4 +65,21 @@ describe NearbySchoolsCaching::NearbySchoolsCacher do
       end
     end
   end
+
+  describe '#closest_top_then_top_nearby_schools' do
+    let (:school) { FactoryGirl.build(:alameda_high_school) }
+    let(:nearby_schools_cacher) do
+      NearbySchoolsCaching::NearbySchoolsCacher.new(school)
+    end
+    let (:subject) { nearby_schools_cacher.send(:closest_top_then_top_nearby_schools)}
+
+    # TODO: Mock out the actual hash return results instead
+    it 'adds review data in to all schools from both methodologies' do
+      allow(NearbySchoolsCaching::Methodologies::ClosestTopSchools).to receive(:results).and_return([school])
+      allow(NearbySchoolsCaching::Methodologies::TopNearbySchools).to receive(:results).and_return([school])
+
+      expect(nearby_schools_cacher).to receive(:add_review_data_to_nearby_school_hashes).with([school, school])
+      subject
+    end
+  end
 end

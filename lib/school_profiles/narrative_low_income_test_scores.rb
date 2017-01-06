@@ -8,33 +8,69 @@ module SchoolProfiles
     def auto_narrative_calculate_and_add
       subjects = ['English Language Arts', 'Math']
       write_location = 'Economically disadvantaged'
+      return nil unless valid_school_cache_data_reader?
       subjects.each do |subject|
         hash = hash_for_calculation '236', subject
         if hash['li'].present?
           year_to_use = year_to_use_from_hash hash
-          yml_key = key_for_yml hash, year_to_use
           if year_to_use.present?
-            write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
+            yml_key = key_for_yml hash, year_to_use
+            if year_to_use.present?
+              write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
+            end
+          else
+            write_to_test_score_hash '236', '0_0', subject, write_location, hash['li'].keys.max
           end
+        elsif hash['nli'].present?
+          write_to_test_score_hash '236', '0_0', subject, 'Not economically disadvantaged', hash['nli'].keys.max
         end
       end
     end
 
     def key_for_yml(hash, year_to_use)
-      st_nli_avg = hash['nli'][year_to_use]['state_average']
-      st_li_avg = hash['li'][year_to_use]['state_average']
-      sch_nli_avg = hash['nli'][year_to_use]['score']
-      sch_li_avg = hash['li'][year_to_use]['score']
-      st_all_avg = hash['all'][year_to_use]['state_average']
+      return_value = '0_0'
+      if hash_has_all_necessary_keys? hash, year_to_use
+        st_nli_avg = hash['nli'][year_to_use]['state_average']
+        st_li_avg = hash['li'][year_to_use]['state_average']
+        sch_nli_avg = hash['nli'][year_to_use]['score']
+        sch_li_avg = hash['li'][year_to_use]['score']
+        st_all_avg = hash['all'][year_to_use]['state_average']
 
-      nf = SchoolProfiles::NarrationFormula.new
-      column = nf.low_income_test_scores_calculate_column st_nli_avg, st_li_avg, sch_li_avg, st_all_avg
-      row = nf.low_income_test_scores_calculate_row st_nli_avg, st_li_avg, sch_li_avg, sch_nli_avg
+        nf = SchoolProfiles::NarrationFormula.new
+        column = nf.low_income_test_scores_calculate_column st_nli_avg, st_li_avg, sch_li_avg, st_all_avg
+        row = nf.low_income_test_scores_calculate_row st_nli_avg, st_li_avg, sch_li_avg, sch_nli_avg
 
-      if year_to_use.present? && column.present? && row.present?
-        (column << '_' << row)
+        if year_to_use.present? && column.present? && row.present?
+          return_value = (column << '_' << row)
+        end
+      end
+      return_value
+    end
+
+    def hash_has_all_necessary_keys?(hash, year)
+      #  top level check
+      if (hash_check_for_data? hash, year, 'li') && (hash_check_for_data? hash, year, 'nli') && (hash_check_for_data_key_all? hash, year)
+        true
       else
-        '0_0'
+        false
+      end
+    end
+
+    def hash_check_for_data?(hash, year, type)
+      if hash[type].present? && hash[type][year].present? && hash[type][year]['state_average'].present? && hash[type][year]['score'].present?
+        true
+      else
+        false
+      end
+    end
+
+
+    def hash_check_for_data_key_all?(hash, year)
+      type = 'all'
+      if hash[type].present? && hash[type][year].present? && hash[type][year]['state_average'].present?
+        true
+      else
+        false
       end
     end
 
@@ -53,6 +89,7 @@ module SchoolProfiles
     end
 
     def write_to_test_score_hash(data_id, yml_key, subject, write_location, year_to_use)
+
       @school_cache_data_reader.test_scores[data_id][write_location]['grades']['All']['level_code']['e,m,h'][subject][year_to_use]['narrative'] = low_income_text(yml_key, subject)
     end
 
@@ -61,6 +98,13 @@ module SchoolProfiles
       full_key = 'lib.test_scores.narrative.low_income.' << key << '_html'
       subject_tran = I18n.t(subject_key)
       I18n.t(full_key, subject: subject_tran)
+    end
+
+    private
+
+    def valid_school_cache_data_reader?
+      @school_cache_data_reader.respond_to?(:test_scores) &&
+        @school_cache_data_reader.test_scores.is_a?(Hash)
     end
   end
 end

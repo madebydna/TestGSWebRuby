@@ -1,6 +1,6 @@
 class Api::TopPerformingNearbySchoolsController < ApplicationController
-  DEFAULT_LIMIT = 4
-  MAX_LIMIT = 4
+  DEFAULT_LIMIT = 6
+  MAX_LIMIT = 6
 
   before_filter :require_school
 

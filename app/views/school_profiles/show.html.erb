@@ -23,8 +23,8 @@
             </div>
           </div>
           <div class="col-xs-12 col-lg-9">
-            <%= render 'test_scores', test_scores: @school_profile.test_scores %>
-            <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+            <%= render 'test_scores', test_scores: @school_profile.test_scores if @school_profile.test_scores.visible? %>
+            <%= render 'college_readiness', college_readiness: @school_profile.college_readiness if @school_profile.college_readiness.visible? %>
           </div>
         </div>
       </div>
@@ -35,12 +35,21 @@
       <div>
         <%= render 'equity', equity: @school_profile.equity %>
       </div>
-      <div>
-        <%= render 'students', students: @school_profile.students %>
+
+      <div class="environment-container">
+        <div class="row">
+          <div class="col-xs-12 col-lg-3">
+            <div class="rating-container__title">
+              <%= t('.environment') %>
+            </div>
+          </div>
+          <div class="col-xs-12 col-lg-9">
+            <%= render 'students', students: @school_profile.students %>
+            <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff if @school_profile.teachers_staff.visible? %>
+          </div>
+        </div>
       </div>
-      <div>
-        <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
-      </div>
+
 
       <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
                  width: 320, height: 50, css_class: 'mbl' %>

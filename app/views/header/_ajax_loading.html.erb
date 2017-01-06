@@ -1,0 +1,13 @@
+<div id="universal_header"></div>
+<script type="application/javascript">
+  jQuery(function() {
+    jQuery.ajax({
+      type: 'GET',
+      url: "/gsr/header",
+      dataType: 'html',
+      async: false
+    }).done(function (data) {
+      jQuery('#universal_header').append(JSON.parse(data).header);
+    });
+  });
+</script>
