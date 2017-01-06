@@ -21,7 +21,7 @@ class DistrictCacheQuery
 
   def matching_districts_clause
     arel = DistrictCache.arel_table
-    q ||= arel[:id].eq('0') # id = 0 d prevents needing to special-case code below
+    q ||= arel.grouping(false: true) # false = true in query prevents needing to special-case code below
     @district_ids_per_state.each_pair do |state, district_ids_for_state|
       q = q.or(
         q.grouping(
