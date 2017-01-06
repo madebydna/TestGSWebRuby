@@ -2,6 +2,7 @@
 <head>
   <%= include_gon %>
   <%= javascript_include_tag 'widget_map', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'widget', media: 'all', 'data-turbolinks-track' => true %>
  </head>
 <body style="margin: 0; padding: 0;">
 <%= content_for?(:content) ? yield(:content) : yield %>

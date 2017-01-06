@@ -4,6 +4,7 @@ class WidgetController < ApplicationController
   include SchoolHelper
 
   layout :determine_layout
+  protect_from_forgery with: :null_session
 
   MAX_RESULTS_FOR_MAP = 100
   DEFAULT_RADIUS = 5
@@ -17,8 +18,7 @@ class WidgetController < ApplicationController
 
   # this is the widget iframe component
   def map
-    convert_widget_params
-    by_location
+    search_by_type
   end
 
   # this is the widget iframe component - that will contain all the content
@@ -34,38 +34,79 @@ class WidgetController < ApplicationController
 
   private
 
+  def all_digits(str)
+    str[/[0-9]+/]  == str
+  end
+
+  def search_by_type
+    city_from_query ? city_browse : by_location
+  end
+
+  def city_from_query
+    @_city ||= (
+      sq = params[:searchQuery]
+      city = nil
+      if sq.present?
+        sq_arr =  sq.split(',')
+        if sq_arr.present? && sq_arr.length == 1
+          #   assume it is a city and check in geocode to see if it is unique
+          #   set city variable if successful
+          city_name = sq_arr[0].strip
+          #   check if zip code
+          unless all_digits(city_name)
+            city_found = City.get_city_by_name(city_name)
+            if city_found.length == 1
+              city = city_found.first
+            end
+          end
+        elsif sq_arr.present? && sq_arr.length == 2
+          #   assume that it is a city and state
+          state_name = sq_arr[1].strip
+          city_name = sq_arr[0].strip
+          #   check to see if it is a state
+          state = States.abbreviation(state_name)
+          #   if it is a state try to find city in state that is unique
+          #   set city variable if successful
+          if state.present?
+            city_found = City.get_city_by_name_and_state(city_name, state)
+            if city_found.length == 1
+              city = city_found.first
+            end
+          end
+        end
+      end
+      city
+    )
+  end
+
   def by_location
     @state_abbreviation = state_abbreviation
-    city = nil
     @by_location = true
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @lat = params_hash['lat']
       @lon = params_hash['lon']
-      @level_codes = params_hash['gradeLevels']
-      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param, filters: {:level_code=>@level_codes}})
+      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param, filters: {:level_code=>levels_from_params}})
       search_options[:state] =  state_abbreviation if @state
       @normalized_address = params_hash['normalizedAddress']
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end
-
-    # @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-
-    # set_meta_tags search_by_location_meta_tag_hash
-    # setup_search_gon_variables
   end
+
+  def city_browse
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
+      search_options.merge!({state: city_from_query.state, city: city_from_query.name, filters: {:level_code=>levels_from_params}})
+    end
+  end
+
 
 
   def setup_search_results!(search_method)
     @params_hash = params #parse_array_query_string(request.query_string)
-
     search_options = {number_of_results: MAX_RESULTS_FOR_MAP, offset: 0}
-
     yield search_options, @params_hash if block_given?
-
     results = search_method.call(search_options)
-
     process_results(results, 0) unless results.empty?
 
   end
@@ -73,15 +114,10 @@ class WidgetController < ApplicationController
   def process_results(results, solr_offset)
     @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
-
     school_results = results[:results] || []
     relative_offset = solr_offset
-
-
-      @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
-      # setup_fit_scores(@schools, @params_hash) if filtering_search?
-
-    @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
+    @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
+    @suggested_query = results[:suggestion] if @total_results == 0 #&& search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
@@ -103,12 +139,8 @@ class WidgetController < ApplicationController
     # mark the results that appear in the list so the map can handle them differently
     @schools.each { |school| school.on_page = true } if @schools.present?
 
-    # require 'pry'
-    # binding.pry
     mapping_points_through_gon
     assign_sprite_files_though_gon
-
-    # set_pagination_instance_variables(@total_results) # @max_number_of_pages @window_size @pagination
   end
 
   def determine_layout
@@ -124,16 +156,18 @@ class WidgetController < ApplicationController
     end
   end
 
-  def convert_widget_params
-    level_code_params = [{:preschoolFilterChecked=>:preschool}, {:elementaryFilterChecked=>:elementary}, {:middleFilterChecked=>:middle}, {:highFilterChecked=>:high}]
-    results = []
-    level_code_params.each do |level_codes|
-      key, value = level_codes.first
-      if params[key].present? && params[key] == 'true'
-        results << value
+  def levels_from_params
+    @_levels_from_params ||= (
+      lc_map = {
+          'preschoolFilterChecked'=> :preschool,
+          'elementaryFilterChecked'=> :elementary,
+          'middleFilterChecked'=> :middle,
+          'highFilterChecked'=> :high,
+      }
+      params.reduce([]) do |a, (k, v)|
+        (lc_map.has_key?(k) && v == 'true') ? a << lc_map[k] : a
       end
-    end
-    params['gradeLevels'] = results
+    )
   end
 
 # duplicate methods in search controller
@@ -179,7 +213,6 @@ class WidgetController < ApplicationController
     @radius = Integer(@radius) rescue @radius = DEFAULT_RADIUS
     @radius = MAX_RADIUS if @radius > MAX_RADIUS
     @radius = MIN_RADIUS if @radius < MIN_RADIUS
-    # record_applied_filter_value('distance', @radius) unless "#{@radius}" == params_hash['distance']
     @radius
   end
 
