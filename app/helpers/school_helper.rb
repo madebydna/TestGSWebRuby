@@ -17,9 +17,9 @@ module SchoolHelper
     tracking_codes = "?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{campaign}"
     # test that values needed are populated
     if school.present? && school.zipcode.present?
-      url = "http://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode.split("-")[0]}"
+      url = "https://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode.split("-")[0]}"
     else
-      url = 'http://www.zillow.com/'
+      url = 'https://www.zillow.com/'
     end
     "#{url}#{tracking_codes}"
   end
