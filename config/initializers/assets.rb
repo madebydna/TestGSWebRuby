@@ -1,4 +1,5 @@
 Rails.application.config.assets.precompile += [
+    'widget_map.js',
     'header.js',
     'header.css',
     'post_load.js',

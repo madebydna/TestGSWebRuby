@@ -121,6 +121,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/gs_widget/map', :to => 'widget#map'
     get '/gs_widget/', :to => 'widget#show'
     post '/gs_widget/', :to => 'widget#create'
+    get '/widget/map', :to => 'widget#map'
+    get '/widget/', :to => 'widget#show'
+    post '/widget/', :to => 'widget#create'
     get '/gk/', as: :greatkids_home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people

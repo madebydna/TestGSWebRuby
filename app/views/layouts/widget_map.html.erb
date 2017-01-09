@@ -17,5 +17,7 @@
 
 <%=  render 'omniture/quantcast' %>
 
+<%= content_for?(:content) ? yield(:content) : yield %>
+
 </body>
 </html>
