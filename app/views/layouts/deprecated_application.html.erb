@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:fb="http://ogp.me/ns/fb#">
 <head>
+  <%= @no_index %>
   <%= display_meta_tags %>
   <%= yield :stylesheet_includes %>
   <%= stylesheet_link_tag    "deprecated_application", media: "all", "data-turbolinks-track" => true %>
