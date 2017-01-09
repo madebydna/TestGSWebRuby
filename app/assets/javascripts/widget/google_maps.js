@@ -2,6 +2,7 @@
 // GS.window.sizing.width = GS.window.sizing.width || {};
 var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
 var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
+<<<<<<< HEAD
 // .getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 
 loadScript(googleMapsScriptURL + '&callback=' + callbackFunction, function(){
@@ -31,14 +32,21 @@ function loadScript(url, callback){
   document.getElementsByTagName("head")[0].appendChild(script);
 }
 var GS = GS || {};
+=======
+$.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
+>>>>>>> JT-2633 - more general config support  - translation files added.
 
 GS.googleMap = GS.googleMap || (function() {
 
     var ajaxInitCallbacks = [];
     var needsInit = true;
+<<<<<<< HEAD
 
     var maxMobileWidth = 767;
     var sizing_width  = window.innerWidth;
+=======
+    GS = GS || {};
+>>>>>>> JT-2633 - more general config support  - translation files added.
     GS.widget = GS.widget || {};
     GS.widget.map = GS.widget.map || {};
     GS.widget.mapMarkers = GS.widget.mapMarkers || [];
@@ -53,6 +61,7 @@ GS.googleMap = GS.googleMap || (function() {
 
           var points = [];
           //          lodash sytax
+<<<<<<< HEAD
           // _(gon.map_points).each(function (point) {
           //     points.push(point);
           // });
@@ -63,13 +72,22 @@ GS.googleMap = GS.googleMap || (function() {
         // }
 
         // console.log(points);
+=======
+          _(gon.map_points).each(function (point) {
+              points.push(point);
+          });
+
+>>>>>>> JT-2633 - more general config support  - translation files added.
 
           var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
           var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
 
           var optionalLat = optionalLat || 37.807778;
           var optionalLon = optionalLon || -122.265149;
+<<<<<<< HEAD
 
+=======
+>>>>>>> JT-2633 - more general config support  - translation files added.
           var centerPoint = new google.maps.LatLng(optionalLat, optionalLon);
           var bounds = new google.maps.LatLngBounds();
 
@@ -78,7 +96,11 @@ GS.googleMap = GS.googleMap || (function() {
 
               var isZoomControl = function(){
 
+<<<<<<< HEAD
                 if(sizing_width <= maxMobileWidth){
+=======
+                if(((GS.window.sizing.width)()) <= GS.window.sizing.maxMobileWidth){
+>>>>>>> JT-2633 - more general config support  - translation files added.
                     return false;
                 }else{
                     return true;
@@ -154,8 +176,13 @@ GS.googleMap = GS.googleMap || (function() {
                       }
                   ]
               };
+<<<<<<< HEAD
 
               GS.widget.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
+=======
+              GS.widget.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
+
+>>>>>>> JT-2633 - more general config support  - translation files added.
               var position;
               var imageUrl;
               var imageSize;
@@ -166,16 +193,26 @@ GS.googleMap = GS.googleMap || (function() {
               var point_12_20 = new google.maps.Point(12, 20);
               var point_5_5 = new google.maps.Point(5, 5);
               var infoWindow = new google.maps.InfoWindow({});
+<<<<<<< HEAD
               for (var i = 0; i < points.length; i++) {
                   var point = points[i];
                 // console.log("point.lng:"+point.lng);
                 // console.log("point.lat:"+point.lat);
                 // if(point.lng)
+=======
+
+              for (var i = 0; i < points.length; i++) {
+                  var point = points[i];
+>>>>>>> JT-2633 - more general config support  - translation files added.
                   position = new google.maps.LatLng(point.lat, point.lng);
                   bounds.extend(position);
                   markerOptions = {
                       position: position,
+<<<<<<< HEAD
                       map: getMap(),
+=======
+                      map: GS.widget.map,
+>>>>>>> JT-2633 - more general config support  - translation files added.
                       title: point.name,
                       schoolId: point.id
                   };
@@ -189,7 +226,10 @@ GS.googleMap = GS.googleMap || (function() {
                   }
 
                   var markerOptions = new google.maps.Marker(markerOptions);
+<<<<<<< HEAD
 
+=======
+>>>>>>> JT-2633 - more general config support  - translation files added.
                   if (point.on_page) {
 
                       imageSize = size_29;
@@ -231,11 +271,18 @@ GS.googleMap = GS.googleMap || (function() {
 
                   var marker = new google.maps.Marker(markerOptions);
                   if (point.profileUrl ) {
+<<<<<<< HEAD
 
                       google.maps.event.addListener(marker, 'click', (function (marker, point) {
                           return function () {
                               infoWindow.setContent(getInfoWindowMarkup(point));
                               infoWindow.open(getMap(), marker);
+=======
+                      google.maps.event.addListener(marker, 'click', (function (marker, point) {
+                          return function () {
+                              infoWindow.setContent(getInfoWindowMarkup(point));
+                              infoWindow.open(GS.widget.map, marker);
+>>>>>>> JT-2633 - more general config support  - translation files added.
                           }
                       })(marker, point));
                   }
@@ -244,6 +291,7 @@ GS.googleMap = GS.googleMap || (function() {
                   // Responsive map sizing and centering
                   var center;
                   var calculateCenter = function () {
+<<<<<<< HEAD
                       center = getMap().getCenter();
                   };
 
@@ -268,6 +316,30 @@ GS.googleMap = GS.googleMap || (function() {
               }
           };
 
+=======
+                      center = GS.widget.map.getCenter();
+                  };
+                  google.maps.event.addDomListener(GS.widget.map, 'idle', function() {
+                      calculateCenter();
+                  });
+                  google.maps.event.addDomListener(window, 'resize', function() {
+                      GS.widget.map.setCenter(center);
+                  })
+
+              }
+              if (!bounds.isEmpty()) {
+                  GS.widget.map.setCenter(bounds.getCenter(), GS.widget.map.fitBounds(bounds));
+                  google.maps.event.addListenerOnce(GS.widget.map, 'bounds_changed', function() {
+                      if (additionalZoom !== 0) {
+                        GS.widget.map.setZoom(GS.widget.map.getZoom() + additionalZoom);
+                      }
+                      GS.widget.map.setOptions({maxZoom:null});
+                  });
+              } else {
+                  GS.widget.map.setOptions({maxZoom:null});
+              }
+          };
+>>>>>>> JT-2633 - more general config support  - translation files added.
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
@@ -377,6 +449,7 @@ GS.googleMap = GS.googleMap || (function() {
             }
         });
     };
+<<<<<<< HEAD
     var isNumeric = function(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
       };
@@ -389,6 +462,25 @@ GS.googleMap = GS.googleMap || (function() {
 
     var applyAjaxInitCallbacks = function () {
       console.log("applyAjaxInitCallbacks:"+ajaxInitCallbacks.length);
+=======
+
+    var setAssignedSchool = function (schoolId, level) {
+        if (gon.map_points) {
+            _(gon.map_points).each(function (point) {
+                if (point.id == schoolId) {
+                    point.assignedLevel = level;
+                }
+            });
+        }
+    };
+
+    var addToInitDependencyCallbacks = function (func) {
+        ajaxInitCallbacks.push(func);
+        ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
+    };
+
+    var applyAjaxInitCallbacks = function () {
+>>>>>>> JT-2633 - more general config support  - translation files added.
       while (ajaxInitCallbacks.length > 0) {
         (ajaxInitCallbacks.shift())();
       }
@@ -404,11 +496,18 @@ GS.googleMap = GS.googleMap || (function() {
         removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap,
+<<<<<<< HEAD
+=======
+        setAssignedSchool: setAssignedSchool,
+>>>>>>> JT-2633 - more general config support  - translation files added.
         addToInitDependencyCallbacks: addToInitDependencyCallbacks,
         applyAjaxInitCallbacks: applyAjaxInitCallbacks,
         setAdditionalZoom: setAdditionalZoom
     }
 
 })();
+<<<<<<< HEAD
 
 GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);
+=======
+>>>>>>> JT-2633 - more general config support  - translation files added.
