@@ -2,13 +2,41 @@
 // GS.window.sizing.width = GS.window.sizing.width || {};
 var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
 var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
-$.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
+// .getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
+
+loadScript(googleMapsScriptURL + '&callback=' + callbackFunction, function(){
+  //initialization code
+});
+
+function loadScript(url, callback){
+
+  var script = document.createElement("script")
+  script.type = "text/javascript";
+
+  if (script.readyState){  //IE
+    script.onreadystatechange = function(){
+      if (script.readyState == "loaded" ||
+          script.readyState == "complete"){
+        script.onreadystatechange = null;
+        callback();
+      }
+    };
+  } else {  //Others
+    script.onload = function(){
+      callback();
+    };
+  }
+
+  script.src = url;
+  document.getElementsByTagName("head")[0].appendChild(script);
+}
+var GS = GS || {};
 
 GS.googleMap = GS.googleMap || (function() {
 
     var ajaxInitCallbacks = [];
     var needsInit = true;
-    GS = GS || {};
+
     GS.widget = GS.widget || {};
     GS.widget.map = GS.widget.map || {};
     GS.widget.mapMarkers = GS.widget.mapMarkers || [];
@@ -136,7 +164,7 @@ GS.googleMap = GS.googleMap || (function() {
                   bounds.extend(position);
                   markerOptions = {
                       position: position,
-                      map: GS.widget.map,
+                      map: getMap(),
                       title: point.name,
                       schoolId: point.id
                   };
@@ -194,7 +222,7 @@ GS.googleMap = GS.googleMap || (function() {
                       google.maps.event.addListener(marker, 'click', (function (marker, point) {
                           return function () {
                               infoWindow.setContent(getInfoWindowMarkup(point));
-                              infoWindow.open(GS.widget.map, marker);
+                              infoWindow.open(getMap(), marker);
                           }
                       })(marker, point));
                   }
@@ -203,26 +231,26 @@ GS.googleMap = GS.googleMap || (function() {
                   // Responsive map sizing and centering
                   var center;
                   var calculateCenter = function () {
-                      center = GS.widget.map.getCenter();
+                      center = getMap().getCenter();
                   };
-                  google.maps.event.addDomListener(GS.widget.map, 'idle', function() {
+                  google.maps.event.addDomListener(getMap(), 'idle', function() {
                       calculateCenter();
                   });
                   google.maps.event.addDomListener(window, 'resize', function() {
-                      GS.widget.map.setCenter(center);
+                      getMap().setCenter(center);
                   })
 
               }
               if (!bounds.isEmpty()) {
-                  GS.widget.map.setCenter(bounds.getCenter(), GS.widget.map.fitBounds(bounds));
-                  google.maps.event.addListenerOnce(GS.widget.map, 'bounds_changed', function() {
+                  getMap().setCenter(bounds.getCenter(), getMap().fitBounds(bounds));
+                  google.maps.event.addListenerOnce(getMap(), 'bounds_changed', function() {
                       if (additionalZoom !== 0) {
-                        GS.widget.map.setZoom(GS.widget.map.getZoom() + additionalZoom);
+                        getMap().setZoom(getMap().getZoom() + additionalZoom);
                       }
-                      GS.widget.map.setOptions({maxZoom:null});
+                      getMap().setOptions({maxZoom:null});
                   });
               } else {
-                  GS.widget.map.setOptions({maxZoom:null});
+                  getMap().setOptions({maxZoom:null});
               }
           };
           var getInfoWindowMarkup = function (point) {
@@ -335,15 +363,6 @@ GS.googleMap = GS.googleMap || (function() {
         });
     };
 
-    var setAssignedSchool = function (schoolId, level) {
-        if (gon.map_points) {
-            _(gon.map_points).each(function (point) {
-                if (point.id == schoolId) {
-                    point.assignedLevel = level;
-                }
-            });
-        }
-    };
 
     var addToInitDependencyCallbacks = function (func) {
         ajaxInitCallbacks.push(func);
@@ -366,7 +385,6 @@ GS.googleMap = GS.googleMap || (function() {
         removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap,
-        setAssignedSchool: setAssignedSchool,
         addToInitDependencyCallbacks: addToInitDependencyCallbacks,
         applyAjaxInitCallbacks: applyAjaxInitCallbacks,
         setAdditionalZoom: setAdditionalZoom
