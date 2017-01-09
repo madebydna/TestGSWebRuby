@@ -1,8 +1,6 @@
 class WidgetController < ApplicationController
 
-  layout 'application', only: [:show]
-  layout 'widget_map', only: [:show]
-  layout false, only: [:create]
+  layout :determine_layout
 
   def show
 
@@ -16,4 +14,18 @@ class WidgetController < ApplicationController
 
   end
 
+  private
+
+  def determine_layout
+    application_layout = ['show']
+    widget_map_layout = ['map']
+
+    if application_layout.include?(action_name)
+      'application'
+    elsif widget_map_layout.include?(action_name)
+      'widget_map'
+    else
+      'false'
+    end
+  end
 end
