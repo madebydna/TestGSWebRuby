@@ -1,8 +1,6 @@
-// GS.window.sizing.maxMobileWidth = GS.window.sizing.maxMobileWidth || {};
-// GS.window.sizing.width = GS.window.sizing.width || {};
+
 var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
 var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
-<<<<<<< HEAD
 // .getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 
 loadScript(googleMapsScriptURL + '&callback=' + callbackFunction, function(){
@@ -32,25 +30,19 @@ function loadScript(url, callback){
   document.getElementsByTagName("head")[0].appendChild(script);
 }
 var GS = GS || {};
-=======
-$.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
->>>>>>> JT-2633 - more general config support  - translation files added.
+GS.widget_map = GS.widget_map || {};
+GS.widget_map.map = GS.widget_map.map || {};
+GS.widget_map.mapMarkers = GS.widget_map.mapMarkers || [];
 
 GS.googleMap = GS.googleMap || (function() {
 
-    var ajaxInitCallbacks = [];
-    var needsInit = true;
-<<<<<<< HEAD
+  var ajaxInitCallbacks = [];
+  var needsInit = true;
 
-    var maxMobileWidth = 767;
-    var sizing_width  = window.innerWidth;
-=======
-    GS = GS || {};
->>>>>>> JT-2633 - more general config support  - translation files added.
-    GS.widget = GS.widget || {};
-    GS.widget.map = GS.widget.map || {};
-    GS.widget.mapMarkers = GS.widget.mapMarkers || [];
-    var additionalZoom = 0;
+  // var maxMobileWidth = 767;
+  // var sizing_width  = window.innerWidth;
+
+  var additionalZoom = 0;
 
   var init = function() {
 
@@ -58,288 +50,210 @@ GS.googleMap = GS.googleMap || (function() {
       needsInit = false;
       if(gon.sprite_files != undefined) {
 
-
-          var points = [];
-          //          lodash sytax
-<<<<<<< HEAD
-          // _(gon.map_points).each(function (point) {
-          //     points.push(point);
-          // });
+        var points = [];
         points = gon.map_points;
-        // for (var point in gon.map_points) {
-        //   console.log(gon.map_points[point]);
-        //   points.push(gon.map_points[point]);
-        // }
 
-        // console.log(points);
-=======
-          _(gon.map_points).each(function (point) {
-              points.push(point);
-          });
 
->>>>>>> JT-2633 - more general config support  - translation files added.
 
-          var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
-          var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
+        var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
+        var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
 
-          var optionalLat = optionalLat || 37.807778;
-          var optionalLon = optionalLon || -122.265149;
-<<<<<<< HEAD
+        var optionalLat = optionalLat || 37.807778;
+        var optionalLon = optionalLon || -122.265149;
 
-=======
->>>>>>> JT-2633 - more general config support  - translation files added.
-          var centerPoint = new google.maps.LatLng(optionalLat, optionalLon);
-          var bounds = new google.maps.LatLngBounds();
+        var centerPoint = new google.maps.LatLng(optionalLat, optionalLon);
+        var bounds = new google.maps.LatLngBounds();
 
-          var initialize = function (points) {
-              var isdraggable = true;
+        var initialize = function (points) {
+          var isdraggable = true;
 
-              var isZoomControl = function(){
+          var isZoomControl = function(){
+            return true;
+          };
 
-<<<<<<< HEAD
-                if(sizing_width <= maxMobileWidth){
-=======
-                if(((GS.window.sizing.width)()) <= GS.window.sizing.maxMobileWidth){
->>>>>>> JT-2633 - more general config support  - translation files added.
-                    return false;
-                }else{
-                    return true;
+          var myOptions = {
+            center: centerPoint,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            disableDefaultUI: true,
+            mapTypeControl: false,
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
+            },
+            zoomControl: isZoomControl(),
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.DEFAULT
+            },
+            streetViewControl: false,
+            panControl: false,
+            scrollwheel: false,
+            draggable: isdraggable,
+            zoom: 12,
+            maxZoom: 19,
+            styles: [
+                {
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [
+                        { "color": "#f5f5f5" }
+                    ]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [
+                        { "color": "#f5f5f5" }
+                    ]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
+                    "featureType": "poi",
+                    "elementType": "labels",
+                    "stylers": [
+                        { "visibility": "simplified" }
+                    ]
+                },{
+                    "featureType": "poi.school",
+                    "elementType": "labels",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
+                    "featureType": "poi.school",
+                    "elementType": "geometry",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
+                    "featureType": "poi.business",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
+                },{
+                    "featureType": "poi.medical",
+                    "elementType": "geometry",
+                    "stylers": [
+                        { "visibility": "off" }
+                    ]
                 }
-              };
+              ]
+            };
 
-              var myOptions = {
-                  center: centerPoint,
-                  mapTypeId: google.maps.MapTypeId.ROADMAP,
-                  disableDefaultUI: true,
-                  mapTypeControl: true,
-                  mapTypeControlOptions: {
-                      mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
-                  },
-                  zoomControl: isZoomControl(),
-                  zoomControlOptions: {
-                      style: google.maps.ZoomControlStyle.DEFAULT
-                  },
-                  streetViewControl: false,
-                  panControl: false,
-                  scrollwheel: false,
-                  draggable: isdraggable,
-                  zoom: 12,
-                  maxZoom: 19,
-                  styles: [
-                      {
-                          "featureType": "road.highway",
-                          "elementType": "geometry.fill",
-                          "stylers": [
-                              { "color": "#f5f5f5" }
-                          ]
-                      },{
-                          "featureType": "road.highway",
-                          "elementType": "geometry.stroke",
-                          "stylers": [
-                              { "color": "#f5f5f5" }
-                          ]
-                      },{
-                          "featureType": "road.highway",
-                          "elementType": "labels",
-                          "stylers": [
-                              { "visibility": "off" }
-                          ]
-                      },{
-                          "featureType": "poi",
-                          "elementType": "labels",
-                          "stylers": [
-                              { "visibility": "simplified" }
-                          ]
-                      },{
-                          "featureType": "poi.school",
-                          "elementType": "labels",
-                          "stylers": [
-                              { "visibility": "off" }
-                          ]
-                      },{
-                          "featureType": "poi.school",
-                          "elementType": "geometry",
-                          "stylers": [
-                              { "visibility": "off" }
-                          ]
-                      },{
-                          "featureType": "poi.business",
-                          "stylers": [
-                              { "visibility": "off" }
-                          ]
-                      },{
-                          "featureType": "poi.medical",
-                          "elementType": "geometry",
-                          "stylers": [
-                              { "visibility": "off" }
-                          ]
-                      }
-                  ]
-              };
-<<<<<<< HEAD
+            GS.widget_map.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
-              GS.widget.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
-=======
-              GS.widget.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
+            var position;
+            var imageUrl;
+            var imageSize;
+            var imageAnchor;
+            var pixelOffset;
+            var size_29 = new google.maps.Size(29, 40);
+            var size_10 = new google.maps.Size(10, 10);
+            var point_12_20 = new google.maps.Point(12, 20);
+            var point_5_5 = new google.maps.Point(5, 5);
+            var infoWindow = new google.maps.InfoWindow({});
+            for (var i = 0; i < points.length; i++) {
+                var point = points[i];
+                position = new google.maps.LatLng(point.lat, point.lng);
+                bounds.extend(position);
+                markerOptions = {
+                    position: position,
+                    map: getMap(),
+                    title: point.name,
+                    schoolId: point.id
+                };
 
->>>>>>> JT-2633 - more general config support  - translation files added.
-              var position;
-              var imageUrl;
-              var imageSize;
-              var imageAnchor;
-              var pixelOffset;
-              var size_29 = new google.maps.Size(29, 40);
-              var size_10 = new google.maps.Size(10, 10);
-              var point_12_20 = new google.maps.Point(12, 20);
-              var point_5_5 = new google.maps.Point(5, 5);
-              var infoWindow = new google.maps.InfoWindow({});
-<<<<<<< HEAD
-              for (var i = 0; i < points.length; i++) {
-                  var point = points[i];
-                // console.log("point.lng:"+point.lng);
-                // console.log("point.lat:"+point.lat);
-                // if(point.lng)
-=======
+                if (!(parseInt(point.gsRating) > 0 && parseInt(point.gsRating) < 11)) {
+                    point.gsRating = '';
+                }
 
-              for (var i = 0; i < points.length; i++) {
-                  var point = points[i];
->>>>>>> JT-2633 - more general config support  - translation files added.
-                  position = new google.maps.LatLng(point.lat, point.lng);
-                  bounds.extend(position);
-                  markerOptions = {
-                      position: position,
-<<<<<<< HEAD
-                      map: getMap(),
-=======
-                      map: GS.widget.map,
->>>>>>> JT-2633 - more general config support  - translation files added.
-                      title: point.name,
-                      schoolId: point.id
-                  };
+                if (point['zIndex'] != undefined) {
+                    markerOptions['zIndex'] = point['zIndex']
+                }
 
-                  if (!(parseInt(point.gsRating) > 0 && parseInt(point.gsRating) < 11)) {
-                      point.gsRating = '';
+                var markerOptions = new google.maps.Marker(markerOptions);
+
+                if (point.on_page) {
+
+                    imageSize = size_29;
+                    imageAnchor = point_12_20; // center of image
+                    if (point.preschool && parseInt(point.gsRating) == 0) {
+                        pixelOffset = 290;
+                        imageUrl = imageUrlOnPage;
+                    } else {
+                        pixelOffset = 290;// default to NR
+                        if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
+                            pixelOffset = 290 - (parseInt(point.gsRating) * 29);
+                        }
+                        imageUrl = imageUrlOnPage;
+                    }
+                } else {
+                    imageUrl = imageUrlOffPage;
+                    imageSize = size_10;
+                    imageAnchor = point_5_5; // center of image
+
+                    if (point.preschool && parseInt(point.gsRating) == 0) {
+                        pixelOffset = 30;
+                    } else if (parseInt(point.gsRating) >= 8) {
+                        pixelOffset = 0;
+                    } else if (parseInt(point.gsRating) <= 7 && parseInt(point.gsRating) > 3) {
+                        pixelOffset = 10;
+                    } else if (parseInt(point.gsRating) <= 3 && parseInt(point.gsRating) > 0) {
+                        pixelOffset = 20;
+                    } else {
+                        pixelOffset = 30;
+                    }
+                }
+
+                markerOptions.icon = new google.maps.MarkerImage(
+                    imageUrl, // url
+                    imageSize, // size
+                    new google.maps.Point(pixelOffset, 0), // index into sprite
+                    imageAnchor // which point of the image anchors to the map
+                );
+
+                var marker = new google.maps.Marker(markerOptions);
+                if (point.profileUrl ) {
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, point) {
+                        return function () {
+                            infoWindow.setContent(getInfoWindowMarkup(point));
+                            infoWindow.open(getMap(), marker);
+                        }
+                    })(marker, point));
+                }
+                GS.widget_map.mapMarkers.push(marker);
+
+                // Responsive map sizing and centering
+                var center;
+                var calculateCenter = function () {
+                    center = getMap().getCenter();
+                };
+
+                google.maps.event.addDomListener(getMap(), 'idle', function() {
+                    calculateCenter();
+                });
+                google.maps.event.addDomListener(window, 'resize', function() {
+                    getMap().setCenter(center);
+                });
+
+            }
+            if (!bounds.isEmpty()) {
+                getMap().setCenter(bounds.getCenter(), getMap().fitBounds(bounds));
+                google.maps.event.addListenerOnce(getMap(), 'bounds_changed', function() {
+                  if($("#zoom").val() != ''){
+                    var zoomStart = parseInt($("#zoom").val());
+                    if(0 < zoomStart < 19){
+                      GS.widget_map.map.setZoom(zoomStart);
+                    }
                   }
-
-                  if (point['zIndex'] != undefined) {
-                      markerOptions['zIndex'] = point['zIndex']
-                  }
-
-                  var markerOptions = new google.maps.Marker(markerOptions);
-<<<<<<< HEAD
-
-=======
->>>>>>> JT-2633 - more general config support  - translation files added.
-                  if (point.on_page) {
-
-                      imageSize = size_29;
-                      imageAnchor = point_12_20; // center of image
-                      if (point.preschool && parseInt(point.gsRating) == 0) {
-                          pixelOffset = 290;
-                          imageUrl = imageUrlOnPage;
-                      } else {
-                          pixelOffset = 290;// default to NR
-                          if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                              pixelOffset = 290 - (parseInt(point.gsRating) * 29);
-                          }
-                          imageUrl = imageUrlOnPage;
-                      }
-                  } else {
-                      imageUrl = imageUrlOffPage;
-                      imageSize = size_10;
-                      imageAnchor = point_5_5; // center of image
-
-                      if (point.preschool && parseInt(point.gsRating) == 0) {
-                          pixelOffset = 30;
-                      } else if (parseInt(point.gsRating) >= 8) {
-                          pixelOffset = 0;
-                      } else if (parseInt(point.gsRating) <= 7 && parseInt(point.gsRating) > 3) {
-                          pixelOffset = 10;
-                      } else if (parseInt(point.gsRating) <= 3 && parseInt(point.gsRating) > 0) {
-                          pixelOffset = 20;
-                      } else {
-                          pixelOffset = 30;
-                      }
-                  }
-
-                  markerOptions.icon = new google.maps.MarkerImage(
-                      imageUrl, // url
-                      imageSize, // size
-                      new google.maps.Point(pixelOffset, 0), // index into sprite
-                      imageAnchor // which point of the image anchors to the map
-                  );
-
-                  var marker = new google.maps.Marker(markerOptions);
-                  if (point.profileUrl ) {
-<<<<<<< HEAD
-
-                      google.maps.event.addListener(marker, 'click', (function (marker, point) {
-                          return function () {
-                              infoWindow.setContent(getInfoWindowMarkup(point));
-                              infoWindow.open(getMap(), marker);
-=======
-                      google.maps.event.addListener(marker, 'click', (function (marker, point) {
-                          return function () {
-                              infoWindow.setContent(getInfoWindowMarkup(point));
-                              infoWindow.open(GS.widget.map, marker);
->>>>>>> JT-2633 - more general config support  - translation files added.
-                          }
-                      })(marker, point));
-                  }
-                  GS.widget.mapMarkers.push(marker);
-
-                  // Responsive map sizing and centering
-                  var center;
-                  var calculateCenter = function () {
-<<<<<<< HEAD
-                      center = getMap().getCenter();
-                  };
-
-                  google.maps.event.addDomListener(getMap(), 'idle', function() {
-                      calculateCenter();
-                  });
-                  google.maps.event.addDomListener(window, 'resize', function() {
-                      getMap().setCenter(center);
-                  });
-
-              }
-              if (!bounds.isEmpty()) {
-                  getMap().setCenter(bounds.getCenter(), getMap().fitBounds(bounds));
-                  google.maps.event.addListenerOnce(getMap(), 'bounds_changed', function() {
-                      if (additionalZoom !== 0) {
-                        getMap().setZoom(getMap().getZoom() + additionalZoom);
-                      }
-                      getMap().setOptions({maxZoom:null});
-                  });
-              } else {
-                  getMap().setOptions({maxZoom:null});
-              }
+                });
+            } else {
+                getMap().setOptions({maxZoom:null});
+            }
           };
 
-=======
-                      center = GS.widget.map.getCenter();
-                  };
-                  google.maps.event.addDomListener(GS.widget.map, 'idle', function() {
-                      calculateCenter();
-                  });
-                  google.maps.event.addDomListener(window, 'resize', function() {
-                      GS.widget.map.setCenter(center);
-                  })
-
-              }
-              if (!bounds.isEmpty()) {
-                  GS.widget.map.setCenter(bounds.getCenter(), GS.widget.map.fitBounds(bounds));
-                  google.maps.event.addListenerOnce(GS.widget.map, 'bounds_changed', function() {
-                      if (additionalZoom !== 0) {
-                        GS.widget.map.setZoom(GS.widget.map.getZoom() + additionalZoom);
-                      }
-                      GS.widget.map.setOptions({maxZoom:null});
-                  });
-              } else {
-                  GS.widget.map.setOptions({maxZoom:null});
-              }
-          };
->>>>>>> JT-2633 - more general config support  - translation files added.
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
@@ -377,9 +291,7 @@ GS.googleMap = GS.googleMap || (function() {
                   }
               }
               markup += '</div>'; //sprites
-
               markup += '</div>'; //
-
               markup += '</div>'; //school data
               markup += '<hr class="mvm">';
               markup += '<div class="clearfix">';
@@ -404,7 +316,6 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '</div>'; //zillow
               markup += '</div>';
 
-
               infoWindowMarkup.innerHTML = markup;
               return infoWindowMarkup;
           };
@@ -425,6 +336,13 @@ GS.googleMap = GS.googleMap || (function() {
       }
     };
 
+    var checkResize = function() {
+      // needed for when displayTab=search because map is not displayed
+      // so Google Maps can't calculate map dimensions
+      var map = getMap();
+      google.maps.event.trigger(map, 'resize');
+    }
+
     var initAndShowMap = function () {
         init();
         var map = getMap();
@@ -439,48 +357,29 @@ GS.googleMap = GS.googleMap || (function() {
 
 
     var getMap = function () {
-     return GS.widget.map;
+     return GS.widget_map.map;
     };
 
     var removeMapMarkerBySchoolId = function (schoolId) {
-        _(GS.widget.mapMarkers).each( function (marker) {
-            if (schoolId == marker.schoolId) {
-                marker.setMap(null);
-            }
-        });
-    };
-<<<<<<< HEAD
-    var isNumeric = function(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-      };
-
-    var addToInitDependencyCallbacks = function (func) {
-      console.log('addToInitDependencyCallbacks');
-        ajaxInitCallbacks.push(func);
-        // ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
-    };
-
-    var applyAjaxInitCallbacks = function () {
-      console.log("applyAjaxInitCallbacks:"+ajaxInitCallbacks.length);
-=======
-
-    var setAssignedSchool = function (schoolId, level) {
-        if (gon.map_points) {
-            _(gon.map_points).each(function (point) {
-                if (point.id == schoolId) {
-                    point.assignedLevel = level;
-                }
-            });
+      for (var i = 0; i < GS.widget_map.mapMarkers.length; i++) {
+        if (schoolId == GS.widget_map.mapMarkers[i].schoolId) {
+          GS.widget_map.mapMarkers[i].setMap(null);
         }
+
+      }
+    };
+
+    var removeAllMapMarkers = function () {
+      for (var i = 0; i < GS.widget_map.mapMarkers.length; i++) {
+        GS.widget_map.mapMarkers[i].setMap(null);
+      }
     };
 
     var addToInitDependencyCallbacks = function (func) {
-        ajaxInitCallbacks.push(func);
-        ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
+      ajaxInitCallbacks.push(func);
     };
 
     var applyAjaxInitCallbacks = function () {
->>>>>>> JT-2633 - more general config support  - translation files added.
       while (ajaxInitCallbacks.length > 0) {
         (ajaxInitCallbacks.shift())();
       }
@@ -491,23 +390,20 @@ GS.googleMap = GS.googleMap || (function() {
     };
 
     return {
-        init: init,
-        getMap: getMap,
-        removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
-        setHeightForMap: setHeightForMap,
-        initAndShowMap : initAndShowMap,
-<<<<<<< HEAD
-=======
-        setAssignedSchool: setAssignedSchool,
->>>>>>> JT-2633 - more general config support  - translation files added.
-        addToInitDependencyCallbacks: addToInitDependencyCallbacks,
-        applyAjaxInitCallbacks: applyAjaxInitCallbacks,
-        setAdditionalZoom: setAdditionalZoom
+      init: init,
+      getMap: getMap,
+      removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
+      removeAllMapMarkers: removeAllMapMarkers,
+      setHeightForMap: setHeightForMap,
+      initAndShowMap : initAndShowMap,
+      addToInitDependencyCallbacks: addToInitDependencyCallbacks,
+      applyAjaxInitCallbacks: applyAjaxInitCallbacks,
+      setAdditionalZoom: setAdditionalZoom,
+      checkResize: checkResize
     }
 
 })();
-<<<<<<< HEAD
+$(function() {
+  GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);
+});
 
-GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);
-=======
->>>>>>> JT-2633 - more general config support  - translation files added.
