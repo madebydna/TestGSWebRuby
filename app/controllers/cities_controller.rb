@@ -253,13 +253,6 @@ class CitiesController < ApplicationController
 
   private
 
-  def set_no_index
-    @no_index = ''
-    if params['s_cid'].present? && params['s_cid'] == 'wsbar93'
-      @no_index = '<meta name="robots" content="noindex"><meta name="googlebot" content="noindex">'
-    end
-  end
-
   def write_meta_tags
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
