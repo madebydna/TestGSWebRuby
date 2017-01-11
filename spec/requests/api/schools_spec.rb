@@ -64,7 +64,7 @@ describe "Schools API" do
     it 'returns schools matching a district id' do
       create(:alameda_high_school, district_id: 1)
       create(:bay_farm_elementary_school, district_id: 2)
-      get '/gsr/api/schools/?state=ca&offset=1'
+      get '/gsr/api/schools/?state=ca&district_id=2'
       expect(status).to eq(200)
       expect(errors).to be_blank
       expect(schools.size).to eq(1)
