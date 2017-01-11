@@ -14,7 +14,7 @@ describe "Schools API" do
 
     it 'Returns school 1 by ID' do
       s1 = create(:alameda_high_school)
-      create(:cristo_rey_new_york_high_school)
+      create(:bay_farm_elementary_school)
 
       get "/gsr/api/schools/#{s1.id}?state=ca"
       expect(status).to eq(200)
@@ -25,7 +25,7 @@ describe "Schools API" do
 
     it 'Returns school 2 by ID' do
       create(:alameda_high_school)
-      s2 = create(:cristo_rey_new_york_high_school)
+      s2 = create(:bay_farm_elementary_school)
 
       get "/gsr/api/schools/#{s2.id}?state=ca"
       expect(status).to eq(200)
@@ -53,7 +53,7 @@ describe "Schools API" do
 
     it 'Returns some schools' do
       create(:alameda_high_school)
-      create(:cristo_rey_new_york_high_school)
+      create(:bay_farm_elementary_school)
 
       get '/gsr/api/schools/?state=ca', format: :json
       expect(status).to eq(200)
@@ -63,7 +63,7 @@ describe "Schools API" do
 
     it 'returns schools matching a district id' do
       create(:alameda_high_school, district_id: 1)
-      create(:cristo_rey_new_york_high_school, district_id: 2)
+      create(:bay_farm_elementary_school, district_id: 2)
       get '/gsr/api/schools/?state=ca&offset=1'
       expect(status).to eq(200)
       expect(errors).to be_blank
@@ -72,18 +72,8 @@ describe "Schools API" do
     end
 
     it 'Obeys limit param' do
-      create(:alameda_high_school)
-      create(:cristo_rey_new_york_high_school)
-
-      get '/gsr/api/schools/?state=ca&limit=1', format: :json
-      expect(status).to eq(200)
-      expect(errors).to be_blank
-      expect(schools.length).to eq(1)
-    end
-
-    it 'Obeys limit param' do
       create(:alameda_high_school, name: 'Alameda High School')
-      create(:cristo_rey_new_york_high_school)
+      create(:bay_farm_elementary_school)
 
       get '/gsr/api/schools/?state=ca&limit=1', format: :json
       expect(status).to eq(200)
@@ -94,7 +84,7 @@ describe "Schools API" do
 
     it 'Obeys offset param' do
       create(:alameda_high_school)
-      create(:cristo_rey_new_york_high_school, name: 'Cristo Rey New York High School')
+      create(:bay_farm_elementary_school, name: 'Cristo Rey New York High School')
 
       get '/gsr/api/schools/?state=ca&offset=1', format: :json
       expect(status).to eq(200)
@@ -105,7 +95,7 @@ describe "Schools API" do
 
     it 'adds "next" when there are more results' do
       create(:alameda_high_school)
-      create(:cristo_rey_new_york_high_school)
+      create(:bay_farm_elementary_school)
 
       get '/gsr/api/schools/?state=ca&limit=1', format: :json
       expect(status).to eq(200)
@@ -116,7 +106,7 @@ describe "Schools API" do
 
     it 'adds "prev" when there are prior results' do
       create(:alameda_high_school)
-      create(:cristo_rey_new_york_high_school)
+      create(:bay_farm_elementary_school)
 
       get '/gsr/api/schools/?state=ca&offset=1'
       expect(status).to eq(200)
