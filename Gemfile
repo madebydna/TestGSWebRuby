@@ -282,6 +282,10 @@ gem 'coffee-rails', '~> 4.0.1'
 # USED: Rails automatically adds the uglifier gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'uglifier', '>= 1.0.3'
 
+gem 'rgeo'
+gem 'rgeo-activerecord', '= 4.0.5'
+gem 'geokit-rails'
+
 group :profile do
   gem 'ruby-prof'
 end
