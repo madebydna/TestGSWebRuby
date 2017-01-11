@@ -10,6 +10,11 @@ class Api::SchoolsController < ApplicationController
 
   before_action :require_state
 
+  def show
+    hash = serialized_schools.first || {}
+    render(json: hash)
+  end
+
   def index
     self.pagination_max_limit = 10 if criteria.blank?
     render json: {
@@ -17,17 +22,21 @@ class Api::SchoolsController < ApplicationController
         prev: self.prev,
         next: self.next,
       },
-      items: schools.map do |school|
-        # Using a plain rubo object to convert domain object to json
-        # decided not to use jbuilder. Dont feel like it adds benefit and
-        # results in less flexible/resuable code. Could use
-        # active_model_serializers (included with rails 5) but it's yet another
-        # gem...
-        Api::SchoolSerializer.new(school).to_hash.tap do |s|
-          s.except(['geometry'] - extras)
-        end
-      end
+      items: serialized_schools
     }
+  end
+
+  def serialized_schools
+    # Using a plain rubo object to convert domain object to json
+    # decided not to use jbuilder. Dont feel like it adds benefit and
+    # results in less flexible/resuable code. Could use
+    # active_model_serializers (included with rails 5) but it's yet another
+    # gem...
+    schools.map do |school|
+      Api::SchoolSerializer.new(school).to_hash.tap do |s|
+        s.except(['geometry'] - extras)
+      end
+    end
   end
 
   def require_state
@@ -56,8 +65,9 @@ class Api::SchoolsController < ApplicationController
   # criteria that will be used to query the school table
   def criteria
     c = params.slice(:district_id)
+    c['id'] = params[:id] if params[:id]
     if lat.present? && lon.present? && radius.blank?
-      c['school_ids'] = school_geometry_containing_lat_lon.keys
+      c['id'] ||= school_geometry_containing_lat_lon.keys
     end
     c
   end
@@ -72,7 +82,7 @@ class Api::SchoolsController < ApplicationController
         containing_point(lat,lon).
         order_by_area
 
-      results.each_with_object({}) do |hash, result|
+      results.each_with_object({}) do |result, hash|
         hash[result['school_id']] = result['geom']
       end
     )
@@ -84,6 +94,10 @@ class Api::SchoolsController < ApplicationController
 
   def lon
     params[:lon]
+  end
+
+  def radius
+    params[:radius]
   end
 
   # reading about API design, I tend to agree that rather than make multiple
