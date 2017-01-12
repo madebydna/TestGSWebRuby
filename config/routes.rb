@@ -157,7 +157,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     get '/schools/cities/:state_long/:state_short', as: :city_list
     get '/schools/districts/:state_long/:state_short', as: :district_list
-    get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/gk/moving-with-kids/', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
@@ -327,6 +326,7 @@ LocalizedProfiles::Application.routes.draw do
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
+  get '/school-district-boundaries-map', as: :district_boundaries, to: 'district_boundaries#show'
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
   #     state: States.any_state_name_regex,
