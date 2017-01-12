@@ -326,7 +326,7 @@ LocalizedProfiles::Application.routes.draw do
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
-  get '/school-district-boundaries-map', as: :district_boundaries, to: 'district_boundaries#show'
+  get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
   #     state: States.any_state_name_regex,
