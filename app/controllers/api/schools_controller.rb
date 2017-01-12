@@ -8,7 +8,9 @@ class Api::SchoolsController < ApplicationController
   # to determine how many results were found for the current request
   self.pagination_items_proc = proc { schools }
 
-  before_action :require_state
+  AVAILABLE_EXTRAS = %w[boundaries]
+
+  before_action :require_state, unless: :location_given?
 
   def show
     hash = serialized_schools.first || {}
@@ -34,7 +36,7 @@ class Api::SchoolsController < ApplicationController
     # gem...
     schools.map do |school|
       Api::SchoolSerializer.new(school).to_hash.tap do |s|
-        s.except(['geometry'] - extras)
+        s.except(AVAILABLE_EXTRAS - extras)
       end
     end
   end
@@ -45,16 +47,24 @@ class Api::SchoolsController < ApplicationController
 
   def schools
     @_schools ||= (
-      if extras.include?('geometry') # see comment on "extras" method
-        Api::SchoolWithGeometry.apply_geometry_data!(get_schools)
+      items = if location_given?
+        SchoolGeometry.schools_for_geometries(school_geometries_containing_lat_lon)
       else
         get_schools
       end
+      add_geometry(items)
     )
   end
 
+  def add_geometry(schools)
+    if extras.include?('boundaries') && schools.length == 1
+      schools = schools.map { |s| Api::SchoolWithGeometry.apply_geometry_data!(s) }
+    end
+    schools
+  end
+
   def get_schools
-    @_schools ||= School.on_db(state.to_s.downcase.to_sym).
+    @_get_schools ||= School.on_db(state.to_s.downcase.to_sym).
       where(criteria).
       active.
       limit(limit).
@@ -64,27 +74,16 @@ class Api::SchoolsController < ApplicationController
 
   # criteria that will be used to query the school table
   def criteria
-    c = params.slice(:district_id)
-    c['id'] = params[:id] if params[:id]
-    if lat.present? && lon.present? && radius.blank?
-      c['id'] ||= school_geometry_containing_lat_lon.keys
-    end
-    c
+    params.slice(:id, :district_id)
   end
 
   def state
     params[:state]
   end
 
-  def school_geometry_containing_lat_lon
-    @_school_geometry_containing_lat_lon ||= (
-      results = SchoolGeometry.select('school_id, AsText(geom) as geom').
-        containing_point(lat,lon).
-        order_by_area
-
-      results.each_with_object({}) do |result, hash|
-        hash[result['school_id']] = result['geom']
-      end
+  def school_geometries_containing_lat_lon
+    @_school_geometries_containing_lat_lon ||= (
+      SchoolGeometry.find_by_point_and_level(lat, lon, boundary_level)
     )
   end
 
@@ -98,6 +97,16 @@ class Api::SchoolsController < ApplicationController
 
   def radius
     params[:radius]
+  end
+
+  def location_given?
+    lat.present? && lon.present?
+  end
+
+  def boundary_level
+    (params[:boundary_level] || '').split(',').tap do |array|
+      array << 'o' unless array.include?('o')
+    end
   end
 
   # reading about API design, I tend to agree that rather than make multiple

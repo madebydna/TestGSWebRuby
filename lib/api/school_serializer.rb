@@ -25,10 +25,8 @@ class Api::SchoolSerializer
       schoolType: school.type,
       state: school.state
     }
-    if school.respond_to?(:boundary)
-      h[:geometry] = {
-        boundary: school.boundary
-      }
+    if school.respond_to?(:boundaries)
+      h[:boundaries] = school.boundaries
     end
     h
   end

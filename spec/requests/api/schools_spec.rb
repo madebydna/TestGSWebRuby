@@ -10,8 +10,6 @@ describe "Schools API" do
   let(:errors) { json['errors'] }
 
   describe 'show' do
-    let(:school) { json }
-
     it 'Returns school 1 by ID' do
       s1 = create(:alameda_high_school)
       create(:bay_farm_elementary_school)
@@ -19,8 +17,8 @@ describe "Schools API" do
       get "/gsr/api/schools/#{s1.id}?state=ca"
       expect(status).to eq(200)
       expect(errors).to be_blank
-      expect(school).to be_present
-      expect(school['name']).to eq(s1.name)
+      expect(json).to be_present
+      expect(json['name']).to eq(s1.name)
     end
 
     it 'Returns school 2 by ID' do
@@ -30,25 +28,79 @@ describe "Schools API" do
       get "/gsr/api/schools/#{s2.id}?state=ca"
       expect(status).to eq(200)
       expect(errors).to be_blank
-      expect(school).to be_present
-      expect(school['name']).to eq(s2.name)
+      expect(json).to be_present
+      expect(json['name']).to eq(s2.name)
+    end
+
+    it 'Requires a state' do
+      get '/gsr/api/schools/', format: :json
+      expect(status).to be(404)
+      expect(errors).to be_present
+    end
+
+    it 'does not return inactive school' do
+      s = create(:alameda_high_school, active: false)
+      get "/gsr/api/schools/#{s.id}?state=#{s.state}", format: :json
+      expect(status).to eq(200)
+      expect(errors).to be_blank
+      expect(json).to be_blank
     end
 
     it 'Returns a successful (empty) response if ID not found' do
       get "/gsr/api/schools/1?state=ca"
       expect(status).to eq(200)
       expect(errors).to be_blank
-      expect(school).to be_blank
+      expect(json).to be_blank
+    end
+
+    context 'with geometry data available for school' do
+      let(:school) { create(:alameda_high_school) }
+      before do
+        str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
+        SchoolGeometry.connection.execute("insert into school_geometry(state, school_id, ed_level, geom) values('#{school.state}', #{school.id}, 'O', GeomFromText('#{str}'));")
+      end
+      let(:coordinates) do
+        [[
+          [1, 1],
+          [1, 10],
+          [10, 10],
+          [10, 1],
+          [1, 1]
+        ]]
+      end
+
+      it 'Doesnt include geometry by default' do
+        get "/gsr/api/schools/#{school.id}?state=ca"
+        expect(status).to eq(200)
+        expect(errors).to be_blank
+        expect(json).to be_present
+        expect(json['boundaries']).to_not be_present
+      end
+
+      it 'Returns boundary data when asked' do
+        get "/gsr/api/schools/#{school.id}?state=ca&extras=boundaries"
+        expect(status).to eq(200)
+        expect(errors).to be_blank
+        expect(json).to be_present
+        expect(json['boundaries']).to be_present
+        expect(json['boundaries']['O']['coordinates']).to eq(coordinates)
+      end
     end
   end
 
   describe 'index' do
     let(:schools) { json['items'] }
 
-    it 'Requires a state' do
+    it 'Requires a state when location unknown' do
       get '/gsr/api/schools/', format: :json
       expect(status).to be(404)
       expect(errors).to be_present
+    end
+
+    it "Doesn't require a state when lat/lon provided" do
+      get '/gsr/api/schools/?lat=1&lon=1', format: :json
+      expect(status).to be(200)
+      expect(errors).to be_blank
     end
 
     it 'Returns some schools' do
@@ -59,6 +111,14 @@ describe "Schools API" do
       expect(status).to eq(200)
       expect(errors).to be_blank
       expect(schools.length).to eq(2)
+    end
+
+    it 'does not find inactive school' do
+      create(:alameda_high_school, active: false)
+      get '/gsr/api/schools/?state=ca', format: :json
+      expect(status).to eq(200)
+      expect(errors).to be_blank
+      expect(schools).to be_blank
     end
 
     it 'returns schools matching a district id' do
@@ -116,12 +176,12 @@ describe "Schools API" do
     end
 
     context 'with geometry data available for school' do
+      let(:school) { create(:alameda_high_school) }
       before do
         str = 'MULTIPOLYGON(((1 1,1 10,10 10,10 1,1 1)))'
-        school = create(:alameda_high_school)
-        SchoolGeometry.connection.execute("insert into school_geometry(school_id, geom) values(#{school.id}, GeomFromText('#{str}'));")
+        SchoolGeometry.connection.execute("insert into school_geometry(state, school_id, ed_level, geom) values('#{school.state}', #{school.id}, 'O', GeomFromText('#{str}'));")
       end
-      let(:boundary) do
+      let(:coordinates) do
         [[
           [1, 1],
           [1, 10],
@@ -131,21 +191,12 @@ describe "Schools API" do
         ]]
       end
 
-      it 'Returns geometry data when asked' do
-        get '/gsr/api/schools/?state=ca&extras=geometry'
-        expect(status).to eq(200)
-        expect(errors).to be_blank
-        expect(schools.length).to eq(1)
-        expect(schools.first['geometry']).to be_present
-        expect(schools.first['geometry']['boundary']).to eq(boundary)
-      end
-
       it 'Doesnt include geometry by default' do
         get '/gsr/api/schools/?state=ca'
         expect(status).to eq(200)
         expect(errors).to be_blank
         expect(schools.length).to eq(1)
-        expect(schools.first['geometry']).to_not be_present
+        expect(schools.first['boundaries']).to_not be_present
       end
 
       it 'Finds school with boundary containing point' do
@@ -154,6 +205,7 @@ describe "Schools API" do
         expect(errors).to be_blank
         expect(schools.length).to eq(1)
       end
+
     end
   end
 
