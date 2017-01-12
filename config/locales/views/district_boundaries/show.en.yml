@@ -1,3 +1,5 @@
 en:
   district_boundaries:
-    heading: School and District Boundaries Map
+    show:
+      heading: School and District Boundaries Map
+      subheading_html: Researching schools in your neighborhood is a snap with our interactive map tool. <br/>Enter an address to see school attendance and district boundary lines. Go ahead and give it a spin.

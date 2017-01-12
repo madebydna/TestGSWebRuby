@@ -1,0 +1,26 @@
+#district-boundaries-page {
+  .header {
+    background-color: #184a7d;
+    color: white;
+    padding: 12px 0 18px 20px;
+    @include media-breakpoint-up(sm){
+      padding: 30px 0 30px 30px;
+    }
+
+    h1 {
+      font-family: 'RobotoSlab-Bold';
+      font-size: 18px;
+      @include media-breakpoint-up(sm){
+        font-size: 26px;
+      }
+    }
+    p {
+      font-family: 'opensans-regular';
+      font-size: 12px;
+      letter-spacing: .2px;
+      @include media-breakpoint-only(xs) {
+        display: none;
+      }
+    }
+  }
+}
