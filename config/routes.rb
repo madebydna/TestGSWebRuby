@@ -94,6 +94,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
   match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
   match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
+  get '/official-school-profile/dashboard/', to: 'osp_landing#dashboard', as: :osp_dashboard
 
    get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
@@ -145,7 +146,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/account/', as: :my_account
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
-    get '/official-school-profile/dashboard/', as: :osp_dashboard
     get '/gk/videos/choose-elementary-school-video/', as: :help_me_e_video
     get '/gk/videos/choose-middle-school-video/', as: :help_me_m_video
     get '/gk/videos/choose-high-school-video/', as: :help_me_h_video
