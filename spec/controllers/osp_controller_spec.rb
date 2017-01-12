@@ -38,48 +38,10 @@ describe OspController do
         end
       end
 
-      context 'when signed in and going to delaware without an gs_localAuth token set' do
-        it 'should redirect to my account page and set flash notice' do
-          expect(controller).to receive(:flash_notice).at_least(:once).with(t('forms.osp.delaware_error').html_safe)
-          get :show, state: 'de', schoolId: school.id, page: 1
-          expect(response.redirect_url).to redirect_to(my_account_url)
-        end
-      end
-
-      context 'when signed in and going to delaware with an gs_localAuth token set' do
-        let(:auth_cookie) do
-          current_user.email = 'aroy@greatschools.org' #this will add a + into the token after encoding
-          Digest::MD5.base64digest(OspController::AUTH_SALT + current_user.email)
-        end
+      context 'when signed in and going to delaware' do
         it 'should render the osp page' do
-          request.cookies['gs_localAuth'] = auth_cookie
           get :show, state: 'de', schoolId: school.id, page: 1
           expect(response).to render_template(:osp_basic_information)
-        end
-
-        context 'when gs_localAuth cookie has trailing and leading " due to encoding issue' do
-          it 'should render the osp page' do
-            request.cookies['gs_localAuth'] = "\"#{auth_cookie}\""
-            get :show, state: 'de', schoolId: school.id, page: 1
-            expect(response).to render_template(:osp_basic_information)
-          end
-        end
-
-        context 'when gs_localAuth cookie has space instead of + due to encoding issue' do
-          it 'should render the osp page' do
-            request.cookies['gs_localAuth'] = auth_cookie.gsub('+', ' ')
-            get :show, state: 'de', schoolId: school.id, page: 1
-            expect(response).to render_template(:osp_basic_information)
-          end
-        end
-      end
-
-      context 'when signed in and going to delaware with an incorrect gs_localAuth token set' do
-        let(:auth_cookie) { Digest::MD5.base64digest(OspController::AUTH_SALT + current_user.email + 'blah') }
-        it 'should redirect to the my account page' do
-          request.cookies['gs_localAuth'] = auth_cookie
-          get :show, state: 'DE', schoolId: school.id, page: 1
-          expect(response.redirect_url).to redirect_to(my_account_url)
         end
       end
 
