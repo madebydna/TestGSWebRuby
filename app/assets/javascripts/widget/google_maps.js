@@ -37,6 +37,8 @@ GS.googleMap = GS.googleMap || (function() {
     var ajaxInitCallbacks = [];
     var needsInit = true;
 
+    var maxMobileWidth = 767;
+    var sizing_width  = window.innerWidth;
     GS.widget = GS.widget || {};
     GS.widget.map = GS.widget.map || {};
     GS.widget.mapMarkers = GS.widget.mapMarkers || [];
@@ -51,16 +53,23 @@ GS.googleMap = GS.googleMap || (function() {
 
           var points = [];
           //          lodash sytax
-          _(gon.map_points).each(function (point) {
-              points.push(point);
-          });
+          // _(gon.map_points).each(function (point) {
+          //     points.push(point);
+          // });
+        points = gon.map_points;
+        // for (var point in gon.map_points) {
+        //   console.log(gon.map_points[point]);
+        //   points.push(gon.map_points[point]);
+        // }
 
+        // console.log(points);
 
           var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
           var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
 
           var optionalLat = optionalLat || 37.807778;
           var optionalLon = optionalLon || -122.265149;
+
           var centerPoint = new google.maps.LatLng(optionalLat, optionalLon);
           var bounds = new google.maps.LatLngBounds();
 
@@ -69,7 +78,7 @@ GS.googleMap = GS.googleMap || (function() {
 
               var isZoomControl = function(){
 
-                if(((GS.window.sizing.width)()) <= GS.window.sizing.maxMobileWidth){
+                if(sizing_width <= maxMobileWidth){
                     return false;
                 }else{
                     return true;
@@ -145,8 +154,8 @@ GS.googleMap = GS.googleMap || (function() {
                       }
                   ]
               };
-              GS.widget.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
+              GS.widget.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
               var position;
               var imageUrl;
               var imageSize;
@@ -157,9 +166,11 @@ GS.googleMap = GS.googleMap || (function() {
               var point_12_20 = new google.maps.Point(12, 20);
               var point_5_5 = new google.maps.Point(5, 5);
               var infoWindow = new google.maps.InfoWindow({});
-
               for (var i = 0; i < points.length; i++) {
                   var point = points[i];
+                // console.log("point.lng:"+point.lng);
+                // console.log("point.lat:"+point.lat);
+                // if(point.lng)
                   position = new google.maps.LatLng(point.lat, point.lng);
                   bounds.extend(position);
                   markerOptions = {
@@ -178,6 +189,7 @@ GS.googleMap = GS.googleMap || (function() {
                   }
 
                   var markerOptions = new google.maps.Marker(markerOptions);
+
                   if (point.on_page) {
 
                       imageSize = size_29;
@@ -219,6 +231,7 @@ GS.googleMap = GS.googleMap || (function() {
 
                   var marker = new google.maps.Marker(markerOptions);
                   if (point.profileUrl ) {
+
                       google.maps.event.addListener(marker, 'click', (function (marker, point) {
                           return function () {
                               infoWindow.setContent(getInfoWindowMarkup(point));
@@ -233,12 +246,13 @@ GS.googleMap = GS.googleMap || (function() {
                   var calculateCenter = function () {
                       center = getMap().getCenter();
                   };
+
                   google.maps.event.addDomListener(getMap(), 'idle', function() {
                       calculateCenter();
                   });
                   google.maps.event.addDomListener(window, 'resize', function() {
                       getMap().setCenter(center);
-                  })
+                  });
 
               }
               if (!bounds.isEmpty()) {
@@ -253,6 +267,7 @@ GS.googleMap = GS.googleMap || (function() {
                   getMap().setOptions({maxZoom:null});
               }
           };
+
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
               var markup = '<div>'; //school data
@@ -362,14 +377,18 @@ GS.googleMap = GS.googleMap || (function() {
             }
         });
     };
-
+    var isNumeric = function(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+      };
 
     var addToInitDependencyCallbacks = function (func) {
+      console.log('addToInitDependencyCallbacks');
         ajaxInitCallbacks.push(func);
-        ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
+        // ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
     };
 
     var applyAjaxInitCallbacks = function () {
+      console.log("applyAjaxInitCallbacks:"+ajaxInitCallbacks.length);
       while (ajaxInitCallbacks.length > 0) {
         (ajaxInitCallbacks.shift())();
       }
@@ -391,3 +410,5 @@ GS.googleMap = GS.googleMap || (function() {
     }
 
 })();
+
+GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);
