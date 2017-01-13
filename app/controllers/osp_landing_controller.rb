@@ -2,6 +2,8 @@ class OspLandingController < ApplicationController
   before_action :set_login_redirect
   before_action :login_required, only: [:dashboard]
 
+  layout 'application', only: [:dashboard]
+
   def show
     page_title = 'Edit your school profile at GreatSchools'
     gon.pageTitle = page_title
@@ -22,36 +24,44 @@ class OspLandingController < ApplicationController
     # If state/schoolId params are provided, redirect directly to that school's form
     if params[:state] && params[:schoolId]
       redirect_to(osp_page_path(:state =>params[:state], :schoolId => params[:schoolId], :page => 1))
+    elsif current_user.is_esp_superuser? || approved_memberships.size > 1
+      @superuser = current_user.is_esp_superuser?
+      @schools = schools
+      render 'osp/dashboard' # demigod disambiguation list and superuser form
+    elsif single_membership # includes provisional
+      redirect_to(osp_page_path(:state =>single_membership.state, :schoolId => single_membership.school_id, :page => 1))
     else
-      # TODO: If superuser, render superuser form
-      # if current_user.is_esp_superuser?
-      #   @superuser = true
-      #   render 'osp/dashboard'
-      #   return
-      # end
+      redirect_to(my_account_path)
+    end
+  end
 
-      memberships = current_user.esp_memberships
-      approved_memberships = memberships.select(&:approved?)
-      provisional_memberships = memberships.select(&:provisional?)
-      if approved_memberships.size == 1
-        # If approved and list.size == 1, redirect to that school's form
-        membership = approved_memberships.first
-        redirect_to(osp_page_path(:state =>membership.state, :schoolId => membership.school_id, :page => 1))
-      elsif approved_memberships.size > 1
-        # Otherwise render demigod list
-        # get ordered list of memberships (by school name ignoring state)
-        #   for each membership get the school
-        #   Sort memberships by school name
-        #   Send list of schools to view
-        redirect_to(my_account_path) # TODO implement correct behavior
-      elsif !provisional_memberships.empty?
-        # If provisional OSP user, get first provisional membership and redirect to that school's form
-        membership = provisional_memberships.first
-        redirect_to(osp_page_path(:state =>membership.state, :schoolId => membership.school_id, :page => 1))
-      else
-        # If other user, block access
-        redirect_to(my_account_path)
+  private
+
+  def single_membership
+    return @_single_membership if defined?(@_single_membership)
+    @_single_membership = if approved_memberships.size == 1 || !provisional_memberships.empty?
+                            (approved_memberships + provisional_memberships).compact.first
+                          end
+  end
+
+  def esp_memberships
+    @_esp_memberships ||= current_user.esp_memberships
+  end
+
+  def approved_memberships
+    @_approved_memberships ||= esp_memberships.select(&:approved?)
+  end
+
+  def provisional_memberships
+    @_provisional_memberships ||= esp_memberships.select(&:provisional?)
+  end
+
+  def schools
+    @_schools ||= begin
+      schools = approved_memberships.map do |m|
+        School.on_db(m.state.downcase.to_sym).find_by_id(m.school_id) if m.state.present? && m.school_id.present?
       end
+      schools.compact.select { |s| s.active == 1 }.sort_by(&:name)
     end
   end
 end
