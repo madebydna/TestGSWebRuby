@@ -2,7 +2,7 @@ class OspLandingController < ApplicationController
   before_action :set_login_redirect
   before_action :login_required, only: [:dashboard]
 
-  layout 'application', only: [:dashboard]
+  layout 'application'
 
   def show
     page_title = 'Edit your school profile at GreatSchools'
@@ -17,7 +17,7 @@ class OspLandingController < ApplicationController
       }
     )
 
-    render 'osp/osp_landing'
+    render 'osp/osp_landing', layout: 'deprecated_application'
   end
 
   def dashboard
