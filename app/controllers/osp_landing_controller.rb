@@ -39,9 +39,13 @@ class OspLandingController < ApplicationController
 
   def single_membership
     return @_single_membership if defined?(@_single_membership)
-    @_single_membership = if approved_memberships.size == 1 || !provisional_memberships.empty?
+    @_single_membership = if has_single_membership?
                             (approved_memberships + provisional_memberships).compact.first
                           end
+  end
+
+  def has_single_membership?
+    approved_memberships.size == 1 || (approved_memberships.empty? && !provisional_memberships.empty?)
   end
 
   def esp_memberships

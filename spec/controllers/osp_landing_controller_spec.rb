@@ -124,6 +124,14 @@ describe OspLandingController do
       expect(subject.approved?).to be_truthy
     end
 
+    it 'returns nil if you have multiple approved memberships and one provisional' do
+      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 2, state: 'ca', member_id: user.id)
+      FactoryGirl.create(:esp_membership, :with_approved_status, school_id: 1, state: 'ca', member_id: user.id)
+      FactoryGirl.create(:esp_membership, :with_provisional_status, school_id: 3, state: 'ca', member_id: user.id)
+
+      expect(subject).to be_nil
+    end
+
     it 'returns nil if you have no memberships' do
       expect(subject).to be_nil
     end
