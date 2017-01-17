@@ -67,9 +67,9 @@ function toggleFilter(levelCode, checked, searchQuery) {
         noneChecked && !document.getElementById('filter_p').checked;
   }
 
-  document.getElementById('zoom').value = GS_map.getZoom();
-  document.getElementById('lat').value = GS_map.getCenter().lat();
-  document.getElementById('lon').value = GS_map.getCenter().lng();
+  // document.getElementById('zoom').value = GS_map.getZoom();
+  // document.getElementById('lat').value = GS_map.getCenter().lat();
+  // document.getElementById('lon').value = GS_map.getCenter().lng();
 
   if (noneChecked) {
     clearMarkers();

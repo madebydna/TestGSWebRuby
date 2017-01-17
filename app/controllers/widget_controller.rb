@@ -17,6 +17,7 @@ class WidgetController < ApplicationController
 
   # this is the widget iframe component
   def map
+    convert_widget_params
     by_location
   end
 
@@ -37,10 +38,12 @@ class WidgetController < ApplicationController
     @state_abbreviation = state_abbreviation
     city = nil
     @by_location = true
+
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
       @lat = params_hash['lat']
       @lon = params_hash['lon']
-      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param})
+      @level_codes = params_hash['gradeLevels']
+      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param, filters: {:level_code=>@level_codes}})
       search_options[:state] =  state_abbreviation if @state
       @normalized_address = params_hash['normalizedAddress']
       @search_term = params_hash['locationSearchString']
@@ -55,13 +58,14 @@ class WidgetController < ApplicationController
 
 
   def setup_search_results!(search_method)
-    @params_hash = parse_array_query_string(request.query_string)
+    @params_hash = params #parse_array_query_string(request.query_string)
 
     search_options = {number_of_results: MAX_RESULTS_FOR_MAP, offset: 0}
 
     yield search_options, @params_hash if block_given?
 
     results = search_method.call(search_options)
+
     process_results(results, 0) unless results.empty?
 
   end
@@ -120,13 +124,25 @@ class WidgetController < ApplicationController
     end
   end
 
+  def convert_widget_params
+    level_code_params = [{:preschoolFilterChecked=>:preschool}, {:elementaryFilterChecked=>:elementary}, {:middleFilterChecked=>:middle}, {:highFilterChecked=>:high}]
+    results = []
+    level_code_params.each do |level_codes|
+      key, value = level_codes.first
+      if params[key].present? && params[key] == 'true'
+        results << value
+      end
+    end
+    params['gradeLevels'] = results
+  end
+
 # duplicate methods in search controller
   def calculate_map_range(solr_offset)
     # solr_offset is used to convert from an absolute range to a relative range.
     # e.g. if user requested 225-250, we want to display on map 150-350. That's the absolute range
     # If we asked solr to give us results 25-425, then the relative range into that resultset is
     # 125-325
-    map_start =  0
+    map_start =  solr_offset
     # map_start = 0 if map_start < 0
     # map_start = (@results_offset - solr_offset) if map_start > @results_offset # handles when @page_size > (MAX_RESULTS_FOR_MAP/2)
     map_end = map_start + MAX_RESULTS_FOR_MAP-1
@@ -134,7 +150,7 @@ class WidgetController < ApplicationController
       map_end = @total_results-1
       map_start = map_end - MAX_RESULTS_FOR_MAP
       map_start = 0 if map_start < 0
-      map_start = (@results_offset - solr_offset) if map_start > @results_offset
+      # map_start = (@results_offset - solr_offset) if map_start > @results_offset
     end
     [map_start, map_end]
   end
@@ -148,7 +164,7 @@ class WidgetController < ApplicationController
   end
 
   def params_hash
-    @params_hash ||= parse_array_query_string(request.query_string)
+    @params_hash ||= params #parse_array_query_string(request.query_string)
   end
 
   # Any time we apply a different filter value than what is in the URL, we should record that here
