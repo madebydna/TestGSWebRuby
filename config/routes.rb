@@ -129,6 +129,16 @@ LocalizedProfiles::Application.routes.draw do
   scope '', controller: 'error', action: 'page_not_found' do
     get '/schools/cities/:state_name_long/:state_name', :to => 'cities_list#show', as: 'cities_list'
     get '/schools/districts/:state_name_long/:state_name', :to => 'districts_list#show', as: 'districts_list'
+    get '/gs_widget/map', :to => 'widget#map'
+    post '/gs_widget/map', :to => 'widget#map'
+    get '/gs_widget/', :to => 'widget#show'
+    post '/gs_widget/', :to => 'widget#create'
+    # get '/widget/map', :to => 'widget#map'
+    # post '/widget/map', :to => 'widget#map'
+    get '/widget/', :to => 'widget#show'
+    post '/widget/', :to => 'widget#create'
+    match '/widget/map' => 'widget#map', via: [:get, :post]
+    match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
     get '/gk/', as: :greatkids_home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
