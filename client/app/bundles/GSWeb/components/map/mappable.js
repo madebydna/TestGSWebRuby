@@ -18,7 +18,7 @@ Mappable.prototype = {
     return this.marker = new google.maps.Marker({
       position: this.getPosition(),
       title: this.getName(),
-      icon: this.getMarkerImage(),
+      // icon: this.getMarkerImage(),
       shape: this.getMarkerShape(),
       zIndex: 1
     });
