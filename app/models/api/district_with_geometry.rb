@@ -20,14 +20,14 @@ class Api::DistrictWithGeometry < SimpleDelegator
   end
 
   def self.geom_to_coordinates(geom)
-    # eval(
-    #   geom.
-    #     gsub('MULTIPOLYGON', '').
-    #     gsub('POLYGON', '').
-    #     gsub('(', '[').
-    #     gsub(')', ']').
-    #     gsub(',', '],[').
-    #     gsub(' ', ',')
-    # )
+    eval(
+      geom.
+        gsub('MULTIPOLYGON', '').
+        gsub('POLYGON', '').
+        gsub('(', '[').
+        gsub(')', ']').
+        gsub(',', '],[').
+        gsub(' ', ',')
+    )
   end
 end

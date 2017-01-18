@@ -23,7 +23,8 @@ class Api::SchoolSerializer
       },
       rating: 'TODO',
       schoolType: school.type,
-      state: school.state
+      state: school.state,
+      type: 'school'
     }
     if school.respond_to?(:boundaries)
       h[:boundaries] = school.boundaries

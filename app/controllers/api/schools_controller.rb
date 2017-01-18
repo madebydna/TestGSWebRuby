@@ -48,7 +48,7 @@ class Api::SchoolsController < ApplicationController
   def schools
     @_schools ||= (
       items = if location_given?
-        SchoolGeometry.schools_for_geometries(school_geometries_containing_lat_lon)
+        SchoolGeometry.schools_for_geometries(school_geometries_containing_lat_lon).first
       else
         get_schools
       end
@@ -57,6 +57,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def add_geometry(schools)
+    schools = Array.wrap(schools)
     if extras.include?('boundaries') && schools.length == 1
       schools = schools.map { |s| Api::SchoolWithGeometry.apply_geometry_data!(s) }
     end
