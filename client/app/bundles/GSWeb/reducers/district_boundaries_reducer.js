@@ -3,8 +3,8 @@ export default (state, action) => {
     return {
       schools: {},
       districts: {},
-      schoolAtLatLon: null,
-      districtAtLatLon: null
+      school: null,
+      district: null
     };
   }
 
@@ -17,49 +17,41 @@ export default (state, action) => {
         },
         {}
       );
-      var currentPlusNewSchools = Object.assign({}, state.schools, schools);
       return Object.assign({}, state, {
-        schools: currentPlusNewSchools,
+        schools: schools,
       });
-    case 'SCHOOL_CONTAINING_POINT_RECEIVED':
+    case 'SCHOOL_RECEIVED':
       var school = action.school;
       var newState = Object.assign({}, state);
-      newState.schools = Object.assign({}, newState.schools);
-
-      var key = [school.state.toLowerCase(), school.id];
-      newState.schools[key] = newState.schools[key] || school;
-      newState.schoolAtLatLon = key;
+      newState.school = school;
       return newState;
-    case 'DISTRICT_CONTAINING_POINT_RECEIVED':
+    case 'DISTRICT_RECEIVED':
       // store/update the district within the state
       var district = action.district;
       var newState = Object.assign({}, state);
-      newState.districts = Object.assign({}, newState.districts);
 
       let boundariesValue = Object.values(district.boundaries)[0];
       let levelCodes = Object.keys(district.boundaries)[0];
-      district.boundaries = levelCodes.split(',').reduce(function(obj, levelCode) {
-        obj[levelCode.toUpperCase()] = boundariesValue;
-        return obj;
-      }, {});
+      if(levelCodes) {
+        district.boundaries = levelCodes.split(',').reduce(function(obj, levelCode) {
+          obj[levelCode.toUpperCase()] = boundariesValue;
+          return obj;
+        }, {});
+      }
 
-      var key = [district.state.toLowerCase(), district.id];
-      newState.districts[key] = district;
-      newState.districtAtLatLon = key;
-
+      newState.district = district;
       return newState;
     case 'DISTRICTS_RECEIVED':
       var districts = action.districts.reduce(
         (obj, district) => {
-          key = [district.state.toLowerCase(), district.id];
+          var key = [district.state.toLowerCase(), district.id];
           obj[key] = state.districts[key] || district;
           return obj;
         },
         {}
       );
-      var newDistricts = Object.assign({}, districts);
       return Object.assign({}, state, {
-        districts: newDistricts,
+        districts: districts,
       });
     default:
       return state;

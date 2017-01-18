@@ -13,15 +13,20 @@ const Mappable = function(){
 
 Mappable.prototype = {
   constructor: Mappable,
-  getMarker: function(){
+  getMarker: function(callback){
     if (this.marker) return this.marker;
-    return this.marker = new google.maps.Marker({
+    let m = new google.maps.Marker({
       position: this.getPosition(),
       title: this.getName(),
       // icon: this.getMarkerImage(),
       shape: this.getMarkerShape(),
       zIndex: 1
     });
+    if(callback) {
+      callback(m);
+    }
+    this.marker = m;
+    return m;
   },
 
   getMarkerShape: function() {

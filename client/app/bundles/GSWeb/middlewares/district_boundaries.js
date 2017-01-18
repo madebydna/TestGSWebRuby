@@ -10,10 +10,9 @@ const DistrictBoundariesMiddleware = store => next => action => {
         action.id,
         action.options
       ).done(function(data) {
-        let school = new School(data);
         store.dispatch({
-          type: 'SCHOOLS_RECEIVED',
-          schools: [school]
+          type: 'SCHOOL_RECEIVED',
+          school: data
         })
       });
       return next(action); // invoke the next middleware with this action
@@ -22,10 +21,9 @@ const DistrictBoundariesMiddleware = store => next => action => {
         action.id,
         action.options
       ).done(function(data) {
-        let district = new District(data);
         store.dispatch({
-          type: 'DISTRICTS_RECEIVED',
-          districts: [district]
+          type: 'DISTRICT_RECEIVED',
+          district: data
         })
       });
       return next(action); // invoke the next middleware with this action
@@ -36,9 +34,9 @@ const DistrictBoundariesMiddleware = store => next => action => {
         action.options
       ).done(function(data) {
         if(data.items.length > 0) {
-          let school = new School(data.items[0]);
+          let school = data.items[0];
           store.dispatch({
-            type: 'SCHOOL_CONTAINING_POINT_RECEIVED',
+            type: 'SCHOOL_RECEIVED',
             school: school,
             lat: action.lat,
             lon: action.lon
@@ -53,9 +51,9 @@ const DistrictBoundariesMiddleware = store => next => action => {
         action.options
       ).done(function(data) {
         if(data.items.length > 0) {
-          let district = new District(data.items[0]);
+          let district = data.items[0];
           store.dispatch({
-            type: 'DISTRICT_CONTAINING_POINT_RECEIVED',
+            type: 'DISTRICT_RECEIVED',
             district: district,
             lat: action.lat,
             lon: action.lon

@@ -23,6 +23,8 @@ export default class DistrictBoundaries extends React.Component {
     this.initGoogleMaps = this.initGoogleMaps.bind(this);
     this.loadSchoolById = this.loadSchoolById.bind(this);
     this.renderMap = this.renderMap.bind(this);
+    this.updateSchoolMarkers = this.updateSchoolMarkers.bind(this);
+    this.updateDistrictMarkers = this.updateDistrictMarkers.bind(this);
 
     this.state = {
       googleMapsInitialized: false,
@@ -95,58 +97,52 @@ export default class DistrictBoundaries extends React.Component {
 
   componentDidMount() {
     this.$map = $(findDOMNode(this.mapDiv));
-    this.centerMapOnSchool();
     this.loadData();
   }
 
-  updateSchoolMarkers()  {
-    let existingMarkers = this.state.schoolMarkers;
+  onSchoolMarkerClicked(marker, obj) {
+    return (e) => {
+      this.showInfoWindow(marker, obj);
+      this.setState({
+        state: obj.state,
+        schoolId: obj.id
+      });
+    }
+  }
 
-    let newMarkers = Object.values(this.props.schools).reduce(function(obj, s) {
+  onDistrictMarkerClicked(marker, obj) {
+    return (e) => {
+      this.showInfoWindow(marker, obj);
+      this.setState({
+        state: obj.state,
+        districtId: obj.id,
+        schoolId: null
+      });
+    }
+  }
+
+  updateSchoolMarkers() {
+    let schools = [this.props.schools[this.state.selectedSchool]];
+    let newMarkers = Object.values(schools).reduce((obj, s) => {
+      if(s == undefined) return obj;
       let key = [s.state.toLowerCase(), s.id];
-      let marker = obj[key] = existingMarkers[key] || new School(s).getMarker();
-
-      google.maps.event.clearListeners(marker, 'click');
-      google.maps.event.addListener(marker, 'click', function() {
-        this.setState({
-          state: obj.state,
-          schoolId: obj.id
-        });
-      }.bind(this), obj);
-
+      let marker = obj[key] = this.state.schoolMarkers[key] || new School(s).getMarker();
+      google.maps.event.addListener(marker, 'click', this.onSchoolMarkerClicked(marker, s));
       return obj;
-    }.bind(this), {});
-
-    Object.keys(existingMarkers).forEach(function(key) {
-      if(!newMarkers[key]) {
-        existingMarkers[key].setMap(null);
-      }
-    });
-
+    }, {});
     this.setState({
       schoolMarkers: newMarkers
     });
   }
 
-  updateDistrictMarkers()  {
-    let existingMarkers = this.state.districtMarkers;
-
-    let newMarkers = Object.values(this.props.nearbyDistricts).reduce(function(obj, s) {
+  updateDistrictMarkers() {
+    let newMarkers = Object.values(this.props.districts).reduce((obj, s) => {
+      if(s == undefined) return obj;
       let key = [s.state.toLowerCase(), s.id];
-      let marker = obj[key] = existingMarkers[key] || new District(s).getMarker();
-
-      google.maps.event.addListener(marker, 'click', function() {
-        this.showInfoWindow(marker, s);
-        this.setState({
-          state: obj.state,
-          districtId: obj.id,
-          schoolId: null
-        });
-      }.bind(this), obj);
-
+      let marker = obj[key] = this.state.districtMarkers[key] || new District(s).getMarker();
+      google.maps.event.addListener(marker, 'click', this.onDistrictMarkerClicked(marker, s));
       return obj;
-    }.bind(this), {});
-
+    }, {});
     this.setState({
       districtMarkers: newMarkers
     });
@@ -168,8 +164,12 @@ export default class DistrictBoundaries extends React.Component {
               {entity.name}
             </span>
           </div>
-          <div>{entity.address.street1}</div>
-          <div>{entity.address.city}, {entity.address.state} {entity.address.zip}</div>
+          {entity.address &&
+            <div>
+              <div>{entity.address.street1}</div>
+              <div>{entity.address.city}, {entity.address.state} {entity.address.zip}</div>
+            </div>
+          }
         </div>
       </div>
     </div>;
@@ -183,84 +183,120 @@ export default class DistrictBoundaries extends React.Component {
     infoWindow.open(this.map, marker);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    let polygonChanged = prevState.polygon && prevState.polygon != this.state.polygon;
-    let schoolsChanged = (Object.keys(prevProps.schools) != Object.keys(this.props.schools));
-    let mapCenterChanged = prevState.mapCenter != this.state.mapCenter;
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.school != this.props.school) {
+      this.setState({
+        selectedSchool: nextProps.school
+      })
+    }
+    if(nextProps.district != this.props.district) {
+      this.setState({
+        selectedDistrict: nextProps.district,
+        selectedSchool: null
+      })
+    }
+  }
 
-    if(polygonChanged) {
-      prevState.polygon.setMap(null);
+  componentDidUpdate(prevProps, prevState) {
+    let schoolPolygonChanged = prevState.schoolPolygon != this.state.schoolPolygon;
+    let districtPolygonChanged = prevState.districtPolygon != this.state.districtPolygon;
+    let mapCenterChanged = prevState.mapCenter != this.state.mapCenter;
+    let schoolsChanged = prevProps.schools != this.props.schools;
+    let districtsChanged = prevProps.districts != this.props.districts;
+    let latLonChanged = prevState.lat != this.state.lat || prevState.lon != this.state.lon;
+    let schoolIdChanged = prevState.schoolId != this.state.schoolId;
+    let districtIdChanged = prevState.districtId != this.state.districtId;
+    let selectedSchoolChanged = prevState.selectedSchool != this.state.selectedSchool;
+    let selectedDistrictChanged = prevState.selectedDistrict != this.state.selectedDistrict;
+    let schoolMarkersChanged = prevState.schoolMarkers != this.state.schoolMarkers;
+    let districtMarkersChanged = prevState.districtMarkers != this.state.districtMarkers;
+
+    if(schoolIdChanged) {
+      this.loadSchoolById();
+    }
+    if(districtIdChanged) {
+      this.loadDistrictById();
+    }
+    if(schoolPolygonChanged) {
+      if(prevState.schoolPolygon) {
+        prevState.schoolPolygon.setMap(null);
+      }
+      if(this.state.schoolPolygon) {
+        this.state.schoolPolygon.setMap(this.map);
+      }
+    }
+    if(districtPolygonChanged) {
+      if(prevState.districtPolygon) {
+        prevState.districtPolygon.setMap(null);
+      }
+      if(this.state.districtPolygon) {
+        this.state.districtPolygon.setMap(this.map);
+      }
     }
     if(mapCenterChanged) {
       this.map.setCenter(this.state.mapCenter);
     }
-    if(prevProps.schools != this.props.schools) {
+    if(schoolsChanged) {
       this.updateSchoolMarkers();
     }
-    if(prevProps.nearbyDistricts != this.props.nearbyDistricts) {
+    if(districtsChanged) {
       this.updateDistrictMarkers();
     }
-    if(Object.keys(prevProps.schools).length == 0 && Object.keys(this.props.schools).length > 0) {
-      this.centerMapOnSchool();
+    if(selectedSchoolChanged) {
+      let school = this.state.selectedSchool;
+      if(school) {
+        school = new School(school);
+        this.setState({
+          schoolPolygon: school.getPolygon(this.state.level)
+        });
+      } else {
+        this.setState({
+          schoolPolygon: null
+        });
+      }
     }
-    if(prevState.schoolId != this.state.schoolId) {
-      this.loadSchoolById();
+    if(selectedDistrictChanged) {
+      let district = this.state.selectedDistrict;
+      if(district) {
+        district = new District(district);
+        // this.map.setCenter(district.getPosition());
+        let m = this.state.districtMarkers[[district.state.toLowerCase(), district.id]];
+        this.showInfoWindow(m, district);
+        this.setState({
+          districtPolygon: district.getPolygon(this.state.level)
+        });
+      } else {
+        this.setState({
+          districtPolygon: null
+        });
+      }
     }
-    if(prevState.districtId != this.state.districtId) {
-      this.loadDistrictById();
-    }
-    if(prevState.lat != this.state.lat || prevState.lon != this.state.lon) {
+    if(latLonChanged) {
       this.loadSchoolByLatLon();
       this.loadDistrictByLatLon();
       this.loadNearbyDistricts();
     }
-    if(prevState.districtMarkers != this.state.districtMarkers) {
-      Object.values(prevState.districtMarkers).forEach(m => m.setMap(null));
-      Object.values(this.state.districtMarkers).forEach(m => m.setMap(this.map));
-    }
-    if(prevState.schoolMarkers != this.state.schoolMarkers) {
+
+    if(schoolMarkersChanged) {
       Object.values(prevState.schoolMarkers).forEach(m => m.setMap(null));
       Object.values(this.state.schoolMarkers).forEach(m => m.setMap(this.map));
     }
-    if(prevProps.districtAtLatLon != this.props.districtAtLatLon) {
-      let district = this.props.nearbyDistricts[this.props.districtAtLatLon];
-      this.setState({
-        polygon: new District(district).getPolygon(this.state.level)
-      });
-    } else if (this.state.schoolId && (prevState.schoolId != this.state.schoolId || schoolsChanged)) {
-      let school = this.props.schools[[this.state.state.toLowerCase(), this.state.schoolId]];
-      if(school) {
-        this.setState({
-          polygon: new School(school).getPolygon(this.state.level)
-        });
-      }
-    } else if (this.state.districtId && (prevState.districtId != this.state.districtId || districtsChanged)) {
-      let district = this.props.districts[[this.state.state.toLowerCase(), this.state.districtId]];
-      if(district) {
-        this.setState({
-          polygon: new District(district).getPolygon(this.state.level)
-        });
-      }
-    }
-  }
-
-  centerMapOnSchool() {
-    let school = this.getSchool();
-    if(school) {
-      this.map.setCenter(school.getPosition());
+    if(districtMarkersChanged) {
+      Object.values(prevState.districtMarkers).forEach(m => m.setMap(null));
+      Object.values(this.state.districtMarkers).forEach(m => m.setMap(this.map));
     }
   }
 
   loadSchoolById() {
-    let key = [this.state.state, this.state.schoolId];
-    let school = this.props.schools[key];
-    if (!school) {
-      this.props.getSchool(
-        this.state.schoolId, {
-          state: this.state.state
-        }
-      );
+    if(!this.state.state || !this.state.schoolId) {
+      return;
     }
+
+    this.props.getSchool(
+      this.state.schoolId, {
+        state: this.state.state
+      }
+    );
   }
 
   loadSchoolByLatLon() {
@@ -274,15 +310,15 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   loadDistrictById() {
-    let key = [this.state.state, this.state.districtId];
-    let district = this.props.schools[key];
-    if (!district) {
-      this.props.getDistrict(
-        this.state.districtId, {
-          state: this.state.state
-        }
-      );
+    if(!this.state.state || !this.state.districtId) {
+      return;
     }
+
+    this.props.getDistrict(
+      this.state.districtId, {
+        state: this.state.state
+      }
+    );
   }
 
   loadDistrictByLatLon() {
@@ -299,26 +335,6 @@ export default class DistrictBoundaries extends React.Component {
     this.props.getNearbyDistricts(this.state.lat, this.state.lon, this.nearbyDistrictsRadius, {
       charter_only: false 
     });
-  }
-
-  getSchool() {
-    let key = undefined;
-    if (this.state.schoolId && this.state.state) {
-      key = [this.state.state, this.state.schoolId];
-    } else if (this.state.lat && this.state.lon) {
-      key = this.props.schoolAtLatLon;
-    }
-    return this.props.schools[key];
-  }
-
-  getDistrict() {
-    let key = undefined;
-    if (this.state.districtId && this.state.state) {
-      key = [this.state.state, this.state.districtId];
-    } else if (this.state.lat && this.state.lon) {
-      key = this.props.districtAtLatLon;
-    }
-    return this.props.nearbyDistricts[key];
   }
 
   loadSchool() {
@@ -338,12 +354,6 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   renderMap() {
-    let school = this.getSchool();
-    let district = this.getDistrict();
-    if (this.state.polygon) {
-      this.state.polygon.setMap(this.map);
-    }
-    let nearbyDistricts = this.props.nearbyDistricts;
   }
 
   render() {

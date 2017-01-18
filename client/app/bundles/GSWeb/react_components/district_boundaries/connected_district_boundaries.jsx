@@ -7,9 +7,9 @@ let ConnectedDistrictBoundaries = connect(
   function(state, ownProps) { // state is global redux store, ownProps are the passed-in props
     return {
       schools: state.districtBoundaries.schools,
-      nearbyDistricts: state.districtBoundaries.districts,
-      schoolAtLatLon: state.districtBoundaries.schoolAtLatLon,
-      districtAtLatLon: state.districtBoundaries.districtAtLatLon
+      districts: state.districtBoundaries.districts,
+      school: state.districtBoundaries.school,
+      district: state.districtBoundaries.district
     };
   },
   function(dispatch, ownProps) { // dispatch can be invoked with action creator
