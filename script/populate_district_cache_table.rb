@@ -1,5 +1,5 @@
 def all_cache_keys
-  ['ratings','feed_test_scores']
+  ['ratings','feed_test_scores', 'district_schools_summary']
 end
 
 def all_states
