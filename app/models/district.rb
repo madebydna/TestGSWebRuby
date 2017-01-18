@@ -67,4 +67,18 @@ class District < ActiveRecord::Base
     District.on_db(state.downcase.to_sym).active.where(city: city.name).order(num_schools: :desc)
   end
 
+  def self.query_distance_function(lat, lon)
+    miles_center_of_earth = 3959
+    "(
+    #{miles_center_of_earth} *
+     acos(
+       cos(radians(#{lat})) *
+       cos( radians( `lat` ) ) *
+       cos(radians(`lon`) - radians(#{lon})) +
+       sin(radians(#{lat})) *
+       sin( radians(`lat`) )
+     )
+   )".squish
+  end
+
 end
