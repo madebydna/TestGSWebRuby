@@ -1,4 +1,4 @@
-<div class="js-mapContainer" style="width:<%= @params_hash['width'] %>px;height:<%= @params_hash['height'] %>px;">
+<div class="js-mapContainer mapContainer" style="width:<%= @params_hash['width'] %>px;height:<%= @params_hash['height'] %>px;">
   <div style="display:none">
     <div class="js-mapPinRatingText"><%= t('.rating') %></div>
     <div class="js-mapPinReviewText"><%= t('.review') %></div>
@@ -14,47 +14,63 @@
       <div class="js-mapPinCommunityStars-<%=rating%>"><%= draw_stars_16 rating %></div>
     <% end %>
   </div>
-  <div style="border-bottom: solid 1px #FFCC66">
-    <div style="width:49%; display: inline-block; text-align:center; padding: 10px 0px; border-right:1px solid #FFCC66;">Map</div>
-    <div style="width:49%; display: inline-block;  text-align:center; padding: 10px 0px; ">Search</div>
+  <div class="gs_tab_container">
+    <div class='gs_tab left_tab active' data-name="tabMap">Map</div>
+    <div class='gs_tab' data-name="tabSearch">Search</div>
   </div>
-  <div class="filter_nav">
-    <style>
-      .filters {float:left}
-      .filters .location {padding: 10px 10px 0px 10px}
-      .filters ul { list-style: none; margin: 0; padding: 10px;}
-      .filters ul li { display: inline; font-size: 11px;}
-      .filter_nav .question_mark{ float: right; padding: 10px;}
-    </style>
-    <div class="filters">
-      <div class="location">Schools near Fremont, CA 94536:</div>
-    <ul>
+  <div class="mapTabBody">
+    <div class="filter_nav">
+      <style>
+        .mapContainer .gs_tab_container {border-bottom: solid 1px #FFCC66}
+        .mapContainer .gs_tab{width:49%; display: inline-block; text-align:center; padding: 10px 0px;}
+        .mapContainer .gs_tab.left_tab {border-right:1px solid #FFCC66;}
+        .mapContainer .gs_tab.active {background-color: #EDEDED;}
+        .filters { float:left; }
+        .filters .location {padding: 10px 10px 0px 10px}
+        .filters ul { list-style: none; margin: 0; padding: 10px;}
+        .filters ul li { display: inline; font-size: 11px;}
+        .filter_nav .question_mark{ float: right; padding: 10px;}
+        .dn { display:none; }
+      </style>
+      <div class="filters">
+        <div class="location">Schools near <%=  @params_hash[:normalizedAddress] %>:</div>
+        <ul>
+          <li><input type="checkbox" name="elementary" id="filter_e"
+                     value="" <%=  @params_hash[:elementaryFilterChecked] == 'true' ? "checked='checked'": '' %>
+                     onclick="toggleFilter('e', this.checked, '20002');"><label for="filter_e">Elementary</label></li>
+          <li><input type="checkbox" name="middle" id="filter_m"
+                     value="" <%=  @params_hash[:middleFilterChecked] == 'true' ? "checked='checked'": ''%>
+                     onclick="toggleFilter('m', this.checked, '20002');"><label for="filter_m">Middle</label></li>
+          <li><input type="checkbox" name="high" id="filter_h"
+                     value="" <%=  @params_hash[:highFilterChecked] == 'true' ? "checked='checked'": '' %>
+                     onclick="toggleFilter('h', this.checked, '20002');"><label for="filter_h">High</label></li>
+        </ul>
+        </div>
+      <div class="question_mark">???</div>
+      <div style="clear: both"></div>
+    </div>
+    <div id="js-map-canvas" style="width: <%= @params_hash['width'] %>px; height:<%= @params_hash['height'].to_i - 105 %>px"></div>
+  </div>
 
-      <li><input type="checkbox" name="elementary" id="filter_e" value="" <%=  @params_hash[:elementaryFilterChecked] == 'true' ? "checked='checked'": '' %> onclick="toggleFilter('e', this.checked, '20002');"><label for="filter_e">Elementary</label></li>
-      <li><input type="checkbox" name="middle" id="filter_m" value="" <%=  @params_hash[:middleFilterChecked] == 'true' ? "checked='checked'": ''%> onclick="toggleFilter('m', this.checked, '20002');"><label for="filter_m">Middle</label></li>
-      <li><input type="checkbox" name="high" id="filter_h" value="" <%=  @params_hash[:highFilterChecked] == 'true' ? "checked='checked'": '' %> onclick="toggleFilter('h', this.checked, '20002');"><label for="filter_h">High</label></li>
-    </ul>
-      </div>
-    <div class="question_mark">???</div>
-    <div style="clear: both"></div>
-  </div>
-  <div id="js-map-canvas" style="width: <%= @params_hash['width'] %>px; height:<%= @params_hash['height'].to_i - 50 %>px"></div>
-</div>
-<div style="display: none">
+<div class="tabBody dn" id="searchTabBody">
+  <h2 class="">Find Schools</h2>
+  <p>Find the top schools in a city or near an address or zip code</p>
+  <p id="noQuery" class="warning dn">Please enter an address or zip code</p>
+  <p id="noResults" class="warning dn">No school results found for "<span id="noResultsSearchQuery"></span>"</p>
   <form id="command" name="searchForm" action="/widget/map" method="post" onsubmit="return submitSearch();">
     <input id="filter_p_value" name="preschoolFilterChecked" type="hidden" value="false">
     <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  @params_hash[:elementaryFilterChecked] %>">
     <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  @params_hash[:middleFilterChecked] %>">
     <input id="filter_h_value" name="highFilterChecked" type="hidden" value="<%=  @params_hash[:highFilterChecked] %>">
-    <input id="width" name="width" type="hidden" value="<%= @params_hash['width'] %>">
-    <input id="height" name="height" type="hidden" value="<%= @params_hash['height'] %>">
-    <input id="textColor" name="textColor" type="hidden" value="<%= @params_hash['textColor'] %>">
-    <input id="zoom" name="zoom" type="hidden" value="<%= @params_hash['zoom'] %>">
-    <input id="lat" name="lat" type="hidden" value="38.912067">
-    <input id="lon" name="lon" type="hidden" value="-77.01902">
-    <input id="cityName" name="cityName" type="hidden" value="Washington">
-    <input id="state" name="state" type="hidden" value="DC">
-    <input id="normalizedAddress" name="normalizedAddress" type="hidden" value="Washington, DC 20001">
+    <input id="width" name="width" type="hidden" value="<%= @params_hash[:width] %>">
+    <input id="height" name="height" type="hidden" value="<%= @params_hash[:height] %>">
+    <input id="textColor" name="textColor" type="hidden" value="<%= @params_hash[:textColor] %>">
+    <input id="zoom" name="zoom" type="hidden" value="<%= @params_hash[:zoom] %>">
+    <input id="lat" name="lat" type="hidden" value="<%=  @params_hash[:lat] %>">
+    <input id="lon" name="lon" type="hidden" value="<%=  @params_hash[:lon] %>">
+    <input id="cityName" name="cityName" type="hidden" value="<%=  @params_hash[:cityName] %>">
+    <input id="state" name="state" type="hidden" value="<%=  @params_hash[:state] %>">
+    <input id="normalizedAddress" name="normalizedAddress" type="hidden" value="<%=  @params_hash[:normalizedAddress] %>">
     <input id="cobrandHostname" name="cobrandHostname" type="hidden" value="">
     <input id="showLocationMarker" name="showLocationMarker" type="hidden" value="false">
     <input id="searchInput"
@@ -63,11 +79,28 @@
            onfocus="textSwitch(this, '', 'Enter city &amp; state or zip code');"
            onblur="textSwitch(this, 'Enter city &amp; state or zip code', '');"
            type="text"
-           value="20002">
+           value="<%=  @params_hash[:searchQuery] %>">
     <button type="submit" class="button-1 searchSubmit">GO</button>
-  </form>
+  </form></div>
+<div class="tabBody dn" id="helpTabBody">
+  <h3>More information
+  <a title="Close help" class="close" onclick="closeHelpTab(); return false;" href="#">CLOSE</a></h3>
+  <p>GreatSchools is an independent, nonprofit organization that improves education by inspiring parents to get involved.</p>
+  <p>GreatSchools empowers parents nationwide to find the right public or private schools,
+  PreK through 12<span class="super">th</span> grade, for their children.
+  Parents gain quick insight into
+  schools through the GreatSchools Ratings and Parent
+  Ratings and Reviews.<br><a target="_blank" href="/find-a-school/defining-your-ideal/2423-ratings.gs?s_cid=wsbayf93">Learn about GreatSchools Ratings.</a></p><p>
+  GreatSchools includes a vast array of information,
+  including academic performance, the school culture and
+  environment, extracurricular programs and more.
+  GreatSchools members can also track their children's
+  school performance grade-by-grade.</p>
+  <p>For more information, visit us at
+    <a target="_blank" href="http://www.greatschools.org/">www.greatschools.org</a>.
+  </p>
 </div>
-
+</div>
 <!--<iframe scrolling="no" frameborder="0" marginwidth="0" marginheight="0" height="534" width="990" src="/widget/schoolSearch.page?-->
 <!--searchQuery=20002-->
 <!--&amp;textColor=0066B8-->

@@ -18,7 +18,7 @@ class WidgetController < ApplicationController
   # this is the widget iframe component
   def map
     convert_widget_params
-    by_location
+    search_by_type
   end
 
   # this is the widget iframe component - that will contain all the content
@@ -33,6 +33,46 @@ class WidgetController < ApplicationController
 
 
   private
+
+  def all_digits(str)
+    str[/[0-9]+/]  == str
+  end
+
+  def search_by_type
+    sq = params[:searchQuery]
+    city = nil
+    results = nil
+    if sq.present?
+      sq_arr =  sq.split(',')
+      if sq_arr.present? && sq_arr.length == 1
+        #   assume it is a city and check in geocode to see if it is unique
+        #   set city variable if successful
+        city_name = sq_arr[0]
+        #   check if zip code
+        unless all_digits(city_name)
+          # city_found = City.get_city_by_name(city_name)
+          # if city_found.length == 1
+          #   city = city_found.first.name
+          # end
+        end
+      elsif sq_arr.present? && sq_arr.length == 2
+        #   assume that it is a city and state
+        #   check to see if it is a state
+        #   if it is a state try to find city in state that is unique
+        #   set city variable if successful
+      end
+
+      if city.present?
+        #   do a city search
+        #   set results
+      end
+    end
+
+    if results.blank?
+      #   if no results fall back on lat lon to find schools
+      by_location
+    end
+  end
 
   def by_location
     @state_abbreviation = state_abbreviation

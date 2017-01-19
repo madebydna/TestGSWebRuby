@@ -1,11 +1,13 @@
 GS = GS || {}
 GS.geoCoder = GS.geoCoder || (function() {
+      var stateAbbreviation = gon.state_abbr;
+
   var init = function (searchInput, callbackFunction) {
     var geocoder = new google.maps.Geocoder();
     if (geocoder && searchInput) {
       var geocodeOptions = {'address': searchInput};
-      if (GS.search.stateAbbreviation != null) {
-        geocodeOptions['componentRestrictions'] = {'administrativeArea': GS.search.stateAbbreviation.toUpperCase()};
+      if (stateAbbreviation != null) {
+        geocodeOptions['componentRestrictions'] = {'administrativeArea': stateAbbreviation.toUpperCase()};
       } else {
         geocodeOptions['componentRestrictions'] = {'country': 'US'};
       }
@@ -46,7 +48,7 @@ GS.geoCoder = GS.geoCoder || (function() {
               geocodeResult = null;
             } else if ('type' in geocodeResult && geocodeResult['type'].indexOf('administrative_area_level_1') > -1) {
               geocodeResult = null; // don't allow states to be returned
-            } else if (GS.search.stateAbbreviation != null && geocodeResult['state'].toUpperCase() != GS.search.stateAbbreviation.toUpperCase()) {
+            } else if (stateAbbreviation != null && geocodeResult['state'].toUpperCase() != stateAbbreviation.toUpperCase()) {
               geocodeResult = null; // don't allow results outside of state
             }
             if (geocodeResult != null) {

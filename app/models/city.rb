@@ -25,6 +25,10 @@ class City < ActiveRecord::Base
     @county ||= County.find_by(state: state, FIPS: fipsCounty)
   end
 
+  def get_city_by_name(city)
+      City.where(name:city).active
+  end
+
   def schools_by_rating_desc
     @schools_by_rating_desc ||= (
       schools = School.within_city(self.state, self.name)

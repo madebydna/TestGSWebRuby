@@ -371,24 +371,30 @@ GS.googleMap = GS.googleMap || (function() {
     };
 
     var removeMapMarkerBySchoolId = function (schoolId) {
-        _(GS.widget.mapMarkers).each( function (marker) {
-            if (schoolId == marker.schoolId) {
-                marker.setMap(null);
-            }
-        });
+      jQuery.each(GS.widget.mapMarkers, function (marker) {
+          if (schoolId == marker.schoolId) {
+              marker.setMap(null);
+          }
+      });
     };
-    var isNumeric = function(n) {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-      };
+
+    var removeAllMapMarkers = function () {
+      jQuery.each(GS.widget.mapMarkers, function (marker) {
+          marker.setMap(null);
+      });
+    };
+    // var isNumeric = function(n) {
+    //     return !isNaN(parseFloat(n)) && isFinite(n);
+    //   };
 
     var addToInitDependencyCallbacks = function (func) {
-      console.log('addToInitDependencyCallbacks');
+      // console.log('addToInitDependencyCallbacks');
         ajaxInitCallbacks.push(func);
         // ajaxInitCallbacks = _.uniq(ajaxInitCallbacks);
     };
 
     var applyAjaxInitCallbacks = function () {
-      console.log("applyAjaxInitCallbacks:"+ajaxInitCallbacks.length);
+      // console.log("applyAjaxInitCallbacks:"+ajaxInitCallbacks.length);
       while (ajaxInitCallbacks.length > 0) {
         (ajaxInitCallbacks.shift())();
       }
@@ -402,6 +408,7 @@ GS.googleMap = GS.googleMap || (function() {
         init: init,
         getMap: getMap,
         removeMapMarkerBySchoolId: removeMapMarkerBySchoolId,
+        removeAllMapMarkers: removeAllMapMarkers,
         setHeightForMap: setHeightForMap,
         initAndShowMap : initAndShowMap,
         addToInitDependencyCallbacks: addToInitDependencyCallbacks,
