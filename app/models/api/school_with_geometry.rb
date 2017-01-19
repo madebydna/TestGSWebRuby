@@ -25,13 +25,13 @@ class Api::SchoolWithGeometry < SimpleDelegator
     # eval(geom.gsub('MULTIPOLYGON', '').gsub('POLYGON', '').gsub('(', '[').gsub(')', ']').gsub(',', '],[').gsub(' ', ','))
 
     eval(
-      geom.
+      '[' + geom.
         gsub('MULTIPOLYGON', '').
         gsub('POLYGON', '').
         gsub('(', '[').
         gsub(')', ']').
         gsub(',', '],[').
-        gsub(' ', ',')
+        gsub(' ', ',') + ']'
     )
   end
 

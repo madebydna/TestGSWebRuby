@@ -79,7 +79,7 @@ Mappable.prototype = {
 
     var boundaries = this.boundaries[level.toUpperCase()];
     if(boundaries) {
-      coords = [boundaries.coordinates];
+      coords = boundaries.coordinates;
     }
 
     if (coords) {

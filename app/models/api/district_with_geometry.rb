@@ -21,13 +21,13 @@ class Api::DistrictWithGeometry < SimpleDelegator
 
   def self.geom_to_coordinates(geom)
     eval(
-      geom.
+      '[' + geom.
         gsub('MULTIPOLYGON', '').
         gsub('POLYGON', '').
         gsub('(', '[').
         gsub(')', ']').
         gsub(',', '],[').
-        gsub(' ', ',')
+        gsub(' ', ',') + ']'
     )
   end
 end
