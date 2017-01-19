@@ -18,7 +18,7 @@ Mappable.prototype = {
     let m = new google.maps.Marker({
       position: this.getPosition(),
       title: this.getName(),
-      // icon: this.getMarkerImage(),
+      icon: this.getMarkerImage(),
       shape: this.getMarkerShape(),
       zIndex: 1
     });
@@ -40,7 +40,7 @@ Mappable.prototype = {
     if (this.rating > 0 && this.rating < 11) {
       xoffset = this.iconSize * (this.rating - 1);
     }
-    return new google.maps.Point(xoffset, 0);
+    return new google.maps.Point(0, xoffset);
   },
   
   getMarkerAnchor: function() {
