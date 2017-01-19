@@ -28,6 +28,16 @@ let ConnectedDistrictBoundaries = connect(
         )
       },
 
+      getSchoolsInDistrict: (districtId, options) => {
+        dispatch(
+          {
+            type: 'FIND_SCHOOLS_IN_DISTRICT',
+            districtId: districtId,
+            options: options
+          }
+        )
+      },
+
       getDistrict: (id, options) => {
         options = Object.assign({}, options, {
           extras: 'boundaries'

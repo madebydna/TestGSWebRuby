@@ -10,6 +10,18 @@ export function findById(id, options) {
   });
 }
 
+export function findByDistrict(districtId, options) {
+  return $.ajax({
+    url: '/gsr/api/schools/',
+    data: Object.assign({
+      district_id: districtId
+    }, options),
+    type: 'GET',
+    dataType: 'json',
+    timeout: 6000
+  });
+}
+
 export function findByLatLon(lat, lon, options) {
   return $.ajax({
     url: '/gsr/api/schools/',

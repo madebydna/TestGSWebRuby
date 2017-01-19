@@ -65,12 +65,18 @@ class Api::SchoolsController < ApplicationController
   end
 
   def get_schools
-    @_get_schools ||= School.on_db(state.to_s.downcase.to_sym).
-      where(criteria).
-      active.
-      limit(limit).
-      offset(offset).
-      order(:id)
+    @_get_schools ||= (
+      schools = School.on_db(state.to_s.downcase.to_sym).
+        where(criteria).
+        active.
+        limit(limit).
+        offset(offset).
+        order(:id)
+      if level_code
+        schools = schools.where('level_code LIKE ?', "%#{level_code}%")
+      end
+      schools
+    )
   end
 
   # criteria that will be used to query the school table
@@ -102,6 +108,10 @@ class Api::SchoolsController < ApplicationController
 
   def location_given?
     lat.present? && lon.present?
+  end
+
+  def level_code
+    params[:level_code]
   end
 
   def boundary_level

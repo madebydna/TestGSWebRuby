@@ -5,6 +5,17 @@ import District from '../components/map/district';
 
 const DistrictBoundariesMiddleware = store => next => action => {
   switch (action.type) {
+    case 'FIND_SCHOOLS_IN_DISTRICT':
+      Schools.findByDistrict(
+        action.districtId,
+        action.options
+      ).done(function(data) {
+        store.dispatch({
+          type: 'SCHOOLS_RECEIVED',
+          schools: data.items
+        })
+      });
+      return next(action); // invoke the next middleware with this action
     case 'GET_SCHOOL':
       Schools.findById(
         action.id,

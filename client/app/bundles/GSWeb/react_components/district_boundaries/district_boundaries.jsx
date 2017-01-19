@@ -22,7 +22,6 @@ export default class DistrictBoundaries extends React.Component {
     this.nearbyDistrictsRadius = 50;
     this.initGoogleMaps = this.initGoogleMaps.bind(this);
     this.loadSchoolById = this.loadSchoolById.bind(this);
-    this.renderMap = this.renderMap.bind(this);
     this.updateSchoolMarkers = this.updateSchoolMarkers.bind(this);
     this.updateDistrictMarkers = this.updateDistrictMarkers.bind(this);
 
@@ -30,18 +29,13 @@ export default class DistrictBoundaries extends React.Component {
       googleMapsInitialized: false,
       // schoolId: 8,
       // state: 'ca'
-      level: 'm',
+      level: 'h',
       lat: 37.7949217,
       lon: -122.2499247,
       schoolMarkers: {},
       districtMarkers: {}
     }
     this.initGoogleMaps();
-  }
-
-  loadData() {
-    this.loadSchool();
-    this.loadNearbyDistricts();
   }
 
   createGoogleMap() {
@@ -92,12 +86,14 @@ export default class DistrictBoundaries extends React.Component {
       google.maps.event.addDomListener(
         window, 'resize', () => this.map.setCenter(this.state.mapCenter)
       );
+      
+      this.loadSchool();
+      this.loadNearbyDistricts();
     }.bind(this));
   }
 
   componentDidMount() {
     this.$map = $(findDOMNode(this.mapDiv));
-    this.loadData();
   }
 
   onSchoolMarkerClicked(marker, obj) {
@@ -122,7 +118,7 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   updateSchoolMarkers() {
-    let schools = [this.props.schools[this.state.selectedSchool]];
+    let schools = this.props.schools;
     let newMarkers = Object.values(schools).reduce((obj, s) => {
       if(s == undefined) return obj;
       let key = [s.state.toLowerCase(), s.id];
@@ -258,8 +254,12 @@ export default class DistrictBoundaries extends React.Component {
     if(selectedDistrictChanged) {
       let district = this.state.selectedDistrict;
       if(district) {
+        this.props.getSchoolsInDistrict(district.id, {
+          state: district.state,
+          level_code: this.state.level
+        });
+
         district = new District(district);
-        // this.map.setCenter(district.getPosition());
         let m = this.state.districtMarkers[[district.state.toLowerCase(), district.id]];
         this.showInfoWindow(m, district);
         this.setState({
@@ -353,13 +353,7 @@ export default class DistrictBoundaries extends React.Component {
     }
   }
 
-  renderMap() {
-  }
-
   render() {
-    if(this.state.googleMapsInitialized) {
-      this.renderMap();
-    }
     return (
       <div id="district-boundaries-component">
         <div id="map-canvas" style={{width:'75%', height:'400px'}} ref={(map) => { this.mapDiv = map; }}></div>
