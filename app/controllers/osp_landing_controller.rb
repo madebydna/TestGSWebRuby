@@ -21,6 +21,13 @@ class OspLandingController < ApplicationController
   end
 
   def dashboard
+    gon.pageTitle = 'GreatSchools Official School Profile Dashboard'
+    gon.pagename = 'GS:OSP:Disambiguation'
+    data_layer_gon_hash.merge!(
+        {
+            'page_name' => gon.pagename,
+        }
+    )
     # If state/schoolId params are provided, redirect directly to that school's form
     if params[:state] && params[:schoolId]
       redirect_to(osp_page_path(:state =>params[:state], :schoolId => params[:schoolId], :page => 1))
