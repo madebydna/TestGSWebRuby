@@ -60,13 +60,13 @@ describe "Schools API" do
         SchoolGeometry.connection.execute("insert into school_geometry(state, school_id, ed_level, geom) values('#{school.state}', #{school.id}, 'O', GeomFromText('#{str}'));")
       end
       let(:coordinates) do
-        [[
+        [[[
           [1, 1],
           [1, 10],
           [10, 10],
           [10, 1],
           [1, 1]
-        ]]
+        ]]]
       end
 
       it 'Doesnt include geometry by default' do

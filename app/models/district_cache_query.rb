@@ -5,6 +5,15 @@ class DistrictCacheQuery
     @district_ids_per_state = {}
   end
 
+  def include_objects(objects)
+    objects = Array.wrap(objects)
+    objects_by_state = objects.group_by(&:state)
+    objects_by_state.each_pair do |state, objects_for_state|
+      include_districts(state, objects_for_state.map(&:id))
+    end
+    self
+  end
+
   def include_cache_keys(cache_keys)
     @cache_keys += Array.wrap(cache_keys)
     @cache_keys.uniq

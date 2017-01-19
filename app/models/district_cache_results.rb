@@ -63,6 +63,8 @@ class DistrictCacheResults
     case cache_key
       when 'feed_test_scores'
         DistrictCachedFeedTestScoresMethods
+      when 'ratings'
+        DistrictCachedRatingsMethods
     end
   end
 

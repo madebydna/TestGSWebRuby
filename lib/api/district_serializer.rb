@@ -20,7 +20,7 @@ class Api::DistrictSerializer
         zip: district['zip'],
         city: district['city']
       },
-      rating: 9,
+      rating: (district.great_schools_rating if defined? district.great_schools_rating),
       # districtType: district.type,
       state: district.state,
       type: 'district'

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Districts API" do
   after do
-    clean_dbs :gs_districtdb, :ca, :us_geo
+    clean_dbs :gs_schooldb, :ca, :us_geo
   end
 
   let(:json) { JSON.parse(response.body) }
@@ -78,7 +78,7 @@ describe "Districts API" do
       end
 
       it 'Returns boundary data when asked' do
-        get "/gsr/api/districts/#{district.id}?state=ca&extras=boundaries"
+        get "/gsr/api/districts/#{district.id}?state=ca&boundary_level=e&extras=boundaries"
         expect(status).to eq(200)
         expect(errors).to be_blank
         expect(json).to be_present
@@ -163,6 +163,20 @@ describe "Districts API" do
       expect(errors).to be_blank
       expect(json['links']).to be_present
       expect(json['links']['prev']).to be_present
+    end
+
+    it 'adds GS rating when available' do
+      rating = 10
+      district = create(:alameda_city_unified)
+      create(:cached_district_ratings, :with_gs_rating,
+             state: district.state,
+             district_id: district.id,
+             gs_rating_value: rating
+            )
+      get '/gsr/api/districts/?state=ca'
+      expect(status).to eq(200)
+      expect(errors).to be_blank
+      expect(districts.first['rating']).to eq(rating)
     end
 
     context 'with geometry data available for district' do

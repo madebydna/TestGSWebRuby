@@ -12,11 +12,11 @@ class SchoolCacheQuery
     end
   end
 
-  def include_school_objects(schools)
-    schools = Array.wrap(schools)
-    schools_by_state = schools.group_by(&:state)
-    schools_by_state.each_pair do |state, schools_for_state|
-      include_schools(state, schools_for_state.map(&:id))
+  def include_objects(objects)
+    objects = Array.wrap(objects)
+    objects_by_state = objects.group_by(&:state)
+    objects_by_state.each_pair do |state, objects_for_state|
+      include_schools(state, objects_for_state.map(&:id))
     end
     self
   end

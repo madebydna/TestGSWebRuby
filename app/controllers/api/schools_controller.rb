@@ -52,14 +52,14 @@ class Api::SchoolsController < ApplicationController
       else
         get_schools
       end
-      add_geometry(items)
-      add_rating(items)
+      items = add_geometry(items)
+      items = add_rating(items)
     )
   end
 
   def add_rating(schools)
     q = SchoolCacheQuery.new.
-      include_school_objects(schools).
+      include_objects(schools).
       include_cache_keys('ratings')
 
     school_cache_results = SchoolCacheResults.new('ratings', q.query)

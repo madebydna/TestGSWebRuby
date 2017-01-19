@@ -30,8 +30,8 @@ class Api::DistrictsController < ApplicationController
 
   def serialized_districts
     districts.map do |district|
-      Api::DistrictSerializer.new(district).to_hash.tap do |s|
-        s.except(AVAILABLE_EXTRAS - extras)
+      Api::DistrictSerializer.new(district).to_hash.tap do |d|
+        d.except(AVAILABLE_EXTRAS - extras)
       end
     end
   end
@@ -48,8 +48,18 @@ class Api::DistrictsController < ApplicationController
         else
           get_districts
         end
-      add_geometry(items)
+      items = add_geometry(items)
+      items = add_rating(items)
     )
+  end
+
+  def add_rating(districts)
+    q = DistrictCacheQuery.new.
+      include_objects(districts).
+      include_cache_keys('ratings')
+
+    school_cache_results = DistrictCacheResults.new('ratings', q.query)
+    school_cache_results.decorate_districts(districts)
   end
 
   def add_geometry(districts)
