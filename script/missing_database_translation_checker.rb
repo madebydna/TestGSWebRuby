@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+require_relative '../config/environment'
 require 'optparse'
 
 OptionParser.new do |opts|

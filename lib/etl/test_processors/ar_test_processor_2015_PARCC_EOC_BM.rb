@@ -299,11 +299,11 @@ class ARTestProcessor2015PARCCEOCBM < GS::ETL::TestProcessor
       row
     end
   end
-    # .transform("Lowercase/capitalize column",WithBlock) do |row|
-    #    row[:subject].downcase!
-    #    row[:breakdown].downcase!
-    #    row
-    # end
+    .transform("Lowercase/capitalize column",WithBlock) do |row|
+       row[:subject].downcase!
+       row[:breakdown].downcase!
+       row
+    end
   def config_hash
     {
         source_id: 70,
