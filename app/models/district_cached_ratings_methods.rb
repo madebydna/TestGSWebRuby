@@ -25,10 +25,10 @@ module DistrictCachedRatingsMethods
         )
       end
       if ratings_obj
-        if ratings_obj['district_value_text']
-          return ratings_obj['district_value_text']
-        elsif ratings_obj['district_value_float']
-          return ratings_obj['district_value_float'].to_i
+        if ratings_obj['value_text']
+          return ratings_obj['value_text']
+        elsif ratings_obj['value_float']
+          return ratings_obj['value_float'].to_i
         end
       end
     end

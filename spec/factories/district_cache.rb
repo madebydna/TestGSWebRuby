@@ -23,8 +23,8 @@ FactoryGirl.define do
           {
             'data_type_id' => 174,
             'year' => 2014,
-            'district_value_text' => nil,
-            'district_value_float' => evaluator.gs_rating_value,
+            'value_text' => nil,
+            'value_float' => evaluator.gs_rating_value,
             'name' => 'GreatSchools rating'
           }
         ].to_json

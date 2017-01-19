@@ -3,7 +3,7 @@ import Mappable from './mappable';
 
 const District = function(){
   if (arguments.length) $.extend(this, arguments[0]);
-  this.iconSize = 40;
+  this.iconSize = 39;
   this.strokeColor = '#2092C4';
   this.zIndex = 1;
   this.fillColor = 'rgba(0,0,0,0.2)';
