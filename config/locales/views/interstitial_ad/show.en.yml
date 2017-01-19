@@ -1,0 +1,8 @@
+---
+en:
+  interstitial_ad:
+    show:
+      ad_header_text: You will see the page you requested shortly
+      ad_intro_1: GreatSchools thanks the foundations and advertisers
+      ad_intro_2: that make it possible to provie our site free to millions of parents.
+      skip_ad_html: To skip ad, click here &#187;

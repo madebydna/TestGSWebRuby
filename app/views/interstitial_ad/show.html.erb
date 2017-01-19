@@ -1,4 +1,14 @@
-<div>
-  <p>GreatSchools thanks the foundations and advertisers </p>
-  <p> that make it possible to provie our site free to millions of parents.</p>
+<div class="interstitial container">
+  <div class="header">
+    <p><%= t('.ad_intro_1') %></p>
+    <p><%= t('.ad_intro_2') %></p>
+    <a class="js-continueToDestination"> <%= t('.skip_ad_html') %></a>
+  </div>
+  <div class="ad-container">
+    <div class="ad-inner-container">
+      <p><%= t('.ad_header_text') %></p>
+      <%= render 'shared/ad', slot: 'Interstitial',
+        size_mapping: "interstitial", width: 640, height: 480 %>
+    </div>
+  </div>
 </div>

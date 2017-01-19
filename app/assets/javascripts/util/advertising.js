@@ -93,6 +93,10 @@ if (gon.advertising_enabled) {
               addSize([992, 300], [[728, 90], [970, 250]]).
               addSize([768, 120], [[728, 90]]).
               addSize([0, 0], [[320, 50], [300, 250]]).
+              build(),
+        'interstitial': googletag.sizeMapping().
+              addSize([640, 480], [[640, 800], [300, 137]]).
+              addSize([0, 0], [[300, 137]]).
               build()
     };
   };
