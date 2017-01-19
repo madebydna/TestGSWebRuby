@@ -18,11 +18,11 @@
     <div class='gs_tab left_tab active' data-name="tabMap">Map</div>
     <div class='gs_tab' data-name="tabSearch">Search</div>
   </div>
-  <div class="mapTabBody">
+  <div id="mapTabBody">
     <div class="filter_nav">
       <style>
-        .mapContainer .gs_tab_container {border-bottom: solid 1px #FFCC66}
-        .mapContainer .gs_tab{width:49%; display: inline-block; text-align:center; padding: 10px 0px;}
+        .mapContainer .gs_tab_container {display: table; border-bottom: solid 1px #FFCC66; width:100%}
+        .mapContainer .gs_tab{width:50%; display: table-cell; text-align:center; padding: 10px 0px; cursor: pointer}
         .mapContainer .gs_tab.left_tab {border-right:1px solid #FFCC66;}
         .mapContainer .gs_tab.active {background-color: #EDEDED;}
         .filters { float:left; }
@@ -37,13 +37,13 @@
         <ul>
           <li><input type="checkbox" name="elementary" id="filter_e"
                      value="" <%=  @params_hash[:elementaryFilterChecked] == 'true' ? "checked='checked'": '' %>
-                     onclick="toggleFilter('e', this.checked, '20002');"><label for="filter_e">Elementary</label></li>
+                     onclick="GS.widget.toggleFilter('e', this.checked, '20002');"><label for="filter_e">Elementary</label></li>
           <li><input type="checkbox" name="middle" id="filter_m"
                      value="" <%=  @params_hash[:middleFilterChecked] == 'true' ? "checked='checked'": ''%>
-                     onclick="toggleFilter('m', this.checked, '20002');"><label for="filter_m">Middle</label></li>
+                     onclick="GS.widget.toggleFilter('m', this.checked, '20002');"><label for="filter_m">Middle</label></li>
           <li><input type="checkbox" name="high" id="filter_h"
                      value="" <%=  @params_hash[:highFilterChecked] == 'true' ? "checked='checked'": '' %>
-                     onclick="toggleFilter('h', this.checked, '20002');"><label for="filter_h">High</label></li>
+                     onclick="GS.widget.toggleFilter('h', this.checked, '20002');"><label for="filter_h">High</label></li>
         </ul>
         </div>
       <div class="question_mark">???</div>
@@ -57,7 +57,7 @@
   <p>Find the top schools in a city or near an address or zip code</p>
   <p id="noQuery" class="warning dn">Please enter an address or zip code</p>
   <p id="noResults" class="warning dn">No school results found for "<span id="noResultsSearchQuery"></span>"</p>
-  <form id="command" name="searchForm" action="/widget/map" method="post" onsubmit="return submitSearch();">
+  <form id="command" name="searchForm" action="/widget/map" method="post" onsubmit="return GS.widget.submitSearch();">
     <input id="filter_p_value" name="preschoolFilterChecked" type="hidden" value="false">
     <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  @params_hash[:elementaryFilterChecked] %>">
     <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  @params_hash[:middleFilterChecked] %>">
@@ -84,7 +84,7 @@
   </form></div>
 <div class="tabBody dn" id="helpTabBody">
   <h3>More information
-  <a title="Close help" class="close" onclick="closeHelpTab(); return false;" href="#">CLOSE</a></h3>
+  <a title="Close help" class="close" onclick="GS.widget.closeHelpTab(); return false;" href="#">CLOSE</a></h3>
   <p>GreatSchools is an independent, nonprofit organization that improves education by inspiring parents to get involved.</p>
   <p>GreatSchools empowers parents nationwide to find the right public or private schools,
   PreK through 12<span class="super">th</span> grade, for their children.
