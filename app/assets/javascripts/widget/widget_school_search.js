@@ -1,6 +1,19 @@
-var GS_MAP_TAB_NAME = "mapTab";
-var GS_SEARCH_TAB_NAME = "searchTab";
-var GS_HELP_TAB_NAME = "helpTab";
+var GS_MAP_TAB_NAME = "mapTabBody";
+var GS_SEARCH_TAB_NAME = "searchTabBody";
+var GS_HELP_TAB_NAME = "helpTabBody";
+
+$('.gs_tab').on('click', function(){
+  var value = $(this).data('name');
+  if(value == 'tabMap'){
+    showMapTab();
+  }else{
+    showSearchTab();
+  }
+});
+
+$('.question_mark').on('click', function(){
+  showHelpTab();
+});
 
 function showMapTab() {
   showTab(GS_MAP_TAB_NAME);
@@ -27,25 +40,27 @@ function closeHelpTab() {
 }
 
 function showTab(tabId) {
-  var tabElem = document.getElementById(tabId);
-  var tabBodyElem = document.getElementById(tabId + 'Body');
-  if (tabElem) {
-    tabElem.className = "selected";
-  }
-  if (tabBodyElem) {
-    tabBodyElem.className = "tabBody selected";
-  }
+  $('#'+tabId).removeClass('dn');
+  // var tabElem = document.getElementById(tabId);
+  // var tabBodyElem = document.getElementById(tabId + 'Body');
+  // if (tabElem) {
+  //   tabElem.className = "selected";
+  // }
+  // if (tabBodyElem) {
+  //   tabBodyElem.className = "tabBody selected";
+  // }
 }
 
 function hideTab(tabId) {
-  var tabElem = document.getElementById(tabId);
-  var tabBodyElem = document.getElementById(tabId + 'Body');
-  if (tabElem) {
-    tabElem.className = "";
-  }
-  if (tabBodyElem) {
-    tabBodyElem.className = "tabBody";
-  }
+  $('#'+tabId).addClass('dn');
+  // var tabElem = document.getElementById(tabId);
+  // var tabBodyElem = document.getElementById(tabId + 'Body');
+  // if (tabElem) {
+  //   tabElem.className = "";
+  // }
+  // if (tabBodyElem) {
+  //   tabBodyElem.className = "tabBody";
+  // }
 }
 
 function textSwitch(el, target, replace) {
@@ -72,7 +87,7 @@ function toggleFilter(levelCode, checked, searchQuery) {
   // document.getElementById('lon').value = GS_map.getCenter().lng();
 
   if (noneChecked) {
-    clearMarkers();
+    GS.googleMap.removeAllMapMarkers();
   } else {
     document.forms['searchForm'].submit();
   }
@@ -145,7 +160,7 @@ function submitSearch() {
   document.getElementById('searchInput').value = searchQuery;
   if (searchQuery != '' &&
       searchQuery != 'Enter city & state or zip code') {
-    gsGeocode(searchQuery, function(geocodeResult) {
+    GS.geoCoder.init(searchQuery, function(geocodeResult) {
       if (geocodeResult != null) {
         document.getElementById('lat').value = geocodeResult['lat'];
         document.getElementById('lon').value = geocodeResult['lon'];
@@ -154,7 +169,11 @@ function submitSearch() {
         document.getElementById('normalizedAddress').value = geocodeResult['normalizedAddress'];
 
         waitForGeocode = false;
-
+        // console.log("geocodeResult['lat']: " + geocodeResult['lat']);
+        // console.log("geocodeResult['lon']: " + geocodeResult['lon']);
+        // console.log("geocodeResult['city']: " + geocodeResult['city']);
+        // console.log("geocodeResult['state']: " + geocodeResult['state']);
+        // console.log("geocodeResult['normalizedAddress']: " + geocodeResult['normalizedAddress']);
         return document.forms['searchForm'].submit();
       } else {
         if (document.getElementById('searchInput') != null) {
