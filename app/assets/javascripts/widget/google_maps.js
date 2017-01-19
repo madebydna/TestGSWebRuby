@@ -30,6 +30,9 @@ function loadScript(url, callback){
   document.getElementsByTagName("head")[0].appendChild(script);
 }
 var GS = GS || {};
+GS.widget_map = GS.widget_map || {};
+GS.widget_map.map = GS.widget_map.map || {};
+GS.widget_map.mapMarkers = GS.widget_map.mapMarkers || [];
 
 GS.googleMap = GS.googleMap || (function() {
 
@@ -38,9 +41,7 @@ GS.googleMap = GS.googleMap || (function() {
 
   var maxMobileWidth = 767;
   var sizing_width  = window.innerWidth;
-  GS.widget_map = GS.widget_map || {};
-  GS.widget_map.map = GS.widget_map.map || {};
-  GS.widget_map.mapMarkers = GS.widget_map.mapMarkers || [];
+
   var additionalZoom = 0;
 
   var init = function() {
@@ -51,6 +52,11 @@ GS.googleMap = GS.googleMap || (function() {
 
         var points = [];
         points = gon.map_points;
+
+        var zoomStart = parseInt($("#zoom").val());
+        if(!(0 < zoomStart < 19)){
+          zoomStart = 12;
+        }
 
         var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
         var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
@@ -77,7 +83,7 @@ GS.googleMap = GS.googleMap || (function() {
             center: centerPoint,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: true,
-            mapTypeControl: true,
+            mapTypeControl: false,
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.SATELLITE]
             },
@@ -89,7 +95,7 @@ GS.googleMap = GS.googleMap || (function() {
             panControl: false,
             scrollwheel: false,
             draggable: isdraggable,
-            zoom: 12,
+            zoom: zoomStart,
             maxZoom: 19,
             styles: [
                 {
@@ -144,7 +150,8 @@ GS.googleMap = GS.googleMap || (function() {
             };
 
             GS.widget_map.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
-            var position;
+
+          var position;
             var imageUrl;
             var imageSize;
             var imageAnchor;
@@ -243,10 +250,7 @@ GS.googleMap = GS.googleMap || (function() {
             if (!bounds.isEmpty()) {
                 getMap().setCenter(bounds.getCenter(), getMap().fitBounds(bounds));
                 google.maps.event.addListenerOnce(getMap(), 'bounds_changed', function() {
-                    if (additionalZoom !== 0) {
-                      getMap().setZoom(getMap().getZoom() + additionalZoom);
-                    }
-                    getMap().setOptions({maxZoom:null});
+                  GS.widget_map.map.setZoom(zoomStart);
                 });
             } else {
                 getMap().setOptions({maxZoom:null});
@@ -360,17 +364,18 @@ GS.googleMap = GS.googleMap || (function() {
     };
 
     var removeMapMarkerBySchoolId = function (schoolId) {
-      jQuery.each(GS.widget_map.mapMarkers, function (marker) {
-          if (schoolId == marker.schoolId) {
-              marker.setMap(null);
-          }
-      });
+      for (var i = 0; i < GS.widget_map.mapMarkers.length; i++) {
+        if (schoolId == GS.widget_map.mapMarkers[i].schoolId) {
+          GS.widget_map.mapMarkers[i].setMap(null);
+        }
+
+      }
     };
 
     var removeAllMapMarkers = function () {
-      jQuery.each(GS.widget_map.mapMarkers, function (marker) {
-          marker.setMap(null);
-      });
+      for (var i = 0; i < GS.widget_map.mapMarkers.length; i++) {
+        GS.widget_map.mapMarkers[i].setMap(null);
+      }
     };
 
     var addToInitDependencyCallbacks = function (func) {
@@ -401,5 +406,7 @@ GS.googleMap = GS.googleMap || (function() {
     }
 
 })();
+$(function() {
+  GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);
+});
 
-GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);

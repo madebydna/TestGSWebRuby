@@ -4,6 +4,7 @@ class WidgetController < ApplicationController
   include SchoolHelper
 
   layout :determine_layout
+  protect_from_forgery with: :null_session
 
   MAX_RESULTS_FOR_MAP = 100
   DEFAULT_RADIUS = 5
@@ -41,36 +42,42 @@ class WidgetController < ApplicationController
   def search_by_type
     sq = params[:searchQuery]
     city = nil
-    results = nil
     if sq.present?
       sq_arr =  sq.split(',')
       if sq_arr.present? && sq_arr.length == 1
         #   assume it is a city and check in geocode to see if it is unique
         #   set city variable if successful
-        city_name = sq_arr[0]
+        city_name = sq_arr[0].strip
         #   check if zip code
         unless all_digits(city_name)
-          # city_found = City.get_city_by_name(city_name)
-          # if city_found.length == 1
-          #   city = city_found.first.name
-          # end
+          city_found = City.get_city_by_name(city_name)
+          if city_found.length == 1
+            city = city_found.first
+          end
         end
       elsif sq_arr.present? && sq_arr.length == 2
         #   assume that it is a city and state
+        state_name = sq_arr[1].strip
+        city_name = sq_arr[0].strip
         #   check to see if it is a state
+        state = States.abbreviation(state_name)
         #   if it is a state try to find city in state that is unique
         #   set city variable if successful
+        if state.present?
+          city_found = City.get_city_by_name_and_state(city_name, state)
+          if city_found.length == 1
+            city = city_found.first
+          end
+        end
       end
 
       if city.present?
         #   do a city search
-        #   set results
+        city_browse(city.name, city.state)
+      else
+        #   by location uses lat lon
+        by_location
       end
-    end
-
-    if results.blank?
-      #   if no results fall back on lat lon to find schools
-      by_location
     end
   end
 
@@ -89,13 +96,13 @@ class WidgetController < ApplicationController
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end
-
-    # @nearby_cities = SearchNearbyCities.new.search(lat:@lat, lon:@lon, count:NUM_NEARBY_CITIES, state: state_abbreviation)
-
-    # set_meta_tags search_by_location_meta_tag_hash
-    # setup_search_gon_variables
   end
 
+  def city_browse(city, state)
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
+      search_options.merge!({state: state, city: city})
+    end
+  end
 
   def setup_search_results!(search_method)
     @params_hash = params #parse_array_query_string(request.query_string)
@@ -118,8 +125,7 @@ class WidgetController < ApplicationController
     relative_offset = solr_offset
 
 
-      @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
-      # setup_fit_scores(@schools, @params_hash) if filtering_search?
+    @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
 
     @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
@@ -143,12 +149,8 @@ class WidgetController < ApplicationController
     # mark the results that appear in the list so the map can handle them differently
     @schools.each { |school| school.on_page = true } if @schools.present?
 
-    # require 'pry'
-    # binding.pry
     mapping_points_through_gon
     assign_sprite_files_though_gon
-
-    # set_pagination_instance_variables(@total_results) # @max_number_of_pages @window_size @pagination
   end
 
   def determine_layout
@@ -219,7 +221,6 @@ class WidgetController < ApplicationController
     @radius = Integer(@radius) rescue @radius = DEFAULT_RADIUS
     @radius = MAX_RADIUS if @radius > MAX_RADIUS
     @radius = MIN_RADIUS if @radius < MIN_RADIUS
-    # record_applied_filter_value('distance', @radius) unless "#{@radius}" == params_hash['distance']
     @radius
   end
 

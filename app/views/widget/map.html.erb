@@ -21,35 +21,38 @@
   <div id="mapTabBody">
     <div class="filter_nav">
       <style>
+        body { font-family: 'Arial, sans-serif'}
         .mapContainer .gs_tab_container {display: table; border-bottom: solid 1px #FFCC66; width:100%}
         .mapContainer .gs_tab{width:50%; display: table-cell; text-align:center; padding: 10px 0px; cursor: pointer}
         .mapContainer .gs_tab.left_tab {border-right:1px solid #FFCC66;}
         .mapContainer .gs_tab.active {background-color: #EDEDED;}
         .filters { float:left; }
-        .filters .location {padding: 10px 10px 0px 10px}
+        .filters .location {padding: 10px 10px 0px 10px; font-size: 12px;}
+        .filters .location span {font-size: 13px; font-weight: bold;}
         .filters ul { list-style: none; margin: 0; padding: 10px;}
         .filters ul li { display: inline; font-size: 11px;}
         .filter_nav .question_mark{ float: right; padding: 10px;}
         .dn { display:none; }
       </style>
       <div class="filters">
-        <div class="location">Schools near <%=  @params_hash[:normalizedAddress] %>:</div>
+        <div class="location" style="width: <%= @params_hash['width'].to_i - 80 %>px;">Schools near <span><%=  @params_hash[:normalizedAddress] %></span>:</div>
         <ul>
           <li><input type="checkbox" name="elementary" id="filter_e"
-                     value="" <%=  @params_hash[:elementaryFilterChecked] == 'true' ? "checked='checked'": '' %>
-                     onclick="GS.widget.toggleFilter('e', this.checked, '20002');"><label for="filter_e">Elementary</label></li>
+                     value="" <%=  (!@params_hash.key?(:elementaryFilterChecked) || @params_hash[:elementaryFilterChecked] == 'true') ?  "checked='checked'": '' %>
+                     onclick="GS.widget.toggleFilter('e', this.checked);"><label for="filter_e">Elementary</label></li>
           <li><input type="checkbox" name="middle" id="filter_m"
-                     value="" <%=  @params_hash[:middleFilterChecked] == 'true' ? "checked='checked'": ''%>
-                     onclick="GS.widget.toggleFilter('m', this.checked, '20002');"><label for="filter_m">Middle</label></li>
+                     value="" <%=  (!@params_hash.key?(:middleFilterChecked) || @params_hash[:middleFilterChecked] == 'true') ? "checked='checked'": ''%>
+                     onclick="GS.widget.toggleFilter('m', this.checked);"><label for="filter_m">Middle</label></li>
           <li><input type="checkbox" name="high" id="filter_h"
-                     value="" <%=  @params_hash[:highFilterChecked] == 'true' ? "checked='checked'": '' %>
-                     onclick="GS.widget.toggleFilter('h', this.checked, '20002');"><label for="filter_h">High</label></li>
+                     value="" <%=  (!@params_hash.key?(:highFilterChecked) || @params_hash[:highFilterChecked] == 'true') ? "checked='checked'": '' %>
+                     onclick="GS.widget.toggleFilter('h', this.checked);"><label for="filter_h">High</label></li>
         </ul>
         </div>
       <div class="question_mark">???</div>
       <div style="clear: both"></div>
     </div>
-    <div id="js-map-canvas" style="width: <%= @params_hash['width'] %>px; height:<%= @params_hash['height'].to_i - 105 %>px"></div>
+    <div id="js-map-canvas" style="width: <%= @params_hash['width'].to_i - 10 %>px; height:<%= @params_hash['height'].to_i - 105 %>px; border: 1px solid #999999; margin:0 5px;"></div>
+    <div style="margin:0 5px;"><%= image_tag (asset_path('widget/widget_legend.gif')) %></div>
   </div>
 
 <div class="tabBody dn" id="searchTabBody">
@@ -59,9 +62,9 @@
   <p id="noResults" class="warning dn">No school results found for "<span id="noResultsSearchQuery"></span>"</p>
   <form id="command" name="searchForm" action="/widget/map" method="post" onsubmit="return GS.widget.submitSearch();">
     <input id="filter_p_value" name="preschoolFilterChecked" type="hidden" value="false">
-    <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  @params_hash[:elementaryFilterChecked] %>">
-    <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  @params_hash[:middleFilterChecked] %>">
-    <input id="filter_h_value" name="highFilterChecked" type="hidden" value="<%=  @params_hash[:highFilterChecked] %>">
+    <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:elementaryFilterChecked) || @params_hash[:elementaryFilterChecked] == 'true') ? true : false %>">
+    <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:middleFilterChecked) || @params_hash[:middleFilterChecked] == 'true') ? true : false %>">
+    <input id="filter_h_value" name="highFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:highFilterChecked) || @params_hash[:highFilterChecked] == 'true') ? true : false %>">
     <input id="width" name="width" type="hidden" value="<%= @params_hash[:width] %>">
     <input id="height" name="height" type="hidden" value="<%= @params_hash[:height] %>">
     <input id="textColor" name="textColor" type="hidden" value="<%= @params_hash[:textColor] %>">
@@ -101,16 +104,3 @@
   </p>
 </div>
 </div>
-<!--<iframe scrolling="no" frameborder="0" marginwidth="0" marginheight="0" height="534" width="990" src="/widget/schoolSearch.page?-->
-<!--searchQuery=20002-->
-<!--&amp;textColor=0066B8-->
-<!--&amp;bordersColor=FFCC66-->
-<!--&amp;lat=38.912067-->
-<!--&amp;lon=-77.01902-->
-<!--&amp;cityName=Washington-->
-<!--&amp;state=DC-->
-<!--&amp;normalizedAddress=Washington%2C+DC+20001-->
-<!--&amp;width=990-->
-<!--&amp;height=534-->
-<!--&amp;zoom=13" id="widgetIFrame" class="greatschools"> Keep from collapsing-->
-<!--</iframe>-->
