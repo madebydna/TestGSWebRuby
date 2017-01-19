@@ -39,6 +39,7 @@ class WidgetController < ApplicationController
   end
 
   def search_by_type
+<<<<<<< HEAD
     city_from_query ? city_browse : by_location
   end
 
@@ -77,6 +78,47 @@ class WidgetController < ApplicationController
       end
       city
     )
+=======
+    sq = params[:searchQuery]
+    city = nil
+    if sq.present?
+      sq_arr =  sq.split(',')
+      if sq_arr.present? && sq_arr.length == 1
+        #   assume it is a city and check in geocode to see if it is unique
+        #   set city variable if successful
+        city_name = sq_arr[0].strip
+        #   check if zip code
+        unless all_digits(city_name)
+          city_found = City.get_city_by_name(city_name)
+          if city_found.length == 1
+            city = city_found.first
+          end
+        end
+      elsif sq_arr.present? && sq_arr.length == 2
+        #   assume that it is a city and state
+        state_name = sq_arr[1].strip
+        city_name = sq_arr[0].strip
+        #   check to see if it is a state
+        state = States.abbreviation(state_name)
+        #   if it is a state try to find city in state that is unique
+        #   set city variable if successful
+        if state.present?
+          city_found = City.get_city_by_name_and_state(city_name, state)
+          if city_found.length == 1
+            city = city_found.first
+          end
+        end
+      end
+
+      if city.present?
+        #   do a city search
+        city_browse(city.name, city.state)
+      else
+        #   by location uses lat lon
+        by_location
+      end
+    end
+>>>>>>> JT-2633 - added map resize to container size.  Adding legend image.  adding zoom consistency
   end
 
   def by_location
@@ -92,14 +134,22 @@ class WidgetController < ApplicationController
       @search_term = params_hash['locationSearchString']
       city = params_hash['city']
     end
+<<<<<<< HEAD
   end
 
   def city_browse
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
       search_options.merge!({state: city_from_query.state, city: city_from_query.name, filters: {:level_code=>levels_from_params}})
     end
+=======
+>>>>>>> JT-2633 - added map resize to container size.  Adding legend image.  adding zoom consistency
   end
 
+  def city_browse(city, state)
+    setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
+      search_options.merge!({state: state, city: city})
+    end
+  end
 
 
   def setup_search_results!(search_method)
@@ -116,8 +166,16 @@ class WidgetController < ApplicationController
     @total_results = results[:num_found]
     school_results = results[:results] || []
     relative_offset = solr_offset
+<<<<<<< HEAD
     @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
     @suggested_query = results[:suggestion] if @total_results == 0 #&& search_by_name? #for Did you mean? feature on no results page
+=======
+
+
+    @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
+
+    @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
+>>>>>>> JT-2633 - added map resize to container size.  Adding legend image.  adding zoom consistency
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)

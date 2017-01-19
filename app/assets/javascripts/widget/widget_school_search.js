@@ -33,6 +33,8 @@ GS.widget = GS.widget || (function() {
   }
 
   var init = function(){
+    calculateMapHeight();
+
     $(".gs_tab").on("click", function () {
       $(this).siblings().removeClass('active');
       $(this).addClass('active');
@@ -48,7 +50,13 @@ GS.widget = GS.widget || (function() {
       showHelpTab();
     });
   };
-
+  var calculateMapHeight = function(){
+    var mapCanvas = $("#js-map-canvas");
+    var mapTabHeight = $("#"+GS_MAP_TAB_NAME).outerHeight(true);
+    var mapContainerHeight = $(".js-mapContainer").height();
+    var mapCanvasHeight = mapCanvas.height();
+    mapCanvas.height(mapCanvasHeight + (mapContainerHeight - mapTabHeight));
+  };
 
   var showMapTab = function() {
     showTab(GS_MAP_TAB_NAME);
@@ -84,17 +92,14 @@ GS.widget = GS.widget || (function() {
 
 
   function toggleFilter(levelCode, checked, searchQuery) {
+    // sq = document.getElementById('searchQuery');
     document.getElementById('filter_' + levelCode + '_value').value = checked;
-    document.getElementById('searchInput').value = searchQuery;
+    // document.getElementById('searchInput').value = sq;
 
     var noneChecked =
         !document.getElementById('filter_e').checked &&
         !document.getElementById('filter_m').checked &&
         !document.getElementById('filter_h').checked;
-    if (document.getElementById('filter_p') != null) {
-      noneChecked =
-          noneChecked && !document.getElementById('filter_p').checked;
-    }
 
     document.getElementById('zoom').value = GS.googleMap.getMap().getZoom();
     document.getElementById('lat').value = GS.googleMap.getMap().getCenter().lat();
@@ -132,12 +137,12 @@ GS.widget = GS.widget || (function() {
       document.getElementById('filter_m_value').value = 'true';
       document.getElementById('filter_h_value').value = 'true';
     }
+    var zoomLevel = GS.googleMap.getMap().getZoom();
+    document.getElementById('zoom').value = zoomLevel;
 
-    var lat = document.getElementById('lat').value;
-    var lon = document.getElementById('lon').value;
-    if (lat != 0 && lon != 0) {        // only reset zoom if this is a user-entered search,
+    if (zoomLevel < 10) {        // only reset zoom if this is a user-entered search,
       // not an automatic submission after client-side geocoding
-      document.getElementById('zoom').value = 0;
+       document.getElementById('zoom').value = 12;
     }
 
     var searchQuery = document.getElementById('searchInput').value;
