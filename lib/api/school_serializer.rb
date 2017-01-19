@@ -21,7 +21,7 @@ class Api::SchoolSerializer
         zip: school['zip'],
         city: school['city']
       },
-      rating: 'TODO',
+      rating: school.great_schools_rating,
       schoolType: school.type,
       state: school.state,
       type: 'school'

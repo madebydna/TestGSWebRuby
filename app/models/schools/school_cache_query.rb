@@ -12,6 +12,15 @@ class SchoolCacheQuery
     end
   end
 
+  def include_school_objects(schools)
+    schools = Array.wrap(schools)
+    schools_by_state = schools.group_by(&:state)
+    schools_by_state.each_pair do |state, schools_for_state|
+      include_schools(state, schools_for_state.map(&:id))
+    end
+    self
+  end
+
   def include_cache_keys(cache_keys)
     @cache_keys += Array.wrap(cache_keys)
     @cache_keys.uniq

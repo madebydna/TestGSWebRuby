@@ -151,8 +151,8 @@ export default class DistrictBoundaries extends React.Component {
 
     let contentString = <div class="rating-container__rating">
       <div class="module-header">
-        <div class="circle-rating--9 circle-rating--medium">
-          9<span class="rating-circle-small">/10</span>
+        <div class={'circle-rating--' + entity.rating + ' circle-rating--medium'}>
+          {entity.rating}<span class="rating-circle-small">/10</span>
         </div>
         <div class="title-container" style="width:300px">
           <div>

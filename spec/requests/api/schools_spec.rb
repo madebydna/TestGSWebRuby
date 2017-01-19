@@ -175,6 +175,20 @@ describe "Schools API" do
       expect(json['links']['prev']).to be_present
     end
 
+    it 'adds GS rating when available' do
+      rating = 10
+      school = create(:alameda_high_school)
+      create(:cached_ratings, :with_gs_rating,
+             state: school.state,
+             school_id: school.id,
+             gs_rating_value: rating
+            )
+      get '/gsr/api/schools/?state=ca'
+      expect(status).to eq(200)
+      expect(errors).to be_blank
+      expect(schools.first['rating']).to eq(rating)
+    end
+
     context 'with geometry data available for school' do
       let(:school) { create(:alameda_high_school) }
       before do

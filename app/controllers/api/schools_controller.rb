@@ -53,7 +53,17 @@ class Api::SchoolsController < ApplicationController
         get_schools
       end
       add_geometry(items)
+      add_rating(items)
     )
+  end
+
+  def add_rating(schools)
+    q = SchoolCacheQuery.new.
+      include_school_objects(schools).
+      include_cache_keys('ratings')
+
+    school_cache_results = SchoolCacheResults.new('ratings', q.query)
+    school_cache_results.decorate_schools(schools)
   end
 
   def add_geometry(schools)
