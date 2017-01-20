@@ -2,6 +2,8 @@ class DistrictsListController < ApplicationController
 
   layout 'application'
 
+  before_filter :require_valid_state
+
   def show
     @districts_cities_counties = districts_cities_counties(state_names[:abbr])
     @state_names = state_names
@@ -36,6 +38,13 @@ class DistrictsListController < ApplicationController
 
   def dropdown_info
     States.labels_hash.map{ |k,v| [k.upcase, v ]}.to_h
+  end
+
+  def require_valid_state
+    unless States.abbreviations.include?(params[:state_name].downcase)
+      # if school.blank?
+      render "error/page_not_found", layout: "error", status: 404
+    end
   end
 
 end
