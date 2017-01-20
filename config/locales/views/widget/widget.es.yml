@@ -1,6 +1,6 @@
 en:
   widget:
-    map:
+    hidden_text_vars:
       assigned_school: Assigned school
       homes_for_sale: Homes for sale
       rate_this_school: Rate this school now!

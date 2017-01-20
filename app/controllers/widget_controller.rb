@@ -106,13 +106,9 @@ class WidgetController < ApplicationController
 
   def setup_search_results!(search_method)
     @params_hash = params #parse_array_query_string(request.query_string)
-
     search_options = {number_of_results: MAX_RESULTS_FOR_MAP, offset: 0}
-
     yield search_options, @params_hash if block_given?
-
     results = search_method.call(search_options)
-
     process_results(results, 0) unless results.empty?
 
   end
@@ -120,13 +116,9 @@ class WidgetController < ApplicationController
   def process_results(results, solr_offset)
     @query_string = '?' + encode_square_brackets(CGI.unescape(@params_hash.to_param))
     @total_results = results[:num_found]
-
     school_results = results[:results] || []
     relative_offset = solr_offset
-
-
     @schools = school_results[relative_offset..(relative_offset+MAX_RESULTS_FOR_MAP-1)]
-
     @suggested_query = results[:suggestion] if @total_results == 0 && search_by_name? #for Did you mean? feature on no results page
     # If the user asked for results 225-250 (absolute), but we actually asked solr for results 25-450 (to support mapping),
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
