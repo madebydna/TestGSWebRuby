@@ -1,3 +1,9 @@
+import { GEOCODE, RECEIVE_GEOCODE_RESULTS, FIND_SCHOOLS_IN_DISTRICT,
+  RECEIVE_SCHOOLS, LOAD_SCHOOL, RECEIVE_SCHOOL, LOAD_DISTRICT,
+  RECEIVE_DISTRICT, RECEIVE_DISTRICTS, FIND_SCHOOL_CONTAINING_POINT,
+  FIND_DISTRICT_CONTAINING_POINT,
+  FIND_DISTRICTS_NEAR_POINT } from '../actions/district_boundaries';
+
 export default (state, action) => {
   if (typeof state === 'undefined') {
     return {
@@ -9,13 +15,13 @@ export default (state, action) => {
   }
 
   switch (action.type) {
-    case 'GEOCODE_RESULTS_RECEIVED':
+    case RECEIVE_GEOCODE_RESULTS:
       return Object.assign({}, state, {
         lat: action.lat,
         lon: action.lon,
         state: action.state
       });
-    case 'SCHOOLS_RECEIVED':
+    case RECEIVE_SCHOOLS:
       var schools = action.schools.reduce(
         (obj, school) => {
           obj[[school.state.toLowerCase(), school.id]] = school;
@@ -26,12 +32,12 @@ export default (state, action) => {
       return Object.assign({}, state, {
         schools: schools,
       });
-    case 'SCHOOL_RECEIVED':
+    case RECEIVE_SCHOOL:
       var school = action.school;
       var newState = Object.assign({}, state);
       newState.school = school;
       return newState;
-    case 'DISTRICT_RECEIVED':
+    case RECEIVE_DISTRICT:
       // store/update the district within the state
       var district = action.district;
       var newState = Object.assign({}, state);
@@ -47,7 +53,7 @@ export default (state, action) => {
 
       newState.district = district;
       return newState;
-    case 'DISTRICTS_RECEIVED':
+    case RECEIVE_DISTRICTS:
       var districts = action.districts.reduce(
         (obj, district) => {
           var key = [district.state.toLowerCase(), district.id];

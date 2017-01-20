@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import DistrictBoundaries from './district_boundaries';
 import { Provider } from 'react-redux';
+import { GEOCODE, RECEIVE_GEOCODE_RESULTS, FIND_SCHOOLS_IN_DISTRICT,
+  RECEIVE_SCHOOLS, LOAD_SCHOOL, RECEIVE_SCHOOL, LOAD_DISTRICT,
+  RECEIVE_DISTRICT, RECEIVE_DISTRICTS, FIND_SCHOOL_CONTAINING_POINT,
+  FIND_DISTRICT_CONTAINING_POINT,
+  FIND_DISTRICTS_NEAR_POINT } from '../../actions/district_boundaries';
 
 let ConnectedDistrictBoundaries = connect(
   function(state, ownProps) { // state is global redux store, ownProps are the passed-in props
@@ -26,7 +31,7 @@ let ConnectedDistrictBoundaries = connect(
         });
         dispatch(
           {
-            type: 'GET_SCHOOL',
+            type: LOAD_SCHOOL,
             id: id,
             options: options
           }
@@ -36,7 +41,7 @@ let ConnectedDistrictBoundaries = connect(
       getSchoolsInDistrict: (districtId, options) => {
         dispatch(
           {
-            type: 'FIND_SCHOOLS_IN_DISTRICT',
+            type: FIND_SCHOOLS_IN_DISTRICT,
             districtId: districtId,
             options: options
           }
@@ -49,7 +54,7 @@ let ConnectedDistrictBoundaries = connect(
         });
         dispatch(
           {
-            type: 'GET_DISTRICT',
+            type: LOAD_DISTRICT,
             id: id,
             options: options
           }
@@ -59,7 +64,7 @@ let ConnectedDistrictBoundaries = connect(
       getNearbyDistricts: (lat, lon, radius, options) => {
         dispatch(
           {
-            type: 'FIND_DISTRICTS_NEAR_POINT',
+            type: FIND_DISTRICTS_NEAR_POINT,
             lat: lat,
             lon: lon,
             radius: radius,
@@ -74,7 +79,7 @@ let ConnectedDistrictBoundaries = connect(
         });
         dispatch(
           {
-            type: 'FIND_SCHOOL_CONTAINING_POINT',
+            type: FIND_SCHOOL_CONTAINING_POINT,
             lat: lat,
             lon: lon,
             options: options
@@ -88,7 +93,7 @@ let ConnectedDistrictBoundaries = connect(
         });
         dispatch(
           {
-            type: 'FIND_DISTRICT_CONTAINING_POINT',
+            type: FIND_DISTRICT_CONTAINING_POINT,
             lat: lat,
             lon: lon,
             options: options

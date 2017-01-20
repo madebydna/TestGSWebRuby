@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import SearchBar from './search_bar';
 import { Provider } from 'react-redux';
+import { GEOCODE } from '../../actions/district_boundaries';
 
 let ConnectedSearchBar = connect(
   function(state, ownProps) { // state is global redux store, ownProps are the passed-in props
@@ -14,7 +15,7 @@ let ConnectedSearchBar = connect(
       geocode: (searchTerm) => {
         dispatch(
           {
-            type: 'GEOCODE_SEARCH_TERM',
+            type: GEOCODE,
             searchTerm: searchTerm
           }
         )
