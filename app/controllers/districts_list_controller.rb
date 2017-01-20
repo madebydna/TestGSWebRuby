@@ -5,44 +5,21 @@ class DistrictsListController < ApplicationController
   before_filter :require_valid_state
 
   def show
-    @districts_cities_counties = districts_cities_counties(state_names[:abbr])
-    @state_names = state_names
-    @dropdown_info = dropdown_info
+    @districts_cities_counties = dcl.districts_cities_counties(state)
+    @state_names = dcl.state_names(state)
+    @dropdown_info = dcl.dropdown_info
   end
 
-  def districts_cities_counties(state)
-    @_districts_cities_counties ||= (
-    District.on_db(state.downcase.to_sym)
-        .where(active: 1)
-        .order(name: :asc)
-        .select(:name, :city, :county).to_a
-        .map(&:serializable_hash)
-    )
+  def state
+    params[:state_name]
   end
 
   def dcl
     @_dcl ||= DistrictsCitiesList.new(state)
   end
 
-  def state_full_name
-    States.state_name(params[:state_name]).titleize
-  end
-
-  def state_names
-    {
-        full: state_full_name,
-        abbr: params[:state_name],
-        routing: state_full_name.gsub(' ','_')
-    }
-  end
-
-  def dropdown_info
-    States.labels_hash.map{ |k,v| [k.upcase, v ]}.to_h
-  end
-
   def require_valid_state
-    unless States.abbreviations.include?(params[:state_name].downcase)
-      # if school.blank?
+    unless States.abbreviations.include?(state.downcase)
       render "error/page_not_found", layout: "error", status: 404
     end
   end
