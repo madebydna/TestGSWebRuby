@@ -10,7 +10,19 @@ export const RECEIVE_DISTRICT = 'RECEIVE_DISTRICT';
 export const RECEIVE_DISTRICTS = 'RECEIVE_DISTRICTS';
 export const RECEIVE_GEOCODE_RESULTS = 'RECEIVE_GEOCODE_RESULTS';
 
+// This is a "thunk" or "thunk action creator", which takes advantage of the
+// "thunk middleware", which is a piece of Redux middleware that allows us
+// to dispatch functions (not just action objects).
+//
+// It returns an inner function which will receive the redux dispatch object,
+// which is used to dispatch redux actions, which in this case happens
+// after an async API call completes successfully
+//
+// This function is exposed to a React component when a "Smart" or
+// "Connected" component calls "bindActionCreators". The dumb UI component
+// would then invoke props.loadSchool
 export const loadSchool = (id, options) => dispatch => {
+  // the ... here captures existing options into new obj. Then set extras prop
   Schools.findById(id, {
     ...options,
     extras: 'boundaries'
