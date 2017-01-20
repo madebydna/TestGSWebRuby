@@ -16,8 +16,6 @@ class OspRegistrationController < ApplicationController
 
     if @school.blank?
       render_no_school_template
-    elsif is_delaware_public_or_charter_user?
-      render 'osp/registration/delaware'
     elsif @current_user.present? && @current_user.is_active_esp_member?
       redirect_to osp_dashboard_path
     else
@@ -58,10 +56,6 @@ class OspRegistrationController < ApplicationController
                   keywords:'School accounts, register, registration, edit profile',
                   robots: 'noindex, nofollow, noarchive'
 
-  end
-
-  def is_delaware_public_or_charter_user?
-    @state[:short] == 'de' && (school.type == 'public' || school.type == 'charter')
   end
 
   def save_new_osp_user

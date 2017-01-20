@@ -20,16 +20,16 @@ describe OspRegistrationController do
     end
 
     with_shared_context 'Delaware public school' do
-      it ' should render correct error page' do
+      it ' should render correct registration page' do
         get :new, state: school.state, schoolId: school.id
-        expect(response).to render_template('osp/registration/delaware')
+        expect(response).to render_template('osp/registration/new')
       end
     end
 
     with_shared_context 'Delaware charter school' do
-      it ' should render correct error page' do
+      it ' should render correct registration page' do
         get :new, state: school.state, schoolId: school.id
-        expect(response).to render_template('osp/registration/delaware')
+        expect(response).to render_template('osp/registration/new')
       end
     end
 

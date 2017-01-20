@@ -183,6 +183,22 @@ class SearchController < ApplicationController
     end
   end
 
+  def by_zip
+    zip = zip_param
+    if zip.present?
+      redirect_to search_path(lat: zip.lat,
+                              lon: zip.lon,
+                              state: zip.state,
+                              city: zip.name,
+                              locationType: 'postal_code',
+                              normalizedAddress: zip.zip,
+                              locationSearchString: zip.zip,
+                              zipCode: zip.zip)
+    else
+      redirect_to home_path
+    end
+  end
+
   def setup_search_results!(search_method)
     setup_filter_display_map
     @params_hash = parse_array_query_string(request.query_string)
@@ -313,6 +329,12 @@ class SearchController < ApplicationController
   end
 
   protected
+
+  def zip_param
+    return @_zip_param if defined?(@_zip_param)
+    zip_code = params[:zipCode]
+    @_zip_param = (zip_code.present? && zip_code =~ /^\d{5}$/) ? BpZip.find_by_zip(zip_code) : nil
+  end
 
   def radius_param
     @radius = params_hash['distance'].presence || DEFAULT_RADIUS

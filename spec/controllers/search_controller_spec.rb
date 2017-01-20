@@ -519,4 +519,63 @@ describe SearchController do
       end
     end
   end
+
+  describe '#by_zip' do
+    let (:subject) { get :by_zip, params_hash }
+
+    context 'error handling' do
+      before { expect(BpZip).to_not receive(:find_by_zip) }
+
+      context 'zipCode is missing' do
+        let (:params_hash) { {} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is 4 digits' do
+        let (:params_hash) { {zipCode: '1234'} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is 6 digits' do
+        let (:params_hash) { {zipCode: '123456'} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is empty' do
+        let (:params_hash) { {zipCode: ''} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is 5 alphanumeric' do
+        let (:params_hash) { {zipCode: '1234b'} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+    end
+
+    context 'with valid zipCode' do
+      let(:params_hash) { {zipCode: '94111'} }
+
+      context 'that is not in database' do
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'that is in the database' do
+        let(:zip) { BpZip.new(Zip: '94111', Name: 'San Francisco', State: 'CA', Lat: 37.7988, Lon: -122.401) }
+        let(:expected_params) { {
+            locationSearchString: zip.zip,
+            normalizedAddress: zip.zip,
+            zipCode: zip.zip,
+            locationType: 'postal_code',
+            city: zip.name,
+            state: zip.state,
+            lat: zip.lat,
+            lon: zip.lon
+        } }
+
+        before { expect(BpZip).to receive(:find_by_zip).with('94111').and_return(zip) }
+
+        it { is_expected.to redirect_to(search_path(expected_params)) }
+      end
+    end
+  end
 end

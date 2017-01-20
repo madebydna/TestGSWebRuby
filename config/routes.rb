@@ -73,6 +73,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
+
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
@@ -94,6 +96,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
   match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
   match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
+  get '/official-school-profile/dashboard/', to: 'osp_landing#dashboard', as: :osp_dashboard
 
    get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
@@ -110,6 +113,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
+  get "/gsr/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
+
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
 
@@ -117,6 +122,8 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
+    get '/schools/cities/:state_name_long/:state_name', :to => 'cities_list#show', as: 'cities_list'
+    get '/schools/districts/:state_name_long/:state_name', :to => 'districts_list#show', as: 'districts_list'
     get '/gk/', as: :greatkids_home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
@@ -145,7 +152,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/account/', as: :my_account
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
-    get '/official-school-profile/dashboard/', as: :osp_dashboard
     get '/gk/videos/choose-elementary-school-video/', as: :help_me_e_video
     get '/gk/videos/choose-middle-school-video/', as: :help_me_m_video
     get '/gk/videos/choose-high-school-video/', as: :help_me_h_video
