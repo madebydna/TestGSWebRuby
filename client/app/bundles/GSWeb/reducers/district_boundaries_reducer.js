@@ -33,10 +33,10 @@ export default (state, action) => {
         schools: schools,
       });
     case RECEIVE_SCHOOL:
-      var school = action.school;
-      var newState = Object.assign({}, state);
-      newState.school = school;
-      return newState;
+      return {
+        ...state,
+        school: action.school
+      };
     case RECEIVE_DISTRICT:
       // store/update the district within the state
       var district = action.district;

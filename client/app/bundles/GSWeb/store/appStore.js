@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import appReducer from '../reducers/app_reducer';
 import NearbySchoolsMiddleware from '../middlewares/nearby_schools';
-import DistrictBoundariesMiddleware from '../middlewares/district_boundaries';
 
 const configureStore = (initialState = {}) => {
   let middlewareApplier = applyMiddleware(
-    NearbySchoolsMiddleware,
-    DistrictBoundariesMiddleware
+    thunk,
+    NearbySchoolsMiddleware
   );
 
   let createStoreWithMiddleware = middlewareApplier(createStore);
