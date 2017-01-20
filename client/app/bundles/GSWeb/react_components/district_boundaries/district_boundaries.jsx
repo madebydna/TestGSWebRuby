@@ -8,6 +8,7 @@ import { findDOMNode } from 'react-dom';
 import School from '../../components/map/school';
 import District from '../../components/map/district';
 import jsxToString from 'jsx-to-string';
+import ConnectedSearchBar from './connected_search_bar';
 
 export default class DistrictBoundaries extends React.Component {
   static defaultProps = {
@@ -27,11 +28,14 @@ export default class DistrictBoundaries extends React.Component {
 
     this.state = {
       googleMapsInitialized: false,
-      // schoolId: 8,
-      // state: 'ca'
+      state: props.state || 'ca',
+      schoolId: 8,
+      districtId: props.districtId,
       level: 'h',
-      lat: 37.7949217,
-      lon: -122.2499247,
+      lat: this.props.lat,
+      lon: this.props.lon,
+      // lat: 37.7949217,
+      // lon: -122.2499247,
       schoolMarkers: {},
       districtMarkers: {}
     }
@@ -190,6 +194,12 @@ export default class DistrictBoundaries extends React.Component {
         selectedDistrict: nextProps.district,
         selectedSchool: null
       })
+    }
+    if(nextProps.lat != this.props.lat) {
+      this.setState({ lat: nextProps.lat });
+    }
+    if(nextProps.lon != this.props.lon) {
+      this.setState({ lon: nextProps.lon });
     }
   }
 
@@ -356,6 +366,8 @@ export default class DistrictBoundaries extends React.Component {
   render() {
     return (
       <div id="district-boundaries-component">
+        <ConnectedSearchBar/>
+
         <div id="map-canvas" style={{width:'75%', height:'400px'}} ref={(map) => { this.mapDiv = map; }}></div>
         <div id="districtList"></div>
         <div id="js-districtHeader"></div>

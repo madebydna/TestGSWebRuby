@@ -2,9 +2,24 @@ import * as Schools from '../api_clients/schools';
 import * as Districts from '../api_clients/districts';
 import School from '../components/map/school';
 import District from '../components/map/district';
+import * as Geocoding from '../components/geocoding';
 
 const DistrictBoundariesMiddleware = store => next => action => {
   switch (action.type) {
+    case 'GEOCODE_SEARCH_TERM':
+      Geocoding.geocode(action.searchTerm).done(data => {
+        var result = data[0];
+        store.dispatch({
+          type: 'GEOCODE_RESULTS_RECEIVED',
+          lat: result.lat,
+          lon: result.lon,
+          normalizedAddress: result.normalizedAddress,
+          state: result.state,
+          partialMatch: result.partial_match,
+          geocodeType: result.type
+        });
+      });
+      return next(action);
     case 'FIND_SCHOOLS_IN_DISTRICT':
       Schools.findByDistrict(
         action.districtId,

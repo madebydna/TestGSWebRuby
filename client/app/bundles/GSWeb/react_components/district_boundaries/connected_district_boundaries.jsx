@@ -9,7 +9,12 @@ let ConnectedDistrictBoundaries = connect(
       schools: state.districtBoundaries.schools,
       districts: state.districtBoundaries.districts,
       school: state.districtBoundaries.school,
-      district: state.districtBoundaries.district
+      district: state.districtBoundaries.district,
+      lat: state.districtBoundaries.lat,
+      lon: state.districtBoundaries.lon,
+      schoolId: state.districtBoundaries.schoolId,
+      districtId: state.districtBoundaries.districtId,
+      state: state.districtBoundaries.state
     };
   },
   function(dispatch, ownProps) { // dispatch can be invoked with action creator

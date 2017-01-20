@@ -1,4 +1,5 @@
 // TODO: import google maps
+// These functions require that google maps has already been initialized
 
 export function geocode( searchInput ) {
   var deferred = new jQuery.Deferred();

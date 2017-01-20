@@ -9,6 +9,12 @@ export default (state, action) => {
   }
 
   switch (action.type) {
+    case 'GEOCODE_RESULTS_RECEIVED':
+      return Object.assign({}, state, {
+        lat: action.lat,
+        lon: action.lon,
+        state: action.state
+      });
     case 'SCHOOLS_RECEIVED':
       var schools = action.schools.reduce(
         (obj, school) => {
