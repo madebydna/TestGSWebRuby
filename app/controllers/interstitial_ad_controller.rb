@@ -4,6 +4,18 @@ class InterstitialAdController < ApplicationController
 
   def show
     gon.pagename = "Interstitial Ad"
+    # set_meta_tags(refresh: "20;#{pass_through_URI}")
   end
 
+  private
+
+  def pass_through_URI
+    uri = params[:passThroughURI]
+    if uri.present?
+      uri = URI.decode(uri)
+    else
+      uri = ""
+    end
+    uri
+  end
 end
