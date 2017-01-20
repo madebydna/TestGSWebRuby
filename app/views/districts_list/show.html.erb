@@ -1,0 +1,72 @@
+<% districts_cities_counties = @districts_cities_counties %>
+<% state_names = @state_names %>
+<% dropdown_info = @dropdown_info %>
+
+<div class="districts-cities-list clearfix">
+  <div class="top-bottom">
+    <div class="top">
+      <div class="navlinks">
+        <a class="top-link" href="/schools/<%= state_names[:routing] %>/<%= state_names[:abbr] %>">All schools in <%= state_names[:full] %></a>
+        <a class="top-link" href="/schools/cities/<%= state_names[:routing] %>/<%= state_names[:abbr] %>">All cities in <%= state_names[:full] %></a>
+        <span class="top-link"><%= state_names[:full] %> School Districts</span>
+      </div>
+      <div class="page-heading">
+        <%= state_names[:full] %> School Districts
+      </div>
+      <div class="dropdown">
+        Show me school districts in a different state:
+
+        <select id="dropdown_menu">
+          <% dropdown_info.each do |st, st_name| %>
+              <option value="<%= districts_list_path(st_name,st) %>"> <%= st %></option>
+          <% end %>
+        </select>
+
+      </div>
+      <div class="pagination-links">
+      </div>
+    </div>
+    <div>
+      <div class="table-column">
+        <table cellspacing="0" cellpadding="0">
+          <tbody>
+          <tr class="table-top-row">
+            <th>District Name</th>
+            <th>City</th>
+            <th>County name</th>
+          </tr>
+          <% districts_cities_counties.each do |district_hash| %>
+              <tr>
+                <td class="city-district-link">
+                  <a href="/nevada/<%= district_hash['city'].gsub(' ','_').downcase %>/"<%= district_hash['name'] %>> <%= district_hash['name'] %></a>
+                </td>
+                <td>
+                  <%= district_hash['city'] %>
+                </td>
+                <td>
+                  <%= district_hash['county'] %>
+                </td>
+              </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="top-bottom">
+    <div class="pagination-links">
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('#dropdown_menu').bind('change', function () {
+      var url = $(this).val();
+      if (url) {
+        window.location.replace(url);
+      }
+      return false;
+    });
+  });
+</script>
