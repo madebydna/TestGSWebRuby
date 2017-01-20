@@ -113,7 +113,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
-  get "/ads/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
+  get "/gsr/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
