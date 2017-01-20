@@ -62,12 +62,12 @@ GS.ad.interstitial = (function() {
             (link.getAttribute("onclick") && link.getAttribute("onclick").toString().match(/window.open/));
     }
 
-    function initInterstitialPage() {
+  function initInterstitialPage() {
       destinationUri = getDestinationUri();
       setInterstitialCookie();
       setUpNoAdHandler();
-     setContinueToDestinationHandlers();
-     setContinueTimeout();
+      setContinueToDestinationHandlers();
+      setContinueTimeout();
     }
 
     function setInterstitialCookie() {
@@ -94,8 +94,32 @@ GS.ad.interstitial = (function() {
       if (uri && uri.length > 0) {
           uriDecoded = decodeURIComponent(uri);
         }
-        return uriDecoded;
+      if ( ! validUri(uriDecoded) ) {
+        uriDecoded = "/"; 
       }
+      return encodeURI(uriDecoded);
+      }
+
+    function validUri(uri) {
+      var valid = ( uriRelative(uri) ||
+            uriAbsoluteToGsOrg(uri) ||
+               uriAbsoluteToLocalhost(uri) );
+      return valid;
+    }
+
+    function uriRelative(uri) {
+      return uri.startsWith("/");
+    }
+
+    function uriAbsoluteToGsOrg(uri) {
+      var gsOrgMatch = /^http(?:s)?:\/\/(?:[^\\/]+\.)?greatschools\.org(?:\/|:|$).*/;
+      return uri.match(gsOrgMatch);
+    }
+
+    function uriAbsoluteToLocalhost(uri) {
+      localhostMatch = /^http:\/\/localhost(?:\/|:|$).*/;
+      return uri.match(localhostMatch);
+    }
 
     function continueToDestination() {
       location.replace(destinationUri);
