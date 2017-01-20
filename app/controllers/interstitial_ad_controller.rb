@@ -1,6 +1,6 @@
 class InterstitialAdController < ApplicationController
 
-  layout "application"
+  layout "no_header_and_footer"
 
   def show
     gon.pagename = "Interstitial Ad"

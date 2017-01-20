@@ -1,8 +1,13 @@
 <div class="interstitial container">
   <div class="header">
-    <p><%= t('.ad_intro_1') %></p>
-    <p><%= t('.ad_intro_2') %></p>
-    <a class="js-continueToDestination"> <%= t('.skip_ad_html') %></a>
+    <div class="logo-container">
+      <%= render 'nav/header/logo_image' %>
+    </div>
+    <div "add-intro-container">
+      <p><%= t('.ad_intro_1') %></p>
+      <p><%= t('.ad_intro_2') %></p>
+      <a class="js-continueToDestination"> <%= t('.skip_ad_html') %></a>
+    </div>
   </div>
   <div class="ad-container">
     <div class="ad-inner-container">
