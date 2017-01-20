@@ -20,23 +20,17 @@ export default class DistrictBoundaries extends React.Component {
   constructor(props) {
     super(props);
     this.map = null;
-    this.nearbyDistrictsRadius = 50;
     this.initGoogleMaps = this.initGoogleMaps.bind(this);
     this.updateSchoolMarkers = this.updateSchoolMarkers.bind(this);
     this.updateDistrictMarkers = this.updateDistrictMarkers.bind(this);
 
     this.state = {
       googleMapsInitialized: false,
-      state: props.state || 'ca',
-      schoolId: 8,
-      districtId: props.districtId,
-      level: 'h',
-      lat: this.props.lat,
-      lon: this.props.lon,
-      // lat: 37.7949217,
-      // lon: -122.2499247,
       schoolMarkers: {},
-      districtMarkers: {}
+      districtMarkers: {},
+      schoolPolygon: null,
+      districtPolygon: null,
+      mapCenter: null
     }
     this.initGoogleMaps();
   }
@@ -78,20 +72,12 @@ export default class DistrictBoundaries extends React.Component {
         if(this.infoWindow) {
           this.infoWindow.close();
         }
-        this.setState({
-          districtId: null,
-          schoolId: null,
-          lat: e.latLng.lat(),
-          lon: e.latLng.lng(),
-        });
+        this.props.changeLocation(e.latLng.lat(), e.latLng.lng());
       }.bind(this));
 
       google.maps.event.addDomListener(
         window, 'resize', () => this.map.setCenter(this.state.mapCenter)
       );
-      
-      this.initSchool();
-      this.loadNearbyDistricts();
     }.bind(this));
   }
 
@@ -102,21 +88,14 @@ export default class DistrictBoundaries extends React.Component {
   onSchoolMarkerClicked(marker, obj) {
     return (e) => {
       this.showInfoWindow(marker, obj);
-      this.setState({
-        state: obj.state,
-        schoolId: obj.id
-      });
+      this.props.selectSchool(obj.id, obj.state);
     }
   }
 
   onDistrictMarkerClicked(marker, obj) {
     return (e) => {
       this.showInfoWindow(marker, obj);
-      this.setState({
-        state: obj.state,
-        districtId: obj.id,
-        schoolId: null
-      });
+      this.props.selectDistrict(obj.id, obj.state);
     }
   }
 
@@ -182,46 +161,17 @@ export default class DistrictBoundaries extends React.Component {
     infoWindow.open(this.map, marker);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.school != this.props.school) {
-      this.setState({
-        selectedSchool: nextProps.school
-      })
-    }
-    if(nextProps.district != this.props.district) {
-      this.setState({
-        selectedDistrict: nextProps.district,
-        selectedSchool: null
-      })
-    }
-    if(nextProps.lat != this.props.lat) {
-      this.setState({ lat: nextProps.lat });
-    }
-    if(nextProps.lon != this.props.lon) {
-      this.setState({ lon: nextProps.lon });
-    }
-  }
-
   componentDidUpdate(prevProps, prevState) {
     let schoolPolygonChanged = prevState.schoolPolygon != this.state.schoolPolygon;
     let districtPolygonChanged = prevState.districtPolygon != this.state.districtPolygon;
     let mapCenterChanged = prevState.mapCenter != this.state.mapCenter;
     let schoolsChanged = prevProps.schools != this.props.schools;
     let districtsChanged = prevProps.districts != this.props.districts;
-    let latLonChanged = prevState.lat != this.state.lat || prevState.lon != this.state.lon;
-    let schoolIdChanged = prevState.schoolId != this.state.schoolId;
-    let districtIdChanged = prevState.districtId != this.state.districtId;
-    let selectedSchoolChanged = prevState.selectedSchool != this.state.selectedSchool;
-    let selectedDistrictChanged = prevState.selectedDistrict != this.state.selectedDistrict;
+    let selectedSchoolChanged = prevProps.school != this.props.school;
+    let selectedDistrictChanged = prevProps.district != this.props.district;
     let schoolMarkersChanged = prevState.schoolMarkers != this.state.schoolMarkers;
     let districtMarkersChanged = prevState.districtMarkers != this.state.districtMarkers;
 
-    if(schoolIdChanged && this.state.state) {
-      this.props.loadSchool(this.state.schoolId, {state: this.state.state});
-    }
-    if(districtIdChanged && this.state.state) {
-      this.props.loadDistrict(this.state.districtId, {state: this.state.state});
-    }
     if(schoolPolygonChanged) {
       if(prevState.schoolPolygon) {
         prevState.schoolPolygon.setMap(null);
@@ -248,11 +198,11 @@ export default class DistrictBoundaries extends React.Component {
       this.updateDistrictMarkers();
     }
     if(selectedSchoolChanged) {
-      let school = this.state.selectedSchool;
+      let school = this.props.school;
       if(school) {
         school = new School(school);
         this.setState({
-          schoolPolygon: school.getPolygon(this.state.level)
+          schoolPolygon: school.getPolygon(this.props.level)
         });
       } else {
         this.setState({
@@ -261,18 +211,13 @@ export default class DistrictBoundaries extends React.Component {
       }
     }
     if(selectedDistrictChanged) {
-      let district = this.state.selectedDistrict;
+      let district = this.props.district;
       if(district) {
-        this.props.findSchoolsInDistrict(district.id, {
-          state: district.state,
-          level_code: this.state.level
-        });
-
         district = new District(district);
         let m = this.state.districtMarkers[[district.state.toLowerCase(), district.id]];
         this.showInfoWindow(m, district);
         this.setState({
-          districtPolygon: district.getPolygon(this.state.level)
+          districtPolygon: district.getPolygon(this.props.level)
         });
       } else {
         this.setState({
@@ -280,63 +225,20 @@ export default class DistrictBoundaries extends React.Component {
         });
       }
     }
-    if(latLonChanged) {
-      this.props.loadSchoolWithBoundaryContainingPoint(
-        this.state.lat,
-        this.state.lon,
-        {
-          boundary_level: this.state.level
-        }
-      );
-      this.loadDistrictByLatLon();
-      this.loadNearbyDistricts();
-    }
 
     if(schoolMarkersChanged) {
-      Object.values(prevState.schoolMarkers).forEach(m => m.setMap(null));
+      Object.values(prevState.schoolMarkers).forEach(m => {
+        m.setMap(null);
+        google.maps.event.clearListeners(m, 'click');
+      });
       Object.values(this.state.schoolMarkers).forEach(m => m.setMap(this.map));
     }
     if(districtMarkersChanged) {
-      Object.values(prevState.districtMarkers).forEach(m => m.setMap(null));
+      Object.values(prevState.districtMarkers).forEach(m => {
+        m.setMap(null);
+        google.maps.event.clearListeners(m, 'click');
+      });
       Object.values(this.state.districtMarkers).forEach(m => m.setMap(this.map));
-    }
-  }
-
-  loadDistrictByLatLon() {
-    this.props.loadDistrictWithBoundaryContainingPoint(
-      this.state.lat,
-      this.state.lon,
-      {
-        boundary_level: this.state.level
-      }
-    );
-  }
-
-  loadNearbyDistricts() {
-    this.props.getNearbyDistricts(this.state.lat, this.state.lon, this.nearbyDistrictsRadius, {
-      charter_only: false 
-    });
-  }
-
-  initSchool() {
-    if (this.state.schoolId && this.state.state) {
-      this.props.loadSchool(this.state.schoolId, { state: this.state.state });
-    } else if (this.state.lat && this.state.lon) {
-      this.props.loadSchoolWithBoundaryContainingPoint(
-        this.state.lat,
-        this.state.lon,
-        {
-          boundary_level: this.state.level
-        }
-      );
-    }
-  }
-
-  loadDistrict() {
-    if (this.state.districtId && this.state.state) {
-      this.props.loadDistrict(this.state.districtId, {state: this.state.state});
-    } else if (this.state.lat && this.state.lon) {
-      this.loadDistrictByLatLon();
     }
   }
 

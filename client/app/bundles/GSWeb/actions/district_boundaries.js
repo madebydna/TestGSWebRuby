@@ -9,6 +9,9 @@ export const RECEIVE_SCHOOLS = 'RECEIVE_SCHOOLS';
 export const RECEIVE_DISTRICT = 'RECEIVE_DISTRICT';
 export const RECEIVE_DISTRICTS = 'RECEIVE_DISTRICTS';
 export const RECEIVE_GEOCODE_RESULTS = 'RECEIVE_GEOCODE_RESULTS';
+export const SET_LAT_LON = 'SET_LAT_LON';
+export const SET_SCHOOL = 'SET_SCHOOL';
+export const SET_DISTRICT = 'SET_SCHOOL';
 
 // This is a "thunk" or "thunk action creator", which takes advantage of the
 // "thunk middleware", which is a piece of Redux middleware that allows us
@@ -27,6 +30,28 @@ export const loadSchool = (id, options) => dispatch => {
     ...options,
     extras: 'boundaries'
   }).done(json => dispatch(receiveSchool(json)));
+}
+
+export const changeLocation = (lat, lon) => (dispatch, getState) => {
+  let level = getState().districtBoundaries.level;
+  let radius = getState().districtBoundaries.nearbyDistrictsRadius;
+  dispatch(setLatLon(lat,lon))
+  dispatch(loadSchoolWithBoundaryContainingPoint(lat, lon, level));
+  dispatch(loadDistrictWithBoundaryContainingPoint(lat, lon, level));
+  dispatch(loadNearbyDistricts(lat, lon, radius, {
+    charter_only: false
+  }));
+}
+
+export const selectSchool = (id, state) => dispatch => {
+  dispatch(setSchool(id, { state }));
+  dispatch(loadSchool(id, { state }));
+}
+
+export const selectDistrict = (id, state) => dispatch => {
+  dispatch(setDistrict(id, { state }));
+  dispatch(loadDistrict(id, { state }));
+  dispatch(findSchoolsInDistrict(id, { state }));
 }
 
 export const findSchoolsInDistrict = (districtId, options) => dispatch => {
@@ -55,7 +80,7 @@ export const loadDistrictWithBoundaryContainingPoint = (lat, lon, options) => di
   }).done(json => store.dispatch(receiveDistrict(json.items[0])));
 }
 
-export const getNearbyDistricts = (lat, lon, radius, options) => dispatch => {
+export const loadNearbyDistricts = (lat, lon, radius, options) => dispatch => {
   Districts.findNearLatLon(lat, lon, radius, options)
     .done(json => store.dispatch(receiveDistricts(json.items)));
 }
@@ -63,14 +88,15 @@ export const getNearbyDistricts = (lat, lon, radius, options) => dispatch => {
 export const geocode = searchTerm => dispatch => {
   Geocoding.geocode(searchTerm).done(data => {
     var result = data[0];
-    store.dispatch(receiveGeocodeResults(
-      lat: result.lat,
-      lon: result.lon,
-      normalizedAddress: result.normalizedAddress,
-      state: result.state,
-      partialMatch: result.partial_match,
-      geocodeType: result.type
+    dispatch(receiveGeocodeResults(
+      result.lat,
+      result.lon,
+      result.normalizedAddress,
+      result.state,
+      result.partial_match,
+      result.type
     ));
+    dispatch(changeLocation(result.lat, result.lon));
   });
 }
 
@@ -104,3 +130,20 @@ export const receiveGeocodeResults = (lat, lon, normalizedAddress, state, geocod
   geocodeType
 })
 
+export const setLatLon = (lat, lon) => ({
+  type: SET_LAT_LON,
+  lat,
+  lon
+});
+
+export const setSchool = (id, state) => ({
+  type: SET_SCHOOL,
+  id,
+  state
+});
+
+export const setDistrict = (id, state) => ({
+  type: SET_DISTRICT,
+  id,
+  state
+});

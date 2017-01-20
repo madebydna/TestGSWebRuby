@@ -16,7 +16,8 @@ let ConnectedDistrictBoundaries = connect(
       lon: state.districtBoundaries.lon,
       schoolId: state.districtBoundaries.schoolId,
       districtId: state.districtBoundaries.districtId,
-      state: state.districtBoundaries.state
+      state: state.districtBoundaries.state,
+      level: state.districtBoundaries.level
     };
   },
   function(dispatch, ownProps) {

@@ -13,7 +13,9 @@ window.store = configureStore({
     lat: getValueOfQueryParam('lat'),
     lon: getValueOfQueryParam('lon'),
     state: getValueOfQueryParam('state'),
-    stateId: getValueOfQueryParam('stateId')
+    schoolId: getValueOfQueryParam('schoolId'),
+    nearbyDistrictsRadius: 50,
+    level: 'e'
   }
 });
 
