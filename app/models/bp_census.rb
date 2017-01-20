@@ -18,6 +18,6 @@ class BpCensus < ActiveRecord::Base
   end
 
   def state
-    self.State ? self.State.downcase.to_sym : nil
+    self.State ? self.State.downcase : nil
   end
 end

@@ -73,6 +73,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
+
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
