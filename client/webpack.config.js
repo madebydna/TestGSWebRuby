@@ -19,6 +19,7 @@ const config = {
   output: {
     filename: 'webpack-bundle.js',
     path: '../app/assets/webpack',
+    publicPath: '/assets'
   },
 
   resolve: {
@@ -40,6 +41,10 @@ const config = {
       {
         test: require.resolve('react'),
         loader: 'imports?shim=es5-shim/es5-shim&sham=es5-shim/es5-sham',
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file'
       },
       {
         test: /\.jsx?$/,
