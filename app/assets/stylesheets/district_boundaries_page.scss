@@ -1,4 +1,46 @@
 #district-boundaries-page {
+  .district-boundaries-component {
+    @include clearfix;
+
+    .school-list { 
+      float: left;
+      height: 400px;
+    }
+
+    .map {
+      height: 400px;
+    }
+
+    ol {
+      width: 380px;
+      height: 344px;
+      margin: 0px;
+      padding: 0px;
+      color: #2e3438;
+      overflow: scroll;
+      list-style: none;
+      li {
+        @include clearfix;
+        padding: 10px;
+      }
+      .school-rating {
+        float: left;
+      }
+      .school {
+        float: left;
+        width: 250px;
+        padding-left: 10px;
+      }
+      li:hover {
+        background-color: #f6f9fa;
+        cursor: pointer;
+      }
+      li.selected {
+        background-color: #f6f9fa;
+      }
+    }
+  }
+
   .header {
     background-color: #184a7d;
     color: white;
@@ -14,6 +56,7 @@
         font-size: 26px;
       }
     }
+
     p {
       font-family: 'opensans-regular';
       font-size: 12px;

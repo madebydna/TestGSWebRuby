@@ -9,6 +9,7 @@ import Polygon from './polygon';
 import ConnectedSearchBar from './connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
+import SchoolList from './school_list';
 
 export default class DistrictBoundaries extends React.Component {
   static defaultProps = {
@@ -92,9 +93,12 @@ export default class DistrictBoundaries extends React.Component {
 
   render() {
     return (
-      <div id="district-boundaries-component">
+      <div className="district-boundaries-component">
         <ConnectedSearchBar/>
-        {this.renderMap()}
+        <SchoolList />
+        <div className="map">
+          {this.renderMap()}
+        </div>
 
         <div id="districtList"></div>
         <div id="js-districtHeader"></div>
