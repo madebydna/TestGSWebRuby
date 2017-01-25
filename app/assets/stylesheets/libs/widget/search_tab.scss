@@ -1,0 +1,23 @@
+#searchTabBody {
+  padding: 30px 20px;
+  position: relative;
+
+  p {
+    font-size: 13px;
+    line-height: 1.3;
+
+    &.warning {
+      color:#c03;
+      margin-top: 15px;
+    }
+  }
+
+  #searchInput {
+    width:100%
+  }
+  
+  .button-1 {
+    float:right;
+    margin-top:5px;
+  }
+}
