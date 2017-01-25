@@ -18,7 +18,7 @@ class Api::SchoolSerializer
       address: {
         street1: school['street'],
         street2: school['street_line_2'],
-        zip: school['zip'],
+        zip: school['zipcode'],
         city: school['city']
       },
       rating: (school.great_schools_rating if defined? school.great_schools_rating),

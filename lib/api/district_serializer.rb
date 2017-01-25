@@ -17,7 +17,7 @@ class Api::DistrictSerializer
       address: {
         street1: district['street'],
         street2: district['street_line_2'],
-        zip: district['zip'],
+        zip: district['zipcode'],
         city: district['city']
       },
       rating: (district.great_schools_rating if defined? district.great_schools_rating),
