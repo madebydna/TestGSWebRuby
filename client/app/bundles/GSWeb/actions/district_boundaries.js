@@ -1,7 +1,5 @@
 import * as Schools from '../api_clients/schools';
 import * as Districts from '../api_clients/districts';
-import School from '../components/map/school';
-import District from '../components/map/district';
 import * as Geocoding from '../components/geocoding';
 
 export const RECEIVE_SCHOOL = 'RECEIVE_SCHOOL';
@@ -66,23 +64,33 @@ export const loadDistrict = (id, options) => dispatch => {
   }).done(json => receiveDistrict(json));
 }
 
-export const loadSchoolWithBoundaryContainingPoint = (lat, lon, options) => dispatch => {
+export const loadSchoolWithBoundaryContainingPoint = (lat, lon, level, options) => dispatch => {
+  if(level == 'E') { level = 'P'; }
   Schools.findByLatLon(lat, lon, {
     ...options,
+    boundary_level: level,
     extras: 'boundaries'
-  }).done(json => store.dispatch(receiveSchool(json.items[0])));
+  }).done(json => dispatch(receiveSchool(json.items[0])));
 }
 
-export const loadDistrictWithBoundaryContainingPoint = (lat, lon, options) => dispatch => {
+export const loadDistrictWithBoundaryContainingPoint = (lat, lon, level, options) => dispatch => {
   Districts.findByLatLon(lat, lon, {
     ...options,
+    boundary_level: level,
     extras: 'boundaries'
-  }).done(json => store.dispatch(receiveDistrict(json.items[0])));
+  }).done(json => {
+    let district = json.items[0];
+    if(district) {
+      dispatch(receiveDistrict(district));
+      dispatch(setDistrict(district.id, { state: district.state }));
+      dispatch(findSchoolsInDistrict(district.id, { state: district.state }));
+    }
+  });
 }
 
 export const loadNearbyDistricts = (lat, lon, radius, options) => dispatch => {
   Districts.findNearLatLon(lat, lon, radius, options)
-    .done(json => store.dispatch(receiveDistricts(json.items)));
+    .done(json => dispatch(receiveDistricts(json.items)));
 }
 
 export const geocode = searchTerm => dispatch => {

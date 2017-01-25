@@ -63,7 +63,7 @@ export default class Map extends React.Component {
     let $map = $(findDOMNode(this.mapDiv))[0];
     this.map = this.createGoogleMap($map);
     this.$map = $map;
-    this.props.googleMaps.event.addDomListener(this.map, 'drag_end', this.onDragEnd.bind(this));
+    this.props.googleMaps.event.addDomListener(this.map, 'dragend', this.onDragEnd.bind(this));
     this.props.googleMaps.event.addDomListener(this.map, 'idle', this.onIdle.bind(this));
     this.props.googleMaps.event.addDomListener(window, 'resize', this.onResize.bind(this));
     this.map.addListener('click', this.onClick.bind(this));
@@ -89,11 +89,9 @@ export default class Map extends React.Component {
 
   render() {
     return (
-      <div>
-        <div id="map-canvas" style={{width:'75%', height:'400px'}} ref={(map) => { this.mapDiv = map; }}>
-          {this.renderMarkers()}
-          {this.renderPolygons()}
-        </div>
+      <div className="map" ref={(map) => { this.mapDiv = map; }}>
+        {this.renderMarkers()}
+        {this.renderPolygons()}
       </div>
     );
   }

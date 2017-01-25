@@ -10,7 +10,8 @@ export default class MapMarker extends React.Component {
     lat: React.PropTypes.number.isRequired,
     lon: React.PropTypes.number.isRequired,
     rating: React.PropTypes.string,
-    onClick: React.PropTypes.func
+    onClick: React.PropTypes.func,
+    selected: React.PropTypes.bool
   }
 
   constructor(props) {
@@ -33,6 +34,16 @@ export default class MapMarker extends React.Component {
     );
     this.marker.setMap(this.props.map);
     google.maps.event.addListener( this.marker, 'click', () => this.props.onClick(this.marker));
+
+    if(this.props.selected) {
+      this.props.onClick(this.marker);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(!this.props.selected && nextProps.selected && this.marker) {
+      this.props.onClick(this.marker);
+    }
   }
 
   componentWillUnmount() {

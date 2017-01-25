@@ -42,6 +42,9 @@ export default class DistrictBoundaries extends React.Component {
       props.key = 's' + s.state + s.id;
       props.createInfoWindow = () => createInfoWindow(s);
       props.onClick = () => this.props.selectSchool(s.id, s.state);
+      if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
+        props.selected = true;
+      }
       if(s.type == 'private') {
         return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />
       } else {
