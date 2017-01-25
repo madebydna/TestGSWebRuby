@@ -39,8 +39,8 @@ GS.googleMap = GS.googleMap || (function() {
   var ajaxInitCallbacks = [];
   var needsInit = true;
 
-  var maxMobileWidth = 767;
-  var sizing_width  = window.innerWidth;
+  // var maxMobileWidth = 767;
+  // var sizing_width  = window.innerWidth;
 
   var additionalZoom = 0;
 
@@ -53,10 +53,7 @@ GS.googleMap = GS.googleMap || (function() {
         var points = [];
         points = gon.map_points;
 
-        var zoomStart = parseInt($("#zoom").val());
-        if(!(0 < zoomStart < 19)){
-          zoomStart = 12;
-        }
+
 
         var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
         var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
@@ -71,12 +68,7 @@ GS.googleMap = GS.googleMap || (function() {
           var isdraggable = true;
 
           var isZoomControl = function(){
-
-            if(sizing_width <= maxMobileWidth){
-                return false;
-            }else{
-                return true;
-            }
+            return true;
           };
 
           var myOptions = {
@@ -95,7 +87,7 @@ GS.googleMap = GS.googleMap || (function() {
             panControl: false,
             scrollwheel: false,
             draggable: isdraggable,
-            zoom: zoomStart,
+            zoom: 12,
             maxZoom: 19,
             styles: [
                 {
@@ -151,7 +143,7 @@ GS.googleMap = GS.googleMap || (function() {
 
             GS.widget_map.map = new google.maps.Map(document.getElementById("js-map-canvas"), myOptions);
 
-          var position;
+            var position;
             var imageUrl;
             var imageSize;
             var imageAnchor;
@@ -250,7 +242,12 @@ GS.googleMap = GS.googleMap || (function() {
             if (!bounds.isEmpty()) {
                 getMap().setCenter(bounds.getCenter(), getMap().fitBounds(bounds));
                 google.maps.event.addListenerOnce(getMap(), 'bounds_changed', function() {
-                  GS.widget_map.map.setZoom(zoomStart);
+                  if($("#zoom").val() != ''){
+                    var zoomStart = parseInt($("#zoom").val());
+                    if(0 < zoomStart < 19){
+                      GS.widget_map.map.setZoom(zoomStart);
+                    }
+                  }
                 });
             } else {
                 getMap().setOptions({maxZoom:null});

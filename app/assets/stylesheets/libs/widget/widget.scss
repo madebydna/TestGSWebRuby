@@ -1,22 +1,25 @@
-body { font-family: 'Arial, sans-serif'}
-.mapContainer {
-  .gs_tab_container {
+//body { font-family: 'Arial, sans-serif'}
+.map-container {
+  font-family: Arial, sans-serif;
+  .gs-tab-container {
     display: table;
     border-bottom: solid 1px #FFCC66;
     width: 100%
   }
-  .gs_tab {
+  .gs-tab {
     width: 50%;
     display: table-cell;
+    font-size: 12px;
     text-align: center;
     padding: 10px 0px;
     cursor: pointer;
+    font-weight: bold;
 
-    &.active {
-      background-color: #EDEDED;
+    &.inactive {
+      background-color: #ebebeb;
     }
 
-    &.left_tab {
+    &.left-tab {
       border-right: 1px solid #FFCC66;
     }
   }
@@ -34,7 +37,7 @@ body { font-family: 'Arial, sans-serif'}
     ul {
       list-style: none;
       margin: 0;
-      padding: 10px;
+      padding: 5px 10px 10px;
 
       li {
         display: inline;
@@ -43,7 +46,7 @@ body { font-family: 'Arial, sans-serif'}
     }
   }
 
-  .filter_nav .question_mark {
+  .filter-nav .question-mark {
     float: right;
     padding: 10px;
   }
