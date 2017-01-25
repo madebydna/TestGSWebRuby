@@ -10,6 +10,7 @@ export const RECEIVE_GEOCODE_RESULTS = 'RECEIVE_GEOCODE_RESULTS';
 export const SET_LAT_LON = 'SET_LAT_LON';
 export const SET_SCHOOL = 'SET_SCHOOL';
 export const SET_DISTRICT = 'SET_SCHOOL';
+export const SET_LEVEL = 'SET_LEVEL';
 
 // This is a "thunk" or "thunk action creator", which takes advantage of the
 // "thunk middleware", which is a piece of Redux middleware that allows us
@@ -154,4 +155,9 @@ export const setDistrict = (id, state) => ({
   type: SET_DISTRICT,
   id,
   state
+});
+
+export const setLevel = level => ({
+  type: SET_LEVEL,
+  level
 });

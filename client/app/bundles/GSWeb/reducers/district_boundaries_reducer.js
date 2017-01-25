@@ -1,6 +1,6 @@
 import { RECEIVE_GEOCODE_RESULTS, RECEIVE_SCHOOLS, RECEIVE_SCHOOL,
   RECEIVE_DISTRICT, RECEIVE_DISTRICTS, SET_LAT_LON, SET_SCHOOL,
-  SET_DISTRICT } from '../actions/district_boundaries';
+  SET_DISTRICT, SET_LEVEL } from '../actions/district_boundaries';
 
 export default (state, action) => {
   if (typeof state === 'undefined') {
@@ -30,6 +30,11 @@ export default (state, action) => {
         ...state,
         districtId: action.id,
         state: action.state
+      };
+    case SET_LEVEL:
+      return {
+        ...state,
+        level: action.level
       };
     case RECEIVE_SCHOOL:
       return {

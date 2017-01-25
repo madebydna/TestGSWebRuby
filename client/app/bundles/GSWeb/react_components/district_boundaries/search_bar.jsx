@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { geocode } from '../../components/geocoding';
+import Multibutton from '../multibutton';
 
 export default class SearchBar extends React.Component {
 
@@ -41,11 +42,31 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="filter-bar">
         <div className="search-input">
           <label>Search</label>
           <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
           <button name="submit-search" onClick={this.search}>Search</button>
+        </div>
+        <div className="filters">
+          <div className="district-select">
+            <label>Districts near ...</label>
+            <select>
+            </select>
+          </div>
+          <div className="grade-filter">
+            <label>School Grade</label>
+            <Multibutton
+              options={{E: 'Elementary', M: 'Middle', H: 'High'}}
+              onSelect={this.props.setLevel} />
+          </div>
+          <div>
+            <label className="type-filter">Additional school type</label>
+            <div>
+              <input type="checkbox"/>Charter
+              <input type="checkbox"/>Private
+            </div>
+          </div>
         </div>
       </div>
     );

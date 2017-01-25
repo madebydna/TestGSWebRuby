@@ -2,9 +2,53 @@
   .district-boundaries-component {
     @include clearfix;
 
+    select {
+      height: 36px;
+      border-radius: 2px;
+      background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+    }
+
+    .multi-button {
+      display: inline-block;
+      border: 1px solid #cecece;
+      background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+      border-radius: 2px;
+      span {
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px 15px 10px 15px;
+      }
+      span.active {
+        background-color: #f6f9fa;
+      }
+      span ~ span {
+        border-left: 1px solid #cecece;
+      }
+    }
+
+    .filter-bar {
+      .filters {
+        @include clearfix;
+        > div {
+          @include media-breakpoint-up(sm) {
+            float:left;
+            padding-left: 20px;
+          }
+        }
+      }
+      label {
+        display: block;
+      }
+    }
+
     .school-list { 
       float: left;
       height: 400px;
+    }
+
+    label {
+      font-family: 'opensans-semibold';
+      font-size: 14px;
     }
 
     .map {
