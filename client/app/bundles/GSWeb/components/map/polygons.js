@@ -11,7 +11,8 @@ export default function createPolygonFactory(googleMaps) {
         strokeWeight: 2,
         fillColor: this.fillColor || '#46461F',
         fillOpacity: 0.25,
-        zIndex: this.zIndex || 1
+        zIndex: this.zIndex || 1,
+        clickable: this.clickable || false // if polygon is clickable, map underneath isn't clickable
       });
     },
 
@@ -37,12 +38,13 @@ export default function createPolygonFactory(googleMaps) {
   const schoolPolygonFactory =  Object.assign(Object.create(polygonFactory), {
     strokeColor: '#FF7800',
     zIndex: 1,
-    fillColor: '#46461F'
+    fillColor: '#46461F',
+    clickable: true
   });
 
   const districtPolygonFactory =  Object.assign(Object.create(polygonFactory), {
     strokeColor: '#2092C4',
-    zIndex: 1,
+    zIndex: 2,
     fillColor: 'rgba(0,0,0,0.2)'
   });
 
