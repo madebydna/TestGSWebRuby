@@ -9,7 +9,7 @@ loadScript(googleMapsScriptURL + '&callback=' + callbackFunction, function(){
 
 function loadScript(url, callback){
 
-  var script = document.createElement("script")
+  var script = document.createElement("script");
   script.type = "text/javascript";
 
   if (script.readyState){  //IE
@@ -39,24 +39,19 @@ GS.googleMap = GS.googleMap || (function() {
   var ajaxInitCallbacks = [];
   var needsInit = true;
 
-  // var maxMobileWidth = 767;
-  // var sizing_width  = window.innerWidth;
-
   var additionalZoom = 0;
 
-  var init = function() {
+  var init = function(sprite_files, map_points) {
 
       if (!needsInit) {return;}
       needsInit = false;
-      if(gon.sprite_files != undefined) {
+      if(sprite_files != undefined) {
 
         var points = [];
-        points = gon.map_points;
+        points = map_points;
 
-
-
-        var imageUrlOnPage = gon.sprite_files['imageUrlOnPage'];
-        var imageUrlOffPage = gon.sprite_files['imageUrlOffPage'];
+        var imageUrlOnPage = sprite_files['imageUrlOnPage'];
+        var imageUrlOffPage = sprite_files['imageUrlOffPage'];
 
         var optionalLat = optionalLat || 37.807778;
         var optionalLon = optionalLon || -122.265149;
@@ -277,7 +272,7 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '<div class="mts col-xs-5 col-sm-4 font-size-small ">'; //sprites
               //markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
               if (point.gsRating != '') {
-                  markup += '<div class="pbs"><div class="fl vam mrs gs-rating-sm ' + GS.rating.getRatingPerformanceLevel(point.gsRating) + '">';
+                  markup += '<div class="pbs"><div class="fl vam mrs circle-rating--small ' + 'rating_'+point.gsRating + '">';
                   markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
               }
 
@@ -343,8 +338,8 @@ GS.googleMap = GS.googleMap || (function() {
       google.maps.event.trigger(map, 'resize');
     }
 
-    var initAndShowMap = function () {
-        init();
+    var initAndShowMap = function (sprite_files, map_points) {
+        init(sprite_files, map_points);
         var map = getMap();
         var center = map.getCenter();
         google.maps.event.trigger(map, 'resize');
@@ -404,6 +399,6 @@ GS.googleMap = GS.googleMap || (function() {
 
 })();
 $(function() {
-  GS.googleMap.addToInitDependencyCallbacks(GS.googleMap.initAndShowMap);
+  GS.googleMap.addToInitDependencyCallbacks(function(){GS.googleMap.initAndShowMap(gon.sprite_files, gon.map_points)});
 });
 

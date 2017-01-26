@@ -1,0 +1,4 @@
+$small: 24px;
+.circle-rating--small {
+  @include circle-rating($small)
+}

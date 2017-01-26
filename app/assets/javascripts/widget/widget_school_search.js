@@ -32,8 +32,8 @@ GS.widget = GS.widget || (function() {
     return false;
   }
 
-  var init = function(){
-    if(gon.search_failed == 'true'){
+  var init = function(search_failed){
+    if(search_failed == 'true'){
       showSearchTab();
     }
     calculateMapHeight();
@@ -194,5 +194,5 @@ function textSwitch(el, target, replace) {
 }
 
 $(window).load(function () {
-  GS.widget.init();
+  GS.widget.init(gon.search_failed);
 });

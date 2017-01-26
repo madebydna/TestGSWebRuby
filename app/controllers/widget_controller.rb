@@ -1,3 +1,4 @@
+require 'ostruct'
 class WidgetController < ApplicationController
 
   include GoogleMapConcerns
@@ -45,7 +46,6 @@ class WidgetController < ApplicationController
   def city_from_query
     @_city ||= (
       sq = params[:searchQuery]
-      city = nil
       if sq.present?
         sq_arr =  sq.split(',')
         if sq_arr.present? && sq_arr.length == 1
@@ -70,8 +70,23 @@ class WidgetController < ApplicationController
           city = search_by_cityName_state
         end
       end
+      if city.blank?
+        lat = params[:lat]
+        lon = params[:lon]
+        if lat.blank? || lon.blank?
+          zip = zip_param(sq)
+          if zip.present?
+            hash = {:state => zip.state, :name => zip.gs_name}
+            city = OpenStruct.new(hash)
+          end
+        end
+      end
       city
     )
+  end
+
+  def zip_param zip_code
+    @_zip_param = (zip_code.present? && zip_code =~ /^\d{5}$/) ? BpZip.find_by_zip(zip_code) : nil
   end
 
   def search_by_cityName_state
