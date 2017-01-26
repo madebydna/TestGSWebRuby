@@ -148,8 +148,17 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def get_data!
-    self.data = cached_data_for_category
+    data = cached_data_for_category
+    data = data.each_with_object({}) do |(key, array_of_data_objects), hash|
+      hash[key] = select_data_with_max_year(array_of_data_objects)
+    end
+    self.data = data
     modify_data!
+  end
+
+  def select_data_with_max_year(array_of_data_objects)
+    max_year = array_of_data_objects.map { |o| o[:year] }.max
+    array_of_data_objects.select { |o| o[:year] == max_year }
   end
 
   def modify_data!
