@@ -33,6 +33,9 @@ GS.widget = GS.widget || (function() {
   }
 
   var init = function(){
+    if(gon.search_failed == 'true'){
+      showSearchTab();
+    }
     calculateMapHeight();
 
     $(".gs-tab").on("click", function () {
@@ -184,12 +187,12 @@ GS.widget = GS.widget || (function() {
 
 })();
 
-$(window).load(function() {
-  GS.widget.init();
-});
-
 function textSwitch(el, target, replace) {
   if (el.value == replace) {
     el.value = target;
   }
 }
+
+$(window).load(function () {
+  GS.widget.init();
+});

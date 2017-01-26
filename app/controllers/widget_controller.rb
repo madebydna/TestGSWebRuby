@@ -54,43 +54,68 @@ class WidgetController < ApplicationController
           city_name = sq_arr[0].strip
           #   check if zip code
           unless all_digits(city_name)
-            city_found = City.get_city_by_name(city_name)
-            if city_found.length == 1
-              city = city_found.first
-            end
+            city = city_found_result(City.get_city_by_name(city_name))
           end
         elsif sq_arr.present? && sq_arr.length == 2
           #   assume that it is a city and state
           state_name = sq_arr[1].strip
           city_name = sq_arr[0].strip
-          #   check to see if it is a state
-          state = States.abbreviation(state_name)
-          #   if it is a state try to find city in state that is unique
-          #   set city variable if successful
-          if state.present?
-            city_found = City.get_city_by_name_and_state(city_name, state)
-            if city_found.length == 1
-              city = city_found.first
-            end
-          end
+          city = search_by_city_state(state_name, city_name)
+        end
+      end
+      if city.blank?
+        lat = params[:lat]
+        lon = params[:lon]
+        if lat.blank? || lon.blank?
+          city = search_by_cityName_state
         end
       end
       city
     )
   end
 
-  def by_location
-    @state_abbreviation = state_abbreviation
-    @by_location = true
+  def search_by_cityName_state
+    city_name = params[:cityName]
+    state_name = params[:state]
+    search_by_city_state(state_name, city_name)
+  end
 
-    setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
-      @lat = params_hash['lat']
-      @lon = params_hash['lon']
-      search_options.merge!({lat: @lat, lon: @lon, radius: radius_param, filters: {:level_code=>levels_from_params}})
-      search_options[:state] =  state_abbreviation if @state
-      @normalized_address = params_hash['normalizedAddress']
-      @search_term = params_hash['locationSearchString']
-      city = params_hash['city']
+  def search_by_city_state(state_name, city_name)
+    state = States.abbreviation(state_name)
+    #   if it is a state try to find city in state that is unique
+    #   set city variable if successful
+    if state.present?
+      city = city_found_result(City.get_city_by_name_and_state(city_name, state))
+    end
+    city
+  end
+
+  def city_found_result city_found
+    if city_found.length == 1
+      city = city_found.first
+    end
+    city
+  end
+
+  def by_location
+    lat = params[:lat]
+    lon = params[:lon]
+    if lat.present? && lon.present?
+      @state_abbreviation = state_abbreviation
+      @by_location = true
+
+      setup_search_results!(Proc.new { |search_options| SchoolSearchService.by_location(search_options) }) do |search_options, params_hash|
+        @lat = params_hash['lat']
+        @lon = params_hash['lon']
+        search_options.merge!({lat: @lat, lon: @lon, radius: radius_param, filters: {:level_code=>levels_from_params}})
+        search_options[:state] =  state_abbreviation if @state
+        @normalized_address = params_hash['normalizedAddress']
+        @search_term = params_hash['locationSearchString']
+        city = params_hash['city']
+      end
+    else
+      params_hash
+      gon.search_failed = 'true'
     end
   end
 
@@ -99,8 +124,6 @@ class WidgetController < ApplicationController
       search_options.merge!({state: city_from_query.state, city: city_from_query.name, filters: {:level_code=>levels_from_params}})
     end
   end
-
-
 
   def setup_search_results!(search_method)
     @params_hash = params #parse_array_query_string(request.query_string)
