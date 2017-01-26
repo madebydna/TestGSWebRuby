@@ -6,11 +6,11 @@ class CitiesListController < ApplicationController
 
   def show
     gon.pageTitle = meta_title
-    set_meta_tags title: meta_title
-    @cities = dcl.cities(state)
-    @state_names = dcl.state_names(state)
-    @dropdown_info = dcl.dropdown_info
+    set_seo_meta_tags
+    @dcl = dcl
   end
+
+  private
 
   def state
     params[:state_name]
@@ -27,7 +27,12 @@ class CitiesListController < ApplicationController
   end
 
   def meta_title
-    "#{dcl.state_full_name(state)} School information by City: Popular Cities"
+    "#{dcl.state_full_name} School information by City: Popular Cities"
+  end
+
+  def set_seo_meta_tags
+    set_meta_tags title: meta_title,
+                  canonical: "http://www.greatschools.org/cities/#{dcl.state_names[:routing]}/#{state}/"
   end
 
 end
