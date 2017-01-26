@@ -11,7 +11,9 @@ export default class SearchBar extends React.Component {
     searchTerm: React.PropTypes.string,
     districts: React.PropTypes.array,
     level: React.PropTypes.string,
-    additionalSchoolType: React.PropTypes.string
+    additionalSchoolType: React.PropTypes.string,
+    onClickMapView: React.PropTypes.func,
+    onClickListView: React.PropTypes.func
   }
 
   constructor(props) {
@@ -19,10 +21,14 @@ export default class SearchBar extends React.Component {
     this.submitOnEnterKey = this.submitOnEnterKey.bind(this);
     this.onSearchTermChange = this.onSearchTermChange.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
+    this.onClickListView = this.onClickListView.bind(this);
+    this.onClickMapView = this.onClickMapView.bind(this);
     this.search = this.search.bind(this);
     this.state = {
       searchTerm: this.props.searchTerm,
-      showFilters: false
+      showFilters: false,
+      mapSelected: true,
+      listSelected: false
     }
   }
 
@@ -48,6 +54,22 @@ export default class SearchBar extends React.Component {
     });
   }
 
+  onClickMapView() {
+    this.setState({
+      mapSelected: true,
+      listSelected: false
+    });
+    this.props.onClickMapView();
+  }
+
+  onClickListView() {
+    this.setState({
+      listSelected: true,
+      mapSelected: false
+    });
+    this.props.onClickListView();
+  }
+
   render() {
     return (
       <div className="filter-bar">
@@ -56,7 +78,19 @@ export default class SearchBar extends React.Component {
           <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
           <button name="submit-search" onClick={this.search}>Search</button>
         </div>
-        <button className="filter-toggle-button" onClick={this.toggleFilters} >Filters</button>
+
+        <div className="toggle-bar">
+          <button className="filter-toggle-button" onClick={this.toggleFilters} >Filters</button>
+          <div className="show-map" onClick={this.onClickMapView}>
+            <span className={'icon icon-location' + (this.state.mapSelected ? ' active' : '')}/>
+            Map View
+          </div>
+          <div className="show-list" onClick={this.onClickListView}>
+            <span className={'icon icon-document' + (this.state.listSelected ? ' active' : '')}/>
+            List View
+          </div>
+        </div>
+
         <div className={this.state.showFilters ? "filters open" : "filters"}>
           <hr/>
           <div className="district-select">

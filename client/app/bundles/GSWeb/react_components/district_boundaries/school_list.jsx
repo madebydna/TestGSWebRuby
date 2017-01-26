@@ -58,7 +58,7 @@ class SchoolList extends React.Component {
 
   render() {
     return(
-      <section className="school-list">
+      <section>
         <h3>Schools in district</h3>
         {this.renderSchools()}
       </section>

@@ -27,16 +27,41 @@
       }
     }
 
-    .filter-toggle-button {
+    .toggle-bar {
+      @include clearfix;
+      margin-top: 10px;
       @include media-breakpoint-up(md) {
         display: none;
       }
-      border: 1px solid #c1d2d9;
-      background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
-      border-radius: 2px;
-      padding: 7px 17px 7px 17px;
-      margin-top: 10px;
+
+      .filter-toggle-button {
+        float: left;
+        border: 1px solid #c1d2d9;
+        background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+        border-radius: 2px;
+        padding: 7px 17px 7px 17px;
+      }
+
+      .show-map, .show-list {
+        float: right;
+      }
+
+      .show-map {
+        border-left: 1px solid #c1d2d9;
+        margin-left: 10px;
+        padding-left: 10px;
+      }
+
+      .icon {
+        font-size: 18px;
+        color: #c1d2d9;
+        margin-right: 5px;
+        &.active {
+          color: #2ba3dc;
+        }
+      }
     }
+
 
     .filter-bar {
       padding: 10px 10px 30px 10px;
@@ -111,6 +136,11 @@
     .school-list { 
       float: left;
       height: 400px;
+      &.closed {
+        @include media-breakpoint-down(sm) {
+          display: none;
+        }
+      }
     }
 
     label {
@@ -120,6 +150,11 @@
 
     .map {
       height: 400px;
+      &.closed {
+        @include media-breakpoint-down(sm) {
+          display: none;
+        }
+      }
     }
 
     ol {

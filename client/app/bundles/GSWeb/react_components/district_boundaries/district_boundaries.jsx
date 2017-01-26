@@ -22,8 +22,11 @@ export default class DistrictBoundaries extends React.Component {
     super(props);
     this.map = null;
     this.initGoogleMaps = this.initGoogleMaps.bind(this);
+    this.showMapView = this.showMapView.bind(this);
+    this.showListView = this.showListView.bind(this);
     this.state = {
       googleMapsInitialized: false,
+      listHidden: true
     }
     this.initGoogleMaps();
   }
@@ -91,12 +94,28 @@ export default class DistrictBoundaries extends React.Component {
     }
   };
 
+  showMapView() {
+    this.setState({
+      mapHidden: false,
+      listHidden: true
+    });
+  }
+
+  showListView() {
+    this.setState({
+      mapHidden: true,
+      listHidden: false 
+    });
+  }
+
   render() {
     return (
       <div className="district-boundaries-component">
-        <ConnectedSearchBar/>
-        <SchoolList />
-        <div className="map">
+        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}/>
+        <div className={ this.state.listHidden ? 'school-list closed' : 'school-list'}>
+          <SchoolList />
+        </div>
+        <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
           {this.renderMap()}
         </div>
 
