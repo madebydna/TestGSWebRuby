@@ -18,9 +18,11 @@ export default class SearchBar extends React.Component {
     super(props);
     this.submitOnEnterKey = this.submitOnEnterKey.bind(this);
     this.onSearchTermChange = this.onSearchTermChange.bind(this);
+    this.toggleFilters = this.toggleFilters.bind(this);
     this.search = this.search.bind(this);
     this.state = {
-      searchTerm: this.props.searchTerm
+      searchTerm: this.props.searchTerm,
+      showFilters: false
     }
   }
 
@@ -40,6 +42,12 @@ export default class SearchBar extends React.Component {
     this.props.geocode(this.state.searchTerm);
   }
 
+  toggleFilters() {
+    this.setState({
+      showFilters: !this.state.showFilters
+    });
+  }
+
   render() {
     return (
       <div className="filter-bar">
@@ -48,7 +56,9 @@ export default class SearchBar extends React.Component {
           <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
           <button name="submit-search" onClick={this.search}>Search</button>
         </div>
-        <div className="filters">
+        <button className="filter-toggle-button" onClick={this.toggleFilters} >Filters</button>
+        <div className={this.state.showFilters ? "filters open" : "filters"}>
+          <hr/>
           <div className="district-select">
             <label>Districts near ...</label>
             <select>
