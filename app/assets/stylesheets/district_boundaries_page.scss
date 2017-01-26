@@ -136,10 +136,14 @@
     .school-list { 
       float: left;
       height: 400px;
+      padding: 0px 10px;
       &.closed {
         @include media-breakpoint-down(sm) {
           display: none;
         }
+      }
+      h3 {
+        margin-top: 0px;
       }
     }
 
@@ -170,7 +174,8 @@
       list-style: none;
       li {
         @include clearfix;
-        padding: 10px;
+        padding: 10px 0;
+        border-bottom: solid 1px #dbe6eb;
       }
       .school-rating {
         float: left;
@@ -199,6 +204,7 @@
     }
 
     h1 {
+      margin: 0;
       font-family: 'RobotoSlab-Bold';
       font-size: 18px;
       @include media-breakpoint-up(sm){
