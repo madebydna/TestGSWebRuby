@@ -298,7 +298,7 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '</div>'; //stars
               markup += '<div class="iw-home">'; //zillow
               markup += '<a class="clearfix" href="' + point.zillowUrl + '" rel="nofollow" target="_blank">';
-              markup += '<div class=""><span class="iconx16 i-16-home"></span></div><div class="">Homes</div>';
+              markup += '<div class=""><span class="icon-house iw-house"></span>&nbsp;Homes</div>';
               markup += '</a>';
               markup += '</div>'; //zillow
               markup += '</div>';

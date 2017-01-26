@@ -14,7 +14,7 @@ module SchoolHelper
 
   def zillow_url(school, campaign=nil)
     campaign ||= (zillow_tracking_hash[action_name].present? ? zillow_tracking_hash[action_name] : 'gstrackingpagefail')
-    tracking_codes = "?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=#{campaign}"
+    tracking_codes = "?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=#{campaign}"
     # test that values needed are populated
     if school.present? && school.zipcode.present?
       url = "https://www.zillow.com/#{States.abbreviation(school.state).upcase}-#{school.zipcode.split("-")[0]}"
@@ -49,7 +49,8 @@ module SchoolHelper
         'city_browse' => 'schoolsearch',
         'district_browse' => 'schoolsearch',
         'search' => 'schoolsearch',
-        'show' => 'schoolsearch'
+        'show' => 'schoolsearch',
+        'map' => 'widget_map'
     }
 
   end

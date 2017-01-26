@@ -16,14 +16,18 @@ $small: 24px;
   }
 
   .iw-review {
-    width:70%;
+    width:65%;
     float:left;
   }
 
   .iw-home {
-    width:30%;
+    width:35%;
     float:left;
     text-align: right;
+  }
+
+  .iw-house {
+    color: #666666;
   }
 
   a {
@@ -34,7 +38,8 @@ $small: 24px;
     margin-right:5px;
   }
   .circle-rating--small {
-    @include circle-rating($small)
+    @include circle-rating($small);
+    font-family: Arial, sans-serif;
   }
 
 }
