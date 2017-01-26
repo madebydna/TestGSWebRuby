@@ -1,4 +1,10 @@
-en:
+es:
   districts_list:
     show:
-      School Districts: School Districts DEREK DEREK
+      All schools in: All schools in
+      All cities in: All cities in
+      School Districts: School Districts
+      Show me school districts in a different state: Show me school districts in a different state
+      District name: District name
+      City: City
+      County name: County name

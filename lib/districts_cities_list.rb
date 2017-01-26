@@ -5,7 +5,7 @@ class DistrictsCitiesList
   def initialize(state)
     @state = state
   end
-  
+
   def city_names
     @_cities ||= (
       City.where(active: 1, state: state).order(name: :asc).pluck(:name)
