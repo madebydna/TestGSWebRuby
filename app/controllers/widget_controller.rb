@@ -48,32 +48,24 @@ class WidgetController < ApplicationController
       sq = params[:searchQuery]
       if sq.present?
         sq_arr =  sq.split(',')
+        # search query has single param
         if sq_arr.present? && sq_arr.length == 1
-          #   assume it is a city and check in geocode to see if it is unique
-          #   set city variable if successful
           city_name = sq_arr[0].strip
-          #   check if zip code
           unless all_digits(city_name)
             city = city_found_result(City.get_city_by_name(city_name))
           end
+        # search query has two params
         elsif sq_arr.present? && sq_arr.length == 2
-          #   assume that it is a city and state
           state_name = sq_arr[1].strip
           city_name = sq_arr[0].strip
           city = search_by_city_state(state_name, city_name)
         end
       end
-      if city.blank?
-        lat = params[:lat]
-        lon = params[:lon]
-        if lat.blank? || lon.blank?
-          city = search_by_cityName_state
-        end
-      end
-      if city.blank?
-        lat = params[:lat]
-        lon = params[:lon]
-        if lat.blank? || lon.blank?
+      # no city yet, if lat or lon is blank try and use params cityName and state to get city
+      if city.blank? && (params[:lat].blank? || params[:lon].blank?)
+        city = search_by_cityName_state
+        # if city is still blank try a zip code search
+        if city.blank?
           zip = zip_param(sq)
           if zip.present?
             hash = {:state => zip.state, :name => zip.gs_name}
@@ -113,9 +105,7 @@ class WidgetController < ApplicationController
   end
 
   def by_location
-    lat = params[:lat]
-    lon = params[:lon]
-    if lat.present? && lon.present?
+    if params[:lat].present? && params[:lon].present?
       @state_abbreviation = state_abbreviation
       @by_location = true
 
@@ -126,7 +116,7 @@ class WidgetController < ApplicationController
         search_options[:state] =  state_abbreviation if @state
         @normalized_address = params_hash['normalizedAddress']
         @search_term = params_hash['locationSearchString']
-        city = params_hash['city']
+        city = params_hash['cityName']
       end
     else
       params_hash

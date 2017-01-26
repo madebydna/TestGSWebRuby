@@ -49,6 +49,15 @@
   .filter-nav .question-mark {
     float: right;
     padding: 10px;
+
+    span {
+      color:#555555;
+      background-color: #eeeeee;
+      &:hover {
+        background-color: #cccccc;
+      }
+    }
+
   }
   .dn {
     display:none;

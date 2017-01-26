@@ -10,6 +10,6 @@
   <div class="js-mapPinSchoolTypeCharterText"><%= db_t(school_type_display('charter')) %></div>
   <div class="js-mapPinAssignedSchoolText"><%= t('.assigned_school') %></div>
   <% (1..5).each do |rating| %>
-    <div class="js-mapPinCommunityStars-<%=rating%>"><%= draw_stars_16 rating %></div>
+    <div class="js-mapPinCommunityStars-<%=rating%>"><%= render 'school_profiles/five_stars', filled: rating %></div>
   <% end %>
 </div>
