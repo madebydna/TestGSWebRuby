@@ -49,7 +49,7 @@ GS.widget = GS.widget || (function() {
       }
     });
 
-    $('.question-mark').on('click', function () {
+    $('.info-mark').on('click', function () {
       showHelpTab();
     });
   };

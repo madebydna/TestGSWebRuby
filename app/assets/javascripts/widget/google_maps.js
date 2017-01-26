@@ -251,62 +251,54 @@ GS.googleMap = GS.googleMap || (function() {
 
           var getInfoWindowMarkup = function (point) {
               var infoWindowMarkup = document.createElement('div');
-              var markup = '<div>'; //school data
+              var markup = '<div class="gs-info-window">'; //school data
               var assignedLevel = point.assignedLevel;
               if (assignedLevel) {
-                  markup += '<div class="mbs"><span class="notranslate font-size-small inverted-text bg-neutral brs uc phm pvs">' + mapPinAssignedSchoolText() + '*</span></div>';
+                  markup += '<div><span class="notranslate">' + mapPinAssignedSchoolText() + '*</span></div>';
               }
-              markup += '<div class="pbm notranslate" style="width: 260px;"><a class="font-size-medium" href="' + point.profileUrl + '">' + point.name + '</a></div>';
-              markup += '<div class="row">'; //row
+              markup += '<div class="notranslate iw-school-name"><a class="" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="">'; //row
 
-              markup += '<div class="col-xs-7 col-sm-8">';
-              markup += '<div class="mrl">'; //address
-              markup += '<div class="notranslate">' + point.street + '<br/>' + point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
+              markup += '<div class="">';
+              markup += '<div class="">'; //address
+              markup += '<div class="notranslate iw-school-address">' + point.street + '<br/>' + point.city + ', ' + point.state.toUpperCase() + ' ' + point.zipcode + '</div>';
 
               var schoolType = point.schoolType;
               var stText = /charter/i.test(schoolType) ? mapPinSchoolTypeCharterText() : /private/i.test(schoolType) ? mapPinSchoolTypePrivateText() : mapPinSchoolTypePublicText();
-              markup += '<div class="mts notranslate">' + stText + ' | ' + point.gradeRange + '</div>';
+              markup += '<div class="notranslate iw-school-type">' + stText + ' | ' + point.gradeRange + '</div>';
 
               markup += '</div>';//address
               markup += '</div>'; //
-              markup += '<div class="mts col-xs-5 col-sm-4 font-size-small ">'; //sprites
+              markup += '<div class="">'; //sprites
               //markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
               if (point.gsRating != '') {
-                  markup += '<div class="pbs"><div class="fl vam mrs circle-rating--small ' + 'rating_'+point.gsRating + '">';
+                  markup += '<div class=""><div class="rating-circle circle-rating--small ' + 'rating_'+point.gsRating + '">';
                   markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
               }
 
-              if(point.fitScore > 0){
-                  if (point.strongFit){
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-strong-fit"></span>' + GS.I18n.t('strong_fit') + '</div>';
-                  } else if (point.okFit){
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-ok-fit"></span>'+ GS.I18n.t('ok_fit')  + '</div>';
-                  } else {
-                      markup += '<div class="pts">' + '<span class="vam mrs iconx24-icons i-24-weak-fit"></span>' + GS.I18n.t('weak_fit') + '</div>';
-                  }
-              }
+
               markup += '</div>'; //sprites
               markup += '</div>'; //
               markup += '</div>'; //school data
               markup += '<hr class="mvm">';
-              markup += '<div class="clearfix">';
-              markup += '<div class="fl mrs">'; //stars
+              markup += '<div class="gs-info-window">';
+              markup += '<div class="iw-review">'; //stars
               if (point.numReviews > 0) {
-                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="vam">'+ mapPinCommunityStars(point.communityRatingStars) + '</span>';
-                  markup += '<span class="mls font-size-small notranslate">'+ point.numReviews;
+                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="">'+ mapPinCommunityStars(point.communityRatingStars) + '</span>';
+                  markup += '<span class="notranslate">'+ point.numReviews;
                   if (point.numReviews != 1) {
-                      markup += ' ' + mapPinReviewsText() + ' </span>';
+                      markup += '&nbsp;' + mapPinReviewsText() + ' </span>';
                   } else {
-                      markup += ' ' + mapPinReviewText() + ' </span>';
+                      markup += '&nbsp;' + mapPinReviewText() + ' </span>';
                   }//reviews link
                   markup += '</a>';//reviews link
               } else {
                   markup += '<a class="notranslate" href="' + point.reviewUrl + '">' + mapPinRateThisSchoolText() + '</a>';
               }
               markup += '</div>'; //stars
-              markup += '<div class="fr">'; //zillow
+              markup += '<div class="iw-home">'; //zillow
               markup += '<a class="clearfix" href="' + point.zillowUrl + '" rel="nofollow" target="_blank">';
-              markup += '<div class="fl mrs pt1"><span class="iconx16 i-16-home"></span></div><div class="fl gray-dark hidden-xs font-size-small notranslate">' + mapPinHomesForSaleText() + '</div><div class="fl gray-dark visible-xs font-size-small">Homes</div>';
+              markup += '<div class=""><span class="iconx16 i-16-home"></span></div><div class="">Homes</div>';
               markup += '</a>';
               markup += '</div>'; //zillow
               markup += '</div>';
