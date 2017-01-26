@@ -7,7 +7,9 @@ import { bindActionCreators } from 'redux';
 
 let ConnectedSearchBar = connect(
   function(state, ownProps) { // state is global redux store, ownProps are the passed-in props
+    state = state.districtBoundaries;
     return {
+      districts: Object.values(state.districts)
     };
   },
   function(dispatch, ownProps) {

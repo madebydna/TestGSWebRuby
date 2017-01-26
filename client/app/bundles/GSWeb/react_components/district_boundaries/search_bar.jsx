@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { geocode } from '../../components/geocoding';
 import Multibutton from '../multibutton';
+import Select from '../select';
 
 export default class SearchBar extends React.Component {
 
@@ -95,8 +96,11 @@ export default class SearchBar extends React.Component {
           <hr/>
           <div className="district-select">
             <label>Districts near ...</label>
-            <select>
-            </select>
+            <Select objects={this.props.districts}
+              labelFunc={d => d.name}
+              keyFunc={d => d.state + d.id}
+              onChange={d => this.props.selectDistrict(d.id, d.state)}
+            />
           </div>
           <div className="grade-filter">
             <label>School Grade</label>

@@ -62,7 +62,7 @@ export const loadDistrict = (id, options) => dispatch => {
   Districts.findById(id, {
     ...options,
     extras: 'boundaries'
-  }).done(json => receiveDistrict(json));
+  }).done(json => dispatch(receiveDistrict(json)));
 }
 
 export const loadSchoolWithBoundaryContainingPoint = (lat, lon, level, options) => dispatch => {

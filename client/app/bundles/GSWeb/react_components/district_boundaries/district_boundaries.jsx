@@ -68,7 +68,7 @@ export default class DistrictBoundaries extends React.Component {
   renderPolygons() {
     let polygons = [];
     if(this.props.schoolBoundaryCoordinates) {
-      let key = 's'+ this.props.district.state + this.props.school.id;
+      let key = 's'+ this.props.school.state + this.props.school.id;
       polygons.push(<Polygon key={key} type={polygonTypes.SCHOOL} coordinates={this.props.schoolBoundaryCoordinates}/>);
     }
     if(this.props.districtBoundaryCoordinates) {
