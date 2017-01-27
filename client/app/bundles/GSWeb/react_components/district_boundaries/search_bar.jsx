@@ -24,6 +24,7 @@ export default class SearchBar extends React.Component {
     this.toggleFilters = this.toggleFilters.bind(this);
     this.onClickListView = this.onClickListView.bind(this);
     this.onClickMapView = this.onClickMapView.bind(this);
+    this.handleSchoolType = this.handleSchoolType.bind(this);
     this.search = this.search.bind(this);
     this.state = {
       searchTerm: this.props.searchTerm,
@@ -71,6 +72,10 @@ export default class SearchBar extends React.Component {
     this.props.onClickListView();
   }
 
+  handleSchoolType(e) {
+    this.props.toggleSchoolType(e.target.value);
+  }
+
   render() {
     return (
       <div className="filter-bar">
@@ -105,14 +110,14 @@ export default class SearchBar extends React.Component {
           <div className="grade-filter">
             <label>School Grade</label>
             <Multibutton
-              options={{E: 'Elementary', M: 'Middle', H: 'High'}}
+              options={{e: 'Elementary', m: 'Middle', h: 'High'}}
               onSelect={this.props.setLevel} />
           </div>
           <div>
             <label className="type-filter">Additional school type</label>
             <div>
-              <input type="checkbox"/>Charter
-              <input type="checkbox"/>Private
+              <input type="checkbox" value="charter" onClick={this.handleSchoolType} />Charter
+              <input type="checkbox" value="private" onClick={this.handleSchoolType} />Private
             </div>
           </div>
         </div>
