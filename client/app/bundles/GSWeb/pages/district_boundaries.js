@@ -15,7 +15,8 @@ window.store = configureStore({
     state: getValueOfQueryParam('state'),
     schoolId: getValueOfQueryParam('schoolId'),
     nearbyDistrictsRadius: 50,
-    level: 'E'
+    level: 'e',
+    schoolTypes: []
   }
 });
 

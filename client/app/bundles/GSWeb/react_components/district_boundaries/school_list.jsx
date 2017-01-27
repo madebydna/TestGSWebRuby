@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { selectSchool } from '../../actions/district_boundaries';
 import { bindActionCreators } from 'redux';
 import * as DistrictBoundaryActions from '../../actions/district_boundaries';
+import { getSchool, getSchools } from '../../reducers/district_boundaries_reducer';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -68,8 +69,8 @@ class SchoolList extends React.Component {
 
 export default connect(
   state => ({
-    school: state.districtBoundaries.school,
-    schools: Object.values(state.districtBoundaries.schools)
+    schools: getSchools(state.districtBoundaries),
+    school: getSchool(state.districtBoundaries)
   }),
   dispatch => bindActionCreators(DistrictBoundaryActions, dispatch)
 )(SchoolList);
