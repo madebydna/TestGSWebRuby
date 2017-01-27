@@ -11,7 +11,7 @@ class Api::SchoolWithGeometry < SimpleDelegator
         next unless result['geom'] 
         coordinates = self.geom_to_coordinates(result['geom'])
         if coordinates
-          hash[result['ed_level']] = {
+          hash[result['ed_level'].downcase] = {
             coordinates: coordinates
           }
         end
