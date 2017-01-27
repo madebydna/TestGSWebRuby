@@ -148,8 +148,17 @@ class GroupComparisonDataReader < SchoolProfileDataReader
   end
 
   def get_data!
-    self.data = cached_data_for_category
+    data = cached_data_for_category
+    data = data.each_with_object({}) do |(key, array_of_data_objects), hash|
+      hash[key] = select_data_with_max_year(array_of_data_objects)
+    end
+    self.data = data
     modify_data!
+  end
+
+  def select_data_with_max_year(array_of_data_objects)
+    max_year = array_of_data_objects.map { |o| o[:year] }.max
+    array_of_data_objects.select { |o| o[:year] == max_year }
   end
 
   def modify_data!
@@ -245,14 +254,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
-  # General education is supposed to be the converse of special education, but
-  # it's confusing to parents. This callback removes data points for that
-  # breakdown.
-  def remove_general_eduation_callback
+  # Remove any breakdowns not wanted displayed
+  def remove_blacklisted_breakdowns_callback
     data.each do | key, _ |
       data[key].delete_if do |data_point|
-        data_point[:original_breakdown] == StudentTypes.general_education_breakdown_label
-      end
+        StudentTypes.blacklisted_breakdowns.include?(data_point[:original_breakdown])
+     end
     end
   end
 

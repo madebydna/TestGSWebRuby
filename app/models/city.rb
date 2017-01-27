@@ -13,6 +13,16 @@ class City < ActiveRecord::Base
     result.to_a.sort { |c1, c2| c1.name <=> c2.name }
   end
 
+  # used by the widget
+  def self.get_city_by_name(city)
+    City.where(name:city).active
+  end
+
+  # used by the widget
+  def self.get_city_by_name_and_state(city, state)
+    City.where(name:city, state:state).active
+  end
+
   def state_long
     States.abbreviation_hash[state.downcase]
   end
@@ -24,6 +34,8 @@ class City < ActiveRecord::Base
   def county
     @county ||= County.find_by(state: state, FIPS: fipsCounty)
   end
+
+
 
   def schools_by_rating_desc
     @schools_by_rating_desc ||= (
