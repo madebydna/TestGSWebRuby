@@ -83,6 +83,9 @@ export default class Map extends React.Component {
       onClick: (m) => {
         component.props.onClick();
         this.openInfoWindow(component.props.createInfoWindow(), m) 
+      },
+      openInfoWindow: (m) => {
+        this.openInfoWindow(component.props.createInfoWindow(), m) 
       }
     }));
   }

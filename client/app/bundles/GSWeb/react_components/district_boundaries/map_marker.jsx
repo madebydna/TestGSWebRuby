@@ -36,13 +36,13 @@ export default class MapMarker extends React.Component {
     google.maps.event.addListener( this.marker, 'click', () => this.props.onClick(this.marker));
 
     if(this.props.selected) {
-      this.props.onClick(this.marker);
+      this.props.openInfoWindow(this.marker);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(!this.props.selected && nextProps.selected && this.marker) {
-      this.props.onClick(this.marker);
+      this.props.openInfoWindow(this.marker);
     }
   }
 
