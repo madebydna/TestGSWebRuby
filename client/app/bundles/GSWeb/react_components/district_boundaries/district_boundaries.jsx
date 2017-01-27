@@ -49,7 +49,7 @@ export default class DistrictBoundaries extends React.Component {
       if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
         props.selected = true;
       }
-      if(s.type == 'private') {
+      if(s.schoolType == 'private') {
         return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />
       } else {
         return <MapMarker type={markerTypes.PUBLIC_SCHOOL} {...props} />

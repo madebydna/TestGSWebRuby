@@ -1,5 +1,5 @@
-import publicSchoolPng from '../../../../../../app/assets/images/icons/google_map_pins/school-pins.png';
-import privateSchoolPng from '../../../../../../app/assets/images/icons/google_map_pins/school-pins.png';
+import publicSchoolPng from '../../../../../../app/assets/images/icons/google_map_pins/public_school_markers.png';
+import privateSchoolPng from '../../../../../../app/assets/images/icons/google_map_pins/private_school_markers.png';
 import districtPng from '../../../../../../app/assets/images/icons/google_map_pins/district_markers.png';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
@@ -40,9 +40,19 @@ export default function createMarkerFactory(googleMaps) {
 
   const markerFactories = {
     PUBLIC_SCHOOL: Object.assign(Object.create(markerFactory), {
-      iconSheet: districtPng,
-      width: 45,
-      height: 57,
+      iconSheet: publicSchoolPng,
+      width: 31,
+      height: 40,
+      shape: {
+        coord: [1,0, 29,0, 29,31, 1,31],
+        type: 'poly'
+      }
+    }),
+
+    PRIVATE_SCHOOL: Object.assign(Object.create(markerFactory), {
+      iconSheet: privateSchoolPng,
+      width: 31,
+      height: 40,
       shape: {
         coord: [1,0, 29,0, 29,31, 1,31],
         type: 'poly'
@@ -51,8 +61,8 @@ export default function createMarkerFactory(googleMaps) {
 
     DISTRICT: Object.assign(Object.create(markerFactory), {
       iconSheet: districtPng,
-      width: 45,
-      height: 57,
+      width: 31,
+      height: 40,
       shape: {
         coord: [8,4, 37,4, 37,33, 32,33, 23,42, 14,33, 8,33],
         type: 'poly'
