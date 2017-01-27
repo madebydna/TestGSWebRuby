@@ -10,7 +10,7 @@ class Api::SchoolsController < ApplicationController
 
   AVAILABLE_EXTRAS = %w[boundaries]
 
-  before_action :require_state, unless: :location_given?
+  before_action :require_state, unless: :point_given?
 
   def show
     hash = serialized_schools.first || {}
@@ -47,7 +47,7 @@ class Api::SchoolsController < ApplicationController
 
   def schools
     @_schools ||= (
-      items = if location_given?
+      items = if point_given?
         SchoolGeometry.schools_for_geometries(school_geometries_containing_lat_lon).first
       else
         get_schools
@@ -80,8 +80,17 @@ class Api::SchoolsController < ApplicationController
         where(criteria).
         active.
         limit(limit).
-        offset(offset).
-        order(:id)
+        offset(offset)
+
+      if area_given?
+        schools = schools.
+          select("*, #{School.query_distance_function(lat,lon)} as distance").
+          having("distance < #{radius}").
+          order('distance asc')
+      else
+        schools = schools.order(:id)
+      end
+
       if level_code
         schools = schools.where('level_code LIKE ?', "%#{level_code}%")
       end
@@ -91,7 +100,7 @@ class Api::SchoolsController < ApplicationController
 
   # criteria that will be used to query the school table
   def criteria
-    params.slice(:id, :district_id)
+    params.slice(:id, :district_id, :type)
   end
 
   def state
@@ -116,8 +125,16 @@ class Api::SchoolsController < ApplicationController
     params[:radius]
   end
 
-  def location_given?
-    lat.present? && lon.present?
+  def type
+    params[:type]
+  end
+
+  def point_given?
+    lat.present? && lon.present? && radius.blank?
+  end
+
+  def area_given?
+    lat.present? && lon.present? && radius.present?
   end
 
   def level_code
