@@ -56,7 +56,7 @@ export function geocode( searchInput ) {
   return deferred.promise();
 }
 
-export function geocodeReverse(lat, lng) {
+export function reverseGeocode(lat, lng) {
   var deferred = new jQuery.Deferred();
   var geocoder = new google.maps.Geocoder();
   if (geocoder && lat && lng) {
@@ -68,6 +68,10 @@ export function geocodeReverse(lat, lng) {
           result.lat = results[i].geometry.location.lat();
           result.lon = results[i].geometry.location.lng();
           result.normalizedAddress = results[i].formatted_address;
+          var stateComponent = results[i].address_components.filter(comp => comp.types[0] == 'administrative_area_level_1')[0];
+          if(stateComponent) {
+            result.state = stateComponent.short_name;
+          }
           for (var x=0; x<results[i].address_components.length; x++) {
             if (results[i].address_components[x].types.contains('postal_code')){
               result.zip = results[i].address_components[x].long_name;
