@@ -5,6 +5,7 @@ class DistrictCacher
   # Known data types:
   # :feed_test_scores
   # :ratings
+  # :district_schools_summary
 
   def initialize(district)
     @district = district
@@ -34,8 +35,8 @@ class DistrictCacher
   def self.cacher_for(key)
     {
         feed_test_scores:      TestScoresCaching::DistrictTestScoresCacher,
-        ratings: DistrictRatingsCacher
-
+        ratings: DistrictRatingsCacher,
+        district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher
     }[key.to_s.to_sym]
   end
 

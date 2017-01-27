@@ -35,8 +35,8 @@
             <ul>
               <% t('.connect_links')[:links].each do |link| %>
                 <li>
-                  <%= link_to(link['url']) do %>
-                    <span class="i-16-f-<%= link['icon'] %>"></span><span class="pls"><%= link['text'] %></span>
+                  <%= link_to(link[:url]) do %>
+                    <span class="i-16-f-<%= link[:icon] %>"></span><span class="pls"><%= link[:text] %></span>
                   <% end %>
                 </li>
               <% end %>
