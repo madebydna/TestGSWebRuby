@@ -296,11 +296,11 @@ GS.googleMap = GS.googleMap || (function() {
                   markup += '<a class="notranslate" href="' + point.reviewUrl + '">' + mapPinRateThisSchoolText() + '</a>';
               }
               markup += '</div>'; //stars
-              markup += '<div class="iw-home">'; //zillow
-              markup += '<a class="clearfix" href="' + point.zillowUrl + '" rel="nofollow" target="_blank">';
-              markup += '<div class=""><span class="icon-house iw-house"></span>&nbsp;Homes</div>';
-              markup += '</a>';
-              markup += '</div>'; //zillow
+              // markup += '<div class="iw-home">'; //zillow
+              // markup += '<a class="clearfix" href="' + point.zillowUrl + '" rel="nofollow" target="_blank">';
+              // markup += '<div class=""><span class="icon-house iw-house"></span>&nbsp;Homes</div>';
+              // markup += '</a>';
+              // markup += '</div>'; //zillow
               markup += '</div>';
 
               infoWindowMarkup.innerHTML = markup;

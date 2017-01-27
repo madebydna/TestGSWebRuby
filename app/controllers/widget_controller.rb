@@ -35,12 +35,12 @@ class WidgetController < ApplicationController
 
   private
 
-  def all_digits(str)
-    str[/[0-9]+/]  == str
-  end
-
   def search_by_type
     city_from_query ? city_browse : by_location
+  end
+
+  def all_digits(str)
+    str[/[0-9]+/]  == str
   end
 
   def city_from_query
@@ -56,16 +56,14 @@ class WidgetController < ApplicationController
           end
         # search query has two params
         elsif sq_arr.present? && sq_arr.length == 2
-          state_name = sq_arr[1].strip
-          city_name = sq_arr[0].strip
-          city = search_by_city_state(state_name, city_name)
+          city = search_by_city_state(sq_arr[1].strip, sq_arr[0].strip)
         end
       end
       # no city yet, if lat or lon is blank try and use params cityName and state to get city
       if city.blank? && (params[:lat].blank? || params[:lon].blank?)
-        city = search_by_cityName_state
+        city = search_by_city_state(params[:state], params[:cityName])
         # if city is still blank try a zip code search
-        if city.blank?
+        if city.blank? && sq.present?
           zip = zip_param(sq)
           if zip.present?
             hash = {:state => zip.state, :name => zip.gs_name}
@@ -79,12 +77,6 @@ class WidgetController < ApplicationController
 
   def zip_param zip_code
     @_zip_param = (zip_code.present? && zip_code =~ /^\d{5}$/) ? BpZip.find_by_zip(zip_code) : nil
-  end
-
-  def search_by_cityName_state
-    city_name = params[:cityName]
-    state_name = params[:state]
-    search_by_city_state(state_name, city_name)
   end
 
   def search_by_city_state(state_name, city_name)
