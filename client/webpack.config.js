@@ -19,7 +19,7 @@ const config = {
   output: {
     filename: 'webpack-bundle.js',
     path: '../app/assets/webpack',
-    publicPath: '/assets'
+    publicPath: '/assets/'
   },
 
   resolve: {
