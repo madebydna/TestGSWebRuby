@@ -162,64 +162,6 @@ const findSchoolsNearLatLon = (lat, lon, state, schoolTypes) => {
 
 // simple action creators
 
-const receiveSchool = school => ({
-  type: RECEIVE_SCHOOL,
-  school
-})
-
-const receiveSchools = schools => ({
-  type: RECEIVE_SCHOOLS,
-  schools
-})
-
-const receiveDistricts = districts => ({
-  type: RECEIVE_DISTRICTS,
-  districts
-})
-
-const receiveDistrict = district => ({
-  type: RECEIVE_DISTRICT,
-  district
-})
-
-const receiveGeocodeResults = (lat, lon, normalizedAddress, state, geocodeType) => ({
-  type: RECEIVE_GEOCODE_RESULTS,
-  lat,
-  lon,
-  normalizedAddress,
-  state,
-  geocodeType
-})
-
-const setLatLon = (lat, lon) => ({
-  type: SET_LAT_LON,
-  lat,
-  lon
-});
-
-const locationChange = (lat, lon) => ({
-  type: LOCATION_CHANGE,
-  lat,
-  lon
-});
-
-const setState = state => ({
-  type: SET_STATE,
-  state
-});
-
-const setSchool = (id, state) => ({
-  type: SET_SCHOOL,
-  id,
-  state
-});
-
-const setDistrict = (id, state) => ({
-  type: SET_DISTRICT,
-  id,
-  state
-});
-
 export const setLevel = level => ({
   type: SET_LEVEL,
   level
