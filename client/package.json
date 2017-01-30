@@ -50,6 +50,7 @@
     "mocha": "^3.2.0",
     "mocha-webpack": "^0.7.0",
     "react-addons-test-utils": "^15.4.1",
+    "redux-devtools-extension": "^1.0.0",
     "sinon": "^1.17.6",
     "webpack-node-externals": "^1.5.4"
   }
