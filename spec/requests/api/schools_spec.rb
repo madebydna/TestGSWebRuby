@@ -21,6 +21,17 @@ describe "Schools API" do
       expect(json['name']).to eq(s1.name)
     end
 
+    it 'Contains a link to school profile' do
+      s1 = create(:alameda_high_school)
+
+      get "/gsr/api/schools/#{s1.id}?state=ca"
+      expect(status).to eq(200)
+      expect(errors).to be_blank
+      expect(json).to be_present
+      expect(json['links']).to be_present
+      expect(json['links']['profile']).to be_present
+    end
+
     it 'Returns school 2 by ID' do
       create(:alameda_high_school)
       s2 = create(:bay_farm_elementary_school)

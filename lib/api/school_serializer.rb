@@ -1,4 +1,7 @@
 class Api::SchoolSerializer
+  include Rails.application.routes.url_helpers
+  include UrlHelper
+
   attr_reader :school
 
   def initialize(school)
@@ -24,7 +27,10 @@ class Api::SchoolSerializer
       rating: (school.great_schools_rating if defined? school.great_schools_rating),
       schoolType: school.type,
       state: school.state,
-      type: 'school'
+      type: 'school',
+      links: {
+        profile: school_path(school)
+      }
     }
     if school.respond_to?(:boundaries)
       h[:boundaries] = school.boundaries
