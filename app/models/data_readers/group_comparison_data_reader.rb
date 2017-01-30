@@ -263,6 +263,12 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
+  # Alias the callback being replaced by remove_blacklisted_breakdowns to allow
+  # code to be released before or after the config is updated
+  # TODO: after release r319 remove the alias
+
+  alias remove_general_eduation_callback remove_blacklisted_breakdowns_callback
+
   ############################# CALLBACK HELPERS ###############################
 
   def i18n_scope
