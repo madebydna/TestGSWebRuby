@@ -1,7 +1,6 @@
-import { RECEIVE_GEOCODE_RESULTS, RECEIVE_SCHOOLS, RECEIVE_SCHOOL,
-  RECEIVE_DISTRICT, RECEIVE_DISTRICTS, SET_LAT_LON, SET_SCHOOL,
-  SET_DISTRICT, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE, ADD_SCHOOLS,
-  SET_STATE
+import { RECEIVE_GEOCODE_RESULTS,
+  SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
+  LOCATION_CHANGE, DISTRICT_SELECT, SCHOOL_SELECT
 } from '../actions/district_boundaries';
 
 // "selector" functions that knows how to navigate the state in order to
@@ -16,8 +15,7 @@ export const getSchools = state => {
   return schools;
 }
 
-export const getDistricts= state => Object.values(state.districts);
-
+export const getDistricts = state => Object.values(state.districts);
 export const getSchool = state => state.schools[[state.state, state.schoolId]];
 export const getDistrict = state => state.districts[[state.state, state.districtId]];
 
@@ -40,6 +38,28 @@ export const getDistrictBoundaryCoordinates = state => {
   }
 }
 
+const groupBy = (objects, keyFunc) => {
+  return objects.reduce((accumulator, obj) => {
+    accumulator[keyFunc(obj)] = obj;
+    return accumulator;
+  }, {});
+}
+
+const stateAndIdKey = obj => [obj.state, obj.id];
+
+const splitBoundariesOnDistrict = district => {
+  district = { ...district };
+  let levelCodes = Object.keys(district.boundaries)[0];
+  if(levelCodes) {
+    let boundariesValue = Object.values(district.boundaries)[0];
+    district.boundaries = levelCodes.split(',').reduce((obj, levelCode) => {
+      obj[levelCode] = boundariesValue;
+      return obj;
+    }, {});
+  }
+  return district;
+}
+
 //
 // reducer function
 // 
@@ -52,109 +72,50 @@ export default (state, action) => {
   }
 
   switch (action.type) {
-    case SET_LAT_LON:
-      return {
-        ...state,
-        lat: action.lat,
-        lon: action.lon
-      };
-    case SET_SCHOOL:
-      return {
-        ...state,
-        schoolId: action.id,
-        state: action.state
-      };
-    case SET_STATE:
-      return {
-        ...state,
-        state: action.state
-      };
-    case SET_DISTRICT:
-      return {
-        ...state,
-        districtId: action.id,
-        state: action.state
-      };
-    case SET_LEVEL:
-      return {
-        ...state,
-        level: action.level
-      };
-    case RECEIVE_SCHOOL:
-      var schools = { ...state.schools };
-      var school = action.school;
-      var key = [school.state, school.id];
-      schools[key] = school;
-      return {
-        ...state,
-        schools: schools,
-        schoolId: school.id,
-        state: school.state
-      };
-    case RECEIVE_SCHOOLS:
-      var copyOfSchools = { ...state.schools };
-      var schools = action.schools.reduce((obj, school) => {
-          let key = [school.state, school.id];
-          let existingSchool = copyOfSchools[key] || {};
-          obj[key] = Object.assign({}, existingSchool, school);
-          return obj;
-        }, {});
-      return {
-        ...state,
-        schools
-      };
-    case ADD_SCHOOLS:
-      var schools = { ...state.schools };
-      action.schools.forEach(school => {
-        let key = [school.state, school.id];
-        schools[key] = schools[key] || school 
-      }, {});
-      return {
-        ...state,
-        schools
-      };
-    case RECEIVE_DISTRICT:
-
-      // store/update the district within the state
-      var district = action.district;
-      var districts = { ...state.districts };
-      var key = [district.state, district.id];
-
-      let levelCodes = Object.keys(district.boundaries)[0];
-      if(levelCodes) {
-        let boundariesValue = Object.values(district.boundaries)[0];
-        district.boundaries = levelCodes.split(',').reduce((obj, levelCode) => {
-          obj[levelCode] = boundariesValue;
-          return obj;
-        }, {});
-      }
-
-      districts[key] = district;
-
-      return {
-        ...state,
-        districts,
-        districtId: district.id,
-        state: district.state
-      };
-    case RECEIVE_DISTRICTS:
-      var copyOfDistricts = { ...state.districts };
-      var districts = action.districts.reduce((obj, district) => {
-          let key = [district.state, district.id];
-          let existingDistrict = copyOfDistricts[key] || {};
-          obj[key] = Object.assign({}, existingDistrict, district);
-          return obj;
-        }, {});
-      return {
-        ...state,
-        districts: districts,
-      };
-    case RECEIVE_GEOCODE_RESULTS:
+    case LOCATION_CHANGE:
+      var { schools, districts, school, district } = action;
+      schools = groupBy(schools, o => stateAndIdKey(o));
+      districts = groupBy(districts, o => stateAndIdKey(o));
+      schools[stateAndIdKey(school)] = school;
+      districts[stateAndIdKey(district)] = splitBoundariesOnDistrict(district);
       return {
         ...state,
         lat: action.lat,
         lon: action.lon,
-        state: action.state
+        schoolId: school.id,
+        districtId: district.id,
+        state: district.state,
+        schools,
+        districts
+      };
+    case DISTRICT_SELECT:
+      var { district, schools } = action;
+      var newDistricts = { ...state.districts }
+      newDistricts[stateAndIdKey(district)] = district;
+
+      return {
+        ...state,
+        schools,
+        districts: newDistricts,
+        districtId: district.id,
+        state: district.state
+      }
+    case SCHOOL_SELECT:
+      var schools = state.schools;
+      var school = action.school;
+      if(action.school) {
+        schools[stateAndIdKey(school)] = school;
+      }
+      return {
+        ...state,
+        schools,
+        schoolId: school.id,
+        state: school.state
+      }
+    case SET_LEVEL:
+      return {
+        ...state,
+        level: action.level
       };
     case ADD_SCHOOL_TYPE:
       return {
