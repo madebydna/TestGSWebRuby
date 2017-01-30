@@ -13,12 +13,12 @@ export function findById(id, options) {
 export function findNearLatLon(lat, lon, radius, options) {
   return $.ajax({
     url: '/gsr/api/districts/',
-    data: Object.assign({
-      state: 'ca', //TODO
+    data: {
+      ...options,
       lat: lat,
       lon: lon,
       radius: radius
-    }, options),
+    },
     type: 'GET',
     dataType: 'json',
     timeout: 6000
