@@ -3,12 +3,12 @@ import jsxToString from 'jsx-to-string';
 
 export default function createInfoWindow(entity) {
 
-  // let homesForSaleHref;
-  // if (typeof entity.state && entity.address && entity.address.zip) {
-  //   homesForSaleHref = 'https://www.zillow.com/' + state + '-' + zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch';
-  // } else {
-  //   homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=Great_Schools&utm_medium=referral&utm_campaign=schoolsearch';
-  // }
+  let homesForSaleHref;
+  if (entity.state && entity.address && entity.address.zip) {
+    homesForSaleHref = 'https://www.zillow.com/' + entity.state + '-' + entity.address.zip.split("-")[0] + '?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
+  } else {
+    homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
+  }
 
   let contentString = (
     <div class="infowindow" style="padding:10px">
@@ -33,7 +33,7 @@ export default function createInfoWindow(entity) {
         </div>
       </div>
       <hr/>
-      <a href="" rel="nofollow">Homes for sale</a>
+      <a href={homesForSaleHref} rel="nofollow">Homes for sale</a>
       <a href="">View school details</a>
     </div>
   );
