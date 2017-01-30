@@ -118,16 +118,6 @@ export default class DistrictBoundaries extends React.Component {
         <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
           {this.renderMap()}
         </div>
-
-        <div id="districtList"></div>
-        <div id="js-districtHeader"></div>
-        <div id="schoolList"></div>
-        <div className="js_mapLevelCode"></div>
-        <div id="searchLocationForm"></div>
-        <div id="js_schoolType_private"></div>
-        <div id="js_schoolType_charter"></div>
-        <div id="js_nearbyHomesForSale"></div>
-        <div id="district_name_header"></div>
       </div>
     );
   }
