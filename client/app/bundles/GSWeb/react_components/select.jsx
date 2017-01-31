@@ -1,10 +1,16 @@
 import React from 'react';
 
-const Select = ({objects, keyFunc, labelFunc, onChange, value}) => {
-  const options = () => objects.map(obj => {
-    let key = keyFunc(obj);
-    return <option key={keyFunc(obj)} value={keyFunc(obj)}>{labelFunc(obj)}</option>
-  });
+const Select = ({objects, keyFunc, labelFunc, onChange, value = '', defaultLabel}) => {
+  const options = () => {
+    if(objects.length > 0) {
+      return objects.map(obj => {
+        let key = keyFunc(obj);
+        return <option key={keyFunc(obj)} value={keyFunc(obj)}>{labelFunc(obj)}</option>
+      });
+    } else {
+     return <option value=''>{defaultLabel}</option>;
+    }
+  }
 
   const _onChange = event => 
     onChange(objects.find(obj=> keyFunc(obj) == event.target.value));
