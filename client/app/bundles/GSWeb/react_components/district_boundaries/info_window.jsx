@@ -10,6 +10,16 @@ export default function createInfoWindow(entity) {
     homesForSaleHref = 'https://www.zillow.com/?cbpartner=Great+Schools&utm_source=GreatSchools&utm_medium=referral&utm_campaign=schoolsearch';
   }
 
+  let schoolLevels = entity => {
+    let levelNameMap = {p: 'Preschool', e: 'Elementary', m: 'Middle', h: 'High'};
+    return Object.entries(entity.schoolCountsByLevelCode)
+      .map(([level, value]) => [levelNameMap[level], value] );
+  }
+
+  let levelMarkup = entity => {
+    return schoolLevels(entity).map(([level, value]) => '<span>' + level + ' (' + value + ')</span>').join(', ')
+  };
+
   let contentString = (
     <div class="infowindow" style="padding:10px">
       <div class="clearfix">
@@ -33,6 +43,8 @@ export default function createInfoWindow(entity) {
         </div>
       </div>
       <hr/>
+      { entity.schoolCountsByLevelCode && <div>{levelMarkup(entity)}</div> }
+
       <a href={homesForSaleHref} rel="nofollow">Homes for sale</a>
       { entity.links && entity.links.profile &&
         <a href={entity.links.profile}>View school details</a>
