@@ -90,8 +90,9 @@ export default (state, action) => {
       };
     case DISTRICT_SELECT:
       var { district, schools } = action;
+      schools = groupBy(schools, o => stateAndIdKey(o));
       var newDistricts = { ...state.districts }
-      newDistricts[stateAndIdKey(district)] = district;
+      newDistricts[stateAndIdKey(district)] = splitBoundariesOnDistrict(district);
 
       return {
         ...state,
