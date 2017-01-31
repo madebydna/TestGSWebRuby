@@ -12,6 +12,9 @@ export function makeDrawer($container) {
   toggle.addCallback(
     toggle.updateContainerClassCallback('show-more--open','show-more--closed')
   );
+  toggle.addCallback(
+      toggle.sendGoogleAnalyticsCallback('ga-category', 'ga-label')
+  );
   return toggle.init();
 }
 
