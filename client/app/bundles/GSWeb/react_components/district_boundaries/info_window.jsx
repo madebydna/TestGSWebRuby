@@ -34,7 +34,9 @@ export default function createInfoWindow(entity) {
       </div>
       <hr/>
       <a href={homesForSaleHref} rel="nofollow">Homes for sale</a>
-      <a href="">View school details</a>
+      { entity.links && entity.links.profile &&
+        <a href={entity.links.profile}>View school details</a>
+      }
     </div>
   );
   return jsxToString(contentString);
