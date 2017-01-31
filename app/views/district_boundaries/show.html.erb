@@ -1,6 +1,6 @@
 <div id="district-boundaries-page">
   <div class="header">
-    <h1><%= t('.heading.') %></h1>
+    <h1><%= t('.heading.') %> <%= render 'school_profiles/info_circle', content: t('.subheading_html') %></h1>
     <p><%= t('.subheading_html') %></p>
   </div>
   <%= react_component('ConnectedDistrictBoundaries') %>

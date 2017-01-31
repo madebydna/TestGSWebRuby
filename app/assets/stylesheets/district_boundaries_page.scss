@@ -210,6 +210,11 @@
       @include media-breakpoint-up(sm){
         font-size: 26px;
       }
+      > a {
+        @include media-breakpoint-up(sm) {
+          display: none;
+        }
+      }
     }
 
     p {
