@@ -65,6 +65,8 @@ class DistrictCacheResults
         DistrictCachedFeedTestScoresMethods
       when 'ratings'
         DistrictCachedRatingsMethods
+      when 'district_schools_summary'
+        DistrictCachedDistrictSchoolsSummaryMethods
     end
   end
 

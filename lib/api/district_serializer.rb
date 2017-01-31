@@ -23,7 +23,8 @@ class Api::DistrictSerializer
       rating: (district.great_schools_rating if defined? district.great_schools_rating),
       # districtType: district.type,
       state: district.state,
-      type: 'district'
+      type: 'district',
+      schoolCountsByLevelCode: district.school_counts_by_level_code
     }
     if district.respond_to?(:boundaries)
       h[:boundaries] = district.boundaries

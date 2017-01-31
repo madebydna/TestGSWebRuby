@@ -179,6 +179,17 @@ describe "Districts API" do
       expect(districts.first['rating']).to eq(rating)
     end
 
+    it 'adds district schools summary when available' do
+      district = create(:alameda_city_unified)
+      create(:cached_district_schools_summary,
+             state: district.state,
+             district_id: district.id)
+      get '/gsr/api/districts/?state=ca'
+      expect(status).to eq(200)
+      expect(errors).to be_blank
+      expect(districts.first['schoolCountsByLevelCode']).to be_present
+    end
+
     context 'with geometry data available for district' do
       let(:district) { create(:alameda_city_unified) }
       before do

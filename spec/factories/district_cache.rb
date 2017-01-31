@@ -32,4 +32,18 @@ FactoryGirl.define do
     end
   end
 
+  factory :cached_district_schools_summary, class: DistrictCache do
+    name 'district_schools_summary'
+    sequence(:district_id) { |n| n }
+    state 'ca'
+    value ({
+      'school counts by level code' => {
+        "e" => 16,
+        "m" => 11,
+        "h" => 8
+      }
+    }.to_json)
+    updated Time.now
+  end
+
 end
