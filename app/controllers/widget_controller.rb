@@ -160,7 +160,7 @@ class WidgetController < ApplicationController
     @schools.each { |school| school.on_page = true } if @schools.present?
 
     mapping_points_through_gon
-    assign_sprite_files_though_gon
+    assign_sprite_files_though_gon_widget
   end
 
   def determine_layout

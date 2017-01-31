@@ -65,6 +65,15 @@ module GoogleMapConcerns
 
   end
 
+  def assign_sprite_files_though_gon_widget
+    sprite_files = {}
+    sprite_files['imageUrlPrivateSchools'] = view_context.image_path('icons/google_map_pins/private_school_markers.png')
+    sprite_files['imageUrlPublicSchools'] = view_context.image_path('icons/google_map_pins/public_school_markers.png')
+
+    gon.sprite_files = sprite_files
+
+  end
+
 
 
 end
