@@ -2,7 +2,6 @@ import * as Schools from '../api_clients/schools';
 import * as Districts from '../api_clients/districts';
 import * as Geocoding from '../components/geocoding';
 
-export const RECEIVE_GEOCODE_RESULTS = 'RECEIVE_GEOCODE_RESULTS';
 export const SET_LEVEL = 'SET_LEVEL';
 export const ADD_SCHOOL_TYPE = 'ADD_SCHOOL_TYPE';
 export const REMOVE_SCHOOL_TYPE = 'REMOVE_SCHOOL_TYPE';
@@ -69,13 +68,6 @@ export const selectDistrict = (id, state) => dispatch => {
       district,
       schools
     });
-  });
-};
-
-export const geocode = searchTerm => dispatch => {
-  Geocoding.geocode(searchTerm).done(data => {
-    var result = data[0];
-    dispatch(changeLocation(result.lat, result.lon));
   });
 };
 

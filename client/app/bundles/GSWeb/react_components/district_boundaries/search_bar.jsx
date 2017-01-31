@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { geocode } from '../../components/geocoding';
 import Multibutton from '../multibutton';
 import Select from '../select';
+import * as Geocoding from '../../components/geocoding';
 
 export default class SearchBar extends React.Component {
 
@@ -47,7 +48,16 @@ export default class SearchBar extends React.Component {
   }
 
   search() {
-    this.props.geocode(this.state.searchTerm);
+    Geocoding.geocode(this.state.searchTerm)
+      .then(json => json[0])
+      .done(({lat, lon, normalizedAddress = ''} = {}) => {
+        if (lat && lon) {
+          this.setState({
+            searchLocation: normalizedAddress.replace(', USA', '')
+          });
+          this.props.changeLocation(lat, lon);
+        }
+      });
   }
 
   toggleFilters() {
@@ -100,7 +110,7 @@ export default class SearchBar extends React.Component {
         <div className={this.state.showFilters ? "filters open" : "filters"}>
           <hr/>
           <div className="district-select">
-            <label>Districts near ...</label>
+            <label>Districts { this.state.searchLocation ? 'near ' + this.state.searchLocation : '' }</label>
             <Select objects={this.props.districts}
               labelFunc={d => d.name}
               keyFunc={d => d.state + d.id}
