@@ -1,6 +1,14 @@
 #district-boundaries-page {
+  button {
+    border: 1px solid #c1d2d9;
+    background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+    border-radius: 2px;
+    padding: 7px 17px 7px 17px;
+  }
+
   .district-boundaries-component {
     @include clearfix;
+
 
     select {
       height: 36px;
@@ -34,12 +42,8 @@
         display: none;
       }
 
-      .filter-toggle-button {
+      .toggle-button {
         float: left;
-        border: 1px solid #c1d2d9;
-        background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
-        border-radius: 2px;
-        padding: 7px 17px 7px 17px;
       }
 
       .show-map, .show-list {
@@ -210,6 +214,7 @@
     background-color: #184a7d;
     color: white;
     padding: 12px 0 18px 20px;
+    position: relative;
     @include media-breakpoint-up(sm){
       padding: 30px 0 30px 30px;
     }
@@ -218,13 +223,14 @@
       margin: 0;
       font-family: 'RobotoSlab-Bold';
       font-size: 18px;
+      max-width: 170px;
+      display: inline-block;
       @include media-breakpoint-up(sm){
         font-size: 26px;
+        max-width: 470px;
       }
-      > a {
-        @include media-breakpoint-up(sm) {
-          display: none;
-        }
+      @include media-breakpoint-up(md){
+        max-width: 100%;
       }
     }
 
@@ -240,6 +246,11 @@
 
   .legend-cta {
     color: white;
+    display: inline-block;
+    font-size: 10px;
+    position: absolute;
+    right: 10px;
+    margin-top: 2px;
     @include media-breakpoint-up(md) {
       display: none;
     }
