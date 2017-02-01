@@ -44,7 +44,7 @@ export default function createMarkerFactory(googleMaps) {
       width: 31,
       height: 40,
       shape: {
-        coord: [1,0, 29,0, 29,31, 1,31],
+        coord: [1,1, 1,30, 30,30, 30,1],
         type: 'poly'
       }
     }),
@@ -54,7 +54,7 @@ export default function createMarkerFactory(googleMaps) {
       width: 31,
       height: 40,
       shape: {
-        coord: [1,0, 29,0, 29,31, 1,31],
+        coord: [1,15, 15,30, 30,15, 15,1],
         type: 'poly'
       }
     }),
@@ -64,7 +64,7 @@ export default function createMarkerFactory(googleMaps) {
       width: 31,
       height: 40,
       shape: {
-        coord: [8,4, 37,4, 37,33, 32,33, 23,42, 14,33, 8,33],
+        coord: [1,1, 1,30, 30,30, 30,1],
         type: 'poly'
       }
     })
