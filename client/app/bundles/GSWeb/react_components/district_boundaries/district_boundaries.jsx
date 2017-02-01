@@ -10,6 +10,7 @@ import ConnectedSearchBar from './connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
 import SchoolList from './school_list';
+import jsxToString from 'jsx-to-string';
 
 export default class DistrictBoundaries extends React.Component {
   static defaultProps = {
@@ -108,6 +109,18 @@ export default class DistrictBoundaries extends React.Component {
     });
   }
 
+  legendCta(legendContainerForCtaId) {
+    return (<a className="js-react-on-rails-component legend-cta gs-tipso"
+       data-remodal-target="modal_info_box"
+       data-content-type="react"
+       data-component-name="DistrictBoundariesLegend"
+       data-dom-id={legendContainerForCtaId}
+       data-props="{}"
+       href="javascript:void(0)">
+       View legend
+    </a>);
+  }
+
   render() {
     return (
       <div className="district-boundaries-component">
@@ -118,7 +131,22 @@ export default class DistrictBoundaries extends React.Component {
         <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
           {this.renderMap()}
         </div>
+        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
       </div>
     );
   }
 }
+
+export const DistrictBoundariesLegend = ({legendContainerForCtaId}) => (
+  <div>
+    <div id={legendContainerForCtaId} style={{display: 'none'}}></div>
+    <ul className="legend">
+      <li><span/>District</li>
+      <li><span/>Private school</li>
+      <li><span/>Public school</li>
+      <li><span/>Not rated school</li>
+      <li><span/>Private school</li>
+      <li><span/>Public school</li>
+    </ul>
+  </div>
+);

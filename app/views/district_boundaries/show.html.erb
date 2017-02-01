@@ -1,7 +1,19 @@
 <div id="district-boundaries-page">
   <div class="header">
-    <h1><%= t('.heading.') %> <%= render 'school_profiles/info_circle', content: t('.subheading_html') %></h1>
-    <p><%= t('.subheading_html') %></p>
+    <h1><%= t('.heading.') %> <%= render 'school_profiles/info_circle', content: t('.subheading_html') %>
+    &nbsp;&nbsp;<span class="js-react-on-rails-component legend-cta gs-tipso"
+       data-remodal-target="modal_info_box"
+       data-content-type="react"
+       data-component-name="DistrictBoundariesLegend"
+       data-dom-id="js-legend-container-for-cta"
+       data-props="{}"
+       href="javascript:void(0)">
+       View legend
+    </span>
+  
+  </h1>
+    <p><%= t('.subheading_html') %>
+    </p>
   </div>
   <%= react_component('ConnectedDistrictBoundaries') %>
 </div>
