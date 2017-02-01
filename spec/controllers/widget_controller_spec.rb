@@ -42,33 +42,56 @@ describe WidgetController do
 
       it 'should call by_name city and state in queryString' do
         params = {:searchQuery => 'San Francisco, CA'}
-        allow(controller).to receive(:city_browse).and_return(true)
         expect(controller).to receive(:city_from_searchQuery_split_two_segment)
+        get :map, params
+      end
+
+      it 'should call by_name city and state in queryString to city_browse' do
+        params = {:searchQuery => 'San Francisco, CA'}
+        allow(controller).to receive(:city_browse).and_return(true)
+        expect(controller).to receive(:city_browse)
         get :map, params
       end
 
       it 'should call by_name single unique city in queryString' do
         params = {:searchQuery => 'San Francisco'}
-        allow(controller).to receive(:city_browse).and_return(true)
         expect(controller).to receive(:city_from_searchQuery_split_one_segment)
+        get :map, params
+      end
+
+      it 'should call by_name single unique city in queryString to city_browse' do
+        params = {:searchQuery => 'San Francisco'}
+        allow(controller).to receive(:city_browse).and_return(true)
+        expect(controller).to receive(:city_browse)
         get :map, params
       end
 
       it 'should call by zip and return city' do
         params = {:searchQuery => '94111'}
-        allow(controller).to receive(:city_browse).and_return(true)
         expect(controller).to receive(:city_from_searchQuery_zip)
         get :map, params
-        clean_dbs :us_geo
+      end
+
+      it 'should call by zip and return city to city_browse' do
+        params = {:searchQuery => '94111'}
+        allow(controller).to receive(:city_browse).and_return(true)
+        expect(controller).to receive(:city_browse)
+        get :map, params
       end
 
       it 'should call by cityName and state' do
         params = {:cityName => 'San Francisco', :state => 'CA'}
-        allow(controller).to receive(:city_browse).and_return(true)
         expect(controller).to receive(:city_from_params_cityName_state)
         get :map, params
-        clean_dbs :us_geo
       end
+
+      it 'should call by cityName and state to city_browse' do
+        params = {:cityName => 'San Francisco', :state => 'CA'}
+        allow(controller).to receive(:city_browse).and_return(true)
+        expect(controller).to receive(:city_browse)
+        get :map, params
+      end
+
     end
   end
 end
