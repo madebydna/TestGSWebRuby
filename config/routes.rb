@@ -1,8 +1,6 @@
 
 LocalizedProfiles::Application.routes.draw do
   require 'states'
-  require 'regular_subdomain'
-  require 'preschool_subdomain'
   require 'path_with_period'
 
   devise_for :admins, path: '/admin/gsr/school-profiles'
@@ -377,119 +375,117 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'community#home', as: :home
     end
 
-  constraints(RegularSubdomain) do
-    get '/join', :to => 'signin#new_join', :as => :join
-    get '/gsr/login', :to => 'signin#new', :as => :signin
+  get '/join', :to => 'signin#new_join', :as => :join
+  get '/gsr/login', :to => 'signin#new', :as => :signin
 
-    scope '/:state', as: :state, constraints: {
-        state: States.any_state_name_regex,
-    } do
-      get '', to: 'states#show'
-      get 'browse', to: 'states#foobar', as: :browse
-      get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
-      get 'guided-search', to: 'guided_search#show', as: :guided_search
-      get 'events', to: 'states#events', as: :events
-
+  scope '/:state', as: :state, constraints: {
+      state: States.any_state_name_regex,
+  } do
+    get '', to: 'states#show'
+    get 'browse', to: 'states#foobar', as: :browse
+    get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
+    get 'guided-search', to: 'guided_search#show', as: :guided_search
+    get 'events', to: 'states#events', as: :events
 
 
-      get 'enrollment', to: 'states#enrollment', as: :enrollment
-      scope '/enrollment', as: :enrollment do
-        get '/:tab', to: 'states#enrollment'
-      end
 
-      scope '/education-community', as: :education_community do
-        get '', to: 'states#community'
-        get '/education', to: 'states#community'
-        get '/funders', to: 'states#community'
-        get '/partner', to: 'states#community', as: :partner
-      end
+    get 'enrollment', to: 'states#enrollment', as: :enrollment
+    scope '/enrollment', as: :enrollment do
+      get '/:tab', to: 'states#enrollment'
     end
 
-    # Routes for school profile pages
-    # This needs to go before the city routes because we want to capture the
-    # ID-school_name pattern first and be looser about district names
-    scope '/:state/:city/:schoolId-:school_name/', as: :school, constraints: {
-        format: false,
-        state: States.any_state_name_regex,
-        schoolId: /\d+/,
-        school_name: /[^\/]+/,
-        # This city regex allows for all characters except /
-        # http://guides.rubyonrails.org/routing.html#specifying-constraints
-        city: /[^\/]+/,
-      } do
-      get "(:path)", to: "school_profiles#show", constraints: Constraint::NewSchoolProfile.new
-
-#     Old Profile Routes
-      get 'quality', to: 'school_profile_quality#quality', as: :quality
-      get 'details', to: 'school_profile_details#details', as: :details
-      # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
-      resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
-      resources :reviews, only: [:create], controller: 'school_profile_reviews'
-      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
-      resource :user, only: [:create], controller: 'school_user', action: 'create'
-      get "", to: 'school_profile_overview#overview'
+    scope '/education-community', as: :education_community do
+      get '', to: 'states#community'
+      get '/education', to: 'states#community'
+      get '/funders', to: 'states#community'
+      get '/partner', to: 'states#community', as: :partner
     end
+  end
 
-
-    # Routes for city page
-    scope '/:state/:city', as: :city, constraints: {
-      # Format: false allows periods to be in path segments.
-      # This then needs to be paired with a regex constraint for each path component.
-      # So in this hash there needs to be state and city and down below there's a constraint 
-      # with the district segment's contrainst.
+  # Routes for school profile pages
+  # This needs to go before the city routes because we want to capture the
+  # ID-school_name pattern first and be looser about district names
+  scope '/:state/:city/:schoolId-:school_name/', as: :school, constraints: {
       format: false,
       state: States.any_state_name_regex,
+      schoolId: /\d+/,
+      school_name: /[^\/]+/,
       # This city regex allows for all characters except /
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       city: /[^\/]+/,
     } do
+    get "(:path)", to: "school_profiles#show", constraints: Constraint::NewSchoolProfile.new
 
-      get '', to: 'cities#show'
-      get 'events', to: 'cities#events', as: :events
-      get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
-      get 'enrollment', to: 'cities#enrollment', as: :enrollment
-      get 'schools', to: 'error#page_not_found', as: :browse
-      get 'guided-search', to: 'guided_search#show', as: :guided_search
+#     Old Profile Routes
+    get 'quality', to: 'school_profile_quality#quality', as: :quality
+    get 'details', to: 'school_profile_details#details', as: :details
+    # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
+    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+    resources :reviews, only: [:create], controller: 'school_profile_reviews'
+    # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
+    resource :user, only: [:create], controller: 'school_user', action: 'create'
+    get "", to: 'school_profile_overview#overview'
+  end
 
-      scope '/enrollment', as: :enrollment do
-        get '/:tab', to: 'cities#enrollment'
-      end
-      get 'programs', to: 'cities#programs', as: :programs
 
-      scope '/education-community', as: :education_community do
-        get '', to: 'cities#community'
-        get '/education', to: 'cities#community'
-        get '/funders', to: 'cities#community'
-        get '/partner', to: 'cities#partner', as: :partner
-      end
+  # Routes for city page
+  scope '/:state/:city', as: :city, constraints: {
+    # Format: false allows periods to be in path segments.
+    # This then needs to be paired with a regex constraint for each path component.
+    # So in this hash there needs to be state and city and down below there's a constraint
+    # with the district segment's contrainst.
+    format: false,
+    state: States.any_state_name_regex,
+    # This city regex allows for all characters except /
+    # http://guides.rubyonrails.org/routing.html#specifying-constraints
+    city: /[^\/]+/,
+  } do
 
-      # NOTE: this must come last in the city scope, because it will match
-      # anything after the cty name
-      get '/:district', to: 'districts#show', as: :district, constraints: {
-        # This city regex allows for all characters except / and the word preschools
-        # http://guides.rubyonrails.org/routing.html#specifying-constraints
-        district: /(?!preschools)[^\/]+/
-      }
+    get '', to: 'cities#show'
+    get 'events', to: 'cities#events', as: :events
+    get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
+    get 'enrollment', to: 'cities#enrollment', as: :enrollment
+    get 'schools', to: 'error#page_not_found', as: :browse
+    get 'guided-search', to: 'guided_search#show', as: :guided_search
+
+    scope '/enrollment', as: :enrollment do
+      get '/:tab', to: 'cities#enrollment'
+    end
+    get 'programs', to: 'cities#programs', as: :programs
+
+    scope '/education-community', as: :education_community do
+      get '', to: 'cities#community'
+      get '/education', to: 'cities#community'
+      get '/funders', to: 'cities#community'
+      get '/partner', to: 'cities#partner', as: :partner
     end
 
-    # NOTE: this must come after the city scope, because it will match anything after the city name
-    # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*
-    get '/:state/:city/:district', to: 'districts#show', as: :district, constraints: {
-        format: false,
-        state: States.any_state_name_regex,
-        city: /[^\/]+/,
-        district: /(?!preschools)[^\/]+/
+    # NOTE: this must come last in the city scope, because it will match
+    # anything after the cty name
+    get '/:district', to: 'districts#show', as: :district, constraints: {
+      # This city regex allows for all characters except / and the word preschools
+      # http://guides.rubyonrails.org/routing.html#specifying-constraints
+      district: /(?!preschools)[^\/]+/
     }
-
-    # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
-    get '/school/overview.page', to: redirect { |params, request|
-          if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
-            "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
-          else
-            '/status/error404.page'
-          end
-        }
   end
+
+  # NOTE: this must come after the city scope, because it will match anything after the city name
+  # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*
+  get '/:state/:city/:district', to: 'districts#show', as: :district, constraints: {
+      format: false,
+      state: States.any_state_name_regex,
+      city: /[^\/]+/,
+      district: /(?!preschools)[^\/]+/
+  }
+
+  # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
+  get '/school/overview.page', to: redirect { |params, request|
+        if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
+          "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
+        else
+          '/status/error404.page'
+        end
+      }
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
@@ -511,11 +507,6 @@ LocalizedProfiles::Application.routes.draw do
 
   constraints(PathWithPeriod) do
     match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]
-  end
-
-  constraints(PreschoolSubdomain) do
-    # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
-    match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain)), via: [:get, :post]
   end
 
   # error handlers

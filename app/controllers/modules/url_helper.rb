@@ -124,30 +124,17 @@ module UrlHelper
     define_method "#{helper_name}_path" do |school, params_hash = {}|
       if school.nil?
         params = school_params_hash params_hash
-        is_preschool = params_hash[:preschool]
       else
         params = school_params school
         params.merge! params_hash
-        is_preschool = school.preschool?
       end
 
-      if is_preschool
-        send "pre#{helper_name}_path", params
-      else
-        super params
-      end
+      super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
       params = school_params school
       params.merge! params_hash
-      if school.preschool?
-        # If we dont add the pk subdomain here, the url's subdomain will default to non-pk subdomain
-        # and although the user will get to the right page when they click the link,
-        # it will happen via a 301 redirect, which we dont want
-        send "pre#{helper_name}_url", (params.merge(host: ENV_GLOBAL['app_pk_host']))
-      else
-        super params
-      end
+      super params
     end
   end
 

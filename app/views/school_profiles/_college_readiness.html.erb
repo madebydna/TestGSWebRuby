@@ -22,7 +22,7 @@
 
   <% if data_values.size > initial_size %>
     <div class="rating-container__more-items">
-      <%= render layout:'drawer' do %>
+      <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'College Readiness' } do %>
         <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
       <% end %>
     </div>

@@ -2,6 +2,7 @@
 <% data_values = teachers_staff.data_values %>
 <% initial_size = 3 %>
 
+
 <div class="teachers-staff">
   <a class="anchor-mobile-offset" name="Teachers_staff"></a>
   <div class="rating-container__rating">
@@ -19,7 +20,7 @@
 
   <% if data_values.size > initial_size %>
       <div class="rating-container__more-items">
-        <%= render layout:'drawer' do %>
+        <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Teachers Staff' }  do %>
             <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
         <% end %>
       </div>

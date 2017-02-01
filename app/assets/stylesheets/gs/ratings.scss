@@ -12,50 +12,6 @@ $rating8: #6BA822;
 $rating9: #559F24;
 $rating10: #439326;
 
-.rating_ {
-  background-color: $ratingNR;
-}
-
-.rating_1 {
-  background-color: $rating1;
-}
-
-.rating_2 {
-  background-color: $rating2;
-}
-
-.rating_3 {
-  background-color: $rating3;
-}
-
-.rating_4 {
-  background-color: $rating4;
-}
-
-.rating_5 {
-  background-color: $rating5;
-}
-
-.rating_6 {
-  background-color: $rating6;
-}
-
-.rating_7 {
-  background-color: $rating7;
-}
-
-.rating_8 {
-  background-color: $rating8;
-}
-
-.rating_9 {
-  background-color: $rating9;
-}
-
-.rating_10 {
-  background-color: $rating10;
-}
-
 .rating_scale-5_1 {
   background-color: $color-5-scale-strongly-disagree;
 }
@@ -72,47 +28,16 @@ $rating10: #439326;
   background-color: $color-5-scale-strongly-agree;
 }
 
+$counter: '',1,2,3,4,5,6,7,8,9,10;
+$color-list: #777777,#F26B16, #E78818, #DCA21A, #D2B81B, #BDC01E, #A3BE1F, #86B320, #6BA822, #559F24, #439326;
 
-.rating_color_ {
-  color: $ratingNR;
-}
+$list-with-id: zip($counter, $color-list);
 
-.rating_color_1 {
-  color: $rating1;
-}
-
-.rating_color_2 {
-  color: $rating2;
-}
-
-.rating_color_3 {
-  color: $rating3;
-}
-
-.rating_color_4 {
-  color: $rating4;
-}
-
-.rating_color_5 {
-  color: $rating5;
-}
-
-.rating_color_6 {
-  color: $rating6;
-}
-
-.rating_color_7 {
-  color: $rating7;
-}
-
-.rating_color_8 {
-  color: $rating8;
-}
-
-.rating_color_9 {
-  color: $rating9;
-}
-
-.rating_color_10 {
-  color: $rating10;
+@each $value in $list-with-id {
+  .rating_color_#{nth($value, 1)} {
+    color: #{nth($value, 2)};
+  }
+  .rating_#{nth($value, 1)} {
+    background-color: #{nth($value, 2)};
+  }
 }

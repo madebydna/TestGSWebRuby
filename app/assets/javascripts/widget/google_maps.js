@@ -50,8 +50,8 @@ GS.googleMap = GS.googleMap || (function() {
         var points = [];
         points = map_points;
 
-        var imageUrlOnPage = sprite_files['imageUrlOnPage'];
-        var imageUrlOffPage = sprite_files['imageUrlOffPage'];
+        var imageUrlPublicSchools = sprite_files['imageUrlPublicSchools'];
+        var imageUrlPrivateSchools = sprite_files['imageUrlPrivateSchools'];
 
         var optionalLat = optionalLat || 37.807778;
         var optionalLon = optionalLon || -122.265149;
@@ -143,10 +143,8 @@ GS.googleMap = GS.googleMap || (function() {
             var imageSize;
             var imageAnchor;
             var pixelOffset;
-            var size_29 = new google.maps.Size(29, 40);
-            var size_10 = new google.maps.Size(10, 10);
-            var point_12_20 = new google.maps.Point(12, 20);
-            var point_5_5 = new google.maps.Point(5, 5);
+            var sizePins = new google.maps.Size(31, 40);
+            var anchorPoint = new google.maps.Point(15,40);
             var infoWindow = new google.maps.InfoWindow({});
             for (var i = 0; i < points.length; i++) {
                 var point = points[i];
@@ -168,36 +166,18 @@ GS.googleMap = GS.googleMap || (function() {
                 }
 
                 var markerOptions = new google.maps.Marker(markerOptions);
-
+                if(point.schoolType == 'Private') {
+                  imageUrl = imageUrlPrivateSchools;
+                }else {
+                  imageUrl = imageUrlPublicSchools;
+                }
                 if (point.on_page) {
-
-                    imageSize = size_29;
-                    imageAnchor = point_12_20; // center of image
-                    if (point.preschool && parseInt(point.gsRating) == 0) {
-                        pixelOffset = 290;
-                        imageUrl = imageUrlOnPage;
+                    imageSize = sizePins;
+                    imageAnchor = anchorPoint; // center of image
+                    if ((point.preschool && parseInt(point.gsRating) == 0) || point.gsRating == "") {
+                      pixelOffset = 310;
                     } else {
-                        pixelOffset = 290;// default to NR
-                        if (point.gsRating != "" && parseInt(point.gsRating) > 0) {
-                            pixelOffset = 290 - (parseInt(point.gsRating) * 29);
-                        }
-                        imageUrl = imageUrlOnPage;
-                    }
-                } else {
-                    imageUrl = imageUrlOffPage;
-                    imageSize = size_10;
-                    imageAnchor = point_5_5; // center of image
-
-                    if (point.preschool && parseInt(point.gsRating) == 0) {
-                        pixelOffset = 30;
-                    } else if (parseInt(point.gsRating) >= 8) {
-                        pixelOffset = 0;
-                    } else if (parseInt(point.gsRating) <= 7 && parseInt(point.gsRating) > 3) {
-                        pixelOffset = 10;
-                    } else if (parseInt(point.gsRating) <= 3 && parseInt(point.gsRating) > 0) {
-                        pixelOffset = 20;
-                    } else {
-                        pixelOffset = 30;
+                      pixelOffset = parseInt(point.gsRating) * 31 -31;
                     }
                 }
 
@@ -272,8 +252,14 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '<div class="">'; //sprites
               //markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
               if (point.gsRating != '') {
-                  markup += '<div class=""><div class="rating-circle circle-rating--small ' + 'rating_'+point.gsRating + '">';
-                  markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
+                var ratingShape = 'rating-circle circle-rating--small rating_'+point.gsRating;
+                var textFormatting = 'circle-side-text';
+                if(point.schoolType == 'Private') {
+                  ratingShape = 'rating-circle diamond-rating--small rating_'+point.gsRating;
+                  var textFormatting = 'diamond-side-text';
+                }
+                markup += '<div class="" style="position: relative"><div class="'+ ratingShape + '">';
+                markup += '<div>' + point.gsRating + '</div></div><div class="'+ textFormatting +'">' + mapPinRatingText() +  '</div></div>';
               }
 
 

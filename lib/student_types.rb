@@ -3,13 +3,15 @@ module StudentTypes
   BLACKLISTED_BREAKDOWNS = [
     "Fluent-English Proficient and English Only",
     "General-Education students", # General education is confusing to parents
+    "Initially-Fluent English Proficient",
     "Parents Education - Declined to State",
     "Parents Graduate Degree",
     "Parents Not High School Graduate",
     "Parents High School Graduate",
     "Parents Comm/Jr College Graduate",
     "Parents Four Year College Graduate",
-    "Not limited English proficient"
+    "Not limited English proficient",
+    "Reclassified-Fluent English Proficient"
   ].freeze
 
    class << self

@@ -1,5 +1,5 @@
 <% school_page_path =  school_path(school) %>
-<% school_page_url = school.preschool? ? "http://#{ENV_GLOBAL['app_pk_host'] + school_page_path}" : school_page_path %>
+<% school_page_url = school_page_path %>
 <% school_provided_photo = decorated_school.uploaded_photo(130) %>
 <% school_reviews_page_url = school_reviews_url(school) %>
 <% if search_by_location? %>
