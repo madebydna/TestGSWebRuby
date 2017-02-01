@@ -20,14 +20,14 @@ export default function createInfoWindow(entity) {
     return schoolLevels(entity).map(([level, value]) => '<span>' + level + ' (' + value + ')</span>').join(', ')
   };
 
+  let ratingDiv = rating => {
+    return (<div class={'circle-rating--' + entity.rating + ' circle-rating--medium rating'} style="float:left; margin-right: 20px">{entity.rating}<span class="rating-circle-small">/10</span></div>);
+  };
+
   let contentString = (
     <div class="infowindow" style="padding:10px">
       <div class="clearfix">
-        { entity.rating != 'NR' &&
-          <div class={'circle-rating--' + entity.rating + ' circle-rating--medium rating'} style="float:left; margin-right: 20px">
-            {entity.rating}<span class="rating-circle-small">/10</span>
-          </div>
-        }
+        { entity.rating != 'NR' && jsxToString(ratingDiv(entity.rating)).replace(/>\W+/, '>').replace(/\W+</, '<') }
         <div style="float:left;">
           <div>
             <span class="title">
