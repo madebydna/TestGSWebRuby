@@ -116,7 +116,7 @@ LocalizedProfiles::Application.routes.draw do
   match '/widget/map' => 'widget#map', via: [:get, :post]
   match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
 
-  get "/gsr/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
+  get "/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
