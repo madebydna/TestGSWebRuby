@@ -35,73 +35,92 @@ class WidgetController < ApplicationController
 
   private
 
-  def all_digits(str)
-    str[/[0-9]+/]  == str
-  end
-
   def search_by_type
     city_from_query ? city_browse : by_location
   end
 
-  def city_from_query
-    @_city ||= (
-      sq = params[:searchQuery]
-      if sq.present?
-        sq_arr =  sq.split(',')
-        # search query has single param
-        if sq_arr.present? && sq_arr.length == 1
-          city_name = sq_arr[0].strip
-          unless all_digits(city_name)
-            city = city_found_result(City.get_city_by_name(city_name))
-          end
-        # search query has two params
-        elsif sq_arr.present? && sq_arr.length == 2
-          state_name = sq_arr[1].strip
-          city_name = sq_arr[0].strip
-          city = search_by_city_state(state_name, city_name)
-        end
-      end
-      # no city yet, if lat or lon is blank try and use params cityName and state to get city
-      if city.blank? && (params[:lat].blank? || params[:lon].blank?)
-        city = search_by_cityName_state
-        # if city is still blank try a zip code search
-        if city.blank?
-          zip = zip_param(sq)
-          if zip.present?
-            hash = {:state => zip.state, :name => zip.gs_name}
-            city = OpenStruct.new(hash)
-          end
-        end
-      end
-      city
-    )
+  def all_digits(str)
+    str[/[0-9]+/] == str
   end
 
-  def zip_param zip_code
+  def city_from_query
+    @_city_from_query ||= (
+      city_from_searchQuery_split_one_segment ||
+        city_from_searchQuery_split_two_segment ||
+        city_from_params_cityName_state ||
+        city_from_searchQuery_zip )
+  end
+
+  def city_from_searchQuery_split_one_segment
+    sq = params[:searchQuery]
+    if sq.present?
+      sq_arr =  sq.split(',').map(&:strip)
+      # search query has single param like San Francisco
+      if sq_arr.present? && sq_arr.length == 1
+        city_name = sq_arr[0]
+        unless all_digits(city_name)
+          city = single_city_or_nil(City.get_city_by_name(city_name))
+        end
+      end
+    end
+    city
+  end
+
+  def city_from_searchQuery_split_two_segment
+    sq = params[:searchQuery]
+    if sq.present?
+      sq_arr =  sq.split(',').map(&:strip)
+      # search query has single param like San Francisco, CA
+      if sq_arr.present? && sq_arr.length == 2
+        city = search_by_city_state(sq_arr[0], sq_arr[1])
+      end
+    end
+    city
+  end
+
+  def city_from_params_cityName_state
+    if params[:lat].blank? || params[:lon].blank?
+      search_by_city_state(params[:cityName], params[:state])
+    end
+  end
+
+  def city_from_searchQuery_zip
+    # try a zip code search using the searchQuery ex. 94607
+    sq = params[:searchQuery]
+    if sq.present? && (params[:lat].blank? || params[:lon].blank?)
+      zip = zip_param(sq)
+      if zip.present?
+        hash = {:state => zip.state, :name => zip.gs_name}
+        city = OpenStruct.new(hash)
+      end
+    end
+    city
+  end
+
+  def search_by_single_city_name?
+    # search query has single param San Francisco
+    if params[:searchQuery].present?
+      sq_arr =  params[:searchQuery].split(',')
+      sq_arr.present? && sq_arr.length == 1
+    end
+  end
+
+  def zip_param(zip_code)
     @_zip_param = (zip_code.present? && zip_code =~ /^\d{5}$/) ? BpZip.find_by_zip(zip_code) : nil
   end
 
-  def search_by_cityName_state
-    city_name = params[:cityName]
-    state_name = params[:state]
-    search_by_city_state(state_name, city_name)
-  end
-
-  def search_by_city_state(state_name, city_name)
+  def search_by_city_state(city_name, state_name)
     state = States.abbreviation(state_name)
     #   if it is a state try to find city in state that is unique
     #   set city variable if successful
     if state.present?
-      city = city_found_result(City.get_city_by_name_and_state(city_name, state))
+      city = single_city_or_nil(City.get_city_by_name_and_state(city_name, state))
     end
     city
   end
 
-  def city_found_result city_found
-    if city_found.length == 1
-      city = city_found.first
-    end
-    city
+  def single_city_or_nil(city_found)
+    city_found.length == 1 ? city_found.first : nil
   end
 
   def by_location
@@ -135,7 +154,7 @@ class WidgetController < ApplicationController
     search_options = {number_of_results: MAX_RESULTS_FOR_MAP, offset: 0}
     yield search_options, @params_hash if block_given?
     results = search_method.call(search_options)
-    process_results(results, 0) unless results.empty?
+    process_results(results, 0) unless results.blank?
 
   end
 
@@ -168,7 +187,7 @@ class WidgetController < ApplicationController
     @schools.each { |school| school.on_page = true } if @schools.present?
 
     mapping_points_through_gon
-    assign_sprite_files_though_gon
+    assign_sprite_files_though_gon_widget
   end
 
   def determine_layout

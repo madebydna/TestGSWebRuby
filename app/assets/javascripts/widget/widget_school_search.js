@@ -119,7 +119,6 @@ GS.widget = GS.widget || (function() {
   var submitSearchButton = function(){
     document.getElementById('zoom').value = '';
     submitSearch();
-    return false;
   }
 
   var submitSearch = function() {

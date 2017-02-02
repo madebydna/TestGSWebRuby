@@ -1,0 +1,14 @@
+@mixin diamond-rating($size, $font-size: $size*.66, $color: #FFFFFF) {
+  transform: rotate(45deg);
+  width:$size;
+  height:$size;
+  color: $color;
+  font-size: $font-size;
+  line-height: $size;
+  text-align: center;
+  margin: 0px 5px;
+
+  > div{
+    transform: rotate(-45deg);
+  }
+}

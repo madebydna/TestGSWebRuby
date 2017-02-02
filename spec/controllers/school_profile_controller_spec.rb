@@ -211,12 +211,12 @@ describe DeprecatedSchoolProfileController do
         school.name = 'ABC Preschool'
       end
 
-      it 'should use pk subdomain for english' do
-        expect(subject[:en]).to eq 'http://pk.greatschools.org/michigan/detroit/preschools/ABC-Preschool/1/'
+      it 'should not use pk subdomain for english' do
+        expect(subject[:en]).to eq 'http://localhost/michigan/detroit/1-ABC-Preschool/'
       end
 
-      it 'should use pk subdomain for spanish' do
-        expect(subject[:es]).to eq 'http://pk.greatschools.org/michigan/detroit/preschools/ABC-Preschool/1/?lang=es'
+      it 'should not use pk subdomain for spanish' do
+        expect(subject[:es]).to eq 'http://localhost/michigan/detroit/1-ABC-Preschool/?lang=es'
       end
     end
 

@@ -3,7 +3,7 @@
   <p>Find the top schools in a city or near an address or zip code</p>
   <p id="noQuery" class="warning dn">Please enter an address or zip code</p>
   <p id="noResults" class="warning dn">No school results found for "<span id="noResultsSearchQuery"></span>"</p>
-  <form id="command" name="searchFormVisible" action="/widget/map" method="post" onsubmit="return GS.widget.submitSearchButton();">
+  <form id="command" name="searchFormVisible" action="/widget/map" method="post" onsubmit="GS.widget.submitSearchButton();return false;">
     <input id="searchInput"
            name="searchQuery"
            class="searchInput"
@@ -14,7 +14,7 @@
     <button type="submit" class="button-1 searchSubmit">GO</button>
   </form>
 
-  <form id="command" name="searchForm" class="dn" action="/widget/map" method="post" onsubmit="return GS.widget.submitSearch();">
+  <form id="command" name="searchForm" class="dn" action="/widget/schoolSearch.page" method="post" onsubmit="return GS.widget.submitSearch();">
     <input id="filter_p_value" name="preschoolFilterChecked" type="hidden" value="false">
     <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:elementaryFilterChecked) || @params_hash[:elementaryFilterChecked] == 'true') ? true : false %>">
     <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:middleFilterChecked) || @params_hash[:middleFilterChecked] == 'true') ? true : false %>">
@@ -31,6 +31,5 @@
     <input id="cobrandHostname" name="cobrandHostname" type="hidden" value="">
     <input id="showLocationMarker" name="showLocationMarker" type="hidden" value="false">
     <input id="searchOutput" name="searchQuery" type="text" value="<%=  @params_hash[:searchQuery] %>">
-    <!--<button type="submit" class="button-1 searchSubmit">GO</button>-->
   </form>
 </div>

@@ -254,16 +254,20 @@ class GroupComparisonDataReader < SchoolProfileDataReader
     end
   end
 
-  # General education is supposed to be the converse of special education, but
-  # it's confusing to parents. This callback removes data points for that
-  # breakdown.
-  def remove_general_eduation_callback
+  # Remove any breakdowns not wanted displayed
+  def remove_blacklisted_breakdowns_callback
     data.each do | key, _ |
       data[key].delete_if do |data_point|
-        data_point[:original_breakdown] == StudentTypes.general_education_breakdown_label
-      end
+        StudentTypes.blacklisted_breakdowns.include?(data_point[:original_breakdown])
+     end
     end
   end
+
+  # Alias the callback being replaced by remove_blacklisted_breakdowns to allow
+  # code to be released before or after the config is updated
+  # TODO: after release r319 remove the alias
+
+  alias remove_general_eduation_callback remove_blacklisted_breakdowns_callback
 
   ############################# CALLBACK HELPERS ###############################
 
