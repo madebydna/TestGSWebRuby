@@ -145,8 +145,8 @@ export const DistrictBoundariesLegend = ({legendContainerForCtaId}) => (
       <li><span/>Private school</li>
       <li><span/>Public school</li>
       <li><span/>Not rated school</li>
-      <li><span/>Private school</li>
-      <li><span/>Public school</li>
+      <li><span/>School boundary</li>
+      <li><span/>District boundary</li>
     </ul>
   </div>
 );
