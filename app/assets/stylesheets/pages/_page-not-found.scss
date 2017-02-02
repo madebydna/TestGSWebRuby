@@ -1,8 +1,5 @@
 .page-not-found-container {
   margin: 53px auto 88px auto;
-  @include media-breakpoint-up(sm) {
-    margin-right: 0px;
-  }
 
   h1 {
     font-family: 'RobotoSlab-Bold';
@@ -22,7 +19,10 @@
   }
 
   li {
-    margin-top: $spacing-large;
+    //margin-top: $spacing-medium;
+    //margin-right: $spacing-small;
+    margin: $spacing-medium $spacing-small auto auto;
+    line-height: 1.36;
     color: #2ba3dc;
     > span {
       color: #333;
@@ -34,16 +34,21 @@
     color: #196184;
   }
 
+  img {
+    max-width: 100%;
+  }
 
   .image {
     text-align:center;
-    max-width: 100%;
   }
 
   .text {
     text-align: center;
     @include media-breakpoint-up(md) {
       text-align: left;
+    }
+    @media only screen and (max-width: $screen-sm-max) {
+      white-space: pre-line;
     }
   }
 
