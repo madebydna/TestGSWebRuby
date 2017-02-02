@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { geocode } from '../../components/geocoding';
-import Multibutton from '../multibutton';
+import ButtonGroup from '../buttongroup';
 import Select from '../select';
 import * as Geocoding from '../../components/geocoding';
 
@@ -120,7 +120,7 @@ export default class SearchBar extends React.Component {
           </div>
           <div className="grade-filter">
             <label>School Grade</label>
-            <Multibutton
+            <ButtonGroup
               options={{e: 'Elementary', m: 'Middle', h: 'High'}}
               onSelect={this.props.setLevel} />
           </div>

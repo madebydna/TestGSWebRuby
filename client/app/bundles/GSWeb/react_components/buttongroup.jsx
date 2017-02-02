@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default class Multibutton extends React.Component {
+export default class ButtonGroup extends React.Component {
   static propTypes = {
     options: React.PropTypes.object.isRequired,
     onSelect: React.PropTypes.func.isRequired,
@@ -29,14 +29,14 @@ export default class Multibutton extends React.Component {
 
   renderOptions() {
     return Object.keys(this.props.options).map(key => 
-        <span key={key}
+        <button key={key}
           className={key == this.state.activeOption ? 'active' : ''}
           onClick={this.handleSelect(key)}>
           {this.props.options[key]}
-        </span>);
+        </button>);
   } 
 
   render() {
-    return <span className="multi-button">{this.renderOptions()}</span>
+    return <span className="button-group">{this.renderOptions()}</span>
   }
 }

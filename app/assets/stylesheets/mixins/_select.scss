@@ -2,7 +2,7 @@
   $arrow-y: ($height / 2) - 2;
   height: $height;
   border: 1px solid $form-field-border-color;
-  border-radius: $border-radius;
+  border-radius: $form-field-border-radius;
   -webkit-appearance: none;
   -webkit-border-radius: 2px;
   padding: 0 30px 0 10px;
