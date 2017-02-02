@@ -53,43 +53,34 @@
       @include media-breakpoint-up(sm) {
         padding: 10px 10px 20px 10px;
       }
+
       .search-input {
         @include input-joined-with-button;
-      }
-      .search-input button {
-        display: none;
-        @include media-breakpoint-up(md) {
-          display: inline-block;
+        @include media-breakpoint-down(sm) {
+          width: 100%;
         }
-        height: 36px;
-        background-color: #2ba3dc;
-        background-image: none;
-        color: white;
-      }
-      .search-input input {
-        height: 36px;
-        padding: 10px 10px 10px 40px;
-        width: 300px;
-        font-size: 13px;
-        background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAAXNSR0IArs4c6QAAAjxJREFUOBGVUz1oU1EUPucmLVREEVwEB3FpxMQmOKgoQqpWXGwcSo0ObQSf4Crq4GBwqD+DIF0chKaWQEKH+rYiiKI4+AO2mtpkqpOl6uAPlGKTe/xOyC3vBaT0wM055zvf/d69554wBSwzONQnRDkiSQnTDiaqiPDbSGfX7amJh98C1FAIHpHneZuWfv29L2QvhaouYfoBoueXHk85KOiNJk6Ama0x5oFhk6aOaIyZBoj4HQltx5rsP5s7ENzsYu4/lzspjca0CrDQqSfl8aeuqD6fz0c/zC8UhOQ8TlPb1mWShUJhJcgxZBs5BSAy2i6gOETqm6NbLuNUi+hX988VOax40AyOmVTAsvWDhWBcLI7+Rv5cMQilgjWNjb6CBh1iFtX/z/BKzTpOvLOdY3DPioKrlhLtxVDOtK+VfwnhSIzOgYLMcl2b2E7Q/Ez2wiEW6UUoYjjUeK0bHSRIfBeR/XiFiQHP26oFZyrQsPUSehEB771fHPvsas7jNkSZ7HDGWjuJMIojLTHJC+0BXkSvmMYHmvOkXGA3MHQjGjuDOlG1MlPdm0xNg3wE7d8FKI51EGs3Fozf4Mc19FgsnqzX5mZfNUv4aYpoMv9p5mtf+uijP8urz4jpozE0h82lCHVe8ctjd7rjqWW05ERrY++eRMri4y81b16nVVjXnR4cvoqJuueITHzTL4/f2pCIbs5kh65ZK3fXhAxdXLuOA9fz1crs61iiR/87x1tcs2ER3VhToZ7kAkIMa2TkH/Aaw6yt1DN6AAAAAElFTkSuQmCC');
-        background-repeat: no-repeat;
-        background-position: left 10px center;
-        background-color: #f5f9fa;
-      }
-      .search-input {
         display: inline-block;
+
         label {
           @include media-breakpoint-down(sm) {
             display: none;
           }
         }
-      }
-      .search-input, .search-input input {
-        width: 100%;
-        @include media-breakpoint-up(md) {
-          width: auto;
+        button {
+          @include media-breakpoint-down(sm) {
+            display: none;
+          }
+        }
+        input {
+          @include input-with-search-icon;
+          width: 175px;
+          @include media-breakpoint-down(sm) {
+            width: 100%;
+            border-right-width: 1px;
+          }
         }
       }
+
       .filters {
         display: none;
         @include media-breakpoint-up(md) {
