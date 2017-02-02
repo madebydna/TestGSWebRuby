@@ -1,0 +1,11 @@
+@mixin input-joined-with-button($border-color: $form-field-border-color) {
+  input {
+    border: solid $border-color;
+    border-width: 1px 0 1px 1px;
+    border-radius: $border-radius 0 0 $border-radius;
+  }
+  button {
+    border: none;
+    border-radius: 0 $border-radius $border-radius 0;
+  }
+}
