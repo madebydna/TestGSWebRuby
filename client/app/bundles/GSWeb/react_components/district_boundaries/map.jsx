@@ -30,7 +30,7 @@ export default class Map extends React.Component {
     let infoWindow = new this.props.googleMaps.InfoWindow({
       content: content
     });
-    infoWindow.open(this.props.map, marker);
+    infoWindow.open(this.map, marker);
     this.infoWindow = infoWindow;
   }
 
@@ -47,15 +47,18 @@ export default class Map extends React.Component {
   }
 
   onIdle() {
+    this.props.googleMaps.event.trigger(this.map, 'resize');
     this.setState({mapCenter: this.map.getCenter()});
   }
 
   onResize() {
+    this.props.googleMaps.event.trigger(this.map, 'resize');
     this.map.setCenter(this.state.mapCenter)
   }
 
   onClick(e) {
     this.closeInfoWindow();
+    this.setState({mapCenter: e.latLng});
     this.props.changeLocation(e.latLng.lat(), e.latLng.lng());
   }
 
@@ -68,6 +71,16 @@ export default class Map extends React.Component {
     this.props.googleMaps.event.addDomListener(window, 'resize', this.onResize.bind(this));
     this.map.addListener('click', this.onClick.bind(this));
   }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.markers.length == 0 && this.props.markers.length > 0) {
+      this.onResize();
+    }
+    if(prevProps.hidden && !this.props.hidden) {
+      this.onResize();
+    }
+  }
+  
 
   renderPolygons() {
     return this.props.polygons.map(component => React.cloneElement(component, {

@@ -87,6 +87,7 @@ export default class DistrictBoundaries extends React.Component {
           markers={this.renderMarkers()}
           polygons={this.renderPolygons()}
           changeLocation={this.props.changeLocation}
+          hidden={this.state.mapHidden}
         />
       );
     } else {
@@ -125,9 +126,11 @@ export default class DistrictBoundaries extends React.Component {
     return (
       <div className="district-boundaries-component">
         <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}/>
+        { this.props.schools.length > 0 && 
         <div className={ this.state.listHidden ? 'school-list closed' : 'school-list'}>
           <SchoolList />
         </div>
+        }
         <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
           {this.renderMap()}
         </div>
