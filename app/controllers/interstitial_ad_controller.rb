@@ -4,7 +4,7 @@ class InterstitialAdController < ApplicationController
 
   def show
     gon.pagename = "Interstitial Ad"
-    set_meta_tags(title: "Interstiail Ad",
+    set_meta_tags(title: "Interstitial Ad",
                   refresh: "20;#{pass_through_URI}",
                   robots: 'noindex, nofollow, noarchive')
   end
