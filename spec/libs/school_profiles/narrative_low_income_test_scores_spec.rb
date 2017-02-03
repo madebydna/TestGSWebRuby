@@ -232,11 +232,11 @@ describe SchoolProfiles::NarrativeLowIncomeTestScores do
   end
 
   def string_key_for_key_4_3_and_subject_english
-    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The English scores of low-income students at this school are above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
+    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The English scores of low-income students at this school are at or above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
     end
 
 
   def string_key_for_key_4_3_and_subject_math
-    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The math scores of low-income students at this school are above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
+    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The math scores of low-income students at this school are at or above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
   end
 end

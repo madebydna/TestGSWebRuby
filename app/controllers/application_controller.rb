@@ -184,4 +184,11 @@ class ApplicationController < ActionController::Base
   def add_fb_appid_to_gon
     gon.facebook_app_id = ENV_GLOBAL['facebook_app_id']
   end
+
+  def set_no_index
+    @no_index = ''
+    if params['s_cid'].present? && params['s_cid'] == 'wsbay93'
+      @no_index = '<meta name="robots" content="noindex"><meta name="googlebot" content="noindex">'.html_safe
+    end
+  end
 end

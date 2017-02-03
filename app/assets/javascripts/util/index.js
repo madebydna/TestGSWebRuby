@@ -10,7 +10,6 @@
 //= require ./handlebars
 // require ./i18n
 //= require ./localStorage
-//= require ./optimizely
 //= require ./photo_upload
 //= require ./popup
 //  require ./responsive_images

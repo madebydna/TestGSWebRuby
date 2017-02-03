@@ -28,8 +28,9 @@ class SchoolCacheQuery
 
   def matching_schools_clause
     arel = SchoolCache.arel_table
-    q ||= arel[:id].eq('0') # id = 0 d prevents needing to special-case code below
+    q ||= Arel::Nodes::Grouping.new(Arel::Nodes::SqlLiteral.new('false = true')) # false = true prevents needing to special-case code below
     @school_ids_per_state.each_pair do |state, school_ids_for_state|
+      next if school_ids_for_state.blank?
       q = q.or(
         q.grouping(
           arel[:state].eq(state).

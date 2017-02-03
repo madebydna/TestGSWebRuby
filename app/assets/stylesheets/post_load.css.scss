@@ -75,6 +75,7 @@
 // more components
 @import "gs/objects/spinny_wheel.css.scss";
 @import "gs/objects/modal_layout";
+@import "pages/districts-cities-list";
 @import 'gs/modal_tooltip';
 
 
@@ -82,6 +83,9 @@
 @import "gs/objects/footer";
 @import "sprites/footer_icons_16x16";
 
+// page specific
+@import "pages/interstitial";
+@import "pages/page-not-found";
 
 // school profile specific
 @import 'school_profiles/hero.scss';

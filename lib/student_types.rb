@@ -1,6 +1,20 @@
 module StudentTypes
 
-  class << self
+  BLACKLISTED_BREAKDOWNS = [
+    "Fluent-English Proficient and English Only",
+    "General-Education students", # General education is confusing to parents
+    "Initially-Fluent English Proficient",
+    "Parents Education - Declined to State",
+    "Parents Graduate Degree",
+    "Parents Not High School Graduate",
+    "Parents High School Graduate",
+    "Parents Comm/Jr College Graduate",
+    "Parents Four Year College Graduate",
+    "Not limited English proficient",
+    "Reclassified-Fluent English Proficient"
+  ].freeze
+
+   class << self
 
     def all
       @_all ||= all_as_strings.map(&:to_sym)
@@ -20,6 +34,10 @@ module StudentTypes
 
     def general_education_breakdown_label
       @_general_education_breakdown_label ||= 'General-Education students'
+    end
+
+    def blacklisted_breakdowns
+        BLACKLISTED_BREAKDOWNS
     end
 
     # Student types aren't necessarily the same name as their breakdowns so we map

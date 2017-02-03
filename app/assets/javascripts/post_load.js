@@ -28,5 +28,7 @@
 //= require util/subscription
 //= require util/send_updates
 //= require util/back_to_top
+//= require ads/interstitial
 //= require page_initializers/school_profiles
+//= require page_initializers/interstitial_ad
 //= require webpack-bundle

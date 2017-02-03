@@ -76,7 +76,7 @@ export default class NearbySchool extends React.Component {
       <div className="nearby-school">
         {this.renderRating()}
         <div>
-          <a href={this.props.schoolUrl}
+          <a className="js-gaClick" href={this.props.schoolUrl}
             data-ga-click-category='Profile'
             data-ga-click-action={this.props.nearbySchoolsType}
             data-ga-click-label={this.props.schoolUrl}>

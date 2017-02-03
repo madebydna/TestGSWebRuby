@@ -1,6 +1,9 @@
 GS = GS || {};
 GS.ad = GS.ad || {};
 GS.ad.interstitial = (function() {
+
+    var destinationUri;
+
     function readCookie(cookieName) {
         var cookie = "" + document.cookie;
         var i = cookie.indexOf(cookieName);
@@ -13,7 +16,7 @@ GS.ad.interstitial = (function() {
     }
 
     function makeInterstitialHref(passThroughHref, adSlot) {
-        var href = 'http://' + location.host + "/ads/interstitial.page?";
+        var href = 'http://' + location.host + "/interstitial/?";
         if (adSlot) {
             href += "adslot=" + adSlot + "&"
         }
@@ -59,7 +62,75 @@ GS.ad.interstitial = (function() {
             (link.getAttribute("onclick") && link.getAttribute("onclick").toString().match(/window.open/));
     }
 
+  function initInterstitialPage() {
+      destinationUri = getDestinationUri();
+      setInterstitialCookie();
+      setUpNoAdHandler();
+      setContinueToDestinationHandlers();
+      setContinueTimeout();
+    }
+
+    function setInterstitialCookie() {
+      $.cookie("gs_interstitial", "viewed", {expires: 1, path: '/' });
+    }
+
+    function setUpNoAdHandler() {
+      googletag.cmd.push(function () {
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+          if (event.isEmpty) {
+            continueToDestination();
+          }
+        });
+      });
+    }
+
+    function setContinueTimeout() {
+      setTimeout(continueToDestination, 15000);
+    }
+
+    function getDestinationUri() {
+      var uri = GS.uri.Uri.getValueOfQueryParam('passThroughURI');
+      var uriDecoded = "";
+      if (uri && uri.length > 0) {
+          uriDecoded = decodeURIComponent(uri);
+        }
+      if ( ! validUri(uriDecoded) ) {
+        uriDecoded = "/"; 
+      }
+      return encodeURI(uriDecoded);
+      }
+
+    function validUri(uri) {
+      var valid = ( uriRelative(uri) ||
+            uriAbsoluteToGsOrg(uri) ||
+               uriAbsoluteToLocalhost(uri) );
+      return valid;
+    }
+
+    function uriRelative(uri) {
+      return uri.startsWith("/");
+    }
+
+    function uriAbsoluteToGsOrg(uri) {
+      var gsOrgMatch = /^http(?:s)?:\/\/(?:[^\\/]+\.)?greatschools\.org(?:\/|:|$).*/;
+      return uri.match(gsOrgMatch);
+    }
+
+    function uriAbsoluteToLocalhost(uri) {
+      localhostMatch = /^http:\/\/localhost(?:\/|:|$).*/;
+      return uri.match(localhostMatch);
+    }
+
+    function continueToDestination() {
+      location.replace(destinationUri);
+    }
+
+    function setContinueToDestinationHandlers() {
+      $('.js-continueToDestination').on('click', continueToDestination)
+    }
+
     return {
-        attachInterstitial: attachInterstitial
+        attachInterstitial: attachInterstitial,
+        initInterstitialPage: initInterstitialPage
     }
 })();

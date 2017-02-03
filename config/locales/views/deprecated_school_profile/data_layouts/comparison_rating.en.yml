@@ -6,3 +6,4 @@ en:
         description_text_html: "<span class='font-size-medium'>Schools serving similar student populations most often got a: <strong>%{value}</strong></span>"
         #for ga event label
         CA Similar Schools Comparison Predicted Rating: 'Similar schools predicted rating'
+        CA Escuelas similares Comparación de puntuaciones predicha: 'Similar schools predicted rating'

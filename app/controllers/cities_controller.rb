@@ -12,6 +12,7 @@ class CitiesController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
+  before_action :set_no_index
 
   def show
     write_meta_tags
