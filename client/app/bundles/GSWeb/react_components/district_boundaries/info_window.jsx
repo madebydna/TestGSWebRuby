@@ -20,35 +20,47 @@ export default function createInfoWindow(entity) {
     return schoolLevels(entity).map(([level, value]) => '<span>' + level + ' (' + value + ')</span>').join(', ')
   };
 
-  let ratingDiv = rating => {
-    return (<div class={'circle-rating--' + entity.rating + ' circle-rating--medium rating'} style="float:left; margin-right: 20px">{entity.rating}<span class="rating-circle-small">/10</span></div>);
+  let ratingDiv = (entity) => {
+    let visibleRating = entity.rating != 'NR' ? entity.rating : undefined;
+    let ratingText = <span></span>;
+
+    if(visibleRating) {
+      ratingText = (<div>{visibleRating}<span>/10</span></div>);
+    }
+    let shape = 'circle';
+    if(entity.type == 'school' && entity.schoolType == 'private') {
+      shape = 'diamond';
+    } else if (entity.type == 'district') {
+      shape = 'square';
+    }
+    return (
+      <div class={'rating_' + entity.rating + ' ' + shape +'-rating--small rating'}>{ratingText}</div>
+    );
   };
 
   let contentString = (
-    <div class="infowindow" style="padding:10px">
+    <div class="info-window">
       <div class="clearfix">
-        { entity.rating != 'NR' && jsxToString(ratingDiv(entity.rating)).replace(/>\W+/, '>').replace(/\W+</, '<') }
-        <div style="float:left;">
-          <div>
-            <span class="title">
-              <a href={entity.show}>{entity.name}</a>
-            </span>
-          </div>
-          {entity.address &&
+        { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
+        <div class="school-info">
+          <a href={entity.links.profile}>{entity.name}</a>
+          {entity.type == 'school' && entity.address &&
             <div>
               <div>{entity.address.street1}</div>
               <div>{entity.address.city + ','} {entity.state} {entity.address.zip}</div>
             </div>
           }
+          { entity.schoolCountsByLevelCode && <div><br/>Number of schools:<div>{levelMarkup(entity)}</div></div> }
         </div>
       </div>
       <hr/>
-      { entity.schoolCountsByLevelCode && <div>{levelMarkup(entity)}</div> }
-
-      <a href={homesForSaleHref} rel="nofollow">Homes for sale</a>
-      { entity.links && entity.links.profile &&
-        <a href={entity.links.profile}>View school details</a>
-      }
+      <div class="other-links">
+        <span class="icon-house">  </span>
+        <a href={homesForSaleHref} rel="nofollow">Homes for sale</a>
+        { entity.links && entity.links.profile &&
+          <a href={entity.links.profile} class="school-details">View school details</a>
+        }
+      </div>
     </div>
   );
   return jsxToString(contentString);

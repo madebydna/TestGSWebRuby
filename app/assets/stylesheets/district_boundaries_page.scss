@@ -1,4 +1,11 @@
 #district-boundaries-page {
+  .diamond-rating--small {
+    margin-top: 10px;
+    div {
+      display: inline-block;
+    }
+  }
+
   select {
     @include select;
   }
@@ -242,7 +249,6 @@
       display: none;
     }
   }
-
 }
 
 #district-boundaries-page ~ footer {
