@@ -16,6 +16,14 @@
       @include button-group;
     }
 
+    input[type="checkbox"] {
+      @include checkbox;
+    }
+
+    .district-select {
+      max-width: 265px;
+    }
+
     .toggle-bar {
       @include clearfix;
       margin-top: 10px;
@@ -82,17 +90,23 @@
       }
 
       .filters {
+        label ~ label {
+          margin-left: 10px;
+        }
         display: none;
         @include media-breakpoint-up(md) {
           display: inline-block;
         }
 
-        // @include clearfix;
         > div {
           @include media-breakpoint-up(sm) {
             display: inline-block;
             padding-left: 20px;
           }
+        }
+
+        > div:last-child {
+          vertical-align: top;
         }
 
         hr {
@@ -106,9 +120,9 @@
       .filters.open {
         display: block;
       }
+
       label {
-        margin-top: 15px;
-        margin-bottom: 10px;
+        margin: 15px 0 10px 0;
         display: block;
       }
     }

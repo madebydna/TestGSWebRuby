@@ -3,6 +3,7 @@ import { geocode } from '../../components/geocoding';
 import ButtonGroup from '../buttongroup';
 import Select from '../select';
 import * as Geocoding from '../../components/geocoding';
+import Checkbox from '../checkbox';
 
 export default class SearchBar extends React.Component {
 
@@ -82,8 +83,8 @@ export default class SearchBar extends React.Component {
     this.props.onClickListView();
   }
 
-  handleSchoolType(e) {
-    this.props.toggleSchoolType(e.target.value);
+  handleSchoolType(value) {
+    this.props.toggleSchoolType(value);
   }
 
   render() {
@@ -127,8 +128,8 @@ export default class SearchBar extends React.Component {
           <div>
             <label className="type-filter">Additional school type</label>
             <div>
-              <input type="checkbox" value="charter" onClick={this.handleSchoolType} />Charter
-              <input type="checkbox" value="private" onClick={this.handleSchoolType} />Private
+              <Checkbox value="charter" label="Charter" onClick={this.handleSchoolType} />
+              <Checkbox value="private" label="Private" onClick={this.handleSchoolType} />
             </div>
           </div>
         </div>
