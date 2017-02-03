@@ -43,7 +43,7 @@ export default function createInfoWindow(entity) {
       <div class="clearfix">
         { jsxToString(ratingDiv(entity)).replace(/>\s+/, '>').replace(/\s+</, '<') }
         <div class="school-info">
-          <a href={entity.links.profile}>{entity.name}</a>
+          <a href={entity.links ? entity.links.profile : '#'}>{entity.name}</a>
           {entity.type == 'school' && entity.address &&
             <div>
               <div>{entity.address.street1}</div>
