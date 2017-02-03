@@ -34,10 +34,10 @@
 <div class="clearfix limit-width-1200">
     <div style="width:500px" class="ma">
     <div class="fl pal">
-        <%= link_to(t('.browse_cities'), city_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+      <%= link_to(t('.browse_cities'), cities_list_path(@state[:long].titleize.gsub(' ','_'), @state[:short].upcase)) %>
     </div>
     <div class="fl pal">
-        <%= link_to(t('.browse_districts'), district_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+      <%= link_to(t('.browse_districts'), districts_list_path(@state[:long].titleize.gsub(' ','_'), @state[:short].upcase)) %>
     </div>
     </div>
 </div>

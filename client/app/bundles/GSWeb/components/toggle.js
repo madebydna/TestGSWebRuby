@@ -81,6 +81,18 @@ _.assign(Toggle.prototype, {
     };
   },
 
+  sendGoogleAnalyticsCallback: function sendGoogleAnalyticsCallback(category, label){
+    return function() {
+      var cat = this.$container.data(category);
+      var lab = this.$container.data(label);
+      if (this.open) {
+        analyticsEvent(cat, 'Show More', lab);
+      } else {
+        analyticsEvent(cat, 'Show Less', lab);
+      }
+    }
+  },
+
   init: function init() {
     this.checkRequiredProps();
     return this;

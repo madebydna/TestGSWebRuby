@@ -12,7 +12,6 @@ facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
 solr.ro.server.url: "http://omega.greatschools.org:8580/main/"
 solr.rw.server.url:  "http://omega.greatschools.org:8580/main/"
 cdn_host: 'http://www.gscdn.org'
-optimizely_key: "384121511"
 gtm_container_id: 'GTM-N9TK8P'
 advertising_env: "dev"
 advertising_enabled: true
@@ -32,6 +31,7 @@ exacttarget_v2_api_app_id: 33a5f73d-b3d3-4724-a50c-a21c1277a041
 
 connection_pooling_enabled: false
 search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
+district_city_list_cache_time: 86400 # in seconds (24 hrs)
 
 # Configs for scripts
 queue_daemon_sleep_time: 1 # in seconds

@@ -75,7 +75,7 @@ class SearchController < ApplicationController
     gon.allow_compare = can_compare?
     set_login_redirect
     @city_browse = true
-    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
+    require_city_instance_variable { redirect_to state_path(gs_legacy_url_encode(@state[:long])); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
       search_options.merge!({state: state_abbreviation, city: @city.name})
@@ -108,7 +108,7 @@ class SearchController < ApplicationController
     @district = params[:district_name] ? District.on_db(state_abbreviation.downcase.to_sym).where(name: district_name, active:1).first : nil
 
     if @district.nil?
-      redirect_to city_path(@state[:long], @city.name)
+      redirect_to city_path(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city.name))
       return
     end
 

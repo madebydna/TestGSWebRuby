@@ -1,4 +1,7 @@
 class ErrorController < ApplicationController
+
+  layout :determine_layout
+
   def internal_error
 
   end
@@ -20,4 +23,15 @@ class ErrorController < ApplicationController
   def school_not_found
 
   end
+
+  private
+
+  def determine_layout
+    if action_name == 'internal_error'
+      'no_header_and_footer'
+    else
+      'error'
+    end
+  end
+
 end

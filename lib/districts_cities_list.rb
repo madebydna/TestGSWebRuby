@@ -6,13 +6,13 @@ class DistrictsCitiesList
     @state = state
   end
 
-  def cities(state)
+  def city_names
     @_cities ||= (
       City.where(active: 1, state: state).order(name: :asc).pluck(:name)
     )
   end
 
-  def districts_cities_counties(state)
+  def districts_cities_counties
     @_districts_cities_counties ||= (
       District.on_db(state.downcase.to_sym)
         .where(active: 1)
@@ -22,20 +22,21 @@ class DistrictsCitiesList
     )
   end
 
-  def state_full_name(state)
-    States.state_name(state).titleize
+  def state_name_long
+    States.state_name(state)
   end
 
-  def state_names(state)
+  def state_names
     {
-        full: state_full_name(state),
+        long: state_name_long,
+        full: state_name_long.titleize,
         abbr: state,
-        routing: state_full_name(state).gsub(' ','_')
+        routing: state_name_long.titleize.gsub(' ','_')
     }
   end
 
   def dropdown_info
-    States.labels_hash.map{ |k,v| [k.upcase, v ]}.to_h
+    States.labels_hash.map{ |k,v| [k.upcase, v.gsub(' ','_')] }.to_h.sort
   end
 
 end
