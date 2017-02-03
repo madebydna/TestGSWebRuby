@@ -4,7 +4,7 @@ describe WidgetController do
   # let!(:widget_controller) { instance_double(WidgetController) }
 
   [GoogleMapConcerns].each do | mod |
-    it 'should include #{mod.to_s}' do
+    it "should include #{mod.to_s}" do
       expect(WidgetController.ancestors.include?(mod)).to be_truthy
     end
   end
