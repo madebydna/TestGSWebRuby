@@ -6,7 +6,7 @@
   <div class="container">
       <div class="top">
         <ul style="display:inline-block; list-style-type:none;">
-          <li style="float:left;"><a class="top-link" href="/schools/<%= state_names[:routing] %>/<%= state_names[:abbr] %>"> <%= t('.All schools in') %> <%= state_names[:full] %></a></li>
+          <li style="float:left;"><%= link_to t('.All schools in') + " #{state_names[:full]}", state_url(state_params(state_names[:abbr])) %></li>
           <li style="float:left;"><span class="top-link"> <%= t('.All cities in') %> <%= state_names[:full] %></span></li>
           <li style="float:left;"><a class="top-link" href="/schools/districts/<%= state_names[:routing] %>/<%= state_names[:abbr] %>"><%= state_names[:full] %> School Districts</a></li>
         </ul>
@@ -34,11 +34,11 @@
               <th style="width: 50%"><%= state_names[:full] %> <%= t('.Cities') %></th>
             </tr>
             <% cities.each do |city| %>
-                <tr>
-                  <td class="city-district-link">
-                    <%= link_to "#{city} " + t('.Schools'), city_url(city_params(state_names[:abbr], city)) %>
-                  </td>
-                </tr>
+              <tr>
+                <td class="city-district-link">
+                  <%= link_to "#{city} " + t('.Schools'), city_url(city_params(state_names[:abbr], city.downcase)) %>
+                </td>
+              </tr>
             <% end %>
             </tbody>
           </table>

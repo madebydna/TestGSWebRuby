@@ -6,7 +6,7 @@
   <div class="top-bottom">
     <div class="top">
       <div class="navlinks">
-        <a class="top-link" href="/schools/<%= state_names[:routing] %>/<%= state_names[:abbr] %>"> <%= t('.All schools in') %> <%= state_names[:full] %></a>
+        <span style="float:left;"><%= link_to t('.All schools in') + " #{state_names[:full]}", state_url(state_params(state_names[:abbr])) %></span>
         <a class="top-link" href="/schools/cities/<%= state_names[:routing] %>/<%= state_names[:abbr] %>"> <%= t('.All cities in') %> <%= state_names[:full] %></a>
         <span class="top-link"><%= state_names[:full] %> <%= t('.School Districts') %></span>
       </div>

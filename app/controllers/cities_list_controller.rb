@@ -27,7 +27,7 @@ class CitiesListController < ApplicationController
   end
 
   def meta_title
-    "#{dcl.state_full_name} School information by City: Popular Cities"
+    "#{dcl.state_names[:full]} School information by City: Popular Cities"
   end
 
   def set_seo_meta_tags

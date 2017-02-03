@@ -27,7 +27,7 @@ class DistrictsListController < ApplicationController
   end
 
   def meta_title
-    "All school districts in #{dcl.state_full_name}, #{state}"
+    "All school districts in #{dcl.state_names[:full]}, #{state}"
   end
 
   def set_seo_meta_tags

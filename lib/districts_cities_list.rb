@@ -22,15 +22,16 @@ class DistrictsCitiesList
     )
   end
 
-  def state_full_name
-    States.state_name(state).titleize
+  def state_name_long
+    States.state_name(state)
   end
 
   def state_names
     {
-        full: state_full_name,
+        long: state_name_long,
+        full: state_name_long.titleize,
         abbr: state,
-        routing: state_full_name.gsub(' ','_')
+        routing: state_name_long.titleize.gsub(' ','_')
     }
   end
 

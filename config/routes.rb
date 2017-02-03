@@ -125,8 +125,6 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
-    get '/schools/cities/:state_name_long/:state_name', :to => 'cities_list#show', as: 'cities_list'
-    get '/schools/districts/:state_name_long/:state_name', :to => 'districts_list#show', as: 'districts_list'
     get '/gk/', as: :greatkids_home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
@@ -163,9 +161,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/healthy-kids.topic?content=2504', as: :health_and_wellness_article
     get '/gk/road-to-college/', as: :college_articles
     get '/STEM.topic?content=8021', as: :stem_article
-    get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
-    get '/schools/cities/:state_long/:state_short', as: :city_list
-    get '/schools/districts/:state_long/:state_short', as: :district_list
+    # get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
+    # get '/schools/cities/:state_long/:state_short', as: :city_list
+    # get '/schools/districts/:state_long/:state_short', as: :district_list
     get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/gk/moving-with-kids/', as: :moving
@@ -501,6 +499,42 @@ LocalizedProfiles::Application.routes.draw do
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     resource :user, only: [:create], controller: 'school_user', action: 'create'
     get '', to: 'school_profile_overview#overview'
+  end
+
+  #Handle City SEO pages
+  scope '/schools/cities/:state_name_long/:state_name/', as: 'cities_list', constraints: {
+      state_name_long: States.any_state_name_regex_titleize,
+      state_name: States.any_state_abbreviation_regex_without_anchors,
+  } do
+    get '', to: 'cities_list#show'
+  end
+
+  scope '/schools/cities/:state_name_long/:state_name/:letter', as: 'cities_list_paginated', constraints: {
+      state_name_long: States.any_state_name_regex_titleize,
+      state_name: States.any_state_abbreviation_regex_without_anchors,
+      letter: /[A-z]?/
+  } do
+    get '', to: redirect { |params, request|
+      "/schools/cities/#{params[:state_name_long]}/#{params[:state_name]}/"
+    }
+  end
+
+  #Handle District SEO pages
+  scope '/schools/districts/:state_name_long/:state_name/', as: 'districts_list', constraints: {
+      state_name_long: States.any_state_name_regex_titleize,
+      state_name: States.any_state_abbreviation_regex_without_anchors
+  } do
+    get '', to: 'districts_list#show'
+  end
+
+  scope '/schools/districts/:state_name_long/:state_name/:letter', as: 'districts_list_paginated', constraints: {
+      state_name_long: States.any_state_name_regex_titleize,
+      state_name: States.any_state_abbreviation_regex_without_anchors,
+      letter: /[A-z]?/
+  } do
+    get '', to: redirect { |params, request|
+      "/schools/cities/#{params[:state_name_long]}/#{params[:state_name]}/"
+    }
   end
 
   constraints(PathWithPeriod) do
