@@ -15,15 +15,9 @@ class SchoolSearchResultReviewInfoAppender
     solr_results
   end
 
-  def school_ids
-    school_search_results.map do |school_search_result|
-      school_search_result.id
-    end
-  end
-
-  def state
-    if school_search_results.present?
-      Array.wrap(school_search_results.first.database_state).first.upcase
+  def state_ids
+    school_search_results.each_with_object({}) do |school_search_result, state_map|
+      (state_map[school_search_result.database_state.first.upcase] ||= []) << school_search_result.id
     end
   end
 
@@ -32,7 +26,8 @@ class SchoolSearchResultReviewInfoAppender
 
     school_search_results.each do |school_search_result|
       school_id = school_search_result.id
-      review_cache_object = review_cache_object_for_school(school_id)
+      state = school_search_result.database_state.first.upcase
+      review_cache_object = review_cache_object_for_school(state, school_id)
       if review_cache_object
         school_search_result.review_count = review_cache_object.num_reviews
         school_search_result.community_rating = review_cache_object.star_rating
@@ -42,17 +37,19 @@ class SchoolSearchResultReviewInfoAppender
   end
 
   def school_cache_results
-    return nil unless school_ids.present? && state.present?
+    return nil unless state_ids.present?
     @school_cache_results ||= (
     query = SchoolCacheQuery.new.include_cache_keys(REVIEW_INFO_CACHE_KEY)
-    query = query.include_schools(state, school_ids)
+    state_ids.each do |state, id_list|
+      query = query.include_schools(state, id_list)
+    end
     query_results = query.query_and_use_cache_keys
     SchoolCacheResults.new(REVIEW_INFO_CACHE_KEY, query_results)
     )
   end
 
-  def review_cache_object_for_school(school_id)
-    return nil unless school_id.present? && school_cache_results.present?
+  def review_cache_object_for_school(state, school_id)
+    return nil unless state.present? && school_id.present? && school_cache_results.present?
 
     school_cache_results.get_cache_object_for_school(state, school_id)
   end
