@@ -66,9 +66,7 @@ RSpec.configure do |config|
 
   config.mock_with :rspec
 
-  unless ENV['SELENIUM']
-    Capybara.javascript_driver = :webkit
-  end
+  Capybara.javascript_driver = :webkit
 
   require 'socket'
   Capybara.default_host = "http://qa.greatschools.org"
@@ -78,6 +76,25 @@ RSpec.configure do |config|
 end
 
 Capybara::Webkit.configure do |config|
+  config.block_unknown_urls # doesnt seem to block urls in all cases
+  config.block_url "http://www.google-analytics.com"
+  config.block_url "https://stats.g.doubleclick.net"
+  config.block_url "http://pixel.quantserve.com"
+  config.block_url "http://bs.serving-sys.com"
+  config.block_url "http://partner.googleadservices.com"
+  config.block_url "https://www.dsply.com"
+  config.block_url "http://gateway.answerscloud.com"
+  config.block_url "https://www.google.com"
+  config.block_url "http://staticxx.facebook.com"
+  config.block_url "https://www.facebook.com"
+  config.block_url "http://www.googletagmanager.com"
+  config.block_url "http://csi.gstatic.com"
+  config.block_url "https://securepubads.g.doubleclick.net"
+  config.block_url "connect.facebook.net"
+  config.block_url "maps.googleapis.com"
+  config.block_url "www.googletagservices.com"
+  config.block_url "tpc.googlesyndication.com"
+
   # Enable debug mode. Prints a log of everything the driver is doing.
   # config.debug = true
 

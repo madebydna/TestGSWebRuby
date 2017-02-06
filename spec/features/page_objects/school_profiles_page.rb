@@ -72,6 +72,7 @@ class SchoolProfilesPage < SitePrism::Page
     end
   end
 
+  element :h1, 'h1'
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
   element :sign_in, '.account_nav_out > a'

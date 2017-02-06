@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 shared_examples_for 'a configurable profile page' do |action|
     before do
       allow(controller).to receive(:find_school).and_return(school)
