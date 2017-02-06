@@ -4,29 +4,13 @@ class DistrictsListController < ApplicationController
 
   before_filter :require_valid_state
 
-  before_action :set_city_state, only: [:suggest_district_by_name]
-
   def show
     gon.pageTitle = meta_title
     set_seo_meta_tags
     @dcl = dcl
-  end
-
-  def suggest_district_by_name
-    set_city_state
-
-    state_abbr = state if state.present?
-    response_objects = SearchSuggestDistrict.new.search(count: 10, state: state_abbr, query: params[:query])
-
-    set_cache_headers_for_suggest
-    render json:response_objects
-  end
-
-  def set_cache_headers_for_suggest
     cache_time = ENV_GLOBAL['district_city_list_cache_time'] || 0
     expires_in cache_time, public: true
   end
-
 
   private
 
