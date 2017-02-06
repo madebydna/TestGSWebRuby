@@ -1,7 +1,7 @@
 require 'remote_spec_helper'
 require 'features/page_objects/home_page'
 
-describe 'User visits Home Page', js: true, type: :feature, remote: true do
+describe 'User visits Home Page', type: :feature, remote: true do
   before { visit home_path }
   subject(:page_object) { HomePage.new }
   context 'successfully' do

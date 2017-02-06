@@ -66,7 +66,7 @@ RSpec.configure do |config|
 
   config.mock_with :rspec
 
-  Capybara.javascript_driver = :webkit
+  Capybara.default_driver = :webkit
 
   require 'socket'
   Capybara.default_host = "http://qa.greatschools.org"
