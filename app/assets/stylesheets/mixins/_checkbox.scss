@@ -21,7 +21,7 @@
   }
   &:checked + label {
     &:before {
-      padding-left: 2px;
+      padding-left: 3px;
       content: '\2713';
       font-size: $height * .4;
       color: $checkmark-color;

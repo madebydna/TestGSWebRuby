@@ -1,0 +1,62 @@
+ul.legend {
+  padding: 15px 0px;
+  display: none;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 450px;
+
+  @include media-breakpoint-up(md) {
+    display: block;
+    max-width: 100%;
+  }
+
+  li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 10px;
+    text-align: left;
+
+    @include media-breakpoint-only(xs) {
+      width: 110px;
+      font-size: 10px;
+    }
+    @include media-breakpoint-up(sm) {
+      width: 140px;
+    }
+    > span {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 5px 0 0;
+    }
+  }
+  li:nth-child(1) span {
+    width: 21px;
+    height: 21px;
+    background-color: $rating10;
+  }
+  li:nth-child(2) span {
+    @include diamond_rating(18px);
+    background-color: $rating10;
+    margin: 0 10px 0 0;
+  }
+  li:nth-child(3) span {
+    @include circle_rating(21px);
+    background-color: $rating10;
+  }
+  li:nth-child(4) span {
+    @include circle_rating(21px);
+    background-color: $ratingNR;
+  }
+  li:nth-child(5) span {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(231, 136, 24, 0.14);
+    border: solid 3px #e78818;
+  }
+  li:nth-child(6) span {
+    width: 20px;
+    height: 20px;
+    background-color: rgba(84, 180, 227, 0.16);
+    border: solid 3px #2ba3dc;
+  }
+}

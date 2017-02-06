@@ -75,6 +75,7 @@
 @import "components/ratio-viz";
 @import "components/back-to-top";
 @import "components/info-window";
+@import "components/school-list";
 // more components
 @import "gs/objects/spinny_wheel.css.scss";
 @import "gs/objects/modal_layout";
@@ -100,7 +101,7 @@
 @import "school_profiles/school_profile";
 @import 'gs/equity';
 
-@import 'district_boundaries_page';
+@import 'pages/district-boundaries/district_boundaries_page';
 
 // third party libraries
 @import 'resources/tipso'; // used on school profiles

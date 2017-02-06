@@ -98,19 +98,21 @@ export default class SearchBar extends React.Component {
 
         <div className="toggle-bar">
           <button className="filter-toggle-button" onClick={this.toggleFilters} >Filters</button>
-          <div className="show-map" onClick={this.onClickMapView}>
-            <span className={'icon icon-location' + (this.state.mapSelected ? ' active' : '')}/>
-            Map View
-          </div>
-          <div className="show-list" onClick={this.onClickListView}>
-            <span className={'icon icon-document' + (this.state.listSelected ? ' active' : '')}/>
-            List View
+          <div className="list-map-toggle">
+            <a href="javascript:void(0);" className="show-list" onClick={this.onClickListView}>
+              <span className={'icon icon-document' + (this.state.listSelected ? ' active' : '')}/>
+              List View
+            </a>
+            <a href="javascript:void(0);" className="show-map" onClick={this.onClickMapView}>
+              <span className={'icon icon-location' + (this.state.mapSelected ? ' active' : '')}/>
+              Map View
+            </a>
           </div>
         </div>
 
         <div className={this.state.showFilters ? "filters open" : "filters"}>
           <hr/>
-          <div className="district-select">
+          <div className="filter district-select">
             <label>Districts { this.state.searchLocation ? 'near ' + this.state.searchLocation : '' }</label>
             <Select objects={this.props.districts}
               labelFunc={d => d.name}
@@ -119,13 +121,13 @@ export default class SearchBar extends React.Component {
               defaultLabel='Search or click map for districts'
             />
           </div>
-          <div className="grade-filter">
+          <div className="filter grade-filter">
             <label>School Grade</label>
             <ButtonGroup
               options={{e: 'Elementary', m: 'Middle', h: 'High'}}
               onSelect={this.props.setLevel} />
           </div>
-          <div>
+          <div className="filter">
             <label className="type-filter">Additional school type</label>
             <div>
               <Checkbox value="charter" label="Charter" onClick={this.handleSchoolType} />

@@ -127,9 +127,7 @@ export default class DistrictBoundaries extends React.Component {
       <div className="district-boundaries-component">
         <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}/>
         { this.props.schools.length > 0 && 
-        <div className={ this.state.listHidden ? 'school-list closed' : 'school-list'}>
-          <SchoolList />
-        </div>
+          <SchoolList className={ this.state.listHidden ? 'closed' : '' } />
         }
         <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
           {this.renderMap()}

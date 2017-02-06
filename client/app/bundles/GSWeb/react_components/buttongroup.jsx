@@ -29,11 +29,11 @@ export default class ButtonGroup extends React.Component {
 
   renderOptions() {
     return Object.keys(this.props.options).map(key => 
-        <button key={key}
+        <label key={key}
           className={key == this.state.activeOption ? 'active' : ''}
           onClick={this.handleSelect(key)}>
           {this.props.options[key]}
-        </button>);
+        </label>);
   } 
 
   render() {

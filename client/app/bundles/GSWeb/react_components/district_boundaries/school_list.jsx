@@ -8,13 +8,15 @@ import { getSchool, getSchools } from '../../reducers/district_boundaries_reduce
 
 class SchoolList extends React.Component {
   static defaultProps = {
-    schools: []
+    schools: [],
+    className: ''
   }
 
   static propTypes = {
     schools: React.PropTypes.array.isRequired,
     school: React.PropTypes.object,
-    selectSchool: React.PropTypes.func.isRequired
+    selectSchool: React.PropTypes.func.isRequired,
+    className: React.PropTypes.string
   }
 
   onClickSchool(school) {
@@ -32,21 +34,12 @@ class SchoolList extends React.Component {
   renderSchool(school) {
     let liClass = '';
     if(this.props.school && this.props.school.state == school.state && this.props.school.id == school.id) {
-      liClass = 'selected';
+      liClass = 'active';
     }
     return (
-      <li
-        key={school.state + school.id}
-        onClick={this.onClickSchool(school)}
-        className={liClass} >
-        { school.rating && 
-          <div className="school-rating">
-            {this.renderRating(school.rating)}
-          </div>
-        }
-        <div className="school">
-          {school.name}
-        </div>
+      <li key={school.state + school.id} onClick={this.onClickSchool(school)} className={liClass} >
+        { school.rating && <span>{this.renderRating(school.rating)}</span> }
+        <span>{school.name}</span>
       </li>
     );
   }
@@ -59,7 +52,7 @@ class SchoolList extends React.Component {
 
   render() {
     return(
-      <section>
+      <section className={ 'school-list ' + this.props.className }>
         <h3>Schools in district</h3>
         {this.renderSchools()}
       </section>

@@ -1,0 +1,30 @@
+
+#district-boundaries-page {
+  .toggle-bar {
+    @include clearfix;
+    margin-top: 10px;
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+
+    .list-map-toggle {
+      float: right;
+      > a {
+        text-decoration: none;
+        color: black;
+      }
+      > a:last-child {
+        @include vertical-seperator(left);
+      }
+    }
+
+    .icon {
+      font-size: 18px;
+      color: #c1d2d9;
+      margin-right: 5px;
+      &.active {
+        color: #2ba3dc;
+      }
+    }
+  }
+}
