@@ -307,7 +307,6 @@ export default class Equity extends React.Component {
   }
 
   addEnrollmentIntoTestData(testData) {
-    let maxTestScoresYear = _.max(_.map(testData, obj => obj.year));
     // this is an O(n^2) operation
     return _.map(testData,
       function(testData) {
@@ -317,7 +316,7 @@ export default class Equity extends React.Component {
         ) || {};
         let newObj = _.merge(
           {}, testData, {
-            percentOfStudentBody: matchingEthnicity['school_value_' + maxTestScoresYear],
+            percentOfStudentBody: matchingEthnicity['school_value'],
             breakdown: matchingEthnicity['breakdown'] || testData.breakdown
           }
         );
