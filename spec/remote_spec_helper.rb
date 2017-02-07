@@ -31,6 +31,7 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
   config.include UrlHelper
   config.include WaitForAjax, type: :feature
+  config.include SigninHelper
   WebMock.allow_net_connect!
 
   # Run specs in random order to surface order dependencies. If you find an
@@ -86,7 +87,6 @@ Capybara::Webkit.configure do |config|
   config.block_url "http://gateway.answerscloud.com"
   config.block_url "https://www.google.com"
   config.block_url "http://staticxx.facebook.com"
-  config.block_url "https://www.facebook.com"
   config.block_url "http://www.googletagmanager.com"
   config.block_url "http://csi.gstatic.com"
   config.block_url "https://securepubads.g.doubleclick.net"
@@ -94,6 +94,8 @@ Capybara::Webkit.configure do |config|
   config.block_url "maps.googleapis.com"
   config.block_url "www.googletagservices.com"
   config.block_url "tpc.googlesyndication.com"
+
+  config.allow_url "https://www.facebook.com"
 
   # Enable debug mode. Prints a log of everything the driver is doing.
   # config.debug = true
