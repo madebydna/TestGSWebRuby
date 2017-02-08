@@ -28,6 +28,8 @@ module SchoolProfiles
     def subject_scores
       scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236) +
                @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 18, grades: '10', subjects: ['Science'])
+      require 'pry'
+      binding.pry
       scores = sort_by_number_tested_descending scores
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
@@ -39,7 +41,7 @@ module SchoolProfiles
     end
 
     def sort_by_number_tested_descending(scores)
-      scores.sort_by { |k| k.number_students_tested }.reverse
+      scores.sort_by { |k| k.number_students_tested }.reverse if scores.present?
     end
 
     def visible?
