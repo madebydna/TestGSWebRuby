@@ -28,8 +28,6 @@ module SchoolProfiles
     def subject_scores
       scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236) +
                @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 18, grades: '10', subjects: ['Science'])
-      require 'pry'
-      binding.pry
       scores = sort_by_number_tested_descending scores
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
@@ -37,7 +35,7 @@ module SchoolProfiles
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
         end
-      end
+      end if scores.present?
     end
 
     def sort_by_number_tested_descending(scores)
