@@ -28,6 +28,7 @@ module SchoolProfiles
     def subject_scores
       scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236) +
                @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 18, grades: '10', subjects: ['Science'])
+      scores = sort_by_number_tested_descending scores
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash.subject)
@@ -35,6 +36,10 @@ module SchoolProfiles
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
         end
       end
+    end
+
+    def sort_by_number_tested_descending(scores)
+      scores.sort_by { |k| k.number_students_tested }.reverse
     end
 
     def visible?
