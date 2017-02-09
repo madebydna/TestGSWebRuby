@@ -76,8 +76,10 @@ import { getScript } from '../util/dependency';
         });
         var ethnicityChartForHighlight = $(ethnicityGraph).highcharts();
         $('.js-highlightPieChart').on("mouseenter mouseleave", function(){
-          sliceId = $(this).data('slice-id');
-          ethnicityChartForHighlight.series[0].data[sliceId].select();
+          var sliceId = $(this).data('slice-id');
+          if (typeof(sliceId) !== 'undefined' && ethnicityChartForHighlight.series[0].data[sliceId]) {
+            ethnicityChartForHighlight.series[0].data[sliceId].select();
+          }
         });
       };
 
