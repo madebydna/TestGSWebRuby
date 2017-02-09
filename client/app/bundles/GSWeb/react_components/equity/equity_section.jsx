@@ -57,7 +57,7 @@ export default class EquitySection extends React.Component {
   }
 
   linkName(name){
-    return name.split(' ').join('_');
+    return name.split(' ').join('_').replace('/', '_');
   }
 
   sectionTitle(sectionInfo) {
