@@ -20,6 +20,9 @@ class WidgetController < ApplicationController
 
   # this is the widget iframe component
   def map
+    params_hash
+    params_width
+    params_height
     search_by_type
   end
 
@@ -256,6 +259,14 @@ class WidgetController < ApplicationController
     else
       @state
     end
+  end
+
+  def params_width
+    @params_width = @params_hash['width'] || 300
+  end
+
+  def params_height
+    @params_height = @params_hash['height'] || 340
   end
 
   def params_hash
