@@ -110,7 +110,12 @@ class WidgetController < ApplicationController
   end
 
   def usable_lat_lon_values?
-    (/\A[0-9\/.]+\z/.match(params[:lat]).present? && /\A[0-9\/.]+\z/.match(params[:lon]).present?)
+    (match_string_lat_lon(params[:lat]).present? && match_string_lat_lon(params[:lon]).present?)
+  end
+
+  #TODO should only match to a single dot - added optional negative to the front.
+  def match_string_lat_lon(str)
+    /\A-?[0-9\/.]+\z/.match(str)
   end
 
   def zip_param(zip_code)
