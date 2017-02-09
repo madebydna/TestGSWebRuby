@@ -15,7 +15,7 @@ class DistrictsListController < ApplicationController
   private
 
   def state
-    params[:state_name]
+    params[:state_abbr].upcase
   end
 
   def dcl
@@ -34,7 +34,7 @@ class DistrictsListController < ApplicationController
 
   def set_seo_meta_tags
     set_meta_tags title: meta_title,
-                  canonical: "http://www.greatschools.org/schools/districts/#{dcl.state_names[:routing]}/#{state}/"
+                  canonical: districts_list_url(state_name: dcl.state_names[:routing], state_abbr: state)
   end
 
 end

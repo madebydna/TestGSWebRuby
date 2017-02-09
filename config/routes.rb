@@ -502,38 +502,24 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   #Handle City SEO pages
-  scope '/schools/cities/:state_name_long/:state_name/', as: 'cities_list', constraints: {
-      state_name_long: States.any_state_name_regex_titleize,
-      state_name: States.any_state_abbreviation_regex_without_anchors,
-  } do
+  scope '/schools/cities/:state_name/:state_abbr/', as: 'cities_list' do
     get '', to: 'cities_list#show'
   end
 
-  scope '/schools/cities/:state_name_long/:state_name/:letter', as: 'cities_list_paginated', constraints: {
-      state_name_long: States.any_state_name_regex_titleize,
-      state_name: States.any_state_abbreviation_regex_without_anchors,
-      letter: /[A-z]?/
-  } do
-    get '', to: redirect { |params, request|
-      "/schools/cities/#{params[:state_name_long]}/#{params[:state_name]}/"
+  scope '/schools/cities/:state_name/:state_abbr/:letter', as: 'cities_list_paginated' do
+    get '', to: redirect { |params, _|
+      "/schools/cities/#{params[:state_name]}/#{params[:state_abbr]}/"
     }
   end
 
   #Handle District SEO pages
-  scope '/schools/districts/:state_name_long/:state_name/', as: 'districts_list', constraints: {
-      state_name_long: States.any_state_name_regex_titleize,
-      state_name: States.any_state_abbreviation_regex_without_anchors
-  } do
+  scope '/schools/districts/:state_name/:state_abbr/', as: 'districts_list' do
     get '', to: 'districts_list#show'
   end
 
-  scope '/schools/districts/:state_name_long/:state_name/:letter', as: 'districts_list_paginated', constraints: {
-      state_name_long: States.any_state_name_regex_titleize,
-      state_name: States.any_state_abbreviation_regex_without_anchors,
-      letter: /[A-z]?/
-  } do
-    get '', to: redirect { |params, request|
-      "/schools/cities/#{params[:state_name_long]}/#{params[:state_name]}/"
+  scope '/schools/districts/:state_name/:state_abbr/:letter', as: 'districts_list_paginated' do
+    get '', to: redirect { |params, _|
+      "/schools/districts/#{params[:state_name]}/#{params[:state_abbr]}/"
     }
   end
 
