@@ -6,6 +6,7 @@ class WidgetController < ApplicationController
 
   layout :determine_layout
   protect_from_forgery with: :null_session
+  after_action :allow_iframe, only: [:map, :gs_map]
 
   MAX_RESULTS_FOR_MAP = 100
   DEFAULT_RADIUS = 5
@@ -32,8 +33,11 @@ class WidgetController < ApplicationController
 
   end
 
-
   private
+
+  def allow_iframe
+    response.headers.except! 'X-Frame-Options'
+  end
 
   def search_by_type
     city_from_query ? city_browse : by_location
@@ -79,7 +83,7 @@ class WidgetController < ApplicationController
   end
 
   def city_from_params_cityName_state
-    if params[:lat].blank? || params[:lon].blank?
+    unless usable_lat_lon_values?
       search_by_city_state(params[:cityName], params[:state])
     end
   end
@@ -87,7 +91,7 @@ class WidgetController < ApplicationController
   def city_from_searchQuery_zip
     # try a zip code search using the searchQuery ex. 94607
     sq = params[:searchQuery]
-    if sq.present? && (params[:lat].blank? || params[:lon].blank?)
+    if sq.present? && !usable_lat_lon_values?
       zip = zip_param(sq)
       if zip.present?
         hash = {:state => zip.state, :name => zip.gs_name}
@@ -103,6 +107,10 @@ class WidgetController < ApplicationController
       sq_arr =  params[:searchQuery].split(',')
       sq_arr.present? && sq_arr.length == 1
     end
+  end
+
+  def usable_lat_lon_values?
+    (/\A[0-9\/.]+\z/.match(params[:lat]).present? && /\A[0-9\/.]+\z/.match(params[:lon]).present?)
   end
 
   def zip_param(zip_code)
@@ -124,7 +132,8 @@ class WidgetController < ApplicationController
   end
 
   def by_location
-    if params[:lat].present? && params[:lon].present?
+    if usable_lat_lon_values?
+
       @state_abbreviation = state_abbreviation
       @by_location = true
 
