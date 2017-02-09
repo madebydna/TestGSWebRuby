@@ -39,7 +39,7 @@ module SchoolProfiles
     end
 
     def sort_by_number_tested_descending(scores)
-      scores.sort_by { |k| k.number_students_tested }.reverse if scores.present?
+      scores.sort_by { |k| k.number_students_tested || 0 }.reverse if scores.present?
     end
 
     def visible?
