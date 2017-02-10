@@ -16,7 +16,7 @@ module SchoolProfiles
     end
 
     def ethnicity_data
-      @school_cache_data_reader.ethnicity_data
+      @school_cache_data_reader.ethnicity_data.select { |e| e.has_key?('school_value') }
     end
 
     def gender_data

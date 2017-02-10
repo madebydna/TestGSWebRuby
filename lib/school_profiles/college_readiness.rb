@@ -37,6 +37,12 @@ module SchoolProfiles
         :range => (1..36)
       },
       {
+        :cache => :characteristics,
+        :data_key => 'ACT participation',
+        :visualization => :person_bar_viz,
+        :formatting => [:round, :percent]
+      },
+      {
         :cache => :gsdata,
         :data_key => 'Percentage AP enrolled grades 9-12',
         :visualization => :person_bar_viz,
@@ -123,7 +129,7 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
-      hashes.sort_by { |o| included_data_types.index( o['data_type']) }
+      hashes.select(&with_school_values).sort_by { |o| included_data_types.index( o['data_type']) }
     end
 
     def data_values
@@ -148,6 +154,12 @@ module SchoolProfiles
 
     def visible?
       data_values.present?
+    end
+
+    private
+
+    def with_school_values
+      ->(h) { h.has_key?('school_value') && h['school_value'].present? }
     end
   end
 end

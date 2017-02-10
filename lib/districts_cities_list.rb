@@ -31,8 +31,16 @@ class DistrictsCitiesList
         long: state_name_long,
         full: state_name_long.titleize,
         abbr: state,
-        routing: state_name_long.titleize.gsub(' ','_')
+        routing: state_route
     }
+  end
+
+  def state_route
+    if state == 'DC'
+      'Washington_DC'
+    else
+      state_name_long.titleize.gsub(' ','_')
+    end
   end
 
   def dropdown_info

@@ -30,7 +30,7 @@ module SchoolProfiles
       hash = {}
       arr = []
       if @equity.ethnicity_visible?
-        arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race/ethnicity'}
+        arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race_ethnicity'}
       end
       if @equity.low_income_visible?
         arr << {column: 'Equity', label: 'low_income', present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
