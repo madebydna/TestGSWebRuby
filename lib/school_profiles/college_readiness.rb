@@ -37,6 +37,12 @@ module SchoolProfiles
         :range => (1..36)
       },
       {
+        :cache => :characteristics,
+        :data_key => 'ACT participation',
+        :visualization => :person_bar_viz,
+        :formatting => [:round, :percent]
+      },
+      {
         :cache => :gsdata,
         :data_key => 'Percentage AP enrolled grades 9-12',
         :visualization => :person_bar_viz,
