@@ -2,26 +2,19 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
 
   CACHE_KEY = 'test_scores'
 
-  def query_results
-    @query_results ||= (
-      results = TestDataSet.fetch_test_scores(school, breakdown_id: 1).select do |result|
-        data_type_id = result.data_type_id
-        # skip this if no corresponding test data type
-        test_data_types && test_data_types[data_type_id].present?
-      end
-      results.map { |obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj) }
-    )
-  end
-
   def build_hash_for_cache
     hash = {}
     query_results.map do |data_set_and_value|
-      hash.deep_merge!(build_hash_for_data_set(data_set_and_value))
+      hash.deep_merge!(build_hash_for_data_set(data_set_and_value)) # impl in subclass
     end
 
     add_lowest_grade_to_hash(hash)
 
     hash
+  end
+
+  def inject_grade_all(data_sets_and_values)
+    TestScoresCaching::GradeAllCalculator.new(data_sets_and_values).inject_grade_all
   end
 
   def add_lowest_grade_to_hash(data_type_hash)
@@ -49,27 +42,4 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
     end
     hash
   end
-
-  def build_hash_for_data_set(test)
-    {
-      test.data_type_id => {
-        test_label: test.test_label,
-        test_source: test.test_source,
-        test_description: test.test_description,
-        grades: {
-          test.grade.value => {
-            label: test.grade_label,
-            level_code: {
-              test.level_code.to_s => {
-                test.subject => {
-                  test.year => innermost_hash(test)
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  end
-
 end

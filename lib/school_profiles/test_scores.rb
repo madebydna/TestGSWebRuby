@@ -26,8 +26,7 @@ module SchoolProfiles
     end
 
     def subject_scores
-      scores = @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 236) +
-               @school_cache_data_reader.subject_scores_by_latest_year(data_type_id: 18, grades: '10', subjects: ['Science'])
+      scores = @school_cache_data_reader.subject_scores_by_latest_year
       scores = sort_by_number_tested_descending scores
       scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
