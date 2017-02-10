@@ -37,6 +37,7 @@ GS.widget = GS.widget || (function() {
       showSearchTab();
     }
     calculateMapHeight();
+    calculateHelpHeight();
 
     $(".gs-tab").on("click", function () {
       $(this).siblings().removeClass('active');
@@ -61,6 +62,13 @@ GS.widget = GS.widget || (function() {
     var tabsHeight = $(".gs-tab-container").outerHeight(true);
     var newMapHeight = mapCanvasHeight + mapContainerHeight - mapTabHeight- tabsHeight;
     mapCanvas.height(newMapHeight);
+  };
+
+  var calculateHelpHeight = function(){
+    // match map tab height
+    var helpTabHeight = $("#"+GS_MAP_TAB_NAME).outerHeight(true);
+    var helpTab = $("#"+GS_HELP_TAB_NAME);
+    helpTab.height(helpTabHeight);
   };
 
   var showMapTab = function() {
