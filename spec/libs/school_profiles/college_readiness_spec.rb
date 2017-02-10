@@ -106,7 +106,6 @@ describe SchoolProfiles::CollegeReadiness do
 
       it 'should pull from the "All students" breakdown for characteristics' do
         data_points = subject.data_values.find {|item| item.label == '4-year high school graduation rate' }
-        puts data_points.score.inspect
         expect(data_points).to be_present
         expect(data_points.score).to eq(50)
         expect(data_points.state_average).to eq(51)
@@ -151,6 +150,29 @@ describe SchoolProfiles::CollegeReadiness do
       ].shuffle
       stub_const('SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS', config)
       expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } )
+    end
+  end
+
+  describe '#with_school_values' do
+    let (:sample_data) do
+      [
+          {school_value: 15},
+          {state_value: 15},
+          {sChool_value: 15},
+          {school_value: nil},
+          {school_value: 0}
+      ].map(&:stringify_keys)
+    end
+
+    let (:expected_outcome) do
+      [
+          {school_value: 15},
+          {school_value: 0}
+      ].map(&:stringify_keys)
+    end
+
+    it 'includes only hashes with the key school_value set to a non-nil value' do
+      expect(sample_data.select(&subject.send(:with_school_values))).to contain_exactly(*expected_outcome)
     end
   end
 end
