@@ -33,6 +33,10 @@ module SchoolProfiles
           rating_score_item.label = data_label(hash.subject)
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
+          rating_score_item.description = I18n.db_t(hash.description)
+          rating_score_item.test_label = I18n.db_t(hash.test_label)
+          rating_score_item.source = I18n.db_t(hash.source)
+          rating_score_item.year = hash.year
         end
       end if scores.present?
     end

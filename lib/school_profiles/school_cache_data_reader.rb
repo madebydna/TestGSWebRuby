@@ -89,10 +89,18 @@ module SchoolProfiles
     end
 
     def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: 'e,m,h', subjects: nil)
-      subject_hash = decorated_school.test_scores.map {|_, v| v.seek(breakdown, 'grades', grades, 'level_code', level_codes) }.compact.each_with_object({}) do |input_hash, output_hash|
-        input_hash.each do |subject, year_hash|
-          output_hash[subject] ||= {}
-          output_hash[subject].merge!(year_hash)
+      subject_hash = test_scores.map{|_,v| v[breakdown]}.each_with_object({}) do |data, output_hash|
+        data.seek('grades', grades, 'level_code', level_codes).each do |subject_score_pair|
+          output_hash[subject_score_pair.first] = subject_score_pair.last
+          output_hash[subject_score_pair.first].each do |year, value_hash|
+            output_hash[subject_score_pair.first][year] = value_hash.merge!(
+              {
+                description: data['test_description'],
+                test_label: data['test_label'],
+                source: data['test_source']
+              }
+            )
+          end
         end
         output_hash
       end
