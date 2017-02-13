@@ -109,6 +109,8 @@ module SchoolProfiles
 
     def data_type_hashes
       hashes = school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+      enforce_same_year_school_value_for_data_types!(hashes, 'Average ACT score', 'ACT participation')
+      enforce_same_year_school_value_for_data_types!(hashes, 'Average SAT score', 'SAT percent participation')
       hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(:gsdata)))
       return [] if hashes.blank?
       hashes = hashes.map do |key, array|
@@ -130,6 +132,36 @@ module SchoolProfiles
         hash
       end
       hashes.select(&with_school_values).sort_by { |o| included_data_types.index( o['data_type']) }
+    end
+
+    def school_value_present?(value)
+      value.present? && value.to_s != '0.0' && value.to_s != '0'
+    end
+
+    def enforce_same_year_school_value_for_data_types!(hash, *data_types)
+      data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
+        tds['subject'] == 'All subjects' && tds['breakdown'] == 'All students'
+      end.flatten
+
+      # first, find the max year for state data across the given data types
+      max_year = data_type_hashes.map { |dts| dts['year'] }.max
+
+      # Do all the data types have school data for that year?
+      data_present_for_all_types = data_type_hashes.reduce(true) do |all_present, h|
+        # The most recent year for one of the data types might be older,
+        # so we have to read the school_value_xxxx property directly
+        # to know whether each data type has school data for that year
+        all_present && school_value_present?(h["school_value_#{max_year}"])
+      end
+
+      # If school data for most recent state isn't present across all the 
+      # data types we need to remove the values, as that is the easiest way
+      # to make sure they don't show up on the page
+      unless data_present_for_all_types
+        data_type_hashes.each do |h|
+          h["school_value"] = nil
+        end
+      end
     end
 
     def data_values
