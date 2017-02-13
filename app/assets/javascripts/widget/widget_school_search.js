@@ -65,10 +65,9 @@ GS.widget = GS.widget || (function() {
   };
 
   var calculateHelpHeight = function(){
-    // match map tab height
+    // set help tab height to map tab height
     var helpTabHeight = $("#"+GS_MAP_TAB_NAME).outerHeight(true);
-    var helpTab = $("#"+GS_HELP_TAB_NAME);
-    helpTab.height(helpTabHeight);
+    $("#"+GS_HELP_TAB_NAME).height(helpTabHeight);
   };
 
   var showMapTab = function() {
