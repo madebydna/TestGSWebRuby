@@ -61,6 +61,7 @@ describe TestScoresCaching::TestScoresCacher do
             school_value_float: 10,
             state_value_float: 50,
             number_students_tested: 4,
+            state_number_tested: 2,
           }).freeze,
           OpenStruct.new({
             data_type_id: 1,
@@ -71,6 +72,7 @@ describe TestScoresCaching::TestScoresCacher do
             school_value_float: 20,
             state_value_float: 100,
             number_students_tested: 8,
+            state_number_tested: 3,
           }).freeze
         ].freeze
       end
@@ -82,9 +84,10 @@ describe TestScoresCaching::TestScoresCacher do
       describe 'grade ALL test data set' do
         subject { grade_all_tds }
         it { is_expected.to be_present }
-        its(:state_value_float) { is_expected.to round_to(83) }
+        its(:state_value_float) { is_expected.to eq(80) }
         its(:school_value_float) { is_expected.to round_to(16.67, 2) }
         its(:number_students_tested) { is_expected.to eq(12) }
+        its(:state_number_tested) { is_expected.to eq(5) }
         its(:subject) { is_expected.to eq('Science') }
       end
     end
