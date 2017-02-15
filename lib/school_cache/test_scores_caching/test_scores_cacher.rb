@@ -27,6 +27,7 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
   def innermost_hash(test)
     hash = {
         number_students_tested: test.number_students_tested,
+        state_number_tested: test.state_number_tested,
         score: test.school_value,
         state_average: test.state_value
     }

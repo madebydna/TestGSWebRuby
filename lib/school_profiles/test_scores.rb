@@ -25,6 +25,18 @@ module SchoolProfiles
       I18n.t(key.to_sym, scope: 'lib.test_scores', default: key)
     end
 
+    def subject_scores_equity
+      scores = @school_cache_data_reader.subject_scores_by_latest_year
+      scores = sort_by_number_tested_descending scores
+      scores.map do |hash|
+        SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
+          rating_score_item.label = data_label(hash.subject)
+          rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
+          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
+        end
+      end if scores.present?
+    end
+
     def subject_scores
       scores = @school_cache_data_reader.subject_scores_by_latest_year
       scores = sort_by_number_tested_descending scores
@@ -33,6 +45,10 @@ module SchoolProfiles
           rating_score_item.label = data_label(hash.subject)
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
+          rating_score_item.description = I18n.db_t(hash.test_description)
+          rating_score_item.test_label = I18n.db_t(hash.test_label)
+          rating_score_item.source = I18n.db_t(hash.test_source)
+          rating_score_item.year = hash.year
         end
       end if scores.present?
     end

@@ -180,6 +180,8 @@ module SchoolProfiles
             apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range
+          item.year = hash['year'].present? ? hash['year'] : hash['source_year']
+          item.source = hash['source'].present? ? hash['source'] : hash['source_name']
         end
       end
     end

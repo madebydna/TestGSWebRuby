@@ -21,6 +21,7 @@ describe 'GradeAllCalculator' do
             school_value_float: 10,
             state_value_float: 50,
             number_students_tested: 4,
+            state_number_tested: 2,
           }).freeze,
           OpenStruct.new({
             data_type_id: 1,
@@ -32,14 +33,16 @@ describe 'GradeAllCalculator' do
             school_value_float: 20,
             state_value_float: 100,
             number_students_tested: 8,
+            state_number_tested: 3,
           }).freeze
         ].freeze
       end
 
       it { is_expected.to be_present }
       its(:school_value_float) { is_expected.to round_to(16.67, 2) }
-      its(:state_value_float) { is_expected.to round_to(83) }
+      its(:state_value_float) { is_expected.to eq(80) }
       its(:number_students_tested) { is_expected.to eq(12) }
+      its(:state_number_tested) { is_expected.to eq(5) }
       its(:subject_id) { is_expected.to eq(4) }
       its(:data_type_id) { is_expected.to eq(1) }
       its(:breakdown_id) { is_expected.to eq(0) }
@@ -57,6 +60,7 @@ describe 'GradeAllCalculator' do
             school_value_float: 10,
             state_value_float: 50,
             number_students_tested: 4,
+            state_number_tested: 4,
           }).freeze,
           OpenStruct.new({
             data_type_id: 1,
@@ -73,6 +77,7 @@ describe 'GradeAllCalculator' do
       its(:school_value_float) { is_expected.to eq(10) }
       its(:state_value_float) { is_expected.to eq(50) }
       its(:number_students_tested) { is_expected.to eq(4) }
+      its(:state_number_tested) { is_expected.to eq(4) }
       its(:subject_id) { is_expected.to eq(4) }
     end
 
@@ -86,6 +91,7 @@ describe 'GradeAllCalculator' do
             subject_id: 4,
             state_value_float: 50,
             number_students_tested: 4,
+            state_number_tested: 4,
           }).freeze,
           OpenStruct.new({
             data_type_id: 1,
@@ -95,14 +101,16 @@ describe 'GradeAllCalculator' do
             school_value_float: 20,
             state_value_float: 100,
             number_students_tested: 8,
+            state_number_tested: 8,
           }).freeze
         ].freeze
       end
 
       it { is_expected.to be_present }
       its(:school_value_float) { is_expected.to eq(20) }
-      its(:state_value_float) { is_expected.to eq(100) }
+      its(:state_value_float) { is_expected.to eq(83) }
       its(:number_students_tested) { is_expected.to eq(8) }
+      its(:state_number_tested) { is_expected.to eq(12) }
       its(:subject_id) { is_expected.to eq(4) }
     end
 
