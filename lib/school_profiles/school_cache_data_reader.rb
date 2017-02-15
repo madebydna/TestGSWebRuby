@@ -88,17 +88,17 @@ module SchoolProfiles
       decorated_school.gsdata.slice(*keys)
     end
 
+    def sources_with_subjects(breakdown: 'All', grades: 'All')
+      @_sources_with_subjects ||= (
+
+      )
+    end
+
     def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: nil, subjects: nil)
       @_subject_scores_by_latest_year ||= (
-        data_type_id = nil
-        subject_hash = test_scores.map { |dti, v| data_type_id= dti; v.seek(breakdown, 'grades', grades, 'level_code') }.compact.each_with_object({}) do |input_hash, output_hash|
-
-          input_hash.each do |level_code|
-            level_code ||= []
-            # this is statically called to handle due to the structure of current test scores hash
-            level_code[1].each do |subject, year_hash|
-
-              year_hash ||= {}
+        subject_hash = test_scores.map do |data_type_id, v|
+          v.seek(breakdown, 'grades', grades, 'level_code').compact.each_with_object({}) do |input_hash, output_hash|
+            input_hash[1].each do |subject, year_hash|
               latest_year = year_hash.keys.max_by { |year| year.to_i }
               output_hash[subject] ||= {}
               val = test_scores[data_type_id.to_s][breakdown]
@@ -111,7 +111,9 @@ module SchoolProfiles
             output_hash
           end
         end
+
         return [] unless subject_hash.present?
+        subject_hash = subject_hash.inject(:merge)
         subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
         subject_hash.inject([]) do |scores_array, (subject, year_hash)|
           scores_array << OpenStruct.new({}.tap do |scores_hash|
