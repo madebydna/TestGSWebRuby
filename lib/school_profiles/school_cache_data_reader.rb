@@ -88,32 +88,39 @@ module SchoolProfiles
       decorated_school.gsdata.slice(*keys)
     end
 
-    def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: 'e,m,h', subjects: nil)
-      subject_hash = test_scores.map{|_,v| v[breakdown]}.each_with_object({}) do |data, output_hash|
-        data.seek('grades', grades, 'level_code', level_codes).each do |subject_score_pair|
-          output_hash[subject_score_pair.first] = subject_score_pair.last
-          output_hash[subject_score_pair.first].each do |year, value_hash|
-            output_hash[subject_score_pair.first][year] = value_hash.merge!(
-              {
-                description: data['test_description'],
-                test_label: data['test_label'],
-                source: data['test_source']
-              }
-            )
+    def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: nil, subjects: nil)
+      @_subject_scores_by_latest_year ||= (
+        data_type_id = nil
+        subject_hash = test_scores.map { |dti, v| data_type_id= dti; v.seek(breakdown, 'grades', grades, 'level_code') }.compact.each_with_object({}) do |input_hash, output_hash|
+
+          input_hash.each do |level_code|
+            level_code ||= []
+            # this is statically called to handle due to the structure of current test scores hash
+            level_code[1].each do |subject, year_hash|
+
+              year_hash ||= {}
+              latest_year = year_hash.keys.max_by { |year| year.to_i }
+              output_hash[subject] ||= {}
+              val = test_scores[data_type_id.to_s][breakdown]
+              year_hash[latest_year.to_s]['test_description'] = val['test_description']
+              year_hash[latest_year.to_s]['test_label']       = val['test_label']
+              year_hash[latest_year.to_s]['test_source']      = val['test_source']
+              output_hash[subject]
+              output_hash[subject].merge!(year_hash)
+            end
+            output_hash
           end
         end
-        output_hash
-      end
-      return [] unless subject_hash.present?
-      subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
-      subject_hash.inject([]) do |scores_array, (subject, year_hash)|
-        scores_array << OpenStruct.new({}.tap do |scores_hash|
-          latest_year = year_hash.keys.max_by { |year| year.to_i }
-          scores_hash.merge!(year_hash[latest_year.to_s])
-          scores_hash['subject'] = subject
-          scores_hash['year'] = latest_year
+        return [] unless subject_hash.present?
+        subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
+        subject_hash.inject([]) do |scores_array, (subject, year_hash)|
+          scores_array << OpenStruct.new({}.tap do |scores_hash|
+            latest_year = year_hash.keys.max_by { |year| year.to_i }
+            scores_hash.merge!(year_hash[latest_year.to_s])
+            scores_hash['subject'] = subject
+            scores_hash['year'] = latest_year
+          end)
         end)
-      end
     end
 
     def school_cache_query

@@ -2,14 +2,17 @@ module SchoolProfiles
   class Equity
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
-      @data_type_id = '236'
       SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
           school_cache_data_reader: school_cache_data_reader
       ).auto_narrative_calculate_and_add
     end
 
     def test_scores_by_ethnicity
-      @school_cache_data_reader.test_scores[@data_type_id]
+      @school_cache_data_reader.test_scores
+    end
+
+    def test_scores_for_equity
+      @school_cache_data_reader.test_scores
     end
 
     def enrollment
