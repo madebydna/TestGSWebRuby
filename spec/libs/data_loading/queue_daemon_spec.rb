@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe QueueDaemon do
-  queue_daemon_sleep_time    = ENV_GLOBAL['queue_daemon_sleep_time']
-  queue_daemon_updates_limit = ENV_GLOBAL['queue_daemon_updates_limit'].to_i
-  queue_daemon_updates_order = ENV_GLOBAL['queue_daemon_update_order']
+  queue_daemon_updates_limit = 4
   num_of_high_priority_items = queue_daemon_updates_limit / 2
   num_of_low_priority_items  = queue_daemon_updates_limit
 
@@ -24,6 +22,7 @@ describe QueueDaemon do
         clean_models UpdateQueue
         UpdateQueue.create(num_of_low_priority_items.times.map  { low_priority_item  })
         UpdateQueue.create(num_of_high_priority_items.times.map { high_priority_item })
+        allow(subject).to receive(:update_limit).and_return(queue_daemon_updates_limit)
       end
 
       after(:all) { clean_models UpdateQueue }
@@ -54,16 +53,6 @@ describe QueueDaemon do
         low_priority_items = updates[4].sort_by { |update| update.created }
         expect(low_priority_items.first).to eq updates[4].first
         expect(low_priority_items.last).to eq updates[4].last
-      end
-    end
-  end
-  describe '#update_order' do
-    it 'should return an array of integers' do
-      order = subject.update_order
-
-      expect(order).to be_an_instance_of Array
-      order.each do |number|
-        expect(number).to be_an_instance_of Fixnum
       end
     end
   end

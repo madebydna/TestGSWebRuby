@@ -34,14 +34,8 @@ search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
 district_city_list_cache_time: 86400 # in seconds (24 hrs)
 
 # Configs for scripts
-queue_daemon_sleep_time: 1 # in seconds
-queue_daemon_updates_limit: 100
-queue_daemon_update_order:
-#  - 1
-  - 2
-#  - 3
-  - 4
-#  - 5
+queue_daemon_sleep_time: 1 # in seconds or fractions thereof
+queue_daemon_updates_limit: 5
 # End configs for scripts
 # Start Config for Feeds
 is_feed_builder: false
