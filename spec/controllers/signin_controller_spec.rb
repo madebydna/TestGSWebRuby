@@ -617,7 +617,7 @@ describe SigninController do
       let(:redirect) { '/foo' }
 
       context 'given a valid token' do
-        before { allow(controller).to receive(:params).and_return(id: valid_token, date: valid_time, redirect: redirect) }
+        before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: redirect) }
 
         it 'should verify the user\'s email' do
           allow(controller).to receive(:redirect_to).with(password_url)
