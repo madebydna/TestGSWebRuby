@@ -60,6 +60,20 @@ export default class Equity extends React.Component {
       );
     }
 
+    data = this.ethnicityTestScoreData('Science');
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
+      tabs[0].push(
+          {
+            subject: 'Science',
+            component: <BarGraphWithEnrollmentInLabel
+                test_scores={data}
+                graphId="test-scores-science-bar-graph" />,
+            explanation: <div>This shows results across different races/ethnicities on a Science test given to
+              juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.</div>
+          }
+      );
+    }
+
     data = this.graduationRateDataByEthnicity();
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
@@ -134,6 +148,19 @@ export default class Equity extends React.Component {
       )
     }
 
+    data = this.incomeLevelTestScoreData('Science');
+    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
+      tabs[0].push(
+          {
+            subject: 'Science',
+            component: <EquityBarGraph
+                test_scores={data}
+                type="column"
+                graphId="low-income-science-bar-graph" />,
+            explanation: this.narrrationContent(data)
+          }
+      )
+    }
 
     data = this.graduationRateDataByIncomeLevel();
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)){
@@ -339,6 +366,7 @@ export default class Equity extends React.Component {
 
   render() {
     let equityConfig = this.equityConfiguration();
+
     var equitySections = [];
     for (var i = 0; i < equityConfig.length; i++) {
       equitySections.push(<EquitySection
