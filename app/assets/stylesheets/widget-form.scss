@@ -1,0 +1,57 @@
+// reset css
+@import "resources/normalize";
+
+// bootstrap
+@import "resources/bootstrap/smaller_bootstrap";
+
+// variables, mixins, base styles
+@import "variables/variables";
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
+@import "gs/form";
+@import "base/spacing";
+@import "base/typography";
+
+// TODO: clean this up
+@import "gs/bring-back-bootstrap"; // depends on responsive-utilities mixins
+
+// fonts
+@import "fonts/fonts-opensans-semibold";
+
+// more components
+@import "gs/objects/spinny_wheel.css.scss";
+
+// footer-specific
+@import "gs/objects/footer";
+@import "sprites/footer_icons_16x16";
+
+#widget-form-page {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0px 10px;
+
+  .preview {
+    padding-top: 30px;
+  }
+}
+
+form.widget {
+  p {
+    margin: 0 0 7px 0;
+  }
+  > div + div {
+    padding-top: 20px;
+  }
+  label {
+    display: inline-block;
+    padding-right: 5px;
+    min-width: 50px;
+  }
+  > div > div {
+     display: block;
+     @include media-breakpoint-up(sm) {
+       display: inline-block;
+       padding-right: 20px;
+     }
+  }
+}

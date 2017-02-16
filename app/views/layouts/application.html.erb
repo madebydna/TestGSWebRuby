@@ -3,6 +3,7 @@
 <head>
   <%= display_meta_tags %>
   <%= yield :stylesheet_includes %>
+  <%= yield :page_stylesheets %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
@@ -55,9 +56,10 @@
 <%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
-<%= stylesheet_link_tag "post_load", :async => true %>
-<%= javascript_include_tag "post_load", :async => true %>
+<%= stylesheet_link_tag("post_load", :async => true) unless content_for?(:page_stylesheets) %>
+<%= javascript_include_tag "post_load", :async => true unless content_for?(:page_javascripts) %>
 <%= yield :javascript_includes %>
+<%= yield :page_javascripts %>
 <div class="remodal modal modal_info_box" data-remodal-id="modal_info_box">Add Spinny</div>
 </body>
 </html>
