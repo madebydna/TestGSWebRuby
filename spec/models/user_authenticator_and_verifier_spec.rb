@@ -63,8 +63,7 @@ describe UserAuthenticatorAndVerifier do
   end
 
   context 'Attempt to hack token by swapping user id for a nonexisting user' do
-    let(:another_user) { FactoryGirl.create(:new_user) }
-    let(:invalid_token) { token.sub(/==\d+$/, "==99999998") }
+    let(:invalid_token) { token.sub(/==\d+$/, '==99999998') }
     let(:hacked_subject) { UserAuthenticatorAndVerifier.new(invalid_token, time) }
 
     it 'is not authenticated' do
