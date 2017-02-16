@@ -1,11 +1,8 @@
 class QueueDaemon
-
   UNPROCESSED_STATUS = 'todo'
   SUCCESS_STATUS = 'done'
   FAILURE_STATUS = 'failed'
   UPDATE_LIMIT_DEFAULT = 5
-  #1 is the highest priority and 5 is the lowest. updates will get processed in order of highest to lowest
-  UPDATE_ORDER_DEFAULT = [1,2,3,4,5]
   DEFAULT_FAIL_MSG = 'Could not find UpdateQueue table'
   MAX_FAIL_COUNTER = 10
   FAIL_SLEEP_TIME = 10
@@ -20,9 +17,9 @@ class QueueDaemon
     puts 'Starting the update queue daemon.'
     loop do
       begin
-        process_unprocessed_updates
+        num_processed = process_unprocessed_updates
         fail_counter = 0
-        sleep ENV_GLOBAL['queue_daemon_sleep_time']
+        sleep ENV_GLOBAL['queue_daemon_sleep_time'] if num_processed == 0
       rescue => e
         fail_counter += 1
         if fail_counter > MAX_FAIL_COUNTER || e.message != DEFAULT_FAIL_MSG
@@ -62,6 +59,7 @@ class QueueDaemon
         end
       end
     end
+    updates.size
   end
 
   def get_updates
