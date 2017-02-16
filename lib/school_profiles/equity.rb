@@ -8,7 +8,9 @@ module SchoolProfiles
     end
 
     def test_scores_by_ethnicity
-      @school_cache_data_reader.test_scores
+      @_test_scores_by_ethnicity ||= (
+        @school_cache_data_reader.test_scores.map{|d,v| v.compact.each_with_object({}) { |input_hash, output_hash|  output_hash.merge!(v)}}.inject(:merge)
+      )
     end
 
     def test_scores_for_equity
