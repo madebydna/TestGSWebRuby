@@ -148,7 +148,7 @@ module SchoolProfiles
         end
 
         return [] unless subject_hash.present?
-        subject_hash = subject_hash.inject(:merge)
+        subject_hash = subject_hash.compact.inject(:merge)
         subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
         subject_hash.inject([]) do |scores_array, (subject, year_hash)|
           scores_array << OpenStruct.new({}.tap do |scores_hash|
