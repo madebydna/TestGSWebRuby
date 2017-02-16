@@ -7,14 +7,17 @@ module SchoolProfiles
       ).auto_narrative_calculate_and_add
     end
 
-    def test_scores_by_ethnicity
-      @_test_scores_by_ethnicity ||= (
-        @school_cache_data_reader.test_scores.map{|d,v| v.compact.each_with_object({}) { |input_hash, output_hash|  output_hash.merge!(v)}}.inject(:merge)
-      )
+    def data_type_id_based_on_hash
+      @school_cache_data_reader.test_scores.each do |k, v|
+        return k if v.gs_dig('Economically disadvantaged', 'grades', 'All','level_code', 'e,m,h', 'English Language Arts') ||
+            v.gs_dig('Economically disadvantaged', 'grades', 'All','level_code', 'e,m,h', 'Math')
+      end
     end
 
-    def test_scores_for_equity
-      @school_cache_data_reader.test_scores
+    def test_scores_by_ethnicity
+      @_test_scores_by_ethnicity ||= (
+        @school_cache_data_reader.test_scores[data_type_id_based_on_hash]
+      )
     end
 
     def enrollment
