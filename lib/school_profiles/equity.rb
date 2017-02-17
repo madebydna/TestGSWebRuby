@@ -25,12 +25,14 @@ module SchoolProfiles
     def test_scores_by_ethnicity
       @_test_scores_by_ethnicity ||= (
         data_type_id = data_type_id_based_on_low_income
+        return_hash_value = {}
         if data_type_id.present?
-          @school_cache_data_reader.test_scores[data_type_id].sort{|a,z|a<=>z}.to_h
+          return_hash_value = @school_cache_data_reader.test_scores[data_type_id]
         else
           data_type_id = data_type_id_based_on_ethnicity
-          @school_cache_data_reader.test_scores[data_type_id].sort{|a,z|a<=>z}.to_h if data_type_id.present?
+          return_hash_value = @school_cache_data_reader.test_scores[data_type_id] if data_type_id.present?
         end
+        return_hash_value.sort{|a,z|a<=>z}.to_h if return_hash_value.present?
       )
     end
 
