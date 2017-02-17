@@ -279,7 +279,7 @@ GS.googleMap = GS.googleMap || (function() {
                   }//reviews link
                   markup += '</a>';//reviews link
               } else {
-                  markup += '<a class="notranslate" href="' + point.reviewUrl + '">' + mapPinRateThisSchoolText() + '</a>';
+                  markup += '<a class="notranslate" href="' + point.reviewUrl + '" target="_blank">' + mapPinRateThisSchoolText() + '</a>';
               }
               markup += '</div>'; //stars
               // markup += '<div class="iw-home">'; //zillow

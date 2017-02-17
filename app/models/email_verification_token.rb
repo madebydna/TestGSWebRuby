@@ -12,8 +12,8 @@ class EmailVerificationToken
       @user_id = options[:user_id]
     end
 
-    @token = options[:token]
     @time = options[:time] || Time.now
+    @token = options[:token] || generate
     @user_searched = false
 
     if @user.nil? && @user_id.nil?

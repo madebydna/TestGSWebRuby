@@ -7,7 +7,7 @@ class TestScoresCaching::GradeAllCalculator
 
   def group_data_sets
     key = proc { |tds| [tds['data_type_id'], tds['year'], tds['subject_id']] }
-    data_sets_and_values.group_by(&key)
+    data_sets_and_values.select { |tds| tds['year'] == max_year }.group_by(&key)
   end
 
   def calculate_grade_all(test_data_sets)
@@ -62,18 +62,22 @@ class TestScoresCaching::GradeAllCalculator
     end / sum_state_number_tested(test_data_sets)
   end
 
+  def max_year
+    @_max_year ||= data_sets_and_values.map { |tds| tds['year'] }.max
+  end
+
   def inject_grade_all
     # group by data type and year and subject
     # for each data type group, noop and abort if existing grade all
     # if no grade all, calculate grade all and add to data type group
     # re-flatten groups and return array
-    grouped_test_data = group_data_sets.each_pair do |key, test_data_sets|
+    new_data_sets = group_data_sets.reduce([]) do |accum, (key, test_data_sets)|
       next if has_any_grade_all_data?(test_data_sets)
       grade_all_tds = calculate_grade_all(test_data_sets.select { |tds| tds['breakdown_id'] == 1 } )
-      test_data_sets << grade_all_tds if grade_all_tds
+      accum << grade_all_tds if grade_all_tds
     end
 
-    grouped_test_data.values.flatten
+    data_sets_and_values + Array.wrap(new_data_sets)
   end
 
   def has_any_grade_all_data?(test_data_sets)

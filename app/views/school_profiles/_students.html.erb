@@ -6,6 +6,7 @@
 <% # If you change these colors they need to be changed in ethnicity_pie_chart.js %>
 <% ethnicity_colors = %w(#184a7d #2ba3dc #08c569 #dca21a #d94373 #fdda46 #0e6ac9 #999EFF) %>
 
+<% if ethnicity_data.present? %>
 <a class="anchor-mobile-offset" name="Students"></a>
 <div class="students-container">
   <div class="rating-container__rating">
@@ -40,3 +41,4 @@
   <div class="gender"> </div>
   <div class="source-link"><%= t('.source') %>: <a href="/gk/ca-high-schools/#Students" target="_blank"><%= t('.see notes') %></a></div>
 </div>
+<% end %>
