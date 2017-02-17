@@ -5,14 +5,16 @@
     <div class="col-xs-12 col-lg-3">
       <div class="rating-container__title">
         <%= title %>
-        <%= link_to 'http://innovateschools.org/greatschools/' do %>
-          <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
-            class: 'innovate-logo mobile',
-            data: {src: image_path('innovate_logo_mobile.png')}) %>
-          <%= image_tag(
-            'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
-            class: 'innovate-logo desktop',
-            data: {src: image_path('innovate_logo_desktop.png')}) %>
+        <% if @school.state == 'CA' %>
+          <%= link_to 'http://innovateschools.org/greatschools/' do %>
+            <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+              class: 'innovate-logo mobile',
+              data: {src: image_path('innovate_logo_mobile.png')}) %>
+            <%= image_tag(
+              'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+              class: 'innovate-logo desktop',
+              data: {src: image_path('innovate_logo_desktop.png')}) %>
+          <% end %>
         <% end %>
       </div>
     </div>
