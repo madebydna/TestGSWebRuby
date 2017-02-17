@@ -49,13 +49,17 @@ describe SchoolProfiles::CollegeReadiness do
                 {
                     'breakdown' => 'All students',
                     'school_value' => 20,
+                    'school_value_2016' => 20,
                     'state_average' => 19,
+                    'year' => 2016,
                     'subject' => 'Reading'
                 },
                 {
                     'breakdown' => 'All students',
                     'school_value' => 25,
+                    'school_value_2016' => 25,
                     'state_average' => 24,
+                    'year' => 2016,
                     'subject' => 'All subjects'
                 },
                 {
@@ -133,6 +137,48 @@ describe SchoolProfiles::CollegeReadiness do
         # that are not in the resulting data_value_labels. Expression should
         # yield an array that is in same order as data_value_labels
         expect(ordered_data_types & data_value_labels).to eq(data_value_labels)
+      end
+    end
+
+    describe 'With mismatching average SAT score / SAT percent participation' do
+      let (:sample_data) do
+        {
+          'Average SAT score' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1600,
+              'school_value_2015' => 1600,
+              'year' => 2015,
+              'state_average' => 1400
+            }
+          ],
+          'SAT percent participation' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1600,
+              'school_value_2016' => 1600,
+              'year' => 2016,
+              'state_average' => 1400
+            }
+          ]
+        }
+      end
+
+      before do
+        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+      end
+
+      it 'should set school SAT score to nil' do
+        data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
+        expect(data_points).to_not be_present
+      end
+
+      it 'should set school SAT percent participation to nil' do
+        data_points = subject.data_values.find {|item| item.label == 'SAT participation rate' }
+        expect(data_points).to_not be_present
       end
     end
 
