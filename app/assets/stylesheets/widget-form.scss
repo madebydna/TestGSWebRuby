@@ -33,12 +33,14 @@
   .preview {
     padding-top: 30px;
   }
+
+  p {
+    margin: 0 0 7px 0;
+    font-family: 'opensans-semibold';
+  }
 }
 
 form.widget {
-  p {
-    margin: 0 0 7px 0;
-  }
   > div + div {
     padding-top: 20px;
   }

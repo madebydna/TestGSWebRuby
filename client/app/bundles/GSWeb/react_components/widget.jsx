@@ -26,7 +26,7 @@ export default class Widget extends React.Component {
       width: params.width || defaultIframeWidth,
       height: params.height || 368,
       zoom: 13,
-      baseUrl: "http://www.greatschools.org/widget/schoolSearch.page"
+      baseUrl: "http://www.greatschools.org/widget/map"
     };
   }
 
@@ -51,7 +51,7 @@ export default class Widget extends React.Component {
       'borderColor',
       'lat',
       'lon',
-      'cityname',
+      'cityName',
       'state',
       'normalizedAddress',
       'width',
@@ -92,7 +92,7 @@ export default class Widget extends React.Component {
   }
 
   iFrameCode() {
-    return '<iframe className="greatschools" src="' + this.widgetUrl() + 'width={this.state.width} height={this.state.height} marginHeight="0" marginWidth="0" frameBorder="0" scrolling="no"></iframe>';
+    return '<iframe className="greatschools" src="' + this.widgetUrl() + '" width="' + this.state.width + '" height="' + this.state.height + '" marginHeight="0" marginWidth="0" frameBorder="0" scrolling="no"></iframe>';
   }
 
   render() {
@@ -110,7 +110,7 @@ export default class Widget extends React.Component {
 
   renderIframe() {
     return <iframe className="greatschools" src={this.widgetUrl()}
-      width={this.state.width} height={this.state.height} marginHeight="0" marginWidth="0" frameBorder="0" scrolling="no">
+      width={this.state.width} height={this.state.height + 65} marginHeight="0" marginWidth="0" frameBorder="0" scrolling="no">
     </iframe>
   }
 
@@ -123,19 +123,19 @@ export default class Widget extends React.Component {
         <div>
           <form className="widget">
             <div>
-              <p style={{fontFamily: 'opensans-semibold'}}>Choose address, zip code or city and state</p>
+              <p>Choose address, zip code or city and state</p>
               <label>Pick the location you'd like your widget to feature </label>
-              <input type="text" name="address" onBlur={this.geocodeAddress} value={this.state.zip} />
+              <input type="text" name="address" onBlur={this.geocodeAddress} defaultValue={this.state.zip} />
             </div>
             <div>
-              <p style={{fontFamily: 'opensans-semibold'}}>Choose the width and height of the widget</p>
+              <p>Choose the width and height of the widget</p>
               <div>
                 <label>Width</label>
-                <input type="text" name="width" onBlur={this.putFieldInState('width')} value={this.state.width}/>
+                <input type="text" name="width" onBlur={this.putFieldInState('width')} defaultValue={this.state.width}/>
               </div>
               <div>
                 <label>Height</label>
-                <input type="text" name="height" onBlur={this.putFieldInState('height')} value={this.state.height}/>
+                <input type="text" name="height" onBlur={this.putFieldInState('height')} defaultValue={this.state.height}/>
               </div>
             </div>
           </form>
@@ -145,11 +145,12 @@ export default class Widget extends React.Component {
         { this.state.showIFrameCode && 
           <div>
             <br/>
+            <p>Cut and paste this code into your site:</p>
             <textarea style={{width: this.state.width, height: '200px'}} value={this.iFrameCode()} readOnly="true" />
           </div>
         }
         <div className="preview">
-          <p style={{fontFamily: 'opensans-semibold'}}>Preview your widget</p>
+          <p>Preview your widget</p>
           {this.state.geocoding ? this.renderSpinny() : this.renderIframe() }
         </div>
       </div>

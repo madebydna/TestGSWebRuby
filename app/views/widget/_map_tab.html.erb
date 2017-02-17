@@ -1,6 +1,6 @@
 <% school_string = @by_location ? 'Schools near ' : 'Schools in ' %>
 
-<div id="mapTabBody">
+<div id="mapTabBody" style="padding: 0 5px">
   <div class="filter-nav">
     <div class="filters">
       <div class="location" style="width: <%= @params_width.to_i - 80 %>px;"><%= school_string %><span><%=  @params_hash[:normalizedAddress] %></span>:</div>
@@ -19,6 +19,6 @@
     <div class="info-mark"><span class="icon-hint circle-rating--smaller"></span></div>
     <div style="clear: both"></div>
   </div>
-  <div id="js-map-canvas" style="width: <%= @params_width.to_i - 10 %>px; height:<%= @params_height.to_i - 105 %>px; border: 1px solid #999999; margin:0 5px;"></div>
-  <div style="margin:0 5px;"><%= image_tag (asset_path('widget/widget_legend.gif')) %></div>
+  <div id="js-map-canvas" style="width: <%= @params_width.to_i - 15 %>px; height:<%= @params_height.to_i - 105 %>px; border: 1px solid #999999;"></div>
+  <div><%= image_tag (asset_path('widget/widget_legend.gif')) %></div>
 </div>
