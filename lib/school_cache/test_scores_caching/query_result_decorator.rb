@@ -124,4 +124,7 @@ class TestScoresCaching::QueryResultDecorator
     self['number_students_tested']
   end
 
+  def state_number_tested
+    self['state_number_tested']
+  end
 end

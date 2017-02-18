@@ -8,7 +8,7 @@ class GsdataCaching::GsdataCacher < Cacher
   # 119: Ratio of students to full time counselors
   # 133: Ratio of teacher salary to total number of teachers
   # 149: Percentage of teachers with less than three years experience
-  DATA_TYPE_IDS = [83, 95, 99, 119, 133, 149].freeze
+  DATA_TYPE_IDS = [55, 83, 95, 99, 119, 133, 149].freeze
 
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }

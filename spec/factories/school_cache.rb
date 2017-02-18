@@ -540,6 +540,29 @@ FactoryGirl.define do
     updated Time.now
   end
 
+  factory :cached_ethnicity_data, class: SchoolCache do
+    name 'characteristics'
+    sequence(:school_id) { |n| n }
+    state 'CA'
+    value ({
+      'Ethnicity' => [{
+        "breakdown" => "White",
+        "original_breakdown" => "White",
+        "created" => "2014-05-02T09:55:10-07:00",
+        "district_average" => 78.0,
+        "school_value" => 81.3688,
+        "source" => "NCES",
+        "state_average" => 65.0,
+        "year" => 2012,
+        "school_value_2011" => 83.6502,
+        "state_average_2011" => 66.2707,
+        "school_value_2012" => 81.3688,
+        "state_average_2012" => 65.0
+      }]
+    }.to_json)
+    updated Time.now
+  end
+
   factory :nearby_schools, class: SchoolCache do
     name :nearby_schools
     school_id 1

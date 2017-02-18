@@ -26,7 +26,15 @@ export default class EquityBarGraph extends React.Component {
     return (
       _.sortBy(
         this.props.test_scores.filter(obj => obj.school_value !== undefined),
-        obj => obj.breakdown == 'All students' ? '' : obj.breakdown
+        obj => {
+          if (obj.breakdown == 'All students') {
+            return -150;
+          } else if (obj.percentOfStudentBody) {
+            return -obj.percentOfStudentBody;
+          } else {
+            return 100; // default to bottom
+          }
+        }
       )
     );
   }

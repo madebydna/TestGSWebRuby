@@ -93,27 +93,6 @@ module States
     return Regexp.new regex, 'i'
   end
 
-  # this is for preserving url structure of Districts/Cities list SEO page urls
-  def self.any_state_name_regex_titleize
-    regex = ''
-    state_hash.keys.each do |s|
-      if s == 'washington dc'
-        regex << ('Washington_DC|')
-      else
-        regex << ("#{s}|".titleize.gsub(/\s+/, '_'))
-      end
-    end
-    regex = regex[0..-2]
-    return Regexp.new regex
-  end
-
-  # this is for preserving url structure of Districts/Cities list SEO page urls
-  def self.any_state_abbreviation_regex_without_anchors
-    regex = ''
-    regex << state_hash.values.map{|s| s.upcase }.join('|')
-    return Regexp.new regex
-  end
-
   def self.abbreviations
     abbreviation_hash.keys.sort
   end

@@ -100,7 +100,7 @@ class SearchController < ApplicationController
     gon.allow_compare = can_compare?
     set_login_redirect
     @district_browse = true
-    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
+    require_city_instance_variable { redirect_to state_path(gs_legacy_url_encode(@state[:long])); return }
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode

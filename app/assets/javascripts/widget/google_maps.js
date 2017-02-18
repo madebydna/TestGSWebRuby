@@ -236,7 +236,7 @@ GS.googleMap = GS.googleMap || (function() {
               if (assignedLevel) {
                   markup += '<div><span class="notranslate">' + mapPinAssignedSchoolText() + '*</span></div>';
               }
-              markup += '<div class="notranslate iw-school-name"><a class="" href="' + point.profileUrl + '">' + point.name + '</a></div>';
+              markup += '<div class="notranslate iw-school-name"><a class="" href="' + point.profileUrl + '" target="_blank">' + point.name + '</a></div>';
               markup += '<div class="">'; //row
 
               markup += '<div class="">';
@@ -270,7 +270,7 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '<div class="gs-info-window">';
               markup += '<div class="iw-review">'; //stars
               if (point.numReviews > 0) {
-                  markup += '<a href="' + point.reviewUrl + '">' + '<span class="">'+ mapPinCommunityStars(point.communityRatingStars) + '</span>';
+                  markup += '<a href="' + point.reviewUrl + '" target="_blank">' + '<span class="">'+ mapPinCommunityStars(point.communityRatingStars) + '</span>';
                   markup += '<span class="notranslate">'+ point.numReviews;
                   if (point.numReviews != 1) {
                       markup += '&nbsp;' + mapPinReviewsText() + ' </span>';
@@ -279,7 +279,7 @@ GS.googleMap = GS.googleMap || (function() {
                   }//reviews link
                   markup += '</a>';//reviews link
               } else {
-                  markup += '<a class="notranslate" href="' + point.reviewUrl + '">' + mapPinRateThisSchoolText() + '</a>';
+                  markup += '<a class="notranslate" href="' + point.reviewUrl + '" target="_blank">' + mapPinRateThisSchoolText() + '</a>';
               }
               markup += '</div>'; //stars
               // markup += '<div class="iw-home">'; //zillow

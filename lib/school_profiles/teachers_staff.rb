@@ -115,6 +115,8 @@ module SchoolProfiles
               apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range
+          item.source = I18n.db_t(hash['source_name'])
+          item.year = hash['source_year']
         end
       end
     end
