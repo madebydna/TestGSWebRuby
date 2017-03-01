@@ -241,6 +241,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resource :top_performing_nearby_schools
+    resource :widget_logs, only: [:create]
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
