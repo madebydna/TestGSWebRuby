@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react';
 import SpinnyWheel from './spinny_wheel';
 import { geocode } from '../components/geocoding';
 import * as google_maps from '../components/map/google_maps';
+import { logWidgetCodeRequest } from '../api_clients/widget_logs';
+import ValidatingInput from './validating_input';
+import * as validations from '../components/validations';
 
 export default class Widget extends React.Component {
   constructor(params) {
@@ -38,10 +41,16 @@ export default class Widget extends React.Component {
     }.bind(this));
   }
 
+  getCodeButtonEnabled() {
+    return (this.state.targetUrlValid && this.state.emailValid);
+  }
+
   getCode() {
-    this.setState({
-      showIFrameCode: true
-    })
+    logWidgetCodeRequest(this.state.email, this.state.targetUrl).always(() => {
+      this.setState({
+        showIFrameCode: true
+      })
+    });
   }
 
   widgetUrl() {
@@ -88,7 +97,7 @@ export default class Widget extends React.Component {
   }
 
   putFieldInState(field) {
-    return e => { if(e.target.value != '') this.setState({[field]: e.target.value}) }
+    return e => { if(e.target.value != '') this.setState({[field]: e.target.value, showIFrameCode: false})}
   }
 
   iFrameCode() {
@@ -138,9 +147,37 @@ export default class Widget extends React.Component {
                 <input type="text" name="height" onBlur={this.putFieldInState('height')} defaultValue={this.state.height}/>
               </div>
             </div>
+            <div>
+              <p>We'll send a code snippet to your email</p>
+              <div>
+                <label>Email</label>
+                <ValidatingInput type="email" name="email"
+                  onBlur={this.putFieldInState('email')}
+                  defaultValue={this.state.email}
+                  validation={validations.VALID_EMAIL_REQUIRED}
+                  onInvalid={() => this.setState({emailValid: false})}
+                  onValid={() => this.setState({emailValid: true})}
+                />
+                { this.state.email && this.state.emailValid === false && <span>Please enter a valid email address</span> }
+              </div>
+            </div>
+            <div>
+              <p>Enter the website URL where the widget will be hosted</p>
+              <div>
+                <label>Your website URL</label>
+                <ValidatingInput type="url"
+                  name="targetUrl"
+                  onBlur={this.putFieldInState('targetUrl')}
+                  defaultValue={this.state.targetUrl}
+                  validation={validations.VALID_URL_REQUIRED}
+                  onInvalid={() => this.setState({targetUrlValid: false})}
+                  onValid={() => this.setState({targetUrlValid: true})}
+                />
+              </div>
+            </div>
           </form>
         </div>
-        <br/><button onClick={this.getCode}>Get Wiget Code</button>
+        <br/><button onClick={this.getCode} disabled={!this.getCodeButtonEnabled()}>Get Wiget Code</button>
 
         { this.state.showIFrameCode && 
           <div>

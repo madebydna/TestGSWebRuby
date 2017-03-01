@@ -41,6 +41,11 @@
 }
 
 form.widget {
+  .errors ul {
+    list-style: none;
+    color: red;
+    padding-left: 0;
+  }
   > div + div {
     padding-top: 20px;
   }
