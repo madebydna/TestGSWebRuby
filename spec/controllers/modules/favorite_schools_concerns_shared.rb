@@ -98,10 +98,8 @@ shared_examples_for 'a controller that can save a favorite school' do
     end
 
     it 'should fail gracefully if school not found' do
-      pending 'TODO: Flash error in controller instead of raise error'
-      fail
       expect(user).to_not receive(:add_favorite_school!)
-      expect(controller).to receive :flash_error
+      expect(controller).to receive(:flash_error).with("We're sorry, something went wrong processing your request.")
       controller.send :add_favorite_school, {}
     end
 
