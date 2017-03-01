@@ -15,6 +15,10 @@ module CachedRatingsMethods
     school_rating_by_id(174)
   end
 
+  def great_schools_rating_year
+    school_rating_year_by_id(174)
+  end
+
   def test_scores_rating
     test_scores_rating = school_rating_by_id(164)
     if test_scores_rating == NO_RATING_TEXT
@@ -29,6 +33,10 @@ module CachedRatingsMethods
 
   def college_readiness_rating
     school_rating_by_id(166)
+  end
+
+  def college_readiness_rating_year
+    school_rating_year_by_id(166)
   end
 
   def school_rating_by_id(rating_id=nil, level_code=nil)
@@ -46,6 +54,22 @@ module CachedRatingsMethods
         elsif ratings_obj['school_value_float']
           return ratings_obj['school_value_float'].to_i
         end
+      end
+    end
+    NO_RATING_TEXT
+  end
+
+  def school_rating_year_by_id(rating_id=nil, level_code=nil)
+    if rating_id
+      # allow caller to provide level_code as 2nd arg. If given,
+      # find only ratings that match it (and date type ID)
+      ratings_year_obj = ratings.find do |rating|
+        rating['data_type_id'] == rating_id && (
+        level_code.nil? || level_code == rating['level_code']
+        )
+      end
+      if ratings_year_obj
+        return ratings_year_obj['year'].to_i
       end
     end
     NO_RATING_TEXT

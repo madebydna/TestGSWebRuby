@@ -25,6 +25,10 @@ module SchoolProfiles
       ((1..10).to_a & [decorated_school.great_schools_rating]).first
     end
 
+    def gs_rating_year
+      decorated_school.great_schools_rating_year
+    end
+
     def students_enrolled
       decorated_school.students_enrolled
     end
@@ -47,6 +51,10 @@ module SchoolProfiles
 
     def college_readiness_rating
       decorated_school.college_readiness_rating
+    end
+
+    def college_readiness_rating_year
+      decorated_school.college_readiness_rating_year
     end
 
     def equity_ratings_breakdown(breakdown)
