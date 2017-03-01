@@ -67,17 +67,6 @@ module SchoolProfiles
       content << 'See more: <a href="/gk/ratings"; target="_blank">More about GreatSchools ratings</a>'
       content << '</div>'
       content << '</div>'
-      # content << subject_scores.each_with_object({}) do |rsi, output|
-      #   output[rsi.test_label] = {
-      #       test_label: rsi.test_label,
-      #       subject: sources_with_subject[rsi.test_label], # subject is an array based on test_label
-      #       test_description: rsi.description,
-      #       source: rsi.source,
-      #       year: rsi.year
-      #   }
-      # end.reduce('') do |string, array|
-      #   string << sources_for_view(array)
-      # end
       data = subject_scores.each_with_object({}) do |rsi, output|
         output[rsi.test_label] = {
             test_label: rsi.test_label,
