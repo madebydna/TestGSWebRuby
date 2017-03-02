@@ -12,14 +12,20 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
     end
 
-    def generate_hash
-      {
+    def generate_equity_test_score_hash
+      @_generate_equity_test_score_hash ||=({
           LOW_INCOME_TOP => low_income_hash,
           ETHNICITY_TOP => ethnicity_hash
-      }
+      })
     end
 
+    def low_income_test_scores_visible?
+      low_income_hash.present?
+    end
 
+    def ethnicity_test_scores_visible?
+      ethnicity_hash.present?
+    end
 
     # Methods shared by low income and ethnicity
 
@@ -92,10 +98,12 @@ module SchoolProfiles
     end
 
     def low_income_hash
-      hash = test_scores_formatted(low_income_breakdowns)
-      sorted = low_income_sort_subjects(hash).to_h
-      low_income_sort_breakdowns(sorted)
-      hash
+      @_low_income_hash ||=(
+        hash = test_scores_formatted(low_income_breakdowns)
+        sorted = low_income_sort_subjects(hash).to_h
+        low_income_sort_breakdowns(sorted)
+        hash
+      )
     end
 
     def low_income_breakdowns
@@ -119,10 +127,12 @@ module SchoolProfiles
     end
 
     def ethnicity_hash
-      hash = test_scores_formatted(ethnicity_breakdowns)
-      sorted = ethnicity_sort_subjects(hash).to_h
-      ethnicity_sort_breakdowns(sorted)
-      hash
+      @_ethnicity_hash ||=(
+        hash = test_scores_formatted(ethnicity_breakdowns)
+        sorted = ethnicity_sort_subjects(hash).to_h
+        ethnicity_sort_breakdowns(sorted)
+        hash
+      )
     end
 
     def ethnicity_breakdowns
