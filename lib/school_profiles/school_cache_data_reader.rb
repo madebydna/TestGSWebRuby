@@ -107,10 +107,7 @@ module SchoolProfiles
         ets = SchoolProfiles::EquityTestScores.new(
             school_cache_data_reader: self
         )
-        {
-          'low_income' => ets.low_income_hash,
-          'ethnicity' => ets.ethnicity_hash
-        }
+        ets.generate_hash
       )
     end
 
