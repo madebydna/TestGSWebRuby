@@ -21,11 +21,26 @@ module SchoolProfiles
 
     def ethnicity_data_source
       ethnicity_data.each_with_object({}) do |ethnicity_hash, output|
-        output[ethnicity_hash['breakdown']] = {
+        output['ethnicity'] = {
             source: I18n.db_t(ethnicity_hash['source']),
             year: ethnicity_hash['year']
         }
       end
+    end
+
+    def sources_for_view
+      str = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
+      str << '<div style="padding:40px 0 40px 20px;">'
+      str << '<h4 style="font-family:RobotoSlab-Bold;">Ethnicity</h4>'
+      str << "<div style='padding-bottom:40px;'><span>Source: #{ethnicity_data_source['ethnicity'][:source]}, "
+      str << "#{ethnicity_data_source['ethnicity'][:year]}</span></div>"
+      str << '<h4 style="font-family:RobotoSlab-Bold;">Gender</h4>'
+      str << "<div style='padding-bottom:40px;'><span>Source: #{gender_data_source['gender'][:source]}, "
+      str << "#{gender_data_source['gender'][:year]}</span></div>"
+      str << '<h4 style="font-family:RobotoSlab-Bold;">Subgroups</h4>'
+      str << "<div><span>Source: #{subgroups_data_source['subgroups'][:source]}, "
+      str << "#{subgroups_data_source['subgroups'][:year]}</span></div>"
+      str << '</div>'
     end
 
     def gender_data
@@ -33,11 +48,11 @@ module SchoolProfiles
     end
 
     def gender_data_source
-      gender_data.each_with_object({}) do |(breakdown, data_array), output|
-        data_array.each do |data_hash|
-          output[breakdown] = {
-              source: data_hash['source'],
-              year: data_hash['year']
+      gender_data.each_with_object({}) do |(gender, array_of_one_hash), output|
+        array_of_one_hash.each do |hash|
+          output['gender'] = {
+              source: hash['source'],
+              year: hash['year']
           }
         end
       end
@@ -48,11 +63,11 @@ module SchoolProfiles
     end
 
     def subgroups_data_source
-      subgroups_data.each_with_object({}) do |(breakdown, data_array), output|
-        data_array.each do |data_hash|
-          output[breakdown] = {
-              source: data_hash['source'],
-              year: data_hash['year']
+      subgroups_data.each_with_object({}) do |(subgroup, array_of_one_hash), output|
+        array_of_one_hash.each do |hash|
+          output['subgroups'] = {
+              source: hash['source'],
+              year: hash['year']
           }
         end
       end

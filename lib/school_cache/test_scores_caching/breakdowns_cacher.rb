@@ -15,6 +15,7 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
           # skip this if no corresponding test data type
           test_data_types && test_data_types[data_type_id].present?
         end
+        results.extend(TestScoreCalculations).select_items_with_max_year!
         results = inject_grade_all(results)
         results.map { |obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj) }
     )

@@ -16,14 +16,25 @@ describe "Visitor" do
     expect(page_object).to_not have_equity
   end
 
-  scenario "sees equity section" do
-    school = create(:school_with_new_profile)
-    create(
-      :ca_caaspp_schoolwide_ela_2015
-    )
-    visit school_path(school)
+  context 'with test score data' do
+    let(:school) { create(:school_with_new_profile) }
+    before do
+      create(:ca_caaspp_schoolwide_ela_2015, school_id: school.id)
+    end
+    scenario "sees equity section" do
+      visit school_path(school)
+      expect(page_object).to have_equity
+    end
+  end
 
-    expect(page_object).to have_equity
+  context 'with graduation rate' do
+    let(:school) { create(:school_with_new_profile) }
+    
+    scenario "sees equity section" do
+      create( :graduation_rate, school_id: school.id)
+      visit school_path(school)
+      expect(page_object).to have_equity
+    end
   end
 
   scenario "sees anchor for data source", js: true do

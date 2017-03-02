@@ -114,6 +114,72 @@ describe 'GradeAllCalculator' do
       its(:subject_id) { is_expected.to eq(4) }
     end
 
+    context 'when one number of students tested is zero for a test' do
+      let(:test_scores) do 
+        [
+          OpenStruct.new({
+            data_type_id: 1,
+            grade: '9',
+            year: 2015,
+            subject_id: 4,
+            school_value_float: 10,
+            state_value_float: 50,
+            number_students_tested: 0,
+            state_number_tested: 4,
+          }).freeze,
+          OpenStruct.new({
+            data_type_id: 1,
+            grade: '10',
+            year: 2015,
+            subject_id: 4,
+            school_value_float: 20,
+            state_value_float: 100,
+            number_students_tested: 8,
+            state_number_tested: 0,
+          }).freeze
+        ].freeze
+      end
+
+      it { is_expected.to be_present }
+      its(:school_value_float) { is_expected.to eq(20) }
+      its(:state_value_float) { is_expected.to eq(50) }
+      its(:number_students_tested) { is_expected.to eq(8) }
+      its(:state_number_tested) { is_expected.to eq(4) }
+    end
+
+    context 'when there are no number of students tested for any test' do
+      let(:test_scores) do 
+        [
+          OpenStruct.new({
+            data_type_id: 1,
+            grade: '9',
+            year: 2015,
+            subject_id: 4,
+            school_value_float: 10,
+            state_value_float: 50,
+            number_students_tested: 0,
+            state_number_tested: 4,
+          }).freeze,
+          OpenStruct.new({
+            data_type_id: 1,
+            grade: '10',
+            year: 2015,
+            subject_id: 4,
+            school_value_float: 20,
+            state_value_float: 100,
+            number_students_tested: 0,
+            state_number_tested: 8,
+          }).freeze
+        ].freeze
+      end
+
+      it { is_expected.to be_present }
+      its(:school_value_float) { is_expected.to eq(nil) }
+      its(:state_value_float) { is_expected.to round_to(83) }
+      its(:number_students_tested) { is_expected.to eq(0) }
+      its(:state_number_tested) { is_expected.to eq(12) }
+    end
+
     context 'with two data sets that already contain grade all' do
       let(:test_scores) do 
         [

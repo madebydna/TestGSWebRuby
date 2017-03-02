@@ -12,12 +12,24 @@ describe "Visitor" do
     clean_models(:ca, School)
   end
 
-  scenario "sees student diversity section" do
-    school = create(:school_with_new_profile, id: 1)
-    visit school_path(school)
+  context 'with ethnicity data' do
+    scenario "should see student diversity section" do
+      school = create(:school_with_new_profile, id: 1)
+      create(:cached_ethnicity_data, school_id: school.id)
+      visit school_path(school)
 
-    expect(page_object).to have_student_diversity
-    expect(page_object.student_diversity.title).to have_text('Students')
+      expect(page_object).to have_student_diversity
+      expect(page_object.student_diversity.title).to have_text('Students')
+    end
+  end
+
+  context 'without ethnicity data' do
+    scenario "should not see student diversity section" do
+      school = create(:school_with_new_profile, id: 1)
+      visit school_path(school)
+
+      expect(page_object).to_not have_student_diversity
+    end
   end
 
   scenario "sees ethnicity data" do
@@ -72,6 +84,7 @@ describe "Visitor" do
 
   scenario "sees anchor for data source" do
     school = create(:school_with_new_profile, id: 1)
+    create(:cached_ethnicity_data, school_id: school.id)
     visit school_path(school)
     expect(page_object.student_diversity).to have_source_link
   end

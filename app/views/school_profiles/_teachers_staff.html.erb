@@ -1,5 +1,6 @@
 <% teachers_staff %>
 <% data_values = teachers_staff.data_values %>
+<% content = teachers_staff.sources %>
 <% initial_size = 3 %>
 
 
@@ -25,5 +26,12 @@
         <% end %>
       </div>
   <% end %>
-  <div class="source-link"><%= t('.source') %>: <a href="/gk/ca-high-schools/#Teachers" target="_blank"><%= t('.see notes') %></a></div>
+  <div>
+    <a data-remodal-target="modal_info_box"
+       data-content-type="info_box"
+       data-content-html="<%= content %>"
+       href="javascript:void(0)">
+      <span class="source-link"><%= t('.see notes') %></span>
+    </a>
+  </div>
 </div>

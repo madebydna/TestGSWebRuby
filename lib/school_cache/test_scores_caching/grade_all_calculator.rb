@@ -51,15 +51,17 @@ class TestScoresCaching::GradeAllCalculator
   end
 
   def weighted_school_value_float(test_data_sets)
+    sum = sum_number_students_tested(test_data_sets)
     test_data_sets.sum do |tds|
       tds['school_value_float'].to_f * tds['number_students_tested']
-    end / sum_number_students_tested(test_data_sets)
+    end / sum unless sum.zero?
   end
 
   def weighted_state_value_float(test_data_sets)
+    sum = sum_state_number_tested(test_data_sets)
     test_data_sets.sum do |tds|
       tds['state_value_float'] * tds['state_number_tested']
-    end / sum_state_number_tested(test_data_sets)
+    end / sum unless sum.zero?
   end
 
   def max_year
@@ -72,12 +74,14 @@ class TestScoresCaching::GradeAllCalculator
     # if no grade all, calculate grade all and add to data type group
     # re-flatten groups and return array
     new_data_sets = group_data_sets.reduce([]) do |accum, (key, test_data_sets)|
-      next if has_any_grade_all_data?(test_data_sets)
-      grade_all_tds = calculate_grade_all(test_data_sets.select { |tds| tds['breakdown_id'] == 1 } )
-      accum << grade_all_tds if grade_all_tds
+      unless has_any_grade_all_data?(test_data_sets)
+        grade_all_tds = calculate_grade_all(test_data_sets.select { |tds| tds['breakdown_id'] == 1 } )
+        accum << Array.wrap(grade_all_tds) if grade_all_tds
+      end
+      accum
     end
 
-    data_sets_and_values + Array.wrap(new_data_sets)
+    data_sets_and_values + Array.wrap(new_data_sets).flatten
   end
 
   def has_any_grade_all_data?(test_data_sets)

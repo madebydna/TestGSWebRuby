@@ -104,6 +104,14 @@ class SchoolProfilesPage < SitePrism::Page
     five_star_rating.find_css('.filled-star').size == star_rating
   end
 
+  def five_star_rating_value
+    five_star_rating.find_css('.filled-star').size
+  end
+
+  def gs_rating_value
+    gs_rating.text.to_i
+  end
+
   def has_all_review_questions?
     review_form.questions.count == 3
   end
