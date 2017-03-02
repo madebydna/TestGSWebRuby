@@ -102,15 +102,6 @@ module SchoolProfiles
       )
     end
 
-    def equity_test_scores
-      @_equity_test_scores ||=(
-        ets = SchoolProfiles::EquityTestScores.new(
-            school_cache_data_reader: self
-        )
-        ets.generate_hash
-      )
-    end
-
     def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: nil, subjects: nil)
       @_subject_scores_by_latest_year ||= (
         subject_hash = test_scores.map do |data_type_id, v|
