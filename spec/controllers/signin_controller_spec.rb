@@ -616,6 +616,15 @@ describe SigninController do
       let(:invalid_token) { 'foo' }
       let(:redirect) { '/foo' }
 
+      context 'given a bad redirect url' do
+        let(:bad_redirect) { 'http://foo.bar.taz/' }
+        before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: bad_redirect) }
+
+        it 'should redirect to the account page' do
+          expect(controller).to receive(:redirect_to).with(my_account_path)
+          controller.send :authenticate_token_and_redirect
+        end
+      end
       context 'given a valid token' do
         before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: redirect) }
 

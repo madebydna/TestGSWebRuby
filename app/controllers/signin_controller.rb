@@ -204,7 +204,7 @@ class SigninController < ApplicationController
     token = params[:id]
     token = CGI.unescape(token) if token
     time = params[:date]
-    success_redirect = params[:redirect] || my_account_path
+    success_redirect = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : my_account_path
     error_message = I18n.t('controllers.forgot_password_controller.token_invalid')
 
     user_authenticator_and_verifier = UserAuthenticatorAndVerifier.new(token, time)
