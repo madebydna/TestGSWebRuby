@@ -43,12 +43,17 @@ module SchoolProfiles
             breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.school_cache_data_reader', default: breakdown_name)
             output_hash[subject_str] ||= []
             output_hash[subject_str] << year_hash[year].merge({'breakdown'=>breakdown_name_str,
+                                                               'display_percentages'=>display_percentages(breakdown_name),
                                                                'year'=>year,
                                                                'percentage'=> percentage_str(inclusion_hash[breakdown_name])})
           } if level_code
         }
       }
       output_hash
+    end
+
+    def display_percentages(breakdown_name)
+      low_income_breakdowns.exclude? breakdown_name
     end
 
     def percentage_str(percent)
