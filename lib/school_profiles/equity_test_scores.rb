@@ -19,8 +19,6 @@ module SchoolProfiles
           LOW_INCOME_TOP => low_income_hash,
           ETHNICITY_TOP => ethnicity_hash
       })
-      # require 'pry'
-      # binding.pry
     end
 
     def low_income_test_scores_visible?
@@ -32,7 +30,7 @@ module SchoolProfiles
     end
 
 
-    #PRIVATE - not sure how to test if private
+    #PRIVATE
     # Methods shared by low income and ethnicity
 
     def test_scores_formatted(breakdown_arr)
@@ -92,9 +90,9 @@ module SchoolProfiles
 
     def low_income_sort_subjects(hash)
       hash.sort do | a, b |
-        sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] }
-        sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] }
-        sum1 <=> sum2
+        # sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] }
+        # sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] }
+        b[1].inject(0){|a,e| a + e['number_students_tested'] } <=> a[1].inject(0){|a,e| a + e['number_students_tested'] }
       end
     end
 
@@ -107,7 +105,7 @@ module SchoolProfiles
         hash = test_scores_formatted(low_income_breakdowns)
         sorted = low_income_sort_subjects(hash).to_h
         low_income_sort_breakdowns(sorted)
-        hash
+        sorted
       )
     end
 
@@ -121,9 +119,7 @@ module SchoolProfiles
 
     def ethnicity_sort_subjects(hash)
       hash.sort do | a, b |
-        sum1 = b[1].first['number_students_tested'].to_i
-        sum2 = a[1].first['number_students_tested'].to_i
-        sum1 <=> sum2
+        b[1].first['number_students_tested'].to_i <=> a[1].first['number_students_tested'].to_i
       end
     end
 
@@ -136,7 +132,7 @@ module SchoolProfiles
         hash = test_scores_formatted(ethnicity_breakdowns)
         sorted = ethnicity_sort_subjects(hash).to_h
         ethnicity_sort_breakdowns(sorted)
-        hash
+        sorted
       )
     end
 
