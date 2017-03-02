@@ -102,37 +102,100 @@ module SchoolProfiles
       )
     end
 
-    def subject_scores_by_latest_year_equity(grades: 'All', subjects: nil)
-      @_subject_scores_by_latest_year ||= (
-        subject_hash = test_scores.map do |data_type_id, v|
-          v.seek(breakdown, 'grades', grades, 'level_code').compact.each_with_object({}) do |input_hash, output_hash|
-            input_hash[1].each do |subject, year_hash|
-              latest_year = year_hash.keys.max_by { |year| year.to_i }
-              output_hash[subject] ||= {}
-              val = test_scores[data_type_id.to_s][breakdown]
-              year_hash[latest_year.to_s]['test_description'] = val['test_description']
-              year_hash[latest_year.to_s]['test_label']       = val['test_label']
-              year_hash[latest_year.to_s]['test_source']      = val['test_source']
-              output_hash[subject]
-              output_hash[subject].merge!(year_hash)
-            end
-            output_hash
-          end
-        end
+    def low_income_breakdowns
+      {'Economically disadvantaged'=>'0', 'Not economically disadvantaged'=>'0'}
+    end
 
-        return [] unless subject_hash.present?
-        subject_hash = subject_hash.inject(:merge)
-        subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
-        subject_hash.inject([]) do |scores_array, (subject, year_hash)|
-          scores_array << OpenStruct.new({}.tap do |scores_hash|
-            latest_year = year_hash.keys.max_by { |year| year.to_i }
-            scores_hash.merge!(year_hash[latest_year.to_s])
-            scores_hash['subject'] = subject
-            scores_hash['year'] = latest_year
-          end)
-        end
+    def ethnicity_breakdowns
+      ethnicity_breakdown = {'All'=>'200'}
+      ethnicity_data.each{ | ed |  ethnicity_breakdown[ed['breakdown']] = ed['school_value']; ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']; }
+      ethnicity_breakdown.compact
+    end
+
+    def equity_test_scores
+      @_equity_test_scores ||=(
+        {
+          'low_income' => low_income_hash,
+          'ethnicity' => ethnicity_hash
+        }
       )
     end
+
+    def low_income_hash
+      hash = test_scores_formatted(low_income_breakdowns)
+      low_income_sort_hash(hash)
+      hash
+    end
+
+    def ethnicity_hash
+      hash = test_scores_formatted(ethnicity_breakdowns)
+      ethnicity_sort_hash(hash)
+      hash
+    end
+
+    def low_income_sort_hash(hash)
+      hash.values.each{|data| data.sort!{|a,b| a['breakdown'] <=> b['breakdown']; } }
+    end
+    def ethnicity_sort_hash(hash)
+      hash.values.each{|data| data.sort_by!{|a| -a['percentage'].to_i  } }
+    end
+
+    def test_scores_formatted(breakdown_arr)
+      hash = equity_test_score_hash(breakdown_arr)
+      sorted = equity_test_score_hash_sort_by_number_students_tested(hash)
+      year = year_latest_across_tests(sorted)
+      equity_test_score_filter_by_latest_year(sorted, year)
+    end
+
+    def latest_year_in_test(year_hash)
+      year_hash.keys.max_by { |year| year.to_i }
+    end
+
+    def equity_test_score_hash(inclusion_hash=low_income_breakdowns)
+      output_hash = {}
+      # for each test data_type_id
+      test_scores.values.each { |test_hash|
+        #for each breakdown low income - eco and not eco
+        breakdowns = test_hash.select{ |breakdown| inclusion_hash.keys.include? breakdown }
+        breakdowns.each { | breakdown_name, breakdown_hash|
+          level_code = breakdown_hash.seek('grades', 'All', 'level_code')
+          level_code.first[1].each {|subject, year_hash|
+            year = latest_year_in_test(year_hash).to_s
+            subject_str = I18n.t(subject, scope: 'lib.school_cache_data_reader', default: subject)
+            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.school_cache_data_reader', default: breakdown_name)
+            output_hash[subject_str] ||= []
+            output_hash[subject_str] << year_hash[year].merge({'breakdown'=>breakdown_name_str,
+                                                               'year'=>year,
+                                                               'percentage'=> percentage_str(inclusion_hash[breakdown_name])})
+          } if level_code
+        }
+      }
+      output_hash
+    end
+
+    def percentage_str(percent)
+      value = percent.to_f.round
+      value < 1 ? '<1' : value.to_s
+    end
+
+    def equity_test_score_filter_by_latest_year(hash, year)
+      hash.select {|subject| subject[1].first['year'] == year }.to_h
+    end
+
+    def year_latest_across_tests(hash)
+      temp = []
+      hash.each{|subject, data| data.each{| d | temp << d['year']}}
+      temp.max
+    end
+
+    def equity_test_score_hash_sort_by_number_students_tested(hash)
+      hash.sort {| a, b |
+        sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] }
+        sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] }
+        sum1 <=> sum2
+      }
+    end
+
 
     def subject_scores_by_latest_year(breakdown: 'All', grades: 'All', level_codes: nil, subjects: nil)
       @_subject_scores_by_latest_year ||= (

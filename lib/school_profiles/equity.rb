@@ -7,34 +7,11 @@ module SchoolProfiles
       ).auto_narrative_calculate_and_add
     end
 
-    def data_type_id_based_on_low_income
-      @school_cache_data_reader.test_scores.each do |k, v|
-        return k if v.gs_dig('Economically disadvantaged', 'grades', 'All','level_code', 'e,m,h', 'English Language Arts') ||
-            v.gs_dig('Economically disadvantaged', 'grades', 'All','level_code', 'e,m,h', 'Math')
-      end
+    def test_scores
+      @school_cache_data_reader.equity_test_scores
     end
 
-    def data_type_id_based_on_ethnicity
-      @school_cache_data_reader.test_scores.each do |k, v|
-        return k if v.gs_dig('White', 'grades', 'All','level_code', 'e,m,h', 'English Language Arts') ||
-            v.gs_dig('African American', 'grades', 'All','level_code', 'e,m,h', 'English Language Arts') ||
-            v.gs_dig('Hispanic', 'grades', 'All','level_code', 'e,m,h', 'English Language Arts')
-      end
-    end
 
-    def test_scores_by_ethnicity
-      @_test_scores_by_ethnicity ||= (
-        data_type_id = data_type_id_based_on_low_income
-        return_hash_value = {}
-        if data_type_id.present?
-          return_hash_value = @school_cache_data_reader.test_scores[data_type_id]
-        else
-          data_type_id = data_type_id_based_on_ethnicity
-          return_hash_value = @school_cache_data_reader.test_scores[data_type_id] if data_type_id.present?
-        end
-        return_hash_value.sort{|a,z|a<=>z}.to_h if return_hash_value.present?
-      )
-    end
 
     def enrollment
       enrollment_string = @school_cache_data_reader.students_enrolled
@@ -63,24 +40,22 @@ module SchoolProfiles
       visible
     end
 
-
-
     def rating_low_income
       @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
     end
 
     def ethnicity_visible?
-      test_scores_by_ethnicity.present? || characteristics['4-year high school graduation rate'].present? || characteristics['Percent of students who meet UC/CSU entrance requirements'].present?
+      test_scores.present? || characteristics['4-year high school graduation rate'].present? || characteristics['Percent of students who meet UC/CSU entrance requirements'].present?
     end
 
     def low_income_visible?
       #characteristics_low_income_visible? || test_scores_by_ethnicity.find{ |k,v| k == 'Economically disadvantaged' }    #test_scores_by_ethnicity.key?('Economically disadvantaged')
-      if test_scores_by_ethnicity.present?
-        test_scores_by_ethnicity.key?('Economically disadvantaged')
-      else
-        characteristics_low_income_visible?
-      end
-
+      # if test_scores.present?
+      #   test_scores.key?('Economically disadvantaged')
+      # else
+      #   characteristics_low_income_visible?
+      # end
+      true
     end
   end
 end
