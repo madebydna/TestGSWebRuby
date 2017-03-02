@@ -1,55 +1,21 @@
 module SchoolProfiles
   class EquityTestScores
 
+    SUBJECT_ALL_PERCENTAGE = '200' # This is also used in react to determine different layout in ethnicity for All students
+    BREAKDOWN_LOW_INCOME = 'Economically disadvantaged'
+    BREAKDOWN_NOT_LOW_INCOME = 'Not economically disadvantaged'
+    BREAKDOWN_ALL = 'All'
+
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
     end
 
-    def low_income_breakdowns
-      {'Economically disadvantaged'=>'0', 'Not economically disadvantaged'=>'0'}
-    end
-
-    def ethnicity_breakdowns
-      ethnicity_breakdown = {'All'=>'200'}
-      @school_cache_data_reader.ethnicity_data.each{ | ed |  ethnicity_breakdown[ed['breakdown']] = ed['school_value']; ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']; }
-      ethnicity_breakdown.compact
-    end
-
-    def equity_test_scores
-      @_equity_test_scores ||=(
-      {
-          'low_income' => low_income_hash,
-          'ethnicity' => ethnicity_hash
-      }
-      )
-    end
-
-    def low_income_hash
-      hash = test_scores_formatted(low_income_breakdowns)
-      sorted = sort_subjects_low_income(hash).to_h
-      low_income_sort_hash(sorted)
-      hash
-    end
-
-    def ethnicity_hash
-      hash = test_scores_formatted(ethnicity_breakdowns)
-      sorted = sort_subjects_ethnicity(hash).to_h
-      ethnicity_sort_hash(sorted)
-      hash
-    end
-
-    def low_income_sort_hash(hash)
-      hash.values.each{|data| data.sort!{|a,b| a['breakdown'] <=> b['breakdown']; } }
-    end
-    def ethnicity_sort_hash(hash)
-      hash.values.each{|data| data.sort_by!{|a| -a['percentage'].to_i  } }
-    end
+    # Methods shared by low income and ethnicity
 
     def test_scores_formatted(breakdown_arr)
       hash = equity_test_score_hash(breakdown_arr)
-
       year = year_latest_across_tests(hash)
-      equity_test_score_filter_by_latest_year(hash, year)
+      filter_by_latest_year(hash, year)
     end
 
     def latest_year_in_test(year_hash)
@@ -83,7 +49,7 @@ module SchoolProfiles
       value < 1 ? '<1' : value.to_s
     end
 
-    def equity_test_score_filter_by_latest_year(hash, year)
+    def filter_by_latest_year(hash, year)
       hash.select {|subject,data| data.first['year'] == year }.to_h
     end
 
@@ -93,6 +59,10 @@ module SchoolProfiles
       temp.max
     end
 
+
+
+    # Low income specific methods
+
     def sort_subjects_low_income(hash)
       hash.sort do | a, b |
         sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] }
@@ -101,13 +71,53 @@ module SchoolProfiles
       end
     end
 
-    def sort_subjects_ethnicity(hash)
+    def low_income_sort_hash(hash)
+      hash.values.each{|data| data.sort!{|a,b| a['breakdown'] <=> b['breakdown']; } }
+    end
 
+    def low_income_hash
+      hash = test_scores_formatted(low_income_breakdowns)
+      sorted = sort_subjects_low_income(hash).to_h
+      low_income_sort_hash(sorted)
+      hash
+    end
+
+    def low_income_breakdowns
+      {BREAKDOWN_LOW_INCOME=>'0', BREAKDOWN_NOT_LOW_INCOME=>'0'}
+    end
+
+
+
+    # Ethnicity specific methods
+
+    def sort_subjects_ethnicity(hash)
       hash.sort do | a, b |
         sum1 = b[1].first['number_students_tested'].to_i
         sum2 = a[1].first['number_students_tested'].to_i
         sum1 <=> sum2
       end
     end
+
+    def ethnicity_sort_hash(hash)
+      hash.values.each{|data| data.sort_by!{|a| -a['percentage'].to_i  } }
+    end
+
+
+    def ethnicity_hash
+      hash = test_scores_formatted(ethnicity_breakdowns)
+      sorted = sort_subjects_ethnicity(hash).to_h
+      ethnicity_sort_hash(sorted)
+      hash
+    end
+
+    def ethnicity_breakdowns
+      ethnicity_breakdown = {BREAKDOWN_ALL=>SUBJECT_ALL_PERCENTAGE}
+      @school_cache_data_reader.ethnicity_data.each do | ed |
+        ethnicity_breakdown[ed['breakdown']] = ed['school_value']
+        ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
+      end
+      ethnicity_breakdown.compact
+    end
+
   end
 end

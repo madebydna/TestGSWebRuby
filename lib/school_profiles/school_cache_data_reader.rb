@@ -102,16 +102,6 @@ module SchoolProfiles
       )
     end
 
-    def low_income_breakdowns
-      {'Economically disadvantaged'=>'0', 'Not economically disadvantaged'=>'0'}
-    end
-
-    def ethnicity_breakdowns
-      ethnicity_breakdown = {'All'=>'200'}
-      ethnicity_data.each{ | ed |  ethnicity_breakdown[ed['breakdown']] = ed['school_value']; ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']; }
-      ethnicity_breakdown.compact
-    end
-
     def equity_test_scores
       @_equity_test_scores ||=(
         ets = SchoolProfiles::EquityTestScores.new(
