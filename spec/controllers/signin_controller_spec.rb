@@ -24,19 +24,17 @@ describe SigninController do
   end
 
   describe '#post_registration_confirmation' do
-    before do
-      allow(controller).to receive(:redirect_to) { }
-      allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
-    end
     context 'when logged in' do
       before do
+        allow(controller).to receive(:redirect_to) { }
+        allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
         allow(controller).to receive(:logged_in?) { true }
       end
       context 'and redirect_url exists in params' do
         before do
           controller.params[:redirect] = 'localhost:3000'
         end
-        it 'should execute defered action' do
+        it 'should execute deferred action' do
           expect(controller).to receive(:executed_deferred_action)
           controller.post_registration_confirmation
         end
@@ -46,8 +44,37 @@ describe SigninController do
         before do
           controller.params[:redirect] = nil
         end
-        it 'should execute defered action' do
+        it 'should execute deferred action' do
           expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+    end
+    context 'redirecting' do
+      context 'with a valid redirect url' do
+        let (:valid_url) { 'http://www.greatschools.org/account/?flash=success' }
+        before do
+          allow(controller).to receive(:logged_in?) { true }
+          controller.params[:redirect] = valid_url
+          allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+        end
+        it 'should redirect to specified url' do
+          expect(controller).to receive(:executed_deferred_action)
+          expect(controller).to receive(:redirect_to).with(valid_url)
+          controller.post_registration_confirmation
+        end
+      end
+
+      context 'with an invalid redirect url' do
+        let (:invalid_url) { 'http://www.greatschools.org.malicious.cn/account/?flash=success' }
+        before do
+          allow(controller).to receive(:logged_in?) { true }
+          controller.params[:redirect] = invalid_url
+          allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+        end
+        it 'should redirect to specified url' do
+          expect(controller).to receive(:executed_deferred_action)
+          expect(controller).to receive(:redirect_to).with('localhost:3000')
           controller.post_registration_confirmation
         end
       end
@@ -486,9 +513,14 @@ describe SigninController do
         expect(subject).to redirect_to my_account_url
       end
 
-      it 'should redirect to url existing on verification link' do
-        valid_params.merge!(redirect: 'google.com')
-        expect(subject).to redirect_to 'google.com'
+      it 'should redirect to url existing on verification link if valid' do
+        valid_params.merge!(redirect: 'http://www.greatschools.org')
+        expect(subject).to redirect_to 'http://www.greatschools.org'
+      end
+
+      it 'should redirect to account page if redirect specified in link is invalid' do
+        valid_params.merge!(redirect: 'http://www.greatschools.org.google.com')
+        expect(subject).to redirect_to my_account_url
       end
 
       it 'should save the user' do
@@ -544,9 +576,14 @@ describe SigninController do
           expect(subject).to redirect_to my_account_url
         end
 
-        it 'should redirect to url existing on verification link' do
-          valid_params.merge!(redirect: 'google.com')
-          expect(subject).to redirect_to 'google.com'
+        it 'should redirect to url existing on verification link if valid' do
+          valid_params.merge!(redirect: 'https://www.greatschools.org/')
+          expect(subject).to redirect_to 'https://www.greatschools.org/'
+        end
+
+        it 'should redirect to account page if url existing on verification link is invalid' do
+          valid_params.merge!(redirect: 'https://www.greatschools.org.google.com')
+          expect(subject).to redirect_to my_account_url
         end
       end
     end
@@ -616,6 +653,15 @@ describe SigninController do
       let(:invalid_token) { 'foo' }
       let(:redirect) { '/foo' }
 
+      context 'given a bad redirect url' do
+        let(:bad_redirect) { 'http://foo.bar.taz/' }
+        before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: bad_redirect) }
+
+        it 'should redirect to the account page' do
+          expect(controller).to receive(:redirect_to).with(my_account_path)
+          controller.send :authenticate_token_and_redirect
+        end
+      end
       context 'given a valid token' do
         before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: redirect) }
 
