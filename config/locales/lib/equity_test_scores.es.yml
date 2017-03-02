@@ -1,8 +1,8 @@
 es:
   lib:
     school_cache_data_reader:
-      Economically disadvantaged: Low-income
-      Not economically disadvantaged: Not low-income
+      Economically disadvantaged: Economically disadvantaged
+      Not economically disadvantaged: Not economically disadvantaged
       English Language Arts: English
       Math: Math
       English: English

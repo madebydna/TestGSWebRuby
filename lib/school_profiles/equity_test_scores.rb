@@ -8,6 +8,8 @@ module SchoolProfiles
     LOW_INCOME_TOP = 'low_income'
     ETHNICITY_TOP = 'ethnicity'
 
+    #PUBLIC
+
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
     end
@@ -17,6 +19,8 @@ module SchoolProfiles
           LOW_INCOME_TOP => low_income_hash,
           ETHNICITY_TOP => ethnicity_hash
       })
+      # require 'pry'
+      # binding.pry
     end
 
     def low_income_test_scores_visible?
@@ -27,6 +31,8 @@ module SchoolProfiles
       ethnicity_hash.present?
     end
 
+
+    #PRIVATE - not sure how to test if private
     # Methods shared by low income and ethnicity
 
     def test_scores_formatted(breakdown_arr)
@@ -39,14 +45,13 @@ module SchoolProfiles
       output_hash = {}
       # for each test data_type_id
       @school_cache_data_reader.test_scores.values.each { |test_hash|
-        #for each breakdown low income - eco and not eco
         breakdowns = test_hash.select{ |breakdown| inclusion_hash.keys.include? breakdown }
         breakdowns.each { | breakdown_name, breakdown_hash|
           level_code = breakdown_hash.seek('grades', 'All', 'level_code')
           level_code.first[1].each {|subject, year_hash|
             year = latest_year_in_test(year_hash).to_s
-            subject_str = I18n.t(subject, scope: 'lib.school_cache_data_reader', default: subject)
-            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.school_cache_data_reader', default: breakdown_name)
+            subject_str = I18n.t(subject, scope: 'lib.equity_test_scores', default: subject)
+            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.equity_test_scores', default: breakdown_name)
             output_hash[subject_str] ||= []
             output_hash[subject_str] << year_hash[year].merge({'breakdown'=>breakdown_name_str,
                                                                'display_percentages'=>display_percentages(breakdown_name),
