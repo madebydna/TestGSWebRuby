@@ -132,8 +132,14 @@ module SchoolProfiles
         hash = test_scores_formatted(ethnicity_breakdowns)
         sorted = ethnicity_sort_subjects(hash).to_h
         ethnicity_sort_breakdowns(sorted)
+        sorted = ethnicity_filter_all_with_no_other_breakdowns(sorted)
         sorted
       )
+    end
+
+    # find any subject where there is only one and kill it
+    def ethnicity_filter_all_with_no_other_breakdowns(hash)
+      hash.delete_if { |key, data| data.count == 1 }
     end
 
     def ethnicity_breakdowns
