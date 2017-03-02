@@ -27,6 +27,96 @@ module SchoolProfiles
       return enrollment_string.gsub(',','').to_i if enrollment_string
     end
 
+    def get_test_source_data
+      @_get_test_source_data ||= (TestScores.new(@school, school_cache_data_reader: @school_cache_data_reader).sources)
+    end
+
+    def characteristics_sources_ethnicity
+      data = @school_cache_data_reader.characteristics_data(*(characteristics.keys))
+      data.each_with_object({}) do |(label, bd_hashes), output|
+        bd_hashes.each do |bd_hash|
+          if bd_hash['breakdown'] == 'White' || bd_hash['breakdown'] == 'Hispanic' || bd_hash['breakdown'] == 'African American'
+            output[label] ||= {
+                year: bd_hash['year'],
+                source: I18n.db_t(bd_hash['source']),
+                label: data_label(label),
+                description: data_label_info_text(label)
+            }
+          end
+        end
+      end
+    end
+
+    def characteristics_sources_low_income
+      data = @school_cache_data_reader.characteristics_data(*(characteristics.keys))
+      data.each_with_object({}) do |(label, bd_hashes), output|
+        bd_hashes.each do |bd_hash|
+          if bd_hash['breakdown'] == 'Economically disadvantaged'
+            output[label] ||= {
+                year: bd_hash['year'],
+                source: I18n.db_t(bd_hash['source']),
+                label: data_label(label),
+                description: data_label_info_text(label)
+            }
+          end
+        end
+      end
+    end
+
+    def sources
+      content = ''
+      if (equity_test_scores.ethnicity_test_scores_visible? || equity_test_scores.low_income_test_scores_visible?)
+        content << get_test_source_data
+      else
+        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
+        content << '<div style="padding:0 40px 20px;">'
+      end
+      if characteristics_low_income_visible?
+        content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
+          string << sources_for_view(hash)
+        end
+      elsif characteristics_ethnicity_visible?
+        content << characteristics_sources_ethnicity.reduce('') do |string, (key, hash)|
+          string << sources_for_view(hash)
+        end
+      end
+      content
+    end
+
+    def sources_for_view(hash)
+      str = '<div style="margin-top:40px;">'
+      str << '<h4 style="font-family:RobotoSlab-Bold;">' + hash[:label] + '</h4>'
+      str << "<p>#{hash[:description]}</p>"
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + hash[:source] + ', ' + hash[:year].to_s + '</div>'
+      str << '</div>'
+      str
+    end
+
+    def data_label(key)
+      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.equity', default: key)
+    end
+
+    def data_label_info_text(key)
+      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.equity.data_point_info_texts')
+    end
+
+    def characteristics_ethnicity_visible?
+      visible = false
+      if characteristics.present?
+        characteristics.each do |data_type, data_hashes|
+          data_hashes.each do |data|
+            if data['breakdown'] == 'White' || data['breakdown'] == 'Hispanic' || data['breakdown'] == 'African American'
+              visible = true
+              break
+            end
+          end
+        end
+      end
+      visible
+    end
+
     def characteristics
       @school_cache_data_reader.characteristics.slice(
         '4-year high school graduation rate',

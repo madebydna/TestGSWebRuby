@@ -6,6 +6,7 @@ import SubSectionToggle from './sub_section_toggle';
 export default class EquitySection extends React.Component {
 
   static propTypes = {
+    sources: React.PropTypes.string,
     equity_config: React.PropTypes.shape({
       section_info: React.PropTypes.object,
       section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -91,7 +92,13 @@ export default class EquitySection extends React.Component {
                          google_tracking={section_info.title}
                          onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
-      <div className="source-link">Source: <a href={section_info.sourceHref} target="_blank">see notes</a></div>
+      <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
+      <a data-remodal-target="modal_info_box"
+         data-content-type="info_box"
+         data-content-html={this.props.sources}
+         href="javascript:void(0)">
+        <span class="source-link">See notes</span>
+      </a>
     </div>
   }
 

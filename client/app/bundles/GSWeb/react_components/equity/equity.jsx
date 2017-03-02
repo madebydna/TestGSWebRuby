@@ -11,7 +11,8 @@ export default class Equity extends React.Component {
     test_scores: React.PropTypes.object,
     enrollment: React.PropTypes.number,
     characteristics: React.PropTypes.object,
-    rating_low_income: React.PropTypes.number
+    rating_low_income: React.PropTypes.number,
+    sources: React.PropTypes.string
   };
 
   constructor(props) {
@@ -321,7 +322,7 @@ export default class Equity extends React.Component {
       equitySections.push(<EquitySection
           key={i}
           equity_config={ equityConfig[i]}
-
+          sources={this.props.sources}
       />)
     }
     return (
