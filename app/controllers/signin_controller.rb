@@ -107,7 +107,7 @@ class SigninController < ApplicationController
   end
 
   def post_registration_confirmation
-    redirect_url = params[:redirect]
+    redirect_url = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : user_profile_or_home
 
     if logged_in?
       executed_deferred_action

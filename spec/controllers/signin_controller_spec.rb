@@ -24,19 +24,17 @@ describe SigninController do
   end
 
   describe '#post_registration_confirmation' do
-    before do
-      allow(controller).to receive(:redirect_to) { }
-      allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
-    end
     context 'when logged in' do
       before do
+        allow(controller).to receive(:redirect_to) { }
+        allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
         allow(controller).to receive(:logged_in?) { true }
       end
       context 'and redirect_url exists in params' do
         before do
           controller.params[:redirect] = 'localhost:3000'
         end
-        it 'should execute defered action' do
+        it 'should execute deferred action' do
           expect(controller).to receive(:executed_deferred_action)
           controller.post_registration_confirmation
         end
@@ -46,8 +44,37 @@ describe SigninController do
         before do
           controller.params[:redirect] = nil
         end
-        it 'should execute defered action' do
+        it 'should execute deferred action' do
           expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+    end
+    context 'redirecting' do
+      context 'with a valid redirect url' do
+        let (:valid_url) { 'http://www.greatschools.org/account/?flash=success' }
+        before do
+          allow(controller).to receive(:logged_in?) { true }
+          controller.params[:redirect] = valid_url
+          allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+        end
+        it 'should redirect to specified url' do
+          expect(controller).to receive(:executed_deferred_action)
+          expect(controller).to receive(:redirect_to).with(valid_url)
+          controller.post_registration_confirmation
+        end
+      end
+
+      context 'with an invalid redirect url' do
+        let (:invalid_url) { 'http://www.greatschools.org.malicious.cn/account/?flash=success' }
+        before do
+          allow(controller).to receive(:logged_in?) { true }
+          controller.params[:redirect] = invalid_url
+          allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+        end
+        it 'should redirect to specified url' do
+          expect(controller).to receive(:executed_deferred_action)
+          expect(controller).to receive(:redirect_to).with('localhost:3000')
           controller.post_registration_confirmation
         end
       end
