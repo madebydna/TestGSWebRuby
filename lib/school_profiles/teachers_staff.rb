@@ -132,7 +132,7 @@ module SchoolProfiles
       str = '<div style="margin-top:40px;">'
       str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + I18n.db_t(hash['source_name']) + ', ' + hash['source_year'].to_s + '</div>'
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source')+ ': </span>' + I18n.db_t(hash['source_name']) + ', ' + hash['source_year'].to_s + '</div>'
       str << '</div>'
       str
     end
