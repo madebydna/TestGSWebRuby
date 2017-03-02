@@ -92,7 +92,6 @@ export default class EquitySection extends React.Component {
                          google_tracking={section_info.title}
                          onTabClick={this.handleTabClick.bind(this)}/>
       <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
-      <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
       <a data-remodal-target="modal_info_box"
          data-content-type="info_box"
          data-content-html={this.props.sources}
