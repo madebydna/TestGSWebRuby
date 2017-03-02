@@ -190,9 +190,11 @@ module SchoolProfiles
       content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
       content << '<div style="padding:0 40px 20px;">'
       content << '<div style="margin-top:40px;">'
-      content << '<h4 style="font-family:RobotoSlab-Bold;">GreatSchools Rating</h4>'
-      content << '<div>The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.</div>'
-      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: GreatSchools, </span>' + rating_year + '</div>'
+      if rating_year.present?
+        content << '<h4 style="font-family:RobotoSlab-Bold;">GreatSchools Rating</h4>'
+        content << '<div>The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.</div>'
+        content << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: GreatSchools, </span>' + rating_year + '</div>'
+      end
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)
       end

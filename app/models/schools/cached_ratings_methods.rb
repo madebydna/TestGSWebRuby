@@ -72,7 +72,7 @@ module CachedRatingsMethods
         return ratings_year_obj['year'].to_i
       end
     end
-    NO_RATING_TEXT
+    nil
   end
 
   def displayed_ratings
