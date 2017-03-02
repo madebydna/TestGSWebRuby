@@ -24,6 +24,14 @@ class WidgetController < ApplicationController
     params_width
     params_height
     search_by_type
+    set_meta_tags(
+      title: 'GreatSchools School Finder Widget | GreatSchools',
+      canonical: widget_url
+    )
+    data_layer_gon_hash.merge!({
+      'page_name'   => 'GS:WidgetForm',
+      'template'    => 'widget_form'
+    })
   end
 
   def map_and_links
