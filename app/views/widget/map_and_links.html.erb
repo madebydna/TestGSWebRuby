@@ -2,13 +2,8 @@
 <div style="border:1px solid #FFCC66;">
   <%= render 'map' %>
   <div class="school-links-and-logo">
-    <%= link_to(home_url(s_cid: 'wsbay93'), target: '_blank', rel: 'nofollow') do %>
+    <%= link_to(home_url, target: '_blank', rel: 'nofollow') do %>
       <div class="logo">Powered by<%= image_tag('widget/logo.png') %></div>
     <% end %>
-    <div class="links">
-      <%= link_to("#{state_name.gs_capitalize_words} schools", state_url(state: state_name, s_cid: 'wsbay93'), target: '_blank', rel: 'nofollow') %>
-      <%= link_to("#{params['cityName']} schools", city_url(state: state_name, city: params['cityName'], s_cid: 'wsbay93'), target: '_blank', rel: 'nofollow') %>
-      <%= link_to("I want this widget for my site", widget_url(s_cid: 'wsbay93'), target: '_blank', rel: 'nofollow') %>
-    </div>
   </div>
 </div>
