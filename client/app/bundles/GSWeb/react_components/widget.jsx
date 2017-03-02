@@ -16,6 +16,11 @@ export default class Widget extends React.Component {
     let defaultIframeWidth = (window.innerWidth ? window.innerWidth - 20 : undefined) || 740;
     if(defaultIframeWidth > 1180) defaultIframeWidth = 1180;
 
+    let widgetHost = 'www.greatschools.org';
+    if(/greatschools\.org(:\d+)?$/.test(window.location.host)) {
+      widgetHost = window.location.host;
+    }
+
     this.state = {
       googleMapsInitialized: false,
       searchQuery: params.searchQuery || '',
@@ -29,7 +34,7 @@ export default class Widget extends React.Component {
       width: params.width || defaultIframeWidth,
       height: params.height || 368,
       zoom: 13,
-      baseUrl: "http://www.greatschools.org/widget/map"
+      baseUrl: "http://" + widgetHost + "/widget/map"
     };
   }
 
@@ -101,7 +106,14 @@ export default class Widget extends React.Component {
   }
 
   iFrameCode() {
-    return '<iframe className="greatschools" src="' + this.widgetUrl() + '" width="' + this.state.width + '" height="' + this.state.height + '" marginHeight="0" marginWidth="0" frameBorder="0" scrolling="no"></iframe>';
+    let code = '<iframe className="greatschools" src="' + this.widgetUrl() + '" width="' + this.state.width + '" height="' + this.state.height + '" marginHeight="0" marginWidth="0" frameBorder="0" scrolling="no"></iframe>';
+    code = code + '<script type="text/javascript">';
+    code = code + 'var _gsreq = new XMLHttpRequest();'
+    code = code + 'var _gsid = new Date().getTime();';
+    code = code + '_gsreq.open("GET", "http://www.google-analytics.com/collect?v=1&tid=UA-54676320-1&cid="+_gsid+"&t=event&ec=widget&ea=loaded&el="+window.location.hostname+"&cs=widget&cm=web&cn=widget&cm1=1");';
+    code = code + '_gsreq.send();'
+    code = code + '</script>';
+    return code;
   }
 
   render() {
@@ -148,7 +160,7 @@ export default class Widget extends React.Component {
               </div>
             </div>
             <div>
-              <p>We'll send a code snippet to your email</p>
+              <p>Please enter your email address</p>
               <div>
                 <label>Email</label>
                 <ValidatingInput type="email" name="email"
@@ -158,7 +170,6 @@ export default class Widget extends React.Component {
                   onInvalid={() => this.setState({emailValid: false})}
                   onValid={() => this.setState({emailValid: true})}
                 />
-                { this.state.email && this.state.emailValid === false && <span>Please enter a valid email address</span> }
               </div>
             </div>
             <div>
