@@ -513,9 +513,14 @@ describe SigninController do
         expect(subject).to redirect_to my_account_url
       end
 
-      it 'should redirect to url existing on verification link' do
-        valid_params.merge!(redirect: 'google.com')
-        expect(subject).to redirect_to 'google.com'
+      it 'should redirect to url existing on verification link if valid' do
+        valid_params.merge!(redirect: 'http://www.greatschools.org')
+        expect(subject).to redirect_to 'http://www.greatschools.org'
+      end
+
+      it 'should redirect to account page if redirect specified in link is invalid' do
+        valid_params.merge!(redirect: 'http://www.greatschools.org.google.com')
+        expect(subject).to redirect_to my_account_url
       end
 
       it 'should save the user' do
@@ -571,9 +576,14 @@ describe SigninController do
           expect(subject).to redirect_to my_account_url
         end
 
-        it 'should redirect to url existing on verification link' do
-          valid_params.merge!(redirect: 'google.com')
-          expect(subject).to redirect_to 'google.com'
+        it 'should redirect to url existing on verification link if valid' do
+          valid_params.merge!(redirect: 'https://www.greatschools.org/')
+          expect(subject).to redirect_to 'https://www.greatschools.org/'
+        end
+
+        it 'should redirect to account page if url existing on verification link is invalid' do
+          valid_params.merge!(redirect: 'https://www.greatschools.org.google.com')
+          expect(subject).to redirect_to my_account_url
         end
       end
     end

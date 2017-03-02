@@ -156,7 +156,8 @@ class SigninController < ApplicationController
     token = params[:id]
     token = CGI.unescape(token) if token
     time = params[:date]
-    success_redirect = params[:redirect] || my_account_url
+
+    success_redirect = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : my_account_url
     error_message = I18n.t('controllers.signin.verify_email.error')
 
     user_authenticator_and_verifier = UserAuthenticatorAndVerifier.new(token, time)
