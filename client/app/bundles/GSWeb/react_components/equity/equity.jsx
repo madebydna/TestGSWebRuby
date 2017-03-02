@@ -149,12 +149,12 @@ export default class Equity extends React.Component {
   narrationContent(data){
     let len = data.length;
     for(var i=0; i < len; i++){
-      if(data[i].breakdown == 'Economically disadvantaged'){
+      if(data[i].breakdown == 'Low-income'){
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }
     for(var i=0; i < len; i++){
-      if(data[i].breakdown == 'Not economically disadvantaged'){
+      if(data[i].breakdown == 'Not low-income'){
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }
