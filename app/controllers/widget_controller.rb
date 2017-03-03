@@ -15,15 +15,6 @@ class WidgetController < ApplicationController
 
   # this is the form for getting the widget
   def show
-
-  end
-
-  # this is the widget iframe component
-  def map
-    params_hash
-    params_width
-    params_height
-    search_by_type
     set_meta_tags(
       title: 'GreatSchools School Finder Widget | GreatSchools',
       canonical: widget_url
@@ -32,6 +23,14 @@ class WidgetController < ApplicationController
       'page_name'   => 'GS:WidgetForm',
       'template'    => 'widget_form'
     })
+  end
+
+  # this is the widget iframe component
+  def map
+    params_hash
+    params_width
+    params_height
+    search_by_type
   end
 
   def map_and_links
