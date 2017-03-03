@@ -21,6 +21,18 @@ module SchoolProfiles
       })
     end
 
+    def scores_format_numbers(value)
+      if value.instance_of? Fixnum
+        value
+      elsif value.instance_of? Float
+        value.round
+      elsif value.instance_of? String
+        value.scan(/\d+/) if value.present?
+      else
+        value
+      end
+    end
+
     def low_income_test_scores_visible?
       low_income_hash.present?
     end
@@ -54,7 +66,9 @@ module SchoolProfiles
             output_hash[subject_str] << year_hash[year].merge({'breakdown'=>breakdown_name_str,
                                                                'display_percentages'=>display_percentages(breakdown_name),
                                                                'year'=>year,
-                                                               'percentage'=> percentage_str(inclusion_hash[breakdown_name])})
+                                                               'percentage'=> percentage_str(inclusion_hash[breakdown_name]),
+                                                               'score'=> scores_format_numbers(year_hash[year]['score']),
+                                                               'state_average'=> scores_format_numbers(year_hash[year]['state_average'])})
           } if level_code
         }
       }
@@ -90,9 +104,14 @@ module SchoolProfiles
 
     def low_income_sort_subjects(hash)
       hash.sort do | a, b |
-        # sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] }
-        # sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] }
-        b[1].inject(0){|a,e| a + e['number_students_tested'] } <=> a[1].inject(0){|a,e| a + e['number_students_tested'] }
+        sum1 = 0
+        sum2 = 0
+        if b.present? && b[1].present? && a.present? && a[1].present?
+          sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
+          sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
+        end
+
+        sum1 <=> sum2
       end
     end
 

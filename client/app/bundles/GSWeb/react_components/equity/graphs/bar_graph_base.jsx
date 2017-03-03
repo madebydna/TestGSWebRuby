@@ -61,18 +61,30 @@ export default class BarGraphBase extends React.Component {
   renderStudentPercentage(test_data){
     if(test_data['display_percentages']){
       if(test_data['percentage'] == '200'){
-        return <span className="subject-subtext"><br />({test_data['number_students_tested']} students)</span>
+        if(test_data['number_students_tested'] > 0) {
+          return <span className="subject-subtext"><br />({test_data['number_students_tested']} students)</span>
+        }
       }
-      return <span className="subject-subtext"><br />({test_data['percentage']}% of students)</span>
+      else {
+        if (test_data['percentage'] > 0) {
+          return <span className="subject-subtext"><br />({test_data['percentage']}% of students)</span>
+        }
+      }
     }
+  }
+
+  renderStateAverage(state_average) {
+      if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
+        return (<div className="state-average">
+          State avg: {state_average}%
+        </div>)
+      }
   }
 
   renderBarGraph(test_data){
     if(test_data !== undefined) {
-
       let style_score_width = {width: test_data['score']+"%", backgroundColor: this.mapColor(test_data['score'])}
       let style_grey_width = {width: 100-test_data['score']+"%" }
-
       return (
         <div className="rating-container__score-item equity_test_scores">
           <div className="rating-score-item">
@@ -97,9 +109,7 @@ export default class BarGraphBase extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="state-average">
-                  State avg: {test_data['state_average']}%
-                </div>
+                {this.renderStateAverage(test_data['state_average'])}
               </div>
             </div>
 

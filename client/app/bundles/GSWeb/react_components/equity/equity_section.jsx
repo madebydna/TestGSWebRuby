@@ -96,7 +96,7 @@ export default class EquitySection extends React.Component {
          data-content-type="info_box"
          data-content-html={this.props.sources}
          href="javascript:void(0)">
-        <span class="source-link">See notes</span>
+        <span className="source-link">See notes</span>
       </a>
     </div>
   }
