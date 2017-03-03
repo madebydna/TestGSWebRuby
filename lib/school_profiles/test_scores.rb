@@ -58,13 +58,13 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
       content << '<div style="padding:0 40px 20px;">'
       content << '<div style="margin-top:40px;">'
-      content << '<h4 style="font-family:RobotoSlab-Bold;">GreatSchools Rating</h4>'
-      content << '<div>The GreatSchools Rating is a simple tool that helps you compare schools based on test scores and other available data, including student academic growth and college readiness. GreatSchools is always working to improve the rating and add more information when state education agencies make school quality data publicly available.</div>'
-      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: GreatSchools, </span>' + rating_year + ' | '
-      content << 'See more: <a href="/gk/ratings"; target="_blank">More about GreatSchools ratings</a>'
+      content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.GreatSchools Rating') + '</h4>'
+      content << '<div>' + data_label('.Rating text') + '</div>'
+      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': GreatSchools, </span>' + rating_year + ' | '
+      content << data_label('.See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('.More') + '</a>'
       content << '</div>'
       content << '</div>'
       data = subject_scores.each_with_object({}) do |rsi, output|
@@ -97,7 +97,7 @@ module SchoolProfiles
       str << "<div style='margin-bottom:10px; font-weight:bold;'>#{array.last[:subject].join(', ')}</div>"
       str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
       str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + source + ', ' + year.to_s + '</div>'
-      str << '</div>'
+      # str << '</div>'
       str
     end
 

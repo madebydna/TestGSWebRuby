@@ -68,7 +68,7 @@ module SchoolProfiles
       if (equity_test_scores.ethnicity_test_scores_visible? || equity_test_scores.low_income_test_scores_visible?)
         content << get_test_source_data
       else
-        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
+        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
         content << '<div style="padding:0 40px 20px;">'
       end
       if characteristics_low_income_visible?
@@ -85,9 +85,9 @@ module SchoolProfiles
 
     def sources_for_view(hash)
       str = '<div style="margin-top:40px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">' + hash[:label] + '</h4>'
-      str << "<p>#{hash[:description]}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + hash[:source] + ', ' + hash[:year].to_s + '</div>'
+      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash[:label]) + '</h4>'
+      str << "<p>#{data_label(hash[:description])}</p>"
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': </span>' + I18n.db_t(hash[:source]) + ', ' + hash[:year].to_s + '</div>'
       str << '</div>'
       str
     end

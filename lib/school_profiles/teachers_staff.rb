@@ -120,7 +120,7 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
       content << '<div style="padding:0 40px 20px;">'
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)

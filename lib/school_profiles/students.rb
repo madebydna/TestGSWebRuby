@@ -29,18 +29,25 @@ module SchoolProfiles
     end
 
     def sources_for_view
-      str = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>'
+      str = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
       str << '<div style="padding:40px 0 40px 20px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">Ethnicity</h4>'
-      str << "<div style='padding-bottom:40px;'><span>Source: #{ethnicity_data_source['ethnicity'][:source]}, "
-      str << "#{ethnicity_data_source['ethnicity'][:year]}</span></div>"
-      str << '<h4 style="font-family:RobotoSlab-Bold;">Gender</h4>'
-      str << "<div style='padding-bottom:40px;'><span>Source: #{gender_data_source['gender'][:source]}, "
-      str << "#{gender_data_source['gender'][:year]}</span></div>"
-      str << '<h4 style="font-family:RobotoSlab-Bold;">Subgroups</h4>'
-      str << "<div><span>Source: #{subgroups_data_source['subgroups'][:source]}, "
-      str << "#{subgroups_data_source['subgroups'][:year]}</span></div>"
+      if ethnicity_data_source.present?
+        str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.ethnicity') + '</h4>'
+        str << "<div style='padding-bottom:40px;'><span>" + data_label('.source') + ": #{I18n.db_t(ethnicity_data_source['ethnicity'][:source])}, "
+        str << "#{ethnicity_data_source['ethnicity'][:year]}</span></div>"
+      end
+      if gender_data_source.present?
+        str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.gender') + '</h4>'
+        str << "<div style='padding-bottom:40px;'><span>" + data_label('.source') + ": #{I18n.db_t(gender_data_source['gender'][:source])}, "
+        str << "#{gender_data_source['gender'][:year]}</span></div>"
+      end
+      if subgroups_data_source.present?
+        str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.subgroups') + '</h4>'
+        str << '<div><span>' + data_label('.source') + ": #{I18n.db_t(subgroups_data_source['subgroups'][:source])}, "
+        str << "#{subgroups_data_source['subgroups'][:year]}</span></div>"
+      end
       str << '</div>'
+      str
     end
 
     def gender_data
@@ -71,6 +78,11 @@ module SchoolProfiles
           }
         end
       end
+    end
+
+    def data_label(key)
+      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.students', default: key)
     end
 
     def visible?
