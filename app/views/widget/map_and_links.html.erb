@@ -1,0 +1,9 @@
+<% state_name = States.state_name(params['state']) %>
+<div style="border:1px solid #FFCC66;">
+  <%= render 'map' %>
+  <div class="school-links-and-logo">
+    <%= link_to(home_url, target: '_blank', rel: 'nofollow') do %>
+      <div class="logo">Powered by<%= image_tag('widget/logo.png') %></div>
+    <% end %>
+  </div>
+</div>

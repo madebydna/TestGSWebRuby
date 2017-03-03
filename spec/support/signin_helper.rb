@@ -15,4 +15,16 @@ module SigninHelper
       click_button('loginbutton')
     end
   end
+
+  def random_email
+    "ssprouse+rspec_#{Time.now.strftime('%s')}@greatschools.org"
+  end
+
+  def register_in_modal
+    within('.modal') do
+      fill_in('email', with: random_email)
+      find('#terms_terms').click
+      click_button('Sign up')
+    end
+  end
 end

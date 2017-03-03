@@ -57,6 +57,54 @@ module SchoolProfiles
       scores.sort_by { |k| k.number_students_tested || 0 }.reverse if scores.present?
     end
 
+    def sources
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
+      content << '<div style="padding:0 40px 20px;">'
+      content << '<div style="margin-top:40px;">'
+      content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.GreatSchools Rating') + '</h4>'
+      content << '<div>' + data_label('.Rating text') + '</div>'
+      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': GreatSchools, </span>' + rating_year + ' | '
+      content << data_label('.See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('.More') + '</a>'
+      content << '</div>'
+      content << '</div>'
+      data = subject_scores.each_with_object({}) do |rsi, output|
+        output[rsi.test_label] = {
+            test_label: rsi.test_label,
+            subject: sources_with_subject[rsi.test_label], # subject is an array based on test_label
+            test_description: rsi.description,
+            source: rsi.source,
+            year: rsi.year
+        }
+      end
+      content << data.reduce('') do |string, array|
+        string << sources_for_view(array)
+      end
+      content
+    end
+
+    def sources_with_subject
+      subject_scores.each_with_object({}) do |rsi, output|
+        output[rsi.test_label] ||= []
+        output[rsi.test_label] << rsi.label
+      end
+    end
+
+    def sources_for_view(array)
+      year = array.last[:year]
+      source = array.last[:source]
+      str = '<div style="margin-top:40px;">'
+      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(array.last[:test_label]) + '</h4>'
+      str << "<div style='margin-bottom:10px; font-weight:bold;'>#{array.last[:subject].join(', ')}</div>"
+      str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + source + ', ' + year.to_s + '</div>'
+      # str << '</div>'
+      str
+    end
+
+    def rating_year
+      @school_cache_data_reader.gs_rating_year.to_s
+    end
+
     def visible?
       subject_scores.present?
     end

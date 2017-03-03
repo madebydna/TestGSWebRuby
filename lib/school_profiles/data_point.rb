@@ -2,7 +2,7 @@ module SchoolProfiles
   class DataPoint
     module Formatters
       def self.round(value)
-        value.round
+        value.is_a?(Float) ? value.round : value
       end
 
       def self.percent(value)
@@ -44,6 +44,10 @@ module SchoolProfiles
 
     def ==(other)
       value == other
+    end
+
+    def float_value
+      value.to_s.scan(/[0-9.]+/).first.to_i
     end
 
     def format

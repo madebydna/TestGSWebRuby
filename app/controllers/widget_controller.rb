@@ -6,7 +6,7 @@ class WidgetController < ApplicationController
 
   layout :determine_layout
   protect_from_forgery with: :null_session
-  after_action :allow_iframe, only: [:map, :gs_map]
+  after_action :allow_iframe, only: [:map, :gs_map, :map_and_links]
 
   MAX_RESULTS_FOR_MAP = 100
   DEFAULT_RADIUS = 5
@@ -24,6 +24,22 @@ class WidgetController < ApplicationController
     params_width
     params_height
     search_by_type
+    set_meta_tags(
+      title: 'GreatSchools School Finder Widget | GreatSchools',
+      canonical: widget_url
+    )
+    data_layer_gon_hash.merge!({
+      'page_name'   => 'GS:WidgetForm',
+      'template'    => 'widget_form'
+    })
+  end
+
+  def map_and_links
+    params_hash
+    params_width
+    params_height
+    search_by_type
+    render 'map_and_links'
   end
 
   # this is the widget iframe component - that will contain all the content
@@ -209,7 +225,7 @@ class WidgetController < ApplicationController
 
   def determine_layout
     application_layout = ['show']
-    widget_map_layout = ['map']
+    widget_map_layout = ['map','map_and_links']
 
     if application_layout.include?(action_name)
       'application'
@@ -262,11 +278,11 @@ class WidgetController < ApplicationController
   end
 
   def params_width
-    @params_width = @params_hash['width'] || 300
+    @params_width = (@params_hash['width'] || 300).to_i
   end
 
   def params_height
-    @params_height = @params_hash['height'] || 340
+    @params_height = (@params_hash['height'] || 340).to_i
   end
 
   def params_hash

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import testScoresHelpers from '../../util/test_scores_helpers';
 import EquityBarGraph from './graphs/equity_bar_graph';
+import BarGraphBase from './graphs/bar_graph_base';
 import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
 import InfoCircle from '../info_circle';
@@ -10,7 +11,8 @@ export default class Equity extends React.Component {
     test_scores: React.PropTypes.object,
     enrollment: React.PropTypes.number,
     characteristics: React.PropTypes.object,
-    rating_low_income: React.PropTypes.number
+    rating_low_income: React.PropTypes.number,
+    sources: React.PropTypes.string
   };
 
   constructor(props) {
@@ -29,52 +31,48 @@ export default class Equity extends React.Component {
     return data.filter(obj => (obj.school_value !== 0 && obj.school_value)).length == 0;
   }
 
+  wordStartsWithAVowel(word){
+    let vowels = ["a","e","i","o","u"]
+    if(vowels.indexOf(word.toLowerCase().charAt(0)) === -1) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  useAorAn(word){
+    if(this.wordStartsWithAVowel(word)) {
+      return 'an';
+    }
+    else{
+      return 'a'
+    }
+  }
+
   section1Tabs() {
     let tabs = [[],[]];
 
-    let data = this.ethnicityTestScoreData('Math');
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[0].push(
-          {
-            subject: 'Math',
-            component: <BarGraphWithEnrollmentInLabel
-                test_scores={data}
-                graphId="test-scores-math-bar-graph" />,
-            explanation: <div>This shows results across different races/ethnicities on a math test given to juniors once a year. Big
-              differences may suggest that some student groups are not getting the support they need to succeed.</div>
-          }
-      );
-    }
-
-    data = this.ethnicityTestScoreData('English Language Arts');
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[0].push(
-        {
-          subject: 'English',
-          component: <BarGraphWithEnrollmentInLabel
-              test_scores={data}
-              graphId="test-scores-ela-bar-graph" />,
-          explanation: <div>This shows results across different races/ethnicities on an English test given to
-            juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.</div>
+    let et = this.props.test_scores['ethnicity'];
+    for (var subject in et) {
+      if (et.hasOwnProperty(subject)) {
+        let subject_data = et[subject];
+        if(subject_data && subject_data.length > 0) {
+          tabs[0].push(
+              {
+                subject: subject,
+                component: <BarGraphBase
+                    test_scores={subject_data} />,
+                explanation: <div>This shows results across different races/ethnicities on {this.useAorAn(subject)} {subject} test given to
+                  students once a year. Big differences can reflect high numbers of students still learning {subject}.
+                  They also may suggest that some students are not getting the support they need to succeed.</div>
+              }
+          );
         }
-      );
+      }
     }
 
-    data = this.ethnicityTestScoreData('Science');
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[0].push(
-          {
-            subject: 'Science',
-            component: <BarGraphWithEnrollmentInLabel
-                test_scores={data}
-                graphId="test-scores-science-bar-graph" />,
-            explanation: <div>This shows results across different races/ethnicities on a Science test given to
-              juniors once a year. Big differences can reflect high numbers of students still learning English. They also may suggest that some students are not getting the support they need to succeed.</div>
-          }
-      );
-    }
-
-    data = this.graduationRateDataByEthnicity();
+    let data = this.graduationRateDataByEthnicity();
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
@@ -120,49 +118,24 @@ export default class Equity extends React.Component {
   section2Tabs() {
     let tabs = [[],[]];
 
-    let data = this.incomeLevelTestScoreData('Math');
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[0].push(
-          {
-            subject: 'Math',
-            component: <EquityBarGraph
-                test_scores={data}
-                type="column"
-                graphId="low-income-math-bar-graph" />,
-            explanation: this.narrrationContent(data)
-          }
-      );
-    }
-
-    data = this.incomeLevelTestScoreData('English Language Arts');
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[0].push(
-        {
-          subject: 'English',
-          component: <EquityBarGraph
-              test_scores={data}
-              type="column"
-              graphId="low-income-ela-bar-graph" />,
-          explanation: this.narrrationContent(data)
+    let li = this.props.test_scores['low_income'];
+    for (var subject in li) {
+      if (li.hasOwnProperty(subject)) {
+        let data = li[subject];
+        if(data && data.length > 0) {
+          tabs[0].push(
+              {
+                subject: subject,
+                component: <BarGraphBase
+                    test_scores={data} />,
+                explanation: this.narrationContent(data)
+              }
+          );
         }
-      )
+      }
     }
 
-    data = this.incomeLevelTestScoreData('Science');
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[0].push(
-          {
-            subject: 'Science',
-            component: <EquityBarGraph
-                test_scores={data}
-                type="column"
-                graphId="low-income-science-bar-graph" />,
-            explanation: this.narrrationContent(data)
-          }
-      )
-    }
-
-    data = this.graduationRateDataByIncomeLevel();
+    let data = this.graduationRateDataByIncomeLevel();
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)){
       tabs[1].push(
         {
@@ -171,7 +144,7 @@ export default class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-by-income-level-graph" />,
-          explanation: this.narrrationContent(data)
+          explanation: this.narrationContent(data)
         }
       )
     }
@@ -185,7 +158,7 @@ export default class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-by-income-level-graph" />,
-          explanation: this.narrrationContent(data)
+          explanation: this.narrationContent(data)
         }
       )
     }
@@ -193,18 +166,14 @@ export default class Equity extends React.Component {
     return tabs;
   }
 
-  narrrationContent(data){
+  narrationContent(data){
     let len = data.length;
     for(var i=0; i < len; i++){
-      if(data[i].breakdown == 'Economically disadvantaged'){
+      if("narrative" in data[i] && data[i] != ''){
         return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
       }
     }
-    for(var i=0; i < len; i++){
-      if(data[i].breakdown == 'Not economically disadvantaged'){
-        return <div dangerouslySetInnerHTML={{__html: data[i]['narrative']}} />;
-      }
-    }
+    return <div dangerouslySetInnerHTML={{__html: 'Need default translatable "narration text" from server'}} />;
   }
 
   equityConfiguration(){
@@ -372,7 +341,7 @@ export default class Equity extends React.Component {
       equitySections.push(<EquitySection
           key={i}
           equity_config={ equityConfig[i]}
-
+          sources={this.props.sources}
       />)
     }
     return (

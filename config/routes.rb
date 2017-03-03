@@ -111,9 +111,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
-  get '/widget/', :to => 'widget#show'
+  get '/widget/', :to => 'widget#show', as: :widget
   post '/widget/', :to => 'widget#create'
-  match '/widget/map' => 'widget#map', via: [:get, :post]
+  match '/widget/map' => 'widget#map_and_links', via: [:get, :post]
   match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
 
   get "/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
@@ -241,6 +241,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resource :top_performing_nearby_schools
+    resource :widget_logs, only: [:create]
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
