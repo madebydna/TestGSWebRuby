@@ -188,7 +188,7 @@ export default class Widget extends React.Component {
             </div>
           </form>
         </div>
-        <br/><button onClick={this.getCode} disabled={!this.getCodeButtonEnabled()}>Get Wiget Code</button>
+        <br/><button onClick={this.getCode} disabled={!this.getCodeButtonEnabled()}>Get Widget Code</button>
 
         { this.state.showIFrameCode && 
           <div>
