@@ -7,6 +7,7 @@ module SchoolProfiles
     BREAKDOWN_ALL = 'All'
     LOW_INCOME_TOP = 'low_income'
     ETHNICITY_TOP = 'ethnicity'
+    SUBJECTS_TO_RETURN = 3
 
     #PUBLIC
 
@@ -110,13 +111,12 @@ module SchoolProfiles
           sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
           sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
         end
-
         sum1 <=> sum2
       end
     end
 
     def low_income_sort_breakdowns(hash)
-      hash.values.each{|data| data.sort!{|a,b| a['breakdown'] <=> b['breakdown']; } }
+      hash.values.each{|data| data.sort!{|a,b| a['breakdown'] <=> b['breakdown']; }[0..2] }
     end
 
     def low_income_hash
@@ -124,7 +124,7 @@ module SchoolProfiles
         hash = test_scores_formatted(low_income_breakdowns)
         sorted = low_income_sort_subjects(hash).to_h
         low_income_sort_breakdowns(sorted)
-        sorted
+        sorted.first(SUBJECTS_TO_RETURN).to_h
       )
     end
 
@@ -152,7 +152,7 @@ module SchoolProfiles
         sorted = ethnicity_sort_subjects(hash).to_h
         ethnicity_sort_breakdowns(sorted)
         sorted = ethnicity_filter_all_with_no_other_breakdowns(sorted)
-        sorted
+        sorted.first(SUBJECTS_TO_RETURN).to_h
       )
     end
 
