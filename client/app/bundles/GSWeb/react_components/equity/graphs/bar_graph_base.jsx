@@ -11,28 +11,8 @@ export default class BarGraphBase extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.series = this.series.bind(this);
-    // this.seriesData = this.seriesData.bind(this);
-    // this.categories = this.categories.bind(this);
     this.mapColor = this.mapColor.bind(this);
   }
-
-  // testScores() {
-  //   return (
-  //       _.sortBy(
-  //           this.props.test_scores.filter(obj => obj.school_value !== undefined),
-  //           obj => {
-  //             if (obj.breakdown == 'All students') {
-  //               return -150;
-  //             } else if (obj.percentOfStudentBody) {
-  //               return -obj.percentOfStudentBody;
-  //             } else {
-  //               return 100; // default to bottom
-  //             }
-  //           }
-  //       )
-  //   );
-  // }
 
   // helper method to map a score to a color for bars
   mapColor(value) {

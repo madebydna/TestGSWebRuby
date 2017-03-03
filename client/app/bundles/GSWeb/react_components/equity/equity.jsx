@@ -31,6 +31,25 @@ export default class Equity extends React.Component {
     return data.filter(obj => (obj.school_value !== 0 && obj.school_value)).length == 0;
   }
 
+  wordStartsWithAVowel(word){
+    let vowels = ["a","e","i","o","u"]
+    if(vowels.indexOf(word.toLowerCase().charAt(0)) === -1) {
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
+  useAorAn(word){
+    if(this.wordStartsWithAVowel(word)) {
+      return 'an';
+    }
+    else{
+      return 'a'
+    }
+  }
+
   section1Tabs() {
     let tabs = [[],[]];
 
@@ -44,9 +63,9 @@ export default class Equity extends React.Component {
                 subject: subject,
                 component: <BarGraphBase
                     test_scores={subject_data} />,
-                explanation: <div>This shows results across different races/ethnicities on an {subject} test given to
-                           juniors once a year. Big differences can reflect high numbers of students still learning {subject}.
-                          They also may suggest that some students are not getting the support they need to succeed.</div>
+                explanation: <div>This shows results across different races/ethnicities on {this.useAorAn(subject)} {subject} test given to
+                  students once a year. Big differences can reflect high numbers of students still learning {subject}.
+                  They also may suggest that some students are not getting the support they need to succeed.</div>
               }
           );
         }
