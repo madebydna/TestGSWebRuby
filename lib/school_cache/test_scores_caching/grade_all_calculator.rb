@@ -53,14 +53,14 @@ class TestScoresCaching::GradeAllCalculator
   def weighted_school_value_float(test_data_sets)
     sum = sum_number_students_tested(test_data_sets)
     test_data_sets.sum do |tds|
-      tds['school_value_float'].to_f * tds['number_students_tested']
+      tds['school_value_float'].to_s.scan(/[0-9.]+/).first.to_f * tds['number_students_tested']
     end / sum unless sum.zero?
   end
 
   def weighted_state_value_float(test_data_sets)
     sum = sum_state_number_tested(test_data_sets)
     test_data_sets.sum do |tds|
-      tds['state_value_float'] * tds['state_number_tested']
+      tds['state_value_float'].to_s.scan(/[0-9.]+/).first.to_f * tds['state_number_tested']
     end / sum unless sum.zero?
   end
 
