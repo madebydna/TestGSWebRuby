@@ -24,7 +24,7 @@ describe 'User doesnt see NR rating for assigned school', type: :feature, remote
   its('assigned_schools.first') { is_expected.to_not have_gs_rating }
 end
 
-describe 'data consistency', type: :feature, remote: true do
+describe 'data consistency', type: :feature, remote: true, safe_for_prod: true do
   it 'lincoln high school has same # of reviews on search and new profile' do
     visit '/california/alameda/schools'
     page_object = SearchPage.new
