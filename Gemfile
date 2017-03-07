@@ -19,7 +19,9 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
 # RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
 # USED: in profile admin. See config in config/initializers/rails_admin.rb
-gem 'rails_admin'
+gem 'rails_admin', '0.6.4'
+
+gem 'kaminari', '0.16.1'
 
 # We added this to rails-admin, as a way to edit json inline
 gem 'codemirror-rails'

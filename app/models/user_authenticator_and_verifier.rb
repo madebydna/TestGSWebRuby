@@ -23,7 +23,7 @@ class UserAuthenticatorAndVerifier
   def token_valid?
     begin
       token = parse_email_verification_token
-      return !(token.expired? || token.user.nil?)
+      token.valid?
     rescue => e
       # GS.logger.error :misc, nil, {message: e}
       return false

@@ -6,30 +6,48 @@ module SchoolProfiles
     end
 
     def auto_narrative_calculate_and_add
-      subjects = ['English Language Arts', 'Math']
-      write_location = 'Economically disadvantaged'
-      return nil unless valid_school_cache_data_reader?
-      subjects.each do |subject|
-        hash = hash_for_calculation '236', subject
-        if hash['li'].present?
-          year_to_use = year_to_use_from_hash hash
-          if year_to_use.present?
-            yml_key = key_for_yml hash, year_to_use
-            if year_to_use.present?
-              write_to_test_score_hash '236', yml_key, subject, write_location, year_to_use
+      return unless valid_school_cache_data_reader?
+
+      @school_cache_data_reader.test_scores.each do |data_type_id, breakdown_hash|
+        staging_hash(breakdown_hash).each do |level_code, subject_hash|
+          subject_hash.each do |subject, hash|
+            write_location = nil
+            year_to_use = nil
+            yml_key = '0_0'
+            if hash['li'].present?
+              write_location = 'Economically disadvantaged'
+              year_to_use = hash['li'].keys.max
+              yml_key = key_for_yml hash, year_to_use
+            elsif hash['nli'].present?
+              write_location = 'Not economically disadvantaged'
+              year_to_use = hash['nli'].keys.max
             end
-          else
-            write_to_test_score_hash '236', '0_0', subject, write_location, hash['li'].keys.max
+            unless write_location.nil?
+              @school_cache_data_reader.test_scores[data_type_id][write_location]['grades']['All']['level_code'][level_code][subject][year_to_use]['narrative'] = low_income_text(yml_key, subject)
+            end
           end
-        elsif hash['nli'].present?
-          write_to_test_score_hash '236', '0_0', subject, 'Not economically disadvantaged', hash['nli'].keys.max
         end
       end
     end
 
+    def staging_hash(breakdown_hash)
+      staging_hash = {}
+      hash_breakdown = {'li' => 'Economically disadvantaged', 'nli' => 'Not economically disadvantaged', 'all' => 'All'}
+      hash_breakdown.each do |label, name|
+        (breakdown_hash.seek(name, 'grades', 'All', 'level_code') || {}).each do |level_code, level_hash|
+          staging_hash[level_code] ||= {}
+          level_hash.each do |subject, value_hash|
+            staging_hash[level_code][subject] ||= {}
+            staging_hash[level_code][subject][label] = value_hash
+          end
+        end
+      end
+      staging_hash
+    end
+
     def key_for_yml(hash, year_to_use)
       return_value = '0_0'
-      if hash_has_all_necessary_keys? hash, year_to_use
+      if year_to_use.present? && hash_has_all_necessary_keys?(hash, year_to_use)
         st_nli_avg = hash['nli'][year_to_use]['state_average']
         st_li_avg = hash['li'][year_to_use]['state_average']
         sch_nli_avg = hash['nli'][year_to_use]['score']
@@ -74,29 +92,11 @@ module SchoolProfiles
       end
     end
 
-    def hash_for_calculation(data_id, subject)
-      hash_breakdown = {'li' => 'Economically disadvantaged', 'nli' => 'Not economically disadvantaged', 'all'=>'All'}
-      hash_breakdown.each do |key, value|
-        hash_breakdown[key] = @school_cache_data_reader.test_scores.seek(data_id, value, 'grades', 'All', 'level_code', 'e,m,h', subject)
-      end
-    end
-
-    # may want to go back a year from max to see if we can find a consistent year to use
-    def year_to_use_from_hash(hash)
-      if hash['li'].present? && hash['nli'].present? && hash['all'].present? && hash['li'].keys.max == hash['nli'].keys.max && hash['li'].keys.max == hash['all'].keys.max
-        hash['li'].keys.max
-      end
-    end
-
-    def write_to_test_score_hash(data_id, yml_key, subject, write_location, year_to_use)
-
-      @school_cache_data_reader.test_scores[data_id][write_location]['grades']['All']['level_code']['e,m,h'][subject][year_to_use]['narrative'] = low_income_text(yml_key, subject)
-    end
-
     def low_income_text(key, subject)
       subject_key = 'lib.test_scores.narrative.subject.' << subject
       full_key = 'lib.test_scores.narrative.low_income.' << key << '_html'
-      subject_tran = I18n.t(subject_key)
+      # TODO: Consider db_t here?
+      subject_tran = I18n.t(subject_key, default: subject.downcase)
       I18n.t(full_key, subject: subject_tran)
     end
 

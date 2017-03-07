@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 def log_in_user(user)
   host = Capybara.app_host ? URI(Capybara.app_host).host : '127.0.0.1'
   auth_token = UserAuthenticationToken.new(user).generate

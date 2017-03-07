@@ -5,6 +5,8 @@
 <% info_text = test_scores.info_text  %>
 <% data_values = test_scores.subject_scores || [] %>
 <% initial_size = 3 %>
+<% content = test_scores.sources %>
+
 
 <div class="rating-container rs-test-scores">
   <a class="anchor-mobile-offset" name="Test_scores"></a>
@@ -22,10 +24,18 @@
 
   <% if data_values.size > initial_size %>
     <div class="rating-container__more-items">
-      <%= render layout:"drawer" do %>
+      <%= render layout:"drawer", locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
         <% render partial: "rating_score_item", collection: data_values[initial_size..-1], as: :score_data %>
       <% end %>
     </div>
   <% end %>
-  <div class="source-link"><%= t('.source') %>: <a href="/gk/ca-high-schools/#Test-scores" target="_blank"><%= t('.see notes') %></a></div>
+  <div>
+    <a data-remodal-target="modal_info_box"
+       data-content-type="info_box"
+       data-content-html="<%= content %>"
+
+       href="javascript:void(0)">
+      <span class="source-link"><%= t('.see notes') %></span>
+    </a>
+  </div>
 </div>

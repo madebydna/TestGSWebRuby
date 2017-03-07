@@ -7,6 +7,8 @@ describe UserAuthenticatorAndVerifier do
   let(:time) { token_and_time[1] }
   subject { UserAuthenticatorAndVerifier.new(token, time) }
 
+  after  { clean_dbs :gs_schooldb }
+
   context 'when given nils and blanks' do
     [
         [nil, nil],
@@ -39,9 +41,34 @@ describe UserAuthenticatorAndVerifier do
     it { is_expected.to be_token_valid }
   end
 
+  context 'when date is 50 days ago' do
+    let(:token_and_time) { EmailVerificationToken.token_and_date(user, 50.days.ago) }
+    it { is_expected.to_not be_token_valid }
+  end
+
   context 'when date is malformed' do
     let(:token_and_time) { EmailVerificationToken.token_and_date(user, 'fubar date') }
     it { is_expected.to_not be_token_valid }
   end
 
+  context 'Attempt to hack token by swapping user id for another user' do
+    let(:another_user) { FactoryGirl.create(:new_user) }
+    let(:invalid_token) { token.sub(/==\d+$/, "==#{another_user.id.to_s}") }
+    let(:hacked_subject) { UserAuthenticatorAndVerifier.new(invalid_token, time) }
+
+    it 'is not authenticated' do
+      expect(subject.authenticated?).to be_truthy
+      expect(hacked_subject.authenticated?).to be_falsey
+    end
+  end
+
+  context 'Attempt to hack token by swapping user id for a nonexisting user' do
+    let(:invalid_token) { token.sub(/==\d+$/, '==99999998') }
+    let(:hacked_subject) { UserAuthenticatorAndVerifier.new(invalid_token, time) }
+
+    it 'is not authenticated' do
+      expect(subject.authenticated?).to be_truthy
+      expect(hacked_subject.authenticated?).to be_falsey
+    end
+  end
 end

@@ -49,13 +49,17 @@ describe SchoolProfiles::CollegeReadiness do
                 {
                     'breakdown' => 'All students',
                     'school_value' => 20,
+                    'school_value_2016' => 20,
                     'state_average' => 19,
+                    'year' => 2016,
                     'subject' => 'Reading'
                 },
                 {
                     'breakdown' => 'All students',
                     'school_value' => 25,
+                    'school_value_2016' => 25,
                     'state_average' => 24,
+                    'year' => 2016,
                     'subject' => 'All subjects'
                 },
                 {
@@ -106,7 +110,6 @@ describe SchoolProfiles::CollegeReadiness do
 
       it 'should pull from the "All students" breakdown for characteristics' do
         data_points = subject.data_values.find {|item| item.label == '4-year high school graduation rate' }
-        puts data_points.score.inspect
         expect(data_points).to be_present
         expect(data_points.score).to eq(50)
         expect(data_points.state_average).to eq(51)
@@ -137,6 +140,48 @@ describe SchoolProfiles::CollegeReadiness do
       end
     end
 
+    describe 'With mismatching average SAT score / SAT percent participation' do
+      let (:sample_data) do
+        {
+          'Average SAT score' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1600,
+              'school_value_2015' => 1600,
+              'year' => 2015,
+              'state_average' => 1400
+            }
+          ],
+          'SAT percent participation' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1600,
+              'school_value_2016' => 1600,
+              'year' => 2016,
+              'state_average' => 1400
+            }
+          ]
+        }
+      end
+
+      before do
+        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+      end
+
+      it 'should set school SAT score to nil' do
+        data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
+        expect(data_points).to_not be_present
+      end
+
+      it 'should set school SAT percent participation to nil' do
+        data_points = subject.data_values.find {|item| item.label == 'SAT participation rate' }
+        expect(data_points).to_not be_present
+      end
+    end
+
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
       expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
@@ -151,6 +196,29 @@ describe SchoolProfiles::CollegeReadiness do
       ].shuffle
       stub_const('SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS', config)
       expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } )
+    end
+  end
+
+  describe '#with_school_values' do
+    let (:sample_data) do
+      [
+          {school_value: 15},
+          {state_value: 15},
+          {sChool_value: 15},
+          {school_value: nil},
+          {school_value: 0}
+      ].map(&:stringify_keys)
+    end
+
+    let (:expected_outcome) do
+      [
+          {school_value: 15},
+          {school_value: 0}
+      ].map(&:stringify_keys)
+    end
+
+    it 'includes only hashes with the key school_value set to a non-nil value' do
+      expect(sample_data.select(&subject.send(:with_school_values))).to contain_exactly(*expected_outcome)
     end
   end
 end

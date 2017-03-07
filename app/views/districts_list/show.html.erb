@@ -2,58 +2,52 @@
 <% state_names = @dcl.state_names %>
 <% dropdown_info = @dcl.dropdown_info %>
 
-<div class="districts-cities-list clearfix">
-  <div class="top-bottom">
-    <div class="top">
-      <div class="navlinks">
-        <a class="top-link" href="/schools/<%= state_names[:routing] %>/<%= state_names[:abbr] %>"> <%= t('.All schools in') %> <%= state_names[:full] %></a>
-        <a class="top-link" href="/schools/cities/<%= state_names[:routing] %>/<%= state_names[:abbr] %>"> <%= t('.All cities in') %> <%= state_names[:full] %></a>
-        <span class="top-link"><%= state_names[:full] %> <%= t('.School Districts') %></span>
-      </div>
-      <div class="page-heading">
-        <%= state_names[:full] %> <%= t('.School Districts') %>
-      </div>
-      <%= t('.Show me school districts in a different state') %>:
+<div class="districts-cities-list">
+  <div class="top">
+    <ul>
+      <li><%= link_to t('.All schools in') + " #{state_names[:full]}", state_url(state_params(state_names[:abbr])) %></li>
+      <li><%= link_to t('.All cities in') + " #{state_names[:full]}", cities_list_path(state_names[:routing],state_names[:abbr])%></li>
+      <li><%= t('.All districts in') %> <%= state_names[:full] %></li>
+    </ul>
+    <div class="page-heading">
+      <%= state_names[:full] %> <%= t('.School Districts') %>
+    </div>
+    <%= t('.Show me school districts in a different state') %>:
 
-      <select id="dropdown_menu">
-        <% dropdown_info.each do |st, st_name| %>
-          <% if st == state_names[:abbr] %>
-            <option selected><%= st %></option>
-          <% else %>
-            <option value="<%= districts_list_path(st_name,st) %>"> <%= st %></option>
-          <% end %>
+    <select id="dropdown_menu">
+      <% dropdown_info.each do |st, st_name| %>
+        <% if st == state_names[:abbr] %>
+          <option selected><%= st %></option>
+        <% else %>
+          <option value="<%= districts_list_path(st_name,st) %>"> <%= st %></option>
         <% end %>
-      </select>
+      <% end %>
+    </select>
 
-    </div>
-    <div>
-      <div class="table-column">
-        <table cellspacing="0" cellpadding="0">
-          <tbody>
-          <tr class="table-top-row">
-            <th><%= t('.District name') %></th>
-            <th><%= t('.City') %></th>
-            <th><%= t('.County name') %></th>
-          </tr>
-          <% districts_cities_counties.each do |district_hash| %>
-              <tr>
-                <td class="city-district-link">
-                  <%= link_to district_hash['name'], city_district_path(district_params(state_names[:abbr],district_hash['city'],district_hash['name'])) %>
-                </td>
-                <td class="city-district-link">
-                  <%= district_hash['city'] %>
-                </td>
-                <td class="city-district-link">
-                  <%= district_hash['county'] %>
-                </td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
-  <div class="top-bottom">
+  <div class="table-column">
+    <table cellspacing="0" cellpadding="0">
+      <tbody>
+      <tr class="table-top-row">
+        <th><%= t('.District name') %></th>
+        <th><%= t('.City') %></th>
+        <th><%= t('.County name') %></th>
+      </tr>
+      <% districts_cities_counties.each do |district_hash| %>
+          <tr>
+            <td class="city-district-link">
+              <%= link_to district_hash['name'], city_district_path(district_params(state_names[:abbr],district_hash['city'],district_hash['name'])) %>
+            </td>
+            <td class="city-district-link">
+              <%= district_hash['city'] %>
+            </td>
+            <td class="city-district-link">
+              <%= district_hash['county'] %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
   </div>
 </div>
 

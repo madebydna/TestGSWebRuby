@@ -4,7 +4,7 @@ class InterstitialAdController < ApplicationController
 
   def show
     gon.pagename = "Interstitial Ad"
-    set_meta_tags(title: "Interstiail Ad",
+    set_meta_tags(title: "Interstitial Ad",
                   refresh: "20;#{pass_through_URI}",
                   robots: 'noindex, nofollow, noarchive')
   end
@@ -23,28 +23,7 @@ class InterstitialAdController < ApplicationController
   end
 
   def whitelist_uri(uri)
-    if !valid_uri?(uri)
-      return "/"
-    else
-      return uri
-    end
-  end
-
-  def valid_uri?(uri)
-    relative?(uri) || absolute_to_localhost?(uri) || absolute_to_gs_org?(uri)
-  end
-
-  def relative?(uri)
-    uri.first == "/"
-  end
-
-  def absolute_to_gs_org?(uri)
-    match_gs_org_regex = /^http(?:s)?:\/\/(?:[^\/]+\.)?greatschools\.org(?:\/|:|$).*/
-    match_gs_org_regex.match(uri)
-  end
-
-  def absolute_to_localhost?(uri)
-    match_localhost_regex = /^http:\/\/localhost(?:\/|:|$).*/
-    match_localhost_regex.match(uri)
+    return uri if UrlUtils.valid_redirect_uri?(uri)
+    '/'
   end
 end

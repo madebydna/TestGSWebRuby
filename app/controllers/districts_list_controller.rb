@@ -8,12 +8,14 @@ class DistrictsListController < ApplicationController
     gon.pageTitle = meta_title
     set_seo_meta_tags
     @dcl = dcl
+    cache_time = ENV_GLOBAL['district_city_list_cache_time'] || 0
+    expires_in cache_time, public: true
   end
 
   private
 
   def state
-    params[:state_name]
+    params[:state_abbr].upcase
   end
 
   def dcl
@@ -27,12 +29,12 @@ class DistrictsListController < ApplicationController
   end
 
   def meta_title
-    "All school districts in #{dcl.state_full_name}, #{state}"
+    "All school districts in #{dcl.state_names[:full]}, #{state}"
   end
 
   def set_seo_meta_tags
     set_meta_tags title: meta_title,
-                  canonical: "http://www.greatschools.org/schools/districts/#{dcl.state_names[:routing]}/#{state}/"
+                  canonical: districts_list_url(state_name: dcl.state_names[:routing], state_abbr: state)
   end
 
 end

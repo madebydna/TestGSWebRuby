@@ -74,6 +74,8 @@ class RatingConfiguration
   end
 
   def school_value(data_set)
+    return data_set['school_value_float'] if data_set['data_type_id'] == 289
+
     if use_school_value_float?
       data_set['school_value_float'].round if data_set['school_value_float']
     else

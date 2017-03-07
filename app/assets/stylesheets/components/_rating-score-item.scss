@@ -27,6 +27,27 @@
 		display: inline;
 	}
 }
+.equity_test_scores {
+  .state-average {
+    font-size: $font-size-s1;
+    color: #71787e;
+  }
+  .score {
+    font-size: $font-size-l4;
+    font-family: opensans-semibold;
+  }
+  .item-bar {
+    padding: 0 0 10px;
+  }
+  .subject {
+    padding-top: 5px; // push label down to align with score/state avg
+    font-size: $font-size-l2;
+  }
+  .subject-subtext{
+    color: #999999;
+    font-size: $font-size-s2;
+  }
+}
 
 .rating-score-item__bar {
 	padding: 10px 0;

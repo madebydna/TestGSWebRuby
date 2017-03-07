@@ -9,15 +9,18 @@ const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
 
 const config = {
-  entry: [
-    'es5-shim/es5-shim',
-    'es5-shim/es5-sham',
-    'babel-polyfill',
-    './app/bundles/GSWeb/application'
-  ],
+  entry: {
+    'widget': ['./app/bundles/GSWeb/widget'],
+    'webpack': [
+      'es5-shim/es5-shim',
+      'es5-shim/es5-sham',
+      'babel-polyfill',
+      './app/bundles/GSWeb/application'
+    ]
+  },
 
   output: {
-    filename: 'webpack-bundle.js',
+    filename: '[name]-bundle.js',
     path: '../app/assets/webpack',
     publicPath: '/assets/'
   },

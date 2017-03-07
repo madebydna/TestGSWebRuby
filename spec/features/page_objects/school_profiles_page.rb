@@ -72,6 +72,7 @@ class SchoolProfilesPage < SitePrism::Page
     end
   end
 
+  element :h1, 'h1'
   element :gs_rating, '.rs-gs-rating'
   element :five_star_rating, '.rs-five-star-rating'
   element :sign_in, '.account_nav_out > a'
@@ -101,6 +102,14 @@ class SchoolProfilesPage < SitePrism::Page
 
   def has_star_rating_of?(star_rating)
     five_star_rating.find_css('.filled-star').size == star_rating
+  end
+
+  def five_star_rating_value
+    five_star_rating.find_css('.filled-star').size
+  end
+
+  def gs_rating_value
+    gs_rating.text.to_i
   end
 
   def has_all_review_questions?

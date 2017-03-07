@@ -1,0 +1,10 @@
+es:
+  lib:
+    equity:
+      'title': 'GreatSchools profile data sources &amp; information'
+      '4-year high school graduation rate': '4-year high school graduation rate'
+      'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
+      'source': 'Source'
+      data_point_info_texts:
+        '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
+        'Percent of students who meet UC/CSU entrance requirements': 'This is the percentage of graduates from this school who completed the A-G courses required for eligibility at University of California and California State University schools.'

@@ -16,8 +16,9 @@ module SchoolProfiles
     def characteristics_low_income_narrative(data_type_name)
       if characteristics.present? && characteristics[data_type_name].present?
         data = characteristics[data_type_name].find do |data| data['breakdown'] == 'Economically disadvantaged' end
+        st_hash = characteristics[data_type_name].find { |d| d['breakdown'] == 'All students' }
         if data.present?
-          key_value = narration_calculation data_type_name, data
+          key_value = narration_calculation data_type_name, data, st_hash
           key_value = '0' if key_value.blank?
           data['narrative'] = low_income_narration key_value, data_type_name
         end
@@ -29,10 +30,10 @@ module SchoolProfiles
       I18n.t(full_key)
     end
 
-    def narration_calculation(data_type_name, data)
+    def narration_calculation(data_type_name, data, st_hash)
       if data.present?
         sch_avg = data['school_value']
-        st_avg = data['state_average']
+        st_avg = st_hash['state_average']
         st_moe = 1
         nf = SchoolProfiles::NarrationFormula.new
         if data_type_name == 'Percent of students who meet UC/CSU entrance requirements' && sch_avg.present? && st_avg.present?

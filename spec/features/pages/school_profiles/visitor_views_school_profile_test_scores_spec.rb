@@ -55,14 +55,14 @@ describe 'Visitor' do
     end
   end
 
-  context 'with science score' do
-    before { create(:ca_cst_10th_grade_science_2015, school_id: school.id) }
-
-    scenario 'sees science included in test scores' do
-      visit school_path(school)
-      expect(page_object).to have_test_score_subject(label: 'Science', score: '100%')
-    end
-  end
+  # context 'with science score' do
+  #   before { create(:ca_cst_10th_grade_science_2015, school_id: school.id) }
+  #
+  #   scenario 'sees science included in test scores' do
+  #     visit school_path(school)
+  #     expect(page_object).to have_test_score_subject(label: 'Science', score: '100%')
+  #   end
+  # end
 
 
   context 'when there are multiple years of data' do

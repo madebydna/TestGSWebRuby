@@ -119,6 +119,24 @@ module SchoolProfiles
       end
     end
 
+    def sources
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
+      content << '<div style="padding:0 40px 20px;">'
+      content << data_type_hashes.reduce('') do |string, hash|
+        string << sources_for_view(hash)
+      end
+      content << '</div>'
+    end
+
+    def sources_for_view(hash)
+      str = '<div style="margin-top:40px;">'
+      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash['data_type']) + '</h4>'
+      str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source')+ ': </span>' + I18n.db_t(hash['source_name']) + ', ' + hash['source_year'].to_s + '</div>'
+      str << '</div>'
+      str
+    end
+
   end
 end
 

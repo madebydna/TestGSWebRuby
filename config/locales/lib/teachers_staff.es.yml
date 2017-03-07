@@ -1,11 +1,13 @@
 es:
   lib:
     teachers_staff:
+      'title': 'GreatSchools profile data sources &amp; information'
       'Ratio of teacher salary to total number of teachers': 'Average teacher salary'
       'Percentage of full time teachers who are certified': '% of full time teachers who are certified'
       'Ratio of students to full time counselors': 'Students per counselor'
       'Ratio of students to full time teachers': 'Students per teacher'
       'Percentage of teachers with less than three years experience': '% of teachers with < 3 years teaching experience'
+      'source': 'Source'
       data_point_info_texts:
         'Ratio of students to full time teachers': 'The average number of students per full-time teacher at this school; please note that this is not a reflection of average class size.'
         'Ratio of teacher salary to total number of teachers': 'The average salary for full-time teachers at this school.'

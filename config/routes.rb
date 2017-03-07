@@ -111,12 +111,12 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/footer', to: 'footer#show'
   get '/gsr/header', to: 'header#show'
 
-  get '/widget/', :to => 'widget#show'
+  get '/widget/', :to => 'widget#show', as: :widget
   post '/widget/', :to => 'widget#create'
-  match '/widget/map' => 'widget#map', via: [:get, :post]
+  match '/widget/map' => 'widget#map_and_links', via: [:get, :post]
   match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
 
-  get "/gsr/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
+  get "/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
@@ -125,8 +125,6 @@ LocalizedProfiles::Application.routes.draw do
   # They are included here so that we can take advantage of the helpful route url helpers, e.g. home_path or jobs_url
   # We need to assign the route a controller action, so just point to page_not_found
   scope '', controller: 'error', action: 'page_not_found' do
-    get '/schools/cities/:state_name_long/:state_name', :to => 'cities_list#show', as: 'cities_list'
-    get '/schools/districts/:state_name_long/:state_name', :to => 'districts_list#show', as: 'districts_list'
     get '/gk/', as: :greatkids_home
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
@@ -163,9 +161,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/healthy-kids.topic?content=2504', as: :health_and_wellness_article
     get '/gk/road-to-college/', as: :college_articles
     get '/STEM.topic?content=8021', as: :stem_article
-    get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
-    get '/schools/cities/:state_long/:state_short', as: :city_list
-    get '/schools/districts/:state_long/:state_short', as: :district_list
+    # get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
+    # get '/schools/cities/:state_long/:state_short', as: :city_list
+    # get '/schools/districts/:state_long/:state_short', as: :district_list
     get '/about/guidelines.page', as: :review_guidelines
     get '/gk/moving-with-kids/', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
@@ -244,6 +242,7 @@ LocalizedProfiles::Application.routes.draw do
     resource :top_performing_nearby_schools
     resources :schools
     resources :districts
+    resource :widget_logs, only: [:create]
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
@@ -504,6 +503,27 @@ LocalizedProfiles::Application.routes.draw do
     resource :user, only: [:create], controller: 'school_user', action: 'create'
     get '', to: 'school_profile_overview#overview'
   end
+
+  #Handle City SEO pages
+  get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'
+
+  scope '/schools/cities/:state_name/:state_abbr/:letter', as: 'cities_list_paginated' do
+    get '', to: redirect { |params, _|
+      "/schools/cities/#{params[:state_name]}/#{params[:state_abbr]}/"
+    }
+  end
+
+  #Handle District SEO pages
+  get '/schools/districts/:state_name/:state_abbr/', to: 'districts_list#show', as: 'districts_list'
+
+  scope '/schools/districts/:state_name/:state_abbr/:letter', as: 'districts_list_paginated' do
+    get '', to: redirect { |params, _|
+      "/schools/districts/#{params[:state_name]}/#{params[:state_abbr]}/"
+    }
+  end
+
+  #Handle old School list SEO pages (has to come below cities_list and districts_list routes)
+  get '/schools/:state_name/:state_abbr/', to: 'schools_list#show', as: :schools_list
 
   constraints(PathWithPeriod) do
     match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]

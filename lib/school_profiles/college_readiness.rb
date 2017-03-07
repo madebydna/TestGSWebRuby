@@ -43,16 +43,16 @@ module SchoolProfiles
         :formatting => [:round, :percent]
       },
       {
-          :cache => :gsdata,
-          :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
-          :visualization => :single_bar_viz,
-          :formatting => [:to_f, :round, :percent]
+        :cache => :gsdata,
+        :data_key => 'Percentage AP enrolled grades 9-12',
+        :visualization => :person_bar_viz,
+        :formatting => [:to_f, :round, :percent]
       },
       {
-          :cache => :characteristics,
-          :data_key => 'AP Course Participation',
-          :visualization => :person_bar_viz,
-          :formatting => [:round, :percent]
+        :cache => :gsdata,
+        :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
+        :visualization => :single_bar_viz,
+        :formatting => [:to_f, :round, :percent]
       }
     ].freeze
 
@@ -109,6 +109,8 @@ module SchoolProfiles
 
     def data_type_hashes
       hashes = school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
+      enforce_same_year_school_value_for_data_types!(hashes, 'Average ACT score', 'ACT participation')
+      enforce_same_year_school_value_for_data_types!(hashes, 'Average SAT score', 'SAT percent participation')
       hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(:gsdata)))
       return [] if hashes.blank?
       hashes = hashes.map do |key, array|
@@ -129,7 +131,37 @@ module SchoolProfiles
         hash['data_type'] = key
         hash
       end
-      hashes.sort_by { |o| included_data_types.index( o['data_type']) }
+      hashes.select(&with_school_values).sort_by { |o| included_data_types.index( o['data_type']) }
+    end
+
+    def school_value_present?(value)
+      value.present? && value.to_s != '0.0' && value.to_s != '0'
+    end
+
+    def enforce_same_year_school_value_for_data_types!(hash, *data_types)
+      data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
+        tds['subject'] == 'All subjects' && tds['breakdown'] == 'All students'
+      end.flatten
+
+      # first, find the max year for state data across the given data types
+      max_year = data_type_hashes.map { |dts| dts['year'] }.max
+
+      # Do all the data types have school data for that year?
+      data_present_for_all_types = data_type_hashes.reduce(true) do |all_present, h|
+        # The most recent year for one of the data types might be older,
+        # so we have to read the school_value_xxxx property directly
+        # to know whether each data type has school data for that year
+        all_present && school_value_present?(h["school_value_#{max_year}"])
+      end
+
+      # If school data for most recent state isn't present across all the 
+      # data types we need to remove the values, as that is the easiest way
+      # to make sure they don't show up on the page
+      unless data_present_for_all_types
+        data_type_hashes.each do |h|
+          h["school_value"] = nil
+        end
+      end
     end
 
     def data_values
@@ -148,12 +180,50 @@ module SchoolProfiles
             apply_formatting(*formatting)
           item.visualization = visualization
           item.range = range
+          item.year = hash['year'] || hash['source_year']
+          item.source = hash['source'] || hash['source_name']
         end
       end
     end
 
+    def sources
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
+      content << '<div style="padding:0 40px 20px;">'
+      content << '<div style="margin-top:40px;">'
+      if rating_year.present?
+        content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.GreatSchools Rating') + '</h4>'
+        content << '<div>' + data_label('.Rating text') + '</div>'
+        content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': GreatSchools, </span>' + rating_year + '</div>'
+      end
+      content << data_type_hashes.reduce('') do |string, hash|
+        string << sources_for_view(hash)
+      end
+      content << '</div>'
+    end
+
+    def sources_for_view(hash)
+      year = hash['year'] || hash['source_year']
+      source = hash['source'] || hash['source_name']
+      str = '<div style="margin-top:40px;">'
+      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash['data_type']) + '</h4>'
+      str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source')+ ': </span>' + I18n.db_t(source) + ', ' + year.to_s + '</div>'
+      str << '</div>'
+      str
+    end
+
+    def rating_year
+      @school_cache_data_reader.college_readiness_rating_year.to_s
+    end
+
     def visible?
       data_values.present?
+    end
+
+    private
+
+    def with_school_values
+      ->(h) { h.has_key?('school_value') && h['school_value'].present? }
     end
   end
 end

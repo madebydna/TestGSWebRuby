@@ -1,5 +1,28 @@
 $smaller: 20px;
 
+.school-links-and-logo {
+  @include clearfix;
+  padding: 5px;
+  font-size: 12px;
+  .links {
+    float: right;
+    a {
+      display: block;
+    }
+    a ~ a {
+      padding-top: 3px;
+    }
+  }
+  .logo {
+    color: #999;
+    float: left;
+    img {
+      padding-left: 10px;
+      vertical-align: middle;
+    }
+  }
+}
+
 .map-container {
   font-family: Arial, sans-serif;
   .gs-tab-container {

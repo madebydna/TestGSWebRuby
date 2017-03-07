@@ -1,34 +1,25 @@
 class QueueDaemon
-
   UNPROCESSED_STATUS = 'todo'
   SUCCESS_STATUS = 'done'
   FAILURE_STATUS = 'failed'
-  UPDATE_LIMIT_DEFAULT = 100
-  #1 is the highest priority and 5 is the lowest. updates will get processed in order of highest to lowest
-  UPDATE_ORDER_DEFAULT = [1,2,3,4,5]
+  UPDATE_LIMIT_DEFAULT = 5
   DEFAULT_FAIL_MSG = 'Could not find UpdateQueue table'
   MAX_FAIL_COUNTER = 10
   FAIL_SLEEP_TIME = 10
 
   def run!
-    # This is just for testing
-    # UpdateQueue.destroy_all
-    # UpdateQueue.seed_sample_data!
-
     fail_counter = 0
     if ENV['RAILS_ENV'] == 'production'
       ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['mysql_production_rw'])
     end
 
-   puts ('Using Data base host '+ActiveRecord::Base.connection.instance_variable_get(:@config)[:host])
-
-
+    puts ('Using Data base host '+ActiveRecord::Base.connection.instance_variable_get(:@config)[:host])
     puts 'Starting the update queue daemon.'
     loop do
       begin
-        process_unprocessed_updates
+        num_processed = process_unprocessed_updates
         fail_counter = 0
-        sleep ENV_GLOBAL['queue_daemon_sleep_time']
+        sleep ENV_GLOBAL['queue_daemon_sleep_time'] if num_processed == 0
       rescue => e
         fail_counter += 1
         if fail_counter > MAX_FAIL_COUNTER || e.message != DEFAULT_FAIL_MSG
@@ -68,57 +59,22 @@ class QueueDaemon
         end
       end
     end
+    updates.size
   end
 
   def get_updates
     begin
-      UpdateQueue.find_by_sql(updates_query)
+      UpdateQueue.where(status: unprocessed_status).order(priority: :asc, created: :asc).limit(update_limit)
     rescue
       raise 'Could Not Retrieve Updates'
     end
   end
 
-  def updates_query
-    todo, limit, order = unprocessed_status, update_limit, update_order
-
-
-    # Orders the select statements based on the order in the array
-    # So if the array is [4,1,3,5,2] then that is the order the selects will be
-    # In other words the order in which the priority items will be processed
-    query = order.inject('') do |q, order_number|
-      q << "(SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` = #{order_number} ORDER BY `created` ASC LIMIT #{limit}) UNION ALL"
-    end
-
-    query << <<-eos
-      (SELECT * FROM update_queue WHERE `status` = #{todo} AND `priority` NOT IN (#{order.join(',')}) ORDER BY `priority`, `created` ASC LIMIT #{limit})
-      LIMIT #{limit}
-    eos
-  end
-
-  # An Example Query from updates_query if update_order = [1, 2, 3, 4, 5]
-  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 1 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 2 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 3 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 4 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` = 5 ORDER BY `created` ASC LIMIT 100) UNION ALL
-  # (SELECT * FROM update_queue WHERE `status` = 'todo' AND `priority` NOT IN (1,2,3,4,5) ORDER BY `priority`, `created` ASC LIMIT 100)
-  # LIMIT 100
-
   def unprocessed_status
-    ActiveRecord::Base.sanitize(UNPROCESSED_STATUS)
+    UNPROCESSED_STATUS
   end
 
   def update_limit
     ENV_GLOBAL['queue_daemon_updates_limit'].to_i || UPDATE_LIMIT_DEFAULT
   end
-
-  def update_order
-    order = ENV_GLOBAL['queue_daemon_update_order']
-    if order.is_a? Array
-      order.each { |order_number| return UPDATE_ORDER_DEFAULT unless order_number.is_a? Fixnum }
-    else
-      UPDATE_ORDER_DEFAULT
-    end
-  end
-
 end
