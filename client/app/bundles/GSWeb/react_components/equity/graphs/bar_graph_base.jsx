@@ -66,7 +66,7 @@ export default class BarGraphBase extends React.Component {
       let style_score_width = {width: test_data['score']+"%", backgroundColor: this.mapColor(test_data['score'])}
       let style_grey_width = {width: 100-test_data['score']+"%" }
       return (
-        <div className="rating-container__score-item equity_test_scores">
+        <div className="rating-container__score-item equity-test-scores">
           <div className="rating-score-item">
             <div className="row">
               <div className="col-xs-6 subject">
@@ -81,7 +81,7 @@ export default class BarGraphBase extends React.Component {
                   <div className="row">
                     <div className="col-xs-12">
                       <div className="single-bar-viz ">
-                        <div className="color-row rating_8" style={style_score_width}></div>
+                        <div className="color-row" style={style_score_width}></div>
                         <div className="grey-row" style={style_grey_width}></div>
                         {this.renderStateAverageArrow(test_data['state_average'])}
                       </div>
@@ -101,10 +101,7 @@ export default class BarGraphBase extends React.Component {
 
   render() {
     let graphs = []
-    let self = this;
-    this.props.test_scores.forEach(function(test_data) {
-      graphs.push(self.renderBarGraph(test_data))
-    })
+    this.props.test_scores.forEach((test_data) => graphs.push(this.renderBarGraph(test_data)))
     return <div>
       {graphs}
     </div>
