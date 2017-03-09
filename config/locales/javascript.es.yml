@@ -44,3 +44,9 @@ es:
     weak_fit: Bajo
     wrong_state_error_start_html: '<strong>Estás comparando escuelas en '
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
+#    added for equity
+    of students: '% de estudiantes'
+    students: estudiantes
+    State avg: Promedio del estado
+    State average: Promedio del estado
+    School value: Valor de la escuela

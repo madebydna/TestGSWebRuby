@@ -33,8 +33,8 @@ export default class BarGraphBase extends React.Component {
 
   renderStateAverageArrow(state_average){
     if(state_average > 0) {
-      let style_arrow_down = {left: state_average + "%", top:'11px'}
-      return <div className="arrow-up"><span style={style_arrow_down}></span></div>
+      let style_arrow_up = {left: state_average + "%", top:'11px'}
+      return <div className="arrow-up"><span style={style_arrow_up}></span></div>
     }
   }
 
@@ -42,21 +42,25 @@ export default class BarGraphBase extends React.Component {
     if(test_data['display_percentages']){
       if(test_data['percentage'] == '200'){
         if(test_data['number_students_tested'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['number_students_tested']} students)</span>
+          return <span className="subject-subtext"><br />({test_data['number_students_tested']} {this.translateString('students')})</span>
         }
       }
       else {
         if (test_data['percentage'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}% of students)</span>
+          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('% of students')} )</span>
         }
       }
     }
   }
 
+  translateString(str){
+    return gon.translations[str];
+  }
+
   renderStateAverage(state_average) {
       if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
         return (<div className="state-average">
-          State avg: {state_average}%
+          {this.translateString('State avg')} {state_average}%
         </div>)
       }
   }

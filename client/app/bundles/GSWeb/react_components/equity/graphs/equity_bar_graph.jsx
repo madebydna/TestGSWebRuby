@@ -39,12 +39,16 @@ export default class EquityBarGraph extends React.Component {
     );
   }
 
+  translateString(str){
+    return gon.translations[str];
+  }
+
   series() {
     let seriesData = this.seriesData();
     let seriesArray = [];
     if (_.without(seriesData.schoolSeriesData, undefined).length > 0) {
       seriesArray.push({
-        name: 'School value',
+        name: this.translateString('School value'),
         showInLegend: false,
         data: seriesData.schoolSeriesData,
         dataLabels: {
@@ -54,7 +58,7 @@ export default class EquityBarGraph extends React.Component {
     }
     if (_.without(seriesData.stateAverageSeriesData, undefined).length > 0) {
       seriesArray.push({
-        name: 'State average',
+        name: this.translateString('State average'),
         color: 'lightgrey',
         data: seriesData.stateAverageSeriesData,
         dataLabels: {
