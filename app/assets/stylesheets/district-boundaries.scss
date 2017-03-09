@@ -1,0 +1,33 @@
+// reset css
+@import "resources/normalize";
+
+// bootstrap
+@import "resources/bootstrap/smaller_bootstrap";
+
+// variables, mixins, base styles
+@import "variables/variables";
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
+@import "gs/form";
+@import "base/spacing";
+@import "base/typography";
+
+// TODO: clean this up
+@import "gs/bring-back-bootstrap"; // depends on responsive-utilities mixins
+
+// fonts
+@import "fonts/fonts-opensans-semibold";
+
+// more components
+@import "gs/objects/spinny_wheel.css.scss";
+
+// footer-specific
+@import "gs/objects/footer";
+@import "sprites/footer_icons_16x16";
+
+@import "gs/ratings";
+@import "fonts/gs-icon-font";
+// @import "sprites/avatars_33x33";
+// @import "sprites/avatars_65x65";
+
+@import 'pages/district-boundaries/_district_boundaries_page';

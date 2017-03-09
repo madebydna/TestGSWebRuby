@@ -11,6 +11,7 @@ const nodeEnv = devBuild ? 'development' : 'production';
 const config = {
   entry: {
     'widget': ['./app/bundles/GSWeb/widget'],
+    'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'webpack': [
       'es5-shim/es5-shim',
       'es5-shim/es5-sham',

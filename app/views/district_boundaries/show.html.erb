@@ -1,3 +1,11 @@
+<% content_for :page_javascripts do %>
+  <%= javascript_include_tag "shared_post_load", async: true %>
+  <%= javascript_include_tag "district-boundaries-bundle", async: true %>
+<% end %>
+<% content_for :page_stylesheets do %>
+  <%= stylesheet_link_tag "district-boundaries", async: true %>
+<% end %>
+
 <div id="district-boundaries-page">
   <div class="header">
     <h1><%= t('.heading.') %> <%= render 'school_profiles/info_circle', content: t('.subheading_html') %></h1>
