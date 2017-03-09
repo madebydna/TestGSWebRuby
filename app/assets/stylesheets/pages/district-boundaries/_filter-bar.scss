@@ -8,15 +8,30 @@
     .search-input, .filter {
       display: inline-block;
       vertical-align: top;
-      @include media-breakpoint-down(sm) {
-        width: 100%;
-      }
 
       > label {
         margin: 15px 0 10px 0;
         display: block;
         font-family: 'opensans-semibold';
         font-size: 14px;
+      }
+    }
+
+    .search-input-and-filter-button {
+      display: inline-block;
+      > button {
+        display: none;
+      }
+      @include media-breakpoint-down(sm) {
+        display: table;
+        > .search-input {
+          display: table-cell;
+          width: 100%;
+        }
+        > button {
+          margin-left: 10px;
+          display: table-cell;
+        }
       }
     }
 
@@ -39,21 +54,35 @@
       }
     }
 
+
     .filters {
       display: none;
-      &.open {
-        @include media-breakpoint-down(sm) {
-          display: block;
-        }
+      @include media-breakpoint-up(sm) {
+        padding-left: 20px;
       }
       @include media-breakpoint-up(md) {
         display: inline-block;
       }
 
-      > div {
-        vertical-align: top;
+      &.open {
+        @include media-breakpoint-only(xs) {
+          display: block;
+        }
         @include media-breakpoint-up(sm) {
-          display: inline-block;
+          display: table;
+        }
+      }
+
+      > .filter {
+        vertical-align: top;
+        @include media-breakpoint-only(xs) {
+          width: 100%;
+          display: block;
+        }
+      }
+
+      > .filter ~ .filter {
+        @include media-breakpoint-up(sm) {
           padding-left: 20px;
         }
       }

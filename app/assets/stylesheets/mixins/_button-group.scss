@@ -26,6 +26,7 @@
     height: $height;
     border-radius: 0px;
     outline: none;
+    text-align: center;
     &.active {
       background-color: $active-background-color;
       border-top: 1px solid $active-background-color;
