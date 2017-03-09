@@ -9,8 +9,6 @@ class Api::DistrictSerializer
     h = {
       id: district.id,
       districtName: district.try(:name),
-      gradeRange: 'TODO',
-      grades: 'TODO',
       lat: district.lat,
       lon: district.lon,
       name: district.name,
@@ -21,7 +19,6 @@ class Api::DistrictSerializer
         city: district['city']
       },
       rating: (district.great_schools_rating if defined? district.great_schools_rating),
-      # districtType: district.type,
       state: district.state,
       type: 'district',
       schoolCountsByLevelCode: district.school_counts_by_level_code

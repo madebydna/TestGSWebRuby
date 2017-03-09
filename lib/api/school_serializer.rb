@@ -13,7 +13,6 @@ class Api::SchoolSerializer
       id: school.id,
       districtId: school.district_id,
       districtName: school.district.try(:name),
-      gradeRange: 'TODO',
       levelCode: school.level_code,
       lat: school.lat,
       lon: school.lon,
