@@ -47,7 +47,7 @@ export default class BarGraphBase extends React.Component {
       }
       else {
         if (test_data['percentage'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('% of students')} )</span>
+          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('of students')} )</span>
         }
       }
     }
