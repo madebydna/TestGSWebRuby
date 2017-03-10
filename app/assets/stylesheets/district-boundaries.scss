@@ -12,6 +12,18 @@
 @import "base/spacing";
 @import "base/typography";
 
+@import 'components/five-star-rating';
+@import 'components/gs-rating-with-label';
+@import "components/circle-rating";
+@import "components/circle-rating-with-label";
+@import "components/diamond-rating";
+@import "components/square-rating";
+@import "components/rating-score-item";
+@import "components/info-circle";
+
+@import "components/school-list";
+@import "components/info-window";
+
 // TODO: clean this up
 @import "gs/bring-back-bootstrap"; // depends on responsive-utilities mixins
 
