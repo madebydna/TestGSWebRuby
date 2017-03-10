@@ -26,5 +26,12 @@
         color: #2ba3dc;
       }
     }
+
+    .icon-text {
+      display: none;
+      @include media-breakpoint-only(sm) {
+        display: inline-block;
+      }
+    }
   }
 }

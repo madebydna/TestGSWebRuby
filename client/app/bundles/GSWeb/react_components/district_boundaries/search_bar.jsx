@@ -114,11 +114,11 @@ export default class SearchBar extends React.Component {
           <div className="list-map-toggle">
             <a href="javascript:void(0);" className="show-list" onClick={this.onClickListView}>
               <span className={'icon icon-document' + (this.state.listSelected ? ' active' : '')}/>
-              List View
+              <span className="icon-text">List View</span>
             </a>
             <a href="javascript:void(0);" className="show-map" onClick={this.onClickMapView}>
               <span className={'icon icon-location' + (this.state.mapSelected ? ' active' : '')}/>
-              Map View
+              <span className="icon-text">Map View</span>
             </a>
           </div>
         </div>
