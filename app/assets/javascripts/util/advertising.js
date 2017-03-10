@@ -40,7 +40,7 @@ if (gon.advertising_enabled) {
 //   Uses Adobe Audience Manager for setTargeting and gon.ad_set_targeting for setTargeting - both page level
 //
 /////////////////////////////////////////////////////////////////////////////
-  $(window).load(function () {
+  window.onload = function () {
     var dfp_slots = $(".gs_ad_slot").filter(":visible,[data-ad-defer-render]");
     if (dfp_slots.length > 0 || gon.pagename == "Reviews") {
 
@@ -72,7 +72,7 @@ if (gon.advertising_enabled) {
         }
       });
     }
-  });
+  };
 
   GS.ad.getSizeMappings = function() {
     return {
