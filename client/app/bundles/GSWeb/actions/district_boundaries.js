@@ -41,7 +41,9 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
             district,
             school,
             schools: schoolsInDistrict.concat(otherSchools),
-            districts: nearbyDistricts
+            districts: nearbyDistricts,
+            lat: lat,
+            lon: lon
           })
         })
       }
@@ -72,16 +74,21 @@ export const selectDistrict = (id, state) => dispatch => {
 };
 
 export const toggleSchoolType = schoolType => (dispatch, getState) => {
+  let { lat, lon, state, schoolTypes } = getState().districtBoundaries;
+
   if(getState().districtBoundaries.schoolTypes.includes(schoolType)) {
     dispatch(removeSchoolType(schoolType));
   } else {
-    dispatch(addSchoolType(schoolType));
-  }
-  let { lat, lon, state } = getState().districtBoundaries;
-  if(lat && lon && state) {
-    dispatch(loadNonDistrictSchools(lat, lon, {
-      state
-    }));
+    schoolTypes = schoolTypes.concat(schoolType);
+    if(lat && lon && state) {
+      $.when(
+        findSchoolsNearLatLon(lat, lon, state, schoolTypes)
+      ).done((additionalSchools = []) => {
+        dispatch(addSchoolType(schoolType, additionalSchools));
+      });
+    } else {
+      dispatch(addSchoolType(schoolType));
+    }
   }
 };
 
@@ -159,9 +166,10 @@ export const setLevel = level => ({
   level
 });
 
-const addSchoolType = schoolType => ({
+const addSchoolType = (schoolType, schools = []) => ({
   type: ADD_SCHOOL_TYPE,
-  schoolType
+  schoolType,
+  schools
 });
 
 const removeSchoolType = schoolType => ({

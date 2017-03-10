@@ -118,8 +118,12 @@ export default (state, action) => {
         level: action.level
       };
     case ADD_SCHOOL_TYPE:
+      var { schools } = action;
+      schools = groupBy(schools, o => stateAndIdKey(o));
+
       return {
         ...state,
+        schools: { ...state.schools, ...schools },
         schoolTypes: state.schoolTypes.concat(action.schoolType)
       }
     case REMOVE_SCHOOL_TYPE:
