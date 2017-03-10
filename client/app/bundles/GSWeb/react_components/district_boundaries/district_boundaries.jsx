@@ -129,9 +129,11 @@ export default class DistrictBoundaries extends React.Component {
         { this.props.schools.length > 0 && 
           <SchoolList className={ this.state.listHidden ? 'closed' : '' } />
         }
-        <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
-          {this.renderMap()}
-        </div>
+          <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
+            <SpinnyWheel active={this.props.loading}>
+              {this.renderMap()}
+            </SpinnyWheel>
+          </div>
         <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
       </div>
     );

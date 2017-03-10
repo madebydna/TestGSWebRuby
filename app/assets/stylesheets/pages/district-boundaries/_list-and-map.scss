@@ -31,9 +31,13 @@
     }
   }
 
+
   .map {
     @include clearfix;
     height: $list-and-map-height;
+    .spinny-wheel {
+      background-color: rgba(200,200,200,.5) !important;
+    }
   }
 
   .school-list, .map {
