@@ -90,14 +90,16 @@ export default class SearchBar extends React.Component {
   render() {
     return (
       <div className="filter-bar">
-        <div className="search-input">
-          <label>Search</label>
-          <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
-          <button name="submit-search" onClick={this.search}>Search</button>
+        <div className="search-input-and-filter-button">
+          <div className="search-input">
+            <label>Search</label>
+            <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
+            <button name="submit-search" onClick={this.search}>Search</button>
+          </div>
+          <button onClick={this.toggleFilters} >Filters</button>
         </div>
 
         <div className="toggle-bar">
-          <button className="filter-toggle-button" onClick={this.toggleFilters} >Filters</button>
           <div className="list-map-toggle">
             <a href="javascript:void(0);" className="show-list" onClick={this.onClickListView}>
               <span className={'icon icon-document' + (this.state.listSelected ? ' active' : '')}/>
