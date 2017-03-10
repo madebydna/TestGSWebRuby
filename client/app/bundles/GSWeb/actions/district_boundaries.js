@@ -6,6 +6,7 @@ export const SET_LEVEL = 'SET_LEVEL';
 export const ADD_SCHOOL_TYPE = 'ADD_SCHOOL_TYPE';
 export const REMOVE_SCHOOL_TYPE = 'REMOVE_SCHOOL_TYPE';
 export const LOCATION_CHANGE = 'LOCATION_CHANGE';
+export const REQUEST_LOCATION_CHANGE = 'REQUEST_LOCATION_CHANGE';
 export const DISTRICT_SELECT = 'DISTRICT_SELECT';
 export const SCHOOL_SELECT = 'SCHOOL_SELECT';
 
@@ -23,6 +24,9 @@ export const SCHOOL_SELECT = 'SCHOOL_SELECT';
 export const changeLocation = (lat, lon) => (dispatch, getState) => {
   let { level, nearbyDistrictsRadius, state, schoolTypes } = getState().districtBoundaries;
   let schoolLevel = (level == 'e') ? 'p' : level;
+  dispatch({
+    type: REQUEST_LOCATION_CHANGE
+  })
 
   $.when(
     findDistrictsByLatLon(lat, lon, level),

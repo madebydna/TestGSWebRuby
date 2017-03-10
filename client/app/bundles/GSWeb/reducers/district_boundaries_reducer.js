@@ -1,5 +1,5 @@
 import { SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
-  LOCATION_CHANGE, DISTRICT_SELECT, SCHOOL_SELECT
+  LOCATION_CHANGE, DISTRICT_SELECT, SCHOOL_SELECT, REQUEST_LOCATION_CHANGE
 } from '../actions/district_boundaries';
 
 // "selector" functions that knows how to navigate the state in order to
@@ -66,11 +66,17 @@ export default (state, action) => {
   if (typeof state === 'undefined') {
     return {
       schools: {},
-      districts: {}
+      districts: {},
+      loading: false
     };
   }
 
   switch (action.type) {
+    case REQUEST_LOCATION_CHANGE:
+      return {
+        ...state,
+        loading: true
+      }
     case LOCATION_CHANGE:
       var { schools, districts, school, district } = action;
       schools = groupBy(schools, o => stateAndIdKey(o));
@@ -85,7 +91,8 @@ export default (state, action) => {
         districtId: district.id,
         state: district.state,
         schools,
-        districts
+        districts,
+        loading: false
       };
     case DISTRICT_SELECT:
       var { district, schools } = action;

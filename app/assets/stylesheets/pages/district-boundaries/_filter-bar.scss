@@ -15,6 +15,19 @@
         font-family: 'opensans-semibold';
         font-size: 14px;
       }
+
+      .spinny-wheel-container {
+        display: inline-block;
+        .spinny-wheel {
+          background-size: 16px;
+          background-position: right 10px center !important;
+        }
+      }
+      .spinny-wheel-container ~ .spinny-wheel-container {
+        .spinny-wheel {
+          background-position: center center !important;
+        }
+      }
     }
 
     .search-input-and-filter-button {

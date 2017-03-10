@@ -4,6 +4,7 @@ import ButtonGroup from '../buttongroup';
 import Select from '../select';
 import * as Geocoding from '../../components/geocoding';
 import Checkbox from '../checkbox';
+import SpinnyWheel from '../../react_components/spinny_wheel';
 
 export default class SearchBar extends React.Component {
 
@@ -88,13 +89,23 @@ export default class SearchBar extends React.Component {
   }
 
   render() {
+    let searchButton = null;
+    let searchInput = null;
+    if(this.props.loading) {
+      searchButton = <SpinnyWheel><button name="submit-search" onClick={this.search}>Search</button></SpinnyWheel>;
+      searchInput = <SpinnyWheel><input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/></SpinnyWheel>
+    } else {
+      searchButton = <button name="submit-search" onClick={this.search}>Search</button>;
+      searchInput = <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
+    }
+
     return (
       <div className="filter-bar">
         <div className="search-input-and-filter-button">
           <div className="search-input">
             <label>Search</label>
-            <input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
-            <button name="submit-search" onClick={this.search}>Search</button>
+            { searchInput }
+            { searchButton }
           </div>
           <button onClick={this.toggleFilters} >Filters</button>
         </div>

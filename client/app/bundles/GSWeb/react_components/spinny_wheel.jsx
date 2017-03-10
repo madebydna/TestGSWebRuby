@@ -22,6 +22,7 @@ export default class SpinnyWheel extends React.Component {
       <div className="spinny-wheel-container">
         <div style={spinnyWheelStyle} className="spinny-wheel"></div>
         {this.props.content}
+        {this.props.children}
       </div>
     );
   }

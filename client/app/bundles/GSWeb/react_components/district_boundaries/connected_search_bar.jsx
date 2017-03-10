@@ -11,7 +11,8 @@ let ConnectedSearchBar = connect(
     state = state.districtBoundaries;
     return {
       districts: getDistricts(state),
-      district: getDistrict(state)
+      district: getDistrict(state),
+      loading: state.loading
     };
   },
   function(dispatch, ownProps) {
