@@ -156,6 +156,8 @@ gem 'binding_of_caller', '~> 0.7.2'
 # USED: Multiple places. Search for *.jbuilder for example
 gem 'jbuilder'
 
+gem 'oj'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests

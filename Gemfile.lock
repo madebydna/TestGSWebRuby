@@ -297,6 +297,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     ntlm-http (0.1.1)
+    oj (2.18.2)
     orm_adapter (0.5.0)
     parser (2.3.1.2)
       ast (~> 2.2)
@@ -598,6 +599,7 @@ DEPENDENCIES
   mini_racer
   mysql2 (= 0.3.13)
   nokogiri (= 1.6.7)
+  oj
   pdf-reader
   prawn
   prawn-table (~> 0.1.2)

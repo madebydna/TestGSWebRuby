@@ -52,7 +52,7 @@ class SchoolCacheResults
     @query_results.each do |result|
       school_id = result[:school_id]
       state = result[:state]
-      cache_value = begin JSON.parse(result.value) rescue {} end
+      cache_value = begin Oj.load(result.value) rescue {} end
 
       @school_data[[state.upcase, school_id]] ||= {}
       @school_data[[state.upcase, school_id]][result.name] = cache_value

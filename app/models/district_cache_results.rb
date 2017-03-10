@@ -51,7 +51,7 @@ class DistrictCacheResults
       district_id = result[:district_id]
       state = result[:state]
       cache_key = result[:name]
-      cache_value = begin JSON.parse(result.value) rescue {} end
+      cache_value = begin Oj.load(result.value) rescue {} end
 
       @district_data[[state, district_id]] ||= {}
       @district_data[[state, district_id]][result.name] = cache_value
