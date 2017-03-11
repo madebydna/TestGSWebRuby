@@ -1,0 +1,23 @@
+en:
+  lib:
+    equity_gsdata:
+      courses_title: Advanced coursework
+      Percentage AP enrolled grades 9-12: '% taking AP courses'
+      Number of Advanced Courses Taken per Student: Adv courses per student
+      African American: Black
+      Black: Black
+      White: White
+      All: All students
+      Hispanic: Hispanic
+      Filipino: Filipino
+      Asian: Asian
+      Multiracial: Two or more races
+      Two or more races: Two or more races
+      American Indian/Alaska Native: American Indian/Alaska Native
+      Pacific Islander: Pacific Islander
+      Hawaiian Native/Pacific Islander: Pacific Islander
+      Male: Male
+      Female: Female
+      data_point_info_texts:
+        'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
+        'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
