@@ -4,7 +4,10 @@ module SchoolProfiles
 
     BREAKDOWN_ALL = 'All'
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
-    COURSES_DATA_TYPES = ['Percentage AP enrolled grades 9-12'] #, 'Number of Advanced Courses Taken per Student']
+    COURSES_DATA_TYPES = {
+        'Percentage AP enrolled grades 9-12' => {type: :bar},
+        'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 2}
+    }
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
@@ -20,9 +23,9 @@ module SchoolProfiles
     private
 
     def courses_hash
-      data = @school_cache_data_reader.gsdata_data(*COURSES_DATA_TYPES)
-      max_year = data.reduce(0, &max_year_across_keys)
+      data = @school_cache_data_reader.gsdata_data(*COURSES_DATA_TYPES.keys)
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+        max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
         matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
         unless matching_breakdowns.empty?
           output_hash.merge!(subject_hash(data_type_name, matching_breakdowns))
@@ -37,10 +40,13 @@ module SchoolProfiles
     end
 
     def subject_hash(data_type_name, value_hashes)
+      type = COURSES_DATA_TYPES[data_type_name][:type]
+      precision = COURSES_DATA_TYPES[data_type_name][:precision] || 0
       {
           subject_name(data_type_name) => {
               narration: I18n.t(data_type_name, scope: 'lib.equity_gsdata.data_point_info_texts', default: ''),
-              values: value_hashes.map(&hash_for_display).sort_by(&percentage_desc)
+              values: value_hashes.map(&hash_for_display(precision)).sort_by(&percentage_desc),
+              type: type
           }
       }
     end
@@ -62,31 +68,28 @@ module SchoolProfiles
       end
     end
 
-    def max_year_across_keys
-      lambda do |max, (_, array_of_hashes)|
-        local_max = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
-        max > local_max ? max : local_max
-      end
-    end
-
-    def hash_for_display
+    def hash_for_display(precision = 0)
       lambda do |hash|
         breakdown = hash['breakdowns'] || BREAKDOWN_ALL
         breakdown_name_str = I18n.t(breakdown, scope: 'lib.equity_gsdata', default: breakdown)
         {
             breakdown: breakdown_name_str,
-            year: hash['source_year'],
-            score: value_to_s(hash['school_value']),
-            state_average: value_to_s(hash['state_value']),
-            percentage: value_to_s(ethnicity_breakdowns[breakdown]),
+            score: value_to_s(hash['school_value'], precision),
+            state_average: value_to_s(hash['state_value'], precision),
+            percentage: value_to_s(ethnicity_breakdowns[breakdown], 0),
             display_percentages: true,
         }.compact
       end
     end
 
-    def value_to_s(value)
-      num = value.to_f.round
-      num < 1 ? '<1' : num.to_s
+    def value_to_s(value, precision=0)
+      return nil if value.nil?
+      num = value.to_f.round(precision)
+      if precision == 0 && num < 1
+        '<1'
+      else
+        num.to_s
+      end
     end
 
     def percentage_desc

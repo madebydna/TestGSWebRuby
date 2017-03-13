@@ -47,6 +47,10 @@
     color: #999999;
     font-size: $font-size-s2;
   }
+  .horizontal > div {
+    display: inline;
+    padding-right: 5px;
+  }
 }
 
 .rating-score-item__bar {

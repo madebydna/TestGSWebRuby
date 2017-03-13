@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import testScoresHelpers from '../../util/test_scores_helpers';
 import EquityBarGraph from './graphs/equity_bar_graph';
 import BarGraphBase from './graphs/bar_graph_base';
+import PlainNumber from './graphs/plain_number';
 import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
 import InfoCircle from '../info_circle';
@@ -287,11 +288,17 @@ export default class Equity extends React.Component {
     if (data && data['values']) {
       let values = data['values'];
       if (values.length > 0) {
+        let displayType = data['type'] || 'bar';
+        let component = null;
+        if (displayType == 'plain') {
+          component = <PlainNumber values={values}/>
+        } else {
+          component = <BarGraphBase test_scores={values}/>
+        }
         return {
           subject: name,
-          component: <BarGraphBase
-              test_scores={values}/>,
-          explanation: data['narration']
+          component: component,
+          explanation: <div dangerouslySetInnerHTML={{__html: data['narration']}} />
         };
       }
     }
