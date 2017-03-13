@@ -67,8 +67,12 @@ export default class BarGraphBase extends React.Component {
 
   renderBarGraph(test_data){
     if(test_data !== undefined) {
-      let style_score_width = {width: test_data['score']+"%", backgroundColor: this.mapColor(test_data['score'])}
-      let style_grey_width = {width: 100-test_data['score']+"%" }
+      let numerical_value = test_data['score'];
+      if (numerical_value == '<1') {
+        numerical_value = '0';
+      }
+      let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
+      let style_grey_width = {width: 100-numerical_value+"%" };
       return (
         <div className="rating-container__score-item equity-test-scores">
           <div className="rating-score-item">
