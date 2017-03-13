@@ -12,7 +12,8 @@ export default class Equity extends React.Component {
     enrollment: React.PropTypes.number,
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number,
-    sources: React.PropTypes.string
+    sources: React.PropTypes.string,
+    data: React.PropTypes.object
   };
 
   constructor(props) {
@@ -217,6 +218,17 @@ export default class Equity extends React.Component {
       );
     }
 
+    if (this.props.data) {
+      for (let category in this.props.data) {
+        if (this.props.data.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.data[category]);
+          if (sectionConfig) {
+            section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
     if(section1Content.length > 0) {
       config.push({
         section_info:{
@@ -246,6 +258,44 @@ export default class Equity extends React.Component {
     }
 
     return config;
+  }
+
+  sectionConfig(name, data) {
+    if (data) {
+      let content = [];
+
+      for (let subject in data) {
+        if (data.hasOwnProperty(subject)) {
+          let subjectConfig = this.subjectConfig(subject, data[subject]);
+          if (subjectConfig) {
+            content.push(subjectConfig);
+          }
+        }
+      }
+
+      if (content.length > 0) {
+        return {
+          section_title: name,
+          content: content
+        };
+      }
+    }
+    return null;
+  }
+
+  subjectConfig(name, data) {
+    if (data && data['values']) {
+      let values = data['values'];
+      if (values.length > 0) {
+        return {
+          subject: name,
+          component: <BarGraphBase
+              test_scores={values}/>,
+          explanation: data['narration']
+        };
+      }
+    }
+    return null;
   }
 
   formattedTestScoreData(subject) {

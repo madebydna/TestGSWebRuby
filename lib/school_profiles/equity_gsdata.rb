@@ -76,16 +76,21 @@ module SchoolProfiles
         {
             breakdown: breakdown_name_str,
             year: hash['source_year'],
-            score: hash['school_value'],
-            state_average: hash['state_value'],
-            percentage: ethnicity_breakdowns[breakdown].to_f,
+            score: value_to_s(hash['school_value']),
+            state_average: value_to_s(hash['state_value']),
+            percentage: value_to_s(ethnicity_breakdowns[breakdown]),
             display_percentages: true,
         }.compact
       end
     end
 
+    def value_to_s(value)
+      num = value.to_f.round
+      num < 1 ? '<1' : num.to_s
+    end
+
     def percentage_desc
-      ->(hash) { -hash[:percentage] }
+      ->(hash) { -(hash[:percentage].to_f) }
     end
 
     def ethnicity_breakdowns
