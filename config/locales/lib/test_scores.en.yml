@@ -18,8 +18,9 @@ en:
           'Biology I': Biology I
         low_income:
           '0_0_html': >
-            This shows results for low-income students on a %{subject} test given to students once a year.
-            Big differences may suggest that some student groups are not getting the support they need to succeed.
+            <p class="narrative-content">This shows results from students who are eligible to receive free or reduced
+            lunch on a test given to students once a year. Big differences may suggest that some groups of students
+            are not getting the support they need to succeed.</p>
           '1_1_html': >
             <p class='title negative'>A worrisome sign:</p>
             <p class="narrative-content">The %{subject} scores of low-income students at this school are
