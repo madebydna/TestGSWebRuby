@@ -19,105 +19,147 @@ es:
             This shows results for low-income students on a %{subject} test given to students once a year.
             Big differences may suggest that some student groups are not getting the support they need to succeed.
           '1_1_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are below the state
-            average for low-income kids. <span class="negative">This is very concerning.</span></p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to help students who are behind.</span>
+            <p class='title negative'>Un signo preocupante:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            están <span class="emphasis">por debajo</span> del promedio estatal para estudiantes de bajos ingresos.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no
+            están logrando por lo menos los resultados promedio.</p>
           '1_2_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are below the state
-            average for low-income kids. <span class="negative">This is very concerning.</span></p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to help students who are behind.</span>
+            <p class='title negative'>Un signo preocupante:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            están <span class="emphasis">por debajo</span> del promedio estatal para estudiantes de bajos ingresos.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no
+            están logrando por lo menos los resultados promedio.</p>
           '1_3_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are
-            <span class="negative">below the state average for low-income kids</span> and there’s a
-            <span class="negative">large gap between how low-income kids</span> are doing compared to their classmates
-            with more financial resources. <span class="negative">This is very concerning.</span></p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing to help all
-            students learn</span> – especially the ones who are behind.</p>
+            <p class='title negative'>Muy preocupante:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            están <span class="emphasis">debajo</span> del promedio estatal de los niños de bajos ingresos y
+            <span class="emphasis">una gran diferencia</span> entre los resultados académicos de los niños con
+            bajos ingresos comparados con sus compañeros con más recursos financieros.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar el aprendizaje de todos los
+            estudiantes, especialmente los que no están logrando los resultados académicos promedio.</p>
           '2_1_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are about the same
-            as the state average for low-income kids, but they’re still below the state average for
-            all kids. <span class="negative">This is worrisome.</span></p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to help students who are behind.</p>
+            <p class='title positive'>Un signo prometedor:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            <span class="emphasis">son aproximadamente los mismos</span> que el promedio estatal para estudiantes de
+            bajos ingresos, pero aún siguen <span class="emphasis">por debajo</span> del promedio estatal de
+            todos los estudiantes.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no
+            están logrando por lo menos los resultados promedio.</p>
           '2_2_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are about the same as
-            the state average for low-income kids, but they’re still behind the state average for all kids.
-            <span class="negative">This is worrisome.</span></p>
-            <p class="narrative-content">What’s more, there’s a <span class="negative">gap between how low-income kids</span>
-            are doing compared to their classmates with more financial resources.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to help students who are behind.</p>
+            <p class='title negative'>Un signo preocupante:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            son <span class="emphasis">aproximadamente los mismos</span> que el promedio estatal para niños de bajos
+            ingresos, pero aún siguen <span class="emphasis">por debajo</span> del promedio estatal de todos
+            los estudiantes.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no
+            están logrando por lo menos los resultados promedio.</p>
           '2_3_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school
-            <span class="positive">are about the same as the state average for low-income kids</span>,
-            but there’s a <span class="negative">large gap between how low-income kids</span> are doing compared
-            to their classmates with more financial resources. <span class="negative">This is worrisome.</span>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing to help
-            all students learn</span> – especially the ones who are behind.</p>
+            <p class='title negative'>Un signo preocupante:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            son <span class="emphasis">aproximadamente los mismos</span> que el promedio estatal de los niños de bajos
+            ingresos, pero hay <span class="emphasis">una gran diferencia</span> entre los resultados académicos de los
+            niños de bajos ingresos comparados con sus compañeros con más recursos financieros.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar el aprendizaje de todos los
+            estudiantes, especialmente los que no están logrando los resultados académicos promedio.</p>
           '3_1_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are above the
-            state average for low-income kids, <span class="positive">which is a promising sign</span>,
-            but they’re still below the state average for all kids.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to accelerate progress for students who are behind.</p>
+            <p class='title positive'>Un signo prometedor:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            están <span class="emphasis">por encima</span> del promedio estatal para niños de bajos ingresos, pero
+            aún así, siguen <span class="emphasis">por debajo</span> del promedio estatal de todos los estudiantes.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para acelerar el progreso de los
+            estudiantes de familias de bajos ingresos.</p>
           '3_2_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are above the
-            state average for low-income kids, <span class="positive">which is a promising sign</span>,
-            but there’s still a <span class="negative">gap between how low-income kids</span> are doing
-            compared to their classmates with more financial resources.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to help accelerate progress for students who are behind.</p>
+            <p class='title positive'>Un signo prometedor:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            están <span class="emphasis">por encima</span> del promedio estatal para niños de bajos ingresos,
+            <span class="emphasis">pero todavía hay una brecha</span> entre los resultados académicos de los niños de
+            bajos ingresos comparados con sus compañeros con más recursos financieros.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para acelerar el progreso de los
+            estudiantes que no están logrando por lo menos los resultados promedio.</p>
           '3_3_html': >
-            <p class="narrative-content">The %{subject} scores of low-income students at this school are
-            <span class="positive">above the state average for low-income kids, which is a promising sign</span>,
-            but there’s a <span class="negative">large gap between how low-income kids</span> are doing compared
-            to their classmates with more financial resources.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask</span>
-            the school what it’s doing to help all students succeed.</p>
+            <p class='title positive'>Un signo prometedor:</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela
+            están <span class="emphasis">por encima</span> del promedio estatal de los niños de bajos ingresos, pero
+            aún así, hay <span class="emphasis">una gran diferencia</span> entre los resultados académicos entre los
+            niños de bajos ingresos comparados con sus compañeros con más recursos financieros.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que todos los estudiantes
+            obtengan resultados académicos exitosos.</p>
           '4_1_html': >
-            <p class="narrative-content"><span class="positive">A positive sign!</span> The %{subject} scores of low-income
-            students at this school are at or above the state average for all kids,
-            suggesting that this school is doing a good job of teaching low-income students.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what else it can do</span>
-            to support low-income students.</p>
+            <p class='title positive'>¡Un signo positivo!</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta
+            escuela se encuentran <span class="emphasis">en o por encima</span> del promedio estatal de todos los
+            estudiantes, lo que sugiere que esta escuela está haciendo un buen trabajo enseñando a estudiantes
+            de bajos ingresos.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela qué más se puede hacer para apoyar a los estudiantes de
+            familias de bajos ingresos.</p>
           '4_2_html': >
-            <p class="narrative-content"><span class="positive">A positive sign!</span> The %{subject} scores of low-income
-            students at this school are at or above the state average for all kids, however, there’s still a
-            <span class="negative">gap between how low-income kids</span>
-            are doing compared to their classmates with more financial resources.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school</span>
-            how it plans to continue to support low-income students.</p>
+            <p class='title positive'>¡Un signo positivo!</p>
+            <p class="narrative-content">Los puntajes de %{subject} de estudiantes de bajos ingresos en esta escuela se
+            encuentran <span class="emphasis">en o por encima</span> del promedio estatal para todos los niños. Sin
+            embargo, todavía <span class="emphasis">hay una brecha</span> entre los resultados académicos de los niños
+            de bajos ingresos comparados con sus compañeros con más recursos financieros.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela cómo planea seguir apoyando a estudiantes de bajos ingresos.</p>
           '4_3_html': >
-             <p class="narrative-content"><span class="positive">A positive sign!</span>
-             The %{subject} scores of low-income students at this school are at or above the state average for all kids.
-             Still, there's a <span class="negative">large gap between how low-income kids</span>
-             are doing compared to their classmates with more financial resources.</p>
-             <p class="footnote"><span class="emphasis">Parents should ask</span>
-             the school what it’s doing to help all students succeed.</p>
+             <p class='title positive'>¡Un signo positivo!</p>
+             <p class="narrative-content">Los puntajes de %{subject}  de estudiantes de bajos ingresos en esta escuela
+             se encuentran <span class="emphasis">en o por encima</span> del promedio estatal para todos los niños. Sin
+             embargo, todavía <span class="emphasis">hay una brecha</span> entre los resultados académicos de los niños
+             de bajos ingresos comparados con sus compañeros con más recursos financieros.</p>
+             <hr />
+             <p class="parent-tip">Consejos para padres:</p>
+             <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que todos los estudiantes
+             obtengan resultados académicos exitosos.</p>
           '5_1_html': >
-            <p class="narrative-content">
-            <span class="positive">An excellent sign!</span>
-            Low-income students at this school perform well above the state average in math/English, which is a
-            great sign that the school supports students equitably.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask</span> the school what it’s doing to help
-            all students get ready for college.
-            <a href="/gk/levels/high-school/">Are they learning essential skills like these?</a>
-            </p>
+            <p class='title positive'>¡Buenas noticias!</p>
+            <p class="narrative-content">Los estudiantes de bajos ingresos en esta escuela obtienen resultados
+            académicos <span class="emphasis">por encima</span> del promedio estatal en %{subject} , lo que es
+            un gran signo de que la escuela apoya a los estudiantes de manera equitativa.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela qué está haciendo para ayudar a que todos los estudiantes
+            estén preparados para la universidad.</p>
           '5_2_html': >
-            <p class="narrative-content"><span class="positive">An excellent sign!</span>
-            Low-income students at this school perform well above the state average in %{subject}, a sign that
-            the school supports students equitably.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask the school what it’s doing</span>
-            to help all students succeed.
+            <p class='title positive'>¡Buenas noticias!</p>
+            <p class="narrative-content">Los estudiantes de bajos ingresos en esta escuela obtienen resultados
+            académicos <span class="emphasis">por encima</span> del promedio estatal %{subject} , lo cual es un gran
+            signo de que la escuela apoya a los estudiantes de manera equitativa.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela qué está haciendo para ayudar a que todos los estudiantes
+            obtengan resultados académicos exitosos.</p>
           '5_3_html': >
-            <p class="narrative-content"><span class="positive">An excellent sign!</span>
-            Low-income students at this school perform well above the state average in %{subject}.
-            Still, there’s a <span class="negative">large gap between how low-income kids</span>
-            are doing compared to their classmates with more financial resources.</p>
-            <p class="footnote"><span class="emphasis">Parents should ask</span> the school what it’s doing to help
-            all students succeed.</p>
+            <p class='title positive'>¡Buenas noticias!</p>
+            <p class="narrative-content">Los estudiantes de bajos ingresos en esta escuela logran resultados
+            <span class="emphasis">por encima</span> del promedio estatal en %{subject} . Sin embargo, todavía hay
+            una brecha entre los resultados académicos de los niños de bajos ingresos comparados con sus compañeros
+            con más recursos financieros.</p>
+            <hr />
+            <p class="parent-tip">Consejos para padres:</p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que todos los estudiantes
+            obtengan resultados académicos  exitosos. </p>
         '4-year high school graduation rate':
           '0_html': >
             <p class="narrative-content">Esto muestra las tasas de graduación de diferentes razas o etnias. Grandes diferencias puede sugerir que algunos estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</a>
@@ -153,7 +195,7 @@ es:
             Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible para la Universidad de CA y colegios de CA State.
             <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
           '1_html': >
-            <p class="title positive">Muy preocupante:</p>
+            <p class="title negative">Muy preocupante:</p>
             <p class="narrative-content">En esta escuela, pocos  estudiantes de bajos ingresos se gradúan siendo elegibles para universidades estatales comparado con el promedio estatal para los estudiantes de bajos ingresos.</p>
             <hr />
             <p class="parent-tip">Consejos para padres:</p>
