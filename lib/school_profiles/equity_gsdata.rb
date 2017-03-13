@@ -64,7 +64,8 @@ module SchoolProfiles
       lambda do |hash|
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
-            (hash['breakdowns'].blank? || ethnicity_breakdowns.keys.include?(hash['breakdowns']))
+            (hash['breakdowns'].blank? ||
+                ethnicity_breakdowns.keys.include?(I18n.t(hash['breakdowns'], scope: 'lib.equity_gsdata', default: hash['breakdowns'])))
       end
     end
 
@@ -76,7 +77,7 @@ module SchoolProfiles
             breakdown: breakdown_name_str,
             score: value_to_s(hash['school_value'], precision),
             state_average: value_to_s(hash['state_value'], precision),
-            percentage: value_to_s(ethnicity_breakdowns[breakdown], 0),
+            percentage: value_to_s(ethnicity_breakdowns[breakdown_name_str], 0),
             display_percentages: true,
         }.compact
       end
@@ -98,7 +99,7 @@ module SchoolProfiles
 
     def ethnicity_breakdowns
       @_ethnicity_breakdowns = begin
-        ethnicity_breakdown = {BREAKDOWN_ALL=>SUBJECT_ALL_PERCENTAGE}
+        ethnicity_breakdown = {I18n.t(BREAKDOWN_ALL, scope: 'lib.equity_gsdata', default: BREAKDOWN_ALL)=>SUBJECT_ALL_PERCENTAGE}
         @school_cache_data_reader.ethnicity_data.each do | ed |
           ethnicity_breakdown[ed['breakdown']] = ed['school_value']
           ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']

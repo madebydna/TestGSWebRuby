@@ -47,9 +47,12 @@
     color: #999999;
     font-size: $font-size-s2;
   }
-  .horizontal > div {
-    display: inline;
-    padding-right: 5px;
+  .horizontal {
+    text-align: right;
+    > div {
+      display: inline;
+      padding-right: 5px;
+    }
   }
 }
 
