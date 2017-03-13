@@ -133,9 +133,11 @@ class CensusDataSetQuery
 
   def load_census_descriptions
     return if @census_descriptions_loaded
-    census_descriptions.each do |description|
-      data_sets.select { |cds| cds.id == description.census_data_set_id }
-        .first.census_description = description
+    descriptions_map = census_descriptions.group_by(&:census_data_set_id)
+
+    data_sets.each do |cds|
+      matching_description = descriptions_map[cds.id]
+      cds.census_description = matching_description.first if matching_description
     end
     @census_descriptions_loaded = true
   end
