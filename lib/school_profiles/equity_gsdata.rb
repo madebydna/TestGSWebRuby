@@ -20,6 +20,11 @@ module SchoolProfiles
       })
     end
 
+    def sources
+      equity_gsdata_hash # Need to build the data hash to compute the sources
+      @sources
+    end
+
     private
 
     def courses_hash

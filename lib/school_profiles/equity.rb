@@ -92,7 +92,24 @@ module SchoolProfiles
           string << sources_for_view(hash)
         end
       end
+      if equity_data_sources.present?
+        content << gsdata_sources_for_view(equity_data_sources)
+      end
       content
+    end
+
+    def gsdata_sources_for_view(hash)
+      str = ''
+      hash.each do |subject, info|
+        str << '<div style="margin-top:40px;">'
+        str <<   '<h4 style="font-family:RobotoSlab-Bold;">' + subject + '</h4>'
+        str <<   "<p>#{info[:info_text]}</p>" if info[:info_text].present?
+        str <<   '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': </span>'
+        str <<     info[:sources].map { |sources| "#{I18n.db_t(sources[:name], default: sources[:name])}, #{sources[:year]}"}.join('; ')
+        str <<   '</div>'
+        str << '</div>'
+      end
+      str
     end
 
     def sources_for_view(hash)
