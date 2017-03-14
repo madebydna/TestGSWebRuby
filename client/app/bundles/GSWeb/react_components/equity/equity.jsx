@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import testScoresHelpers from '../../util/test_scores_helpers';
 import EquityBarGraph from './graphs/equity_bar_graph';
 import BarGraphBase from './graphs/bar_graph_base';
+import PlainNumber from './graphs/plain_number';
 import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
 import InfoCircle from '../info_circle';
@@ -12,7 +13,8 @@ export default class Equity extends React.Component {
     enrollment: React.PropTypes.number,
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number,
-    sources: React.PropTypes.string
+    sources: React.PropTypes.string,
+    data: React.PropTypes.object
   };
 
   constructor(props) {
@@ -217,6 +219,17 @@ export default class Equity extends React.Component {
       );
     }
 
+    if (this.props.data) {
+      for (let category in this.props.data) {
+        if (this.props.data.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.data[category]);
+          if (sectionConfig) {
+            section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
     if(section1Content.length > 0) {
       config.push({
         section_info:{
@@ -246,6 +259,50 @@ export default class Equity extends React.Component {
     }
 
     return config;
+  }
+
+  sectionConfig(name, data) {
+    if (data) {
+      let content = [];
+
+      for (let subject in data) {
+        if (data.hasOwnProperty(subject)) {
+          let subjectConfig = this.subjectConfig(subject, data[subject]);
+          if (subjectConfig) {
+            content.push(subjectConfig);
+          }
+        }
+      }
+
+      if (content.length > 0) {
+        return {
+          section_title: name,
+          content: content
+        };
+      }
+    }
+    return null;
+  }
+
+  subjectConfig(name, data) {
+    if (data && data['values']) {
+      let values = data['values'];
+      if (values.length > 0) {
+        let displayType = data['type'] || 'bar';
+        let component = null;
+        if (displayType == 'plain') {
+          component = <PlainNumber values={values}/>
+        } else {
+          component = <BarGraphBase test_scores={values}/>
+        }
+        return {
+          subject: name,
+          component: component,
+          explanation: <div dangerouslySetInnerHTML={{__html: data['narration']}} />
+        };
+      }
+    }
+    return null;
   }
 
   formattedTestScoreData(subject) {

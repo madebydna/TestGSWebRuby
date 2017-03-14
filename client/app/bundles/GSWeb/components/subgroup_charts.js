@@ -106,7 +106,7 @@ var generateSubgroupContainer = function(parsedData) {
 };
 
 var generateInfoCircle = function(content) {
- var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)"><span class="icon-hint"></a>'
+ var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)"><span class="icon-question"></a>'
   return infoCircleHtml;
 }
 

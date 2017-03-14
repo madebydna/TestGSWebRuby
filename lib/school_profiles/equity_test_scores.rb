@@ -8,6 +8,9 @@ module SchoolProfiles
     LOW_INCOME_TOP = 'low_income'
     ETHNICITY_TOP = 'ethnicity'
     SUBJECTS_TO_RETURN = 3
+    BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
+    BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
+    BREAKDOWN_HAWAIIAN = 'Hawaiian'
 
     #PUBLIC
 
@@ -166,6 +169,10 @@ module SchoolProfiles
       @school_cache_data_reader.ethnicity_data.each do | ed |
         ethnicity_breakdown[ed['breakdown']] = ed['school_value']
         ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
+        if  ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO || ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO
+          ethnicity_breakdown[BREAKDOWN_PACIFIC_ISLANDER] = ed['school_value']
+          ethnicity_breakdown[BREAKDOWN_HAWAIIAN] = ed['school_value']
+        end
       end
       ethnicity_breakdown.compact
     end

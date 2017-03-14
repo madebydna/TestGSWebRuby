@@ -1,13 +1,13 @@
 .info-circle {
-  $info-gray: #c1d2d9;
+  $info-gray: #b9ccd4;
   $white: #fff;
 
   @include circle-rating(16px);
   color: $white;
   background-color: $info-gray;
   vertical-align: middle;
-  .icon-hint {
-    font-size: $font-size-s3;
+  .icon-question {
+    font-size: $font-size-s2;
   }
 }
 a:hover.info-circle {

@@ -33,8 +33,8 @@ export default class BarGraphBase extends React.Component {
 
   renderStateAverageArrow(state_average){
     if(state_average > 0) {
-      let style_arrow_down = {left: state_average + "%", top:'11px'}
-      return <div className="arrow-up"><span style={style_arrow_down}></span></div>
+      let style_arrow_up = {left: state_average + "%", top:'11px'}
+      return <div className="arrow-up"><span style={style_arrow_up}></span></div>
     }
   }
 
@@ -42,31 +42,39 @@ export default class BarGraphBase extends React.Component {
     if(test_data['display_percentages']){
       if(test_data['percentage'] == '200'){
         if(test_data['number_students_tested'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['number_students_tested']} students)</span>
+          return <span className="subject-subtext"><br />({test_data['number_students_tested']} {this.translateString('students')})</span>
         }
       }
       else {
         if (test_data['percentage'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}% of students)</span>
+          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('of students')} )</span>
         }
       }
     }
   }
 
+  translateString(str){
+    return gon.translations[str];
+  }
+
   renderStateAverage(state_average) {
       if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
         return (<div className="state-average">
-          State avg: {state_average}%
+          {this.translateString('State avg')} {state_average}%
         </div>)
       }
   }
 
   renderBarGraph(test_data){
     if(test_data !== undefined) {
-      let style_score_width = {width: test_data['score']+"%", backgroundColor: this.mapColor(test_data['score'])}
-      let style_grey_width = {width: 100-test_data['score']+"%" }
+      let numerical_value = test_data['score'];
+      if (numerical_value == '<1') {
+        numerical_value = '0';
+      }
+      let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
+      let style_grey_width = {width: 100-numerical_value+"%" };
       return (
-        <div className="rating-container__score-item equity_test_scores">
+        <div className="rating-container__score-item equity-test-scores">
           <div className="rating-score-item">
             <div className="row">
               <div className="col-xs-6 subject">
@@ -81,7 +89,7 @@ export default class BarGraphBase extends React.Component {
                   <div className="row">
                     <div className="col-xs-12">
                       <div className="single-bar-viz ">
-                        <div className="color-row rating_8" style={style_score_width}></div>
+                        <div className="color-row" style={style_score_width}></div>
                         <div className="grey-row" style={style_grey_width}></div>
                         {this.renderStateAverageArrow(test_data['state_average'])}
                       </div>
@@ -101,10 +109,7 @@ export default class BarGraphBase extends React.Component {
 
   render() {
     let graphs = []
-    let self = this;
-    this.props.test_scores.forEach(function(test_data) {
-      graphs.push(self.renderBarGraph(test_data))
-    })
+    this.props.test_scores.forEach((test_data) => graphs.push(this.renderBarGraph(test_data)))
     return <div>
       {graphs}
     </div>

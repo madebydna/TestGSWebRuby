@@ -96,7 +96,7 @@ module SchoolProfiles
       subject_key = 'lib.test_scores.narrative.subject.' << subject
       full_key = 'lib.test_scores.narrative.low_income.' << key << '_html'
       # TODO: Consider db_t here?
-      subject_tran = I18n.t(subject_key, default: subject.downcase)
+      subject_tran = I18n.t(subject_key, default: subject)
       I18n.t(full_key, subject: subject_tran)
     end
 
