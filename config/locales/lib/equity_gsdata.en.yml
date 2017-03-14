@@ -2,7 +2,7 @@ en:
   lib:
     equity_gsdata:
       courses_title: Advanced coursework
-      Percentage AP enrolled grades 9-12: '% taking AP courses'
+      Percentage AP enrolled grades 9-12: '% taking AP classes'
       Number of Advanced Courses Taken per Student: Adv courses per student
       African American: Black
       Black: Black

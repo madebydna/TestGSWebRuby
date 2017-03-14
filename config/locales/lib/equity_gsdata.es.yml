@@ -1,9 +1,9 @@
 es:
   lib:
     equity_gsdata:
-      courses_title: Advanced coursework
-      Percentage AP enrolled grades 9-12: '% taking AP courses'
-      Number of Advanced Courses Taken per Student: Adv courses per student
+      courses_title: Cursos avanzados
+      Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
+      Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
       African American: Black
       Black: Black
       White: White
@@ -21,5 +21,5 @@ es:
       Male: Male
       Female: Female
       data_point_info_texts:
-        'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
-        'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
+        'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
+        'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'
