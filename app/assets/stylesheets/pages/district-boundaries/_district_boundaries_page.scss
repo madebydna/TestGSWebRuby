@@ -3,7 +3,12 @@
 @import 'toggle-bar';
 @import 'list-and-map';
 
+
 #district-boundaries-page {
+  .spinny-wheel-container {
+    overflow: hidden;
+  }
+
   .header {
     @include clearfix;
     background-color: #184a7d;
@@ -95,7 +100,7 @@
 }
   
 .attribution {
-  text-align: right;
+  text-align: center;
   font-size: 10px;
 }
 

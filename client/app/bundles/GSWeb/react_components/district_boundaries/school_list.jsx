@@ -5,6 +5,7 @@ import { selectSchool } from '../../actions/district_boundaries';
 import { bindActionCreators } from 'redux';
 import * as DistrictBoundaryActions from '../../actions/district_boundaries';
 import { getSchool, getSchools } from '../../reducers/district_boundaries_reducer';
+import DistrictBoundariesLegend from './district_boundaries_legend';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -55,6 +56,8 @@ class SchoolList extends React.Component {
       <section className={ 'school-list ' + this.props.className }>
         <h3>Schools in district</h3>
         {this.renderSchools()}
+        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
+        <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
       </section>
     );
   }

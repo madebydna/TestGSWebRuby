@@ -21,7 +21,7 @@
       margin-top: 0px;
     }
     ol {
-      height: $list-and-map-height - 56;
+      height: $list-and-map-height - 120;
     }
     @include media-breakpoint-up(md) {
       width: $list-width;

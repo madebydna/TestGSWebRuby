@@ -1,6 +1,7 @@
 import ReactOnRails from 'react-on-rails';
 import configureStore from './store/appStore';
-import DistrictBoundaries, { DistrictBoundariesLegend } from './react_components/district_boundaries/district_boundaries';
+import DistrictBoundaries from './react_components/district_boundaries/district_boundaries';
+import DistrictBoundariesLegend from './react_components/district_boundaries/district_boundaries_legend';
 import ConnectedDistrictBoundaries from './react_components/district_boundaries/connected_district_boundaries.jsx';
 import { getValueOfQueryParam } from './util/uri';
 

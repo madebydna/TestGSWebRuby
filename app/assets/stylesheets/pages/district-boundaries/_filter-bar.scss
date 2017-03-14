@@ -18,6 +18,7 @@
 
       .spinny-wheel-container {
         display: inline-block;
+        overflow: hidden;
         .spinny-wheel {
           background-size: 16px;
           background-position: right 10px center !important;

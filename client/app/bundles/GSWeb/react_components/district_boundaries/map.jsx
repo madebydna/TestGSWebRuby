@@ -108,7 +108,6 @@ export default class Map extends React.Component {
       <div className="map" ref={(map) => { this.mapDiv = map; }}>
         {this.renderMarkers()}
         {this.renderPolygons()}
-        <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
       </div>
     );
   }
