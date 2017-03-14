@@ -50,7 +50,7 @@ module SchoolProfiles
           if bd_hash['breakdown'] == 'White' || bd_hash['breakdown'] == 'Hispanic' || bd_hash['breakdown'] == 'African American'
             output[label] ||= {
                 year: bd_hash['year'],
-                source: I18n.db_t(bd_hash['source']),
+                source: bd_hash['source'],
                 label: data_label(label),
                 description: data_label_info_text(label)
             }
@@ -66,7 +66,7 @@ module SchoolProfiles
           if bd_hash['breakdown'] == 'Economically disadvantaged'
             output[label] ||= {
                 year: bd_hash['year'],
-                source: I18n.db_t(bd_hash['source']),
+                source: bd_hash['source'],
                 label: data_label(label),
                 description: data_label_info_text(label)
             }
