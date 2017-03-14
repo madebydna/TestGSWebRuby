@@ -322,6 +322,7 @@ FactoryGirl.define do
       data_type 'data type'
       school_value 0.0
       state_average 0.0
+      source 'CA Dept. of Education'
     end
     before(:create) do |data, evaluator|
       data.value = (
@@ -330,7 +331,8 @@ FactoryGirl.define do
           {
             "breakdown" => "All students",
             "school_value" => evaluator.school_value,
-            "state_average" => evaluator.state_average
+            "state_average" => evaluator.state_average,
+            'source' => evaluator.source
           }
         ]
       }.to_json)
