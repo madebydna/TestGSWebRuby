@@ -60,6 +60,9 @@
       input {
         @include input-with-search-icon;
         width: 175px; //
+        @include media-breakpoint-up(lg) {
+          width: 350px;
+        }
         @include media-breakpoint-down(sm) {
           width: 100%; //
           border-right-width: 1px;
