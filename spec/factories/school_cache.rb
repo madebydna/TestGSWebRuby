@@ -310,7 +310,8 @@ FactoryGirl.define do
         {
           "breakdown" => "All students",
           "school_value" => 80.6,
-          "state_average" => 42
+          "state_average" => 42,
+          'source' => 'CA Dept. of Education'
         }
       ]
     }.to_json)
