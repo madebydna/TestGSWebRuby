@@ -8,7 +8,7 @@ es:
       'source': 'Source'
       'See more': 'See more'
       'More': 'More about GreatSchools ratings'
-      info_text: "The test score rating reflects annual state test results for this school compared with scores statewide."
+      info_text: "La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal."
       'Math': Math
       narrative:
         subject:

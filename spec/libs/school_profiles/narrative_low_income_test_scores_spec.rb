@@ -443,20 +443,20 @@ describe SchoolProfiles::NarrativeLowIncomeTestScores do
   end
 
   def string_key_for_key_4_3_and_subject_english
-    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The English scores of low-income students at this school are at or above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
-    end
+    "<p class='title positive'>A positive sign!</p> <p class=\"narrative-content\">The English scores of low-income students at this school are at or <span class=\"emphasis\">above</span> the state average for all kids. Still, there’s a <span class=\"emphasis\">large gap</span> between how low-income kids are doing compared to their classmates with more financial resources.</p> <hr /> <p class=\"parent-tip\">Parent tip:</p> <p class=\"footnote\">Ask the school what it’s doing to help all students succeed.</p>\n"
+  end
 
 
   def string_key_for_key_4_3_and_subject_math
-    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The math scores of low-income students at this school are at or above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
+    "<p class='title positive'>A positive sign!</p> <p class=\"narrative-content\">The math scores of low-income students at this school are at or <span class=\"emphasis\">above</span> the state average for all kids. Still, there’s a <span class=\"emphasis\">large gap</span> between how low-income kids are doing compared to their classmates with more financial resources.</p> <hr /> <p class=\"parent-tip\">Parent tip:</p> <p class=\"footnote\">Ask the school what it’s doing to help all students succeed.</p>\n"
   end
 
   def string_key_for_key_4_3_and_subject_some_subject
-    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The some subject scores of low-income students at this school are at or above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
-    end
+    "<p class='title positive'>A positive sign!</p> <p class=\"narrative-content\">The Some subject scores of low-income students at this school are at or <span class=\"emphasis\">above</span> the state average for all kids. Still, there’s a <span class=\"emphasis\">large gap</span> between how low-income kids are doing compared to their classmates with more financial resources.</p> <hr /> <p class=\"parent-tip\">Parent tip:</p> <p class=\"footnote\">Ask the school what it’s doing to help all students succeed.</p>\n"
+  end
 
 
   def string_key_for_key_4_3_and_subject_some_other_subject
-    "<p class=\"narrative-content\"><span class=\"positive\">A positive sign!</span> The some other subject scores of low-income students at this school are at or above the state average for all kids. Still, there's a <span class=\"negative\">large gap between how low-income kids</span> are doing compared to their classmates with more financial resources.</p> <p class=\"footnote\"><span class=\"emphasis\">Parents should ask</span> the school what it’s doing to help all students succeed.</p>\n"
+    "<p class='title positive'>A positive sign!</p> <p class=\"narrative-content\">The Some other subject scores of low-income students at this school are at or <span class=\"emphasis\">above</span> the state average for all kids. Still, there’s a <span class=\"emphasis\">large gap</span> between how low-income kids are doing compared to their classmates with more financial resources.</p> <hr /> <p class=\"parent-tip\">Parent tip:</p> <p class=\"footnote\">Ask the school what it’s doing to help all students succeed.</p>\n"
   end
 end

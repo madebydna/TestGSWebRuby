@@ -42,25 +42,21 @@ export default class BarGraphBase extends React.Component {
     if(test_data['display_percentages']){
       if(test_data['percentage'] == '200'){
         if(test_data['number_students_tested'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['number_students_tested']} {this.translateString('students')})</span>
+          return <span className="subject-subtext"><br />({test_data['number_students_tested']} {GS.I18n.t('students')})</span>
         }
       }
       else {
         if (test_data['percentage'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('of students')} )</span>
+          return <span className="subject-subtext"><br />({test_data['percentage']}{GS.I18n.t('of students')} )</span>
         }
       }
     }
   }
 
-  translateString(str){
-    return gon.translations[str];
-  }
-
   renderStateAverage(state_average) {
       if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
         return (<div className="state-average">
-          {this.translateString('State avg')} {state_average}%
+          {GS.I18n.t('State avg')} {state_average}%
         </div>)
       }
   }

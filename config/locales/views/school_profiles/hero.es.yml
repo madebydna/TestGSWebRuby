@@ -10,4 +10,4 @@ es:
       school_type: Type
       school_website: School website
       students_enrolled: Students
-      gs_rating_info_text_html: "GreatSchools is a national nonpartisan nonprofit organization. Our rating is a simple tool that helps you compare schools within a state based on test scores and other available data, like student academic progress and college readiness. <div><a href='/gk/ratings/' target='_blank'>About the GreatSchools Rating.</a></div>"
+      gs_rating_info_text_html: "GreatSchools es una organización nacional sin fines de lucro y no partidista. Nuestra calificación es una sencilla herramienta que le ayuda a comparar escuelas dentro de un estado basado en los puntajes de los exámenes estatales y otros datos disponibles, como el progreso académico del estudiante y la preparación universitaria.<!-- <div><a href='/gk/ratings/?lang=es' target='_blank'>Acerca de la calificación GreatSchools.</a></div>-->"

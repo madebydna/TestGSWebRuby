@@ -2,6 +2,6 @@ es:
   school_profiles:
     test_scores:
       title: Test scores
-      subtitle_html: 'Find out <a href="/gk/articles/state-standardized-test-scores-issues-to-consider/">what state standardized test scores really tell you</a> about a school – and what they don’t.'
+      subtitle_html: 'Averigua <!--<a href="/gk/articles/state-standardized-test-scores-issues-to-consider/?lang=es">-->lo que los resultados de los exámenes estatales realmente te dicen<!--</a>--> acerca de una escuela - y lo que no te dicen'
       source: Source
       see notes: See notes

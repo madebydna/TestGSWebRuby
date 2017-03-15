@@ -14,8 +14,6 @@ en:
         subject:
           'English Language Arts': English
           'Math': math
-          'Science': Science
-          'Biology I': Biology I
         low_income:
           '0_0_html': >
             <p class="narrative-content">This shows results from students who are eligible to receive free or reduced
