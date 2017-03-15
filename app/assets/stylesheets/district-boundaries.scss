@@ -39,8 +39,11 @@
 
 @import "gs/ratings";
 @import "fonts/gs-icon-font";
-// @import "sprites/avatars_33x33";
-// @import "sprites/avatars_65x65";
+
+// third party libraries
+@import 'resources/tipso'; // used on school profiles
+@import 'resources/remodal'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme'; // used on profiles / used by modals
 
 @import 'pages/district-boundaries/_district_boundaries_page';
 
