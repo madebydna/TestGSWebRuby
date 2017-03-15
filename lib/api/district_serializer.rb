@@ -6,6 +6,7 @@ class Api::DistrictSerializer
   end
 
   def to_hash
+    rating = district.great_schools_rating if defined? district.great_schools_rating
     h = {
       id: district.id,
       districtName: district.try(:name),
@@ -18,7 +19,7 @@ class Api::DistrictSerializer
         zip: district['zipcode'],
         city: district['city']
       },
-      rating: (district.great_schools_rating if defined? district.great_schools_rating),
+      rating: rating && rating != 'NR' ? rating : nil,
       state: district.state,
       type: 'district',
       schoolCountsByLevelCode: district.school_counts_by_level_code

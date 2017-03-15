@@ -65,7 +65,7 @@ class SchoolList extends React.Component {
 
 export default connect(
   state => ({
-    schools: getSchools(state.districtBoundaries),
+    schools: getSchools(state.districtBoundaries).sort((s1,s2) => (s2.rating || 0) - (s1.rating || 0)),
     school: getSchool(state.districtBoundaries)
   }),
   dispatch => bindActionCreators(DistrictBoundaryActions, dispatch)
