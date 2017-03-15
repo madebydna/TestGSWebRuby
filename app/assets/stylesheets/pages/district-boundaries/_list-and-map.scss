@@ -33,6 +33,9 @@
 
 
   .map {
+    .spinny-wheel-container {
+      overflow: hidden;
+    }
     @include clearfix;
     height: $list-and-map-height;
     .spinny-wheel {
