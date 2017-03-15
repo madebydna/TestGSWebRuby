@@ -40,7 +40,7 @@ class SchoolList extends React.Component {
     return (
       <li key={school.state + school.id} onClick={this.onClickSchool(school)} className={liClass} >
         { school.rating && <span>{this.renderRating(school.rating)}</span> }
-        <span>{school.name}</span>
+        <span>{school.name}<br/><a href={school.links.profile} target="_blank">View school profile</a></span>
       </li>
     );
   }

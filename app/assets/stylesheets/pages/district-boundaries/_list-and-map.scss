@@ -22,6 +22,17 @@
     }
     ol {
       height: $list-and-map-height - 120;
+      li {
+        span {
+          display: inline-block;
+        }
+        span ~ span {
+          max-width: $list-width - 90px;
+        }
+        a {
+          font-size: 12px;
+        }
+      }
     }
     @include media-breakpoint-up(md) {
       width: $list-width;
