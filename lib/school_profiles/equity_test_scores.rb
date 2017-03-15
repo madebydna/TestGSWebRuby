@@ -52,8 +52,8 @@ module SchoolProfiles
           level_code = breakdown_hash.seek('grades', 'All', 'level_code')
           level_code.first[1].each do |subject, year_hash|
             year = latest_year_in_test(year_hash).to_s
-            subject_str = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.t(subject, default: subject))
-            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.equity_test_scores', default: I18n.t(breakdown_name, breakdown_name))
+            subject_str = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))
+            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.equity_test_scores', default: I18n.db_t(breakdown_name, default: breakdown_name))
             output_hash[subject_str] ||= []
             output_hash[subject_str] << year_hash[year].merge({'breakdown'=>breakdown_name_str,
                                                                'display_percentages'=>display_percentages(breakdown_name),

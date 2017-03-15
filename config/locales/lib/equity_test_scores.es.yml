@@ -3,5 +3,8 @@ es:
     equity_test_scores:
       Economically disadvantaged: De bajos recursos
       Not economically disadvantaged: Sin desventaja económica
-      'U.S. History': 'Historia de Estados Unidos'
+      English Language Arts: Inglés
+      African American: Afroamericanos
       Black: Afroamericanos
+      White: Blancos
+      All: Todos
