@@ -1,20 +1,7 @@
 es:
   lib:
     equity_test_scores:
-      Economically disadvantaged: Economically disadvantaged
-      Not economically disadvantaged: Not economically disadvantaged
-      U.S. History: 'Historia de Estados Unidos'
-      African American: Black
-      Black: Black
-      White: White
-      All: All students
-      Hispanic: Hispanic
-      Filipino: Filipino
-      Asian: Asian
-      Multiracial: Two or more races
-      Two or more races: Two or more races
-      American Indian/Alaska Native: American Indian/Alaska Native
-      Pacific Islander: Pacific Islander
-      Hawaiian Native/Pacific Islander: Pacific Islander
-      Male: Male
-      Female: Female
+      Economically disadvantaged: De bajos recursos
+      Not economically disadvantaged: Sin desventaja económica
+      'U.S. History': 'Historia de Estados Unidos'
+      Black: Afroamericanos

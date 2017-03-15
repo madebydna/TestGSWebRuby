@@ -71,7 +71,7 @@ export default class EquityBarGraph extends React.Component {
 
   // build the labels for each of the bars ("categories in highcharts land")
   categories() {
-    return _.map(this.testScores(), data => data.breakdown);
+    return _.map(this.testScores(), data => GS.I18n.t(data.breakdown));
   }
 
   // helper method to map a score to a color for bars
