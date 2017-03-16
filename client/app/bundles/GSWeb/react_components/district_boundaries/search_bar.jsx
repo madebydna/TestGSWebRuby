@@ -103,9 +103,9 @@ export default class SearchBar extends React.Component {
     let searchInput = null;
     let searchButton = <button name="submit-search" onClick={this.search}>Search</button>;
     if(this.props.loading) {
-      searchInput = <SpinnyWheel><input name="search-term" type="text" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/></SpinnyWheel>
+      searchInput = <SpinnyWheel><input name="search-term" type="text" defaultValue={this.state.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/></SpinnyWheel>
     } else {
-      searchInput = <input name="search-term" type="text" placeholder="Enter an address to see schools" value={this.props.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
+      searchInput = <input name="search-term" type="text" placeholder="Enter an address to see schools" defaultValue={this.state.searchTerm} onChange={this.onSearchTermChange} onKeyPress={this.submitOnEnterKey}/>
     }
 
     return (
