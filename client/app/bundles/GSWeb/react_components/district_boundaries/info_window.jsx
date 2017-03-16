@@ -58,7 +58,7 @@ export default function createInfoWindow(entity) {
         <span class="icon-house">  </span>
         <a href={homesForSaleHref} rel="nofollow" target="_blank">Homes for sale</a>
         { entity.links && entity.links.profile &&
-          <a href={entity.links.profile} class="school-details">View school details</a>
+          <a href={entity.links.profile} class="school-details" target="_blank">View school details</a>
         }
       </div>
     </div>
