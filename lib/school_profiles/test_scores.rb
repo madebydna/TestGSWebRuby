@@ -95,7 +95,7 @@ module SchoolProfiles
       str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(array.last[:test_label]) + '</h4>'
       str << "<div style='margin-bottom:10px; font-weight:bold;'>#{array.last[:subject].join(', ')}</div>"
       str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</div>'
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': </span>' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</div>'
       # str << '</div>'
       str
     end
