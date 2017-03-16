@@ -104,8 +104,8 @@ module SchoolProfiles
         str << '<div style="margin-top:40px;">'
         str <<   '<h4 style="font-family:RobotoSlab-Bold;">' + subject + '</h4>'
         str <<   "<p>#{info[:info_text]}</p>" if info[:info_text].present?
-        str <<   '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': </span>'
-        str <<     info[:sources].map { |sources| "#{I18n.db_t(sources[:name], default: sources[:name])}, #{sources[:year]}"}.join('; ')
+        str <<   '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source') + ': </span>'
+        str <<     info[:sources].map { |sources| "#{data_label(sources[:name])}, #{sources[:year]}"}.join('; ')
         str <<   '</div>'
         str << '</div>'
       end
@@ -116,18 +116,20 @@ module SchoolProfiles
       str = '<div style="margin-top:40px;">'
       str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash[:label]) + '</h4>'
       str << "<p>#{data_label(hash[:description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': </span>' + I18n.db_t(hash[:source]) + ', ' + hash[:year].to_s + '</div>'
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source') + ': </span>' + data_label(hash[:source]) + ', ' + hash[:year].to_s + '</div>'
       str << '</div>'
       str
     end
 
     def data_label(key)
-      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.equity', default: I18n.db_t(key, default: key))
+    end
+
+    def static_label(key)
       I18n.t(key.to_sym, scope: 'lib.equity', default: key)
     end
 
     def data_label_info_text(key)
-      key.to_sym
       I18n.t(key.to_sym, scope: 'lib.equity.data_point_info_texts')
     end
 
