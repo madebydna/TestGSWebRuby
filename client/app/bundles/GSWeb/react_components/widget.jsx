@@ -137,19 +137,19 @@ export default class Widget extends React.Component {
 
   renderWidget() {
     return(
-      <div id="widget-form-page" style={{margin: 'auto', maxWidth: '1200px'}}>
+      <div id="widget-form-page" style={{margin: 'auto', maxWidth: '1200px', padding: '0 20px'}}>
         <h1>GreatSchools School Finder Widget</h1>
-        <h2>Create Your Customized Widget</h2>
+        <h2>Create your customized widget</h2>
         <hr/>
         <div>
           <form className="widget">
             <div>
-              <p>Choose address, zip code or city and state</p>
-              <label>Pick the location you'd like your widget to feature </label>
-              <input type="text" name="address" onBlur={this.geocodeAddress} defaultValue={this.state.zip} />
+              <p>Pick the location you'd like your widget to feature</p>
+              <label>Choose address, zip code, or city and state</label>
+              <input type="text" name="address" onBlur={this.geocodeAddress} defaultValue={this.state.zip}/>
             </div>
             <div>
-              <p>Choose the width and height of the widget</p>
+              <p>Choose the size of your widget</p>
               <div>
                 <label>Width</label>
                 <input type="text" name="width" onBlur={this.putFieldInState('width')} defaultValue={this.state.width}/>
@@ -173,7 +173,7 @@ export default class Widget extends React.Component {
               </div>
             </div>
             <div>
-              <p>Enter the website URL where the widget will be hosted</p>
+              <p>Enter the website URL where this widget will be hosted</p>
               <div>
                 <label>Your website URL</label>
                 <ValidatingInput type="url"
