@@ -111,18 +111,6 @@ export default class DistrictBoundaries extends React.Component {
     });
   }
 
-  legendCta(legendContainerForCtaId) {
-    return (<a className="js-react-on-rails-component legend-cta gs-tipso"
-       data-remodal-target="modal_info_box"
-       data-content-type="react"
-       data-component-name="DistrictBoundariesLegend"
-       data-dom-id={legendContainerForCtaId}
-       data-props="{}"
-       href="javascript:void(0)">
-       View legend
-    </a>);
-  }
-
   render() {
     return (
       <div className="district-boundaries-component">
