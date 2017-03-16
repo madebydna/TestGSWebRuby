@@ -2,7 +2,7 @@ class CitiesListController < ApplicationController
 
   layout 'application'
 
-  before_filter :require_valid_state
+  before_filter :require_valid_state, :except => :old_homepage
 
   def show
     gon.pageTitle = meta_title
@@ -10,6 +10,19 @@ class CitiesListController < ApplicationController
     @dcl = dcl
     cache_time = ENV_GLOBAL['district_city_list_cache_time'] || 0
     expires_in cache_time, public: true
+  end
+
+  def old_homepage
+    state_name = States.state_name(params[:state_abbr])
+    city_name = params[:city].downcase.gsub('_', '-')
+
+    return redirect_to :root if state_name.nil?
+
+    target_url = city_path(:state => state_name, :city => city_name)
+    query_params = request.query_parameters.to_query
+    query_params = "?#{query_params}" unless query_params.empty?
+
+    redirect_to "#{target_url}#{query_params}", :status => 301
   end
 
   private

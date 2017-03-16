@@ -502,6 +502,9 @@ LocalizedProfiles::Application.routes.draw do
     get '', to: 'school_profile_overview#overview'
   end
 
+  #Handle old city homepage structure
+  get '/city/:city/:state_abbr', to: 'cities_list#old_homepage'
+
   #Handle City SEO pages
   get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'
 
