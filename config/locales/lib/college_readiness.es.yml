@@ -5,15 +5,10 @@ es:
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
-      '4-year high school graduation rate': '4-year high school graduation rate'
-      'Average SAT score': 'Average SAT score'
       'SAT percent participation': 'SAT participation rate'
-      'Average ACT score': 'Average ACT score'
       'ACT participation':  'ACT participation rate'
       'Percentage AP enrolled grades 9-12': 'AP course participation'
-      'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
-      'Percentage of students passing 1 or more AP exams grades 9-12': 'Percentage of students passing 1 or more AP exams grades 9-12'
-      'source': 'Source'
+      'source': Fuente
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenia un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
