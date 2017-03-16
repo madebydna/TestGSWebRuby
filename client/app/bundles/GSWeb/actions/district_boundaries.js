@@ -6,7 +6,7 @@ export const SET_LEVEL = 'SET_LEVEL';
 export const ADD_SCHOOL_TYPE = 'ADD_SCHOOL_TYPE';
 export const REMOVE_SCHOOL_TYPE = 'REMOVE_SCHOOL_TYPE';
 export const LOCATION_CHANGE = 'LOCATION_CHANGE';
-export const REQUEST_LOCATION_CHANGE = 'REQUEST_LOCATION_CHANGE';
+export const IS_LOADING = 'IS_LOADING';
 export const DISTRICT_SELECT = 'DISTRICT_SELECT';
 export const SCHOOL_SELECT = 'SCHOOL_SELECT';
 
@@ -25,7 +25,7 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
   let { level, nearbyDistrictsRadius, state, schoolTypes } = getState().districtBoundaries;
   let schoolLevel = (level == 'e') ? 'p' : level;
   dispatch({
-    type: REQUEST_LOCATION_CHANGE
+    type: IS_LOADING
   })
 
   $.when(
@@ -56,6 +56,9 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
 }
 
 export const selectSchool = (id, state) => dispatch => {
+  dispatch({
+    type: IS_LOADING
+  })
   $.when(loadSchoolById(id, state)).done(school => {
     dispatch({
       type: SCHOOL_SELECT,
@@ -65,6 +68,9 @@ export const selectSchool = (id, state) => dispatch => {
 };
 
 export const selectDistrict = (id, state) => dispatch => {
+  dispatch({
+    type: IS_LOADING
+  })
   $.when(
     loadDistrictById(id, state),
     findSchoolsByDistrict(id, state)
@@ -85,6 +91,9 @@ export const toggleSchoolType = schoolType => (dispatch, getState) => {
   } else {
     schoolTypes = schoolTypes.concat(schoolType);
     if(lat && lon && state) {
+      dispatch({
+        type: IS_LOADING
+      })
       $.when(
         findSchoolsNearLatLon(lat, lon, state, schoolTypes)
       ).done((additionalSchools = []) => {

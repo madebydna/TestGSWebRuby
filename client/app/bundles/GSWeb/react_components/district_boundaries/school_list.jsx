@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import * as DistrictBoundaryActions from '../../actions/district_boundaries';
 import { getSchool, getSchools } from '../../reducers/district_boundaries_reducer';
 import DistrictBoundariesLegend from './district_boundaries_legend';
+import SpinnyWheel from '../spinny_wheel';
 
 class SchoolList extends React.Component {
   static defaultProps = {
@@ -52,21 +53,31 @@ class SchoolList extends React.Component {
   }
 
   render() {
-    return(
-      <section className={ 'school-list ' + this.props.className }>
+    if(this.props.loading) {
+      return <section className={ 'school-list ' + this.props.className }>
+        <h3>Schools in district</h3>
+        <SpinnyWheel>
+          {this.renderSchools()}
+        </SpinnyWheel>
+        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
+        <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
+      </section>
+    } else {
+      return <section className={ 'school-list ' + this.props.className }>
         <h3>Schools in district</h3>
         {this.renderSchools()}
         <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
         <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
       </section>
-    );
+    }
   }
 }
 
 export default connect(
   state => ({
     schools: getSchools(state.districtBoundaries).sort((s1,s2) => (s2.rating || 0) - (s1.rating || 0)),
-    school: getSchool(state.districtBoundaries)
+    school: getSchool(state.districtBoundaries),
+    loading: state.districtBoundaries.loading
   }),
   dispatch => bindActionCreators(DistrictBoundaryActions, dispatch)
 )(SchoolList);
