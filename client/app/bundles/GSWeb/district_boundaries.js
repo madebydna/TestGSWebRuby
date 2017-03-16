@@ -4,6 +4,8 @@ import DistrictBoundaries from './react_components/district_boundaries/district_
 import DistrictBoundariesLegend from './react_components/district_boundaries/district_boundaries_legend';
 import ConnectedDistrictBoundaries from './react_components/district_boundaries/connected_district_boundaries.jsx';
 import { getValueOfQueryParam } from './util/uri';
+import * as tooltips from './util/tooltip';
+import * as remodal from './util/remodal';
 
 window.store = configureStore({
   districtBoundaries: {
@@ -30,6 +32,8 @@ ReactOnRails.register({
 
 $(function() {
   ReactOnRails.reactOnRailsPageLoaded();
+  tooltips.initialize();
+  remodal.init();
 });
 
 

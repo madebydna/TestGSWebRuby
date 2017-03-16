@@ -82,11 +82,14 @@
   .legend-cta {
     display: inline-block;
     text-align: right;
-    margin-bottom: 5px;
-    vertical-align: bottom;
-    font-size: 10px;
+    float: right;
+    margin-right: 10px;
     @include media-breakpoint-up(md) {
       display: none;
+    }
+    > button {
+      background: transparent;
+      color: #2ba3dc;
     }
   }
 }

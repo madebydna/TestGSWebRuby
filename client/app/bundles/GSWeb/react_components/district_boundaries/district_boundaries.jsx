@@ -11,6 +11,7 @@ import * as markerTypes from '../../components/map/markers';
 import * as polygonTypes from '../../components/map/polygons';
 import SchoolList from './school_list';
 import jsxToString from 'jsx-to-string';
+import DistrictBoundariesLegend from './district_boundaries_legend';
 
 export default class DistrictBoundaries extends React.Component {
   static defaultProps = {
@@ -125,6 +126,7 @@ export default class DistrictBoundaries extends React.Component {
   render() {
     return (
       <div className="district-boundaries-component">
+        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta" style={{display: 'none'}}/>
         <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}/>
         { this.props.schools.length > 0 && 
           <SchoolList className={ this.state.listHidden ? 'closed' : '' } />

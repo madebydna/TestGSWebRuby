@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
-export default ({legendContainerForCtaId}) => (
-  <div>
+export default ({legendContainerForCtaId, ...rest}) => (
+  <div {...rest}>
     <div id={legendContainerForCtaId} style={{display: 'none'}}></div>
     <ul className="legend">
       <li><span/>District</li>
