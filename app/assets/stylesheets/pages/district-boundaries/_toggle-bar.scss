@@ -33,5 +33,12 @@
         display: inline-block;
       }
     }
+
+    .icon-house {
+      font-size: 14px;
+      > a {
+        font-size: 12px;
+      }
+    }
   }
 }
