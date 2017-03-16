@@ -2,7 +2,7 @@ es:
   lib:
     students:
       'title': 'GreatSchools profile data sources &amp; information'
-      'source': 'Source'
+      'source': 'Fuente'
       'ethnicity': 'Ethnicity'
-      'gender': 'Gender'
+      'gender': 'El Sexo'
       'subgroups': 'Subgroups'
