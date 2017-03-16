@@ -21,8 +21,7 @@ module SchoolProfiles
     end
 
     def data_label(key)
-      key.to_sym
-      I18n.t(key.to_sym, scope: 'lib.test_scores', default: key)
+      I18n.t(key, scope: 'lib.test_scores', default: I18n.db_t(key, default: key))
     end
 
     def subject_scores_equity
@@ -45,9 +44,9 @@ module SchoolProfiles
           rating_score_item.label = data_label(hash.subject)
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
           rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
-          rating_score_item.description = I18n.db_t(hash.test_description)
-          rating_score_item.test_label = I18n.db_t(hash.test_label)
-          rating_score_item.source = I18n.db_t(hash.test_source)
+          rating_score_item.description = hash.test_description
+          rating_score_item.test_label = hash.test_label
+          rating_score_item.source = hash.test_source
           rating_score_item.year = hash.year
         end
       end if scores.present?
@@ -58,13 +57,13 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
       content << '<div style="padding:0 40px 20px;">'
       content << '<div style="margin-top:40px;">'
-      content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('.GreatSchools Rating') + '</h4>'
-      content << '<div>' + data_label('.Rating text') + '</div>'
-      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': GreatSchools, </span>' + rating_year + ' | '
-      content << data_label('.See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('.More') + '</a>'
+      content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
+      content << '<div>' + data_label('Rating text') + '</div>'
+      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year + ' | '
+      content << data_label('See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
       content << '</div>'
       content << '</div>'
       data = subject_scores.each_with_object({}) do |rsi, output|
@@ -96,7 +95,7 @@ module SchoolProfiles
       str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(array.last[:test_label]) + '</h4>'
       str << "<div style='margin-bottom:10px; font-weight:bold;'>#{array.last[:subject].join(', ')}</div>"
       str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + source + ', ' + year.to_s + '</div>'
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">Source: </span>' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</div>'
       # str << '</div>'
       str
     end
