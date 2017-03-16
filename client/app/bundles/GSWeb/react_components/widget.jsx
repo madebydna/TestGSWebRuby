@@ -47,7 +47,7 @@ export default class Widget extends React.Component {
   }
 
   getCodeButtonEnabled() {
-    return (this.state.targetUrlValid && this.state.emailValid);
+    return (this.state.targetUrlValid && this.state.emailValid && this.state.termsValid);
   }
 
   getCode() {
@@ -185,6 +185,17 @@ export default class Widget extends React.Component {
                   onValid={() => this.setState({targetUrlValid: true})}
                 />
               </div>
+            </div>
+            <div>
+              <label htmlFor="termsCheckbox">I agree to the widget <a href="/gk/licensing/greatschools-widget-terms-use/" target="_blank">terms of service</a>.</label>
+              <ValidatingInput type="checkbox"
+                               id="termsCheckbox"
+                               onBlur={this.putFieldInState('terms')}
+                               name="terms"
+                               validation={validations.TERMS_REQUIRED}
+                               onInvalid={() => this.setState({termsValid: false})}
+                               onValid={() => this.setState({termsValid: true})}
+                               />
             </div>
           </form>
         </div>
