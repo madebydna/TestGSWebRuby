@@ -148,6 +148,7 @@ export default class SearchBar extends React.Component {
           <div className="filter grade-filter">
             <label>School Grade</label>
             <ButtonGroup
+              activeOption="e"
               options={{e: 'Elementary', m: 'Middle', h: 'High'}}
               onSelect={this.props.setLevel} />
           </div>
