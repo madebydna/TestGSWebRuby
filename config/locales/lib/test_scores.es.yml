@@ -1,15 +1,20 @@
 es:
   lib:
     test_scores:
-      'English Language Arts': English
+      'English Language Arts': Inglés
+      'English': Inglés
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools Rating'
       'Rating text': 'The GreatSchools Rating is a simple tool that helps you compare schools based on test scores and other available data, including student academic growth and college readiness. GreatSchools is always working to improve the rating and add more information when state education agencies make school quality data publicly available.'
       'source': 'Source'
       'See more': 'See more'
       'More': 'More about GreatSchools ratings'
+      Test scores: Resultados de exámenes
       info_text: "La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal."
-      'Math': Math
+      'Math': Matemáticas
+      Science: Ciencia
+      Source: Fuente
+      see notes: Ver notas
       narrative:
         subject:
           'English Language Arts': English
