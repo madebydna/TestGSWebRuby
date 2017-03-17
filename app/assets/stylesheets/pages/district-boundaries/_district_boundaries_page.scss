@@ -71,7 +71,9 @@
     }
 
     .district-select {
-      max-width: 40%;
+      @include media-breakpoint-up(md) {
+        max-width: 250px;
+      }
       label {
         white-space: nowrap;
         overflow: hidden;
