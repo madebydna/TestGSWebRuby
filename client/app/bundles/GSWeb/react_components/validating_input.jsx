@@ -10,16 +10,23 @@ export default class ValidatingInput extends React.Component {
     super(props);
     this.onChange = this.onChange.bind(this);
     this.state = {
-      errors: []
+      errors: [],
+      initial: true
     };
   }
 
   onChange(event) {
-    let value = event.target.value;
+    let value = null;
+    if (this.props.type === 'checkbox') {
+      value = event.target.checked;
+    } else {
+      value = event.target.value;
+    }
     let errors = validations[this.props.validation](value);
 
     this.setState({
-      errors: errors
+      errors: errors,
+      initial: false
     }, () => {
       if(errors.length == 0 && this.props.onChange) {
         this.props.onChange(event);
@@ -32,6 +39,8 @@ export default class ValidatingInput extends React.Component {
       this.props.onInvalid();
     } else if(prevState.errors.length > 0 && this.state.errors.length === 0 && this.props.onValid) {
       this.props.onValid();
+    } else if (prevState.initial === true && this.state.initial === false && this.state.errors.length === 0 && this.props.onValid) {
+      this.props.onValid();
     }
   }
 
@@ -42,7 +51,7 @@ export default class ValidatingInput extends React.Component {
   renderError() {
     return <span className="errors">
       <ul>
-        {this.state.errors.map(e => <li>{e}</li>)}
+        {this.state.errors.map(e => <li key={e}>{e}</li>)}
       </ul>
     </span>
   }

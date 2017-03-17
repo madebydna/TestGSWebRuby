@@ -79,8 +79,17 @@ es:
       con todos los estudiantes en el estado.
     Low income icon: 'icon-pie'
     Test scores: 'Resultados de exámenes'
-    Graduation rates: 'la elegibilidad a la UC/CSU'
-    'UC/CSU eligibility': 'índices de Graduación'
-    See notes: See notes
+    Graduation rates: 'La elegibilidad a la UC/CSU'
+    'UC/CSU eligibility': 'Índices de Graduación'
+    See notes: Ver notas
     Economically disadvantaged: De bajos recursos
     Not economically disadvantaged: Sin desventaja económica
+    show_more: Mostrar más
+    show_less: Mostrar menos
+    english-learners: Estudiantes aprendices de Inglés
+    english-learners-info-text: Este grupo incluye a todos los estudiantes clasificados como aprendices de inglés (ELL).
+    students-participating-in-free-or-reduced-price-lunch-program: Estudiantes de familias de bajos ingresos
+    students-participating-in-free-or-reduced-price-lunch-program-info-text: La designación de los estudiantes de familias de bajos ingresos se basa en el porcentaje de estudiantes de esta escuela que son elegibles para recibir el almuerzo gratis o a un precio reducido.
+    Gender: El sexo
+    Male: Masculino
+    Female: Femenino

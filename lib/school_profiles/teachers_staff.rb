@@ -73,13 +73,15 @@ module SchoolProfiles
     end
 
     def data_label(key)
-      key.to_sym
-      I18n.t(key.to_sym, scope: 'lib.teachers_staff', default: key)
+      I18n.t(key.to_sym, scope: 'lib.teachers_staff', default: I18n.db_t(key, default: key))
+    end
+
+    def static_label(key)
+      I18n.t(key, scope: 'lib.teachers_staff', default: key)
     end
 
     def data_label_info_text(key)
-      key.to_sym
-      I18n.t(key.to_sym, scope: 'lib.teachers_staff.data_point_info_texts')
+      I18n.t(key.to_sym, scope: 'lib.teachers_staff.data_point_info_texts', default: '')
     end
 
     def data_type_hashes
@@ -120,7 +122,7 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
+      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + static_label('title') + '</h1>'
       content << '<div style="padding:0 40px 20px;">'
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)
@@ -132,7 +134,7 @@ module SchoolProfiles
       str = '<div style="margin-top:40px;">'
       str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source')+ ': </span>' + I18n.db_t(hash['source_name']) + ', ' + hash['source_year'].to_s + '</div>'
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source')+ ': </span>' + data_label(hash['source_name']) + ', ' + hash['source_year'].to_s + '</div>'
       str << '</div>'
       str
     end
