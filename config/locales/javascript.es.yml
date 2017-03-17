@@ -79,8 +79,8 @@ es:
       con todos los estudiantes en el estado.
     Low income icon: 'icon-pie'
     Test scores: 'Resultados de exámenes'
-    Graduation rates: 'La elegibilidad a la UC/CSU'
-    'UC/CSU eligibility': 'Índices de Graduación'
+    Graduation rates: 'Índices de Graduación'
+    'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
     See notes: Ver notas
     Economically disadvantaged: De bajos recursos
     Not economically disadvantaged: Sin desventaja económica
@@ -93,3 +93,24 @@ es:
     Gender: El sexo
     Male: Masculino
     Female: Femenino
+    Strongly disagree: Totalmente en desacuerdo
+    Disagree: En desacuerdo
+    Neutral: Indiferente
+    Agree: De acuerdo
+    Strongly agree: Totalmente de acuerdo
+    Review Guidelines: Guia para comentarios
+    Cancel: Cancelar
+    Submit: Enviar
+    Required: Requerido
+    Review this School: Review this School
+    Overall experience: Experiencia general
+    Recent Comments: Recent Comments
+    Be the first to review this school: Be the first to review this school
+    Tell us why: Díganos por qué
+    What is your relationship to this school?: '¿Cuál es su relación con esta escuela?'
+    all set: '¡Ya estamos! Hemos enviado tu comentario. Gracias por ayudar a otras familias compartiendo tus experiencias.'
+    Parent: Padre
+    Current student: Estudiante
+    Teacher: Profesor
+    School leader: Funcionario de la escuela
+    Community member: Miembro de la comunidad

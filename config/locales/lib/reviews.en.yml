@@ -1,0 +1,16 @@
+en:
+  lib:
+    reviews:
+      Review: Opinion
+      Reviews: Opiniones
+      Review this school: Review this school
+      'How would you rate your experience at this school': 'How would you rate your experience at this school?'
+      'how would you rate your experience at this school_html': 'How would you rate your experience at this school?'
+      Terrible: Terrible
+      Bad: Bad
+      Average: Average
+      Good: Good
+      Great: Great
+      out of: out of
+      stars: stars
+      that: that
