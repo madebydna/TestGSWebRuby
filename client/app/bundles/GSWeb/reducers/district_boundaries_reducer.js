@@ -7,7 +7,7 @@ import { SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
 export const getSchools = state => {
   let schools = Object.values(state.schools);
   if(state.level) {
-    schools = schools.filter(s => s.levelCode.includes(state.level));
+    schools = schools.filter(s => s.levelCode && s.levelCode.includes(state.level));
   }
   schools = schools.filter(s => s.districtId != 0 || state.schoolTypes.includes(s.schoolType));
 
