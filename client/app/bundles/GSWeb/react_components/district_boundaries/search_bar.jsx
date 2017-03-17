@@ -9,6 +9,7 @@ import SpinnyWheel from '../../react_components/spinny_wheel';
 export default class SearchBar extends React.Component {
 
   static defaultProps = {
+    district: {}
   }
 
   static propTypes = {
@@ -143,6 +144,7 @@ export default class SearchBar extends React.Component {
               keyFunc={d => d.state + d.id}
               onChange={d => this.props.selectDistrict(d.id, d.state)}
               defaultLabel='Search or click map for districts'
+              defaultValue={this.props.district.id}
             />
           </div>
           <div className="filter grade-filter">

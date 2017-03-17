@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Select = ({objects, keyFunc, labelFunc, onChange, value = '', defaultLabel}) => {
+const Select = ({objects, keyFunc, labelFunc, onChange, defaultValue, defaultLabel}) => {
   const options = () => {
     if(objects.length > 0) {
       return objects.map(obj => {
@@ -15,7 +15,7 @@ const Select = ({objects, keyFunc, labelFunc, onChange, value = '', defaultLabel
   const _onChange = event => 
     onChange(objects.find(obj=> keyFunc(obj) == event.target.value));
 
-  return <select value={value} onChange={_onChange}>{options()}</select>;
+  return <select onChange={_onChange} defaultValue={defaultValue}>{options()}</select>;
 };
 
 Select.PropTypes = {
@@ -23,7 +23,7 @@ Select.PropTypes = {
   keyFunc: React.PropTypes.func.isRequired,
   labelFunc: React.PropTypes.func.isRequired,
   onChange: React.PropTypes.func,
-  value: React.PropTypes.string
+  defaultValue: React.PropTypes.any
 }
 
 export default Select;
