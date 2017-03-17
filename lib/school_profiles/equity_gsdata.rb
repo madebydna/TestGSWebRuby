@@ -5,7 +5,7 @@ module SchoolProfiles
     BREAKDOWN_ALL = 'All'
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
     COURSES_DATA_TYPES = {
-        'Percentage AP enrolled grades 9-12' => {type: :bar},
+        'Percentage AP enrolled grades 9-12' => {type: :person},
         'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
     }
 

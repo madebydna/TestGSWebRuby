@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import testScoresHelpers from '../../util/test_scores_helpers';
 import EquityBarGraph from './graphs/equity_bar_graph';
 import BarGraphBase from './graphs/bar_graph_base';
+import PersonBar from './graphs/person_bar';
 import PlainNumber from './graphs/plain_number';
 import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
@@ -294,6 +295,8 @@ export default class Equity extends React.Component {
         let component = null;
         if (displayType == 'plain') {
           component = <PlainNumber values={values}/>
+        } else if (displayType == 'person') {
+          component = <PersonBar values={values}/>
         } else {
           component = <BarGraphBase test_scores={values}/>
         }
