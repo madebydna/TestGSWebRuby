@@ -6,6 +6,8 @@ export const SET_LEVEL = 'SET_LEVEL';
 export const ADD_SCHOOL_TYPE = 'ADD_SCHOOL_TYPE';
 export const REMOVE_SCHOOL_TYPE = 'REMOVE_SCHOOL_TYPE';
 export const LOCATION_CHANGE = 'LOCATION_CHANGE';
+export const LOCATION_CHANGE_FAILURE = 'LOCATION_CHANGE_FAILURE';
+export const LOCATION_CHANGE_FAILURE_RESET = 'LOCATION_CHANGE_FAILURE_RESET';
 export const IS_LOADING = 'IS_LOADING';
 export const DISTRICT_SELECT = 'DISTRICT_SELECT';
 export const SCHOOL_SELECT = 'SCHOOL_SELECT';
@@ -22,6 +24,12 @@ export const SCHOOL_SELECT = 'SCHOOL_SELECT';
 // "Connected" component calls "bindActionCreators". The dumb UI component
 // would then invoke props.loadSchool
 export const changeLocation = (lat, lon) => (dispatch, getState) => {
+  const dispatchLocationChangeFailure = () => {
+    dispatch({
+      type: LOCATION_CHANGE_FAILURE
+    })
+  }
+
   let { level, nearbyDistrictsRadius, state, schoolTypes } = getState().districtBoundaries;
   let schoolLevel = (level == 'e') ? 'p' : level;
   dispatch({
@@ -34,7 +42,7 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
   ).done((district = {}, school = {}) => {
     let state = (district.state || school.state || getStateFromLatLon(lat, lon));
     $.when(state).done(state => {
-      if(district.id) {
+      if(state && district.id) {
         $.when(
           findSchoolsByDistrict(district.id, state),
           findDistrictsNearLatLon(lat, lon, state, nearbyDistrictsRadius),
@@ -50,9 +58,11 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
             lon: lon
           })
         })
+      } else {
+        dispatchLocationChangeFailure();
       }
-    });
-  });
+    }).fail(dispatchLocationChangeFailure);
+  }).fail(dispatchLocationChangeFailure);
 }
 
 export const selectSchool = (id, state) => dispatch => {
@@ -141,7 +151,7 @@ const findDistrictsByLatLon = (lat, lon, level, options) => {
 
 const getStateFromLatLon = (lat, lon) => {
   return Geocoding.reverseGeocode(lat, lon)
-    .then(data => data[0].state.toLowerCase());
+    .then(data => (data[0].state)? data[0].state.toLowerCase() : null);
 }
 
 const findSchoolsByDistrict = (districtId, state) => {
@@ -189,3 +199,15 @@ const removeSchoolType = schoolType => ({
   type: REMOVE_SCHOOL_TYPE,
   schoolType
 });
+
+export const locationChangeFailed = () => dispatch => {
+  dispatch({
+    type: LOCATION_CHANGE_FAILURE
+  });
+}
+
+export const resetLocationChangeFailure = () => dispatch => {
+  dispatch({
+    type: LOCATION_CHANGE_FAILURE_RESET
+  });
+}

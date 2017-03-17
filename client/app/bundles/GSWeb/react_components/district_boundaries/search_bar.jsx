@@ -59,8 +59,11 @@ export default class SearchBar extends React.Component {
             searchLocation: normalizedAddress.replace(', USA', '')
           });
           this.props.changeLocation(lat, lon);
+        } else {
+          this.props.locationChangeFailed();
         }
-      });
+      })
+      .fail(this.props.locationChangeFailed);
   }
 
   toggleFilters() {

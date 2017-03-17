@@ -1,5 +1,6 @@
 import { SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
-  LOCATION_CHANGE, DISTRICT_SELECT, SCHOOL_SELECT, IS_LOADING
+  LOCATION_CHANGE, LOCATION_CHANGE_FAILURE, LOCATION_CHANGE_FAILURE_RESET,
+  DISTRICT_SELECT, SCHOOL_SELECT, IS_LOADING
 } from '../actions/district_boundaries';
 
 // "selector" functions that knows how to navigate the state in order to
@@ -92,8 +93,20 @@ export default (state, action) => {
         state: district.state,
         schools,
         districts,
-        loading: false
+        loading: false,
+        locationChangeFailure: false
       };
+    case LOCATION_CHANGE_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        locationChangeFailure: true
+      }
+    case LOCATION_CHANGE_FAILURE_RESET:
+      return {
+        ...state,
+        locationChangeFailure: false
+      }
     case DISTRICT_SELECT:
       var { district, schools } = action;
       schools = groupBy(schools, o => stateAndIdKey(o));
@@ -106,7 +119,8 @@ export default (state, action) => {
         districts: newDistricts,
         districtId: district.id,
         state: district.state,
-        loading: false
+        loading: false,
+        locationChangeFailure: false
       }
     case SCHOOL_SELECT:
       var schools = state.schools;
@@ -119,12 +133,14 @@ export default (state, action) => {
         schools,
         schoolId: school.id,
         state: school.state,
-        loading: false
+        loading: false,
+        locationChangeFailure: false
       }
     case SET_LEVEL:
       return {
         ...state,
-        level: action.level
+        level: action.level,
+        locationChangeFailure: false
       };
     case ADD_SCHOOL_TYPE:
       var { schools } = action;
@@ -134,12 +150,14 @@ export default (state, action) => {
         ...state,
         schools: { ...state.schools, ...schools },
         schoolTypes: state.schoolTypes.concat(action.schoolType),
-        loading: false
+        loading: false,
+        locationChangeFailure: false
       }
     case REMOVE_SCHOOL_TYPE:
       return {
         ...state,
-        schoolTypes: state.schoolTypes.filter(t => action.schoolType != t)
+        schoolTypes: state.schoolTypes.filter(t => action.schoolType != t),
+        locationChangeFailure: false
       }
     default:
       return state;
