@@ -33,6 +33,12 @@ export default class DistrictBoundaries extends React.Component {
     this.initGoogleMaps();
   }
 
+  componentDidMount() {
+    if(this.props.lat && this.props.lon) {
+      this.props.changeLocation(this.props.lat, this.props.lon);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if(!prevProps.locationChangeFailure && this.props.locationChangeFailure) {
       alert('No results found. Please try a different search.');
