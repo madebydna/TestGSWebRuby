@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'controllers/contexts/ad_shared_contexts'
-require 'controllers/examples/ad_shared_examples'
 
 describe CitiesListController do
   context 'path' do
@@ -18,7 +16,7 @@ describe CitiesListController do
     it 'redirects to city home' do
       get :old_homepage, :controller => 'cities_list', :city => 'Santa_Monica', :state_abbr => 'CA'
 
-      target = city_path(:city => 'california', :state => 'santa-monica')
+      target = city_path(:city => 'santa-monica', :state => 'california')
       expect(response).to redirect_to(target)
       expect(response).to have_http_status(301)
     end
