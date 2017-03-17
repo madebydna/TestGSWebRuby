@@ -69,7 +69,7 @@ export default class EquitySection extends React.Component {
     return (
         <div className="title-container">
           <div className="title">
-            {sectionInfo.title}
+            {GS.I18n.t(sectionInfo.title)}
             {this.drawInfoCircle(sectionInfo.info_text)}
           </div>
           {subtitle}
