@@ -119,6 +119,7 @@ export default class SearchBar extends React.Component {
             <label>Search</label>
             { searchInput }
             { searchButton }
+            <div className="icon active icon-house"> <a href={this.homesForSaleHref()} target="_blank">Nearby homes for sale</a></div>
           </div>
           <button onClick={this.toggleFilters} >Filters</button>
         </div>

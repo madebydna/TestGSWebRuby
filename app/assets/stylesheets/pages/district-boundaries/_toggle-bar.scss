@@ -18,29 +18,5 @@
       }
     }
 
-    .icon {
-      font-size: 18px;
-      color: #c1d2d9;
-      margin-right: 5px;
-      &.active {
-        color: #2ba3dc;
-      }
-    }
-
-    .icontext {
-      display: none;
-      font-family: 'opensans-regular';
-      font-size: 12px;
-      @include media-breakpoint-only(sm) {
-        display: inline-block;
-      }
-    }
-
-    .icon-house {
-      font-size: 14px;
-      > a {
-        font-size: 12px;
-      }
-    }
   }
 }
