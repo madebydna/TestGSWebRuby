@@ -102,10 +102,10 @@ es:
     Cancel: Cancelar
     Submit: Enviar
     Required: Requerido
-    Review this School: Review this School
+    Review this School: Incluya su opinión sobre esta escuela
     Overall experience: Experiencia general
     Recent Comments: Recent Comments
-    Be the first to review this school: Be the first to review this school
+    Be the first to review this school: Sé el primero en opinar sobre esta escuela
     Tell us why: Díganos por qué
     What is your relationship to this school?: '¿Cuál es su relación con esta escuela?'
     all set: '¡Ya estamos! Hemos enviado tu comentario. Gracias por ayudar a otras familias compartiendo tus experiencias.'
@@ -116,14 +116,14 @@ es:
     Community member: Miembro de la comunidad
     Nearest high-performing: Escuelas más cercanas de alto rendimiento
     Nearby schools: Todas las escuelas cercanas
-    'Submitted ': 'Submitted '
-    'by a ': 'by a '
+    'Submitted ': 'Enviado '
+    'by a ': 'por un '
     More: Mas
     Terrible: Terrible
-    Bad: Bad
-    Average: Average
-    Good: Good
-    Great: Great
+    Bad: Mala
+    Average: Regular
+    Good: Buena
+    Great: Muy Buena
     You: You
     review_not_saved: 'Your review has not been saved.'
     review_word_min: 'Please be sure your story is 7 words or more in length'

@@ -371,8 +371,8 @@ export default class ReviewForm extends React.Component {
     }
     return(
       <div className="form-actions clearfix">
-        <a href={guidelinesLink} target="_blank">Review Guidelines</a>
-        <button className="button" onClick={this.cancelForm}>Cancel</button>
+        <a href={guidelinesLink} target="_blank">{GS.I18n.t('Review Guidelines')}</a>
+        <button className="button" onClick={this.cancelForm}>{GS.I18n.t('Cancel')}</button>
         <button className="button cta"
           disabled= {this.state.disabled}
           onClick={this.onSubmit}>
