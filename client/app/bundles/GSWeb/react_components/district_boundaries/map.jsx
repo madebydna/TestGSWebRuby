@@ -20,7 +20,8 @@ export default class Map extends React.Component {
       center: new this.props.googleMaps.LatLng(37.77,-122.419),
       zoom: 11,
       mapTypeId: this.props.googleMaps.MapTypeId.ROADMAP,
-      mapTypeControl: false
+      mapTypeControl: false,
+      scrollwheel: false
     };
     return new this.props.googleMaps.Map($elem, mapOptions);
   }
