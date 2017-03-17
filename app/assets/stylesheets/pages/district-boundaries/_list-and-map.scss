@@ -14,13 +14,14 @@
   .school-list { 
     float: left;
     height: $list-and-map-height;
-    padding: 0px 10px;
     width: 100%;
 
     h3 {
       margin-top: 0px;
+      padding: 0px 10px;
     }
     ol {
+      padding: 0px 10px;
       height: $list-and-map-height - 120;
       li {
         span {

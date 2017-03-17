@@ -55,12 +55,12 @@ class SchoolList extends React.Component {
   render() {
     if(this.props.loading) {
       return <section className={ 'school-list ' + this.props.className }>
-        <h3>Schools in district</h3>
         <SpinnyWheel>
-          {this.renderSchools()}
+          <h3>Schools in district</h3>
+            {this.renderSchools()}
+          <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
+          <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
         </SpinnyWheel>
-        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
-        <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
       </section>
     } else {
       return <section className={ 'school-list ' + this.props.className }>
