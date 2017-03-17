@@ -3,8 +3,8 @@ es:
     college_readiness:
       info_text: "Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles."
       'title': 'GreatSchools profile data sources &amp; information'
-      'GreatSchools Rating': 'GreatSchools Rating'
-      'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
+      'GreatSchools Rating': 'Calificaciones de GreatSchools'
+      'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
       'SAT percent participation': 'Participación SAT'
       ACT participation: 'Participación ACT'
       'Percentage AP enrolled grades 9-12': 'Participación en cursos AP'

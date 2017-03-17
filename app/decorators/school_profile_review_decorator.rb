@@ -6,7 +6,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   delegate_all
 
   def five_star_rating?
-    review.question.question == t('lib.reviews.How would you rate your experience at this school')
+    review.question.question == 'How would you rate your experience at this school?'
   end
 
   def answer_markup
@@ -124,8 +124,8 @@ class SchoolProfileReviewDecorator < Draper::Decorator
 
   def answer_label
     return nil if five_star_rating?
-    question_answer_text = 
-      review.question.question[0].downcase + 
+    question_answer_text =
+      review.question.question[0].downcase +
       review.question.question[1..-2]
       t("#{answer} that #{question_answer_text}_html")
   end
