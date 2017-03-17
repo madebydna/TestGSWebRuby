@@ -156,6 +156,8 @@ gem 'binding_of_caller', '~> 0.7.2'
 # USED: Multiple places. Search for *.jbuilder for example
 gem 'jbuilder'
 
+gem 'oj'
+
 group :development do
   # better_errors and binding_of_caller work together as in-browser debugging tools
   # these cannot be in the test group, or a segmentation fault will occur when running tests
@@ -283,6 +285,10 @@ gem 'coffee-rails', '~> 4.0.1'
 # Uglifier minifies JavaScript files by wrapping UglifyJS to be accessible in Ruby
 # USED: Rails automatically adds the uglifier gem to your Gemfile, which is used by Sprockets for asset compression
 gem 'uglifier', '>= 1.0.3'
+
+gem 'rgeo'
+gem 'rgeo-activerecord', '= 4.0.5'
+gem 'geokit-rails'
 
 group :profile do
   gem 'ruby-prof'

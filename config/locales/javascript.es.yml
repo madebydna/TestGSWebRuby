@@ -44,3 +44,89 @@ es:
     weak_fit: Bajo
     wrong_state_error_start_html: '<strong>Estás comparando escuelas en '
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare escuelas ahora&nbsp</a>o<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspdremover escuelas&nbsp</a><strong>para comparar en esta ubicación.'
+#    added for equity
+    of students: '% de estudiantes'
+    students: estudiantes
+    State avg: Promedio del estado
+    State average: Promedio del estado
+    School value: Valor de la escuela
+    Race ethnicity title: 'Raza/etnicidad'
+    Race ethnicity subtitle: >
+      Las diferencias en el rendimiento académico entre los distintos grupos de estudiantes son comunes, pero no
+      insuperables. Descubre cómo iniciar una conversación en la escuela de tu hijo.
+    Race ethnicity tooltip: >
+      Esta sección refleja las clasificaciones de los exámenes y otras medidas importantes para los estudiantes de
+      esta escuela a través de diferentes razas y etnias.
+    Race ethnicity icon: 'icon-pie'
+    RE Test scores narration: >
+      Esto muestra resultados de diferentes razas y etnicidades en un examen de {subject} dado a los estudiantes
+      una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el
+      apoyo que necesitan para tener éxito.
+    RE Grad rates narration: >
+      Esto muestra las tasas de graduación de diferentes razas o etnias. Grandes diferencias puede sugerir que algunos
+      estudiantes no están recibiendo el apoyo que necesitan para tener éxito.
+    RE UC/CSU eligibility narration: >
+      Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible
+      para la Universidad de CA y colegios de CA State. Obtenga más información acerca de estos requisitos.
+    Low income title: 'Estudiantes de bajos ingresos'
+    Low income subtitle: >
+      ¿Su escuela está ayudando a todos los estudiantes obtener resultados académicos exitosos?
+      <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
+      Esto es lo que debe buscar.</a>
+    Low income tooltip: >
+      La calificación de estudiantes de bajos ingresos refleja los puntajes de los exámenes estatales para los
+      estudiantes de esta escuela que son elegibles para recibir el almuerzo gratis o a un precio reducido, comparado
+      con todos los estudiantes en el estado.
+    Low income icon: 'icon-pie'
+    Test scores: 'Resultados de exámenes'
+    Graduation rates: 'Índices de Graduación'
+    'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
+    See notes: Ver notas
+    Economically disadvantaged: De bajos recursos
+    Not economically disadvantaged: Sin desventaja económica
+    show_more: Mostrar más
+    show_less: Mostrar menos
+    english-learners: Estudiantes aprendices de Inglés
+    english-learners-info-text: Este grupo incluye a todos los estudiantes clasificados como aprendices de inglés (ELL).
+    students-participating-in-free-or-reduced-price-lunch-program: Estudiantes de familias de bajos ingresos
+    students-participating-in-free-or-reduced-price-lunch-program-info-text: La designación de los estudiantes de familias de bajos ingresos se basa en el porcentaje de estudiantes de esta escuela que son elegibles para recibir el almuerzo gratis o a un precio reducido.
+    Gender: El sexo
+    Male: Masculino
+    Female: Femenino
+    Strongly disagree: Totalmente en desacuerdo
+    Disagree: En desacuerdo
+    Neutral: Indiferente
+    Agree: De acuerdo
+    Strongly agree: Totalmente de acuerdo
+    Review Guidelines: Guia para comentarios
+    Cancel: Cancelar
+    Submit: Enviar
+    Required: Requerido
+    Review this School: Incluya su opinión sobre esta escuela
+    Overall experience: Experiencia general
+    Recent Comments: Recent Comments
+    Be the first to review this school: Sé el primero en opinar sobre esta escuela
+    Tell us why: Díganos por qué
+    What is your relationship to this school?: '¿Cuál es su relación con esta escuela?'
+    all set: '¡Ya estamos! Hemos enviado tu comentario. Gracias por ayudar a otras familias compartiendo tus experiencias.'
+    Parent: Padre
+    Current student: Estudiante
+    Teacher: Profesor
+    School leader: Funcionario de la escuela
+    Community member: Miembro de la comunidad
+    Nearest high-performing: Escuelas más cercanas de alto rendimiento
+    Nearby schools: Todas las escuelas cercanas
+    'Submitted ': 'Enviado '
+    'by a ': 'por un '
+    More: Mas
+    Terrible: Terrible
+    Bad: Mala
+    Average: Regular
+    Good: Buena
+    Great: Muy Buena
+    You: Tú
+    review_not_saved: 'Your review has not been saved.'
+    review_word_min: 'Please be sure your story is 7 words or more in length'
+    review_char_limit: 'Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.'
+    review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
+    Submitting: Submitting

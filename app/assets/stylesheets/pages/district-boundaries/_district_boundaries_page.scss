@@ -1,0 +1,145 @@
+@import 'filter-bar';
+@import 'legend';
+@import 'toggle-bar';
+@import 'list-and-map';
+
+
+#district-boundaries-page {
+
+  .header {
+    @include clearfix;
+    background-color: #184a7d;
+    color: white;
+    padding: 16px 0 12px 20px;
+
+    h1 {
+      margin: 0;
+      font-family: 'RobotoSlab-Bold';
+      font-size: 18px;
+      max-width: 170px;
+      display: inline-block;
+      @include media-breakpoint-up(sm){
+        font-size: 26px;
+        max-width: 470px;
+      }
+      @include media-breakpoint-up(md){
+        max-width: 100%;
+      }
+    }
+
+    p {
+      font-family: 'opensans-regular';
+      font-size: 12px;
+      letter-spacing: .2px;
+      @include media-breakpoint-only(xs) {
+        display: none;
+      }
+    }
+
+    .info-circle {
+      background-color: #3f658d;
+    }
+  }
+
+  .diamond-rating--small {
+    margin-top: 10px;
+    div {
+      display: inline-block;
+    }
+  }
+
+  button {
+    border: 1px solid #c1d2d9;
+    background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+    border-radius: 2px;
+    padding: 7px 17px 7px 17px;
+  }
+
+  .district-boundaries-component {
+    @include clearfix;
+
+    select {
+      @include select;
+    }
+
+    .button-group {
+      @include button-group;
+    }
+
+    input[type="checkbox"] {
+      @include checkbox;
+    }
+
+    .district-select {
+      @include media-breakpoint-up(md) {
+        max-width: 250px;
+      }
+      label {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+    .district-select select {
+      text-overflow: ellipsis;
+      width: 100%;
+      @include media-breakpoint-up(md) {
+        max-width: 235px;
+      }
+    }
+  }
+
+  .legend-cta {
+    display: inline-block;
+    text-align: right;
+    float: right;
+    margin-right: 10px;
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+    > button {
+      background: transparent;
+      color: #2ba3dc;
+    }
+  }
+
+  .icon {
+    font-size: 18px;
+    color: #c1d2d9;
+    margin-right: 5px;
+    &.active {
+      color: #2ba3dc;
+    }
+  }
+
+  .icontext {
+    display: none;
+    font-family: 'opensans-regular';
+    font-size: 12px;
+    @include media-breakpoint-only(sm) {
+      display: inline-block;
+    }
+  }
+
+  .icon-house {
+    padding-top: 5px;
+    font-size: 14px;
+    > a {
+      font-size: 12px;
+    }
+  }
+}
+
+#district-boundaries-page ~ footer {
+  @include media-breakpoint-only(xs) {
+    display:none
+  }
+}
+  
+.attribution {
+  text-align: center;
+  font-size: 10px;
+}
+
+.remodal ul.legend {
+  display: block;
+}

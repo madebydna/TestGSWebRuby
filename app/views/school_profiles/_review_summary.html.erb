@@ -10,7 +10,7 @@
         <span class="label"><%= summary.number_of_reviews_label %></span>
       </div>
       <%= render 'five_stars', filled: summary.average_five_star_rating %>
-      <div class="n-out-of-5-stars"><%= summary.average_five_star_rating %> out of 5 stars</div>
+      <div class="n-out-of-5-stars"><%= summary.average_five_star_rating %> <%= I18n.t('out_of', scope: 'lib.reviews') %> 5 <%= I18n.t('lib.reviews.stars') %></div>
     </div>
     <div class="review-summary__distribution" style="color:grey">
       <% ['5','4','3','2','1'].each do |number_of_stars| %>

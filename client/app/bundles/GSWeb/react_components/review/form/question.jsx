@@ -84,7 +84,7 @@ export default class Question extends React.Component {
     return(
       <div className="tell-us-link" onClick={this.handleTellUsWhyClick}>
         <span className="icon-pencil"></span>
-        Tell us why&hellip;
+        {GS.I18n.t('Tell us why')}&hellip;
        </div>
     );
   }

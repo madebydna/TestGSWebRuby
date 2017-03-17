@@ -51,3 +51,11 @@ export const required = function(errorMessage, input) {
     return [];
   }
 };
+
+export const checkRequired = function(errorMessage, input) {
+  if (input === undefined || input === null || input === 'false' || input === false) {
+    return [errorMessage];
+  } else {
+    return [];
+  }
+};

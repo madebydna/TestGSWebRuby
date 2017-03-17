@@ -57,7 +57,7 @@ export default class SelectBoxes extends React.Component {
   renderResponseLabels() {
     let labels = [];
     this.props.responseLabels.forEach(function(label, index) {
-      labels.push(<li key={index}>{label}</li>);
+      labels.push(<li key={index}>{GS.I18n.t(label)}</li>);
     });
     return(
       <ul className="review-select-name">

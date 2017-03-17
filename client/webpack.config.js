@@ -11,6 +11,7 @@ const nodeEnv = devBuild ? 'development' : 'production';
 const config = {
   entry: {
     'widget': ['./app/bundles/GSWeb/widget'],
+    'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'webpack': [
       'es5-shim/es5-shim',
       'es5-shim/es5-sham',
@@ -46,9 +47,17 @@ const config = {
         loader: 'imports?shim=es5-shim/es5-shim&sham=es5-shim/es5-sham',
       },
       {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file'
+      },
+      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
+        query: {
+          plugins: ['transform-runtime'],
+          presets: ['es2015', 'stage-0', 'react'],
+        }
       },
     ],
   },

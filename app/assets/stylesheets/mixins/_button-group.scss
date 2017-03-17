@@ -1,0 +1,41 @@
+@mixin button-group(
+  $height: $form-field-medium-height,
+  $active-background-color: #2ba3dc,
+  $active-color: #fff
+  ) {
+
+    display: table;
+    width: inherit;
+
+  > label:first-child {
+    border-radius: $form-field-border-radius 0 0 $form-field-border-radius;
+    border-left: 1px solid $form-field-border-color;
+  }
+  > label:last-child {
+    border-radius: 0 $form-field-border-radius $form-field-border-radius 0;
+    border-right: 1px solid $form-field-border-color;
+  }
+  > label {
+    background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+    border-top: 1px solid $form-field-border-color;
+    border-bottom: 1px solid $form-field-border-color;
+    border-right: none;
+    cursor: pointer;
+    display: table-cell;
+    padding: 7px 17px 7px 17px;
+    height: $height;
+    border-radius: 0px;
+    outline: none;
+    text-align: center;
+    &.active {
+      background-color: $active-background-color;
+      border-top: 1px solid $active-background-color;
+      border-bottom: 1px solid $active-background-color;
+      color: $active-color;
+      background-image: none;
+    }
+  }
+  label ~ label {
+    border-left: 1px solid $form-field-border-color;
+  }
+}

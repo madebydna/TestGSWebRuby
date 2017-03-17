@@ -1,0 +1,25 @@
+es:
+  lib:
+    equity_gsdata:
+      courses_title: Cursos avanzados
+      Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
+      Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
+      African American: Black
+      Black: Black
+      White: White
+      All: All students
+      Hispanic: Hispanic
+      Filipino: Filipino
+      Asian: Asian
+      Multiracial: Two or more races
+      Two or more races: Two or more races
+      American Indian/Alaska Native: American Indian/Alaska Native
+      Native American: American Indian/Alaska Native
+      Pacific Islander: Pacific Islander
+      Hawaiian Native/Pacific Islander: Pacific Islander
+      Native Hawaiian or Other Pacific Islander: Pacific Islander
+      Male: Male
+      Female: Female
+      data_point_info_texts:
+        'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
+        'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'

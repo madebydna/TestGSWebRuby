@@ -7,7 +7,7 @@ export function makeDrawer($container) {
   var toggle = _.assign(new Toggle($container));
   toggle.effect = "slideToggle";
   toggle.addCallback(
-    toggle.updateButtonTextCallback('Show Less', 'Show More')
+    toggle.updateButtonTextCallback(GS.I18n.t('show_less'), GS.I18n.t('show_more'))
   );
   toggle.addCallback(
     toggle.updateContainerClassCallback('show-more--open','show-more--closed')

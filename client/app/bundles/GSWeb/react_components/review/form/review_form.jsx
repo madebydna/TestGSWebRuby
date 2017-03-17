@@ -51,7 +51,7 @@ export default class ReviewForm extends React.Component {
 
   promptUserWhenNavigatingAway(e) {
     if (this.state.unsavedChanges) {
-      e.returnValue = 'Your review has not been saved.';
+      e.returnValue = GS.I18n.t('review_not_saved');
       return e.returnValue;
     }
   }
@@ -175,7 +175,7 @@ export default class ReviewForm extends React.Component {
       .replace( /\n /, "\n" )
       .split(' ').length;
     if (7 > numberWords) {
-      return "Please be sure your story is 7 words or more in length";
+      return GS.I18n.t('review_word_min');
     } else {
       return null;
     }
@@ -183,7 +183,7 @@ export default class ReviewForm extends React.Component {
 
   requiredCommentValidator(string) {
     if ( !string || string.length == 0) {
-      return "Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.";
+      return GS.I18n.t('review_thank_you');
     } else {
       return null;
     }
@@ -191,7 +191,7 @@ export default class ReviewForm extends React.Component {
 
   maxCharactersValidator(string) {
     if (string && string.legnth != 0 && string.length > 2400) {
-      return "Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.";
+      return GS.I18n.t('review_char_limit');;
     } else {
       return null;
     }
@@ -356,9 +356,9 @@ export default class ReviewForm extends React.Component {
   }
 
   renderFormErrorMessage() {
-  return(
-    <div className='form-error'>Errors in Form</div>
-  );
+    return(
+      <div className='form-error'>Errors in Form</div>
+    );
   }
 
   renderFormActions() {
@@ -371,12 +371,12 @@ export default class ReviewForm extends React.Component {
     }
     return(
       <div className="form-actions clearfix">
-        <a href={guidelinesLink} target="_blank">Review Guidelines</a>
-        <button className="button" onClick={this.cancelForm}>Cancel</button>
+        <a href={guidelinesLink} target="_blank">{GS.I18n.t('Review Guidelines')}</a>
+        <button className="button" onClick={this.cancelForm}>{GS.I18n.t('Cancel')}</button>
         <button className="button cta"
           disabled= {this.state.disabled}
           onClick={this.onSubmit}>
-          {submitText}
+          {GS.I18n.t(submitText)}
         </button>
         {/* { this.state.formErrors ? this.renderFormErrorMessage() : null } */}
       </div>

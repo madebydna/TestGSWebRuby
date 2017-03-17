@@ -8,6 +8,9 @@ module SchoolProfiles
     LOW_INCOME_TOP = 'low_income'
     ETHNICITY_TOP = 'ethnicity'
     SUBJECTS_TO_RETURN = 3
+    BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
+    BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
+    BREAKDOWN_HAWAIIAN = 'Hawaiian'
 
     #PUBLIC
 
@@ -20,18 +23,6 @@ module SchoolProfiles
           LOW_INCOME_TOP => low_income_hash,
           ETHNICITY_TOP => ethnicity_hash
       })
-    end
-
-    def scores_format_numbers(value)
-      if value.instance_of? Fixnum
-        value
-      elsif value.instance_of? Float
-        value.round
-      elsif value.instance_of? String
-        value.scan(/\d+/) if value.present?
-      else
-        value
-      end
     end
 
     def low_income_test_scores_visible?
@@ -55,14 +46,14 @@ module SchoolProfiles
     def equity_test_score_hash(inclusion_hash=low_income_breakdowns)
       output_hash = {}
       # for each test data_type_id
-      @school_cache_data_reader.test_scores.values.each { |test_hash|
+      @school_cache_data_reader.test_scores.values.each do |test_hash|
         breakdowns = test_hash.select{ |breakdown| inclusion_hash.keys.include? breakdown }
-        breakdowns.each { | breakdown_name, breakdown_hash|
+        breakdowns.each do | breakdown_name, breakdown_hash|
           level_code = breakdown_hash.seek('grades', 'All', 'level_code')
-          level_code.first[1].each {|subject, year_hash|
+          level_code.first[1].each do |subject, year_hash|
             year = latest_year_in_test(year_hash).to_s
-            subject_str = I18n.t(subject, scope: 'lib.equity_test_scores', default: subject)
-            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.equity_test_scores', default: breakdown_name)
+            subject_str = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))
+            breakdown_name_str = I18n.t(breakdown_name, scope: 'lib.equity_test_scores', default: I18n.db_t(breakdown_name, default: breakdown_name))
             output_hash[subject_str] ||= []
             output_hash[subject_str] << year_hash[year].merge({'breakdown'=>breakdown_name_str,
                                                                'display_percentages'=>display_percentages(breakdown_name),
@@ -70,9 +61,9 @@ module SchoolProfiles
                                                                'percentage'=> percentage_str(inclusion_hash[breakdown_name]),
                                                                'score'=> scores_format_numbers(year_hash[year]['score']),
                                                                'state_average'=> scores_format_numbers(year_hash[year]['state_average'])})
-          } if level_code
-        }
-      }
+          end if level_code
+        end
+      end
       output_hash
     end
 
@@ -97,6 +88,18 @@ module SchoolProfiles
       temp = []
       hash.each{|subject, data| data.each{| d | temp << d['year']}}
       temp.max
+    end
+
+    def scores_format_numbers(value)
+      if value.instance_of? Fixnum
+        value
+      elsif value.instance_of? Float
+        value.round
+      elsif value.instance_of? String
+        value.scan(/\d+/) if value.present?
+      else
+        value
+      end
     end
 
 
@@ -166,6 +169,10 @@ module SchoolProfiles
       @school_cache_data_reader.ethnicity_data.each do | ed |
         ethnicity_breakdown[ed['breakdown']] = ed['school_value']
         ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
+        if  ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO || ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO
+          ethnicity_breakdown[BREAKDOWN_PACIFIC_ISLANDER] = ed['school_value']
+          ethnicity_breakdown[BREAKDOWN_HAWAIIAN] = ed['school_value']
+        end
       end
       ethnicity_breakdown.compact
     end

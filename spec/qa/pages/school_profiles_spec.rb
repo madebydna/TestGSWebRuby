@@ -1,13 +1,13 @@
 require 'remote_spec_helper'
 require 'features/page_objects/school_profiles_page'
 
-describe 'school name shows up on a preschool profile', type: :feature, remote: true do
+describe 'school name shows up on a preschool profile', type: :feature, remote: true, safe_for_prod: true do
   before { visit '/new-jersey/newark/preschools/Broadway-Mini-Mall-Head-Start/7453/' }
   subject(:page_object) { SchoolProfilesPage.new }
   its(:h1) { is_expected.to have_text('Broadway Mini Mall Head Start') }
 end
 
-describe 'I can view profiles for schools in cities with hyphenated names', type: :feature, remote: true do
+describe 'I can view profiles for schools in cities with hyphenated names', type: :feature, remote: true, safe_for_prod: true do
   subject { page }
   context 'New York' do
     before { visit '/new-york/new-york/1811-Beacon-High-School/reviews/' }
@@ -19,6 +19,8 @@ describe 'I can view profiles for schools in cities with hyphenated names', type
   end
 end
 
+
+# Don't tag tests that write reviews to DB as safe_for_prod
 describe 'submit a review while signed out', type: :feature, remote: true do
   it 'submits the review after signing in with facebook' do
     pending 'Need to allow all facebook urls in the correct spec helper file. But still doesn\'t work. Enable webkit debug and see logs.'
@@ -31,6 +33,7 @@ describe 'submit a review while signed out', type: :feature, remote: true do
   end
 end
 
+# Don't tag tests that write reviews to DB as safe_for_prod
 describe 'while signed in as facebook user', type: :feature, remote: true do
   it 'when I submit a review it is acknowledged' do
     sign_in_as_facebook_adam
@@ -51,6 +54,7 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
   end
 end
 
+# Don't tag tests that write reviews to DB as safe_for_prod
 describe 'submit a review while registering', type: :feature, remote: true do
   it 'show indicate my review is saved and ask me to verify my email' do
     visit('/california/alameda/1-Alameda-High-School/')

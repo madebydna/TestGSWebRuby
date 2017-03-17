@@ -1,17 +1,17 @@
 es:
   school_profiles:
     toc:
-      ACADEMICS: ACADEMICS
-      test_scores: Test scores
-      college_readiness: College readiness
-      EQUITY: EQUITY
-      race_ethnicity: Race/ethnicity
-      low_income: Low-income students
-      ENVIRONMENT: ENVIRONMENT
-      students: Students
-      teachers_staff_html: Teachers &amp; Staff
-      neighborhood: Neighborhood
+      ACADEMICS: ACADÉMICO
+      test_scores: Resultados de exámenes
+      college_readiness: Preparación universitaria
+      EQUITY: EQUIDAD
+      race_ethnicity: Grupo Étnico
+      low_income: De bajos Ingresos
+      ENVIRONMENT: MEDIO AMBIENTE
+      students: Estudiantes
+      teachers_staff_html: Profesores y personal
+      neighborhood: Vecindario
       info_texts:
-        academics_html: This section includes test scores for this school, and student progress information when available.
-        environment_html: This section tells you more about the school’s student demographics, the surrounding neighborhood, and more.
-        equity_html: How well does this school serve the needs of different student groups? This section shows you test scores and other information about different student groups at this school. Low ratings may indicate some student groups are not getting the support they need.
+        academics_html: Esta sección incluye puntajes en los exámenes estatales para esta escuela y información de el progreso estudiantil cuando está disponible.
+        environment_html: Esta sección le ofrece más información sobre la demografía estudiantil, el vecindario y más.
+        equity_html: ¿Qué tan bien funciona esta escuela sirviendo las necesidades de diferentes grupos de estudiantes? Esta sección le muestra los puntajes en los exámenes estatales y otra información acerca de los diferentes grupos de estudiantes de esta escuela. Una puntuación baja puede indicar que algunos grupos de estudiantes no están recibiendo el apoyo necesario.

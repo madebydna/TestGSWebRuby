@@ -44,7 +44,87 @@ en:
     weak_fit: Weak fit
     wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
-
-
-
-
+#    added for equity
+    of students: '% of students'
+    students: students
+    State avg: 'State avg:'
+    State average: State average
+    School value: School value
+    Race ethnicity title: 'Race/ethnicity'
+    Race ethnicity subtitle: >
+      Achievement gaps between different student groups are common but not insurmountable. Find out
+      <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">how to start a
+      conversation</a> at your child's school about the best ways to help all kids succeed.
+    Race ethnicity tooltip: >
+      This section reflects test scores and other important measures for students at this school across different races/ethnicities.
+    Race ethnicity icon: 'icon-pie'
+    RE Test scores narration: >
+      This shows results across different races/ethnicities on {subject} test given to students once a year. Big
+      differences may suggest that some student groups are not getting the support they need to succeed.
+    RE Grad rates narration: >
+      This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are
+      not getting the support they need to succeed.
+    RE UC/CSU eligibility narration: >
+      This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for
+      University of CA and CA state schools. Find out more about these requirements.
+    Low income title: 'Low-income students'
+    Low income subtitle: >
+      Is your school helping all students succeed?
+      <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
+      Here's what to look for.</a>
+    Low income tooltip: >
+      The low-income rating reflects state test scores for students at this school who qualify for free or
+      reduced-price lunch compared to all students in the state.
+    Low income icon: 'icon-pie'
+    Test scores: Test scores
+    Graduation rates: Graduation rates
+    'UC/CSU eligibility': 'UC/CSU eligibility'
+    See notes: See notes
+    Economically disadvantaged: Economically disadvantaged
+    Not economically disadvantaged: Not economically disadvantaged
+    show_more: Show more
+    show_less: Show less
+    english-learners: Students learning English
+    english-learners-info-text: This group includes all students classified as English language learners.
+    students-participating-in-free-or-reduced-price-lunch-program: Students from low-income families
+    students-participating-in-free-or-reduced-price-lunch-program-info-text: The students from low-income families designation is based on the percentage of students at this school who are eligible for free or reduced-price lunch.
+    Gender: Gender
+    Male: Male
+    Female: Female
+    Strongly disagree: Strongly disagree
+    Disagree: Disagree
+    Neutral: Neutral
+    Agree: Agree
+    Strongly agree: Strongly agree
+    Review Guidelines: Review guidelines
+    Cancel: Cancel
+    Submit: Submit
+    Required: Required
+    Review this School: Review this School
+    Overall experience: Overall experience
+    Recent Comments: Recent comments
+    Be the first to review this school: Be the first to review this school
+    Tell us why: Tell us why
+    What is your relationship to this school?: 'What is your relationship to this school?'
+    all set: 'All set! We have submitted your review. Thank you for helping other families by sharing your experiences.'
+    Parent: Parent
+    Current student: Current student
+    Teacher: Teacher
+    School leader: School leader
+    Community member: Community member
+    Nearest high-performing: Nearest high-performing
+    Nearby schools: Nearby schools
+    'Submitted ': 'Submitted '
+    'by a ': 'by a '
+    More: More
+    Terrible: Terrible
+    Bad: Bad
+    Average: Average
+    Good: Good
+    Great: Great
+    You: You
+    review_not_saved: 'Your review has not been saved.'
+    review_word_min: 'Please be sure your story is 7 words or more in length'
+    review_char_limit: 'Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.'
+    review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
+    Submitting: Submitting

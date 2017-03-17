@@ -31,7 +31,7 @@ export default class FiveStarQuestionCTA extends React.Component {
       <div key={index} className="five-star-question-cta__response-container">
         <div onClick={this.handleStarResponseClick(parseInt(starValue))}>
           <div className="icon-star five-star-question-cta__star"></div>
-          <div className="five-star-question-cta__response-label">{label}</div>
+          <div className="five-star-question-cta__response-label">{GS.I18n.t(label)}</div>
         </div>
       </div>
     );
@@ -43,7 +43,7 @@ export default class FiveStarQuestionCTA extends React.Component {
         <div className="row">
           <div className="col-xs-12 col-sm-2">
             <div className="five-star-question-cta__avatar icon-avatar-1"></div>
-            <div className="five-star-question-cta__user-type">You</div>
+            <div className="five-star-question-cta__user-type">{GS.I18n.t('You')}</div>
           </div>
           <div className="col-xs-12 col-sm-10 five-star-question-cta__container">
             <div className="five-star-question-cta__title">

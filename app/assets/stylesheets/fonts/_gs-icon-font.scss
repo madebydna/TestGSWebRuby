@@ -1,17 +1,17 @@
 @font-face {
-  font-family: 'icon-greatscrool';
-  src: url('icon-greatscrool.eot?6dfdhg');
+  font-family: 'icon-greatschools';
+  src: url('icon-greatschools.eot?6dfdhg');
   src: local('?'),
-  asset-url('icon-greatscrool.woff?6dfdhg') format('woff'),
-  asset-url('icon-greatscrool.ttf?6dfdhg') format('truetype'),
-  asset-url('icon-greatscrool.svg?6dfdhg#icon-greatscrool') format('svg');
+  asset-url('icon-greatschools.woff?6dfdhg') format('woff'),
+  asset-url('icon-greatschools.ttf?6dfdhg') format('truetype'),
+  asset-url('icon-greatschools.svg?6dfdhg#icon-greatschools') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icon-greatscrool' !important;
+  font-family: 'icon-greatschools' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -193,4 +193,10 @@
 }
 .icon-users:before {
   content: "\e908";
+}
+.icon-list:before {
+  content: "\e90a";
+}
+.icon-question:before {
+  content: "\e90b";
 }

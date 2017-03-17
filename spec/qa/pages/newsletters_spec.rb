@@ -1,6 +1,6 @@
 require 'remote_spec_helper'
 
-describe 'newsletters', type: :feature, remote: true  do
+describe 'newsletters', type: :feature, remote: true do
   context 'on the home page' do
     before { visit '/' }
     feature 'I can click newsletter link in footer to sign up' do

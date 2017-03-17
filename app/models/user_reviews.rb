@@ -2,12 +2,18 @@ class UserReviews
   include Rails.application.routes.url_helpers
 
   USER_TYPE_AVATARS = {
-    "parent" => 1,
-    "student" => 2,
-    "principal" => 5,
-    "teacher" => 4,
-    "community member" => 3,
-    "unknown" => 3
+    'parent' => 1,
+    'student' => 2,
+    'principal' => 5,
+    'teacher' => 4,
+    'community member' => 3,
+    'unknown' => 3,
+    'padre' => 1,
+    'estudiante actual' => 2,
+    'estudiante' => 2,
+    'funcionario de la escuela' => 5,
+    'profesor' => 4,
+    'miembro de la comunidad' => 3
   }.freeze
 
   attr_reader :reviews, :school

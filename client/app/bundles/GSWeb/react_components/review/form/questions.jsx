@@ -78,7 +78,7 @@ export default class Questions extends React.Component {
     />)
     return(<Question
       id = {question.id}
-      subtext = { "Required" }
+      subtext = { GS.I18n.t("Required") }
       questionCounter = {this.props.questions.length + 1}
       title = {question.title}
       layout = {layoutComponent}

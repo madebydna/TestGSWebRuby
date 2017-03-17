@@ -108,25 +108,54 @@
   }
 
   .right_content {
+    $narrative_gray_text: #71787e;
+    $narrative_negative: #ff9900;
+    $narrative_positive: #6aa84f;
+    $narrative_bold: opensans-semibold;
+    $narrative_title_font_size: 18px;
+    $narrative_content_font_size: 14px;
+    $narrative_link_color: #2ba3dc;
+    $narrative_hr_margin: 14px;
+
     padding: 10px 20px;
+    .title {
+      font-family: $narrative_bold;
+      font-size: $narrative_title_font_size;
+      margin-bottom: 5px;
+    }
+    .parent-tip{
+      font-size: $narrative_content_font_size;
+      font-family: $narrative_bold;
+      margin-bottom: 5px;
+      color: $narrative_gray_text;
+
+    }
+    .negative {
+      color: $narrative_negative;
+    }
+    .positive{
+      color: $narrative_positive;
+    }
+    hr {
+      color: $narrative_gray_text;
+      margin-top: $narrative_hr_margin;
+      margin-bottom: $narrative_hr_margin;
+    }
     .narrative-content {
-      font-family: opensans-semibold;
-      font-size: 16px;
-      .negative {
-        color: #ff9900;
-      }
-      .positive{
-        color: #6aa84f;
-      }
+      font-size: $narrative_content_font_size;
+      line-height: 21px;
     }
     .footnote {
-      font-size: 12px;
+      font-size: $narrative_content_font_size;
+      color: $narrative_gray_text;
+      line-height: 1.36;
       a {
-        font-size: 12px;
+        font-size: $narrative_content_font_size;
+        color: $narrative_link_color;
       }
-      .emphasis {
-        font-family: opensans-semibold;
-      }
+    }
+    .emphasis {
+      font-family: $narrative_bold;
     }
   }
 

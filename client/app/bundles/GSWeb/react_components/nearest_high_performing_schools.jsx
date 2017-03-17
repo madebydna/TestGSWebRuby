@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list';
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
 
@@ -11,10 +11,18 @@ class NearestHighPerformingSchools extends React.Component {
 
   constructor(props) {
     super(props);
+    this.tabNames = this.tabNames.bind(this);
     this.state = {
       tabIndex: this.props.tabIndex || 0,
     }
-    this.tabNames = ['Nearest high-performing', 'All nearby']
+  }
+
+  tabNames() {
+    if(this.props.schoolState == 'CA') {
+      return [GS.I18n.t('Nearest high-performing'), GS.I18n.t('Nearby schools')]
+    } else {
+      return [GS.I18n.t('Nearby schools')]
+    }
   }
 
   createTabClickHandler(index) {
@@ -26,7 +34,7 @@ class NearestHighPerformingSchools extends React.Component {
   }
 
   trackTabChanged() {
-    window.analyticsEvent('Profile', 'Nearby Schools Toggle', this.tabNames[this.state.tabIndex]);
+    window.analyticsEvent('Profile', 'Nearby Schools Toggle', this.tabNames()[this.state.tabIndex]);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,7 +45,7 @@ class NearestHighPerformingSchools extends React.Component {
 
   renderTabs() {
     let tabIndex = this.state.tabIndex;
-    return this.tabNames.map(function(tabName, i) {
+    return this.tabNames().map(function(tabName, i) {
       return (
         <button className={tabIndex == i ? 'active' : ''} onClick={this.createTabClickHandler(i)} key={i}>
           {tabName}
@@ -48,7 +56,7 @@ class NearestHighPerformingSchools extends React.Component {
 
   tabContentPanes() {
     let i = this.state.tabIndex;
-    return [
+    let panes = [
       <TopPerformingNearbySchoolsList
         store={window.store}
         key={0}
@@ -60,6 +68,11 @@ class NearestHighPerformingSchools extends React.Component {
         visible={i == 1}
       />
     ];
+    if(this.props.schoolState == 'CA') {
+      return panes;
+    } else {
+      return [panes[1]];
+    }
   }
 
   renderContentPanes() {
@@ -96,11 +109,14 @@ class NearestHighPerformingSchools extends React.Component {
 //     <NearestHighPerformingSchools  />
 //   </Provider>);
 // }
+const ConnectedNearestHighPerformingSchools = connect(state => ({
+  schoolState: state.school.state
+}))(NearestHighPerformingSchools);
 
 export default () => {
   return (
     <Provider store={window.store}>
-      <NearestHighPerformingSchools />
+      <ConnectedNearestHighPerformingSchools />
     </Provider>
   );
 }

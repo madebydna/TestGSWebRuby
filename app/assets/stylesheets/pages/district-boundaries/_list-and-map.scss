@@ -1,0 +1,69 @@
+#district-boundaries-page {
+  $list-and-map-height: 400px;
+  $list-width: 100%;
+  @include media-breakpoint-up(sm) {
+    $list-and-map-height: 580px;
+  }
+  @include media-breakpoint-up(md) {
+    $list-width: 320px;
+  }
+  @include media-breakpoint-up(lg) {
+    $list-width: 380px;
+  }
+
+  .school-list { 
+    float: left;
+    height: $list-and-map-height;
+    width: 100%;
+
+    h3 {
+      margin-top: 0px;
+      padding: 0px 10px;
+    }
+    ol {
+      padding: 0px 10px;
+      height: $list-and-map-height - 120;
+      li {
+        span {
+          display: inline-block;
+        }
+        span ~ span {
+          max-width: $list-width - 150px;
+          @include media-breakpoint-up(sm) {
+            max-width: $list-width - 90px;
+          }
+        }
+        a {
+          font-size: 12px;
+        }
+      }
+    }
+    @include media-breakpoint-up(md) {
+      width: $list-width;
+    }
+    @include media-breakpoint-up(lg) {
+      width: $list-width;
+    }
+  }
+
+
+  .map, .school-list {
+    .spinny-wheel-container {
+      overflow: hidden;
+    }
+    @include clearfix;
+    height: $list-and-map-height;
+    .spinny-wheel {
+      background-color: rgba(200,200,200,.5) !important;
+    }
+  }
+
+  .school-list, .map {
+    // List and map can be hidden completely by tab on mobile. Other selectors have unwanted global styles
+    &.closed {
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+    }
+  }
+}

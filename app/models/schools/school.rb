@@ -295,6 +295,20 @@ class School < ActiveRecord::Base
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
   end
 
+  def self.query_distance_function(lat, lon)
+    miles_center_of_earth = 3959
+    "(
+    #{miles_center_of_earth} *
+     acos(
+       cos(radians(#{lat})) *
+       cos( radians( `lat` ) ) *
+       cos(radians(`lon`) - radians(#{lon})) +
+       sin(radians(#{lat})) *
+       sin( radians(`lat`) )
+     )
+   )".squish
+  end
+
   # def notes
   #   @notes ||= SchoolNote.find_by_school(self)
   # end

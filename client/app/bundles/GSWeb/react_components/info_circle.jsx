@@ -23,7 +23,7 @@ export default class InfoCircle extends React.Component {
         data-content-html={this.props.content}
         className="gs-tipso info-circle"
         href="javascript:void(0)">
-          <span className="icon-hint"></span>
+          <span className="icon-question"></span>
       </a>
     )
   };

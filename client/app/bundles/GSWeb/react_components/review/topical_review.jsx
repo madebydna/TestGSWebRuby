@@ -19,11 +19,11 @@ export default class TopicalReview extends React.Component {
     var isReported = !!this.props.userAlreadyReported;
     if (isReported) {
       return (
-          <div className="reported">Review Reported</div>
+          <div className="reported">{GS.I18n.t('Review Reported')}</div>
       )
     } else {
       return (
-          <a href="#" onClick={this.handleReportReviewClick.bind(this)}>Report</a>
+          <a href="#" onClick={this.handleReportReviewClick.bind(this)}>{GS.I18n.t('Report')}</a>
       )
     }
   }

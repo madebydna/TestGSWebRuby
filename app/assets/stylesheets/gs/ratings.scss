@@ -41,3 +41,9 @@ $list-with-id: zip($counter, $color-list);
     background-color: #{nth($value, 2)};
   }
 }
+.rating_color_NR {
+  color: #777777;
+};
+.rating_NR {
+  background-color: #777777;
+};

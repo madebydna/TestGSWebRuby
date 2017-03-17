@@ -22,6 +22,18 @@ module SchoolProfiles
       )
     end
 
+    def equity_data_hash
+      @_equity_data_hash ||= equity_data.equity_gsdata_hash
+    end
+
+    def equity_data_sources
+      @_equity_data_sources ||= equity_data.sources
+    end
+
+    def equity_data
+      @_equity_data ||= SchoolProfiles::EquityGsdata.new(school_cache_data_reader: @school_cache_data_reader)
+    end
+
     def enrollment
       enrollment_string = @school_cache_data_reader.students_enrolled
       return enrollment_string.gsub(',','').to_i if enrollment_string
@@ -38,7 +50,7 @@ module SchoolProfiles
           if bd_hash['breakdown'] == 'White' || bd_hash['breakdown'] == 'Hispanic' || bd_hash['breakdown'] == 'African American'
             output[label] ||= {
                 year: bd_hash['year'],
-                source: I18n.db_t(bd_hash['source']),
+                source: bd_hash['source'],
                 label: data_label(label),
                 description: data_label_info_text(label)
             }
@@ -54,7 +66,7 @@ module SchoolProfiles
           if bd_hash['breakdown'] == 'Economically disadvantaged'
             output[label] ||= {
                 year: bd_hash['year'],
-                source: I18n.db_t(bd_hash['source']),
+                source: bd_hash['source'],
                 label: data_label(label),
                 description: data_label_info_text(label)
             }
@@ -80,25 +92,44 @@ module SchoolProfiles
           string << sources_for_view(hash)
         end
       end
+      if equity_data_sources.present?
+        content << gsdata_sources_for_view(equity_data_sources)
+      end
       content
+    end
+
+    def gsdata_sources_for_view(hash)
+      str = ''
+      hash.each do |subject, info|
+        str << '<div style="margin-top:40px;">'
+        str <<   '<h4 style="font-family:RobotoSlab-Bold;">' + subject + '</h4>'
+        str <<   "<p>#{info[:info_text]}</p>" if info[:info_text].present?
+        str <<   '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source') + ': </span>'
+        str <<     info[:sources].map { |sources| "#{data_label(sources[:name])}, #{sources[:year]}"}.join('; ')
+        str <<   '</div>'
+        str << '</div>'
+      end
+      str
     end
 
     def sources_for_view(hash)
       str = '<div style="margin-top:40px;">'
       str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash[:label]) + '</h4>'
       str << "<p>#{data_label(hash[:description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('.source') + ': </span>' + I18n.db_t(hash[:source]) + ', ' + hash[:year].to_s + '</div>'
+      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source') + ': </span>' + data_label(hash[:source]) + ', ' + hash[:year].to_s + '</div>'
       str << '</div>'
       str
     end
 
     def data_label(key)
-      key.to_sym
+      I18n.t(key.to_sym, scope: 'lib.equity', default: I18n.db_t(key, default: key))
+    end
+
+    def static_label(key)
       I18n.t(key.to_sym, scope: 'lib.equity', default: key)
     end
 
     def data_label_info_text(key)
-      key.to_sym
       I18n.t(key.to_sym, scope: 'lib.equity.data_point_info_texts')
     end
 

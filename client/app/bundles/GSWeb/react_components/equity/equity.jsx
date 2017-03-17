@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import testScoresHelpers from '../../util/test_scores_helpers';
 import EquityBarGraph from './graphs/equity_bar_graph';
 import BarGraphBase from './graphs/bar_graph_base';
+import PlainNumber from './graphs/plain_number';
 import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
 import InfoCircle from '../info_circle';
@@ -12,7 +13,8 @@ export default class Equity extends React.Component {
     enrollment: React.PropTypes.number,
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number,
-    sources: React.PropTypes.string
+    sources: React.PropTypes.string,
+    data: React.PropTypes.object
   };
 
   constructor(props) {
@@ -50,6 +52,10 @@ export default class Equity extends React.Component {
     }
   }
 
+  createParametersListSubject(subject){
+    return GS.I18n.t('RE Test scores narration', {parameters: {subject: subject}});
+  }
+
   section1Tabs() {
     let tabs = [[],[]];
 
@@ -63,9 +69,7 @@ export default class Equity extends React.Component {
                 subject: subject,
                 component: <BarGraphBase
                     test_scores={subject_data} />,
-                explanation: <div>This shows results across different races/ethnicities on {this.useAorAn(subject)} {subject} test given to
-                  students once a year. Big differences can reflect high numbers of students still learning {subject}.
-                  They also may suggest that some students are not getting the support they need to succeed.</div>
+                explanation: <div>{this.createParametersListSubject(subject)}</div>
               }
           );
         }
@@ -76,12 +80,12 @@ export default class Equity extends React.Component {
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
-          subject: 'Graduation rates',
+          subject: GS.I18n.t('Graduation rates'),
           component: <EquityBarGraph
               test_scores={data}
               type="bar"
               graphId="graduation-rates-graph" />,
-          explanation: <div>This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are not getting the support they need to succeed.</div>
+          explanation: <div>{GS.I18n.t('RE Grad rates narration')}</div>
         }
       );
     }
@@ -90,12 +94,12 @@ export default class Equity extends React.Component {
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
-          subject: 'UC/CSU eligibility',
+          subject: GS.I18n.t('UC/CSU eligibility'),
           component: <EquityBarGraph
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-graph" />,
-          explanation: this.narrationContentTestScores(4)
+          explanation: <div>{GS.I18n.t('RE UC/CSU eligibility narration')}</div>
         }
       )
     }
@@ -139,7 +143,7 @@ export default class Equity extends React.Component {
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)){
       tabs[1].push(
         {
-          subject: 'Graduation rates',
+          subject: GS.I18n.t('Graduation rates'),
           component: <EquityBarGraph
               test_scores={data}
               type="bar"
@@ -153,7 +157,7 @@ export default class Equity extends React.Component {
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
-          subject: 'UC/CSU eligibility',
+          subject: GS.I18n.t('UC/CSU eligibility'),
           component: <EquityBarGraph
               test_scores={data}
               type="bar"
@@ -186,7 +190,7 @@ export default class Equity extends React.Component {
     if(section1Tabs[0].length > 0) {
       section1Content.push(
         {
-          section_title: 'Test scores',
+          section_title: GS.I18n.t('Test scores'),
           content: section1Tabs[0]
         }
       );
@@ -194,7 +198,7 @@ export default class Equity extends React.Component {
     if(section1Tabs[1].length > 0) {
       section1Content.push(
         {
-          section_title: 'Graduation rates',
+          section_title: GS.I18n.t('Graduation rates'),
           content: section1Tabs[1]
         }
       );
@@ -203,7 +207,7 @@ export default class Equity extends React.Component {
     if(section2Tabs[0].length > 0) {
       section2Content.push(
         {
-          section_title: 'Test scores',
+          section_title: GS.I18n.t('Test scores'),
           content: section2Tabs[0]
         }
       );
@@ -211,21 +215,32 @@ export default class Equity extends React.Component {
     if(section2Tabs[1].length > 0) {
       section2Content.push(
         {
-          section_title: 'Graduation rates',
+          section_title: GS.I18n.t('Graduation rates'),
           content: section2Tabs[1]
         }
       );
     }
 
+    if (this.props.data) {
+      for (let category in this.props.data) {
+        if (this.props.data.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.data[category]);
+          if (sectionConfig) {
+            section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
     if(section1Content.length > 0) {
       config.push({
         section_info:{
-          title: 'Race/ethnicity',
-          subtitle: <span>Achievement gaps between different student groups are common but not insurmountable. Find out <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">how to start a conversation</a> at your child's school about the best ways to help all kids succeed.</span>,
+          title: GS.I18n.t('Race ethnicity title'),
+          subtitle: <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Race ethnicity subtitle')}} />,
           rating: '',
-          info_text: 'This section reflects test scores and other important measures for students at this school across different races/ethnicities.',
+          info_text: GS.I18n.t('Race ethnicity tooltip'),
           sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity',
-          icon_classes: 'icon-pie'
+          icon_classes: GS.I18n.t('Race ethnicity icon')
         },
         section_content: section1Content
       });
@@ -234,11 +249,11 @@ export default class Equity extends React.Component {
     if(section2Content.length > 0) {
       config.push({
         section_info:{
-          title: 'Low-income students',
-          subtitle: <span>Is your school helping all students succeed? <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">Here's what to look for.</a></span>,
+          title: GS.I18n.t('Low income title'),
+          subtitle:  <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Low income subtitle')}} />,
           rating: this.lowIncomeRating(),
-          icon_classes: 'icon-pie',
-          info_text: 'The low-income rating reflects state test scores for students at this school who qualify for free or reduced-price lunch compared to all students in the state.',
+          icon_classes: GS.I18n.t('Low income icon'),
+          info_text: GS.I18n.t('Low income tooltip'),
           sourceHref: '/gk/ca-high-schools/#Equity-Low-Income'
         },
         section_content: section2Content
@@ -246,6 +261,50 @@ export default class Equity extends React.Component {
     }
 
     return config;
+  }
+
+  sectionConfig(name, data) {
+    if (data) {
+      let content = [];
+
+      for (let subject in data) {
+        if (data.hasOwnProperty(subject)) {
+          let subjectConfig = this.subjectConfig(subject, data[subject]);
+          if (subjectConfig) {
+            content.push(subjectConfig);
+          }
+        }
+      }
+
+      if (content.length > 0) {
+        return {
+          section_title: name,
+          content: content
+        };
+      }
+    }
+    return null;
+  }
+
+  subjectConfig(name, data) {
+    if (data && data['values']) {
+      let values = data['values'];
+      if (values.length > 0) {
+        let displayType = data['type'] || 'bar';
+        let component = null;
+        if (displayType == 'plain') {
+          component = <PlainNumber values={values}/>
+        } else {
+          component = <BarGraphBase test_scores={values}/>
+        }
+        return {
+          subject: name,
+          component: component,
+          explanation: <div dangerouslySetInnerHTML={{__html: data['narration']}} />
+        };
+      }
+    }
+    return null;
   }
 
   formattedTestScoreData(subject) {

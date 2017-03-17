@@ -24,8 +24,6 @@ ReactOnRails.register({
   NearestHighPerformingSchools
 });
 
-ReactOnRails.reactOnRailsPageLoaded();
-
 $(function() {
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));

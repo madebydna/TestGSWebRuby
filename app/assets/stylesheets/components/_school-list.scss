@@ -1,0 +1,33 @@
+section.school-list {
+  $active-color: #f6f9fa;
+  $hover-color: #f6f9fa;
+  $border-color: #dbe6eb;
+
+  ol {
+    margin: 0px;
+    padding: 0px;
+    overflow: scroll;
+    list-style: none;
+    width: 100%;
+
+    li {
+      @include clearfix;
+      padding: 10px 0;
+      border-bottom: solid 1px $border-color;
+
+      &:hover {
+        background-color: $hover-color;
+        cursor: pointer;
+      }
+      &.active {
+        background-color: $active-color;
+      }
+      > span {
+        vertical-align: top;
+      }
+      > span + span {
+        margin-left: 10px;
+      }
+    }
+  }
+}

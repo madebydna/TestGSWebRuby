@@ -57,6 +57,8 @@
 @import "components/rating-container";
 @import "components/circle-rating";
 @import "components/circle-rating-with-label";
+@import "components/diamond-rating";
+@import "components/square-rating";
 @import "components/rating-score-item";
 @import "components/five-stars";
 @import "components/review-list";
@@ -72,6 +74,8 @@
 @import "components/module-header";
 @import "components/ratio-viz";
 @import "components/back-to-top";
+@import "components/info-window";
+@import "components/school-list";
 // more components
 @import "gs/objects/spinny_wheel.css.scss";
 @import "gs/objects/modal_layout";
@@ -98,6 +102,7 @@
 @import "school_profiles/school_profile";
 @import 'gs/equity';
 
+@import 'pages/district-boundaries/district_boundaries_page';
 
 // third party libraries
 @import 'resources/tipso'; // used on school profiles

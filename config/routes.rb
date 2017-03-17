@@ -164,7 +164,6 @@ LocalizedProfiles::Application.routes.draw do
     # get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
     # get '/schools/cities/:state_long/:state_short', as: :city_list
     # get '/schools/districts/:state_long/:state_short', as: :district_list
-    get '/school-district-boundaries-map/', as: :district_boundary
     get '/about/guidelines.page', as: :review_guidelines
     get '/gk/moving-with-kids/', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
@@ -241,6 +240,8 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resource :top_performing_nearby_schools
+    resources :schools
+    resources :districts
     resource :widget_logs, only: [:create]
   end
 
@@ -334,6 +335,7 @@ LocalizedProfiles::Application.routes.draw do
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
+  get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
   #     state: States.any_state_name_regex,
@@ -501,6 +503,9 @@ LocalizedProfiles::Application.routes.draw do
     resource :user, only: [:create], controller: 'school_user', action: 'create'
     get '', to: 'school_profile_overview#overview'
   end
+
+  #Handle old city homepage structure
+  get '/city/:city/:state_abbr', to: 'cities_list#old_homepage'
 
   #Handle City SEO pages
   get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'

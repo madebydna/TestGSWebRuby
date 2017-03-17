@@ -1,0 +1,52 @@
+// reset css
+@import "resources/normalize";
+
+// bootstrap
+@import "resources/bootstrap/smaller_bootstrap";
+
+// variables, mixins, base styles
+@import "variables/variables";
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
+@import "gs/form";
+@import "base/spacing";
+@import "base/typography";
+
+@import 'components/five-star-rating';
+@import 'components/gs-rating-with-label';
+@import "components/circle-rating";
+@import "components/circle-rating-with-label";
+@import "components/diamond-rating";
+@import "components/square-rating";
+@import "components/rating-score-item";
+@import "components/info-circle";
+
+@import "components/school-list";
+@import "components/info-window";
+
+// TODO: clean this up
+@import "gs/bring-back-bootstrap"; // depends on responsive-utilities mixins
+
+// fonts
+@import "fonts/fonts-opensans-semibold";
+
+// more components
+@import "gs/objects/spinny_wheel.css.scss";
+
+// footer-specific
+@import "gs/objects/footer";
+@import "sprites/footer_icons_16x16";
+
+@import "gs/ratings";
+@import "fonts/gs-icon-font";
+
+// third party libraries
+@import 'resources/tipso'; // used on school profiles
+@import 'resources/remodal'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme'; // used on profiles / used by modals
+
+@import 'pages/district-boundaries/_district_boundaries_page';
+
+.back-to-top {
+  display: none;
+}

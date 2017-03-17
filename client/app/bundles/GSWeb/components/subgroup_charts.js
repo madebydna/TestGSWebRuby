@@ -7,15 +7,15 @@ var defaultPieColor = '#eef3f5';
 var colorMap = {
   'Female': '#21C36C',
   'Male': '#34A4DA'
-}
+};
 var titleMap = {
-  'students-participating-in-free-or-reduced-price-lunch-program': 'Students from low-income families',
-  'english-learners': 'Students learning English'
+  'students-participating-in-free-or-reduced-price-lunch-program': GS.I18n.t('students-participating-in-free-or-reduced-price-lunch-program'),
+  'english-learners': GS.I18n.t('english-learners')
 };
 
 var infoTextMap = {
-  'students-participating-in-free-or-reduced-price-lunch-program': 'The students from low-income families designation is based on the percentage of students at this school who are eligible for free or reduced-price lunch.',
-  'english-learners': 'This group includes all students classified as English language learners.'
+  'students-participating-in-free-or-reduced-price-lunch-program': GS.I18n.t('students-participating-in-free-or-reduced-price-lunch-program-info-text'),
+  'english-learners': GS.I18n.t('english-learners-info-text')
 };
 
 var buildSubgroupData = function (parsedData) {
@@ -106,12 +106,12 @@ var generateSubgroupContainer = function(parsedData) {
 };
 
 var generateInfoCircle = function(content) {
- var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)"><span class="icon-hint"></a>'
+ var infoCircleHtml =  ' <a data-remodal-target="modal_info_box" data-content-type="info_box" data-content-html="' + content  +  '" class="gs-tipso info-circle" href="javascript:void(0)"><span class="icon-question"></a>'
   return infoCircleHtml;
 }
 
 var generateGenderContainer = function(parsedGenderData) {
-  var chartTitle = 'Gender';
+  var chartTitle = GS.I18n.t('Gender');
   var chartId = 'gender';
   var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title gender'>" + chartTitle + "</div><div id='" + chartId + "'></div></div>";
   $('.subgroups > .row').append(containerHtml);
@@ -140,7 +140,10 @@ var renderGenderChart = function(data, key) {
       enabled: true,
       itemDistance: 2,
       margin: 0,
-      reversed: true
+      reversed: true,
+      labelFormatter: function() {
+        return GS.I18n.t(this.name, {default: this.name});
+      }
     },
     title: {
       text: null
@@ -178,7 +181,6 @@ var renderGenderChart = function(data, key) {
         point: {
           events: {
             legendItemClick: function () {
-              console.log('d');
               return false; // <== returning false will cancel the default action
             }
           }

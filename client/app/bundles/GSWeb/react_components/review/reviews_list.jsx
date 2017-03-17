@@ -102,7 +102,7 @@ export default class ReviewsList extends React.Component {
   showMoreButton(){
     if(!this.lastPage()) {
       return (<div className="show-more__button" onClick={this.handleClick}>
-        Show more
+        {GS.I18n.t('Show more')}
       </div>);
     }
   }
@@ -110,7 +110,7 @@ export default class ReviewsList extends React.Component {
   closeAllButton(){
     if(this.state.pageNumber != 1) {
       return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
-        Close All
+        {GS.I18n.t('Close All')}
       </a></div>);
     }
   }

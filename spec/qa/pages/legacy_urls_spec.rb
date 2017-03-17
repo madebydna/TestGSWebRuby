@@ -1,6 +1,6 @@
 require 'remote_spec_helper'
 
-describe 'legacy URLs', type: :feature, remote: true do
+describe 'legacy URLs', type: :feature, remote: true, safe_for_prod: true do
   subject { page }
 
   describe 'old parentReview.page redirects correctly' do
