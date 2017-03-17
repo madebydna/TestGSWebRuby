@@ -21,7 +21,7 @@ export default class ReviewDistribution extends React.Component {
     return (
         <div className="rating-bar-viz">
           <span className={iconClassName}/>
-          <span className="title">{answer}</span>
+          <span className="title">{GS.I18n.t(answer)}</span>
           <span className={barColorClassName} style={style}/>
           <span className="answer-count">{answerCount}</span>
         </div>
