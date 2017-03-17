@@ -50,7 +50,7 @@ es:
     State avg: Promedio del estado
     State average: Promedio del estado
     School value: Valor de la escuela
-    Race ethnicity title: 'Raza/etnicidad'
+    Race ethnicity: 'Raza/etnicidad'
     Race ethnicity subtitle: >
       Las diferencias en el rendimiento académico entre los distintos grupos de estudiantes son comunes, pero no
       insuperables. Descubre cómo iniciar una conversación en la escuela de tu hijo.
@@ -68,7 +68,7 @@ es:
     RE UC/CSU eligibility narration: >
       Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible
       para la Universidad de CA y colegios de CA State. Obtenga más información acerca de estos requisitos.
-    Low income title: 'Estudiantes de bajos ingresos'
+    'Low-income students': 'Estudiantes de bajos ingresos'
     Low income subtitle: >
       ¿Su escuela está ayudando a todos los estudiantes obtener resultados académicos exitosos?
       <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
@@ -125,10 +125,10 @@ es:
     Good: Buena
     Great: Muy Buena
     You: Tú
-    review_not_saved: 'Your review has not been saved.'
-    review_word_min: 'Please be sure your story is 7 words or more in length'
-    review_char_limit: 'Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.'
-    review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
+    review_not_saved: 'Su comentario no ha sido guardado.'
+    review_word_min: 'Por favor, asegúrese de que su comentario es de 7 palabras o más.'
+    review_char_limit: 'Lo sentimos, tenemos un límite de 2500 caracteres para los comentarios. Acorte su comentario para guardarlo.'
+    review_thank_you: 'Gracias por su opinión! Por favor comparte algunos pensamientos sobre esta escuela para guardar tus comentarios.'
     Submitting: Enviando
     Report Review: Report Review
     Show more: Mostrar más

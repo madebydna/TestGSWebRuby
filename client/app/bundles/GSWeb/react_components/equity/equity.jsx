@@ -236,7 +236,7 @@ export default class Equity extends React.Component {
     if(section1Content.length > 0) {
       config.push({
         section_info:{
-          title: GS.I18n.t('Race ethnicity title'),
+          title: 'Race ethnicity',
           subtitle: <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Race ethnicity subtitle')}} />,
           rating: '',
           info_text: GS.I18n.t('Race ethnicity tooltip'),
@@ -250,7 +250,7 @@ export default class Equity extends React.Component {
     if(section2Content.length > 0) {
       config.push({
         section_info:{
-          title: GS.I18n.t('Low income title'),
+          title: 'Low-income students',
           subtitle:  <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Low income subtitle')}} />,
           rating: this.lowIncomeRating(),
           icon_classes: GS.I18n.t('Low income icon'),
