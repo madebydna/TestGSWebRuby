@@ -19,9 +19,9 @@ class NearestHighPerformingSchools extends React.Component {
 
   tabNames() {
     if(this.props.schoolState == 'CA') {
-      return ['Nearest high-performing', 'Nearby schools']
+      return [GS.I18n.t('Nearest high-performing'), GS.I18n.t('Nearby schools')]
     } else {
-      return ['Nearby schools']
+      return [GS.I18n.t('Nearby schools')]
     }
   }
 

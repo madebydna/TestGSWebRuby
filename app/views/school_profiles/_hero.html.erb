@@ -102,7 +102,7 @@
       </div>
       <div class="school-info__item">
         <div class="label"><%= t('.school_type') %></div>
-        <div><%= hero.school_type %></div>
+        <div><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></div>
       </div>
     </div>
 

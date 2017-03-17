@@ -64,7 +64,7 @@ class NearbySchoolsList extends React.Component {
         GSRating={school.gs_rating}
         averageRating={school.average_rating}
         schoolName={school.name}
-        schoolType={school.type}
+        schoolType={GS.I18n.t('school_types.' + school.type)}
         gradeRange={school.level}
         city={school.city}
         state={school.state}
