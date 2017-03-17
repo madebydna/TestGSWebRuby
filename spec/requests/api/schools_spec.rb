@@ -89,6 +89,7 @@ describe "Schools API" do
       end
 
       it 'Returns boundary data when asked' do
+        pending
         get "/gsr/api/schools/#{school.id}?state=ca&extras=boundaries"
         expect(status).to eq(200)
         expect(errors).to be_blank
