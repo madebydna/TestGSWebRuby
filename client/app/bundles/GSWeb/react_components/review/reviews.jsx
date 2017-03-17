@@ -127,10 +127,10 @@ export default class Reviews extends React.Component {
     let reviewFormContent = null;
     let recentComments = null;
     if(this.state.reviews.length > 0) {
-      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, 'Review this school');
-      recentComments = this.renderReviewLayout(this.renderReviewsList, 'Recent Comments');
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, GS.I18n.t('Review this school'));
+      recentComments = this.renderReviewLayout(this.renderReviewsList, GS.I18n.t('Recent Comments'));
     } else {
-      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, 'Be the first to review this school');
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, GS.I18n.t('Be the first to review this school'));
     }
     return (
       <div>

@@ -91,3 +91,40 @@ en:
     Gender: Gender
     Male: Male
     Female: Female
+    Strongly disagree: Strongly disagree
+    Disagree: Disagree
+    Neutral: Neutral
+    Agree: Agree
+    Strongly agree: Strongly agree
+    Review Guidelines: Review guidelines
+    Cancel: Cancel
+    Submit: Submit
+    Required: Required
+    Review this School: Review this School
+    Overall experience: Overall experience
+    Recent Comments: Recent comments
+    Be the first to review this school: Be the first to review this school
+    Tell us why: Tell us why
+    What is your relationship to this school?: 'What is your relationship to this school?'
+    all set: 'All set! We have submitted your review. Thank you for helping other families by sharing your experiences.'
+    Parent: Parent
+    Current student: Current student
+    Teacher: Teacher
+    School leader: School leader
+    Community member: Community member
+    Nearest high-performing: Nearest high-performing
+    Nearby schools: Nearby schools
+    'Submitted ': 'Submitted '
+    'by a ': 'by a '
+    More: More
+    Terrible: Terrible
+    Bad: Bad
+    Average: Average
+    Good: Good
+    Great: Great
+    You: You
+    review_not_saved: 'Your review has not been saved.'
+    review_word_min: 'Please be sure your story is 7 words or more in length'
+    review_char_limit: 'Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.'
+    review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
+    Submitting: Submitting

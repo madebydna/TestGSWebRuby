@@ -23,7 +23,7 @@ export default class ShortenText extends React.Component {
     return(
       <span>
         { this.shortenText(this.props.text, this.props.length) }
-        <span onClick={this.showFullText}>... <a href="javascript:void(0);">More</a></span>
+        <span onClick={this.showFullText}>... <a href="javascript:void(0);">{GS.I18n.t('More')}</a></span>
       </span>
     )
   }
