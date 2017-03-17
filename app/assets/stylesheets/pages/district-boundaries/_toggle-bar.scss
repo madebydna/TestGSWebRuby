@@ -27,8 +27,10 @@
       }
     }
 
-    .icon-text {
+    .icontext {
       display: none;
+      font-family: 'opensans-regular';
+      font-size: 12px;
       @include media-breakpoint-only(sm) {
         display: inline-block;
       }
