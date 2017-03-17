@@ -6,7 +6,7 @@ module SchoolProfiles
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
     COURSES_DATA_TYPES = {
         'Percentage AP enrolled grades 9-12' => {type: :bar},
-        'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 2}
+        'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
     }
 
     def initialize(school_cache_data_reader:)
