@@ -59,10 +59,11 @@
       line-height: $people-height;
       height: $people-height;
     }
-  }
-  .person-progress > .state-average {
-    font-family: 'opensans-regular';
-    line-height: 22px;
+    .state-average {
+      font-family: 'opensans-regular';
+      line-height: 18px;
+      padding-top: 3px;
+    }
   }
 }
 

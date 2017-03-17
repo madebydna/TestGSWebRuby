@@ -45,7 +45,7 @@ export default class PersonBar extends React.Component {
 
   renderStateAverageArrow(state_average){
     if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
-      let style_arrow_up = {left: state_average + "%", top: '-6px'};
+      let style_arrow_up = {left: state_average + "%", top: '-4px'};
       return <div className="arrow-up"><span style={style_arrow_up}/></div>
     }
   }
@@ -80,18 +80,18 @@ export default class PersonBar extends React.Component {
                   <div className="person-bar-viz">
                     <div className="person-progress">
                       <div className="background">
-                        {ten.map(() => (
-                            <span className="icon-person"/>
+                        {ten.map((i) => (
+                            <span key={'back' + i} className="icon-person"/>
                         ))}
                       </div>
                       <div className={class_score_rating} style={style_score_width}>
-                        {ten.map(() => (
-                            <span className="icon-person"/>
+                        {ten.map((i) => (
+                            <span key={'fore' + i} className="icon-person"/>
                         ))}
                       </div>
-                      {this.renderStateAverageArrow(value['state_average'])}
-                      {this.renderStateAverage(value['state_average'])}
                     </div>
+                    {this.renderStateAverageArrow(value['state_average'])}
+                    {this.renderStateAverage(value['state_average'])}
                   </div>
                 </div>
               </div>
