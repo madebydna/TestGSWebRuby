@@ -45,7 +45,7 @@ export default class PersonBar extends React.Component {
 
   renderStateAverageArrow(state_average){
     if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
-      let style_arrow_up = {left: state_average + "%", top: '-4px'};
+      let style_arrow_up = {left: state_average + "%", top: '-1px'};
       return <div className="arrow-up"><span style={style_arrow_up}/></div>
     }
   }
