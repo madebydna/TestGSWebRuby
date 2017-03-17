@@ -60,7 +60,7 @@ describe 'Visitor' do
   scenario 'sees the school\'s type' do
     school = create(:school_with_new_profile, type: 'charter')
     visit school_path(school)
-    expect(page).to have_content('Charter')
+    expect(page).to have_content('charter')
   end
 
   scenario 'sees the school\'s district name' do
