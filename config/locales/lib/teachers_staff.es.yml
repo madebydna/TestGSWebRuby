@@ -1,7 +1,7 @@
 es:
   lib:
     teachers_staff:
-      'title': 'GreatSchools profile data sources &amp; information'
+      'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'Ratio of teacher salary to total number of teachers': 'El salario promedio de profesores'
       'Percentage of full time teachers who are certified': 'El porcentaje de profesores de tiempo completo que están certificados'
       'Ratio of students to full time counselors': 'El promedio de estudiantes por cada consejero'

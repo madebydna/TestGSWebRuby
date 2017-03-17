@@ -104,7 +104,7 @@ es:
     Required: Requerido
     Review this School: Incluya su opinión sobre esta escuela
     Overall experience: Experiencia general
-    Recent Comments: Recent Comments
+    Recent Comments: Comentarios recientes
     Be the first to review this school: Sé el primero en opinar sobre esta escuela
     Tell us why: Díganos por qué
     What is your relationship to this school?: '¿Cuál es su relación con esta escuela?'
@@ -129,4 +129,9 @@ es:
     review_word_min: 'Please be sure your story is 7 words or more in length'
     review_char_limit: 'Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.'
     review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
-    Submitting: Submitting
+    Submitting: Enviando
+    Report Review: Report Review
+    Show more: Mostrar más
+    Show less: Mostrar menos
+    Review: Review
+    Review this school: Review this school

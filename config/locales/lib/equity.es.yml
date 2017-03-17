@@ -1,7 +1,7 @@
 es:
   lib:
     equity:
-      'title': 'GreatSchools profile data sources &amp; information'
+      'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
       'Percent of students who meet UC/CSU entrance requirements': 'Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU'
       'source': 'Fuente'

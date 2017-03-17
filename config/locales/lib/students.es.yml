@@ -1,7 +1,7 @@
 es:
   lib:
     students:
-      'title': 'GreatSchools profile data sources &amp; information'
+      'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'source': 'Fuente'
       'ethnicity': 'Ethnicity'
       'gender': 'El Sexo'

@@ -23,9 +23,9 @@ const Drawer = React.createClass({
   render: function() {
     let label;
     if (this.state.open) {
-      label = this.props.openedLabel || 'Show less';
+      label = this.props.openedLabel || GS.I18n.t('Show less');
     } else {
-      label = this.props.closedLabel || 'Show more';
+      label = this.props.closedLabel || GS.I18n.t('Show more');
     }
     return(
       <div className={"show-more show-more--" + (this.state.open ? 'open' : 'closed')}>
