@@ -70,6 +70,13 @@
       @include checkbox;
     }
 
+    .district-select {
+      max-width: 40%;
+      label {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
     .district-select select {
       text-overflow: ellipsis;
       width: 100%;
