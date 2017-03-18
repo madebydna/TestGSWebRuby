@@ -110,7 +110,7 @@ export default class ReviewsList extends React.Component {
   closeAllButton(){
     if(this.state.pageNumber != 1) {
       return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
-        {GS.I18n.t('Close All')}
+        {GS.I18n.t('Close all')}
       </a></div>);
     }
   }
