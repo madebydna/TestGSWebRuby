@@ -11,7 +11,7 @@ export default class ReviewDistribution extends React.Component {
   }
 
   renderBar(answer, scale, answerCount, totalReviews) {
-    var percentageOfTotal = (answerCount / totalReviews) * 50;
+    var percentageOfTotal = (answerCount / totalReviews) * 40;
     if (percentageOfTotal < 1) {
       percentageOfTotal = 0.5;
     }

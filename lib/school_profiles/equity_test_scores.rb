@@ -108,12 +108,15 @@ module SchoolProfiles
 
     def low_income_sort_subjects(hash)
       hash.sort do | a, b |
+
         sum1 = 0
         sum2 = 0
         if b.present? && b[1].present? && a.present? && a[1].present?
-          sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
-          sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
+          sum1 = b[1].inject(0){|a,e| total + e['number_students_tested'] if e['number_students_tested']}
+          sum2 = a[1].inject(0){|a,e| total + e['number_students_tested'] if e['number_students_tested']}
         end
+        sum1 = 0 if sum1.blank?
+        sum2 = 0 if sum2.blank?
         sum1 <=> sum2
       end
     end

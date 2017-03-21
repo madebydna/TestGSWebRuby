@@ -1,4 +1,3 @@
-import ReactOnRails from 'react-on-rails';
 import configureStore from './store/appStore';
 import DistrictBoundaries from './react_components/district_boundaries/district_boundaries';
 import DistrictBoundariesLegend from './react_components/district_boundaries/district_boundaries_legend';
