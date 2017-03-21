@@ -10,6 +10,7 @@ module ActiveRecord::ConnectionAdapters
           if active?
             raise e # if the connection is still active, nothing I can do here will help. re-raise the error
           else
+            GSLogger.error(:misc, e, message: 'Error executing update_queue statement', vars: {args: args.join(',')})
             reconnect!
             execute_without_retry(*args) if active?
           end
