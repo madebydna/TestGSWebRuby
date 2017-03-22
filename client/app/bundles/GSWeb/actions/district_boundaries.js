@@ -37,8 +37,8 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
   })
 
   $.when(
-    findDistrictsByLatLon(lat, lon, level),
-    findSchoolsByLatLon(lat, lon, schoolLevel)
+    findFirstDistrictServingLatLon(lat, lon, level),
+    findFirstSchoolServingLatLon(lat, lon, schoolLevel)
   ).done((district = {}, school = {}) => {
     let state = (district.state || school.state || getStateFromLatLon(lat, lon));
     $.when(state).done(state => {
@@ -133,7 +133,7 @@ const loadDistrictById = (id, state) => {
   }).then(json => json);
 }
 
-const findSchoolsByLatLon = (lat, lon, level, options) => {
+const findFirstSchoolServingLatLon = (lat, lon, level, options) => {
   return Schools.findByLatLon(lat, lon, {
     ...options,
     boundary_level: level,
@@ -141,7 +141,7 @@ const findSchoolsByLatLon = (lat, lon, level, options) => {
   }).then(json => (json.items || [])[0]);
 };
 
-const findDistrictsByLatLon = (lat, lon, level, options) => {
+const findFirstDistrictServingLatLon = (lat, lon, level, options) => {
   return Districts.findByLatLon(lat, lon, {
     ...options,
     boundary_level: level,
