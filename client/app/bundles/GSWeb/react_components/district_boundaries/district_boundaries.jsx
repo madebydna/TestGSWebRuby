@@ -34,8 +34,12 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   componentDidMount() {
-    if(this.props.lat && this.props.lon) {
+    if(this.props.schoolId && this.props.state) {
+      this.props.locateSchool(this.props.state, this.props.schoolId);
+    } else if(this.props.lat && this.props.lon) {
       this.props.changeLocation(this.props.lat, this.props.lon);
+    } else {
+      // do nothing
     }
   }
 

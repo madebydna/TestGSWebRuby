@@ -24,45 +24,38 @@ export const SCHOOL_SELECT = 'SCHOOL_SELECT';
 // "Connected" component calls "bindActionCreators". The dumb UI component
 // would then invoke props.loadSchool
 export const changeLocation = (lat, lon) => (dispatch, getState) => {
-  const dispatchLocationChangeFailure = () => {
-    dispatch({
-      type: LOCATION_CHANGE_FAILURE
-    })
-  }
-
-  let { level, nearbyDistrictsRadius, state, schoolTypes } = getState().districtBoundaries;
-  let schoolLevel = (level == 'e') ? 'p' : level;
+  let { level, schoolTypes } = getState().districtBoundaries;
   dispatch({
     type: IS_LOADING
   })
 
-  $.when(
-    findFirstDistrictServingLatLon(lat, lon, level),
-    findFirstSchoolServingLatLon(lat, lon, schoolLevel)
-  ).done((district = {}, school = {}) => {
-    let state = (district.state || school.state || getStateFromLatLon(lat, lon));
-    $.when(state).done(state => {
-      if(state && district.id) {
-        $.when(
-          findSchoolsByDistrict(district.id, state),
-          findDistrictsNearLatLon(lat, lon, state, nearbyDistrictsRadius),
-          findSchoolsNearLatLon(lat, lon, state, schoolTypes)
-        ).done((schoolsInDistrict = [], nearbyDistricts = [], otherSchools = []) => {
-          dispatch({
-            type: LOCATION_CHANGE,
-            district,
-            school,
-            schools: schoolsInDistrict.concat(otherSchools),
-            districts: nearbyDistricts,
-            lat: lat,
-            lon: lon
-          })
-        })
-      } else {
-        dispatchLocationChangeFailure();
-      }
-    }).fail(dispatchLocationChangeFailure);
-  }).fail(dispatchLocationChangeFailure);
+  return findDataForLatLon(lat, lon, level, schoolTypes)
+    .done((lat, lon, districts, district, school, schools) => {
+      dispatch({
+        type: LOCATION_CHANGE,
+        district,
+        school,
+        schools,
+        districts,
+        lat: lat,
+        lon: lon
+      })
+    }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
+}
+
+export const locateSchool = (state, id) => (dispatch, getState) => {
+  dispatch({
+    type: IS_LOADING
+  })
+  loadSchoolById(id, state).done(school => {
+    dispatch(changeLocation(school.lat, school.lon)).done(() => {
+      debugger;
+      dispatch({
+        type: SCHOOL_SELECT,
+        school
+      });
+    });
+  });
 }
 
 export const selectSchool = (id, state) => dispatch => {
@@ -161,7 +154,7 @@ const findSchoolsByDistrict = (districtId, state) => {
   }).then(json => json.items);
 };
 
-const findDistrictsNearLatLon = (lat, lon, state, radius) => {
+const findDistrictsNearLatLon = (lat, lon, state, radius = 50) => {
   return Districts.findNearLatLon(lat, lon, radius, {
     state: state,
     charter_only: false
@@ -180,6 +173,33 @@ const findSchoolsNearLatLon = (lat, lon, state, schoolTypes) => {
     return $.when([]);
   }
 };
+
+const findDataForLatLon = (lat, lon, level, schoolTypes) => {
+  let deferred = $.Deferred();
+  let schoolLevel = (level == 'e') ? 'p' : level;
+
+  $.when(
+    findFirstDistrictServingLatLon(lat, lon, level),
+    findFirstSchoolServingLatLon(lat, lon, schoolLevel)
+  ).done((district = {}, school = {}) => {
+    let state = (district.state || school.state || getStateFromLatLon(lat, lon));
+    $.when(state).done(state => {
+      if(state && district.id) {
+        $.when(
+          findSchoolsByDistrict(district.id, state),
+          findDistrictsNearLatLon(lat, lon, state),
+          findSchoolsNearLatLon(lat, lon, state, schoolTypes)
+        ).done((schoolsInDistrict = [], nearbyDistricts = [], otherSchools = []) => {
+          deferred.resolve(lat, lon, nearbyDistricts, district, school, schoolsInDistrict.concat(otherSchools));
+        })
+      } else {
+        deferred.reject()
+      }
+    }).fail(() => deferred.reject());
+  }).fail(() => deferred.reject());
+
+  return deferred.promise();
+}
 
 
 // simple action creators
