@@ -44,19 +44,46 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
 }
 
 export const locateSchool = (state, id) => (dispatch, getState) => {
+  let { level, schoolTypes } = getState().districtBoundaries;
   dispatch({
     type: IS_LOADING
   })
-  loadSchoolById(id, state).done(school => {
-    dispatch(changeLocation(school.lat, school.lon)).done(() => {
-      debugger;
-      dispatch({
-        type: SCHOOL_SELECT,
-        school
-      });
-    });
+  loadSchoolById(id, state).done(selectedSchool => {
+    findDataForLatLon(selectedSchool.lat, selectedSchool.lon, level, schoolTypes)
+      .done((lat, lon, districts, district, school, schools) => {
+        dispatch({
+          type: LOCATION_CHANGE,
+          district,
+          school: selectedSchool,
+          schools,
+          districts,
+          lat: lat,
+          lon: lon
+        })
+      }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
   });
 }
+
+export const locateDistrict = (state, id) => (dispatch, getState) => {
+  let { level, schoolTypes } = getState().districtBoundaries;
+  dispatch({
+    type: IS_LOADING
+  })
+  loadDistrictById(id, state).done(selectedDistrict => {
+    findDataForLatLon(selectedDistrict.lat, selectedDistrict.lon, level, schoolTypes)
+      .done((lat, lon, districts, district, school, schools) => {
+        dispatch({
+          type: LOCATION_CHANGE,
+          district: selectedDistrict,
+          school,
+          schools,
+          districts,
+          lat: lat,
+          lon: lon
+        });
+      }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
+  });
+};
 
 export const selectSchool = (id, state) => dispatch => {
   dispatch({

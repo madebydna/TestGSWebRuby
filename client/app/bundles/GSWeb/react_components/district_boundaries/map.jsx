@@ -74,6 +74,7 @@ export default class Map extends React.Component {
     this.props.googleMaps.event.addDomListener(this.map, 'idle', this.onIdle.bind(this));
     this.props.googleMaps.event.addDomListener(window, 'resize', this.onResize.bind(this));
     this.map.addListener('click', this.onClick.bind(this));
+    this.setState({mapCenter: this.map.getCenter()});
   }
 
   componentDidUpdate(prevProps, prevState) {
