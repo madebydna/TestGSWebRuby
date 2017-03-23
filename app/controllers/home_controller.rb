@@ -21,6 +21,11 @@ class HomeController < ApplicationController
                       type: 'website',
                       url: home_url,
                       site_name: 'GreatSchools'
+                  },
+                  twitter: {
+                      card: 'Summary',
+                      site: '@GreatSchools',
+                      description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'
                   }
     @homepage_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     set_omniture_pagename
