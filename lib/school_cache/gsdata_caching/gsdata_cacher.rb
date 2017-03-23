@@ -2,15 +2,18 @@
 class GsdataCaching::GsdataCacher < Cacher
   CACHE_KEY = 'gsdata'.freeze
   # DATA_TYPES INCLUDED
+  # 31: In school suspension ---- not used currently JT-3276
+  # 35: Out of school suspension
   # 55: %AP enrollment for students in grades 9-12
   # 83: Percentage of students passing 1 or more AP exams grades 9-12
+  # 91: Absent the rate of absenteeism
   # 95: Ration of students to full time teachers
   # 99: Percentage of full time teachers who are certified
   # 119: Ratio of students to full time counselors
   # 133: Ratio of teacher salary to total number of teachers
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
-  DATA_TYPE_IDS = [55, 83, 95, 99, 119, 133, 149, 152].freeze
+  DATA_TYPE_IDS = [35, 55, 83, 91, 95, 99, 119, 133, 149, 152].freeze
 
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
