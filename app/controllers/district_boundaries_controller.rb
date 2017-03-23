@@ -6,11 +6,11 @@ class DistrictBoundariesController < ApplicationController
   end
 
   def meta_title
-    'School and District Boundaries Map | GreatSchools'
+    'What School District Are You In? District Boundary Map | GreatSchools'
   end
 
   def meta_description
-    'Enter zip code or address to see school attendance zones and district boundary lines on our interactive map'
+    'See what school district you are in by providing your zip code or address in our interactive map.'
   end
 
   def set_seo_meta_tags
