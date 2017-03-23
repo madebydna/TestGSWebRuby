@@ -91,9 +91,7 @@ module SchoolProfiles
     end
 
     def scores_format_numbers(value)
-      if value.instance_of? Fixnum
-        value
-      elsif value.instance_of? Float
+      if value.respond_to?(:round)
         value.round
       elsif value.instance_of? String
         value.scan(/\d+/) if value.present?
