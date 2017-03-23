@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { geocode } from '../../components/geocoding';
 import ButtonGroup from '../buttongroup';
 import Select from '../select';
 import * as Geocoding from '../../components/geocoding';
@@ -31,10 +30,18 @@ export default class SearchBar extends React.Component {
     this.handleSchoolType = this.handleSchoolType.bind(this);
     this.search = this.search.bind(this);
     this.state = {
-      searchTerm: this.props.searchTerm,
+      searchTerm: props.searchTerm,
       showFilters: false,
       mapSelected: true,
       listSelected: false
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(!prevProps.googleMapsInitialized && this.props.googleMapsInitialized) {
+      if(this.state.searchTerm) {
+        this.search();
+      }
     }
   }
 
@@ -154,7 +161,7 @@ export default class SearchBar extends React.Component {
           <div className="filter grade-filter">
             <label>School Grade</label>
             <ButtonGroup
-              activeOption="e"
+              activeOption={this.props.level}
               options={{e: 'Elementary', m: 'Middle', h: 'High'}}
               onSelect={this.props.setLevel} />
           </div>

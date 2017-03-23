@@ -19,7 +19,7 @@ window.store = configureStore({
     schoolId: getValueOfQueryParam('schoolId'),
     districtId: getValueOfQueryParam('districtId'),
     nearbyDistrictsRadius: 50,
-    level: 'e',
+    level: getValueOfQueryParam('level') || 'e',
     schoolTypes: [],
     loading: false
   }
