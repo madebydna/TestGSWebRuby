@@ -1,5 +1,6 @@
 class TestScoresCaching::GradeAllCalculator
   attr_reader :data_sets_and_values
+  PRECISION = 2
 
   def initialize(data_sets_and_values = [])
     @data_sets_and_values = data_sets_and_values 
@@ -52,16 +53,18 @@ class TestScoresCaching::GradeAllCalculator
 
   def weighted_school_value_float(test_data_sets)
     sum = sum_number_students_tested(test_data_sets)
-    test_data_sets.sum do |tds|
+    percent = test_data_sets.sum do |tds|
       tds['school_value_float'].to_s.scan(/[0-9.]+/).first.to_f * tds['number_students_tested']
     end / sum unless sum.zero?
+    percent.round(PRECISION) if percent
   end
 
   def weighted_state_value_float(test_data_sets)
     sum = sum_state_number_tested(test_data_sets)
-    test_data_sets.sum do |tds|
+    percent = test_data_sets.sum do |tds|
       tds['state_value_float'].to_s.scan(/[0-9.]+/).first.to_f * tds['state_number_tested']
     end / sum unless sum.zero?
+    percent.round(PRECISION) if percent
   end
 
   def max_year

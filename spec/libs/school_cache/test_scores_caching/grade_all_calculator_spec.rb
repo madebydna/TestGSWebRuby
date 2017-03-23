@@ -39,7 +39,7 @@ describe 'GradeAllCalculator' do
       end
 
       it { is_expected.to be_present }
-      its(:school_value_float) { is_expected.to round_to(16.67, 2) }
+      its(:school_value_float) { is_expected.to eq(16.67) }
       its(:state_value_float) { is_expected.to eq(80) }
       its(:number_students_tested) { is_expected.to eq(12) }
       its(:state_number_tested) { is_expected.to eq(5) }
@@ -80,7 +80,7 @@ describe 'GradeAllCalculator' do
       end
 
       it { is_expected.to be_present }
-      its(:school_value_float) { is_expected.to round_to(16.67, 2) }
+      its(:school_value_float) { is_expected.to eq(16.67) }
       its(:state_value_float) { is_expected.to eq(80) }
       its(:number_students_tested) { is_expected.to eq(12) }
       its(:state_number_tested) { is_expected.to eq(5) }
@@ -149,7 +149,7 @@ describe 'GradeAllCalculator' do
 
       it { is_expected.to be_present }
       its(:school_value_float) { is_expected.to eq(20) }
-      its(:state_value_float) { is_expected.to round_to(83.33, 2) }
+      its(:state_value_float) { is_expected.to eq(83.33) }
       its(:number_students_tested) { is_expected.to eq(8) }
       its(:state_number_tested) { is_expected.to eq(12) }
       its(:subject_id) { is_expected.to eq(4) }
@@ -216,7 +216,7 @@ describe 'GradeAllCalculator' do
 
       it { is_expected.to be_present }
       its(:school_value_float) { is_expected.to eq(nil) }
-      its(:state_value_float) { is_expected.to round_to(83) }
+      its(:state_value_float) { is_expected.to eq(83.33) }
       its(:number_students_tested) { is_expected.to eq(0) }
       its(:state_number_tested) { is_expected.to eq(12) }
     end
