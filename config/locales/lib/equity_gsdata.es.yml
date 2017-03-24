@@ -2,6 +2,9 @@ es:
   lib:
     equity_gsdata:
       courses_title: Cursos avanzados
+      disabilities_title: Discipline & attendance
+      'Percentage of students chronically absent (15+ days)': '% Chronically absent'
+      'Percentage of students suspended out of school': '% Suspended'
       Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
       Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
       African American: Black

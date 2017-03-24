@@ -4,9 +4,15 @@ module SchoolProfiles
 
     BREAKDOWN_ALL = 'All'
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
+    STUDENTS_WITH_DISABILITIES = 'Students with IDEA catagory disabilities'
     COURSES_DATA_TYPES = {
         'Percentage AP enrolled grades 9-12' => {type: :person},
         'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
+    }
+
+    DISABILITIES_DATA_TYPES = {
+        'Percentage of students suspended out of school' => {type: :person_reversed},
+        'Percentage of students chronically absent (15+ days)' => {type: :person_reversed}
     }
 
     def initialize(school_cache_data_reader:)
@@ -20,6 +26,15 @@ module SchoolProfiles
       })
     end
 
+    def equity_gsdata_disabilities_hash
+      # require 'pry'
+      # binding.pry
+      @_equity_gsdata_disabilities_hash ||= ({
+          I18n.t('disabilities_title', scope: 'lib.equity_gsdata') => disabilities_hash
+
+      })
+    end
+
     def sources
       equity_gsdata_hash # Need to build the data hash to compute the sources
       @sources
@@ -27,13 +42,41 @@ module SchoolProfiles
 
     private
 
+    def disabilities_hash
+      data = @school_cache_data_reader.gsdata_data(*DISABILITIES_DATA_TYPES.keys)
+      data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+        max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
+        matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
+        unless matching_breakdowns.empty?
+          output_hash.merge!(subject_hash(DISABILITIES_DATA_TYPES, data_type_name, matching_breakdowns))
+
+          @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
+        end
+      end
+    end
+
+    # Students with IDEA catagory disabilities
+
+    def students_with_disabilities_hash
+      data = @school_cache_data_reader.gsdata_data(*DISABILITIES_DATA_TYPES.keys)
+      data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+        max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
+        matching_breakdowns = array_of_hashes.select(&matching_students_with_disabilities_values(max_year))
+        unless matching_breakdowns.empty?
+          output_hash.merge!(subject_hash(DISABILITIES_DATA_TYPES, data_type_name, matching_breakdowns))
+
+          @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
+        end
+      end
+    end
+
     def courses_hash
       data = @school_cache_data_reader.gsdata_data(*COURSES_DATA_TYPES.keys)
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
         matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
         unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(data_type_name, matching_breakdowns))
+          output_hash.merge!(subject_hash(COURSES_DATA_TYPES, data_type_name, matching_breakdowns))
 
           @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
         end
@@ -44,9 +87,9 @@ module SchoolProfiles
       I18n.t(data_type_name, scope: 'lib.equity_gsdata', default: data_type_name)
     end
 
-    def subject_hash(data_type_name, value_hashes)
-      type = COURSES_DATA_TYPES[data_type_name][:type]
-      precision = COURSES_DATA_TYPES[data_type_name][:precision] || 0
+    def subject_hash(data_types, data_type_name, value_hashes)
+      type = data_types[data_type_name][:type]
+      precision = data_types[data_type_name][:precision] || 0
       {
           subject_name(data_type_name) => {
               narration: I18n.t(data_type_name, scope: 'lib.equity_gsdata.data_point_info_texts', default: ''),
@@ -70,13 +113,31 @@ module SchoolProfiles
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
             (hash['breakdowns'].blank? ||
-                ethnicity_breakdowns.keys.include?(I18n.t(hash['breakdowns'], scope: 'lib.equity_gsdata', default: hash['breakdowns'])))
+                ethnicity_breakdowns.keys.include?(I18n.t(suspension_breakdown_matching(hash['breakdowns']),
+                                                          scope: 'lib.equity_gsdata',
+                                                          default: suspension_breakdown_matching(hash['breakdowns']))))
       end
+    end
+
+    def matching_students_with_disabilities_values(max_year)
+      lambda do |hash|
+        hash.has_key?('school_value') &&
+            hash['source_year'].to_i == max_year &&
+            (hash['breakdowns'].blank? ||
+                hash['breakdowns'] == STUDENTS_WITH_DISABILITIES)
+      end
+    end
+
+    # hack for gsdata Percentage of students suspended out of school
+    def suspension_breakdown_matching(breakdowns)
+      breakdowns.gsub('All students except 504 category,','')
     end
 
     def hash_for_display(precision = 0)
       lambda do |hash|
         breakdown = hash['breakdowns'] || BREAKDOWN_ALL
+        # hack for gsdata Percentage of students suspended out of school
+        breakdown.gsub!('All students except 504 category,','')
         breakdown_name_str = I18n.t(breakdown, scope: 'lib.equity_gsdata', default: breakdown)
         {
             breakdown: breakdown_name_str,

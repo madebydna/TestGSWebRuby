@@ -93,7 +93,7 @@ module SchoolProfiles
     end
 
     def data_label(key)
-      I18n.t(key, default: I18n.db_t(key, default: key))
+      I18n.t(key, scope: 'lib.equity_test_scores', default: I18n.db_t(key, default: key))
     end
 
     def visible?

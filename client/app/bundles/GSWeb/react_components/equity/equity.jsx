@@ -15,7 +15,8 @@ export default class Equity extends React.Component {
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number,
     sources: React.PropTypes.string,
-    data: React.PropTypes.object
+    data: React.PropTypes.object,
+    disabilities: React.PropTypes.object
   };
 
   constructor(props) {
@@ -120,6 +121,41 @@ export default class Equity extends React.Component {
     return <div dangerouslySetInnerHTML={{__html: narration_str}} />;
   }
 
+  section3Tabs() {
+    let tabs = [[],[]];
+
+    let li = this.props.test_scores['disabilities'];
+    for (var subject in li) {
+      if (li.hasOwnProperty(subject)) {
+        let data = li[subject];
+        if(data && data.length > 0) {
+          tabs[0].push(
+              {
+                subject: subject,
+                component: <BarGraphBase
+                    test_scores={data} />,
+                explanation: this.narrationContent(data)
+              }
+          );
+        }
+      }
+    }
+    // let data = this.graduationRateDataByIncomeLevel();
+    // if(data && data.length > 0 && !this.allSchoolValueInvalid(data)){
+    //   tabs[0].push(
+    //       {
+    //         subject: GS.I18n.t('Graduation rates'),
+    //         component: <EquityBarGraph
+    //             test_scores={data}
+    //             type="bar"
+    //             graphId="graduation-rates-by-income-level-graph" />,
+    //         explanation: this.narrationContent(data)
+    //       }
+    //   )
+    // }
+    return tabs;
+  }
+
   section2Tabs() {
     let tabs = [[],[]];
 
@@ -184,8 +220,10 @@ export default class Equity extends React.Component {
   equityConfiguration(){
     let section1Content = [];
     let section2Content = [];
+    let section3Content = [];
     let section1Tabs = this.section1Tabs();
     let section2Tabs = this.section2Tabs();
+    let section3Tabs = this.section3Tabs();
     let config = [];
 
     if(section1Tabs[0].length > 0) {
@@ -222,10 +260,30 @@ export default class Equity extends React.Component {
       );
     }
 
+    if(section3Tabs[0].length > 0) {
+      section3Content.push(
+          {
+            section_title: GS.I18n.t('Test scores'),
+            content: section3Tabs[0]
+          }
+      );
+    }
+
     if (this.props.data) {
       for (let category in this.props.data) {
         if (this.props.data.hasOwnProperty(category)) {
           let sectionConfig = this.sectionConfig(category, this.props.data[category]);
+          if (sectionConfig) {
+            section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
+    if (this.props.disabilities) {
+      for (let category in this.props.disabilities) {
+        if (this.props.disabilities.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.disabilities[category]);
           if (sectionConfig) {
             section1Content.push(sectionConfig);
           }
@@ -258,6 +316,20 @@ export default class Equity extends React.Component {
           sourceHref: '/gk/ca-high-schools/#Equity-Low-Income'
         },
         section_content: section2Content
+      });
+    }
+
+    if(section3Content.length > 0) {
+      config.push({
+        section_info:{
+          title: 'Students with Disabilities',
+          subtitle: '',
+          rating: '',
+          icon_classes: GS.I18n.t('Race ethnicity icon'),
+          info_text: GS.I18n.t('Low income tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Students with Disabilities'
+        },
+        section_content: section3Content
       });
     }
 
@@ -296,7 +368,9 @@ export default class Equity extends React.Component {
         if (displayType == 'plain') {
           component = <PlainNumber values={values}/>
         } else if (displayType == 'person') {
-          component = <PersonBar values={values}/>
+          component = <PersonBar values={values} />
+        } else if (displayType == 'person_reversed') {
+          component = <PersonBar values={values} invertedRatings="true"/>
         } else {
           component = <BarGraphBase test_scores={values}/>
         }
@@ -344,6 +418,7 @@ export default class Equity extends React.Component {
   }
 
   graduationRateDataByIncomeLevel() {
+    console.log('graduationRateDataByIncomeLevel ----- 4-year high school graduation rate');
     return testScoresHelpers.incomeLevelTestScoreData(
       this.props.characteristics['4-year high school graduation rate'],
       gon.ethnicity
@@ -351,6 +426,7 @@ export default class Equity extends React.Component {
   }
   
   entranceRequirementData() {
+    console.log('entranceRequirementData ----- Percent of students who meet UC/CSU entrance requirements');
     return testScoresHelpers.testDataMatchingEthnicities(
       this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
       gon.ethnicity
@@ -358,6 +434,7 @@ export default class Equity extends React.Component {
   }
 
   entranceRequirementByIncomeLevelData() {
+    console.log('entranceRequirementByIncomeLevelData --- Percent of students who meet UC/CSU entrance requirements');
     return testScoresHelpers.incomeLevelTestScoreData(
       this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
       gon.ethnicity

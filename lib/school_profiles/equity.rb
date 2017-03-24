@@ -30,6 +30,10 @@ module SchoolProfiles
       @_equity_data_sources ||= equity_data.sources
     end
 
+    def equity_disabilities_hash
+      @_equity_disabilities_hash ||= equity_data.equity_gsdata_disabilities_hash
+    end
+
     def equity_data
       @_equity_data ||= SchoolProfiles::EquityGsdata.new(school_cache_data_reader: @school_cache_data_reader)
     end

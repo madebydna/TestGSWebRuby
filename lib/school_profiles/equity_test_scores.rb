@@ -7,10 +7,12 @@ module SchoolProfiles
     BREAKDOWN_ALL = 'All'
     LOW_INCOME_TOP = 'low_income'
     ETHNICITY_TOP = 'ethnicity'
+    DISABILITIES_TOP = 'disabilities'
     SUBJECTS_TO_RETURN = 3
     BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
     BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
     BREAKDOWN_HAWAIIAN = 'Hawaiian'
+    BREAKDOWN_DISABILITIES = 'Students with disabilities'
 
     #PUBLIC
 
@@ -19,9 +21,11 @@ module SchoolProfiles
     end
 
     def generate_equity_test_score_hash
+      # require 'pry'; binding.pry
       @_generate_equity_test_score_hash ||=({
           LOW_INCOME_TOP => low_income_hash,
-          ETHNICITY_TOP => ethnicity_hash
+          ETHNICITY_TOP => ethnicity_hash,
+          DISABILITIES_TOP => disabilities_hash
       })
     end
 
@@ -132,7 +136,20 @@ module SchoolProfiles
       {BREAKDOWN_LOW_INCOME=>'0', BREAKDOWN_NOT_LOW_INCOME=>'0'}
     end
 
+    # disability
 
+    def disabilities_hash
+      @_disabilities_hash ||=(
+      hash = test_scores_formatted(disabilities_breakdowns)
+      # sorted = low_income_sort_subjects(hash).to_h
+      # low_income_sort_breakdowns(sorted)
+      hash.first(SUBJECTS_TO_RETURN).to_h
+      )
+    end
+
+    def disabilities_breakdowns
+      {BREAKDOWN_DISABILITIES => '0'}
+    end
 
     # Ethnicity specific methods
 

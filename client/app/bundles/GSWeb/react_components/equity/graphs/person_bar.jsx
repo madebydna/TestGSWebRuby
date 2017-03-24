@@ -9,7 +9,8 @@ export default class PersonBar extends React.Component {
       display_percentages: React.PropTypes.bool,
       number_students_tested: React.PropTypes.string,
       state_average: React.PropTypes.string
-    })).isRequired
+    })).isRequired,
+    invertedRatings:  React.PropTypes.bool
   };
 
   constructor(props) {
@@ -64,6 +65,10 @@ export default class PersonBar extends React.Component {
       } else if (score_rating < 1) {
         score_rating = 1;
       }
+      if(this.props.invertedRatings) {
+        score_rating = 11 - score_rating;
+      }
+
       let class_score_rating = 'foreground rating_color_' + score_rating;
       return (
           <div key={value['breakdown']} className="rating-container__score-item equity-test-scores">
