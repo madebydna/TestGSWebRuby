@@ -45,23 +45,29 @@ GS.testScoresHelpers = {
     );
   },
 
+  chooseBreakdownValue: function(obj) {
+    if (obj.original_breakdown == null) {
+      return obj.breakdown;
+    }
+    return obj.original_breakdown;
+  },
+
   testDataMatchingEthnicities(
     testScoreDataArray,
     arrayOfEthnicityCharacteristicsObjects) {
-
     let ethnicities = _.map(
       arrayOfEthnicityCharacteristicsObjects,
-      obj => obj.original_breakdown
+      obj => this.chooseBreakdownValue(obj)
     );
 
     ethnicities.push('All');
     ethnicities.push('All students');
 
-    let result = _.select(
-      testScoreDataArray, obj => _.include(ethnicities, obj.breakdown)
+    let result = _.filter(
+      testScoreDataArray, obj  => {return _.include(ethnicities, this.chooseBreakdownValue(obj))}
     );
     return result;
-  }
+  },
 };
 
 export default GS.testScoresHelpers;
