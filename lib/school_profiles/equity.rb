@@ -30,6 +30,10 @@ module SchoolProfiles
       @_equity_data_sources ||= equity_data.sources
     end
 
+    def equity_discipline_hash
+      @_equity_discipline_hash ||= equity_data.equity_gsdata_discipline_hash
+    end
+
     def equity_disabilities_hash
       @_equity_disabilities_hash ||= equity_data.equity_gsdata_disabilities_hash
     end

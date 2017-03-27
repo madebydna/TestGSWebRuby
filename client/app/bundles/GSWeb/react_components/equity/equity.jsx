@@ -16,6 +16,7 @@ export default class Equity extends React.Component {
     rating_low_income: React.PropTypes.number,
     sources: React.PropTypes.string,
     data: React.PropTypes.object,
+    discipline: React.PropTypes.object,
     disabilities: React.PropTypes.object
   };
 
@@ -280,12 +281,23 @@ export default class Equity extends React.Component {
       }
     }
 
+    if (this.props.discipline) {
+      for (let category in this.props.discipline) {
+        if (this.props.discipline.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.discipline[category]);
+          if (sectionConfig) {
+            section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
     if (this.props.disabilities) {
       for (let category in this.props.disabilities) {
         if (this.props.disabilities.hasOwnProperty(category)) {
           let sectionConfig = this.sectionConfig(category, this.props.disabilities[category]);
           if (sectionConfig) {
-            section1Content.push(sectionConfig);
+            section3Content.push(sectionConfig);
           }
         }
       }
@@ -370,7 +382,7 @@ export default class Equity extends React.Component {
         } else if (displayType == 'person') {
           component = <PersonBar values={values} />
         } else if (displayType == 'person_reversed') {
-          component = <PersonBar values={values} invertedRatings="true"/>
+          component = <PersonBar values={values} invertedRatings={true} />
         } else {
           component = <BarGraphBase test_scores={values}/>
         }
@@ -418,7 +430,6 @@ export default class Equity extends React.Component {
   }
 
   graduationRateDataByIncomeLevel() {
-    console.log('graduationRateDataByIncomeLevel ----- 4-year high school graduation rate');
     return testScoresHelpers.incomeLevelTestScoreData(
       this.props.characteristics['4-year high school graduation rate'],
       gon.ethnicity
@@ -426,7 +437,6 @@ export default class Equity extends React.Component {
   }
   
   entranceRequirementData() {
-    console.log('entranceRequirementData ----- Percent of students who meet UC/CSU entrance requirements');
     return testScoresHelpers.testDataMatchingEthnicities(
       this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
       gon.ethnicity
@@ -434,7 +444,6 @@ export default class Equity extends React.Component {
   }
 
   entranceRequirementByIncomeLevelData() {
-    console.log('entranceRequirementByIncomeLevelData --- Percent of students who meet UC/CSU entrance requirements');
     return testScoresHelpers.incomeLevelTestScoreData(
       this.props.characteristics['Percent of students who meet UC/CSU entrance requirements'],
       gon.ethnicity

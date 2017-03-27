@@ -2,7 +2,8 @@ en:
   lib:
     equity_gsdata:
       courses_title: Advanced coursework
-      disabilities_title: Discipline & attendance
+      discipline_title: Discipline & attendance
+      disabilities_title: Students with disabilities
       'Percentage of students chronically absent (15+ days)': '% Chronically absent'
       'Percentage of students suspended out of school': '% Suspended'
       Percentage AP enrolled grades 9-12: '% taking AP classes'

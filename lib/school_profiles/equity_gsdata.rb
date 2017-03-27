@@ -10,9 +10,12 @@ module SchoolProfiles
         'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
     }
 
-    DISABILITIES_DATA_TYPES = {
+    DISCIPLINE_DATA_TYPES = {
         'Percentage of students suspended out of school' => {type: :person_reversed},
         'Percentage of students chronically absent (15+ days)' => {type: :person_reversed}
+    }
+    DISABILITIES_BREAKDOWN = {
+        'Students with disabilities' => {type: :person_reversed}
     }
 
     def initialize(school_cache_data_reader:)
@@ -26,11 +29,17 @@ module SchoolProfiles
       })
     end
 
+    def equity_gsdata_discipline_hash
+      @_equity_gsdata_discipline_hash ||= ({
+          I18n.t('discipline_title', scope: 'lib.equity_gsdata') => discipline_hash
+
+      })
+    end
+
+
     def equity_gsdata_disabilities_hash
-      # require 'pry'
-      # binding.pry
       @_equity_gsdata_disabilities_hash ||= ({
-          I18n.t('disabilities_title', scope: 'lib.equity_gsdata') => disabilities_hash
+          I18n.t('discipline_title', scope: 'lib.equity_gsdata') => students_with_disabilities_hash
 
       })
     end
@@ -42,41 +51,71 @@ module SchoolProfiles
 
     private
 
-    def disabilities_hash
-      data = @school_cache_data_reader.gsdata_data(*DISABILITIES_DATA_TYPES.keys)
-      data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
-        max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
-        matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
-        unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(DISABILITIES_DATA_TYPES, data_type_name, matching_breakdowns))
-
-          @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
-        end
-      end
+    def discipline_hash
+      generate_hash DISCIPLINE_DATA_TYPES
+      # data = @school_cache_data_reader.gsdata_data(*DISCIPLINE_DATA_TYPES.keys)
+      # data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+      #   max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
+      #   matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
+      #   unless matching_breakdowns.empty?
+      #     output_hash.merge!(subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns))
+      #
+      #     @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
+      #   end
+      # end
     end
 
     # Students with IDEA catagory disabilities
 
     def students_with_disabilities_hash
-      data = @school_cache_data_reader.gsdata_data(*DISABILITIES_DATA_TYPES.keys)
+      data = @school_cache_data_reader.gsdata_data(*DISCIPLINE_DATA_TYPES.keys)
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
         matching_breakdowns = array_of_hashes.select(&matching_students_with_disabilities_values(max_year))
         unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(DISABILITIES_DATA_TYPES, data_type_name, matching_breakdowns))
+          output_hash.merge!(subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns))
 
           @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
         end
       end
+      # disabilities_invert_hash johnny
+      #
+      # johnny
     end
 
+    # def disabilities_invert_hash(hash)
+    #   output_hash = {'Discipline & Attendance' => []}
+    #   hash.each do | key, value |
+    #     value.values.each do |breakdown|
+    #       if breakdown.breakdown == 'Students with IDEA catagory disabilities'
+    #         output_hash
+    #       end
+    #     end
+    #   end
+    #
+    # end
+
     def courses_hash
-      data = @school_cache_data_reader.gsdata_data(*COURSES_DATA_TYPES.keys)
+      generate_hash COURSES_DATA_TYPES
+      # data = @school_cache_data_reader.gsdata_data(*COURSES_DATA_TYPES.keys)
+      # data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+      #   max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
+      #   matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
+      #   unless matching_breakdowns.empty?
+      #     output_hash.merge!(subject_hash(COURSES_DATA_TYPES, data_type_name, matching_breakdowns))
+      #
+      #     @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
+      #   end
+      # end
+    end
+
+    def generate_hash(data_types)
+      data = @school_cache_data_reader.gsdata_data(*data_types.keys)
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
         matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
         unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(COURSES_DATA_TYPES, data_type_name, matching_breakdowns))
+          output_hash.merge!(subject_hash(data_types, data_type_name, matching_breakdowns))
 
           @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
         end
@@ -115,16 +154,17 @@ module SchoolProfiles
             (hash['breakdowns'].blank? ||
                 ethnicity_breakdowns.keys.include?(I18n.t(suspension_breakdown_matching(hash['breakdowns']),
                                                           scope: 'lib.equity_gsdata',
-                                                          default: suspension_breakdown_matching(hash['breakdowns']))))
+                                                          default: suspension_breakdown_matching(hash['breakdowns'])))
+            )
       end
     end
+
 
     def matching_students_with_disabilities_values(max_year)
       lambda do |hash|
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
-            (hash['breakdowns'].blank? ||
-                hash['breakdowns'] == STUDENTS_WITH_DISABILITIES)
+                hash['breakdowns'] == STUDENTS_WITH_DISABILITIES
       end
     end
 
