@@ -2,10 +2,7 @@ module SchoolProfiles
   class Equity
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
-
-      SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
-          school_cache_data_reader: school_cache_data_reader
-      ).auto_narrative_calculate_and_add
+      @graduation_rate = GraduationRate.new(school_cache_data_reader: school_cache_data_reader)
 
       test_scores
     end
@@ -157,10 +154,7 @@ module SchoolProfiles
     end
 
     def characteristics
-      @school_cache_data_reader.characteristics.slice(
-        '4-year high school graduation rate',
-        'Percent of students who meet UC/CSU entrance requirements'
-      )
+      @graduation_rate.to_hash
     end
 
     def characteristics_low_income_visible?
