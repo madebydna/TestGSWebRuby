@@ -88,7 +88,7 @@ export default class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="graduation-rates-graph" />,
-          explanation: <div>{GS.I18n.t('RE Grad rates narration')}</div>
+          explanation: <div dangerouslySetInnerHTML={{__html: GS.I18n.t('RE Grad rates narration')}}/>
         }
       );
     }
@@ -102,24 +102,12 @@ export default class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-graph" />,
-          explanation: <div>{GS.I18n.t('RE UC/CSU eligibility narration')}</div>
+          explanation: <div dangerouslySetInnerHTML={{__html: GS.I18n.t('RE UC/CSU eligibility narration')}}/>
         }
       )
     }
 
     return tabs;
-  }
-
-  narrationContentTestScores(id){
-    let narration_str;
-    switch(id){
-      case 4: { narration_str = 'This shows the percentages of graduates who have taken the A-G required classes needed to ' +
-          'be eligible for University of CA and CA state schools. ' +
-          '<a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> ' +
-          'about these requirements.</div>'; break;}
-    }
-
-    return <div dangerouslySetInnerHTML={{__html: narration_str}} />;
   }
 
   section3Tabs() {
