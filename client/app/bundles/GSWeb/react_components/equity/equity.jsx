@@ -15,7 +15,7 @@ export default class Equity extends React.Component {
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number,
     sources: React.PropTypes.string,
-    data: React.PropTypes.object,
+    courses: React.PropTypes.object,
     discipline: React.PropTypes.object,
     disabilities: React.PropTypes.object
   };
@@ -258,10 +258,10 @@ export default class Equity extends React.Component {
       );
     }
 
-    if (this.props.data) {
-      for (let category in this.props.data) {
-        if (this.props.data.hasOwnProperty(category)) {
-          let sectionConfig = this.sectionConfig(category, this.props.data[category]);
+    if (this.props.courses) {
+      for (let category in this.props.courses) {
+        if (this.props.courses.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.courses[category]);
           if (sectionConfig) {
             section1Content.push(sectionConfig);
           }

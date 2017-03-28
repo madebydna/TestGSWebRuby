@@ -22,8 +22,8 @@ module SchoolProfiles
       )
     end
 
-    def equity_data_hash
-      @_equity_data_hash ||= equity_data.equity_gsdata_hash
+    def equity_courses_hash
+      @_equity_courses_hash ||= equity_data.equity_gsdata_courses_hash
     end
 
     def equity_data_sources

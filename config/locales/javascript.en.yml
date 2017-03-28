@@ -100,7 +100,8 @@ en:
     Cancel: Cancel
     Submit: Submit
     Required: Required
-    Review this School: Review this School
+    Review this School: Review this school
+    Review this school: Review this school
     Overall experience: Overall experience
     Recent Comments: Recent comments
     Be the first to review this school: Be the first to review this school
@@ -129,6 +130,7 @@ en:
     review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
     Submitting: Submitting
     Report Review: Report Review
+    Report: Report
     Show more: Show more
     Show less: Show less
     Review: Review

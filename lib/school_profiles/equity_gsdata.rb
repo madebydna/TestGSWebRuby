@@ -23,8 +23,8 @@ module SchoolProfiles
       @sources = {}
     end
 
-    def equity_gsdata_hash
-      @_equity_gsdata_hash ||= ({
+    def equity_gsdata_courses_hash
+      @_equity_gsdata_courses_hash ||= ({
           I18n.t('courses_title', scope: 'lib.equity_gsdata') => courses_hash
       })
     end
@@ -45,7 +45,7 @@ module SchoolProfiles
     end
 
     def sources
-      equity_gsdata_hash # Need to build the data hash to compute the sources
+      equity_gsdata_courses_hash # Need to build the data hash to compute the sources
       @sources
     end
 
