@@ -16,12 +16,8 @@ module SchoolProfiles
     def academics
       hash = {}
       arr = []
-      if @test_scores.visible?
-        arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
-      end
-      if @college_readiness.visible?
-        arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
-      end
+      arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
+      arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
       hash[:academics] = arr
       hash.delete_if{|key, value| value.blank?}
     end
@@ -29,12 +25,8 @@ module SchoolProfiles
     def equity
       hash = {}
       arr = []
-      if @equity.ethnicity_visible?
-        arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race_ethnicity'}
-      end
-      if @equity.low_income_visible?
-        arr << {column: 'Equity', label: 'low_income', present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
-      end
+      arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race_ethnicity'}
+      arr << {column: 'Equity', label: 'low_income', present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
       hash[:equity] = arr
       hash.delete_if{|key, value| value.blank?}
     end
@@ -42,12 +34,8 @@ module SchoolProfiles
     def environment
       hash = {}
       arr = []
-      if @students.visible?
-        arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
-      end
-      if @teacher_staff.visible?
-        arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}
-      end
+      arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
+      arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}
       arr << {column: 'Environment', label: 'neighborhood', present: true, rating: nil, anchor: 'Neighborhood'}
       hash[:environment] = arr
       hash.delete_if{|key, value| value.blank?}
