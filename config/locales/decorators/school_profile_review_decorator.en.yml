@@ -2,6 +2,7 @@
 en:
   decorators:
     school_profile_review_decorator:
+      # WARNING: Changing user type strings requires updating the avatar mapping in user_reviews.rb
       community_member: community member
       found_helpful: ' found this helpful'
       no_rating: no rating

@@ -5,6 +5,7 @@ class UserReviews
     'parent' => 1,
     'student' => 2,
     'principal' => 5,
+    'school leader' => 5,
     'teacher' => 4,
     'community member' => 3,
     'unknown' => 3,
@@ -12,6 +13,7 @@ class UserReviews
     'estudiante actual' => 2,
     'estudiante' => 2,
     'funcionario de la escuela' => 5,
+    'líder de la escuela' => 5,
     'profesor' => 4,
     'miembro de la comunidad' => 3
   }.freeze
