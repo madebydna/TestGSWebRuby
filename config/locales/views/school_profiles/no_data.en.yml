@@ -1,0 +1,5 @@
+en:
+  school_profiles:
+    no_data:
+      message: "Data is not available. "
+      call_to_action: "Notify me when it's available."
