@@ -25,6 +25,18 @@ module SchoolProfiles
       end
     end
 
+    def get_characteristics_low_income_narrative(data_type_name)
+      if characteristics.present? && characteristics[data_type_name].present?
+        data = characteristics[data_type_name].find { |d| d['breakdown'] == 'Economically disadvantaged' }
+        st_hash = characteristics[data_type_name].find { |d| d['breakdown'] == 'All students' }
+        if data.present?
+          key_value = narration_calculation data_type_name, data, st_hash
+          key_value = '0' if key_value.blank?
+          return low_income_narration key_value, data_type_name
+        end
+      end
+    end
+
     def low_income_narration(key, subject)
       full_key = 'lib.test_scores.narrative.' << subject << '.' << key << '_html'
       I18n.t(full_key)

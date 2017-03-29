@@ -2,7 +2,7 @@ module SchoolProfiles
   class Equity
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
-      @graduation_rate = GraduationRate.new(school_cache_data_reader: school_cache_data_reader)
+      @graduation_rate = ::SchoolProfiles::GraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
 
       test_scores
     end
@@ -20,7 +20,7 @@ module SchoolProfiles
     end
 
     def equity_courses_hash
-      @_equity_courses_hash ||= equity_data.equity_gsdata_courses_hash
+      @_equity_courses_hash ||= {I18n.t('Graduation rates', scope:'lib.equity_gsdata') => @graduation_rate.to_hash}.merge(equity_data.equity_gsdata_courses_hash)
     end
 
     def equity_data_sources
@@ -154,7 +154,10 @@ module SchoolProfiles
     end
 
     def characteristics
-      @graduation_rate.to_hash
+      @school_cache_data_reader.characteristics.slice(
+        '4-year high school graduation rate',
+        'Percent of students who meet UC/CSU entrance requirements'
+      )
     end
 
     def characteristics_low_income_visible?
