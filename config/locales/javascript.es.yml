@@ -69,6 +69,11 @@ es:
       Esto muestra los porcentajes de graduados que han tomado el A-G clases requeridas necesarias para ser elegible
       para la Universidad de CA y colegios de CA State. <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información</a> acerca de estos requisitos.
     'Low-income students': 'Estudiantes de bajos ingresos'
+    'SD Test scores narration': >
+      <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de {subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
+      <hr />
+      <p class="parent-tip">Consejos para padres:</p>
+      <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que los estudiantes con discapacidades obtengan resultados académicos exitosos.</p>
     Low income subtitle: >
       ¿Su escuela está ayudando a todos los estudiantes obtener resultados académicos exitosos?
       <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
@@ -77,6 +82,8 @@ es:
       La calificación de estudiantes de bajos ingresos refleja los puntajes de los exámenes estatales para los
       estudiantes de esta escuela que son elegibles para recibir el almuerzo gratis o a un precio reducido, comparado
       con todos los estudiantes en el estado.
+    Student with disabilities tooltip: >
+      Este grupo incluye a todos los estudiantes con discapacidades físicas o de aprendizaje que reciben servicios de educación especial y servicios relacionados a sus discapacidades.
     Low income icon: 'icon-pie'
     Test scores: 'Resultados de exámenes'
     Graduation rates: 'Índices de Graduación'
@@ -138,4 +145,4 @@ es:
     Review: Review
     Close all: Cerrar sección
     Review Reported: Comentario reportado
-    Students with Disabilities: Students with disabilities
+    Students with Disabilities: Estudiantes con discapacidades

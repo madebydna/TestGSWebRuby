@@ -2,28 +2,45 @@ es:
   lib:
     equity_gsdata:
       courses_title: Cursos avanzados
-      discipline_title: Discipline & attendance
+      discipline_title: Disciplina y asistencia
       disabilities_title: Estudiantes con discapacidades
-      'Percentage of students chronically absent (15+ days)': '% Chronically absent'
-      'Percentage of students suspended out of school': '% Suspended'
+      Students with IDEA catagory disabilities: Students with IDEA catagory disabilities
       Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
       Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
-      African American: Black
-      Black: Black
-      White: White
-      All: All students
-      Hispanic: Hispanic
-      Filipino: Filipino
-      Asian: Asian
-      Multiracial: Two or more races
-      Two or more races: Two or more races
-      American Indian/Alaska Native: American Indian/Alaska Native
-      Native American: American Indian/Alaska Native
-      Pacific Islander: Pacific Islander
-      Hawaiian Native/Pacific Islander: Pacific Islander
-      Native Hawaiian or Other Pacific Islander: Pacific Islander
-      Male: Male
-      Female: Female
+      African American: Afroamericanos
+      Black: Afroamericanos
+      White: Blancos
+      All: Todos
+      Multiracial: Dos o más razas
+      Two or more races: Dos o más razas
+      American Indian/Alaska Native: Los indios americanos / nativos de Alaska
+      Native American: Los indios americanos / nativos de Alaska
+      Pacific Islander: Islas del Pacífico
+      Hawaiian Native/Pacific Islander: Islas del Pacífico
+      Native Hawaiian or Other Pacific Islander: Islas del Pacífico
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
         'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'
+      Students with disabilities: Estudiantes con discapacidades
+      'Discipline & attendance': Disciplina y asistencia
+      'Percentage of students suspended out of school': 'Porcentaje de estudiantes suspendidos'
+      'Percentage of students chronically absent (15+ days)': 'Porcentaje de estudiantes crónicamente ausentes'
+      Student with disabilities tooltip: >
+        Este grupo incluye a todos los estudiantes con discapacidades físicas o de aprendizaje que
+        reciben servicios de educación especial y servicios relacionados a sus discapacidades.
+      narration:
+        'Discipline & attendence': >
+           <p class="narrative-content">Este índice muestra la suspensión y absentismo de los estudiantes con discapacidades en esta escuela en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+           <hr />
+           <p class="parent-tip">Consejos para padres:</p>
+           <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+        'Percentage of students chronically absent (15+ days)': >
+          <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+          <hr />
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+        'Percentage of students suspended out of school': >
+          <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+          <hr />
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>

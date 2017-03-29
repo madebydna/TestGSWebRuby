@@ -110,6 +110,10 @@ export default class Equity extends React.Component {
     return tabs;
   }
 
+  translateNarrationWithSubject(subject){
+    return GS.I18n.t('SD Test scores narration', {parameters: {subject: subject}});
+  }
+
   section3Tabs() {
     let tabs = [[],[]];
 
@@ -123,25 +127,12 @@ export default class Equity extends React.Component {
                 subject: subject,
                 component: <BarGraphBase
                     test_scores={data} />,
-                explanation: this.narrationContent(data)
+                explanation: <div dangerouslySetInnerHTML={{__html: this.translateNarrationWithSubject(subject)}}/>
               }
           );
         }
       }
     }
-    // let data = this.graduationRateDataByIncomeLevel();
-    // if(data && data.length > 0 && !this.allSchoolValueInvalid(data)){
-    //   tabs[0].push(
-    //       {
-    //         subject: GS.I18n.t('Graduation rates'),
-    //         component: <EquityBarGraph
-    //             test_scores={data}
-    //             type="bar"
-    //             graphId="graduation-rates-by-income-level-graph" />,
-    //         explanation: this.narrationContent(data)
-    //       }
-    //   )
-    // }
     return tabs;
   }
 
@@ -326,7 +317,7 @@ export default class Equity extends React.Component {
           subtitle: '',
           rating: '',
           icon_classes: GS.I18n.t('Race ethnicity icon'),
-          info_text: GS.I18n.t('Low income tooltip'),
+          info_text: GS.I18n.t('Student with disabilities tooltip'),
           sourceHref: '/gk/ca-high-schools/#Students with Disabilities'
         },
         section_content: section3Content
