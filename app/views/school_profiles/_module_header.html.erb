@@ -3,6 +3,7 @@
  <% title %>
  <% subtitle ||= nil %>
  <% info_text = info_text || nil %>
+ <% has_data %>
  <div class="module-header">
    <% unless circle_content.nil? || circle_content == 'NR' %>
        <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
@@ -20,6 +21,9 @@
      </div>
      <% unless subtitle.nil? %>
        <span><%= subtitle %></span>
+     <% end %>
+     <% unless has_data %>
+       <%= render 'no_data' %>
      <% end %>
    </div>
  </div>

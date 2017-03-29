@@ -57,26 +57,29 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
-      content << '<div style="padding:0 40px 20px;">'
-      content << '<div style="margin-top:40px;">'
-      content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
-      content << '<div>' + data_label('Rating text') + '</div>'
-      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year + ' | '
-      content << data_label('See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
-      content << '</div>'
-      content << '</div>'
-      data = subject_scores.each_with_object({}) do |rsi, output|
-        output[rsi.test_label] = {
-            test_label: rsi.test_label,
-            subject: sources_with_subject[rsi.test_label], # subject is an array based on test_label
-            test_description: rsi.description,
-            source: rsi.source,
-            year: rsi.year
-        }
-      end
-      content << data.reduce('') do |string, array|
-        string << sources_for_view(array)
+      content = ''
+      if subject_scores.present?
+        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
+        content << '<div style="padding:0 40px 20px;">'
+        content << '<div style="margin-top:40px;">'
+        content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
+        content << '<div>' + data_label('Rating text') + '</div>'
+        content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year + ' | '
+        content << data_label('See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
+        content << '</div>'
+        content << '</div>'
+        data = subject_scores.each_with_object({}) do |rsi, output|
+          output[rsi.test_label] = {
+              test_label: rsi.test_label,
+              subject: sources_with_subject[rsi.test_label], # subject is an array based on test_label
+              test_description: rsi.description,
+              source: rsi.source,
+              year: rsi.year
+          }
+        end
+        content << data.reduce('') do |string, array|
+          string << sources_for_view(array)
+        end
       end
       content
     end

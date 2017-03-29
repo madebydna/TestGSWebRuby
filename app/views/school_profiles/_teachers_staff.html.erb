@@ -14,24 +14,27 @@
       <div class="title-container">
         <span class="title"><%= t('.title') %></span></br>
         <span><%= t('.subtitle_html') %></span>
+        <%= render 'no_data' unless data_values.present? %>
       </div>
     </div>
   </div>
-  <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+  <% if data_values.present? %>
+    <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
 
-  <% if data_values.size > initial_size %>
-      <div class="rating-container__more-items">
-        <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Teachers Staff' }  do %>
-            <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
-        <% end %>
-      </div>
+    <% if data_values.size > initial_size %>
+        <div class="rating-container__more-items">
+          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Teachers Staff' }  do %>
+              <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+          <% end %>
+        </div>
+    <% end %>
+    <div>
+      <a data-remodal-target="modal_info_box"
+         data-content-type="info_box"
+         data-content-html="<%= content %>"
+         href="javascript:void(0)">
+        <span class="source-link"><%= t('.see notes') %></span>
+      </a>
+    </div>
   <% end %>
-  <div>
-    <a data-remodal-target="modal_info_box"
-       data-content-type="info_box"
-       data-content-html="<%= content %>"
-       href="javascript:void(0)">
-      <span class="source-link"><%= t('.see notes') %></span>
-    </a>
-  </div>
 </div>
