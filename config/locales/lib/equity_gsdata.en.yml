@@ -3,18 +3,14 @@ en:
     equity_gsdata:
       courses_title: Advanced coursework
       discipline_title: Discipline & attendance
+      Students with IDEA catagory disabilities: Students with IDEA catagory disabilities
       disabilities_title: Students with disabilities
-      'Percentage of students chronically absent (15+ days)': '% Chronically absent'
-      'Percentage of students suspended out of school': '% Suspended'
       Percentage AP enrolled grades 9-12: '% taking AP classes'
       Number of Advanced Courses Taken per Student: Adv courses per student
       African American: Black
       Black: Black
       White: White
       All: All students
-      Hispanic: Hispanic
-      Filipino: Filipino
-      Asian: Asian
       Multiracial: Two or more races
       Two or more races: Two or more races
       American Indian/Alaska Native: American Indian/Alaska Native
@@ -22,8 +18,29 @@ en:
       Pacific Islander: Pacific Islander
       Hawaiian Native/Pacific Islander: Pacific Islander
       Native Hawaiian or Other Pacific Islander: Pacific Islander
-      Male: Male
-      Female: Female
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
         'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
+      Students with disabilities: Students with disabilities
+      'Discipline & attendance': 'Discipline & attendance'
+      'Percentage of students suspended out of school': '% suspended'
+      'Percentage of students chronically absent (15+ days)': '% chronically absent'
+      Student with disabilities tooltip: >
+        This group includes all students with physical or learning disabilities who receive special education and related services.
+        <a href="/gk/articles/special-education-a-practical-primer/">Learn more</a>.
+      narration:
+        'Discipline & attendence': >
+            <p class="narrative-content">This shows the suspension and absenteeism rates for students with disabilities at this school compared to the state average. High suspension and absenteeism rates mean less time for  teaching and learning.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+        'Percentage of students chronically absent (15+ days)': >
+          <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
+          <hr />
+          <p class="parent-tip">Parent tip:</p>
+          <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+        'Percentage of students suspended out of school': >
+          <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
+          <hr />
+          <p class="parent-tip">Parent tip:</p>
+          <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>

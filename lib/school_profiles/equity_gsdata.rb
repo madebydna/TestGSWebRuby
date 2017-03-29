@@ -5,6 +5,21 @@ module SchoolProfiles
     BREAKDOWN_ALL = 'All'
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
     STUDENTS_WITH_DISABILITIES = 'Students with IDEA catagory disabilities'
+    COURSES = 1
+    DISCIPLINE = 2
+    DISABILITIES = 3
+
+    NATIVE_AMERICAN = [
+        'American Indian/Alaska Native',
+        'Native American'
+    ]
+
+    PACIFIC_ISLANDER = [
+        'Pacific Islander',
+        'Hawaiian Native/Pacific Islander',
+        'Native Hawaiian or Other Pacific Islander'
+    ]
+
     COURSES_DATA_TYPES = {
         'Percentage AP enrolled grades 9-12' => {type: :person},
         'Number of Advanced Courses Taken per Student' => {type: :plain, precision: 1}
@@ -15,7 +30,7 @@ module SchoolProfiles
         'Percentage of students chronically absent (15+ days)' => {type: :person_reversed}
     }
     DISABILITIES_BREAKDOWN = {
-        'Students with disabilities' => {type: :person_reversed}
+        'Students with disabilities' => {type: :person}
     }
 
     def initialize(school_cache_data_reader:)
@@ -36,7 +51,6 @@ module SchoolProfiles
       })
     end
 
-
     def equity_gsdata_disabilities_hash
       @_equity_gsdata_disabilities_hash ||= ({
           I18n.t('discipline_title', scope: 'lib.equity_gsdata') => students_with_disabilities_hash
@@ -46,24 +60,12 @@ module SchoolProfiles
 
     def sources
       equity_gsdata_courses_hash # Need to build the data hash to compute the sources
+      equity_gsdata_discipline_hash
+      equity_gsdata_disabilities_hash
       @sources
     end
 
     private
-
-    def discipline_hash
-      generate_hash DISCIPLINE_DATA_TYPES
-      # data = @school_cache_data_reader.gsdata_data(*DISCIPLINE_DATA_TYPES.keys)
-      # data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
-      #   max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
-      #   matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
-      #   unless matching_breakdowns.empty?
-      #     output_hash.merge!(subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns))
-      #
-      #     @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
-      #   end
-      # end
-    end
 
     # Students with IDEA catagory disabilities
 
@@ -73,49 +75,29 @@ module SchoolProfiles
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
         matching_breakdowns = array_of_hashes.select(&matching_students_with_disabilities_values(max_year))
         unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns))
+          output_hash.merge!(subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns, DISABILITIES))
 
           @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
         end
       end
-      # disabilities_invert_hash johnny
-      #
-      # johnny
     end
 
-    # def disabilities_invert_hash(hash)
-    #   output_hash = {'Discipline & Attendance' => []}
-    #   hash.each do | key, value |
-    #     value.values.each do |breakdown|
-    #       if breakdown.breakdown == 'Students with IDEA catagory disabilities'
-    #         output_hash
-    #       end
-    #     end
-    #   end
-    #
-    # end
+    def discipline_hash
+      generate_hash DISCIPLINE_DATA_TYPES, DISCIPLINE
+    end
 
     def courses_hash
-      generate_hash COURSES_DATA_TYPES
-      # data = @school_cache_data_reader.gsdata_data(*COURSES_DATA_TYPES.keys)
-      # data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
-      #   max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
-      #   matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
-      #   unless matching_breakdowns.empty?
-      #     output_hash.merge!(subject_hash(COURSES_DATA_TYPES, data_type_name, matching_breakdowns))
-      #
-      #     @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
-      #   end
-      # end
+      generate_hash COURSES_DATA_TYPES, COURSES
     end
 
-    def generate_hash(data_types)
+    def generate_hash(data_types, hash_type)
       data = @school_cache_data_reader.gsdata_data(*data_types.keys)
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
+
         matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
         unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(data_types, data_type_name, matching_breakdowns))
+          output_hash.merge!(subject_hash(data_types, data_type_name, matching_breakdowns, hash_type))
 
           @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
         end
@@ -126,16 +108,28 @@ module SchoolProfiles
       I18n.t(data_type_name, scope: 'lib.equity_gsdata', default: data_type_name)
     end
 
-    def subject_hash(data_types, data_type_name, value_hashes)
+    def subject_hash(data_types, data_type_name, value_hashes, hash_type)
       type = data_types[data_type_name][:type]
       precision = data_types[data_type_name][:precision] || 0
       {
           subject_name(data_type_name) => {
-              narration: I18n.t(data_type_name, scope: 'lib.equity_gsdata.data_point_info_texts', default: ''),
+              narration: narration_text(data_types, data_type_name, hash_type),
               values: value_hashes.map(&hash_for_display(precision)).sort_by(&percentage_desc),
               type: type
           }
       }
+    end
+
+    def narration_text(data_types, data_type_name, hash_type)
+      case hash_type
+        when COURSES
+          I18n.t(data_type_name, scope: 'lib.equity_gsdata.data_point_info_texts', default: '')
+        when DISCIPLINE
+          I18n.t('Discipline & attendence', scope: 'lib.equity_gsdata.narration', default: '')
+        when DISABILITIES
+          I18n.t(data_type_name, scope: 'lib.equity_gsdata.narration', default: '')
+      end
+
     end
 
     def sources_hash(data_type_name, value_hashes)
@@ -152,13 +146,10 @@ module SchoolProfiles
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
             (hash['breakdowns'].blank? ||
-                ethnicity_breakdowns.keys.include?(I18n.t(suspension_breakdown_matching(hash['breakdowns']),
-                                                          scope: 'lib.equity_gsdata',
-                                                          default: suspension_breakdown_matching(hash['breakdowns'])))
+                ethnicity_breakdowns.keys.include?(suspension_breakdown_matching(hash['breakdowns']))
             )
       end
     end
-
 
     def matching_students_with_disabilities_values(max_year)
       lambda do |hash|
@@ -178,12 +169,12 @@ module SchoolProfiles
         breakdown = hash['breakdowns'] || BREAKDOWN_ALL
         # hack for gsdata Percentage of students suspended out of school
         breakdown.gsub!('All students except 504 category,','')
-        breakdown_name_str = I18n.t(breakdown, scope: 'lib.equity_gsdata', default: breakdown)
+        breakdown_name_str = I18n.t(breakdown, scope: 'lib.equity_gsdata', default: I18n.db_t(breakdown, default: breakdown))
         {
             breakdown: breakdown_name_str,
             score: value_to_s(hash['school_value'], precision),
             state_average: value_to_s(hash['state_value'], precision),
-            percentage: value_to_s(ethnicity_breakdowns[breakdown_name_str], 0),
+            percentage: value_to_s(ethnicity_breakdowns[breakdown], 0),
             display_percentages: true,
         }.compact
       end
@@ -205,10 +196,20 @@ module SchoolProfiles
 
     def ethnicity_breakdowns
       @_ethnicity_breakdowns = begin
-        ethnicity_breakdown = {I18n.t(BREAKDOWN_ALL, scope: 'lib.equity_gsdata', default: BREAKDOWN_ALL)=>SUBJECT_ALL_PERCENTAGE}
+        # ethnicity_breakdown = {I18n.t(BREAKDOWN_ALL, scope: 'lib.equity_gsdata', default: BREAKDOWN_ALL)=>SUBJECT_ALL_PERCENTAGE}
+        ethnicity_breakdown = {BREAKDOWN_ALL =>SUBJECT_ALL_PERCENTAGE}
         @school_cache_data_reader.ethnicity_data.each do | ed |
-          ethnicity_breakdown[ed['breakdown']] = ed['school_value']
-          ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
+          # Two hacks for mapping pacific islander and native american to test scores values.
+          if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
+              (PACIFIC_ISLANDER.include? ed['original_breakdown'])
+            PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed['school_value']}
+          elsif (NATIVE_AMERICAN.include? ed['breakdown']) ||
+              (NATIVE_AMERICAN.include? ed['original_breakdown'])
+            NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed['school_value']}
+          else
+            ethnicity_breakdown[ed['breakdown']] = ed['school_value']
+            ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
+          end
         end
         ethnicity_breakdown.compact
       end

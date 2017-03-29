@@ -9,9 +9,19 @@ module SchoolProfiles
     ETHNICITY_TOP = 'ethnicity'
     DISABILITIES_TOP = 'disabilities'
     SUBJECTS_TO_RETURN = 3
-    BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
-    BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
-    BREAKDOWN_HAWAIIAN = 'Hawaiian'
+    NATIVE_AMERICAN = [
+        'American Indian/Alaska Native',
+        'Native American'
+    ]
+
+    PACIFIC_ISLANDER = [
+        'Pacific Islander',
+        'Hawaiian Native/Pacific Islander',
+        'Native Hawaiian or Other Pacific Islander'
+    ]
+    # BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
+    # BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
+    # BREAKDOWN_HAWAIIAN = 'Hawaiian'
     BREAKDOWN_DISABILITIES = 'Students with disabilities'
 
     #PUBLIC
@@ -181,11 +191,15 @@ module SchoolProfiles
     def ethnicity_breakdowns
       ethnicity_breakdown = {BREAKDOWN_ALL=>SUBJECT_ALL_PERCENTAGE}
       @school_cache_data_reader.ethnicity_data.each do | ed |
-        ethnicity_breakdown[ed['breakdown']] = ed['school_value']
-        ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
-        if  ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO || ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO
-          ethnicity_breakdown[BREAKDOWN_PACIFIC_ISLANDER] = ed['school_value']
-          ethnicity_breakdown[BREAKDOWN_HAWAIIAN] = ed['school_value']
+        if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
+            (PACIFIC_ISLANDER.include? ed['original_breakdown'])
+          PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed['school_value']}
+        elsif (NATIVE_AMERICAN.include? ed['breakdown']) ||
+            (NATIVE_AMERICAN.include? ed['original_breakdown'])
+          NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed['school_value']}
+        else
+          ethnicity_breakdown[ed['breakdown']] = ed['school_value']
+          ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
         end
       end
       ethnicity_breakdown.compact
