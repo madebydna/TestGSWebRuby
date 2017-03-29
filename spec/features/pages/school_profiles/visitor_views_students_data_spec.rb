@@ -24,11 +24,11 @@ describe "Visitor" do
   end
 
   context 'without ethnicity data' do
-    scenario "should not see student diversity section" do
+    scenario "should still see student diversity section" do
       school = create(:school_with_new_profile, id: 1)
       visit school_path(school)
 
-      expect(page_object).to_not have_student_diversity
+      expect(page_object).to have_student_diversity
     end
   end
 
