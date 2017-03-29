@@ -4,7 +4,7 @@ es:
       courses_title: Cursos avanzados
       discipline_title: Disciplina y asistencia
       disabilities_title: Estudiantes con discapacidades
-      Students with IDEA catagory disabilities: Students with IDEA catagory disabilities
+      Students with IDEA catagory disabilities: Estudiantes con discapacidades
       Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
       Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
       African American: Afroamericanos
@@ -23,8 +23,8 @@ es:
         'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'
       Students with disabilities: Estudiantes con discapacidades
       'Discipline & attendance': Disciplina y asistencia
-      'Percentage of students suspended out of school': 'Porcentaje de estudiantes suspendidos'
-      'Percentage of students chronically absent (15+ days)': 'Porcentaje de estudiantes crónicamente ausentes'
+      'Percentage of students suspended out of school': '% de estudiantes suspendidos'
+      'Percentage of students chronically absent (15+ days)': '% de estudiantes crónicamente ausentes'
       Student with disabilities tooltip: >
         Este grupo incluye a todos los estudiantes con discapacidades físicas o de aprendizaje que
         reciben servicios de educación especial y servicios relacionados a sus discapacidades.

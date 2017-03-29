@@ -74,8 +74,9 @@ module SchoolProfiles
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
         matching_breakdowns = array_of_hashes.select(&matching_students_with_disabilities_values(max_year))
-        unless matching_breakdowns.empty?
-          output_hash.merge!(subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns, DISABILITIES))
+        if matching_breakdowns.present? && !(matching_breakdowns.length == 1 && !matching_breakdowns.first.has_key?('breakdowns'))
+          sh = subject_hash(DISCIPLINE_DATA_TYPES, data_type_name, matching_breakdowns, DISABILITIES)
+          output_hash.merge!(sh)
 
           @sources.merge!(sources_hash(data_type_name, matching_breakdowns))
         end
@@ -155,7 +156,7 @@ module SchoolProfiles
       lambda do |hash|
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
-                hash['breakdowns'] == STUDENTS_WITH_DISABILITIES
+              (hash['breakdowns'] == STUDENTS_WITH_DISABILITIES || !hash.has_key?('breakdowns'))
       end
     end
 
@@ -196,8 +197,8 @@ module SchoolProfiles
 
     def ethnicity_breakdowns
       @_ethnicity_breakdowns = begin
-        # ethnicity_breakdown = {I18n.t(BREAKDOWN_ALL, scope: 'lib.equity_gsdata', default: BREAKDOWN_ALL)=>SUBJECT_ALL_PERCENTAGE}
         ethnicity_breakdown = {BREAKDOWN_ALL =>SUBJECT_ALL_PERCENTAGE}
+
         @school_cache_data_reader.ethnicity_data.each do | ed |
           # Two hacks for mapping pacific islander and native american to test scores values.
           if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
