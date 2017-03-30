@@ -31,12 +31,9 @@
 
       <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
                  width: 320, height: 50, css_class: 'mbl' %>
-
-      <% if @school_profile.toc.equity.present? %>
-        <div>
-          <%= render 'equity', equity: @school_profile.equity %>
-        </div>
-      <% end %>
+      <div>
+        <%= render 'equity', equity: @school_profile.equity %>
+      </div>
 
         <div class="environment-container">
           <div class="row">

@@ -146,3 +146,5 @@ es:
     Close all: Cerrar sección
     Review Reported: Comentario reportado
     Students with Disabilities: Estudiantes con discapacidades
+    no_data_message: 'Data is not available. '
+    notify_me: "Notify me when it's available."

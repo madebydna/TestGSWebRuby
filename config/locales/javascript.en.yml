@@ -144,3 +144,5 @@ en:
     Close all: Close all
     Review Reported: Review Reported
     Students with Disabilities: Students with disabilities
+    no_data_message: 'Data is not available. '
+    notify_me: "Notify me when it's available."

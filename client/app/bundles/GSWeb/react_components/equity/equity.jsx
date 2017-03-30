@@ -197,6 +197,14 @@ export default class Equity extends React.Component {
     return <div dangerouslySetInnerHTML={{__html: 'Need default translatable "narration text" from server'}} />;
   }
 
+  myFunction = function (event) {
+
+      var state = GS.stateAbbreviationFromUrl();
+      var schoolId = GS.schoolIdFromUrl();
+      return GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+
+  };
+
   equityConfiguration(){
     let section1Content = [];
     let section2Content = [];
@@ -295,6 +303,22 @@ export default class Equity extends React.Component {
         section_content: section1Content
       });
     }
+    else {
+      config.push({
+        section_info:{
+          title: 'Race ethnicity',
+          subtitle: <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Race ethnicity subtitle')}} />,
+          message: <div className="ptm">
+                    <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                    <a href="javascript:void(0)" className="js-followThisSchool" onClick={this.myFunction} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}} />
+                   </div>,
+          rating: '',
+          info_text: GS.I18n.t('Race ethnicity tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity',
+          icon_classes: GS.I18n.t('Race ethnicity icon')
+        }
+      })
+    }
 
     if(section2Content.length > 0) {
       config.push({
@@ -309,6 +333,22 @@ export default class Equity extends React.Component {
         section_content: section2Content
       });
     }
+    else {
+      config.push({
+        section_info:{
+          title: 'Low-income students',
+          subtitle:  <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Low income subtitle')}} />,
+          message: <div className="ptm">
+                    <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                    <a href="javascript:void(0)" className="js-followThisSchool" onClick={this.myFunction} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}} />
+                   </div>,
+          rating: '',
+          icon_classes: GS.I18n.t('Low income icon'),
+          info_text: GS.I18n.t('Low income tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Equity-Low-Income'
+        }
+      })
+    }
 
     if(section3Content.length > 0) {
       config.push({
@@ -322,6 +362,22 @@ export default class Equity extends React.Component {
         },
         section_content: section3Content
       });
+    }
+    else {
+      config.push({
+        section_info:{
+          title: 'Students with Disabilities',
+          subtitle: '',
+          message: <div className="ptm">
+                    <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                    <a href="javascript:void(0)" className="js-followThisSchool" onClick={this.myFunction} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}} />
+                   </div>,
+          rating: '',
+          icon_classes: GS.I18n.t('Race ethnicity icon'),
+          info_text: GS.I18n.t('Student with disabilities tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Students with Disabilities'
+        }
+      })
     }
 
     return config;
