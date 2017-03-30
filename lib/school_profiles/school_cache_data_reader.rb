@@ -84,6 +84,26 @@ module SchoolProfiles
       decorated_school.test_scores
     end
 
+    def flat_test_scores_for_latest_year
+      output_array = []
+      test_scores.values.each do |test_hash|
+        test_hash.each do | breakdown_name, breakdown_hash|
+          level_code = breakdown_hash.seek('grades', 'All', 'level_code')
+          level_code.first[1].each do |subject, year_hash|
+            max_year = year_hash.keys.max_by { |year| year.to_i }
+            output_array << year_hash[max_year].merge(
+              {
+                breakdown: breakdown_name,
+                year: max_year,
+                subject: subject
+              }
+            ).symbolize_keys
+          end if level_code
+        end
+      end
+      output_array
+    end
+
     def graduation_rate_data
       decorated_school.characteristics['4-year high school graduation rate']
     end

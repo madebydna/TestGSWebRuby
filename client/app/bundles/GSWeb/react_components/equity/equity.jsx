@@ -212,14 +212,6 @@ export default class Equity extends React.Component {
     let section3Tabs = this.section3Tabs();
     let config = [];
 
-    if(section1Tabs[0].length > 0) {
-      section1Content.push(
-        {
-          section_title: GS.I18n.t('Test scores'),
-          content: section1Tabs[0]
-        }
-      );
-    }
     if(section1Tabs[1].length > 0) {
       section1Content.push(
         {
