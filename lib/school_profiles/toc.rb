@@ -27,6 +27,7 @@ module SchoolProfiles
       arr = []
       arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race_ethnicity'}
       arr << {column: 'Equity', label: 'low_income', present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
+      arr << {column: 'Equity', label: 'disabilities', present: true, rating: nil, anchor: 'Students_with_Disabilities'}
       hash[:equity] = arr
       hash.delete_if{|key, value| value.blank?}
     end
