@@ -5,7 +5,7 @@ class WordpressInterfaceController < ApplicationController
 
   # These arrays are for white listing
   SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'email_cuecardscenario',
-                       'get_like_count', 'post_like']
+                       'get_like_count', 'post_like', 'newsletter_page_signup',]
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
   SUPPORTED_LISTS = ['greatnews', 'sponsor', 'greatkidsnews']
   TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
