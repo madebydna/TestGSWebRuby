@@ -30,18 +30,25 @@ en:
         This group includes all students with physical or learning disabilities who receive special education and related services.
         <a href="/gk/articles/special-education-a-practical-primer/">Learn more</a>.
       narration:
-        'Discipline & attendence': >
-            <p class="narrative-content">This shows the suspension and absenteeism rates for students with disabilities at this school compared to the state average. High suspension and absenteeism rates mean less time for  teaching and learning.</p>
+        ER:
+          'Percentage of students chronically absent (15+ days)': >
+            <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
             <p class="parent-tip">Parent tip:</p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
-        'Percentage of students chronically absent (15+ days)': >
-          <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
-          <hr />
-          <p class="parent-tip">Parent tip:</p>
-          <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
-        'Percentage of students suspended out of school': >
-          <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
-          <hr />
-          <p class="parent-tip">Parent tip:</p>
-          <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          'Percentage of students suspended out of school': >
+            <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+        SD:
+          'Percentage of students chronically absent (15+ days)': >
+            <p class="narrative-content">This shows the absenteeism rates for students with disabilities at this school compared to the state average. High absenteeism rates mean less time for  teaching and learning. </p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          'Percentage of students suspended out of school': >
+            <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>

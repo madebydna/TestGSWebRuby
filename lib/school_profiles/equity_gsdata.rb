@@ -95,7 +95,6 @@ module SchoolProfiles
       data = @school_cache_data_reader.gsdata_data(*data_types.keys)
       data.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
         max_year = array_of_hashes.map { |hash| hash['source_year'].to_i }.max
-
         matching_breakdowns = array_of_hashes.select(&matching_values(max_year))
         unless matching_breakdowns.empty?
           output_hash.merge!(subject_hash(data_types, data_type_name, matching_breakdowns, hash_type))
@@ -126,9 +125,9 @@ module SchoolProfiles
         when COURSES
           I18n.t(data_type_name, scope: 'lib.equity_gsdata.data_point_info_texts', default: '')
         when DISCIPLINE
-          I18n.t('Discipline & attendence', scope: 'lib.equity_gsdata.narration', default: '')
+          I18n.t(data_type_name, scope: 'lib.equity_gsdata.narration.ER', default: '')
         when DISABILITIES
-          I18n.t(data_type_name, scope: 'lib.equity_gsdata.narration', default: '')
+          I18n.t(data_type_name, scope: 'lib.equity_gsdata.narration.SD', default: '')
       end
 
     end
@@ -198,7 +197,6 @@ module SchoolProfiles
     def ethnicity_breakdowns
       @_ethnicity_breakdowns = begin
         ethnicity_breakdown = {BREAKDOWN_ALL =>SUBJECT_ALL_PERCENTAGE}
-
         @school_cache_data_reader.ethnicity_data.each do | ed |
           # Two hacks for mapping pacific islander and native american to test scores values.
           if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
