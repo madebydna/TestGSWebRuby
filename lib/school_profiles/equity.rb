@@ -2,6 +2,11 @@ module SchoolProfiles
   class Equity
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+
+      SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
+          school_cache_data_reader: school_cache_data_reader
+      ).auto_narrative_calculate_and_add
+
       @graduation_rate = ::SchoolProfiles::GraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
       @test_scores = ::SchoolProfiles::TestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
 
