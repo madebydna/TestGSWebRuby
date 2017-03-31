@@ -1,0 +1,9 @@
+<% title %>
+<% message = t('.message') %>
+<% call_to_action = t('.call_to_action') %>
+<div class="ptm">
+  <span class="no-data"><%= message %> </span><a href="javascript:void(0)" class="js-followThisSchool js-gaClick"
+                                                 data-ga-click-category='Profile'
+                                                 data-ga-click-action='Notify from empty data module'
+                                                 data-ga-click-label='<%= title %>'><%= call_to_action %></a>
+</div>

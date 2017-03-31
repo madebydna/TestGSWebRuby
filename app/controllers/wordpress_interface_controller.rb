@@ -5,10 +5,12 @@ class WordpressInterfaceController < ApplicationController
 
   # These arrays are for white listing
   SUPPORTED_ACTIONS = ['newsletter_signup', 'email_testguide', 'email_cuecardscenario',
-                       'get_like_count', 'post_like']
+                       'get_like_count', 'post_like', 'newsletter_page_signup',]
   SUPPORTED_GRADES = ['PK', 'KG', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+  SUPPORTED_LISTS = ['greatnews', 'sponsor', 'greatkidsnews']
   TEST_TYPE = ['PARCC', 'SBAC', 'parcc', 'sbac']
   NEWSLETTER_HOW = 'wp_newsletter'
+  NEWSLETTER_PAGE_HOW = 'wp_newsletter_page'
   NEWSLETTER_HOW_TG = 'wp_newsletter_test_guide'
   PRODUCT_ID_WORD_OF_THE_DAY = 1
 
@@ -42,6 +44,25 @@ class WordpressInterfaceController < ApplicationController
 
     # sign up for these lists
     lists = ['greatnews', 'greatkidsnews']
+    create_subscriptions(user_id, lists, state)
+
+    # found_user.id
+    return {'member_id' => user_id}
+  end
+
+  def newsletter_page_signup(wp_params)
+    if (wp_params['state'].present?)
+      state = state_abbreviate (wp_params['state'])
+    end
+
+    # find or create user
+    user_id = create_member(wp_params['email'], NEWSLETTER_PAGE_HOW)
+
+    # grade association to user is in the student table
+    create_students(user_id, wp_params['grade'], state)
+
+    # sign up for these lists
+    lists = wp_params['lists'] #['greatnews', 'greatkidsnews']
     create_subscriptions(user_id, lists, state)
 
     # found_user.id
@@ -159,20 +180,22 @@ class WordpressInterfaceController < ApplicationController
 
   def create_subscriptions(user_id, list_arr, state)
     list_arr.each do |list_name|
-      s = Subscription.find_by_member_id_and_list(user_id, list_name)
-      if (s.blank?)
-        s = Subscription.new
-        s.member_id = user_id
-        s.list = list_name
-        if (state.present?)
-          s.state = state
-        end
-        unless s.save!
-          GSLogger.error(:gk_action, nil, message: 'WP Newsletter subscription failed to save', vars: {
-                                       user_id: user_id,
-                                       list_name: list_name,
-                                       state: state
-                                   })
+      if list_name.present? && SUPPORTED_LISTS.include?(list_name)
+        s = Subscription.find_by_member_id_and_list(user_id, list_name)
+        if (s.blank?)
+          s = Subscription.new
+          s.member_id = user_id
+          s.list = list_name
+          if (state.present?)
+            s.state = state
+          end
+          unless s.save!
+            GSLogger.error(:gk_action, nil, message: 'WP Newsletter subscription failed to save', vars: {
+                                         user_id: user_id,
+                                         list_name: list_name,
+                                         state: state
+                                     })
+          end
         end
       end
     end

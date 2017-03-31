@@ -96,4 +96,25 @@ describe 'states' do
       end
     end
   end
+
+  describe '.state_path' do
+    {
+        ca: 'california',
+        dc: 'washington-dc',
+        ma: 'massachusetts',
+        nj: 'new-jersey',
+        sd: 'south-dakota',
+        xx: nil
+    }.each do |abbreviation, expected_path|
+      context abbreviation do
+        subject { States.state_path(abbreviation.to_s) }
+        it { should eq(expected_path) }
+      end
+    end
+
+    context 'handles nil' do
+      subject { States.state_path(nil) }
+      it { should be_nil }
+    end
+  end
 end

@@ -63,8 +63,12 @@ export default class EquitySection extends React.Component {
 
   sectionTitle(sectionInfo) {
     var subtitle = '';
+    var message = '';
     if (sectionInfo.subtitle) {
       subtitle = sectionInfo.subtitle;
+    }
+    if (sectionInfo.message) {
+      message = sectionInfo.message;
     }
     return (
         <div className="title-container">
@@ -73,6 +77,7 @@ export default class EquitySection extends React.Component {
             {this.drawInfoCircle(sectionInfo.info_text)}
           </div>
           {subtitle}
+          {message}
         </div>
     )
   }
@@ -82,23 +87,30 @@ export default class EquitySection extends React.Component {
     let section_content = this.props.equity_config["section_content"];
     let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
     let link_name = this.linkName(section_info.title);
-
-    return <div className="equity-section">
-          <a className="anchor-mobile-offset" name={link_name}></a>
-      <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
-      <SectionNavigation key="sectionNavigation"
-                         items={section_content}
-                         active={this.state.active}
-                         google_tracking={section_info.title}
-                         onTabClick={this.handleTabClick.bind(this)}/>
-      <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html={this.props.sources}
-         href="javascript:void(0)">
-        <span className="source-link">{GS.I18n.t('See notes')}</span>
-      </a>
-    </div>
+    if (section_content) {
+      return <div className="equity-section">
+        <a className="anchor-mobile-offset" name={link_name}></a>
+        <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
+        <SectionNavigation key="sectionNavigation"
+                           items={section_content}
+                           active={this.state.active}
+                           google_tracking={section_info.title}
+                           onTabClick={this.handleTabClick.bind(this)}/>
+        <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
+        <a data-remodal-target="modal_info_box"
+           data-content-type="info_box"
+           data-content-html={this.props.sources}
+           href="javascript:void(0)">
+          <span className="source-link">{GS.I18n.t('See notes')}</span>
+        </a>
+      </div>
+    }
+    else {
+      return <div className="equity-section">
+        <a className="anchor-mobile-offset" name={link_name}></a>
+        <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
+        </div>
+    }
   }
 
   handleTabClick(index) {

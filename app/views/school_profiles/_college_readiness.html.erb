@@ -15,7 +15,8 @@
       circle_content: rating,
       title: title,
       subtitle: subtitle,
-      info_text: info_text
+      info_text: info_text,
+      has_data: data_values.present?
     %>
   </div>
 
@@ -33,7 +34,9 @@
        data-content-type="info_box"
        data-content-html="<%= content %>"
        href="javascript:void(0)">
-      <span class="source-link"><%= t('.see notes') %></span>
+      <% if data_values.present? %>
+        <span class="source-link"><%= t('.see notes') %></span>
+      <% end %>
     </a>
   </div>
 </div>

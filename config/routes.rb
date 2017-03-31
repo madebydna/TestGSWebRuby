@@ -505,7 +505,9 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   #Handle old city homepage structure
-  get '/city/:city/:state_abbr', to: 'cities_list#old_homepage'
+  get '/city/:city/:state_abbr(/*other)', to: 'cities_list#old_homepage', constraints: {
+      city: /[^\/]+/
+  }
 
   #Handle City SEO pages
   get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'

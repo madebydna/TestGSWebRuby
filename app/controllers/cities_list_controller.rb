@@ -13,8 +13,8 @@ class CitiesListController < ApplicationController
   end
 
   def old_homepage
-    state_name = States.state_name(params[:state_abbr])
-    city_name = params[:city].downcase.gsub('_', '-')
+    state_name = States.state_path(params[:state_abbr])
+    city_name = params[:city].downcase.gsub('_', ' ').gsub('-', '_').gsub(' ', '-').gsub(/\A-+|-+\Z/, '')
 
     return redirect_to :root if state_name.nil?
 

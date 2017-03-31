@@ -24,46 +24,66 @@ export const SCHOOL_SELECT = 'SCHOOL_SELECT';
 // "Connected" component calls "bindActionCreators". The dumb UI component
 // would then invoke props.loadSchool
 export const changeLocation = (lat, lon) => (dispatch, getState) => {
-  const dispatchLocationChangeFailure = () => {
-    dispatch({
-      type: LOCATION_CHANGE_FAILURE
-    })
-  }
-
-  let { level, nearbyDistrictsRadius, state, schoolTypes } = getState().districtBoundaries;
-  let schoolLevel = (level == 'e') ? 'p' : level;
+  let { level, schoolTypes } = getState().districtBoundaries;
   dispatch({
     type: IS_LOADING
   })
 
-  $.when(
-    findDistrictsByLatLon(lat, lon, level),
-    findSchoolsByLatLon(lat, lon, schoolLevel)
-  ).done((district = {}, school = {}) => {
-    let state = (district.state || school.state || getStateFromLatLon(lat, lon));
-    $.when(state).done(state => {
-      if(state && district.id) {
-        $.when(
-          findSchoolsByDistrict(district.id, state),
-          findDistrictsNearLatLon(lat, lon, state, nearbyDistrictsRadius),
-          findSchoolsNearLatLon(lat, lon, state, schoolTypes)
-        ).done((schoolsInDistrict = [], nearbyDistricts = [], otherSchools = []) => {
-          dispatch({
-            type: LOCATION_CHANGE,
-            district,
-            school,
-            schools: schoolsInDistrict.concat(otherSchools),
-            districts: nearbyDistricts,
-            lat: lat,
-            lon: lon
-          })
-        })
-      } else {
-        dispatchLocationChangeFailure();
-      }
-    }).fail(dispatchLocationChangeFailure);
-  }).fail(dispatchLocationChangeFailure);
+  return findDataForLatLon(lat, lon, level, schoolTypes)
+    .done((lat, lon, districts, district, school, schools) => {
+      dispatch({
+        type: LOCATION_CHANGE,
+        district,
+        school,
+        schools,
+        districts,
+        lat: lat,
+        lon: lon
+      })
+    }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
 }
+
+export const locateSchool = (state, id) => (dispatch, getState) => {
+  let { level, schoolTypes } = getState().districtBoundaries;
+  dispatch({
+    type: IS_LOADING
+  })
+  loadSchoolById(id, state).done(selectedSchool => {
+    findDataForLatLon(selectedSchool.lat, selectedSchool.lon, level, schoolTypes)
+      .done((lat, lon, districts, district, school, schools) => {
+        dispatch({
+          type: LOCATION_CHANGE,
+          district,
+          school: selectedSchool,
+          schools,
+          districts,
+          lat: lat,
+          lon: lon
+        })
+      }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
+  });
+}
+
+export const locateDistrict = (state, id) => (dispatch, getState) => {
+  let { level, schoolTypes } = getState().districtBoundaries;
+  dispatch({
+    type: IS_LOADING
+  })
+  loadDistrictById(id, state).done(selectedDistrict => {
+    findDataForLatLon(selectedDistrict.lat, selectedDistrict.lon, level, schoolTypes)
+      .done((lat, lon, districts, district, school, schools) => {
+        dispatch({
+          type: LOCATION_CHANGE,
+          district: selectedDistrict,
+          school,
+          schools,
+          districts,
+          lat: lat,
+          lon: lon
+        });
+      }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
+  });
+};
 
 export const selectSchool = (id, state) => dispatch => {
   dispatch({
@@ -133,7 +153,7 @@ const loadDistrictById = (id, state) => {
   }).then(json => json);
 }
 
-const findSchoolsByLatLon = (lat, lon, level, options) => {
+const findFirstSchoolServingLatLon = (lat, lon, level, options) => {
   return Schools.findByLatLon(lat, lon, {
     ...options,
     boundary_level: level,
@@ -141,7 +161,7 @@ const findSchoolsByLatLon = (lat, lon, level, options) => {
   }).then(json => (json.items || [])[0]);
 };
 
-const findDistrictsByLatLon = (lat, lon, level, options) => {
+const findFirstDistrictServingLatLon = (lat, lon, level, options) => {
   return Districts.findByLatLon(lat, lon, {
     ...options,
     boundary_level: level,
@@ -161,7 +181,7 @@ const findSchoolsByDistrict = (districtId, state) => {
   }).then(json => json.items);
 };
 
-const findDistrictsNearLatLon = (lat, lon, state, radius) => {
+const findDistrictsNearLatLon = (lat, lon, state, radius = 50) => {
   return Districts.findNearLatLon(lat, lon, radius, {
     state: state,
     charter_only: false
@@ -180,6 +200,33 @@ const findSchoolsNearLatLon = (lat, lon, state, schoolTypes) => {
     return $.when([]);
   }
 };
+
+const findDataForLatLon = (lat, lon, level, schoolTypes) => {
+  let deferred = $.Deferred();
+  let schoolLevel = (level == 'e') ? 'p' : level;
+
+  $.when(
+    findFirstDistrictServingLatLon(lat, lon, level),
+    findFirstSchoolServingLatLon(lat, lon, schoolLevel)
+  ).done((district = {}, school = {}) => {
+    let state = (district.state || school.state || getStateFromLatLon(lat, lon));
+    $.when(state).done(state => {
+      if(state && district.id) {
+        $.when(
+          findSchoolsByDistrict(district.id, state),
+          findDistrictsNearLatLon(lat, lon, state),
+          findSchoolsNearLatLon(lat, lon, state, schoolTypes)
+        ).done((schoolsInDistrict = [], nearbyDistricts = [], otherSchools = []) => {
+          deferred.resolve(lat, lon, nearbyDistricts, district, school, schoolsInDistrict.concat(otherSchools));
+        })
+      } else {
+        deferred.reject()
+      }
+    }).fail(() => deferred.reject());
+  }).fail(() => deferred.reject());
+
+  return deferred.promise();
+}
 
 
 // simple action creators

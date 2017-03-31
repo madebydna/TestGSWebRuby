@@ -66,8 +66,13 @@ en:
       not getting the support they need to succeed.
     RE UC/CSU eligibility narration: >
       This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for
-      University of CA and CA state schools. Find out more about these requirements.
+      University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.
     'Low-income students': 'Low-income students'
+    'SD Test scores narration': >
+      <p class="narrative-content">This shows results for students with disabilities on a {subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+      <hr />
+      <p class="parent-tip">Parent tip:</p>
+      <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
     Low income subtitle: >
       Is your school helping all students succeed?
       <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
@@ -75,7 +80,10 @@ en:
     Low income tooltip: >
       The low-income rating reflects state test scores for students at this school who qualify for free or
       reduced-price lunch compared to all students in the state.
+    Student with disabilities tooltip: >
+      This group includes all students with physical or learning disabilities who receive special education and related services.  <a href='/gk/articles/special-education-a-practical-primer/'>Learn more</a>.
     Low income icon: 'icon-pie'
+    Student with disabilities icon: 'icon-disability-2'
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
@@ -100,7 +108,8 @@ en:
     Cancel: Cancel
     Submit: Submit
     Required: Required
-    Review this School: Review this School
+    Review this School: Review this school
+    Review this school: Review this school
     Overall experience: Overall experience
     Recent Comments: Recent comments
     Be the first to review this school: Be the first to review this school
@@ -129,8 +138,12 @@ en:
     review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
     Submitting: Submitting
     Report Review: Report Review
+    Report: Report
     Show more: Show more
     Show less: Show less
     Review: Review
     Close all: Close all
     Review Reported: Review Reported
+    Students with Disabilities: Students with disabilities
+    no_data_message: 'Data is not available. '
+    notify_me: "Notify me when it's available."

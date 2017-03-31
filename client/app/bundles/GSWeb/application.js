@@ -2,7 +2,7 @@ import ReactOnRails from 'react-on-rails';
 
 import './pages/school_profiles';
 
-$(function() {
+$(window).on('load', function () {
   ReactOnRails.reactOnRailsPageLoaded();
 });
 

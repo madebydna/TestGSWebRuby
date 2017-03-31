@@ -71,6 +71,7 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   def user_type
     school_user = review.school_user || SchoolUser.new
 
+    # WARNING: Changing user type strings requires updating the avatar mapping in user_reviews.rb
     if school_user.unknown?
       t('decorators.school_profile_review_decorator.community_member')
     elsif school_user.principal?

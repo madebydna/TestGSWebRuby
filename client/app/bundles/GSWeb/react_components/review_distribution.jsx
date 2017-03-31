@@ -11,7 +11,7 @@ export default class ReviewDistribution extends React.Component {
   }
 
   renderBar(answer, scale, answerCount, totalReviews) {
-    var percentageOfTotal = (answerCount / totalReviews) * 50;
+    var percentageOfTotal = (answerCount / totalReviews) * 40;
     if (percentageOfTotal < 1) {
       percentageOfTotal = 0.5;
     }
@@ -21,7 +21,7 @@ export default class ReviewDistribution extends React.Component {
     return (
         <div className="rating-bar-viz">
           <span className={iconClassName}/>
-          <span className="title">{answer}</span>
+          <span className="title">{GS.I18n.t(answer)}</span>
           <span className={barColorClassName} style={style}/>
           <span className="answer-count">{answerCount}</span>
         </div>

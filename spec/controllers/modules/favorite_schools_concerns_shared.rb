@@ -78,6 +78,12 @@ shared_examples_for 'a controller that can save a favorite school' do
       allow(School).to receive(:find_by_state_and_id).and_return school
     end
 
+    it 'should fail gracefully if user does not exist' do
+      allow(controller).to receive(:current_user).and_return nil
+      expect(GSLogger).to_not receive :error
+      subject
+    end
+
     with_shared_context 'when school already favorited' do
       include_examples 'should not save the school as a favorite'
     end

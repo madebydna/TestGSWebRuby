@@ -1,16 +1,21 @@
 en:
   lib:
     equity_gsdata:
+      RE Test scores narration: >
+        This shows results across different races/ethnicities on %{subject} test given to students once a year. Big
+        differences may suggest that some student groups are not getting the support they need to succeed.
+      Graduation rates: Graduation rates
+      Test scores: Test scores
       courses_title: Advanced coursework
+      discipline_title: Discipline & attendance
+      Students with IDEA catagory disabilities: Students with disabilities
+      disabilities_title: Students with disabilities
       Percentage AP enrolled grades 9-12: '% taking AP classes'
       Number of Advanced Courses Taken per Student: Adv courses per student
       African American: Black
       Black: Black
       White: White
       All: All students
-      Hispanic: Hispanic
-      Filipino: Filipino
-      Asian: Asian
       Multiracial: Two or more races
       Two or more races: Two or more races
       American Indian/Alaska Native: American Indian/Alaska Native
@@ -18,8 +23,36 @@ en:
       Pacific Islander: Pacific Islander
       Hawaiian Native/Pacific Islander: Pacific Islander
       Native Hawaiian or Other Pacific Islander: Pacific Islander
-      Male: Male
-      Female: Female
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
         'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
+      Students with disabilities: Students with disabilities
+      'Discipline & attendance': 'Discipline & attendance'
+      'Percentage of students suspended out of school': '% suspended'
+      'Percentage of students chronically absent (15+ days)': '% chronically absent'
+      Student with disabilities tooltip: >
+        This group includes all students with physical or learning disabilities who receive special education and related services.
+        <a href="/gk/articles/special-education-a-practical-primer/">Learn more</a>.
+      narration:
+        ER:
+          'Percentage of students chronically absent (15+ days)': >
+            <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          'Percentage of students suspended out of school': >
+            <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+        SD:
+          'Percentage of students chronically absent (15+ days)': >
+            <p class="narrative-content">This shows the absenteeism rates for students with disabilities at this school compared to the state average. High absenteeism rates mean less time for  teaching and learning. </p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          'Percentage of students suspended out of school': >
+            <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>

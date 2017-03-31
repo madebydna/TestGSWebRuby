@@ -32,7 +32,8 @@ describe ReviewsForm do
   end
 
   it "validates the validity of the reviews submitted for school" do
-    school = create(:alameda_high_school, id: 1)
+    create(:alameda_high_school, id: 1)
+    create(:review_question, id: 1)
     invalid_comment = "test this"
 
     reviews_params = build_reviews_params(comment: invalid_comment)
@@ -43,54 +44,64 @@ describe ReviewsForm do
     expect(reviews_form.errors[:reviews]).to eq(error_messages_result)
   end
 
+  it 'validates presence of review question' do
+    create(:alameda_high_school, id: 1)
+    reviews_params = build_reviews_params(review_question_id: 0)
+    reviews_form = build_reviews_form(reviews_params: reviews_params)
+    expect(reviews_form).to be_invalid
+  end
+
   describe "#save" do
     context "with valid params" do
       it "saves reviews in database" do
-        school = create(:alameda_high_school, id: 1)
-        comment = ("test this " * 15).strip
-        reviews_params = build_reviews_params
+        create(:alameda_high_school, id: 1)
+        create(:review_question, id: 1)
 
+        reviews_params = build_reviews_params
         reviews_form = build_reviews_form(reviews_params: reviews_params)
         expect{reviews_form.save}.to change{Review.count}.by(1)
       end
 
       context "with old reviews to deactivate" do
         context "with successful deactivation of old reviews" do
-          it "should save new review" do
-            comment = ("test this " * 15).strip
-            school = create(:alameda_high_school, id: 1)
-            verified_user = create(:verified_user)
-            existing_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1)
-            reviews_params = build_reviews_params(review_question_id: "2")
-            reviews_form = build_reviews_form(reviews_params: reviews_params, user: verified_user)
-  
+          before do
+            create(:alameda_high_school, id: 1)
+            @verified_user = create(:verified_user)
+            @existing_review = create(:teacher_effectiveness_review, user: @verified_user, school_id: 1)
+          end
+
+          it 'should save new review' do
+            create(:review_question, id: 15)
+            @existing_review.review_question_id = 15
+            @existing_review.save!
+
+            reviews_params = build_reviews_params(review_question_id: '15')
+            reviews_form = build_reviews_form(reviews_params: reviews_params, user: @verified_user)
+
             expect(reviews_form.valid?).to eq(true)
             expect{reviews_form.save}.to change{Review.count}.by(1)
           end
-          it "should deactivate old review" do
-            comment = ("test this " * 15).strip
-            school = create(:alameda_high_school, id: 1)
-            verified_user = create(:verified_user)
-            existing_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1, review_question_id: 2)
-            reviews_params = build_reviews_params(review_question_id: "2")
-            reviews_form = build_reviews_form(reviews_params: reviews_params, user: verified_user)
+
+          it 'should deactivate old review' do
+            comment = ('new comment ' * 15).strip
+
+            create(:review_question, id: 15)
+            @existing_review.review_question_id = 15
+            @existing_review.save!
+            reviews_params = build_reviews_params(comment: comment, review_question_id: '15')
+            reviews_form = build_reviews_form(reviews_params: reviews_params, user: @verified_user)
 
             expect(reviews_form.valid?).to eq(true)
             expect{reviews_form.save}.not_to change{Review.active.count}
             expect(Review.active.first.comment).to eq(comment)
-            expect(Review.inactive.first).to eq(existing_review)
-          end
-        end
-
-        context "with unsuccessful deactivation of reviews" do
-          it "should return errors for reviews not deactivated" do
-
+            expect(Review.inactive.first).to eq(@existing_review)
           end
         end
 
         context "with one invalid saving of a review" do
           it "should return false" do
-            school = create(:alameda_high_school, id: 1)
+            create(:alameda_high_school, id: 1)
+            create(:review_question, id: 1)
             verified_user = create(:verified_user)
             review = build(:teacher_effectiveness_review, user: verified_user, school_id: 1)
             reviews_params = build_reviews_params
@@ -167,11 +178,6 @@ describe ReviewsForm do
     end
   end
 
-  describe "existing_reviews" do
-
-
-  end
-
   describe "existing_reviews_with_comments_not_updated" do
     context "with user having existing reviews for school" do
       it "it should return only existing reviews not being updated by form" do
@@ -225,7 +231,7 @@ describe ReviewsForm do
 
   describe "#user_reviews" do
     it "should return user reviews struct" do
-      school = create(:alameda_high_school, id: 1)
+      create(:alameda_high_school, id: 1)
       verified_user = create(:verified_user)
       saved_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1)
       reviews_form = build_reviews_form
@@ -239,7 +245,7 @@ describe ReviewsForm do
   describe "#reviews_hash" do
     context "with no errors in saved questions" do
       it "should return reviews hash without errors" do
-        school = create(:alameda_high_school, id: 1)
+        create(:alameda_high_school, id: 1)
         verified_user = create(:verified_user)
         saved_review = create(:teacher_effectiveness_review, user: verified_user, school_id: 1)
         reviews_form = build_reviews_form
@@ -257,7 +263,7 @@ describe ReviewsForm do
     end
     context "with one review with error" do
       it "should return reviews hash with one question with error" do
-        school = create(:alameda_high_school, id: 1)
+        create(:alameda_high_school, id: 1)
         verified_user = create(:verified_user)
         invalid_comment = "comment"
         saved_review = build(:teacher_effectiveness_review, comment: invalid_comment, user: verified_user, school_id: 1)
@@ -265,17 +271,61 @@ describe ReviewsForm do
         reviews_form = build_reviews_form
         invalid_reviews = [saved_review]
         allow(reviews_form).to receive(:saved_reviews).and_return(invalid_reviews)
-        review_question_id = saved_review.review_question_id
         hash_result = {
-          "#{saved_review.review_question_id}" => {
+          saved_review.review_question_id => {
             comment: saved_review.comment,
             answer: saved_review.answer,
             errors: ["comment is too short (minimum is 7 words)"]
           }
-        }
+        }.stringify_keys
 
         expect(reviews_form.reviews_hash).to eq(hash_result)
       end
+    end
+  end
+
+  describe '#presence_of_review_question' do
+    let (:reviews_form) { build_reviews_form }
+    subject { reviews_form.presence_of_review_question }
+
+    it 'is valid with a single review with a question' do
+      create(:review_question, id: 1)
+      review = Review.new
+      review.review_question_id = 1
+      allow(reviews_form).to receive(:reviews).and_return([review])
+      subject
+      expect(reviews_form.errors).to be_empty
+    end
+
+    it 'is invalid with a single review without a question' do
+      review = Review.new
+      review.review_question_id = 1
+      allow(reviews_form).to receive(:reviews).and_return([review])
+      subject
+      expect(reviews_form.errors).to_not be_empty
+    end
+
+    it 'is valid with multiple reviews with questions' do
+      create(:review_question, id: 1)
+      create(:review_question, id: 2)
+      review1 = Review.new
+      review1.review_question_id = 1
+      review2 = Review.new
+      review2.review_question_id = 2
+      allow(reviews_form).to receive(:reviews).and_return([review1, review2])
+      subject
+      expect(reviews_form.errors).to be_empty
+    end
+
+    it 'is invalid with multiple reviews where one is missing a question' do
+      create(:review_question, id: 2)
+      review1 = Review.new
+      review1.review_question_id = 1
+      review2 = Review.new
+      review2.review_question_id = 2
+      allow(reviews_form).to receive(:reviews).and_return([review1, review2])
+      subject
+      expect(reviews_form.errors).to_not be_empty
     end
   end
 

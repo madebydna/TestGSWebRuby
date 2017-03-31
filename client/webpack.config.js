@@ -13,9 +13,6 @@ const config = {
     'widget': ['./app/bundles/GSWeb/widget'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'webpack': [
-      'es5-shim/es5-shim',
-      'es5-shim/es5-sham',
-      'babel-polyfill',
       './app/bundles/GSWeb/application'
     ]
   },
@@ -27,7 +24,7 @@ const config = {
   },
 
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
     alias: {
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
@@ -41,36 +38,33 @@ const config = {
     })
   ],
   module: {
-    loaders: [
-      {
-        test: require.resolve('react'),
-        loader: 'imports?shim=es5-shim/es5-shim&sham=es5-shim/es5-sham',
-      },
+    rules: [
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file'
+        loader: 'file-loader'
       },
       {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        query: {
+        options: {
           plugins: ['transform-runtime'],
-          presets: ['es2015', 'stage-0', 'react'],
+          presets: [
+            [ 'es2015', { modules: false } ],
+            'react',
+            'stage-0'
+          ]
         }
       },
     ],
   },
 };
 
-module.exports = config;
 
 if (devBuild) {
   console.log('Webpack dev build for Rails'); // eslint-disable-line no-console
-  module.exports.devtool = 'eval-source-map';
+  config.devtool = 'eval-source-map';
 } else {
-  config.plugins.push(
-    new webpack.optimize.DedupePlugin()
-  );
   console.log('Webpack production build for Rails'); // eslint-disable-line no-console
 }
+module.exports = config;

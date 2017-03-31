@@ -73,6 +73,11 @@ module States
     return state_hash[str]
   end
 
+  def self.state_path(name)
+    path = States.state_name(name)
+    path.gsub(' ', '-') if path
+  end
+
   def self.state_name(str)
     return nil unless str.present?
     str = str.downcase

@@ -7,10 +7,22 @@ module SchoolProfiles
     BREAKDOWN_ALL = 'All'
     LOW_INCOME_TOP = 'low_income'
     ETHNICITY_TOP = 'ethnicity'
+    DISABILITIES_TOP = 'disabilities'
     SUBJECTS_TO_RETURN = 3
-    BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
-    BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
-    BREAKDOWN_HAWAIIAN = 'Hawaiian'
+    NATIVE_AMERICAN = [
+        'American Indian/Alaska Native',
+        'Native American'
+    ]
+
+    PACIFIC_ISLANDER = [
+        'Pacific Islander',
+        'Hawaiian Native/Pacific Islander',
+        'Native Hawaiian or Other Pacific Islander'
+    ]
+    # BREAKDOWN_PACIFIC_ISLANDER_COMBO = 'Native Hawaiian or Other Pacific Islander'
+    # BREAKDOWN_PACIFIC_ISLANDER = 'Pacific Islander'
+    # BREAKDOWN_HAWAIIAN = 'Hawaiian'
+    BREAKDOWN_DISABILITIES = 'Students with disabilities'
 
     #PUBLIC
 
@@ -19,9 +31,11 @@ module SchoolProfiles
     end
 
     def generate_equity_test_score_hash
+      # require 'pry'; binding.pry
       @_generate_equity_test_score_hash ||=({
           LOW_INCOME_TOP => low_income_hash,
-          ETHNICITY_TOP => ethnicity_hash
+          ETHNICITY_TOP => ethnicity_hash,
+          DISABILITIES_TOP => disabilities_hash
       })
     end
 
@@ -91,9 +105,7 @@ module SchoolProfiles
     end
 
     def scores_format_numbers(value)
-      if value.instance_of? Fixnum
-        value
-      elsif value.instance_of? Float
+      if value.respond_to?(:round)
         value.round
       elsif value.instance_of? String
         value.scan(/\d+/) if value.present?
@@ -108,11 +120,10 @@ module SchoolProfiles
 
     def low_income_sort_subjects(hash)
       hash.sort do | a, b |
-        sum1 = 0
-        sum2 = 0
+        sum1 = sum2 = 0
         if b.present? && b[1].present? && a.present? && a[1].present?
-          sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
-          sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']}
+          sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']} || 0
+          sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']} || 0
         end
         sum1 <=> sum2
       end
@@ -135,7 +146,20 @@ module SchoolProfiles
       {BREAKDOWN_LOW_INCOME=>'0', BREAKDOWN_NOT_LOW_INCOME=>'0'}
     end
 
+    # disability
 
+    def disabilities_hash
+      @_disabilities_hash ||=(
+      hash = test_scores_formatted(disabilities_breakdowns)
+      # sorted = low_income_sort_subjects(hash).to_h
+      # low_income_sort_breakdowns(sorted)
+      hash.first(SUBJECTS_TO_RETURN).to_h
+      )
+    end
+
+    def disabilities_breakdowns
+      {BREAKDOWN_DISABILITIES => '0'}
+    end
 
     # Ethnicity specific methods
 
@@ -167,11 +191,15 @@ module SchoolProfiles
     def ethnicity_breakdowns
       ethnicity_breakdown = {BREAKDOWN_ALL=>SUBJECT_ALL_PERCENTAGE}
       @school_cache_data_reader.ethnicity_data.each do | ed |
-        ethnicity_breakdown[ed['breakdown']] = ed['school_value']
-        ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
-        if  ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO || ed['breakdown'] == BREAKDOWN_PACIFIC_ISLANDER_COMBO
-          ethnicity_breakdown[BREAKDOWN_PACIFIC_ISLANDER] = ed['school_value']
-          ethnicity_breakdown[BREAKDOWN_HAWAIIAN] = ed['school_value']
+        if (PACIFIC_ISLANDER.include? ed['breakdown']) ||
+            (PACIFIC_ISLANDER.include? ed['original_breakdown'])
+          PACIFIC_ISLANDER.each { |islander| ethnicity_breakdown[islander] = ed['school_value']}
+        elsif (NATIVE_AMERICAN.include? ed['breakdown']) ||
+            (NATIVE_AMERICAN.include? ed['original_breakdown'])
+          NATIVE_AMERICAN.each { |native_american| ethnicity_breakdown[native_american] = ed['school_value']}
+        else
+          ethnicity_breakdown[ed['breakdown']] = ed['school_value']
+          ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
         end
       end
       ethnicity_breakdown.compact

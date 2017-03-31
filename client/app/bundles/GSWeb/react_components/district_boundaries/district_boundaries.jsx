@@ -33,6 +33,18 @@ export default class DistrictBoundaries extends React.Component {
     this.initGoogleMaps();
   }
 
+  componentDidMount() {
+    if(this.props.schoolId && this.props.state) {
+      this.props.locateSchool(this.props.state, this.props.schoolId);
+    } else if(this.props.districtId && this.props.state) {
+      this.props.locateDistrict(this.props.state, this.props.districtId);
+    } else if(this.props.lat && this.props.lon) {
+      this.props.changeLocation(this.props.lat, this.props.lon);
+    } else {
+      // do nothing
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if(!prevProps.locationChangeFailure && this.props.locationChangeFailure) {
       alert('No results found. Please try a different search.');
@@ -50,6 +62,7 @@ export default class DistrictBoundaries extends React.Component {
   }
 
   renderMarkers() {
+    let anySchoolMarkerSelected = false;
     let markers = this.props.schools.map(s => {
       let props = {title: s.name, rating: s.rating, lat: s.lat, lon: s.lon};
       props.key = 's' + s.state + s.id;
@@ -57,6 +70,7 @@ export default class DistrictBoundaries extends React.Component {
       props.onClick = () => this.props.selectSchool(s.id, s.state);
       if(this.props.school && this.props.school.state == s.state && this.props.school.id == s.id) {
         props.selected = true;
+        anySchoolMarkerSelected = true;
       }
       if(s.schoolType == 'private') {
         return <MapMarker type={markerTypes.PRIVATE_SCHOOL} {...props} />
@@ -69,6 +83,9 @@ export default class DistrictBoundaries extends React.Component {
       props.key = 'd' + d.state + d.id;
       props.createInfoWindow = () => createInfoWindow(d);
       props.onClick = () => this.props.selectDistrict(d.id, d.state);
+      if(!anySchoolMarkerSelected && this.props.district && this.props.district.state == d.state && this.props.district.id == d.id) {
+        props.selected = true;
+      }
       return <MapMarker type={markerTypes.DISTRICT} {...props} />
     }));
     return markers;
@@ -122,7 +139,7 @@ export default class DistrictBoundaries extends React.Component {
     return (
       <div className="district-boundaries-component">
         <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta" style={{display: 'none'}}/>
-        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}/>
+        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView} googleMapsInitialized={this.state.googleMapsInitialized} />
         { this.props.schools.length > 0 && 
           <SchoolList className={ this.state.listHidden ? 'closed' : '' } />
         }

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import testScoresHelpers from '../../util/test_scores_helpers';
 import EquityBarGraph from './graphs/equity_bar_graph';
 import BarGraphBase from './graphs/bar_graph_base';
+import PersonBar from './graphs/person_bar';
 import PlainNumber from './graphs/plain_number';
 import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
@@ -14,7 +15,9 @@ export default class Equity extends React.Component {
     characteristics: React.PropTypes.object,
     rating_low_income: React.PropTypes.number,
     sources: React.PropTypes.string,
-    data: React.PropTypes.object
+    courses: React.PropTypes.object,
+    discipline: React.PropTypes.object,
+    disabilities: React.PropTypes.object
   };
 
   constructor(props) {
@@ -76,21 +79,21 @@ export default class Equity extends React.Component {
       }
     }
 
-    let data = this.graduationRateDataByEthnicity();
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[1].push(
-        {
-          subject: GS.I18n.t('Graduation rates'),
-          component: <EquityBarGraph
-              test_scores={data}
-              type="bar"
-              graphId="graduation-rates-graph" />,
-          explanation: <div>{GS.I18n.t('RE Grad rates narration')}</div>
-        }
-      );
-    }
+    // let data = this.graduationRateDataByEthnicity();
+    // if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
+    //   tabs[1].push(
+    //     {
+    //       subject: GS.I18n.t('Graduation rates'),
+    //       component: <EquityBarGraph
+    //           test_scores={data}
+    //           type="bar"
+    //           graphId="graduation-rates-graph" />,
+    //       explanation: <div dangerouslySetInnerHTML={{__html: GS.I18n.t('RE Grad rates narration')}}/>
+    //     }
+    //   );
+    // }
 
-    data = this.entranceRequirementData();
+    let data = this.entranceRequirementData();
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
@@ -99,7 +102,7 @@ export default class Equity extends React.Component {
               test_scores={data}
               type="bar"
               graphId="entrance-requirement-graph" />,
-          explanation: <div>{GS.I18n.t('RE UC/CSU eligibility narration')}</div>
+          explanation: <div dangerouslySetInnerHTML={{__html: GS.I18n.t('RE UC/CSU eligibility narration')}}/>
         }
       )
     }
@@ -107,16 +110,30 @@ export default class Equity extends React.Component {
     return tabs;
   }
 
-  narrationContentTestScores(id){
-    let narration_str;
-    switch(id){
-      case 4: { narration_str = 'This shows the percentages of graduates who have taken the A-G required classes needed to ' +
-          'be eligible for University of CA and CA state schools. ' +
-          '<a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> ' +
-          'about these requirements.</div>'; break;}
-    }
+  translateNarrationWithSubject(subject){
+    return GS.I18n.t('SD Test scores narration', {parameters: {subject: subject}});
+  }
 
-    return <div dangerouslySetInnerHTML={{__html: narration_str}} />;
+  section3Tabs() {
+    let tabs = [[],[]];
+
+    let li = this.props.test_scores['disabilities'];
+    for (var subject in li) {
+      if (li.hasOwnProperty(subject)) {
+        let data = li[subject];
+        if(data && data.length > 0) {
+          tabs[0].push(
+              {
+                subject: subject,
+                component: <BarGraphBase
+                    test_scores={data} />,
+                explanation: <div dangerouslySetInnerHTML={{__html: this.translateNarrationWithSubject(subject)}}/>
+              }
+          );
+        }
+      }
+    }
+    return tabs;
   }
 
   section2Tabs() {
@@ -180,29 +197,29 @@ export default class Equity extends React.Component {
     return <div dangerouslySetInnerHTML={{__html: 'Need default translatable "narration text" from server'}} />;
   }
 
+  followSchoolForDataUpdates = function (event) {
+      var state = GS.stateAbbreviationFromUrl();
+      var schoolId = GS.schoolIdFromUrl();
+      return GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+  };
+
   equityConfiguration(){
     let section1Content = [];
     let section2Content = [];
+    let section3Content = [];
     let section1Tabs = this.section1Tabs();
     let section2Tabs = this.section2Tabs();
+    let section3Tabs = this.section3Tabs();
     let config = [];
 
-    if(section1Tabs[0].length > 0) {
-      section1Content.push(
-        {
-          section_title: GS.I18n.t('Test scores'),
-          content: section1Tabs[0]
-        }
-      );
-    }
-    if(section1Tabs[1].length > 0) {
-      section1Content.push(
-        {
-          section_title: GS.I18n.t('Graduation rates'),
-          content: section1Tabs[1]
-        }
-      );
-    }
+    // if(section1Tabs[1].length > 0) {
+    //   section1Content.push(
+    //     {
+    //       section_title: GS.I18n.t('Graduation rates'),
+    //       content: section1Tabs[1]
+    //     }
+    //   );
+    // }
 
     if(section2Tabs[0].length > 0) {
       section2Content.push(
@@ -221,12 +238,43 @@ export default class Equity extends React.Component {
       );
     }
 
-    if (this.props.data) {
-      for (let category in this.props.data) {
-        if (this.props.data.hasOwnProperty(category)) {
-          let sectionConfig = this.sectionConfig(category, this.props.data[category]);
+    if(section3Tabs[0].length > 0) {
+      section3Content.push(
+          {
+            section_title: GS.I18n.t('Test scores'),
+            content: section3Tabs[0]
+          }
+      );
+    }
+
+    if (this.props.courses) {
+      for (let category in this.props.courses) {
+        if (this.props.courses.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.courses[category]);
           if (sectionConfig) {
             section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
+    if (this.props.discipline) {
+      for (let category in this.props.discipline) {
+        if (this.props.discipline.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.discipline[category]);
+          if (sectionConfig) {
+            section1Content.push(sectionConfig);
+          }
+        }
+      }
+    }
+
+    if (this.props.disabilities) {
+      for (let category in this.props.disabilities) {
+        if (this.props.disabilities.hasOwnProperty(category)) {
+          let sectionConfig = this.sectionConfig(category, this.props.disabilities[category]);
+          if (sectionConfig) {
+            section3Content.push(sectionConfig);
           }
         }
       }
@@ -245,6 +293,27 @@ export default class Equity extends React.Component {
         section_content: section1Content
       });
     }
+    else {
+      config.push({
+        section_info:{
+          title: 'Race ethnicity',
+          subtitle: <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Race ethnicity subtitle')}} />,
+          message: <div className="ptm">
+                    <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                    <a href="javascript:void(0)"
+                       className="js-followThisSchool js-gaClick"
+                       onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                       data-ga-click-category='Profile'
+                       data-ga-click-action='Notify from empty data module'
+                       data-ga-click-label='Race ethnicity' />
+                   </div>,
+          rating: '',
+          info_text: GS.I18n.t('Race ethnicity tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Equity-Race-ethnicity',
+          icon_classes: GS.I18n.t('Race ethnicity icon')
+        }
+      })
+    }
 
     if(section2Content.length > 0) {
       config.push({
@@ -258,6 +327,62 @@ export default class Equity extends React.Component {
         },
         section_content: section2Content
       });
+    }
+    else {
+      config.push({
+        section_info:{
+          title: 'Low-income students',
+          subtitle:  <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Low income subtitle')}} />,
+          message: <div className="ptm">
+                    <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                    <a href="javascript:void(0)"
+                       className="js-followThisSchool js-gaClick"
+                       onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                       data-ga-click-category='Profile'
+                       data-ga-click-action='Notify from empty data module'
+                       data-ga-click-label='Low-income students' />
+                   </div>,
+          rating: '',
+          icon_classes: GS.I18n.t('Low income icon'),
+          info_text: GS.I18n.t('Low income tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Equity-Low-Income'
+        }
+      })
+    }
+
+    if(section3Content.length > 0) {
+      config.push({
+        section_info:{
+          title: 'Students with Disabilities',
+          subtitle: '',
+          rating: '',
+          icon_classes: GS.I18n.t('Student with disabilities icon'),
+          info_text: GS.I18n.t('Student with disabilities tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Students with Disabilities'
+        },
+        section_content: section3Content
+      });
+    }
+    else {
+      config.push({
+        section_info:{
+          title: 'Students with Disabilities',
+          subtitle: '',
+          message: <div className="ptm">
+                    <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                    <a href="javascript:void(0)"
+                       className="js-followThisSchool js-gaClick"
+                       onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                       data-ga-click-category='Profile'
+                       data-ga-click-action='Notify from empty data module'
+                       data-ga-click-label='Students with Disabilities' />
+                   </div>,
+          rating: '',
+          icon_classes: GS.I18n.t('Race ethnicity icon'),
+          info_text: GS.I18n.t('Student with disabilities tooltip'),
+          sourceHref: '/gk/ca-high-schools/#Students with Disabilities'
+        }
+      })
     }
 
     return config;
@@ -294,6 +419,10 @@ export default class Equity extends React.Component {
         let component = null;
         if (displayType == 'plain') {
           component = <PlainNumber values={values}/>
+        } else if (displayType == 'person') {
+          component = <PersonBar values={values} />
+        } else if (displayType == 'person_reversed') {
+          component = <PersonBar values={values} invertedRatings={true} />
         } else {
           component = <BarGraphBase test_scores={values}/>
         }
