@@ -1,9 +1,7 @@
 module SchoolProfiles
   class GraduationRateComponent < ::SchoolProfiles::Component
     def narration
-      SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq
-      .new(school_cache_data_reader: school_cache_data_reader)
-      .get_characteristics_low_income_narrative(data_type)
+      I18n.t('RE Grad rates narration', scope: 'lib.equity_gsdata', subject: data_type) # TODO: update scope after moving translations
     end
 
     def normalized_values
