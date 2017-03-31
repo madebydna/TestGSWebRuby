@@ -7,6 +7,7 @@ class ReviewsForm
   validates :school_id, presence: {message: "Must provide school id"}
   validate :school_found
   validate :validate_reviews_expect_for_unique_active_reviews_validation
+  validate :presence_of_review_question
 
   def save
     if valid?
@@ -127,5 +128,10 @@ class ReviewsForm
     unless valid
       errors.add(:reviews, error_messages)
     end
+  end
+
+  def presence_of_review_question
+    valid = reviews.reduce(true) { |a, e| a && e.question.present? }
+    errors.add(:reviews, 'Specified question was not found') unless valid
   end
 end
