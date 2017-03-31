@@ -83,6 +83,7 @@ en:
     Student with disabilities tooltip: >
       This group includes all students with physical or learning disabilities who receive special education and related services.  <a href='/gk/articles/special-education-a-practical-primer/'>Learn more</a>.
     Low income icon: 'icon-pie'
+    Student with disabilities icon: 'icon-disability'
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'

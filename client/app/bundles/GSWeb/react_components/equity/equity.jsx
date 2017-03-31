@@ -356,7 +356,7 @@ export default class Equity extends React.Component {
           title: 'Students with Disabilities',
           subtitle: '',
           rating: '',
-          icon_classes: GS.I18n.t('Race ethnicity icon'),
+          icon_classes: GS.I18n.t('Student with disabilities icon'),
           info_text: GS.I18n.t('Student with disabilities tooltip'),
           sourceHref: '/gk/ca-high-schools/#Students with Disabilities'
         },

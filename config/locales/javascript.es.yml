@@ -85,6 +85,7 @@ es:
     Student with disabilities tooltip: >
       Este grupo incluye a todos los estudiantes con discapacidades físicas o de aprendizaje que reciben servicios de educación especial y servicios relacionados a sus discapacidades.
     Low income icon: 'icon-pie'
+    Student with disabilities icon: 'icon-disability'
     Test scores: 'Resultados de exámenes'
     Graduation rates: 'Índices de Graduación'
     'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
