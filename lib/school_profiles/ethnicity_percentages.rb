@@ -7,7 +7,8 @@ module SchoolProfiles
 
     NATIVE_AMERICAN = [
         'American Indian/Alaska Native',
-        'Native American'
+        'Native American',
+        'Native American or Native Alaskan'
     ]
 
     PACIFIC_ISLANDER = [
