@@ -197,12 +197,10 @@ export default class Equity extends React.Component {
     return <div dangerouslySetInnerHTML={{__html: 'Need default translatable "narration text" from server'}} />;
   }
 
-  myFunction = function (event) {
-
+  followSchoolForDataUpdates = function (event) {
       var state = GS.stateAbbreviationFromUrl();
       var schoolId = GS.schoolIdFromUrl();
       return GS.sendUpdates.signupAndFollowSchool(state, schoolId);
-
   };
 
   equityConfiguration(){
@@ -310,7 +308,12 @@ export default class Equity extends React.Component {
           subtitle: <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Race ethnicity subtitle')}} />,
           message: <div className="ptm">
                     <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
-                    <a href="javascript:void(0)" className="js-followThisSchool" onClick={this.myFunction} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}} />
+                    <a href="javascript:void(0)"
+                       className="js-followThisSchool js-gaClick"
+                       onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                       data-ga-click-category='Profile'
+                       data-ga-click-action='Notify from empty data module'
+                       data-ga-click-label='Race ethnicity' />
                    </div>,
           rating: '',
           info_text: GS.I18n.t('Race ethnicity tooltip'),
@@ -340,7 +343,12 @@ export default class Equity extends React.Component {
           subtitle:  <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Low income subtitle')}} />,
           message: <div className="ptm">
                     <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
-                    <a href="javascript:void(0)" className="js-followThisSchool" onClick={this.myFunction} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}} />
+                    <a href="javascript:void(0)"
+                       className="js-followThisSchool js-gaClick"
+                       onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                       data-ga-click-category='Profile'
+                       data-ga-click-action='Notify from empty data module'
+                       data-ga-click-label='Low-income students' />
                    </div>,
           rating: '',
           icon_classes: GS.I18n.t('Low income icon'),
@@ -370,7 +378,12 @@ export default class Equity extends React.Component {
           subtitle: '',
           message: <div className="ptm">
                     <span dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
-                    <a href="javascript:void(0)" className="js-followThisSchool" onClick={this.myFunction} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}} />
+                    <a href="javascript:void(0)"
+                       className="js-followThisSchool js-gaClick"
+                       onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                       data-ga-click-category='Profile'
+                       data-ga-click-action='Notify from empty data module'
+                       data-ga-click-label='Students with Disabilities' />
                    </div>,
           rating: '',
           icon_classes: GS.I18n.t('Race ethnicity icon'),

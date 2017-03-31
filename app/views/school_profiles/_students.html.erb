@@ -17,7 +17,7 @@
       <div class="title-container">
         <span class="title"><%= title %></span></br>
         <span><%= subtitle %></span>
-        <%= render 'no_data' unless students.visible? %>
+        <%= render 'no_data_for_module', title: title unless students.visible? %>
       </div>
     </div>
   </div>

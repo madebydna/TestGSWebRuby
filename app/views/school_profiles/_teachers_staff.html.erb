@@ -14,7 +14,7 @@
       <div class="title-container">
         <span class="title"><%= t('.title') %></span></br>
         <span><%= t('.subtitle_html') %></span>
-        <%= render 'no_data' unless data_values.present? %>
+        <%= render 'no_data_for_module', title: t('.title') unless data_values.present? %>
       </div>
     </div>
   </div>
