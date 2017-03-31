@@ -11,7 +11,8 @@ module SchoolProfiles
     SUBJECTS_TO_RETURN = 3
     NATIVE_AMERICAN = [
         'American Indian/Alaska Native',
-        'Native American'
+        'Native American',
+        'Native American or Native Alaskan'
     ]
 
     PACIFIC_ISLANDER = [
