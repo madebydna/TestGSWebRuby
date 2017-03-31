@@ -40,7 +40,7 @@ export default class BarGraphBase extends React.Component {
 
   renderStudentPercentage(test_data){
     if(test_data['display_percentages']){
-      if(test_data['percentage'] == '200' || test_data['breakdown'] == 'All students'){
+      if(test_data['percentage'] == '200' || test_data['breakdown'] == 'All students' || test_data['breakdown'] == 'Todos los estudiantes'){
         if(test_data['number_students_tested'] > 0) {
           return <span className="subject-subtext"><br />({test_data['number_students_tested']} {GS.I18n.t('students')})</span>
         }

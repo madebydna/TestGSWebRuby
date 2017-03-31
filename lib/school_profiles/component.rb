@@ -9,7 +9,7 @@ module SchoolProfiles
     # Whether or not this component has enough data to be displayed
     def has_data?
       normalized_values.any? do |h|
-        filter_predicate(h) &&
+        ethnicities_to_percentages.key?(h[:breakdown]) &&
         h[:score].present? && h[:score].nonzero? && h[:score] != '0'
       end
     end
