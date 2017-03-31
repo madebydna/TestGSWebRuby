@@ -4,7 +4,8 @@ module SchoolProfiles
 
     BREAKDOWN_ALL = 'All'
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
-    STUDENTS_WITH_DISABILITIES = 'Students with IDEA catagory disabilities'
+    STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
+    STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
     COURSES = 1
     DISCIPLINE = 2
     DISABILITIES = 3
@@ -155,7 +156,8 @@ module SchoolProfiles
       lambda do |hash|
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
-              (hash['breakdowns'] == STUDENTS_WITH_DISABILITIES || !hash.has_key?('breakdowns'))
+              ((hash['breakdowns'] == STUDENTS_WITH_DISABILITIES || !hash.has_key?('breakdowns')) ||
+                  (hash['breakdowns'] == STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES || !hash.has_key?('breakdowns')))
       end
     end
 
