@@ -15,177 +15,151 @@ mysql: &mysql
   pool: 7
   username: root
 
-mysql_localhost: &mysql_localhost
+mysql_rw_server: &mysql_rw_server
   <<: *mysql
   host: localhost
   password:
 
-mysql_localhost_rw: &mysql_localhost_rw
-  <<: *mysql_localhost
-
-mysql_localhost_ro: &mysql_localhost_ro
-  <<: *mysql_localhost
-
-mysql_dev: &mysql_dev
+mysql_ro_server: &mysql_ro_server
   <<: *mysql
-  host: dev.greatschools.org
-  username: service
-  password: service
+  host: localhost
+  password:
 
-mysql_dev_rw: &mysql_dev_rw
-  <<: *mysql_dev
-
-mysql_dev_ro: &mysql_dev_ro
-  <<: *mysql_dev
-
-mysql_omega: &mysql_omega
-  <<: *mysql
-  host: omega.greatschools.org
-  username: service
-  password: service
-
-mysql_omega_rw: &mysql_omega_rw
-  <<: *mysql_omega
-mysql_omega_ro: &mysql_omega_ro
-  <<: *mysql_omega
-
-mysql_rw_server_to_use_in_development: &mysql_rw_server_to_use_in_development
-  <<: *mysql_localhost_rw
-
-mysql_ro_server_to_use_in_development: &mysql_ro_server_to_use_in_development
-  <<: *mysql_localhost_ro
-
-mysql_development_gsdata: &mysql_development_gsdata
+mysql_gsdata: &mysql_gsdata
   <<: *mysql
   host: dev-gsdata.greatschools.org
   username: gsdata
   password: yAKuECCBRdEu8MaI
 
 development: &development
-  <<: *mysql_rw_server_to_use_in_development
-  database: LocalizedProfiles_development
+  <<: *mysql_rw_server
+  database: localized_profiles
   profile_config_rw:
-    <<: *mysql_rw_server_to_use_in_development
-    database: LocalizedProfiles_development
+    <<: *mysql_rw_server
+    database: localized_profiles
     legacy: false
   profile_config:
-    <<: *mysql_ro_server_to_use_in_development
-    database: LocalizedProfiles_development
+    <<: *mysql_ro_server
+    database: localized_profiles
     legacy: false
   _STATE__rw:
-    <<: *mysql_rw_server_to_use_in_development
+    <<: *mysql_rw_server
     database: __STATE_
     legacy: true
   _STATE_:
-    <<: *mysql_ro_server_to_use_in_development
+    <<: *mysql_ro_server
     database: __STATE_
     legacy: true
   gs_schooldb_rw:
-    <<: *mysql_rw_server_to_use_in_development
+    <<: *mysql_rw_server
     database: gs_schooldb
     legacy: true
   gs_schooldb:
-    <<: *mysql_ro_server_to_use_in_development
+    <<: *mysql_ro_server
     database: gs_schooldb
     legacy: true
   surveys_rw:
-    <<: *mysql_rw_server_to_use_in_development
+    <<: *mysql_rw_server
     database: surveys
     legacy: true
   surveys:
-    <<: *mysql_ro_server_to_use_in_development
+    <<: *mysql_ro_server
     database: surveys
     legacy: true
   community_rw:
-    <<: *mysql_rw_server_to_use_in_development
+    <<: *mysql_rw_server
     database: community
     legacy: true
   community:
-    <<: *mysql_ro_server_to_use_in_development
+    <<: *mysql_ro_server
     database: community
     legacy: true
   us_geo_rw:
-    <<: *mysql_rw_server_to_use_in_development
+    <<: *mysql_rw_server
     database: us_geo
     legacy: true
   us_geo:
-    <<: *mysql_ro_server_to_use_in_development
+    <<: *mysql_ro_server
     database: us_geo
     legacy: true
   gscms_pub_rw:
-    <<: *mysql_rw_server_to_use_in_development
+    <<: *mysql_rw_server
     database: gscms_pub
     legacy: true
   gscms_pub:
-    <<: *mysql_ro_server_to_use_in_development
+    <<: *mysql_ro_server
     database: gscms_pub
     legacy: true
   gsdata:
-    <<: *mysql_development_gsdata
+    <<: *mysql_gsdata
     database: gsdata
     legacy: false
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
+test_db: &test_db
+  <<: *mysql
+  host: localhost
+  password:
 
 test: &test
-  <<: *mysql_localhost_rw
+  <<: *test_db
   database: localized_profiles_test
   profile_config_rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: localized_profiles_test
     legacy: true
   profile_config:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: localized_profiles_test
     legacy: true
   _STATE__rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: __STATE__test
     legacy: true
   _STATE_:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: __STATE__test
     legacy: true
   gs_schooldb_rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: gs_schooldb_test
     legacy: true
   gs_schooldb:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: gs_schooldb_test
     legacy: true
   surveys_rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: surveys_test
     legacy: true
   surveys:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: surveys_test
     legacy: true
   community_rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: community_test
     legacy: true
   community:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: community_test
     legacy: true
   us_geo_rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: us_geo_test
     legacy: true
   us_geo:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: us_geo_test
     legacy: true
   gscms_pub_rw:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: gscms_pub_test
     legacy: true
   gscms_pub:
-    <<: *mysql_localhost_rw
+    <<: *test_db
     database: gscms_pub_test
     legacy: true
 
@@ -193,4 +167,7 @@ cucumber:
   <<: *test
 
 profile:
+  <<: *development
+
+production:
   <<: *development

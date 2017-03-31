@@ -33,7 +33,32 @@ class DatabaseConfigurationLoader
       end
     end
 
+    self.overwrite_connection_credentials_if_available(config)
+
     return config
+  end
+
+  # Note this does not distinguish between rw/ro connections
+  def self.overwrite_connection_credentials_if_available(config)
+    db_host = ENV['db_host'] || ENV_GLOBAL['db_host']
+    db_username = ENV['db_username'] || ENV_GLOBAL['db_username']
+    db_password = ENV['db_password'] || ENV_GLOBAL['db_password']
+
+    if db_host.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_host if key == 'host'
+      end
+    end
+    if db_username.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_username if key == 'username'
+      end
+    end
+    if db_password.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_password if key == 'password'
+      end
+    end
   end
 
   def self.expand_state_template_in_config(config)
