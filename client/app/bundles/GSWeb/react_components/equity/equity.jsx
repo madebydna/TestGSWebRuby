@@ -79,21 +79,21 @@ export default class Equity extends React.Component {
       }
     }
 
-    let data = this.graduationRateDataByEthnicity();
-    if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
-      tabs[1].push(
-        {
-          subject: GS.I18n.t('Graduation rates'),
-          component: <EquityBarGraph
-              test_scores={data}
-              type="bar"
-              graphId="graduation-rates-graph" />,
-          explanation: <div dangerouslySetInnerHTML={{__html: GS.I18n.t('RE Grad rates narration')}}/>
-        }
-      );
-    }
+    // let data = this.graduationRateDataByEthnicity();
+    // if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
+    //   tabs[1].push(
+    //     {
+    //       subject: GS.I18n.t('Graduation rates'),
+    //       component: <EquityBarGraph
+    //           test_scores={data}
+    //           type="bar"
+    //           graphId="graduation-rates-graph" />,
+    //       explanation: <div dangerouslySetInnerHTML={{__html: GS.I18n.t('RE Grad rates narration')}}/>
+    //     }
+    //   );
+    // }
 
-    data = this.entranceRequirementData();
+    let data = this.entranceRequirementData();
     if(data && data.length > 0 && !this.allSchoolValueInvalid(data)) {
       tabs[1].push(
         {
@@ -212,14 +212,14 @@ export default class Equity extends React.Component {
     let section3Tabs = this.section3Tabs();
     let config = [];
 
-    if(section1Tabs[1].length > 0) {
-      section1Content.push(
-        {
-          section_title: GS.I18n.t('Graduation rates'),
-          content: section1Tabs[1]
-        }
-      );
-    }
+    // if(section1Tabs[1].length > 0) {
+    //   section1Content.push(
+    //     {
+    //       section_title: GS.I18n.t('Graduation rates'),
+    //       content: section1Tabs[1]
+    //     }
+    //   );
+    // }
 
     if(section2Tabs[0].length > 0) {
       section2Content.push(
