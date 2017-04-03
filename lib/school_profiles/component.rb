@@ -10,7 +10,7 @@ module SchoolProfiles
     def has_data?
       normalized_values.any? do |h|
         ethnicities_to_percentages.key?(h[:breakdown]) &&
-        h[:score].present? && h[:score].nonzero? && h[:score] != '0'
+            h[:score].present? && value_to_s(h[:score]) != '0'
       end
     end
 
