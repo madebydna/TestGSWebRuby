@@ -33,7 +33,7 @@ class DatabaseConfigurationLoader
       end
     end
 
-    self.overwrite_connection_credentials_if_available(config)
+    self.overwrite_connection_credentials_if_available(config['development'])
 
     return config
   end
