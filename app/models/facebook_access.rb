@@ -16,15 +16,15 @@ class FacebookAccess
     access_token_hash = nil
 
     # get access token
-    begin
-      access_token_hash = MiniFB.oauth_access_token(app_id, callback_url, app_secret, code)
-    rescue
-      Rails.logger.error($!)
+    access_token_hash = MiniFB.oauth_access_token(app_id, callback_url, app_secret, code)
+    access_token_hash_string = (access_token_hash || {}).keys.first
+    if access_token_hash_string
+      return JSON.parse(access_token_hash_string)['access_token']
     end
-
-    return nil unless access_token_hash.present?
-
-    access_token_hash['access_token']
+    return nil
+  rescue Exception => e
+    GSLogger.error(:misc, e, message:'Error handling FB oauth access token with MiniFB')
+    nil
   end
 
 
