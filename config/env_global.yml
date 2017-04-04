@@ -50,3 +50,8 @@ feed_log_level : 0
 # db_host: sw3.greatschools.org
 # db_username: foobarbaz
 # db_password: foobarbaz
+#
+# Sample params for gsdata database:
+# gsdata_db_host: dev-gsdata.greatschools.org
+# gsdata_db_username: foobarbaz
+# gsdata_db_password: foobarbaz
