@@ -1,6 +1,6 @@
 import { SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
-  LOCATION_CHANGE, LOCATION_CHANGE_FAILURE, LOCATION_CHANGE_FAILURE_RESET,
-  DISTRICT_SELECT, SCHOOL_SELECT, IS_LOADING
+  LOCATION_CHANGE, LOCATION_CHANGE_FAILURE, ERRORS_RESET,
+  DISTRICT_SELECT, SCHOOL_SELECT, IS_LOADING, API_FAILURE
 } from '../actions/district_boundaries';
 
 // "selector" functions that knows how to navigate the state in order to
@@ -94,7 +94,8 @@ export default (state, action) => {
         schools,
         districts,
         loading: false,
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
       };
     case LOCATION_CHANGE_FAILURE:
       return {
@@ -102,10 +103,17 @@ export default (state, action) => {
         loading: false,
         locationChangeFailure: true
       }
-    case LOCATION_CHANGE_FAILURE_RESET:
+    case ERRORS_RESET:
       return {
         ...state,
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
+      }
+    case API_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        apiFailure: true
       }
     case DISTRICT_SELECT:
       var { district, schools } = action;
@@ -120,7 +128,8 @@ export default (state, action) => {
         districtId: district.id,
         state: district.state,
         loading: false,
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
       }
     case SCHOOL_SELECT:
       var schools = state.schools;
@@ -134,13 +143,15 @@ export default (state, action) => {
         schoolId: school.id,
         state: school.state,
         loading: false,
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
       }
     case SET_LEVEL:
       return {
         ...state,
         level: action.level,
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
       };
     case ADD_SCHOOL_TYPE:
       var { schools } = action;
@@ -151,13 +162,15 @@ export default (state, action) => {
         schools: { ...state.schools, ...schools },
         schoolTypes: state.schoolTypes.concat(action.schoolType),
         loading: false,
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
       }
     case REMOVE_SCHOOL_TYPE:
       return {
         ...state,
         schoolTypes: state.schoolTypes.filter(t => action.schoolType != t),
-        locationChangeFailure: false
+        locationChangeFailure: false,
+        apiFailure: false
       }
     default:
       return state;

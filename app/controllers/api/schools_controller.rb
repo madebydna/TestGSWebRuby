@@ -77,6 +77,8 @@ class Api::SchoolsController < ApplicationController
   def get_schools
     @_get_schools ||= (
       schools = School.on_db(state.to_s.downcase.to_sym).
+        select("#{School.table_name}.*, #{District.table_name}.name as district_name").
+        joins("LEFT JOIN district on school.district_id = district.id").
         where(criteria).
         active.
         limit(limit).
