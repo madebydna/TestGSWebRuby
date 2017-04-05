@@ -138,13 +138,20 @@ module SchoolProfiles
       @_low_income_hash ||=(
         hash = test_scores_formatted(low_income_breakdowns)
         sorted = low_income_sort_subjects(hash).to_h
+        sorted = reject_all_with_no_other_breakdowns(sorted)
         low_income_sort_breakdowns(sorted)
         sorted.first(SUBJECTS_TO_RETURN).to_h
       )
     end
 
+    def reject_all_with_no_other_breakdowns(hash)
+      hash.reject do |_, subject_hash_array|
+        subject_hash_array.size <= 1
+      end
+    end
+
     def low_income_breakdowns
-      {BREAKDOWN_LOW_INCOME=>'0', BREAKDOWN_NOT_LOW_INCOME=>'0'}
+      {BREAKDOWN_ALL => SUBJECT_ALL_PERCENTAGE, BREAKDOWN_LOW_INCOME=>'0', BREAKDOWN_NOT_LOW_INCOME=>'0'}
     end
 
     # disability

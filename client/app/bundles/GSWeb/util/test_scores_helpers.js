@@ -39,7 +39,7 @@ GS.testScoresHelpers = {
   incomeLevelTestScoreData : function(testScoreDataArray) {
     return _.filter(testScoreDataArray, obj =>
         _.include(
-          ['Economically disadvantaged', 'Not economically disadvantaged'],
+          ['All students', 'Economically disadvantaged', 'Not economically disadvantaged'],
           obj.breakdown
         )
     );
