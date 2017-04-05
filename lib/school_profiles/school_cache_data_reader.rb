@@ -153,7 +153,7 @@ module SchoolProfiles
             scores_hash['subject'] = subject
             scores_hash['year'] = latest_year
           end)
-        end)
+        end) if subject_hash
     end
 
     def school_cache_query
