@@ -15,6 +15,7 @@ export default class Courses extends React.Component {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
     let courseSubjects = subjects.map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
     return <div id="advanced-courses" className="rating-container">
+      <a className="anchor-mobile-offset" name="Advanced_courses"></a>
       <div className="rating-container__rating">
         <div className="module-header">
             <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>

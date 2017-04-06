@@ -1,3 +1,4 @@
+require 'set'
 module SchoolProfiles
   class Courses
     def initialize(school_cache_data_reader:)
@@ -19,35 +20,33 @@ module SchoolProfiles
     # {
     #   "STEM Index" => [
     #     {
-    #       rating: "8",
+    #       rating: 8,
     #       courses: [
     #         {
     #           "name" => "Math A"
-    #           "source_year" => 2015,
-    #           "source_name" => "California Department of Education"
-    #           "school_value" => "162"
     #         }
     #       ]
     #     }
     #   ],
-    #   "FL Index" => "2"
+    #   "FL Index" => 2
     # }
     def course_enrollments_and_ratings
-      course_subject_group_ratings.each_with_object({}) do |(readable_index, rating), accum|
-        index_key = readable_index.downcase.gsub(' ', '_')
-        courses = course_enrollments_by_course_index[index_key]
-        accum[readable_index.gsub(/ index/i, '')] = {
-          'courses' => courses,
-          'rating' => rating
-        }
-      end
+      course_subject_group_ratings
+        .each_with_object({}) do |(readable_subject, rating), accum|
+          subject_key = readable_subject.downcase.gsub(' ', '_')
+          courses = courses_by_subject[subject_key]
+          accum[readable_subject.gsub(/ index/i, '')] = {
+            'courses' => courses,
+            'rating' => rating
+          }
+        end
     end
 
     def data
       @school_cache_data_reader.gsdata_data(*@data_types)
     end
 
-    def course_enrollments_by_course_index
+    def courses_by_subject
       # Course Enrollment data format:
       # [
       #   { 
@@ -87,19 +86,21 @@ module SchoolProfiles
       #     }
       #   ]
       # }
-      @course_enrollments_by_course_index ||= (
-        array = (data['Course Enrollment'] || [])
-          .each_with_object([]) do |h, accum|
-            # tags that match *_index
-            tags = h['breakdown_tags'].split(',').select { |t| t[-6..-1] == '_index' } 
-            tags.each do |t|
-              accum << h.merge(
-                'breakdown_tags' => t,
-                'name' => h['breakdowns']
-              ).except('breakdowns')
-            end
+      @courses_by_subject ||= (
+      (data['Course Enrollment'] || [])
+        .each_with_object({}) do |h, accum|
+          # tags that match *_index
+          subjects = h['breakdown_tags']
+            .split(',')
+            .select { |s| s[-6..-1] == '_index' } 
+
+          subjects.each do |subject|
+            accum[subject] ||= []
+            accum[subject] << {
+              'name' => h['breakdowns']
+            }
           end
-        array.group_by { |h| h['breakdown_tags'] }
+        end
       )
     end
 
@@ -124,16 +125,62 @@ module SchoolProfiles
     # Output data format:
     #
     # {
-    #   "Arts Index" => "9",
-    #   "FL Index" => "2"
+    #   "Arts Index" => 9,
+    #   "FL Index" => 2
     # }
     def course_subject_group_ratings
       @_course_subject_group_ratings ||= (
+        course_ratings_subjects.each_with_object({}) do |hash, accum|
+          subject = hash['breakdowns']
+          accum[subject] = hash['school_value'].to_i
+        end
+      )
+    end
+
+    # Input data example:
+    # [
+    #   {
+    #     "breakdowns" => "Arts Index",
+    #     "breakdown_tags" => "course_subject_group",
+    #     "school_value" => "2",
+    #     ...
+    #   },
+    #   {
+    #     "breakdowns" => "Foo",
+    #     "breakdown_tags" => "male",
+    #     "school_value" => "9",
+    #     ...
+    #   }
+    # ]
+    #
+    # Output data example:
+    #
+    # [
+    #   {
+    #     "breakdowns" => "Arts Index",
+    #     "breakdown_tags" => "course_subject_group",
+    #     "school_value" => "2",
+    #     ...
+    #   }
+    # ]
+    def course_ratings_subjects
+      @_course_ratings_subjects ||= (
         (data['Advanced Course Rating'] || [])
-        .select { |h| h['breakdown_tags'] == 'course_subject_group'}
-        .each_with_object({}) do |course, hash|
-          index = course['breakdowns']
-          hash[index] = course['school_value']
+          .select { |h| h['breakdown_tags'] == 'course_subject_group'}
+      )
+    end
+
+    # Output data example:
+    #
+    # {
+    #   ['California Department of Education', 2016] => [ 'Arts', 'Math']
+    # }
+    def sources
+      (
+        course_ratings_subjects.each_with_object({}) do |hash, accum|
+          source_info = [hash['source_name'], hash['source_year'].to_i]
+          accum[source_info] ||= Set.new
+          accum[source_info] << hash['breakdowns']
         end
       )
     end

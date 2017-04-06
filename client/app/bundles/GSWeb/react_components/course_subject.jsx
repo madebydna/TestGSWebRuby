@@ -34,7 +34,7 @@ export default class CourseSubject extends React.Component {
           <span>
             <span className={'gs-rating circle-rating--xtra-small circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>
           </span>
-          <span><a href="javascript:void(0)">{this.props.courses.length} courses</a></span>
+          { this.props.courses && <span><a href="javascript:void(0)">{this.props.courses.length} courses</a></span> }
         </div>
         { this.state.open &&
           <ul>
