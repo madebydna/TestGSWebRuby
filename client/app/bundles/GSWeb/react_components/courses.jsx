@@ -17,9 +17,7 @@ export default class Courses extends React.Component {
     return <div id="advanced-courses" className="rating-container">
       <div className="rating-container__rating">
         <div className="module-header">
-          <div className="circle-rating--equity-blue circle-rating--medium">
-            <span className="icon-user"></span>
-          </div>
+            <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>
           <div className="title-container">
             <div className="title">{GS.I18n.t('Advanced courses')}</div>
               <span dangerouslySetInnerHTML={{__html: GS.I18n.t('advanced_courses_subheading_html')}}>

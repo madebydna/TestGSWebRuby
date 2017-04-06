@@ -8,6 +8,12 @@ module SchoolProfiles
       ]
     end
 
+    def rating
+      @_rating ||=
+        ((data['Advanced Course Rating'] || [])
+          .find { |h| h['breakdowns'].nil? } || {})['school_value']
+    end
+
     # Output data format:
     #
     # {
