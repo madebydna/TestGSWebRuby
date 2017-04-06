@@ -6,6 +6,7 @@ FactoryGirl.define do
     value 1
     name 'Sample data type'
     breakdowns 'Male'
+    breakdown_tags 'Gender'
     source_name 'Sample Source'
     date_valid Time.parse("Jan 1 2014")
     state 'CA'
