@@ -82,7 +82,7 @@ module SchoolProfiles
       #   ]
       # }
       @course_enrollments_by_course_index ||= (
-        array = data['Course Enrollment']
+        array = (data['Course Enrollment'] || [])
           .each_with_object([]) do |h, accum|
             # tags that match *_index
             tags = h['breakdown_tags'].split(',').select { |t| t[-6..-1] == '_index' } 
@@ -123,7 +123,7 @@ module SchoolProfiles
     # }
     def course_subject_group_ratings
       @_course_subject_group_ratings ||= (
-        data['Advanced Course Rating']
+        (data['Advanced Course Rating'] || [])
         .select { |h| h['breakdown_tags'] == 'course_subject_group'}
         .each_with_object({}) do |course, hash|
           index = course['breakdowns']
