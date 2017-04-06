@@ -63,6 +63,7 @@ class SchoolProfilesController < ApplicationController
         sp.breadcrumbs = breadcrumbs
         sp.teachers_staff = teachers_staff
         sp.show_college_readiness = show_college_readiness?
+        sp.courses = courses
       end
     )
   end
@@ -123,6 +124,12 @@ class SchoolProfilesController < ApplicationController
 
   def equity
     SchoolProfiles::Equity.new(
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def courses
+    SchoolProfiles::Courses.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
