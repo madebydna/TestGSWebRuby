@@ -123,8 +123,8 @@ module SchoolProfiles
       hash.sort do | a, b |
         sum1 = sum2 = 0
         if b.present? && b[1].present? && a.present? && a[1].present?
-          sum1 = b[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']} || 0
-          sum2 = a[1].inject(0){|a,e| a + e['number_students_tested'] if e['number_students_tested']} || 0
+          sum1 = b[1].inject(0){|a,e| a.to_s.to_i + e['number_students_tested'].to_s.to_i} || 0
+          sum2 = a[1].inject(0){|a,e| a.to_s.to_i + e['number_students_tested'].to_s.to_i} || 0
         end
         sum1 <=> sum2
       end
