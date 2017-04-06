@@ -18,24 +18,28 @@ module SchoolProfiles
     # Output data format:
     #
     # {
-    #   "STEM Index" => [
+    #   "STEM" => [
     #     {
     #       rating: 8,
-    #       courses: [
-    #         {
-    #           "name" => "Math A"
-    #         }
-    #       ]
+    #       courses: [ "Math A" ]
     #     }
     #   ],
-    #   "FL Index" => 2
+    #   "Foreign Language" => [
+    #     {
+    #       rating: 9,
+    #       courses: [ "Foo", "Bar" ]
+    #
+    #     }
+    #
+    #   ]
     # }
     def course_enrollments_and_ratings
       course_subject_group_ratings
         .each_with_object({}) do |(readable_subject, rating), accum|
           subject_key = readable_subject.downcase.gsub(' ', '_')
-          courses = courses_by_subject[subject_key]
-          accum[readable_subject.gsub(/ index/i, '')] = {
+          courses = courses_by_subject[subject_key].map { |h| h['name'] }
+          translated_subject = t(readable_subject.gsub(/ index/i, ''))
+          accum[translated_subject] = {
             'courses' => courses,
             'rating' => rating
           }
@@ -88,6 +92,7 @@ module SchoolProfiles
       # }
       @courses_by_subject ||= (
       (data['Course Enrollment'] || [])
+        .select { |h| h['breakdown_tags'] =~ /advanced/ }
         .each_with_object({}) do |h, accum|
           # tags that match *_index
           subjects = h['breakdown_tags']
@@ -183,6 +188,10 @@ module SchoolProfiles
           accum[source_info] << hash['breakdowns']
         end
       )
+    end
+
+    def t(s)
+      I18n.t(s, scope:'lib.advanced_courses')
     end
 
   end

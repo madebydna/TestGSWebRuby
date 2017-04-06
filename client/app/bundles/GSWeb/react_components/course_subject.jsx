@@ -17,7 +17,7 @@ export default class CourseSubject extends React.Component {
   }
 
   listOfCourses() {
-    return this.props.courses.map((course) => <li>{course.name}</li>);
+    return this.props.courses.map((course) => <li>{course}</li>);
   }
 
   toggle() {
