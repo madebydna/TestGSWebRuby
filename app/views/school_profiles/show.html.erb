@@ -25,6 +25,7 @@
           <div class="col-xs-12 col-lg-9">
             <%= render 'test_scores', test_scores: @school_profile.test_scores %>
             <%= render 'college_readiness', college_readiness: @school_profile.college_readiness if @school_profile.show_college_readiness %>
+            <%= render 'courses', courses: @school_profile.courses %>
           </div>
         </div>
       </div>

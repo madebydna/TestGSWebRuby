@@ -5,12 +5,13 @@ module SchoolProfiles
 
     attr_accessor :content
 
-    def initialize(test_scores, college_readiness, equity, students, teacher_staff, school)
+    def initialize(test_scores, college_readiness, equity, students, teacher_staff, courses, school)
       @test_scores = test_scores
       @college_readiness = college_readiness
       @equity = equity
       @students = students
       @teacher_staff = teacher_staff
+      @courses = courses
       @school = school
     end
 
@@ -21,6 +22,7 @@ module SchoolProfiles
       if @school.level_code =~ /h/
         arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
       end
+      arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       hash[:academics] = arr
       hash.delete_if{|key, value| value.blank?}
     end

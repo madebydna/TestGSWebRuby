@@ -13,11 +13,29 @@ class GsdataCaching::GsdataCacher < Cacher
   # 133: Ratio of teacher salary to total number of teachers
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
-  DATA_TYPE_IDS = [35, 55, 83, 91, 95, 99, 119, 133, 149, 152].freeze
+  DATA_TYPE_IDS = [35, 55, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152].freeze
+  BREAKDOWN_TAG_NAMES = [
+    'ethnicity',
+    'gender',
+    'language_learner',
+    'disability',
+    'course_subject_group',
+    'advanced',
+    'course',
+    'stem_index',
+    'arts_index',
+    'vocational_hands_on_index',
+    'ela_index',
+    'fl_index',
+    'hss_index',
+    'business_index',
+    'health_index'
+  ]
 
   def build_hash_for_cache
     school_cache_hash = Hash.new { |h, k| h[k] = [] }
-    school_results.each_with_object(school_cache_hash) do |result, cache_hash|
+    r = school_results
+    r.each_with_object(school_cache_hash) do |result, cache_hash|
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
       cache_hash[result.name] << result_hash
@@ -30,12 +48,16 @@ class GsdataCaching::GsdataCacher < Cacher
 
   def school_results
     @_school_results ||=
-      DataValue.find_by_school_and_data_types(school, DATA_TYPE_IDS)
+      DataValue.find_by_school_and_data_types(school,
+                                              DATA_TYPE_IDS,
+                                              BREAKDOWN_TAG_NAMES)
   end
 
   def state_results_hash
     @_state_results_hash ||= (
-      DataValue.find_by_state_and_data_types(school.state, DATA_TYPE_IDS)
+      DataValue.find_by_state_and_data_types(school.state,
+                                             DATA_TYPE_IDS,
+                                             BREAKDOWN_TAG_NAMES)
       .each_with_object({}) do |r, h|
         state_key = r.datatype_breakdown_year
         h[state_key] = r.value
@@ -48,7 +70,8 @@ class GsdataCaching::GsdataCacher < Cacher
       district_values = DataValue
       .find_by_district_and_data_types(school.state,
                                        school.district_id,
-                                       DATA_TYPE_IDS)
+                                       DATA_TYPE_IDS,
+                                       BREAKDOWN_TAG_NAMES)
       district_values.each_with_object({}) do |r, h|
         district_key = r.datatype_breakdown_year
         h[district_key] = r.value
@@ -60,11 +83,13 @@ class GsdataCaching::GsdataCacher < Cacher
 
   def result_to_hash(result)
     breakdowns = result.breakdowns
+    breakdown_tags = result.breakdown_tags
     state_value = state_value(result)
     district_value = district_value(result)
     display_range = display_range(result)
     {}.tap do |h|
       h[:breakdowns] = breakdowns if breakdowns
+      h[:breakdown_tags] = breakdown_tags if breakdown_tags
       h[:school_value] = result.value
       h[:source_year] = result.date_valid.year
       h[:state_value] = state_value if state_value

@@ -6,6 +6,7 @@ describe GsdataCaching::GsdataCacher do
   end
   describe '#build_hash_for_cache' do
     it 'should return correct hash' do
+      tags = ['a', 'b']
       school = build(:alameda_high_school)
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       breakdowns = ['AA', 'BB', 1]
@@ -13,10 +14,12 @@ describe GsdataCaching::GsdataCacher do
       data_type_one_values = build_school_values(1,
                                                  'Data Type 1',
                                                  date_valid,
+                                                 tags,
                                                  *breakdowns)
       data_type_two_values = build_school_values(2,
                                                  'Data Type 2',
                                                  date_valid,
+                                                 tags,
                                                  *breakdowns)
       all_values = data_type_one_values + data_type_two_values
       state_results = build_state_results_hash(breakdowns,
@@ -31,10 +34,10 @@ describe GsdataCaching::GsdataCacher do
       allow(gsdb_cacher).to receive(:district_results_hash)
         .and_return(district_results)
       breakdown_one_result_hashes = breakdowns.map do |bd|
-        build_result_hash(bd)
+        build_result_hash(bd, tags)
       end
       breakdown_two_result_hashes = breakdowns.map do |bd|
-        build_result_hash(bd)
+        build_result_hash(bd, tags)
       end
       result = {
         'Data Type 1' => breakdown_one_result_hashes,
@@ -53,9 +56,10 @@ describe GsdataCaching::GsdataCacher do
     end
   end
 
-  def build_result_hash(breakdown)
+  def build_result_hash(breakdown, breakdown_tags)
     {
       breakdowns: breakdown,
+      breakdown_tags: breakdown_tags,
       school_value: 1,
       state_value: 1,
       district_value: 1,
@@ -64,10 +68,11 @@ describe GsdataCaching::GsdataCacher do
     }
   end
 
-  def build_school_values(data_type_id, name, date_valid, *breakdowns)
+  def build_school_values(data_type_id, name, date_valid, breakdown_tags, *breakdowns)
     breakdowns.map do |bd|
       data_value = build(:school_data_value,
                          breakdowns: bd,
+                         breakdown_tags: breakdown_tags,
                          data_type_id: data_type_id,
                          name: name)
       allow(data_value).to receive(:datatype_breakdown_year)
@@ -81,12 +86,17 @@ describe GsdataCaching::GsdataCacher do
       school = build(:alameda_high_school)
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       stub_const('GsdataCaching::GsdataCacher::DATA_TYPE_IDS', [5, 6])
+      stub_const('GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES', [:a, :b])
       data_values = double
       stub_const('DataValue', data_values)
 
       expect(data_values)
         .to receive(:find_by_school_and_data_types)
-        .with(school, GsdataCaching::GsdataCacher::DATA_TYPE_IDS)
+        .with(
+          school,
+          GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
+          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES
+        )
       gsdb_cacher.school_results
     end
   end
@@ -97,6 +107,7 @@ describe GsdataCaching::GsdataCacher do
       data_type_id = 95
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       stub_const('GsdataCaching::GsdataCacher::DATA_TYPE_IDS', [5, 6])
+      stub_const('GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES', [:a, :b])
       data_values = double
       stub_const('DataValue', data_values)
       state_value = double(
@@ -108,7 +119,11 @@ describe GsdataCaching::GsdataCacher do
       state_values = [state_value]
 
       allow(data_values).to receive(:find_by_state_and_data_types)
-        .with(school.state, GsdataCaching::GsdataCacher::DATA_TYPE_IDS)
+        .with(
+          school.state,
+          GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
+          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES
+        )
         .and_return(state_values)
       results = {
         state_value.datatype_breakdown_year => state_value.value
@@ -125,6 +140,7 @@ describe GsdataCaching::GsdataCacher do
       data_type_id = 95
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       stub_const('GsdataCaching::GsdataCacher::DATA_TYPE_IDS', [5, 6])
+      stub_const('GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES', [:a, :b])
       data_values = double
       stub_const('DataValue', data_values)
       district_value = double(
@@ -137,9 +153,12 @@ describe GsdataCaching::GsdataCacher do
 
       allow(DataValue).to receive(:establish_connection)
       allow(DataValue).to receive(:find_by_district_and_data_types)
-        .with(school.state,
-              school.district_id,
-              GsdataCaching::GsdataCacher::DATA_TYPE_IDS)
+        .with(
+          school.state,
+          school.district_id,
+          GsdataCaching::GsdataCacher::DATA_TYPE_IDS,
+          GsdataCaching::GsdataCacher::BREAKDOWN_TAG_NAMES
+        )
         .and_return(district_values)
       results = {
         district_value.datatype_breakdown_year => district_value.value

@@ -1,0 +1,40 @@
+#advanced-courses {
+  .course-subject {
+    display: table;
+    width: 100%;
+    > span {
+      display: table-cell;
+    }
+    > span:nth-child(1) {
+      font-size: 16px;
+      font-family: OpenSans-Semibold;
+      width: 50%;
+    }
+    > span:nth-child(2) {
+      width: 25%;
+    }
+    > span:nth-child(3) {
+      width: 25%;
+      text-align: right;
+    }
+  }
+  .course-subject-header {
+    display: table;
+    width: 100%;
+    > span {
+      display: table-cell;
+      font-size: 14px;
+      font-family: OpenSans;
+    }
+    > span:nth-child(1) {
+      width: 50%;
+    }
+    > span:nth-child(2) {
+      width: 25%;
+    }
+    > span:nth-child(3) {
+      width: 25%;
+      text-align: right;
+    }
+  }
+}

@@ -12,6 +12,7 @@ es:
       students: Estudiantes
       teachers_staff_html: Profesores y personal
       neighborhood: Vecindario
+      advanced_courses: Cursos avanzados
       info_texts:
         academics_html: Esta sección incluye puntajes en los exámenes estatales para esta escuela y información de el progreso estudiantil cuando está disponible.
         environment_html: Esta sección le ofrece más información sobre la demografía estudiantil, el vecindario y más.
