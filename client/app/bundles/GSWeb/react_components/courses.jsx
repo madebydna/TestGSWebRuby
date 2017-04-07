@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import CourseSubject from './course_subject';
+import Drawer from './drawer';
 
 export default class Courses extends React.Component {
 
@@ -31,7 +32,9 @@ export default class Courses extends React.Component {
 
   render() {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
-    let courseSubjects = subjects.map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
+    let courseSubjects = subjects.slice(0,3).map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
+    let courseSubjectsForDrawer = subjects.slice(4).map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
+
     return <div id="advanced-courses" className="rating-container">
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
       <div className="rating-container__rating">
@@ -60,6 +63,7 @@ export default class Courses extends React.Component {
           <span></span>
         </div>
         {courseSubjects}
+        <Drawer content={courseSubjectsForDrawer} />
       </div>
       <a data-remodal-target="modal_info_box"
          data-content-type="info_box"
