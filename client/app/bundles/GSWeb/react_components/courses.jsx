@@ -63,7 +63,7 @@ export default class Courses extends React.Component {
           <span></span>
         </div>
         {courseSubjects}
-        <Drawer content={courseSubjectsForDrawer} />
+        {courseSubjectsForDrawer.length > 0 && <Drawer content={courseSubjectsForDrawer} /> }
       </div>
       <a data-remodal-target="modal_info_box"
          data-content-type="info_box"
