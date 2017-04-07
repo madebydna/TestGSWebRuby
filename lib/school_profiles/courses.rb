@@ -185,7 +185,7 @@ module SchoolProfiles
         course_ratings_subjects.each_with_object({}) do |hash, accum|
           source_info = [hash['source_name'], hash['source_year'].to_i]
           accum[source_info] ||= Set.new
-          accum[source_info] << hash['breakdowns']
+          accum[source_info] << t(hash['breakdowns'].gsub(' Index', ''))
         end
       )
     end
