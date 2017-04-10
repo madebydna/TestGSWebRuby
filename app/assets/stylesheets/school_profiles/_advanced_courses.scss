@@ -37,4 +37,18 @@
       text-align: right;
     }
   }
+
+  ul{
+    margin:10px 0px 10px 0px;
+    overflow: hidden;
+  }
+
+  li{
+    line-height:1.5em;
+    float: left;
+    display: list-item;
+    width: 50%;
+    font-family: opensans-regular;
+  }
+
 }
