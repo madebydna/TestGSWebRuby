@@ -46,44 +46,59 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
 
 export const locateSchool = (state, id) => (dispatch, getState) => {
   let { level, schoolTypes } = getState().districtBoundaries;
+  let schoolLevel = (level == 'e') ? 'p' : level;
   dispatch({
     type: IS_LOADING
   })
-  loadSchoolById(id, state).done(selectedSchool => {
-    findDataForLatLon(selectedSchool.lat, selectedSchool.lon, level, schoolTypes)
-      .done((lat, lon, districts, district, school, schools) => {
-        dispatch({
-          type: LOCATION_CHANGE,
-          district,
-          school: selectedSchool,
-          schools,
-          districts,
-          lat: lat,
-          lon: lon
-        })
-      }).fail(() => dispatch({ type: API_FAILURE }));
-  });
+  loadSchoolById(id, state).done(school => {
+    let lat = school.lat;
+    let lon = school.lon;
+    let districtId = school.districtId;
+    $.when(
+      loadDistrictById(districtId, state),
+      findSchoolsByDistrict(districtId, state),
+      findDistrictsNearLatLon(lat, lon, state),
+      findSchoolsNearLatLon(lat, lon, state, schoolTypes)
+    ).done((district, schoolsInDistrict = [], nearbyDistricts = [], otherSchools = []) => {
+      dispatch({
+        type: LOCATION_CHANGE,
+        district,
+        school,
+        schools: schoolsInDistrict.concat(otherSchools),
+        districts: nearbyDistricts,
+        lat: lat,
+        lon: lon
+      });
+    }).fail(() => dispatch({ type: API_FAILURE }));
+  }).fail(() => dispatch({ type: API_FAILURE }));
 }
 
 export const locateDistrict = (state, id) => (dispatch, getState) => {
   let { level, schoolTypes } = getState().districtBoundaries;
+  let schoolLevel = (level == 'e') ? 'p' : level;
   dispatch({
     type: IS_LOADING
   })
-  loadDistrictById(id, state).done(selectedDistrict => {
-    findDataForLatLon(selectedDistrict.lat, selectedDistrict.lon, level, schoolTypes)
-      .done((lat, lon, districts, district, school, schools) => {
-        dispatch({
-          type: LOCATION_CHANGE,
-          district: selectedDistrict,
-          school,
-          schools,
-          districts,
-          lat: lat,
-          lon: lon
-        });
-      }).fail(() => dispatch({ type: API_FAILURE }));
-  }).fail(() => dispatch({ type: API_FAILURE }));;
+  loadDistrictById(id, state).done(district => {
+    let lat = district.lat;
+    let lon = district.lon;
+    $.when(
+      findFirstSchoolServingLatLon(lat, lon, schoolLevel),
+      findSchoolsByDistrict(id, state),
+      findDistrictsNearLatLon(lat, lon, state),
+      findSchoolsNearLatLon(lat, lon, state, schoolTypes)
+    ).done((school, schoolsInDistrict = [], nearbyDistricts = [], otherSchools = []) => {
+      dispatch({
+        type: LOCATION_CHANGE,
+        district,
+        school,
+        schools: schoolsInDistrict.concat(otherSchools),
+        districts: nearbyDistricts,
+        lat: lat,
+        lon: lon
+      });
+    }).fail(() => dispatch({ type: API_FAILURE }));
+  }).fail(() => dispatch({ type: API_FAILURE }));
 };
 
 export const selectSchool = (id, state) => dispatch => {

@@ -86,7 +86,7 @@ class Api::SchoolsController < ApplicationController
 
       if area_given?
         schools = schools.
-          select("*, #{School.query_distance_function(lat,lon)} as distance").
+          select("#{School.query_distance_function(lat,lon)} as distance").
           having("distance < #{radius}").
           order('distance asc')
       else

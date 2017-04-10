@@ -301,10 +301,10 @@ class School < ActiveRecord::Base
     #{miles_center_of_earth} *
      acos(
        cos(radians(#{lat})) *
-       cos( radians( `lat` ) ) *
-       cos(radians(`lon`) - radians(#{lon})) +
+       cos( radians(school.lat) ) *
+       cos(radians(school.lon) - radians(#{lon})) +
        sin(radians(#{lat})) *
-       sin( radians(`lat`) )
+       sin( radians(school.lat) )
      )
    )".squish
   end
