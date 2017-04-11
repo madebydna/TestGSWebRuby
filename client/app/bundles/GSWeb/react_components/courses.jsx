@@ -58,7 +58,7 @@ export default class Courses extends React.Component {
           <div className="rating-container__score-item course-subject-header">
             <span>Subjects</span>
             <span>
-              Rating&nbsp;
+              <span>Rating&nbsp;</span>
               <a data-remodal-target="modal_info_box"
                 data-content-type="info_box"
                 data-content-html={GS.I18n.t('advanced_courses_rating_tooltip')}

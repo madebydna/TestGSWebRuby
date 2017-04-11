@@ -24,7 +24,8 @@
     > span {
       display: table-cell;
       font-size: 14px;
-      font-family: OpenSans;
+      font-family: opensans-regular;
+      color: $gray-text-color;
     }
     > span:nth-child(1) {
       width: 50%;
@@ -38,17 +39,18 @@
     }
   }
 
-  ul{
-    margin:10px 0px 10px 0px;
+  ul {
+    margin: 10px 0px 10px 0px;
     overflow: hidden;
   }
 
-  li{
-    line-height:1.5em;
+  li {
     float: left;
     display: list-item;
-    width: 50%;
+    width: 100%;
     font-family: opensans-regular;
+    @include media-breakpoint-up(sm) {
+      width: 50%;
+    }
   }
-
 }
