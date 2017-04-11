@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import CourseSubject from './course_subject';
 import Drawer from './drawer';
+import NoDataModuleCta from './no_data_module_cta';
 
 export default class Courses extends React.Component {
 
@@ -30,11 +31,6 @@ export default class Courses extends React.Component {
     return html;
   }
 
-  followSchoolForDataUpdates = function (event) {
-    var state = GS.stateAbbreviationFromUrl();
-    var schoolId = GS.schoolIdFromUrl();
-    return GS.sendUpdates.signupAndFollowSchool(state, schoolId);
-  };
 
   render() {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
@@ -70,7 +66,8 @@ export default class Courses extends React.Component {
             <span></span>
           </div>
           {courseSubjects}
-          {courseSubjectsForDrawer.length > 0 && <Drawer content={courseSubjectsForDrawer} /> }
+          {courseSubjectsForDrawer.length > 0 &&
+          <div className="rating-container__more-items"><Drawer content={courseSubjectsForDrawer} /> </div>}
         </div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"
@@ -90,15 +87,7 @@ export default class Courses extends React.Component {
             <div className="title-container">
               <div className="title">{GS.I18n.t('Advanced courses')}</div>
               <span dangerouslySetInnerHTML={{__html: GS.I18n.t('advanced_courses_subheading_html')}}></span>
-              <div className="ptm">
-                <span class ="no-data" dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
-                <a href="javascript:void(0)"
-                   className="js-followThisSchool js-gaClick"
-                   onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
-                   data-ga-click-category='Profile'
-                   data-ga-click-action='Notify from empty data module'
-                   data-ga-click-label='Advanced courses' />
-              </div>
+              <NoDataModuleCta moduleName="Advanced courses"/>
             </div>
           </div>
         </div>
