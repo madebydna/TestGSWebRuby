@@ -30,47 +30,78 @@ export default class Courses extends React.Component {
     return html;
   }
 
+  followSchoolForDataUpdates = function (event) {
+    var state = GS.stateAbbreviationFromUrl();
+    var schoolId = GS.schoolIdFromUrl();
+    return GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+  };
+
   render() {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
     let courseSubjects = subjects.slice(0,3).map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
     let courseSubjectsForDrawer = subjects.slice(4).map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
 
-    return <div id="advanced-courses" className="rating-container">
+    if (subjects.length > 0)
+      return (<div id="advanced-courses" className="rating-container">
+        <a className="anchor-mobile-offset" name="Advanced_courses"></a>
+        <div className="rating-container__rating">
+          <div className="module-header">
+              <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>
+            <div className="title-container">
+              <div className="title">{GS.I18n.t('Advanced courses')}</div>
+                <span dangerouslySetInnerHTML={{__html: GS.I18n.t('advanced_courses_subheading_html')}}>
+                </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="rating-container__score-item course-subject-header">
+            <span>Subjects</span>
+            <span>
+              Rating&nbsp;
+              <a data-remodal-target="modal_info_box"
+                data-content-type="info_box"
+                data-content-html={GS.I18n.t('advanced_courses_rating_tooltip')}
+                className="gs-tipso info-circle tipso_style"
+                href="javascript:void(0)">
+                <span className="icon-question"></span>
+              </a>
+            </span>
+            <span></span>
+          </div>
+          {courseSubjects}
+          {courseSubjectsForDrawer.length > 0 && <Drawer content={courseSubjectsForDrawer} /> }
+        </div>
+        <a data-remodal-target="modal_info_box"
+           data-content-type="info_box"
+           data-content-html={this.sourcesToHtml()}
+           href="javascript:void(0)">
+          <span className="">{GS.I18n.t('See notes')}</span>
+        </a>
+      </div>)
+    else
+      return <div id="advanced-courses" className="rating-container">
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-      <div className="rating-container__rating">
-        <div className="module-header">
-            <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>
-          <div className="title-container">
-            <div className="title">{GS.I18n.t('Advanced courses')}</div>
-              <span dangerouslySetInnerHTML={{__html: GS.I18n.t('advanced_courses_subheading_html')}}>
-              </span>
+        <div className="rating-container__rating">
+          <div className="module-header">
+            <div className="circle-rating--equity-blue circle-rating--medium">
+              <span className="icon-user"></span>
+            </div>
+            <div className="title-container">
+              <div className="title">{GS.I18n.t('Advanced courses')}</div>
+              <span dangerouslySetInnerHTML={{__html: GS.I18n.t('advanced_courses_subheading_html')}}></span>
+              <div className="ptm">
+                <span class ="no-data" dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+                <a href="javascript:void(0)"
+                   className="js-followThisSchool js-gaClick"
+                   onClick={this.followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+                   data-ga-click-category='Profile'
+                   data-ga-click-action='Notify from empty data module'
+                   data-ga-click-label='Advanced courses' />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div>
-        <div className="rating-container__score-item course-subject-header">
-          <span>Subjects</span>
-          <span>
-            Rating&nbsp;
-            <a data-remodal-target="modal_info_box"
-              data-content-type="info_box"
-              data-content-html={GS.I18n.t('advanced_courses_rating_tooltip')}
-              className="gs-tipso info-circle tipso_style"
-              href="javascript:void(0)">
-              <span className="icon-question"></span>
-            </a>
-          </span>
-          <span></span>
-        </div>
-        {courseSubjects}
-        {courseSubjectsForDrawer.length > 0 && <Drawer content={courseSubjectsForDrawer} /> }
-      </div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html={this.sourcesToHtml()}
-         href="javascript:void(0)">
-        <span className="">{GS.I18n.t('See notes')}</span>
-      </a>
-    </div>
   }
 }
