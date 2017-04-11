@@ -62,13 +62,13 @@ class SchoolProfilesController < ApplicationController
         sp.toc = toc
         sp.breadcrumbs = breadcrumbs
         sp.teachers_staff = teachers_staff
-        sp.show_college_readiness = show_college_readiness?
+        sp.show_high_school_data = show_high_school_data?
         sp.courses = courses
       end
     )
   end
 
-  def show_college_readiness?
+  def show_high_school_data?
     school.level_code =~ /h/
   end
 

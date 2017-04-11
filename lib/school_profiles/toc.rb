@@ -21,8 +21,8 @@ module SchoolProfiles
       arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
       if @school.level_code =~ /h/
         arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
+        arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
-      arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       hash[:academics] = arr
       hash.delete_if{|key, value| value.blank?}
     end
