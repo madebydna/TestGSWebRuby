@@ -7,7 +7,7 @@
     }
     > span:nth-child(1) {
       font-size: 16px;
-      font-family: OpenSans-Semibold;
+      font-family: opensans-regular;
       width: 50%;
     }
     > span:nth-child(2) {
@@ -32,18 +32,17 @@
     }
     > span:nth-child(2) {
       width: 25%;
+      //float: left;
     }
     > span:nth-child(3) {
       width: 25%;
       text-align: right;
     }
   }
-
   ul {
     margin: 10px 0px 10px 0px;
     overflow: hidden;
   }
-
   li {
     float: left;
     display: list-item;
@@ -52,5 +51,18 @@
     @include media-breakpoint-up(sm) {
       width: 50%;
     }
+  }
+  .gs-rating {
+    border-radius: 50%;
+    height: 34px;
+    width: 34px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 32px;
+  }
+  .show-classes {
+    color: #337ab7;
+    padding-left: 5px;
+    vertical-align: middle;
   }
 }
