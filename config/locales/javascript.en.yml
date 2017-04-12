@@ -152,3 +152,4 @@ en:
     advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
+    courses: courses

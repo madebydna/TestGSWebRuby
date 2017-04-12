@@ -26,6 +26,14 @@ export default class CourseSubject extends React.Component {
     });
   }
 
+  t(string) {
+    if (window.GS && GS.I18n && GS.I18n.t) {
+      return GS.I18n.t(string);
+    } else {
+      return string;
+    }
+  }
+
   render() {
     return (
       <div className="rating-container__score-item">
@@ -34,7 +42,7 @@ export default class CourseSubject extends React.Component {
           <span>
             <span className={'gs-rating-inline circle-rating--xtra-small circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>
           </span>
-          { this.props.courses && <span><a href="javascript:void(0)">{this.props.courses.length} courses</a></span> }
+          { this.props.courses && <span><a href="javascript:void(0)">{this.props.courses.length} <span>{this.t('courses')}</span></a></span> }
           <span className="icon-caret-down show-classes" />
         </div>
         { this.state.open &&

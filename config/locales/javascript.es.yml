@@ -152,5 +152,6 @@ es:
     Advanced courses: Cursos avanzados
     advanced_courses_subheading_html: Cursos avanzados ayuda a preparar a los estudiantes para la universidad. Un curso riguroso también puede ayudar que su estudiante entre a la universidad.
     advanced_courses_rating_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela, en comparación con el promedio estatal.
-    subjects: Subjects
-    rating: Rating
+    subjects: Materias
+    rating_html: 'Calificación&nbsp;'
+    courses: cursos
