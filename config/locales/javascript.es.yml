@@ -92,8 +92,8 @@ es:
     See notes: Ver notas
     Economically disadvantaged: De bajos recursos
     Not economically disadvantaged: Sin desventaja económica
-    show_more: Mostrar más
-    show_less: Mostrar menos
+    show_more: Ver más preparación de colegio
+    show_less: Ver menos preparación de colegio
     english-learners: Estudiantes aprendices de Inglés
     english-learners-info-text: Este grupo incluye a todos los estudiantes clasificados como aprendices de inglés (ELL).
     students-participating-in-free-or-reduced-price-lunch-program: Estudiantes de familias de bajos ingresos
@@ -155,3 +155,4 @@ es:
     subjects: Materias
     rating_html: 'Calificación&nbsp;'
     courses: cursos
+    rating: Rating
