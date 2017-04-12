@@ -27,9 +27,9 @@ mysql_ro_server: &mysql_ro_server
 
 mysql_gsdata: &mysql_gsdata
   <<: *mysql
-  host: dev-gsdata.greatschools.org
-  username: gsdata
-  password: yAKuECCBRdEu8MaI
+  host: localhost
+  username: root
+  password:
 
 development: &development
   <<: *mysql_rw_server

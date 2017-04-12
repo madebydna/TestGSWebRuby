@@ -13,7 +13,7 @@ class Api::SchoolSerializer
     h = {
       id: school.id,
       districtId: school.district_id,
-      districtName: school.district.try(:name),
+      districtName: school['district_name'],
       levelCode: school.level_code,
       lat: school.lat,
       lon: school.lon,

@@ -29,7 +29,8 @@ let ConnectedDistrictBoundaries = connect(
       schoolBoundaryCoordinates: getSchoolBoundaryCoordinates(state),
       districtBoundaryCoordinates: getDistrictBoundaryCoordinates(state),
       loading: state.loading,
-      locationChangeFailure: state.locationChangeFailure
+      locationChangeFailure: state.locationChangeFailure,
+      apiFailure: state.apiFailure
     };
   },
   function(dispatch, ownProps) {

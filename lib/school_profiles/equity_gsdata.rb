@@ -157,8 +157,8 @@ module SchoolProfiles
       lambda do |hash|
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
-              ((hash['breakdowns'] == STUDENTS_WITH_DISABILITIES || !hash.has_key?('breakdowns')) ||
-                  (hash['breakdowns'] == STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES || !hash.has_key?('breakdowns')))
+              (hash['breakdowns'] == STUDENTS_WITH_DISABILITIES ||
+                  hash['breakdowns'] == STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES)
       end
     end
 

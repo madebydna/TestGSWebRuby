@@ -10,7 +10,7 @@ module SchoolProfiles
       school_cache_data_reader
         .flat_test_scores_for_latest_year
         .sort_by { |h| -1 * h[:number_students_tested].to_f }
-        .map { |h| h[:subject] }.uniq.take(3).map do |subject|
+        .map { |h| h[:subject] }.uniq.map do |subject|
           TestScoresComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = subject
@@ -25,7 +25,7 @@ module SchoolProfiles
     end
 
     def to_hash
-      components.select(&:has_data?).each_with_object({}) do |component, accum|
+      components.select(&:has_data?).take(3).each_with_object({}) do |component, accum|
         accum[t(component.title)] = component.to_hash
       end
     end

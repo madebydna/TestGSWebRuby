@@ -91,11 +91,13 @@ export default class EquitySection extends React.Component {
       return <div className="equity-section">
         <a className="anchor-mobile-offset" name={link_name}></a>
         <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
-        <SectionNavigation key="sectionNavigation"
+        <div className="tab-buttons">
+          <SectionNavigation key="sectionNavigation"
                            items={section_content}
                            active={this.state.active}
                            google_tracking={section_info.title}
                            onTabClick={this.handleTabClick.bind(this)}/>
+        </div>
         <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"
