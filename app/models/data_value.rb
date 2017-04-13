@@ -16,7 +16,7 @@ class DataValue < ActiveRecord::Base
           .with_breakdowns
           .with_breakdown_tags(breakdown_tag_names)
           .group('data_values.id')
-          .having("breakdown_count < 2")
+          .having("breakdown_count < 2 OR breakdowns like '%All students except 504 category%'")
   end
 
   def self.school_values
