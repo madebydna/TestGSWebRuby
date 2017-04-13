@@ -126,10 +126,10 @@ module SchoolProfiles
                                        id: @school_cache_data_reader.school.id}
                        }) if values.size > 1
         hash = values.first
-        hash['data_type'] = key
+        hash['data_type'] = key if hash
         hash
       end
-      hashes.select(&with_school_values).sort_by { |o| included_data_types.index( o['data_type']) }
+      hashes.compact.select(&with_school_values).sort_by { |o| included_data_types.index( o['data_type']) }
     end
 
     def school_value_present?(value)
