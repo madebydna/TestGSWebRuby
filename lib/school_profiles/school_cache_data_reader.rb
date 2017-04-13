@@ -144,6 +144,7 @@ module SchoolProfiles
           end
         end
 
+        subject_hash.compact!
         return [] unless subject_hash.present?
         subject_hash = subject_hash.compact.inject(:merge)
         subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
