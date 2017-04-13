@@ -8,7 +8,7 @@ const followSchoolForDataUpdates = function (event) {
 
 const NoDataModuleCta = ({moduleName}) => (
   <div className="ptm">
-    <span class ="no-data" dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+    <span className="no-data" dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
     <a href="javascript:void(0)"
        className="js-followThisSchool js-gaClick"
        onClick={followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}

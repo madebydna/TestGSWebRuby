@@ -65,6 +65,33 @@ module SchoolProfiles
       return_value
     end
 
+    def yml_key(nli_school_value, nli_state_average, li_school_value, li_state_average, state_average)
+      unless nli_school_value && nli_state_average && li_school_value && li_state_average && state_average
+        return '0_0'
+      end
+      nf = SchoolProfiles::NarrationFormula.new
+
+      column = nf.low_income_test_scores_calculate_column(
+        nli_state_average,
+        li_state_average,
+        li_school_value,
+        state_average
+      )
+
+      row = nf.low_income_test_scores_calculate_row(
+        nli_state_average,
+        li_state_average,
+        li_school_value,
+        nli_school_value
+      )
+
+      if column.present? && row.present?
+        (column << '_' << row)
+      else
+        '0_0'
+      end
+    end
+
     def hash_has_all_necessary_keys?(hash, year)
       #  top level check
       if (hash_check_for_data? hash, year, 'li') && (hash_check_for_data? hash, year, 'nli') && (hash_check_for_data_key_all? hash, year)

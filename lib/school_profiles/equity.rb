@@ -7,8 +7,16 @@ module SchoolProfiles
           school_cache_data_reader: school_cache_data_reader
       ).auto_narrative_calculate_and_add
 
-      @graduation_rate = ::SchoolProfiles::GraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
-      @test_scores = ::SchoolProfiles::TestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @graduation_rate = ::SchoolProfiles::Components::GraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @test_scores = ::SchoolProfiles::Components::TestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @advanced_coursework = ::SchoolProfiles::Components::AdvancedCourseworkComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @discipline_and_attendance = ::SchoolProfiles::Components::DisciplineAndAttendanceComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @low_income_test_scores = ::SchoolProfiles::Components::LowIncomeTestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @low_income_graduation_rate = ::SchoolProfiles::Components::LowIncomeGraduationRateComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+
+
+      @students_with_disabilities_test_scores_component_group = ::SchoolProfiles::Components::StudentsWithDisabilitiesTestScoresComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
+      @students_with_disabilities_discipline_and_attendance_group= ::SchoolProfiles::Components::StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup.new(school_cache_data_reader: school_cache_data_reader)
 
       test_scores
     end
@@ -28,9 +36,24 @@ module SchoolProfiles
     def equity_courses_hash
       @_equity_courses_hash ||= {
         I18n.t('Test scores', scope:'lib.equity_gsdata') => @test_scores.to_hash,
-        I18n.t('Graduation rates', scope:'lib.equity_gsdata') => @graduation_rate.to_hash
+        I18n.t('Graduation rates', scope:'lib.equity_gsdata') => @graduation_rate.to_hash,
+        I18n.t('Advanced coursework', scope:'lib.equity_gsdata') => @advanced_coursework.to_hash,
+        I18n.t('Discipline & attendance', scope:'lib.equity_gsdata') => @discipline_and_attendance.to_hash
       }
-        .merge(equity_data.equity_gsdata_courses_hash)
+    end
+
+    def low_income_section_props
+      @_low_income_section_props ||= {
+        I18n.t('Test scores', scope:'lib.equity_gsdata') => @low_income_test_scores.to_hash,
+        I18n.t('Graduation rates', scope:'lib.equity_gsdata') => @low_income_graduation_rate.to_hash,
+      }
+    end
+
+    def students_with_disabilities_section_props
+      @_students_with_disabilities_section_props ||= {
+        I18n.t('Test scores', scope:'lib.equity_gsdata') => @students_with_disabilities_test_scores_component_group.to_hash,
+        I18n.t('Discipline & attendance', scope:'lib.equity_gsdata') => @students_with_disabilities_discipline_and_attendance_group.to_hash,
+      }
     end
 
     def equity_data_sources

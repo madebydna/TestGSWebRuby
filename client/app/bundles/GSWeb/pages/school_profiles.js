@@ -1,6 +1,8 @@
 import configureStore from '../store/appStore';
 
 import Equity from '../react_components/equity/equity';
+import LowIncome from '../react_components/equity/low_income';
+import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
 import NearestHighPerformingSchools from '../react_components/nearest_high_performing_schools';
@@ -20,6 +22,8 @@ window.store = configureStore({
 
 ReactOnRails.register({
   Equity,
+  LowIncome,
+  StudentsWithDisabilities,
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,

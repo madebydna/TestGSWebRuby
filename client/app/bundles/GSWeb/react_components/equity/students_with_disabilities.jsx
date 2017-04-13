@@ -10,12 +10,11 @@ import InfoCircle from '../info_circle';
 import NoDataModuleCta from '../no_data_module_cta';
 import Module from './module';
 
-export default class Equity extends Module {
+export default class StudentsWithDisabilities extends Module {
   static defaultProps = {
-    title: 'Race ethnicity',
-    subtitle: <span dangerouslySetInnerHTML={{__html: GS.I18n.t('Race ethnicity subtitle')}} />,
-    info_text: GS.I18n.t('Race ethnicity tooltip'),
-    icon_classes: GS.I18n.t('Race ethnicity icon')
+    title: 'Students with Disabilities',
+    info_text: GS.I18n.t('Student with disabilities tooltip'),
+    icon_classes: GS.I18n.t('Student with disabilities icon')
   }
 };
 
