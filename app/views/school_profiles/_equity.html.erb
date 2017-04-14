@@ -19,14 +19,16 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <%= react_component('Equity', props: {test_scores:  equity.test_scores,
-                          enrollment: equity.enrollment,
-                          characteristics: equity.characteristics,
-                          rating_low_income: equity.rating_low_income,
+      <%= react_component('Equity', props: {
                           sources: equity.sources,
-                          courses: equity.equity_courses_hash,
-                          discipline: equity.equity_discipline_hash,
-                          disabilities: equity.equity_disabilities_hash})  %>
+                          data: equity.equity_courses_hash })  %>
+      <%= react_component('LowIncome', props: {
+                          sources: equity.sources,
+                          rating: equity.rating_low_income,
+                          data: equity.low_income_section_props })  %>
+      <%= react_component('StudentsWithDisabilities', props: {
+                          sources: equity.sources,
+                          data: equity.students_with_disabilities_section_props })  %>
     </div>
   </div>
 </div>

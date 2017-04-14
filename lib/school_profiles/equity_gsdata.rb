@@ -157,14 +157,14 @@ module SchoolProfiles
       lambda do |hash|
         hash.has_key?('school_value') &&
             hash['source_year'].to_i == max_year &&
-              ((hash['breakdowns'] == STUDENTS_WITH_DISABILITIES || !hash.has_key?('breakdowns')) ||
-                  (hash['breakdowns'] == STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES || !hash.has_key?('breakdowns')))
+              (hash['breakdowns'] == STUDENTS_WITH_DISABILITIES ||
+                  hash['breakdowns'] == STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES)
       end
     end
 
     # hack for gsdata Percentage of students suspended out of school
     def suspension_breakdown_matching(breakdowns)
-      breakdowns.gsub('All students except 504 category,','')
+      breakdowns.gsub('All students except 504 category,','').gsub(/,All students except 504 category$/,'')
     end
 
     def hash_for_display(precision = 0)
@@ -172,6 +172,7 @@ module SchoolProfiles
         breakdown = hash['breakdowns'] || BREAKDOWN_ALL
         # hack for gsdata Percentage of students suspended out of school
         breakdown.gsub!('All students except 504 category,','')
+        breakdown.gsub!(/,All students except 504 category$/,'')
         breakdown_name_str = I18n.t(breakdown, scope: 'lib.equity_gsdata', default: I18n.db_t(breakdown, default: breakdown))
         {
             breakdown: breakdown_name_str,

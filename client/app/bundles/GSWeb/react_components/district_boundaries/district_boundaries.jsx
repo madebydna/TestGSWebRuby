@@ -48,7 +48,11 @@ export default class DistrictBoundaries extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     if(!prevProps.locationChangeFailure && this.props.locationChangeFailure) {
       alert('No results found. Please try a different search.');
-      this.props.resetLocationChangeFailure();
+      this.props.resetErrors();
+    }
+    if(!prevProps.apiFailure && this.props.apiFailure) {
+      alert('An error occurred. Please try again in a moment.');
+      this.props.resetErrors();
     }
   }
 

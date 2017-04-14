@@ -57,5 +57,17 @@ module SchoolProfiles
         end
       end
     end
+
+    def get_narration_calculation(data_type_name, school_value, state_average)
+      st_moe = 1
+      nf = SchoolProfiles::NarrationFormula.new
+      if data_type_name == 'Percent of students who meet UC/CSU entrance requirements' && school_value.present? && state_average.present?
+        very_low = 20
+        nf.low_income_grad_rate_and_entrance_requirements school_value, state_average, st_moe, very_low
+      elsif data_type_name == '4-year high school graduation rate' && school_value.present? && state_average.present?
+        very_low = 10
+        nf.low_income_grad_rate_and_entrance_requirements school_value, state_average, st_moe, very_low
+      end
+    end
   end
 end

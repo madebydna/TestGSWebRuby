@@ -62,12 +62,13 @@ class SchoolProfilesController < ApplicationController
         sp.toc = toc
         sp.breadcrumbs = breadcrumbs
         sp.teachers_staff = teachers_staff
-        sp.show_college_readiness = show_college_readiness?
+        sp.show_high_school_data = show_high_school_data?
+        sp.courses = courses
       end
     )
   end
 
-  def show_college_readiness?
+  def show_high_school_data?
     school.level_code =~ /h/
   end
 
@@ -99,7 +100,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teachers_staff, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teachers_staff, courses, school)
   end
 
   def test_scores
@@ -123,6 +124,12 @@ class SchoolProfilesController < ApplicationController
 
   def equity
     SchoolProfiles::Equity.new(
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def courses
+    SchoolProfiles::Courses.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end

@@ -9,15 +9,19 @@ en:
         not getting the support they need to succeed.
       Graduation rates: Graduation rates
       Test scores: Test scores
+      'UC/CSU eligibility': 'UC/CSU eligibility'
       courses_title: Advanced coursework
+      Advanced coursework: Advanced coursework
       discipline_title: Discipline & attendance
       Students with IDEA catagory disabilities: Students with disabilities
       disabilities_title: Students with disabilities
       Percentage AP enrolled grades 9-12: '% taking AP classes'
       Number of Advanced Courses Taken per Student: Adv courses per student
+      English Language Arts: English
       African American: Black
       Black: Black
       White: White
+      Asian or Pacific Islander: Asian
       All: All students
       Multiracial: Two or more races
       Two or more races: Two or more races
@@ -50,7 +54,7 @@ en:
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
         SD:
           'Percentage of students chronically absent (15+ days)': >
-            <p class="narrative-content">This shows the absenteeism rates for students with disabilities at this school compared to the state average. High absenteeism rates mean less time for  teaching and learning. </p>
+            <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
             <p class="parent-tip">Parent tip:</p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
@@ -59,3 +63,8 @@ en:
             <hr />
             <p class="parent-tip">Parent tip:</p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          'Test scores': >
+            <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+            <hr />
+            <p class="parent-tip">Parent tip:</p>
+            <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>

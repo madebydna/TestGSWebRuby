@@ -83,7 +83,7 @@ export default class BarGraphBase extends React.Component {
               </div>
               <div className="col-xs-6">
                 <div className="score">
-                  {test_data['score']}%
+                  {test_data['label']}%
                 </div>
                 <div className="item-bar">
                   <div className="row">

@@ -14,10 +14,10 @@ es:
         featured:
           title: Featured
           building_character: Building character
-          road_to_college: Road to college
           parenting_cue_cards: Parenting Cue Cards
-          emotional_smarts: Emotional smarts
           worksheets: Worksheets
+          first_to_college: Primero a la universidad
+          state_test_guide: Prueba de Guía Estado
         parenting:
           title: Parenting
           raising_kids: Raising kids

@@ -130,6 +130,7 @@ module SchoolProfiles
             level_code_obj.compact.each_with_object({}) do |input_hash, output_hash|
               input_hash[1].each do |subject, year_hash|
                 latest_year = year_hash.keys.max_by { |year| year.to_i }
+                next if year_hash[latest_year]['score'].nil?
                 output_hash[subject] ||= {}
                 val = test_scores[data_type_id.to_s][breakdown]
                 year_hash[latest_year.to_s]['test_description'] = val['test_description']
@@ -143,6 +144,7 @@ module SchoolProfiles
           end
         end
 
+        subject_hash.compact!
         return [] unless subject_hash.present?
         subject_hash = subject_hash.compact.inject(:merge)
         subject_hash.select! { |subject, _| subjects.include?(subject) } if subjects.present?
