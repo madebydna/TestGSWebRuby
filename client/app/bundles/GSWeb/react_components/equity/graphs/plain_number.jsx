@@ -4,11 +4,11 @@ export default class PlainNumber extends React.Component {
   static propTypes = {
     values: React.PropTypes.arrayOf(React.PropTypes.shape({
       breakdown: React.PropTypes.string.isRequired,
-      score: React.PropTypes.string.isRequired,
+      score: React.PropTypes.number.isRequired,
       percentage: React.PropTypes.string,
       display_percentages: React.PropTypes.bool,
       number_students_tested: React.PropTypes.string,
-      state_average: React.PropTypes.string
+      state_average: React.PropTypes.number
     })).isRequired
   };
 

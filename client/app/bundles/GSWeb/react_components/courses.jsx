@@ -8,7 +8,7 @@ export default class Courses extends React.Component {
   static propTypes = {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
-    rating: PropTypes.number
+    rating: PropTypes.string
   };
 
   static defaultProps = {
@@ -48,15 +48,15 @@ export default class Courses extends React.Component {
 
   render() {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
-    let courseSubjects = subjects.slice(0,3).map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
-    let courseSubjectsForDrawer = subjects.slice(4).map((subject) => <CourseSubject name={subject} {...this.props.course_enrollments_and_ratings[subject]} />);
+    let courseSubjects = subjects.slice(0,3).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
+    let courseSubjectsForDrawer = subjects.slice(4).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
 
     if (subjects.length > 0)
       return (<div id="advanced-courses" className="rating-container">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
         <div className="rating-container__rating">
           <div className="module-header">
-              <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span class="denominator">/10</span></span>
+              <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span className="denominator">/10</span></span>
             <div className="title-container">
               <div className="title">{this.t('Advanced courses')}</div>
                 <span dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}>
