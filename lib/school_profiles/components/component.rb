@@ -70,6 +70,11 @@ module SchoolProfiles
       def text_value(value)
         return value if value.nil?
         return '<1' if float_value(value) < 1
+        # If a precision is set, and the value is a number, then just
+        # use stringified float value
+        if value.to_s == value.to_f.to_s && precision
+          return float_value(value).to_s
+        end
         return value.to_s
       end
 

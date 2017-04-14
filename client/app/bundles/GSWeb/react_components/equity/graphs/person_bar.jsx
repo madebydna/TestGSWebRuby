@@ -5,10 +5,12 @@ export default class PersonBar extends React.Component {
     values: React.PropTypes.arrayOf(React.PropTypes.shape({
       breakdown: React.PropTypes.string.isRequired,
       score: React.PropTypes.number.isRequired,
+      label: React.PropTypes.string.isRequired,
       percentage: React.PropTypes.string,
       display_percentages: React.PropTypes.bool,
       number_students_tested: React.PropTypes.string,
-      state_average: React.PropTypes.number
+      state_average: React.PropTypes.number,
+      state_average_label: React.PropTypes.string
     })).isRequired,
     invertedRatings:  React.PropTypes.bool
   };
@@ -80,7 +82,7 @@ export default class PersonBar extends React.Component {
                 </div>
                 <div className="col-xs-6">
                   <div className="score">
-                    {value['score']}%
+                    {value['label']}%
                   </div>
                   <div className="person-bar-viz">
                     <div className="person-progress">
