@@ -22,6 +22,11 @@ module SchoolProfiles
       'Black'
     ]
 
+    ASIAN = [
+      'Asian or Pacific Islander',
+      'Asian'
+    ]
+
     def ethnicities_to_percentages
       @_ethnicity_breakdowns = begin
         ethnicity_breakdown = {}
@@ -37,6 +42,9 @@ module SchoolProfiles
           elsif (AFRICAN_AMERICAN.include? ed['breakdown']) ||
               (AFRICAN_AMERICAN.include? ed['original_breakdown'])
             AFRICAN_AMERICAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed['school_value']}
+          elsif (ASIAN.include? ed['breakdown']) ||
+              (ASIAN.include? ed['original_breakdown'])
+            ASIAN.each { |ethnicity| ethnicity_breakdown[ethnicity] = ed['school_value']}
           else
             ethnicity_breakdown[ed['breakdown']] = ed['school_value']
             ethnicity_breakdown[ed['original_breakdown']] = ed['school_value']
