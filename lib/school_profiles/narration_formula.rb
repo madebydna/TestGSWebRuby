@@ -33,9 +33,23 @@ module SchoolProfiles
       end
     end
 
+    def numberfy(value)
+      if value.is_a? String
+        value.scan(/\d+/).first.to_f
+      else
+        value
+      end
+    end
+
     def low_income_test_scores_calculate_row(st_nli_avg, st_li_avg, sch_li_avg, sch_nli_avg)
       # margin of error
       st_diff_moe = 1
+
+      # handle '>95' etc
+      st_nli_avg = numberfy(st_nli_avg)
+      st_li_avg = numberfy(st_li_avg)
+      sch_li_avg = numberfy(sch_li_avg)
+      sch_nli_avg = numberfy(sch_nli_avg)
 
       #   Row logic
       if ((sch_li_avg - sch_nli_avg) - ((st_li_avg - st_nli_avg) - st_diff_moe) < 0)
