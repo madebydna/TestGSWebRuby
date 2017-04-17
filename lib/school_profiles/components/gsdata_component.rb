@@ -9,10 +9,6 @@ module SchoolProfiles
           .map { |h| normalize(h) }
       end
 
-      def valid_breakdowns
-        @valid_breakdowns || ethnicities_to_percentages.keys
-      end
-
       def normalize(hash)
         breakdown = (hash['breakdowns'] - ['All students except 504 category']).first
         {

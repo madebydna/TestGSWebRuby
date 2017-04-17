@@ -15,17 +15,19 @@ module SchoolProfiles
       # Whether or not this component has enough data to be displayed
       def has_data?
         normalized_values.any? do |h|
-          valid_breakdowns.include?(h[:breakdown]) && h[:score].present? && !float_value(h[:score]).zero?
+          (valid_breakdowns - ['All students']).include?(h[:breakdown]) && h[:score].present? && !float_value(h[:score]).zero?
         end
+      end
+
+      def valid_breakdowns
+        @valid_breakdowns || ethnicities_to_percentages.keys + ['All students']
       end
 
       # TODO: split into multiple methods?
       #
       # Returns true if the given score hash should be included in result
       def filter_predicate(h)
-        h[:score].present? &&
-        (h[:breakdown] == 'All students' || 
-         valid_breakdowns.include?(h[:breakdown]))
+        h[:score].present? && valid_breakdowns.include?(h[:breakdown])
       end
 
       # By default, sort by percentage of study body, but keep "All" or "All

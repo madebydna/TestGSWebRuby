@@ -14,10 +14,6 @@ module SchoolProfiles
         )
       end
 
-      def valid_breakdowns
-        @valid_breakdowns || ethnicities_to_percentages.keys
-      end
-
       def normalize_test_scores_hash(hash)
         breakdown = hash[:breakdown]
         normalized_breakdown = breakdown == 'All' ? 'All students' : breakdown

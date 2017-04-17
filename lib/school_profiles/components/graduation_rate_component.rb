@@ -13,10 +13,6 @@ module SchoolProfiles
         .map { |h| normalize_characteristics_hash(h) }
       end
 
-      def valid_breakdowns
-        @valid_breakdowns || ethnicities_to_percentages.keys
-      end
-
       # TODO: move somewhere more sensible, where it can be reused
       def normalize_characteristics_hash(hash)
         breakdown = hash['original_breakdown'] || hash['breakdown']

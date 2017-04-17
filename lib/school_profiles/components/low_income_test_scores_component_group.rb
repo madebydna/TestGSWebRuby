@@ -17,7 +17,7 @@ module SchoolProfiles
               component.data_type = subject
               component.title = I18n.t(subject, scope: 'lib.equity_test_scores', default: I18n.db_t(subject, default: subject))
               component.type = 'bar'
-              component.valid_breakdowns = ['Economically disadvantaged', 'Not economically disadvantaged']
+              component.valid_breakdowns = ['All students', 'Economically disadvantaged', 'Not economically disadvantaged']
             end
           end
       end
