@@ -11,7 +11,7 @@ describe 'I18n' do
   before do
   end
 
-  GsI18n::I18nManager.new.files.each do |i18n_file|
+  GsI18n::Manager.new.files.each do |i18n_file|
     describe "#{i18n_file.filename}" do
 
     end
