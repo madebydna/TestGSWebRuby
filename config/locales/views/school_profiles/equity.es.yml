@@ -2,3 +2,26 @@ es:
   school_profiles:
     equity:
       title: Equidad
+      Race ethnicity: 'Raza/etnicidad'
+      Race ethnicity subtitle: >
+        Las diferencias en el rendimiento académico entre los distintos grupos de estudiantes son comunes, pero no
+        insuperables. Descubre cómo iniciar una conversación en la escuela de tu hijo.
+      Race ethnicity tooltip: >
+        Esta sección refleja las clasificaciones de los exámenes y otras medidas importantes para los estudiantes de
+        esta escuela a través de diferentes razas y etnias.
+      Race ethnicity icon: 'icon-pie'
+      'Low-income students': 'Estudiantes de bajos ingresos'
+      Low income subtitle: >
+        ¿Su escuela está ayudando a todos los estudiantes obtener resultados académicos exitosos?
+        <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">
+        Esto es lo que debe buscar.</a>
+      Low income tooltip: >
+        La calificación de estudiantes de bajos ingresos refleja los puntajes de los exámenes estatales para los
+        estudiantes de esta escuela que son elegibles para recibir el almuerzo gratis o a un precio reducido, comparado
+        con todos los estudiantes en el estado.
+      Low income icon: 'icon-pie'
+      Students with Disabilities: Estudiantes con discapacidades
+      Students with Disabilities subtitle: <br />
+      Student with disabilities tooltip: >
+        Este grupo incluye a todos los estudiantes con discapacidades físicas o de aprendizaje que reciben servicios de educación especial y servicios relacionados a sus discapacidades.
+      Student with disabilities icon: 'icon-disability-2'

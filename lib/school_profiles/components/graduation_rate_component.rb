@@ -10,11 +10,11 @@ module SchoolProfiles
         .characteristics_data(data_type)
         .values
         .flatten
-        .map { |h| normalize_characteristics_hash(h) }
+        .map { |h| cache_hash_to_standard_hash(h) }
       end
 
       # TODO: move somewhere more sensible, where it can be reused
-      def normalize_characteristics_hash(hash)
+      def cache_hash_to_standard_hash(hash)
         breakdown = hash['original_breakdown'] || hash['breakdown']
         breakdown = 'All students' if breakdown == 'All'
         {

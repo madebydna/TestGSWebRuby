@@ -17,10 +17,10 @@ export default class EquityContentPane extends React.Component {
   render() {
     return(
       <div className="row">
-        <div className="col-xs-12 col-sm-6">{this.props.graph}</div>
-        <div className="col-xs-12 col-sm-6">
-          <div className="right_content">{this.get_narrative()}</div>
-        </div>
+        <div className="top-content">{this.get_narrative()}</div>
+        <hr />
+        <div>{this.props.graph}</div>
+
       </div>
     )
   }

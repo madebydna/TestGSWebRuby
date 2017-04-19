@@ -1,16 +1,17 @@
 import React, { PropTypes } from 'react';
-import testScoresHelpers from '../../util/test_scores_helpers';
-import EquityBarGraph from './graphs/equity_bar_graph';
 import BarGraphBase from './graphs/bar_graph_base';
+import TestScores from './graphs/test_scores';
 import PersonBar from './graphs/person_bar';
 import PlainNumber from './graphs/plain_number';
-import BarGraphWithEnrollmentInLabel from './graphs/bar_graph_with_enrollment_in_label';
 import EquitySection from './equity_section';
-import InfoCircle from '../info_circle';
 import NoDataModuleCta from '../no_data_module_cta';
 
-export default class Module extends React.Component {
+export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
+    title: React.PropTypes.string,
+    subtitle:  React.PropTypes.string,
+    info_text: React.PropTypes.string,
+    icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
     data: React.PropTypes.object,
     rating: React.PropTypes.number
@@ -36,6 +37,15 @@ export default class Module extends React.Component {
   subjectConfig(name, data) {
     if (data && data['values']) {
       let values = data['values'];
+      // This is for titles in the test scores
+      if(!(values instanceof Array)){
+        return {
+          subject: name,
+          component: <TestScores test_scores={values}/>,
+          explanation: <div dangerouslySetInnerHTML={{__html: data['narration']}} />
+        };
+      }
+
       if (values.length > 0) {
         let displayType = data['type'] || 'bar';
         let component = null;
@@ -59,11 +69,11 @@ export default class Module extends React.Component {
   }
 
   equityConfiguration(){
-    let section1Content = [];
+    let sectionContent = [];
     let config = [];
 
     if (this.props.data) {
-      section1Content = Object.keys(this.props.data).map(
+      sectionContent = Object.keys(this.props.data).map(
         category => this.sectionConfig(category, this.props.data[category])
       ).filter(o => o != null);
     }
@@ -71,15 +81,15 @@ export default class Module extends React.Component {
     let sectionConfig = {
       section_info:{
         title: this.props.title,
-        subtitle: this.props.subtitle,
+        subtitle: <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />,
         rating: this.props.rating,
         info_text: this.props.info_text,
         icon_classes: this.props.icon_classes
       }
     };
 
-    if(section1Content.length > 0) {
-      sectionConfig['section_content'] = section1Content;
+    if(sectionContent.length > 0) {
+      sectionConfig['section_content'] = sectionContent;
     } else {
       sectionConfig['section_info']['message'] = <NoDataModuleCta moduleName={this.props.title} />
     }

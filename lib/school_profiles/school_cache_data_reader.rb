@@ -93,6 +93,9 @@ module SchoolProfiles
             max_year = year_hash.keys.max_by { |year| year.to_i }
             output_array << year_hash[max_year].merge(
               {
+                test_label: breakdown_hash['test_label'],
+                test_description: breakdown_hash['test_description'],
+                test_source: breakdown_hash['test_source'],
                 breakdown: breakdown_name,
                 year: max_year,
                 subject: subject

@@ -37,23 +37,33 @@ module SchoolProfiles
     end
 
     def subject_scores
-      scores = @school_cache_data_reader.subject_scores_by_latest_year
-      scores = sort_by_number_tested_descending scores
-      scores.map do |hash|
+      scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h| h[:breakdown] == 'All' }
+      subjects = scores.map { |h| h[:subject] }
+      if subjects.uniq.size < subjects.size
+        scores = sort_by_test_label_and_number_tested_descending(scores)
+      else
+        scores = sort_by_number_tested_descending(scores)
+      end
+      scores = scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-          rating_score_item.label = data_label(hash.subject)
-          rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
-          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
-          rating_score_item.description = hash.test_description
-          rating_score_item.test_label = hash.test_label
-          rating_score_item.source = hash.test_source
-          rating_score_item.year = hash.year
+          rating_score_item.label = data_label(hash[:subject])
+          rating_score_item.score = SchoolProfiles::DataPoint.new(hash[:score]).apply_formatting(:round, :percent)
+          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash[:state_average]).apply_formatting(:round, :percent)
+          rating_score_item.description = hash[:test_description]
+          rating_score_item.test_label = hash[:test_label]
+          rating_score_item.source = hash[:test_source]
+          rating_score_item.year = hash[:year]
         end
       end if scores.present?
+      scores
+    end
+
+    def sort_by_test_label_and_number_tested_descending(scores)
+      scores.sort_by { |h| [h[:test_label], (h[:number_students_tested] || 0) * -1] }
     end
 
     def sort_by_number_tested_descending(scores)
-      scores.sort_by { |k| k.number_students_tested || 0 }.reverse if scores.present?
+      scores.sort_by { |k| k[:number_students_tested] || 0 }.reverse if scores.present?
     end
 
     def sources

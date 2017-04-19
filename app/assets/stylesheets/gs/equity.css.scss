@@ -119,7 +119,13 @@
     }
   }
 
-  .right_content {
+  .test-title {
+    padding: 10px 0px;
+    font-family: opensans-semibold;
+    font-size: 14px;
+  }
+
+  .top-content {
     $narrative_gray_text: #71787e;
     $narrative_negative: #ff9900;
     $narrative_positive: #6aa84f;
@@ -129,7 +135,6 @@
     $narrative_link_color: #2ba3dc;
     $narrative_hr_margin: 14px;
 
-    padding: 10px 20px;
     .title {
       font-family: $narrative_bold;
       font-size: $narrative_title_font_size;

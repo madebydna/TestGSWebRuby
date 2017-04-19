@@ -6,10 +6,10 @@ module SchoolProfiles
           .gsdata_data(data_type).fetch(data_type, [])
           .map { |h| h.merge('breakdowns' => (h['breakdowns'] || 'All students').split(',')) }
           .select { |h| h['breakdowns'].size < 2 }
-          .map { |h| normalize(h) }
+          .map { |h| normalize_test_scores_hash(h) }
       end
 
-      def normalize(hash)
+      def normalize_test_scores_hash(hash)
         breakdown = (hash['breakdowns'] - ['All students except 504 category']).first
         {
           breakdown: breakdown,

@@ -5,6 +5,11 @@ $border-color: #dbe6eb;
 %rating-container {
   // padding: 0 0 20px 0;
   margin-bottom: $spacing-extra-large;
+  .item-heading {
+    padding: 10px;
+    font-family: opensans-semibold;
+    font-size: 16px;
+  }
 }
 
 .rating-container__title {
@@ -28,7 +33,7 @@ $border-color: #dbe6eb;
 .rating-container__score-item {
   padding: 10px 10px 5px 10px;
 }
-.rating-container__score-item ~ .rating-container__score-item {
+.rating-container__score-item + .rating-container__score-item {
   border-top: 1px solid $border-color;
 }
 

@@ -1,6 +1,6 @@
 module SchoolProfiles
   module Components
-    class StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup
+    class StudentsWithDisabilitiesDisciplineAndAttendanceComponentGroup < ComponentGroup
       attr_reader :school_cache_data_reader, :components
 
       def initialize(school_cache_data_reader:)
@@ -31,12 +31,6 @@ module SchoolProfiles
           default: I18n.t(string, default: string)
         )
         I18n.t(string, options)
-      end
-
-      def to_hash
-        components.select(&:has_data?).each_with_object({}) do |component, accum|
-          accum[t(component.title)] = component.to_hash
-        end
       end
     end
   end
