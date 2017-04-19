@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe "Schools API" do
-  before { pending('Reinstate after mysql 5.6 upgrade on jenkins'); fail }
   after do
     clean_dbs :gs_schooldb, :ca, :us_geo
   end
