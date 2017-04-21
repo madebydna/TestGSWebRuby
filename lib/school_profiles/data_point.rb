@@ -5,6 +5,14 @@ module SchoolProfiles
         value.respond_to?(:round) ? value.round : value
       end
 
+      def self.round_unless_less_than_1(value)
+        if value < 1
+          '<1'
+        else
+          value.respond_to?(:round) ? value.round : value
+        end
+      end
+
       def self.percent(value)
         "#{value}%"
       end

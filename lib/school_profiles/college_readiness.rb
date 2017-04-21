@@ -27,7 +27,7 @@ module SchoolProfiles
         :cache => :characteristics,
         :data_key => 'SAT percent participation',
         :visualization => :person_bar_viz,
-        :formatting => [:round, :percent]
+        :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
@@ -40,7 +40,7 @@ module SchoolProfiles
         :cache => :characteristics,
         :data_key => 'ACT participation',
         :visualization => :person_bar_viz,
-        :formatting => [:round, :percent]
+        :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
