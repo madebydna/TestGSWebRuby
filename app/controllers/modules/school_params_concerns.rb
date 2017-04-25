@@ -18,7 +18,11 @@ module SchoolParamsConcerns
 
     @school.extend SchoolProfileDataDecorator
 
-    render 'error/school_not_found', layout: 'error', status: 404 if @school.nil?
+    if @school.blank?
+      render 'error/school_not_found', layout: 'error', status: 404
+    elsif !@school.active?
+      redirect_to city_path(city_params(@school.state_name, @school.city)), status: :found
+    end
   end
 
 
