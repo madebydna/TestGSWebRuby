@@ -27,7 +27,8 @@ describe 'Visitor' do
   scenario 'views new school profile invalid school' do
     school = build(:school_with_new_profile)
     visit school_path(school)
-    expect(page).to have_content('school could not be found')
+    uri = URI.parse(current_url)
+    expect(uri.path).to eq state_path('california')
   end
 
   scenario 'sees the school\'s GreatSchools rating' do
