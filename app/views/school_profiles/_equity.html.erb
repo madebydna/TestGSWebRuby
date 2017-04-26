@@ -21,6 +21,7 @@
     <div class="col-xs-12 col-lg-9">
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Race ethnicity'),
+                          anchor: 'Race/ethnicity',
                           subtitle: t('.Race ethnicity subtitle'),
                           info_text: t('.Race ethnicity tooltip'),
                           icon_classes: t('.Race ethnicity icon'),
@@ -28,6 +29,7 @@
                           data: equity.equity_courses_hash })  %>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Low-income students'),
+                          anchor: 'Low-income students',
                           subtitle:  t('.Low income subtitle'),
                           info_text: t('.Low income tooltip'),
                           icon_classes: t('.Low income icon'),
@@ -36,6 +38,7 @@
                           data: equity.low_income_section_props })  %>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Students with Disabilities'),
+                          anchor: 'Students with Disabilities',
                           subtitle:  t('.Students with Disabilities subtitle'),
                           info_text: t('.Student with disabilities tooltip'),
                           icon_classes: t('.Student with disabilities icon'),

@@ -9,6 +9,7 @@ import NoDataModuleCta from '../no_data_module_cta';
 export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
     title: React.PropTypes.string,
+    anchor: React.PropTypes.string,
     subtitle:  React.PropTypes.string,
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
@@ -81,6 +82,7 @@ export default class SchoolProfileComponent extends React.Component {
     let sectionConfig = {
       section_info:{
         title: this.props.title,
+        anchor:this.props.anchor,
         subtitle: <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />,
         rating: this.props.rating,
         info_text: this.props.info_text,

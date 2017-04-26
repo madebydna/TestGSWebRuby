@@ -86,7 +86,7 @@ export default class EquitySection extends React.Component {
     let section_info = this.props.equity_config["section_info"];
     let section_content = this.props.equity_config["section_content"];
     let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
-    let link_name = this.linkName(section_info.title);
+    let link_name = this.linkName(section_info.anchor);
     if (section_content) {
       return <div className="equity-section">
         <a className="anchor-mobile-offset" name={link_name}></a>
