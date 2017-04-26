@@ -82,7 +82,7 @@ class SchoolProfilesController < ApplicationController
   def require_school
     if school.blank?
       redirect_to city_path(city_params(state_param, city_param)), status: :found
-    elsif !school.active? && !@school.demo_school?
+    elsif !school.active? && !school.demo_school?
       redirect_to city_path(city_params(school.state_name, school.city)), status: :found
     end
   end
