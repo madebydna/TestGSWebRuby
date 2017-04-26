@@ -24,8 +24,9 @@ module SchoolProfiles
           values_by_test_label.keep_if do |test_label, values|
             array_contains_any_valid_data?(values)
           end
-          values_by_test_label.values.flatten.each do |h|
-            h.replace(standard_hash_to_value_hash(h))
+
+          values_by_test_label = values_by_test_label.each_with_object({}) do |(test_label, values), hash|
+            hash[test_label] = values.map { |h| standard_hash_to_value_hash(h) }
           end
           values_by_test_label
         )
