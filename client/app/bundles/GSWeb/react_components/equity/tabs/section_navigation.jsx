@@ -22,7 +22,7 @@ export default class SectionNavigation extends React.Component {
   addDivider(index){
     var last_item = this.props.items.length - 1;
     if(index != last_item){
-      return <span className="divider">|</span>
+      return <span className="divider" />
     }
   }
 

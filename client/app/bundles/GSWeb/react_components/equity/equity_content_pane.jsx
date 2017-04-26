@@ -15,10 +15,11 @@ export default class EquityContentPane extends React.Component {
   }
 
   render() {
+    let hr_style = ''
     return(
       <div className="row">
-        <div className="top-content">{this.get_narrative()}</div>
-        <hr />
+        <div className="top-content">{this.get_narrative()}<hr  /></div>
+
         <div>{this.props.graph}</div>
 
       </div>

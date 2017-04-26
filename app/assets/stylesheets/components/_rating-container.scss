@@ -31,18 +31,15 @@ $border-color: #dbe6eb;
 }
 
 .rating-container__score-item {
-  padding: 10px 10px 5px 10px;
+  margin: 10px 10px 0px;
+  padding-bottom: 5px;
 }
-.rating-container__score-item + .rating-container__score-item {
-  border-top: 1px solid $border-color;
+.rating-container__score-item {
+  border-bottom: 1px solid $border-color;
 }
 
 @media (min-width: 970px) {
   .rating-container__title {
     padding-top: 0;
   }
-}
-
-.rating-container__more-items .show-more--open {
-  border-top: 1px solid $border-color;
 }
