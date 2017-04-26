@@ -20,10 +20,10 @@ shared_examples_for 'a configurable profile page' do |action|
       expect(assigns[:school]).to eq(school)
     end
 
-    it 'should 404 with non-existent school' do
+    it 'should 302-redirect with non-existent school' do
       allow(controller).to receive(:find_school).and_return(nil)
       get action, controller.view_context.school_params(school)
-      expect(response.code).to eq('404')
+      expect(response.code).to eq('302')
     end
 
     it 'should convert a full state name to a state abbreviation' do
