@@ -4,7 +4,7 @@ module SchoolProfiles
     # characteristics - for enrollment
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
-    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata)
+    SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses)
 
     attr_reader :school, :school_cache_keys
 
@@ -117,6 +117,10 @@ module SchoolProfiles
 
     def gsdata_data(*keys)
       decorated_school.gsdata.slice(*keys)
+    end
+
+    def esp_responses_data(*keys)
+      decorated_school.programs.slice(*keys)
     end
 
     def sources_with_subjects(breakdown: 'All', grades: 'All')

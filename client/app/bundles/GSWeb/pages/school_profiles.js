@@ -13,6 +13,7 @@ import { generateSubgroupPieCharts } from '../components/subgroup_charts';
 import * as stickyCTA from '../components/school_profile_sticky_cta';
 import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
+import PrivateSchoolInfo from '../react_components/private_school_info';
 
 window.store = configureStore({
   school: gon.school
@@ -23,7 +24,8 @@ ReactOnRails.register({
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,
-  Courses 
+  Courses,
+  PrivateSchoolInfo
 });
 
 $(function() {

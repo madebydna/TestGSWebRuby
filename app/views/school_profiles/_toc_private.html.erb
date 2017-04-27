@@ -1,0 +1,27 @@
+<% content = @private_school_profile.toc.content_for_private %>
+<% tooltips_info = {} %>
+<% tooltips_info['ACADEMICS'] = '.info_texts.academics_html'  %>
+<% tooltips_info['EQUITY'] = '.info_texts.equity_html'  %>
+<% tooltips_info['ENVIRONMENT'] = '.info_texts.environment_html'  %>
+
+<div id="toc_private">
+  <div class="toc-private-header">
+    This is a private school. The info seen on this page is provided by the school (user generated content).
+  </div>
+  <div class="toc-private-container-box">
+    <div class="row">
+      <% content.each do |column,data| %>
+        <div class="col-xs-12 col-sm-4">
+          <div class="toc-private-section">
+            <div class="toc-private-section-title">
+              <a><%= column.upcase %></a>
+            </div>
+            <div>
+              <%= data %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
