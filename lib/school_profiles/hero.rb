@@ -49,6 +49,10 @@ module SchoolProfiles
       school.district.name
     end
 
+    def should_show_osp_badge?
+      school.private_school? && has_osp_badge?
+    end
+
     def has_osp_badge?
       EspMembership.where(
           active: 1,
