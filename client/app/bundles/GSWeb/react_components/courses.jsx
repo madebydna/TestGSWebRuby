@@ -49,7 +49,7 @@ export default class Courses extends React.Component {
   render() {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
     let courseSubjects = subjects.slice(0,3).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
-    let courseSubjectsForDrawer = subjects.slice(4).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
+    let courseSubjectsForDrawer = subjects.slice(3).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
 
     if (subjects.length > 0)
       return (<div id="advanced-courses" className="rating-container">
