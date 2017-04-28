@@ -30,7 +30,6 @@ es:
             <p class="narrative-content">Los puntajes de %{subject} de 
             estudiantes de bajos ingresos en esta escuela están <span class="emphasis">por debajo</span> 
             del promedio estatal para estudiantes de bajos ingresos.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Pregúntele a la escuela lo que está haciendo 
             para ayudar a los estudiantes que no están logrando por lo menos 
@@ -43,7 +42,6 @@ es:
             promedio estatal para niños de bajos ingresos, pero aún 
             siguen <span class="emphasis">por debajo</span> del promedio 
             estatal de <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no
             están logrando por lo menos los resultados promedio.</p>
@@ -55,7 +53,6 @@ es:
             para niños de bajos ingresos, pero aún así, siguen 
             <span class="emphasis">por debajo</span> del promedio estatal 
             de <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Pregúntele a la escuela lo que está haciendo 
             para acelerar el progreso de los estudiantes de familias de 
@@ -68,7 +65,6 @@ es:
             promedio estatal de <span class="italicized">todos</span> los estudiantes, lo que sugiere que 
             esta escuela está haciendo un buen trabajo enseñando a 
             estudiantes de bajos ingresos.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Pregúntele a la escuela qué más se puede 
             hacer para apoyar a los estudiantes de familias de bajos 
@@ -82,7 +78,6 @@ es:
             graduación de los estudiantes de bajos ingresos 
             están <span>por debajo</span> del promedio estatal para 
             estudiantes de bajos ingresos.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Pregúntele al director o consejero que es lo que la escuela está haciendo para apoyar a los estudiantes que <span class='emphasis'>corren el riesgo de abandonar la escuela.</span></p>
           '2_html': >
@@ -92,7 +87,6 @@ es:
             ingresos <span class="emphasis">es comparable</span> con el 
             promedio estatal para los estudiantes de bajos ingresos, pero 
             por debajo del promedio de <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Los índices de graduación no cuentan toda 
             la historia. Averigua si la escuela está preparando a los 
@@ -101,14 +95,12 @@ es:
           '3_html': >
             <p class="title positive">Un signo positivo:</p>
             <p class="narrative-content">En esta escuela, los índices de graduación de los estudiantes de bajos ingresos <span class='emphasis'>están más altas</span> que el promedio estatal para los estudiantes de bajos ingresos, pero <span class='emphasis'>por debajo</span> del promedio de <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Los índices de graduación no cuentan toda la historia. Averigua si la escuela está preparando a los estudiantes para el éxito universitario.</p>
             <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
           '4_html': >
             <p class="title positive">¡Buenas noticias!</p>
             <p class="narrative-content">En esta escuela, los estudiantes de bajos ingresos se están graduando <span class='emphasis'>en o por encima</span> del promedio estatal para <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">Los índices de graduación no cuentan toda la historia. Averigua si la escuela está preparando a los estudiantes para el éxito universitario.</p>
             <p class="footnote"><a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">Obtenga más información.</a></p>
@@ -122,7 +114,6 @@ es:
             de bajos ingresos se gradúan siendo elegibles para 
             universidades estatales comparado con el promedio estatal para 
             los estudiantes de bajos ingresos.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
             <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
@@ -135,21 +126,18 @@ es:
             los estudiantes de bajos ingresos, pero todavía 
             están <span class="emphasis">por debajo</span> del promedio 
             estatal de <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
             <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
           '3_html': >
             <p class="title positive">Un signo positivo:</p>
             <p class="narrative-content">En esta escuela, más estudiantes de bajos ingresos se gradúan elegibles para la universidades o universidades estatales comparado con el promedio estatal para los estudiantes de bajos ingresos, pero todavía están <span class='emphasis'>por debajo</span> del promedio estatal de <span class="italicized">todos</span> los estudiantes.</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
             <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
           '4_html': >
             <p class="title positive">¡Buenas noticias!</p>
             <p class="narrative-content">En esta escuela, más estudiantes de bajos ingresos se gradúan elegibles para la universidades o universidades estatales comparado con el promedio estatal para <span class="italicized">todos</span> los estudiantes</p>
-            <hr />
             <p class="parent-tip">Consejos para padres:</p>
             <p class="footnote">¿Su hijo está preparado para ir a la universidad? Los índices de graduación no son el mejor indicador. Asegúrese de que su niño esté tomando las clases adecuadas para ser elegible para las universidades estatales.</p>
             <p class="footnote"><a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información.</a></p>
