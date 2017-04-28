@@ -1,6 +1,6 @@
 module SchoolProfiles
   module Components
-    class TestScoresComponentGroup
+    class TestScoresComponentGroup < ComponentGroup
       attr_reader :school_cache_data_reader, :components
 
       def initialize(school_cache_data_reader:)
@@ -23,12 +23,6 @@ module SchoolProfiles
 
       def t(string)
         I18n.t(string, scope: 'lib.equity_gsdata', default: I18n.t(string, default: string))
-      end
-
-      def to_hash
-        components.select(&:has_data?).take(3).each_with_object({}) do |component, accum|
-          accum[t(component.title)] = component.to_hash
-        end
       end
     end
   end

@@ -3,7 +3,11 @@
 <div id="hero">
   <div class="container">
     <div>
-      <h1 class="school-name"><%= hero.school_name %></h1>
+      <h1 class="school-name"><%= hero.school_name %>
+        <% if hero.has_osp_badge? %>
+          <span class="icon-check osp-badge">&nbsp;<span class="claimed">Claimed</span></span>
+        <% end %>
+      </h1>
     </div>
 
     <div class="school-contact">
@@ -82,6 +86,20 @@
             </div>
           </div>
         </div>
+      <% end %>
+      <% if @school.type == 'Private' %>
+          <div class="school-info__item school-info__gs-rating">
+            <div class="gs-rating-with-label">
+              <div class="gs-rating-with-label__rating">
+                <div class="label-owl">
+                  <span><%= image_tag('owl.svg') %></span>
+                </div>
+              </div>
+              <div class="gs-rating-with-label__label">
+                Private school
+              </div>
+            </div>
+          </div>
       <% end %>
       <div class="school-info__item school-info__five-star-rating school-info-reviews-mobile"
            onclick="analyticsEvent('Profile', 'Review CTA Clicked','Hero stars'); window.location.href='#Reviews';">

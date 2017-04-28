@@ -19,14 +19,29 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <%= react_component('Equity', props: {
+      <%= react_component('SchoolProfileComponent', props: {
+                          title: t('.Race ethnicity'),
+                          anchor: 'Race/ethnicity',
+                          subtitle: t('.Race ethnicity subtitle'),
+                          info_text: t('.Race ethnicity tooltip'),
+                          icon_classes: t('.Race ethnicity icon'),
                           sources: equity.sources,
                           data: equity.equity_courses_hash })  %>
-      <%= react_component('LowIncome', props: {
+      <%= react_component('SchoolProfileComponent', props: {
+                          title: t('.Low-income students'),
+                          anchor: 'Low-income students',
+                          subtitle:  t('.Low income subtitle'),
+                          info_text: t('.Low income tooltip'),
+                          icon_classes: t('.Low income icon'),
                           sources: equity.sources,
                           rating: equity.rating_low_income,
                           data: equity.low_income_section_props })  %>
-      <%= react_component('StudentsWithDisabilities', props: {
+      <%= react_component('SchoolProfileComponent', props: {
+                          title: t('.Students with Disabilities'),
+                          anchor: 'Students with Disabilities',
+                          subtitle:  t('.Students with Disabilities subtitle'),
+                          info_text: t('.Student with disabilities tooltip'),
+                          icon_classes: t('.Student with disabilities icon'),
                           sources: equity.sources,
                           data: equity.students_with_disabilities_section_props })  %>
     </div>

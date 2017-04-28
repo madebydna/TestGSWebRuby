@@ -14,6 +14,7 @@ class SchoolProfilesController < ApplicationController
     set_seo_meta_tags
     build_gon_object
     @school_profile = school_profile
+    @private_school_profile = private_school_profile
   end
 
   private
@@ -68,6 +69,23 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
+  def private_school_profile
+    @_private_school_profile ||= (
+    OpenStruct.new.tap do |psp|
+      psp.hero = hero
+      psp.reviews = reviews
+      psp.review_questions = review_questions
+      psp.students = students
+      psp.nearby_schools = nearby_schools
+      psp.last_modified_date = last_modified_date
+      psp.neighborhood = neighborhood
+      psp.toc = toc # TODO - do we want something like a toc_private method? probably...
+      psp.breadcrumbs = breadcrumbs
+      psp.private_school_info = private_school_info.private_school_info
+    end
+    )
+  end
+
   def show_high_school_data?
     school.level_code =~ /h/
   end
@@ -81,9 +99,9 @@ class SchoolProfilesController < ApplicationController
 
   def require_school
     if school.blank?
-      render "error/school_not_found", layout: "error", status: 404
-    elsif !school.active?
-      redirect_to city_path(city_params(school.state_name, school.city)), status: :moved_permanently
+      redirect_to city_path(city_params(state_param, city_param)), status: :found
+    elsif !school.active? && !school.demo_school?
+      redirect_to city_path(city_params(school.state_name, school.city)), status: :found
     end
   end
 
@@ -162,6 +180,10 @@ class SchoolProfilesController < ApplicationController
 
   def teachers_staff
     SchoolProfiles::TeachersStaff.new(school_cache_data_reader)
+  end
+
+  def private_school_info
+    SchoolProfiles::PrivateSchoolInfo.new(school, school_cache_data_reader)
   end
 
   def build_gon_object

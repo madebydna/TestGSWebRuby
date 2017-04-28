@@ -1,89 +1,93 @@
 <div class="school-profile">
-  <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
-  <%= render 'hero', hero: @school_profile.hero %>
-  <!-- main content -->
-  <div class="static-container">
-    <div class="right_rail">
-      <%= render 'school_profile_sticky_cta' %>
-    </div>
-    <div class="content">
-
-      <div>
-        <%= render 'toc' %>
+  <% if @school.type == 'Private' %>
+    <%= render 'show_private', private_school_profile: @private_school_profile %>
+  <% else %>
+    <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
+    <%= render 'hero', hero: @school_profile.hero %>
+    <!-- main content -->
+    <div class="static-container">
+      <div class="right_rail">
+        <%= render 'school_profile_sticky_cta' %>
       </div>
-      <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
-                 width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
+      <div class="content">
 
-      <a class="anchor-mobile-offset" name="Academics"></a>
-      <div class="academics-container">
-        <div class="row">
-          <div class="col-xs-12 col-lg-3">
-            <div class="rating-container__title">
-              <%= t('.academics') %>
-            </div>
-          </div>
-          <div class="col-xs-12 col-lg-9">
-            <%= render 'test_scores', test_scores: @school_profile.test_scores %>
-            <% if @school_profile.show_high_school_data %>
-              <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
-              <%= render 'courses', courses: @school_profile.courses %>
-            <% end %>
-          </div>
+        <div>
+          <%= render 'toc' %>
         </div>
-      </div>
+        <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+                   width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
 
-      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
-                 width: 320, height: 50, css_class: 'mbl' %>
-      <div>
-        <%= render 'equity', equity: @school_profile.equity %>
-      </div>
-
-        <div class="environment-container">
+        <a class="anchor-mobile-offset" name="Academics"></a>
+        <div class="academics-container">
           <div class="row">
             <div class="col-xs-12 col-lg-3">
               <div class="rating-container__title">
-                <%= t('.environment') %>
+                <%= t('.academics') %>
               </div>
             </div>
             <div class="col-xs-12 col-lg-9">
-              <%= render 'students', students: @school_profile.students %>
-              <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+              <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+              <% if @school_profile.show_high_school_data %>
+                <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+                <%= render 'courses', courses: @school_profile.courses %>
+              <% end %>
             </div>
           </div>
         </div>
 
-      <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
-                 width: 320, height: 50, css_class: 'mbl' %>
+        <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+                   width: 320, height: 50, css_class: 'mbl' %>
+        <div>
+          <%= render 'equity', equity: @school_profile.equity %>
+        </div>
 
-      <div>
-        <%= render 'review_summary', reviews: @school_profile.reviews %>
-      </div>
+          <div class="environment-container">
+            <div class="row">
+              <div class="col-xs-12 col-lg-3">
+                <div class="rating-container__title">
+                  <%= t('.environment') %>
+                </div>
+              </div>
+              <div class="col-xs-12 col-lg-9">
+                <%= render 'students', students: @school_profile.students %>
+                <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+              </div>
+            </div>
+          </div>
 
-      <div>
-        <%= render 'reviews',
-          review_questions: @school_profile.review_questions,
-          reviews: @school_profile.reviews
-        %>
+        <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+                   width: 320, height: 50, css_class: 'mbl' %>
+
+        <div>
+          <%= render 'review_summary', reviews: @school_profile.reviews %>
+        </div>
+
+        <div>
+          <%= render 'reviews',
+            review_questions: @school_profile.review_questions,
+            reviews: @school_profile.reviews
+          %>
+        </div>
       </div>
     </div>
-  </div>
 
-  <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
-             width: 320, height: 50, css_class: 'mbl' %>
+    <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+               width: 320, height: 50, css_class: 'mbl' %>
 
-  <div>
-    <%= render 'neighborhood', neighborhood: @school_profile.neighborhood %>
-  </div>
-
-  <div>
-    <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
-  </div>
-
-  <% if @school_profile.last_modified_date.present? %>
-    <div class="pll ptl" style="color:#999999">
-      <span>
-        <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
-      </span>
+    <div>
+      <%= render 'neighborhood', neighborhood: @school_profile.neighborhood %>
     </div>
+
+    <div>
+      <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
+    </div>
+
+    <% if @school_profile.last_modified_date.present? %>
+      <div class="pll ptl" style="color:#999999">
+        <span>
+          <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
+        </span>
+      </div>
+    <% end %>
   <% end %>
 </div>

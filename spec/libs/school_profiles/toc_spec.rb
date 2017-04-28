@@ -9,9 +9,10 @@ describe SchoolProfiles::Toc do
   let(:equity) {double('equity')}
   let(:students) {double('students')}
   let(:teacher_staff) {double('teacher_staff')}
+  let(:courses) {double('courses')}
 
   subject(:toc) do
-    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teacher_staff)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teacher_staff, courses, school)
   end
 
   it { is_expected.to respond_to(:content) }

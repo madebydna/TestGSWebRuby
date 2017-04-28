@@ -14,7 +14,11 @@ module SchoolProfiles
 
       # Whether or not this component has enough data to be displayed
       def has_data?
-        normalized_values.any? do |h|
+        values.present?
+      end
+
+      def array_contains_any_valid_data?(array)
+        array.any? do |h|
           (valid_breakdowns - ['All students']).include?(h[:breakdown]) && h[:score].present? && !float_value(h[:score]).zero?
         end
       end
@@ -40,25 +44,35 @@ module SchoolProfiles
         return h2[:percentage].to_f <=> h1[:percentage].to_f
       end
 
+      # formats and translates values in a hash before it goes to the view
+      def standard_hash_to_value_hash(h)
+        {
+          breakdown: t(h[:breakdown]),
+          label: text_value(h[:score]),
+          score: float_value(h[:score]),
+          state_average: float_value(h[:state_average]),
+          state_average_label: text_value(h[:state_average]),
+          percentage: h[:percentage],
+          number_students_tested: h[:number_students_tested],
+          display_percentages: true # TODO: true
+        }
+      end
+
+      def values
+        @_values ||= (
+          array = normalized_values
+            .select(&method(:filter_predicate))
+          array = [] unless array_contains_any_valid_data?(array)
+          array.sort(&method(:comparator))
+            .map { |h| standard_hash_to_value_hash(h) }
+        )
+      end
+
       def to_hash
         {
           narration: narration,
           type: type,
-          values: normalized_values
-          .sort(&method(:comparator))
-          .select(&method(:filter_predicate))
-          .map do |h|
-            {
-              breakdown: t(h[:breakdown]),
-              label: text_value(h[:score]),
-              score: float_value(h[:score]),
-              state_average: float_value(h[:state_average]),
-              state_average_label: text_value(h[:state_average]),
-              percentage: h[:percentage],
-              number_students_tested: h[:number_students_tested],
-              display_percentages: true # TODO: true
-            }
-          end
+          values: values 
         }
       end
 

@@ -4,7 +4,7 @@ export default class SectionNavigation extends React.Component {
   render(){
     var active = this.props.active;
     var items = _.map(this.props.items, function(item, index) {
-      return <div className="tab-container">
+      return <div key={index} className="tab-container">
         <a href="javascript:void(0)"
                 key={index}
                 className={'tab-title js-gaClick' + (active === index ? ' tab-selected' : '')}
@@ -22,7 +22,7 @@ export default class SectionNavigation extends React.Component {
   addDivider(index){
     var last_item = this.props.items.length - 1;
     if(index != last_item){
-      return <span className="divider">|</span>
+      return <span className="divider" />
     }
   }
 

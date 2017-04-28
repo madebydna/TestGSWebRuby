@@ -21,15 +21,33 @@
     %>
   </div>
 
-  <%= render partial: "rating_score_item", collection: data_values.take(initial_size), as: :score_data %>
+  <% subjects = data_values.map(&:label) %>
+  <% total_items = data_values.size %>
+  <% last_test_name = nil %>
+  <% render_test_names = subjects.uniq.size < subjects.size %>
 
-  <% if data_values.size > initial_size %>
+  <% data_values.take(initial_size).each do |data_value| %>
+    <% if render_test_names && last_test_name != data_value.test_label %>
+      <div class="item-heading"><%= data_value.test_label %></div>
+    <% end %>
+    <%= render partial: "rating_score_item", locals: { score_data: data_value } %>
+    <% last_test_name = data_value.test_label %>
+  <% end %>
+
+  <% if total_items > initial_size %>
     <div class="rating-container__more-items">
       <%= render layout:"drawer", locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
-        <% render partial: "rating_score_item", collection: data_values[initial_size..-1], as: :score_data %>
+        <% data_values.drop(initial_size).each do |data_value| %>
+          <% if render_test_names && last_test_name != data_value.test_label %>
+            <div class="item-heading"><%= data_value.test_label %></div>
+          <% end %>
+          <%= render partial: "rating_score_item", locals: { score_data: data_value } %>
+          <% last_test_name = data_value.test_label %>
+        <% end %>
       <% end %>
     </div>
   <% end %>
+
   <div>
     <a data-remodal-target="modal_info_box"
        data-content-type="info_box"

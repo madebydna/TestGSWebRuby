@@ -5,6 +5,9 @@ GS.nav = GS.nav || {};
 GS.nav.featured = GS.nav.featured || (function(){
   var init = function() {
     var featuredSection = document.querySelector('.js-featured');
+    if (featuredSection === null) {
+      return;
+    }
     var pathsWithoutNavSearch = ['/'];
     var i = pathsWithoutNavSearch.length;
     var matchesAnyPaths = false;

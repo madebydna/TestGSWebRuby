@@ -2,93 +2,139 @@ class TestScoresCaching::GradeAllCalculator
   attr_reader :data_sets_and_values
   PRECISION = 2
 
+  DATA_TYPE_ID = 'data_type_id'
+  SUBJECT_ID = 'subject_id'
+  BREAKDOWN_ID = 'breakdown_id'
+  SCHOOL_VALUE = 'school_value_float'
+  STATE_VALUE = 'state_value_float'
+  SCHOOL_NUM_TESTED = 'number_students_tested'
+  STATE_NUM_TESTED = 'state_number_tested'
+  YEAR = 'year'
+  GRADE = 'grade'
+
+  GRADE_ALL = 'All'
+
   def initialize(data_sets_and_values = [])
     @data_sets_and_values = data_sets_and_values 
   end
 
+  def inject_grade_all
+    # group by data type and year and subject and breakdown
+    # for each group, noop and abort if existing grade all
+    # if no grade all, calculate grade all and add to group
+    # re-flatten groups and return array
+    new_data_sets = group_data_sets.each_with_object([]) do |(_, test_data_sets), accum|
+      unless has_any_grade_all_data?(test_data_sets)
+        grade_all_tds = calculate_grade_all(test_data_sets)
+        accum << Array.wrap(grade_all_tds) if grade_all_tds
+      end
+    end
+
+    data_sets_and_values + Array.wrap(new_data_sets).flatten
+  end
+
+  private
+
   def group_data_sets
-    key = proc { |tds| [tds['data_type_id'], tds['year'], tds['subject_id']] }
-    data_sets_and_values.select { |tds| tds['year'] == max_year }.group_by(&key)
+    key = proc { |tds| [tds[DATA_TYPE_ID], tds[YEAR], tds[SUBJECT_ID], tds[BREAKDOWN_ID]] }
+    data_sets_and_values.select { |tds| tds[YEAR] == max_year }.group_by(&key)
   end
 
   def calculate_grade_all(test_data_sets)
     raise ArgumentError.new('test data already contains grade All') if has_any_grade_all_data?(test_data_sets)
     return nil if test_data_sets.blank?
 
-    data_sets_for_school_value = data_sets_valid_for_weighted_school_value(test_data_sets)
-    data_sets_for_state_value = data_sets_valid_for_weighted_state_value(test_data_sets)
-    
+    data_sets_for_school_value = data_sets_with_school_value(test_data_sets)
+    data_sets_for_state_value = data_sets_with_state_value(test_data_sets)
+
+    return nil if data_sets_for_school_value.blank? && data_sets_for_state_value.blank?
+
     grade_all_tds = test_data_sets.first.dup
-    grade_all_tds['grade'] = 'All'
-    grade_all_tds['school_value_float'] = weighted_school_value_float(data_sets_for_school_value)
-    grade_all_tds['number_students_tested'] = sum_number_students_tested(data_sets_for_school_value)
-    grade_all_tds['state_value_float'] = weighted_state_value_float(data_sets_for_state_value)
-    grade_all_tds['state_number_tested'] = sum_state_number_tested(data_sets_for_state_value)
+    grade_all_tds[GRADE] = GRADE_ALL
+    if all_have_number_tested?(data_sets_for_school_value)
+      grade_all_tds[SCHOOL_VALUE] = weighted_school_value_float(data_sets_for_school_value)
+      grade_all_tds[SCHOOL_NUM_TESTED] = sum_number_students_tested(data_sets_for_school_value)
+    else
+      grade_all_tds[SCHOOL_VALUE] = average_school_value_float(data_sets_for_school_value)
+      grade_all_tds[SCHOOL_NUM_TESTED] = nil
+    end
+    if all_have_state_number_tested?(data_sets_for_state_value)
+      grade_all_tds[STATE_VALUE] = weighted_state_value_float(data_sets_for_state_value)
+      grade_all_tds[STATE_NUM_TESTED] = sum_state_number_tested(data_sets_for_state_value)
+    else
+      grade_all_tds[STATE_VALUE] = average_state_value_float(data_sets_for_state_value)
+      grade_all_tds[STATE_NUM_TESTED] = nil
+    end
+
+    # Make sure to only return a new data set if we've actually computed something
+    return nil unless grade_all_tds[SCHOOL_VALUE] || grade_all_tds[STATE_VALUE]
+
     grade_all_tds
   end
 
-  def data_sets_valid_for_weighted_school_value(test_data_sets)
-    test_data_sets.select do |tds|
-      tds['school_value_float'] &&
-      tds['number_students_tested'] &&
-      tds['number_students_tested'].to_s.to_f == tds['number_students_tested']
-    end
+  def all_have_number_tested?(test_data_sets)
+    test_data_sets.all?(&numeric_and_nonzero(SCHOOL_NUM_TESTED))
   end
 
-  def data_sets_valid_for_weighted_state_value(test_data_sets)
-    test_data_sets.select do |tds|
-      tds['state_value_float'] &&
-      tds['state_number_tested'] &&
-      tds['state_number_tested'].to_s.to_f == tds['state_number_tested']
-    end
+  def all_have_state_number_tested?(test_data_sets)
+    test_data_sets.all?(&numeric_and_nonzero(STATE_NUM_TESTED))
+  end
+
+  def numeric_and_nonzero(field_name)
+    ->(tds) { tds[field_name].to_s.to_f == tds[field_name] && tds[field_name].to_f > 0 }
+  end
+
+  def data_sets_with_school_value(test_data_sets)
+    test_data_sets.select { |tds| tds[SCHOOL_VALUE] }
+  end
+
+  def data_sets_with_state_value(test_data_sets)
+    test_data_sets.select { |tds| tds[STATE_VALUE] }
   end
 
   def sum_state_number_tested(test_data_sets)
-    test_data_sets.sum { |tds| tds['state_number_tested'] }
+    test_data_sets.sum { |tds| tds[STATE_NUM_TESTED] }
   end
 
   def sum_number_students_tested(test_data_sets)
-    test_data_sets.sum { |tds| tds['number_students_tested'] }
+    test_data_sets.sum { |tds| tds[SCHOOL_NUM_TESTED] }
+  end
+
+  def float_portion(var)
+    var.to_s.scan(/[0-9.]+/).first.to_f
+  end
+
+  def average_school_value_float(test_data_sets)
+    sum = test_data_sets.sum { |tds| float_portion(tds[SCHOOL_VALUE]) }
+    avg = sum / test_data_sets.size unless test_data_sets.empty?
+    avg.round(PRECISION) if avg
   end
 
   def weighted_school_value_float(test_data_sets)
-    sum = sum_number_students_tested(test_data_sets)
-    percent = test_data_sets.sum do |tds|
-      tds['school_value_float'].to_s.scan(/[0-9.]+/).first.to_f * tds['number_students_tested']
-    end / sum unless sum.zero?
-    percent.round(PRECISION) if percent
+    count = sum_number_students_tested(test_data_sets)
+    weighted_sum = test_data_sets.sum { |tds| float_portion(tds[SCHOOL_VALUE]) * tds[SCHOOL_NUM_TESTED] }
+    avg = weighted_sum / count unless count.zero?
+    avg.round(PRECISION) if avg
+  end
+
+  def average_state_value_float(test_data_sets)
+    sum = test_data_sets.sum { |tds| float_portion(tds[STATE_VALUE])}
+    avg = sum / test_data_sets.size unless test_data_sets.empty?
+    avg.round(PRECISION) if avg
   end
 
   def weighted_state_value_float(test_data_sets)
-    sum = sum_state_number_tested(test_data_sets)
-    percent = test_data_sets.sum do |tds|
-      tds['state_value_float'].to_s.scan(/[0-9.]+/).first.to_f * tds['state_number_tested']
-    end / sum unless sum.zero?
-    percent.round(PRECISION) if percent
+    count = sum_state_number_tested(test_data_sets)
+    weighted_sum = test_data_sets.sum { |tds| float_portion(tds[STATE_VALUE]) * tds[STATE_NUM_TESTED] }
+    avg = weighted_sum / count unless count.zero?
+    avg.round(PRECISION) if avg
   end
 
   def max_year
-    @_max_year ||= data_sets_and_values.map { |tds| tds['year'] }.max
-  end
-
-  def inject_grade_all
-    # group by data type and year and subject
-    # for each data type group, noop and abort if existing grade all
-    # if no grade all, calculate grade all and add to data type group
-    # re-flatten groups and return array
-    new_data_sets = group_data_sets.reduce([]) do |accum, (key, test_data_sets)|
-      unless has_any_grade_all_data?(test_data_sets)
-        grade_all_tds = calculate_grade_all(test_data_sets.select { |tds| tds['breakdown_id'] == 1 } )
-        accum << Array.wrap(grade_all_tds) if grade_all_tds
-      end
-      accum
-    end
-
-    data_sets_and_values + Array.wrap(new_data_sets).flatten
+    @_max_year ||= data_sets_and_values.map { |tds| tds[YEAR] }.max
   end
 
   def has_any_grade_all_data?(test_data_sets)
-    test_data_sets.any? { |tds| tds['grade'] == 'All' }
+    test_data_sets.any? { |tds| tds[GRADE] == GRADE_ALL }
   end
-
 end

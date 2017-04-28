@@ -8,13 +8,13 @@ module SchoolProfiles
         :cache => :characteristics,
         :data_key => '4-year high school graduation rate',
         :visualization => :person_bar_viz,
-        :formatting => [:round, :percent]
+        :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => 'Percent of students who meet UC/CSU entrance requirements',
         :visualization => :single_bar_viz,
-        :formatting => [:round, :percent]
+        :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
@@ -27,7 +27,7 @@ module SchoolProfiles
         :cache => :characteristics,
         :data_key => 'SAT percent participation',
         :visualization => :person_bar_viz,
-        :formatting => [:round, :percent]
+        :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
@@ -40,19 +40,19 @@ module SchoolProfiles
         :cache => :characteristics,
         :data_key => 'ACT participation',
         :visualization => :person_bar_viz,
-        :formatting => [:round, :percent]
+        :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => 'Percentage AP enrolled grades 9-12',
         :visualization => :person_bar_viz,
-        :formatting => [:to_f, :round, :percent]
+        :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
         :visualization => :single_bar_viz,
-        :formatting => [:to_f, :round, :percent]
+        :formatting => [:to_f, :round_unless_less_than_1, :percent]
       }
     ].freeze
 

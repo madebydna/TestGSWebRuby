@@ -20,11 +20,7 @@ module CachedRatingsMethods
   end
 
   def test_scores_rating
-    test_scores_rating = school_rating_by_id(164)
-    if test_scores_rating == NO_RATING_TEXT
-      test_scores_rating = great_schools_rating
-    end
-    test_scores_rating
+    school_rating_by_id(164)
   end
 
   def student_growth_rating

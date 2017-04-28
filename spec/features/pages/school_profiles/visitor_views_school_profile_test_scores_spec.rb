@@ -18,9 +18,9 @@ describe 'Visitor' do
 
     scenario 'sees test score rating in a non-enhanced rating state' do
       create(:cached_ratings,
-             :with_gs_rating,
+             :with_test_score_rating,
              school_id: school.id,
-             gs_rating_value: 6.0)
+             test_score_rating_value: 6.0)
 
       visit school_path(school)
 

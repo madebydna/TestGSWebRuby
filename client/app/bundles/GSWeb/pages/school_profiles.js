@@ -1,8 +1,6 @@
 import configureStore from '../store/appStore';
 
-import Equity from '../react_components/equity/equity';
-import LowIncome from '../react_components/equity/low_income';
-import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
+import SchoolProfileComponent from '../react_components/equity/school_profile_component';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
 import NearestHighPerformingSchools from '../react_components/nearest_high_performing_schools';
@@ -15,19 +13,19 @@ import { generateSubgroupPieCharts } from '../components/subgroup_charts';
 import * as stickyCTA from '../components/school_profile_sticky_cta';
 import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
+import PrivateSchoolInfo from '../react_components/private_school_info';
 
 window.store = configureStore({
   school: gon.school
 });
 
 ReactOnRails.register({
-  Equity,
-  LowIncome,
-  StudentsWithDisabilities,
+  SchoolProfileComponent,
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,
-  Courses 
+  Courses,
+  PrivateSchoolInfo
 });
 
 $(function() {

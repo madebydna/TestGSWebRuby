@@ -32,10 +32,8 @@ module SchoolProfiles
     end
 
     def generate_equity_test_score_hash
-      # require 'pry'; binding.pry
       @_generate_equity_test_score_hash ||=({
           LOW_INCOME_TOP => low_income_hash,
-          # ETHNICITY_TOP => ethnicity_hash,
           DISABILITIES_TOP => disabilities_hash
       })
     end

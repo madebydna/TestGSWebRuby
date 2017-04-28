@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import BarGraph from '../../bar_graph';
 
 export default class BarGraphBase extends React.Component {
 

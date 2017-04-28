@@ -13,11 +13,11 @@ module SchoolProfiles
           subject_hash.each do |subject, hash|
             write_location = nil
             year_to_use = nil
-            yml_key = '0_0'
+            yml_key = '0'
             if hash['li'].present?
               write_location = 'Economically disadvantaged'
               year_to_use = hash['li'].keys.max
-              yml_key = key_for_yml hash, year_to_use
+              yml_key = key_for_yml(hash, year_to_use)
             elsif hash['nli'].present?
               write_location = 'Not economically disadvantaged'
               year_to_use = hash['nli'].keys.max
@@ -46,55 +46,44 @@ module SchoolProfiles
     end
 
     def key_for_yml(hash, year_to_use)
-      return_value = '0_0'
+      return_value = '0'
       if year_to_use.present? && hash_has_all_necessary_keys?(hash, year_to_use)
-        st_nli_avg = hash['nli'][year_to_use]['state_average']
         st_li_avg = hash['li'][year_to_use]['state_average']
-        sch_nli_avg = hash['nli'][year_to_use]['score']
         sch_li_avg = hash['li'][year_to_use]['score']
         st_all_avg = hash['all'][year_to_use]['state_average']
 
         nf = SchoolProfiles::NarrationFormula.new
-        column = nf.low_income_test_scores_calculate_column st_nli_avg, st_li_avg, sch_li_avg, st_all_avg
-        row = nf.low_income_test_scores_calculate_row st_nli_avg, st_li_avg, sch_li_avg, sch_nli_avg
+        column = nf.low_income_test_scores_calculate_column(st_li_avg, sch_li_avg, st_all_avg)
 
-        if year_to_use.present? && column.present? && row.present?
-          return_value = (column << '_' << row)
+        if year_to_use.present? && column.present?
+          return_value = column
         end
       end
       return_value
     end
 
-    def yml_key(nli_school_value, nli_state_average, li_school_value, li_state_average, state_average)
-      unless nli_school_value && nli_state_average && li_school_value && li_state_average && state_average
-        return '0_0'
+    def yml_key(li_school_value, li_state_average, state_average)
+      unless li_school_value && li_state_average && state_average
+        return '0'
       end
       nf = SchoolProfiles::NarrationFormula.new
 
       column = nf.low_income_test_scores_calculate_column(
-        nli_state_average,
         li_state_average,
         li_school_value,
         state_average
       )
 
-      row = nf.low_income_test_scores_calculate_row(
-        nli_state_average,
-        li_state_average,
-        li_school_value,
-        nli_school_value
-      )
-
-      if column.present? && row.present?
-        (column << '_' << row)
+      if column.present?
+        column
       else
-        '0_0'
+        '0'
       end
     end
 
     def hash_has_all_necessary_keys?(hash, year)
       #  top level check
-      if (hash_check_for_data? hash, year, 'li') && (hash_check_for_data? hash, year, 'nli') && (hash_check_for_data_key_all? hash, year)
+      if (hash_check_for_data? hash, year, 'li') && (hash_check_for_data_key_all? hash, year)
         true
       else
         false

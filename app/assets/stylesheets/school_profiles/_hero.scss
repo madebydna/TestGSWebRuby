@@ -153,5 +153,23 @@
     text-align: center;
     text-transform: uppercase;
   }
+
+  .label-owl {
+    font-size: $font-size-l1;
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .osp-badge {
+    margin-left: 20px;
+    font-size: 20px;
+  }
+
+  .claimed {
+    font-family: opensans-semibold;
+    color: #2ba3dc;
+  }
 }
 

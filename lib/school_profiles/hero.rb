@@ -48,5 +48,13 @@ module SchoolProfiles
       return unless has_district?
       school.district.name
     end
+
+    def has_osp_badge?
+      EspMembership.where(
+          active: 1,
+          state: school.state,
+          school_id: school.id
+      ).present?
+    end
   end
 end
