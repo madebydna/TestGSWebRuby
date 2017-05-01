@@ -6,7 +6,11 @@ module SchoolProfiles
       end
 
       def self.round_unless_less_than_1(value)
-        if value < 1
+        if ((value.to_i.to_s == value.to_s) || (value.to_f.to_s == value.to_s))
+          value = value.to_f
+        end
+
+        if value.is_a?(Numeric) && value < 1
           '<1'
         else
           value.respond_to?(:round) ? value.round : value
