@@ -37,6 +37,13 @@ describe 'legacy URLs', type: :feature, remote: true, safe_for_prod: true do
       it { is_expected.to have_content 'New York School Districts' }
     end
   end
+  
+  describe 'old content search url' do
+    before { visit '/search/contentSearch.page?q=love+for+books' }
+    it 'should redirect to home page' do
+      expect(page.current_path).to match('^/?$')
+    end
+  end
 
 
 end
