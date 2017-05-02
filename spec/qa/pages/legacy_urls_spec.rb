@@ -45,5 +45,12 @@ describe 'legacy URLs', type: :feature, remote: true, safe_for_prod: true do
     end
   end
 
+  describe 'guided search' do
+    before { visit '/indiana/indianapolis/guided-search/' }
+    it 'should redirect to city home' do
+      expect(page.current_path).to match('^/indiana/indianapolis/?$')
+    end
+  end
+
 
 end
