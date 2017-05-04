@@ -27,6 +27,10 @@ module CachedRatingsMethods
     school_rating_by_id(165)
   end
 
+  def student_growth_rating_year
+    school_rating_year_by_id(165)
+  end
+
   def college_readiness_rating
     school_rating_by_id(166)
   end

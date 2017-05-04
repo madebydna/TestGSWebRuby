@@ -57,6 +57,14 @@ module SchoolProfiles
       decorated_school.college_readiness_rating_year
     end
 
+    def student_progress_rating
+      decorated_school.student_growth_rating
+    end
+
+    def student_progress_rating_year
+      decorated_school.student_growth_rating_year
+    end
+
     def equity_ratings_breakdown(breakdown)
       if decorated_school.performance && decorated_school.performance['GreatSchools rating']
         breakdown_results = decorated_school.performance['GreatSchools rating'].select { |bd|

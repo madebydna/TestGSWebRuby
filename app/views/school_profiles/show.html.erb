@@ -31,6 +31,9 @@
                 <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
                 <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
+              <% if @school_profile.student_progress.visible? %>
+                <%= render 'student_progress', student_progress: @school_profile.student_progress %>
+              <% end %>
             </div>
           </div>
         </div>

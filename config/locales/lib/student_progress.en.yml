@@ -1,0 +1,8 @@
+en:
+  lib:
+    student_progress:
+      info_text: "Student progress (also known as \"student growth\") is a way of understanding how well schools are helping individual students grow academically year-over-year, and whether these students are on track to meet their full potential, compared to students in other schools in the state.<br/><br/>The student progress rating compares the academic progress over time for this school to all schools in the state, using student growth data provided by the state Department of Education. <a href=\"/gk/ratings/\">Learn more about this rating</a>."
+      'title': 'GreatSchools profile data sources &amp; information'
+      'GreatSchools Rating': 'GreatSchools Rating'
+      'Rating text': 'The student progress rating measures whether students at this school are making academic progress over time based on student growth data provided by the Department of Education. Specifically, this rating looks at how much progress individual students have made on state assessments during the past year or more, how this performance aligns with expected progress based on a student growth model established by the state Department of Education, and how this school''s growth data compares to other schools in the state.'
+      'source': 'Source'
