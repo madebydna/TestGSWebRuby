@@ -29,10 +29,12 @@
               <%= render 'test_scores', test_scores: @school_profile.test_scores %>
               <% if @school_profile.show_high_school_data %>
                 <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
-                <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
               <% if @school_profile.student_progress.visible? %>
                 <%= render 'student_progress', student_progress: @school_profile.student_progress %>
+              <% end %>
+              <% if @school_profile.show_high_school_data %>
+                <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
             </div>
           </div>

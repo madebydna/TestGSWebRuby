@@ -16,6 +16,29 @@ module SchoolProfiles
       I18n.t('lib.student_progress.info_text')
     end
 
+    def narration
+      return nil unless has_data?
+      key = narration_key_from_rating
+      I18n.t(key).html_safe if key
+    end
+
+    def narration_key_from_rating
+      bucket = {
+          1 => 1,
+          2 => 1,
+          3 => 2,
+          4 => 2,
+          5 => 3,
+          6 => 3,
+          7 => 4,
+          8 => 4,
+          9 => 5,
+          10 => 5
+      }[rating.to_i]
+      return nil unless bucket
+      "lib.student_progress.narrative.#{bucket}_html"
+    end
+
     def data_label(key)
       I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
     end
@@ -42,7 +65,7 @@ module SchoolProfiles
     end
 
     def has_data?
-      rating.present? && rating.to_s.downcase != 'nr'
+      rating.present? && rating.to_s.downcase != 'nr' && rating.to_i.between?(1, 10)
     end
   end
 end

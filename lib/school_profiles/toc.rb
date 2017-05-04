@@ -22,10 +22,12 @@ module SchoolProfiles
       arr << {column: 'Academics', label: 'test_scores', present: true, rating: @test_scores.rating, anchor: 'Test_scores'}
       if @school.level_code =~ /h/
         arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
-        arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
       if @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
+      end
+      if @school.level_code =~ /h/
+        arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
       hash[:academics] = arr
       hash.delete_if{|key, value| value.blank?}
@@ -67,6 +69,5 @@ module SchoolProfiles
       key.to_sym
       I18n.t(key.to_sym, scope: 'lib.toc', default: key)
     end
-
   end
 end
