@@ -124,19 +124,19 @@ describe SchoolRating do
       subject.auto_moderate
     end
 
-    it 'should report reviews for Delaware public schools' do
+    it 'should not report reviews for Delaware public schools' do
       school.state = 'DE'
       school.type = 'public'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(ReportedEntity).to receive(:from_review).with(subject, 'Review is for GreatSchools Delaware school.')
+      expect(ReportedEntity).to_not receive(:from_review)
       subject.auto_moderate
     end
 
-    it 'should report reviews for Delaware charter schools' do
+    it 'should not report reviews for Delaware charter schools' do
       school.state = 'DE'
       school.type = 'charter'
       expect(AlertWord).to receive(:search).and_return(no_bad_language)
-      expect(ReportedEntity).to receive(:from_review).with(subject, 'Review is for GreatSchools Delaware school.')
+      expect(ReportedEntity).to_not receive(:from_review)
       subject.auto_moderate
     end
 

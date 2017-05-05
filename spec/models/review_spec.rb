@@ -154,11 +154,11 @@ describe Review do
         end
       end
 
-      it 'should flag reviews for Delaware public schools' do
+      it 'should not flag reviews for Delaware public schools' do
         school.state = 'DE'
         school.type = 'public'
         expect(AlertWord).to receive(:search).and_return(no_bad_language)
-        expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
+        expect(subject).to_not receive(:build_review_flag)
         subject.auto_moderate.build
       end
 
@@ -233,11 +233,11 @@ describe Review do
         end
       end
 
-      it 'should flag reviews for Delaware charter schools' do
+      it 'should not flag reviews for Delaware charter schools' do
         school.state = 'DE'
         school.type = 'charter'
         expect(AlertWord).to receive(:search).and_return(no_bad_language)
-        expect(subject).to receive(:build_review_flag).with('Review is for GreatSchools Delaware school.', [:'local-school'])
+        expect(subject).to_not receive(:build_review_flag)
         subject.auto_moderate.build
       end
 

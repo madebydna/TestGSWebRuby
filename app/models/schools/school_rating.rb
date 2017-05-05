@@ -216,13 +216,6 @@ class SchoolRating < ActiveRecord::Base
       end
     end
 
-    if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
-      if reason.nil?
-        reason = "Review is for GreatSchools Delaware school."
-      else
-        reason << " Review is for GreatSchools Delaware school."
-      end
-    end
     if reason
       report = ReportedEntity.from_review(self, reason)
 
