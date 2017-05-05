@@ -11,7 +11,7 @@ class UrlUtils
   end
 
   def self.uri_absolute_to_gs_org?(uri)
-    match_gs_org_regex = /^http(?:s)?:\/\/(?:[^\/]+\.)?greatschools\.org(?:\/|:|\?|$).*/
+    match_gs_org_regex = /^http(?:s)?:\/\/(?:[^\/?&]+\.)?greatschools\.org(?:\/|:|\?|$).*/
     match_gs_org_regex.match(uri)
   end
 
