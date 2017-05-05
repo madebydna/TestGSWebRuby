@@ -96,20 +96,24 @@ module SchoolProfiles
       output_array = []
       test_scores.values.each do |test_hash|
         test_hash.each do | breakdown_name, breakdown_hash|
-          level_code = breakdown_hash.seek('grades', 'All', 'level_code')
-          level_code.first[1].each do |subject, year_hash|
-            max_year = year_hash.keys.max_by { |year| year.to_i }
-            output_array << year_hash[max_year].merge(
-              {
-                test_label: breakdown_hash['test_label'],
-                test_description: breakdown_hash['test_description'],
-                test_source: breakdown_hash['test_source'],
-                breakdown: breakdown_name,
-                year: max_year,
-                subject: subject
-              }
-            ).symbolize_keys
-          end if level_code
+          breakdown_hash['grades'].each { | grade |
+            grade_value = grade.first
+            level_code = grade.second['level_code']
+            level_code.first[1].each do |subject, year_hash|
+              max_year = year_hash.keys.max_by { |year| year.to_i }
+              output_array << year_hash[max_year].merge(
+                {
+                  test_label: breakdown_hash['test_label'],
+                  test_description: breakdown_hash['test_description'],
+                  test_source: breakdown_hash['test_source'],
+                  breakdown: breakdown_name,
+                  year: max_year,
+                  subject: subject,
+                  grade: grade_value
+                }
+              ).symbolize_keys
+            end if level_code
+          }
         end
       end
       output_array

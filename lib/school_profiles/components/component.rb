@@ -54,6 +54,8 @@ module SchoolProfiles
           state_average_label: text_value(h[:state_average]),
           percentage: h[:percentage],
           number_students_tested: h[:number_students_tested],
+          grade: h[:grade],
+          grades: h[:grades],
           display_percentages: true # TODO: true
         }
       end

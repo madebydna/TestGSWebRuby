@@ -73,7 +73,8 @@ export default class BarGraphBase extends React.Component {
       let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
       let style_grey_width = {width: 100-numerical_value+"%" };
       return (
-        <div key={this.renderKey(test_data)} className="rating-container__score-item equity-test-scores">
+        <div key={this.renderKey(test_data)}>
+          <div className="rating-container__score-item equity-test-scores">
           <div className="rating-score-item">
             <div className="row">
               <div className="col-xs-6 subject">
@@ -101,8 +102,63 @@ export default class BarGraphBase extends React.Component {
             </div>
 
           </div>
+
+        </div>
+          {this.renderGrades(test_data['grades'])}
         </div>
       );
+    }
+  }
+  renderBarGraphGrade(test_data){
+    if(test_data !== undefined) {
+      let numerical_value = test_data['score'];
+      if (numerical_value == '<1') {
+        numerical_value = '0';
+      }
+      let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
+      let style_grey_width = {width: 100-numerical_value+"%" };
+      return (
+          <div key={this.renderKey(test_data)} className="rating-container__score-item equity-test-scores grades">
+            <div className="rating-score-item">
+              <div className="row">
+                <div className="col-xs-6 subject">
+                  Grade {test_data['grade']}
+                  {this.renderStudentPercentage(test_data)}
+                </div>
+                <div className="col-xs-6">
+                  <div className="score">
+                    {test_data['score']}%
+                  </div>
+                  <div className="item-bar">
+                    <div className="row">
+                      <div className="col-xs-12">
+                        <div className="single-bar-viz ">
+                          <div className="color-row" style={style_score_width}></div>
+                          <div className="grey-row" style={style_grey_width}></div>
+                          {this.renderStateAverageArrow(test_data['state_average'])}
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  {this.renderStateAverage(test_data['state_average'])}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+      );
+    }
+  }
+
+  renderGrades(grades){
+    if(grades) {
+      let graphs = []
+      grades.forEach((grade) => graphs.push(this.renderBarGraphGrade(grade)))
+      return <div>
+        {graphs}
+      </div>
     }
   }
 

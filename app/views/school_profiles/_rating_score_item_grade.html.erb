@@ -1,0 +1,45 @@
+<% score_data %>
+
+<div class="rating-container__score-item" style="background-color: #EFEFEF;">
+  <div class="rating-score-item">
+    <div class="row">
+      <div class="col-xs-6 rating-score-item__label">
+        <%= t('school_profiles.rating_score_item.grade') %> <%= score_data.grade %>
+        <% if score_data.info_text %>
+          <%= render 'info_circle', content: score_data.info_text %>
+        <% end %>
+      </div>
+      <div class="col-xs-6">
+        <div class="rating-score-item__score">
+          <%= score_data.formatted_score %>
+          <% if score_data.visualization == :ratio_viz %>
+            <span class="ratio-viz">:1</span>
+          <% end %>
+        </div>
+
+        <% unless score_data.formatted_state_average.nil? %>
+          <div class="rating-score-item__state-average">
+            <%= t('school_profiles.rating_score_item.state_average') %>: <%= score_data.formatted_state_average %>
+            <% if score_data.visualization == :ratio_viz %>
+              <span class="ratio-viz-state-avg">:1</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <% if score_data.visualization.present? && (score_data.visualization != :ratio_viz && score_data.visualization != :dollar_viz ) %>
+      <div class="rating-score-item__bar">
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-md-offset-6">
+            <%=
+              render "#{score_data.visualization}",
+                     score: score_data.score.float_value,
+                     state_score: score_data.state_average.try(:value),
+                     range: score_data.range
+            %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

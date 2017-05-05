@@ -24,26 +24,32 @@ module SchoolProfiles
       I18n.t(key, scope: 'lib.test_scores', default: I18n.db_t(key, default: key))
     end
 
-    def subject_scores_equity
-      scores = @school_cache_data_reader.subject_scores_by_latest_year
-      scores = sort_by_number_tested_descending scores
-      scores.map do |hash|
-        SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-          rating_score_item.label = data_label(hash.subject)
-          rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
-          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
-        end
-      end if scores.present?
-    end
+    # def subject_scores_equity
+    #   scores = @school_cache_data_reader.subject_scores_by_latest_year
+    #   scores = sort_by_number_tested_descending scores
+    #   scores.map do |hash|
+    #     SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
+    #       rating_score_item.label = data_label(hash.subject)
+    #       rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
+    #       rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
+    #     end
+    #   end if scores.present?
+    # end
 
     def subject_scores
       scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h| h[:breakdown] == 'All' }
-      subjects = scores.map { |h| h[:subject] }
+      scores_grade_all = scores.select { | score | score[:grade] == 'All' }
+      scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
+      subjects = scores_grade_all.map { |h| h[:subject] }
       if subjects.uniq.size < subjects.size
-        scores = sort_by_test_label_and_number_tested_descending(scores)
+        scores_grade_all = sort_by_test_label_and_number_tested_descending(scores_grade_all)
       else
-        scores = sort_by_number_tested_descending(scores)
+        scores_grade_all = sort_by_number_tested_descending(scores_grade_all)
       end
+      build_rating_score_hash(scores_grade_all, scores_grade_not_all)
+    end
+
+    def build_rating_score_hash(scores, grades_hash)
       scores = scores.map do |hash|
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash[:subject])
@@ -53,6 +59,9 @@ module SchoolProfiles
           rating_score_item.test_label = hash[:test_label]
           rating_score_item.source = hash[:test_source]
           rating_score_item.year = hash[:year]
+          rating_score_item.grade = hash[:grade]
+          rating_score_item.grades = build_rating_score_hash(grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] }, nil) if grades_hash
+
         end
       end if scores.present?
       scores

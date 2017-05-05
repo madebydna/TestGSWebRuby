@@ -3,13 +3,13 @@
 <div class="rating-container__score-item">
   <div class="rating-score-item">
     <div class="row">
-      <div class="col-xs-6 rating-score-item__label">
+      <div class="col-xs-3 rating-score-item__label">
         <%= score_data.label %>
         <% if score_data.info_text %>
           <%= render 'info_circle', content: score_data.info_text %>
         <% end %>
       </div>
-      <div class="col-xs-6">
+      <div class="col-xs-9">
         <div class="rating-score-item__score">
           <%= score_data.formatted_score %>
           <% if score_data.visualization == :ratio_viz %>
@@ -30,7 +30,7 @@
     <% if score_data.visualization.present? && (score_data.visualization != :ratio_viz && score_data.visualization != :dollar_viz ) %>
       <div class="rating-score-item__bar">
         <div class="row">
-          <div class="col-xs-12 col-md-6 col-md-offset-6">
+          <div class="col-xs-8 col-sm-9 col-md-6 col-md-offset-3">
               <%=
                 render "#{score_data.visualization}",
                   score: score_data.score.float_value,
@@ -38,8 +38,18 @@
                   range: score_data.range
               %>
           </div>
+          <div class="col-xs-4 col-sm-3">
+            <% if score_data.grades.present? %>
+              <div style="padding-left: 10px; line-height: 1em;">see grades -></div>
+            <% end %>
+          </div>
         </div>
       </div>
     <% end %>
   </div>
 </div>
+<% if score_data.grades.present? %>
+  <% score_data.grades.each do |data_value| %>
+    <%= render partial: 'rating_score_item_grade', locals: { score_data: data_value } %>
+  <% end %>
+<% end %>
