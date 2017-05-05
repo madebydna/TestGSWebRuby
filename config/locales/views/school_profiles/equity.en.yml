@@ -4,11 +4,10 @@ en:
       title: Equity
       Race ethnicity: 'Race/ethnicity'
       Race ethnicity subtitle: >
-        Achievement gaps between different student groups are common but not insurmountable. Find out
-        <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">how to start a
+        Find out <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/">how to start a
         conversation</a> at your child's school about the best ways to help all kids succeed.
       Race ethnicity tooltip: >
-        This section reflects test scores and other important measures for students at this school across different races/ethnicities.
+        This section reflects test scores and other important measures for students at this school across different races/ethnicities. <br/><br/> Note: When the population of a subgroup is too small to provide reliable data, that subgroup does not show up in the display. This may cause certain races/ethnicities to not be included in some charts within this section.
       Race ethnicity icon: 'icon-pie'
       'Low-income students': 'Low-income students'
       Low income subtitle: >

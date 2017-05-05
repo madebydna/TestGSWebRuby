@@ -1,8 +1,8 @@
 es:
   lib:
     equity_test_scores:
-      Economically disadvantaged: De bajos recursos
-      Not economically disadvantaged: Sin desventaja económica
+      Economically disadvantaged: De bajos ingresos
+      Not economically disadvantaged: Sin ingresos bajos
       English Language Arts: Inglés
       African American: Afroamericanos
       Black: Afroamericanos

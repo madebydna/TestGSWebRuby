@@ -57,9 +57,14 @@ export default class Courses extends React.Component {
           <div className="module-header">
               <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span className="denominator">/10</span></span>
             <div className="title-container">
-              <div className="title">{this.t('Advanced courses')}</div>
-                <span dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}>
-                </span>
+              <span className="title">{this.t('Advanced courses')} </span>
+              <a data-remodal-target="modal_info_box"
+                data-content-type="info_box"
+                data-content-html={GS.I18n.t('advanced_courses_tooltip')}
+                className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
+                <span className="icon-question"></span>
+              </a>
+              <div dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}></div>
             </div>
           </div>
         </div>

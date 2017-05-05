@@ -8,9 +8,14 @@ export default class PlainNumber extends React.Component {
       percentage: React.PropTypes.string,
       display_percentages: React.PropTypes.bool,
       number_students_tested: React.PropTypes.string,
-      state_average: React.PropTypes.number
+      state_average: React.PropTypes.number,
+      precision: React.PropTypes.number
     })).isRequired
-  };
+   };
+
+  static defaultProps = {
+    precision: 1
+  }
 
   constructor(props) {
     super(props);
@@ -55,7 +60,7 @@ export default class PlainNumber extends React.Component {
                 </div>
                 <div className="col-xs-6 horizontal">
                   <div className="score">
-                    {value['score']}
+                    {value['score'].toFixed(this.props.precision)}
                   </div>
                   {this.renderStateAverage(value['state_average'])}
                 </div>
