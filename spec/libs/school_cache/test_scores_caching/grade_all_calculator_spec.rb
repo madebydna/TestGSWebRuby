@@ -141,7 +141,7 @@ describe 'GradeAllCalculator' do
       its(:level_code) { is_expected.to eq('e,m,h') }
     end
 
-    context 'when a school_value_float is actually a string' do
+    context 'when a state_value_float is actually a string' do
       let(:test_scores) do 
         [
           OpenStruct.new({
@@ -173,9 +173,9 @@ describe 'GradeAllCalculator' do
 
       it { is_expected.to be_present }
       its(:school_value_float) { is_expected.to eq(16.67) }
-      its(:state_value_float) { is_expected.to eq(80) }
+      its(:state_value_float) { is_expected.to eq(nil) }
       its(:number_students_tested) { is_expected.to eq(12) }
-      its(:state_number_tested) { is_expected.to eq(5) }
+      its(:state_number_tested) { is_expected.to eq(nil) }
       its(:subject_id) { is_expected.to eq(4) }
       its(:data_type_id) { is_expected.to eq(1) }
       its(:breakdown_id) { is_expected.to eq(0) }
@@ -240,9 +240,9 @@ describe 'GradeAllCalculator' do
       end
 
       it { is_expected.to be_present }
-      its(:school_value_float) { is_expected.to eq(20) }
+      its(:school_value_float) { is_expected.to eq(nil) }
       its(:state_value_float) { is_expected.to eq(83.33) }
-      its(:number_students_tested) { is_expected.to eq(8) }
+      its(:number_students_tested) { is_expected.to eq(nil) }
       its(:state_number_tested) { is_expected.to eq(12) }
       its(:subject_id) { is_expected.to eq(4) }
     end
@@ -522,6 +522,127 @@ describe 'GradeAllCalculator' do
       its(:level_code) { is_expected.to eq('e,m,h') }
     end
 
+    context 'with just value_text values' do
+      let(:test_scores) do
+        [
+            OpenStruct.new({
+                               data_type_id: 1,
+                               grade: '9',
+                               year: 2015,
+                               subject_id: 4,
+                               breakdown_id: 0,
+                               level_code: 'e,m,h',
+                               school_value_text: '<10',
+                               state_value_float: 50,
+                               number_students_tested: 10,
+                               state_number_tested: 10,
+                           }).freeze,
+            OpenStruct.new({
+                               data_type_id: 1,
+                               grade: '10',
+                               year: 2015,
+                               subject_id: 4,
+                               breakdown_id: 0,
+                               level_code: 'e,m,h',
+                               school_value_text: '<20',
+                               state_value_float: 100,
+                               number_students_tested: 10,
+                               state_number_tested: 10,
+                           }).freeze
+        ].freeze
+      end
+
+      it { is_expected.to be_present }
+      its(:school_value_float) { is_expected.to eq(nil) }
+      its(:state_value_float) { is_expected.to eq(75) }
+      its(:number_students_tested) { is_expected.to eq(nil) }
+      its(:state_number_tested) { is_expected.to eq(20) }
+      its(:subject_id) { is_expected.to eq(4) }
+      its(:data_type_id) { is_expected.to eq(1) }
+      its(:breakdown_id) { is_expected.to eq(0) }
+      its(:level_code) { is_expected.to eq('e,m,h') }
+    end
+
+    context 'with value_float and value_text values' do
+      let(:test_scores) do
+        [
+            OpenStruct.new({
+                               data_type_id: 1,
+                               grade: '9',
+                               year: 2015,
+                               subject_id: 4,
+                               breakdown_id: 0,
+                               level_code: 'e,m,h',
+                               school_value_float: 10,
+                               school_value_text: '<10',
+                               state_value_float: 50,
+                               number_students_tested: 10,
+                               state_number_tested: 10,
+                           }).freeze,
+            OpenStruct.new({
+                               data_type_id: 1,
+                               grade: '10',
+                               year: 2015,
+                               subject_id: 4,
+                               breakdown_id: 0,
+                               level_code: 'e,m,h',
+                               school_value_float: 20,
+                               school_value_text: '<20',
+                               state_value_float: 100,
+                               number_students_tested: 10,
+                               state_number_tested: 10,
+                           }).freeze
+        ].freeze
+      end
+
+      it { is_expected.to be_present }
+      its(:school_value_float) { is_expected.to eq(nil) }
+      its(:state_value_float) { is_expected.to eq(75) }
+      its(:number_students_tested) { is_expected.to eq(nil) }
+      its(:state_number_tested) { is_expected.to eq(20) }
+      its(:subject_id) { is_expected.to eq(4) }
+      its(:data_type_id) { is_expected.to eq(1) }
+      its(:breakdown_id) { is_expected.to eq(0) }
+      its(:level_code) { is_expected.to eq('e,m,h') }
+    end
+
+    context 'when test scores contain value_text' do
+      let(:test_scores) do
+        [
+            OpenStruct.new({
+                               data_type_id: 1,
+                               grade: '9',
+                               year: 2015,
+                               subject_id: 4,
+                               breakdown_id: 0,
+                               level_code: 'e,m,h',
+                               school_value_float: 10,
+                               school_value_text: '>95',
+                               state_value_float: 50,
+                               number_students_tested: false,
+                               state_number_tested: '<2',
+                           }).freeze,
+            OpenStruct.new({
+                               data_type_id: 1,
+                               grade: '10',
+                               year: 2015,
+                               subject_id: 4,
+                               breakdown_id: 0,
+                               level_code: 'e,m,h',
+                               school_value_float: 20,
+                               school_value_text: '<2',
+                               state_value_float: 100,
+                               number_students_tested: -5,
+                               state_number_tested: '0.3',
+                           }).freeze
+        ].freeze
+      end
+
+      it { is_expected.to be_present }
+      its(:school_value_text) { is_expected.to be_nil }
+      its(:state_value_text) { is_expected.to be_nil }
+    end
+
     context 'with invalid characters after the value_float' do
       let(:test_scores) do
         [
@@ -552,15 +673,7 @@ describe 'GradeAllCalculator' do
         ].freeze
       end
 
-      it { is_expected.to be_present }
-      its(:school_value_float) { is_expected.to eq(16.67) }
-      its(:state_value_float) { is_expected.to eq(80) }
-      its(:number_students_tested) { is_expected.to eq(12) }
-      its(:state_number_tested) { is_expected.to eq(5) }
-      its(:subject_id) { is_expected.to eq(4) }
-      its(:data_type_id) { is_expected.to eq(1) }
-      its(:breakdown_id) { is_expected.to eq(0) }
-      its(:level_code) { is_expected.to eq('e,m,h') }
+      its(:to_h) { is_expected.to_not be_present }
     end
 
     context 'with no data sets' do
