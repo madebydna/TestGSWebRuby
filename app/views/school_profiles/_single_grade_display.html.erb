@@ -1,0 +1,38 @@
+<% score_data %>
+<% score = score_data.score.float_value %>
+<% state_score = score_data.state_average.try(:value) %>
+<% range = score_data.range %>
+<% range ||= (0..100) %>
+<% min_value = range.min %>
+<% max_value = range.max %>
+<% score_percentage = 100.0 * ((score.to_f - min_value) / (max_value - min_value)) %>
+<% grey_score = 100.to_f - score_percentage %>
+<% state_average_percentage = 100.0 * ((state_score.to_f - min_value) / (max_value - min_value)) %>
+<% score_rating = (score_percentage / 10.0).truncate + 1 %>
+<% score_rating = [10, score_rating].min # 100% gets an 11 per previous line %>
+
+<div class="row bar-graph-display">
+  <div style="padding: 5px 10px; border-bottom: 1px solid #efefef; background-color: #E9e9e9" class="clearfix">
+    <div class="col-xs-12 col-sm-4 subject"><%= t('school_profiles.rating_score_item.grade') + ' ' + score_data.grade %></div>
+    <div class="col-xs-9 col-sm-6">
+      <span class="score"><%= score_percentage.to_i %>%</span>
+      <div class="item-bar">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="single-bar-viz">
+              <div class="color-row rating_<%= score_rating %>" style="width:<%= score_percentage %>%"></div>
+              <div class="grey-row" style="width:<%= grey_score %>%"></div>
+              <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+                <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="state-average">
+        <%= t('school_profiles.rating_score_item.state_average') + ' ' + state_score.to_i.to_s %>%
+      </div>
+    </div>
+    <div class="col-xs-3 col-sm-2"></div>
+  </div>
+</div>

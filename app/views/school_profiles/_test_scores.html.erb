@@ -30,7 +30,7 @@
     <% if render_test_names && last_test_name != data_value.test_label %>
       <div class="item-heading"><%= data_value.test_label %></div>
     <% end %>
-    <%= render partial: 'rating_score_item', locals: { score_data: data_value } %>
+    <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
     <% last_test_name = data_value.test_label %>
   <% end %>
 

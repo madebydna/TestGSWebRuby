@@ -61,3 +61,38 @@
 }
 
 
+
+.bar-graph-display {
+  .test-score-container{
+    padding: 5px 10px; border-bottom: 1px solid #efefef;
+  }
+  .details {
+    line-height: 1em; float: right; margin-top:26px; font-family: opensans-bold; color: #00b3ee; cursor: pointer
+  }
+  .state-average {
+    font-size: $font-size-s1;
+    color: #71787e;
+  }
+  .score {
+    font-size: $font-size-l4;
+    font-family: opensans-semibold;
+  }
+  .item-bar {
+    padding: 0 0 10px;
+  }
+  .subject {
+    padding-top: 5px; // push label down to align with score/state avg
+    font-size: 16px;
+  }
+  .subject-subtext{
+    color: #999999;
+    font-size: $font-size-s2;
+  }
+  .horizontal {
+    text-align: right;
+    > div {
+      display: inline;
+      padding-right: 5px;
+    }
+  }
+}
