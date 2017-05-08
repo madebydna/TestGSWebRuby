@@ -45,7 +45,7 @@ class CensusLoading::Loader < CensusLoading::Base
     # validate_census_data_set!(data_set, census_update)
 
     school_type = entity.respond_to?(:type) ? entity.type : 'public'
-    configure_census_description!(census_update.census_description_attributes, school_type, data_set.id)
+    configure_census_description!(census_update.census_description_attributes, school_type, data_set.id, census_update.source)
 
     value_row_attributes = { data_set_id: data_set.id }
     unless census_update.entity_type == :state
@@ -74,12 +74,16 @@ class CensusLoading::Loader < CensusLoading::Base
    value_row.blank? || (!census_update.created.present?) || (value_row.present? && !value_row.modified.present?)|| (value_row.present? && value_row.modified.present? &&  census_update.created.present? && census_update.created_before?(value_row.modified))
   end
 
-  def configure_census_description!(attributes, school_type, data_set_id)
+  def configure_census_description!(attributes, school_type, data_set_id, source)
     attributes.merge!(
         { census_data_set_id: data_set_id,
           school_type: school_type }
     )
-    CensusDescription.where(attributes).first_or_create!
+    description = CensusDescription.where(attributes).first_or_initialize
+    if description.source != source
+      description.source = source
+      description.save!
+    end
   end
 
   def disable!(census_update)
