@@ -12,7 +12,7 @@ es:
           <h3 class="negative">Muy preocupante:</h3>
           <p>Los estudiantes de esta escuela están progresando <span class="emphasis">mucho menos</span>
           académicamente en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
-          <p>Dependiendo de los resultados de los exámenes de la escuela, el progreso del estudiante significa cosas diferentes.</p>
+          <p>Dependiendo de los resultados de los exámenes de la escuela, el progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes.</p>
           <p><span class="emphasis">Muy poco progreso con bajas calificaciones en los exámenes</span> significa...que los
           estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros.</p>
           <p><span class="emphasis">Muy poco progreso con altas calificaciones en los exámenes</span> significa…que los
@@ -25,7 +25,7 @@ es:
           <h3 class="negative">Un signo preocupante:</h3>
           <p>Los estudiantes de esta escuela están progresando <span class="emphasis">menos</span>
           académicamente en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
-          <p>Dependiendo de los resultados de los exámenes de la escuela, el progreso del estudiante significa cosas diferentes.</p>
+          <p>Dependiendo de los resultados de los exámenes de la escuela, el progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes.</p>
           <p><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span> significa...que los
           estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros.</p>
           <p><span class="emphasis">Poco progreso con altas calificaciones en los exámenes </span> significa…que los
@@ -38,7 +38,7 @@ es:
           <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
           <p>Los estudiantes de esta escuela están <span class="emphasis">en promedio</span>
           logrando un progreso académico en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
-          <p>El progreso promedio del estudiante significa cosas diferentes. En algunos estados, el
+          <p>El progreso promedio del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes. En algunos estados, el
           <span class="emphasis">progreso promedio es tan bajo</span>, la mayoría de los estudiantes no están preparados
           para la universidad o una carrera. Esto también depende de los resultados de los exámenes de la escuela.</p>
           <p><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span> significa...que los
@@ -53,7 +53,7 @@ es:
           <h3 class="positive">Un signo prometedor</h3>
           <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span>
           progreso académico en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
-          <p>El grande progreso del estudiante significa cosas diferentes. En algunos estados, el
+          <p>El grande progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes. En algunos estados, el
           <span class="emphasis">progreso promedio es tan bajo</span>, la mayoría de los estudiantes no están preparados
           para la universidad o una carrera. Esto también depende de los resultados de los exámenes de la escuela.</p>
           <p><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes</span> significa...que los
@@ -69,7 +69,7 @@ es:
           <h3 class="positive">¡Buenas noticias!</h3>
           <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">mucho más</span>
           progreso académico en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
-          <p>El grande progreso del estudiante significa cosas diferentes, dependiendo de los resultados de los exámenes de la escuela.</p>
+          <p>El grande progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes, dependiendo de los resultados de los exámenes de la escuela.</p>
           <p><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span> significa...que los
           estudiantes están comenzando en un punto bajo pero la escuela está haciendo un buen trabajo en apoyar su
           crecimiento académico comparado con la mayoría de las otras escuelas.</p>

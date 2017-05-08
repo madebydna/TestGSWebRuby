@@ -12,7 +12,7 @@ en:
           <h3 class="negative">Very concerning:</h3>
           <p>Students at this school are making <span class="emphasis">far less</span>
           academic progress given where they were last year, compared to other students in the state.</p>
-          <p>Depending on the school's test scores, student progress means different things.</p>
+          <p>Depending on the school's test scores, student progress (also known as student growth) means different things.</p>
           <p><span class="emphasis">Very low progress with low test scores</span> means... that students are starting
           at a low point and falling even farther behind their peers.</p>
           <p><span class="emphasis">Very low progress with high test scores</span> means... students have strong
@@ -23,7 +23,7 @@ en:
           <h3 class="negative">A worrisome sign:</h3>
           <p>Students at this school are making <span class="emphasis">less</span>
           academic progress given where they were last year, compared to other students in the state.</p>
-          <p>Depending on the school's test scores, student progress means different things.</p>
+          <p>Depending on the school's test scores, student progress (also known as student growth) means different things.</p>
           <p><span class="emphasis">Low progress with low test scores</span> means... that students are starting at a
           low point and falling farther behind their peers.</p>
           <p><span class="emphasis">Low progress with high test scores</span> means... students have strong academic
@@ -34,7 +34,7 @@ en:
           <h3 class="neutral">Worth a deeper look:</h3>
           <p>Students at this school are making <span class="emphasis">average</span>
           academic progress given where they were last year, compared to other students in the state.</p>
-          <p>Average student progress means different things. In some states, the <span class="emphasis">average
+          <p>Average student progress (also known as student growth) means different things. In some states, the <span class="emphasis">average
           progress is so low</span>, a majority of students are not ready for college and career. It also depends on the
           school's test scores.</p>
           <p><span class="emphasis">Average progress with low test scores</span> means... that students are starting at
@@ -48,7 +48,7 @@ en:
           <h3 class="positive">A promising sign</h3>
           <p>Students at this school are making <span class="emphasis">more</span>
           academic progress given where they were last year, compared to other students in the state.</p>
-          <p>Strong student progress means different things. In some states, the <span class="emphasis">average progress
+          <p>Strong student progress (also known as student growth) means different things. In some states, the <span class="emphasis">average progress
           is so low</span>, that even strong progress may not prepare a majority of students for college and career.
           It also depends on the school's test scores.</p>
           <p><span class="emphasis">Strong progress with low test scores</span> means... that students are starting at a
@@ -61,7 +61,7 @@ en:
           <h3 class="positive">Good news!</h3>
           <p>Students at this school are making <span class="emphasis">far more</span>
           academic progress given where they were last year, compared to other students in the state.</p>
-          <p>High student progress means different things, depending on the school's test scores.</p>
+          <p>High student progress (also known as student growth) means different things, depending on the school's test scores.</p>
           <p><span class="emphasis">High progress with low test scores</span> means... that students are starting at a
           low point but the school is doing a great job at supporting their academic growth compared to most other schools.</p>
           <p><span class="emphasis">High progress with high test scores</span> means... students have strong academic
