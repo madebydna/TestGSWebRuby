@@ -41,12 +41,12 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
     if(test_data['display_percentages']){
       if(test_data['percentage'] == '200' || test_data['breakdown'] == 'All students' || test_data['breakdown'] == 'Todos los estudiantes'){
         if(test_data['number_students_tested'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['number_students_tested']} {GS.I18n.t('students')})</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({test_data['number_students_tested']} {GS.I18n.t('students')})</span>
         }
       }
       else {
         if (test_data['percentage'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}{GS.I18n.t('of students')} )</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({test_data['percentage']}{GS.I18n.t('of students')} )</span>
         }
       }
     }

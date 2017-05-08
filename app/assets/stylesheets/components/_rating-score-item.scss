@@ -63,6 +63,11 @@
 
 
 .bar-graph-display {
+  @include media-breakpoint-only(xs) {
+    .br_except_for_mobile {
+      display: none;
+    }
+  }
   .test-score-container{
     padding: 5px 10px; border-bottom: 1px solid #efefef;
   }
