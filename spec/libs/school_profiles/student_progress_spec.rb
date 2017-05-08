@@ -57,4 +57,62 @@ describe SchoolProfiles::StudentProgress do
       it { should be_nil }
     end
   end
+
+  describe '#sources' do
+    subject { student_progress.sources }
+    let(:expected_description) { 'This sentence describes the Student Progress rating.' }
+    let(:expected_methodology) { 'This sentence describes what data goes into the rating.' }
+
+    before do
+      allow(student_progress).to receive(:data_label).with(expected_description).and_return(expected_description)
+      allow(student_progress).to receive(:data_label).with(expected_methodology).and_return(expected_methodology)
+      expect(student_progress).to receive(:label).at_least(:once) { |arg| arg }
+      expect(school).to receive(:state_name).and_return('California')
+      expect(student_progress).to receive(:rating_year).and_return('2017')
+    end
+
+    describe 'Handles both description and methodology' do
+      before do
+        expect(student_progress).to receive(:rating_description).and_return(expected_description)
+        expect(student_progress).to receive(:rating_methodology).and_return(expected_methodology)
+      end
+
+      it { should include expected_description }
+      it { should include expected_methodology }
+      it { should include 'California Dept of Education, 2017' }
+    end
+
+    describe 'Handles just description' do
+      before do
+        expect(student_progress).to receive(:rating_description).and_return(expected_description)
+        expect(student_progress).to receive(:rating_methodology).and_return(nil)
+      end
+
+      it { should include expected_description }
+      it { should_not include expected_methodology }
+      it { should include 'California Dept of Education, 2017' }
+    end
+
+    describe 'Handles just methodology' do
+      before do
+        expect(student_progress).to receive(:rating_description).and_return(nil)
+        expect(student_progress).to receive(:rating_methodology).and_return(expected_methodology)
+      end
+
+      it { should_not include expected_description }
+      it { should include expected_methodology }
+      it { should include 'California Dept of Education, 2017' }
+    end
+
+    describe 'Handles neither description nor methodology' do
+      before do
+        expect(student_progress).to receive(:rating_description).and_return(nil)
+        expect(student_progress).to receive(:rating_methodology).and_return(nil)
+      end
+
+      it { should_not include expected_description }
+      it { should_not include expected_methodology }
+      it { should include 'California Dept of Education, 2017' }
+    end
+  end
 end

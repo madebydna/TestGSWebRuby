@@ -31,12 +31,30 @@ module CachedRatingsMethods
     school_rating_year_by_id(165)
   end
 
+  def student_growth_rating_hash
+    school_rating_hash_by_id(165)
+  end
+
   def college_readiness_rating
     school_rating_by_id(166)
   end
 
   def college_readiness_rating_year
     school_rating_year_by_id(166)
+  end
+
+  def school_rating_hash_by_id(rating_id, level_code=nil)
+    if rating_id
+      # allow caller to provide level_code as 2nd arg. If given,
+      # find only ratings that match it (and date type ID)
+      ratings_year_obj = ratings.find do |rating|
+        rating['data_type_id'] == rating_id && (
+        level_code.nil? || level_code == rating['level_code']
+        )
+      end
+      return ratings_year_obj if ratings_year_obj
+    end
+    nil
   end
 
   def school_rating_by_id(rating_id=nil, level_code=nil)

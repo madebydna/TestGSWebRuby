@@ -39,21 +39,46 @@ module SchoolProfiles
       "lib.student_progress.narrative.#{bucket}_html"
     end
 
+    def label(key)
+      I18n.t(key, scope: 'lib.student_progress', default: key)
+    end
+
     def data_label(key)
       I18n.t(key, scope: 'lib.student_progress', default: I18n.db_t(key, default: key))
     end
 
     def sources
-      content = ''
-      content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
-      content << '<div style="padding:0 40px 20px;">'
-      content << '<div style="margin-top:40px;">'
-      content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
-      content << '<div>' + data_label('Rating text') + '</div>'
-      content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year
+      description = rating_description
+      description = data_label(description) if description
+      methodology = rating_methodology
+      methodology = data_label(methodology) if methodology
+      source = "#{@school.state_name.capitalize} #{label('Dept of Education')}, #{rating_year}"
+
+      content = '<div class="sourcing">'
+      content << '<h1>' + label('title') + '</h1>'
+      content << '<div>'
+      content << '<h4>' + label('GreatSchools Rating') + '</h4>'
+      if description || methodology
+        content << '<p>'
+        content << description if description
+        content << ' ' if description && methodology
+        content << methodology if methodology
+        content << '</p>'
+      end
+      content << '<p>' + label('source') + ': ' + source + '</p>'
       content << '</div>'
       content << '</div>'
       content
+    end
+
+    def rating_description
+      hash = @school_cache_data_reader.student_progress_rating_hash
+      hash['description'] if hash
+    end
+
+    def rating_methodology
+      hash = @school_cache_data_reader.student_progress_rating_hash
+      hash['methodology'] if hash
     end
 
     def rating_year

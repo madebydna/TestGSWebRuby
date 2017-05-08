@@ -133,6 +133,15 @@ class Cacher
 ### BEGIN RATINGS CACHE CODE
 # TODO move this out to its own classes structure
 
+  def self.data_descriptions
+    @_data_descriptions ||= Hash[DataDescription.all.map { |dd| [dd.data_key+dd.state.to_s, dd] }]
+  end
+
+  def self.data_description_value(key)
+    dd = data_descriptions[key]
+    dd.value if dd
+  end
+
   # Uses configuration_map to map attributes/methods in obj_array to keys in a hash
   def self.map_object_array_to_hash_array(configuration_map, obj_array)
     rval = []
@@ -182,6 +191,13 @@ class Cacher
       results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
       # Prune out empty data sets
       results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
+      growth_rating = results_hash_array.find { |hash| hash['data_type_id'] == 165}
+      if growth_rating
+        description = data_description_value('whats_this_growth')
+        methodology = data_description_value("footnote_growth#{school.state}")
+        growth_rating[:description] = description
+        growth_rating[:methodology] = methodology
+      end
       school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
     elsif school_cache && school_cache.id.present?
       SchoolCache.destroy(school_cache.id)

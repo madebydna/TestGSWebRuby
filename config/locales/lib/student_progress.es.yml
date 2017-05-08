@@ -6,6 +6,7 @@ es:
       'GreatSchools Rating': 'Calificaciones de GreatSchools'
       'Rating text': 'La calificación de el progreso del estudiante mide si los estudiantes de esta escuela están progresando académicamente a lo largo del tiempo basada en los datos de crecimiento proporcionados por el Departamento de Educación. Específicamente, esta calificación mira cuánto progreso estudiantes individuales han hecho en los exámenes estatales durante el último año o más, como este rendimiento se alinea con el esperado progreso basado en el modelo de crecimiento estudiantil establecido por el Departamento de Educación del estado, y cómo los datos de crecimiento de esta escuela compara con otras escuelas en el estado.'
       'source': 'Fuente'
+      'Dept of Education': 'Dept. de Educación'
       narrative:
         1_html: >
           <h3 class="negative">Muy preocupante:</h3>
