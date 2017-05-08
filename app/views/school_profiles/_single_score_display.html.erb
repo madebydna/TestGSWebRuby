@@ -30,7 +30,9 @@
         </div>
       </div>
       <div class="state-average">
-        <%= t('school_profiles.rating_score_item.state_average') + ' ' + state_score.to_i.to_s %>%
+        <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+          <%= t('school_profiles.rating_score_item.state_average') + ' ' + state_score.to_i.to_s %>%
+        <% end %>
       </div>
     </div>
     <div class="col-xs-3 col-sm-2">

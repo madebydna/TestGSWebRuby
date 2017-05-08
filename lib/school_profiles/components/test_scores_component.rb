@@ -41,13 +41,23 @@ module SchoolProfiles
         hash.merge(
           breakdown: normalized_breakdown,
           percentage: value_to_s(ethnicities_to_percentages[normalized_breakdown]),
-          grades: strip_unneeded_content(grades_for_breakdown)
+          grades: manage_hash_content(grades_for_breakdown)
         )
       end
 
-      def strip_unneeded_content(grades)
-        stripped_grades = grades.map{|grade| grade.except(:breakdown, :subject, :test_description, :test_label, :test_source, :year, :state_number_tested)}
-        stripped_grades.map{|grade| grade.merge(label: text_value(grade[:score]), state_average_label: text_value(grade[:state_average]))}
+      def manage_hash_content(grades)
+        grades.map do |grade|
+          grade.except(:breakdown,
+                       :subject,
+                       :test_description,
+                       :test_label,
+                       :test_source,
+                       :year,
+                       :state_number_tested)
+              .merge(label: text_value(grade[:score]),
+                     state_average_label: text_value(grade[:state_average]))
+
+        end
       end
     end
   end
