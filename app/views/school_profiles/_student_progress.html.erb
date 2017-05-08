@@ -16,11 +16,13 @@
                has_data: student_progress.has_data?
     %>
 
-    <div class="panel">
-      <div class="auto-narration">
-        <%= narration %>
+    <% if student_progress.has_data? %>
+      <div class="panel">
+        <div class="auto-narration">
+          <%= narration %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
 
   <div>
