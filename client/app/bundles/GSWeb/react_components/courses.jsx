@@ -20,20 +20,19 @@ export default class Courses extends React.Component {
   }
 
   sourcesToHtml() {
-    let html = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">GreatSchools profile data sources &amp; information</h1>';
-    html += '<div style="padding: 40px 40px 20px 40px">';
-      html += '<h4 style="font-family:RobotoSlab-Bold;">' + this.t('Advanced courses') + '</h4>';
-      Object.keys(this.props.sources).forEach((sourceNameAndYear) => {
-        let courses = this.props.sources[sourceNameAndYear];
-        sourceNameAndYear = JSON.parse(sourceNameAndYear);
-        let name = sourceNameAndYear[0];
-        let year = sourceNameAndYear[1];
-        let commaSeparatedCourses = courses.join(', ');
-        html += '<div style="margin-bottom:10px; font-weight:bold;">' + commaSeparatedCourses + '</div>';
-        html += '<div style="padding-bottom:40px;">';
-        html += '<span>Source: ' + name + ', ' + year +'</span>';
-        html += '</div>';
-      });
+    let html = '<div class="sourcing">';
+    html += '<h1>GreatSchools profile data sources &amp; information</h1>';
+    html += '<div>';
+    html += '<h4>' + this.t('Advanced courses') + '</h4>';
+    Object.keys(this.props.sources).forEach((sourceNameAndYear) => {
+      let courses = this.props.sources[sourceNameAndYear];
+      sourceNameAndYear = JSON.parse(sourceNameAndYear);
+      let name = sourceNameAndYear[0];
+      let year = sourceNameAndYear[1];
+      let commaSeparatedCourses = courses.join(', ');
+      html += '<p>' + commaSeparatedCourses + '</p>';
+      html += '<p><span class="emphasis">Source</span>: ' + name + ', ' + year + '</p>';
+    });
     html += '</div>';
     return html;
   }

@@ -78,14 +78,14 @@ module SchoolProfiles
     def sources
       content = ''
       if subject_scores.present?
-        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
-        content << '<div style="padding:0 40px 20px;">'
-        content << '<div style="margin-top:40px;">'
-        content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
-        content << '<div>' + data_label('Rating text') + '</div>'
-        content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year + ' | '
-        content << data_label('See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
-        content << '</div>'
+        content << '<div class="sourcing">'
+        content << '<h1>' + data_label('title') + '</h1>'
+        content << '<div>'
+        content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
+        content << '<p>' + data_label('Rating text') + '</p>'
+        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
+        content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
+        content << '</p>'
         content << '</div>'
         data = subject_scores.each_with_object({}) do |rsi, output|
           output[rsi.test_label] = {
@@ -99,6 +99,7 @@ module SchoolProfiles
         content << data.reduce('') do |string, array|
           string << sources_for_view(array)
         end
+        content << '</div>'
       end
       content
     end
@@ -113,12 +114,12 @@ module SchoolProfiles
     def sources_for_view(array)
       year = array.last[:year]
       source = array.last[:source]
-      str = '<div style="margin-top:40px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(array.last[:test_label]) + '</h4>'
-      str << "<div style='margin-bottom:10px; font-weight:bold;'>#{array.last[:subject].join(', ')}</div>"
+      str = '<div>'
+      str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
+      str << "<p>#{array.last[:subject].join(', ')}</p>"
       str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': </span>' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</div>'
-      # str << '</div>'
+      str << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
+      str << '</div>'
       str
     end
 

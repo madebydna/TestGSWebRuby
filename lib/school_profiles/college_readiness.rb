@@ -185,13 +185,14 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
-      content << '<div style="padding:0 40px 20px;">'
-      content << '<div style="margin-top:40px;">'
+      content = '<div class="sourcing">'
+      content << '<h1>' + data_label('title') + '</h1>'
       if rating_year.present?
-        content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
-        content << '<div>' + data_label('Rating text') + '</div>'
-        content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year + '</div>'
+        content << '<div>'
+        content << '<h4>' + data_label('GreatSchools Rating') + '</h4>'
+        content << '<p>' + data_label('Rating text') + '</p>'
+        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + '</p>'
+        content << '</div>'
       end
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)
@@ -202,10 +203,10 @@ module SchoolProfiles
     def sources_for_view(hash)
       year = hash['year'] || hash['source_year']
       source = hash['source'] || hash['source_name']
-      str = '<div style="margin-top:40px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash['data_type']) + '</h4>'
+      str = '<div>'
+      str << '<h4>' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source')+ ': </span>' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</div>'
+      str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
       str << '</div>'
       str
     end

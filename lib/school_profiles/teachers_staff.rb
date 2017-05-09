@@ -122,8 +122,8 @@ module SchoolProfiles
     end
 
     def sources
-      content = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + static_label('title') + '</h1>'
-      content << '<div style="padding:0 40px 20px;">'
+      content = '<div class="sourcing">'
+      content << '<h1>' + static_label('title') + '</h1>'
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)
       end
@@ -131,10 +131,10 @@ module SchoolProfiles
     end
 
     def sources_for_view(hash)
-      str = '<div style="margin-top:40px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash['data_type']) + '</h4>'
+      str = '<div>'
+      str << '<h4>' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source')+ ': </span>' + data_label(hash['source_name']) + ', ' + hash['source_year'].to_s + '</div>'
+      str << '<p><span class="emphasis">' + static_label('source')+ '</span>: ' + data_label(hash['source_name']) + ', ' + hash['source_year'].to_s + '</p>'
       str << '</div>'
       str
     end
