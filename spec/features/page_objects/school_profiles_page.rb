@@ -25,6 +25,12 @@ class SchoolProfilesPage < SitePrism::Page
       element :state_average, '.rating-score-item__state-average'
     end
 
+    sections :test_score_items, '.test-score-container' do
+      element :label, '.subject'
+      element :score, '.score'
+      element :state_average, '.state-average'
+    end
+
     section :show_more, '.show-more' do
       element :more_button, '.show-more__button'
       element :items, '.show-more__items', visible: false
@@ -117,12 +123,12 @@ class SchoolProfilesPage < SitePrism::Page
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)
-    score_item = self.test_scores.score_items.first
-    return false unless score_item.present?
+    test_score_items = self.test_scores.test_score_items.first
+    return false unless test_score_items.present?
 
-    return false if label.present? && !score_item.label.text.include?(label)
-    return false if score.present? && !score_item.score.text.include?(score)
-    return false if state_average.present? && !score_item.state_average.text.include?(state_average)
+    return false if label.present? && !test_score_items.label.text.include?(label)
+    return false if score.present? && !test_score_items.score.text.include?(score)
+    return false if state_average.present? && !test_score_items.state_average.text.include?(state_average)
     return true
   end
 
