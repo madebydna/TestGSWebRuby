@@ -117,7 +117,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
       if (numerical_value == '<1') {
         numerical_value = '0';
       }
-      let bg_color = '#E9e9e9';
+      let bg_color = '#f4f4f4';
       let grades = this.renderGrades(test_data['grades']);
       let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
       let style_grey_width = {width: 100-numerical_value+"%" };
