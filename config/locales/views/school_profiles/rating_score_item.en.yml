@@ -3,3 +3,4 @@ en:
     rating_score_item:
       state_average: State avg
       grade: Grade
+      details: Details

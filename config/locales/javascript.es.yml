@@ -134,3 +134,5 @@ es:
     subjects: Materias
     rating_html: 'Calificación&nbsp;'
     courses: cursos
+    grade: Grado
+    details: Detalles
