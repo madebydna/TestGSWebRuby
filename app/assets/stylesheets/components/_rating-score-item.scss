@@ -61,43 +61,80 @@
 }
 
 
-
 .bar-graph-display {
-  @include media-breakpoint-only(xs) {
-    .br_except_for_mobile {
-      display: none;
-    }
-  }
+  $score_width : 60px;
+
+  border-bottom: 1px solid #efefef;
+
   .test-score-container{
-    padding: 5px 10px; border-bottom: 1px solid #efefef;
+    padding: 7px 10px;
   }
+  .bar-graph-container{
+    display: table;
+    table-layout: fixed;
+    width:100%;
+  }
+
   .details {
-    line-height: 1em; float: right; margin-top:26px; font-family: opensans-bold; color: #00b3ee; cursor: pointer
+    line-height: 1em;
+    float: right;
+    color: #00b3ee;
+    cursor: pointer
   }
   .state-average {
+    display: block;
     font-size: $font-size-s1;
     color: #71787e;
+    padding-left: $score_width;
   }
   .score {
-    font-size: $font-size-l4;
+    font-size: 18px;
     font-family: opensans-semibold;
+    width: $score_width;
+    display: table-cell;
+    text-align: left;
+    vertical-align: top;
+    line-height: 18px;
   }
   .item-bar {
     padding: 0 0 10px;
+    width:auto;
+    display: table-cell;
   }
   .subject {
     padding-top: 5px; // push label down to align with score/state avg
     font-size: 16px;
+    span {
+      padding-left:20px
+    }
   }
   .subject-subtext{
     color: #999999;
     font-size: $font-size-s2;
   }
-  .horizontal {
-    text-align: right;
-    > div {
-      display: inline;
-      padding-right: 5px;
+
+  .grades>.bar-graph-display:last-of-type {
+      border:none;
+
+  }
+  .grades{
+    background-color: #F6FAFA;
+  }
+  @include media-breakpoint-only(xs) {
+    padding: 0 20px;
+
+    .br_except_for_mobile {
+      display: none;
+    }
+    .state-average{
+      padding-left: $score_width;
+    }
+    .subject {
+      span {
+        padding-left:0px
+      }
     }
   }
+
 }
+

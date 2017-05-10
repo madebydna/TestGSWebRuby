@@ -15,17 +15,15 @@
   <div class="test-score-container clearfix">
     <div class="col-xs-12 col-sm-4 subject"><%= score_data.label %></div>
     <div class="col-xs-9 col-sm-6">
-      <span class="score"><%= score_percentage.to_i %>%</span>
-      <div class="item-bar">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="single-bar-viz">
-              <div class="color-row rating_<%= score_rating %>" style="width:<%= score_percentage %>%"></div>
-              <div class="grey-row" style="width:<%= grey_score %>%"></div>
-              <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
-                <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
-              <% end %>
-            </div>
+      <div class="bar-graph-container">
+        <div class="score"><%= score_percentage.to_i %>%</div>
+        <div class="item-bar">
+          <div class="single-bar-viz">
+            <div class="color-row rating_<%= score_rating %>" style="width:<%= score_percentage %>%"></div>
+            <div class="grey-row" style="width:<%= grey_score %>%"></div>
+            <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+              <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
+            <% end %>
           </div>
         </div>
       </div>

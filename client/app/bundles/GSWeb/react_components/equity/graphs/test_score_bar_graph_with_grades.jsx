@@ -65,7 +65,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
   }
 
   renderDetailsLink(grades) {
-    if (grades != null && grades != undefined && grades.constructor === Array) {
+    if (grades != null && grades != undefined && grades.constructor === Array && grades.length > 0) {
       return <div className="details js-test-score-details">{GS.I18n.t('details')}  <span className="icon-caret-down"></span></div>
     }
   }
@@ -88,23 +88,21 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
                 {this.renderStudentPercentage(test_data)}
               </div>
               <div className="col-xs-9 col-sm-6">
-                <span className="score">{test_data['label']}%</span>
-                <div className="item-bar">
-                  <div className="row">
-                    <div className="col-xs-12">
-                      <div className="single-bar-viz">
-                        <div className="color-row" style={style_score_width}></div>
-                        <div className="grey-row" style={style_grey_width}></div>
-                        {this.renderStateAverageArrow(test_data['state_average'])}
-                      </div>
+                <div className="bar-graph-container">
+                  <div className="score">{test_data['label']}%</div>
+                  <div className="item-bar">
+                    <div className="single-bar-viz">
+                      <div className="color-row" style={style_score_width}></div>
+                      <div className="grey-row" style={style_grey_width}></div>
+                      {this.renderStateAverageArrow(test_data['state_average'])}
                     </div>
                   </div>
-                </div>
-                {this.renderStateAverage(test_data['state_average'])}
-          </div>
-          <div className="col-xs-3 col-sm-2">
-            {this.renderDetailsLink(test_data['grades'])}
-          </div>
+              </div>
+              {this.renderStateAverage(test_data['state_average'])}
+            </div>
+            <div className="col-xs-3 col-sm-2">
+              {this.renderDetailsLink(test_data['grades'])}
+            </div>
         </div>
         {this.renderGrades(test_data['grades'])}
       </div> )
@@ -117,36 +115,32 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
       if (numerical_value == '<1') {
         numerical_value = '0';
       }
-      let bg_color = '#f4f4f4';
       let grades = this.renderGrades(test_data['grades']);
       let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
       let style_grey_width = {width: 100-numerical_value+"%" };
-      let gray_bg = { backgroundColor: bg_color}
 
       return (
         <div className="row bar-graph-display" key={this.renderKey(test_data)}>
-          <div className="test-score-container clearfix" style={gray_bg}>
+          <div className="test-score-container clearfix">
             <div className="col-xs-12 col-sm-4 subject">
+              <span>
               {GS.I18n.t('grade')} {test_data['grade']}
-              {this.renderStudentPercentage(test_data)}
+              </span>
             </div>
-            <div className="col-xs-9 col-sm-6">
-              <span className="score">{test_data['label']}%</span>
-              <div className="item-bar">
-                <div className="row">
-                  <div className="col-xs-12">
-                    <div className="single-bar-viz">
-                      <div className="color-row" style={style_score_width}></div>
-                      <div className="grey-row" style={style_grey_width}></div>
-                      {this.renderStateAverageArrow(test_data['state_average'])}
-                    </div>
-                  </div>
+            <div className="col-xs-12 col-sm-6">
+              <div className="bar-graph-container">
+                <div className="score">{test_data['label']}%</div>
+                <div className="item-bar">
+                      <div className="single-bar-viz">
+                        <div className="color-row" style={style_score_width}></div>
+                        <div className="grey-row" style={style_grey_width}></div>
+                        {this.renderStateAverageArrow(test_data['state_average'])}
+                      </div>
                 </div>
               </div>
               {this.renderStateAverage(test_data['state_average'])}
             </div>
-            <div className="col-xs-3 col-sm-2">
-            </div>
+            <div className="col-sm-2"></div>
           </div>
         </div> )
     }
