@@ -3,6 +3,8 @@ module SchoolProfiles
 
     attr_reader :school, :school_cache_data_reader
 
+    GRADES_DISPLAY_MINIMUM = 2
+
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
@@ -51,6 +53,9 @@ module SchoolProfiles
 
     def build_rating_score_hash(scores, grades_hash)
       scores = scores.map do |hash|
+        grades_from_hash = grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] } if grades_hash
+        grades = build_rating_score_hash(grades_from_hash, nil) if grades_from_hash && grades_from_hash.count >= GRADES_DISPLAY_MINIMUM
+
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash[:subject])
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash[:score]).apply_formatting(:round, :percent)
@@ -60,7 +65,7 @@ module SchoolProfiles
           rating_score_item.source = hash[:test_source]
           rating_score_item.year = hash[:year]
           rating_score_item.grade = hash[:grade]
-          rating_score_item.grades = build_rating_score_hash(grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] }, nil) if grades_hash
+          rating_score_item.grades = grades
 
         end
       end if scores.present?

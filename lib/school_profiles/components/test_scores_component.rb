@@ -1,6 +1,8 @@
 module SchoolProfiles
   module Components
     class TestScoresComponent < Component
+      GRADES_DISPLAY_MINIMUM = 2
+
       def narration
         t('RE Test scores narration', scope: 'lib.equity_gsdata', subject: t(data_type)) # TODO: update scope after moving translations
       end
@@ -57,7 +59,7 @@ module SchoolProfiles
               .merge(label: text_value(grade[:score]),
                      state_average_label: text_value(grade[:state_average]))
 
-        end
+        end if grades.present? && grades.count >= GRADES_DISPLAY_MINIMUM
       end
     end
   end

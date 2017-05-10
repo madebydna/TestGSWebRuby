@@ -7,6 +7,9 @@ export default class CourseSubject extends React.Component {
     rating: PropTypes.number,
     courses: PropTypes.array
   }
+  static defaultProps = {
+    courses: []
+  }
 
   constructor(props) {
     super(props);
@@ -34,6 +37,29 @@ export default class CourseSubject extends React.Component {
     }
   }
 
+  renderCoursesCount(){
+    var underline_none = 'none';
+    var text_no_underline = {textDecoration: underline_none};
+    if( this.props.courses.length > 0 ){
+      return (
+          <span>
+            <a href="javascript:void(0)" style={text_no_underline}>{this.props.courses.length} <span>{this.t('courses')}</span>
+            <span className="icon-caret-down show-classes" /></a>
+          </span>
+      );
+    }
+    else{
+      var white = '#FFFFFF';
+      var colorWhite = {color: white};
+      return (
+          <span>
+            {this.props.courses.length} <span>{this.t('courses')}</span>
+            <span className="icon-caret-down show-classes" style={colorWhite} />
+          </span>
+      );
+    }
+  }
+
   render() {
     return (
       <div className="rating-container__score-item">
@@ -42,10 +68,9 @@ export default class CourseSubject extends React.Component {
           <span>
             <span className={'gs-rating-inline circle-rating--xtra-small circle-rating--' + this.props.rating}>{this.props.rating}<span className="denominator">/10</span></span>
           </span>
-          { this.props.courses && <span><a href="javascript:void(0)">{this.props.courses.length} <span>{this.t('courses')}</span></a></span> }
-          <span className="icon-caret-down show-classes" />
+          {this.renderCoursesCount()}
         </div>
-        { this.state.open &&
+        { this.state.open && this.props.courses.length > 0 &&
           <ul>
             {this.listOfCourses()}
           </ul>
