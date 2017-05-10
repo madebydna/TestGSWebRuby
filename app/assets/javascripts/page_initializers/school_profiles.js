@@ -26,7 +26,15 @@ $(function() {
 
   // used by test scores in school profiles
   $('body').on('click', '.js-test-score-details', function () {
-    $(this).closest('.bar-graph-display').find('.grades').slideToggle();
+    var grades = $(this).closest('.bar-graph-display').find('.grades');
+    if(grades.css('display') == 'none') {
+      grades.slideDown();
+      $(this).find('span').removeClass('rotate-text-270');
+    }
+    else{
+      grades.slideUp();
+      $(this).find('span').addClass('rotate-text-270');
+    }
   });
 
   // When search bar added to universal nav, was required to init autocomplete on all pages

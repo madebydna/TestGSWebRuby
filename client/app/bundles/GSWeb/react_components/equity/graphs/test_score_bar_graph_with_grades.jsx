@@ -66,7 +66,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
 
   renderDetailsLink(grades) {
     if (grades != null && grades != undefined && grades.constructor === Array && grades.length > 0) {
-      return <div className="details js-test-score-details">{GS.I18n.t('details')}  <span className="icon-caret-down"></span></div>
+      return <div className="details js-test-score-details">{GS.I18n.t('details')}  <span className="icon-caret-down rotate-text-270"></span></div>
     }
   }
 
