@@ -6,9 +6,10 @@
 <% data_values = test_scores.subject_scores || [] %>
 <% initial_size = 3 %>
 <% content = test_scores.sources %>
+<% analytics_id = 'TestScores' %>
+<% analytics_id += '-empty' unless data_values.present? %>
 
-
-<div class="rating-container rs-test-scores">
+<div id="<%= analytics_id %>" class="rating-container rs-test-scores">
   <a class="anchor-mobile-offset" name="Test_scores"></a>
   <div class="rating-container__rating">
     <%= render "module_header",

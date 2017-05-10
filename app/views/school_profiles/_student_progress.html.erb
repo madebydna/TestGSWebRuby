@@ -4,8 +4,10 @@
 <% info_text = student_progress.info_text  %>
 <% narration = student_progress.narration %>
 <% sources = student_progress.sources %>
+<% analytics_id = 'StudentProgress' %>
+<% analytics_id += '-empty' unless student_progress.has_data? %>
 
-<div class="rating-container rs-student_progress">
+<div id="<%= analytics_id %>" class="rating-container rs-student_progress">
   <a class="anchor-mobile-offset" name="Student_progress"></a>
   <div class="rating-container__rating">
     <%= render 'module_header',

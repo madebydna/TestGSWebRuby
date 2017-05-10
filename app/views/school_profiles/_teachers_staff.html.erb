@@ -2,9 +2,10 @@
 <% data_values = teachers_staff.data_values %>
 <% content = teachers_staff.sources %>
 <% initial_size = 3 %>
+<% analytics_id = 'TeachersStaff' %>
+<% analytics_id += '-empty' unless data_values.present? %>
 
-
-<div class="teachers-staff">
+<div id="<%= analytics_id %>" class="teachers-staff">
   <a class="anchor-mobile-offset" name="Teachers_staff"></a>
   <div class="rating-container__rating">
     <div class="module-header">

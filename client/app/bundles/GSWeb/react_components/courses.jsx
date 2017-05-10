@@ -51,7 +51,7 @@ export default class Courses extends React.Component {
     let courseSubjectsForDrawer = subjects.slice(3).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
 
     if (subjects.length > 0)
-      return (<div id="advanced-courses" className="rating-container">
+      return (<div id="AdvancedCourses" className="advanced-courses rating-container">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
         <div className="rating-container__rating">
           <div className="module-header">
@@ -94,7 +94,7 @@ export default class Courses extends React.Component {
         </a>
       </div>)
     else
-      return <div id="advanced-courses" className="rating-container">
+      return <div id="AdvancedCourses-empty" className="advanced-courses rating-container">
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
         <div className="rating-container__rating">
           <div className="module-header">

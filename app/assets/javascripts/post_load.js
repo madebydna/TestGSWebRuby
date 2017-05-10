@@ -29,6 +29,7 @@
 //= require util/send_updates
 //= require util/back_to_top
 //= require ads/interstitial
+//= require util/impression_tracker
 //= require page_initializers/school_profiles
 //= require page_initializers/interstitial_ad
 //= require webpack-bundle
