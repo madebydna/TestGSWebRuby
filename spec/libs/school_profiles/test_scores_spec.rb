@@ -12,6 +12,7 @@ describe SchoolProfiles::TestScores do
 
   it { is_expected.to respond_to(:rating) }
   it { is_expected.to respond_to(:subject_scores) }
+  it { is_expected.to respond_to(:flags_for_sources) }
 
   let(:os_obj_1) { OpenStruct.new(
       number_students_tested: 393

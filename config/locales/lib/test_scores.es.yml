@@ -6,7 +6,11 @@ es:
       'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'GreatSchools Rating': 'Calificaciones de GreatSchools'
       'Rating text': 'GreatSchools es una organización nacional sin fines de lucro y no partidista. Nuestra calificación es una sencilla herramienta que le ayuda a comparar escuelas dentro de un estado basado en los puntajes de los exámenes estatales y otros datos disponibles, como el progreso académico del estudiante y la preparación universitaria. Acerca de la calificación GreatSchools.'
+      n_tested: 'Para proporcionar una visión de la capacidad en esta escuela, calculamos una calificación general de los exámenes para cada categoría, haciendo un promedio ponderado con el número de estudiantes evaluados en cada grado.'
+      straight_avg: 'Para proporcionar una visión de la capacidad en esta escuela, calculamos una calificación general de los exámenes para cada categoría basado en un promedio no ponderado de los puntajes en cada grado. No somos capaces de proporcionar un promedio ponderado porque el número de estudiantes tomando los exámenes en cada grado no está disponible.'
+      n_tested_and_straight_avg: 'Para proporcionar una visión de la capacidad en esta escuela, calculamos una calificación general de los exámenes para cada categoría basadas en las puntuaciones obtenidas en cada grado. Cuando es posible, la total calificación es ponderado por el número de estudiantes evaluados en cada grado. Cuando el número de estudiantes tomando los exámenes en cada grado no está disponible, podemos calcular un promedio no ponderado.'
       'source': 'Fuente'
+      note: Note
       'See more': 'See more'
       'More': 'More about GreatSchools ratings'
       Test scores: Resultados de exámenes

@@ -4,6 +4,9 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
 
     GRADES_DISPLAY_MINIMUM = 2
+    N_TESTED = 'n_tested'
+    STRAIGHT_AVG = 'straight_avg'
+    N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
 
     def initialize(school, school_cache_data_reader:)
       @school = school
@@ -66,7 +69,7 @@ module SchoolProfiles
           rating_score_item.year = hash[:year]
           rating_score_item.grade = hash[:grade]
           rating_score_item.grades = grades
-
+          rating_score_item.flags = hash[:flags]
         end
       end if scores.present?
       scores
@@ -93,13 +96,15 @@ module SchoolProfiles
         content << '</p>'
         content << '</div>'
         data = subject_scores.each_with_object({}) do |rsi, output|
-          output[rsi.test_label] = {
-              test_label: rsi.test_label,
-              subject: sources_with_subject[rsi.test_label], # subject is an array based on test_label
-              test_description: rsi.description,
-              source: rsi.source,
-              year: rsi.year
-          }
+          output[rsi.test_label] ||= {}
+          output[rsi.test_label][:test_label] = rsi.test_label
+          output[rsi.test_label][:subject] ||= []
+          output[rsi.test_label][:subject] << rsi.label
+          output[rsi.test_label][:test_description] = rsi.description
+          output[rsi.test_label][:source] = rsi.source
+          output[rsi.test_label][:year] = rsi.year
+          output[rsi.test_label][:flags] ||= []
+          output[rsi.test_label][:flags] << rsi.flags
         end
         content << data.reduce('') do |string, array|
           string << sources_for_view(array)
@@ -109,23 +114,30 @@ module SchoolProfiles
       content
     end
 
-    def sources_with_subject
-      subject_scores.each_with_object({}) do |rsi, output|
-        output[rsi.test_label] ||= []
-        output[rsi.test_label] << rsi.label
-      end
-    end
-
     def sources_for_view(array)
       year = array.last[:year]
       source = array.last[:source]
+      flags = flags_for_sources(array.last[:flags].flatten.compact.uniq)
       str = '<div>'
       str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
       str << "<p>#{array.last[:subject].join(', ')}</p>"
       str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
+      if flags.present?
+        str << '<p><span class="emphasis">' + data_label('note') + '</span>: ' + data_label(flags) + '</p>'
+      end
       str << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
       str << '</div>'
       str
+    end
+
+    def flags_for_sources(flag_array)
+      if (flag_array.include?(N_TESTED) && flag_array.include?(STRAIGHT_AVG))
+        N_TESTED_AND_STRAIGHT_AVG
+      elsif flag_array.include?(N_TESTED)
+        N_TESTED
+      elsif flag_array.include?(STRAIGHT_AVG)
+        STRAIGHT_AVG
+      end
     end
 
     def rating_year

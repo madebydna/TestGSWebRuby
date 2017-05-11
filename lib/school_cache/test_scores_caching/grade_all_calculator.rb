@@ -13,6 +13,7 @@ class TestScoresCaching::GradeAllCalculator
   STATE_NUM_TESTED = 'state_number_tested'
   YEAR = 'year'
   GRADE = 'grade'
+  SUBJECT = 'subject'
 
   GRADE_ALL = 'All'
 
@@ -60,13 +61,15 @@ class TestScoresCaching::GradeAllCalculator
     grade_all_tds[STATE_NUM_TESTED] = nil
 
     grade_all_tds[GRADE] = GRADE_ALL
-
+    flags = []
     if all_school_values_are_numeric?(test_data_sets) && all_school_text_values_are_nil_or_match_float?(test_data_sets)
       if all_have_number_tested?(data_sets_for_school_value)
         grade_all_tds[SCHOOL_VALUE] = weighted_school_value_float(data_sets_for_school_value)
         grade_all_tds[SCHOOL_NUM_TESTED] = sum_number_students_tested(data_sets_for_school_value)
+        flags << 'n_tested'
       else
         grade_all_tds[SCHOOL_VALUE] = average_school_value_float(data_sets_for_school_value)
+        flags << 'straight_avg'
       end
     end
 
@@ -82,7 +85,25 @@ class TestScoresCaching::GradeAllCalculator
     # Make sure to only return a new data set if we've actually computed something
     return nil unless grade_all_tds[SCHOOL_VALUE] || grade_all_tds[STATE_VALUE]
 
-    grade_all_tds
+    test = OpenStruct.new.tap do |t|
+      t.grade = grade_all_tds.grade
+      t.year = grade_all_tds.year
+      t.level_code = grade_all_tds.level_code
+      t.data_type_id = grade_all_tds.data_type_id
+      t.subject_id = grade_all_tds.subject_id
+      t.breakdown_id = grade_all_tds.breakdown_id
+      t.proficiency_band_id = grade_all_tds.proficiency_band_id
+      t.active = grade_all_tds.active
+      t.school_decile_tops = grade_all_tds.school_decile_tops
+      t.display_target = grade_all_tds.display_target
+      t.flags = flags
+      t.school_value_float = grade_all_tds[SCHOOL_VALUE]
+      t.state_value_float = grade_all_tds[STATE_VALUE]
+      t.number_students_tested = grade_all_tds[SCHOOL_NUM_TESTED]
+      t.state_number_tested = grade_all_tds[STATE_NUM_TESTED]
+      t.subject = grade_all_tds[SUBJECT]
+    end
+    test
   end
 
   def all_have_number_tested?(test_data_sets)

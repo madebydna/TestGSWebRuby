@@ -29,7 +29,8 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
         number_students_tested: test.number_students_tested,
         state_number_tested: test.state_number_tested,
         score: test.school_value,
-        state_average: test.state_value
+        state_average: test.state_value,
+        flags: test.flags
     }
     if test.proficiency_band_id.present?
       hash.merge!(band_id: test.proficiency_band_id)

@@ -113,7 +113,8 @@ module SchoolProfiles
                   breakdown: breakdown_name,
                   year: max_year,
                   subject: subject,
-                  grade: grade_value
+                  grade: grade_value,
+                  flags: year_hash[max_year]['flags']
                 }
               ).symbolize_keys
             end if level_code
