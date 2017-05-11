@@ -11,10 +11,8 @@ module SchoolProfiles
         @_normalized_values ||= (
           scores = school_cache_data_reader
             .flat_test_scores_for_latest_year
-          scores_grade_all = scores.select { | score | score[:grade] == 'All' }
-          scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
-          scores_grade_all.select { |h| h[:subject] == data_type } # TODO: using data type variable to hold subject. Improve
-            .map { |h| cache_hash_to_standard_hash(h, scores_grade_not_all) }
+          (scores_grade_all, scores_grade_not_all) = scores.select { |h| h[:subject] == data_type }.partition { |score| score[:grade] == 'All' }
+          scores_grade_all.map { |h| cache_hash_to_standard_hash(h, scores_grade_not_all) }
         )
       end
 
@@ -38,16 +36,16 @@ module SchoolProfiles
       
       def cache_hash_to_standard_hash(hash, grades)
         breakdown = hash[:breakdown]
-        grades_for_breakdown = grades.select{|grade| grade[:breakdown] == breakdown && grade[:subject] == hash[:subject] && grade[:test_label] == hash[:test_label]}
+        grades_for_breakdown = grades.select{|grade| grade[:breakdown] == breakdown && grade[:test_label] == hash[:test_label]}
         normalized_breakdown = breakdown == 'All' ? 'All students' : breakdown
         hash.merge(
           breakdown: normalized_breakdown,
           percentage: value_to_s(ethnicities_to_percentages[normalized_breakdown]),
-          grades: manage_hash_content(grades_for_breakdown)
+          grades: manage_grades_hash(grades_for_breakdown)
         )
       end
 
-      def manage_hash_content(grades)
+      def manage_grades_hash(grades)
         grades.map do |grade|
           grade.except(:breakdown,
                        :subject,
