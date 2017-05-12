@@ -163,15 +163,6 @@ class Review < ActiveRecord::Base
       return self
     end
 
-    def check_for_local_school
-      if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
-        self.reasons << ReviewFlag::LOCAL_SCHOOL
-        comment << ' ' if self.comment.present?
-        self.comment << IS_DELAWARE_SCHOOL_ERROR
-      end
-      return self
-    end
-
     def check_for_held_school
       if school.held?
         self.reasons << ReviewFlag::HELD_SCHOOL
@@ -204,7 +195,6 @@ class Review < ActiveRecord::Base
 
     def auto_moderate
       check_alert_words
-      check_for_local_school
       check_for_student_user_type_with_comment
       check_for_principal_user_type
       check_for_held_school

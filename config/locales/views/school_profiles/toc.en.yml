@@ -4,16 +4,17 @@ en:
       ACADEMICS: ACADEMICS
       test_scores: Test scores
       college_readiness: College readiness
+      student_progress: Student progress
       EQUITY: EQUITY
       race_ethnicity: Race/ethnicity
       low_income: Low-income students
       disabilities: Students with disabilities
       ENVIRONMENT: ENVIRONMENT
       students: Students
-      teachers_staff_html: Teachers &amp; Staff
+      teachers_staff_html: Teachers &amp; staff
       neighborhood: Neighborhood
       advanced_courses: Advanced courses
       info_texts:
-        academics_html: This section includes test scores for this school, and student progress information when available.
+        academics_html: This section includes test scores for this school and, when available, information about student progress and college readiness.
         environment_html: This section tells you more about the school’s student demographics, the surrounding neighborhood, and more.
         equity_html: How well does this school serve the needs of different student groups? This section shows you test scores and other information about different student groups at this school. Low ratings may indicate some student groups are not getting the support they need.

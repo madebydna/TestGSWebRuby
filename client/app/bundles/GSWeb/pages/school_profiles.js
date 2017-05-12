@@ -14,6 +14,7 @@ import * as stickyCTA from '../components/school_profile_sticky_cta';
 import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
 import PrivateSchoolInfo from '../react_components/private_school_info';
+import Toggle from '../components/toggle';
 
 window.store = configureStore({
   school: gon.school
@@ -29,6 +30,14 @@ ReactOnRails.register({
 });
 
 $(function() {
+  (function() {
+    var toggle = _.assign(new Toggle($('#hero').find('.school-info')));
+    toggle.effect = "slideToggle";
+    toggle.addCallback(
+        toggle.updateButtonTextCallback(GS.I18n.t('show_less'), GS.I18n.t('show_more'))
+    );
+    toggle.init().add_onclick();
+  })();
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
   tooltips.initialize();

@@ -122,7 +122,23 @@
         <div class="label"><%= t('.school_type') %></div>
         <div><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></div>
       </div>
-    </div>
 
+      <div class="vertical-items js-toggle-target" style="display: none;">
+        <div class="school-info__item-mobile">
+          <span class="label"><%= hero.grade_range_label %></span>
+          <span><%= hero.grade_range %></span>
+        </div>
+        <div class="school-info__item-mobile">
+          <span class="label"><%= t('.students_enrolled') %></span>
+          <span><%= hero.students_enrolled_or_default %></span>
+        </div>
+        <div class="school-info__item-mobile">
+          <span class="label"><%= t('.school_type') %></span>
+          <span><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></span>
+        </div>
+      </div>
+
+      <a href="javascript:void(0);" class="see-more js-toggle-button"><%= t('javascript.show_more') %></a>
+    </div>
   </div>
 </div>

@@ -3,5 +3,5 @@ es:
     teachers_staff:
       title: 'Profesores y personal'
       source: 'Fuente'
-      see notes: 'Ver notas'
-      subtitle_html: 'A menudo los padres valoran clases pequeñas porque saben que los profesores son el factor más  importante en la educación de sus hijos, pero la verdad es más complicada.'
+      sources: Fuentes
+      subtitle_html: 'A menudo los padres valoran clases pequeñas, pero la verdad es más complicada.'

@@ -3,6 +3,11 @@ module SchoolProfiles
 
     attr_reader :school, :school_cache_data_reader
 
+    GRADES_DISPLAY_MINIMUM = 2
+    N_TESTED = 'n_tested'
+    STRAIGHT_AVG = 'straight_avg'
+    N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
+
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
@@ -24,27 +29,36 @@ module SchoolProfiles
       I18n.t(key, scope: 'lib.test_scores', default: I18n.db_t(key, default: key))
     end
 
-    def subject_scores_equity
-      scores = @school_cache_data_reader.subject_scores_by_latest_year
-      scores = sort_by_number_tested_descending scores
-      scores.map do |hash|
-        SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
-          rating_score_item.label = data_label(hash.subject)
-          rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
-          rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
-        end
-      end if scores.present?
-    end
+    # def subject_scores_equity
+    #   scores = @school_cache_data_reader.subject_scores_by_latest_year
+    #   scores = sort_by_number_tested_descending scores
+    #   scores.map do |hash|
+    #     SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
+    #       rating_score_item.label = data_label(hash.subject)
+    #       rating_score_item.score = SchoolProfiles::DataPoint.new(hash.score).apply_formatting(:round, :percent)
+    #       rating_score_item.state_average = SchoolProfiles::DataPoint.new(hash.state_average).apply_formatting(:round, :percent)
+    #     end
+    #   end if scores.present?
+    # end
 
     def subject_scores
       scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h| h[:breakdown] == 'All' }
-      subjects = scores.map { |h| h[:subject] }
+      scores_grade_all = scores.select { | score | score[:grade] == 'All' }
+      scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
+      subjects = scores_grade_all.map { |h| h[:subject] }
       if subjects.uniq.size < subjects.size
-        scores = sort_by_test_label_and_number_tested_descending(scores)
+        scores_grade_all = sort_by_test_label_and_number_tested_descending(scores_grade_all)
       else
-        scores = sort_by_number_tested_descending(scores)
+        scores_grade_all = sort_by_number_tested_descending(scores_grade_all)
       end
+      build_rating_score_hash(scores_grade_all, scores_grade_not_all)
+    end
+
+    def build_rating_score_hash(scores, grades_hash)
       scores = scores.map do |hash|
+        grades_from_hash = grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] } if grades_hash
+        grades = build_rating_score_hash(grades_from_hash, nil) if grades_from_hash && grades_from_hash.count >= GRADES_DISPLAY_MINIMUM
+
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash[:subject])
           rating_score_item.score = SchoolProfiles::DataPoint.new(hash[:score]).apply_formatting(:round, :percent)
@@ -53,6 +67,9 @@ module SchoolProfiles
           rating_score_item.test_label = hash[:test_label]
           rating_score_item.source = hash[:test_source]
           rating_score_item.year = hash[:year]
+          rating_score_item.grade = hash[:grade]
+          rating_score_item.grades = grades
+          rating_score_item.flags = hash[:flags]
         end
       end if scores.present?
       scores
@@ -69,48 +86,58 @@ module SchoolProfiles
     def sources
       content = ''
       if subject_scores.present?
-        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('title') + '</h1>'
-        content << '<div style="padding:0 40px 20px;">'
-        content << '<div style="margin-top:40px;">'
-        content << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label('GreatSchools Rating') + '</h4>'
-        content << '<div>' + data_label('Rating text') + '</div>'
-        content << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': GreatSchools, </span>' + rating_year + ' | '
-        content << data_label('See more') + ': <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
-        content << '</div>'
+        content << '<div class="sourcing">'
+        content << '<h1>' + data_label('title') + '</h1>'
+        content << '<div>'
+        content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
+        content << '<p>' + data_label('Rating text') + '</p>'
+        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
+        content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
+        content << '</p>'
         content << '</div>'
         data = subject_scores.each_with_object({}) do |rsi, output|
-          output[rsi.test_label] = {
-              test_label: rsi.test_label,
-              subject: sources_with_subject[rsi.test_label], # subject is an array based on test_label
-              test_description: rsi.description,
-              source: rsi.source,
-              year: rsi.year
-          }
+          output[rsi.test_label] ||= {}
+          output[rsi.test_label][:test_label] = rsi.test_label
+          output[rsi.test_label][:subject] ||= []
+          output[rsi.test_label][:subject] << rsi.label
+          output[rsi.test_label][:test_description] = rsi.description
+          output[rsi.test_label][:source] = rsi.source
+          output[rsi.test_label][:year] = rsi.year
+          output[rsi.test_label][:flags] ||= []
+          output[rsi.test_label][:flags] << rsi.flags
         end
         content << data.reduce('') do |string, array|
           string << sources_for_view(array)
         end
+        content << '</div>'
       end
       content
-    end
-
-    def sources_with_subject
-      subject_scores.each_with_object({}) do |rsi, output|
-        output[rsi.test_label] ||= []
-        output[rsi.test_label] << rsi.label
-      end
     end
 
     def sources_for_view(array)
       year = array.last[:year]
       source = array.last[:source]
-      str = '<div style="margin-top:40px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(array.last[:test_label]) + '</h4>'
-      str << "<div style='margin-bottom:10px; font-weight:bold;'>#{array.last[:subject].join(', ')}</div>"
+      flags = flags_for_sources(array.last[:flags].flatten.compact.uniq)
+      str = '<div>'
+      str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
+      str << "<p>#{array.last[:subject].join(', ')}</p>"
       str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + data_label('source') + ': </span>' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</div>'
-      # str << '</div>'
+      if flags.present?
+        str << '<p><span class="emphasis">' + data_label('note') + '</span>: ' + data_label(flags) + '</p>'
+      end
+      str << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
+      str << '</div>'
       str
+    end
+
+    def flags_for_sources(flag_array)
+      if (flag_array.include?(N_TESTED) && flag_array.include?(STRAIGHT_AVG))
+        N_TESTED_AND_STRAIGHT_AVG
+      elsif flag_array.include?(N_TESTED)
+        N_TESTED
+      elsif flag_array.include?(STRAIGHT_AVG)
+        STRAIGHT_AVG
+      end
     end
 
     def rating_year

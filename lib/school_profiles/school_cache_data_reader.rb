@@ -57,6 +57,18 @@ module SchoolProfiles
       decorated_school.college_readiness_rating_year
     end
 
+    def student_progress_rating
+      decorated_school.student_growth_rating
+    end
+
+    def student_progress_rating_year
+      decorated_school.student_growth_rating_year
+    end
+
+    def student_progress_rating_hash
+      decorated_school.student_growth_rating_hash
+    end
+
     def equity_ratings_breakdown(breakdown)
       if decorated_school.performance && decorated_school.performance['GreatSchools rating']
         breakdown_results = decorated_school.performance['GreatSchools rating'].select { |bd|
@@ -88,20 +100,25 @@ module SchoolProfiles
       output_array = []
       test_scores.values.each do |test_hash|
         test_hash.each do | breakdown_name, breakdown_hash|
-          level_code = breakdown_hash.seek('grades', 'All', 'level_code')
-          level_code.first[1].each do |subject, year_hash|
-            max_year = year_hash.keys.max_by { |year| year.to_i }
-            output_array << year_hash[max_year].merge(
-              {
-                test_label: breakdown_hash['test_label'],
-                test_description: breakdown_hash['test_description'],
-                test_source: breakdown_hash['test_source'],
-                breakdown: breakdown_name,
-                year: max_year,
-                subject: subject
-              }
-            ).symbolize_keys
-          end if level_code
+          breakdown_hash['grades'].each { | grade |
+            grade_value = grade.first
+            level_code = grade.second['level_code']
+            level_code.first[1].each do |subject, year_hash|
+              max_year = year_hash.keys.max_by { |year| year.to_i }
+              output_array << year_hash[max_year].merge(
+                {
+                  test_label: breakdown_hash['test_label'],
+                  test_description: breakdown_hash['test_description'],
+                  test_source: breakdown_hash['test_source'],
+                  breakdown: breakdown_name,
+                  year: max_year,
+                  subject: subject,
+                  grade: grade_value,
+                  flags: year_hash[max_year]['flags']
+                }
+              ).symbolize_keys
+            end if level_code
+          }
         end
       end
       output_array

@@ -7,7 +7,7 @@ export default {
   target: 'node',
   externals: [nodeExternals()],
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   module: {
     loaders: [

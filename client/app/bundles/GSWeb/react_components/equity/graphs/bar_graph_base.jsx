@@ -99,7 +99,6 @@ export default class BarGraphBase extends React.Component {
                 {this.renderStateAverage(test_data['state_average'])}
               </div>
             </div>
-
           </div>
         </div>
       );

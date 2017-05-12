@@ -24,6 +24,19 @@ $(function() {
     }
   });
 
+  // used by test scores in school profiles
+  $('body').on('click', '.js-test-score-details', function () {
+    var grades = $(this).closest('.bar-graph-display').find('.grades');
+    if(grades.css('display') == 'none') {
+      grades.slideDown();
+      $(this).find('span').removeClass('rotate-text-270');
+    }
+    else{
+      grades.slideUp();
+      $(this).find('span').addClass('rotate-text-270');
+    }
+  });
+
   // When search bar added to universal nav, was required to init autocomplete on all pages
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
   // if state abbreviation is NOT set will init autocomplete without state.
@@ -87,5 +100,32 @@ $(function() {
     refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   })();
 
-
+  $(window).on('load', function() {
+    var moduleIds = [
+      '#TestScores',
+      '#CollegeReadiness',
+      '#StudentProgress',
+      '#AdvancedCourses',
+      '#Equity',
+      '#EquityRaceEthnicity',
+      '#EquityLowIncome',
+      '#EquityDisabilities',
+      '#Students',
+      '#TeachersStaff',
+      '#Reviews',
+      '#ReviewSummary',
+      '#Neighborhood',
+      '#NearbySchools'
+    ];
+    var elementIds = [];
+    for (var x=0; x < moduleIds.length; x ++) {
+      var theId = moduleIds[x];
+      elementIds.push(theId);
+      elementIds.push(theId + '-empty');
+    }
+    GS.impressionTracker({
+      elements: elementIds,
+      threshold: 50
+    });
+  });
 });

@@ -6,9 +6,10 @@
 <% data_values = test_scores.subject_scores || [] %>
 <% initial_size = 3 %>
 <% content = test_scores.sources %>
+<% analytics_id = 'TestScores' %>
+<% analytics_id += '-empty' unless data_values.present? %>
 
-
-<div class="rating-container rs-test-scores">
+<div id="<%= analytics_id %>" class="rating-container rs-test-scores">
   <a class="anchor-mobile-offset" name="Test_scores"></a>
   <div class="rating-container__rating">
     <%= render "module_header",
@@ -25,23 +26,24 @@
   <% total_items = data_values.size %>
   <% last_test_name = nil %>
   <% render_test_names = subjects.uniq.size < subjects.size %>
-
+  <div style="padding-top: 10px;"></div>
   <% data_values.take(initial_size).each do |data_value| %>
     <% if render_test_names && last_test_name != data_value.test_label %>
       <div class="item-heading"><%= data_value.test_label %></div>
     <% end %>
-    <%= render partial: "rating_score_item", locals: { score_data: data_value } %>
+
+    <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
     <% last_test_name = data_value.test_label %>
   <% end %>
 
   <% if total_items > initial_size %>
     <div class="rating-container__more-items">
-      <%= render layout:"drawer", locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
+      <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
         <% data_values.drop(initial_size).each do |data_value| %>
           <% if render_test_names && last_test_name != data_value.test_label %>
             <div class="item-heading"><%= data_value.test_label %></div>
           <% end %>
-          <%= render partial: "rating_score_item", locals: { score_data: data_value } %>
+          <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
           <% last_test_name = data_value.test_label %>
         <% end %>
       <% end %>
@@ -55,7 +57,7 @@
 
        href="javascript:void(0)">
       <% if data_values.present? %>
-        <span class="source-link"><%= t('lib.test_scores.see notes') %></span>
+        <span class="source-link"><%= t('lib.test_scores.sources') %></span>
       <% end %>
     </a>
   </div>

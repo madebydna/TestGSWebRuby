@@ -29,7 +29,7 @@ describe 'school_profiles/_test_scores' do
       render_partial(props(data_values: []))
       rendered
     end
-    it { is_expected.to have_text('Data is not available') }
+    it { is_expected.to have_text('This information is currently not available') }
   end
 
   context 'when there are multiple tests with same subject' do

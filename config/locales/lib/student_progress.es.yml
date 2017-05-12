@@ -1,0 +1,81 @@
+es:
+  lib:
+    student_progress:
+      info_text: 'El progreso del estudiante (también conocido como "el crecimiento académico del estudiante") es una forma de medir si las escuelas están ayudando a los estudiantes para avanzar académicamente año tras año, y si estos estudiantes están en camino de lograr su máximo potencial, en comparación con otras escuelas en el estado.<br/><br/>El progreso del estudiante compara el progreso académico a lo largo del tiempo para esta escuela en comparación con todas las escuelas en el estado, usando datos del crecimiento académico del estudiante proporcionados por el Departamento de Educación. <a href="/gk/ratings/">Aprenda más acerca de esta clasificación</a>.'
+      'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
+      'GreatSchools Rating': 'Calificaciones de GreatSchools'
+      'Rating text': 'La calificación de el progreso del estudiante mide si los estudiantes de esta escuela están progresando académicamente a lo largo del tiempo basada en los datos de crecimiento proporcionados por el Departamento de Educación. Específicamente, esta calificación mira cuánto progreso estudiantes individuales han hecho en los exámenes estatales durante el último año o más, como este rendimiento se alinea con el esperado progreso basado en el modelo de crecimiento estudiantil establecido por el Departamento de Educación del estado, y cómo los datos de crecimiento de esta escuela compara con otras escuelas en el estado.'
+      'source': 'Fuente'
+      'Dept of Education': 'Dept. de Educación'
+      narrative:
+        1_html: >
+          <h3 class="negative">Muy preocupante:</h3>
+          <p>Los estudiantes de esta escuela están progresando <span class="emphasis">mucho menos</span>
+          académicamente en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
+          <p>Dependiendo de los resultados de los exámenes de la escuela, el progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes.</p>
+          <p><span class="emphasis">Muy poco progreso con bajas calificaciones en los exámenes</span> significa...que los
+          estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros.</p>
+          <p><span class="emphasis">Muy poco progreso con altas calificaciones en los exámenes</span> significa…que los
+          estudiantes tienen fuertes capacidades académicas, pero la escuela no contribuye al aprendizaje de los
+          estudiantes tanto como otras escuelas en el estado.</p>
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para mejorar sus programas.</p>
+        2_html: >
+          <h3 class="negative">Un signo preocupante:</h3>
+          <p>Los estudiantes de esta escuela están progresando <span class="emphasis">menos</span>
+          académicamente en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
+          <p>Dependiendo de los resultados de los exámenes de la escuela, el progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes.</p>
+          <p><span class="emphasis">Poco progreso con bajas calificaciones en los exámenes</span> significa...que los
+          estudiantes empiezan en un punto bajo y caerán aún más lejos detrás de sus compañeros.</p>
+          <p><span class="emphasis">Poco progreso con altas calificaciones en los exámenes </span> significa…que los
+          estudiantes tienen fuertes capacidades académicas, pero la escuela no contribuye al aprendizaje de los
+          estudiantes tanto como otras escuelas en el estado.</p>
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para mejorar sus programas.</p>
+        3_html: >
+          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+          <p>Los estudiantes de esta escuela están <span class="emphasis">en promedio</span>
+          logrando un progreso académico en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
+          <p>El progreso promedio del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes. En algunos estados, el
+          <span class="emphasis">progreso promedio es tan bajo</span>, la mayoría de los estudiantes no están preparados
+          para la universidad o una carrera. Esto también depende de los resultados de los exámenes de la escuela.</p>
+          <p><span class="emphasis">Progreso promedio con bajas calificaciones en los exámenes</span> significa...que los
+          estudiantes están comenzando en un punto bajo pero manteniendo el ritmo con sus compañeros.</p>
+          <p><span class="emphasis">Progreso promedio con altas calificaciones en los exámenes</span> significa... los
+          estudiantes tienen fuertes capacidades académicas y la escuela está contribuyendo en el aprendizaje de los
+          estudiantes aproximadamente al mismo ritmo que otras escuelas en el estado.</p>
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para mejorar sus programas.</p>
+        4_html: >
+          <h3 class="positive">Un signo prometedor</h3>
+          <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">más</span>
+          progreso académico en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
+          <p>El grande progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes. En algunos estados, el
+          <span class="emphasis">progreso promedio es tan bajo</span>, la mayoría de los estudiantes no están preparados
+          para la universidad o una carrera. Esto también depende de los resultados de los exámenes de la escuela.</p>
+          <p><span class="emphasis">Grande progreso con bajas calificaciones en los exámenes</span> significa...que los
+          estudiantes están comenzando en un punto bajo pero la escuela está haciendo un mejor trabajo en apoyar su
+          crecimiento académico que la mayoría de las otras escuelas.</p>
+          <p><span class="emphasis">Grande progreso con altas calificaciones en los exámenes</span> significa... los
+          estudiantes tienen fuertes capacidades académicas y la escuela está haciendo un mejor trabajo en apoyar su
+          crecimiento académico que la mayoría de las otras escuelas.</p>
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para mejorar sus programas.</p>
+        5_html: >
+          <h3 class="positive">¡Buenas noticias!</h3>
+          <p>Los estudiantes de esta escuela están haciendo <span class="emphasis">mucho más</span>
+          progreso académico en comparación al año anterior, y en comparación a otros estudiantes en el estado.</p>
+          <p>El grande progreso del estudiante (también conocido como "el crecimiento académico del estudiante") significa cosas diferentes, dependiendo de los resultados de los exámenes de la escuela.</p>
+          <p><span class="emphasis">Alto progreso con bajas calificaciones en los exámenes</span> significa...que los
+          estudiantes están comenzando en un punto bajo pero la escuela está haciendo un buen trabajo en apoyar su
+          crecimiento académico comparado con la mayoría de las otras escuelas.</p>
+          <p><span class="emphasis">Alto progreso con altas calificaciones en los exámenes</span> significa...que los
+          estudiantes tienen fuertes capacidades académicas y la escuela está haciendo un excelente trabajo en apoyar su
+          crecimiento académico comparado con la mayoría de las otras escuelas.</p>
+          <p class="parent-tip">Consejos para padres:</p>
+          <p class="footnote">Pregúntele a la escuela cómo interpreta esta clasificación y cómo podría utilizar esta
+          información para mejorar sus programas.</p>

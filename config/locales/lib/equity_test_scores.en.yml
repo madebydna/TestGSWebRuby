@@ -1,8 +1,8 @@
 en:
   lib:
     equity_test_scores:
-      Economically disadvantaged: Economically disadvantaged
-      Not economically disadvantaged: Not economically disadvantaged
+      Economically disadvantaged: Low-income
+      Not economically disadvantaged: Not low-income
       English Language Arts: English
       African American: Black
       Black: Black

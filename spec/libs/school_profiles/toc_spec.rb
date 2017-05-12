@@ -5,6 +5,7 @@ describe SchoolProfiles::Toc do
   let(:school) { double('school') }
   let(:school_cache_data_reader) { double('school_cache_data_reader') }
   let(:test_scores) {double('test_scores')}
+  let(:student_progress) {double('student_progress')}
   let(:college_readiness) {double('college_readiness')}
   let(:equity) {double('equity')}
   let(:students) {double('students')}
@@ -12,7 +13,7 @@ describe SchoolProfiles::Toc do
   let(:courses) {double('courses')}
 
   subject(:toc) do
-    SchoolProfiles::Toc.new(test_scores, college_readiness, equity, students, teacher_staff, courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, students, teacher_staff, courses, school)
   end
 
   it { is_expected.to respond_to(:content) }

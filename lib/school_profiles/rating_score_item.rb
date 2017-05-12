@@ -1,6 +1,6 @@
 module SchoolProfiles
   class RatingScoreItem
-    attr_accessor :label, :score, :state_average, :visualization, :range, :info_text, :description, :test_label, :source, :year
+    attr_accessor :label, :score, :state_average, :visualization, :range, :info_text, :description, :test_label, :source, :year, :grade, :grades, :flags
 
     def self.from_hash(hash)
       self.new.tap do |obj|
@@ -19,6 +19,9 @@ module SchoolProfiles
         obj.test_label = hash.test_label
         obj.source = hash.source
         obj.year = hash.year
+        obj.grade = hash.grade
+        obj.grades = hash.grades
+        obj.flags = hash.flags
       end
     end
 

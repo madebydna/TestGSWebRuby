@@ -1,0 +1,38 @@
+<% student_progress %>
+<% title = t('.title') %>
+<% rating = student_progress.rating %>
+<% info_text = student_progress.info_text  %>
+<% narration = student_progress.narration %>
+<% sources = student_progress.sources %>
+<% analytics_id = 'StudentProgress' %>
+<% analytics_id += '-empty' unless student_progress.has_data? %>
+
+<div id="<%= analytics_id %>" class="rating-container rs-student_progress">
+  <a class="anchor-mobile-offset" name="Student_progress"></a>
+  <div class="rating-container__rating">
+    <%= render 'module_header',
+               circle_color_modifier: rating,
+               circle_content: rating,
+               title: title,
+               info_text: info_text,
+               has_data: student_progress.has_data?
+    %>
+
+    <% if student_progress.has_data? %>
+      <div class="panel">
+        <div class="auto-narration">
+          <%= narration %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <a data-remodal-target="modal_info_box"
+       data-content-type="info_box"
+       data-content-html="<%= sources %>"
+       href="javascript:void(0)">
+        <span class="source-link"><%= t('.sources') %></span>
+    </a>
+  </div>
+</div>

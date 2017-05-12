@@ -4,11 +4,9 @@ es:
       title: Equidad
       Race ethnicity: 'Raza/etnicidad'
       Race ethnicity subtitle: >
-        Las diferencias en el rendimiento académico entre los distintos grupos de estudiantes son comunes, pero no
-        insuperables. Descubre cómo iniciar una conversación en la escuela de tu hijo.
+        Descubre cómo iniciar una conversación en la escuela de tu hijo.
       Race ethnicity tooltip: >
-        Esta sección refleja las clasificaciones de los exámenes y otras medidas importantes para los estudiantes de
-        esta escuela a través de diferentes razas y etnias.
+        Esta sección refleja las clasificaciones de los exámenes y otras medidas importantes para los estudiantes de esta escuela a través de diferentes razas y etnias. <br/><br/>Nota: Cuando la población de un subgrupo es demasiado pequeña para proporcionar datos fiables, es subgrupo no aparecerá en la pantalla. Esto puede provocar que ciertas razas o etnias no sean incluidos en algunos gráficos dentro de esta sección.
       Race ethnicity icon: 'icon-pie'
       'Low-income students': 'Estudiantes de bajos ingresos'
       Low income subtitle: >

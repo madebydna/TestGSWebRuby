@@ -6,7 +6,11 @@ en:
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools Rating'
       'Rating text': 'The GreatSchools Rating is a simple tool that helps you compare schools based on test scores and other available data, including student academic growth and college readiness. GreatSchools is always working to improve the rating and add more information when state education agencies make school quality data publicly available.'
+      n_tested: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject weighted by the number of students tested in each grade.'
+      straight_avg: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject based on a non-weighted average of the scores in each grade. We are not able to provide a weighted average because the number of test-taking students in each grade is not available.'
+      n_tested_and_straight_avg: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject based on the scores in each grade. Where possible, the overall score is weighted by the number of students tested in each grade. When the number of test-taking students in each grade is not available, we calculate a non-weighted average.'
       'source': 'Source'
+      note: Note
       'See more': 'See more'
       'More': 'More about GreatSchools ratings'
       Test scores: Test scores
@@ -14,7 +18,7 @@ en:
       'Math': Math
       Science: Science
       Source: Source
-      see notes: See notes
+      sources: Sources
       narrative:
         subject:
           'English Language Arts': English

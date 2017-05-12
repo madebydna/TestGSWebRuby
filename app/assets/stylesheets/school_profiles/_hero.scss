@@ -3,6 +3,7 @@
   $rating-star-empty-color: #65859f;
   $hero-background-color: #08497b;
   $hero-font-color: white;
+  $color-see-more: #26abe2;
 
   background-image: image_url('school_profiles/hero_bg.jpg');
   color: $hero-font-color;
@@ -98,13 +99,21 @@
     text-align: center;
     padding-top: 1.5rem;
     padding-bottom: 1rem;
-    @media(min-width: 750px) {
+    @include media-breakpoint-up(md) {
       text-align: left;
       width: 100%;
     }
     @include media-breakpoint-down(sm) {
       .school-info-reviews-mobile {
         padding-right: 0px;
+      }
+    }
+    a.see-more {
+      margin-top: 10px;
+      color: $color-see-more;
+      display: block;
+      @include media-breakpoint-up(md) {
+        display: none;
       }
     }
   }
@@ -126,9 +135,28 @@
     border-left: none;
   }
 
-  .school-info__item:nth-last-of-type(-n+3) {
+  .school-info__item:nth-last-of-type(-n+4) {
     @include media-breakpoint-down(sm) {
       display: none;
+    }
+  }
+
+  .vertical-items {
+    margin: 20px auto 0;
+    max-width: 275px;
+  }
+
+  .school-info__item-mobile {
+    border-bottom: 1px solid rgba(255, 255, 255, .17);
+    text-align: left;
+    padding: 2px 0;
+
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+
+    span:not(.label) {
+      float: right;
     }
   }
 

@@ -37,22 +37,28 @@ module SchoolProfiles
     end
 
     def sources_for_view
-      str = '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + static_label('title') + '</h1>'
-      str << '<div style="padding:40px 0 40px 20px;">'
+      str = '<div class="sourcing">'
+      str << '<h1>' + static_label('title') + '</h1>'
       if ethnicity_data_source.present?
-        str << '<h4 style="font-family:RobotoSlab-Bold;">' + static_label('ethnicity') + '</h4>'
-        str << "<div style='padding-bottom:40px;'><span>" + static_label('source') + ": #{data_label(ethnicity_data_source['ethnicity'][:source])}, "
-        str << "#{ethnicity_data_source['ethnicity'][:year]}</span></div>"
+        str << '<div>'
+        str << '<h4>' + static_label('ethnicity') + '</h4>'
+        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(ethnicity_data_source['ethnicity'][:source])}, "
+        str << "#{ethnicity_data_source['ethnicity'][:year]}</p>"
+        str << '</div>'
       end
       if gender_data_source.present?
-        str << '<h4 style="font-family:RobotoSlab-Bold;">' + static_label('gender') + '</h4>'
-        str << "<div style='padding-bottom:40px;'><span>" + static_label('source') + ": #{data_label(gender_data_source['gender'][:source])}, "
-        str << "#{gender_data_source['gender'][:year]}</span></div>"
+        str << '<div>'
+        str << '<h4>' + static_label('gender') + '</h4>'
+        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(gender_data_source['gender'][:source])}, "
+        str << "#{gender_data_source['gender'][:year]}</p>"
+        str << '</div>'
       end
       if subgroups_data_source.present?
-        str << '<h4 style="font-family:RobotoSlab-Bold;">' + static_label('subgroups') + '</h4>'
-        str << '<div><span>' + static_label('source') + ": #{data_label(subgroups_data_source['subgroups'][:source])}, "
-        str << "#{subgroups_data_source['subgroups'][:year]}</span></div>"
+        str << '<div>'
+        str << '<h4>' + static_label('subgroups') + '</h4>'
+        str << '<p><span class="emphasis">' + static_label('source') + "</span>: #{data_label(subgroups_data_source['subgroups'][:source])}, "
+        str << "#{subgroups_data_source['subgroups'][:year]}</p>"
+        str << '</div>'
       end
       str << '</div>'
       str

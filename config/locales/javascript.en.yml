@@ -67,7 +67,7 @@ en:
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
-    See notes: See notes
+    See notes: Sources
     Economically disadvantaged: Economically disadvantaged
     Not economically disadvantaged: Not economically disadvantaged
     show_more: Show more
@@ -124,11 +124,14 @@ en:
     Review: Review
     Close all: Close all
     Review Reported: Review Reported
-    no_data_message: 'Data is not available. '
-    notify_me: "Notify me when it's available."
+    no_data_message: 'This information is currently not available. '
+    notify_me: "Keep me updated on this school, including when new data is published."
     Advanced courses: Advanced courses
-    advanced_courses_subheading_html: Advanced coursework helps prepare students for college. A rigorous course load can also help your student get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/">Learn more</a>.
+    advanced_courses_subheading_html: A rigorous course load can also help your student get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/">Learn more</a>.
+    advanced_courses_tooltip: The Advanced courses rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign language compared to the state average.
     advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses
+    grade: Grade
+    details: Details

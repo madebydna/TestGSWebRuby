@@ -262,6 +262,7 @@ LocalizedProfiles::Application.routes.draw do
 
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
+    get '/first-active-school-url-per-state', to: 'first_active_school_url_per_state#show'
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
@@ -312,9 +313,9 @@ LocalizedProfiles::Application.routes.draw do
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   get '/gsr/validations/need_to_signin', :to => 'user#need_to_signin'
-  get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
-  get '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
-  get '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
+  post '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
+  post '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
+  post '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
 
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'

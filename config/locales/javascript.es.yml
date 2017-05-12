@@ -68,7 +68,7 @@ es:
     Test scores: 'Resultados de exámenes'
     Graduation rates: 'Índices de Graduación'
     'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
-    See notes: Ver notas
+    See notes: Fuentes
     Economically disadvantaged: De bajos recursos
     Not economically disadvantaged: Sin desventaja económica
     show_more: Mostrar más
@@ -125,11 +125,14 @@ es:
     Review: Review
     Close all: Cerrar sección
     Review Reported: Comentario reportado
-    no_data_message: 'Data is not available. '
-    notify_me: "Notify me when it's available."
+    no_data_message: 'Esta información no está actualmente disponible. '
+    notify_me: "Mantenganme informado en esta escuela, incluso cuando se publican nuevos datos."
     Advanced courses: Cursos avanzados
-    advanced_courses_subheading_html: Cursos avanzados ayuda a preparar a los estudiantes para la universidad. Un curso riguroso también puede ayudar que su estudiante entre a la universidad.
+    advanced_courses_subheading_html: Cursos riguroso también pueden ayudar a que tu estudiante se prepare y entre a la universidad.
+    advanced_courses_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela en inglés, STEM, ciencias sociales y idiomas extranjeros, en comparación con el promedio estatal.
     advanced_courses_rating_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela, en comparación con el promedio estatal.
     subjects: Materias
     rating_html: 'Calificación&nbsp;'
     courses: cursos
+    grade: Grado
+    details: Detalles

@@ -14,7 +14,7 @@ class SchoolProfilesPage < SitePrism::Page
   class RatingContainer < SitePrism::Section
     element :title, '.module-header .title'
     element :rating, '.circle-rating--medium'
-    element :source_link, 'a', text: 'See notes'
+    element :source_link, 'a', text: 'Sources'
     def has_rating?(r)
       rating.text == r
     end
@@ -23,6 +23,12 @@ class SchoolProfilesPage < SitePrism::Page
       element :label, '.rating-score-item__label'
       element :score, '.rating-score-item__score'
       element :state_average, '.rating-score-item__state-average'
+    end
+
+    sections :test_score_items, '.test-score-container' do
+      element :label, '.subject'
+      element :score, '.score'
+      element :state_average, '.state-average'
     end
 
     section :show_more, '.show-more' do
@@ -117,12 +123,12 @@ class SchoolProfilesPage < SitePrism::Page
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)
-    score_item = self.test_scores.score_items.first
-    return false unless score_item.present?
+    test_score_items = self.test_scores.test_score_items.first
+    return false unless test_score_items.present?
 
-    return false if label.present? && !score_item.label.text.include?(label)
-    return false if score.present? && !score_item.score.text.include?(score)
-    return false if state_average.present? && !score_item.state_average.text.include?(state_average)
+    return false if label.present? && !test_score_items.label.text.include?(label)
+    return false if score.present? && !test_score_items.score.text.include?(score)
+    return false if state_average.present? && !test_score_items.state_average.text.include?(state_average)
     return true
   end
 

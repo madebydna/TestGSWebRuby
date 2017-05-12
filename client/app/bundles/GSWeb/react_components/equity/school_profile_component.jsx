@@ -10,6 +10,7 @@ export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
     title: React.PropTypes.string,
     anchor: React.PropTypes.string,
+    analytics_id: React.PropTypes.string,
     subtitle:  React.PropTypes.string,
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
@@ -105,15 +106,23 @@ export default class SchoolProfileComponent extends React.Component {
     let equityConfig = this.equityConfiguration();
 
     var equitySections = [];
+    var noData = true;
     for (var i = 0; i < equityConfig.length; i++) {
       equitySections.push(<EquitySection
           key={i}
           equity_config={ equityConfig[i]}
           sources={this.props.sources}
       />)
+      if (equityConfig[i] && equityConfig[i]['section_content']) {
+        noData = false;
+      }
+    }
+    let analyticsId = this.props.analytics_id;
+    if (noData) {
+      analyticsId += '-empty';
     }
     return (
-        <div>
+        <div id={analyticsId}>
           { equitySections }
         </div>
     );

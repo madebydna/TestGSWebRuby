@@ -118,20 +118,27 @@ module SchoolProfiles
       if (equity_test_scores.ethnicity_test_scores_visible? || equity_test_scores.low_income_test_scores_visible?)
         content << get_test_source_data
       else
-        content << '<h1 style="text-align:center; font-size:22px; font-family:RobotoSlab-Bold;">' + data_label('.title') + '</h1>'
-        content << '<div style="padding:0 40px 20px;">'
+        content << '<div class="sourcing">'
+        content << '<h1>' + data_label('.title') + '</h1>'
+        content << '</div>'
       end
       if characteristics_low_income_visible?
+        content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
           string << sources_for_view(hash)
         end
+        content << '</div>'
       elsif characteristics_ethnicity_visible?
+        content << '<div class="sourcing">'
         content << characteristics_sources_ethnicity.reduce('') do |string, (key, hash)|
           string << sources_for_view(hash)
         end
+        content << '</div>'
       end
       if equity_data_sources.present?
+        content << '<div class="sourcing">'
         content << gsdata_sources_for_view(equity_data_sources)
+        content << '</div>'
       end
       content
     end
@@ -139,22 +146,22 @@ module SchoolProfiles
     def gsdata_sources_for_view(hash)
       str = ''
       hash.each do |subject, info|
-        str << '<div style="margin-top:40px;">'
-        str <<   '<h4 style="font-family:RobotoSlab-Bold;">' + subject + '</h4>'
+        str << '<div>'
+        str <<   '<h4>' + subject + '</h4>'
         str <<   "<p>#{info[:info_text]}</p>" if info[:info_text].present?
-        str <<   '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source') + ': </span>'
+        str <<   '<p><span class="emphasis">' + static_label('source') + '</span>: '
         str <<     info[:sources].map { |sources| "#{data_label(sources[:name])}, #{sources[:year]}"}.join('; ')
-        str <<   '</div>'
+        str <<   '</p>'
         str << '</div>'
       end
       str
     end
 
     def sources_for_view(hash)
-      str = '<div style="margin-top:40px;">'
-      str << '<h4 style="font-family:RobotoSlab-Bold;">' + data_label(hash[:label]) + '</h4>'
+      str = '<div>'
+      str << '<h4>' + data_label(hash[:label]) + '</h4>'
       str << "<p>#{data_label(hash[:description])}</p>"
-      str << '<div style="margin-top:10px;"><span style="font-weight:bold;">' + static_label('source') + ': </span>' + data_label(hash[:source]) + ', ' + hash[:year].to_s + '</div>'
+      str << '<p><span class="emphasis">' + static_label('source') + ': </span>' + data_label(hash[:source]) + ', ' + hash[:year].to_s + '</p>'
       str << '</div>'
       str
     end

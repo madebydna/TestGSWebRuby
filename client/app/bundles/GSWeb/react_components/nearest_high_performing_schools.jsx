@@ -87,7 +87,7 @@ class NearestHighPerformingSchools extends React.Component {
   }
 
   render() {
-    return (<div>
+    return (<div id="NearbySchools">
       <a className="anchor-mobile-offset" name="NearbySchools"></a>
       <div className="nearby-schools">
         <div className="title-bar">

@@ -6,8 +6,10 @@
 <% data_values = college_readiness.data_values || [] %>
 <% initial_size = 3 %>
 <% content = college_readiness.sources %>
+<% analytics_id = 'CollegeReadiness' %>
+<% analytics_id += '-empty' unless data_values.present? %>
 
-<div class="rating-container rs-college-readiness">
+<div id="<%= analytics_id %>" class="rating-container rs-college-readiness">
   <a class="anchor-mobile-offset" name="College_readiness"></a>
   <div class="rating-container__rating">
     <%= render "module_header",
@@ -35,7 +37,7 @@
        data-content-html="<%= content %>"
        href="javascript:void(0)">
       <% if data_values.present? %>
-        <span class="source-link"><%= t('.see notes') %></span>
+        <span class="source-link"><%= t('.sources') %></span>
       <% end %>
     </a>
   </div>

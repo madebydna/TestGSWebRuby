@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import BarGraphBase from './bar_graph_base';
+import TestScoreBarGraphWithGrades from './test_score_bar_graph_with_grades';
 
 export default class TestScores extends React.Component {
 
@@ -13,7 +13,7 @@ export default class TestScores extends React.Component {
       return this.displayWithTestTitles();
     }
     else{
-      return <BarGraphBase test_scores={breakdowns}/>;
+      return <TestScoreBarGraphWithGrades test_scores={breakdowns}/>;
     }
   }
 
@@ -21,7 +21,7 @@ export default class TestScores extends React.Component {
     return (
         <div key={this.renderKey(key)} >
           <div className="test-title">{key}</div>
-          <BarGraphBase test_scores={values}/>
+          <TestScoreBarGraphWithGrades test_scores={values}/>
         </div>
     );
   }

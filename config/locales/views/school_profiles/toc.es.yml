@@ -4,16 +4,17 @@ es:
       ACADEMICS: ACADÉMICO
       test_scores: Resultados de exámenes
       college_readiness: Preparación universitaria
+      student_progress: Progreso estudiantil
       EQUITY: EQUIDAD
-      race_ethnicity: Grupo Étnico
+      race_ethnicity: Raza/etnicidad
       low_income: De bajos Ingresos
-      disabilities: Estudientes con discapacidad
+      disabilities: Estudiantes con discapacidades
       ENVIRONMENT: MEDIO AMBIENTE
       students: Estudiantes
       teachers_staff_html: Profesores y personal
       neighborhood: Vecindario
       advanced_courses: Cursos avanzados
       info_texts:
-        academics_html: Esta sección incluye puntajes en los exámenes estatales para esta escuela y información de el progreso estudiantil cuando está disponible.
+        academics_html: Esta sección incluye puntajes en los exámenes estatales para esta escuela, y cuando está disponible,  información de el progreso del estudiante y preparación universitaria.
         environment_html: Esta sección le ofrece más información sobre la demografía estudiantil, el vecindario y más.
         equity_html: ¿Qué tan bien funciona esta escuela sirviendo las necesidades de diferentes grupos de estudiantes? Esta sección le muestra los puntajes en los exámenes estatales y otra información acerca de los diferentes grupos de estudiantes de esta escuela. Una puntuación baja puede indicar que algunos grupos de estudiantes no están recibiendo el apoyo necesario.

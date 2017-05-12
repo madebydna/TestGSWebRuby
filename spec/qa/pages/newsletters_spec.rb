@@ -34,7 +34,7 @@ describe 'newsletters', type: :feature, remote: true do
           fill_in('email', with: email)
           click_button('Sign up')
         end
-        sleep 2 # need to wait long enough for modal ajax call to complete and save database records
+        sleep 10 # need to wait long enough for modal ajax call to complete and save database records
         visit '/account/'
         # should force capybara to wait at least a couple seconds for this to appear
         expect(page).to have_content('My School List') 

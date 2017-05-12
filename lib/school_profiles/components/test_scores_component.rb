@@ -1,16 +1,18 @@
 module SchoolProfiles
   module Components
     class TestScoresComponent < Component
+      GRADES_DISPLAY_MINIMUM = 2
+
       def narration
         t('RE Test scores narration', scope: 'lib.equity_gsdata', subject: t(data_type)) # TODO: update scope after moving translations
       end
 
       def normalized_values
         @_normalized_values ||= (
-          school_cache_data_reader
+          scores = school_cache_data_reader
             .flat_test_scores_for_latest_year
-            .select { |h| h[:subject] == data_type } # TODO: using data type variable to hold subject. Improve
-            .map { |h| cache_hash_to_standard_hash(h) }
+          (scores_grade_all, scores_grade_not_all) = scores.select { |h| h[:subject] == data_type }.partition { |score| score[:grade] == 'All' }
+          scores_grade_all.map { |h| cache_hash_to_standard_hash(h, scores_grade_not_all) }
         )
       end
 
@@ -32,13 +34,30 @@ module SchoolProfiles
         )
       end
       
-      def cache_hash_to_standard_hash(hash)
+      def cache_hash_to_standard_hash(hash, grades)
         breakdown = hash[:breakdown]
+        grades_for_breakdown = grades.select{|grade| grade[:breakdown] == breakdown && grade[:test_label] == hash[:test_label]}
         normalized_breakdown = breakdown == 'All' ? 'All students' : breakdown
         hash.merge(
           breakdown: normalized_breakdown,
-          percentage: value_to_s(ethnicities_to_percentages[normalized_breakdown])
+          percentage: value_to_s(ethnicities_to_percentages[normalized_breakdown]),
+          grades: manage_grades_hash(grades_for_breakdown)
         )
+      end
+
+      def manage_grades_hash(grades)
+        grades.map do |grade|
+          grade.except(:breakdown,
+                       :subject,
+                       :test_description,
+                       :test_label,
+                       :test_source,
+                       :year,
+                       :state_number_tested)
+              .merge(label: text_value(grade[:score]),
+                     state_average_label: text_value(grade[:state_average]))
+
+        end if grades.present? && grades.count >= GRADES_DISPLAY_MINIMUM
       end
     end
   end
