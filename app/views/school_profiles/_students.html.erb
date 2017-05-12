@@ -23,19 +23,21 @@
     </div>
   </div>
   <% if students.visible? %>
-    <div class="row">
-      <div class="col-xs-12 col-sm-8">
-        <div id="ethnicity-graph"></div>
+    <% if ethnicity_data.present? %>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8">
+          <div id="ethnicity-graph"></div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <% ethnicity_data.each_with_index do |val, index |  %>
+            <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
+              <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
+              <div class="legend-title"><%= val[:breakdown] %></div>
+            </div>
+          <% end %>
+        </div>
       </div>
-      <div class="col-xs-12 col-sm-4">
-        <% ethnicity_data.each_with_index do |val, index |  %>
-          <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
-            <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
-            <div class="legend-title"><%= val[:breakdown] %></div>
-          </div>
-        <% end %>
-      </div>
-    </div>
+    <% end %>
     <div class="subgroups">
       <div class="row">
 
