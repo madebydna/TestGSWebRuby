@@ -40,11 +40,15 @@ export default class CourseSubject extends React.Component {
   renderCoursesCount(){
     var underline_none = 'none';
     var text_no_underline = {textDecoration: underline_none};
+    let carets = 'icon-caret-down rotate-text-270 show-classes'
+    if ( this.state.open ) {
+      carets = 'icon-caret-down show-classes'
+    }
     if( this.props.courses.length > 0 ){
       return (
           <span>
             <a href="javascript:void(0)" style={text_no_underline}>{this.props.courses.length} <span>{this.t('courses')}</span>
-            <span className="icon-caret-down show-classes" /></a>
+            <span className={carets} /></a>
           </span>
       );
     }
@@ -54,7 +58,7 @@ export default class CourseSubject extends React.Component {
       return (
           <span>
             {this.props.courses.length} <span>{this.t('courses')}</span>
-            <span className="icon-caret-down show-classes" style={colorWhite} />
+            <span className={carets} style={colorWhite} />
           </span>
       );
     }
