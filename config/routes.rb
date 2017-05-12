@@ -262,6 +262,7 @@ LocalizedProfiles::Application.routes.draw do
 
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
+    get '/first-active-school-url-per-state', to: 'first_active_school_url_per_state#show'
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
