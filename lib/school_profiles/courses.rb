@@ -34,16 +34,18 @@ module SchoolProfiles
     #   ]
     # }
     def course_enrollments_and_ratings
-      course_subject_group_ratings
-        .each_with_object({}) do |(readable_subject, rating), accum|
-          subject_key = readable_subject.downcase.gsub(' ', '_')
-          courses = (courses_by_subject[subject_key] || []).map { |h| h['name'] }
-          translated_subject = t(readable_subject.gsub(/ index/i, ''))
-          accum[translated_subject] = {
-            'courses' => courses,
-            'rating' => rating
-          }
-        end
+      course_ratings_hash = course_subject_group_ratings.each_with_object({}) do |(readable_subject, rating), accum|
+        subject_key = readable_subject.downcase.gsub(' ', '_')
+        accum[subject_key] = rating
+      end
+      courses_by_subject.each_with_object({}) do |(snake_case_subject, courses), accum|
+        rating = course_ratings_hash[snake_case_subject]
+        translated_subject = t(snake_case_subject.gsub(/ index/i, ''))
+        accum[translated_subject] = {
+          'courses' => courses.map { |h| h['name'] },
+          'rating' => rating
+        }
+      end
     end
 
     def data
