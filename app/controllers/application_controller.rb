@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
         end
       end
     rescue => e
-      GSLogger.error(e, :misc, message:'Failed to explicitly close connections')
+      GSLogger.error(:misc, e, message:'Failed to explicitly close connections')
     end
   end
 
