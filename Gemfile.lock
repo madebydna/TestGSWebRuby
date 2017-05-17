@@ -502,6 +502,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
+    stackprof (0.2.10)
     systemu (2.6.4)
     teaspoon (0.9.1)
       railties (>= 3.2.5, < 5)
@@ -636,6 +637,7 @@ DEPENDENCIES
   site_prism
   sourcify
   spring-commands-rspec
+  stackprof
   teaspoon
   thin
   timecop

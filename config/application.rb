@@ -113,6 +113,16 @@ module LocalizedProfiles
     config.middleware.insert_before ActiveRecord::ConnectionAdapters::ConnectionManagement, ::StatusPage
     require File.join(config.root, 'lib', 'ajax_flash_messages_middleware')
     config.middleware.use ::AjaxFlashMessagesMiddleware
+    require File.join(config.root, 'lib', 'stackprof_middleware')
+    if ENV_GLOBAL['profiling_key'].present?
+      config.middleware.use ::StackProfMiddleware,
+        enabled: true,
+        mode: :cpu,
+        interval: 1000,
+        save_every: 1,
+        raw: true,
+        path: ENV_GLOBAL['profiling_output_path']
+    end
 
     config.active_record.schema_format = :sql
 
