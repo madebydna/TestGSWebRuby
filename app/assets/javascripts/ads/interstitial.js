@@ -16,7 +16,7 @@ GS.ad.interstitial = (function() {
     }
 
     function makeInterstitialHref(passThroughHref, adSlot) {
-        var href = 'http://' + location.host + "/interstitial/?";
+        var href = "/interstitial/?";
         if (adSlot) {
             href += "adslot=" + adSlot + "&"
         }

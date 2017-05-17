@@ -179,9 +179,9 @@ class SchoolProfilesController < ApplicationController
 
   def breadcrumbs
     {
-      StructuredMarkup.state_breadcrumb_text(school.state) => state_url(state_params(school.state)),
-      StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city) => city_url(city_params(school.state, school.city)),
-      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
+      StructuredMarkup.state_breadcrumb_text(school.state) => state_path(state_params(school.state)),
+      StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city) => city_path(city_params(school.state, school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_path(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end

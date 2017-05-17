@@ -220,9 +220,9 @@ class DeprecatedSchoolProfileController < SchoolController
   def set_breadcrumbs
     school = SchoolProfileDecorator.decorate(@school)
     @breadcrumbs = {
-      school.state_breadcrumb_text => state_url(state_params(school.state)),
-      school.city_breadcrumb_text => city_url(city_params(school.state, school.city)),
-      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
+      school.state_breadcrumb_text => state_path(state_params(school.state)),
+      school.city_breadcrumb_text => city_path(city_params(school.state, school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_path(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end
