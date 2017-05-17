@@ -1,7 +1,7 @@
 class GoogleSignedImages
-  STREET_VIEW_URL = 'http://maps.googleapis.com/maps/api/streetview'
-  STATIC_MAP_URL =  'http://maps.googleapis.com/maps/api/staticmap'
-  GOOGLE_MAPS_URL = 'http://www.google.com/maps/place/'
+  STREET_VIEW_URL = '//maps.googleapis.com/maps/api/streetview'
+  STATIC_MAP_URL =  '//maps.googleapis.com/maps/api/staticmap'
+  GOOGLE_MAPS_URL = '//www.google.com/maps/place/'
 
   def self.street_view_url(height, width, address)
     url = STREET_VIEW_URL.clone
@@ -48,7 +48,8 @@ class GoogleSignedImages
     signature =  url_safe_base64_encode(raw_signature)
 
     # prepend the server and append the signature.
-    signed_url = parsed_url.scheme+"://"+ parsed_url.host + url_to_sign + "&signature=#{signature}"
+    signed_url = parsed_url.scheme.present? ? parsed_url.scheme + '://' : '//'
+    signed_url + parsed_url.host + url_to_sign + "&signature=#{signature}"
   end
 end
 
