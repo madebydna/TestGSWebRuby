@@ -33,7 +33,7 @@
               <% if @school_profile.student_progress.visible? %>
                 <%= render 'student_progress', student_progress: @school_profile.student_progress %>
               <% end %>
-              <% if @school_profile.show_high_school_data %>
+              <% if @school_profile.show_high_school_data || @school_profile.courses.visible? %>
                 <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
             </div>

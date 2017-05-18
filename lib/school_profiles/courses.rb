@@ -1,6 +1,9 @@
 require 'set'
 module SchoolProfiles
   class Courses
+
+    SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
+
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
       @data_types = [
@@ -38,12 +41,13 @@ module SchoolProfiles
         subject_key = readable_subject.downcase.gsub(' ', '_')
         accum[subject_key] = rating
       end
-      courses_by_subject.each_with_object({}) do |(snake_case_subject, courses), accum|
+      SUBJECT_ORDER.each_with_object({}) do |snake_case_subject, accum|
+        courses = courses_by_subject[snake_case_subject] || []
         rating = course_ratings_hash[snake_case_subject]
         translated_subject = t(snake_case_subject.gsub(/ index/i, ''))
         accum[translated_subject] = {
-          'courses' => courses.map { |h| h['name'] },
-          'rating' => rating
+            'courses' => courses.map { |h| h['name'] },
+            'rating' => courses.empty? ? nil : rating
         }
       end
     end
@@ -76,19 +80,22 @@ module SchoolProfiles
       #   stem_index: [
       #     { 
       #       name: 'Math A',
-      #       enrollment: 8
+      #       source: 'California Dept. of Education',
+      #       year: 2016
       #     }
       #   ],
       #   business_index: [
       #     {
       #       name: 'Marketing and Business Fundamentals712',
-      #       enrollment: 57
+      #       source: 'California Dept. of Education',
+      #       year: 2016
       #     }
       #   ],
       #   vocational_hands_on_index: [
       #     {
       #       name: 'Marketing and Business Fundamentals712',
-      #       enrollment: 57
+      #       source: 'California Dept. of Education',
+      #       year: 2016
       #     }
       #   ]
       # }
@@ -200,6 +207,10 @@ module SchoolProfiles
 
     def db_t(s)
       I18n.db_t(s, default: s)
+    end
+
+    def visible?
+      rating.present? || (courses_by_subject.map { |_,v| v.size }.reduce(:+) > 0)
     end
   end
 end
