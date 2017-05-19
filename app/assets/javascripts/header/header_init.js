@@ -6,6 +6,11 @@
     GS.nav.featured.init();
     GS.nav.language.init();
     var topHeaderNavigationWP = document.getElementById("header_top_navigation_wp");
-    if(topHeaderNavigationWP) topHeaderNavigationWP.style.display = null;
+    if(topHeaderNavigationWP) {
+      setTimeout(function () {
+        topHeaderNavigationWP.style.display = null;
+      }, 1000);
+
+    }
   }
 })();
