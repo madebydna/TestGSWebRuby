@@ -22,3 +22,14 @@ es:
         'Percent of students who meet UC/CSU entrance requirements': 'Este es el porcentaje de estudiantes graduados de esta escuela que completaron los cursos A-G requeridos para ser elegibles para atender a alguna de las escuelas de la Universidad de California y Universidad del Estado de California.'
         'Percentage of students passing 1 or more AP exams grades 9-12': 'El índice de aprobación de los exámenes de “AP” (Cursos Avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes.'
         'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+      narration:
+        _1_html: >
+          <div>sp value 1 2</div>
+        _2_html: >
+          <div>sp value 3 4</div>
+        _3_html: >
+          <div>sp value 5 6</div>
+        _4_html: >
+          <div>sp value 7 8</div>
+        _5_html: >
+          <div>sp value 9 10</div>

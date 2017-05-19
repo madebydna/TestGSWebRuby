@@ -21,6 +21,11 @@ module SchoolProfiles
       @school_cache_data_reader.test_scores_rating
     end
 
+    def narration
+      key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
+      I18n.t(key, scope: 'lib.test_scores.narration', default: I18n.db_t(key, default: key)).html_safe
+    end
+
     def info_text
       I18n.t('lib.test_scores.info_text')
     end

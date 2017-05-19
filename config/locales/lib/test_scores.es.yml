@@ -19,6 +19,17 @@ es:
       Science: Ciencia
       Source: Fuente
       sources: Fuentes
+      narration:
+        _1_html: >
+          <div>sp value 1 2</div>
+        _2_html: >
+          <div>sp value 3 4</div>
+        _3_html: >
+          <div>sp value 5 6</div>
+        _4_html: >
+          <div>sp value 7 8</div>
+        _5_html: >
+          <div>sp value 9 10</div>
       narrative:
         subject:
           'English Language Arts': English

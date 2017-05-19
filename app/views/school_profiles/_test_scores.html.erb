@@ -8,6 +8,7 @@
 <% content = test_scores.sources %>
 <% analytics_id = 'TestScores' %>
 <% analytics_id += '-empty' unless data_values.present? %>
+<% narration = test_scores.narration %>
 
 <div id="<%= analytics_id %>" class="rating-container rs-test-scores">
   <a class="anchor-mobile-offset" name="Test_scores"></a>
@@ -20,36 +21,39 @@
       info_text: info_text,
       has_data: data_values.present?
     %>
-  </div>
+
 
   <% subjects = data_values.map(&:label) %>
   <% total_items = data_values.size %>
   <% last_test_name = nil %>
+
   <% render_test_names = subjects.uniq.size < subjects.size %>
-  <div style="padding-top: 10px;"></div>
-  <% data_values.take(initial_size).each do |data_value| %>
-    <% if render_test_names && last_test_name != data_value.test_label %>
-      <div class="item-heading"><%= data_value.test_label %></div>
+  <div class="panel">
+    <div class="auto-narration"><%= narration %></div>
+    <% data_values.take(initial_size).each do |data_value| %>
+      <% if render_test_names && last_test_name != data_value.test_label %>
+        <div class="item-heading"><%= data_value.test_label %></div>
+      <% end %>
+
+      <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
+      <% last_test_name = data_value.test_label %>
     <% end %>
 
-    <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
-    <% last_test_name = data_value.test_label %>
-  <% end %>
-
-  <% if total_items > initial_size %>
-    <div class="rating-container__more-items">
-      <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
-        <% data_values.drop(initial_size).each do |data_value| %>
-          <% if render_test_names && last_test_name != data_value.test_label %>
-            <div class="item-heading"><%= data_value.test_label %></div>
+    <% if total_items > initial_size %>
+      <div class="rating-container__more-items">
+        <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
+          <% data_values.drop(initial_size).each do |data_value| %>
+            <% if render_test_names && last_test_name != data_value.test_label %>
+              <div class="item-heading"><%= data_value.test_label %></div>
+            <% end %>
+            <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
+            <% last_test_name = data_value.test_label %>
           <% end %>
-          <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
-          <% last_test_name = data_value.test_label %>
         <% end %>
-      <% end %>
-    </div>
-  <% end %>
-
+      </div>
+    <% end %>
+  </div>
+  </div>
   <div>
     <a data-remodal-target="modal_info_box"
        data-content-type="info_box"
