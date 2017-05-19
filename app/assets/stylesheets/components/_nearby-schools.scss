@@ -24,29 +24,9 @@
   }
 
   .button-bar {
-    button {
-      cursor: pointer;
-      border-radius: 2px;
-      background-image: linear-gradient(to bottom, #fff, $color-toggle-button-gradient);
-      border: solid 1px $color-toggle-button-border;
-      padding: $spacing-small $spacing-medium;
-      color: $color-toggle-button-text;
-      font-size: 12px;
-      text-align: center;
-
-      &.active {
-        border: solid 1px $color-toggle-button-border;
-        background: $color-toggle-button-active none;
-        color: #fff;
-      }
-
-      &:first-of-type {
-        border-right: none;
-      }
-
-      &:last-of-type {
-        border-left: none;
-      }
+    display: inline-block;
+    .button-group {
+      @include button-group;
     }
   }
 

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { Provider, connect } from 'react-redux';
 import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list';
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
+import ButtonGroup from './buttongroup';
 
 class NearestHighPerformingSchools extends React.Component {
 
@@ -25,12 +26,10 @@ class NearestHighPerformingSchools extends React.Component {
     }
   }
 
-  createTabClickHandler(index) {
-    return function() {
-      this.setState({
-        tabIndex: index
-      });
-    }.bind(this);
+  tabSwitched(index) {
+    this.setState({
+      tabIndex: index
+    });
   }
 
   trackTabChanged() {
@@ -44,14 +43,11 @@ class NearestHighPerformingSchools extends React.Component {
   }
 
   renderTabs() {
-    let tabIndex = this.state.tabIndex;
-    return this.tabNames().map(function(tabName, i) {
-      return (
-        <button className={tabIndex == i ? 'active' : ''} onClick={this.createTabClickHandler(i)} key={i}>
-          {tabName}
-        </button>
-      );
-    }.bind(this));
+    let tabs = this.tabNames().reduce((accum, name, index) => ({...accum, [index]: name}), {});
+    return <ButtonGroup
+              activeOption={this.state.tabIndex.toString()}
+              options={tabs}
+              onSelect={this.tabSwitched.bind(this)} />
   }
 
   tabContentPanes() {

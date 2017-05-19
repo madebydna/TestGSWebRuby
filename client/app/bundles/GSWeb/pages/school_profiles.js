@@ -15,6 +15,7 @@ import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
 import PrivateSchoolInfo from '../react_components/private_school_info';
 import Toggle from '../components/toggle';
+import HomesAndRentals from '../react_components/homes_and_rentals';
 
 window.store = configureStore({
   school: gon.school
@@ -26,7 +27,8 @@ ReactOnRails.register({
   Reviews,
   NearestHighPerformingSchools,
   Courses,
-  PrivateSchoolInfo
+  PrivateSchoolInfo,
+  HomesAndRentals
 });
 
 $(function() {
