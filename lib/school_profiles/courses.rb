@@ -3,6 +3,7 @@ module SchoolProfiles
   class Courses
 
     SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
+    SUBJECT_RATING_SUPPRESSION = %w(arts_index health_index vocational_hands_on_index)
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
@@ -43,11 +44,15 @@ module SchoolProfiles
       end
       SUBJECT_ORDER.each_with_object({}) do |snake_case_subject, accum|
         courses = courses_by_subject[snake_case_subject] || []
-        rating = course_ratings_hash[snake_case_subject]
+        if courses.empty? || SUBJECT_RATING_SUPPRESSION.include?(snake_case_subject)
+          rating = nil
+        else
+          rating = course_ratings_hash[snake_case_subject]
+        end
         translated_subject = t(snake_case_subject.gsub(/ index/i, ''))
         accum[translated_subject] = {
             'courses' => courses.map { |h| h['name'] },
-            'rating' => courses.empty? ? nil : rating
+            'rating' => rating
         }
       end
     end

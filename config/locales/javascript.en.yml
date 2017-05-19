@@ -133,5 +133,6 @@ en:
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses
+    course: course
     grade: Grade
     details: Details

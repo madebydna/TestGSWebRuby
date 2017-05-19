@@ -44,10 +44,16 @@ export default class CourseSubject extends React.Component {
     if ( this.state.open ) {
       carets = 'icon-caret-down show-classes'
     }
+    let course_word = '';
+    if (this.props.courses.length === 1) {
+      course_word = this.t('course');
+    } else {
+      course_word = this.t('courses');
+    }
     if( this.props.courses.length > 0 ){
       return (
           <span>
-            <a href="javascript:void(0)" style={text_no_underline}>{this.props.courses.length} <span>{this.t('courses')}</span>
+            <a href="javascript:void(0)" style={text_no_underline}>{this.props.courses.length} <span>{ course_word }</span>
             <span className={carets} /></a>
           </span>
       );
