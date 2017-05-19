@@ -26,7 +26,7 @@ module SchoolProfiles
       if @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
       end
-      if @school.level_code =~ /h/
+      if @school.level_code =~ /h/ || @courses.visible?
         arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
       hash[:academics] = arr

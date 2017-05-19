@@ -210,7 +210,7 @@ module SchoolProfiles
     end
 
     def visible?
-      rating.present? || (courses_by_subject.map { |_,v| v.size }.reduce(:+) > 0)
+      rating.present? || (courses_by_subject.present? && courses_by_subject.map { |_,v| v.size }.reduce(:+) > 0)
     end
   end
 end
