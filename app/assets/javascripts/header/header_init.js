@@ -9,7 +9,7 @@
     if(topHeaderNavigationWP) {
       setTimeout(function () {
         topHeaderNavigationWP.style.display = null;
-      }, 1000);
+      }, 500);
 
     }
   }
