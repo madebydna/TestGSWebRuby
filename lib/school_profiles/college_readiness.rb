@@ -65,6 +65,7 @@ module SchoolProfiles
     end
 
     def narration
+      return nil unless rating.present? && (1..10).cover?(rating.to_i)
       key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
       I18n.t(key, scope: 'lib.college_readiness.narration', default: I18n.db_t(key, default: key)).html_safe
     end

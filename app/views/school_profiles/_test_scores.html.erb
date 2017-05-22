@@ -29,7 +29,9 @@
 
   <% render_test_names = subjects.uniq.size < subjects.size %>
   <div class="panel">
-    <div class="auto-narration"><%= narration %></div>
+    <% if narration %>
+      <div class="auto-narration"><%= narration %></div>
+    <% end %>
     <% data_values.take(initial_size).each do |data_value| %>
       <% if render_test_names && last_test_name != data_value.test_label %>
         <div class="item-heading"><%= data_value.test_label %></div>
