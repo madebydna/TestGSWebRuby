@@ -26,6 +26,10 @@ module SchoolProfiles
         return 1 if h2[:breakdown] == 'Economically disadvantaged'
         return h2[:percentage].to_f <=> h1[:percentage].to_f
       end
+
+      def breakdown_percentage(breakdown)
+        value_to_s(low_income_to_percentages[breakdown])
+      end
     end
   end
 end

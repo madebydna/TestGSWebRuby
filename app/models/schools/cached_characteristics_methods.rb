@@ -116,6 +116,10 @@ module CachedCharacteristicsMethods
     style_school_value_as_percent('Students participating in free or reduced-price lunch program')
   end
 
+  def free_or_reduced_price_lunch_data
+    characteristics['Students participating in free or reduced-price lunch program']
+  end
+
   def formatted_ethnicity_data
     formatted_eth_data = {}
     ethnicity_data.each do |eth|

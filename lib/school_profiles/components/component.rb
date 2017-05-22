@@ -129,6 +129,15 @@ module SchoolProfiles
           school_cache_data_reader: school_cache_data_reader
         ).ethnicities_to_percentages
       end
+
+      def low_income_to_percentages
+        @_breakdown_percentages ||= begin
+          low_income = school_cache_data_reader.forpl_data.find {|ed| ed['breakdown'] == 'All students'}
+          {
+              'Economically disadvantaged' => low_income.present? ? low_income['school_value'] : nil
+          }.compact
+        end
+      end
     end
   end
 end
