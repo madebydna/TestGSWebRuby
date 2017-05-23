@@ -31,6 +31,8 @@ es:
       Pacific Islander: Islas del Pacífico
       Hawaiian Native/Pacific Islander: Islas del Pacífico
       Native Hawaiian or Other Pacific Islander: Islas del Pacífico
+      Economically disadvantaged: De bajos ingresos
+      Not economically disadvantaged: Sin ingresos bajos
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
         'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'

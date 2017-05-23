@@ -30,6 +30,8 @@ en:
       Pacific Islander: Pacific Islander
       Hawaiian Native/Pacific Islander: Pacific Islander
       Native Hawaiian or Other Pacific Islander: Pacific Islander
+      Economically disadvantaged: Low-income
+      Not economically disadvantaged: Not low-income
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
         'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
