@@ -14,7 +14,7 @@ class SchoolGeometry < ActiveRecord::Base
 
   # level is one or more of [O,P,M,H]
   def self.find_by_point_and_level(lat, lon, level)
-    results = SchoolGeometry.select('*, AsText(geom) as geom').
+    results = SchoolGeometry.select('*, AsText(geom) as geom, ST_area(geom) as area').
       containing_point(lat,lon).
       order_by_area
     results = results.where(ed_level: level)

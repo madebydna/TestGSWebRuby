@@ -47,10 +47,19 @@ class Api::SchoolsController < ApplicationController
 
   def schools
     @_schools ||= (
-      items = if point_given?
-        SchoolGeometry.schools_for_geometries(school_geometries_containing_lat_lon).first
+      if point_given?
+        geometries = school_geometries_containing_lat_lon
+        geometries_valid = geometries.present?
+        if geometries && geometries.size > 1
+          if geometries[0].area == geometries[1].area
+            # A geometry is not valid if it covers the same area as the next one
+            # This is because we can't really recommend one of those boundaries above the other
+            geometries_valid = false
+          end
+        end
+        items = geometries_valid ? SchoolGeometry.schools_for_geometries([geometries.first]) : []
       else
-        get_schools
+        items = get_schools
       end
       items = add_geometry(items)
       items = add_rating(items)
