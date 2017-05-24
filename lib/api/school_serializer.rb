@@ -9,7 +9,7 @@ class Api::SchoolSerializer
   end
 
   def to_hash
-    rating = school.great_schools_rating if defined? school.great_schools_rating
+    rating = school.great_schools_rating if defined? school.great_schools_rating || school.respond_to?(great_schools_rating)
     h = {
       id: school.id,
       districtId: school.district_id,
@@ -18,6 +18,7 @@ class Api::SchoolSerializer
       lat: school.lat,
       lon: school.lon,
       name: school.name,
+      gradeLevels: school.process_level,
       address: {
         street1: school['street'],
         street2: school['street_line_2'],
@@ -35,6 +36,13 @@ class Api::SchoolSerializer
     if school.respond_to?(:boundaries)
       h[:boundaries] = school.boundaries
     end
+    if school.respond_to?(:star_rating) || defined? school.star_rating
+      h[:parentRating] = school.star_rating
+    end
+    if school.respond_to?(:num_reviews) || defined? school.num_reviews
+      h[:numReviews] = school.num_reviews
+    end
+
     h
   end
 end
