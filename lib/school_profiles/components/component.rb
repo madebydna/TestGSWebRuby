@@ -131,8 +131,8 @@ module SchoolProfiles
       end
 
       def low_income_to_percentages
-        @_breakdown_percentages ||= begin
-          low_income = school_cache_data_reader.forpl_data.find {|ed| ed['breakdown'] == 'All students'}
+        @_low_income_to_percentages ||= begin
+          low_income = school_cache_data_reader.low_income_data.find {|ed| ed['breakdown'] == 'All students'}
           {
               'Economically disadvantaged' => low_income.present? ? low_income['school_value'] : nil
           }.compact

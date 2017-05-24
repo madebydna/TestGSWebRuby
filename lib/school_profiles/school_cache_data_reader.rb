@@ -84,7 +84,7 @@ module SchoolProfiles
       decorated_school.ethnicity_data
     end
 
-    def forpl_data
+    def low_income_data
       decorated_school.free_or_reduced_price_lunch_data
     end
 

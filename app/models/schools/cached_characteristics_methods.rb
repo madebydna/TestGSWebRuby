@@ -117,7 +117,7 @@ module CachedCharacteristicsMethods
   end
 
   def free_or_reduced_price_lunch_data
-    characteristics['Students participating in free or reduced-price lunch program']
+    characteristics['Students participating in free or reduced-price lunch program'] || []
   end
 
   def formatted_ethnicity_data
