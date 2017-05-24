@@ -15,4 +15,12 @@ class OspQuestion < ActiveRecord::Base
     super.split(',')
   end
 
+  def self.question_key_label_level_code
+    self.select(:esp_response_key, :level_code).active.each_with_object({}) do |obj, accum|
+      accum[obj.esp_response_key] = {
+          level_code: obj.level_code
+      }
+    end
+  end
+
 end

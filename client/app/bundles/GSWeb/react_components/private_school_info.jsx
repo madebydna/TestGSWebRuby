@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-import NoDataModuleCta from './no_data_module_cta.jsx'
+import NoDataModuleCta from './no_data_module_cta.jsx';
+import SectionNavigation from './equity/tabs/section_navigation';
+import ResponseData from './response_data.jsx';
 
 export default class PrivateSchoolInfo extends React.Component {
 
   static propTypes = {
-    best_known_for: React.PropTypes.string,
-    anything_else: React.PropTypes.string,
-    general_info: React.PropTypes.array
+    content: PropTypes.array
   };
 
   constructor(props) {
@@ -16,25 +16,46 @@ export default class PrivateSchoolInfo extends React.Component {
     }
   }
 
-  generalInfo() {
-    return this.props.general_info.map((info) => <li>{info}</li>);
+  handleTabClick(index) {
+    this.setState({activeTabIndex: index})
+  }
+
+  selectSectionContent(items) {
+    let item = items[this.state.activeTabIndex];
+    let data = Object.values(item)[0];
+    console.log(data);
+    return <div className={'tabs-panel tabs-panel_selected'}>
+      <ResponseData input={data}/>
+    </div>
   }
 
   render() {
-    let schoolDescriptions = this.props.general_info;
-    if (schoolDescriptions.length > 0) {
+    let tabs = Object.keys(this.props.content);
+    let stuff = this.props.content;
+    let items = stuff.map((h) => ({section_title: Object.keys(h)[0]}));
+    if (tabs.length > 0) {
       return (<div id="private-school-info">
         <a className="anchor-mobile-offset" name="General_info"/>
-        <div className="private-school-info-container">
+        <div className="equity-container">
           <div className="title-bar">
-            General Info
+            <div className='rating-layout circle-rating--equity-blue'>
+              <span className='icon-users'/>
+            </div>
+            <div className="title-container">
+              <div className="title">
+                General Info
+              </div>
+            </div>
+          <div className="tab-buttons">
+            <SectionNavigation key="sectionNavigation"
+                               items={items}
+                               active={this.state.activeTabIndex}
+                               google_tracking={'General_info'}
+                               onTabClick={this.handleTabClick.bind(this)}/>
           </div>
-          <div className="info-pane">
-            <ul>
-              {this.generalInfo()}
-            </ul>
+          <div className="top-tab-panel">{this.selectSectionContent(stuff)}</div>
           </div>
-          <div className="source-bar">
+            <div className="source-bar">
             Source:&nbsp;<span className="sources-text">School Admin</span>
           </div>
         </div>
