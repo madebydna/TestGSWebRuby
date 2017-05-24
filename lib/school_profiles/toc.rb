@@ -57,14 +57,6 @@ module SchoolProfiles
       [academics, equity, environment].reject{ |hash| hash.all?(&:empty?) }
     end
 
-    def content_for_private
-      {
-          "General Info" => "This is text that needs copy. When there's copy it will be updated",
-          "Reviews" => "This is also text that needs copy. When there's copy it will be updated",
-          "Neighborhood" => "This is also text that needs copy. When there's copy it will be updated"
-      }
-    end
-
     def info_text(key)
       key.to_sym
       I18n.t(key.to_sym, scope: 'lib.toc', default: key)

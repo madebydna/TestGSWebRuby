@@ -1,0 +1,10 @@
+en:
+  school_profiles:
+    show_profile:
+      toc:
+        - title: overview
+          description: Find out about this school’s hours, enrollment, classes, sports, and more.
+        - title: students
+          description: See a snapshot of student diversity at this school.
+        - title: neighborhood
+          description: Learn more about this school’s location and contact information, and explore other nearby schools.

@@ -1,0 +1,10 @@
+es:
+  school_profiles:
+    show_profile:
+      toc:
+        - title: informacion general
+          description: Averigue las horas, inscripción, clases, deportes y más acerca de esta escuela.
+        - title: estudiantes
+          description: Vea la diversidad estudiantil en esta escuela.
+        - title: vecindario
+          description: Obtenga más información de la ubicación e información de contacto de esta escuela y explore otras escuelas cercanas.

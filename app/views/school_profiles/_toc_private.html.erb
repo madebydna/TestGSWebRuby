@@ -1,4 +1,3 @@
-<% content = @private_school_profile.toc.content_for_private %>
 <% tooltips_info = {} %>
 <% tooltips_info['ACADEMICS'] = '.info_texts.academics_html'  %>
 <% tooltips_info['EQUITY'] = '.info_texts.equity_html'  %>
@@ -10,14 +9,14 @@
   </div>
   <div class="toc-private-container-box">
     <div class="row">
-      <% content.each do |column,data| %>
+      <% I18n.t('toc', scope:'school_profiles.show_profile').each do |column_data| %>
         <div class="col-xs-12 col-sm-4">
           <div class="toc-private-section">
             <div class="toc-private-section-title">
-              <a><%= column.upcase %></a>
+              <a><%= column_data[:title].upcase %></a>
             </div>
             <div>
-              <%= data %>
+              <%= column_data[:description] %>
             </div>
           </div>
         </div>
