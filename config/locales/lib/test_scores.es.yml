@@ -21,15 +21,43 @@ es:
       sources: Fuentes
       narration:
         _1_html: >
-          <div>sp value 1 2</div>
+          <h3 class="negative">Muy preocupante:</h3>
+          <p>Los resultados de los exámenes en esta escuela está <span class="emphasis">muy por debajo</span> del promedio estatal. Esto significa que los estudiantes de esta escuela no están alcanzando el nivel de grado.</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          <hr />
         _2_html: >
-          <div>sp value 3 4</div>
+          <h3 class="negative">Un signo preocupante:</h3>
+          <p>Los resultados de los exámenes en esta escuela está <span class="emphasis">por debajo</span> del promedio estatal. Esto significa que los estudiantes de esta escuela no están alcanzando el nivel de grado.</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          <hr />
         _3_html: >
-          <div>sp value 5 6</div>
+          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+          <p>Los resultados de los exámenes en esta escuela <span class="emphasis">son comparables</span> con el promedio estatal, aunque todavía por debajo de escuelas de rendimiento superior en el estado. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          <hr />
         _4_html: >
-          <div>sp value 7 8</div>
+          <h3 class="positive">Un signo prometedor:</h3>
+          <p>Los resultados de los exámenes en esta escuela están por encima del promedio estatal. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes. Para comprender cómo esta escuela educa a todos sus estudiantes, revisa la siguiente información en la sección de Equidad.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+          <hr />
         _5_html: >
-          <div>sp value 9 10</div>
+          <h3 class="positive">¡Buenas noticias!:</h3>
+          <p>Los resultados de los exámenes en esta escuela están <span class="emphasis">muy por encima</span> del promedio estatal, sugiriendo que la mayoría de los estudiantes de esta escuela están realizando en o por encima del nivel de grado.</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes. Para comprender cómo esta escuela educa a todos sus estudiantes, revisa la siguiente información en la sección de Equidad.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+          <hr />
       narrative:
         subject:
           'English Language Arts': English

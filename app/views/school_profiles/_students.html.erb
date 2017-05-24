@@ -30,9 +30,16 @@
         </div>
         <div class="col-xs-12 col-sm-4">
           <% ethnicity_data.each_with_index do |val, index |  %>
+            <% value = Float(val[:school_value]) rescue nil  %>
+            <% value.round if value %>
             <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
               <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
               <div class="legend-title"><%= val[:breakdown] %></div>
+              <% if value %>
+                <% v = value.round%>
+                <% v = '<1' if v == 0 %>
+                <div class="legend-title"><%= v %>%</div>
+              <% end %>
             </div>
           <% end %>
         </div>

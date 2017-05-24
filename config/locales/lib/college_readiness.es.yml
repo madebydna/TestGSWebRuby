@@ -24,12 +24,44 @@ es:
         'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
       narration:
         _1_html: >
-          <div>sp value 1 2</div>
+          <h3 class="negative">Muy preocupante:</h3>
+          <p>Esta escuela está muy por debajo del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
+          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases avanzadas y ayudar a los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
         _2_html: >
-          <div>sp value 3 4</div>
+          <h3 class="negative">Un signo preocupante:</h3>
+          <p>Esta escuela está <span class="emphasis">por debajo</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
+          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases avanzadas y ayudar a los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
         _3_html: >
-          <div>sp value 5 6</div>
+          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+          <p>Esta escuela está <span class="emphasis">comparable</span> al promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional, pero dependiendo del estado, promedio puede significar que sólo una minoría de los estudiantes están preparados para la universidad y la carrera.</p>
+          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
         _4_html: >
-          <div>sp value 7 8</div>
+          <h3 class="positive">Un signo prometedor:</h3>
+          <p>Esta escuela está <span class="emphasis">por encima</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
         _5_html: >
-          <div>sp value 9 10</div>
+          <h3 class="positive">¡Buenas noticias!:</h3>
+          <p>Esta escuela está <span class="emphasis">muy por encima</span> del promedio estatal en medidas de
+          preparación universitario y de la preparación (o carrera) profesional</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
