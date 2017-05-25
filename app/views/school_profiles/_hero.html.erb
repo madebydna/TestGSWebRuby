@@ -6,6 +6,8 @@
       <h1 class="school-name"><%= hero.school_name %>
         <% if hero.should_show_osp_badge? %>
           <span class="icon-check osp-badge">&nbsp;<span class="claimed">Claimed</span></span>
+        <% elsif hero.school.private_school? %>
+          <span class="osp-badge"><span class="claimed">Unclaimed</span></span>
         <% end %>
       </h1>
     </div>
