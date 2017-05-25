@@ -9,6 +9,14 @@
         <% elsif hero.school.private_school? %>
           <span class="osp-badge"><span class="claimed">Unclaimed</span></span>
         <% end %>
+        <% if hero.school.private_school? %>
+          <span class="badge-and-content"><span class="badge icon-pencil" style="padding-top:3px"></span><span class="content">
+              <%= link_to(t('.edit'), osp_register_path(
+                city: hero.school.city,
+                school_id: hero.school.id.to_s,
+                state: hero.school.state
+              ), rel: 'nofollow') %></span></span>
+        <% end %>
       </h1>
     </div>
 

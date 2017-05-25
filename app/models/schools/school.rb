@@ -126,7 +126,7 @@ class School < ActiveRecord::Base
   end
 
   def private_school?
-    type == 'Private'
+    type.downcase == 'private'
   end
 
   def public_or_charter?
