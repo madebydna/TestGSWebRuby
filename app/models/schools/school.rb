@@ -126,11 +126,11 @@ class School < ActiveRecord::Base
   end
 
   def private_school?
-    type == 'private'
+    type == 'Private'
   end
 
   def public_or_charter?
-    ['public', 'charter'].include?(type)
+    ['Public', 'Charter'].include?(type)
   end
 
   def preschool?
