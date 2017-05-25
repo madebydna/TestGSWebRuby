@@ -8,7 +8,7 @@ module SchoolProfiles
     CLASSES_CACHE_KEYS = %w(arts_media arts_music arts_performing_written arts_visual foreign_language ap_classes)
     SPORTS_CLUBS_CACHE_KEYS = %w(boys_sports girls_sports student_clubs)
 
-    NO_DATA_TEXT = 'Data not provided by the school'
+    NO_DATA_TEXT = 'no_data_text'
 
     def initialize(school, school_cache_data_reader)
       @school = school
@@ -18,23 +18,23 @@ module SchoolProfiles
     def private_school_cache_data
       @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
-
+    
     def private_school_datas(*cache_keys)
-      osp_keys = osp_question_metadata.slice(*cache_keys).keys
-      used_keys = keys_with_data(*cache_keys)
-      no_data_keys = (osp_keys - used_keys)
-      foo = private_school_cache_data.slice(*cache_keys).each_with_object([]) do |(key, value), accum|
-        responses = value.keys
+      osp_question_metadata.slice(*cache_keys).each_with_object([]) do |(response_key, response_value), accum|
+        next if (response_value[:level_code] & school_level_code).empty?
+        data = private_school_cache_data.slice(*cache_keys)
+        next if (keys_to_hide_if_no_data.include?(response_key) && data[response_key].nil?)
+        responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
         translated_responses = responses.map{|response| data_label(response)}
         accum << {
-            response_key: data_label(key),
+            response_key: data_label(response_key),
             response_value: translated_responses
         }
       end
-      no_data_keys.each do |no_data_key|
-        foo << {response_key: data_label(no_data_key), response_value: Array(NO_DATA_TEXT)}
-      end
-      foo
+    end
+
+    def school_level_code
+      @_school_level_code ||= @school.level_code.split(',')
     end
 
     def keys_with_data(*cache_keys)

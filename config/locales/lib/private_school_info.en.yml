@@ -20,7 +20,7 @@ en:
       tuition_high: Tuition range (high)
       tuition_year: For the year
       financial_aid_type: Financial aid offered
-      pk_financial_aid: Financial aid offered
+      pk_financial_aid: Preschool financial aid offered
       students_vouchers: Vouchers accepted
       admissions_url: Additional info
       classes: Classes
@@ -34,3 +34,4 @@ en:
       girls_sports: Girls sports
       boys_sports: Boys sports
       student_clubs: Clubs
+      no_data_text: Data not provided by the school
