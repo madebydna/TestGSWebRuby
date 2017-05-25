@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import NoDataModuleCta from './no_data_module_cta.jsx';
 import SectionNavigation from './equity/tabs/section_navigation';
 import ResponseData from './response_data.jsx';
+import InfoCircle from './info_circle';
 
 export default class PrivateSchoolInfo extends React.Component {
 
@@ -29,11 +30,22 @@ export default class PrivateSchoolInfo extends React.Component {
     </div>
   }
 
+  drawInfoCircle(infoText) {
+    if (infoText) {
+      return(<InfoCircle
+          content={infoText}
+        />
+      );
+    } else {
+      return null;
+    }
+  }
+
   render() {
     if (this.props.content) {
       let stuff = this.props.content;
       let items = stuff.map((h) => ({section_title: h.title}));
-
+      let infoText = 'Replace this with real copy';
       return (<div id="private-school-info">
         <a className="anchor-mobile-offset" name="General_info"/>
         <div className="equity-container">
@@ -44,6 +56,7 @@ export default class PrivateSchoolInfo extends React.Component {
             <div className="title-container">
               <div className="title">
                 General Information
+                {this.drawInfoCircle(infoText)}
               </div>
             </div>
           <div className="tab-buttons">

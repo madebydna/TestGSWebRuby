@@ -45,27 +45,9 @@ module SchoolProfiles
       @_osp_question_metadata ||= OspQuestion.question_key_label_level_code(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
 
-    def old_data_for_view(*cache_keys)
-      osp_question_metadata.select do |response_key,value|
-        if private_school_datas(*cache_keys).keys.include?(response_key)
-          value.merge!(private_school_datas(*cache_keys)[response_key])
-        end
-      end
-    end
-
     def keys_to_hide_if_no_data
       %w(best_known_for anything_else)
     end
-
-    # def tab_config
-    #   return nil if private_school_cache_data.blank?
-    #   [
-    #       {data_label(:overview) => private_school_datas(*OVERVIEW_CACHE_KEYS)},
-    #       {data_label(:enrollment) => private_school_datas(*ENROLLMENT_CACHE_KEYS)},
-    #       {data_label(:classes) => private_school_datas(*CLASSES_CACHE_KEYS)},
-    #       {data_label(:sports_and_clubs) => private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)}
-    #   ]
-    # end
 
     def tab_config
       return nil if private_school_cache_data.blank?
