@@ -48,14 +48,16 @@ es:
           <h3 class="positive">Un signo prometedor:</h3>
           <p>Los resultados de los exámenes en esta escuela están por encima del promedio estatal. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado</p>
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes. Para comprender cómo esta escuela educa a todos sus estudiantes, revisa la siguiente información en la sección de Equidad.
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
+          Para comprender cómo esta escuela educa a todos sus estudiantes, <a href="#Entity">revisa la siguiente información en la sección de Equidad</a>.
           <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
           <hr />
         _5_html: >
           <h3 class="positive">¡Buenas noticias!:</h3>
           <p>Los resultados de los exámenes en esta escuela están <span class="emphasis">muy por encima</span> del promedio estatal, sugiriendo que la mayoría de los estudiantes de esta escuela están realizando en o por encima del nivel de grado.</p>
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes. Para comprender cómo esta escuela educa a todos sus estudiantes, revisa la siguiente información en la sección de Equidad.
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
+          Para comprender cómo esta escuela educa a todos sus estudiantes, <a href="#Entity">revisa la siguiente información en la sección de Equidad</a>.
           <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
           <hr />
       narrative:

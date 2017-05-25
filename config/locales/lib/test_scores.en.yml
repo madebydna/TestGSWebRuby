@@ -49,14 +49,19 @@ en:
           <h3 class="positive">A promising sign:</h3>
           <p>Test scores at this school are <span class="emphasis">above</span> the state average. Because test scores in some states are so low, some students at this school may still not be performing at grade level</p>
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">Even high-performing schools can have disparities between student groups. To understand how well this school serves all its students, review the information below in the Equity section. Understand what
+          <p class="footnote">Even high-performing schools can have disparities between student groups.
+          To understand how well this school serves all its students, <a href="#Equity">review the information below in the Equity section</a>.
+          Understand what
           <a href="/gk/milestones/">on-track learning looks like</a> for your child and how you can help at home.</p>
           <hr />
         _5_html: >
           <h3 class="positive">Good news!</h3>
           <p>Test scores at this school are <span class="emphasis">far above</span> the state average, suggesting that most students at this school are performing at or above grade level.</p>
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
-          <p class="footnote">Even high-performing schools can have disparities between student groups. To understand how well this school serves all its students, review the information below in the Equity section. Understand what
+          <p class="footnote">Even high-performing schools can have disparities between student groups.
+          To understand how well this school serves all its students,
+          <a href="#Equity">review the information below in the Equity section</a>.
+          Understand what
           <a href="/gk/milestones/">on-track learning looks like</a> for your child and how you can help at home.</p>
           <hr />
       narrative:
