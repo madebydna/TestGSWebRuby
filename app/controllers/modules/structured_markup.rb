@@ -32,7 +32,7 @@ module StructuredMarkup
       "@type" => "Organization",
       "name" => "GreatSchools",
       "url" => "http://www.greatschools.org/",
-      "logo" => "http://www.greatschools.org/images/greatschools-logo.png",
+      "logo" => "https://www.greatschools.org/images/greatschools-logo.png",
       "sameAs" => [
         "https://www.facebook.com/greatschools",
         "https://www.twitter.com/greatschools",

@@ -26,8 +26,8 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
-  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
-  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(only_path: false, lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
+  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(only_path: false, lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
 
   <% if @canonical_url.present? %>
     <link rel="canonical" href="<%= @canonical_url %>" />
@@ -36,23 +36,9 @@
   <% end %>
   <%= yield :head %>
 
-  <script type="application/ld+json">
-      {
-        "@context": "http://schema.org",
-        "@type": "Organization",
-        "name": "GreatSchools",
-        "url": "http://www.greatschools.org/",
-        "logo": "http://www.greatschools.org/images/greatschools-logo.png",
-        "sameAs": [
-          "https://www.facebook.com/greatschools",
-          "https://www.twitter.com/greatschools",
-          "https://pinterest.com/greatschools/",
-          "https://www.youtube.com/GreatSchools",
-          "https://www.instagram.com/greatschools/",
-          "https://en.wikipedia.org/wiki/GreatSchools"
-        ]
-      }
-    </script>
+  <% json_ld_hash.each do |hash| %>
+      <script type="application/ld+json"><%= raw hash.to_json %></script>
+  <% end %>
 
   <!-- Start Visual Website Optimizer Asynchronous Code -->
   <script type='text/javascript'>
