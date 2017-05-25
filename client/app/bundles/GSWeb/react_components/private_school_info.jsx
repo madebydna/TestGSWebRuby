@@ -30,10 +30,11 @@ export default class PrivateSchoolInfo extends React.Component {
   }
 
   render() {
-    let tabs = Object.keys(this.props.content);
-    let stuff = this.props.content;
-    let items = stuff.map((h) => ({section_title: Object.keys(h)[0]}));
-    if (tabs.length > 0) {
+    if (this.props.content) {
+      let tabs = Object.keys(this.props.content);
+      let stuff = this.props.content;
+      let items = stuff.map((h) => ({section_title: Object.keys(h)[0]}));
+
       return (<div id="private-school-info">
         <a className="anchor-mobile-offset" name="General_info"/>
         <div className="equity-container">
@@ -43,7 +44,7 @@ export default class PrivateSchoolInfo extends React.Component {
             </div>
             <div className="title-container">
               <div className="title">
-                General Info
+                General Information
               </div>
             </div>
           <div className="tab-buttons">
@@ -69,7 +70,7 @@ export default class PrivateSchoolInfo extends React.Component {
               <span className="icon-user"></span>
             </div>
             <div className="title-container">
-              <div className="title">General Info</div>
+              <div className="title">General Information</div>
               <NoDataModuleCta moduleName="General info"/>
             </div>
           </div>

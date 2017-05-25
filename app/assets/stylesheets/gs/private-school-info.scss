@@ -12,6 +12,12 @@
     div:last-child {
       font-family: opensans-regular;
     }
+    li {
+      color: slategray;
+      @include media-breakpoint-up(sm) {
+        list-style: none;
+      }
+    }
   }
 
   .response:first-child {

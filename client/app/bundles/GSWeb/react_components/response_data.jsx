@@ -10,6 +10,10 @@ export default class ResponseData extends React.Component {
     super(props);
   }
 
+  listOfAnswers(answers) {
+    return answers.map((answer) => <li>{answer}</li>);
+  }
+
   render() {
     let data = this.props.input;
     let responses = data.map((thing) => {
@@ -23,7 +27,7 @@ export default class ResponseData extends React.Component {
       else {
         return (<div className="response clearfix">
           <div className="col-xs-12 col-sm-4 sources-text" key={response_key}>{response_key}</div>
-          <div className="col-xs-12 col-sm-6">{answers.join(', ')}</div>
+          <div className="col-xs-12 col-sm-6"><ul>{this.listOfAnswers(answers)}</ul></div>
         </div>);
       }
     });

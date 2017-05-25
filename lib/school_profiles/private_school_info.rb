@@ -8,26 +8,41 @@ module SchoolProfiles
     CLASSES_CACHE_KEYS = %w(arts_media arts_music arts_performing_written arts_visual foreign_language ap_classes)
     SPORTS_CLUBS_CACHE_KEYS = %w(boys_sports girls_sports student_clubs)
 
+    NO_DATA_TEXT = 'Data not provided by the school'
+
     def initialize(school, school_cache_data_reader)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
     end
 
     def private_school_cache_data
-      @_private_school_cache_data ||= @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
+      @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
 
     def private_school_datas(*cache_keys)
-      private_school_cache_data.slice(*cache_keys).each_with_object([]) do |(key, value), accum|
+      osp_keys = osp_question_metadata.slice(*cache_keys).keys
+      used_keys = keys_with_data(*cache_keys)
+      no_data_keys = (osp_keys - used_keys)
+      foo = private_school_cache_data.slice(*cache_keys).each_with_object([]) do |(key, value), accum|
+        responses = value.keys
+        translated_responses = responses.map{|response| data_label(response)}
         accum << {
             response_key: data_label(key),
-            response_value: value.keys
+            response_value: translated_responses
         }
       end
+      no_data_keys.each do |no_data_key|
+        foo << {response_key: data_label(no_data_key), response_value: Array(NO_DATA_TEXT)}
+      end
+      foo
+    end
+
+    def keys_with_data(*cache_keys)
+      private_school_cache_data.slice(*cache_keys).keys
     end
 
     def osp_question_metadata
-      @_osp_question_metadata ||= OspQuestion.question_key_label_level_code
+      @_osp_question_metadata ||= OspQuestion.question_key_label_level_code(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
 
     def old_data_for_view(*cache_keys)
@@ -42,21 +57,13 @@ module SchoolProfiles
       %w(best_known_for anything_else)
     end
 
-    # def tab_config
-    #   [
-    #     {overview: data_for_view(*OVERVIEW_CACHE_KEYS)},
-    #     {enrollment: data_for_view(*ENROLLMENT_CACHE_KEYS)},
-    #     {classes: data_for_view(*CLASSES_CACHE_KEYS)},
-    #     {sports_and_clubs: data_for_view(*SPORTS_CLUBS_CACHE_KEYS)}
-    #   ]
-    # end
-
     def tab_config
+      return nil if private_school_cache_data.blank?
       [
-          {overview: private_school_datas(*OVERVIEW_CACHE_KEYS)},
-          {enrollment: private_school_datas(*ENROLLMENT_CACHE_KEYS)},
-          {classes: private_school_datas(*CLASSES_CACHE_KEYS)},
-          {sports_and_clubs: private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)}
+          {data_label(:overview) => private_school_datas(*OVERVIEW_CACHE_KEYS)},
+          {data_label(:enrollment) => private_school_datas(*ENROLLMENT_CACHE_KEYS)},
+          {data_label(:classes) => private_school_datas(*CLASSES_CACHE_KEYS)},
+          {data_label(:sports_and_clubs) => private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)}
       ]
     end
 
