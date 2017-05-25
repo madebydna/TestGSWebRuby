@@ -98,6 +98,9 @@ module LocalizedProfiles
 
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }
+    if ENV_GLOBAL['force_ssl'].present? && ENV_GLOBAL['force_ssl'].to_s == 'true'
+      config.action_controller.default_url_options[:protocol] = 'https'
+    end
 
     require 'database_configuration_loader'
     def config.database_configuration

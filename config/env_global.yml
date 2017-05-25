@@ -5,6 +5,7 @@ app_port: "3000"
 app_pk_host: "localhost"
 gsweb_host: "localhost"
 gsweb_port: "8080"
+force_ssl: false
 GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
 GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
 facebook_app_id: "178930405559082"
