@@ -51,12 +51,10 @@ class Api::SchoolsController < ApplicationController
       if point_given?
         geometries = school_geometries_containing_lat_lon
         geometries_valid = geometries.present?
-        if geometries && geometries.size > 1
-          if geometries[0].area == geometries[1].area
-            # A geometry is not valid if it covers the same area as the next one
-            # This is because we can't really recommend one of those boundaries above the other
-            geometries_valid = false
-          end
+        if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
+          # A geometry is not valid if it covers the same area as the next one
+          # This is because we can't really recommend one of those boundaries above the other
+          geometries_valid = false
         end
         items = geometries_valid ? SchoolGeometry.schools_for_geometries([geometries.first]) : []
       else
@@ -88,7 +86,7 @@ class Api::SchoolsController < ApplicationController
   end
 
   def add_review_summary(schools)
-    if extras.include?('review_summary') && !schools.empty?
+    if extras.include?('review_summary') && schools.present?
       q = SchoolCacheQuery.new.
           include_objects(schools).
           include_cache_keys('reviews_snapshot')

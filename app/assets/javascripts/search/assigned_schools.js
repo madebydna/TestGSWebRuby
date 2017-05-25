@@ -34,22 +34,22 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     };
 
     var assignedSchoolsAjaxCall = function(options, setAssignedSchoolCallbackFn) {
-      var localPromise = $.Deferred(); // We need a promise that is always resolved even if the ajax fails
+      var deferred = $.Deferred(); // We need a deferred that is always resolved even if the ajax fails
       jQuery.getJSON('/gsr/api/schools/', options).done(function(data) {
         if (data && data.items && data.items.length) {
-          localPromise.resolve(1);
+          deferred.resolve(1);
           var level = options.boundary_level;
           if (level === 'p') {
             level = 'e';
           }
           setAssignedSchoolCallbackFn(level, data.items[0]);
         } else {
-          localPromise.resolve(0);
+          deferred.resolve(0);
         }
       }).fail(function() {
-        localPromise.resolve(0);
+        deferred.resolve(0);
       });
-      return localPromise;
+      return deferred.promise();
     };
 
     var getAssignedSchools = function (setAssignedSchoolCallbackFn) {
