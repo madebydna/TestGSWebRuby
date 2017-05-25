@@ -51,7 +51,7 @@ export default class PrivateSchoolInfo extends React.Component {
         <div className="equity-container">
           <div className="title-bar">
             <div className='rating-layout circle-rating--equity-blue'>
-              <span className='icon-users'/>
+              <span className='icon-general-info'/>
             </div>
             <div className="title-container">
               <div className="title">
