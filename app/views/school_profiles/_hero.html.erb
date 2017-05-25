@@ -86,17 +86,22 @@
             </div>
           </div>
         </div>
-      <% end %>
-      <% if @school.type == 'Private' %>
+      <% elsif @school.type == 'Private' %>
           <div class="school-info__item school-info__gs-rating">
             <div class="gs-rating-with-label">
               <div class="gs-rating-with-label__rating">
                 <div class="label-owl">
-                  <span><%= image_tag('owl.svg') %></span>
+                  <span><%= image_tag('school_profiles/owl_header.png') %></span>
                 </div>
               </div>
-              <div class="gs-rating-with-label__label">
-                Private school
+              <div class="gs-rating-with-label__label speech-bubble-dark left private-school">
+                <div><%= t('.greatschools_rating_private') %></div>
+                <div><a data-content-type="info_box"
+                        data-content-html="<%= t('.greatschools_rating_private_tooltip') %>"
+                        class="gs-tipso info-circle tipso_style"
+                        href="javascript:void(0)"
+                        data-remodal-target="modal_info_box"><span class="icon-question"></span>
+                </a></div>
               </div>
             </div>
           </div>

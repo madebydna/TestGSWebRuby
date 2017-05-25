@@ -5,6 +5,8 @@ en:
         one: Grade
         other: Grades
       greatschools_rating: GreatSchools Rating
+      greatschools_rating_private: PRIVATE SCHOOLS HAVE NO RATINGS
+      greatschools_rating_private_tooltip: We have not assigned a GreatSchools rating to this school, due to incomplete or unavailable data.
       more_contact: More contact
       reviews: Reviews
       school_type: Type

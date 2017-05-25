@@ -5,6 +5,8 @@ es:
         one: GRADO
         other: GRADOS
       greatschools_rating: CALIFICACION DE GREATSCHOOLS
+      greatschools_rating_private: LAS ESCUELAS PRIVADAS NO TIENEN CALIFICACIONES
+      greatschools_rating_private_tooltip: No hemos asignado una calificación GreatSchools a esta escuela, debido a datos incompletos o no disponibles.
       more_contact: Más info
       reviews: OPINIONES
       school_type: TIPO
