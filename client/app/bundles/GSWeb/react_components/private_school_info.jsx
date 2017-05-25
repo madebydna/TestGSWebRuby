@@ -22,7 +22,7 @@ export default class PrivateSchoolInfo extends React.Component {
 
   selectSectionContent(items) {
     let item = items[this.state.activeTabIndex];
-    let data = Object.values(item)[0];
+    let data = item.data;
     console.log(data);
     return <div className={'tabs-panel tabs-panel_selected'}>
       <ResponseData input={data}/>
@@ -31,9 +31,8 @@ export default class PrivateSchoolInfo extends React.Component {
 
   render() {
     if (this.props.content) {
-      let tabs = Object.keys(this.props.content);
       let stuff = this.props.content;
-      let items = stuff.map((h) => ({section_title: Object.keys(h)[0]}));
+      let items = stuff.map((h) => ({section_title: h.title}));
 
       return (<div id="private-school-info">
         <a className="anchor-mobile-offset" name="General_info"/>

@@ -18,7 +18,7 @@ module SchoolProfiles
     def private_school_cache_data
       @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
-    
+
     def private_school_datas(*cache_keys)
       osp_question_metadata.slice(*cache_keys).each_with_object([]) do |(response_key, response_value), accum|
         next if (response_value[:level_code] & school_level_code).empty?
@@ -57,13 +57,35 @@ module SchoolProfiles
       %w(best_known_for anything_else)
     end
 
+    # def tab_config
+    #   return nil if private_school_cache_data.blank?
+    #   [
+    #       {data_label(:overview) => private_school_datas(*OVERVIEW_CACHE_KEYS)},
+    #       {data_label(:enrollment) => private_school_datas(*ENROLLMENT_CACHE_KEYS)},
+    #       {data_label(:classes) => private_school_datas(*CLASSES_CACHE_KEYS)},
+    #       {data_label(:sports_and_clubs) => private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)}
+    #   ]
+    # end
+
     def tab_config
       return nil if private_school_cache_data.blank?
       [
-          {data_label(:overview) => private_school_datas(*OVERVIEW_CACHE_KEYS)},
-          {data_label(:enrollment) => private_school_datas(*ENROLLMENT_CACHE_KEYS)},
-          {data_label(:classes) => private_school_datas(*CLASSES_CACHE_KEYS)},
-          {data_label(:sports_and_clubs) => private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)}
+          {
+              title: data_label(:overview),
+              data: private_school_datas(*OVERVIEW_CACHE_KEYS)
+          },
+          {
+              title: data_label(:enrollment),
+              data: private_school_datas(*ENROLLMENT_CACHE_KEYS)
+          },
+          {
+              title: data_label(:classes),
+              data: private_school_datas(*CLASSES_CACHE_KEYS)
+          },
+          {
+              title:data_label(:sports_and_clubs),
+              data: private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
+          }
       ]
     end
 
