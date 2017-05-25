@@ -63,4 +63,12 @@
       margin: 10px;
     }
   }
+
+  .module-header, .title-bar {
+    .anchor-button {
+      float: right;
+      height: 28px;
+      font-size: $font-size-s1;
+    }
+  }
 }

@@ -21,7 +21,13 @@
           </div>
           <div class="col-xs-12 col-lg-9">
             <%= react_component('PrivateSchoolInfo', props: {
-              content: private_school_profile.tab_config}) %>
+              content: private_school_profile.tab_config,
+              osp_link: osp_register_path(
+                city: private_school_profile.school.city,
+                school_id: private_school_profile.school.id.to_s,
+                state: private_school_profile.school.state
+              )
+            }) %>
           </div>
         </div>
       </div>

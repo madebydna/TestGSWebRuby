@@ -8,14 +8,14 @@
   }
 
   @include media-breakpoint-up(md) {
-    .right_rail {
+    > .right_rail {
       position: absolute;
       right: 0px;
       width: 300px;
       height: 100%;
     }
 
-    .content {
+    > .content {
       position: relative;
       // 300 for right rail and 15 for gutter
       margin-right: 315px;

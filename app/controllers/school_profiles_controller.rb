@@ -83,6 +83,7 @@ class SchoolProfilesController < ApplicationController
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
       psp.tab_config = private_school_info.tab_config
+      psp.school = school
     end
     )
   end

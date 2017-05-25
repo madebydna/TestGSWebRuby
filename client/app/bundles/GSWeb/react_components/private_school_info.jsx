@@ -3,6 +3,7 @@ import NoDataModuleCta from './no_data_module_cta.jsx';
 import SectionNavigation from './equity/tabs/section_navigation';
 import ResponseData from './response_data.jsx';
 import InfoCircle from './info_circle';
+import AnchorButton from './anchor_button';
 
 export default class PrivateSchoolInfo extends React.Component {
 
@@ -57,6 +58,7 @@ export default class PrivateSchoolInfo extends React.Component {
               <div className="title">
                 General Information
                 {this.drawInfoCircle(infoText)}
+                <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton>
               </div>
             </div>
           <div className="tab-buttons">
@@ -82,7 +84,7 @@ export default class PrivateSchoolInfo extends React.Component {
               <span className="icon-user"></span>
             </div>
             <div className="title-container">
-              <div className="title">General Information</div>
+              <div className="title">General Information <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton></div>
               <NoDataModuleCta moduleName="General info"/>
             </div>
           </div>
