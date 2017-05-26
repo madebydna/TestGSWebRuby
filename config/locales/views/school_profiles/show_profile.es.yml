@@ -15,7 +15,10 @@ es:
       toc:
         - title: informaciÓn general
           description: Averigue las horas, inscripción, clases, deportes y más acerca de esta escuela.
+          anchor: '#General_info'
         - title: estudiantes
           description: Vea la diversidad estudiantil en esta escuela.
+          anchor: '#Students'
         - title: vecindario
           description: Obtenga más información de la ubicación e información de contacto de esta escuela y explore otras escuelas cercanas.
+          anchor: '#Neighborhood'

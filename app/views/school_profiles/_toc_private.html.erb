@@ -18,7 +18,7 @@
         <div class="col-xs-12 col-sm-4">
           <div class="toc-private-section">
             <div class="toc-private-section-title">
-              <a><%= column_data[:title].upcase %></a>
+              <a href=<%= column_data[:anchor] %>><%= column_data[:title].upcase %></a>
             </div>
             <div>
               <%= column_data[:description] %>
