@@ -27,6 +27,9 @@
     display: inline-block;
     .button-group {
       @include button-group;
+      label {
+        white-space: normal;
+      }
     }
   }
 

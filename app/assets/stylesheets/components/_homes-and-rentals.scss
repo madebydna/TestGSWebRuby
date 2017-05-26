@@ -63,7 +63,7 @@
       margin: 20px auto 0px auto;
     }
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       display: table;
       .title {
         text-align: left;
