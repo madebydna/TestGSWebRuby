@@ -26,7 +26,7 @@ export default class PrivateSchoolInfo extends React.Component {
   selectSectionContent(items) {
     let item = items[this.state.activeTabIndex];
     let data = item.data;
-    console.log(data);
+
     return <div className={'tabs-panel tabs-panel_selected'}>
       <ResponseData input={data}/>
     </div>
@@ -45,6 +45,7 @@ export default class PrivateSchoolInfo extends React.Component {
 
   render() {
     if (this.props.content) {
+
       let stuff = this.props.content;
       let items = stuff.map((h) => ({section_title: h.title}));
       let infoText = 'Replace this with real copy';
@@ -59,6 +60,7 @@ export default class PrivateSchoolInfo extends React.Component {
               <div className="title">
                 General Information
                 <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton>
+                <p><br /></p>
               </div>
             </div>
           <div className="tab-buttons">
