@@ -7,6 +7,18 @@ es:
       greatschools_rating: CALIFICACION DE GREATSCHOOLS
       greatschools_rating_private: LAS ESCUELAS PRIVADAS NO TIENEN CALIFICACIONES
       greatschools_rating_private_tooltip: No hemos asignado una calificación GreatSchools a esta escuela, debido a datos incompletos o no disponibles.
+      claimed: Reclamado
+      claimed_tooltip_html: >
+        Los administradores de esta escuela han reclamado este perfil de escuela para editar y compartir más
+        información general acerca de los programas escolares y la cultura.
+        <a href="/gk/schools/">Obtenga más información</a>.
+      unclaimed: Sin reclamar
+      unclaimed_tooltip_html: >
+        Esta escuela todavía no ha reclamado su perfil.
+        <br /><br />
+        Líderes de la escuela - <a href="/official-school-profile/">reclame el perfil de tu escuela</a>
+        para editar información general y compartir qué hace tu escuela única.
+        <a hre="/gk/schools/">Obtenga más información</a>.
       more_contact: Más info
       reviews: OPINIONES
       school_type: TIPO

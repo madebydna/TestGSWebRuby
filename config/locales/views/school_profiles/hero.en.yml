@@ -7,6 +7,17 @@ en:
       greatschools_rating: GreatSchools Rating
       greatschools_rating_private: PRIVATE SCHOOLS HAVE NO RATINGS
       greatschools_rating_private_tooltip: We have not assigned a GreatSchools rating to this school, due to incomplete or unavailable data.
+      claimed: Claimed
+      claimed_tooltip_html: >
+        Administrators at this school have claimed this school's profile in order to edit general
+        information and share more about school programs and culture.
+        <a href='/gk/schools/'>Learn more</a>.
+      unclaimed: Unclaimed
+      unclaimed_tooltip_html: >
+        This school has not yet claimed its profile.<br /><br />
+        School leaders - <a href='/official-school-profile/'>claim your school’s profile</a> to edit general
+        information and share what makes your school unique.
+        <a href='/gk/schools/'>Learn more</a>.
       more_contact: More contact
       reviews: Reviews
       school_type: Type

@@ -5,9 +5,21 @@
     <div>
       <h1 class="school-name"><%= hero.school_name %>
         <% if hero.should_show_osp_badge? %>
-          <span class="icon-check osp-badge">&nbsp;<span class="claimed">Claimed</span></span>
+          <span class="icon-check osp-badge">&nbsp;<span class="claimed"><%= t('.claimed') %></span></span>
+          <a data-content-type="info_box"
+                  data-content-html="<%= t('.claimed_tooltip_html') %>"
+                  class="gs-tipso info-circle tipso_style"
+                  href="javascript:void(0)"
+                  data-remodal-target="modal_info_box"><span class="icon-question"></span>
+          </a>
         <% elsif hero.school.private_school? %>
-          <span class="osp-badge"><span class="claimed">Unclaimed</span></span>
+          <span class="osp-badge"><span class="claimed"><%= t('.unclaimed') %></span></span>
+          <a data-content-type="info_box"
+                  data-content-html="<%= t('.unclaimed_tooltip_html') %>"
+                  class="gs-tipso info-circle tipso_style"
+                  href="javascript:void(0)"
+                  data-remodal-target="modal_info_box"><span class="icon-question"></span>
+          </a>
         <% end %>
       </h1>
     </div>
