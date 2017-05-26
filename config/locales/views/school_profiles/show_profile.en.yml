@@ -4,12 +4,12 @@ en:
       overview: OVERVIEW
       false_header:
         first_bullet: Are you an administrator at this school?
-        second_bullet_html: Claim your school’s profile to edit general information and share what makes your school unique. Learn more.
+        second_bullet_html: <a href="/official-school-profile/">Claim your school’s profile</a> to edit general information and share what makes your school unique. <a href="/gk/schools/">Learn more.</a>
         third_bullet: Are you a parent or student at this school?
         fourth_bullet: Encourage your school administrators to claim this school’s profile.
       true_header:
         first_bullet: Are you an administrator at this school?
-        second_bullet_html: <a href="/official/school/profile/dashboard/">Keep your school’s information up-to-date.</a>
+        second_bullet_html: <a href="/official-school-profile/dashboard/">Keep your school’s information up-to-date.</a>
         third_bullet: Are you a parent or student at this school?
         fourth_bullet: Encourage school administrators to update your school’s profile.
       toc:

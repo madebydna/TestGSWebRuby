@@ -4,12 +4,12 @@ es:
       overview: RESUMEN
       false_header:
         first_bullet: ¿Eres un administrador de esta escuela?
-        second_bullet_html: Reclame el perfil de tu escuela para editar información general y compartir qué hace tu escuela única. Obtenga más información.
+        second_bullet_html: <a href="/official-school-profile/">Reclame el perfil de tu escuela</a> para editar información general y compartir qué hace tu escuela única. <a href="/gk/schools/">Obtenga más información.</a>
         third_bullet: ¿Es usted un padre o estudiante en esta escuela?
         fourth_bullet: Alienta a los líderes escolares para que reclamen este perfil de escuela.
       true_header:
         first_bullet: ¿Eres un administrador de esta escuela? Mantén la información de tu escuela actualizada.
-        second_bullet_html: <a href="/official/school/profile/dashboard/">Mantén la información de tu escuela actualizada.<a>
+        second_bullet_html: <a href="/official-school-profile/dashboard/">Mantén la información de tu escuela actualizada.<a>
         third_bullet: ¿Es usted un padre o estudiante en esta escuela?
         fourth_bullet: Alienta a los líderes escolares para actualizar el perfil de su escuela.
       toc:
