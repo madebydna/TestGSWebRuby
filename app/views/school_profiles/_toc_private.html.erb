@@ -4,17 +4,17 @@
   <div class="toc-private-header">
     <% translation_type = 'school_profiles.show_profile.' + claimed_string + '_header' %>
     <ul>
-      <li><%= I18n.t(translation_type + '.first_bullet') %></li>
-      <li><%= I18n.t(translation_type + '.second_bullet_html') %></li>
+      <li><%= t(translation_type + '.first_bullet') %></li>
+      <li><%= t(translation_type + '.second_bullet_html') %></li>
     </ul>
     <ul>
-      <li><%= I18n.t(translation_type + '.third_bullet') %></li>
-      <li><%= I18n.t(translation_type + '.fourth_bullet') %></li>
+      <li><%= t(translation_type + '.third_bullet') %></li>
+      <li><%= t(translation_type + '.fourth_bullet') %></li>
     </ul>
   </div>
   <div class="toc-private-container-box">
     <div class="row">
-      <% I18n.t('.toc', scope:'school_profiles.show_profile').each do |column_data| %>
+      <% t('school_profiles.show_profile.toc').each do |column_data| %>
         <div class="col-xs-12 col-sm-4">
           <div class="toc-private-section">
             <div class="toc-private-section-title">
