@@ -47,26 +47,26 @@ en:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
-            <p class="parent-tip">Parent tip:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
             <hr />
-            <p class="parent-tip">Parent tip:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
             <hr />
-            <p class="parent-tip">Parent tip:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">This shows the suspension rates for students with disabilities at this school compared to the state average. High suspension rates mean less time for  teaching and learning.</p>
             <hr />
-            <p class="parent-tip">Parent tip:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
           'Test scores': >
             <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
             <hr />
-            <p class="parent-tip">Parent tip:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
