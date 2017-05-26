@@ -17,7 +17,7 @@
         <% elsif hero.school.private_school? %>
           <span class="claimed"><%= t('.unclaimed') %></span>
           <a data-content-type="info_box"
-                  data-content-html="<%= t('.unclaimed_tooltip_html') %>"
+                  data-content-html="<%= t('.unclaimed_tooltip_html', city: hero.school.city, state: hero.school.state, school_id: hero.school.id) %>"
                   class="gs-tipso info-circle tipso_style"
                   href="javascript:void(0)"
                   data-remodal-target="modal_info_box"><span class="icon-question"></span>
