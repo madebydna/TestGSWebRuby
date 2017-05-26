@@ -1,6 +1,7 @@
 es:
   school_profiles:
     show_profile:
+      overview: RESUMEN
       false_header:
         - first_bullet: ¿Eres un administrador de esta escuela?
           second_bullet: Reclame el perfil de tu escuela para editar información general y compartir qué hace tu escuela única. Obtenga más información.

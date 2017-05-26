@@ -1,6 +1,7 @@
 en:
   school_profiles:
     show_profile:
+      overview: OVERVIEW
       false_header:
         - first_bullet: Are you an administrator at this school?
           second_bullet: Claim your school’s profile to edit general information and share what makes your school unique. Learn more.

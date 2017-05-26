@@ -12,11 +12,13 @@
       <div>
         <%= render 'toc_private', claimed: private_school_profile.claimed %>
       </div>
+      <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+                 width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
       <div>
         <div class="row">
           <div class="col-xs-12 col-lg-3">
             <div class="rating-container__title">
-              OVERVIEW
+              <%= I18n.t('overview', scope:'school_profiles.show_profile') %>
             </div>
           </div>
           <div class="col-xs-12 col-lg-9">
@@ -31,7 +33,8 @@
           </div>
         </div>
       </div>
-
+      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
       <div class="environment-container">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
@@ -44,7 +47,8 @@
           </div>
         </div>
       </div>
-
+      <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
       <div>
         <%= render 'review_summary', reviews: private_school_profile.reviews %>
       </div>
@@ -58,7 +62,8 @@
 
     </div>
   </div>
-
+  <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+             width: 320, height: 50, css_class: 'mbl' %>
   <div>
     <%= render 'neighborhood', neighborhood: private_school_profile.neighborhood %>
   </div>
