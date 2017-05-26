@@ -58,7 +58,6 @@ export default class PrivateSchoolInfo extends React.Component {
             <div className="title-container">
               <div className="title">
                 General Information
-                {this.drawInfoCircle(infoText)}
                 <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton>
               </div>
             </div>
