@@ -8,7 +8,8 @@ import AnchorButton from './anchor_button';
 export default class PrivateSchoolInfo extends React.Component {
 
   static propTypes = {
-    content: PropTypes.array
+    content: PropTypes.array,
+    source_name: PropTypes.string
   };
 
   constructor(props) {
@@ -71,7 +72,7 @@ export default class PrivateSchoolInfo extends React.Component {
           <div className="top-tab-panel">{this.selectSectionContent(stuff)}</div>
           </div>
             <div className="source-bar">
-            Source:&nbsp;<span className="sources-text">School Admin</span>
+            Source:&nbsp;<span className="sources-text">{this.props.source_name}</span>
           </div>
         </div>
       </div>)}

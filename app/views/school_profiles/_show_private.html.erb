@@ -10,7 +10,7 @@
     </div>
     <div class="content">
       <div>
-        <%= render 'toc_private' %>
+        <%= render 'toc_private', claimed: private_school_profile.claimed %>
       </div>
       <div>
         <div class="row">
@@ -26,8 +26,8 @@
                 city: private_school_profile.school.city,
                 school_id: private_school_profile.school.id.to_s,
                 state: private_school_profile.school.state
-              ).gsub(/\/$/, '')
-            }) %>
+              ).gsub(/\/$/, ''),
+              source_name: private_school_profile.source_name}) %>
           </div>
         </div>
       </div>

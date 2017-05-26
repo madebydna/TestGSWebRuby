@@ -84,6 +84,8 @@ class SchoolProfilesController < ApplicationController
       psp.breadcrumbs = breadcrumbs
       psp.tab_config = private_school_info.tab_config
       psp.school = school
+      psp.source_name = private_school_info.source_name
+      psp.claimed = hero.has_osp_badge?
     end
     )
   end

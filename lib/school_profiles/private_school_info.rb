@@ -9,6 +9,7 @@ module SchoolProfiles
     SPORTS_CLUBS_CACHE_KEYS = %w(boys_sports girls_sports student_clubs)
 
     NO_DATA_TEXT = 'no_data_text'
+    SCHOOL_ADMIN = 'School Admin'
 
     def initialize(school, school_cache_data_reader)
       @school = school
@@ -37,10 +38,6 @@ module SchoolProfiles
       @_school_level_code ||= @school.level_code.split(',')
     end
 
-    def keys_with_data(*cache_keys)
-      private_school_cache_data.slice(*cache_keys).keys
-    end
-
     def osp_question_metadata
       @_osp_question_metadata ||= OspQuestion.question_key_label_level_code(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
@@ -65,7 +62,7 @@ module SchoolProfiles
               data: private_school_datas(*CLASSES_CACHE_KEYS)
           },
           {
-              title:data_label(:sports_and_clubs),
+              title: data_label(:sports_and_clubs),
               data: private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
           }
       ]
@@ -73,6 +70,10 @@ module SchoolProfiles
 
     def data_label(key)
       I18n.t(key.to_sym, scope: 'lib.private_school_info', default: I18n.db_t(key, default: key))
+    end
+
+    def source_name
+      data_label(SCHOOL_ADMIN)
     end
 
   end

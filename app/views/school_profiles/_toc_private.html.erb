@@ -1,15 +1,21 @@
-<% tooltips_info = {} %>
-<% tooltips_info['ACADEMICS'] = '.info_texts.academics_html'  %>
-<% tooltips_info['EQUITY'] = '.info_texts.equity_html'  %>
-<% tooltips_info['ENVIRONMENT'] = '.info_texts.environment_html'  %>
+<% claimed_string = claimed.to_s %>
 
 <div id="toc_private">
   <div class="toc-private-header">
-    This is a private school. The info seen on this page is provided by the school (user generated content).
+    <% I18n.t('.' + claimed_string + '_header', scope:'school_profiles.show_profile').each_with_index do |header_data, i| %>
+      <ul>
+        <li><%= header_data[:first_bullet] %></li>
+        <% if i == 0 %>
+          <li><%= link_to "#{header_data[:second_bullet]}", osp_dashboard_url, class: "js-no_ad" %></li>
+        <% else %>
+          <li><%= header_data[:second_bullet] %></li>
+        <% end %>
+      </ul>
+    <% end %>
   </div>
   <div class="toc-private-container-box">
     <div class="row">
-      <% I18n.t('toc', scope:'school_profiles.show_profile').each do |column_data| %>
+      <% I18n.t('.toc', scope:'school_profiles.show_profile').each do |column_data| %>
         <div class="col-xs-12 col-sm-4">
           <div class="toc-private-section">
             <div class="toc-private-section-title">
