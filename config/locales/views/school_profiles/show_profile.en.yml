@@ -3,15 +3,15 @@ en:
     show_profile:
       overview: OVERVIEW
       false_header:
-        - first_bullet: Are you an administrator at this school?
-          second_bullet: Claim your school’s profile to edit general information and share what makes your school unique. Learn more.
-        - first_bullet: Are you a parent or student at this school?
-          second_bullet: Encourage your school administrators to claim this school’s profile.
+        first_bullet: Are you an administrator at this school?
+        second_bullet_html: Claim your school’s profile to edit general information and share what makes your school unique. Learn more.
+        third_bullet: Are you a parent or student at this school?
+        fourth_bullet: Encourage your school administrators to claim this school’s profile.
       true_header:
-        - first_bullet: Are you an administrator at this school?
-          second_bullet: Keep your school’s information up-to-date.
-        - first_bullet: Are you a parent or student at this school?
-          second_bullet: Encourage school administrators to update your school’s profile.
+        first_bullet: Are you an administrator at this school?
+        second_bullet_html: <a href="/official/school/profile/dashboard/">Keep your school’s information up-to-date.</a>
+        third_bullet: Are you a parent or student at this school?
+        fourth_bullet: Encourage school administrators to update your school’s profile.
       toc:
         - title: overview
           description: Find out about this school’s hours, enrollment, classes, sports, and more.

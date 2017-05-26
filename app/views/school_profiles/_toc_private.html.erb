@@ -2,16 +2,15 @@
 
 <div id="toc_private">
   <div class="toc-private-header">
-    <% I18n.t('.' + claimed_string + '_header', scope:'school_profiles.show_profile').each_with_index do |header_data, i| %>
-      <ul>
-        <li><%= header_data[:first_bullet] %></li>
-        <% if i == 0 %>
-          <li><%= link_to "#{header_data[:second_bullet]}", osp_dashboard_url, class: "js-no_ad" %></li>
-        <% else %>
-          <li><%= header_data[:second_bullet] %></li>
-        <% end %>
-      </ul>
-    <% end %>
+    <% translation_type = 'school_profiles.show_profile.' + claimed_string + '_header' %>
+    <ul>
+      <li><%= I18n.t(translation_type + '.first_bullet') %></li>
+      <li><%= I18n.t(translation_type + '.second_bullet_html') %></li>
+    </ul>
+    <ul>
+      <li><%= I18n.t(translation_type + '.third_bullet') %></li>
+      <li><%= I18n.t(translation_type + '.fourth_bullet') %></li>
+    </ul>
   </div>
   <div class="toc-private-container-box">
     <div class="row">

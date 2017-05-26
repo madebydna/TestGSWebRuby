@@ -3,15 +3,15 @@ es:
     show_profile:
       overview: RESUMEN
       false_header:
-        - first_bullet: ¿Eres un administrador de esta escuela?
-          second_bullet: Reclame el perfil de tu escuela para editar información general y compartir qué hace tu escuela única. Obtenga más información.
-        - first_bullet: ¿Es usted un padre o estudiante en esta escuela?
-          second_bullet: Alienta a los líderes escolares para que reclamen este perfil de escuela.
+        first_bullet: ¿Eres un administrador de esta escuela?
+        second_bullet_html: Reclame el perfil de tu escuela para editar información general y compartir qué hace tu escuela única. Obtenga más información.
+        third_bullet: ¿Es usted un padre o estudiante en esta escuela?
+        fourth_bullet: Alienta a los líderes escolares para que reclamen este perfil de escuela.
       true_header:
-        - first_bullet: ¿Eres un administrador de esta escuela? Mantén la información de tu escuela actualizada.
-          second_bullet: Mantén la información de tu escuela actualizada.
-        - first_bullet: ¿Es usted un padre o estudiante en esta escuela?
-          second_bullet: Alienta a los líderes escolares para actualizar el perfil de su escuela.
+        first_bullet: ¿Eres un administrador de esta escuela? Mantén la información de tu escuela actualizada.
+        second_bullet_html: <a href="/official/school/profile/dashboard/">Mantén la información de tu escuela actualizada.<a>
+        third_bullet: ¿Es usted un padre o estudiante en esta escuela?
+        fourth_bullet: Alienta a los líderes escolares para actualizar el perfil de su escuela.
       toc:
         - title: informaciÓn general
           description: Averigue las horas, inscripción, clases, deportes y más acerca de esta escuela.
