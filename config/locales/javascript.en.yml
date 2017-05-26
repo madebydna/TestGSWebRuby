@@ -62,7 +62,7 @@ en:
     'SD Test scores narration': >
       <p class="narrative-content">This shows results for students with disabilities on a {subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
       <hr />
-      <p class="parent-tip">Parent tip:</p>
+      <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
       <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
     Test scores: Test scores
     Graduation rates: Graduation rates
