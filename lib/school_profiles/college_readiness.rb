@@ -64,6 +64,12 @@ module SchoolProfiles
       ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
     end
 
+    def narration
+      return nil unless rating.present? && (1..10).cover?(rating.to_i)
+      key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
+      I18n.t(key, scope: 'lib.college_readiness.narration', default: I18n.db_t(key, default: key)).html_safe
+    end
+
     def info_text
       I18n.t('lib.college_readiness.info_text')
     end

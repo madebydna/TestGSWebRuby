@@ -191,11 +191,16 @@
   }
 
   .osp-badge {
-    margin-left: 20px;
-    font-size: 20px;
+    vertical-align: middle;
+    margin-left: 10px;
+    font-size: 16px;
+    background: image_url('school_profiles/claimed_badge.png') no-repeat;
   }
 
   .claimed {
+    vertical-align: middle;
+    margin-left: 25px;
+    font-size: 16px;
     font-family: opensans-semibold;
     color: #2ba3dc;
   }

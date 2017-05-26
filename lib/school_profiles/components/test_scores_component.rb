@@ -40,23 +40,25 @@ module SchoolProfiles
         normalized_breakdown = breakdown == 'All' ? 'All students' : breakdown
         hash.merge(
           breakdown: normalized_breakdown,
-          percentage: value_to_s(ethnicities_to_percentages[normalized_breakdown]),
+          percentage: breakdown_percentage(normalized_breakdown),
           grades: manage_grades_hash(grades_for_breakdown)
         )
       end
 
+      def breakdown_percentage(breakdown)
+        value_to_s(ethnicities_to_percentages[breakdown])
+      end
+
       def manage_grades_hash(grades)
         grades.map do |grade|
-          grade.except(:breakdown,
-                       :subject,
-                       :test_description,
-                       :test_label,
-                       :test_source,
-                       :year,
-                       :state_number_tested)
-              .merge(label: text_value(grade[:score]),
-                     state_average_label: text_value(grade[:state_average]))
-
+          standard_hash_to_value_hash(grade).
+              except(:breakdown,
+                     :subject,
+                     :test_description,
+                     :test_label,
+                     :test_source,
+                     :year,
+                     :state_number_tested)
         end if grades.present? && grades.count >= GRADES_DISPLAY_MINIMUM
       end
     end

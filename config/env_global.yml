@@ -5,6 +5,7 @@ app_port: "3000"
 app_pk_host: "localhost"
 gsweb_host: "localhost"
 gsweb_port: "8080"
+force_ssl: false
 GOOGLE_PRIVATE_KEY: "ROnVnbh8o4tmlpgnSXDTu2DAWQU="
 GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
 facebook_app_id: "178930405559082"
@@ -28,6 +29,8 @@ exacttarget_api_app_id_SMS: c1d444f8-087d-4921-927e-790a7bad1119
 exacttarget_v2_api_key: 12f1dx5e916tjkij5sajei5e
 exacttarget_v2_api_secret: Qrrgd4ITVtssAgiSZNqCwVyn
 exacttarget_v2_api_app_id: 33a5f73d-b3d3-4724-a50c-a21c1277a041
+
+homes_and_rentals_service_url: //office-gsxapi.greatschools.org/homes-and-rentals-service
 
 connection_pooling_enabled: false
 search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
@@ -55,3 +58,6 @@ feed_log_level : 0
 # gsdata_db_host: dev-gsdata.greatschools.org
 # gsdata_db_username: foobarbaz
 # gsdata_db_password: foobarbaz
+
+profiling_key: we<3performance
+profiling_output_path: /tmp

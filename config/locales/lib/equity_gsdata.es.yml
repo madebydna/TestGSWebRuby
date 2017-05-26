@@ -31,6 +31,8 @@ es:
       Pacific Islander: Islas del Pacífico
       Hawaiian Native/Pacific Islander: Islas del Pacífico
       Native Hawaiian or Other Pacific Islander: Islas del Pacífico
+      Economically disadvantaged: De bajos ingresos
+      Not economically disadvantaged: Sin ingresos bajos
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
         'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'
@@ -46,26 +48,26 @@ es:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
-            <p class="parent-tip">Consejos para padres:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
-            <p class="parent-tip">Consejos para padres:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">Esto muestra el porcentaje de estudiantes con discapacidades ausentes 15 días o más en esta escuela en comparación con el promedio estatal. Altos índices de absentismo significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
-            <p class="parent-tip">Consejos para padres:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
           'Percentage of students suspended out of school': >
             <p class="narrative-content">Este índice muestra la suspensión de los estudiantes con discapacidades en esta escuela en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
             <hr />
-            <p class="parent-tip">Consejos para padres:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
           'Test scores': >
             <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
             <hr />
-            <p class="parent-tip">Consejos para padres:</p>
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
             <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que los estudiantes con discapacidades obtengan resultados académicos exitosos.</p>

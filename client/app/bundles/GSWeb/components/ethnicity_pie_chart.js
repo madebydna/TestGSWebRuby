@@ -1,7 +1,7 @@
 import { getScript } from '../util/dependency';
 // TODO: import $
 
-      //  If you change these colors they need to be changed in _ethnicity.html.erb 
+      //  If you change these colors they need to be changed in _students.html.erb
   const ethnicityColors = ['#184a7d', '#2ba3dc', '#08c569', '#dca21a', '#d94373', '#fdda46', '#0e6ac9', '#999EFF'];
       // write the graph to this location in html
   const ethnicityGraph = '#ethnicity-graph';

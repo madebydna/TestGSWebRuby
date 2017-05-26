@@ -21,8 +21,12 @@ module SchoolProfiles
           breakdown: breakdown,
           score: hash['school_value'],
           state_average: hash['state_average'],
-          percentage: value_to_s(ethnicities_to_percentages[breakdown])
+          percentage: breakdown_percentage(breakdown)
         }
+      end
+
+      def breakdown_percentage(breakdown)
+        value_to_s(ethnicities_to_percentages[breakdown])
       end
     end
   end

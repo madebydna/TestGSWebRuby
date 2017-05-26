@@ -17,6 +17,10 @@ module SchoolProfiles
 
         t(yml_key + '_html', scope: 'lib.test_scores.narrative.' + data_type)
       end
+
+      def breakdown_percentage(breakdown)
+        value_to_s(low_income_to_percentages[breakdown])
+      end
     end
   end
 end

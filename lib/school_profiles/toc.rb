@@ -26,7 +26,7 @@ module SchoolProfiles
       if @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
       end
-      if @school.level_code =~ /h/
+      if @school.level_code =~ /h/ || @courses.visible?
         arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
       hash[:academics] = arr
@@ -55,14 +55,6 @@ module SchoolProfiles
 
     def content
       [academics, equity, environment].reject{ |hash| hash.all?(&:empty?) }
-    end
-
-    def content_for_private
-      {
-          "General Info" => "This is text that needs copy. When there's copy it will be updated",
-          "Reviews" => "This is also text that needs copy. When there's copy it will be updated",
-          "Neighborhood" => "This is also text that needs copy. When there's copy it will be updated"
-      }
     end
 
     def info_text(key)

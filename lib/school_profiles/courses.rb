@@ -1,6 +1,10 @@
 require 'set'
 module SchoolProfiles
   class Courses
+
+    SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
+    SUBJECT_RATING_SUPPRESSION = %w(arts_index health_index vocational_hands_on_index)
+
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
       @data_types = [
@@ -34,16 +38,23 @@ module SchoolProfiles
     #   ]
     # }
     def course_enrollments_and_ratings
-      course_subject_group_ratings
-        .each_with_object({}) do |(readable_subject, rating), accum|
-          subject_key = readable_subject.downcase.gsub(' ', '_')
-          courses = (courses_by_subject[subject_key] || []).map { |h| h['name'] }
-          translated_subject = t(readable_subject.gsub(/ index/i, ''))
-          accum[translated_subject] = {
-            'courses' => courses,
-            'rating' => rating
-          }
+      course_ratings_hash = course_subject_group_ratings.each_with_object({}) do |(readable_subject, rating), accum|
+        subject_key = readable_subject.downcase.gsub(' ', '_')
+        accum[subject_key] = rating
+      end
+      SUBJECT_ORDER.each_with_object({}) do |snake_case_subject, accum|
+        courses = courses_by_subject[snake_case_subject] || []
+        if courses.empty? || SUBJECT_RATING_SUPPRESSION.include?(snake_case_subject)
+          rating = nil
+        else
+          rating = course_ratings_hash[snake_case_subject]
         end
+        translated_subject = t(snake_case_subject.gsub(/ index/i, ''))
+        accum[translated_subject] = {
+            'courses' => courses.map { |h| h['name'] },
+            'rating' => rating
+        }
+      end
     end
 
     def data
@@ -74,19 +85,22 @@ module SchoolProfiles
       #   stem_index: [
       #     { 
       #       name: 'Math A',
-      #       enrollment: 8
+      #       source: 'California Dept. of Education',
+      #       year: 2016
       #     }
       #   ],
       #   business_index: [
       #     {
       #       name: 'Marketing and Business Fundamentals712',
-      #       enrollment: 57
+      #       source: 'California Dept. of Education',
+      #       year: 2016
       #     }
       #   ],
       #   vocational_hands_on_index: [
       #     {
       #       name: 'Marketing and Business Fundamentals712',
-      #       enrollment: 57
+      #       source: 'California Dept. of Education',
+      #       year: 2016
       #     }
       #   ]
       # }
@@ -102,7 +116,9 @@ module SchoolProfiles
           subjects.each do |subject|
             accum[subject] ||= []
             accum[subject] << {
-              'name' => h['breakdowns']
+              'name' => h['breakdowns'],
+              'source' => h['source_name'],
+              'year' => h['source_year']
             }
           end
         end
@@ -181,18 +197,25 @@ module SchoolProfiles
     #   ['California Department of Education', 2016] => [ 'Arts', 'Math']
     # }
     def sources
-      (
-        course_ratings_subjects.each_with_object({}) do |hash, accum|
-          source_info = [hash['source_name'], hash['source_year'].to_i]
-          accum[source_info] ||= Set.new
-          accum[source_info] << t(hash['breakdowns'].gsub(' Index', ''))
+      courses_by_subject.each_with_object({}) do |(subject_key, courses), accum|
+        unique_sources = courses.map { |c| [db_t(c['source']), c['year'].to_i] }.uniq
+        unique_sources.each do |source|
+          accum[source] ||= Set.new
+          accum[source] << t(subject_key)
         end
-      )
+      end
     end
 
     def t(s)
-      I18n.t(s, scope:'lib.advanced_courses')
+      I18n.t(s, scope:'lib.advanced_courses', default: s)
     end
 
+    def db_t(s)
+      I18n.db_t(s, default: s)
+    end
+
+    def visible?
+      rating.present? || (courses_by_subject.present? && courses_by_subject.map { |_,v| v.size }.reduce(:+) > 0)
+    end
   end
 end

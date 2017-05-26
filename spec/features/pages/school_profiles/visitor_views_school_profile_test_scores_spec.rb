@@ -80,7 +80,7 @@ describe 'Visitor' do
       visit school_path(school)
       expect(page_object).to have_test_score_subject(
         label: 'English',
-        state_average: '30%'
+        state_average: '31%'
       )
     end
   end

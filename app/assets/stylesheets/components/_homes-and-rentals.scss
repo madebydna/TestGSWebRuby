@@ -1,0 +1,210 @@
+#homes-and-rentals {
+  $button-text-color: #2ba3dc;
+  $max-tile-width: 384px;
+  $max-tile-height: 270px;
+
+  padding: 50px 15px 0 15px;
+  margin: auto;
+  max-width: 1170px;
+
+  @include media-breakpoint-only(xs) {
+    background-color: #f6f9fa;
+    padding: 40px 15px 40px 15px;
+  }
+
+  .cta-buttons {
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+
+    .anchor-button {
+      font-size: $font-size-s1;
+      font-family: 'opensans-regular';
+      color: $button-text-color;
+      text-transform: uppercase;
+    }
+
+    .anchor-button {
+      display: block;
+      margin: 10px auto 0px auto;
+    }
+    img {
+      display: block;
+      margin: 40px auto 0px auto;
+    }
+    
+    @include media-breakpoint-up(sm) {
+      .anchor-button {
+        height: 50px;
+        display: inline-block;
+      }
+      .anchor-button + .anchor-button {
+        margin-left: 10px;
+      }
+      img {
+        @include position-top-right;
+        margin: 10px auto 0px auto;
+      }
+    }
+  }
+
+  .title-bar {
+    display: block;
+    text-align: center;
+
+    .title {
+      width: 100%;
+      font-family: 'Robotoslab-Bold';
+      font-size: 26px;
+    }
+
+    .button-group {
+      @include button-group;
+      margin: 20px auto 0px auto;
+    }
+
+    @include media-breakpoint-up(sm) {
+      display: table;
+      .title {
+        text-align: left;
+      }
+      .title, .button-group {
+        display: table-cell;
+      }
+    }
+  }
+
+  .tile-container {
+    display: block;
+    overflow: hidden;
+    max-width: $max-tile-width;
+    background-color: white;
+    @include media-breakpoint-up(sm) {
+      padding: 0px 10px;
+      display: table-cell;
+      width: 2%; // hack to make cells split evenly at maximum width
+      margin: auto;
+    }
+    .tile {
+      max-width: $max-tile-width;
+    }
+  }
+
+  .tile-container + .tile-container {
+    margin-top: 10px;
+    @include media-breakpoint-up(sm) {
+      margin-top: 20px;
+    }
+  }
+}
+
+.tiles {
+  display: table;
+  margin: 30px auto 0 auto;
+  @include media-breakpoint-up(md) {
+    display: block;
+    margin: 30px -10px 0 -10px;
+  }
+}
+
+
+.tile {
+  @mixin overlay {
+    color: white;
+    background-color: rgba(0,0,0,.70);
+  }
+  position: relative;
+  &:hover {
+    text-decoration: none;
+  }
+
+  .price {
+    padding: 5px 10px;
+    font-size: $font-size-base;
+    font-family: 'RobotoSlab-bold';
+  }
+
+  .info {
+    vertical-align: top;
+    color: #71787e;
+  }
+
+  .heading {
+    font-size: $font-size-l2;
+    font-family: 'opensans-semibold';
+    color: #28292a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @include media-breakpoint-only(xs) {
+    vertical-align: top;
+    width: 100%;
+    display: table;
+
+    > div {
+      display: inline-block;
+    }
+
+    img {
+      display: table-cell;
+      width: 100px;
+      height: 100px;
+    }
+
+    .price {
+      @include overlay;
+      top: 71px; // safer to offset from top
+      left: 0px;
+      position: absolute;
+    }
+
+    .info {
+      display: table-cell;
+      padding: 10px;
+      font-size: $font-size-s1;
+      font-family: 'opensans-regular';
+    }
+
+    .heading {
+      padding-bottom: 5px;
+    }
+  }
+
+  @include media-breakpoint-up(sm) {
+    vertical-align: top;
+    width: 100%;
+    display: block;
+
+    > div {
+      display: inline-block;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .price {
+      @include overlay;
+      top: 20px;
+      position: absolute;
+      font-size: $font-size-l2;
+    }
+
+    .info {
+      @include overlay;
+      bottom: 0px;
+      position: absolute;
+      display: block;
+      width: 100%;
+      padding: 10px 20px;
+
+      .heading {
+        color: white;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+

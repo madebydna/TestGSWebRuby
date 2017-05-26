@@ -47,15 +47,22 @@ export default class Courses extends React.Component {
 
   render() {
     let subjects = Object.keys(this.props.course_enrollments_and_ratings);
+    let num_courses = subjects.reduce ( (sum, subject) => sum + this.props.course_enrollments_and_ratings[subject].courses.length, 0);
     let courseSubjects = subjects.slice(0,3).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
     let courseSubjectsForDrawer = subjects.slice(3).map((subject, i) => <CourseSubject name={subject} key={i} {...this.props.course_enrollments_and_ratings[subject]} />);
+    let ratingHtml = '';
+    if (this.props.rating !== null) {
+      ratingHtml = <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span className="denominator">/10</span></span>
+    } else {
+      ratingHtml = <span className='circle-rating--equity-blue circle-rating--medium'><span className="icon-advanced"/></span>
+    }
 
-    if (subjects.length > 0)
+    if (subjects.length > 0 && num_courses > 0)
       return (<div id="AdvancedCourses" className="advanced-courses rating-container">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
         <div className="rating-container__rating">
           <div className="module-header">
-              <span className={'gs-rating circle-rating--medium circle-rating--' + this.props.rating}>{this.props.rating}<span className="denominator">/10</span></span>
+              { ratingHtml }
             <div className="title-container">
               <span className="title">{this.t('Advanced courses')} </span>
               <a data-remodal-target="modal_info_box"

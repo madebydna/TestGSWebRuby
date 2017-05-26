@@ -37,6 +37,7 @@ class Api::SchoolsController < ApplicationController
     schools.map do |school|
       Api::SchoolSerializer.new(school).to_hash.tap do |s|
         s.except(AVAILABLE_EXTRAS - extras)
+        add_distance(s)
       end
     end
   end
@@ -47,13 +48,23 @@ class Api::SchoolsController < ApplicationController
 
   def schools
     @_schools ||= (
-      items = if point_given?
-        SchoolGeometry.schools_for_geometries(school_geometries_containing_lat_lon).first
+      if point_given?
+        geometries = school_geometries_containing_lat_lon
+        geometries_valid = geometries.present?
+        if geometries && geometries.size > 1 && geometries[0].area == geometries[1].area
+          # A geometry is not valid if it covers the same area as the next one
+          # This is because we can't really recommend one of those boundaries above the other
+          geometries_valid = false
+        end
+        items = geometries_valid ? SchoolGeometry.schools_for_geometries([geometries.first]) : []
       else
-        get_schools
+        items = get_schools
       end
       items = add_geometry(items)
       items = add_rating(items)
+      items = add_review_summary(items)
+
+      items
     )
   end
 
@@ -62,7 +73,7 @@ class Api::SchoolsController < ApplicationController
       include_objects(schools).
       include_cache_keys('ratings')
 
-    school_cache_results = SchoolCacheResults.new('ratings', q.query)
+    school_cache_results = SchoolCacheResults.new('ratings', q.query_and_use_cache_keys)
     school_cache_results.decorate_schools(schools)
   end
 
@@ -72,6 +83,42 @@ class Api::SchoolsController < ApplicationController
       schools = schools.map { |s| Api::SchoolWithGeometry.apply_geometry_data!(s) }
     end
     schools
+  end
+
+  def add_review_summary(schools)
+    if extras.include?('review_summary') && schools.present?
+      q = SchoolCacheQuery.new.
+          include_objects(schools).
+          include_cache_keys('reviews_snapshot')
+
+      school_cache_results = SchoolCacheResults.new('reviews_snapshot', q.query_and_use_cache_keys)
+      return school_cache_results.decorate_schools(schools)
+    end
+    schools
+  end
+
+  def add_distance(hash)
+    if extras.include?('distance') && point_given? && hash.has_key?(:lat) && hash.has_key?(:lon)
+      hash['distance'] = distance_between(hash[:lat], hash[:lon], lat.to_f, lon.to_f)
+    end
+    hash
+  end
+
+  def distance_between(lat1, lon1, lat2, lon2)
+    rad_per_degree = Math::PI / 180
+    radius_miles = 3959 # Earth radius
+    lat1_rad = lat1 * rad_per_degree
+    lat2_rad = lat2 * rad_per_degree
+    lon1_rad = lon1 * rad_per_degree
+    lon2_rad = lon2 * rad_per_degree
+
+    a = Math.sin((lat2_rad - lat1_rad) / 2) ** 2 +
+        Math.cos(lat1_rad) * Math.cos(lat2_rad) * Math.sin((lon2_rad - lon1_rad) / 2) ** 2
+    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+    (radius_miles * c).round(2) # Delta in miles
+  rescue
+    nil
   end
 
   def get_schools

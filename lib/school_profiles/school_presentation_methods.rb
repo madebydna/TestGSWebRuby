@@ -11,7 +11,7 @@ module SchoolProfiles
     end
 
     def address
-      "#{street} #{city}, #{state} #{zipcode}"
+      "#{street}, #{city}, #{state} #{zipcode}"
     end
 
     def city_state

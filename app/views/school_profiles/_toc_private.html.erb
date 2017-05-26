@@ -1,23 +1,27 @@
-<% content = @private_school_profile.toc.content_for_private %>
-<% tooltips_info = {} %>
-<% tooltips_info['ACADEMICS'] = '.info_texts.academics_html'  %>
-<% tooltips_info['EQUITY'] = '.info_texts.equity_html'  %>
-<% tooltips_info['ENVIRONMENT'] = '.info_texts.environment_html'  %>
+<% claimed_string = claimed.to_s %>
 
 <div id="toc_private">
   <div class="toc-private-header">
-    This is a private school. The info seen on this page is provided by the school (user generated content).
+    <% translation_type = 'school_profiles.show_profile.' + claimed_string + '_header' %>
+    <ul>
+      <li><%= t(translation_type + '.first_bullet') %></li>
+      <li><%= t(translation_type + '.second_bullet_html') %></li>
+    </ul>
+    <ul>
+      <li><%= t(translation_type + '.third_bullet') %></li>
+      <li><%= t(translation_type + '.fourth_bullet') %></li>
+    </ul>
   </div>
   <div class="toc-private-container-box">
     <div class="row">
-      <% content.each do |column,data| %>
+      <% t('school_profiles.show_profile.toc').each do |column_data| %>
         <div class="col-xs-12 col-sm-4">
           <div class="toc-private-section">
             <div class="toc-private-section-title">
-              <a><%= column.upcase %></a>
+              <a href=<%= column_data[:anchor] %>><%= column_data[:title].upcase %></a>
             </div>
             <div>
-              <%= data %>
+              <%= column_data[:description] %>
             </div>
           </div>
         </div>

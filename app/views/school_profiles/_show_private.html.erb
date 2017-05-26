@@ -10,22 +10,31 @@
     </div>
     <div class="content">
       <div>
-        <%= render 'toc_private' %>
+        <%= render 'toc_private', claimed: private_school_profile.claimed %>
       </div>
+      <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+                 width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
       <div>
         <div class="row">
           <div class="col-xs-12 col-lg-3">
             <div class="rating-container__title">
-              OVERVIEW
+              <%= I18n.t('overview', scope:'school_profiles.show_profile') %>
             </div>
           </div>
           <div class="col-xs-12 col-lg-9">
             <%= react_component('PrivateSchoolInfo', props: {
-              general_info: private_school_profile.private_school_info}) %>
+              content: private_school_profile.tab_config,
+              osp_link: osp_register_path(
+                city: private_school_profile.school.city,
+                school_id: private_school_profile.school.id.to_s,
+                state: private_school_profile.school.state
+              ).gsub(/\/$/, ''),
+              source_name: private_school_profile.source_name}) %>
           </div>
         </div>
       </div>
-
+      <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
       <div class="environment-container">
         <div class="row">
           <div class="col-xs-12 col-lg-3">
@@ -38,7 +47,8 @@
           </div>
         </div>
       </div>
-
+      <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+                 width: 320, height: 50, css_class: 'mbl' %>
       <div>
         <%= render 'review_summary', reviews: private_school_profile.reviews %>
       </div>
@@ -52,7 +62,11 @@
 
     </div>
   </div>
-
+  <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+             width: 320, height: 50, css_class: 'mbl' %>
+  <div>
+    <%= render 'homes_and_rentals', school: @school %>
+  </div>
   <div>
     <%= render 'neighborhood', neighborhood: private_school_profile.neighborhood %>
   </div>

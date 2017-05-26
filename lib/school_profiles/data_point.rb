@@ -59,7 +59,8 @@ module SchoolProfiles
     end
 
     def float_value
-      value.to_s.scan(/[0-9.]+/).first.to_i
+      return nil if value.nil?
+      value.to_s.scan(/[0-9.]+/).first.to_f
     end
 
     def format

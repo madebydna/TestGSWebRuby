@@ -22,3 +22,53 @@ en:
         'Percent of students who meet UC/CSU entrance requirements': 'This is the percentage of graduates from this school who completed the A-G courses required for eligibility at University of California and California State University schools.'
         'Percentage of students passing 1 or more AP exams grades 9-12': 'The AP exam pass rate reflects how many students at this school got a passing score on at least one AP exam.'
         'Percentage AP enrolled grades 9-12': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
+      narration:
+        _1_html: >
+          <h3 class="negative">Very concerning:</h3>
+          <p>This school is <span class="emphasis">far below</span> the state average in key measures of college and career readiness.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _2_html: >
+          <h3 class="negative">A worrisome sign:</h3>
+          <p>This school is <span class="emphasis">below</span> the state average in key measures of college and career readiness.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _3_html: >
+          <h3 class="neutral">Worth a deeper look:</h3>
+          <p>This school is <span class="emphasis">about the same as</span> the state average in key measures of college and career readiness, but depending on the state,
+          average can mean only a minority of students are ready for college and career.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating
+          without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _4_html: >
+          <h3 class="positive">A promising sign:</h3>
+          <p>This school is <span class="emphasis">above</span> the state average in key measures of college and career readiness. </p>
+          <p>Even at schools with strong college and career readiness, there may be students who are not getting
+          the opportunities they need to succeed.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _5_html: >
+          <h3 class="positive">Good news!</h3>
+          <p>This school is <span class="emphasis">far above</span> the state average in key measures of college and career readiness.</p>
+          <p>Even at schools with strong college and career readiness, there may be students who are not getting
+          the opportunities they need to succeed.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />

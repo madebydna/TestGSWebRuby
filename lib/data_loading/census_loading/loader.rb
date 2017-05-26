@@ -29,6 +29,7 @@ class CensusLoading::Loader < CensusLoading::Base
           # do nothing
         else
           insert_into!(census_update, entity)
+          CharacteristicsCaching::Base.clear_rails_caches
         end
       rescue Exception => e
         raise e.message

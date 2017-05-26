@@ -84,6 +84,10 @@ module SchoolProfiles
       decorated_school.ethnicity_data
     end
 
+    def low_income_data
+      decorated_school.free_or_reduced_price_lunch_data
+    end
+
     def characteristics_data(*keys)
       decorated_school.characteristics.slice(*keys)
     end

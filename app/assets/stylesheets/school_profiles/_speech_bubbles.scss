@@ -1,0 +1,7 @@
+.speech-bubble {
+  @include speech-bubble(#edf2f5);
+}
+
+.speech-bubble-dark {
+  @include speech-bubble(#4a6f8c);
+}

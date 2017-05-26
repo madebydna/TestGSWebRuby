@@ -98,6 +98,9 @@ module LocalizedProfiles
 
     # Add trailing slashes to generated URLs
     config.action_controller.default_url_options = { :trailing_slash => true }
+    if ENV_GLOBAL['force_ssl'].present? && ENV_GLOBAL['force_ssl'].to_s == 'true'
+      config.action_controller.default_url_options[:protocol] = 'https'
+    end
 
     require 'database_configuration_loader'
     def config.database_configuration
@@ -113,6 +116,16 @@ module LocalizedProfiles
     config.middleware.insert_before ActiveRecord::ConnectionAdapters::ConnectionManagement, ::StatusPage
     require File.join(config.root, 'lib', 'ajax_flash_messages_middleware')
     config.middleware.use ::AjaxFlashMessagesMiddleware
+    require File.join(config.root, 'lib', 'stackprof_middleware')
+    if ENV_GLOBAL['profiling_key'].present?
+      config.middleware.use ::StackProfMiddleware,
+        enabled: true,
+        mode: :cpu,
+        interval: 1000,
+        save_every: 1,
+        raw: true,
+        path: ENV_GLOBAL['profiling_output_path']
+    end
 
     config.active_record.schema_format = :sql
 

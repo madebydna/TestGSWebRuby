@@ -37,19 +37,19 @@ en:
       connect_links:
         heading: Connect
         links:
-          - url: http://www.facebook.com/greatschools
+          - url: https://www.facebook.com/greatschools
             icon: facebook
             text: Facebook
-          - url: http://www.twitter.com/greatschools
+          - url: https://www.twitter.com/greatschools
             icon: twitter
             text: Twitter
-          - url: http://pinterest.com/greatschools/
+          - url: https://pinterest.com/greatschools/
             icon: pinterest
             text: Pinterest
-          - url: http://www.youtube.com/greatschools
+          - url: https://www.youtube.com/greatschools
             icon: youtube
             text: YouTube
-          - url: http://www.instagram.com/greatschools/
+          - url: https://www.instagram.com/greatschools/
             icon: instagram
             text: Instagram
       newsletter: Newsletter

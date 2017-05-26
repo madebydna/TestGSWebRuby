@@ -67,7 +67,8 @@ describe TestScoresCaching::BreakdownsCacher do
                         number_students_tested: 100,
                         state_number_tested: nil,
                         score: '10',
-                        state_average: '20'
+                        state_average: '20',
+                        flags: nil
                       }
                     }
                   }

@@ -82,7 +82,10 @@ class SchoolProfilesController < ApplicationController
       psp.neighborhood = neighborhood
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
-      psp.private_school_info = private_school_info.private_school_info
+      psp.tab_config = private_school_info.tab_config
+      psp.school = school
+      psp.source_name = private_school_info.source_name
+      psp.claimed = hero.has_osp_badge?
     end
     )
   end
@@ -179,9 +182,9 @@ class SchoolProfilesController < ApplicationController
 
   def breadcrumbs
     {
-      StructuredMarkup.state_breadcrumb_text(school.state) => state_url(state_params(school.state)),
-      StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city) => city_url(city_params(school.state, school.city)),
-      t('controllers.school_profile_controller.schools') => search_city_browse_url(city_params(school.state, school.city)),
+      StructuredMarkup.state_breadcrumb_text(school.state) => state_path(state_params(school.state)),
+      StructuredMarkup.city_breadcrumb_text(state: school.state, city: school.city) => city_path(city_params(school.state, school.city)),
+      t('controllers.school_profile_controller.schools') => search_city_browse_path(city_params(school.state, school.city)),
       t('controllers.school_profile_controller.school_profile') => nil
     }
   end

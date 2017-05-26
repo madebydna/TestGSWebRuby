@@ -14,8 +14,8 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             return false;
         }
 
-        var grade = GS.uri.Uri.getFromQueryString("grades");
-        if (grade == 'p' || grade == 'pk') {
+        var grades = GS.uri.Uri.getFromQueryStringAsArray("gradeLevels[]");
+        if (grades.length === 1 && grades[0] === 'p') {
             return false;
         }
         return true;
@@ -33,38 +33,66 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         return false;
     };
 
-    var getAssignedSchools = function(setAssignedSchoolCallbackFn) {
-        setAssignedSchoolCallbackFn = setAssignedSchoolCallbackFn || setAssignedSchool;
-        var lat = GS.uri.Uri.getFromQueryString("lat");
-        var lon = GS.uri.Uri.getFromQueryString("lon");
-        var gradeLevels = GS.uri.Uri.getFromQueryStringAsArray("gradeLevels[]");
-        var gradeLevelsCommaSeperated = gradeLevels.join();
-        if (!lat || !lon || !isSearchSpecificEnough()) {
-            $('#js-assigned-school-not-valid').show('slow');
-            return;
+    var assignedSchoolsAjaxCall = function(options, setAssignedSchoolCallbackFn) {
+      var deferred = $.Deferred(); // We need a deferred that is always resolved even if the ajax fails
+      jQuery.getJSON('/gsr/api/schools/', options).done(function(data) {
+        if (data && data.items && data.items.length) {
+          deferred.resolve(1);
+          var level = options.boundary_level;
+          if (level === 'p') {
+            level = 'e';
+          }
+          setAssignedSchoolCallbackFn(level, data.items[0]);
+        } else {
+          deferred.resolve(0);
         }
-        var data = {lat: lat, lon: lon ,level:gradeLevelsCommaSeperated};
-        jQuery.getJSON("/geo/boundary/ajax/getAssignedSchoolByLocation.json", data, function(data) {
-            if (data && data.results && data.results.length) {
-                var totalSchoolsFound = 0;
-                for (var x=0; x < data.results.length; x++) {
-                    var schoolWrapper = data.results[x];
-                    if (schoolWrapper.schools && schoolWrapper.schools.length) {
-                        totalSchoolsFound += schoolWrapper.schools.length;
-                        try {
-                            setAssignedSchoolCallbackFn(schoolWrapper.level, schoolWrapper.schools[0]);
-                        } catch (e) {
-                            // on any error just ignore it and move on
-                        }
-                    }
-                }
-                if (totalSchoolsFound == 0) {
-                    setNoAssignedSchools();
-                }
-            } else if (data && data.results && data.results.length === 0) {
-                setNoAssignedSchools();
-            }
-        });
+      }).fail(function() {
+        deferred.resolve(0);
+      });
+      return deferred.promise();
+    };
+
+    var getAssignedSchools = function (setAssignedSchoolCallbackFn) {
+      setAssignedSchoolCallbackFn = setAssignedSchoolCallbackFn || setAssignedSchool;
+      var lat = GS.uri.Uri.getFromQueryString("lat");
+      var lon = GS.uri.Uri.getFromQueryString("lon");
+      var state = gon.state_abbr || GS.uri.Uri.getFromQueryString("state");
+      var gradeLevels = GS.uri.Uri.getFromQueryStringAsArray("gradeLevels[]");
+      if (!lat || !lon || !state || !isSearchSpecificEnough()) {
+        $('#js-assigned-school-not-valid').show('slow');
+        return;
+      }
+      if (gradeLevels.length > 0) {
+        var p_index = gradeLevels.indexOf('p');
+        if (p_index > -1) {
+          gradeLevels.splice(p_index, 1); // Remove the grade 'p', since that char is reserved for elementary (see below)
+        }
+        var e_index = gradeLevels.indexOf('e');
+        if (e_index > -1) {
+          gradeLevels.splice(e_index, 1, 'p'); // 'p' for primary, the boundary term for elementary
+        }
+      } else {
+        gradeLevels = ['p', 'm', 'h']; // 'p' for primary, the boundary term for elementary
+      }
+
+      var allPromises = [];
+      for (var x = 0; x < gradeLevels.length; x++) {
+        var options = {
+          state: state, lat: lat, lon: lon, boundary_level: gradeLevels[x], extras: 'review_summary,distance'
+        };
+        allPromises.push(assignedSchoolsAjaxCall(options, setAssignedSchoolCallbackFn));
+      }
+
+      // Collect the results from all the individual AJAX calls here, invoke the "none found" case if necessary
+      $.when.apply($, allPromises).done(function () {
+        var totalSchoolsFound = 0;
+        for (var x = 0; x < arguments.length; x++) {
+          totalSchoolsFound += arguments[x];
+        }
+        if (totalSchoolsFound === 0) {
+          setNoAssignedSchools();
+        }
+      })
     };
 
     var setAssignedSchool = function(levelCode, school) {
@@ -112,14 +140,12 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         } else {
             type = type.charAt(0).toUpperCase() + type.slice(1);
         }
-        var url = school.url;
-        var reviewsUrl = school.url + 'reviews/';
-        var qualityUrl = school.url + 'quality/';
+        var url = school.links.profile;
+        var reviewsUrl = url + '/reviews/';
         url = GS.I18n.preserveLanguageParam(url);
         reviewsUrl = GS.I18n.preserveLanguageParam(reviewsUrl);
-        qualityUrl = GS.I18n.preserveLanguageParam(qualityUrl);
 
-        var address = school.address.street1 + ', ' + school.address.cityStateZip;
+        var address = school.address.street1 + ', ' + school.address.city + ', ' + state + ' ' + zip;
 
         $listItem.find('.js-name').html(name).attr('href', url);
         $listItem.find('.js-address').html(address);
@@ -208,7 +234,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     // finds GS rating within a list item, and changes its class to show correct rating
     var updateRatingIconInListItem = function($listItem, newGSRating, school) {
       if (newGSRating && newGSRating > 0 && newGSRating < 11) {
-        var qualityUrl = school.url + 'quality/';
+        var qualityUrl = school.links.profile + '/quality/';
         qualityUrl = GS.I18n.preserveLanguageParam(qualityUrl);
         var gsRatingLink = $listItem.find('.js-gs-rating-link');
         var $ratingIcon = gsRatingLink.attr('href', qualityUrl).find('.js-gs-rating-icon');

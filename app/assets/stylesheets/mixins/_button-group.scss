@@ -22,11 +22,13 @@
     border-right: none;
     cursor: pointer;
     display: table-cell;
-    padding: 7px 17px 7px 17px;
+    padding: 0px 15px;
     height: $height;
     border-radius: 0px;
     outline: none;
     text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
     &.active {
       background-color: $active-background-color;
       border-top: 1px solid $active-background-color;

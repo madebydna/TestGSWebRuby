@@ -62,14 +62,12 @@ en:
     'SD Test scores narration': >
       <p class="narrative-content">This shows results for students with disabilities on a {subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
       <hr />
-      <p class="parent-tip">Parent tip:</p>
+      <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
       <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
     See notes: Sources
-    Economically disadvantaged: Economically disadvantaged
-    Not economically disadvantaged: Not economically disadvantaged
     show_more: Show more
     show_less: Show less
     english-learners: Students learning English
@@ -133,5 +131,18 @@ en:
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses
+    course: course
     grade: Grade
     details: Details
+    Homes for sale: Homes for sale
+    Homes for rent: Homes for rent
+    Homes for sale near: Homes for sale near
+    Rentals near: Rentals near
+    See more listings near this school: See more listings near this school
+    Find out what your home is worth: Find out what your home is worth
+    beds: beds
+    baths: baths
+    bed: bed
+    bath: bath
+    sqft: sqft
+    Studio: Studio
