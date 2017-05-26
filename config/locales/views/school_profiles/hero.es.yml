@@ -6,7 +6,13 @@ es:
         other: GRADOS
       greatschools_rating: CALIFICACION DE GREATSCHOOLS
       greatschools_rating_private: LAS ESCUELAS PRIVADAS NO TIENEN CALIFICACIONES
-      greatschools_rating_private_tooltip: No hemos asignado una calificación GreatSchools a esta escuela, debido a datos incompletos o no disponibles.
+      greatschools_rating_private_tooltip: >
+        GreatSchools es una organización nacional sin fines de lucro y no partidista. Nuestra calificación es una sencilla
+        herramienta que le ayuda a comparar escuelas dentro de un estado basado en los puntajes de los exámenes y otros
+        datos disponibles, como el progreso académico del estudiante y la preparación universitaria. Agencias estatales
+        y nacionales de educación no reportan todos o algunos de estos datos para las escuelas privadas como ésta, así
+        que no somos capaces de ofrecer una calificación. 
+        <a href='/gk/ratings/'>Mas acerca de la calificación de GreatSchools.</a>
       claimed: Reclamado
       claimed_tooltip_html: >
         Los administradores de esta escuela han reclamado este perfil de escuela para editar y compartir más
