@@ -30,7 +30,7 @@ exacttarget_v2_api_key: 12f1dx5e916tjkij5sajei5e
 exacttarget_v2_api_secret: Qrrgd4ITVtssAgiSZNqCwVyn
 exacttarget_v2_api_app_id: 33a5f73d-b3d3-4724-a50c-a21c1277a041
 
-homes_and_rentals_service_url: https://www.zillow.com/webservice/FMRWidget.htm?zws-id=X1-ZWz1fs7ntb4op7_7hp6b
+homes_and_rentals_service_url: //office-gsxapi.greatschools.org/homes-and-rentals-service
 
 connection_pooling_enabled: false
 search_suggest_cache_time: 0 #in seconds ie. Cache-Control: 'max-age=300'
