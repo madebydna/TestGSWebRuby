@@ -44,7 +44,7 @@ module SchoolProfiles
       end
       SUBJECT_ORDER.each_with_object({}) do |snake_case_subject, accum|
         courses = courses_by_subject[snake_case_subject] || []
-        if courses.empty? || SUBJECT_RATING_SUPPRESSION.include?(snake_case_subject)
+        if SUBJECT_RATING_SUPPRESSION.include?(snake_case_subject)
           rating = nil
         else
           rating = course_ratings_hash[snake_case_subject]
