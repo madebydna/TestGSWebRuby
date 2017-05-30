@@ -13,8 +13,12 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     set_seo_meta_tags
     build_gon_object
-    @school_profile = school_profile
-    @private_school_profile = private_school_profile
+    if @school.private_school?
+      @private_school_profile = private_school_profile
+      render 'show_private_school'
+    else
+      @school_profile = school_profile
+    end
   end
 
   private

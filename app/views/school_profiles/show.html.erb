@@ -1,7 +1,4 @@
 <div class="school-profile">
-  <% if @school.type == 'Private' %>
-    <%= render 'show_private', private_school_profile: @private_school_profile %>
-  <% else %>
     <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
     <%= render 'hero', hero: @school_profile.hero %>
     <!-- main content -->
@@ -98,5 +95,4 @@
         </span>
       </div>
     <% end %>
-  <% end %>
 </div>
