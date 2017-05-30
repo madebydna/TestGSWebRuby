@@ -73,7 +73,7 @@ module SchoolProfiles
     rescue
       GSLogger.error(:misc, e, message: 'Key is not found for translation - private school info', vars: key)
       raise e
-      ''
+      Array(NO_DATA_TEXT)
     end
 
     def source_name
