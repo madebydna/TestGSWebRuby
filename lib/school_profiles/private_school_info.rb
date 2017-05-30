@@ -70,6 +70,10 @@ module SchoolProfiles
 
     def data_label(key)
       I18n.t(key.to_sym, scope: 'lib.private_school_info', default: I18n.db_t(key, default: key))
+    rescue
+      GSLogger.error(:misc, e, message: 'Key is not found for translation - private school info', vars: key)
+      raise e
+      Array(NO_DATA_TEXT)
     end
 
     def source_name
