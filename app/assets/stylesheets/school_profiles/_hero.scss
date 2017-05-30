@@ -118,13 +118,12 @@
     }
   }
 
-
   .school-info__item {
     display: inline-block;
     padding: 0 34px;
     border-left: 1px solid rgba(255, 255, 255, .17);
     @include media-breakpoint-down(xs)  {
-      padding: 0 15px;
+      padding: 0 10px;
     }
     font-size: $font-size-l4;
     font-family: 'opensans-semibold';
@@ -192,17 +191,38 @@
 
   .osp-badge {
     vertical-align: middle;
-    margin-left: 10px;
-    font-size: 16px;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
     background: image_url('school_profiles/claimed_badge.png') no-repeat;
   }
 
   .claimed {
     vertical-align: middle;
-    margin-left: 25px;
     font-size: 16px;
     font-family: opensans-semibold;
     color: #2ba3dc;
+  }
+
+  .school-name-container {
+    >h1.school-name {
+      display: inline-block;
+      margin-right: 25px;
+    }
+    >span{
+      display:inline-block;
+      vertical-align: text-bottom
+    }
+    @include media-breakpoint-down(xs) {
+      text-align: center;
+      >h1.school-name {
+        display: block;
+        margin-right: 0px;
+      }
+      >span{
+        display:block;
+      }
+    }
   }
 }
 
