@@ -130,7 +130,7 @@ class School < ActiveRecord::Base
   end
 
   def public_or_charter?
-    ['Public', 'Charter'].include?(type)
+    ['public', 'charter'].include?(type.downcase)
   end
 
   def preschool?
