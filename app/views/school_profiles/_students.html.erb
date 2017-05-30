@@ -35,11 +35,6 @@
             <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
               <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
               <div class="legend-title"><%= val[:breakdown] %></div>
-              <% if value %>
-                <% v = value.round%>
-                <% v = '<1' if v == 0 %>
-                <div class="legend-title"><%= v %>%</div>
-              <% end %>
             </div>
           <% end %>
         </div>
