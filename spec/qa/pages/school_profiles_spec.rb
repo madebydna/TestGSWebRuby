@@ -52,6 +52,47 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
     
     expect(page).to have_text('All set! We have submitted your review')
   end
+
+  it 'when I save the school the right newsletters are saved' do
+    sign_in_as_facebook_adam
+    visit('/california/alameda/1-Alameda-High-School/')
+    first('.js-followThisSchool').click
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    expect(page).to have_text('Alameda High School, Alameda , CA')
+  end
+
+  it 'when I save the school it is added to my school list' do
+    sign_in_as_facebook_adam
+    visit('/california/alameda/1-Alameda-High-School/')
+    first('.js-followThisSchool').click
+    visit '/account/'
+    # assuming that the school's address only shows up in the school list card
+    expect(page).to have_text('2201 Encinal Avenue, Alameda, CA 94501')
+  end
+end
+
+describe 'follow a school while registering', type: :feature, remote: true do
+  it 'when I save the school the right newsletters are saved' do
+    visit('/california/alameda/1-Alameda-High-School/')
+    first('.js-followThisSchool').click
+    register_in_email_modal
+    sleep 2
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    expect(page).to have_text('Alameda High School, Alameda , CA')
+  end
+
+  it 'when I save the school it is added to my school list' do
+    visit('/california/alameda/1-Alameda-High-School/')
+    first('.js-followThisSchool').click
+    register_in_email_modal
+    sleep 2
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    # assuming that the school's address only shows up in the school list card
+    expect(page).to have_text('2201 Encinal Avenue, Alameda, CA 94501')
+  end
 end
 
 # Don't tag tests that write reviews to DB as safe_for_prod
