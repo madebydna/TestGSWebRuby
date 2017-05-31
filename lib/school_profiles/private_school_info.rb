@@ -24,7 +24,7 @@ module SchoolProfiles
       osp_question_metadata.slice(*cache_keys).each_with_object([]) do |(response_key, response_value), accum|
         next if (response_value[:level_code] & school_level_code).empty?
         data = private_school_cache_data.slice(*cache_keys)
-        next if (keys_to_hide_if_no_data.include?(response_key) || data[response_key].nil?)
+        next if (keys_to_hide_if_no_data.include?(response_key))
         responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
         translated_responses = responses.map{|response| data_label(response)}
         accum << {
