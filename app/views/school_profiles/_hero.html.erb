@@ -83,12 +83,12 @@
             </div>
           </div>
         </div>
-      <% elsif @school.type == 'Private' %>
+      <% elsif @school.private_school? %>
           <div class="school-info__item school-info__gs-rating">
             <div class="gs-rating-with-label">
               <div class="gs-rating-with-label__rating">
                 <div class="label-owl">
-                  <span><%= image_tag('school_profiles/owl_header.png') %></span>
+                  <span><%= image_tag('school_profiles/owl_in_light_blue_circle.png') %></span>
                 </div>
               </div>
               <div class="gs-rating-with-label__label speech-bubble-dark left private-school">
