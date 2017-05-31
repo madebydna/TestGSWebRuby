@@ -51,7 +51,7 @@ module SchoolProfiles
       scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h| h[:breakdown] == 'All' }
       scores_grade_all = scores.select { | score | score[:grade] == 'All' }
       scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
-      subjects = scores_grade_all.map { |h| h[:subject] }
+      subjects = scores_grade_all.map { |h| data_label(h[:subject]) }
       if subjects.uniq.size < subjects.size
         scores_grade_all = sort_by_test_label_and_number_tested_descending(scores_grade_all)
       else
