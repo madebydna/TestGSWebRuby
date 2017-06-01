@@ -5,21 +5,39 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   before_filter :require_school
 
   def show
-    nearby_school_cache_hash =
-      SchoolCacheDataReader.new(school).nearby_schools
     array_of_nearby_school_hashes = []
-
-    if nearby_school_cache_hash.present?
-      array_of_nearby_school_hashes =
-        nearby_school_cache_hash['closest_top_then_top_nearby_schools'] || []
-      array_of_nearby_school_hashes = array_of_nearby_school_hashes.take(limit)
+    results = SchoolSearchService.by_location(school_search_service_params)
+    array_of_nearby_school_hashes = results[:results].take(limit)
+    array_of_nearby_school_hashes.map! do |ssr|
+      {
+        'state' => ssr.state,
+        'id' => ssr.id,
+        'name' => ssr.name,
+        'city' => ssr.city,
+        'type' => ssr.type,
+        'level' => ssr.level,
+        'gs_rating' => ssr.overall_gs_rating,
+        'average_rating' => ssr.community_rating,
+        'number_of_reviews' => ssr.review_count
+      }
     end
-
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
     render 'api/nearby_schools/show'
   end
 
   protected 
+
+  def school_search_service_params
+    {
+      number_of_results: limit,
+      offset: offset,
+      sort: :rating_desc,
+      lat: school.lat,
+      lon: school.lon,
+      radius: 50,
+      state: school.state
+    }
+  end
 
   def limit
     return DEFAULT_LIMIT unless params[:limit]
@@ -35,6 +53,10 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
     if school.blank? || !school.active?
       render json: {error: 'School not found'}, status: 404
     end
+  end
+
+  def offset
+    0
   end
 
   class SchoolCacheDataReader

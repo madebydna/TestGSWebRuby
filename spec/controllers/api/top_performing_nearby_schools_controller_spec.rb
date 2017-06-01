@@ -10,8 +10,21 @@ describe Api::TopPerformingNearbySchoolsController do
     end
 
     context 'with no schools' do
+      before do
+        expect(SchoolSearchService).to receive(:by_location).and_return({
+          num_results: 0,
+          start: 0,
+          results: []
+        })
+      end
+
       it 'should return an empty response' do
-        school = FactoryGirl.create(:school)
+        school = FactoryGirl.create(
+          :school,
+          name: 'school a',
+          lat: 37.7647364,
+          lon: -122.2470357
+        )
         get :show, state: school.state, id: school.id
         expect(JSON.parse(response.body)).to be_empty
       end
@@ -25,30 +38,51 @@ describe Api::TopPerformingNearbySchoolsController do
     context 'with nearby schools' do
       let(:schools) do
         [
-          FactoryGirl.create(
-            :school,
+          FactoryGirl.build(
+            :school_search_result,
+            id: 1,
             name: 'school a',
-            lat: 37.7647364,
-            lon: -122.2470357
+            city: 'alameda',
+            state: 'ca',
+            review_count: 2,
+            community_rating: 3.0
           ),
-          FactoryGirl.create(
-            :school,
+          FactoryGirl.build(
+            :school_search_result,
+            id: 2,
             name: 'school b',
-            lat: 37.7647365,
-            lon: -122.2470358
+            city: 'alameda',
+            state: 'ca',
+            review_count: 2,
+            community_rating: 3.0
           ),
-          FactoryGirl.create(
-            :school,
+          FactoryGirl.build(
+            :school_search_result,
+            id: 3,
             name: 'school c',
-            lat: 37.7647366,
-            lon: -122.2470359
+            city: 'alameda',
+            state: 'ca',
+            review_count: 2,
+            community_rating: 3.0
           )
         ]
       end
       let(:nearby_schools) { schools[1..-1] }
-      let(:school) { schools.first }
+      let(:school) do
+        FactoryGirl.create(
+          :school,
+          name: 'school a',
+          lat: 37.7647364,
+          lon: -122.2470357
+        )
+      end
+
       before do
-        make_nearby_school_caches(school, nearby_schools)
+        expect(SchoolSearchService).to receive(:by_location).and_return({
+          num_results: 3,
+          start: 0,
+          results: schools
+        })
       end
 
       it 'should return a 200 status code' do
@@ -108,28 +142,28 @@ describe Api::TopPerformingNearbySchoolsController do
     end
   end
 
-  def make_nearby_school_caches(school, nearby_schools)
-    closest_top_then_top_nearby_schools =
-      nearby_schools.map.with_index do |s, index|
-        {
-          "city" => s.city,
-          "distance" => index,
-          "id" => s.id,
-          "name" => s.name,
-          "state" => s.state,
-          "number_of_reviews" => 2,
-          "average_rating" => 3.0
-        }
-      end
-    FactoryGirl.create(
-      :nearby_schools,
-      school_id: school.id,
-      state: school.state,
-      value: {
-        "closest_top_then_top_nearby_schools" => closest_top_then_top_nearby_schools
-      }.to_json
-    )
-  end
+  # def make_nearby_school_caches(school, nearby_schools)
+  #   closest_top_then_top_nearby_schools =
+  #     nearby_schools.map.with_index do |s, index|
+  #       {
+  #         "city" => s.city,
+  #         "distance" => index,
+  #         "id" => s.id,
+  #         "name" => s.name,
+  #         "state" => s.state,
+  #         "number_of_reviews" => 2,
+  #         "average_rating" => 3.0
+  #       }
+  #     end
+  #   FactoryGirl.create(
+  #     :nearby_schools,
+  #     school_id: school.id,
+  #     state: school.state,
+  #     value: {
+  #       "closest_top_then_top_nearby_schools" => closest_top_then_top_nearby_schools
+  #     }.to_json
+  #   )
+  # end
 
   def give_reviews_to_schools(schools)
     schools.each do |s|
