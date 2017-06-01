@@ -22,7 +22,7 @@ class SchoolGeometry < ActiveRecord::Base
   end
 
   def self.schools_for_geometries(geometries)
-    geometries.map { |geo| geo.school }
+    geometries.map { |geo| geo.school }.compact
   end
 
 end
