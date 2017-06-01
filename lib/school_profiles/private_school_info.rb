@@ -17,14 +17,14 @@ module SchoolProfiles
     end
 
     def private_school_cache_data
-      @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
+      @_private_school_cache_data ||= @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
 
     def private_school_datas(*cache_keys)
       osp_question_metadata.slice(*cache_keys).each_with_object([]) do |(response_key, response_value), accum|
         next if (response_value[:level_code] & school_level_code).empty?
         data = private_school_cache_data.slice(*cache_keys)
-        next if (keys_to_hide_if_no_data.include?(response_key) || data[response_key].nil?)
+        next if (keys_to_hide_if_no_data.include?(response_key) && data[response_key].nil?)
         responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
         translated_responses = responses.map{|response| data_label(response)}
         accum << {
