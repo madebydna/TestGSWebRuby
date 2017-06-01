@@ -48,7 +48,7 @@ module SchoolProfiles
 
     def tab_config
       return nil if private_school_cache_data.blank?
-      [
+      tab_config = [
           {
               title: data_label(:overview),
               data: private_school_datas(*OVERVIEW_CACHE_KEYS)
@@ -56,7 +56,10 @@ module SchoolProfiles
           {
               title: data_label(:enrollment),
               data: private_school_datas(*ENROLLMENT_CACHE_KEYS)
-          },
+          }
+      ]
+      unless @school.level_code == 'p'
+        tab_config.push(
           {
               title: data_label(:classes),
               data: private_school_datas(*CLASSES_CACHE_KEYS)
@@ -65,7 +68,9 @@ module SchoolProfiles
               title: data_label(:sports_and_clubs),
               data: private_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
           }
-      ]
+        )
+      end
+      tab_config
     end
 
     def data_label(key)
