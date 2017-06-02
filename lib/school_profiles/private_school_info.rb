@@ -24,7 +24,10 @@ module SchoolProfiles
       osp_question_metadata.slice(*cache_keys).each_with_object([]) do |(response_key, response_value), accum|
         next if (response_value[:level_code] & school_level_code).empty?
         data = private_school_cache_data.slice(*cache_keys)
-        next if (keys_to_hide_if_no_data.include?(response_key) && !data[response_key].to_s.match(/\w+/)) ## We dont't want to give no_data_text to a data-less key in keys_to_hide_if_no_data
+        next if (
+          keys_to_hide_if_no_data.include?(response_key) &&
+          (data[response_key].nil? || !data[response_key].keys.first.to_s.match(/\w+/))
+        ) ## We dont't want to give no_data_text to a data-less key in keys_to_hide_if_no_data
         responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
         translated_responses = responses.map{|response| data_label(response)}
         accum << {
@@ -74,8 +77,8 @@ module SchoolProfiles
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.private_school_info', default: I18n.db_t(key, default: key))
-    rescue
+      I18n.t(key.to_sym, scope: 'lib.private_school_info', default: I18n.db_t(key.to_s, default: key))
+    rescue => e
       GSLogger.error(:misc, e, message: 'Key is not found for translation - private school info', vars: key)
       raise e
       Array(NO_DATA_TEXT)
