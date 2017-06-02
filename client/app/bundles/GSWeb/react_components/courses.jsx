@@ -8,7 +8,8 @@ export default class Courses extends React.Component {
   static propTypes = {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
-    rating: PropTypes.string
+    rating: PropTypes.string,
+    narration: PropTypes.string
   };
 
   static defaultProps = {
@@ -74,8 +75,11 @@ export default class Courses extends React.Component {
               <div dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}></div>
             </div>
           </div>
-        </div>
-        <div>
+
+        <div className="panel">
+          <div className="auto-narration">
+            <div dangerouslySetInnerHTML={{__html: this.props.narration}}></div>
+          </div>
           <div className="rating-container__score-item course-subject-header">
             <span dangerouslySetInnerHTML={{__html: this.t('subjects')}}></span>
             <span>
@@ -99,6 +103,7 @@ export default class Courses extends React.Component {
            href="javascript:void(0)">
           <span className="">{this.t('See notes')}</span>
         </a>
+      </div>
       </div>)
     else
       return <div id="AdvancedCourses-empty" className="advanced-courses rating-container">

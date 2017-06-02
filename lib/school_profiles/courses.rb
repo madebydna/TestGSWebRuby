@@ -19,6 +19,13 @@ module SchoolProfiles
           .find { |h| h['breakdowns'].nil? } || {})['school_value']
     end
 
+    def narration
+      return nil unless rating.present? && (1..10).cover?(rating.to_i)
+      key = '_' + ((rating.to_i / 2) + (rating.to_i % 2)).to_s + '_html'
+      I18n.t(key, scope: 'lib.advanced_courses.narration', default: I18n.db_t(key, default: key)).html_safe
+    end
+
+
     # Output data format:
     #
     # {

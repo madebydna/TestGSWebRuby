@@ -17,4 +17,49 @@ en:
       vocational_hands_on_index: Career / Technical
       business_index: Business
       health_index: Health
-
+      narration:
+        _1_html: >
+          <h3 class="negative">Very concerning:</h3>
+          <p>The number of advanced courses taken per student at this school is <span class="emphasis">far lower</span> than state average.</p>
+          <p>College admissions officers look at both a student's grades and the level of coursework taken. Taking advanced courses helps demonstrate that students are willing to challenge themselves. Plus, some advanced courses, like AP, may qualify for college credit and raise the student’s GPA.</p>
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it's doing to ensure that students have access to - and participate in - advanced coursework.</p>
+          <hr />
+        _2_html: >
+          <h3 class="negative">A worrisome sign:</h3>
+          <p>The number of advanced courses taken per student at this school is <span class="emphasis">below</span> the state average.</p>
+          <p>College admissions officers look at both a student’s grades and the level of coursework taken. Taking advanced courses helps demonstrate that students are willing to challenge themselves. Plus, some advanced courses, like AP, may qualify for college credit and raise the student’s GPA.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it's doing to ensure that students have access to - and participate in - advanced coursework.</p>
+          <hr />
+        _3_html: >
+          <h3 class="neutral">Worth a deeper look:</h3>
+          <p>The number of advanced courses taken per student at this school is <span class="emphasis">about the same</span> as the state average.</p>
+          <p>College admissions officers look at both a student’s grades and the level of coursework taken.
+          Taking advanced courses helps demonstrate that students are willing to challenge themselves.
+          Plus, some advanced courses, like AP, may qualify for college credit and raise the student’s GPA.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it's doing to ensure that students have access to - and participate in - advanced coursework.</p>
+          <hr />
+        _4_html: >
+          <h3 class="positive">A promising sign:</h3>
+          <p>The number of advanced courses taken per student at this school is <span class="emphasis">higher than</span> the state average.</p>
+          <p>College admissions officers look at both a student’s grades and the level of coursework taken.
+          Taking advanced courses helps demonstrate that students are willing to challenge themselves. Plus,
+          some advanced courses, like AP, may qualify for college credit and raise the student’s GPA.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Encourage your student to take advanced courses in areas where they excel.</p>
+          <hr />
+        _5_html: >
+          <h3 class="positive">Good news!</h3>
+          <p>The number of advanced courses taken per student at this school is <span class="emphasis">much higher than</span> the state average.</p>
+          <p>College admissions officers look at both a student’s grades and the level of coursework taken.
+          Taking advanced courses helps demonstrate that students are willing to challenge themselves.
+          Plus, some advanced courses, like AP, may qualify for college credit and raise the student’s GPA.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Encourage your student to take advanced courses in areas where they excel.</p>
+          <hr />
