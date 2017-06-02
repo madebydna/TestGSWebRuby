@@ -13,13 +13,15 @@ export function getNearbySchoolsByDistance(state, schoolId, offset, limit) {
   );
 }
 
-export function getTopPerformingNearbySchools(state, schoolId) {
+export function getTopPerformingNearbySchools(state, schoolId, offset, limit) {
   var uri = '/gsr/api/top_performing_nearby_schools/';
   return $.get(
     uri,
     {
       state: state,
-      id: schoolId 
+      id: schoolId,
+      offset: offset,
+      limit: limit
     },
     null,
     'json'
