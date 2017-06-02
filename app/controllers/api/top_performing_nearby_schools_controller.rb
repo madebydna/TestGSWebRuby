@@ -38,7 +38,17 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
       lon: school.lon,
       radius: 100,
       state: school.state,
-      filters: { overall_gs_rating: [8,9,10] }
+      filters: {
+        overall_gs_rating: [8,9,10],
+        level_code: school.level_code.split(',').map do |code|
+          {
+            'p' => :preschool,
+            'e' => :elementary,
+            'm' => :middle,
+            'h' => :high
+          }[code]
+        end
+      }
     }
   end
 
