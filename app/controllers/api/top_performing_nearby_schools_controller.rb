@@ -40,7 +40,7 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
       sort: :distance_asc,
       lat: school.lat,
       lon: school.lon,
-      radius: 100,
+      radius: 5,
       state: school.state,
       filters: { overall_gs_rating: [8,9,10] }
     }
