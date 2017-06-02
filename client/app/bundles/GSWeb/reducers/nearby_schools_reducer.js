@@ -10,10 +10,22 @@ export default (state, action) => {
 
   switch (action.type) {
     case 'TOP_PERFORMING_NEARBY_SCHOOLS_RECEIVED':
-      return Object.assign({}, state, {
-        topPerforming: action.schools,
-        allTopPerformingSchoolsLoaded: true
-      })
+      var newSchools = action.schools;
+      var offset = action.offset;
+      var limit = action.limit;
+      var schools = (state.topPerforming || []).slice(0);
+
+      for (var i = 0; i < newSchools.length; i++) {
+        schools[offset + i] = newSchools[i];
+      }
+
+      var newState = Object.assign({}, state, {
+        topPerforming: schools
+      });
+      if (newSchools.length < limit) {
+        newState.allTopPerformingSchoolsLoaded = true;
+      }
+      return newState;
     case 'NEARBY_SCHOOLS_BY_DISTANCE_RECEIVED':
       var newSchools = action.schools;
       var offset = action.offset;

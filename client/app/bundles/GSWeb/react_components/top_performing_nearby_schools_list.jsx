@@ -13,12 +13,14 @@ const TopPerformingNearbySchoolsList = connect(
   function(dispatch, ownProps) { // dispatch can be invoked with action creator
     // return an object containing action creators
     return {
-      getSchools: (state, schoolId) => {
+      getSchools: (state, schoolId, offset, limit) => {
         dispatch(
           {
             type: 'GET_TOP_PERFORMING_NEARBY_SCHOOLS',
             state: state,
-            schoolId: schoolId
+            schoolId: schoolId,
+            offset: offset,
+            limit: limit
           }
         )
       }

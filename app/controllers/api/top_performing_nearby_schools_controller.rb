@@ -7,18 +7,24 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   def show
     array_of_nearby_school_hashes = []
     results = SchoolSearchService.by_location(school_search_service_params)
-    array_of_nearby_school_hashes = results[:results].take(limit)
+    if offset >= results[:num_found] - 1 # we always get one (the school itself)
+      array_of_nearby_school_hashes = []
+    else
+      array_of_nearby_school_hashes = results[:results].drop(1).take(limit)
+    end
     array_of_nearby_school_hashes.map! do |ssr|
+      ssr = SchoolSearchResultDecorator.decorate(ssr)
       {
-        'state' => ssr.state,
+        'state' => ssr.state.upcase,
         'id' => ssr.id,
         'name' => ssr.name,
         'city' => ssr.city,
-        'type' => ssr.type,
-        'level' => ssr.level,
+        'type' => ssr.decorated_school_type,
+        'level' => ssr.grade_range,
         'gs_rating' => ssr.overall_gs_rating,
         'average_rating' => ssr.community_rating,
-        'number_of_reviews' => ssr.review_count
+        'number_of_reviews' => ssr.review_count,
+        'distance' => ssr.distance
       }
     end
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
@@ -31,11 +37,12 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
     {
       number_of_results: limit,
       offset: offset,
-      sort: :rating_desc,
+      sort: :distance_asc,
       lat: school.lat,
       lon: school.lon,
-      radius: 50,
-      state: school.state
+      radius: 100,
+      state: school.state,
+      filters: { overall_gs_rating: [8,9,10] }
     }
   end
 
@@ -56,7 +63,7 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   end
 
   def offset
-    0
+    params[:offset].to_i
   end
 
   class SchoolCacheDataReader
