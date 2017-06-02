@@ -7,11 +7,7 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   def show
     array_of_nearby_school_hashes = []
     results = SchoolSearchService.by_location(school_search_service_params)
-    if offset >= results[:num_found] - 1 # we always get one (the school itself)
-      array_of_nearby_school_hashes = []
-    else
-      array_of_nearby_school_hashes = results[:results].drop(1).take(limit)
-    end
+    array_of_nearby_school_hashes = results[:results].take(limit)
     array_of_nearby_school_hashes.map! do |ssr|
       ssr = SchoolSearchResultDecorator.decorate(ssr)
       {
@@ -36,11 +32,11 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   def school_search_service_params
     {
       number_of_results: limit,
-      offset: offset,
+      offset: offset + 1, # closest school is the same school
       sort: :distance_asc,
       lat: school.lat,
       lon: school.lon,
-      radius: 5,
+      radius: 100,
       state: school.state,
       filters: { overall_gs_rating: [8,9,10] }
     }
