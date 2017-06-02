@@ -68,7 +68,6 @@ class TestDataSet < ActiveRecord::Base
     .active
     .includes(:test_data_school_values)
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
-    .with_display_targets('ratings')
     .with_no_subject_breakdowns
     .all_students
   end
