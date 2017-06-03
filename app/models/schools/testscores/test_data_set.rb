@@ -65,8 +65,10 @@ class TestDataSet < ActiveRecord::Base
 
   def self.ratings_for_school school
     TestDataSet.on_db(school.shard)
+    .joins('INNER JOIN gs_schooldb.TestDataType on gs_schooldb.TestDataType.id = TestDataSet.data_type_id')
     .active
     .includes(:test_data_school_values)
+    .where('TestDataType.classification = ?', 'gs_rating')
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
     .with_no_subject_breakdowns
     .all_students
