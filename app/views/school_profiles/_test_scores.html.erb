@@ -54,6 +54,7 @@
         <% end %>
       </div>
     <% end %>
+    <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
   </div>
 
   <div>
