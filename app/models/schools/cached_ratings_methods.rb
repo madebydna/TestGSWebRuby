@@ -43,6 +43,10 @@ module CachedRatingsMethods
     school_rating_year_by_id(166)
   end
 
+  def historical_test_scores_ratings
+    school_historical_rating_hashes_by_id(164)
+  end
+
   def school_rating_hash_by_id(rating_id, level_code=nil)
     if rating_id
       # allow caller to provide level_code as 2nd arg. If given,
@@ -54,6 +58,18 @@ module CachedRatingsMethods
       end
       ratings_year_obj = relevant_ratings.max_by { |rating| rating['year'] }
       return ratings_year_obj if ratings_year_obj
+    end
+    nil
+  end
+
+  def school_historical_rating_hashes_by_id(rating_id, level_code=nil)
+    if rating_id
+      historical_ratings = ratings.select do |rating|
+        rating['data_type_id'] == rating_id && (
+        level_code.nil? || level_code == rating['level_code']
+        )
+      end
+      return historical_ratings
     end
     nil
   end

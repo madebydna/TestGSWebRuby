@@ -49,6 +49,10 @@ module SchoolProfiles
       decorated_school.test_scores_rating
     end
 
+    def historical_test_scores_ratings
+      decorated_school.historical_test_scores_ratings
+    end
+
     def college_readiness_rating
       decorated_school.college_readiness_rating
     end

@@ -7,6 +7,7 @@ module SchoolProfiles
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'
+    HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
 
     def initialize(school, school_cache_data_reader:)
       @school = school
@@ -19,6 +20,17 @@ module SchoolProfiles
 
     def rating
       @school_cache_data_reader.test_scores_rating
+    end
+
+    def historical_ratings_detail_hashes
+      @school_cache_data_reader.historical_test_scores_ratings
+    end
+
+    def historical_ratings
+      historical_ratings_detail_hashes.map do |hash|
+        hash['school_value_float'] = hash['school_value_float'].try(:to_i)
+        hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
+      end
     end
 
     def narration
