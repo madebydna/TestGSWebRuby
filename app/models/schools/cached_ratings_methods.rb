@@ -47,6 +47,14 @@ module CachedRatingsMethods
     school_historical_rating_hashes_by_id(164)
   end
 
+  def historical_college_readiness_ratings
+    school_historical_rating_hashes_by_id(166)
+  end
+
+  def historical_student_growth_ratings
+    school_historical_rating_hashes_by_id(165)
+  end
+
   def school_rating_hash_by_id(rating_id, level_code=nil)
     if rating_id
       # allow caller to provide level_code as 2nd arg. If given,

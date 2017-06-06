@@ -61,6 +61,10 @@ module SchoolProfiles
       decorated_school.college_readiness_rating_year
     end
 
+    def historical_college_readiness_ratings
+      decorated_school.historical_college_readiness_ratings
+    end
+
     def student_progress_rating
       decorated_school.student_growth_rating
     end
@@ -71,6 +75,10 @@ module SchoolProfiles
 
     def student_progress_rating_hash
       decorated_school.student_growth_rating_hash
+    end
+
+    def historical_student_progress_ratings
+      decorated_school.historical_student_growth_ratings
     end
 
     def equity_ratings_breakdown(breakdown)

@@ -33,6 +33,10 @@ module SchoolProfiles
       end
     end
 
+    def show_historical_ratings?
+      historical_ratings.present? && historical_ratings.length > 1
+    end
+
     def narration
       return nil unless rating.present? && (1..10).cover?(rating.to_i)
       key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
