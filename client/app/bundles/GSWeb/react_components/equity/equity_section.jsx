@@ -3,6 +3,8 @@ import InfoCircle from '../info_circle';
 import SectionNavigation from './tabs/section_navigation';
 import SubSectionToggle from './sub_section_toggle';
 
+import { handleAnchor } from '../../components/anchor_router';
+
 export default class EquitySection extends React.Component {
 
   static propTypes = {
@@ -20,14 +22,32 @@ export default class EquitySection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 0
+      active: 0,
+      defaultSubSectionTab: null
     }
+  }
+
+  componentDidMount() {
+    let mapping = {
+      'Low-income students': 'Low-income_students'
+    }
+    handleAnchor(
+      mapping[this.props.equity_config["section_info"].anchor], tokens => {
+        let section_content = this.props.equity_config["section_content"];
+        let index = section_content.findIndex((content) => content["section_title"] == tokens[0]);
+        if(index == -1) {
+          index = 0;
+        }
+        this.setState({ active: index, defaultSubSectionTab: tokens[1] });
+      }
+    );
   }
 
   selectSectionContent(section_content) {
     let item = section_content[this.state.active];
     return <div className={'tabs-panel tabs-panel_selected'}>
       <SubSectionToggle
+          defaultTab={this.state.defaultSubSectionTab}
           key={this.state.active}
           equity_config={item["content"]}
       />

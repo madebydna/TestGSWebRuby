@@ -16,6 +16,7 @@ import * as remodal from '../util/remodal';
 import PrivateSchoolInfo from '../react_components/private_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
+import { autoAnchor } from '../components/anchor_router';
 
 window.store = configureStore({
   school: gon.school
@@ -40,6 +41,7 @@ $(function() {
     );
     toggle.init().add_onclick();
   })();
+  autoAnchor();
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
   tooltips.initialize();
