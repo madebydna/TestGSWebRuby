@@ -2,8 +2,6 @@ module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
 
-    HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
-
     # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
       {
@@ -66,15 +64,8 @@ module SchoolProfiles
       ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
     end
 
-    def historical_ratings_detail_hashes
-      @school_cache_data_reader.historical_test_scores_ratings
-    end
-
     def historical_ratings
-      historical_ratings_detail_hashes.map do |hash|
-        hash['school_value_float'] = hash['school_value_float'].try(:to_i)
-        hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
-      end
+      @school_cache_data_reader.historical_test_scores_ratings
     end
 
     def show_historical_ratings?

@@ -2,6 +2,7 @@ module CachedRatingsMethods
 
   NO_RATING_TEXT = 'NR'
   GREATSCHOOLS_RATINGS_NAMES = ['GreatSchools rating','Test score rating', 'Student growth rating', 'College readiness rating', 'Climate rating']
+  HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
 
   def ratings
     cache_data['ratings'] || []
@@ -70,14 +71,16 @@ module CachedRatingsMethods
     nil
   end
 
-  def school_historical_rating_hashes_by_id(rating_id, level_code=nil)
+  def school_historical_rating_hashes_by_id(rating_id)
     if rating_id
       historical_ratings = ratings.select do |rating|
-        rating['data_type_id'] == rating_id && (
-        level_code.nil? || level_code == rating['level_code']
-        )
+        rating['data_type_id'] == rating_id
       end
-      return historical_ratings
+      historical_ratings_filtered = historical_ratings.map do |hash|
+        hash['school_value_float'] = hash['school_value_float'].try(:to_i)
+        hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
+      end
+      return historical_ratings_filtered
     end
     nil
   end
