@@ -80,7 +80,7 @@ module CachedRatingsMethods
         hash['school_value_float'] = hash['school_value_float'].try(:to_i)
         hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
       end
-      return historical_ratings_filtered
+      return historical_ratings_filtered.sort_by{ |hash| hash['year'] }.reverse
     end
     nil
   end
