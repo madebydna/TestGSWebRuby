@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import CourseSubject from './course_subject';
 import Drawer from './drawer';
+import InfoTextAndCircle from './info_text_and_circle'
 import NoDataModuleCta from './no_data_module_cta';
 
 export default class Courses extends React.Component {
@@ -9,7 +10,11 @@ export default class Courses extends React.Component {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
     rating: PropTypes.string,
-    narration: PropTypes.string
+    narration: PropTypes.string,
+    faq: PropTypes.shape({
+      cta: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -96,6 +101,7 @@ export default class Courses extends React.Component {
           {courseSubjects}
           {courseSubjectsForDrawer.length > 0 &&
           <div className="rating-container__more-items"><Drawer content={courseSubjectsForDrawer} /> </div>}
+          {this.props.faq && <InfoTextAndCircle cta={this.props.faq.cta} content={this.props.faq.content}/>}
         </div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"

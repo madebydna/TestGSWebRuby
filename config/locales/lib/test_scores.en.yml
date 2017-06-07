@@ -19,6 +19,11 @@ en:
       Science: Science
       Source: Source
       sources: Sources
+      faq:
+        cta: Notice something missing or confusing?
+        content_html: >
+          <p>The test scores and state averages we display come from the State Department of Education. When information is missing in our display, it is because the information was not included in the data we received from the DOE.</p>
+          <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
           <h3 class="negative">Very concerning:</h3>

@@ -60,6 +60,11 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
     end
 
+    def faq
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.college_readiness.faq'),
+                        content: I18n.t(:content_html, scope: 'lib.college_readiness.faq'))
+    end
+
     def rating
       ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
     end
