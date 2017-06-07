@@ -9,7 +9,7 @@ module SchoolProfiles
     SPORTS_CLUBS_CACHE_KEYS = %w(boys_sports girls_sports student_clubs)
 
     NO_DATA_TEXT = 'no_data_text'
-    SCHOOL_ADMIN = 'School Admin'
+    SCHOOL_ADMIN = 'School administrator'
 
     def initialize(school, school_cache_data_reader)
       @school = school
@@ -85,7 +85,7 @@ module SchoolProfiles
     end
 
     def source_name
-      data_label(SCHOOL_ADMIN)
+      data_label(I18n.t(SCHOOL_ADMIN, scope: 'lib.private_school_info'))
     end
 
   end

@@ -1,7 +1,8 @@
 es:
   lib:
     private_school_info:
-      overview: Overview
+      School administrator: Administradores de la escuela
+      overview: Descripción general
       best_known_for: ''
       anything_else: ''
       start_time: Start time
@@ -13,7 +14,7 @@ es:
       school_sub_type: Type of school
       coed: Coed/Single-gender
       college_destination_1: Colleges students typically attend after grduation
-      enrollment: Enrollment
+      enrollment: Inscripción
       application_deadline_date: Application deadline
       application_requirements: Application requirements
       tuition_low: Tuition range (low)
@@ -23,14 +24,14 @@ es:
       pk_financial_aid: Preschool financial aid offered
       students_vouchers: Vouchers accepted
       admissions_url: Additional info
-      classes: Classes
+      classes: Clases
       arts_media: Media arts
       arts_music: Music
       arts_performing_written: Performing & written arts
       arts_visual: Visual arts
       foreign_language: World languages taught
       ap_classes: AP classes offered
-      sports_and_clubs: Sports & clubs
+      sports_and_clubs: Deportes y clubes
       girls_sports: Girls sports
       boys_sports: Boys sports
       student_clubs: Clubs

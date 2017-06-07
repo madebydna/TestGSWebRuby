@@ -1,6 +1,7 @@
 ---
 es:
   javascript:
+    edit: Editar
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
     fatal_error: Se produjo un error inesperado durante la carga de la página. Por favor, intente actualizar la página.
@@ -130,12 +131,14 @@ es:
     advanced_courses_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela en inglés, STEM, ciencias sociales y idiomas extranjeros, en comparación con el promedio estatal.
     advanced_courses_rating_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela, en comparación con el promedio estatal.
     general_information_tooltip: En esta sección, los administradores de la escuela han proporcionado información general sobre esta escuela, como horas, inscripción, clases y actividades extracurriculares.
+    General Information: Información general
     subjects: Materias
     rating_html: 'Calificación&nbsp;'
     courses: cursos
     course: curso
     grade: Grado
     details: Detalles
+    source: Fuente
     Homes for sale: Casas en venta
     Homes for rent: Casas en alquiler
     Homes for sale near: Casas en venta cerca de
