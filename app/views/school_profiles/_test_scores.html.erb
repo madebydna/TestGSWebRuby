@@ -28,45 +28,47 @@
   <% last_test_name = nil %>
 
   <% render_test_names = subjects.uniq.size < subjects.size %>
-  <div class="panel">
-    <% if narration %>
-      <div class="auto-narration"><%= narration %></div>
-    <% end %>
-    <% data_values.take(initial_size).each do |data_value| %>
-      <% if render_test_names && last_test_name != data_value.test_label %>
-        <div class="item-heading"><%= data_value.test_label %></div>
+  <% if data_values.present? %>
+    <div class="panel">
+      <% if narration %>
+        <div class="auto-narration"><%= narration %></div>
       <% end %>
-
-      <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
-      <% last_test_name = data_value.test_label %>
-    <% end %>
-
-    <% if total_items > initial_size %>
-      <div class="rating-container__more-items">
-        <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
-          <% data_values.drop(initial_size).each do |data_value| %>
-            <% if render_test_names && last_test_name != data_value.test_label %>
-              <div class="item-heading"><%= data_value.test_label %></div>
-            <% end %>
-            <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
-            <% last_test_name = data_value.test_label %>
-          <% end %>
+      <% data_values.take(initial_size).each do |data_value| %>
+        <% if render_test_names && last_test_name != data_value.test_label %>
+          <div class="item-heading"><%= data_value.test_label %></div>
         <% end %>
-      </div>
-    <% end %>
-    <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
-  </div>
 
-  <div>
-    <a data-remodal-target="modal_info_box"
-       data-content-type="info_box"
-       data-content-html="<%= content %>"
-
-       href="javascript:void(0)">
-      <% if data_values.present? %>
-        <span class="source-link"><%= t('lib.test_scores.sources') %></span>
+        <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
+        <% last_test_name = data_value.test_label %>
       <% end %>
-    </a>
-  </div>
+
+      <% if total_items > initial_size %>
+        <div class="rating-container__more-items">
+          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
+            <% data_values.drop(initial_size).each do |data_value| %>
+              <% if render_test_names && last_test_name != data_value.test_label %>
+                <div class="item-heading"><%= data_value.test_label %></div>
+              <% end %>
+              <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
+              <% last_test_name = data_value.test_label %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
+    </div>
+
+    <div>
+      <a data-remodal-target="modal_info_box"
+         data-content-type="info_box"
+         data-content-html="<%= content %>"
+
+         href="javascript:void(0)">
+        <% if data_values.present? %>
+          <span class="source-link"><%= t('lib.test_scores.sources') %></span>
+        <% end %>
+      </a>
+    </div>
+  <% end %>
   </div>
 </div>
