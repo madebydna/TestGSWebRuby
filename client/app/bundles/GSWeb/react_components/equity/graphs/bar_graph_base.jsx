@@ -64,7 +64,7 @@ export default class BarGraphBase extends React.Component {
     return test_data['breakdown']+Math.random();
   }
 
-  renderBarGraph(test_data){
+  /*renderBarGraph(test_data){
     if(test_data !== undefined) {
       let numerical_value = test_data['score'];
       if (numerical_value == '<1') {
@@ -102,6 +102,72 @@ export default class BarGraphBase extends React.Component {
           </div>
         </div>
       );
+    }
+  }*/
+
+  renderStudentPercentage(test_data){
+    if(test_data['display_percentages']){
+      if(test_data['percentage'] == '200' || test_data['breakdown'] == 'All students' || test_data['breakdown'] == 'Todos los estudiantes'){
+        if(test_data['number_students_tested'] > 0) {
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({test_data['number_students_tested']} {GS.I18n.t('students')})</span>
+        }
+      }
+      else {
+        if (test_data['percentage'] > 0) {
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({test_data['percentage']}{GS.I18n.t('of students')} )</span>
+        }
+      }
+    }
+  }
+
+  renderStateAverage(state_average) {
+    if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
+      return (<div className="state-average">
+        {GS.I18n.t('State avg')} {state_average}%
+      </div>)
+    }
+  }
+
+  renderStateAverageArrow(state_average){
+    if(state_average > 0) {
+      let style_arrow_up = {left: state_average + "%", top:'11px'}
+      return <div className="arrow-up"><span style={style_arrow_up}></span></div>
+    }
+  }
+
+  renderBarGraph(test_data){
+    if(test_data !== undefined) {
+      let numerical_value = test_data['score'];
+      if (numerical_value == '<1') {
+        numerical_value = '0';
+      }
+      // let grades = this.renderGrades(test_data['grades']);
+      let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
+      let style_grey_width = {width: 100-numerical_value+"%" };
+
+      return (
+          <div className="row bar-graph-display" key={this.renderKey(test_data)}>
+            <div className="test-score-container clearfix">
+              <div className="col-xs-12 col-sm-4 subject">
+                {test_data['breakdown']}
+                {this.renderStudentPercentage(test_data)}
+              </div>
+              <div className="col-sm-1"></div>
+              <div className="col-xs-12 col-sm-7">
+                <div className="bar-graph-container">
+                  <div className="score">{test_data['label']}%</div>
+                  <div className="item-bar">
+                    <div className="single-bar-viz">
+                      <div className="color-row" style={style_score_width}></div>
+                      <div className="grey-row" style={style_grey_width}></div>
+                      {this.renderStateAverageArrow(test_data['state_average'])}
+                    </div>
+                  </div>
+                </div>
+                {this.renderStateAverage(test_data['state_average'])}
+              </div>
+            </div>
+          </div> )
     }
   }
 

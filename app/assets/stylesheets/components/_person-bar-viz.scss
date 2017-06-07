@@ -20,7 +20,7 @@
     left: -7px;
     > span {
       position: absolute;
-      top: 0;
+      top: 4px;
       width: 0;
       height: 0;
       border-left: 7px solid transparent;
@@ -34,11 +34,16 @@
     font-size: $people-height;
     line-height: $people-height;
     display: inline-block;
-    height: $people-height;
+    //height: $people-height;
   }
   .person-progress > .background {
     color: $background-gray;
-    display: inline-block;
+    top: 0;
+    left: 0;
+    //position: absolute;
+    //display: inline-block;
+    height:30px;
+    overflow: hidden;
   }
   .person-progress span {
     display: inline-block;
@@ -48,6 +53,13 @@
    top: 0;
    left: 0;
    overflow: hidden;
+    height:30px;
+
+  }
+  >.state-average{
+    font-family: 'opensans-regular';
+    line-height: 18px;
+    padding-top: 4px;
   }
 }
 
@@ -62,7 +74,7 @@
     .state-average {
       font-family: 'opensans-regular';
       line-height: 18px;
-      padding-top: 5px;
+      padding-top: 10px;
     }
   }
 }

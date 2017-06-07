@@ -87,7 +87,9 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
                 {test_data['breakdown']}
                 {this.renderStudentPercentage(test_data)}
               </div>
-              <div className="col-xs-9 col-sm-6">
+              <div className="col-sm-1"></div>
+
+              <div className="col-xs-9 col-sm-5">
                 <div className="bar-graph-container">
                   <div className="score">{test_data['label']}%</div>
                   <div className="item-bar">
