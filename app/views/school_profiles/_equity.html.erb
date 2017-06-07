@@ -27,7 +27,8 @@
                           info_text: t('.Race ethnicity tooltip'),
                           icon_classes: t('.Race ethnicity icon'),
                           sources: equity.sources,
-                          data: equity.equity_courses_hash })  %>
+                          data: equity.equity_courses_hash,
+                          faq: equity.faq_race_ethnicity })%>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Low-income students'),
                           anchor: 'Low-income students',
@@ -37,7 +38,8 @@
                           icon_classes: t('.Low income icon'),
                           sources: equity.sources,
                           rating: equity.rating_low_income,
-                          data: equity.low_income_section_props })  %>
+                          data: equity.low_income_section_props,
+                          faq: equity.faq_low_income })  %>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Students with Disabilities'),
                           anchor: 'Students with Disabilities',
@@ -46,7 +48,8 @@
                           info_text: t('.Student with disabilities tooltip'),
                           icon_classes: t('.Student with disabilities icon'),
                           sources: equity.sources,
-                          data: equity.students_with_disabilities_section_props })  %>
+                          data: equity.students_with_disabilities_section_props,
+                          faq: equity.faq_disabilities })  %>
     </div>
   </div>
 </div>

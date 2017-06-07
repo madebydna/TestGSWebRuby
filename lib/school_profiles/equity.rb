@@ -227,5 +227,19 @@ module SchoolProfiles
       equity_test_scores.low_income_test_scores_visible? || characteristics_low_income_visible?
     end
 
+    def faq_race_ethnicity
+      @_faq_race_ethnicity ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.race_ethnicity'),
+                                       content: I18n.t(:content_html, scope: 'lib.equity.faq.race_ethnicity'))
+    end
+
+    def faq_low_income
+      @_faq_race_ethnicity ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.low_income'),
+                                       content: I18n.t(:content_html, scope: 'lib.equity.faq.low_income'))
+    end
+
+    def faq_disabilities
+      @_faq_race_ethnicity ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.disabilities'),
+                                       content: I18n.t(:content_html, scope: 'lib.equity.faq.disabilities'))
+    end
   end
 end

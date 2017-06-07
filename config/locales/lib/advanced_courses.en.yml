@@ -17,6 +17,10 @@ en:
       vocational_hands_on_index: Career / Technical
       business_index: Business
       health_index: Health
+      faq:
+        cta: Notice something missing or confusing?
+        content_html: >
+          Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
       narration:
         _1_html: >
           <h3 class="negative">Very concerning:</h3>

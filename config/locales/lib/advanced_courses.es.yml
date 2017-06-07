@@ -17,6 +17,10 @@ es:
       vocational_hands_on_index: Carreras técnicas
       business_index: Business
       health_index: Educación para la salud
+      faq:
+        cta: Notice something missing or confusing?
+        content_html: >
+          Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
       narration:
         _1_html: >
           <h3 class="negative">Muy preocupante:</h3>

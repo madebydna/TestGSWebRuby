@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import InfoCircle from '../info_circle';
+import InfoTextAndCircle from '../info_text_and_circle'
 import SectionNavigation from './tabs/section_navigation';
 import SubSectionToggle from './sub_section_toggle';
 
@@ -14,6 +15,10 @@ export default class EquitySection extends React.Component {
         component: React.PropTypes.object,
         explanation: React.PropTypes.element
       }))
+    }),
+    faq: PropTypes.shape({
+      cta: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
     })
   };
 
@@ -98,7 +103,10 @@ export default class EquitySection extends React.Component {
                            google_tracking={section_info.title}
                            onTabClick={this.handleTabClick.bind(this)}/>
         </div>
-        <div className="top-tab-panel">{this.selectSectionContent(section_content)}</div>
+        <div className="top-tab-panel">
+          {this.selectSectionContent(section_content)}
+          {this.props.faq && <InfoTextAndCircle cta={this.props.faq.cta} content={this.props.faq.content}/>}
+        </div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"
            data-content-html={this.props.sources}
