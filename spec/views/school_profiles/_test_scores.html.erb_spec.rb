@@ -9,7 +9,11 @@ describe 'school_profiles/_test_scores' do
         rating: nil,
         info_text: 'Info text',
         subject_scores: [],
-        content: nil
+        content: nil,
+        faq: OpenStruct.new(
+            cta: nil,
+            content: nil
+        )
       }
     }
   end
