@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SchoolCache do
 
-  let!(:school) { FactoryGirl.create(:school, id:1) }
+  let!(:school) { FactoryGirl.create(:school) }
   let!(:test_data_breakdown) { FactoryGirl.create(:test_data_breakdown) }
   let!(:test_data_subject) { FactoryGirl.create(:test_data_subject) }
 
@@ -16,15 +16,21 @@ describe SchoolCache do
 
 
     context 'when a school has ratings data' do
+      let!(:test_data_type) do
+        FactoryGirl.create(
+          :test_data_type,
+          classification: 'gs_rating'
+        )
+      end
       let!(:test_data_set) do
         FactoryGirl.create(
           :test_data_set,
           :with_school_values,
-          data_type_id: 1,
+          data_type_id: test_data_type.id,
           breakdown_id: 1,
           subject_id: 1,
           display_target: 'ratings',
-          school_id: 1,
+          school_id: school.id,
           value_float: 2,
           value_text: '3'
         )
@@ -33,13 +39,13 @@ describe SchoolCache do
       it 'should insert ratings for the school' do
         Cacher.ratings_cache_for_school(school)
 
-        cache_row = SchoolCache.where("school_id = ? and state = ?", 1,'ca')
+        cache_row = SchoolCache.where("school_id = ? and state = ?", school.id,school.state)
 
         expect(cache_row).to_not be_empty
         expect(cache_row.size).to eq(1)
         ratings = JSON.parse(cache_row[0].value)
         expect(ratings.size).to eq(1)
-        expect(ratings[0]['data_type_id']).to eq(1)
+        expect(ratings[0]['data_type_id']).to eq(test_data_type.id)
         expect(ratings[0]['school_value_float']).to eq(2)
         expect(ratings[0]['school_value_text']).to eq('3')
       end
