@@ -85,7 +85,7 @@ module SchoolProfiles
     end
 
     def source_name
-      data_label(I18n.t(SCHOOL_ADMIN, scope: 'lib.private_school_info'))
+      data_label(SCHOOL_ADMIN)
     end
 
   end
