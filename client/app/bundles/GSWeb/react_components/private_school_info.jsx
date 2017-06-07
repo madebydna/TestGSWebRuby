@@ -59,6 +59,12 @@ export default class PrivateSchoolInfo extends React.Component {
             <div className="title-container">
               <div className="title">
                 General Information
+                <a data-remodal-target="modal_info_box"
+                  data-content-type="info_box"
+                  data-content-html={GS.I18n.t('general_information_tooltip')}
+                  className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
+                  <span className="icon-question"></span>
+                </a>
                 <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton>
                 <p><br /></p>
               </div>
