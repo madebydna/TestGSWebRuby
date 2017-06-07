@@ -7,17 +7,32 @@ es:
       'source': 'Fuente'
       faq:
         race_ethnicity:
-          cta: Notice something missing or confusing?
+          cta: ¿Notas que algo falta o confunde?
           content_html: >
-            Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
+            <p><span class="emphasis">¿Falta una raza o etnicidad?</span> Cuando la población de un subgrupo es demasiado pequeño para ofrecer datos fiables, no aparece en el perfil. Esto puede provocar que ciertas razas o etnicidades no sean incluidos en algunos gráficos dentro de esta sección.</p>
+            <p><span class="emphasis">¿Cómo creamos las etiquetas de raza/etnicidad?</span> Usamos los términos utilizado por el Departamento de Educación del estado para describir la información de la raza/etnicidad del estudiante.</p>
+            <ul>
+            <li>El "Todos los estudiantes" número representa el número de estudiantes de la escuela que participaron en los exámenes.</li>
+            <li>La información del "% de estudiantes" refleja la porción de la población estudiantil en la escuela que cada subgrupo representa. Para obtener más información sobre la demografía del estudiante en esta escuela, visite la sección "estudiantes" a continuación.</li>
+            </ul>
+            <p><span class="emphasis">¿Cómo decidimos los temas que vamos a mostrar?</span> Temas del examen que mostramos representan los temas más tomadas por la mayoría de los estudiantes en esta escuela.</p>
+            <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
         low_income:
-          cta: Notice something missing or confusing?
+          cta: ¿Notas que algo falta o confunde?
           content_html: >
-            Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
+            <p><span class="emphasis">¿Cómo decidimos los temas que vamos a mostrar?</span> Mostramos los tres exámenes tomadas por la mayoría de estudiantes en esta escuela.</p>
+            <p><span class="emphasis">Nota:</span> El "Todos los estudiantes" número representa el número de estudiantes de la escuela que participaron en los exámenes. La información del "% de estudiantes" de bajos ingresos representa la porción del total de estudiantes de la escuela que provienen de familias de bajos ingresos.</p>
+            <ul>
+            <li>Para obtener más información sobre definiciones de bajos ingresos, consulte el "?" en la parte superior del módulo.</li>
+            <li>Para obtener más información sobre la demografía del estudiante en esta escuela, visite la sección "estudiantes" a continuación.</li>
+            </ul>
+            <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
         disabilities:
-          cta: Notice something missing or confusing?
+          cta: ¿Notas que algo falta o confunde?
           content_html: >
-            Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
+            <p><span class="emphasis">¿Cómo decidimos los temas que vamos a mostrar?</span> Mostramos los tres exámenes tomadas por la mayoría de estudiantes en esta escuela.</p>
+            <p><span class="emphasis">¿Qué muestra los datos del "promedio del estado"?</span> En este gráfico, el promedio del estado muestra el promedio estatal para estudiantes con discapacidades (no para todos los estudiantes) en todo el estado. Esto te permite comparar los resultados de los estudiantes con discapacidades en esta escuela a poblaciones de estudiantes similares en otras escuelas en el estado.</p>
+            <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Percent of students who meet UC/CSU entrance requirements': 'Este es el porcentaje de estudiantes graduados de esta escuela que completaron los cursos A-G requeridos para ser elegibles para atender a alguna de las escuelas de la Universidad de California y Universidad del Estado de California.'

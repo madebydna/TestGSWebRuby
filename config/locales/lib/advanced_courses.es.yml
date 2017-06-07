@@ -18,9 +18,10 @@ es:
       business_index: Business
       health_index: Educación para la salud
       faq:
-        cta: Notice something missing or confusing?
+        cta: ¿Notas que algo falta o confunde?
         content_html: >
-          Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
+          <p><span class="emphasis">¿Por qué le falta una calificación a algunas materias?</span> Ofrecemos información de cursos avanzados en siete materias, pero sólo cuatro de ellos (inglés, STEM, ciencias sociales y idiomas extranjeros) se ofrecen en suficiente escuelas en todo el estado para asignar una calificación que puede resumirse en nuestra calificación de cursos avanzados. (Haz clic en los símbolos "?" junto a "Cursos Avanzados" y "Calificaciones" para más información).</p>
+          <p>Clasificaciones se basan en una escala del 1 (bajo) al 10 (alto). Si una escuela no ofrece ningún tipo de cursos avanzados en una de las cuatro materias con una clasificación, esa materia recibirá un "1" para la calificación.</p>
       narration:
         _1_html: >
           <h3 class="negative">Muy preocupante:</h3>

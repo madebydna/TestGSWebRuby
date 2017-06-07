@@ -20,9 +20,10 @@ es:
       Source: Fuente
       sources: Fuentes
       faq:
-        cta: Notice something missing or confusing?
+        cta: ¿Notas que algo falta o confunde?
         content_html: >
-          Lorem ipsum dolor <a href="javascript:void(0)">sit</a>
+          <p>Los resultados de los exámenes y los promedios estatales que mostramos provienen del Departamento de Educación del estado. Cuando falta información en nuestros perfiles, es porque la información no estaba incluida en los datos que recibimos del DE.</p>
+          <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
       narration:
         _1_html: >
           <h3 class="negative">Muy preocupante:</h3>
