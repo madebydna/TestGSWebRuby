@@ -29,16 +29,31 @@ export default class EquitySection extends React.Component {
 
   componentDidMount() {
     let mapping = {
-      'Low-income students': 'Low-income_students'
+      'Raza/etnicidad': 'Race_ethnicity',
+      'Race/ethnicity': 'Race_ethnicity',
+      'Low-income students': 'Low-income_students',
+      'De bajos Ingresos': 'Low-income_students',
+      'Estudiantes con discapacidades': 'Students_with_Disabilities',
+      'Students with Disabilities': 'Students_with_Disabilities'
     }
     handleAnchor(
       mapping[this.props.equity_config["section_info"].anchor], tokens => {
+        let tabNameAnchorMap = {
+          'Test scores': 'Test_scores',
+          'Graduation rates': 'Graduation_rates',
+          'Advanced coursework': 'Advanced_coursework',
+          'Discipline & attendance': 'Discipline_and_attendance',
+          'Resultados de exámenes': 'Test_scores',
+          'Índices de Graduación': 'Graduation_rates',
+          'Cursos avanzados': 'Advanced_coursework',
+          'Disciplina y asistencia': 'Discipline_and_attendance',
+        }
         let section_content = this.props.equity_config["section_content"];
-        let index = section_content.findIndex((content) => content["section_title"] == tokens[0]);
+        let index = section_content.findIndex((content) => tabNameAnchorMap[content["section_title"]] == tokens[0]);
         if(index == -1) {
           index = 0;
         }
-        this.setState({ active: index, defaultSubSectionTab: tokens[1] });
+        this.setState({ active: index });
       }
     );
   }

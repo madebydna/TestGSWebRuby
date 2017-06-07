@@ -1,10 +1,12 @@
-export function scrollToElement(selector) {
+export function scrollToElement(selector, doneCallback) {
   if($(selector).length > 0) {
-    let top = $(selector).offset().top;
-    setTimeout(function() {
-      $(function() {
-        $(window).scrollTop(top);
-      });
-    }, 1);
+    let y = $(selector).offset().top;
+    let widthWithSearchBar = 767;
+    let searchBarHeight = 48;
+    if(document.documentElement.clientWidth <= widthWithSearchBar) {
+      $('body').animate({scrollTop:y-searchBarHeight}, 500, 'swing', doneCallback);
+    } else {
+      $('body').animate({scrollTop:y}, 500, 'swing', doneCallback);
+    }
   }
 }
