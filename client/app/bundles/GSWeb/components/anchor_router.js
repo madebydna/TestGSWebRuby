@@ -19,8 +19,8 @@ export function enableAutoAnchoring(map) {
 
 function highlightForAMoment(selector) {
   let backgroundColor = $(selector).css('background-color');
-  $(selector).css('background-color', '#ffff93');
-  setTimeout(() => $(selector).css('background-color', backgroundColor), 750);
+  $(selector).css('background-color', '#ffff93', 'important');
+  setTimeout(() => $(selector).css('background-color', '', ''), 750);
 }
 
 function autoAnchor(selector) {

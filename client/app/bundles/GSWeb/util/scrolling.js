@@ -4,9 +4,10 @@ export function scrollToElement(selector, doneCallback) {
     let widthWithSearchBar = 767;
     let searchBarHeight = 48;
     if(document.documentElement.clientWidth <= widthWithSearchBar) {
-      $('body').animate({scrollTop:y-searchBarHeight}, 500, 'swing', doneCallback);
+      // html needed in selector because firefox overflows at html node
+      $('html,body').animate({scrollTop:y-searchBarHeight}, 500, 'swing', doneCallback);
     } else {
-      $('body').animate({scrollTop:y}, 500, 'swing', doneCallback);
+      $('html,body').animate({scrollTop:y}, 500, 'swing', doneCallback);
     }
   }
 }
