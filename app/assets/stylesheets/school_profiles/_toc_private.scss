@@ -11,7 +11,7 @@
   }
 
   .toc-private-container-box {
-    margin: 53px auto 88px auto;
+    margin: 15px auto 30px auto;
     @include media-breakpoint-up(sm) {
       margin-right: 0px;
     }
@@ -38,7 +38,7 @@
     padding-bottom: 0px;
     vertical-align: middle;
     @include media-breakpoint-up(sm) {
-      padding-bottom: 26px;
+      padding-bottom: 20px;
     }
 
     a {

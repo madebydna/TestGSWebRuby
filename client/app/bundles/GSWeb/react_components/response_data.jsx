@@ -12,8 +12,8 @@ export default class ResponseData extends React.Component {
 
   listOfAnswers(response_key, answers) {
     let styling;
-    if (answers[0] != 'Data not provided by the school' && answers[0] != 'Datos no provistos por la escuela') {
-      styling = {color: 'black'};
+    if (answers[0] == 'Data not provided by the school' || answers[0] == 'Datos no provistos por la escuela') {
+      styling = {color: 'slategray'};
     }
     return answers.map((answer) => {
       if(response_key == 'Admissions webpage' || response_key == 'Página de admisiones') {
