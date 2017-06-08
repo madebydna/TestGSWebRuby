@@ -12,6 +12,10 @@ class ResponseValue < ActiveRecord::Base
     end
   end
 
+  def self.response_value_to_response_label_map
+    Hash[ResponseValue.pluck(:response_value, :response_label)]
+  end
+
   # TODO: add collection support to this method
   def self.lookup_table
     cached_all_values = Rails.cache.fetch(['response_value/all_values', I18n.locale], expires_in: 5.minutes) do

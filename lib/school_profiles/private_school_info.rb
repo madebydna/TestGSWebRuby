@@ -77,7 +77,15 @@ module SchoolProfiles
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.private_school_info', default: I18n.db_t(key.to_s, default: key))
+      I18n.t(key.to_sym, scope: 'lib.private_school_info', default:
+        I18n.db_t(key.to_s, default: 
+          I18n.db_t(key.to_s.gsub('_', ' ').gs_capitalize_first, default: 
+            I18n.db_t(key.to_s.gsub('_', ' ').gs_capitalize_words, default: 
+              I18n.db_t(response_value_to_response_label_map[key.to_s], default: key)
+            )
+          )
+        )
+      )
     rescue => e
       GSLogger.error(:misc, e, message: 'Key is not found for translation - private school info', vars: key)
       raise e
@@ -86,6 +94,10 @@ module SchoolProfiles
 
     def source_name
       data_label(SCHOOL_ADMIN)
+    end
+
+    def response_value_to_response_label_map
+      @_response_value_to_response_label_map ||= ResponseValue.response_value_to_response_label_map
     end
 
   end
