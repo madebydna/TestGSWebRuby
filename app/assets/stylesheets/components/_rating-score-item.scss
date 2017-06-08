@@ -5,7 +5,7 @@
 
 .rating-score-item__score {
 	text-align: right;
-	font-size: $font-size-l5;
+	font-size: 18px;
 	font-family: opensans-semibold;
   @include media-breakpoint-only(sm) {
 		float: right;
