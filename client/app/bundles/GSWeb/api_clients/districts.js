@@ -1,6 +1,9 @@
 // TODO: import jQuery
 
 export function findById(id, options) {
+  if(id == 0) {
+    return $.when({});
+  }
   return $.ajax({
     url: '/gsr/api/districts/' + id.toString(),
     data: options,
