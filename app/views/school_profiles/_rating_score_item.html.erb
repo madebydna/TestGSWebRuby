@@ -1,5 +1,15 @@
 <% score_data %>
 
+<% if score_data.visualization.present? && (score_data.visualization != :ratio_viz && score_data.visualization != :dollar_viz ) %>
+    <%=
+      render "#{score_data.visualization}",
+             score_data: score_data
+    %>
+<% else %>
+
+
+
+
 <div class="rating-container__score-item">
   <div class="rating-score-item">
     <div class="row">
@@ -27,19 +37,7 @@
         <% end %>
       </div>
     </div>
-    <% if score_data.visualization.present? && (score_data.visualization != :ratio_viz && score_data.visualization != :dollar_viz ) %>
-      <div class="rating-score-item__bar">
-        <div class="row">
-          <div class="col-xs-12 col-md-6 col-md-offset-6">
-              <%=
-                render "#{score_data.visualization}",
-                  score: score_data.score.float_value,
-                  state_score: score_data.state_average.try(:value),
-                  range: score_data.range
-              %>
-          </div>
-        </div>
-      </div>
-    <% end %>
+
   </div>
 </div>
+<% end %>
