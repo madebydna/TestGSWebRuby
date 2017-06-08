@@ -41,7 +41,7 @@ export const changeLocation = (lat, lon) => (dispatch, getState) => {
         lat: lat,
         lon: lon
       })
-    }).fail(() => dispatch({ type: API_FAILURE }));
+    }).fail(() => dispatch({ type: LOCATION_CHANGE_FAILURE }));
 }
 
 export const locateSchool = (state, id) => (dispatch, getState) => {
