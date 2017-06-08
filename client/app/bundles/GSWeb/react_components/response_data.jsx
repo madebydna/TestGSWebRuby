@@ -19,7 +19,11 @@ export default class ResponseData extends React.Component {
       if(response_key == 'Admissions webpage' || response_key == 'Página de admisiones') {
         answer = <a href={answer}>{answer}</a>;
       }
-      return <li style={styling}>{answer}</li>
+      if(answers.length > 1) {
+        return <li style={styling} style={{listStyle: 'disc'}}>{answer}</li>
+      } else {
+        return <li style={styling}>{answer}</li>
+      }
     });
   }
 
