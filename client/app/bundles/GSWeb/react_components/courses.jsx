@@ -101,7 +101,7 @@ export default class Courses extends React.Component {
           {courseSubjects}
           {courseSubjectsForDrawer.length > 0 &&
           <div className="rating-container__more-items"><Drawer content={courseSubjectsForDrawer} /> </div>}
-          {this.props.faq && <InfoTextAndCircle cta={this.props.faq.cta} content={this.props.faq.content}/>}
+          <InfoTextAndCircle {...this.props.faq} />
         </div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"

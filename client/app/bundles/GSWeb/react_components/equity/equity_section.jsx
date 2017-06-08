@@ -105,7 +105,7 @@ export default class EquitySection extends React.Component {
         </div>
         <div className="top-tab-panel">
           {this.selectSectionContent(section_content)}
-          {this.props.faq && <InfoTextAndCircle cta={this.props.faq.cta} content={this.props.faq.content}/>}
+          <InfoTextAndCircle {...this.props.faq} />
         </div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"
