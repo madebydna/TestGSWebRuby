@@ -86,7 +86,13 @@ class UserReviews
   def partition
     five_star_reviews = reviews.five_star_rating_reviews
     other_reviews = reviews.non_five_star_rating_reviews
-    raise "User has multiple five-star reviews" if five_star_reviews.size > 1
+    if five_star_reviews.size > 1
+      GSLogger.error(:reviews, nil, vars: {
+        user_id: five_star_reviews.first.member_id,
+        school_id: five_star_reviews.first.school_id,
+        state: five_star_reviews.first.state
+      }, message: "User has more than one five star review")
+    end
     return five_star_reviews.first, Array.wrap(other_reviews)
   end
 end
