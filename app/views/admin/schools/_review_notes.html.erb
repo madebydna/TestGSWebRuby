@@ -2,7 +2,8 @@
 
 <div class="rs-review-notes">
   <h5>Notes</h5>
-  <% review.notes.includes(:user).each do |review_note| %>
+  <% review.notes.each do |review_note| %>
+    <% next unless review_note.notes %>
     <%= "#{review_note.created.strftime('%B %d, %Y')} " %>
     <%= "#{review_note.user.email} :" if review_note.user %>
     <%= review_note.notes %>
