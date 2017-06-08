@@ -12,7 +12,7 @@ export default class ResponseData extends React.Component {
 
   listOfAnswers(answers) {
     let styling;
-    if (answers[0] != 'Data not provided by the school') {
+    if (answers[0] != 'Data not provided by the school' && answers[0] != 'Datos no provistos por la escuela') {
       styling = {color: 'black'};
     }
     return answers.map((answer) => <li style={styling}>{answer}</li>);
