@@ -15,7 +15,9 @@
                circle_content: rating,
                title: title,
                info_text: info_text,
-               has_data: student_progress.has_data?
+               has_data: student_progress.has_data?,
+               show_historical_ratings: student_progress.show_historical_ratings?,
+               historical_ratings: student_progress.historical_ratings
     %>
 
     <% if student_progress.has_data? %>
@@ -27,12 +29,14 @@
     <% end %>
   </div>
 
-  <div>
-    <a data-remodal-target="modal_info_box"
-       data-content-type="info_box"
-       data-content-html="<%= sources %>"
-       href="javascript:void(0)">
-        <span class="source-link"><%= t('.sources') %></span>
-    </a>
-  </div>
+  <% if student_progress.has_data? %>
+    <div>
+      <a data-remodal-target="modal_info_box"
+         data-content-type="info_box"
+         data-content-html="<%= sources %>"
+         href="javascript:void(0)">
+          <span class="source-link"><%= t('.sources') %></span>
+      </a>
+    </div>
+  <% end %>
 </div>

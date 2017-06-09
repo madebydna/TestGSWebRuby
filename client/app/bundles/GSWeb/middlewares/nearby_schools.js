@@ -8,11 +8,15 @@ const NearbySchoolsMiddleware = store => next => action => {
     case 'GET_TOP_PERFORMING_NEARBY_SCHOOLS':
       getTopPerformingNearbySchools(
         action.state,
-        action.schoolId
+        action.schoolId,
+        action.offset,
+        action.limit
       ).done(function(data) {
         store.dispatch({
           type: 'TOP_PERFORMING_NEARBY_SCHOOLS_RECEIVED',
-          schools: data
+          schools: data,
+          offset: action.offset,
+          limit: action.limit
         })
       }).fail(function() {
       });

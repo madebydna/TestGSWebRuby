@@ -19,31 +19,36 @@
       title: title,
       subtitle: subtitle,
       info_text: info_text,
-      has_data: data_values.present?
+      has_data: data_values.present?,
+      show_historical_ratings: college_readiness.show_historical_ratings?,
+      historical_ratings: college_readiness.historical_ratings
     %>
-    <div class="panel">
-      <% if narration %>
-        <div class="auto-narration"><%= narration %></div>
-      <% end %>
-      <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
-
-      <% if data_values.size > initial_size %>
-        <div class="rating-container__more-items">
-          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'College Readiness' } do %>
-            <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html="<%= content %>"
-         href="javascript:void(0)">
-        <% if data_values.present? %>
-          <span class="source-link"><%= t('.sources') %></span>
+    <% if data_values.present? %>
+      <div class="panel">
+        <% if narration %>
+          <div class="auto-narration"><%= narration %></div>
         <% end %>
-      </a>
-    </div>
+        <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+
+        <% if data_values.size > initial_size %>
+          <div class="rating-container__more-items">
+            <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'College Readiness' } do %>
+              <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+            <% end %>
+          </div>
+        <% end %>
+        <%= render partial: 'info_text_and_circle', locals: {cta: college_readiness.faq.cta, content: college_readiness.faq.content } if data_values.present? %>
+      </div>
+      <div>
+        <a data-remodal-target="modal_info_box"
+           data-content-type="info_box"
+           data-content-html="<%= content %>"
+           href="javascript:void(0)">
+          <% if data_values.present? %>
+            <span class="source-link"><%= t('.sources') %></span>
+          <% end %>
+        </a>
+      </div>
+    <% end %>
   </div>
 </div>

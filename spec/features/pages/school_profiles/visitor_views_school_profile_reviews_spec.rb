@@ -43,6 +43,47 @@ describe "Visitor" do
     end
   end
 
+  scenario "sees the reviews section even if there are more than one five star review from a user", js: true do
+    review_comment = "Smple riw cmnt with engh chars & wrds to be valid h s f s"
+    school = create(:school_with_new_profile, id: 1)
+    user = create(:verified_user, id: 1)
+    create(
+      :community_school_user,
+      member_id: user.id,
+      school_id: school.id,
+      state: school.state
+    )
+    review_created_time = Time.parse("2016-09-09 07:00:00 -0700")
+    five_star_review_question = create(:overall_rating_question)
+    five_star_review_with_comment = create(
+      :five_star_review,
+      review_question_id: five_star_review_question.id,
+      answer_value: 5,
+      active: 1,
+      comment: review_comment,
+      created: review_created_time,
+      user: user,
+      state: school.state,
+      school_id: school.id,
+      id: 1)
+    five_star_review_with_comment = build(
+      :five_star_review,
+      review_question_id: five_star_review_question.id,
+      answer_value: 5,
+      active: 1,
+      comment: review_comment,
+      created: review_created_time,
+      user: user,
+      state: school.state,
+      school_id: school.id,
+      id: 1)
+    five_star_review_with_comment.id = nil
+    five_star_review_with_comment.save(validate: false)
+
+    visit school_path(school)
+    expect(page).to have_text "RECENT COMMENTS"
+  end
+
   scenario "sees a topical review from community member", js:true do
     review_comment = "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum."
     school = create(:school_with_new_profile)

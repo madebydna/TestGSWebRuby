@@ -16,7 +16,11 @@ export default class SchoolProfileComponent extends React.Component {
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
     data: React.PropTypes.object,
-    rating: React.PropTypes.number
+    rating: React.PropTypes.number,
+    faq: PropTypes.shape({
+      cta: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
   };
 
   constructor(props) {
@@ -112,7 +116,8 @@ export default class SchoolProfileComponent extends React.Component {
           key={i}
           equity_config={ equityConfig[i]}
           sources={this.props.sources}
-      />)
+          faq={this.props.faq}
+      />);
       if (equityConfig[i] && equityConfig[i]['section_content']) {
         noData = false;
       }

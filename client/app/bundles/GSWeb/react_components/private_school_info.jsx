@@ -43,6 +43,13 @@ export default class PrivateSchoolInfo extends React.Component {
     }
   }
 
+  t() {
+    if(GS && GS.I18n && GS.I18n.t) {
+      return GS.I18n.t(...arguments);
+    }
+    return null;
+  }
+
   render() {
     if (this.props.content) {
 
@@ -58,8 +65,14 @@ export default class PrivateSchoolInfo extends React.Component {
             </div>
             <div className="title-container">
               <div className="title">
-                General Information
-                <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton>
+                { this.t('General Information') }
+                <a data-remodal-target="modal_info_box"
+                  data-content-type="info_box"
+                  data-content-html={GS.I18n.t('general_information_tooltip')}
+                  className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
+                  <span className="icon-question"></span>
+                </a>
+                <AnchorButton href={ this.props.osp_link } >{ this.t('edit') }</AnchorButton>
                 <p><br /></p>
               </div>
             </div>
@@ -73,7 +86,7 @@ export default class PrivateSchoolInfo extends React.Component {
           <div className="top-tab-panel">{this.selectSectionContent(stuff)}</div>
           </div>
             <div className="source-bar">
-            Source:&nbsp;<span className="sources-text">{this.props.source_name}</span>
+              { this.t('source') }:&nbsp;<span className="sources-text">{this.props.source_name}</span>
           </div>
         </div>
       </div>)}
@@ -86,7 +99,7 @@ export default class PrivateSchoolInfo extends React.Component {
               <span className="icon-user"></span>
             </div>
             <div className="title-container">
-              <div className="title">General Information <AnchorButton href={ this.props.osp_link } >Edit</AnchorButton></div>
+              <div className="title">{ this.t('General Information') } <AnchorButton href={ this.props.osp_link } >{ this.t('edit') }</AnchorButton></div>
               <NoDataModuleCta moduleName="General info"/>
             </div>
           </div>

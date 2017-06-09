@@ -19,11 +19,7 @@ class NearestHighPerformingSchools extends React.Component {
   }
 
   tabNames() {
-    if(this.props.schoolState == 'CA') {
-      return [GS.I18n.t('Nearest high-performing'), GS.I18n.t('Nearby schools')]
-    } else {
-      return [GS.I18n.t('Nearby schools')]
-    }
+    return [GS.I18n.t('Nearest high-performing'), GS.I18n.t('Nearby schools')]
   }
 
   tabSwitched(index) {
@@ -64,11 +60,7 @@ class NearestHighPerformingSchools extends React.Component {
         visible={i == 1}
       />
     ];
-    if(this.props.schoolState == 'CA') {
-      return panes;
-    } else {
-      return [panes[1]];
-    }
+    return panes;
   }
 
   renderContentPanes() {

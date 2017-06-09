@@ -18,9 +18,6 @@
       <% db_hash = {:districtId => @school.district, :level => level_value, :schoolId => @school.id, :state => @school.state} %>
   <% end %>
   <div class="map-container">
-    <div class="attendance-zone">
-      <a href="<%= district_boundary_path(db_hash) %>"><%= t('.attendance_zone')%></a>
-    </div>
     <div class="map-overlay">
       <div class="overlay-container">
         <div class="contact-address<%= street_address_css_class %>">
@@ -82,9 +79,13 @@
               <a target="_blank" href="<%= prepend_http(school.home_page_url) %>"><%= t('.school_website') %></a>
             </div>
           <% end %>
+          <div class="homes-for-sale">
+            <a href="<%= district_boundary_path(db_hash) %>"><button><%= t('.attendance_zone')%></button></a>
+          </div>
           <a class="homes-for-sale" target="_blank" href='<%= zillow_url(@school, 'localoverview') %>'>
-            <button><%= t('.nearby_homes').upcase %></button>
+            <button class="nearby-homes"><%= t('.nearby_homes').upcase %></button>
           </a>
+
         </div>
       </div>
     </div>
@@ -93,7 +94,7 @@
         class: "static-map visible-#{size}",
         alt: "Map of #{school.name} address.",
         data: { src: static_google_maps[size] }
-      ), neighborhood.google_maps_url, target: '_blank')
+      ), district_boundary_path(db_hash))
       %>
     <% end %>
   </div>

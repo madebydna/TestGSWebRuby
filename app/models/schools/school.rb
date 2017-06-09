@@ -309,6 +309,15 @@ class School < ActiveRecord::Base
    )".squish
   end
 
+  def claimed?
+    @_claimed ||= 
+      EspMembership.where(
+          active: 1,
+          state: state,
+          school_id: id
+      ).present?
+  end
+
   # def notes
   #   @notes ||= SchoolNote.find_by_school(self)
   # end

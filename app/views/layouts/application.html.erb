@@ -72,6 +72,6 @@
 <%= javascript_include_tag "post_load", :async => true unless content_for?(:page_javascripts) %>
 <%= yield :javascript_includes %>
 <%= yield :page_javascripts %>
-<div class="remodal modal modal_info_box" data-remodal-id="modal_info_box">Add Spinny</div>
+<div class="remodal modal modal_info_box" data-remodal-options="hashTracking: false" data-remodal-id="modal_info_box">Add Spinny</div>
 </body>
 </html>

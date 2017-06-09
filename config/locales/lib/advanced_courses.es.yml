@@ -17,3 +17,55 @@ es:
       vocational_hands_on_index: Carreras técnicas
       business_index: Business
       health_index: Educación para la salud
+      faq:
+        cta: ¿Notas que algo falta o confunde?
+        content_html: >
+          <p><span class="emphasis">¿Por qué le falta una calificación a algunas materias?</span> Ofrecemos información de cursos avanzados en siete materias, pero sólo cuatro de ellos (inglés, STEM, ciencias sociales y idiomas extranjeros) se ofrecen en suficiente escuelas en todo el estado para asignar una calificación que puede resumirse en nuestra calificación de cursos avanzados. (Haz clic en los símbolos "?" junto a "Cursos Avanzados" y "Calificaciones" para más información).</p>
+          <p>Clasificaciones se basan en una escala del 1 (bajo) al 10 (alto). Si una escuela no ofrece ningún tipo de cursos avanzados en una de las cuatro materias con una clasificación, esa materia recibirá un "1" para la calificación.</p>
+      narration:
+        _1_html: >
+          <h3 class="negative">Muy preocupante:</h3>
+          <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">muy por debajo</span> del promedio estatal.</p>
+          <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados. Tomando cursos avanzados ayuda a demostrar que el estudiante está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para asegurar que los estudiantes tengan acceso a -- y participen en cursos avanzados.</p>
+          <hr />
+        _2_html: >
+          <h3 class="negative">Un signo preocupante:</h3>
+          <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">por debajo</span> del promedio estatal.</p>
+          <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados. Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para asegurar que los estudiantes tengan acceso a -- y participen en cursos avanzados.</p>
+          <hr />
+        _3_html: >
+          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+          <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">comparable</span> al promedio estatal.</p>
+          <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados.
+          Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que está dispuesto a desafiarse a sí mismo.
+          Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para asegurar que los estudiantes tengan acceso a -- y participen en cursos avanzados.</p>
+          <hr />
+        _4_html: >
+          <h3 class="positive">Un signo prometedor:</h3>
+          <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está <span class="emphasis">más alto</span> que el promedio estatal.</p>
+          <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de cursos tomados. Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para crédito universitario y elevar el GPA del estudiante.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Anime a su estudiante a tomar cursos avanzados en áreas donde ellos sobresalen.</p>
+          <hr />
+        _5_html: >
+          <h3 class="positive">¡Buenas noticias!:</h3>
+          <p>El número de cursos avanzados tomadas por estudiantes de esta escuela está
+          <span class="emphasis">mucho más alto</span> que el promedio estatal.</p>
+          <p>Los oficiales de admisiones universitarias miran las calificaciones de los estudiantes y el nivel de
+          cursos tomados. Tomando cursos avanzados ayuda a demostrar la firmeza del carácter del estudiante y que
+          está dispuesto a desafiarse a sí mismo. Además, algunos cursos avanzados, como AP, puede calificar para
+          crédito universitario y elevar el GPA del estudiante.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Anime a su estudiante a tomar cursos avanzados en áreas donde ellos sobresalen.</p>
+          <hr />

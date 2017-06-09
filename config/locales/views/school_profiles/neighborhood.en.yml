@@ -3,8 +3,8 @@ en:
     neighborhood:
       title: Neighborhood
       attendance_zone: See this school's attendance zone
-      school_leader_label: School leader
-      facebook: School Facebook page
-      school_website: School website
+      school_leader_label: Principal
+      facebook: Facebook page
+      school_website: Website
       nearby_homes: Nearby homes
-      school_leader_email: School leader email
+      school_leader_email: Principal email

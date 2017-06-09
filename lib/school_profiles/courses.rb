@@ -13,11 +13,23 @@ module SchoolProfiles
       ]
     end
 
+    def faq
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.advanced_courses.faq'),
+                        content: I18n.t(:content_html, scope: 'lib.advanced_courses.faq'))
+    end
+
     def rating
       @_rating ||=
         ((data['Advanced Course Rating'] || [])
           .find { |h| h['breakdowns'].nil? } || {})['school_value']
     end
+
+    def narration
+      return nil unless rating.present? && (1..10).cover?(rating.to_i)
+      key = '_' + ((rating.to_i / 2) + (rating.to_i % 2)).to_s + '_html'
+      I18n.t(key, scope: 'lib.advanced_courses.narration', default: I18n.db_t(key, default: key)).html_safe
+    end
+
 
     # Output data format:
     #

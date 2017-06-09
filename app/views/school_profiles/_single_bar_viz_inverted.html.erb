@@ -1,5 +1,10 @@
-<% score %>
-<% state_score %>
+<% score_data %>
+<% score = score_data.score.float_value %>
+<% score_label = score_data.formatted_score %>
+<% state_score = score_data.state_average.try(:float_value) %>
+<% state_label = score_data.formatted_state_average %>
+<% info_text = score_data.info_text %>
+<% range = score_data.range %>
 <% range ||= (0..100) %>
 <% min_value = range.min %>
 <% max_value = range.max %>
@@ -11,17 +16,32 @@
 
 <% invert_score_rating = 11 - score_rating %>
 
-
-<% if (0..100).cover?(score_percentage) && (1..10).cover?(score_rating) && !score.nil? %>
-  <div class="single-bar-viz ">
-    <div class="color-row rating_<%= invert_score_rating %>"
-         style="width:<%= score_percentage %>%"></div>
-    <div class="grey-row" style="width:<%= grey_score %>%"></div>
-    <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
-      <div class="arrow-down"><span style="left:<%= state_average_percentage %>%"></span></div>
-    <% end %>
+<div class="row bar-graph-display">
+  <div class="test-score-container clearfix">
+    <div class="col-xs-12 col-sm-5 subject"><%= score_data.label %>
+      <% if info_text %>
+        <%= render 'info_circle', content: info_text %>
+      <% end %>
+    </div>
+    <div class="col-sm-1"></div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="bar-graph-container">
+        <div class="score"><%= score_label %></div>
+        <div class="item-bar">
+          <div class="single-bar-viz">
+            <div class="color-row rating_<%= invert_score_rating %>" style="width:<%= score_percentage %>%"></div>
+            <div class="grey-row" style="width:<%= grey_score %>%"></div>
+            <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+              <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="state-average">
+        <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+          <%= t('school_profiles.rating_score_item.state_average') + ': ' + state_label.to_s %>
+        <% end %>
+      </div>
+    </div>
   </div>
-<% else
-     GSLogger.error(:misc, nil, message: 'Score or rating is out of range',
-                    vars: {score: score, score_rating: score_rating, score_range: range})
-   end %>
+</div>

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import CourseSubject from './course_subject';
 import Drawer from './drawer';
+import InfoTextAndCircle from './info_text_and_circle'
 import NoDataModuleCta from './no_data_module_cta';
 
 export default class Courses extends React.Component {
@@ -8,7 +9,12 @@ export default class Courses extends React.Component {
   static propTypes = {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
-    rating: PropTypes.string
+    rating: PropTypes.string,
+    narration: PropTypes.string,
+    faq: PropTypes.shape({
+      cta: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
+    })
   };
 
   static defaultProps = {
@@ -74,8 +80,11 @@ export default class Courses extends React.Component {
               <div dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}></div>
             </div>
           </div>
-        </div>
-        <div>
+
+        <div className="panel">
+          <div className="auto-narration">
+            <div dangerouslySetInnerHTML={{__html: this.props.narration}}></div>
+          </div>
           <div className="rating-container__score-item course-subject-header">
             <span dangerouslySetInnerHTML={{__html: this.t('subjects')}}></span>
             <span>
@@ -92,6 +101,7 @@ export default class Courses extends React.Component {
           {courseSubjects}
           {courseSubjectsForDrawer.length > 0 &&
           <div className="rating-container__more-items"><Drawer content={courseSubjectsForDrawer} /> </div>}
+          <InfoTextAndCircle {...this.props.faq} />
         </div>
         <a data-remodal-target="modal_info_box"
            data-content-type="info_box"
@@ -99,6 +109,7 @@ export default class Courses extends React.Component {
            href="javascript:void(0)">
           <span className="">{this.t('See notes')}</span>
         </a>
+      </div>
       </div>)
     else
       return <div id="AdvancedCourses-empty" className="advanced-courses rating-container">

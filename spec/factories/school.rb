@@ -15,6 +15,8 @@ FactoryGirl.define do
       state 'CA'
       collections { FactoryGirl.build_list :collection, 1 }
       created { Time.now.to_s }
+      lat 37.801239
+      lon -122.258301
 
       factory :demo_school do
         name 'A demo school'

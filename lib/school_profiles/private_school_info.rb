@@ -9,11 +9,61 @@ module SchoolProfiles
     SPORTS_CLUBS_CACHE_KEYS = %w(boys_sports girls_sports student_clubs)
 
     NO_DATA_TEXT = 'no_data_text'
-    SCHOOL_ADMIN = 'School Admin'
+    SCHOOL_ADMIN = 'School administration'
 
     def initialize(school, school_cache_data_reader)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def mailto
+      data = @school_cache_data_reader.
+        esp_responses_data('administrator_name','administrator_email')
+      recipient_email = data.fetch('administrator_email', {}).keys.first
+      recipient_name = data.fetch('administrator_name', {}).keys.first
+      return nil unless recipient_email && recipient_name
+      osp_url = Rails.application.routes.url_helpers.osp_register_url(
+          city: school.city,
+          school_id: school.id.to_s,
+          state: school.state,
+          trailing_slash: false
+      )
+      subject = 'Claim your school’s profile on GreatSchools.org!'
+      crlf = '%0D%0A'
+
+      if school.claimed?
+        body = %(
+          Dear #{recipient_name},#{crlf}
+          #{crlf}
+          You have “claimed” your school’s GreatSchools.org profile page, 
+          which means you can add and edit information at any time. 
+          This is a powerful way to ensure parents see up-to-date information 
+          about your school and what makes it special.#{crlf}
+          #{crlf}
+          It’s been awhile since you’ve made updates to your school’s page; 
+          log in at #{ERB::Util.url_encode(osp_url)} to share what’s new.#{crlf}
+          #{crlf}
+          Thank you,#{crlf}
+          (your name)
+        ).gsub(/^\s+/, '')
+      else
+        body = %(
+          Dear #{recipient_name},#{crlf}
+          #{crlf}
+          GreatSchools.org offers school administrators like you the ability 
+          to “claim” your school’s GreatSchools profile page so you can add 
+          and edit information. It’s a great way to help tell your school’s 
+          story and ensure parents see robust and accurate information.#{crlf}
+          #{crlf}
+          Get started by claiming your school’s profile page 
+          here: #{ERB::Util.url_encode(osp_url)}#{crlf}
+          #{crlf}
+          Thank you,#{crlf}
+          (your name)
+        ).gsub(/^\s+/, '')
+      end
+
+      "mailto:#{recipient_email}?subject=#{subject}&body=#{body}"
     end
 
     def private_school_cache_data
@@ -29,7 +79,7 @@ module SchoolProfiles
           (data[response_key].nil? || !data[response_key].keys.first.to_s.match(/\w+/))
         ) ## We dont't want to give no_data_text to a data-less key in keys_to_hide_if_no_data
         responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
-        translated_responses = responses.map{|response| data_label(response)}
+        translated_responses = responses.map{|response| response_label(response_key, response)}
         accum << {
             response_key: data_label(response_key),
             response_value: translated_responses
@@ -76,8 +126,30 @@ module SchoolProfiles
       tab_config
     end
 
-    def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.private_school_info', default: I18n.db_t(key.to_s, default: key))
+    def response_label(response_key, response_value)
+      str = response_value
+      I18n.db_t(
+        response_value_label_lookup_table[[response_key, str]],
+        default: I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default: 
+          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default: 
+            I18n.t(str.to_sym, scope: 'lib.private_school_info', default: str)
+          )
+        )
+      )
+    end
+
+    def response_value_label_lookup_table
+      @_response_value_label_lookup_table ||= ResponseValue.lookup_table
+    end
+
+    def data_label(str)
+      I18n.t(str.to_sym, scope: 'lib.private_school_info', default:
+        I18n.db_t(str.to_s, default: 
+          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default: 
+            I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default: str)
+          )
+        )
+      )
     rescue => e
       GSLogger.error(:misc, e, message: 'Key is not found for translation - private school info', vars: key)
       raise e
@@ -87,7 +159,6 @@ module SchoolProfiles
     def source_name
       data_label(SCHOOL_ADMIN)
     end
-
   end
 end
 

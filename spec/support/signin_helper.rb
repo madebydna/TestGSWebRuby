@@ -27,4 +27,12 @@ module SigninHelper
       click_button('Sign up')
     end
   end
+
+  # Same as #register_in_modal, but no terms checkbox
+  def register_in_email_modal
+    within('.modal') do
+      fill_in('email', with: random_email)
+      click_button('Sign up')
+    end
+  end
 end

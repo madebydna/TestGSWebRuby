@@ -52,6 +52,64 @@ describe 'while signed in as facebook user', type: :feature, remote: true do
     
     expect(page).to have_text('All set! We have submitted your review')
   end
+
+  it 'when I save the school the right newsletters are saved and it is added to my school list' do
+    sign_in_as_facebook_adam
+    visit('/california/alameda/1-Alameda-High-School/')
+    first('.js-followThisSchool').click
+    expect(page).to have_text('Good news! You’re signed up to receive our newsletter and updates on Alameda High School')
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    expect(page.has_checked_field?('mystat')).to be_truthy
+    expect(page.has_checked_field?('greatnews')).to be_truthy
+    expect(page.has_checked_field?('sponsor')).to be_falsey
+    # assuming that the school's address only shows up in the school list card
+    expect(page).to have_text('2201 Encinal Avenue, Alameda, CA 94501')
+  end
+
+  it 'when I click the newsletter link in the footer, the right newsletters are saved and it is added to my school list' do
+    sign_in_as_facebook_adam
+    visit('/california/alameda/1-Alameda-High-School/')
+    within('footer') { click_link 'Newsletter' }
+    expect(page).to have_text('Good news! You’re signed up to receive our newsletter and updates on Alameda High School')
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    expect(page.has_checked_field?('mystat')).to be_truthy
+    expect(page.has_checked_field?('greatnews')).to be_truthy
+    expect(page.has_checked_field?('sponsor')).to be_falsey
+    # assuming that the school's address only shows up in the school list card
+    expect(page).to have_text('2201 Encinal Avenue, Alameda, CA 94501')
+  end
+end
+
+describe 'follow a school while registering', type: :feature, remote: true do
+  it 'when I save the school the right newsletters are saved and it is added to my school list' do
+    visit('/california/alameda/1-Alameda-High-School/')
+    first('.js-followThisSchool').click
+    register_in_email_modal
+    sleep 2
+    expect(page).to have_text('All set! You are signed up for our newsletter and updates on Alameda High School')
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    expect(page.has_checked_field?('mystat')).to be_truthy
+    expect(page.has_checked_field?('greatnews')).to be_truthy
+    expect(page.has_checked_field?('sponsor')).to be_truthy
+    expect(page).to have_text('Alameda High School, Alameda , CA')
+  end
+
+  it 'when I click the newsletter link in the footer the right newsletters are saved and it is added to my school list' do
+    visit('/california/alameda/1-Alameda-High-School/')
+    within('footer') { click_link 'Newsletter' }
+    register_in_email_modal
+    sleep 2
+    expect(page).to have_text('All set! You are signed up for our newsletter and updates on Alameda High School')
+    visit '/account/'
+    page.first('div', text: 'Email Subscriptions').click
+    expect(page.has_checked_field?('mystat')).to be_truthy
+    expect(page.has_checked_field?('greatnews')).to be_truthy
+    expect(page.has_checked_field?('sponsor')).to be_truthy
+    expect(page).to have_text('Alameda High School, Alameda , CA')
+  end
 end
 
 # Don't tag tests that write reviews to DB as safe_for_prod

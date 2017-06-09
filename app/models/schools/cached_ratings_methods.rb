@@ -2,6 +2,7 @@ module CachedRatingsMethods
 
   NO_RATING_TEXT = 'NR'
   GREATSCHOOLS_RATINGS_NAMES = ['GreatSchools rating','Test score rating', 'Student growth rating', 'College readiness rating', 'Climate rating']
+  HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
 
   def ratings
     cache_data['ratings'] || []
@@ -43,16 +44,43 @@ module CachedRatingsMethods
     school_rating_year_by_id(166)
   end
 
+  def historical_test_scores_ratings
+    school_historical_rating_hashes_by_id(164)
+  end
+
+  def historical_college_readiness_ratings
+    school_historical_rating_hashes_by_id(166)
+  end
+
+  def historical_student_growth_ratings
+    school_historical_rating_hashes_by_id(165)
+  end
+
   def school_rating_hash_by_id(rating_id, level_code=nil)
     if rating_id
       # allow caller to provide level_code as 2nd arg. If given,
       # find only ratings that match it (and date type ID)
-      ratings_year_obj = ratings.find do |rating|
+      relevant_ratings = ratings.select do |rating|
         rating['data_type_id'] == rating_id && (
         level_code.nil? || level_code == rating['level_code']
         )
       end
+      ratings_year_obj = relevant_ratings.max_by { |rating| rating['year'] }
       return ratings_year_obj if ratings_year_obj
+    end
+    nil
+  end
+
+  def school_historical_rating_hashes_by_id(rating_id)
+    if rating_id
+      historical_ratings = ratings.select do |rating|
+        rating['data_type_id'] == rating_id
+      end
+      historical_ratings_filtered = historical_ratings.map do |hash|
+        hash['school_value_float'] = hash['school_value_float'].try(:to_i)
+        hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
+      end
+      return historical_ratings_filtered.sort_by{ |hash| hash['year'] }.reverse
     end
     nil
   end
@@ -61,11 +89,7 @@ module CachedRatingsMethods
     if rating_id
       # allow caller to provide level_code as 2nd arg. If given,
       # find only ratings that match it (and date type ID)
-      ratings_obj = ratings.find do |rating|
-        rating['data_type_id'] == rating_id && (
-          level_code.nil? || level_code == rating['level_code']
-        )
-      end
+      ratings_obj = school_rating_hash_by_id(rating_id, level_code)
       if ratings_obj
         if ratings_obj['school_value_text']
           return ratings_obj['school_value_text']
@@ -81,14 +105,8 @@ module CachedRatingsMethods
     if rating_id
       # allow caller to provide level_code as 2nd arg. If given,
       # find only ratings that match it (and date type ID)
-      ratings_year_obj = ratings.find do |rating|
-        rating['data_type_id'] == rating_id && (
-        level_code.nil? || level_code == rating['level_code']
-        )
-      end
-      if ratings_year_obj
-        return ratings_year_obj['year'].to_i
-      end
+      ratings_year_obj = school_rating_hash_by_id(rating_id, level_code)
+      return ratings_year_obj['year'].to_i if ratings_year_obj
     end
     nil
   end

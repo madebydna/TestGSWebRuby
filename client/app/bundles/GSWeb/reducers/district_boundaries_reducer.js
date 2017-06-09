@@ -7,10 +7,15 @@ import { SET_LAT_LON, SET_LEVEL, ADD_SCHOOL_TYPE, REMOVE_SCHOOL_TYPE,
 // derive something such as boundary coordinates
 export const getSchools = state => {
   let schools = Object.values(state.schools);
+
+  // always include the currently selected school in the list
+  let school = getSchool(state);
+
   if(state.level) {
-    schools = schools.filter(s => s.levelCode && s.levelCode.includes(state.level));
+    schools = schools.filter(s => s == school || (s.levelCode && s.levelCode.includes(state.level)));
   }
-  schools = schools.filter(s => s.districtId != 0 || state.schoolTypes.includes(s.schoolType));
+  schools = schools.filter(s => s == school || (s.districtId != 0 || state.schoolTypes.includes(s.schoolType)));
+
 
   return schools;
 }
@@ -49,7 +54,7 @@ const stateAndIdKey = obj => [obj.state, obj.id];
 
 const splitBoundariesOnDistrict = district => {
   district = { ...district };
-  let levelCodes = Object.keys(district.boundaries)[0];
+  let levelCodes = Object.keys(district.boundaries || {})[0];
   if(levelCodes) {
     let boundariesValue = Object.values(district.boundaries)[0];
     district.boundaries = levelCodes.split(',').reduce((obj, levelCode) => {
@@ -83,14 +88,16 @@ export default (state, action) => {
       schools = groupBy(schools, o => stateAndIdKey(o));
       districts = groupBy(districts, o => stateAndIdKey(o));
       schools[stateAndIdKey(school)] = school;
-      districts[stateAndIdKey(district)] = splitBoundariesOnDistrict(district);
+      if(Object.keys(district).length > 0) {
+        districts[stateAndIdKey(district)] = splitBoundariesOnDistrict(district);
+      }
       return {
         ...state,
         lat: action.lat,
         lon: action.lon,
         schoolId: school.id,
         districtId: district.id,
-        state: district.state,
+        state: district.state || school.state,
         schools,
         districts,
         loading: false,

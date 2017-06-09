@@ -9,9 +9,10 @@ describe 'Visitor' do
     clean_models(:ca, School)
   end
 
-  scenario 'does not see nearby schools if no data present' do
+  scenario 'sees nearby schools module even if there are no high performing or other nearby schools', js:true do
     visit school_path(school)
-    expect(page_object).to_not have_nearby_schools
+    screenshot_and_open_image
+    expect(page_object).to have_nearby_schools
   end
 
   context 'with a nearby top performing school' do

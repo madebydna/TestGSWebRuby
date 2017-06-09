@@ -4,7 +4,7 @@
 <% content = students.sources_for_view %>
 
 <% # If you change these colors they need to be changed in ethnicity_pie_chart.js %>
-<% ethnicity_colors = %w(#184a7d #2ba3dc #08c569 #dca21a #d94373 #fdda46 #0e6ac9 #999EFF) %>
+<% ethnicity_colors = %w(#0f69c4 #2bdc99 #f1830f #f1e634 #6f2eb4 #ef60d0 #ca3154 #999EFF) %>
 <% analytics_id = 'Students' %>
 <% analytics_id += '-empty' unless students.visible? %>
 
@@ -25,16 +25,21 @@
   <% if students.visible? %>
     <% if ethnicity_data.present? %>
       <div class="row">
-        <div class="col-xs-12 col-sm-8">
+        <div class="col-xs-12 col-sm-7">
           <div id="ethnicity-graph"></div>
         </div>
-        <div class="col-xs-12 col-sm-4">
+        <div class="col-xs-12 col-sm-5">
           <% ethnicity_data.each_with_index do |val, index |  %>
             <% value = Float(val[:school_value]) rescue nil  %>
             <% value.round if value %>
-            <div class="legend-separator js-highlightPieChart" data-slice-id="<%= index %>">
-              <div class="legend-square" style="background-color: <%= ethnicity_colors[index] %>"></div>
-              <div class="legend-title"><%= val[:breakdown] %></div>
+            <div class="legend-separator js-highlightPieChart clearfix" data-slice-id="<%= index %>" style="" >
+              <div class="legend-square" style="float:left;background-color: <%= ethnicity_colors[index] %>"></div>
+              <div class="legend-title" style="float:left;"><%= val[:breakdown] %></div>
+              <% if value %>
+                <% v = value.round%>
+                <% v = '<1' if v == 0 %>
+                <div class="legend-title" style="float: right"><%= v %>%</div>
+              <% end %>
             </div>
           <% end %>
         </div>

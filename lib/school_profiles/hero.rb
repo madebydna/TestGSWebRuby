@@ -54,11 +54,7 @@ module SchoolProfiles
     end
 
     def has_osp_badge?
-      EspMembership.where(
-          active: 1,
-          state: school.state,
-          school_id: school.id
-      ).present?
+      school.claimed?
     end
   end
 end

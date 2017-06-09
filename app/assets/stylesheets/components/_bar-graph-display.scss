@@ -30,9 +30,10 @@
     font-family: opensans-semibold;
     width: $score_width;
     display: table-cell;
-    text-align: left;
+    text-align: right;
     vertical-align: top;
     line-height: 18px;
+    padding-right: 10px;
   }
   .item-bar {
     padding: 0 0 10px;
@@ -41,7 +42,7 @@
   }
   .subject {
     font-size: 16px;
-    span {
+    >span {
       padding-left:20px
     }
   }

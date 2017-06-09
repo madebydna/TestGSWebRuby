@@ -2,28 +2,9 @@
 
 <div id="hero">
   <div class="container">
-    <div>
-      <h1 class="school-name"><%= hero.school_name %>
-        <% if hero.should_show_osp_badge? %>
-          <span class="osp-badge">
-            <span class="claimed"><%= t('.claimed') %></span>
-            <a data-content-type="info_box"
-                    data-content-html="<%= t('.claimed_tooltip_html') %>"
-                    class="gs-tipso info-circle tipso_style"
-                    href="javascript:void(0)"
-                    data-remodal-target="modal_info_box"><span class="icon-question"></span>
-            </a>
-          </span>
-        <% elsif hero.school.private_school? %>
-          <span class="claimed"><%= t('.unclaimed') %></span>
-          <a data-content-type="info_box"
-                  data-content-html="<%= t('.unclaimed_tooltip_html') %>"
-                  class="gs-tipso info-circle tipso_style"
-                  href="javascript:void(0)"
-                  data-remodal-target="modal_info_box"><span class="icon-question"></span>
-          </a>
-        <% end %>
-      </h1>
+    <div class="school-name-container">
+      <h1 class="school-name"><%= hero.school_name %></h1>
+      <%= render 'osp_badge', hero: hero %>
     </div>
 
     <div class="school-contact">
@@ -102,12 +83,12 @@
             </div>
           </div>
         </div>
-      <% elsif @school.type == 'Private' %>
+      <% elsif @school.private_school? %>
           <div class="school-info__item school-info__gs-rating">
             <div class="gs-rating-with-label">
               <div class="gs-rating-with-label__rating">
                 <div class="label-owl">
-                  <span><%= image_tag('school_profiles/owl_header.png') %></span>
+                  <span><%= image_tag('school_profiles/owl_in_light_blue_circle.png') %></span>
                 </div>
               </div>
               <div class="gs-rating-with-label__label speech-bubble-dark left private-school">

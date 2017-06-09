@@ -12,6 +12,14 @@ module SchoolProfiles
       @school_cache_data_reader.student_progress_rating
     end
 
+    def historical_ratings
+      @school_cache_data_reader.historical_student_progress_ratings
+    end
+
+    def show_historical_ratings?
+      historical_ratings.present? && historical_ratings.length > 1
+    end
+
     def info_text
       I18n.t('lib.student_progress.info_text')
     end

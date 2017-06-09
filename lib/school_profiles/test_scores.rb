@@ -14,11 +14,22 @@ module SchoolProfiles
       SchoolProfiles::NarrativeLowIncomeTestScores.new(
           school_cache_data_reader: school_cache_data_reader
       ).auto_narrative_calculate_and_add
+    end
 
+    def faq
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.test_scores.faq'), content: I18n.t(:content_html, scope: 'lib.test_scores.faq'))
     end
 
     def rating
       @school_cache_data_reader.test_scores_rating
+    end
+
+    def historical_ratings
+      @school_cache_data_reader.historical_test_scores_ratings
+    end
+
+    def show_historical_ratings?
+      historical_ratings.present? && historical_ratings.length > 1
     end
 
     def narration
@@ -51,7 +62,7 @@ module SchoolProfiles
       scores = @school_cache_data_reader.flat_test_scores_for_latest_year.select { |h| h[:breakdown] == 'All' }
       scores_grade_all = scores.select { | score | score[:grade] == 'All' }
       scores_grade_not_all = scores.select { | score | score[:grade] != 'All' }
-      subjects = scores_grade_all.map { |h| h[:subject] }
+      subjects = scores_grade_all.map { |h| data_label(h[:subject]) }
       if subjects.uniq.size < subjects.size
         scores_grade_all = sort_by_test_label_and_number_tested_descending(scores_grade_all)
       else

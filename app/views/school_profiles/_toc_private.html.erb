@@ -9,7 +9,11 @@
     </ul>
     <ul>
       <li><%= t(translation_type + '.third_bullet') %></li>
-      <li><%= t(translation_type + '.fourth_bullet') %></li>
+      <% if mailto %>
+        <li><%= link_to(t(translation_type + '.fourth_bullet'), mailto) %></li>
+      <% else %>
+        <li><%= t(translation_type + '.fourth_bullet') %></li>
+      <% end %>
     </ul>
   </div>
   <div class="toc-private-container-box">

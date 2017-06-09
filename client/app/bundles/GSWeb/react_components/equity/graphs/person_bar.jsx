@@ -40,7 +40,9 @@ export default class PersonBar extends React.Component {
 
   renderStateAverage(state_average) {
     if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
-      return (<div className="state-average">
+      let style_override = {paddingLeft: '0px'};
+
+      return (<div className="state-average" style={style_override}>
         {GS.I18n.t('State avg')} {state_average}%
       </div>)
     }
@@ -48,9 +50,13 @@ export default class PersonBar extends React.Component {
 
   renderStateAverageArrow(state_average){
     if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
-      let style_arrow_up = {left: state_average + "%", top: '-3px'};
+      let style_arrow_up = {left: state_average + "%", top: '1px'};
       return <div className="arrow-up"><span style={style_arrow_up}/></div>
     }
+  }
+
+  renderKey(test_data){
+    return test_data['breakdown']+Math.random();
   }
 
   renderRow(value){
@@ -73,17 +79,16 @@ export default class PersonBar extends React.Component {
 
       let class_score_rating = 'foreground rating_color_' + score_rating;
       return (
-          <div key={value['breakdown']} className="rating-container__score-item equity-test-scores">
-            <div className="rating-score-item">
-              <div className="row">
-                <div className="col-xs-6 subject">
-                  {value['breakdown']}
-                  {this.renderStudentPercentage(value)}
-                </div>
-                <div className="col-xs-6">
-                  <div className="score">
-                    {value['label']}%
-                  </div>
+          <div className="row bar-graph-display" key={this.renderKey(value)}>
+            <div className="test-score-container clearfix">
+              <div className="col-xs-12 col-sm-5 subject">
+                {value['breakdown']}
+                {this.renderStudentPercentage(value)}
+              </div>
+              <div className="col-sm-1"></div>
+              <div className="col-xs-12 col-sm-6">
+                <div className="bar-graph-container">
+                  <div className="score">{value['label']}%</div>
                   <div className="person-bar-viz">
                     <div className="person-progress">
                       <div className="background">
@@ -96,15 +101,19 @@ export default class PersonBar extends React.Component {
                             <span key={'fore' + i} className="icon-person"/>
                         ))}
                       </div>
+                    {/*<div className="single-bar-viz">*/}
+                      {/*<div className="color-row" style={style_score_width}></div>*/}
+                      {/*<div className="grey-row" style={style_grey_width}></div>*/}
                       {this.renderStateAverageArrow(value['state_average'])}
                     </div>
                     {this.renderStateAverage(value['state_average'])}
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
-      );
+    );
     }
   }
 

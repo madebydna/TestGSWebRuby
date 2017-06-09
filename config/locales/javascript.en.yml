@@ -2,6 +2,7 @@
 en:
   javascript:
     close: Close
+    edit: Edit
     learn_more_html: Learn More &raquo;
     fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
@@ -128,12 +129,15 @@ en:
     advanced_courses_subheading_html: A rigorous course load can also help your student get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/">Learn more</a>.
     advanced_courses_tooltip: The Advanced courses rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign language compared to the state average.
     advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
+    general_information_tooltip: In this section, school administrators have provided general information about this school, like hours, enrollment, classes and extracurriculars.
+    General Information: General information
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses
     course: course
     grade: Grade
     details: Details
+    source: Source
     Homes for sale: Homes for sale
     Homes for rent: Homes for rent
     Homes for sale near: Homes for sale near
@@ -146,3 +150,5 @@ en:
     bath: bath
     sqft: sqft
     Studio: Studio
+    Past ratings: Past ratings
+    Hide past ratings: Hide past ratings
