@@ -8,7 +8,10 @@
     </div>
     <div class="content">
       <div>
-        <%= render 'toc_private', claimed: @private_school_profile.claimed %>
+        <%= @private_school_profile.administrator_email %>
+        <%= render 'toc_private',
+          mailto: @private_school_profile.mailto,
+          claimed: @private_school_profile.claimed %>
       </div>
       <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                  width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>

@@ -16,6 +16,56 @@ module SchoolProfiles
       @school_cache_data_reader = school_cache_data_reader
     end
 
+    def mailto
+      data = @school_cache_data_reader.
+        esp_responses_data('administrator_name','administrator_email')
+      recipient_email = data.fetch('administrator_email', {}).keys.first
+      recipient_name = data.fetch('administrator_name', {}).keys.first
+      return nil unless recipient_email && recipient_name
+      osp_url = Rails.application.routes.url_helpers.osp_register_url(
+          city: school.city,
+          school_id: school.id.to_s,
+          state: school.state,
+          trailing_slash: false
+      )
+      subject = 'Claim your school’s profile on GreatSchools.org!'
+      crlf = '%0D%0A'
+
+      if school.claimed?
+        body = %(
+          Dear #{recipient_name},#{crlf}
+          #{crlf}
+          You have “claimed” your school’s GreatSchools.org profile page, 
+          which means you can add and edit information at any time. 
+          This is a powerful way to ensure parents see up-to-date information 
+          about your school and what makes it special.#{crlf}
+          #{crlf}
+          It’s been awhile since you’ve made updates to your school’s page; 
+          log in at #{ERB::Util.url_encode(osp_url)} to share what’s new.#{crlf}
+          #{crlf}
+          Thank you,#{crlf}
+          (your name)
+        ).gsub(/^\s+/, '')
+      else
+        body = %(
+          Dear #{recipient_name},#{crlf}
+          #{crlf}
+          GreatSchools.org offers school administrators like you the ability 
+          to “claim” your school’s GreatSchools profile page so you can add 
+          and edit information. It’s a great way to help tell your school’s 
+          story and ensure parents see robust and accurate information.#{crlf}
+          #{crlf}
+          Get started by claiming your school’s profile page 
+          here: #{ERB::Util.url_encode(osp_url)}#{crlf}
+          #{crlf}
+          Thank you,#{crlf}
+          (your name)
+        ).gsub(/^\s+/, '')
+      end
+
+      "mailto:#{recipient_email}?subject=#{subject}&body=#{body}"
+    end
+
     def private_school_cache_data
       @_private_school_cache_data ||= @school_cache_data_reader.esp_responses_data(*OVERVIEW_CACHE_KEYS,*ENROLLMENT_CACHE_KEYS,*CLASSES_CACHE_KEYS,*SPORTS_CLUBS_CACHE_KEYS)
     end
