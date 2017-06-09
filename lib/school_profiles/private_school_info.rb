@@ -79,7 +79,7 @@ module SchoolProfiles
           (data[response_key].nil? || !data[response_key].keys.first.to_s.match(/\w+/))
         ) ## We dont't want to give no_data_text to a data-less key in keys_to_hide_if_no_data
         responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
-        translated_responses = responses.map{|response| data_label(response)}
+        translated_responses = responses.map{|response| response_label(response_key, response)}
         accum << {
             response_key: data_label(response_key),
             response_value: translated_responses
@@ -126,13 +126,27 @@ module SchoolProfiles
       tab_config
     end
 
-    def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.private_school_info', default:
-        I18n.db_t(key.to_s, default: 
-          I18n.db_t(key.to_s.gsub('_', ' ').gs_capitalize_first, default: 
-            I18n.db_t(key.to_s.gsub('_', ' ').gs_capitalize_words, default: 
-              I18n.db_t(response_value_to_response_label_map[key.to_s], default: key)
-            )
+    def response_label(response_key, response_value)
+      str = response_value
+      I18n.db_t(
+        response_value_label_lookup_table[[response_key, str]],
+        default: I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default: 
+          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default: 
+            I18n.t(str.to_sym, scope: 'lib.private_school_info', default: str)
+          )
+        )
+      )
+    end
+
+    def response_value_label_lookup_table
+      @_response_value_label_lookup_table ||= ResponseValue.lookup_table
+    end
+
+    def data_label(str)
+      I18n.t(str.to_sym, scope: 'lib.private_school_info', default:
+        I18n.db_t(str.to_s, default: 
+          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default: 
+            I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default: str)
           )
         )
       )
@@ -145,11 +159,6 @@ module SchoolProfiles
     def source_name
       data_label(SCHOOL_ADMIN)
     end
-
-    def response_value_to_response_label_map
-      @_response_value_to_response_label_map ||= ResponseValue.response_value_to_response_label_map
-    end
-
   end
 end
 
