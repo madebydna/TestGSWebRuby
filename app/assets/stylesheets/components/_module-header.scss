@@ -78,6 +78,7 @@
     padding: 0px 15px 15px;
     @include media-breakpoint-down(sm) {
       margin-top: 20px;
+      //display: none;
     }
   }
   .historical-title {
@@ -95,7 +96,9 @@
     margin-left: 0px;
     margin-right: 0px;
     &:last-child {
-      border-bottom: none;
+      @include media-breakpoint-up(sm) {
+        border-bottom: none;
+      }
     }
   }
 }
