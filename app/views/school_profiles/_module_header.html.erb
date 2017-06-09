@@ -4,30 +4,56 @@
  <% subtitle ||= nil %>
  <% info_text = info_text || nil %>
  <% has_data %>
- <div class="module-header">
-   <% unless circle_content.nil? || circle_content == 'NR' %>
-       <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
-         <%= circle_content %><span class="rating-circle-small">/10</span>
+ <% show_historical_ratings %>
+ <div class="module-header js-historical-module">
+   <div class="row">
+     <div class="col-xs-12 col-md-9">
+     <% unless circle_content.nil? || circle_content == 'NR' %>
+         <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
+           <%= circle_content %><span class="rating-circle-small">/10</span>
+         </div>
+     <% else %>
+         <div class="circle-rating--equity-blue circle-rating--medium">
+           <span class="icon-user"></span>
+         </div>
+     <% end %>
+       <div class="title-container">
+         <div>
+           <span class="title">
+             <%= title %>
+           </span>
+           <% if info_text %>
+             <%= render 'info_circle', content: info_text %>
+           <% end %>
+         </div>
+         <% unless subtitle.nil? %>
+           <span><%= subtitle %></span>
+         <% end %>
+         <% unless has_data %>
+           <%= render 'no_data_for_module', title: title %>
+         <% end %>
        </div>
-   <% else %>
-       <div class="circle-rating--equity-blue circle-rating--medium">
-         <span class="icon-user"></span>
-       </div>
-   <% end %>
-   <div class="title-container">
-     <div>
-       <span class="title">
-         <%= title %>
-       </span>
-       <% if info_text %>
-         <%= render 'info_circle', content: info_text %>
-       <% end %>
      </div>
-     <% unless subtitle.nil? %>
-       <span><%= subtitle %></span>
-     <% end %>
-     <% unless has_data %>
-       <%= render 'no_data_for_module', title: title %>
-     <% end %>
-   </div>
+     <div class="col-xs-12 col-md-3 show-history-button">
+       <% if show_historical_ratings %>
+         <div>
+           <button class="js-historical-button">
+           <span class="icon-clock"></span>
+           <div class="dib"><%= t('.past_ratings') %></div>
+         </button>
+         </div>
+
+     </div>
+  </div>
+  <div>
+    <%= render 'historical_ratings',
+               historical_ratings: historical_ratings,
+               title: title
+    %>
+  </div>
+   <% else %>
  </div>
+ </div>
+ <div>
+   <%end%>
+</div>

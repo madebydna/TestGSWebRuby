@@ -15,7 +15,9 @@
                circle_content: rating,
                title: title,
                info_text: info_text,
-               has_data: student_progress.has_data?
+               has_data: student_progress.has_data?,
+               show_historical_ratings: student_progress.show_historical_ratings?,
+               historical_ratings: student_progress.historical_ratings
     %>
 
     <% if student_progress.has_data? %>

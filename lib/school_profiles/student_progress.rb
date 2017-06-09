@@ -13,7 +13,7 @@ module SchoolProfiles
     end
 
     def historical_ratings
-      @school_cache_data_reader.historical_test_scores_ratings
+      @school_cache_data_reader.historical_student_progress_ratings
     end
 
     def show_historical_ratings?

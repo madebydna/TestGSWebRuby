@@ -19,7 +19,9 @@
       title: title,
       subtitle: subtitle,
       info_text: info_text,
-      has_data: data_values.present?
+      has_data: data_values.present?,
+      show_historical_ratings: college_readiness.show_historical_ratings?,
+      historical_ratings: college_readiness.historical_ratings,
     %>
     <% if data_values.present? %>
       <div class="panel">

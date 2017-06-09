@@ -37,6 +37,19 @@ $(function() {
     }
   });
 
+  // for historical ratings
+  $('body').on('click', '.js-historical-button', function () {
+    var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
+    if(historical_data.css('display') == 'none') {
+      historical_data.slideDown();
+      $(this).find('div').html(GS.I18n.t('Hide past ratings'));
+    }
+    else{
+      historical_data.slideUp();
+      $(this).find('div').html('Past ratings');
+    }
+  });
+
   // When search bar added to universal nav, was required to init autocomplete on all pages
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
   // if state abbreviation is NOT set will init autocomplete without state.
