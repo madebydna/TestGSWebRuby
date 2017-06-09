@@ -43,10 +43,11 @@ $(function() {
     if(historical_data.css('display') == 'none') {
       historical_data.slideDown();
       $(this).find('div').html(GS.I18n.t('Hide past ratings'));
+      analyticsEvent('Profile', 'Historical Ratings', null, null, true);
     }
     else{
       historical_data.slideUp();
-      $(this).find('div').html('Past ratings');
+      $(this).find('div').html(GS.I18n.t('Past ratings'));
     }
   });
 
