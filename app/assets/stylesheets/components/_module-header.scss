@@ -78,7 +78,9 @@
     padding: 0px 15px 15px;
     @include media-breakpoint-down(sm) {
       margin-top: 20px;
-      //display: none;
+    }
+    .emphasis {
+      font-family: opensans-semibold;
     }
   }
   .historical-title {
