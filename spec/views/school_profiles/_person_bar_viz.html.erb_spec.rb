@@ -17,7 +17,7 @@ describe 'school_profile/_person_bar_viz' do
 
   def props(value)
     p = valid_props.clone
-    p[:score_data] = OpenStruct.new(p[:score_data].merge(value))
+    p[:score_data] = OpenStruct.new(p[:score_data]).tap { |s| s.score = value }
     p
   end
 
@@ -61,27 +61,24 @@ describe 'school_profile/_person_bar_viz' do
   #     end
   #   end
   # end
-  #
-  # describe 'score_rating' do
-  #   {
-  #       0 => 1,
-  #       9 => 1,
-  #       10 => 2,
-  #       50 => 6,
-  #       89 => 9,
-  #       90 => 10,
-  #       100 => 10
-  #   }.each do |score, expected_rating|
-  #     it "renders #{expected_rating} when score is #{score}" do
-  #       score_data = SchoolProfiles::RatingScoreItem.new.tap do |rsi|
-  #         rsi.score = SchoolProfiles::DataPoint.new(score)
-  #       end
-  #       render_partial(props(score_data: score_data))
-  #       expect(rendered).to have_css(".rating_color_#{expected_rating}")
-  #     end
-  #   end
-  # end
-  #
+
+  describe 'score_rating' do
+    {
+        0 => 1,
+        9 => 1,
+        10 => 2,
+        50 => 6,
+        89 => 9,
+        90 => 10,
+        100 => 10
+    }.each do |score, expected_rating|
+      it "renders #{expected_rating} when score is #{score}" do
+        render_partial(props(SchoolProfiles::DataPoint.new(score)))
+        expect(rendered).to have_css(".rating_color_#{expected_rating}")
+      end
+    end
+  end
+
   # describe 'state average' do
   #   describe 'when within range' do
   #     it 'renders the arrow' do
