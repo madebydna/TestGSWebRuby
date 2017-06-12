@@ -16,6 +16,7 @@ import * as remodal from '../util/remodal';
 import PrivateSchoolInfo from '../react_components/private_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
+import { enableAutoAnchoring } from '../components/anchor_router';
 
 window.store = configureStore({
   school: gon.school
@@ -40,6 +41,18 @@ $(function() {
     );
     toggle.init().add_onclick();
   })();
+
+  enableAutoAnchoring({
+    'Test_scores': '#TestScores .rating-container__rating',
+    'College_readiness': '#CollegeReadiness .rating-container__rating',
+    'Advanced_courses': '#AdvancedCourses .rating-container__rating',
+    'Low-income_students': '#EquityLowIncome .equity-section',
+    'Race_ethnicity': '#EquityRaceEthnicity .equity-section',
+    'Students_with_Disabilities': '#EquityDisabilities .equity-section',
+    'Students': '#Students',
+    'Teachers_staff': '#TeachersStaff',
+    'Neighborhood': '#Neighborhood'
+  });
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
   tooltips.initialize();
