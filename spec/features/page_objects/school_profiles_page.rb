@@ -19,10 +19,10 @@ class SchoolProfilesPage < SitePrism::Page
       rating.text == r
     end
 
-    sections :score_items, '.rating-score-item' do
-      element :label, '.rating-score-item__label'
-      element :score, '.rating-score-item__score'
-      element :state_average, '.rating-score-item__state-average'
+    sections :score_items, '.bar-graph-display' do
+      element :label, '.subject'
+      element :score, '.score'
+      element :state_average, '.state-average'
     end
 
     sections :test_score_items, '.test-score-container' do
