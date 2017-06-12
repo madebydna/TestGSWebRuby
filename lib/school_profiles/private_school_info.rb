@@ -79,9 +79,15 @@ module SchoolProfiles
           (data[response_key].nil? || !data[response_key].keys.first.to_s.match(/\w+/))
         ) ## We dont't want to give no_data_text to a data-less key in keys_to_hide_if_no_data
         responses = data[response_key].present? ? data[response_key].keys : Array(NO_DATA_TEXT)
+        if %w(best_known_for anything_else).include?(response_key) 
+          # causes these two data points to span two table columns
+          translated_response_key = ['']
+        else
+          translated_response_key = data_label(response_key)
+        end
         translated_responses = responses.map{|response| response_label(response_key, response)}
         accum << {
-            response_key: data_label(response_key),
+            response_key: translated_response_key,
             response_value: translated_responses
         }
       end
@@ -143,10 +149,10 @@ module SchoolProfiles
     end
 
     def data_label(str)
-      I18n.t(str.to_sym, scope: 'lib.private_school_info', default:
-        I18n.db_t(str.to_s, default: 
-          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default: 
-            I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default: str)
+      I18n.db_t(str.to_s, default: 
+        I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default: 
+          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default: 
+            I18n.t(str.to_sym, scope: 'lib.private_school_info', default: str)
           )
         )
       )
