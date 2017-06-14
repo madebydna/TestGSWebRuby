@@ -14,7 +14,7 @@
     <button type="submit" class="button-1 searchSubmit">GO</button>
   </form>
 
-  <form id="command" name="searchForm" class="dn" action="/widget/schoolSearch.page" method="post" onsubmit="return GS.widget.submitSearch();">
+  <form id="command" name="searchForm" class="dn" action="/widget/map/" method="post" onsubmit="return GS.widget.submitSearch();">
     <input id="filter_p_value" name="preschoolFilterChecked" type="hidden" value="false">
     <input id="filter_e_value" name="elementaryFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:elementaryFilterChecked) || @params_hash[:elementaryFilterChecked] == 'true') ? true : false %>">
     <input id="filter_m_value" name="middleFilterChecked" type="hidden" value="<%=  (!@params_hash.key?(:middleFilterChecked) || @params_hash[:middleFilterChecked] == 'true') ? true : false %>">

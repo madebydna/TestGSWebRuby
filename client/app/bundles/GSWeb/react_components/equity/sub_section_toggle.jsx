@@ -5,6 +5,7 @@ import EquityContentPane from './equity_content_pane';
 export default class SubSectionToggle extends React.Component {
 
   static propTypes = {
+    defaultTab: React.PropTypes.string,
     equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
       subject: React.PropTypes.string,
       component: React.PropTypes.object,
@@ -14,22 +15,34 @@ export default class SubSectionToggle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      active: 0
+    let defaultTabIndex = 0;
+    if(props.defaultTab) {
+      defaultTabIndex = this.tabNames().indexOf(props.defaultTab);
     }
+    this.state = {
+      active: defaultTabIndex
+    };
+  }
+
+  tabNames() {
+    return this.props.equity_config.map(c => c.subject);
   }
 
   renderContent() {
-        let item = this.props.equity_config[this.state.active];
-        return <div className={'tabs-panel tabs-panel_selected'}>
-          <EquityContentPane key={this.state.active} graph={item["component"]} text={item["explanation"]} />
-        </div>
+    let item = this.props.equity_config[this.state.active];
+    return <div className={'tabs-panel tabs-panel_selected'}>
+      <EquityContentPane key={this.state.active} graph={item["component"]} text={item["explanation"]} />
+    </div>
   }
 
   render() {
     return <div>
       <div className="sub-section-navigation">
-        <SectionSubNavigation items={this.props.equity_config} active={this.state.active} onTabClick={this.handleTabClick.bind(this)}/>
+        <SectionSubNavigation
+          items={this.tabNames()}
+          active={this.state.active}
+          onTabClick={this.handleTabClick.bind(this)}
+        />
       </div>
       {this.renderContent()}
     </div>
