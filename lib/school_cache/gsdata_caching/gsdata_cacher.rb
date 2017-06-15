@@ -14,7 +14,7 @@ class GsdataCaching::GsdataCacher < Cacher
   # 133: Ratio of teacher salary to total number of teachers
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
-  DATA_TYPE_IDS = [35, 55, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152].freeze
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
     'gender',
