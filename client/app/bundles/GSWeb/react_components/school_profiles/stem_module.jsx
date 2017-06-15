@@ -24,7 +24,7 @@ const StemModule = ({title, parentTip, subtitle}) => {
   parentTip = 'Many successful high school students end up in remedial math courses in college. Is your student prepared for college-level math? Ask this school how they ensure that students are well prepared.';
   subtitle = 'A rigorous STEM course load can help your student prepare for and get into college. Find out more about why STEM coursework is so important for today’s students.'
 
-  data = [
+  let data = [
     {
       breakdown: 'data point label',
       score: 90,
