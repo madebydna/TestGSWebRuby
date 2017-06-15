@@ -6,7 +6,7 @@ const Tooltip = ({className, content, children}) => {
       data-remodal-target="modal_info_box"
       data-content-type="info_box"
       data-content-html={content}
-      class={className}
+      className={className}
       href="javascript:void(0)">{children}
     </a>
   );
