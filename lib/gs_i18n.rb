@@ -1,7 +1,7 @@
 # encoding: utf-8
-require_relative 'i18n_file.rb'
-require_relative 'file_group.rb'
-require_relative 'manager.rb'
+require_relative 'i18n/i18n_file.rb'
+require_relative 'i18n/file_group.rb'
+require_relative 'i18n/manager.rb'
 
 module GsI18n
   def db_t(key, *args)
