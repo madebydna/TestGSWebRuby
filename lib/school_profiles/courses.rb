@@ -18,6 +18,10 @@ module SchoolProfiles
                         content: I18n.t(:content_html, scope: 'lib.advanced_courses.faq'))
     end
 
+    def rating_year
+      @_rating_year ||= ((data['Advanced Course Rating'] || []).find { |h| h['breakdowns'].nil? } || {})['source_year']
+    end
+
     def rating
       @_rating ||=
         ((data['Advanced Course Rating'] || [])
@@ -206,16 +210,22 @@ module SchoolProfiles
     # Output data example:
     #
     # {
-    #   ['California Department of Education', 2016] => [ 'Arts', 'Math']
+    #   'GreatSchools College Readiness Rating' => {['GreatSchools', 2016'] => ['The college readiness rating...']}
+    #   'Advanced courses' => {['California Department of Education', 2016] => [ 'Arts', 'Math']}
     # }
     def sources
-      courses_by_subject.each_with_object({}) do |(subject_key, courses), accum|
+      subject_sources = courses_by_subject.each_with_object({}) do |(subject_key, courses), accum|
         unique_sources = courses.map { |c| [db_t(c['source']), c['year'].to_i] }.uniq
         unique_sources.each do |source|
           accum[source] ||= Set.new
           accum[source] << t(subject_key)
         end
       end
+      subject_hash = { t(:advanced_courses) => subject_sources }
+      rating_hash = {
+          t(:rating_title) => { ['GreatSchools', rating_year] => t(:rating_description) }
+      }
+      rating_hash.merge(subject_hash)
     end
 
     def t(s)

@@ -27,17 +27,26 @@ export default class Courses extends React.Component {
 
   sourcesToHtml() {
     let html = '<div class="sourcing">';
-    html += '<h1>GreatSchools profile data sources &amp; information</h1>';
-    html += '<div>';
-    html += '<h4>' + this.t('Advanced courses') + '</h4>';
-    Object.keys(this.props.sources).forEach((sourceNameAndYear) => {
-      let courses = this.props.sources[sourceNameAndYear];
-      sourceNameAndYear = JSON.parse(sourceNameAndYear);
-      let name = sourceNameAndYear[0];
-      let year = sourceNameAndYear[1];
-      let commaSeparatedCourses = courses.join(', ');
-      html += '<p>' + commaSeparatedCourses + '</p>';
-      html += '<p><span class="emphasis">Source</span>: ' + name + ', ' + year + '</p>';
+    html += '<h1>' + this.t('profile_data_sources_and_info') + '</h1>';
+    Object.keys(this.props.sources).forEach((category) => {
+      let categorySourceHash = this.props.sources[category];
+      html += '<div>';
+      html += '<h4>' + category + '</h4>';
+      Object.keys(categorySourceHash).forEach((sourceNameAndYear) => {
+        let descriptionObj = categorySourceHash[sourceNameAndYear];
+        sourceNameAndYear = JSON.parse(sourceNameAndYear);
+        let name = sourceNameAndYear[0];
+        let year = sourceNameAndYear[1];
+        let description = '';
+        if (Array.isArray(descriptionObj)) {
+          description = descriptionObj.join(', ');
+        } else {
+          description = descriptionObj;
+        }
+        html += '<p>' + description + '</p>';
+        html += '<p><span class="emphasis">' + this.t('source') + '</span>: ' + name + ', ' + year + '</p>';
+      });
+      html += '</div>';
     });
     html += '</div>';
     return html;
