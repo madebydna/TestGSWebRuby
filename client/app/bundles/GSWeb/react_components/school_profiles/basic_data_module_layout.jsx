@@ -2,11 +2,11 @@ import React from 'react';
 
 
 const BasicDataModuleLayout = ({
-  className, icon, title, subtitle, body, footer
+  id, className, icon, title, subtitle, body, footer
 }) => {
   return (
-    <div id="CollegeReadiness" className={'rating-container ' + className }>
-      <a className="anchor-mobile-offset" name="College_readiness"></a>
+    <div id={id} className={'rating-container ' + className }>
+      <a className="anchor-mobile-offset" name={id}></a>
       <div className="rating-container__rating">
 
         <div className="module-header">
