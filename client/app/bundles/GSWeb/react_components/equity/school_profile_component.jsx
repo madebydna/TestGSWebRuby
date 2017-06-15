@@ -59,9 +59,9 @@ export default class SchoolProfileComponent extends React.Component {
         if (displayType == 'plain') {
           component = <PlainNumber values={values}/>
         } else if (displayType == 'person') {
-          component = <PersonBar values={values} />
+          component = <div>{values.map((value) => <PersonBar {...value} />) }</div>
         } else if (displayType == 'person_reversed') {
-          component = <PersonBar values={values} invertedRatings={true} />
+          component = <div>{values.map((value) => <PersonBar {...value} invertedRatings={true} />) }</div>
         } else {
           component = <BarGraphBase test_scores={values}/>
         }

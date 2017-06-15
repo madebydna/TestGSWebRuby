@@ -2,16 +2,14 @@ import React, { PropTypes } from 'react';
 
 export default class PersonBar extends React.Component {
   static propTypes = {
-    values: React.PropTypes.arrayOf(React.PropTypes.shape({
-      breakdown: React.PropTypes.string.isRequired,
-      score: React.PropTypes.number.isRequired,
-      label: React.PropTypes.string.isRequired,
-      percentage: React.PropTypes.string,
-      display_percentages: React.PropTypes.bool,
-      number_students_tested: React.PropTypes.string,
-      state_average: React.PropTypes.number,
-      state_average_label: React.PropTypes.string
-    })).isRequired,
+    breakdown: React.PropTypes.string.isRequired,
+    score: React.PropTypes.number.isRequired,
+    label: React.PropTypes.string.isRequired,
+    percentage: React.PropTypes.string,
+    display_percentages: React.PropTypes.bool,
+    number_students_tested: React.PropTypes.string,
+    state_average: React.PropTypes.number,
+    state_average_label: React.PropTypes.string,
     invertedRatings:  React.PropTypes.bool
   };
 
@@ -118,10 +116,6 @@ export default class PersonBar extends React.Component {
   }
 
   render() {
-    let rows = [];
-    this.props.values.forEach((value) => rows.push(this.renderRow(value)));
-    return <div>
-      {rows}
-    </div>
+    return this.renderRow(this.props);
   }
 }
