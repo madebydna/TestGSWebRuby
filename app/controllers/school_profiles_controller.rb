@@ -89,7 +89,7 @@ class SchoolProfilesController < ApplicationController
       psp.tab_config = private_school_info.tab_config
       psp.school = school
       psp.source_name = private_school_info.source_name
-      psp.claimed = hero.has_osp_badge?
+      psp.claimed = hero.school_claimed?
       psp.mailto = private_school_info.mailto
     end
     )
