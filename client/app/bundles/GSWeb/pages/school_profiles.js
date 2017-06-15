@@ -16,6 +16,7 @@ import * as remodal from '../util/remodal';
 import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
+import StemModule from '../react_components/school_profiles/stem_module';
 import { enableAutoAnchoring } from '../components/anchor_router';
 
 window.store = configureStore({
@@ -30,6 +31,7 @@ ReactOnRails.register({
   Courses,
   OspSchoolInfo,
   HomesAndRentals
+  StemModule
 });
 
 $(function() {

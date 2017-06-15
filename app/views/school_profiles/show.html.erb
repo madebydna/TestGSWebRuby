@@ -34,6 +34,7 @@
               <% if @school_profile.show_high_school_data || @school_profile.courses.visible? %>
                 <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
+<%= react_component('StemModule') %>
             </div>
           </div>
         </div>

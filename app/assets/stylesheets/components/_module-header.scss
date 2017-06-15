@@ -9,6 +9,11 @@
     overflow: hidden;
   }
 
+  > .icon {
+    float:left;
+    vertical-align: middle;
+  }
+
   .title {
     font-family: opensans-semibold;
     font-size: 18px;
