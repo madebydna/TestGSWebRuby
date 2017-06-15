@@ -17,16 +17,16 @@ export default class PersonBar extends React.Component {
     super(props);
   }
 
-  renderStudentPercentage(test_data){
-    if(test_data['display_percentages']){
-      if(test_data['percentage'] == '200'){
-        if(test_data['number_students_tested'] > 0) {
-          return <span className="subject-subtext"><br />({test_data['number_students_tested']} {this.translateString('students')})</span>
+  renderStudentPercentage(){
+    if(this.props.display_percentages){
+      if(this.props.percentage == '200'){
+        if(this.props.number_students_tested > 0) {
+          return <span className="subject-subtext"><br />({this.props.number_students_tested} {this.translateString('students')})</span>
         }
       }
       else {
-        if (test_data['percentage']) {
-          return <span className="subject-subtext"><br />({test_data['percentage']}{this.translateString('of students')} )</span>
+        if (this.props.percentage) {
+          return <span className="subject-subtext"><br />({this.props.percentage}{this.translateString('of students')} )</span>
         }
       }
     }
@@ -53,14 +53,14 @@ export default class PersonBar extends React.Component {
     }
   }
 
-  renderKey(test_data){
-    return test_data['breakdown']+Math.random();
+  renderKey() {
+    return this.props.breakdown + Math.random();
   }
 
-  renderRow(value){
-    if (value !== undefined && value['score'] !== undefined) {
+  render() {
+    if (this.props !== undefined && this.props.score !== undefined) {
       let ten = [1,2,3,4,5,6,7,8,9,10];
-      let numerical_value = value['score'];
+      let numerical_value = this.props.score;
       if (numerical_value == '<1') {
         numerical_value = '0';
       }
@@ -77,16 +77,16 @@ export default class PersonBar extends React.Component {
 
       let class_score_rating = 'foreground rating_color_' + score_rating;
       return (
-          <div className="row bar-graph-display" key={this.renderKey(value)}>
+          <div className="row bar-graph-display" key={this.renderKey()}>
             <div className="test-score-container clearfix">
               <div className="col-xs-12 col-sm-5 subject">
-                {value['breakdown']}
-                {this.renderStudentPercentage(value)}
+                {this.props.breakdown}
+                {this.renderStudentPercentage()}
               </div>
               <div className="col-sm-1"></div>
               <div className="col-xs-12 col-sm-6">
                 <div className="bar-graph-container">
-                  <div className="score">{value['label']}%</div>
+                  <div className="score">{this.props.label}%</div>
                   <div className="person-bar-viz">
                     <div className="person-progress">
                       <div className="background">
@@ -99,12 +99,9 @@ export default class PersonBar extends React.Component {
                             <span key={'fore' + i} className="icon-person"/>
                         ))}
                       </div>
-                    {/*<div className="single-bar-viz">*/}
-                      {/*<div className="color-row" style={style_score_width}></div>*/}
-                      {/*<div className="grey-row" style={style_grey_width}></div>*/}
-                      {this.renderStateAverageArrow(value['state_average'])}
+                      {this.renderStateAverageArrow(this.props.state_average)}
                     </div>
-                    {this.renderStateAverage(value['state_average'])}
+                    {this.renderStateAverage(this.props.state_average)}
                   </div>
                 </div>
 
@@ -113,9 +110,5 @@ export default class PersonBar extends React.Component {
           </div>
     );
     }
-  }
-
-  render() {
-    return this.renderRow(this.props);
   }
 }
