@@ -70,6 +70,10 @@ class SchoolProfilesController < ApplicationController
         sp.teachers_staff = teachers_staff
         sp.show_high_school_data = show_high_school_data?
         sp.courses = courses
+        sp.tab_config = osp_school_info.tab_config
+        sp.source_name = osp_school_info.source_name
+        sp.mailto = osp_school_info.mailto
+        sp.claimed = hero.has_osp_badge?
       end
     )
   end
@@ -86,11 +90,11 @@ class SchoolProfilesController < ApplicationController
       psp.neighborhood = neighborhood
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
-      psp.tab_config = private_school_info.tab_config
+      psp.tab_config = osp_school_info.tab_config
       psp.school = school
-      psp.source_name = private_school_info.source_name
+      psp.source_name = osp_school_info.source_name
       psp.claimed = hero.has_osp_badge?
-      psp.mailto = private_school_info.mailto
+      psp.mailto = osp_school_info.mailto
     end
     )
   end
@@ -198,8 +202,8 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::TeachersStaff.new(school_cache_data_reader)
   end
 
-  def private_school_info
-    SchoolProfiles::PrivateSchoolInfo.new(school, school_cache_data_reader)
+  def osp_school_info
+    SchoolProfiles::OspSchoolInfo.new(school, school_cache_data_reader)
   end
 
   def build_gon_object

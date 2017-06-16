@@ -13,7 +13,7 @@ import { generateSubgroupPieCharts } from '../components/subgroup_charts';
 import * as stickyCTA from '../components/school_profile_sticky_cta';
 import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
-import PrivateSchoolInfo from '../react_components/private_school_info';
+import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import { enableAutoAnchoring } from '../components/anchor_router';
@@ -28,7 +28,7 @@ ReactOnRails.register({
   Reviews,
   NearestHighPerformingSchools,
   Courses,
-  PrivateSchoolInfo,
+  OspSchoolInfo,
   HomesAndRentals
 });
 
