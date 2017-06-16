@@ -77,38 +77,26 @@ export default class PersonBar extends React.Component {
 
       let class_score_rating = 'foreground rating_color_' + score_rating;
       return (
-          <div className="row bar-graph-display" key={this.renderKey()}>
-            <div className="test-score-container clearfix">
-              <div className="col-xs-12 col-sm-5 subject">
-                {this.props.breakdown}
-                {this.renderStudentPercentage()}
+        <div className="bar-graph-container">
+          <div className="score">{this.props.label}%</div>
+          <div className="person-bar-viz">
+            <div className="person-progress">
+              <div className="background">
+                {ten.map((i) => (
+                  <span key={'back' + i} className="icon-person"/>
+                ))}
               </div>
-              <div className="col-sm-1"></div>
-              <div className="col-xs-12 col-sm-6">
-                <div className="bar-graph-container">
-                  <div className="score">{this.props.label}%</div>
-                  <div className="person-bar-viz">
-                    <div className="person-progress">
-                      <div className="background">
-                        {ten.map((i) => (
-                            <span key={'back' + i} className="icon-person"/>
-                        ))}
-                      </div>
-                      <div className={class_score_rating} style={style_score_width}>
-                        {ten.map((i) => (
-                            <span key={'fore' + i} className="icon-person"/>
-                        ))}
-                      </div>
-                      {this.renderStateAverageArrow(this.props.state_average)}
-                    </div>
-                    {this.renderStateAverage(this.props.state_average)}
-                  </div>
-                </div>
-
+              <div className={class_score_rating} style={style_score_width}>
+                {ten.map((i) => (
+                  <span key={'fore' + i} className="icon-person"/>
+                ))}
               </div>
+              {this.renderStateAverageArrow(this.props.state_average)}
             </div>
+            {this.renderStateAverage(this.props.state_average)}
           </div>
-    );
+        </div>
+      );
     }
   }
 }

@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import BarGraphBase from './graphs/bar_graph_base';
 import TestScores from './graphs/test_scores';
-import PersonBar from './graphs/person_bar';
+import PersonBar from '../visualizations/person_bar';
+import BasicDataModuleRow from '../school_profiles/basic_data_module_row';
 import PlainNumber from './graphs/plain_number';
 import EquitySection from './equity_section';
 import NoDataModuleCta from '../no_data_module_cta';
@@ -59,9 +60,21 @@ export default class SchoolProfileComponent extends React.Component {
         if (displayType == 'plain') {
           component = <PlainNumber values={values}/>
         } else if (displayType == 'person') {
-          component = <div>{values.map((value) => <PersonBar {...value} />) }</div>
+          component = <div>
+            {values.map((value) => 
+              <BasicDataModuleRow {...value} >
+                <PersonBar {...value} />
+              </BasicDataModuleRow>)
+            }
+          </div>
         } else if (displayType == 'person_reversed') {
-          component = <div>{values.map((value) => <PersonBar {...value} invertedRatings={true} />) }</div>
+          component = <div>
+            {values.map((value) => 
+              <BasicDataModuleRow {...value} >
+                <PersonBar {...value} invertedRatings={true} />
+              </BasicDataModuleRow>)
+            }
+          </div>
         } else {
           component = <BarGraphBase test_scores={values}/>
         }
