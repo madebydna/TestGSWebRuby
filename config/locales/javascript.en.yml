@@ -131,6 +131,7 @@ en:
     advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
     general_information_tooltip: In this section, school administrators have provided general information about this school, like hours, enrollment, classes and extracurriculars.
     General Information: General information
+    profile_data_sources_and_info: 'GreatSchools profile data sources &amp; information'
     subjects: Subjects
     rating_html: 'Rating&nbsp;'
     courses: courses

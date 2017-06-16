@@ -1,6 +1,9 @@
 en:
   lib:
-    advanced_courses: 
+    advanced_courses:
+      advanced_courses: Advanced courses
+      rating_title: GreatSchools Advanced Courses Rating
+      rating_description: The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign languages compared to the state average.
       Arts: Arts
       ELA: English
       FL: Foreign language
