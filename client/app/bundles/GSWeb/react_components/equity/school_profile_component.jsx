@@ -76,7 +76,13 @@ export default class SchoolProfileComponent extends React.Component {
             }
           </div>
         } else {
-          component = <BarGraphBase test_scores={values}/>
+          component = <div>
+            {values.map((value) => 
+              <BasicDataModuleRow {...value} >
+                <BarGraphBase {...value} />
+              </BasicDataModuleRow>)
+            }
+          </div>
         }
         return {
           subject: name,

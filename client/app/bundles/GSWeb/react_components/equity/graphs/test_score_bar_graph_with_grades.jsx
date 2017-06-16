@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import BarGraphBase from './bar_graph_base';
 
 export default class TestScoreBarGraphWithGrades extends React.Component {
 
@@ -37,16 +38,16 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
     }
   }
 
-  renderStudentPercentage(test_data){
-    if(test_data['display_percentages']){
-      if(test_data['percentage'] == '200' || test_data['breakdown'] == 'All students' || test_data['breakdown'] == 'Todos los estudiantes'){
-        if(test_data['number_students_tested'] > 0) {
-          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({test_data['number_students_tested']} {GS.I18n.t('students')})</span>
+  renderStudentPercentage(){
+    if(this.props.display_percentages){
+      if(this.props.percentage == '200' || this.props.breakdown == 'All students' || this.props.breakdown == 'Todos los estudiantes'){
+        if(this.props.number_students_tested > 0) {
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({this.props.number_students_tested} {GS.I18n.t('students')})</span>
         }
       }
       else {
-        if (test_data['percentage'] > 0) {
-          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({test_data['percentage']}{GS.I18n.t('of students')} )</span>
+        if (this.props.percentage > 0) {
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({this.props.percentage}{GS.I18n.t('of students')} )</span>
         }
       }
     }
@@ -60,8 +61,8 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
     }
   }
 
-  renderKey(test_data){
-    return test_data['breakdown']+Math.random().toString();
+  renderKey(){
+    return this.props.breakdown + Math.random().toString();
   }
 
   renderDetailsLink(grades) {
@@ -70,44 +71,33 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
     }
   }
 
-  renderTestScore(test_data){
-    if(test_data !== undefined) {
-      let numerical_value = test_data['score'];
-      if (numerical_value == '<1') {
-        numerical_value = '0';
-      }
-      let grades = this.renderGrades(test_data['grades']);
-      let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(test_data['score'])};
-      let style_grey_width = {width: 100-numerical_value+"%" };
+  render(){
+    let numerical_value = this.props.score;
+    if (numerical_value == '<1') {
+      numerical_value = '0';
+    }
+    let grades = this.renderGrades(this.props.grades);
+    let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(this.props.score)};
+    let style_grey_width = {width: 100-numerical_value+"%" };
 
-        return (
-          <div className="row bar-graph-display" key={this.renderKey(test_data)}>
-            <div className="test-score-container clearfix">
-              <div className="col-xs-12 col-sm-5 subject">
-                {test_data['breakdown']}
-                {this.renderStudentPercentage(test_data)}
-              </div>
-              <div className="col-sm-1"></div>
-              <div className="col-xs-9 col-sm-4">
-                <div className="bar-graph-container">
-                  <div className="score">{test_data['label']}%</div>
-                  <div className="item-bar">
-                    <div className="single-bar-viz">
-                      <div className="color-row" style={style_score_width}></div>
-                      <div className="grey-row" style={style_grey_width}></div>
-                      {this.renderStateAverageArrow(test_data['state_average'])}
-                    </div>
-                  </div>
-              </div>
-              {this.renderStateAverage(test_data['state_average'])}
+      return (
+        <div className="row bar-graph-display" key={this.renderKey()}>
+          <div className="test-score-container clearfix">
+            <div className="col-xs-12 col-sm-5 subject">
+              {this.props.breakdown}
+              {this.renderStudentPercentage()}
+            </div>
+            <div className="col-sm-1"></div>
+            <div className="col-xs-9 col-sm-4">
+              <BarGraphBase {...this.props} />
             </div>
             <div className="col-xs-3 col-sm-2">
-              {this.renderDetailsLink(test_data['grades'])}
+              {this.renderDetailsLink(this.props.grades)}
             </div>
+          </div>
+          {this.renderGrades(this.props.grades)}
         </div>
-        {this.renderGrades(test_data['grades'])}
-      </div> )
-    }
+      )
   }
 
   renderTestScoreGrade(test_data){
@@ -129,21 +119,12 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
               </span>
             </div>
             <div className="col-xs-12 col-sm-6">
-              <div className="bar-graph-container">
-                <div className="score">{test_data['label']}%</div>
-                <div className="item-bar">
-                      <div className="single-bar-viz">
-                        <div className="color-row" style={style_score_width}></div>
-                        <div className="grey-row" style={style_grey_width}></div>
-                        {this.renderStateAverageArrow(test_data['state_average'])}
-                      </div>
-                </div>
-              </div>
-              {this.renderStateAverage(test_data['state_average'])}
+              <BarGraphBase {...test_data} />
             </div>
             <div className="col-sm-2"></div>
           </div>
-        </div> )
+        </div>
+      )
     }
   }
 
@@ -158,14 +139,6 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
         {graphs_grades}
       </div>
     }
-  }
-
-  render() {
-    let graphs = [];
-    this.props.test_scores.forEach((test_data) => graphs.push(this.renderTestScore(test_data)));
-    return <div>
-      {graphs}
-    </div>
   }
 }
 

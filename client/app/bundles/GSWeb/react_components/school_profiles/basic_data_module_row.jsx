@@ -3,6 +3,7 @@ import React from 'react';
 // TODOs:
 // - rename subject css class
 // - rename bar-graph-container css class
+// - improve renderStudentPercentage
 
 const t = function(string) {
   if (window.GS && GS.I18n && GS.I18n.t) {
@@ -24,18 +25,18 @@ const BasicDataModuleRow = ({
 
   const renderStudentPercentage = function(){
     if(display_percentages){
-      if(percentage == '200'){
+      if(percentage == '200' || breakdown == 'All students' || breakdown == 'Todos los estudiantes'){
         if(number_students_tested > 0) {
-          return <span className="subject-subtext"><br />({number_students_tested} {t('students')})</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({number_students_tested} {GS.I18n.t('students')})</span>
         }
       }
       else {
-        if (percentage) {
-          return <span className="subject-subtext"><br />({percentage}{t('of students')} )</span>
+        if (percentage > 0) {
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({percentage}{GS.I18n.t('of students')} )</span>
         }
       }
     }
-  };
+  }
 
   return (
     <div className="row bar-graph-display">

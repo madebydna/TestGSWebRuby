@@ -13,7 +13,7 @@ export default class TestScores extends React.Component {
       return this.displayWithTestTitles();
     }
     else{
-      return <TestScoreBarGraphWithGrades test_scores={breakdowns}/>;
+      return breakdowns.map((testData) => <TestScoreBarGraphWithGrades {...testData}/>);
     }
   }
 
@@ -21,7 +21,7 @@ export default class TestScores extends React.Component {
     return (
         <div key={this.renderKey(key)} >
           <div className="test-title">{key}</div>
-          <TestScoreBarGraphWithGrades test_scores={values}/>
+          { values.map((testData) => <TestScoreBarGraphWithGrades {...testData}/>) }
         </div>
     );
   }
