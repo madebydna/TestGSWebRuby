@@ -72,9 +72,6 @@ export default class BarGraphBase extends React.Component {
 
   render() {
     let numerical_value = this.props.score;
-    if (numerical_value == '<1') {
-      numerical_value = '0';
-    }
     let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(this.props.score)};
     let style_grey_width = {width: 100-numerical_value+"%" };
 

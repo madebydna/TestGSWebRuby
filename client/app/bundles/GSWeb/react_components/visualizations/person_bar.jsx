@@ -61,9 +61,6 @@ export default class PersonBar extends React.Component {
     if (this.props !== undefined && this.props.score !== undefined) {
       let ten = [1,2,3,4,5,6,7,8,9,10];
       let numerical_value = this.props.score;
-      if (numerical_value == '<1') {
-        numerical_value = '0';
-      }
       let style_score_width = {width: numerical_value + "%"};
       let score_rating = Math.trunc(numerical_value / 10.0) + 1;
       if (score_rating > 10) {

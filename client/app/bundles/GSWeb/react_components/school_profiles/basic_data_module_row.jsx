@@ -21,6 +21,7 @@ const BasicDataModuleRow = ({
   number_students_tested,   // Absolute number of students the score applies to
   state_average_label,      // The text version of the state score/value
   children,                 // A visualization to put into this container
+  drawerTrigger,            // Any node which when clicked will open drawer
 }) => {
 
   const renderStudentPercentage = function(){
@@ -50,6 +51,7 @@ const BasicDataModuleRow = ({
           {children}
         </div>
         <div className="col-xs-3 col-sm-2">
+          {drawerTrigger}
         </div>
       </div>
     </div>

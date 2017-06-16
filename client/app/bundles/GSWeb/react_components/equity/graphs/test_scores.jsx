@@ -19,10 +19,10 @@ export default class TestScores extends React.Component {
 
   displayContent(key, values){
     return (
-        <div key={this.renderKey(key)} >
-          <div className="test-title">{key}</div>
-          { values.map((testData) => <TestScoreBarGraphWithGrades {...testData}/>) }
-        </div>
+      <div key={this.renderKey(key)} >
+        <div className="test-title">{key}</div>
+        { values.map((testData) => <TestScoreBarGraphWithGrades {...testData}/>) }
+      </div>
     );
   }
 
@@ -60,9 +60,9 @@ export default class TestScores extends React.Component {
 
   render() {
     return (
-        <div>
-          { this.showTestScores() }
-        </div>
+      <div>
+        { this.showTestScores() }
+      </div>
     );
   }
 }
