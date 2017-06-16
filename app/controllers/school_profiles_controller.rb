@@ -73,7 +73,7 @@ class SchoolProfilesController < ApplicationController
         sp.tab_config = osp_school_info.tab_config
         sp.source_name = osp_school_info.source_name
         sp.mailto = osp_school_info.mailto
-        sp.claimed = hero.has_osp_badge?
+        sp.claimed = hero.school_claimed?
       end
     )
   end
