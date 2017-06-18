@@ -52,16 +52,7 @@
                 </div>
               </div>
               <div class="col-xs-12 col-lg-9">
-                <div style="margin-bottom: 40px;">
-                  <%= react_component('OspSchoolInfo', props: {
-                      content: @school_profile.tab_config,
-                      osp_link: osp_register_path(
-                          city: @school.city,
-                          school_id: @school.id.to_s,
-                          state: @school.state
-                      ).gsub(/\/$/, ''),
-                      source_name: @school_profile.source_name}) %>
-                </div>
+                <%= render 'osp_school_info', school: @school, school_profile: @school_profile %>
                 <%= render 'students', students: @school_profile.students %>
                 <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
               </div>

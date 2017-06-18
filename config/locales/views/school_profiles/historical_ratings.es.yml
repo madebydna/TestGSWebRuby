@@ -1,6 +1,7 @@
 es:
   school_profiles:
     historical_ratings:
+      past_ratings: Clasificaciones anteriores
       rating: Calificación
       year: Año
       subtitle_a: 'Este gráfico muestra cómo la Calificación de GreatSchools de '

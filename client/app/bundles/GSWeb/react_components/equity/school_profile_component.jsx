@@ -6,6 +6,7 @@ import PlainNumber from './graphs/plain_number';
 import EquitySection from './equity_section';
 import NoDataModuleCta from '../no_data_module_cta';
 
+
 export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
     title: React.PropTypes.string,

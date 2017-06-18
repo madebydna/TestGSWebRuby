@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import NoDataModuleCta from './no_data_module_cta.jsx';
 import SectionNavigation from './equity/tabs/section_navigation';
 import ResponseData from './response_data.jsx';
 import InfoCircle from './info_circle';
@@ -51,8 +50,7 @@ export default class OspSchoolInfo extends React.Component {
   }
 
   render() {
-    if (this.props.content) {
-
+    if (this.props.content ) {
       let stuff = this.props.content;
       let items = stuff.map((h) => ({section_title: h.title}));
       let infoText = 'Replace this with real copy';
@@ -90,22 +88,7 @@ export default class OspSchoolInfo extends React.Component {
             </div>
           </div>
         </div>
-      </div>)}
-    else {
-      return <div id="osp-school-info" className="rating-container">
-        <a className="anchor-mobile-offset" name="General_info"></a>
-        <div className="rating-container__rating">
-          <div className="module-header">
-            <div className="circle-rating--equity-blue circle-rating--medium">
-              <span className="icon-user"></span>
-            </div>
-            <div className="title-container">
-              <div className="title">{ this.t('General Information') } <AnchorButton href={ this.props.osp_link } >{ this.t('edit') }</AnchorButton></div>
-              <NoDataModuleCta moduleName="General info"/>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div>)
     }
   }
 }

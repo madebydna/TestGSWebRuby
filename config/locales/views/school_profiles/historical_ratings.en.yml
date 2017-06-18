@@ -1,6 +1,7 @@
 en:
   school_profiles:
     historical_ratings:
+      past_ratings: Past ratings
       rating: Rating
       year: Year
       subtitle_a: 'This chart shows how this school’s GreatSchools '

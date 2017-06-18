@@ -1,0 +1,14 @@
+en:
+  school_profiles:
+    osp_school_info:
+      title: General Information
+      edit: Edit
+      subtitle: Find out about this school’s hours, enrollment, classes, sports, and more.
+      bullet_1_html: >
+        Are you an administrator at this school?<br />
+        <a href="/official-school-profile/">Claim your school’s profile</a>
+        to edit general information and share what makes your school unique.<br />
+        <a href="/gk/schools/">Learn more.</a>
+      bullet_2_html: >
+        Are you a parent or student at this school?<br />
+        <a href="">Encourage school administrators</a> to claim this school’s profile.
