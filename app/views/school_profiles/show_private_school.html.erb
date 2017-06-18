@@ -24,7 +24,8 @@
           </div>
 
           <div class="col-xs-12 col-lg-9">
-            <%= render 'osp_school_info', school: @school, school_profile: @private_school_profile %>
+            <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
+            <%= render 'osp_school_info', osp_link: osp_link, school_profile: @private_school_profile %>
           </div>
         </div>
       </div>

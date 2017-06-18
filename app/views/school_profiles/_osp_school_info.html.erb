@@ -1,15 +1,11 @@
-<% school %>
+<% osp_link %>
 <% school_profile %>
 
 <div style="margin-bottom: 40px;">
   <% if school_profile.claimed %>
     <%= react_component('OspSchoolInfo', props: {
       content: school_profile.tab_config,
-      osp_link: osp_register_path(
-          city: school.city,
-          school_id: school.id.to_s,
-          state: school.state
-      ).gsub(/\/$/, ''),
+      osp_link: osp_link,
       source_name: school_profile.source_name}) %>
   <% else %>
     <div id="osp-school-info" class="rating-container">
@@ -22,7 +18,7 @@
           <div class="title-container">
             <div class="title"><%= t('.title') %>
               <a class="anchor-button"
-                 href="/official-school-profile/register.page?city=#{@school.city}&schoolId=#{@school.id.to_s}&state=#{@school.state}">
+                 href="<%= osp_link %>">
                 <div><%= t('.edit') %></div>
               </a>
             </div>
