@@ -24,7 +24,7 @@
           <% member_roles.each do |value, display_value| %>
             <div data-school-user="<%= value %>" class="js-schoolUserSelect select-button">
               <div class="avatar icon-33-avatar-<%= value.gsub(' ','-') %>"></div>
-              <div class="user-type"><%= t(display_value) %></div>
+              <div class="user-type"><%= display_value %></div>
               <div class="icon-checkmark"></div>
             </div>
           <% end %>
