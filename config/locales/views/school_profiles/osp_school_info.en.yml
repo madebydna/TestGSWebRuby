@@ -11,4 +11,4 @@ en:
         <a href="/gk/schools/">Learn more.</a>
       bullet_2_html: >
         Are you a parent or student at this school?<br />
-        <a href="">Encourage school administrators</a> to claim this school’s profile.
+        %{mailto_start}Encourage school administrators%{mailto_end} to claim this school’s profile.

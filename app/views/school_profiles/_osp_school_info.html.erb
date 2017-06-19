@@ -1,5 +1,11 @@
 <% osp_link %>
 <% school_profile %>
+<% mailto_start = '' %>
+<% mailto_end = '' %>
+<% if school_profile.mailto %>
+  <% mailto_start = "<a href='#{school_profile.mailto}'>" %>
+  <% mailto_end = '</a>' %>
+<% end %>
 
 <div style="margin-bottom: 40px;">
   <% if school_profile.claimed %>
@@ -26,7 +32,7 @@
               <span class="no-data"><%= t('.subtitle') %></span>
               <ul style="padding: 20px">
                 <li class="no-data"><%= t('.bullet_1_html') %><br /><br /></li>
-                <li class="no-data"><%= t('.bullet_2_html') %></li>
+                <li class="no-data"><%= t('.bullet_2_html', mailto_start: mailto_start.html_safe, mailto_end: mailto_end.html_safe) %></li>
               </ul>
             </div>
           </div>
@@ -35,5 +41,3 @@
     </div>
   <% end %>
 </div>
-
-
