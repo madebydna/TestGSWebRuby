@@ -414,17 +414,12 @@ LocalizedProfiles::Application.routes.draw do
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       city: /[^\/]+/,
     } do
-    get "(:path)", to: "school_profiles#show", constraints: Constraint::NewSchoolProfile.new
+    get "(:path)", to: "school_profiles#show"
 
-#     Old Profile Routes
-    get 'quality', to: 'school_profile_quality#quality', as: :quality
-    get 'details', to: 'school_profile_details#details', as: :details
-    # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
-    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+#     Old Profile Route
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
     resource :user, only: [:create], controller: 'school_user', action: 'create'
-    get "", to: 'school_profile_overview#overview'
   end
 
 
@@ -497,12 +492,9 @@ LocalizedProfiles::Application.routes.draw do
       city: /[^\/]+/,
   } do
 
-    get 'quality', to: 'school_profile_quality#quality', as: :quality
-    get 'details', to: 'school_profile_details#details', as: :details
-    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     resource :user, only: [:create], controller: 'school_user', action: 'create'
-    get '', to: 'school_profile_overview#overview'
+    get '', to: 'school_profiles#show'
   end
 
   #Handle old city homepage structure
