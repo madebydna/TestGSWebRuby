@@ -14,3 +14,4 @@ export default CircleIcon;
 
 
 export const PieCircleIcon = () => <CircleIcon icon='pie'/>
+export const MicroscopeCircleIcon = () => <CircleIcon icon='microscope'/>

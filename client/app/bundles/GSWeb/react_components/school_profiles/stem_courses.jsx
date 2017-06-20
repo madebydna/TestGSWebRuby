@@ -1,6 +1,6 @@
 import React from 'react';
 import BasicDataModuleLayout from './basic_data_module_layout';
-import { PieCircleIcon } from './circle_icons';
+import { MicroscopeCircleIcon } from './circle_icons';
 import Tooltip from './tooltip';
 import QuestionMarkTooltip from './question_mark_tooltip';
 import ParentTip from './parent_tip';
@@ -74,7 +74,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
       <BasicDataModuleLayout
         className='stem-module'
-        icon = { <PieCircleIcon /> }
+        icon = { <MicroscopeCircleIcon /> }
         title = { titleElement }
         subtitle = { subtitle }
         footer = { footer }
