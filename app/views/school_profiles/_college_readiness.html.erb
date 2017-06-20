@@ -12,7 +12,7 @@
 
 <div id="<%= analytics_id %>" class="rating-container rs-college-readiness">
   <a class="anchor-mobile-offset" name="College_readiness"></a>
-  <div class="rating-container__rating">
+  <div class="rating-container__rating js-historical-module">
     <%= render "module_header",
       circle_color_modifier: rating,
       circle_content: rating,
@@ -20,8 +20,13 @@
       subtitle: subtitle,
       info_text: info_text,
       has_data: data_values.present?,
-      show_historical_ratings: college_readiness.show_historical_ratings?,
-      historical_ratings: college_readiness.historical_ratings
+      show_historical_ratings: college_readiness.show_historical_ratings?
+    %>
+    <%=
+      if college_readiness.show_historical_ratings?
+        render 'historical_ratings', historical_ratings: college_readiness.historical_ratings,
+               title: t('.historical.title'), subtitle: t('.historical.subtitle')
+      end
     %>
     <% if data_values.present? %>
       <div class="panel">

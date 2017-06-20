@@ -4,10 +4,10 @@
  <% subtitle ||= nil %>
  <% info_text = info_text || nil %>
  <% has_data %>
- <% show_historical_ratings %>
+ <% show_historical_ratings ||= false %>
  <% columns_historical = show_historical_ratings ? 'col-md-9' : 'col-md-12' %>
 
- <div class="module-header js-historical-module">
+ <div class="module-header">
    <div class="row">
      <div class="col-xs-12 <%= columns_historical %>">
      <% unless circle_content.nil? || circle_content == 'NR' %>
@@ -37,10 +37,14 @@
        </div>
      </div>
    <% if show_historical_ratings %>
-     <%= render 'historical_ratings',
-                historical_ratings: historical_ratings,
-                title: title %>
-   <% else %>
+     <div class="col-xs-12 col-md-3 show-history-button">
+       <div>
+         <button class="js-historical-button">
+           <span class="icon-clock"></span>
+           <div class="dib"><%= t('.past_ratings') %></div>
+         </button>
+       </div>
      </div>
-   <%end%>
+   <% end %>
+   </div>
 </div>
