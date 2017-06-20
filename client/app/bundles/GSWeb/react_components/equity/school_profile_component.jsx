@@ -61,24 +61,24 @@ export default class SchoolProfileComponent extends React.Component {
           component = <PlainNumber values={values}/>
         } else if (displayType == 'person') {
           component = <div>
-            {values.map((value) => 
-              <BasicDataModuleRow {...value} >
+            {values.map((value, index) => 
+              <BasicDataModuleRow {...value} key={index}>
                 <PersonBar {...value} />
               </BasicDataModuleRow>)
             }
           </div>
         } else if (displayType == 'person_reversed') {
           component = <div>
-            {values.map((value) => 
-              <BasicDataModuleRow {...value} >
+            {values.map((value, index) => 
+              <BasicDataModuleRow {...value} key={index}>
                 <PersonBar {...value} invertedRatings={true} />
               </BasicDataModuleRow>)
             }
           </div>
         } else {
           component = <div>
-            {values.map((value) => 
-              <BasicDataModuleRow {...value} >
+            {values.map((value, index) => 
+              <BasicDataModuleRow {...value} key={index}>
                 <BarGraphBase {...value} />
               </BasicDataModuleRow>)
             }

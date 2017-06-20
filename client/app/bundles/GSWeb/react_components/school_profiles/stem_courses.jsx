@@ -70,17 +70,17 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
 
   let footer = <Tooltip content={sourcesToHtml(sources)} >{ t('Sources') }</Tooltip>
 
-    return <div>
-      <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-      <BasicDataModuleLayout
-        className='stem-module'
-        icon = { <MicroscopeCircleIcon /> }
-        title = { titleElement }
-        subtitle = { subtitle }
-        footer = { footer }
-        body = { body }
-      />
-    </div>
+  return <div>
+    <a className="anchor-mobile-offset" name="Advanced_courses"></a>
+    <BasicDataModuleLayout
+      className='stem-module'
+      icon = { <MicroscopeCircleIcon /> }
+      title = { titleElement }
+      subtitle = { subtitle }
+      footer = { footer }
+      body = { body }
+    />
+  </div>
 };
 
 StemModule.PropTypes = {

@@ -19,6 +19,8 @@ const BasicDataModuleDrawerRow = ({ label, children }) => {
 };
 
 BasicDataModuleDrawerRow.PropTypes = {
+  label: React.PropTypes.element.isRequired,
+  children: React.PropTypes.element.isRequired
 }
 
 export default BasicDataModuleDrawerRow;

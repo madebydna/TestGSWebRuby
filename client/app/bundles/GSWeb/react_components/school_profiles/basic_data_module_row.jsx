@@ -17,10 +17,9 @@ const t = function(string) {
 const BasicDataModuleRow = ({
   breakdown,                // The short text description of the data type
   label,                    // The text version of the score/value
-  percentage,               // The percentag of study body
+  percentage,               // The percentage of study body
   display_percentages,      // Whether or not to display % of student body
   number_students_tested,   // Absolute number of students the score applies to
-  state_average_label,      // The text version of the state score/value
   children,                 // A visualization to put into this container
   drawerTrigger,            // Any node which when clicked will open drawer
   tooltip_html,              // String containing html, to place inside tooltip to right of label
@@ -61,6 +60,18 @@ const BasicDataModuleRow = ({
 };
 
 BasicDataModuleRow.PropTypes = {
+  breakdown: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string,
+  percentage: React.PropTypes.string,
+  display_percentages: React.PropTypes.bool,
+  number_students_tested: React.PropTypes.number,
+  drawerTrigger: React.PropTypes.element,
+  tooltip_html: React.PropTypes.string,
+  children: React.PropTypes.element.isRequired
+}
+
+BasicDataModuleRow.DefaultProps = {
+  display_percentages: false
 }
 
 export default BasicDataModuleRow;

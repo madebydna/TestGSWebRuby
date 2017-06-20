@@ -11,7 +11,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
     label: React.PropTypes.string.isRequired,
     percentage: React.PropTypes.string,
     display_percentages: React.PropTypes.bool,
-    number_students_tested: React.PropTypes.string,
+    number_students_tested: React.PropTypes.number,
     state_average: React.PropTypes.number,
     state_average_label: React.PropTypes.string,
     grades: React.PropTypes.array,
@@ -36,10 +36,10 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
         </BasicDataModuleRow>
 
         { this.props.grades && 
-          this.props.grades.map((test_data_for_grade) => {
+          this.props.grades.map((test_data_for_grade, index) => {
             let label = <span> {GS.I18n.t('grade')} {test_data_for_grade.grade} </span>
             return (
-              <div className="grades" style={{display: 'none'}}>
+              <div className="grades" style={{display: 'none'}} key={index}>
                 <BasicDataModuleDrawerRow {...test_data_for_grade} label={label}>
                   <BarGraphBase {...test_data_for_grade} />
                 </BasicDataModuleDrawerRow>
