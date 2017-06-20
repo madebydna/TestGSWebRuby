@@ -13,7 +13,7 @@ const BasicDataModuleLayout = ({
           <div className="icon">{icon}</div>
           <div className="title-container">
             <span className="title">{title}</span>
-            <div>{subtitle}</div>
+            <div dangerouslySetInnerHTML={{__html: subtitle}}/>
           </div>
         </div>
 

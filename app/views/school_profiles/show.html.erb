@@ -31,10 +31,16 @@
               <% if @school_profile.student_progress.visible? %>
                 <%= render 'student_progress', student_progress: @school_profile.student_progress %>
               <% end %>
-              <% if @school_profile.show_high_school_data || @school_profile.courses.visible? %>
+              <% if @school_profile.courses.visible? %>
+                <%= render 'courses', courses: @school_profile.courses %>
+              <% elsif @school_profile.stem_courses.visible? %>
+                <%= render(
+                  'stem_courses',
+                  stem_courses: @school_profile.stem_courses
+                ) %>
+              <% elsif @school.includes_level_code?(%w[m h]) %>
                 <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
-<%= react_component('StemModule') %>
             </div>
           </div>
         </div>

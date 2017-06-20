@@ -36,19 +36,30 @@ export default class PersonBar extends React.Component {
     return GS.I18n.t(str);
   }
 
-  renderStateAverage(state_average) {
-    if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
+  validStateAverageValue() {
+    let state_average = this.props.state_average;
+    return (
+      state_average != null && 
+      state_average != undefined && 
+      parseInt(state_average) > 0 && 
+      parseInt(state_average) <= 100
+    );
+  }
+
+  renderStateAverage() {
+    let state_average = this.props.state_average_label;
+    if(this.validStateAverageValue()) {
       let style_override = {paddingLeft: '0px'};
 
       return (<div className="state-average" style={style_override}>
-        {GS.I18n.t('State avg')} {state_average}%
+        {GS.I18n.t('State avg')} {this.props.state_average_label || this.props.state_average}%
       </div>)
     }
   }
 
-  renderStateAverageArrow(state_average){
-    if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
-      let style_arrow_up = {left: state_average + "%", top: '1px'};
+  renderStateAverageArrow(){
+    if(this.validStateAverageValue()) {
+      let style_arrow_up = {left: this.props.state_average + "%", top: '1px'};
       return <div className="arrow-up"><span style={style_arrow_up}/></div>
     }
   }
@@ -88,9 +99,9 @@ export default class PersonBar extends React.Component {
                   <span key={'fore' + i} className="icon-person"/>
                 ))}
               </div>
-              {this.renderStateAverageArrow(this.props.state_average)}
+              {this.renderStateAverageArrow()}
             </div>
-            {this.renderStateAverage(this.props.state_average)}
+            {this.renderStateAverage()}
           </div>
         </div>
       );

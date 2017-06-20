@@ -1,4 +1,5 @@
 import React from 'react';
+import QuestionMarkTooltip from './question_mark_tooltip';
 
 // TODOs:
 // - rename subject css class
@@ -22,6 +23,7 @@ const BasicDataModuleRow = ({
   state_average_label,      // The text version of the state score/value
   children,                 // A visualization to put into this container
   drawerTrigger,            // Any node which when clicked will open drawer
+  tooltip_html,              // String containing html, to place inside tooltip to right of label
 }) => {
 
   const renderStudentPercentage = function(){
@@ -43,7 +45,7 @@ const BasicDataModuleRow = ({
     <div className="row bar-graph-display">
       <div className="test-score-container clearfix">
         <div className="col-xs-12 col-sm-5 subject">
-          {breakdown}
+          {breakdown}&nbsp;{ tooltip_html && <QuestionMarkTooltip content={tooltip_html} /> }
           { (percentage || number_students_tested) && display_percentages && renderStudentPercentage() }
         </div>
         <div className="col-sm-1"></div>

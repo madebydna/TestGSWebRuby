@@ -8,7 +8,7 @@ export default class BarGraphBase extends React.Component {
     label: React.PropTypes.string.isRequired,
     percentage: React.PropTypes.string,
     display_percentages: React.PropTypes.bool,
-    number_students_tested: React.PropTypes.string,
+    number_students_tested: React.PropTypes.number,
     state_average: React.PropTypes.number,
     state_average_label: React.PropTypes.string,
     invertedRatings:  React.PropTypes.bool
@@ -35,37 +35,31 @@ export default class BarGraphBase extends React.Component {
     }[Math.ceil(value/10)]
   }
 
-
-  renderStateAverageArrow(state_average){
-    if(state_average > 0) {
-      let style_arrow_up = {left: state_average + "%", top:'11px'}
-      return <div className="arrow-up"><span style={style_arrow_up}></span></div>
-    }
-  }
-
-  renderStateAverage(state_average) {
-      if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
-        return (<div className="state-average">
-          {GS.I18n.t('State avg')} {state_average}%
-        </div>)
-      }
+  validStateAverageValue() {
+    let state_average = this.props.state_average;
+    return (
+      state_average != null && 
+      state_average != undefined && 
+      parseInt(state_average) > 0 && 
+      parseInt(state_average) <= 100
+    );
   }
 
   renderKey(){
     return this.props.breakdown + Math.random();
   }
 
-  renderStateAverage(state_average) {
-    if(state_average != null && state_average != undefined && parseInt(state_average) > 0 && parseInt(state_average) <= 100) {
+  renderStateAverage() {
+    if(this.validStateAverageValue(this.props.state_average)) {
       return (<div className="state-average">
-        {GS.I18n.t('State avg')} {state_average}%
+        {GS.I18n.t('State avg')} {this.props.state_average_label || this.props.state_average}%
       </div>)
     }
   }
 
-  renderStateAverageArrow(state_average){
-    if(state_average > 0) {
-      let style_arrow_up = {left: state_average + "%", top:'11px'}
+  renderStateAverageArrow(){
+    if(this.validStateAverageValue(this.props.state_average)) {
+      let style_arrow_up = {left: this.props.state_average + "%", top:'11px'}
       return <div className="arrow-up"><span style={style_arrow_up}></span></div>
     }
   }

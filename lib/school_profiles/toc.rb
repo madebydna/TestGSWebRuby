@@ -5,7 +5,7 @@ module SchoolProfiles
 
     attr_accessor :content
 
-    def initialize(test_scores, college_readiness, student_progress, equity, students, teacher_staff, courses, school)
+    def initialize(test_scores, college_readiness, student_progress, equity, students, teacher_staff, courses, stem_courses, school)
       @test_scores = test_scores
       @college_readiness = college_readiness
       @student_progress = student_progress
@@ -13,6 +13,7 @@ module SchoolProfiles
       @students = students
       @teacher_staff = teacher_staff
       @courses = courses
+      @stem_courses = stem_courses
       @school = school
     end
 
@@ -26,7 +27,7 @@ module SchoolProfiles
       if @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
       end
-      if @school.level_code =~ /h/ || @courses.visible?
+      if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
         arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
       hash[:academics] = arr
