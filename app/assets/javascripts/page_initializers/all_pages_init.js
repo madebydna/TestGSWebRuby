@@ -119,3 +119,4 @@ $(function() {
     GS.search.autocomplete.searchAutocomplete.init();
   }
 });
+

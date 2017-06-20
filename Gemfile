@@ -73,9 +73,6 @@ gem 'gon'
 # TODO: If this is just for History.js, let's just use that library and drop the gem
 gem 'wiselinks'
 
-# USED: In FB authentication. See SigninController or related
-gem 'mini_fb'
-
 # Uses the materialized path pattern to implement a tree on a model
 # USED: CategoryPlacement model in profile admin
 gem 'ancestry'
