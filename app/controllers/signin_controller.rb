@@ -120,38 +120,6 @@ class SigninController < ApplicationController
     end
   end
 
-  # send to FB to login via Facebook Connect
-  def facebook_connect
-    redirect_to(FacebookAccess.facebook_connect_url(facebook_callback_url))
-  end
-
-  # callback action at completion of Facebook Connect
-  def facebook_callback
-    code = params['code']
-    access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
-    unless access_token
-      Rails.logger.debug('Could not log in with Facebook.')
-      flash_error I18n.t('controllers.signin.create.facebook_login_error')
-      redirect_to signin_url
-      return nil
-    end
-
-    # attempt login with FB info
-    user, error = facebook_login(access_token)
-
-    log_user_in user if error.nil?
-
-    executed_deferred_action
-    unless already_redirecting?
-      redirect_uri =nil
-      if cookies[:redirect_uri]
-        redirect_uri = cookies[:redirect_uri]
-        delete_cookie :redirect_uri
-      end
-      redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
-    end
-  end
-
   def verify_email
     token = params[:id]
     token = CGI.unescape(token) if token

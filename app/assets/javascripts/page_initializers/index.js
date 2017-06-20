@@ -22,3 +22,4 @@
 //= require ./signin_new_init
 //= require ./state_init
 //= require ./email_preferences
+//= require ./login_page_init
