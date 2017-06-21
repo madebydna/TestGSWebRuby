@@ -51,7 +51,7 @@
 
       <% if total_items > initial_size %>
         <div class="rating-container__more-items">
-          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
+          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores', suffix: t('lib.test_scores.Test scores') } do %>
             <% data_values.drop(initial_size).each do |data_value| %>
               <% if render_test_names && last_test_name != data_value.test_label %>
                 <div class="item-heading"><%= data_value.test_label %></div>

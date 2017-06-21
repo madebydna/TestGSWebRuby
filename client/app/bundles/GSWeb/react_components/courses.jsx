@@ -109,7 +109,14 @@ export default class Courses extends React.Component {
           </div>
           {courseSubjects}
           {courseSubjectsForDrawer.length > 0 &&
-          <div className="rating-container__more-items"><Drawer content={courseSubjectsForDrawer} /> </div>}
+              <div className="rating-container__more-items">
+                <Drawer
+                  content={courseSubjectsForDrawer}
+                  closedLabel={GS.I18n.t('Show more') + ' ' + this.t('Advanced courses')}
+                  openLabel={GS.I18n.t('Show less') + ' ' + this.t('Advanced courses')}
+                /> 
+              </div>
+          }
           <InfoTextAndCircle {...this.props.faq} />
         </div>
         <a data-remodal-target="modal_info_box"

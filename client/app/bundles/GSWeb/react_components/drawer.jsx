@@ -7,6 +7,14 @@ const Drawer = React.createClass({
     }
   },
 
+  propTypes: {
+    content: React.PropTypes.string.isRequired,
+    openLabel: React.PropTypes.string,
+    closedLabel: React.PropTypes.string,
+    trackingCategory: React.PropTypes.string,
+    trackingAction: React.PropTypes.string
+  },
+
   handleClick: function() {
     if(this.state.open) {
       analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' Less');
@@ -23,7 +31,7 @@ const Drawer = React.createClass({
   render: function() {
     let label;
     if (this.state.open) {
-      label = this.props.openedLabel || GS.I18n.t('Show less');
+      label = this.props.openLabel || GS.I18n.t('Show less');
     } else {
       label = this.props.closedLabel || GS.I18n.t('Show more');
     }
