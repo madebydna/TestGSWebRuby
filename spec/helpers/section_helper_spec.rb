@@ -31,7 +31,7 @@ describe SectionHelper do
 
         it 'should use category title as text' do
           expect(helper.display_section_head_link(category_placement,nil))
-          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/\">See all Details</a></div>")
+          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/\">See all Details</a></div>")
         end
       end
 
@@ -40,12 +40,12 @@ describe SectionHelper do
 
         it 'should return header link' do
           expect(helper.display_section_head_link(category_placement,'See all information'))
-          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/\">See all information</a></div>")
+          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/\">See all information</a></div>")
         end
 
         it 'should return header link with anchor' do
             expect(helper.display_section_head_link(category_placement,'See all information','enrollment'))
-            .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/details/#enrollment\">"+
+            .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/#enrollment\">"+
                      "See all information</a></div>")
         end
       end
@@ -59,7 +59,7 @@ describe SectionHelper do
 
       it 'should return header link, with precedence to layout config' do
         expect(helper.display_section_head_link(category_placement,'See all information'))
-        .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/quality/\">See all information</a></div>")
+        .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/\">See all information</a></div>")
       end
 
       context 'When the anchor_link is present' do
@@ -70,7 +70,7 @@ describe SectionHelper do
 
         it 'should return header link and anchor link' do
           expect(helper.display_section_head_link(category_placement,'See more information'))
-          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/quality/#test_scores\">"+
+          .to eq("<div class=\"fr prm pt8\"><a href=\"/michigan/detroit/1-A-School/#test_scores\">"+
                    "See more information</a></div>")
         end
       end
