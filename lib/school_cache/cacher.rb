@@ -87,7 +87,6 @@ class Cacher
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
-      NearbySchoolsCaching::NearbySchoolsCacher,
       FeedTestScoresCacher,
       GsdataCaching::GsdataCacher
     ]
