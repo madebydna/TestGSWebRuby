@@ -10,8 +10,4 @@ describe SchoolProfileDetailsController do
     expect(controller.action_methods - ['details']).to eq(Set.new)
   end
 
-  describe 'GET details' do
-    it_behaves_like 'a configurable profile page', 'details'
-  end
-
 end
