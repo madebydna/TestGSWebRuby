@@ -1,46 +1,29 @@
 <% historical_ratings %>
 <% title %>
-  <div class="col-xs-12 col-md-3 show-history-button">
-    <div>
-      <button class="js-historical-button">
-        <span class="icon-clock"></span>
-        <div class="dib"><%= t('.past_ratings') %></div>
-      </button>
-    </div>
-  </div>
-</div>
+<% subtitle ||= ''%>
 
-<div class="row">
-  <div class="show-more show-more--closed">
-    <div class="show-more__items js-historical-target" style="display:none;">
-      <div class="historical-title">
-        <h4><%= t('.Past_GreatSchools_' + title.titleize.gsub(' ','_') + '_Ratings') %></h4>
-        <p><%= t('.subtitle_a') + t('.' + title.titleize) + t('.subtitle_b') %> </p>
+<div class="historical-ratings js-historical-target" style="display:none;">
+  <div class="title">
+    <h4><%= title %></h4>
+    <p><%= subtitle %></p>
+  </div>
+  <div class="row panel">
+    <div class="col-xs-12 col-md-5">
+      <div class="header">
+        <div><%= t('.rating') %></div>
+        <%= t('.year') %>
       </div>
-        <div class="panel clearfix">
-          <div class="col-xs-12 col-md-5">
-            <div class="historical-header clearfix">
-              <div class="left-aligned-value"><%= t('.year') %></div>
-              <div class="right-aligned-value"><%= t('.rating') %></div>
-            </div>
-            <% historical_ratings.each do |rating| %>
-              <div class="rating-container__score-item clearfix">
-                <div class="left-aligned-value">
-                  <span><%= rating['year'] %></span>
-                </div>
-                <div class="right-aligned-value">
-                  <span class="gs-rating-inline circle-rating--xtra-small circle-rating--<%=rating['school_value_float']%>"><%= rating['school_value_float'] %></span>
-                </div>
-              </div>
-            <% end %>
+      <% historical_ratings.each do |rating| %>
+        <div class="rating-row clearfix">
+          <div class="gs-rating-inline circle-rating--xtra-small circle-rating--<%=rating['school_value_float']%>">
+            <%= rating['school_value_float'] %>
           </div>
-          <div class="col-sm-1"></div>
-          <div class="col-xs-12 col-md-6">
-            <div class="historical-text">
-              <%= t('.historical_ratings_text_html').html_safe %>
-            </div>
-          </div>
+          <%= rating['year'] %>
         </div>
+      <% end %>
+    </div>
+    <div class="col-xs-12 col-md-6 col-md-offset-1 text">
+      <%= t('.footnote_html') %>
     </div>
   </div>
 </div>

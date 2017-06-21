@@ -1,15 +1,6 @@
 en:
   school_profiles:
     historical_ratings:
-      past_ratings: Past ratings
       rating: Rating
       year: Year
-      subtitle_a: 'This chart shows how this school’s GreatSchools '
-      subtitle_b: ' Rating has changed over time.'
-      Student Progress: Student Progress
-      Test Scores: Test Scores
-      College Readiness: College Readiness
-      Past_GreatSchools_Test_Scores_Ratings: Past GreatSchools Test Score Ratings
-      Past_GreatSchools_Student_Progress_Ratings: Past GreatSchools Student Progress Ratings
-      Past_GreatSchools_College_Readiness_Ratings: Past GreatSchools College Readiness Ratings
-      historical_ratings_text_html: '<span class="emphasis">Note:</span> Ratings show a school’s performance relative to other schools in the state. Ratings can change for a variety of reasons, including changes in assessments or changes in rating methodology. Because the underlying data and methodology can vary over time, comparing past ratings to current ones may not accurately reflect changes in the school’s quality.'
+      footnote_html: '<span class="emphasis">Note:</span> Ratings show a school’s performance relative to other schools in the state. Ratings can change for a variety of reasons, including changes in assessments or changes in rating methodology. Because the underlying data and methodology can vary over time, comparing past ratings to current ones may not accurately reflect changes in the school’s quality.'

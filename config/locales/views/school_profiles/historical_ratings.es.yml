@@ -1,15 +1,6 @@
 es:
   school_profiles:
     historical_ratings:
-      past_ratings: Clasificaciones anteriores
       rating: Calificación
       year: Año
-      subtitle_a: 'Este gráfico muestra cómo la Calificación de GreatSchools de '
-      subtitle_b: ' de esta escuela ha cambiado con el tiempo.'
-      Progreso Estudiantil: el Progreso del Estudiante
-      Resultados De Exámenes: los Resultados de Exámenes
-      Preparación Universitaria: la Preparación Universitaria
-      Past_GreatSchools_Resultados_De_Exámenes_Ratings: Clasificaciones anteriores de GreatSchools de los Resultados de Exámenes
-      Past_GreatSchools_Progreso_Estudiantil_Ratings: Clasificaciones anteriores de GreatSchools del progreso del estudiante
-      Past_GreatSchools_Preparación_Universitaria_Ratings: Clasificaciones anteriores de GreatSchools de la Preparación Universitaria
-      historical_ratings_text_html: <span class="emphasis">Nota:</span> Las clasificaciones muestran el rendimiento de una escuela en relación a otras escuelas en el estado. La calificación puede cambiar por varias razones, incluyendo los cambios en los exámenes o cambios en la metodología de calificación. Dado que los datos subyacentes y la metodología puede variar a lo largo del tiempo, comparando clasificaciones anteriores a clasificaciones actuales puede no reflejar con precisión los cambios en la calidad de la escuela.
+      footnote_html: <span class="emphasis">Nota:</span> Las clasificaciones muestran el rendimiento de una escuela en relación a otras escuelas en el estado. La calificación puede cambiar por varias razones, incluyendo los cambios en los exámenes o cambios en la metodología de calificación. Dado que los datos subyacentes y la metodología puede variar a lo largo del tiempo, comparando clasificaciones anteriores a clasificaciones actuales puede no reflejar con precisión los cambios en la calidad de la escuela.
