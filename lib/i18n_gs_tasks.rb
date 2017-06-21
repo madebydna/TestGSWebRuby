@@ -1,5 +1,5 @@
 require_relative '../config/initializers/extensions/hash'
-require_relative 'i18n/gs_i18n'
+require_relative 'gs_i18n'
 module I18nGsTasks
   include ::I18n::Tasks::Command::Collection
 
