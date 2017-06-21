@@ -53,6 +53,12 @@ module SchoolProfiles
         :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
         :visualization => :single_bar_viz,
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :gsdata,
+        :data_key => 'Percentage SAT/ACT participation grades 11-12',
+        :visualization => :person_bar_viz,
+        :formatting => [:round_unless_less_than_1, :percent]
       }
     ].freeze
 
@@ -126,10 +132,9 @@ module SchoolProfiles
 
     def data_type_hashes
       hashes = school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
-      enforce_same_year_school_value_for_data_types!(hashes, 'Average ACT score', 'ACT participation')
-      enforce_same_year_school_value_for_data_types!(hashes, 'Average SAT score', 'SAT percent participation')
       hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(:gsdata)))
       return [] if hashes.blank?
+      handle_ACT_SAT_to_display!(hashes)
       hashes = hashes.map do |key, array|
         values = array.select do |h|
           # If it has no breakdown keys, that's good (gsdata)
@@ -155,30 +160,37 @@ module SchoolProfiles
       value.present? && value.to_s != '0.0' && value.to_s != '0'
     end
 
-    def enforce_same_year_school_value_for_data_types!(hash, *data_types)
+    def handle_ACT_SAT_to_display!(hash)
+      act_content = enforce_latest_year_school_value_for_data_types!(hash, 'Average ACT score', 'ACT participation')
+      sat_content = enforce_latest_year_school_value_for_data_types!(hash, 'Average SAT score', 'SAT percent participation')
+      if act_content || sat_content
+        remove_crdc_data_for_ACT_SAT_participation!(hash, 'Percentage SAT/ACT participation grades 11-12')
+      end
+    end
+
+    def remove_crdc_data_for_ACT_SAT_participation!(hash, *data_types)
+      data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
+        tds['breakdowns'].nil?
+      end.flatten
+      data_type_hashes.each do |h|
+        h['school_value'] = nil
+      end
+    end
+
+    def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
+      return_value = false
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
         tds['subject'] == 'All subjects' && tds['breakdown'] == 'All students'
       end.flatten
-
-      # first, find the max year for state data across the given data types
       max_year = data_type_hashes.map { |dts| dts['year'] }.max
-
-      # Do all the data types have school data for that year?
-      data_present_for_all_types = data_type_hashes.reduce(true) do |all_present, h|
-        # The most recent year for one of the data types might be older,
-        # so we have to read the school_value_xxxx property directly
-        # to know whether each data type has school data for that year
-        all_present && school_value_present?(h["school_value_#{max_year}"])
-      end
-
-      # If school data for most recent state isn't present across all the 
-      # data types we need to remove the values, as that is the easiest way
-      # to make sure they don't show up on the page
-      unless data_present_for_all_types
-        data_type_hashes.each do |h|
-          h["school_value"] = nil
+      data_type_hashes.each do |h|
+        if school_value_present?(h["school_value_#{max_year}"])
+          return_value = true
+        else
+          h['school_value'] = nil
         end
       end
+      return_value
     end
 
     def data_values
