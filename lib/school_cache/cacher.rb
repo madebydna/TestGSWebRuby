@@ -61,7 +61,6 @@ class Cacher
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        nearby_schools:   NearbySchoolsCaching::NearbySchoolsCacher,
         feed_test_scores: FeedTestScoresCacher,
         gsdata: GsdataCaching::GsdataCacher
     }[key.to_s.to_sym]
