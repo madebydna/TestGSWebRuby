@@ -222,9 +222,11 @@ module SchoolProfiles
         end
       end
       subject_hash = { t(:advanced_courses) => subject_sources }
-      rating_hash = {
-          t(:rating_title) => { ['GreatSchools', rating_year] => t(:rating_description) }
-      }
+      rating_hash = if rating.present?
+                      {t(:rating_title) => {['GreatSchools', rating_year] => t(:rating_description)}}
+                    else
+                      {}
+                    end
       rating_hash.merge(subject_hash)
     end
 
