@@ -6,7 +6,7 @@ const ParentTip = ({children}) => {
     <div>
       <p className="parent-tip">
         <img src="/assets/school_profiles/owl.png"/>
-        <span className="speech-bubble left">Parent tip</span>
+        <span className="speech-bubble left">{GS.I18n.t('Parent tip')}</span>
       </p> 
       <p className="footnote">
         {children}
