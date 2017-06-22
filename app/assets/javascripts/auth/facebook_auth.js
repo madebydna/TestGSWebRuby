@@ -232,10 +232,10 @@ GS.facebook = GS.facebook || (function ($) {
         GS.auth.signinUsingFacebookData(facebookData).done(function(data) {
           deferred.resolve(data);
         }).fail(function(data) {
-          deferred.reject(data);
+          deferred.reject();
         });
       }).fail(function(data) {
-        deferred.reject(data);
+        deferred.reject();
       });
       return deferred.promise();
     };
