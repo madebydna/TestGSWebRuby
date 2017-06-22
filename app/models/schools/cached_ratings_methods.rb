@@ -24,6 +24,10 @@ module CachedRatingsMethods
     school_rating_by_id(164)
   end
 
+  def test_scores_rating_hash
+    school_rating_hash_by_id(164)
+  end
+
   def student_growth_rating
     school_rating_by_id(165)
   end
