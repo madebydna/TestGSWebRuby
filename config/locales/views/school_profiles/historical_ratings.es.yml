@@ -1,6 +1,7 @@
 es:
   school_profiles:
     historical_ratings:
+      notes: notas
       rating: Calificación
       year: Año
       footnote_html: <span class="emphasis">Nota:</span> Las clasificaciones muestran el rendimiento de una escuela en relación a otras escuelas en el estado. La calificación puede cambiar por varias razones, incluyendo los cambios en los exámenes o cambios en la metodología de calificación. Dado que los datos subyacentes y la metodología puede variar a lo largo del tiempo, comparando clasificaciones anteriores a clasificaciones actuales puede no reflejar con precisión los cambios en la calidad de la escuela.
