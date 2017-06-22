@@ -22,14 +22,17 @@ es:
       faq:
         cta: ¿Notas que algo falta o confunde?
         content_html: >
-          <p>Los resultados de los exámenes y los promedios estatales que mostramos provienen del Departamento de Educación del estado(DE). Cuando falta información en nuestros perfiles, es porque la información no estaba incluida en los datos que recibimos del DE.</p>
+          <p>Los resultados de los exámenes y los promedios estatales que mostramos provienen del Departamento de
+          Educación del estado(DE). Cuando falta información en nuestros perfiles, es porque la información no
+          estaba incluida en los datos que recibimos del DE.</p>
           <p>¿Ha encontrado la información sobre los resultados de los exámenes útil? ¿Qué podemos hacer mejor?
           <a href='https://s.qualaroo.com/45194/1547acf4-6133-4d98-b2e0-5eb28ca1ec04' target='blank'>Comparte tus comentarios.</a></p>
           <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
       narration:
         _1_html: >
           <h3 class="negative">Muy preocupante:</h3>
-          <p>Los resultados de los exámenes en esta escuela está <span class="emphasis">muy por debajo</span> del promedio estatal. Esto significa que los estudiantes de esta escuela no están alcanzando el nivel de grado.</p>
+          <p>Los resultados de los exámenes en esta escuela está <span class="emphasis">muy por debajo</span>
+          del promedio estatal. Esto sugiere que los estudiantes de esta escuela posiblemente no están alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
@@ -38,7 +41,8 @@ es:
           <hr />
         _2_html: >
           <h3 class="negative">Un signo preocupante:</h3>
-          <p>Los resultados de los exámenes en esta escuela está <span class="emphasis">por debajo</span> del promedio estatal. Esto significa que los estudiantes de esta escuela no están alcanzando el nivel de grado.</p>
+          <p>Los resultados de los exámenes en esta escuela está <span class="emphasis">por debajo</span> del promedio estatal.
+          Esto sugiere que los estudiantes de esta escuela no están alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
