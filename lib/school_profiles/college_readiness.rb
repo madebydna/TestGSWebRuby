@@ -2,61 +2,71 @@ module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
 
+    FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
+    UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
+    SAT_SCORE = 'Average SAT score'
+    SAT_PARTICIPATION = 'SAT percent participation'
+    ACT_SCORE = 'Average ACT score'
+    ACT_PARTICIPATION = 'ACT participation'
+    AP_ENROLLED = 'Percentage AP enrolled grades 9-12'
+    AP_EXAMS_PASSED = 'Percentage of students passing 1 or more AP exams grades 9-12'
+    ACT_SAT_PARTICIPATION = 'Percentage SAT/ACT participation grades 11-12'
+
     # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
       {
         :cache => :characteristics,
-        :data_key => '4-year high school graduation rate',
+        :data_key => FOUR_YEAR_GRADE_RATE,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => 'Percent of students who meet UC/CSU entrance requirements',
+        :data_key => UC_CSU_ENTRANCE,
         :visualization => :single_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => 'Average SAT score',
+        :data_key => SAT_SCORE,
         :visualization => :single_bar_viz,
         :formatting => [:round],
         :range => (600..2400)
       },
       {
         :cache => :characteristics,
-        :data_key => 'SAT percent participation',
+        :data_key => SAT_PARTICIPATION,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => 'Average ACT score',
+        :data_key => ACT_SCORE,
         :visualization => :single_bar_viz,
         :formatting => [:round],
         :range => (1..36)
       },
       {
         :cache => :characteristics,
-        :data_key => 'ACT participation',
+        :data_key => ACT_PARTICIPATION,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
-        :data_key => 'Percentage AP enrolled grades 9-12',
+        :data_key => AP_ENROLLED,
         :visualization => :person_bar_viz,
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
-        :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
+        :data_key => AP_EXAMS_PASSED,
         :visualization => :single_bar_viz,
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
-        :data_key => 'Percentage SAT/ACT participation grades 11-12',
+        :data_key => ACT_SAT_PARTICIPATION,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       }
@@ -161,14 +171,14 @@ module SchoolProfiles
     end
 
     def handle_ACT_SAT_to_display!(hash)
-      act_content = enforce_latest_year_school_value_for_data_types!(hash, 'Average ACT score', 'ACT participation')
-      sat_content = enforce_latest_year_school_value_for_data_types!(hash, 'Average SAT score', 'SAT percent participation')
+      act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION)
+      sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION)
       if act_content || sat_content
-        remove_crdc_data_for_ACT_SAT_participation!(hash, 'Percentage SAT/ACT participation grades 11-12')
+        remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION)
       end
     end
 
-    def remove_crdc_data_for_ACT_SAT_participation!(hash, *data_types)
+    def remove_crdc_breakdown!(hash, *data_types)
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
         tds['breakdowns'].nil?
       end.flatten

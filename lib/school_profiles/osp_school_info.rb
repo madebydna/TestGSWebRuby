@@ -141,16 +141,13 @@ module SchoolProfiles
     end
 
     def response_label(response_key, response_value)
-
       str = response_value
-      I18n.db_t(
-          response_value_label_lookup_table[[response_key, str]],
-          default: I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default:
-              I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default:
-                  I18n.t(str.to_sym, scope: 'lib.osp_school_info', default: str)
-              )
-          )
-      ) if response_key.present? && response_value.present?
+      response_value_look_up = response_value_label_lookup_table[[response_key, str]]
+      translation = data_label(response_value_look_up)
+      if translation.blank?
+        translation = data_label(str)
+      end
+      translation
     end
 
     def response_value_label_lookup_table
@@ -158,17 +155,21 @@ module SchoolProfiles
     end
 
     def data_label(str)
-      I18n.db_t(str.to_s, default:
-          I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default:
-              I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default:
-                  I18n.t(str.to_sym, scope: 'lib.osp_school_info', default: str)
+      if str.present?
+        begin
+          I18n.db_t(str.to_s, default:
+              I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_first, default:
+                  I18n.db_t(str.to_s.gsub('_', ' ').gs_capitalize_words, default:
+                      I18n.t(str.to_sym, scope: 'lib.osp_school_info', default: str)
+                  )
               )
           )
-      )
-    rescue => e
-      GSLogger.error(:misc, e, message: 'Key is not found for translation - osp school info', vars: key)
-      raise e
-      Array(NO_DATA_TEXT)
+        rescue => e
+          GSLogger.error(:misc, e, message: 'Key is not found for translation - osp school info', vars: key)
+          raise e
+          Array(NO_DATA_TEXT)
+        end
+      end
     end
 
     def source_name
