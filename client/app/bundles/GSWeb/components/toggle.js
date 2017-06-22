@@ -61,10 +61,13 @@ _.assign(Toggle.prototype, {
 
   updateButtonTextCallback: function toggleButtonTextCallback(open, closed) {
     return function() {
+      let html = this.$button().html();
       if(this.open) {
-        this.$button().html(open);
+        html = html.replace(closed, open);
+        this.$button().html(html);
       } else {
-        this.$button().html(closed);
+        html = html.replace(open, closed);
+        this.$button().html(html);
       }
     };
   },
