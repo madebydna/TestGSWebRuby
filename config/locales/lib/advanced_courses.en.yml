@@ -23,8 +23,10 @@ en:
       faq:
         cta: Notice something missing or confusing?
         content_html: >
-          <p><span class="emphasis">Why are some subjects missing a rating?</span> We offer advanced coursework information in seven subject areas, but only four of these (English, STEM, Social sciences and Foreign language) are offered in enough schools across the state to assign a rating that can be summarized in our overall Advanced courses rating. (Click on the "?" symbols next to "Advanced courses" and "Rating" labels for more information).</p>
+          <p><span class="emphasis">Why are some subjects missing a rating?</span> We offer advanced coursework information in seven subject areas, but only four of these (English, STEM, Social sciences and Foreign language) are offered in enough schools across the state to assign a rating that can be summarized in our overall Advanced Courses Rating. (Click on the "?" symbols next to "Advanced courses" and "Rating" labels for more information).</p>
           <p>Ratings are based on a 1 (low) -10 (high) scale. If a school does not offer any advanced courses in one of the four subject areas with ratings that subject will receive a "1" rating.</p>
+          <p>Did you find the information about advanced courses useful? What can we do better?
+          <a href="https://s.qualaroo.com/45194/d8fa4702-59cd-435c-a922-9409acaf81c8" target='blank'>Share your feedback.</a></p>
           <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
