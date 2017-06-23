@@ -5,3 +5,4 @@ es:
       rating: Calificación
       year: Año
       footnote_html: Las clasificaciones muestran el rendimiento de una escuela en relación a otras escuelas en el estado. La calificación puede cambiar por varias razones, incluyendo los cambios en los exámenes o cambios en la metodología de calificación. Dado que los datos subyacentes y la metodología puede variar a lo largo del tiempo, comparando clasificaciones anteriores a clasificaciones actuales puede no reflejar con precisión los cambios en la calidad de la escuela. Si nos falta un año de calificaciones, probablemente es porque no recibimos los datos del Departamento de Educación del estado para ese año y por lo tanto no calculamos una calificación.
+      notes: notas
