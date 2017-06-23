@@ -2,6 +2,7 @@ import React from 'react';
 import BasicDataModuleLayout from './basic_data_module_layout';
 import { MicroscopeCircleIcon } from './circle_icons';
 import Tooltip from './tooltip';
+import InfoBox from './info_box';
 import QuestionMarkTooltip from './question_mark_tooltip';
 import ParentTip from './parent_tip';
 import PersonBar from '../visualizations/person_bar';
@@ -68,7 +69,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
     <InfoTextAndCircle cta={faqCta} content={faqContent} />
   </div>
 
-  let footer = <Tooltip content={sourcesToHtml(sources)} >{ t('Sources') }</Tooltip>
+  let footer = <InfoBox content={sourcesToHtml(sources)} >{ t('Sources') }</InfoBox>
 
   return <div>
     <a className="anchor-mobile-offset" name="Advanced_courses"></a>
