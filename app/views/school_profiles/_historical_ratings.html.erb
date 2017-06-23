@@ -16,13 +16,17 @@
       <% historical_ratings.each do |rating| %>
         <div class="rating-row clearfix">
           <div class="gs-rating-inline circle-rating--xtra-small circle-rating--<%=rating['school_value_float']%>">
-            <%= rating['school_value_float'] %>
+            <%= rating['school_value_float'] %><span class="rating-circle-small">/10</span>
           </div>
           <%= rating['year'] %>
         </div>
       <% end %>
     </div>
     <div class="col-xs-12 col-md-6 col-md-offset-1 text">
+      <p class="parent-tip">
+        <%= image_tag("/assets/school_profiles/owl.png") %>
+        <span class="speech-bubble left"><%= t('.notes').capitalize %></span>
+      </p>
       <%= t('.footnote_html') %>
     </div>
   </div>
