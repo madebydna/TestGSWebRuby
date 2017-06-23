@@ -22,15 +22,10 @@
               <%= I18n.t('overview', scope:'school_profiles.show_profile') %>
             </div>
           </div>
+
           <div class="col-xs-12 col-lg-9">
-            <%= react_component('PrivateSchoolInfo', props: {
-                content: @private_school_profile.tab_config,
-                osp_link: osp_register_path(
-                    city: @private_school_profile.school.city,
-                    school_id: @private_school_profile.school.id.to_s,
-                    state: @private_school_profile.school.state
-                ).gsub(/\/$/, ''),
-                source_name: @private_school_profile.source_name}) %>
+            <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
+            <%= render 'osp_school_info', osp_link: osp_link, school_profile: @private_school_profile %>
           </div>
         </div>
       </div>

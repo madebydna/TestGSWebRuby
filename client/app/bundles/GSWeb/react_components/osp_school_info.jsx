@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react';
-import NoDataModuleCta from './no_data_module_cta.jsx';
 import SectionNavigation from './equity/tabs/section_navigation';
 import ResponseData from './response_data.jsx';
 import InfoCircle from './info_circle';
 import AnchorButton from './anchor_button';
 
-export default class PrivateSchoolInfo extends React.Component {
+export default class OspSchoolInfo extends React.Component {
 
   static propTypes = {
     content: PropTypes.array,
@@ -35,8 +34,8 @@ export default class PrivateSchoolInfo extends React.Component {
   drawInfoCircle(infoText) {
     if (infoText) {
       return(<InfoCircle
-          content={infoText}
-        />
+              content={infoText}
+          />
       );
     } else {
       return null;
@@ -51,12 +50,11 @@ export default class PrivateSchoolInfo extends React.Component {
   }
 
   render() {
-    if (this.props.content) {
-
+    if (this.props.content ) {
       let stuff = this.props.content;
       let items = stuff.map((h) => ({section_title: h.title}));
       let infoText = 'Replace this with real copy';
-      return (<div id="private-school-info">
+      return (<div id="osp-school-info">
         <a className="anchor-mobile-offset" name="General_info"/>
         <div className="equity-container">
           <div className="title-bar">
@@ -67,44 +65,30 @@ export default class PrivateSchoolInfo extends React.Component {
               <div className="title">
                 { this.t('General Information') }
                 <a data-remodal-target="modal_info_box"
-                  data-content-type="info_box"
-                  data-content-html={GS.I18n.t('general_information_tooltip')}
-                  className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
+                   data-content-type="info_box"
+                   data-content-html={GS.I18n.t('general_information_tooltip')}
+                   className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
                   <span className="icon-question"></span>
                 </a>
                 <AnchorButton href={ this.props.osp_link } >{ this.t('edit') }</AnchorButton>
                 <p><br /></p>
               </div>
             </div>
-          <div className="tab-buttons">
-            <SectionNavigation key="sectionNavigation"
-                               items={items}
-                               active={this.state.activeTabIndex}
-                               google_tracking={'General_info'}
-                               onTabClick={this.handleTabClick.bind(this)}/>
-          </div>
-          <div className="top-tab-panel">{this.selectSectionContent(stuff)}</div>
-          </div>
+            <div className="tab-buttons">
+              <SectionNavigation key="sectionNavigation"
+                                 items={items}
+                                 active={this.state.activeTabIndex}
+                                 google_tracking={'General_info'}
+                                 onTabClick={this.handleTabClick.bind(this)}/>
+            </div>
+            <div className="top-tab-panel">{this.selectSectionContent(stuff)}</div>
+
             <div className="source-bar">
-              { this.t('source') }:&nbsp;<span className="sources-text">{this.props.source_name}</span>
-          </div>
-        </div>
-      </div>)}
-    else {
-      return <div id="private-school-info" className="rating-container">
-        <a className="anchor-mobile-offset" name="General_info"></a>
-        <div className="rating-container__rating">
-          <div className="module-header">
-            <div className="circle-rating--equity-blue circle-rating--medium">
-              <span className="icon-user"></span>
-            </div>
-            <div className="title-container">
-              <div className="title">{ this.t('General Information') } <AnchorButton href={ this.props.osp_link } >{ this.t('edit') }</AnchorButton></div>
-              <NoDataModuleCta moduleName="General info"/>
+              { this.t('source') }:&nbsp;<span>{this.props.source_name}</span>
             </div>
           </div>
         </div>
-      </div>
+      </div>)
     }
   }
 }

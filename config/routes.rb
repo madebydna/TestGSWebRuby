@@ -139,7 +139,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/terms/', as: :terms_of_use
     get '/gk/review-guidelines', as: :school_review_guidelines
     get '/gk/privacy/', as: :privacy
-    get '/about/gsFaq.page', as: :faq
+    get '/gk/faq/', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
@@ -329,8 +329,6 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
-  match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]
-  match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
   match '/gsr/session/facebook_auth' => 'signin#facebook_auth', :as => :facebook_auth, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
@@ -414,17 +412,12 @@ LocalizedProfiles::Application.routes.draw do
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       city: /[^\/]+/,
     } do
-    get "(:path)", to: "school_profiles#show", constraints: Constraint::NewSchoolProfile.new
+    get "(:path)", to: "school_profiles#show"
 
-#     Old Profile Routes
-    get 'quality', to: 'school_profile_quality#quality', as: :quality
-    get 'details', to: 'school_profile_details#details', as: :details
-    # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
-    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
+#     Old Profile Route
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
     resource :user, only: [:create], controller: 'school_user', action: 'create'
-    get "", to: 'school_profile_overview#overview'
   end
 
 
@@ -497,12 +490,9 @@ LocalizedProfiles::Application.routes.draw do
       city: /[^\/]+/,
   } do
 
-    get 'quality', to: 'school_profile_quality#quality', as: :quality
-    get 'details', to: 'school_profile_details#details', as: :details
-    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     resource :user, only: [:create], controller: 'school_user', action: 'create'
-    get '', to: 'school_profile_overview#overview'
+    get '', to: 'school_profiles#show'
   end
 
   #Handle old city homepage structure

@@ -9,6 +9,11 @@
     overflow: hidden;
   }
 
+  > .icon {
+    float:left;
+    vertical-align: middle;
+  }
+
   .title {
     font-family: opensans-semibold;
     font-size: 18px;
@@ -43,64 +48,6 @@
     @include media-breakpoint-down(sm) {
       margin-left: 60px;
       text-align: left;
-    }
-  }
-
-  .historical-header {
-    background-color: #f5f6f8;
-    padding: 10px 0px;
-    > div {
-      font-size: 12px;
-      font-family: opensans-regular;
-      color: #71787e;
-    }
-  }
-  .gs-rating-inline {
-    border-radius: 50%;
-    height: 34px;
-    width: 34px;
-    text-align: center;
-    font-size: 16px;
-    line-height: 32px;
-  }
-  .left-aligned-value {
-    float: left;
-    padding-left: 10px;
-    font-size: 16px;
-  }
-
-  .right-aligned-value {
-    float: right;
-    padding-right: 10px;
-  }
-
-  .historical-text {
-    padding: 0px 15px 15px;
-    @include media-breakpoint-down(sm) {
-      margin-top: 20px;
-    }
-    .emphasis {
-      font-family: opensans-semibold;
-    }
-  }
-  .historical-title {
-    margin: 20px 10px -10px 0px;
-    padding: 10px 32px;
-    border: 1px solid #dbe6eb;
-    border-bottom: 0;
-    background-color: #f5f6f8;
-    > h4 {
-      font-family: opensans-semibold;
-    }
-
-  }
-  .rating-container__score-item {
-    margin-left: 0px;
-    margin-right: 0px;
-    &:last-child {
-      @include media-breakpoint-up(sm) {
-        border-bottom: none;
-      }
     }
   }
 }

@@ -70,6 +70,11 @@ class SchoolProfilesController < ApplicationController
         sp.teachers_staff = teachers_staff
         sp.show_high_school_data = show_high_school_data?
         sp.courses = courses
+        sp.tab_config = osp_school_info.tab_config
+        sp.source_name = osp_school_info.source_name
+        sp.mailto = osp_school_info.mailto
+        sp.claimed = hero.school_claimed?
+        sp.stem_courses = stem_courses
       end
     )
   end
@@ -86,11 +91,11 @@ class SchoolProfilesController < ApplicationController
       psp.neighborhood = neighborhood
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
-      psp.tab_config = private_school_info.tab_config
+      psp.tab_config = osp_school_info.tab_config
       psp.school = school
-      psp.source_name = private_school_info.source_name
-      psp.claimed = hero.has_osp_badge?
-      psp.mailto = private_school_info.mailto
+      psp.source_name = osp_school_info.source_name
+      psp.claimed = hero.school_claimed?
+      psp.mailto = osp_school_info.mailto
     end
     )
   end
@@ -127,7 +132,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, students, teachers_staff, courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, students, teachers_staff, courses, stem_courses, school)
   end
 
   def test_scores
@@ -168,6 +173,12 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
+  def stem_courses
+    SchoolProfiles::StemCourses.new(
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
   def reviews
     # This needs ReviewQuestions for the topical distribution popup
     @_reviews ||= SchoolProfiles::Reviews.new(school, review_questions)
@@ -198,8 +209,8 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::TeachersStaff.new(school_cache_data_reader)
   end
 
-  def private_school_info
-    SchoolProfiles::PrivateSchoolInfo.new(school, school_cache_data_reader)
+  def osp_school_info
+    SchoolProfiles::OspSchoolInfo.new(school, school_cache_data_reader)
   end
 
   def build_gon_object

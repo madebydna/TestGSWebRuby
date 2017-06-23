@@ -3,7 +3,7 @@ en:
     college_readiness:
       info_text: "This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and  AP coursework when available."
       'title': 'GreatSchools profile data sources &amp; information'
-      'GreatSchools Rating': 'GreatSchools Rating'
+      'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
       'SAT percent participation': 'SAT participation rate'
       ACT participation:  'ACT participation rate'

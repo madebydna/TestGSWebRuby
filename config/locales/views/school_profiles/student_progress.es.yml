@@ -3,3 +3,6 @@ es:
     student_progress:
       title: Progreso estudiantil
       sources: Fuentes
+      historical:
+        title: Clasificaciones anteriores de GreatSchools del Progreso del Estudiante
+        subtitle: Este gráfico muestra cómo la Calificación de GreatSchools de el Progreso del Estudiante de esta escuela ha cambiado con el tiempo.

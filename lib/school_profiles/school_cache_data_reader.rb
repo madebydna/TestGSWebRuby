@@ -77,6 +77,10 @@ module SchoolProfiles
       decorated_school.student_growth_rating_hash
     end
 
+    def test_scores_rating_hash
+      decorated_school.test_scores_rating_hash
+    end
+
     def historical_student_progress_ratings
       decorated_school.historical_student_growth_ratings
     end
@@ -150,6 +154,21 @@ module SchoolProfiles
 
     def gsdata_data(*keys)
       decorated_school.gsdata.slice(*keys)
+    end
+
+    # Returns a hash that includes the percentage and sourcing info
+    # {
+    #   "breakdowns": "Students with disabilities",
+    #   "breakdown_tags": "disability",
+    #   "school_value": "11.59",
+    #   "source_year": 2014,
+    #   "source_name": "Civil Rights Data Collection"
+    # }
+    def percentage_of_students(breakdown)
+      percentages = (
+        decorated_school.gsdata.slice('Percentage of Students Enrolled') || {}
+      ).fetch('Percentage of Students Enrolled', [])
+      percentages.find { |h| h['breakdowns'] == breakdown }
     end
 
     def esp_responses_data(*keys)

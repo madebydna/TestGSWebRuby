@@ -4,7 +4,7 @@ en:
       'English Language Arts': English
       English: English
       'title': 'GreatSchools profile data sources &amp; information'
-      'GreatSchools Rating': 'GreatSchools Rating'
+      'GreatSchools Rating': 'GreatSchools Test Scores Rating'
       'Rating text': 'The GreatSchools Rating is a simple tool that helps you compare schools based on test scores and other available data, including student academic growth and college readiness. GreatSchools is always working to improve the rating and add more information when state education agencies make school quality data publicly available.'
       n_tested: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject weighted by the number of students tested in each grade.'
       straight_avg: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject based on a non-weighted average of the scores in each grade. We are not able to provide a weighted average because the number of test-taking students in each grade is not available.'
@@ -14,7 +14,7 @@ en:
       'See more': 'See more'
       'More': 'More about GreatSchools ratings'
       Test scores: Test scores
-      info_text: "The test score rating reflects annual state test results for this school compared with scores statewide."
+      info_text: "The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide."
       'Math': Math
       Science: Science
       Source: Source
@@ -22,12 +22,17 @@ en:
       faq:
         cta: Notice something missing or confusing?
         content_html: >
-          <p>The test scores and state averages we display come from the State Department of Education. When information is missing in our display, it is because the information was not included in the data we received from the DOE.</p>
+          <p>The test scores and state averages we display come from the State Department of Education(DOE).
+          When information is missing in our display, it is because the information was not included in the data we
+          received from the DOE.</p>
+          <p>Did you find the information about test scores useful? What can we do better?
+          <a href='https://s.qualaroo.com/45194/1547acf4-6133-4d98-b2e0-5eb28ca1ec04' target='blank'>Share your feedback.</a></p>
           <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
           <h3 class="negative">Very concerning:</h3>
-          <p>Test scores at this school fall <span class="emphasis">far below</span> the state average. This means that students at this school are not performing at grade level.</p>
+          <p>Test scores at this school fall <span class="emphasis">far below</span> the state average.
+          This suggests that students at this school are likely not performing at grade level.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
@@ -36,8 +41,8 @@ en:
           <hr />
         _2_html: >
           <h3 class="negative">A worrisome sign:</h3>
-          <p>Test scores at this school fall <span class="emphasis">below</span> the state average. This means that
-          most students at this school are not performing at grade level.</p>
+          <p>Test scores at this school fall <span class="emphasis">below</span> the state average.
+          This suggests that most students at this school may not be performing at grade level.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what

@@ -4,6 +4,8 @@ import InfoTextAndCircle from '../info_text_and_circle'
 import SectionNavigation from './tabs/section_navigation';
 import SubSectionToggle from './sub_section_toggle';
 
+import { handleAnchor } from '../../components/anchor_router';
+
 export default class EquitySection extends React.Component {
 
   static propTypes = {
@@ -25,16 +27,50 @@ export default class EquitySection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 0
+      active: 0,
+      defaultSubSectionTab: null
     }
+  }
+
+  componentDidMount() {
+    let mapping = {
+      'Raza/etnicidad': 'Race_ethnicity',
+      'Race/ethnicity': 'Race_ethnicity',
+      'Low-income students': 'Low-income_students',
+      'De bajos Ingresos': 'Low-income_students',
+      'Estudiantes con discapacidades': 'Students_with_Disabilities',
+      'Students with Disabilities': 'Students_with_Disabilities'
+    };
+    handleAnchor(
+      mapping[this.props.equity_config["section_info"].anchor], tokens => {
+        let tabNameAnchorMap = {
+          'Test scores': 'Test_scores',
+          'Graduation rates': 'Graduation_rates',
+          'Advanced coursework': 'Advanced_coursework',
+          'Discipline & attendance': 'Discipline_and_attendance',
+          'Resultados de exámenes': 'Test_scores',
+          'Índices de Graduación': 'Graduation_rates',
+          'Cursos avanzados': 'Advanced_coursework',
+          'Disciplina y asistencia': 'Discipline_and_attendance'
+        };
+        let section_content = this.props.equity_config["section_content"];
+        let index = section_content.findIndex((content) => tabNameAnchorMap[content["section_title"]] == tokens[0]);
+        if(index == -1) {
+          index = 0;
+        }
+        this.setState({ active: index });
+      }
+    );
   }
 
   selectSectionContent(section_content) {
     let item = section_content[this.state.active];
     return <div className={'tabs-panel tabs-panel_selected'}>
       <SubSectionToggle
+          defaultTab={this.state.defaultSubSectionTab}
           key={this.state.active}
           equity_config={item["content"]}
+          parent_tab={this.props.equity_config["section_content"][this.state.active].section_title}
       />
     </div>
   }

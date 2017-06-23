@@ -2,57 +2,73 @@ module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
 
+    FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
+    UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
+    SAT_SCORE = 'Average SAT score'
+    SAT_PARTICIPATION = 'SAT percent participation'
+    ACT_SCORE = 'Average ACT score'
+    ACT_PARTICIPATION = 'ACT participation'
+    AP_ENROLLED = 'Percentage AP enrolled grades 9-12'
+    AP_EXAMS_PASSED = 'Percentage of students passing 1 or more AP exams grades 9-12'
+    ACT_SAT_PARTICIPATION = 'Percentage SAT/ACT participation grades 11-12'
+
     # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
       {
         :cache => :characteristics,
-        :data_key => '4-year high school graduation rate',
+        :data_key => FOUR_YEAR_GRADE_RATE,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => 'Percent of students who meet UC/CSU entrance requirements',
+        :data_key => UC_CSU_ENTRANCE,
         :visualization => :single_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => 'Average SAT score',
+        :data_key => SAT_SCORE,
         :visualization => :single_bar_viz,
         :formatting => [:round],
         :range => (600..2400)
       },
       {
         :cache => :characteristics,
-        :data_key => 'SAT percent participation',
+        :data_key => SAT_PARTICIPATION,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => 'Average ACT score',
+        :data_key => ACT_SCORE,
         :visualization => :single_bar_viz,
         :formatting => [:round],
         :range => (1..36)
       },
       {
         :cache => :characteristics,
-        :data_key => 'ACT participation',
+        :data_key => ACT_PARTICIPATION,
         :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
-        :data_key => 'Percentage AP enrolled grades 9-12',
+        :data_key => AP_ENROLLED,
         :visualization => :person_bar_viz,
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
-        :data_key => 'Percentage of students passing 1 or more AP exams grades 9-12',
+        :data_key => AP_EXAMS_PASSED,
         :visualization => :single_bar_viz,
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :gsdata,
+        :data_key => ACT_SAT_PARTICIPATION,
+        :visualization => :person_bar_viz,
+        :formatting => [:round_unless_less_than_1, :percent]
       }
     ].freeze
 
@@ -126,10 +142,9 @@ module SchoolProfiles
 
     def data_type_hashes
       hashes = school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
-      enforce_same_year_school_value_for_data_types!(hashes, 'Average ACT score', 'ACT participation')
-      enforce_same_year_school_value_for_data_types!(hashes, 'Average SAT score', 'SAT percent participation')
       hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(:gsdata)))
       return [] if hashes.blank?
+      handle_ACT_SAT_to_display!(hashes)
       hashes = hashes.map do |key, array|
         values = array.select do |h|
           # If it has no breakdown keys, that's good (gsdata)
@@ -155,30 +170,37 @@ module SchoolProfiles
       value.present? && value.to_s != '0.0' && value.to_s != '0'
     end
 
-    def enforce_same_year_school_value_for_data_types!(hash, *data_types)
+    def handle_ACT_SAT_to_display!(hash)
+      act_content = enforce_latest_year_school_value_for_data_types!(hash, ACT_SCORE, ACT_PARTICIPATION)
+      sat_content = enforce_latest_year_school_value_for_data_types!(hash, SAT_SCORE, SAT_PARTICIPATION)
+      if act_content || sat_content
+        remove_crdc_breakdown!(hash, ACT_SAT_PARTICIPATION)
+      end
+    end
+
+    def remove_crdc_breakdown!(hash, *data_types)
+      data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
+        tds['breakdowns'].nil?
+      end.flatten
+      data_type_hashes.each do |h|
+        h['school_value'] = nil
+      end
+    end
+
+    def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
+      return_value = false
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
         tds['subject'] == 'All subjects' && tds['breakdown'] == 'All students'
       end.flatten
-
-      # first, find the max year for state data across the given data types
       max_year = data_type_hashes.map { |dts| dts['year'] }.max
-
-      # Do all the data types have school data for that year?
-      data_present_for_all_types = data_type_hashes.reduce(true) do |all_present, h|
-        # The most recent year for one of the data types might be older,
-        # so we have to read the school_value_xxxx property directly
-        # to know whether each data type has school data for that year
-        all_present && school_value_present?(h["school_value_#{max_year}"])
-      end
-
-      # If school data for most recent state isn't present across all the 
-      # data types we need to remove the values, as that is the easiest way
-      # to make sure they don't show up on the page
-      unless data_present_for_all_types
-        data_type_hashes.each do |h|
-          h["school_value"] = nil
+      data_type_hashes.each do |h|
+        if school_value_present?(h["school_value_#{max_year}"])
+          return_value = true
+        else
+          h['school_value'] = nil
         end
       end
+      return_value
     end
 
     def data_values

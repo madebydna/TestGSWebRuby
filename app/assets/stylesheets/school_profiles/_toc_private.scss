@@ -23,13 +23,12 @@
     padding-right: 10px;
     padding-left: 20px;
     border-right: solid 1px #dbe6eb;
-    @include media-breakpoint-down(sm) {
-      padding-bottom: 20px;
+    @include media-breakpoint-down(xs) {
+      border-right: none;
     }
   }
 
-  .toc_private.toc-private-section:last-child{
-    padding-right: 0px;
+  .row > div:last-child .toc-private-section{
     border-right: none;
   }
 

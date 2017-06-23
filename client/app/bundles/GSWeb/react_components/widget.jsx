@@ -34,7 +34,7 @@ export default class Widget extends React.Component {
       width: params.width || defaultIframeWidth,
       height: params.height || 368,
       zoom: 13,
-      baseUrl: "http://" + widgetHost + "/widget/map"
+      baseUrl: "//" + widgetHost + "/widget/map"
     };
   }
 
@@ -110,7 +110,7 @@ export default class Widget extends React.Component {
     code = code + '<script type="text/javascript">';
     code = code + 'var _gsreq = new XMLHttpRequest();'
     code = code + 'var _gsid = new Date().getTime();';
-    code = code + '_gsreq.open("GET", "http://www.google-analytics.com/collect?v=1&tid=UA-54676320-1&cid="+_gsid+"&t=event&ec=widget&ea=loaded&el="+window.location.hostname+"&cs=widget&cm=web&cn=widget&cm1=1&ni=1");';
+    code = code + '_gsreq.open("GET", "https://www.google-analytics.com/collect?v=1&tid=UA-54676320-1&cid="+_gsid+"&t=event&ec=widget&ea=loaded&el="+window.location.hostname+"&cs=widget&cm=web&cn=widget&cm1=1&ni=1");';
     code = code + '_gsreq.send();'
     code = code + '</script>';
     return code;

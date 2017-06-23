@@ -5,6 +5,7 @@ class GsdataCaching::GsdataCacher < Cacher
   # 31: In school suspension ---- not used currently JT-3276
   # 35: Out of school suspension
   # 55: %AP enrollment for students in grades 9-12
+  # 71: Percentage SAT/ACT participation grades 11-12
   # 83: Percentage of students passing 1 or more AP exams grades 9-12
   # 91: Absent the rate of absenteeism
   # 95: Ration of students to full time teachers
@@ -13,7 +14,8 @@ class GsdataCaching::GsdataCacher < Cacher
   # 133: Ratio of teacher salary to total number of teachers
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
-  DATA_TYPE_IDS = [35, 55, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152].freeze
+  # 154: Percentage of Students Enrolled
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154].freeze
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
     'gender',

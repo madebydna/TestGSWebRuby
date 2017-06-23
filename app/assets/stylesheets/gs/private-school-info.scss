@@ -22,7 +22,7 @@
 
   .response:first-child {
     p {
-      font-family: opensans-semibold;
+      //font-family: opensans-semibold;
     }
     p:before, p:after {
       content: '"';
@@ -46,9 +46,8 @@
   }
 
   .source-bar {
-    padding-bottom: 10px;
-    margin-left: 20px;
-    margin-top: 10px;
+    font-size: 14px;
+    font-family: 'opensans-regular';
   }
 
   .title-bar {

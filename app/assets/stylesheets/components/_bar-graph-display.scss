@@ -11,6 +11,10 @@
     display: table;
     table-layout: fixed;
     width:100%;
+
+    > div {
+      display: table-cell;
+    }
   }
 
   .details {
@@ -23,7 +27,9 @@
     display: block;
     font-size: $font-size-s1;
     color: #71787e;
-    padding-left: $score_width;
+    font-family: 'opensans-regular';
+    line-height: 18px;
+    padding-top: 10px;
   }
   .score {
     font-size: 18px;
@@ -38,7 +44,6 @@
   .item-bar {
     padding: 0 0 10px;
     width:auto;
-    display: table-cell;
   }
   .subject {
     font-size: 16px;

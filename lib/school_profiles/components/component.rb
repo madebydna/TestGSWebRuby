@@ -138,6 +138,15 @@ module SchoolProfiles
           }.compact
         end
       end
+
+      def percentage_of_students_enrolled(breakdown)
+        @_percentage_of_students_enrolled ||= begin
+          hash = school_cache_data_reader.percentage_of_students(breakdown)
+          {
+            breakdown => hash['school_value']
+          } if hash
+        end
+      end
     end
   end
 end

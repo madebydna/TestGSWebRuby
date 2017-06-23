@@ -12,7 +12,7 @@
 
 <div id="<%= analytics_id %>" class="rating-container rs-test-scores">
   <a class="anchor-mobile-offset" name="Test_scores"></a>
-  <div class="rating-container__rating">
+  <div class="rating-container__rating js-historical-module">
     <%= render "module_header",
       circle_color_modifier: rating,
       circle_content: rating,
@@ -20,10 +20,15 @@
       subtitle: subtitle,
       info_text: info_text,
       has_data: data_values.present?,
-      show_historical_ratings: test_scores.show_historical_ratings?,
-      historical_ratings: test_scores.historical_ratings
+      show_historical_ratings: test_scores.show_historical_ratings?
     %>
 
+    <%=
+      if test_scores.show_historical_ratings?
+        render 'historical_ratings', historical_ratings: test_scores.historical_ratings,
+               title: t('.historical.title'), subtitle: t('.historical.subtitle')
+      end
+    %>
 
   <% subjects = data_values.map(&:label) %>
   <% total_items = data_values.size %>
@@ -46,7 +51,7 @@
 
       <% if total_items > initial_size %>
         <div class="rating-container__more-items">
-          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores' } do %>
+          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores', suffix: t('lib.test_scores.Test scores') } do %>
             <% data_values.drop(initial_size).each do |data_value| %>
               <% if render_test_names && last_test_name != data_value.test_label %>
                 <div class="item-heading"><%= data_value.test_label %></div>

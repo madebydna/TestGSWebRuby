@@ -62,8 +62,8 @@ _.assign(GS.modal.JoinModal.prototype, {
     },
 
     facebookSignInFailHandler: function facebookSignInSuccessHandle(data) {
-        var defaultMessage = 'Oops there was an error signing into your facebook account.';
-        jQuery('.js-facebook-signin-errors').html(defaultMessage);
+        var defaultMessage = 'Oops! There was an error signing into your facebook account.';
+        jQuery('.js-facebook-signin-errors').html(data || defaultMessage);
         this.allowInteractions();
     },
 

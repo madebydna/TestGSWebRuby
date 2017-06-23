@@ -61,7 +61,6 @@ class Cacher
         esp_responses:    EspResponsesCaching::EspResponsesCacher,
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
-        nearby_schools:   NearbySchoolsCaching::NearbySchoolsCacher,
         feed_test_scores: FeedTestScoresCacher,
         gsdata: GsdataCaching::GsdataCacher
     }[key.to_s.to_sym]
@@ -88,7 +87,6 @@ class Cacher
       EspResponsesCaching::EspResponsesCacher,
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
-      NearbySchoolsCaching::NearbySchoolsCacher,
       FeedTestScoresCacher,
       GsdataCaching::GsdataCacher
     ]
@@ -191,13 +189,29 @@ class Cacher
       results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
       # Prune out empty data sets
       results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
-      growth_rating = results_hash_array.find { |hash| hash['data_type_id'] == 165}
+
+      growth_rating = 
+        results_hash_array.
+          select { |hash| hash['data_type_id'] == 165}.
+          max_by { |hash| hash['year'] }
       if growth_rating
         description = data_description_value('whats_this_growth')
         methodology = data_description_value("footnote_growth#{school.state}")
         growth_rating[:description] = description
         growth_rating[:methodology] = methodology
       end
+
+      test_score_rating = 
+        results_hash_array.
+          select { |hash| hash['data_type_id'] == 164}.
+          max_by { |hash| hash['year'] }
+      if test_score_rating
+        description = data_description_value('whats_this_test_scores')
+        methodology = data_description_value("footnote_test_scores#{school.state}")
+        test_score_rating[:description] = description
+        test_score_rating[:methodology] = methodology
+      end
+
       school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
     elsif school_cache && school_cache.id.present?
       SchoolCache.destroy(school_cache.id)

@@ -107,7 +107,19 @@ module SchoolProfiles
         content << '<h1>' + data_label('title') + '</h1>'
         content << '<div>'
         content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
-        content << '<p>' + data_label('Rating text') + '</p>'
+
+        description = rating_description
+        description = data_label(description) if description
+        methodology = rating_methodology
+        methodology = data_label(methodology) if methodology
+        if description || methodology
+          content << '<p>'
+          content << description if description
+          content << ' ' if description && methodology
+          content << methodology if methodology
+          content << '</p>'
+        end
+
         content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
         content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
         content << '</p>'
@@ -163,6 +175,16 @@ module SchoolProfiles
 
     def visible?
       subject_scores.present?
+    end
+
+    def rating_description
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['description'] if hash
+    end
+
+    def rating_methodology
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['methodology'] if hash
     end
   end
 end

@@ -1,3 +1,4 @@
+<div class="overlay" style="display:none"></div>
 <div class="school-profile">
     <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
     <%= render 'hero', hero: @school_profile.hero %>
@@ -30,7 +31,14 @@
               <% if @school_profile.student_progress.visible? %>
                 <%= render 'student_progress', student_progress: @school_profile.student_progress %>
               <% end %>
-              <% if @school_profile.show_high_school_data || @school_profile.courses.visible? %>
+              <% if @school_profile.courses.visible? %>
+                <%= render 'courses', courses: @school_profile.courses %>
+              <% elsif @school_profile.stem_courses.visible? %>
+                <%= render(
+                  'stem_courses',
+                  stem_courses: @school_profile.stem_courses
+                ) %>
+              <% elsif @school.includes_level_code?(%w[m h]) %>
                 <%= render 'courses', courses: @school_profile.courses %>
               <% end %>
             </div>
@@ -51,6 +59,8 @@
                 </div>
               </div>
               <div class="col-xs-12 col-lg-9">
+                <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
+                <%= render 'osp_school_info', osp_link: osp_link, school_profile: @school_profile %>
                 <%= render 'students', students: @school_profile.students %>
                 <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
               </div>

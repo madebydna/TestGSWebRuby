@@ -10,8 +10,4 @@ describe SchoolProfileQualityController do
     expect(controller.action_methods - ['quality']).to eq(Set.new)
   end
 
-  describe 'GET quality' do
-    it_behaves_like 'a configurable profile page', 'quality'
-  end
-
 end

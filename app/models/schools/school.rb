@@ -125,6 +125,10 @@ class School < ActiveRecord::Base
     (level_code_array & (Array(arr_levels))).any?
   end
 
+  def includes_type? (types)
+    (type.downcase.split(',') & (Array(types))).any?
+  end
+
   def private_school?
     type.downcase == 'private'
   end
