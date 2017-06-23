@@ -152,6 +152,21 @@ module SchoolProfiles
       decorated_school.gsdata.slice(*keys)
     end
 
+    # Returns a hash that includes the percentage and sourcing info
+    # {
+    #   "breakdowns": "Students with disabilities",
+    #   "breakdown_tags": "disability",
+    #   "school_value": "11.59",
+    #   "source_year": 2014,
+    #   "source_name": "Civil Rights Data Collection"
+    # }
+    def percentage_of_students(breakdown)
+      percentages = (
+        decorated_school.gsdata.slice('Percentage of Students Enrolled') || {}
+      ).fetch('Percentage of Students Enrolled', [])
+      percentages.find { |h| h['breakdowns'] == breakdown }
+    end
+
     def esp_responses_data(*keys)
       decorated_school.programs.slice(*keys)
     end
