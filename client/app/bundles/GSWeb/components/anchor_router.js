@@ -51,3 +51,10 @@ export function handleAnchor(token, callback) {
     callback(tokens.slice(1));
   }
 }
+
+export function handleThirdAnchor(token, callback) {
+  let tokens = anchorTokens();
+  if(tokens[1] == token) {
+    callback(tokens.slice(2));
+  }
+}

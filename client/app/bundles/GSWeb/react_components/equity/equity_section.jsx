@@ -40,7 +40,7 @@ export default class EquitySection extends React.Component {
       'De bajos Ingresos': 'Low-income_students',
       'Estudiantes con discapacidades': 'Students_with_Disabilities',
       'Students with Disabilities': 'Students_with_Disabilities'
-    }
+    };
     handleAnchor(
       mapping[this.props.equity_config["section_info"].anchor], tokens => {
         let tabNameAnchorMap = {
@@ -51,8 +51,8 @@ export default class EquitySection extends React.Component {
           'Resultados de exámenes': 'Test_scores',
           'Índices de Graduación': 'Graduation_rates',
           'Cursos avanzados': 'Advanced_coursework',
-          'Disciplina y asistencia': 'Discipline_and_attendance',
-        }
+          'Disciplina y asistencia': 'Discipline_and_attendance'
+        };
         let section_content = this.props.equity_config["section_content"];
         let index = section_content.findIndex((content) => tabNameAnchorMap[content["section_title"]] == tokens[0]);
         if(index == -1) {
@@ -70,6 +70,7 @@ export default class EquitySection extends React.Component {
           defaultTab={this.state.defaultSubSectionTab}
           key={this.state.active}
           equity_config={item["content"]}
+          parent_tab={this.props.equity_config["section_content"][this.state.active].section_title}
       />
     </div>
   }
