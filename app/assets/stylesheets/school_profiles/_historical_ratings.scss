@@ -8,6 +8,9 @@
     > h4 {
       font-family: opensans-semibold;
     }
+    @include media-breakpoint-down(xs) {
+      padding: 10px 12px;
+    }
   }
 
   .header {
