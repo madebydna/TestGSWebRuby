@@ -3,8 +3,7 @@
   $contact-icon-color: #c1d2d9;
   $background-color: #f6f9fa;
   margin-top: 20px;
-  margin-left: -15px;
-  margin-right: -15px;
+
   @include media-breakpoint-up(sm) {
     padding: 30px 15px;
     margin-left: auto;
@@ -21,13 +20,7 @@
     }
   }
 
-  //.attendance-zone {
-  //  text-align: right;
-  //  vertical-align: bottom;
-  //  @include media-breakpoint-down(xs) {
-  //    text-align: center;
-  //  }
-  //}
+
 
   & a {
     color: $link-text-color;
@@ -62,13 +55,11 @@
 
   .map-container {
     position: relative;
-    min-height: 450px;
     max-width: 1200px;
     padding-bottom: 30px;
     margin: auto;
-    @include media-breakpoint-down(xs) {
-      float: none;
-      min-height: 400px;
+    @include media-breakpoint-up(sm) {
+      min-height: 450px;
     }
   }
 
