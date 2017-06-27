@@ -1,6 +1,9 @@
 <% ajax %>
 <div>
-  <form class="js-signin-form" data-parsley-namespace="data-parsley-">
+  <%= form_tag authenticate_user_path, method: :post, remote: ajax,
+               id: '',
+               class: 'js-signin-form',
+               'data-parsley-namespace' => 'data-parsley-' do %>
     <%= token_tag form_authenticity_token %>
         <p class="<%= 'active' if @active_tab == 'join' %>"><%= t('.no_account_label') %>
           <a href="#join" data-toggle="tab" class="js_join_tab"> <%= t('.signup_tab') %></a>
@@ -40,5 +43,5 @@
         </div>
 
         <button type="submit" class="submit js-join-login-submit-button"><%= t('.login_button') %></button>
-  </form>
+  <% end %>
 </div>
