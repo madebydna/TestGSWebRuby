@@ -24,12 +24,15 @@
     cursor: pointer
   }
   .state-average {
-    display: block;
+    display: inline-block;
     font-size: $font-size-s1;
     color: #71787e;
     font-family: 'opensans-regular';
     line-height: 18px;
     padding-top: 10px;
+  }
+  .person-bar-viz > .state-average{
+    display: block;
   }
   .score {
     font-size: 18px;
