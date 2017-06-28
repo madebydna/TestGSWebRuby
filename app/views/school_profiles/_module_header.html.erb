@@ -5,7 +5,7 @@
  <% info_text = info_text || nil %>
  <% has_data %>
  <% show_historical_ratings ||= false %>
- <% columns_historical = show_historical_ratings ? 'col-md-9' : 'col-md-12' %>
+ <% columns_historical = show_historical_ratings ? 'col-md-8' : 'col-md-12' %>
 
  <div class="module-header">
    <div class="row">
@@ -37,7 +37,7 @@
        </div>
      </div>
    <% if show_historical_ratings %>
-     <div class="col-xs-12 col-md-3 show-history-button">
+     <div class="col-xs-12 col-md-4 show-history-button">
        <div>
          <button class="js-historical-button">
            <span class="icon-clock"></span>
