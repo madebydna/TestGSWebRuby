@@ -186,7 +186,7 @@ module SchoolProfiles
         h['school_value'] = nil
       end
     end
-
+    # TODO Create method to handle ACT_SAT_PARTICIPATION  -  Instead of returning boolean
     def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
       return_value = false
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|
