@@ -25,6 +25,10 @@ module SchoolProfiles
         value.to_f
       end
 
+      def self.invert_using_one_hundred(value)
+        100.to_f - value
+      end
+
       def self.dollars(value)
         ActiveSupport::NumberHelper.number_to_currency(value, precision:0)
       end

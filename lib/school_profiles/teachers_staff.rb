@@ -3,6 +3,8 @@ module SchoolProfiles
 
     attr_reader :school_cache_data_reader
 
+    THREE_YEARS_EXPERIENCE ='Percentage of teachers with less than three years experience'
+
     GSDATA_CACHE_ACCESSORS = [
         {
             :data_key => 'Ratio of students to full time teachers',
@@ -15,9 +17,9 @@ module SchoolProfiles
             :formatting => [:to_f, :round]
         },
         {
-            :data_key => 'Percentage of teachers with less than three years experience',
+            :data_key => THREE_YEARS_EXPERIENCE,
             :visualization => :single_bar_viz_inverted,
-            :formatting => [:to_f, :round, :percent]
+            :formatting => [:to_f, :invert_using_one_hundred, :round, :percent]
         },
         {
             :data_key => 'Percentage of full time teachers who are certified',

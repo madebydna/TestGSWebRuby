@@ -3,9 +3,12 @@
 
 <% range = score_data.range ||= (0..100) %>
 <% percentage = score_data.score_percentage(score_data.score.float_value, range) %>
+<% percentage = 100.to_f - percentage if inverted %>
+
 <% grey_score = 100.to_f - percentage %>
 <% state_average_percentage = score_data.score_percentage(score_data.state_average.try(:float_value), range) %>
-<% score_rating = score_data.score_rating_color(percentage, inverted) %>
+<% state_average_percentage = 100.to_f - state_average_percentage if inverted && state_average_percentage.present? %>
+<% score_rating = score_data.score_rating_color(percentage,false) %>
 
 <div class="row bar-graph-display">
   <div class="test-score-container clearfix">
