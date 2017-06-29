@@ -1,4 +1,6 @@
-class StripEdgeWhitespace
+require_relative '../step'
+
+class StripEdgeWhitespace < GS::ETL::Step
   def initialize(field, which_sides = :both)
     self.field = field
     self.which_sides = which_sides
