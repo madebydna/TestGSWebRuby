@@ -34,10 +34,8 @@ module SchoolProfiles
       100.0 * ((score.to_f - range.min) / (range.max - range.min))
     end
 
-    def score_rating_color(percentage, inverted)
-      score_rating = [10, ((percentage / 10.0).truncate + 1)].min # 100% gets an 11 per previous line
-      score_rating = 11 - score_rating if inverted
-      score_rating
+    def score_rating_color(percentage)
+      [10, ((percentage / 10.0).truncate + 1)].min # 100% gets an 11 per previous line
     end
 
     def formatted_score
