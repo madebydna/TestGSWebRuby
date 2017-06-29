@@ -51,7 +51,7 @@ es:
           <hr />
         _3_html: >
           <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
-          <p>Los resultados de los exámenes en esta escuela <span class="emphasis">son comparables</span> con el promedio estatal, aunque todavía por debajo de escuelas de rendimiento superior en el estado. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado</p>
+          <p>Los resultados de los exámenes en esta escuela <span class="emphasis">son comparables</span> con el promedio estatal, aunque todavía por debajo de escuelas de rendimiento superior en el estado. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
@@ -60,7 +60,7 @@ es:
           <hr />
         _4_html: >
           <h3 class="positive">Un signo prometedor:</h3>
-          <p>Los resultados de los exámenes en esta escuela están por encima del promedio estatal. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado</p>
+          <p>Los resultados de los exámenes en esta escuela están por encima del promedio estatal. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
