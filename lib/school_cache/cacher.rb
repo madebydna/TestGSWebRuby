@@ -62,7 +62,7 @@ class Cacher
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
         feed_test_scores: FeedTestScoresCacher,
-        gsdata: GsdataCaching::GsdataCacher
+        gsdata:           GsdataCaching::GsdataCacher
     }[key.to_s.to_sym]
   end
 
