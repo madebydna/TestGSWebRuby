@@ -1,6 +1,7 @@
 module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
+    include Qualaroo
 
     FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
     UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
@@ -74,6 +75,10 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:college_readiness, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def faq

@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
 import CourseSubject from './course_subject';
 import Drawer from './drawer';
-import InfoTextAndCircle from './info_text_and_circle'
+import InfoTextAndCircle from './info_text_and_circle';
 import NoDataModuleCta from './no_data_module_cta';
+import InfoBox from './school_profiles/info_box';
+import GiveUsFeedback from './school_profiles/give_us_feedback';
 
 export default class Courses extends React.Component {
 
@@ -14,7 +16,8 @@ export default class Courses extends React.Component {
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired
-    })
+    }),
+    qualaroo_module_link: PropTypes.string
   };
 
   static defaultProps = {
@@ -23,6 +26,15 @@ export default class Courses extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  footer(sources, qualaroo_module_link) {
+    return (
+        <div>
+          <InfoBox content={sources} >{ this.t('See notes') }</InfoBox>
+          <GiveUsFeedback content={qualaroo_module_link} />
+        </div>
+    )
   }
 
   sourcesToHtml() {
@@ -119,12 +131,7 @@ export default class Courses extends React.Component {
           }
           <InfoTextAndCircle {...this.props.faq} />
         </div>
-        <a data-remodal-target="modal_info_box"
-           data-content-type="info_box"
-           data-content-html={this.sourcesToHtml()}
-           href="javascript:void(0)">
-          <span className="">{this.t('See notes')}</span>
-        </a>
+        { this.footer(this.sourcesToHtml(), this.props.qualaroo_module_link) }
       </div>
       </div>)
     else

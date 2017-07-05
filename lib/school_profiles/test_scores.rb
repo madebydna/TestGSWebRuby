@@ -2,6 +2,7 @@ module SchoolProfiles
   class TestScores
 
     attr_reader :school, :school_cache_data_reader
+    include Qualaroo
 
     GRADES_DISPLAY_MINIMUM = 2
     N_TESTED = 'n_tested'
@@ -14,6 +15,10 @@ module SchoolProfiles
       SchoolProfiles::NarrativeLowIncomeTestScores.new(
           school_cache_data_reader: school_cache_data_reader
       ).auto_narrative_calculate_and_add
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:test_scores, @school.state, @school.id.to_s)
     end
 
     def faq

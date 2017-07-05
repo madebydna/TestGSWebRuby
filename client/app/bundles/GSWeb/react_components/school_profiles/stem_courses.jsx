@@ -9,6 +9,7 @@ import PersonBar from '../visualizations/person_bar';
 import BarGraphBase from '../equity/graphs/bar_graph_base';
 import BasicDataModuleRow from '../school_profiles/basic_data_module_row';
 import InfoTextAndCircle from '../info_text_and_circle';
+import GiveUsFeedback from './give_us_feedback';
 
 function t(string) {
   if (window.GS && GS.I18n && GS.I18n.t) {
@@ -26,6 +27,15 @@ const stateAverageLabel = function(stateAverageValue) {
     return Math.round(f).toString();
   }
 }
+function footer(sources, qualaroo_module_link) {
+  return (
+    <div>
+      <InfoBox content={sourcesToHtml(sources)} >{ t('See notes') }</InfoBox>
+      <GiveUsFeedback content={qualaroo_module_link} />
+    </div>
+  )
+}
+
 
 const visualizationMap = {
   'PersonBar': PersonBar,
@@ -57,7 +67,7 @@ const sourcesToHtml = function(sources) {
   return html;
 }
 
-const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources }) => {
+const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link }) => {
 
   let titleElement = <span>
     {title} <QuestionMarkTooltip content={titleTooltipText} />
@@ -69,7 +79,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
     <InfoTextAndCircle cta={faqCta} content={faqContent} />
   </div>
 
-  let footer = <InfoBox content={sourcesToHtml(sources)} >{ t('Sources') }</InfoBox>
+
 
   return <div>
     <a className="anchor-mobile-offset" name="Advanced_courses"></a>
@@ -78,7 +88,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
       icon = { <MicroscopeCircleIcon /> }
       title = { titleElement }
       subtitle = { subtitle }
-      footer = { footer }
+      footer = { footer(sources, qualaroo_module_link) }
       body = { body }
     />
   </div>

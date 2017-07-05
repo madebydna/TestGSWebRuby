@@ -30,12 +30,8 @@
         </div>
     <% end %>
     <div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html="<%= content %>"
-         href="javascript:void(0)">
-        <span class="source-link"><%= t('.sources') %></span>
-      </a>
+      <%= render 'sources_link_to_modal', content: content %>
+      <%= render 'module_feedback', content: teachers_staff.qualaroo_module_link %>
     </div>
   <% end %>
 </div>

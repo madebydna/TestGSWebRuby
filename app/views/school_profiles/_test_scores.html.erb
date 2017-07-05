@@ -2,6 +2,7 @@
 <% title = t('.title') %>
 <% subtitle = t('.subtitle_html') %>
 <% rating = test_scores.rating %>
+<% qualaroo_module_link = test_scores.qualaroo_module_link %>
 <% info_text = test_scores.info_text  %>
 <% data_values = test_scores.subject_scores || [] %>
 <% initial_size = 3 %>
@@ -64,18 +65,10 @@
       <% end %>
       <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
     </div>
-
-    <div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html="<%= content %>"
-
-         href="javascript:void(0)">
-        <% if data_values.present? %>
-          <span class="source-link"><%= t('lib.test_scores.sources') %></span>
-        <% end %>
-      </a>
-    </div>
+    <% if data_values.present? %>
+      <%= render 'sources_link_to_modal', content: content %>
+      <%= render 'module_feedback', content: qualaroo_module_link %>
+    <% end %>
   <% end %>
   </div>
 </div>

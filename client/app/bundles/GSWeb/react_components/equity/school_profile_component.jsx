@@ -22,7 +22,8 @@ export default class SchoolProfileComponent extends React.Component {
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired
-    })
+    }),
+    qualaroo_module_link: React.PropTypes.string
   };
 
   constructor(props) {
@@ -137,6 +138,7 @@ export default class SchoolProfileComponent extends React.Component {
           equity_config={ equityConfig[i]}
           sources={this.props.sources}
           faq={this.props.faq}
+          qualaroo_module_link={this.props.qualaroo_module_link}
       />);
       if (equityConfig[i] && equityConfig[i]['section_content']) {
         noData = false;

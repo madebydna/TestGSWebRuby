@@ -1,11 +1,15 @@
 module SchoolProfiles
   class StudentProgress
-
+    include Qualaroo
     attr_reader :school, :school_cache_data_reader
 
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:student_progress, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def rating

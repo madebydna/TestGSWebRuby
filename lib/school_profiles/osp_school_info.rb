@@ -1,6 +1,6 @@
 module SchoolProfiles
   class OspSchoolInfo
-
+    include Qualaroo
     attr_reader :school, :school_cache_data_reader
 
     OVERVIEW_CACHE_KEYS = %w(best_known_for anything_else start_time end_time schedule transportation dress_code boarding school_sub_type coed college_destination_1)
@@ -57,6 +57,14 @@ module SchoolProfiles
         OSP_CACHE_KEYS.each {|tab, content| content.each {|c| keys.push( c[:key] ) if level_code_matches?(c[:level_code]) && school_type_matches?(c[:type]) }}
         keys
       )
+    end
+
+    def qualaroo_module_link
+      if @school.private_school?
+        qualaroo_iframe(:general_information_private, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
+      else
+        qualaroo_iframe(:general_information_public, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
+      end
     end
 
     def level_code_matches?(level_code)

@@ -1,6 +1,7 @@
 require 'set'
 module SchoolProfiles
   class Courses
+    include Qualaroo
 
     SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
     SUBJECT_RATING_SUPPRESSION = %w(arts_index health_index vocational_hands_on_index)
@@ -11,6 +12,10 @@ module SchoolProfiles
         'Course Enrollment',
         'Advanced Course Rating'
       ]
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:advanced_coursework, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def faq

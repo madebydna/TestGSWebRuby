@@ -36,13 +36,7 @@
   </div>
 
   <% if student_progress.has_data? %>
-    <div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html="<%= sources %>"
-         href="javascript:void(0)">
-          <span class="source-link"><%= t('.sources') %></span>
-      </a>
-    </div>
+    <%= render 'sources_link_to_modal', content: sources %>
+    <%= render 'module_feedback', content: qualaroo_module_link %>
   <% end %>
 </div>
