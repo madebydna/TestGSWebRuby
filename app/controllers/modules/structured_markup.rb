@@ -28,10 +28,10 @@ module StructuredMarkup
 
   def self.organization_hash
     {
-      "@context" => "http://schema.org",
+      "@context" => "https://schema.org",
       "@type" => "Organization",
       "name" => "GreatSchools",
-      "url" => "http://www.greatschools.org/",
+      "url" => "https://www.greatschools.org/",
       "logo" => "https://www.greatschools.org/images/greatschools-logo.png",
       "sameAs" => [
         "https://www.facebook.com/greatschools",
@@ -126,7 +126,7 @@ module StructuredMarkup
       }
     end
     {
-      "@context" => "http://schema.org",
+      "@context" => "https://schema.org",
       "@type" => "BreadcrumbList",
       "itemListElement" => crumbs
     }
@@ -134,7 +134,7 @@ module StructuredMarkup
 
   def self.school_hash(school, school_reviews = nil)
     hash = {}
-    hash["@context"] = "http://schema.org"
+    hash["@context"] = "https://schema.org"
     hash["@type"] = "School"
     hash['name'] = school.name
     hash['address'] = {
