@@ -24,7 +24,6 @@ class SchoolProfilesController < ApplicationController
   private
 
   def add_profile_structured_markup
-    set_sm_protocol request['SERVER_PROTOCOL']
     add_json_ld(StructuredMarkup.school_hash(school, school.reviews_with_calculations))
     add_json_ld(StructuredMarkup.breadcrumbs_hash(school))
     add_json_ld({
