@@ -1,8 +1,11 @@
 var GS = GS || {}
 GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
+    var baseInt1 = 1;
+    var baseInt2 = 20;
+
     var blockHtmlTags = function(val, _) {
-        var pairOfTagsRegex = /<(\s|\n)*([a-z0-9]+)[^>]*>(.|\n)*<\s*\/\2(.|\n)*>/;
+      var pairOfTagsRegex = /<(\s|\n)*([a-z0-9]+)[^>]*>(.|\n)*<\s*\/\2(.|\n)*>/;
         var whiteListedSingleTags = /<(\s|\n)*(img|input|br)(.|\n)*>/;
 
         return val.match(pairOfTagsRegex) || val.match(whiteListedSingleTags) ? false : true
@@ -35,6 +38,26 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
         }
     };
 
+    var checkAddition = function(val, _) {
+      if ((int1 + int2) == val){
+        return true;
+      }else{
+        return false;
+      }
+    };
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    var int1 = getRandomInt(baseInt1, baseInt2);
+    var int2 = getRandomInt(baseInt1, baseInt2);
+
+    var code = int1 + ' + ' + int2 + ' = ';
+
+    document.getElementById("txtCaptcha").innerHTML = code;
+    document.getElementById("txtCaptchaDiv").innerHTML = code;
+
     var init = function() {
         window.ParsleyValidator
               .addValidator('blockhtmltags', blockHtmlTags)
@@ -45,6 +68,8 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
               .addMessage('en','phonenumber','Please enter a valid 10 digit phone number')
               .addValidator('currency', currency)
               .addMessage('en','currency', 'Please enter a valid dollar amount. (Example: $1000)')
+              .addValidator('checkaddition', checkAddition)
+              .addMessage('en','checkaddition', 'Please enter a valid answer.')
     };
 
     return {
