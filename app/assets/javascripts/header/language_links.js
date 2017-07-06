@@ -2,11 +2,12 @@ var GS = GS || {};
 
 GS.nav = GS.nav || {};
 
+
 GS.nav.language = GS.nav.language || (function(){
   var initLanguageLinkListener = function() {
     var changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
-    if (typeof otherLanguageAvailable!== 'undefined'  && otherLanguageAvailable == 'false' ) {
-      changeLanguageLink.addClass('dn');
+    if (typeof otherLanguageAvailable !== 'undefined'  && !otherLanguageAvailable ) {
+      changeLanguageLink.className += " dn";
     }
 
     var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
