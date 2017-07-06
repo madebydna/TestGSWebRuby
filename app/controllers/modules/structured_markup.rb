@@ -92,9 +92,13 @@ module StructuredMarkup
   end
 
   def self.ensure_https(url)
-    uri = URI.parse(url)
-    uri.scheme = 'https'
-    uri.to_s
+    url_local = url
+    if ENV_GLOBAL['force_ssl'].present? && ENV_GLOBAL['force_ssl'].to_s == 'true'
+      uri = URI.parse(url)
+      uri.scheme = 'https'
+      url_local = uri.to_s
+    end
+    url_local
   end
 
   def self.breadcrumbs_hash(school)
