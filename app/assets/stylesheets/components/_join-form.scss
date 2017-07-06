@@ -70,10 +70,42 @@
     input, label {
       float: left;
     }
-    span {
-      float: right;
-      @include media-breakpoint-only(xs) {
-        width: 100%;
+  }
+
+  .multi-select-button-group {
+    @include button-group;
+    > label {
+      border-radius: 0px !important;
+      width: 50px;
+      padding: 0;
+    }
+    @include media-breakpoint-up(xs) {
+      font-size: $font-size-s1;
+      display: block;
+      & + .multi-select-button-group {
+        > label {
+          border-top: none;
+        }
+      }
+    }
+  }
+  .multi-select-button-group:last-of-type {
+    > label:last-child {
+      width: 51px;
+    }
+  }
+
+  .tou {
+    margin-top: 5px;
+    color: #666;
+    font-size: $font-size-s2;
+    a {
+      font-size: $font-size-s2;
+    }
+    @include media-breakpoint-up(sm) {
+      font-size: $font-size-s1;
+      a {
+        font-size: $font-size-s1;
       }
     }
   }
