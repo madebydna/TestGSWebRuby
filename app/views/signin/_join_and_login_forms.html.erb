@@ -1,11 +1,11 @@
 <% @active_tab ||= 'login' %>
 
-  <div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
-    <%= render 'signin/login_form', ajax: false %>
-  </div>
-  <div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
-    <%= render 'signin/join_tab' %>
-  </div>
+<div class="tab-pane <%= @active_tab == 'login' ? 'active in' : '' %> " id="login">
+  <%= render 'signin/login_form', ajax: false %>
+</div>
+<div class="tab-pane <%= @active_tab == 'join' ? 'active in' : '' %>" id="join">
+  <%= render 'signin/join_tab' %>
+</div>
 
 <script type="text/javascript">
 
@@ -28,14 +28,5 @@
 
   $(function() {
     GS_bind_and_sync('.js-signin-email', '.js-join-email');
-
   });
-
-  if (location.hash.substr(1) == "join" || $('.js-join-tab').hasClass('active')) {
-    GS.track.baseOmnitureObject.pageName = JOIN_PAGENAME;
-    GS.track.baseOmnitureObject.hier1 = JOIN_HIER;
-  } else {
-    GS.track.baseOmnitureObject.pageName = SIGNIN_PAGENAME;
-    GS.track.baseOmnitureObject.hier1 = SIGNIN_HIER;
-  }
 </script>

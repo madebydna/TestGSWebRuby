@@ -1,0 +1,25 @@
+---
+  en:
+    forms:
+      email address: Email address
+      sign up: Sign up
+      log in: Log in
+      done: Done
+      password: Password
+      forgot your password: Forgot your password?
+      GreatSchools terms of use: GreatSchools Terms of Use
+      privacy policy: Privacy Policy
+      already have an account: Already have an account?
+      dont have an account: Don't have an account?
+      or: or
+      log in with Facebook: Log in with Facebook
+      sign up with Facebook: Sign up with Facebook
+      sign up with your email: Sign up with your email
+      log in with your email: Log in with your email
+      submit review: Submit review
+      email_required_error: Please enter an email address.
+      signup_success: Thanks! You're now signed up.
+      sponsors_signup: Partner offers & updates (from our carefully chosen community partners)
+      terms_of_use_html: By signing up, I agree to the %{terms_of_use_link} and %{privacy_policy_link}.
+      parsley_required_message: "Please enter an email address."
+      parsley_remote_message_html: "Looks like you already have an account. <a href='#login' data-toggle='tab'>Log in</a>."

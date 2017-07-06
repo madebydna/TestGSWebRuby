@@ -1,8 +1,10 @@
 .join-and-login {
-  text-align: center;
+  text-align: left;
+
   div.well {
     background-color: #fff;
   }
+
   li {
     text-align: left;
   }
@@ -10,6 +12,19 @@
   .parsley-errors-list {
     margin: 0;
     padding: 0px;
+  }
+
+  legend {
+    color: inherit;
+    font-size: inherit;
+    border: none;
+    margin: 0 0 5px 0;
+  }
+
+  fieldset {
+    margin: 20px 0 0 0;
+    border: none;
+    padding: 0;
   }
 
   button {
@@ -35,40 +50,36 @@
   button.submit {
     text-transform: uppercase;
     font-size: $font-size-l1;
-    margin-top: 15px;
   }
 
   input {
-    margin-top: 10px;
-    height: 55px;
-    background-color: #edf3f5;
-    border: 1px solid #dbe6eb;
-    webkit-box-shadow: none;
-    box-shadow: none;
-    display: block;
-    padding: 10px 20px;
+    padding: 20px;
     width: 100%;
-    border-radius: 3px;
-    @include media-breakpoint-up(sm) {
-      height: 60px;
-    }
+    height: $form-field-large-height;
+    border: 1px solid $form-field-border-color;
+    border-radius: $form-field-border-radius;
+    background-color: #f5f9fa;
   }
 
   input.checkbox {
-    height: 16px;
-    width: 16px;
-    margin: 2px 7px 0 0;
+    height: 15px;
+    width: 15px;
+    padding: 0;
   }
 
   .checkbox-and-label {
+    display: table;
     @extend .clearfix;
-    margin-top: 20px;
     font-size: $font-size-base;
     a {
       font-size: $font-size-base;
     }
     input, label {
-      float: left;
+      display: table-cell;
+    }
+    label {
+      padding: 0 0 0 5px;
+      margin: 0;
     }
   }
 
