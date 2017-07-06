@@ -25,21 +25,24 @@
       <div class="col-xs-12 col-sm-4">
         <div class="bar-graph-container">
           <div class="score"><span><%= score_label %></span></div>
-          <div class="item-bar">
-            <div class="single-bar-viz">
-              <div class="color-row rating_<%= score_rating %>" style="width:<%= score_percentage %>%"></div>
-              <div class="grey-row" style="width:<%= grey_score %>%"></div>
+          <div class="viz">
+            <div class="item-bar">
+              <div class="single-bar-viz">
+                <div class="color-row rating_<%= score_rating %>" style="width:<%= score_percentage %>%"></div>
+                <div class="grey-row" style="width:<%= grey_score %>%"></div>
+                <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+                  <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
+                <% end %>
+              </div>
+            </div>
+            <div class="state-average">
               <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
-                <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
+                <%= t('school_profiles.rating_score_item.state_average') + ': ' + state_label %>
               <% end %>
             </div>
           </div>
         </div>
-        <div class="state-average">
-          <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
-            <%= t('school_profiles.rating_score_item.state_average') + ': ' + state_label %>
-          <% end %>
-        </div>
+
       </div>
       <div class="col-sm-2"></div>
 
