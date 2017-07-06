@@ -184,12 +184,23 @@ module SchoolProfiles
       data_label(SCHOOL_ADMIN)
     end
 
-
-    def mailto
+    def administrators_email_and_name
       data = @school_cache_data_reader.
           esp_responses_data('administrator_name','administrator_email')
       recipient_email = data.fetch('administrator_email', {}).keys.first
       recipient_name = data.fetch('administrator_name', {}).keys.first
+      # Check characteristics data if esp fails
+      if recipient_email.blank? && recipient_name.blank?
+        data = @school_cache_data_reader.characteristics_data('Head official name','Head official email address')
+        recipient_email = data.fetch('Head official email address', {}).first['school_value']
+        recipient_name = data.fetch('Head official name', {}).first['school_value']
+      end
+      return recipient_email, recipient_name
+    end
+
+    def mailto
+      recipient_email, recipient_name = administrators_email_and_name
+
       return nil unless recipient_email && recipient_name
       osp_url = Rails.application.routes.url_helpers.osp_register_url(
           city: school.city,
