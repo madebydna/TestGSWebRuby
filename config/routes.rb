@@ -243,6 +243,7 @@ LocalizedProfiles::Application.routes.draw do
     resources :schools
     resources :districts
     resource :widget_logs, only: [:create]
+    resources :students
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
