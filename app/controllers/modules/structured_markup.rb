@@ -5,6 +5,10 @@ module StructuredMarkup
 
     protected
 
+    def set_sm_protocol(p)
+      @_protocol = p
+    end
+
     def json_ld_hash 
       @_json_ld_hash ||= default_json_ld_hash
     end
@@ -91,6 +95,20 @@ module StructuredMarkup
     text.gs_capitalize_words
   end
 
+  def self.get_sm_protocol
+    @_protocol
+  end
+
+  def self.ensure_https(url)
+    if get_sm_protocol == 'https'
+      uri = URI.parse(url)
+      uri.scheme = 'https'
+      uri.to_s
+    else
+      url
+    end
+  end
+
   def self.breadcrumbs_hash(school)
     urlHelperMethods = Class.new
       .include(Rails.application.routes.url_helpers)
@@ -119,9 +137,9 @@ module StructuredMarkup
         "@type" => "ListItem",
         "position" => index + 1,
         "item" => {
-          "@id" => url,
+          "@id" => ensure_https(url),
           "name" => name,
-          "image" => url 
+          "image" => ensure_https(url)
         }
       }
     end
