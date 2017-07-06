@@ -1,0 +1,20 @@
+// bootstrap
+@import "resources/bootstrap/smaller_bootstrap";
+
+// variables, mixins, base styles
+@import "variables/variables";
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
+@import "gs/form";
+@import "base/spacing";
+@import "base/typography";
+
+// components
+@import "components/join-form";
+
+// more components
+@import "gs/objects/modal_layout";
+@import 'gs/modal_tooltip';
+
+@import 'resources/remodal'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme'; // used on profiles / used by modals
