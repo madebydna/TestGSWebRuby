@@ -55,7 +55,7 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
     var code = int1 + ' + ' + int2 + ' = ';
 
     $(function() {
-      if (gon.pagename == "GS:OSP:Register") {
+      if (window.gon && gon.pagename == "GS:OSP:Register") {
         document.getElementById("txtCaptchaDiv").innerHTML = code;
       }
     });
