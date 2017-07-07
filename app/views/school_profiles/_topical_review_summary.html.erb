@@ -20,6 +20,7 @@
                data-component-name="ReviewDistribution"
                data-props="<%= {distribution: reviews.summary.topical_review_distributions[topic]}.to_json %>"
                data-dom-id="js-topical-review-distribution"
+               data-ga-click-label="topical review summary - <%= topic %>"
                href="javascript:void(0)">
               <span class="answer-icon topic-icon <%= topical_review_summary[topic][:average].downcase.gsub(' ', '-') %>"></span>
               <span class="topic-details"><%= topic %>&nbsp;(<%= topical_review_summary[topic][:count] %>)</span>

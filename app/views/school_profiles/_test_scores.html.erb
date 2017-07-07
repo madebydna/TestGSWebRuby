@@ -11,7 +11,7 @@
 <% analytics_id += '-empty' unless data_values.present? %>
 <% narration = test_scores.narration %>
 
-<div id="<%= analytics_id %>" class="rating-container rs-test-scores">
+<div id="<%= analytics_id %>" class="rating-container rs-test-scores" data-ga-click-label="Test scores">
   <a class="anchor-mobile-offset" name="Test_scores"></a>
   <div class="rating-container__rating js-historical-module">
     <%= render "module_header",
