@@ -1,7 +1,10 @@
 module SchoolProfiles
   class TeachersStaff
+    include Qualaroo
 
     attr_reader :school_cache_data_reader
+
+    THREE_YEARS_EXPERIENCE ='Percentage of teachers with less than three years experience'
 
     GSDATA_CACHE_ACCESSORS = [
         {
@@ -15,9 +18,9 @@ module SchoolProfiles
             :formatting => [:to_f, :round]
         },
         {
-            :data_key => 'Percentage of teachers with less than three years experience',
+            :data_key => THREE_YEARS_EXPERIENCE,
             :visualization => :single_bar_viz_inverted,
-            :formatting => [:to_f, :round, :percent]
+            :formatting => [:to_f, :invert_using_one_hundred, :round, :percent]
         },
         {
             :data_key => 'Percentage of full time teachers who are certified',
@@ -33,6 +36,10 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:teachers_staff, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def included_data_types

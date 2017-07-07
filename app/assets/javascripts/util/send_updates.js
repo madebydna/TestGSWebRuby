@@ -25,21 +25,19 @@ GS.sendUpdates = (function() {
           .done(function(){
             var schoolName = GS.schoolNameFromUrl();
             if (schoolName === undefined) {
-              GS.notifications
-                .notice(
+              GS.notifications.success(
                 GS.I18n.t('follow_schools.signed_in_message_with_no_school_name')
               );
             } else {
-              GS.notifications.notice(
-                GS.I18n.t('follow_schools.signed_in_message') +
-                ' ' +
-                schoolName
+              GS.notifications.success(
+                GS.I18n.t('follow_schools.signed_in_message') + ' ' + schoolName
               );
             }
           });
       } else {
-        GS.modal.manager.showModal(GS.modal.SignupAndFollowSchoolModal)
-          .done(GS.subscription.schools(state, schoolId).follow);
+        GS.modal.manager.showModal(GS.modal.SignupAndFollowSchoolModal).done(function(data) {
+          GS.subscription.schools(state, schoolId).follow({email: data.email});
+        });
       }
     }
   };

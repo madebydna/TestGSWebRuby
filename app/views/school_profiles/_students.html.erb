@@ -9,7 +9,7 @@
 <% analytics_id += '-empty' unless students.visible? %>
 
 <a class="anchor-mobile-offset" name="Students"></a>
-<div id="<%= analytics_id %>" class="students-container">
+<div id="<%= analytics_id %>" class="students-container" data-ga-click-label="Students">
   <div class="rating-container__rating">
     <div class="module-header">
       <div class="circle-rating--equity-blue circle-rating--medium">
@@ -52,12 +52,8 @@
     </div>
     <div class="gender"> </div>
     <div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html="<%= content %>"
-         href="javascript:void(0)">
-        <span class="source-link"><%= t('.sources') %></span>
-      </a>
+      <%= render 'sources_link_to_modal', content: content %>
+      <%= render 'module_feedback', content: students.qualaroo_module_link %>
     </div>
   <% end %>
 </div>

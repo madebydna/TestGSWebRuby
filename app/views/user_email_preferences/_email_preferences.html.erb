@@ -1,7 +1,6 @@
 <% greatnews = @current_preferences.include? :greatnews %>
 <% greatkidsnews = @current_preferences.include? :greatkidsnews %>
 <% sponsor = @current_preferences.include? :sponsor %>
-<% decline_auto_graduate = @current_preferences.include? :decline_auto_graduate %>
 
 <section class="row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
@@ -59,24 +58,6 @@
               <div class="clearfix"></div>
             <% end %>
           </div>
-        </div>
-      </div>
-
-
-      <div class="well pam mtm">
-        <em><%= t('.auto_graduate_label') %></em>
-        <div class="mtm">
-          <div class="fl prm mts mbm">
-            <div class="js-checkbox iconx16 js-icon <%= decline_auto_graduate ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box'  %>" 
-                 data-toggle="button" readonly="">
-              <input name="decline_auto_graduate"
-                 disabled="true"
-                 type="hidden"
-                 value="true">
-            </div>
-          </div>
-          <%= t('.keep_following_same_grade') %>
-          <div class="clearfix"></div>
         </div>
       </div>
 

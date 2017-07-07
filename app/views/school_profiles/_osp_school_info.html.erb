@@ -12,7 +12,8 @@
     <%= react_component('OspSchoolInfo', props: {
       content: school_profile.tab_config,
       osp_link: osp_link,
-      source_name: school_profile.source_name}) %>
+      source_name: school_profile.source_name,
+      qualaroo_module_link: school_profile.qualaroo_module_link}) %>
   <% else %>
     <div id="osp-school-info" class="rating-container">
       <a class="anchor-mobile-offset" name="General_info"></a>

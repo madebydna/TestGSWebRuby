@@ -1,6 +1,6 @@
 module SchoolProfiles
   class OspSchoolInfo
-
+    include Qualaroo
     attr_reader :school, :school_cache_data_reader
 
     OVERVIEW_CACHE_KEYS = %w(best_known_for anything_else start_time end_time schedule transportation dress_code boarding school_sub_type coed college_destination_1)
@@ -57,6 +57,14 @@ module SchoolProfiles
         OSP_CACHE_KEYS.each {|tab, content| content.each {|c| keys.push( c[:key] ) if level_code_matches?(c[:level_code]) && school_type_matches?(c[:type]) }}
         keys
       )
+    end
+
+    def qualaroo_module_link
+      if @school.private_school?
+        qualaroo_iframe(:general_information_private, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
+      else
+        qualaroo_iframe(:general_information_public, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
+      end
     end
 
     def level_code_matches?(level_code)
@@ -176,12 +184,23 @@ module SchoolProfiles
       data_label(SCHOOL_ADMIN)
     end
 
-
-    def mailto
+    def administrators_email_and_name
       data = @school_cache_data_reader.
           esp_responses_data('administrator_name','administrator_email')
       recipient_email = data.fetch('administrator_email', {}).keys.first
       recipient_name = data.fetch('administrator_name', {}).keys.first
+      # Check characteristics data if esp fails
+      if recipient_email.blank? && recipient_name.blank?
+        data = @school_cache_data_reader.characteristics_data('Head official name','Head official email address')
+        recipient_email = data.fetch('Head official email address', {}).first['school_value']
+        recipient_name = data.fetch('Head official name', {}).first['school_value']
+      end
+      return recipient_email, recipient_name
+    end
+
+    def mailto
+      recipient_email, recipient_name = administrators_email_and_name
+
       return nil unless recipient_email && recipient_name
       osp_url = Rails.application.routes.url_helpers.osp_register_url(
           city: school.city,

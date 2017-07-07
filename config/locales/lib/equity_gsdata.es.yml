@@ -10,6 +10,12 @@ es:
       RE Grad rates narration: >
         Esto muestra las tasas de graduación de diferentes razas o etnias. Grandes diferencias puede sugerir que algunos
         estudiantes no están recibiendo el apoyo que necesitan para tener éxito.
+      RE UC/CSU eligibility narration: >
+        No todos los estudiantes graduados de la escuela secundaria han tomado las clases que necesitan para ser
+        elegible para aplicar a la Universidad de CA o escuelas estatales de CA. Esto muestra los porcentajes de
+        graduados de esta escuela que obtuvieron un grado "C" o superior en las A-G clases requeridas para ser elegible
+        para la Universidad de CA y colegios de CA State.
+        <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
       'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
       courses_title: Cursos avanzados
       Advanced coursework: Cursos avanzados

@@ -1,0 +1,11 @@
+.module_feedback {
+  display: inline-block;
+}
+@include media-breakpoint-down(xs) {
+  .module_feedback_desktop_divider{
+    display: none;
+  }
+  .module_feedback {
+    display: block;
+  }
+}

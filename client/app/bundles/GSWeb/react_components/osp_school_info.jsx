@@ -3,12 +3,14 @@ import SectionNavigation from './equity/tabs/section_navigation';
 import ResponseData from './response_data.jsx';
 import InfoCircle from './info_circle';
 import AnchorButton from './anchor_button';
+import GiveUsFeedback from './school_profiles/give_us_feedback'
 
 export default class OspSchoolInfo extends React.Component {
 
   static propTypes = {
     content: PropTypes.array,
-    source_name: PropTypes.string
+    source_name: PropTypes.string,
+    qualaroo_module_link: PropTypes.string
   };
 
   constructor(props) {
@@ -42,6 +44,15 @@ export default class OspSchoolInfo extends React.Component {
     }
   }
 
+  footer(sources, qualaroo_module_link) {
+    return (
+        <div>
+          { this.t('source') }:&nbsp;<span>{sources}</span>
+          <GiveUsFeedback content={qualaroo_module_link} />
+        </div>
+    )
+  }
+
   t() {
     if(GS && GS.I18n && GS.I18n.t) {
       return GS.I18n.t(...arguments);
@@ -54,7 +65,7 @@ export default class OspSchoolInfo extends React.Component {
       let stuff = this.props.content;
       let items = stuff.map((h) => ({section_title: h.title}));
       let infoText = 'Replace this with real copy';
-      return (<div id="osp-school-info">
+      return (<div id="osp-school-info" data-ga-click-label="General Information">
         <a className="anchor-mobile-offset" name="General_info"/>
         <div className="equity-container">
           <div className="title-bar">
@@ -84,7 +95,7 @@ export default class OspSchoolInfo extends React.Component {
             <div className="top-tab-panel">{this.selectSectionContent(stuff)}</div>
 
             <div className="source-bar">
-              { this.t('source') }:&nbsp;<span>{this.props.source_name}</span>
+              { this.footer(this.props.source_name, this.props.qualaroo_module_link) }
             </div>
           </div>
         </div>

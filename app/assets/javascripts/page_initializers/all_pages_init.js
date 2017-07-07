@@ -53,6 +53,9 @@ $(function() {
     }
   });
 
+  $(function() {
+    $('body').on('click', '.multi-select-button-group label', GS.multiSelectButtonGroup);
+  });
 
   $('.js-clear-local-cookies-link').each(function() {
     $(this).click(GS.hubs.clearLocalUserCookies);

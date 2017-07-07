@@ -1,5 +1,6 @@
 module SchoolProfiles
   class Students
+    include Qualaroo
 
     OTHER_BREAKDOWN_KEYS = [
         'English learners',
@@ -10,6 +11,10 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:students, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def ethnicity_data

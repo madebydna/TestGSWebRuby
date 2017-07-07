@@ -33,28 +33,16 @@ GS.notifications = GS.notifications || (function($) {
   };
 
   var notice = function(message) {
-    $getNotificationContainer().append(
-      GS.handlebars.partialContent(
-        'notification_bar_message',{
-          message: message,
-          bootstrapType: 'info'
-        }
-      )
-    );
-    closeNotificationMessage(10000);
+    GS.modal.manager.showModal(GS.modal.SuccessModal, {
+      subheading: message
+    });
   };
 
-  var success = function(message) {
-    $getNotificationContainer().append(
-      GS.handlebars.partialContent(
-        'notification_bar_message',{
-          message: message,
-          bootstrapType: 'success'
-        }
-      )
-    );
-    closeNotificationMessage(10000);
-  };
+  var success = function(message) { 
+    GS.modal.manager.showModal(GS.modal.SuccessModal, {
+      subheading: message
+    });
+  }
 
   var warning = function(message) {
     $getNotificationContainer().append(

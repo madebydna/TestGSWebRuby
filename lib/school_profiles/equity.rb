@@ -1,5 +1,7 @@
 module SchoolProfiles
   class Equity
+    include Qualaroo
+
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
 
@@ -25,6 +27,10 @@ module SchoolProfiles
         @_test_scores ||=(
           equity_test_scores.generate_equity_test_score_hash
         )
+    end
+
+    def qualaroo_module_link(module_sym)
+      qualaroo_iframe(module_sym, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def equity_test_scores

@@ -5,7 +5,7 @@ const BasicDataModuleLayout = ({
   id, className, icon, title, subtitle, body, footer
 }) => {
   return (
-    <div id={id} className={'rating-container ' + className }>
+    <div id={id} className={'rating-container ' + className } data-ga-click-label={title}>
       <a className="anchor-mobile-offset" name={id}></a>
       <div className="rating-container__rating">
 

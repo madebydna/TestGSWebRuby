@@ -5,7 +5,7 @@
 <% analytics_id = 'TeachersStaff' %>
 <% analytics_id += '-empty' unless data_values.present? %>
 
-<div id="<%= analytics_id %>" class="teachers-staff">
+<div id="<%= analytics_id %>" class="teachers-staff" data-ga-click-label="Teachers and staff">
   <a class="anchor-mobile-offset" name="Teachers_staff"></a>
   <div class="rating-container__rating">
     <div class="module-header">
@@ -30,12 +30,8 @@
         </div>
     <% end %>
     <div>
-      <a data-remodal-target="modal_info_box"
-         data-content-type="info_box"
-         data-content-html="<%= content %>"
-         href="javascript:void(0)">
-        <span class="source-link"><%= t('.sources') %></span>
-      </a>
+      <%= render 'sources_link_to_modal', content: content %>
+      <%= render 'module_feedback', content: teachers_staff.qualaroo_module_link %>
     </div>
   <% end %>
 </div>

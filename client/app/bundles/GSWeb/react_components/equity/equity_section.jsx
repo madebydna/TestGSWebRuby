@@ -3,6 +3,8 @@ import InfoCircle from '../info_circle';
 import InfoTextAndCircle from '../info_text_and_circle'
 import SectionNavigation from './tabs/section_navigation';
 import SubSectionToggle from './sub_section_toggle';
+import InfoBox from '../school_profiles/info_box';
+import GiveUsFeedback from '../school_profiles/give_us_feedback';
 
 import { handleAnchor } from '../../components/anchor_router';
 
@@ -10,6 +12,7 @@ export default class EquitySection extends React.Component {
 
   static propTypes = {
     sources: React.PropTypes.string,
+    qualaroo_module_link: React.PropTypes.string,
     equity_config: React.PropTypes.shape({
       section_info: React.PropTypes.object,
       section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -30,6 +33,15 @@ export default class EquitySection extends React.Component {
       active: 0,
       defaultSubSectionTab: null
     }
+  }
+
+  footer(sources, qualaroo_module_link) {
+    return (
+        <div>
+          <InfoBox content={sources} >{ GS.I18n.t('See notes') }</InfoBox>
+          <GiveUsFeedback content={qualaroo_module_link} />
+        </div>
+    )
   }
 
   componentDidMount() {
@@ -129,7 +141,7 @@ export default class EquitySection extends React.Component {
     let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
     let link_name = this.linkName(section_info.anchor);
     if (section_content) {
-      return <div className="equity-section">
+      return <div className="equity-section" data-ga-click-label={section_info.title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
         <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
         <div className="tab-buttons">
@@ -143,12 +155,7 @@ export default class EquitySection extends React.Component {
           {this.selectSectionContent(section_content)}
           <InfoTextAndCircle {...this.props.faq} />
         </div>
-        <a data-remodal-target="modal_info_box"
-           data-content-type="info_box"
-           data-content-html={this.props.sources}
-           href="javascript:void(0)">
-          <span className="source-link">{GS.I18n.t('See notes')}</span>
-        </a>
+        { this.footer(this.props.sources, this.props.qualaroo_module_link) }
       </div>
     }
     else {

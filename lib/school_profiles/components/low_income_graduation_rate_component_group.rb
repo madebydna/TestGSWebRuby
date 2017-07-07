@@ -9,15 +9,15 @@ module SchoolProfiles
         @components = [
           LowIncomeGraduationRateComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
-            component.data_type = '4-year high school graduation rate'
-            component.title = 'Graduation rates'
+            component.data_type = 'Percent of students who meet UC/CSU entrance requirements'
+            component.title = 'UC/CSU eligibility'
             component.type = 'bar'
             component.valid_breakdowns = ['All students', 'Economically disadvantaged', 'Not economically disadvantaged']
           end,
           LowIncomeGraduationRateComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
-            component.data_type = 'Percent of students who meet UC/CSU entrance requirements'
-            component.title = 'UC/CSU eligibility'
+            component.data_type = '4-year high school graduation rate'
+            component.title = 'Graduation rates'
             component.type = 'bar'
             component.valid_breakdowns = ['All students', 'Economically disadvantaged', 'Not economically disadvantaged']
           end

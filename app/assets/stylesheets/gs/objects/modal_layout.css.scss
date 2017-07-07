@@ -1,36 +1,33 @@
 .gs-modal-dialog {
-  max-width: 600px;
+  max-width: 660px;
+  @include media-breakpoint-up(sm) {
+    &.modal-dialog {
+      width: 660px;
+    }
+  }
 
   font-family: 'opensans-regular';
-  font-size: $font-size-l2;
-  @include media-breakpoint-up(sm) {
-    font-size: $font-size-l3;
-  }
 
   p,a {
     font-family: 'opensans-regular';
     font-size: $font-size-l2;
     @include media-breakpoint-up(sm) {
-      font-size: $font-size-l3;
+      font-size: $font-size-l2;
     }
   }
 
-  .title {
-    line-height: 30px;
-    text-align: center;
-    font-family: 'RobotoSlab-Bold';
-    font-size: $font-size-l4;
+  .heading {
+    // line-height: 30px;
+    font-family: 'opensans-semibold';
+    font-size: $font-size-l3;
     @include media-breakpoint-up(sm) {
-      font-size: $font-size-l5;
+      font-size: $font-size-l4;
     }
   }
 
   .subheading {
-    text-align: center;
     margin: 10px 0 0 0;
-    padding: 0px 10px;
     @include media-breakpoint-up(sm) {
-      padding: 0px 30px;
       font-size: $font-size-l2;
     }
   }
@@ -41,7 +38,6 @@
 
   .modal-body {
     position: initial;
-    text-align: center;
     padding: 30px 15px 15px 15px;
     background-color: #fff;
     @include media-breakpoint-up(sm) {

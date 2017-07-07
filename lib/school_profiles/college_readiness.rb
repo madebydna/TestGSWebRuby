@@ -1,6 +1,7 @@
 module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
+    include Qualaroo
 
     FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
     UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
@@ -74,6 +75,10 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:college_readiness, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
     def faq
@@ -186,7 +191,7 @@ module SchoolProfiles
         h['school_value'] = nil
       end
     end
-
+    # TODO Create method to handle ACT_SAT_PARTICIPATION  -  Instead of returning boolean
     def enforce_latest_year_school_value_for_data_types!(hash, *data_types)
       return_value = false
       data_type_hashes = hash.slice(*data_types).values.flatten.select do |tds|

@@ -73,7 +73,6 @@
                                        <option value=\"teacher\">Teacher</option>
                                       <option value=\"webmaster\">Webmaster</option>".html_safe, class: 'selectpicker required role-select' %>
           </div>
-
           <%= label_tag(:school_website, "Official school website (URL)") %>
           <input class="form-control" type="text" name="school_website" id="school_website"
                  data-parsley-blockhtmltags
@@ -82,7 +81,17 @@
                  data-parsley-maxlength="100"
                  data-parsley-type-message="Please enter a valid school website"
                  >
-
+          <div class="ptm" style="font-family:opensans-semibold">
+            <span>For security reasons, please add these numbers: *</span>
+            <div class="pts">
+              <span id="txtCaptchaDiv">&nbsp;</span>
+            <span>
+              <input type="text" name="txtCaptchaInput" id="txtCaptchaInput" size="3"
+                     data-parsley-checkaddition
+                     data-parsley-required="true"/>
+            </span>
+            </div>
+          </div>
           <div class="pvl">
             <div class="clearfix">
               <label>
@@ -106,11 +115,11 @@
             </span>
           </div>
           <div class="padding-lg tac">
-          <button class="btn btn-lg btn-primary" type="submit">
-            Sign up
-          </button>
+            <button class="btn btn-lg btn-primary" type="submit">
+              Sign up
+            </button>
           </div>
-          </div>
+        </div>
       <% end %>
       </div>
     </div>

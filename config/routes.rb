@@ -243,6 +243,7 @@ LocalizedProfiles::Application.routes.draw do
     resources :schools
     resources :districts
     resource :widget_logs, only: [:create]
+    resources :students
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
@@ -323,8 +324,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
   get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
+  get '/gsr/modals/dependencies', to: 'modals#dependencies'
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
-
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]

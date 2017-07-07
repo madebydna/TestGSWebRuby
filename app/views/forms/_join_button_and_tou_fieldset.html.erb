@@ -1,0 +1,17 @@
+<fieldset>
+  <button type="submit" class="submit js-join-login-submit-button"><%= t('sign up', scope: 'forms') %></button>
+  <p class="tou">
+    <%= t(
+      'terms_of_use_html',
+      scope: 'forms',
+      terms_of_use_link: link_to(
+        t('GreatSchools terms of use', scope: 'forms'),
+        terms_of_use_url
+      ),
+      privacy_policy_link: link_to(
+        t('privacy policy', scope: 'forms'),
+        privacy_url
+      )
+    ) %>
+  </p>
+</fieldset>

@@ -28,10 +28,10 @@ module StructuredMarkup
 
   def self.organization_hash
     {
-      "@context" => "http://schema.org",
+      "@context" => "https://schema.org",
       "@type" => "Organization",
       "name" => "GreatSchools",
-      "url" => "http://www.greatschools.org/",
+      "url" => "https://www.greatschools.org/",
       "logo" => "https://www.greatschools.org/images/greatschools-logo.png",
       "sameAs" => [
         "https://www.facebook.com/greatschools",
@@ -91,6 +91,16 @@ module StructuredMarkup
     text.gs_capitalize_words
   end
 
+  def self.ensure_https(url)
+    url_local = url
+    if ENV_GLOBAL['force_ssl'].present? && ENV_GLOBAL['force_ssl'].to_s == 'true'
+      uri = URI.parse(url)
+      uri.scheme = 'https'
+      url_local = uri.to_s
+    end
+    url_local
+  end
+
   def self.breadcrumbs_hash(school)
     urlHelperMethods = Class.new
       .include(Rails.application.routes.url_helpers)
@@ -119,14 +129,14 @@ module StructuredMarkup
         "@type" => "ListItem",
         "position" => index + 1,
         "item" => {
-          "@id" => url,
+          "@id" => ensure_https(url),
           "name" => name,
-          "image" => url 
+          "image" => ensure_https(url)
         }
       }
     end
     {
-      "@context" => "http://schema.org",
+      "@context" => "https://schema.org",
       "@type" => "BreadcrumbList",
       "itemListElement" => crumbs
     }
@@ -134,7 +144,7 @@ module StructuredMarkup
 
   def self.school_hash(school, school_reviews = nil)
     hash = {}
-    hash["@context"] = "http://schema.org"
+    hash["@context"] = "https://schema.org"
     hash["@type"] = "School"
     hash['name'] = school.name
     hash['address'] = {

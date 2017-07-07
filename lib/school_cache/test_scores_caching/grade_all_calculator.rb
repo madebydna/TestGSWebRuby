@@ -53,6 +53,7 @@ class TestScoresCaching::GradeAllCalculator
     return nil if data_sets_for_school_value.blank? && data_sets_for_state_value.blank?
 
     grade_all_tds = test_data_sets.first.dup
+    # require 'pry';binding.pry
     grade_all_tds[SCHOOL_VALUE_TEXT] = nil
     grade_all_tds[STATE_VALUE_TEXT] = nil
     grade_all_tds[SCHOOL_VALUE] = nil
@@ -115,7 +116,7 @@ class TestScoresCaching::GradeAllCalculator
   end
   
   def all_school_text_values_are_nil_or_match_float?(test_data_sets)
-    test_data_sets.all? { |tds| tds[SCHOOL_VALUE_TEXT].nil? || tds[SCHOOL_VALUE_TEXT] == tds[SCHOOL_VALUE] }
+    test_data_sets.all? { |tds| tds[SCHOOL_VALUE_TEXT].nil? || float_value(tds[SCHOOL_VALUE_TEXT]) > 0.0 }
   end
 
   def all_state_values_are_numeric?(test_data_sets)
@@ -151,27 +152,27 @@ class TestScoresCaching::GradeAllCalculator
   end
 
   def average_school_value_float(test_data_sets)
-    sum = test_data_sets.sum { |tds| tds[SCHOOL_VALUE] }
+    sum = test_data_sets.sum { |tds| float_value(tds[SCHOOL_VALUE]) }
     avg = sum.to_f / test_data_sets.size unless test_data_sets.empty?
     avg.round(PRECISION) if avg
   end
 
   def weighted_school_value_float(test_data_sets)
     count = sum_number_students_tested(test_data_sets)
-    weighted_sum = test_data_sets.sum { |tds| tds[SCHOOL_VALUE] * tds[SCHOOL_NUM_TESTED] }
+    weighted_sum = test_data_sets.sum { |tds| float_value(tds[SCHOOL_VALUE]) * tds[SCHOOL_NUM_TESTED] }
     avg = weighted_sum.to_f / count unless count.zero?
     avg.round(PRECISION) if avg
   end
 
   def average_state_value_float(test_data_sets)
-    sum = test_data_sets.sum { |tds| tds[STATE_VALUE]}
+    sum = test_data_sets.sum { |tds| float_value(tds[STATE_VALUE])}
     avg = sum.to_f / test_data_sets.size unless test_data_sets.empty?
     avg.round(PRECISION) if avg
   end
 
   def weighted_state_value_float(test_data_sets)
     count = sum_state_number_tested(test_data_sets)
-    weighted_sum = test_data_sets.sum { |tds| tds[STATE_VALUE] * tds[STATE_NUM_TESTED] }
+    weighted_sum = test_data_sets.sum { |tds| float_value(tds[STATE_VALUE]) * tds[STATE_NUM_TESTED] }
     avg = weighted_sum.to_f / count unless count.zero?
     avg.round(PRECISION) if avg
   end
@@ -182,5 +183,10 @@ class TestScoresCaching::GradeAllCalculator
 
   def has_any_grade_all_data?(test_data_sets)
     test_data_sets.any? { |tds| tds[GRADE] == GRADE_ALL }
+  end
+
+  def float_value(value)
+    return value if value.nil?
+    value.to_s.scan(/[0-9.]+/).first.to_f
   end
 end

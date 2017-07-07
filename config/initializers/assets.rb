@@ -4,6 +4,8 @@ Rails.application.config.assets.precompile += [
     'district-boundaries.css',
     'widget.css',
     'widget-form.css',
+    'wordpress-modals.js',
+    'wordpress-modals.css',
     'header.js',
     'header.css',
     'post_load.js',

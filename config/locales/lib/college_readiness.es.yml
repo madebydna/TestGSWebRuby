@@ -9,7 +9,7 @@ es:
       ACT participation: 'Participación ACT'
       'Percentage AP enrolled grades 9-12': 'Participación en cursos AP'
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
-      Percent of students who meet UC/CSU entrance requirements: 'Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU'
+      Percent of students who meet UC/CSU entrance requirements: Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU
       'Percentage of students passing 1 or more AP exams grades 9-12': 'El porcentaje de estudiantes que pasaron uno o más exámenes AP grados 9°-12°'
       'source': Fuente
       faq:
@@ -17,14 +17,21 @@ es:
         content_html: >
           <p>Información de la preparación universitaria procede de agencias del estado o nacionales de educación (haz clic en el enlace "Fuentes" para más detalles).</p>
           <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP o participó en uno de los dos exámenes de preparación universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar). También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
+          <p>¿Ha encontrado la información de la preparación universitaria útil? ¿Qué podemos hacer mejor?
+          <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Comparte tus comentarios<?a>.</p>
+          <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
-        'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenia un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
+        'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
         'SAT percent participation': 'El índice  de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
         'Average ACT score': 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de  36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre  los estudiantes de esta escuela.'
         'ACT participation':  'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
         'AP Course Participation': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
-        'Percent of students who meet UC/CSU entrance requirements': 'Este es el porcentaje de estudiantes graduados de esta escuela que completaron los cursos A-G requeridos para ser elegibles para atender a alguna de las escuelas de la Universidad de California y Universidad del Estado de California.'
+        'Percent of students who meet UC/CSU entrance requirements': >
+               Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
+               A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
+               Universidad de California y Universidad del Estado de California.
+               <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtenga más información</a>.
         'Percentage of students passing 1 or more AP exams grades 9-12': 'El índice de aprobación de los exámenes de “AP” (Cursos Avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes.'
         'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
       narration:

@@ -15,6 +15,14 @@ export function initialize() {
         var content = contentManager(ele);
         $('.gs-tipso').tipso('update', 'content', content);
       },
+      onShow: function(ele, tipso) {
+        var category = ele.closest('*[data-ga-click-category]').data('ga-click-category') || 'Profile';
+        var action = ele.closest('*[data-ga-click-action]').data('ga-click-action') || 'Infobox';
+        var label = ele.closest('*[data-ga-click-label]').data('ga-click-label');
+        if(label && label != '') {
+          analyticsEvent(category, action, label);
+        }
+      },
       tooltipHover: true,
       onHide: function (ele, tipso) {
         // enable modal

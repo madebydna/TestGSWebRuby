@@ -6,11 +6,11 @@ es:
       'Percentage of full time teachers who are certified': 'El porcentaje de profesores de tiempo completo que están certificados'
       'Ratio of students to full time counselors': 'El promedio de estudiantes por cada consejero'
       'Ratio of students to full time teachers': 'El promedio de estudiantes por cada profesor'
-      'Percentage of teachers with less than three years experience': 'El porcentaje de profesores con menos de 3 años de experiencia en enseñanza'
+      'Percentage of teachers with less than three years experience': 'El porcentaje de profesores con 3 o más años de experiencia'
       'source': 'Fuente'
       data_point_info_texts:
         'Ratio of students to full time teachers': 'El promedio de estudiantes por cada profesor de tiempo completo en esta escuela; tenga en cuenta que este no es un reflejo del promedio de estudiantes por clase.'
         'Ratio of teacher salary to total number of teachers': 'El salario promedio de profesores trabajando de tiempo completo en esta escuela.'
         'Percentage of full time teachers who are certified': 'El porcentaje de profesores de tiempo completo en esta escuela que han cumplido con todos los requisitos estándares de certificación del estado.'
         'Ratio of students to full time counselors': 'El promedio de estudiantes por cada consejero en esta escuela.'
-        'Percentage of teachers with less than three years experience': 'El porcentaje de profesores trabajando de tiempo completo en esta escuela para quienes es su primer o segundo año enseñando.'
+        'Percentage of teachers with less than three years experience': 'El porcentaje de profesores trabajando de tiempo completo en esta escuela con 3 o más años de experiencia.'
