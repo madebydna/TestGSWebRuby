@@ -141,7 +141,7 @@ export default class EquitySection extends React.Component {
     let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
     let link_name = this.linkName(section_info.anchor);
     if (section_content) {
-      return <div className="equity-section">
+      return <div className="equity-section" data-ga-click-label={section_info.title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
         <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
         <div className="tab-buttons">
