@@ -192,8 +192,8 @@ module SchoolProfiles
       # Check characteristics data if esp fails
       if recipient_email.blank? && recipient_name.blank?
         data = @school_cache_data_reader.characteristics_data('Head official name','Head official email address')
-        recipient_email = data.fetch('Head official email address', {}).first['school_value']
-        recipient_name = data.fetch('Head official name', {}).first['school_value']
+        recipient_email = data.fetch('Head official email address', [{}]).first['school_value']
+        recipient_name = data.fetch('Head official name', [{}]).first['school_value']
       end
       return recipient_email, recipient_name
     end
