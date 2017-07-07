@@ -52,11 +52,13 @@ GS.gsParsleyValidations = GS.gsParsleyValidations || (function() {
 
     var int1 = getRandomInt(baseInt1, baseInt2);
     var int2 = getRandomInt(baseInt1, baseInt2);
-
     var code = int1 + ' + ' + int2 + ' = ';
 
-    document.getElementById("txtCaptcha").innerHTML = code;
-    document.getElementById("txtCaptchaDiv").innerHTML = code;
+    $(function() {
+      if (gon.pagename == "GS:OSP:Register") {
+        document.getElementById("txtCaptchaDiv").innerHTML = code;
+      }
+    });
 
     var init = function() {
         window.ParsleyValidator
