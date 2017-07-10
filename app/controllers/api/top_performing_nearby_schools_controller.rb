@@ -6,22 +6,24 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
 
   def show
     array_of_nearby_school_hashes = []
-    results = SchoolSearchService.by_location(school_search_service_params)
-    array_of_nearby_school_hashes = results[:results].take(limit)
-    array_of_nearby_school_hashes.map! do |ssr|
-      ssr = SchoolSearchResultDecorator.decorate(ssr)
-      {
-        'state' => ssr.state.upcase,
-        'id' => ssr.id,
-        'name' => ssr.name,
-        'city' => ssr.city,
-        'type' => ssr.decorated_school_type,
-        'level' => ssr.grade_range,
-        'gs_rating' => ssr.overall_gs_rating,
-        'average_rating' => ssr.community_rating,
-        'number_of_reviews' => ssr.review_count,
-        'distance' => ssr.distance
-      }
+    if school_search_service_params[:lat] && school_search_service_params[:lon]
+      results = SchoolSearchService.by_location(school_search_service_params)
+      array_of_nearby_school_hashes = results[:results].take(limit)
+      array_of_nearby_school_hashes.map! do |ssr|
+        ssr = SchoolSearchResultDecorator.decorate(ssr)
+        {
+          'state' => ssr.state.upcase,
+          'id' => ssr.id,
+          'name' => ssr.name,
+          'city' => ssr.city,
+          'type' => ssr.decorated_school_type,
+          'level' => ssr.grade_range,
+          'gs_rating' => ssr.overall_gs_rating,
+          'average_rating' => ssr.community_rating,
+          'number_of_reviews' => ssr.review_count,
+          'distance' => ssr.distance
+        }
+      end
     end
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
     render 'api/nearby_schools/show'
