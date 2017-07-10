@@ -596,9 +596,9 @@ describe 'GradeAllCalculator' do
       end
 
       it { is_expected.to be_present }
-      its(:school_value_float) { is_expected.to eq(nil) }
+      its(:school_value_float) { is_expected.to eq(15) }
       its(:state_value_float) { is_expected.to eq(75) }
-      its(:number_students_tested) { is_expected.to eq(nil) }
+      its(:number_students_tested) { is_expected.to eq(20) }
       its(:state_number_tested) { is_expected.to eq(20) }
       its(:subject_id) { is_expected.to eq(4) }
       its(:data_type_id) { is_expected.to eq(1) }
