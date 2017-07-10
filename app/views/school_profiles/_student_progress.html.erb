@@ -37,6 +37,6 @@
 
   <% if student_progress.has_data? %>
     <%= render 'sources_link_to_modal', content: sources %>
-    <%= render 'module_feedback', content: qualaroo_module_link %>
+    <%= render 'module_feedback', content: student_progress.qualaroo_module_link %>
   <% end %>
 </div>
