@@ -265,6 +265,14 @@ class School < ActiveRecord::Base
     includes_level_code?(%w[e m])  &&  !preschool?
   end
 
+  def middle_school?
+    level_code == 'm'
+  end
+
+  def high_school?
+    level_code == 'h'
+  end
+
   SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar test_scores nearby_schools)
 
   def cache_results
