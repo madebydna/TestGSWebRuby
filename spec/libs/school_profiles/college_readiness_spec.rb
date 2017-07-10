@@ -175,11 +175,7 @@ describe SchoolProfiles::CollegeReadiness do
         data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
-
-      it 'should set school SAT percent participation to nil' do
-        data_points = subject.data_values.find {|item| item.label == 'SAT participation rate' }
-        expect(data_points).to_not be_present
-      end
+      
     end
 
     it 'should return empty array if no data' do
