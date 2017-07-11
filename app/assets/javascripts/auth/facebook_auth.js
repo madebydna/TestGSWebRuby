@@ -116,7 +116,7 @@ GS.facebook = GS.facebook || (function ($) {
 
     var getFacebookData = function () {
       var deferred = $.Deferred();
-      FB.api('/me', function (facebookData) {
+      FB.api('/me?fields=email', function (facebookData) {
         if (!facebookData || facebookData.error) {
           // problem occurred
           deferred.reject(facebookData.error.message);
