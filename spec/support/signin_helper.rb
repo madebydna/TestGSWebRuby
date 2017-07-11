@@ -21,16 +21,15 @@ module SigninHelper
   end
 
   def register_in_modal
-    within('.modal') do
+    within('.remodal') do
       fill_in('email', with: random_email)
-      find('#terms_terms').click
       click_button('Sign up')
     end
   end
 
   # Same as #register_in_modal, but no terms checkbox
   def register_in_email_modal
-    within('.modal') do
+    within('.remodal') do
       fill_in('email', with: random_email)
       click_button('Sign up')
     end
