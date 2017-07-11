@@ -247,9 +247,9 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
-    get '/omniture-test', to: :omniture_test, as: :omniture_test
-    get '/info', to: :info
-    get '/examples-and-gotchas', to: :examples_and_gotchas
+    get '/omniture-test', action: :omniture_test, as: :omniture_test
+    get '/info', action: :info
+    get '/examples-and-gotchas', action: :examples_and_gotchas
 
     scope '/school-profiles', as: :school_profiles do
       get '/help', to: 'admin#help'
