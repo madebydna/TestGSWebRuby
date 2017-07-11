@@ -8,7 +8,7 @@ describe 'newsletters', type: :feature, remote: true do
         within('footer') { click_link 'Newsletter' }
       end
       it 'I should see the newsletter modal' do
-        within('.modal') do
+        within('.remodal') do
           expect(page).to have_content(
             'Get our best articles, worksheets, and more delivered weekly to your inbox.'
           )
@@ -24,12 +24,12 @@ describe 'newsletters', type: :feature, remote: true do
         within('#profile-sticky-container') { click_link 'Save' }
       end
       it 'I should see the newsletter modal' do
-        within('.modal') do
-          expect(page).to have_content('Get email updates on this school.')
+        within('.remodal') do
+          expect(page).to have_content('Yes! Send me email updates about my child\'s school')
         end
       end
       it 'I can sign up and see school on my account page' do
-        within('.modal') do
+        within('.remodal') do
           email = "ssprouse+rspec_#{Time.now.strftime('%s')}@greatschools.org"
           fill_in('email', with: email)
           click_button('Sign up')
