@@ -1,4 +1,3 @@
-
 var googleMapsScriptURL = '//maps.googleapis.com/maps/api/js?client=gme-greatschoolsinc&amp;libraries=geometry&amp;sensor=false&amp;signature=qeUgzsyTsk0gcv93MnxnJ_0SGTw=';
 var callbackFunction = 'GS.googleMap.applyAjaxInitCallbacks';
 // .getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
@@ -41,7 +40,7 @@ GS.googleMap = GS.googleMap || (function() {
 
   var additionalZoom = 0;
 
-  var init = function(sprite_files, map_points) {
+  var init = function(sprite_files, map_points, optionalLat, optionalLon) {
 
       if (!needsInit) {return;}
       needsInit = false;
@@ -316,8 +315,32 @@ GS.googleMap = GS.googleMap || (function() {
       google.maps.event.trigger(map, 'resize');
     }
 
+    var getFromQueryString = function(key, queryString) {
+        queryString = queryString || window.location.search.substring(1);
+        var vars = [];
+        var result;
+
+        if (queryString.length > 0) {
+            vars = queryString.split("&");
+        }
+
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split("=");
+            var thisKey = pair[0];
+
+            if (decodeURIComponent(thisKey) === key) {
+                result = decodeURIComponent(pair[1].replace(/\+/g, ' '));
+                break;
+            }
+        }
+        return result;
+    };
+
     var initAndShowMap = function (sprite_files, map_points) {
-        init(sprite_files, map_points);
+        var lat = getFromQueryString('lat', window.location.query);
+        var lon = getFromQueryString('lon', window.location.query);
+
+        init(sprite_files, map_points, lat, lon);
         var map = getMap();
         var center = map.getCenter();
         google.maps.event.trigger(map, 'resize');
