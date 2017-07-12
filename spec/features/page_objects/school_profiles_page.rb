@@ -132,4 +132,16 @@ class SchoolProfilesPage < SitePrism::Page
     return true
   end
 
+  def props_for_react_component(component)
+    node = page.find('div.js-react-on-rails-component[data-component-name="' + component + '"]', visible: false)
+    return {} unless node
+    props_as_string = node['data-props']
+    return {} unless props_as_string.present?
+    JSON.parse(props_as_string)
+  end
+
+  def advanced_courses_props
+    props_for_react_component('Courses')
+  end
+
 end
