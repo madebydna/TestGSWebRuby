@@ -23,6 +23,7 @@ en:
       data_point_info_texts:
         '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
         'Average SAT score': 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
+        'Average SAT score_new': 'The SAT is a college admissions test which in 2016 had a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
         'SAT percent participation': 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
         'Average ACT score': 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
         'ACT participation':  'The ACT participation rate shows the percentage of eligible students at this school who took the ACT.'
