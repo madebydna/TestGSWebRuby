@@ -96,6 +96,7 @@ describe SchoolProfiles::CollegeReadiness do
       before do
         expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
         expect(school_cache_data_reader).to receive(:gsdata_data).and_return(gsdata_sample_data)
+        allow(subject).to receive(:new_sat?).and_return(false)
       end
 
       it 'should return chosen data types if data present' do
@@ -105,7 +106,7 @@ describe SchoolProfiles::CollegeReadiness do
         expect(data_points).to be_present
         expect(data_points.score).to eq(1600)
         expect(data_points.state_average).to eq(1400)
-        expect(data_points.range).to eq((600..2400))
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
       end
 
       it 'should pull from the "All students" breakdown for characteristics' do
@@ -211,7 +212,7 @@ describe SchoolProfiles::CollegeReadiness do
         data_points = data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(1400)
-        expect(data_points.range).to eq((400..1600))
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::NEW_SAT_RANGE)
       end
     end
 
@@ -241,7 +242,7 @@ describe SchoolProfiles::CollegeReadiness do
         data_points = data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(1800)
-        expect(data_points.range).to eq((600..2400))
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
       end
     end
 
@@ -265,9 +266,7 @@ describe SchoolProfiles::CollegeReadiness do
       before do
         expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
         expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
-        # Set up AK to always fail new_sat? test
-        allow(school).to receive(:state).and_return(:ak)
-        allow(subject).to receive(:new_sat?).with(:ak, 2016).and_return(false)
+        stub_const('SchoolProfiles::CollegeReadiness::NEW_SAT_STATES', [])
       end
 
       it 'should set range to 600..2400' do
@@ -275,7 +274,7 @@ describe SchoolProfiles::CollegeReadiness do
         data_points = data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(1400)
-        expect(data_points.range).to eq((600..2400))
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
       end
     end
   end
