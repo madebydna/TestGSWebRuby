@@ -7,11 +7,11 @@ let welcomeStep = {
 let otherSteps = [
   {
     element: document.querySelector('#hero'),
-    intro: "Here you'll find general information about this school, including our GreatSchools Summary Rating, community reviews, school contact info and more."
+    intro: 'Here you\'ll find general information about this school, including our GreatSchools Summary Rating, community reviews, school contact info and more.'
   },
   {
     element: document.querySelectorAll('.gs-rating-with-label')[0],
-    intro: "Here you'll find general information about this school, including our GreatSchools Summary Rating, community reviews, school contact info and more.",
+    intro: 'The GreatSchools rating provides a quick snapshot of this school\'s quality compared to other schools in the state.',
     position: 'right',
     highlightClass: 'highlight-dark'
   },
@@ -22,7 +22,7 @@ let otherSteps = [
   },
   {
     element: '#cta',
-    intro: "<div><p>From here you can...</p><ul><li>Write a review of a school</li><li>Save the school to get email updates</li><li>Compare nearby high performing schools</li></ul></div>",
+    intro: '<div><p>From here you can...</p><ul><li>Write a review of a school</li><li>Save the school to get email updates</li><li>Compare nearby high performing schools</li></ul></div>',
     position: 'top'
   },
   {
