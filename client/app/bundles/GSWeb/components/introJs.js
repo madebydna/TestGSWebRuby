@@ -95,17 +95,25 @@ let otherSteps = [
     intro: 'Scroll through other nearby high-performing schools so you can better understand the education options in your area.',
     position: 'top',
   }
-]
+];
+
+let intro = null;
+
+const onStepSeen = function(targetElement) {
+  let stepNum = intro._currentStep + 1;
+  window.analyticsEvent('Profile', 'tutorial-public', stepNum);
+}
 
 export function start() {
-  introJs().
+  intro = introJs().
     setOptions({
       showStepNumbers: false, 
       // use jQuery to filter out elements that dont exist
       steps: otherSteps.filter(obj => $(obj.element).length).concat([doneStep]),
       hidePrev: true,
       hideNext: true,
-      showProgress: true
+      showProgress: true,
     }).
-    start();
+    onafterchange(onStepSeen)
+  intro.start();
 }

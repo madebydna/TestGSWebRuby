@@ -103,6 +103,7 @@ $(function() {
   $('body').on('click', '.js-start-tour', function() {
     scrollToElement('#hero');
     introJs.start();
+    return false;
   }).show();
 
 });
