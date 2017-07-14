@@ -18,6 +18,7 @@ import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
 import { enableAutoAnchoring } from '../components/anchor_router';
+import * as introJs from '../components/introJs';
 
 window.store = configureStore({
   school: gon.school
@@ -97,6 +98,13 @@ $(function() {
     $hiddenField.val(values.join(','));
     $label.toggleClass('active');
   });
+
+  if(introJs.isEnabled()) {
+    $('.js-start-tour').on('click', function() {
+      $('.js-start-tour').hide();
+      introJs.start();
+    }).show();
+  }
 
 });
 
