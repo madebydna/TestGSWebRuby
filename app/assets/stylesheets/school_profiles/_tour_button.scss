@@ -1,6 +1,6 @@
 button.start-tour {
   @include button;
-  position: absolute;
+  position: fixed;
   bottom: 50px;
   right: 10px;
   @include media-breakpoint-up(md) {
