@@ -1,11 +1,7 @@
 .tour-teaser {
-  display: none;
   position: fixed;
   bottom: 50px;
   right: 10px;
-  @include media-breakpoint-up(sm) {
-    display: block;
-  }
   @include media-breakpoint-up(md) {
     bottom: 10px;
   }

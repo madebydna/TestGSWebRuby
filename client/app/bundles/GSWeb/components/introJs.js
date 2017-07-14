@@ -12,7 +12,7 @@ let otherSteps = [
   {
     element: document.querySelectorAll('.gs-rating-with-label')[0],
     intro: 'The GreatSchools rating provides a quick snapshot of this school\'s quality compared to other schools in the state.',
-    position: 'right',
+    position: 'auto',
     highlightClass: 'highlight-dark'
   },
   {
@@ -86,9 +86,9 @@ let otherSteps = [
     position: 'top'
   },
   {
-    element: '#Neighborhood',
+    element: '#Neighborhood .overlay-container',
     intro: 'Here you can find this school on a map, including a link to see the school’s attendance zone.',
-    position: 'bottom'
+    position: 'top'
   },
   {
     element: '#NearbySchools',
