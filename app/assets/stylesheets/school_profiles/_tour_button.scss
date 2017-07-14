@@ -1,9 +1,23 @@
-button.start-tour {
-  @include button;
+.tour-teaser {
+  display: none;
   position: fixed;
   bottom: 50px;
   right: 10px;
+  @include media-breakpoint-up(sm) {
+    display: block;
+  }
   @include media-breakpoint-up(md) {
     bottom: 10px;
   }
+  img {
+    float: left;
+  }
+  button {
+    @include button(24px);
+    float: left;
+  }
+}
+
+button.start-tour {
+  @include button;
 }

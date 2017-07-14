@@ -1,7 +1,7 @@
 import { introJs } from 'intro.js';
 
-let welcomeStep = { 
-  intro: '<h4><img alt="" height="42" src="http://orangestripes.com/gschool/owl/owl-2-copy-4.png" style="float:left" width="39"></h4><h3>Welcome!<br>&nbsp;</h3>You\'re seeing our new, improved GreatSchools School Profile.'
+let doneStep = {
+  intro: '<img alt="" height="42" src="http://orangestripes.com/gschool/owl/owl-2-copy-4.png" style="float:left" width="39"><h1>&nbsp;All done!</h1></div><div class="inmplayer-template-content"><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><div class="inmplayer-button" onclick="inline_manual_player.deactivate()">Start exploring this school</div></div>'
 };
 
 let otherSteps = [
@@ -84,34 +84,28 @@ let otherSteps = [
     element: '#Reviews',
     intro: 'Here, parents and others in the school community share their experiences with this school. ',
     position: 'top'
+  },
+  {
+    element: '#Neighborhood',
+    intro: 'Here you can find this school on a map, including a link to see the school’s attendance zone.',
+    position: 'bottom'
+  },
+  {
+    element: '#NearbySchools',
+    intro: 'Scroll through other nearby high-performing schools so you can better understand the education options in your area.',
+    position: 'top',
   }
 ]
 
-const cookieName = 'schoolProfileTourStatus';
-
-let onTourExit = function() {
-  $.cookie(cookieName, 'exited');
-}
-
-export function isEnabled() {
-  return !$.cookie(cookieName);
-}
-
 export function start() {
-  if($.cookie(cookieName)) {
-    return;
-  }
   introJs().
     setOptions({
-      showStepNumbers: false,
-      steps: [welcomeStep].concat(
-        // use jQuery to filter out elements that dont exist
-        otherSteps.filter(obj => $(obj.element).length) 
-      ),
+      showStepNumbers: false, 
+      // use jQuery to filter out elements that dont exist
+      steps: otherSteps.filter(obj => $(obj.element).length).concat([doneStep]),
       hidePrev: true,
       hideNext: true,
       showProgress: true
     }).
-    onexit(onTourExit).
     start();
 }

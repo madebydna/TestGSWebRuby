@@ -19,6 +19,7 @@ import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
 import { enableAutoAnchoring } from '../components/anchor_router';
 import * as introJs from '../components/introJs';
+import { scrollToElement } from '../util/scrolling';
 
 window.store = configureStore({
   school: gon.school
@@ -99,8 +100,8 @@ $(function() {
     $label.toggleClass('active');
   });
 
-  $('.js-start-tour').on('click', function() {
-    $('.js-start-tour').hide();
+  $('body').on('click', '.js-start-tour', function() {
+    scrollToElement('#hero');
     introJs.start();
   }).show();
 
