@@ -112,7 +112,8 @@ export function start() {
       steps: otherSteps.filter(obj => $(obj.element).length).concat([doneStep]),
       hidePrev: true,
       hideNext: true,
-      showProgress: true,
+      showProgress: false,
+      skipLabel: 'cancel'
     }).
     onafterchange(onStepSeen)
   intro.start();
