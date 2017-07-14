@@ -99,12 +99,10 @@ $(function() {
     $label.toggleClass('active');
   });
 
-  if(introJs.isEnabled()) {
-    $('.js-start-tour').on('click', function() {
-      $('.js-start-tour').hide();
-      introJs.start();
-    }).show();
-  }
+  $('.js-start-tour').on('click', function() {
+    $('.js-start-tour').hide();
+    introJs.start();
+  }).show();
 
 });
 
