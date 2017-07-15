@@ -97,24 +97,39 @@ let otherSteps = [
   }
 ];
 
-let intro = null;
+let numberOfVisibleSteps;
+
+let intro;
 
 const onStepSeen = function(targetElement) {
   let stepNum = intro._currentStep + 1;
   window.analyticsEvent('Profile', 'tutorial-public', stepNum);
 }
 
+const onExitTour = function() {
+  let stepNum = intro._currentStep + 1;
+  if(stepNum < numberOfVisibleSteps) {
+    alert('exit');
+    window.analyticsEvent('Profile', 'tutorial-public', 'cancel-step ' + stepNum);
+  }
+};
+
 export function start() {
+  // use jQuery to filter out elements that dont exist
+  let filteredSteps = otherSteps.filter(obj => $(obj.element).length);
+  let allSteps = filteredSteps.concat([doneStep]);
+  numberOfVisibleSteps = allSteps.length;
+
   intro = introJs().
     setOptions({
       showStepNumbers: false, 
-      // use jQuery to filter out elements that dont exist
-      steps: otherSteps.filter(obj => $(obj.element).length).concat([doneStep]),
+      steps: filteredSteps.concat([doneStep]),
       hidePrev: true,
       hideNext: true,
       showProgress: false,
       skipLabel: 'cancel'
     }).
-    onafterchange(onStepSeen)
+    onafterchange(onStepSeen).
+    onexit(onExitTour)
   intro.start();
 }

@@ -101,7 +101,10 @@ $(function() {
   });
 
   $('body').on('click', '.js-start-tour', function() {
-    $('.js-start-tour').closest('.remodal').remodal().close();
+    let remodal = $('.js-start-tour').closest('.remodal');
+    if(remodal.length > 0) {
+      remodal.remodal().close();
+    }
     scrollToElement('#hero');
     introJs.start();
     return false;
