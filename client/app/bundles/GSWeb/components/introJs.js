@@ -109,7 +109,6 @@ const onStepSeen = function(targetElement) {
 const onExitTour = function() {
   let stepNum = intro._currentStep + 1;
   if(stepNum < numberOfVisibleSteps) {
-    alert('exit');
     window.analyticsEvent('Profile', 'tutorial-public', 'cancel-step ' + stepNum);
   }
 };
