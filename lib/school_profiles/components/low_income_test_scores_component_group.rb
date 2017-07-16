@@ -16,7 +16,11 @@ module SchoolProfiles
           component.valid_breakdowns = VALID_BREAKDOWNS
         end
         overview_title = t('Overview')
-        { overview_title  => test_score_data } if test_score_data.values.present?
+        { overview_title  => test_score_data } if overview_has_data?(test_score_data)
+      end
+
+      def overview_has_data?(data_values)
+        data_values.values.present? && data_values.values.count > 1
       end
 
       def components
