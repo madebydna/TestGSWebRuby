@@ -81,6 +81,10 @@ module SchoolProfiles
       decorated_school.test_scores_rating_hash
     end
 
+    def test_scores_all_rating_hash
+      decorated_school.test_scores_all_rating_hash
+    end
+
     def historical_student_progress_ratings
       decorated_school.historical_student_growth_ratings
     end

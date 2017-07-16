@@ -200,9 +200,9 @@ class Cacher
       results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
 
       results_hash_array.each do |hash|
-        hash['breakdown_name'] = breakdown_name(hash['breakdown_id'])
+        hash['breakdown'] = breakdown_name(hash['breakdown_id'])
         hash.delete('breakdown_id')
-        hash.delete_if { |key, value| key == 'breakdown_name' && value.nil? }
+        hash.delete_if { |key, value| key == 'breakdown' && value.nil? }
       end
 
       growth_rating = 

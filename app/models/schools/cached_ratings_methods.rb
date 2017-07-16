@@ -28,6 +28,10 @@ module CachedRatingsMethods
     school_rating_hash_by_id(164)
   end
 
+  def test_scores_all_rating_hash
+    school_rating_all_hash_by_id(164)
+  end
+
   def student_growth_rating
     school_rating_by_id(165)
   end
@@ -66,11 +70,28 @@ module CachedRatingsMethods
       # find only ratings that match it (and date type ID)
       relevant_ratings = ratings.select do |rating|
         rating['data_type_id'] == rating_id && (
-        level_code.nil? || level_code == rating['level_code']
+        level_code.nil? || level_code == rating['level_code'] &&
+        rating['breakdown'] == 'All students'
         )
       end
       ratings_year_obj = relevant_ratings.max_by { |rating| rating['year'] }
       return ratings_year_obj if ratings_year_obj
+    end
+    nil
+  end
+
+  def school_rating_all_hash_by_id(rating_id, level_code=nil)
+    if rating_id
+      relevant_ratings = ratings.select do |rating|
+        rating['data_type_id'] == rating_id && (
+        level_code.nil? || level_code == rating['level_code']
+        )
+      end
+      year = relevant_ratings.max_by { |rating| rating['year'] }['year']
+      ratings_year_objs = relevant_ratings.select do |rating|
+        rating['year'] == year
+      end
+      return ratings_year_objs if ratings_year_objs
     end
     nil
   end

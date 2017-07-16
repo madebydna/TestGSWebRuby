@@ -7,6 +7,15 @@ module SchoolProfiles
         @school_cache_data_reader = school_cache_data_reader
       end
 
+      def overview
+        test_score_data = TestScoresRatingsComponent.new.tap do |component|
+          component.school_cache_data_reader = school_cache_data_reader
+          component.type = 'rating'
+        end
+        overview_title = t('Overview')
+        { overview_title  => test_score_data } if test_score_data.values.present?
+      end
+
       def components
         scores = school_cache_data_reader.flat_test_scores_for_latest_year
         scores_grade_all = scores.select { | score | score[:grade] == 'All' }
