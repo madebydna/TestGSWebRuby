@@ -11,5 +11,6 @@ export default ({legendContainerForCtaId, ...rest}) => (
       <li><span/>School boundary</li>
       <li><span/>District boundary</li>
     </ul>
+    <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
   </div>
 );

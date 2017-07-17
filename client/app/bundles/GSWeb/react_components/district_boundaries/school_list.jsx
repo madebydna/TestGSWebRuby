@@ -58,16 +58,12 @@ class SchoolList extends React.Component {
         <SpinnyWheel>
           <h3>Schools in district</h3>
             {this.renderSchools()}
-          <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
-          <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
         </SpinnyWheel>
       </section>
     } else {
       return <section className={ 'school-list ' + this.props.className }>
         <h3>Schools in district</h3>
         {this.renderSchools()}
-        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
-        <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
       </section>
     }
   }
