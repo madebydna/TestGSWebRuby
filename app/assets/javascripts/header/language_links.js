@@ -5,18 +5,15 @@ GS.nav = GS.nav || {};
 
 GS.nav.language = GS.nav.language || (function(){
   var initLanguageLinkListener = function() {
-    var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
+
 
     var changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
-    changeLanguageLink.href =  window.location.href;
+    var locationLanguageLink =  window.location.href;
     if (typeof otherLanguageAvailable !== 'undefined'  && !otherLanguageAvailable ) {
-      if(lang == null || lang == 'en') {
-        changeLanguageLink.href = "/gk/?lang=es";
-      } else {
-        changeLanguageLink.href = "/gk/";
-      }
+      locationLanguageLink = "/gk/";
     }
 
+    var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
     if(lang == null || lang == 'en') {
       changeLanguageLink.innerHTML = 'En Español';
     } else {
@@ -26,9 +23,9 @@ GS.nav.language = GS.nav.language || (function(){
     changeLanguageLink.onclick = function(e) {
       var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
       if(lang == null || lang == 'en') {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(changeLanguageLink.href, 'lang', 'es');
+        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', 'es');
       } else {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(changeLanguageLink.href, 'lang', '');
+        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(locationLanguageLink, 'lang', '');
       }
       window.open(full_uri, '_self');
     }
