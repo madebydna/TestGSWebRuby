@@ -6,11 +6,15 @@ GS.nav = GS.nav || {};
 GS.nav.language = GS.nav.language || (function(){
   var initLanguageLinkListener = function() {
     var changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
+    var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
     if (typeof otherLanguageAvailable !== 'undefined'  && !otherLanguageAvailable ) {
-      changeLanguageLink.className += " dn";
+      if(lang == null || lang == 'en') {
+        changeLanguageLink.href = "/gk/?lang=es";
+      } else {
+        changeLanguageLink.href = "/gk/";
+      }
     }
 
-    var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
     if(lang == null || lang == 'en') {
       changeLanguageLink.innerHTML = 'En Español';
     } else {
