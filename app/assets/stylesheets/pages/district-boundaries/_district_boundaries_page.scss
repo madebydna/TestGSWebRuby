@@ -130,9 +130,7 @@
 }
 
 #district-boundaries-page ~ footer {
-  @include media-breakpoint-only(xs) {
-    display:none
-  }
+  display:none
 }
   
 .attribution {
