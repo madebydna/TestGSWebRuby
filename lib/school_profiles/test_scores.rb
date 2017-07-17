@@ -4,7 +4,7 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
     include Qualaroo
 
-    GRADES_DISPLAY_MINIMUM = 2
+    GRADES_DISPLAY_MINIMUM = 1
     N_TESTED = 'n_tested'
     STRAIGHT_AVG = 'straight_avg'
     N_TESTED_AND_STRAIGHT_AVG = 'n_tested_and_straight_avg'

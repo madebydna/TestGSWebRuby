@@ -71,7 +71,7 @@ class TestDataSet < ActiveRecord::Base
     .where('tdt.classification = ?', 'gs_rating')
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
     .with_no_subject_breakdowns
-    .all_students
+    # .all_students
   end
 
   def self.ratings_for_district district

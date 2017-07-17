@@ -9,17 +9,17 @@ module SchoolProfiles
         @components = [
           GsdataComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
-            component.data_type = 'Percentage AP enrolled grades 9-12'
-            component.title = 'Percentage AP enrolled grades 9-12'
-            component.type = 'person'
+            component.data_type = 'Advanced Course Rating'
+            component.title = 'Advanced courses'
+            component.type = 'rating'
           end,
           GsdataComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
-            component.data_type = 'Number of Advanced Courses Taken per Student'
-            component.title = 'Number of Advanced Courses Taken per Student'
-            component.type = 'plain'
-            component.precision = 1
+            component.data_type = 'Percentage AP enrolled grades 9-12'
+            component.title = 'Percentage AP enrolled grades 9-12'
+            component.type = 'person'
           end
+
         ]
       end
 

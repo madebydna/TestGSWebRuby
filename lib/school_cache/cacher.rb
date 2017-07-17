@@ -135,6 +135,14 @@ class Cacher
     @_data_descriptions ||= Hash[DataDescription.all.map { |dd| [dd.data_key+dd.state.to_s, dd] }]
   end
 
+  def self.test_data_breakdowns
+    @_test_data_breakdowns = Hash[TestDataBreakdown.all.map { |f| [f.id, f] }]
+  end
+
+  def self.breakdown_name(id)
+    id.present? && id > 0 ? test_data_breakdowns[id]['name'] : nil
+  end
+
   def self.data_description_value(key)
     dd = data_descriptions[key]
     dd.value if dd
@@ -180,6 +188,7 @@ class Cacher
     if results_obj_array.present?
       config_map = {
           data_type_id: 'data_type_id',
+          breakdown_id: 'breakdown_id',
           year: 'year',
           school_value_text: 'school_value_text',
           school_value_float: 'school_value_float',
@@ -189,6 +198,12 @@ class Cacher
       results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
       # Prune out empty data sets
       results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
+
+      results_hash_array.each do |hash|
+        hash['breakdown'] = breakdown_name(hash['breakdown_id'])
+        hash.delete('breakdown_id')
+        hash.delete_if { |key, value| key == 'breakdown' && value.nil? }
+      end
 
       growth_rating = 
         results_hash_array.
