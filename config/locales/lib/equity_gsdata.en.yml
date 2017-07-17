@@ -43,9 +43,13 @@ en:
       Native Hawaiian or Other Pacific Islander: Pacific Islander
       Economically disadvantaged: Low-income
       Not economically disadvantaged: Not low-income
+      Advanced courses: Advanced courses
       data_point_info_texts:
         'Percentage AP enrolled grades 9-12': 'This shows the percentage of students who are enrolled in Advanced Placement (AP) courses.'
         'Number of Advanced Courses Taken per Student': 'This shows the average number of advanced courses taken by students at this school.'
+        'Advanced Course Rating': >
+          The Advanced Courses ratings reflect the number of advanced courses taken per student by different
+          races/ethnicities, in English, STEM, Social Sciences, and Foreign languages, compared to the state average.
       Students with disabilities: Students with disabilities
       'Discipline & attendance': 'Discipline & attendance'
       'Percentage of students suspended out of school': '% suspended'
