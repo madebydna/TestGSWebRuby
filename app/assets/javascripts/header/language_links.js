@@ -5,8 +5,10 @@ GS.nav = GS.nav || {};
 
 GS.nav.language = GS.nav.language || (function(){
   var initLanguageLinkListener = function() {
-    var changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
     var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
+
+    var changeLanguageLink = document.querySelector('.jsChangeLanguageLink');
+    changeLanguageLink.href =  window.location.href;
     if (typeof otherLanguageAvailable !== 'undefined'  && !otherLanguageAvailable ) {
       if(lang == null || lang == 'en') {
         changeLanguageLink.href = "/gk/?lang=es";
@@ -24,9 +26,9 @@ GS.nav.language = GS.nav.language || (function(){
     changeLanguageLink.onclick = function(e) {
       var lang = GS.nav.queryParamsUtils.getQueryParam('lang');
       if(lang == null || lang == 'en') {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(window.location.href, 'lang', 'es');
+        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(changeLanguageLink.href, 'lang', 'es');
       } else {
-        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(window.location.href, 'lang', '');
+        changeLanguageLink.href = GS.nav.queryParamsUtils.updateUrlParameter(changeLanguageLink.href, 'lang', '');
       }
       window.open(full_uri, '_self');
     }
