@@ -87,7 +87,7 @@ module CachedRatingsMethods
         level_code.nil? || level_code == rating['level_code']
         )
       end
-      year = relevant_ratings.max_by { |rating| rating['year'] }['year']
+      year = relevant_ratings.max_by { |rating| rating['year'] }['year'] if relevant_ratings.present?
       ratings_year_objs = relevant_ratings.select do |rating|
         rating['year'] == year
       end
