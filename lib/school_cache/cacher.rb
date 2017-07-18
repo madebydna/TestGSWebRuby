@@ -139,100 +139,15 @@ class Cacher
     @_test_data_breakdowns = Hash[TestDataBreakdown.all.map { |f| [f.id, f] }]
   end
 
-  def self.breakdown_name(id)
-    id.present? && id > 0 ? test_data_breakdowns[id]['name'] : nil
-  end
-
-  def self.data_description_value(key)
-    dd = data_descriptions[key]
-    dd.value if dd
-  end
-
-  # Uses configuration_map to map attributes/methods in obj_array to keys in a hash
-  def self.map_object_array_to_hash_array(configuration_map, obj_array)
-    rval = []
-    obj_array.each do |obj|
-      rval << active_record_to_hash(configuration_map, obj)
-    end
-    rval
-  end
-
-  def self.active_record_to_hash(configuration_map, obj)
-    rval_map = {}
-    configuration_map.each do |key, val|
-      if obj.attributes.include?(key.to_s)
-        rval_map[val] = obj[key]
-      elsif obj.respond_to?(key)
-        rval_map[val] = obj.send(key)
-      elsif key == :test_data_type_display_name
-        # Hack until we get ratings into its own tiered class structure
-        if obj.test_data_type
-          rval_map[val] = obj.test_data_type.display_name
-        end
-      else
-        Rails.logger.error "ERROR: Can't find attribute or method named #{key} in #{obj}"
-      end
-    end
-    rval_map
-  end
-
   def self.test_description_for(data_type_id,state)
     @@test_descriptions["#{data_type_id}#{state}"]
   end
 
-
   def self.ratings_cache_for_school(school)
-    results_obj_array = TestDataSet.ratings_for_school(school)
-    school_cache = SchoolCache.find_or_initialize_by(school_id: school.id,state: school.state,name: 'ratings')
-
-    if results_obj_array.present?
-      config_map = {
-          data_type_id: 'data_type_id',
-          breakdown_id: 'breakdown_id',
-          year: 'year',
-          school_value_text: 'school_value_text',
-          school_value_float: 'school_value_float',
-          level_code: 'level_code',
-          test_data_type_display_name: 'name'
-      }
-      results_hash_array = map_object_array_to_hash_array(config_map, results_obj_array)
-      # Prune out empty data sets
-      results_hash_array.delete_if {|hash| hash['school_value_text'].nil? && hash['school_value_float'].nil?}
-
-      results_hash_array.each do |hash|
-        hash['breakdown'] = breakdown_name(hash['breakdown_id'])
-        hash.delete('breakdown_id')
-        hash.delete_if { |key, value| key == 'breakdown' && value.nil? }
-      end
-
-      growth_rating = 
-        results_hash_array.
-          select { |hash| hash['data_type_id'] == 165}.
-          max_by { |hash| hash['year'] }
-      if growth_rating
-        description = data_description_value('whats_this_growth')
-        methodology = data_description_value("footnote_growth#{school.state}")
-        growth_rating[:description] = description
-        growth_rating[:methodology] = methodology
-      end
-
-      test_score_rating = 
-        results_hash_array.
-          select { |hash| hash['data_type_id'] == 164}.
-          max_by { |hash| hash['year'] }
-      if test_score_rating
-        description = data_description_value('whats_this_test_scores')
-        methodology = data_description_value("footnote_test_scores#{school.state}")
-        test_score_rating[:description] = description
-        test_score_rating[:methodology] = methodology
-      end
-
-      school_cache.update_attributes!(:value => results_hash_array.to_json, :updated => Time.now)
-    elsif school_cache && school_cache.id.present?
-      SchoolCache.destroy(school_cache.id)
-    end
+    RatingsCacher.new(school).cache
   end
 
 ### END RATINGS CACHE CODE
 
 end
+
