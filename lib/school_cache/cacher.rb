@@ -62,7 +62,8 @@ class Cacher
         reviews_snapshot: ReviewsCaching::ReviewsSnapshotCacher,
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
         feed_test_scores: FeedTestScoresCacher,
-        gsdata:           GsdataCaching::GsdataCacher
+        gsdata:           GsdataCaching::GsdataCacher,
+        ratings:          RatingsCaching::RatingsCacher
     }[key.to_s.to_sym]
   end
 
@@ -88,23 +89,15 @@ class Cacher
       ReviewsCaching::ReviewsSnapshotCacher,
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
-      GsdataCaching::GsdataCacher
+      GsdataCaching::GsdataCacher,
+      RatingsCaching::RatingsCacher
     ]
   end
 
   def self.create_caches_for_data_type(school, data_type)
-    if data_type != :ratings
-      cachers_for_data_type(data_type).each do |cacher_class|
-        begin
-          cacher_class.new(school).cache if cacher_class.active?
-        rescue => error
-          error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
-          GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
-        end
-      end
-    else
+    cachers_for_data_type(data_type).each do |cacher_class|
       begin
-        ratings_cache_for_school(school)
+        cacher_class.new(school).cache if cacher_class.active?
       rescue => error
         error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
         GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
@@ -114,14 +107,10 @@ class Cacher
 
   def self.create_cache(school, cache_key)
     begin
-      if cache_key != 'ratings'
-        cacher_class = cacher_for(cache_key)
-        return unless cacher_class.active?
-        cacher = cacher_class.new(school)
-        cacher.cache
-      else
-        ratings_cache_for_school(school)
-      end
+      cacher_class = cacher_for(cache_key)
+      return unless cacher_class.active?
+      cacher = cacher_class.new(school)
+      cacher.cache
     rescue => error
       error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
       GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
@@ -141,10 +130,6 @@ class Cacher
 
   def self.test_description_for(data_type_id,state)
     @@test_descriptions["#{data_type_id}#{state}"]
-  end
-
-  def self.ratings_cache_for_school(school)
-    RatingsCacher.new(school).cache
   end
 
 ### END RATINGS CACHE CODE

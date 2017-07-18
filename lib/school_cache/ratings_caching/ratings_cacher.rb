@@ -1,4 +1,6 @@
-class RatingsCacher < Cacher
+class RatingsCaching::RatingsCacher < Cacher
+  CACHE_KEY = 'ratings'
+
   def cache
     school_cache = SchoolCache.find_or_initialize_by(
       school_id: school.id,
@@ -65,11 +67,11 @@ class RatingsCacher < Cacher
   end
 
   def breakdown_name(id)
-    id.present? && id > 0 ? RatingsCacher.test_data_breakdowns.seek(id, 'name') : nil
+    id.present? && id > 0 ? self.class.test_data_breakdowns.seek(id, 'name') : nil
   end
 
   def data_description_value(key)
-    dd = RatingsCacher.data_descriptions[key]
+    dd = self.class.data_descriptions[key]
     dd.value if dd
   end
 end

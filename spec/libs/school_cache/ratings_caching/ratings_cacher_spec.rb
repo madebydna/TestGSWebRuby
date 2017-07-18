@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe RatingsCacher do
+describe RatingsCaching::RatingsCacher do
 
   let(:school) { FactoryGirl.build(:alameda_high_school) }
-  let(:cacher) { RatingsCacher.new(school) }
+  let(:cacher) { RatingsCaching::RatingsCacher.new(school) }
 
   describe '#cache' do
     subject { cacher.cache }
