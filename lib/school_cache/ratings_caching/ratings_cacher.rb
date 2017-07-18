@@ -1,6 +1,10 @@
 class RatingsCaching::RatingsCacher < Cacher
   CACHE_KEY = 'ratings'
 
+  def self.listens_to?(data_type)
+    :ratings == data_type
+  end
+
   def cache
     school_cache = SchoolCache.find_or_initialize_by(
       school_id: school.id,
