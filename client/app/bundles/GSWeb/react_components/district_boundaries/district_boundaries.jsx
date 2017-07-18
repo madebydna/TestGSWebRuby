@@ -5,6 +5,7 @@ import * as google_map_extensions from '../../components/map/google_maps_extensi
 import createInfoWindow from './info_window';
 import Map from './map';
 import MapMarker from './map_marker';
+import DefaultMapMarker from './default_map_marker';
 import Polygon from './polygon';
 import ConnectedSearchBar from './connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
@@ -92,6 +93,11 @@ export default class DistrictBoundaries extends React.Component {
       }
       return <MapMarker type={markerTypes.DISTRICT} {...props} />
     }));
+    if (this.props.lat && this.props.lon) {
+      let props = {lat: this.props.lat, lon: this.props.lon};
+      props.key = 'locationMarkerl' + this.props.lat + 'l' + this.props.lon;
+      markers = markers.concat(<DefaultMapMarker {...props} />);
+    }
     return markers;
   }
 
