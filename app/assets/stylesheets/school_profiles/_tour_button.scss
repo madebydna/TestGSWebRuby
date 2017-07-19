@@ -9,8 +9,9 @@
     float: left;
   }
   button {
-    @include button(24px);
+    @include button;
     float: left;
+    border-radius: 50%;
   }
 }
 

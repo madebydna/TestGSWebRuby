@@ -6,17 +6,17 @@ let doneStep = {
 
 let otherSteps = [
   {
-    element: document.querySelector('#hero'),
+    element: '#hero',
     intro: 'Here you\'ll find general information about this school, including our GreatSchools Summary Rating, community reviews, school contact info and more.'
   },
   {
-    element: document.querySelectorAll('.gs-rating-with-label')[0],
+    element: '.gs-rating-with-label',
     intro: 'The GreatSchools rating provides a quick snapshot of this school\'s quality compared to other schools in the state.',
     position: 'auto',
     highlightClass: 'highlight-dark'
   },
   {
-    element: document.querySelectorAll('.toc-container-box > .row')[0],
+    element: '.toc-container-box > .row',
     intro: 'This section offers quick links to 3 categories of  information about this school.',
     position: 'top'
   },
@@ -36,12 +36,12 @@ let otherSteps = [
     position: 'top'
   },
   {
-    element: $('#AdvancedCourses .module-header')[0],
+    element: '#AdvancedCourses .module-header',
     intro: 'This section looks how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.',
     position: 'top'
   },
   {
-    element: $('#StudentProgress .module-header')[0],
+    element: '#StudentProgress .module-header',
     intro: 'The <strong>Student Progress Rating</strong> gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.',
     position: 'top'
   },
@@ -115,7 +115,9 @@ const onExitTour = function() {
 
 export function start() {
   // use jQuery to filter out elements that dont exist
-  let filteredSteps = otherSteps.filter(obj => $(obj.element).length);
+  let filteredSteps = otherSteps.filter(function(obj) {
+    return $(obj.element).length;
+  });
   let allSteps = filteredSteps.concat([doneStep]);
   numberOfVisibleSteps = allSteps.length;
 
