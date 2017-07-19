@@ -9,30 +9,55 @@ describe Api::TopPerformingNearbySchoolsController do
       clean_dbs :gs_schooldb, :ca
     end
 
-    context 'with no schools' do
-      before do
-        expect(SchoolSearchService).to receive(:by_location).and_return({
-          num_found: 0,
-          start: 0,
-          results: []
-        })
-      end
+    let(:school) do
+      FactoryGirl.create(
+        :school,
+        name: 'school a',
+        lat: 37.7647364,
+        lon: -122.2470357
+      )
+    end
 
-      it 'should return an empty response' do
-        school = FactoryGirl.create(
-          :school,
-          name: 'school a',
-          lat: 37.7647364,
-          lon: -122.2470357
-        )
-        get :show, state: school.state, id: school.id
-        expect(JSON.parse(response.body)).to be_empty
-      end
+    let(:no_results) do
+      {
+        num_found: 0,
+        start: 0,
+        results: []
+      }
     end
 
     it 'when not given school should return 404' do
       get :show
       expect(response.status).to be(404)
+    end
+
+    it 'accepts and uses overall_gs_rating_param' do
+      expect(SchoolSearchService).to(
+        receive(:by_location).
+        with(hash_including(filters: hash_including(overall_gs_rating: ['8','9','10']))).
+        and_return(no_results)
+      )
+      get :show, state: school.state, id: school.id, overall_gs_rating: [8,9,10]
+    end
+
+    it 'omits overall_gs_rating when param not present' do
+      expect(SchoolSearchService).to(
+        receive(:by_location).
+        with(hash_including(filters: {level_code: [] })).
+        and_return(no_results)
+      )
+      get :show, state: school.state, id: school.id
+    end
+
+    context 'with no schools' do
+      before do
+        expect(SchoolSearchService).to receive(:by_location).and_return(no_results)
+      end
+
+      it 'should return an empty response' do
+        get :show, state: school.state, id: school.id
+        expect(JSON.parse(response.body)).to be_empty
+      end
     end
 
     context 'with nearby schools' do
@@ -74,14 +99,6 @@ describe Api::TopPerformingNearbySchoolsController do
         ]
       end
       let(:nearby_schools) { schools[1..-1] }
-      let(:school) do
-        FactoryGirl.create(
-          :school,
-          name: 'school a',
-          lat: 37.7647364,
-          lon: -122.2470357
-        )
-      end
 
       before do
         expect(SchoolSearchService).to receive(:by_location).and_return({

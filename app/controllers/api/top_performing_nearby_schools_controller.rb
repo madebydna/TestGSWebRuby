@@ -41,7 +41,6 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
       radius: 100,
       state: school.state,
       filters: {
-        overall_gs_rating: [8,9,10],
         level_code: school.level_code.split(',').map do |code|
           {
             'p' => :preschool,
@@ -51,7 +50,15 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
           }[code]
         end
       }
-    }
+    }.tap do |hash|
+      if overall_gs_rating_param
+        hash[:filters][:overall_gs_rating] = overall_gs_rating_param
+      end
+    end
+  end
+
+  def overall_gs_rating_param
+    params[:overall_gs_rating]
   end
 
   def limit
@@ -73,43 +80,4 @@ class Api::TopPerformingNearbySchoolsController < ApplicationController
   def offset
     params[:offset].to_i
   end
-
-  class SchoolCacheDataReader
-    SCHOOL_CACHE_KEYS = %w(nearby_schools)
-
-    attr_reader :school, :school_cache_keys
-
-    def initialize(school, school_cache_keys: SCHOOL_CACHE_KEYS)
-      self.school = school
-      @school_cache_keys = school_cache_keys
-    end
-
-    def decorated_school
-      @_decorated_school ||= decorate_school(school)
-    end
-
-    def nearby_schools
-      decorated_school.nearby_schools
-    end
-
-    def school_cache_query
-      SchoolCacheQuery.for_school(school).tap do |query|
-        query.include_cache_keys(school_cache_keys)
-      end
-    end
-
-    def decorate_school(school)
-      query_results = school_cache_query.query
-      school_cache_results = SchoolCacheResults.new(SCHOOL_CACHE_KEYS, query_results)
-      school_cache_results.decorate_school(school)
-    end
-
-    private
-
-    def school=(school)
-      raise ArgumentError('School must be provided') if school.nil?
-      @school = school
-    end
-  end
-
 end
