@@ -1,5 +1,5 @@
 export function getNearbySchoolsByDistance(state, schoolId, offset, limit) {
-  var uri = '/gsr/api/top_performing_nearby_schools/';
+  var uri = '/gsr/api/nearby_schools/';
   return $.get(
     uri,
     {
@@ -14,7 +14,7 @@ export function getNearbySchoolsByDistance(state, schoolId, offset, limit) {
 }
 
 export function getTopPerformingNearbySchools(state, schoolId, offset, limit) {
-  var uri = '/gsr/api/top_performing_nearby_schools/';
+  var uri = '/gsr/api/nearby_schools/';
   return $.get(
     uri,
     {

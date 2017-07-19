@@ -1,5 +1,5 @@
 require 'spec_helper'
-describe Api::TopPerformingNearbySchoolsController do
+describe Api::NearbySchoolsController do
   render_views
 
   it { is_expected.to respond_to(:show) }
@@ -137,7 +137,7 @@ describe Api::TopPerformingNearbySchoolsController do
       end
 
       it 'obeys the max limit' do
-        stub_const('Api::TopPerformingNearbySchoolsController::MAX_LIMIT', 1)
+        stub_const('Api::NearbySchoolsController::MAX_LIMIT', 1)
         get :show, state: school.state, id: school.id, limit: 2
         response_array = JSON.parse(response.body)
         expect(response_array.size).to eq(1)

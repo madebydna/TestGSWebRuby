@@ -1,4 +1,4 @@
-class Api::TopPerformingNearbySchoolsController < ApplicationController
+class Api::NearbySchoolsController < ApplicationController
   DEFAULT_LIMIT = 6
   MAX_LIMIT = 6
 
