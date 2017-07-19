@@ -71,9 +71,10 @@ describe TestDataSet do
   describe '.historic_ratings_for_school' do
     let(:school) { FactoryGirl.build(:school, id: 1) }
     describe 'query criteria' do
-      subject { TestDataSet.ratings_for_school(school) }
-      it { is_expected.to include('breakdown') }
-      its(:breakdown) { is_expected.to eq(1) }
+      subject { TestDataSet.historic_ratings_for_school(school, [1,2], [3,4]) }
+      its(:where_values_hash) { is_expected.to include('breakdown_id') }
+      its('where_values_hash.breakdown_id') { is_expected.to eq(1) }
+      its('where_values_hash.data_type_id') { is_expected.to eq([1,2]) }
       its('where_values_hash.active') { is_expected.to eq(1) }
       its('to_sql') { is_expected.to include("classification = 'gs_rating'") }
     end

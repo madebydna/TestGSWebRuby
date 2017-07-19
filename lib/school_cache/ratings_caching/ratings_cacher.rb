@@ -65,7 +65,7 @@ class RatingsCaching::RatingsCacher < Cacher
       'school_value_text' => data_set.school_value_text,
       'school_value_float' => data_set.school_value_float,
       'level_code' => data_set.level_code,
-      'test_data_type_display_name' => data_set.test_data_type.display_name,
+      'test_data_type_display_name' => data_set.test_data_type.try(:display_name),
       'breakdown' => breakdown_name(data_set.breakdown_id)
     }.reject { |key, value| key == 'breakdown' && value.nil? }
   end
