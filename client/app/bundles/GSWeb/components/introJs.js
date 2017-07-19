@@ -1,6 +1,8 @@
 import { introJs } from 'intro.js';
 
 let doneStep = {
+  element: '.school-name-container',
+  highlightClass: 'no-highlight',
   intro: '<img alt="" height="42" src="http://orangestripes.com/gschool/owl/owl-2-copy-4.png" style="float:left" width="39"><h1>&nbsp;All done!</h1></div><div class="inmplayer-template-content"><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><div class="inmplayer-button" onclick="inline_manual_player.deactivate()">Start exploring this school</div></div>'
 };
 
@@ -16,7 +18,7 @@ let otherSteps = [
     highlightClass: 'highlight-dark'
   },
   {
-    element: '.toc-container-box > .row',
+    element: '.toc-container-box .toc-section-title',
     intro: 'This section offers quick links to 3 categories of  information about this school.',
     position: 'top'
   },
@@ -81,12 +83,12 @@ let otherSteps = [
     position: 'top'
   },
   {
-    element: '#Neighborhood .overlay-container',
+    element: '#Neighborhood .title',
     intro: 'Here you can find this school on a map, including a link to see the school’s attendance zone.',
     position: 'top'
   },
   {
-    element: '#NearbySchools',
+    element: '#NearbySchools .title-bar',
     intro: 'Scroll through other nearby high-performing schools so you can better understand the education options in your area.',
     position: 'top',
   }
@@ -96,12 +98,15 @@ let numberOfVisibleSteps;
 
 let intro;
 
+const homesAndRentalsSelector = '#homes-and-rentals';
+
 const onStepSeen = function(targetElement) {
   let stepNum = intro._currentStep + 1;
   window.analyticsEvent('Profile', 'tutorial-public', stepNum);
 }
 
 const onExitTour = function() {
+  $(homesAndRentalsSelector).show();
   let stepNum = intro._currentStep + 1;
   if(stepNum < numberOfVisibleSteps) {
     window.analyticsEvent('Profile', 'tutorial-public', 'cancel-step ' + stepNum);
@@ -127,5 +132,6 @@ export function start() {
     }).
     onafterchange(onStepSeen).
     onexit(onExitTour)
+  $(homesAndRentalsSelector).hide();
   intro.start();
 }

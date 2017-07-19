@@ -499,3 +499,7 @@ tr.introjs-showElement > th {
   background-color: rgba(26, 74, 110, 1);
   border: 1px solid rgb(53, 64, 73);
 }
+
+.introjs-helperLayer.no-highlight {
+  background-color: transparent;
+}
