@@ -46,22 +46,17 @@ let otherSteps = [
     position: 'top'
   },
   {
-    element: '#Equityoverview .module-header',
-    intro: 'The Equity Overview Rating looks at how well this school is serving the needs of diverse student groups relative to all its students, compared to other schools in the state.',
-    position: 'top'
-  },
-  {
-    element: '#EquityRaceEthnicity .module-header',
+    element: '#EquityRaceEthnicity .title-bar',
     intro: 'This section helps you understand how well a school is serving all of its students, looking at information like test scores and suspension rates for different racial and ethnic groups at this school.',
     position: 'top'
   },
   {
-    element: '#EquityLowIncome .module-header',
+    element: '#EquityLowIncome .title-bar',
     intro: 'This section looks at how well this school is serving its students from low-income families, looking at information like test scores and graduation rates.',
     position: 'top'
   },
   {
-    element: '#EquityDisabilities .module-header',
+    element: '#EquityDisabilities .title-bar',
     intro: 'From this section, you can learn about test scores, chronic absenteeism and suspension rates at this school for students who have physical or learning disabilities, compared to state averages.',
     position: 'top'
   },
