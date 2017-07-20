@@ -36,6 +36,10 @@
         a {
           font-size: 12px;
         }
+        a.name {
+          font-size: 14px;
+          font-family: 'opensans-semibold', sans-serif;
+        }
       }
     }
     @include media-breakpoint-up(md) {
