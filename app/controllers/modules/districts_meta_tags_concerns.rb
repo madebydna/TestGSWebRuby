@@ -4,6 +4,9 @@ module DistrictsMetaTagsConcerns
     state = @state[:short].upcase
     city = @city.gs_capitalize_first
     district = @district.name
+    # Testing different title tag for Pennsylvania pages
+    return "#{district}: See 2017 School Ratings in #{city}, #{state}" if state == 'PA'
+    "Philadelphia City School District: See 2017 School Ratings in Philadelphia, PA"
     "#{district} in #{city}, #{state} | GreatSchools"
   end
 

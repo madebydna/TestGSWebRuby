@@ -9,6 +9,8 @@ module StatesMetaTagsConcerns
   end
 
   def states_show_title
+    # Testing different title tag for Pennsylvania state page
+    return "#{state_long_name_with_caps} State 2017 School Ratings | Public & Private" if @state[:short] == 'pa'
     "#{state_long_name_with_caps} Schools - #{state_long_name_with_caps} State School Ratings - Public and Private"
   end
 
