@@ -18,11 +18,15 @@ class SchoolList extends React.Component {
     schools: React.PropTypes.array.isRequired,
     school: React.PropTypes.object,
     selectSchool: React.PropTypes.func.isRequired,
+    showMapView: React.PropTypes.func.isRequired,
     className: React.PropTypes.string
   }
 
   onClickSchool(school) {
-    return () => this.props.selectSchool(school.id, school.state);
+    return () => {
+      this.props.selectSchool(school.id, school.state);
+      this.props.showMapView();
+    }
   }
 
   renderRating(rating) {
@@ -41,7 +45,11 @@ class SchoolList extends React.Component {
     return (
       <li key={school.state + school.id} onClick={this.onClickSchool(school)} className={liClass} >
         { school.rating && <span>{this.renderRating(school.rating)}</span> }
-        <span>{school.name}<br/><a href={school.links.profile} target="_blank">View school profile</a></span>
+        <span>
+          <a href={school.links.profile} className="name" target="_blank">{school.name}</a>
+          <br/>
+          <a href="javascript:void(0);"><span className="icon icon-location active"/>View in map</a>
+        </span>
       </li>
     );
   }

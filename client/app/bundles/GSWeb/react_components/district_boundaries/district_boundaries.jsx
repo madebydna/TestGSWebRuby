@@ -143,9 +143,10 @@ export default class DistrictBoundaries extends React.Component {
     return (
       <div className="district-boundaries-component">
         <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta" style={{display: 'none'}}/>
-        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView} googleMapsInitialized={this.state.googleMapsInitialized} />
+        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}
+                            googleMapsInitialized={this.state.googleMapsInitialized} mapSelected={this.state.listHidden}/>
         { this.props.schools.length > 0 && 
-          <SchoolList className={ this.state.listHidden ? 'closed' : '' } />
+          <SchoolList showMapView={this.showMapView} className={ this.state.listHidden ? 'closed' : '' } />
         }
           <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
             <SpinnyWheel active={this.props.loading}>
