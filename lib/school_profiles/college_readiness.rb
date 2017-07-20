@@ -274,7 +274,11 @@ module SchoolProfiles
       str = '<div>'
       str << '<h4>' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
+      if year && source
+        str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
+      else
+        GSLogger.error( :misc, nil, message: "Missing source or missing year", vars: hash)
+      end
       str << '</div>'
       str
     end
