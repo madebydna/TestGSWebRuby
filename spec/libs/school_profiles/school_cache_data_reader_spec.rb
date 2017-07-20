@@ -41,6 +41,45 @@ describe SchoolProfiles::SchoolCacheDataReader do
         end
       end
     end
+
+    describe '#characteristics_data' do
+      let(:reader) { new_reader(school) }
+      subject { reader.characteristics_data(:foo, :bar) }
+      context 'with missing sources' do
+        before do
+          allow(reader).to receive(:decorated_school).and_return(
+            OpenStruct.new(
+              characteristics: {
+                foo: [
+                  {
+                    'source' => 'abc',
+                    'label' => 'foo label'
+                  },
+                  {
+                    'label' => 'foo label'
+                  }
+                ],
+                bar: [
+                  {
+                    'label' => 'foo label'
+                  },
+                  {
+                    'source' => 'abc',
+                    'label' => 'foo label'
+                  }
+                ]
+              }
+            )
+          )
+        end
+        it 'should reject the hashes that have missing source' do
+          expect(subject.values.flatten.select { |h| !h.has_key?('source') }).to be_empty
+          expect(subject.values.flatten.select { |h| h.has_key?('source') }.size).to eq(2)
+        end
+      end
+    end
+
+
   end
 
   context 'when not given a school' do
