@@ -167,7 +167,11 @@ module SchoolProfiles
       str = '<div>'
       str << '<h4>' + data_label(hash[:label]) + '</h4>'
       str << "<p>#{data_label(hash[:description])}</p>"
-      str << '<p><span class="emphasis">' + static_label('source') + ': </span>' + data_label(hash[:source]) + ', ' + hash[:year].to_s + '</p>'
+      if hash[:source] && hash[:year]
+        str << '<p><span class="emphasis">' + static_label('source') + ': </span>' + data_label(hash[:source]) + ', ' + hash[:year].to_s + '</p>'
+      else
+        GSLogger.error( :misc, nil, message: "Missing source or missing year", vars: hash)
+      end
       str << '</div>'
       str
     end
