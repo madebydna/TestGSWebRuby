@@ -26,6 +26,18 @@ class SchoolList extends React.Component {
     return () => {
       this.props.selectSchool(school.id, school.state);
       this.props.showMapView();
+      try {
+        window.open(school.links.profile);
+      } catch (e) {}
+    }
+  }
+
+  onClickMap(school) {
+    return (event) => {
+      this.props.selectSchool(school.id, school.state);
+      this.props.showMapView();
+      event.stopPropagation();
+      return false;
     }
   }
 
@@ -48,7 +60,7 @@ class SchoolList extends React.Component {
         <span>
           <a href={school.links.profile} className="name" target="_blank">{school.name}</a>
           <br/>
-          <a href="javascript:void(0);"><span className="icon icon-location active"/>View in map</a>
+          <a href="javascript:void(0);" onClick={this.onClickMap(school)}><span className="icon icon-location active"/>View in map</a>
         </span>
       </li>
     );
