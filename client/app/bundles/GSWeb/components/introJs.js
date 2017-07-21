@@ -3,7 +3,7 @@ import { introJs } from 'intro.js';
 let doneStep = {
   element: '.school-name-container',
   highlightClass: 'no-highlight',
-  intro: '<img alt="" height="42" src="http://orangestripes.com/gschool/owl/owl-2-copy-4.png" style="float:left" width="39"><h1>&nbsp;All done!</h1></div><div class="inmplayer-template-content"><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><div class="inmplayer-button" onclick="inline_manual_player.deactivate()">Start exploring this school</div></div>'
+  intro: '<img alt="" height="42" src="http://orangestripes.com/gschool/owl/owl-2-copy-4.png" style="float:left" width="39"><h1>&nbsp;All done!</h1></div><div class="inmplayer-template-content"><br/><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><div class="inmplayer-button" onclick="inline_manual_player.deactivate()">Start exploring this school</div></div>'
 };
 
 let otherSteps = [
@@ -14,12 +14,12 @@ let otherSteps = [
   {
     element: '.gs-rating-with-label',
     intro: 'The GreatSchools rating provides a quick snapshot of this school\'s quality compared to other schools in the state.',
-    position: 'auto',
+    position: 'top',
     highlightClass: 'highlight-dark'
   },
   {
     element: '.toc-container-box .toc-section-title',
-    intro: 'This section offers quick links to 3 categories of  information about this school.',
+    intro: 'From here you can see quick links to information about the school.',
     position: 'top'
   },
   {
