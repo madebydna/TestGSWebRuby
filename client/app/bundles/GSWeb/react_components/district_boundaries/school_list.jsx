@@ -55,7 +55,7 @@ class SchoolList extends React.Component {
       liClass = 'active';
     }
     return (
-      <li key={school.state + school.id} onClick={this.onClickSchool(school)} className={liClass} >
+      <li key={school.state + school.id} className={liClass} >
         { school.rating && <span>{this.renderRating(school.rating)}</span> }
         <span>
           <a href={school.links.profile} className="name" target="_blank">{school.name}</a>
