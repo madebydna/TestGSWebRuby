@@ -100,6 +100,8 @@ export default class OspSchoolInfo extends React.Component {
           </div>
         </div>
       </div>)
+    } else {
+      return (<div/>)
     }
   }
 }

@@ -1,7 +1,7 @@
 module SchoolProfiles
   module Components
     class TestScoresComponent < Component
-      GRADES_DISPLAY_MINIMUM = 2
+      GRADES_DISPLAY_MINIMUM = 1
 
       def narration
         t('RE Test scores narration', scope: 'lib.equity_gsdata', subject: t(data_type)) # TODO: update scope after moving translations

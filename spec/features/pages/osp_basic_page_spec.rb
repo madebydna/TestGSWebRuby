@@ -28,7 +28,7 @@ describe 'OSP Basic Page' do
       end
     end
 
-    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture', 'Facilities & Staff']
+    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture']
 
     describe_desktop do
       osp_forms.each do |form|
@@ -90,13 +90,6 @@ describe 'OSP Basic Page' do
             include_examples 'should have a footer'
           end
           include_example 'Before Care and Canoe buttons should be active'
-        end
-
-        with_shared_context 'click osp nav link element with text:', 'Facilities' do
-          describe 'footer' do
-            subject { OspPage.new }
-            include_examples 'should have a footer'
-          end
         end
 
         with_shared_context 'click osp nav link element with text:', 'Extracurriculars' do

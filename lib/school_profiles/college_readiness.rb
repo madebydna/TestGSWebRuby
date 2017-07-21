@@ -12,6 +12,10 @@ module SchoolProfiles
     AP_ENROLLED = 'Percentage AP enrolled grades 9-12'
     AP_EXAMS_PASSED = 'Percentage of students passing 1 or more AP exams grades 9-12'
     ACT_SAT_PARTICIPATION = 'Percentage SAT/ACT participation grades 11-12'
+    NEW_SAT_STATES = %w(ca mi nj)
+    NEW_SAT_YEAR = 2016
+    NEW_SAT_RANGE = (400..1600)
+    OLD_SAT_RANGE = (600..2400)
 
     # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
@@ -214,20 +218,38 @@ module SchoolProfiles
         formatting = data_type_formatting_map[data_type]
         visualization = data_type_visualization_map[data_type]
         range = data_type_range_map[data_type]
+        state = @school_cache_data_reader.school.state
         RatingScoreItem.new.tap do |item|
           item.label = data_label(data_type)
-          item.info_text = data_label_info_text(data_type)
+          item.year = hash['year'] || hash['source_year']
+          if data_type == SAT_SCORE
+            item.info_text = data_label_info_text(sat_score_info_text_key(state, item.year))
+            item.range = sat_score_range(state, item.year)
+          else
+            item.info_text = data_label_info_text(data_type)
+            item.range = range
+          end
           item.score = SchoolProfiles::DataPoint.new(hash['school_value']).
             apply_formatting(*formatting)
           state_average = hash['state_average'] || hash['state_value']
           item.state_average = SchoolProfiles::DataPoint.new(state_average).
             apply_formatting(*formatting)
           item.visualization = visualization
-          item.range = range
-          item.year = hash['year'] || hash['source_year']
           item.source = hash['source'] || hash['source_name']
         end
       end
+    end
+
+    def sat_score_range(state, year)
+      new_sat?(state, year) ? NEW_SAT_RANGE : OLD_SAT_RANGE
+    end
+
+    def sat_score_info_text_key(state, year)
+      new_sat?(state, year) ? "#{SAT_SCORE}_new" : SAT_SCORE
+    end
+
+    def new_sat?(state, year)
+      NEW_SAT_STATES.include?(state.to_s.downcase) && year.to_i >= NEW_SAT_YEAR
     end
 
     def sources
@@ -252,7 +274,11 @@ module SchoolProfiles
       str = '<div>'
       str << '<h4>' + data_label(hash['data_type']) + '</h4>'
       str << "<p>#{data_label_info_text(hash['data_type'])}</p>"
-      str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
+      if year && source
+        str << '<p><span class="emphasis">' + data_label('source')+ '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
+      else
+        GSLogger.error( :misc, nil, message: "Missing source or missing year", vars: hash)
+      end
       str << '</div>'
       str
     end

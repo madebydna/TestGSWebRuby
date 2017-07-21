@@ -7,33 +7,51 @@ es:
       m:
         subtitle_html: Cursos avanzados de STEM en la escuela intermedia puede ayudar a su estudiante a tener éxito en la escuela secundaria. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a>.
         parent_tip_html: ¿Cuando va tomar su hijo álgebra? <a href="/gk/articles/algebra-middle-school-math-track/">Esto es lo que usted necesita entender</a> acerca la ruta de matemáticas.
+        faq_content_html: >
+          <p><a href="/gk/articles/why-algebra/">Álgebra 1</a> normalmente es ofrecido como un curso de matemáticas
+          avanzado para estudiantes en los años 7° y 8° (es una clase estándar de matemáticas en la escuela secundaria).
+          Cuando falta información en nuestra perfil, probablemente es porque esta escuela no ofrece Álgebra 1 en los
+          años 7° o 8° o porque esta escuela no tienen estudiantes en estos años. También puede ser que los datos que
+          faltan no fueron incluidos en los datos de la recopilación de datos federales de los Derechos Civiles (Ver
+          "Fuentes" para más información).</p>
+          <p>¿Todavía tiene preguntas? <a href="%{faq_path}">Visite nuestra página de preguntas frecuentes</a>.</p>
       h:
         subtitle_html: Un riguroso curso de STEM puede ayudar a su estudiante a prepararse y entrar a la universidad. <a href="/gk/articles/stem-in-the-classroom/">Averigue más</a> acerca de por qué cursos de STEM son tan importantes para los estudiantes de hoy.
         parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. <a href="/gk/articles/ready-for-college-math/">¿Su estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a esta escuela cómo garantizan que los estudiantes están bien preparados. 
+        faq_content_html: >
+          <div class="emphasis">¿Qué son las clases de AP?</div>
+          <p>Las cursos “AP” (Cursos Avanzados) son clases de nivel universitario con un examen final que, si aprobado,
+          podría contar para crédito universitario. El porcentaje de los estudiantes que toman clases AP puede reflejar
+          si la cultura escolar se centra en la preparación universitaria.</p>
+          <div class="emphasis">¿Por qué no veo índices de AP?</div>
+          <p>Cuando falta información en nuestra perfiles, puede ser debido a que la escuela no ofrece estos cursos
+          o porque los datos no fueron incluidos en la recopilación de datos federales de los Derechos Civiles (CRDC).
+          Información sobre los estudiantes tomando y/o aprobando los exámenes de matemáticas o ciencias AP no es parte
+          de los datos proporcionados por el CRDC. (Ver "Fuentes" para más información).</p>
+          <p>¿Todavía tiene preguntas? <a href="%{faq_path}">Visite nuestra página de preguntas frecuentes</a>.</p>
       mixed:
         subtitle_html: >
           El acrónimo STEM representa las iniciales de: ciencia, tecnología, ingeniería y matemáticas. Averigue más por qué  cursos de STEM son tan importantes para los estudiantes de hoy.
         parent_tip_html: Muchos estudiantes exitosos terminan en cursos correctivas de matemáticas en la universidad. <a href="/gk/articles/ready-for-college-math/">¿Su estudiante está preparado</a> para matemáticas a nivel universitario? Pregúntele a esta escuela cómo garantizan que los estudiantes están bien preparados.
+        faq_content_html: >
+          <div class="emphasis">Matemáticas avanzadas en la escuela intermedia:</div>
+          <p><a href="/gk/articles/why-algebra/">Álgebra 1</a> normalmente es ofrecido como un curso de matemáticas
+          avanzado para estudiantes en los años 7° y 8° (es una clase estándar de matemáticas en la escuela secundaria).
+          Cuando falta información en nuestra perfil, probablemente es porque esta escuela no ofrece Álgebra 1 en los
+          años 7° o 8°.</p>
+          <div class="emphasis">Matemáticas y ciencias avanzadas en la escuela secundaria:</div>
+          <p>Las cursos “AP” (Cursos Avanzados) son clases de nivel universitario con un examen final que, si
+          aprobado, podría contar para crédito universitario. El porcentaje de los estudiantes que toman clases
+          AP puede reflejar si la cultura escolar se centra en la preparación universitaria. Cuando falta información
+          en nuestra perfil, probablemente es porque esta escuela no ofrece estos cursos.</p>
+          <div class="emphasis">¿Por qué no veo índices de AP?</div>
+          <p>Cuando falta información en nuestra perfiles, puede ser debido a que la escuela no ofrece estos cursos
+          o porque los datos no fueron incluidos en la recopilación de datos federales de los Derechos Civiles (CRDC).
+          Información sobre los estudiantes tomando y/o aprobando los exámenes de matemáticas o ciencias AP no es parte
+          de los datos proporcionados por el CRDC. (Ver "Fuentes" para más información).</p>
+          <p>¿Todavía tiene preguntas? <a href="%{faq_path}">Visite nuestra página de preguntas frecuentes</a>.</p>
       faq_cta: ¿Notas que algo falta o confunde?
-      faq_content_html: >
-        <div class="emphasis">Matemáticas avanzadas en la escuela intermedia:</div>
-        <div><a href="/gk/articles/why-algebra/">Álgebra 1</a> normalmente es ofrecido como un curso de matemáticas
-        avanzado para estudiantes en los años 7° y 8° (es una clase estándar de matemáticas en la escuela secundaria).
-        Cuando falta información en nuestra perfil, probablemente es porque esta escuela no ofrece Álgebra 1 en
-        los años 7° o 8°.</div><br/><div class="emphasis">Matemáticas y ciencias avanzadas en la escuela secundaria:</div>
-        <div>Las cursos “AP” (Cursos Avanzados) son clases de nivel universitario con un examen final que, si aprobado,
-        podría contar para crédito universitario. El porcentaje de los estudiantes que toman clases AP puede reflejar
-        si la cultura escolar se centra en la preparación universitaria. Cuando falta información en nuestra perfil,
-        probablemente es porque esta escuela no ofrece estos cursos.</div><br/>
-        <div class="emphasis">¿Por qué no veo índices de AP?</div><div>Cuando falta información en nuestra perfiles,
-        puede ser debido a que la escuela no ofrece estos cursos o porque los datos no fueron incluidos en la
-        recopilación de datos federales de los Derechos Civiles (CRDC). Información sobre los estudiantes tomando y/o
-        aprobando los exámenes de matemáticas o ciencias AP no es parte de los datos proporcionados por el CRDC.
-        (Ver "Fuentes" para más información).</div></br>
-        <p>¿Ha encontrado la información de cursos avanzados útil? ¿Qué podemos hacer mejor?
-        <a href="https://s.qualaroo.com/45194/d8fa4702-59cd-435c-a922-9409acaf81c8" target="blank">Comparte tus comentarios.</a></p>
-        ¿Todavía tiene preguntas? <a href="%{faq_path}">Visite nuestra página de preguntas frecuentes</a>.
-      'Percentage algebra 1 enrolled grades 7-8': 
+      'Percentage algebra 1 enrolled grades 7-8':
         label: Algebra 1 índice de participación
         tooltip_html: La mayoría de las escuelas consideran <a href="/gk/articles/why-algebra/">Álgebra 1</a> como un curso avanzado en los años 7° y 8° y un curso estándar en la escuela secundaria. Esto refleja el porcentaje de estudiantes en 7º o 8º de esta escuela que tomaron Álgebra 1 comparado con el promedio estatal. Aquí encontrará todo lo que necesita saber acerca de la <a href="/gk/articles/algebra-middle-school-math-track/">ruta de matemáticas</a>. 
       'Percentage passing algebra 1 grades 7-8': 

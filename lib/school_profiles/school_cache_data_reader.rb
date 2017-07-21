@@ -81,6 +81,10 @@ module SchoolProfiles
       decorated_school.test_scores_rating_hash
     end
 
+    def test_scores_all_rating_hash
+      decorated_school.test_scores_all_rating_hash
+    end
+
     def historical_student_progress_ratings
       decorated_school.historical_student_growth_ratings
     end
@@ -105,7 +109,10 @@ module SchoolProfiles
     end
 
     def characteristics_data(*keys)
-      decorated_school.characteristics.slice(*keys)
+      decorated_school.characteristics.slice(*keys).each_with_object({}) do |(k,array_of_hashes), hash|
+        array_of_hashes = array_of_hashes.select { |h| h.has_key?('source') }
+        hash[k] = array_of_hashes if array_of_hashes.present?
+      end
     end
 
     def nearby_schools

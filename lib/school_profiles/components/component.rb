@@ -23,6 +23,10 @@ module SchoolProfiles
         end
       end
 
+      def rating_has_valid_data?(hash)
+          (valid_breakdowns).include?(hash['breakdown']) && hash['school_value_float'].present? && !float_value(hash['school_value_float']).zero?
+      end
+
       def valid_breakdowns
         @valid_breakdowns || ethnicities_to_percentages.keys + ['All students']
       end
@@ -42,6 +46,17 @@ module SchoolProfiles
         return -1 if h1[:breakdown] == 'All students'
         return 1 if h2[:breakdown] == 'All students'
         return h2[:percentage].to_f <=> h1[:percentage].to_f
+      end
+
+      # formats and translates values in a hash before it goes to the view
+      def standard_hash_to_value_hash_ratings(h)
+        {
+          breakdown: t(h['breakdown']),
+          label: text_value(h['school_value_text']),
+          score: float_value(h['school_value_float']),
+          percentage: h['percentage'],
+          display_percentages: true
+        }
       end
 
       # formats and translates values in a hash before it goes to the view

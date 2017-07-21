@@ -96,6 +96,7 @@ describe SchoolProfiles::CollegeReadiness do
       before do
         expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
         expect(school_cache_data_reader).to receive(:gsdata_data).and_return(gsdata_sample_data)
+        allow(subject).to receive(:new_sat?).and_return(false)
       end
 
       it 'should return chosen data types if data present' do
@@ -105,7 +106,7 @@ describe SchoolProfiles::CollegeReadiness do
         expect(data_points).to be_present
         expect(data_points.score).to eq(1600)
         expect(data_points.state_average).to eq(1400)
-        expect(data_points.range).to eq((600..2400))
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
       end
 
       it 'should pull from the "All students" breakdown for characteristics' do
@@ -175,17 +176,130 @@ describe SchoolProfiles::CollegeReadiness do
         data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
-
-      it 'should set school SAT percent participation to nil' do
-        data_points = subject.data_values.find {|item| item.label == 'SAT participation rate' }
-        expect(data_points).to_not be_present
-      end
+      
     end
 
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
       expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
       expect(subject.data_values).to be_empty
+    end
+
+    describe 'With 2016 SAT scores in CA, uses new range' do
+      let (:sample_data) do
+        {
+          'Average SAT score' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1400,
+              'school_value_2016' => 1400,
+              'school_value_2015' => 1800,
+              'year' => 2016,
+              'state_average' => 1200
+            }
+          ]
+        }
+      end
+
+      before do
+        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+      end
+
+      it 'should set range to 400..1600' do
+        data_values = subject.data_values
+        data_points = data_values.find {|item| item.label == 'Average SAT score' }
+        expect(data_points).to be_present
+        expect(data_points.score).to eq(1400)
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::NEW_SAT_RANGE)
+      end
+    end
+
+    describe 'With 2015 SAT scores in CA, uses old range' do
+      let (:sample_data) do
+        {
+          'Average SAT score' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1800,
+              'school_value_2015' => 1800,
+              'year' => 2015,
+              'state_average' => 1600
+            }
+          ]
+        }
+      end
+
+      before do
+        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+      end
+
+      it 'should set range to 600..2400' do
+        data_values = subject.data_values
+        data_points = data_values.find {|item| item.label == 'Average SAT score' }
+        expect(data_points).to be_present
+        expect(data_points.score).to eq(1800)
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
+      end
+    end
+
+    describe 'With 2016 SAT scores in old SAT state, uses old range' do
+      let (:sample_data) do
+        {
+          'Average SAT score' => [
+            {
+              'breakdown' => 'All students',
+              'subject' => 'All subjects',
+              'school_value' => 1400,
+              'school_value_2016' => 1400,
+              'school_value_2015' => 1800,
+              'year' => 2016,
+              'state_average' => 1200
+            }
+          ]
+        }
+      end
+
+      before do
+        expect(school_cache_data_reader).to receive(:characteristics_data).and_return(sample_data)
+        expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+        stub_const('SchoolProfiles::CollegeReadiness::NEW_SAT_STATES', [])
+      end
+
+      it 'should set range to 600..2400' do
+        data_values = subject.data_values
+        data_points = data_values.find {|item| item.label == 'Average SAT score' }
+        expect(data_points).to be_present
+        expect(data_points.score).to eq(1400)
+        expect(data_points.range).to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE)
+      end
+    end
+  end
+
+  describe '#sources_for_view' do
+    subject { college_readiness.sources_for_view(hash) }
+    let(:hash) { valid_hash }
+    let(:valid_hash) do
+      {
+        'data_type' => 'foo',
+        'description' => 'description',
+        'source' => 'foo',
+        'year' => 2014
+      }
+    end
+
+    it { is_expected.to be_a(String) }
+
+    context 'with missing source' do
+      let(:hash) { valid_hash.except('source') }
+      it { is_expected.to be_a(String) }
+    end
+    context 'with missing year' do
+      let(:hash) { valid_hash.except('year') }
+      it { is_expected.to be_a(String) }
     end
   end
 

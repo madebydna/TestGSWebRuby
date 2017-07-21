@@ -68,9 +68,22 @@ class TestDataSet < ActiveRecord::Base
       .joins("INNER JOIN #{TestDataType.connection_config[:database]}.TestDataType tdt on tdt.id = TestDataSet.data_type_id")
     .active
     .includes(:test_data_school_values)
+    .with_display_targets('ratings')
     .where('tdt.classification = ?', 'gs_rating')
     .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
     .with_no_subject_breakdowns
+  end
+
+  def self.historic_ratings_for_school(school, data_type_ids, exclude_data_set_ids)
+    TestDataSet.on_db(school.shard)
+      .joins("INNER JOIN #{TestDataType.connection_config[:database]}.TestDataType tdt on tdt.id = TestDataSet.data_type_id")
+    .active
+    .includes(:test_data_school_values)
+    .where('tdt.classification = ?', 'gs_rating')
+    .where('TestDataSchoolValue.school_id = ? and TestDataSchoolValue.active = ?', school.id, 1).references(:test_data_school_values)
+    .with_no_subject_breakdowns
+    .where(data_type_id: Array.wrap(data_type_ids))
+    .where.not(id: Array.wrap(exclude_data_set_ids))
     .all_students
   end
 

@@ -20,7 +20,7 @@ export default class NearbySchool extends React.Component {
   }
 
   renderGSRating() {
-    if(this.props.GSRating === undefined) {
+    if(!this.props.GSRating) {
       return null;
     }
     return (
@@ -32,6 +32,9 @@ export default class NearbySchool extends React.Component {
 
   fiveStars(numberFilled) {
     if (numberFilled === undefined || numberFilled == null) {
+      return null;
+    }
+    if(!this.props.GSRating) {
       return null;
     }
 

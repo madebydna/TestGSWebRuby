@@ -108,7 +108,11 @@ def its(attribute, *options, &block)
       else
         attribute_chain = attribute.to_s.split('.')
         attribute_chain.inject(subject) do |inner_subject, attr|
-          inner_subject.send(attr)
+          if inner_subject.is_a?(Hash)
+            inner_subject.send(:'[]', attr)
+          else
+            inner_subject.send(attr)
+          end
         end
       end
     end

@@ -1,7 +1,7 @@
 module StatesMetaTagsConcerns
 
   def state_long_name_with_caps
-    state_name = @state[:long].gs_capitalize_words;
+    state_name = @state[:long].gs_capitalize_words
     if @state[:short] == 'dc'
       state_name = "Washington DC";
     end
@@ -9,6 +9,9 @@ module StatesMetaTagsConcerns
   end
 
   def states_show_title
+    # Testing different title tag for Pennsylvania state page
+    current_yr = Date.today.year
+    return "#{state_long_name_with_caps} State #{current_yr} School Ratings | Public & Private" if @state[:short].casecmp('pa').zero?
     "#{state_long_name_with_caps} Schools - #{state_long_name_with_caps} State School Ratings - Public and Private"
   end
 

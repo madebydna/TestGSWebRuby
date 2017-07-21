@@ -18,11 +18,27 @@ class SchoolList extends React.Component {
     schools: React.PropTypes.array.isRequired,
     school: React.PropTypes.object,
     selectSchool: React.PropTypes.func.isRequired,
+    showMapView: React.PropTypes.func.isRequired,
     className: React.PropTypes.string
   }
 
   onClickSchool(school) {
-    return () => this.props.selectSchool(school.id, school.state);
+    return () => {
+      this.props.selectSchool(school.id, school.state);
+      this.props.showMapView();
+      try {
+        window.open(school.links.profile);
+      } catch (e) {}
+    }
+  }
+
+  onClickMap(school) {
+    return (event) => {
+      this.props.selectSchool(school.id, school.state);
+      this.props.showMapView();
+      event.stopPropagation();
+      return false;
+    }
   }
 
   renderRating(rating) {
@@ -39,9 +55,13 @@ class SchoolList extends React.Component {
       liClass = 'active';
     }
     return (
-      <li key={school.state + school.id} onClick={this.onClickSchool(school)} className={liClass} >
+      <li key={school.state + school.id} className={liClass} >
         { school.rating && <span>{this.renderRating(school.rating)}</span> }
-        <span>{school.name}<br/><a href={school.links.profile} target="_blank">View school profile</a></span>
+        <span>
+          <a href={school.links.profile} className="name" target="_blank">{school.name}</a>
+          <br/>
+          <a href="javascript:void(0);" onClick={this.onClickMap(school)}><span className="icon icon-location active"/>View in map</a>
+        </span>
       </li>
     );
   }
@@ -58,16 +78,12 @@ class SchoolList extends React.Component {
         <SpinnyWheel>
           <h3>Schools in district</h3>
             {this.renderSchools()}
-          <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
-          <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
         </SpinnyWheel>
       </section>
     } else {
       return <section className={ 'school-list ' + this.props.className }>
         <h3>Schools in district</h3>
         {this.renderSchools()}
-        <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta"/>
-        <div className="attribution">School Boundaries © Maponics {(new Date()).getFullYear()}. Duplication is strictly prohibited.</div>
       </section>
     }
   }

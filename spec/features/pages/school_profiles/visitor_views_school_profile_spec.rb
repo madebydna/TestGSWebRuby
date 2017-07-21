@@ -148,7 +148,7 @@ describe 'Visitor' do
       )
 
       expected_markup = {
-        "@context" => "http://schema.org",
+        "@context" => "https://schema.org",
         "@type" => "School",
         "name" => "Alameda High School",
         "address" => {

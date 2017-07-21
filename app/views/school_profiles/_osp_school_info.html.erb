@@ -8,7 +8,7 @@
 <% end %>
 
 <div style="margin-bottom: 40px;">
-  <% if school_profile.claimed %>
+  <% if school_profile.claimed && school_profile.tab_config.present? %>
     <%= react_component('OspSchoolInfo', props: {
       content: school_profile.tab_config,
       osp_link: osp_link,

@@ -21,7 +21,6 @@ describe 'Visitor' do
   def register_new_account
     page.click_link 'Sign up'
     page.fill_in 'join-email', with: 'ssprouse+testing@greatschools.org'
-    page.check 'terms_terms'
     page.click_button 'Sign up'
   end
 end
