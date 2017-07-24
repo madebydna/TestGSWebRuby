@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import UserReviews from './user_reviews';
+import { scrollToElement } from '../../util/scrolling';
 
 export default class ReviewsList extends React.Component {
 
@@ -96,7 +97,7 @@ export default class ReviewsList extends React.Component {
 
   handleCloseAllClick() {
     this.setState({pageNumber: 1});
-    GS.reviewHelpers.scrollToReviewSummary();
+    scrollToElement('.review-summary');
   }
 
   showMoreButton(){

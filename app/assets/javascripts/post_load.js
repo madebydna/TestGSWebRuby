@@ -3,7 +3,6 @@
 //= require resources/tipso
 //= require header
 //= require util/cached_script
-//= require util/review_helpers
 //= require resources/fastclick
 // require resources/pep
 //= require resources/remodal

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import FiveStarQuestionCTA from './five_star_question_cta';
 import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
+import { scrollToElement } from '../../../util/scrolling';
 
 export default class ReviewForm extends React.Component {
 
@@ -86,7 +87,7 @@ export default class ReviewForm extends React.Component {
         displayAllQuestions: false
       }
     );
-    GS.reviewHelpers.scrollToReviewSummary();
+    scrollToElement('.review-summary');
   }
 
   fiveStarQuestionSelect(value, id) {
