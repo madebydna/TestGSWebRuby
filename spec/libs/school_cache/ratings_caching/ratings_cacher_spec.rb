@@ -167,7 +167,7 @@ describe RatingsCaching::RatingsCacher do
     subject { cacher.data_set_to_hash(data_set) }
     before do
       allow(cacher.class).to receive(:test_data_breakdowns).and_return(
-        1 => { 'name' => 'foo' }
+        1 => OpenStruct.new('name' => 'foo')
       )
     end
     its('data_type_id') { is_expected.to eq(10) }

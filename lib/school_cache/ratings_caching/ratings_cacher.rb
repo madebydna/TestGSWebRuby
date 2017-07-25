@@ -71,7 +71,10 @@ class RatingsCaching::RatingsCacher < Cacher
   end
 
   def breakdown_name(id)
-    id.present? && id > 0 ? self.class.test_data_breakdowns.seek(id, 'name') : nil
+    if id.present? && id > 0
+      breakdown = self.class.test_data_breakdowns[id]
+      breakdown.name if breakdown
+    end
   end
 
   def data_description_value(key)

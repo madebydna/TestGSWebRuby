@@ -99,7 +99,8 @@ module CachedRatingsMethods
   def school_historical_rating_hashes_by_id(rating_id)
     if rating_id
       historical_ratings = ratings.select do |rating|
-        rating['data_type_id'] == rating_id
+        rating['data_type_id'] == rating_id &&
+        rating['breakdown'] == 'All students'
       end
       historical_ratings_filtered = historical_ratings.map do |hash|
         hash['school_value_float'] = hash['school_value_float'].try(:to_i)
