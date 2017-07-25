@@ -8,6 +8,19 @@ module CachedRatingsMethods
     cache_data['ratings'] || []
   end
 
+  # ignore nil criteria
+  def ratings_matching_criteria(ratings, criteria)
+    # if all criteria are contained within the rating (after removing nil
+    # values) then we have a match
+    ratings.select { |rating| (criteria.compact.to_a - rating.to_a).empty? }
+  end
+
+  def ratings_having_max_year(ratings)
+    return ratings unless ratings.present?
+    year = ratings.max_by { |rating| rating['year'] }['year']
+    ratings.select { |rating| rating['year'] == year }
+  end
+
   def overall_gs_rating
     great_schools_rating.to_s.downcase
   end
@@ -65,50 +78,43 @@ module CachedRatingsMethods
   end
 
   def school_rating_hash_by_id(rating_id, level_code=nil)
-    if rating_id
-      # allow caller to provide level_code as 2nd arg. If given,
-      # find only ratings that match it (and date type ID)
-      relevant_ratings = ratings.select do |rating|
-        rating['data_type_id'] == rating_id && (
-        (level_code.nil? || level_code == rating['level_code']) &&
-        rating['breakdown'] == 'All students'
-        )
-      end
-      ratings_year_obj = relevant_ratings.max_by { |rating| rating['year'] }
-      return ratings_year_obj if ratings_year_obj
-    end
-    nil
+    raise 'Must provide rating data type ID as first argument' unless rating_id
+
+    relevant_ratings = ratings_matching_criteria(
+      ratings,
+      'data_type_id' => rating_id,
+      'level_code' => level_code,
+      'breakdown' => 'All students'
+    )
+    relevant_ratings = ratings_having_max_year(relevant_ratings)
+    relevant_ratings.first # there should only be one
   end
 
   def school_rating_all_hash_by_id(rating_id, level_code=nil)
-    if rating_id
-      relevant_ratings = ratings.select do |rating|
-        rating['data_type_id'] == rating_id && (
-        (level_code.nil? || level_code == rating['level_code'])
-        )
-      end
-      year = relevant_ratings.max_by { |rating| rating['year'] }['year'] if relevant_ratings.present?
-      ratings_year_objs = relevant_ratings.select do |rating|
-        rating['year'] == year
-      end
-      return ratings_year_objs if ratings_year_objs
-    end
-    nil
+    raise 'Must provide rating data type ID as first argument' unless rating_id
+
+    relevant_ratings = ratings_matching_criteria(
+      ratings,
+      'data_type_id' => rating_id,
+      'level_code' => level_code
+    )
+    ratings_having_max_year(relevant_ratings)
   end
 
   def school_historical_rating_hashes_by_id(rating_id)
-    if rating_id
-      historical_ratings = ratings.select do |rating|
-        rating['data_type_id'] == rating_id &&
-        rating['breakdown'] == 'All students'
-      end
-      historical_ratings_filtered = historical_ratings.map do |hash|
-        hash['school_value_float'] = hash['school_value_float'].try(:to_i)
-        hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
-      end
-      return historical_ratings_filtered.sort_by{ |hash| hash['year'] }.reverse
+    raise 'Must provide rating data type ID as first argument' unless rating_id
+
+    historical_ratings = ratings_matching_criteria(
+      ratings,
+      'data_type_id' => rating_id,
+      'breakdown' => 'All students'
+    )
+    historical_ratings_filtered = historical_ratings.map do |hash|
+      hash['school_value_float'] = hash['school_value_float'].try(:to_i)
+      hash.select { |k, _| HISTORICAL_RATINGS_KEYS.include?(k) }
     end
-    nil
+
+    return historical_ratings_filtered.sort_by{ |hash| hash['year'] }.reverse
   end
 
   def school_rating_by_id(rating_id=nil, level_code=nil)
