@@ -25,7 +25,8 @@ FactoryGirl.define do
             'year' => 2014,
             'school_value_text' => nil,
             'school_value_float' => evaluator.gs_rating_value,
-            'name' => 'GreatSchools rating'
+            'name' => 'GreatSchools rating',
+            'breakdown' => 'All students'
           }
         ].to_json
       end
@@ -42,7 +43,8 @@ FactoryGirl.define do
             'year' => 2015,
             'school_value_text' => nil,
             'school_value_float' => evaluator.test_score_rating_value,
-            'name' => 'Test score rating'
+            'name' => 'Test score rating',
+            'breakdown' => 'All students'
           }
         ].to_json
       end
@@ -60,14 +62,16 @@ FactoryGirl.define do
             'year' => 2014,
             'school_value_text' => nil,
             'school_value_float' => evaluator.gs_rating_value,
-            'name' => 'GreatSchools rating'
+            'name' => 'GreatSchools rating',
+            'breakdown' => 'All students'
           },
           {
             'data_type_id' => 164,
             'year' => 2014,
             'school_value_text' => nil,
             'school_value_float' => evaluator.test_score_rating_value,
-            'name' => 'Test score rating'
+            'name' => 'Test score rating',
+            'breakdown' => 'All students'
           }
         ].to_json
       end
@@ -141,7 +145,8 @@ FactoryGirl.define do
         'year' => 2014,
         'school_value_text' => nil,
         'school_value_float' => 5.0,
-        'name' => 'GreatSchools rating'
+        'name' => 'GreatSchools rating',
+        'breakdown' => 'All students'
       }
     ].to_json)
     updated Time.now
