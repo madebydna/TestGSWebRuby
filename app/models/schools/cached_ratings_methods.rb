@@ -70,7 +70,7 @@ module CachedRatingsMethods
       # find only ratings that match it (and date type ID)
       relevant_ratings = ratings.select do |rating|
         rating['data_type_id'] == rating_id && (
-        level_code.nil? || level_code == rating['level_code'] &&
+        (level_code.nil? || level_code == rating['level_code']) &&
         rating['breakdown'] == 'All students'
         )
       end
@@ -84,7 +84,7 @@ module CachedRatingsMethods
     if rating_id
       relevant_ratings = ratings.select do |rating|
         rating['data_type_id'] == rating_id && (
-        level_code.nil? || level_code == rating['level_code']
+        (level_code.nil? || level_code == rating['level_code'])
         )
       end
       year = relevant_ratings.max_by { |rating| rating['year'] }['year'] if relevant_ratings.present?
