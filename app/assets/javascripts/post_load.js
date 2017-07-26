@@ -15,7 +15,6 @@
 //= require resources/parsley.remote
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations
-//= require util/states
 //= require util/send_updates
 //= require ads/interstitial
 //= require page_initializers/school_profiles
