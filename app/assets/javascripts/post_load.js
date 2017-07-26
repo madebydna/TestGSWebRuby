@@ -22,7 +22,6 @@
 //= require loaders/facebook
 //= require util/states
 //= require util/notifications
-//= require util/subscription
 //= require util/send_updates
 //= require util/back_to_top
 //= require ads/interstitial
