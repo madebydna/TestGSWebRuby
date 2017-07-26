@@ -23,6 +23,7 @@ import { signupAndFollowSchool } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
 import { impressionTracker } from '../util/impression_tracker';
 import { t } from '../util/i18n';
+import * as facebook from '../components/facebook_auth';
 
 window.store = configureStore({
   school: gon.school

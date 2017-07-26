@@ -5,7 +5,6 @@
 //= require resources/fastclick
 //= require resources/remodal
 //= require auth/auth
-//= require auth/facebook_auth
 //= require util/gs_bind
 //= require util/session
 //= require autocomplete
