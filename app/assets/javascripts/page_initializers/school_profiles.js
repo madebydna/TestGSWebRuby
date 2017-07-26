@@ -1,8 +1,6 @@
 $(function() {
 
   GS.ad.addCompfilterToGlobalAdTargetingGon();
-  GS.handlebars.registerPartials();
-  GS.handlebars.registerHelpers();
   GS.util.BackToTop.init();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
