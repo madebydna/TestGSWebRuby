@@ -18,6 +18,7 @@ import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
 import { enableAutoAnchoring } from '../components/anchor_router';
+import * as footer from '../components/footer';
 
 window.store = configureStore({
   school: gon.school
@@ -61,6 +62,7 @@ $(function() {
   remodal.init();
   generateSubgroupPieCharts();
   stickyCTA.init();
+  footer.setupNewsletterLink();
 
   $('.rating-container__title').each(function() {
     var $elem = $(this);

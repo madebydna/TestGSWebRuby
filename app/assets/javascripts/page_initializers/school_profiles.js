@@ -14,16 +14,6 @@ $(function() {
     $contentPane.children().addClass('dn').filter('[data-target="' + $this.data('target') + '"]').removeClass('dn');
   });
 
-  $('.js-send-me-updates-button-footer').on('click', function () {
-    if (GS.schoolNameFromUrl() === undefined || GS.stateAbbreviationFromUrl() === undefined ) {
-      GS.sendUpdates.signupAndGetNewsletter();
-    } else {
-      var state = GS.stateAbbreviationFromUrl();
-      var schoolId = GS.schoolIdFromUrl();
-      GS.sendUpdates.signupAndFollowSchool(state, schoolId);
-    }
-  });
-
   // used by test scores in school profiles
   $('body').on('click', '.js-test-score-details', function () {
     var grades = $(this).closest('.bar-graph-display').parent().find('.grades');

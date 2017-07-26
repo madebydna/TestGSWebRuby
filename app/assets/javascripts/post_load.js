@@ -13,7 +13,6 @@
 //= require autocomplete
 //= require resources/typeahead_modified.bundle
 //= require util/handlebars
-//= require util/url_params
 //= require ./util/advertising.js
 //= require modals
 // require ./resources/parsley
