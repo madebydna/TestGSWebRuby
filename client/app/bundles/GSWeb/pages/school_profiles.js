@@ -20,6 +20,7 @@ import StemCourses from '../react_components/school_profiles/stem_courses';
 import { enableAutoAnchoring } from '../components/anchor_router';
 import * as footer from '../components/footer';
 import { signupAndFollowSchool } from '../util/newsletters';
+import * as backToTop from '../components/back_to_top';
 
 window.store = configureStore({
   school: gon.school
@@ -64,6 +65,7 @@ $(function() {
   generateSubgroupPieCharts();
   stickyCTA.init();
   footer.setupNewsletterLink();
+  backToTop.init();
 
   $('.js-followThisSchool').on('click', function () {
     signupAndFollowSchool(gon.school.state, gon.school.id);

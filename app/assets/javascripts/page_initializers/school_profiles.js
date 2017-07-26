@@ -1,7 +1,6 @@
 $(function() {
 
   GS.ad.addCompfilterToGlobalAdTargetingGon();
-  GS.util.BackToTop.init();
 
   $('.js-nearby-toggle').find('button').on('click', function() {
     var $this = $(this);
