@@ -53,12 +53,6 @@ $(function() {
     GS.search.autocomplete.searchAutocomplete.init();
   }
 
-  $('.js-followThisSchool').on('click', function () {
-    var state = GS.stateAbbreviationFromUrl();
-    var schoolId = GS.schoolIdFromUrl();
-    GS.sendUpdates.signupAndFollowSchool(state, schoolId);
-  });
-
   try {
     $('.neighborhood img[data-src]').unveil(300, function() {
       $(this).width('100%')
