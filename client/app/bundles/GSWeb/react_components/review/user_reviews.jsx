@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import TopicalReview from './topical_review';
 import ShortenText from '../shorten_text';
 import ReportReview from './report_review.jsx';
+import { t } from '../../util/i18n';
 
 export default class UserReviews extends React.Component {
 
@@ -55,7 +56,7 @@ export default class UserReviews extends React.Component {
       return(
         <div className="five-star-review" key={review.id}>
           <div className="header">
-            { GS.I18n.t(review.topic_label) }
+            { t(review.topic_label) }
           </div>
           <div className="answer">
             { this.fiveStars(review.answer) }
@@ -71,7 +72,7 @@ export default class UserReviews extends React.Component {
   reportReviewMobileLabel(review) {
     if (this.props.current_user_reported_reviews.indexOf(review.id) >= 0) {
       return (
-          <span className="visible-xs-inline pls">{GS.I18n.t('Reported')}</span>
+          <span className="visible-xs-inline pls">{t('Reported')}</span>
       )
     }
   }
@@ -79,7 +80,7 @@ export default class UserReviews extends React.Component {
   buttonBar(review) {
     if (review !== undefined) {
       var alreadyReported = this.props.current_user_reported_reviews.indexOf(review.id) >= 0;
-      const desktopLabel = alreadyReported ? GS.I18n.t('Review Reported') : GS.I18n.t('Report Review');
+      const desktopLabel = alreadyReported ? t('Review Reported') : t('Report Review');
       return (
           <div className="review-button-bar">
           <span className={'button' + (alreadyReported ? ' reported' : '')} onClick={this.handleReportReviewClick.bind(this, review.id)}>
@@ -123,9 +124,9 @@ export default class UserReviews extends React.Component {
 
   userTypeAndDate() {
     let userType = this.props.user_type_label;
-    let userTypeSentence = GS.I18n.t('Submitted ');
+    let userTypeSentence = t('Submitted ');
     if (userType) {
-      userTypeSentence += GS.I18n.t('by a ') + userType.toLowerCase() + ' \u00B7 ';
+      userTypeSentence += t('by a ') + userType.toLowerCase() + ' \u00B7 ';
     }
     return (
         <div className="type-and-date">

@@ -22,6 +22,7 @@ import * as footer from '../components/footer';
 import { signupAndFollowSchool } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
 import { impressionTracker } from '../util/impression_tracker';
+import { t } from '../util/i18n';
 
 window.store = configureStore({
   school: gon.school
@@ -43,7 +44,7 @@ $(function() {
     var toggle = _.assign(new Toggle($('#hero').find('.school-info')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
-        toggle.updateButtonTextCallback(GS.I18n.t('show_less'), GS.I18n.t('show_more'))
+        toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
     );
     toggle.init().add_onclick();
   })();

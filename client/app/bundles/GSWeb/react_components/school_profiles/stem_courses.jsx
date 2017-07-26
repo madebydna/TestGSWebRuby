@@ -10,14 +10,7 @@ import BarGraphBase from '../equity/graphs/bar_graph_base';
 import BasicDataModuleRow from '../school_profiles/basic_data_module_row';
 import InfoTextAndCircle from '../info_text_and_circle';
 import GiveUsFeedback from './give_us_feedback';
-
-function t(string) {
-  if (window.GS && GS.I18n && GS.I18n.t) {
-    return GS.I18n.t(string) || string;
-  } else {
-    return string;
-  }
-}
+import { t } from '../../util/i18n';
 
 const stateAverageLabel = function(stateAverageValue) {
   let f = parseFloat(stateAverageValue);

@@ -8,7 +8,6 @@
 //= require auth/facebook_auth
 //= require util/gs_bind
 //= require util/session
-//= require util/i18n
 //= require autocomplete
 //= require ./util/advertising.js
 //= require modals

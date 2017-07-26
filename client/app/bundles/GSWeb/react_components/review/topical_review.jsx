@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReportReview from './report_review';
 import ShortenText from '../shorten_text';
+import { t } from '../../util/i18n';
 
 export default class TopicalReview extends React.Component {
 
@@ -19,11 +20,11 @@ export default class TopicalReview extends React.Component {
     var isReported = !!this.props.userAlreadyReported;
     if (isReported) {
       return (
-          <div className="reported">{GS.I18n.t('Review Reported')}</div>
+          <div className="reported">{t('Review Reported')}</div>
       )
     } else {
       return (
-          <a href="#" onClick={this.handleReportReviewClick.bind(this)}>{GS.I18n.t('Report')}</a>
+          <a href="#" onClick={this.handleReportReviewClick.bind(this)}>{t('Report')}</a>
       )
     }
   }

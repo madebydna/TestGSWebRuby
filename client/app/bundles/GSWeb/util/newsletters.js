@@ -2,6 +2,7 @@
 // TODO: import session
 // TODO: import I18n
 import * as notifications from '../util/notifications';
+import { t, preserveLanguageParam } from '../util/i18n';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
@@ -25,11 +26,11 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
         .done(function(){
           if (schoolName === undefined) {
             notifications.success(
-              GS.I18n.t('follow_schools.signed_in_message_with_no_school_name')
+              t('follow_schools.signed_in_message_with_no_school_name')
             );
           } else {
             notifications.success(
-              GS.I18n.t('follow_schools.signed_in_message') + ' ' + schoolName
+              t('follow_schools.signed_in_message') + ' ' + schoolName
             );
           }
         });
@@ -107,7 +108,7 @@ const schools = function(states, schoolIds, options) {
   */
   var makeFollowSchoolAjaxRequest = function(options) {
     var url = '/gsr/user/favorites/';
-    url = GS.I18n.preserveLanguageParam(url);
+    url = preserveLanguageParam(url);
     var data = {
       'favorite_school': _.merge(
         {

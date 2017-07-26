@@ -3,6 +3,7 @@ import FiveStarQuestionCTA from './five_star_question_cta';
 import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
 import { scrollToElement } from '../../../util/scrolling';
+import { t } from '../../../util/i18n';
 
 export default class ReviewForm extends React.Component {
 
@@ -52,7 +53,7 @@ export default class ReviewForm extends React.Component {
 
   promptUserWhenNavigatingAway(e) {
     if (this.state.unsavedChanges) {
-      e.returnValue = GS.I18n.t('review_not_saved');
+      e.returnValue = t('review_not_saved');
       return e.returnValue;
     }
   }
@@ -176,7 +177,7 @@ export default class ReviewForm extends React.Component {
       .replace( /\n /, "\n" )
       .split(' ').length;
     if (7 > numberWords) {
-      return GS.I18n.t('review_word_min');
+      return t('review_word_min');
     } else {
       return null;
     }
@@ -184,7 +185,7 @@ export default class ReviewForm extends React.Component {
 
   requiredCommentValidator(string) {
     if ( !string || string.length == 0) {
-      return GS.I18n.t('review_thank_you');
+      return t('review_thank_you');
     } else {
       return null;
     }
@@ -192,7 +193,7 @@ export default class ReviewForm extends React.Component {
 
   maxCharactersValidator(string) {
     if (string && string.legnth != 0 && string.length > 2400) {
-      return GS.I18n.t('review_char_limit');;
+      return t('review_char_limit');;
     } else {
       return null;
     }
@@ -372,12 +373,12 @@ export default class ReviewForm extends React.Component {
     }
     return(
       <div className="form-actions clearfix">
-        <a href={guidelinesLink} target="_blank">{GS.I18n.t('Review Guidelines')}</a>
-        <button className="button" onClick={this.cancelForm}>{GS.I18n.t('Cancel')}</button>
+        <a href={guidelinesLink} target="_blank">{t('Review Guidelines')}</a>
+        <button className="button" onClick={this.cancelForm}>{t('Cancel')}</button>
         <button className="button cta"
           disabled= {this.state.disabled}
           onClick={this.onSubmit}>
-          {GS.I18n.t(submitText)}
+          {t(submitText)}
         </button>
         {/* { this.state.formErrors ? this.renderFormErrorMessage() : null } */}
       </div>

@@ -1,5 +1,6 @@
 import * as tooltips from '../util/tooltip';
 import { getScript } from '../util/dependency';
+import { t } from '../util/i18n';
 //TODO: import jQuery
 
 var subgroupSliceColor = '#34A4DA';
@@ -9,13 +10,13 @@ var colorMap = {
   'Male': '#34A4DA'
 };
 var titleMap = {
-  'students-participating-in-free-or-reduced-price-lunch-program': GS.I18n.t('students-participating-in-free-or-reduced-price-lunch-program'),
-  'english-learners': GS.I18n.t('english-learners')
+  'students-participating-in-free-or-reduced-price-lunch-program': t('students-participating-in-free-or-reduced-price-lunch-program'),
+  'english-learners': t('english-learners')
 };
 
 var infoTextMap = {
-  'students-participating-in-free-or-reduced-price-lunch-program': GS.I18n.t('students-participating-in-free-or-reduced-price-lunch-program-info-text'),
-  'english-learners': GS.I18n.t('english-learners-info-text')
+  'students-participating-in-free-or-reduced-price-lunch-program': t('students-participating-in-free-or-reduced-price-lunch-program-info-text'),
+  'english-learners': t('english-learners-info-text')
 };
 
 var buildSubgroupData = function (parsedData) {
@@ -111,7 +112,7 @@ var generateInfoCircle = function(content) {
 }
 
 var generateGenderContainer = function(parsedGenderData) {
-  var chartTitle = GS.I18n.t('Gender');
+  var chartTitle = t('Gender');
   var chartId = 'gender';
   var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title gender'>" + chartTitle + "</div><div id='" + chartId + "'></div></div>";
   $('.subgroups > .row').append(containerHtml);
@@ -142,7 +143,7 @@ var renderGenderChart = function(data, key) {
       margin: 0,
       reversed: true,
       labelFormatter: function() {
-        return GS.I18n.t(this.name, {default: this.name});
+        return t(this.name, {default: this.name});
       }
     },
     title: {

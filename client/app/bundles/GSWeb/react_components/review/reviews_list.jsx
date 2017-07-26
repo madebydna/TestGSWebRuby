@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import UserReviews from './user_reviews';
 import { scrollToElement } from '../../util/scrolling';
+import { t } from '../../util/i18n';
 
 export default class ReviewsList extends React.Component {
 
@@ -103,7 +104,7 @@ export default class ReviewsList extends React.Component {
   showMoreButton(){
     if(!this.lastPage()) {
       return (<div className="show-more__button" onClick={this.handleClick}>
-        {GS.I18n.t('Show more')}
+        {t('Show more')}
       </div>);
     }
   }
@@ -111,7 +112,7 @@ export default class ReviewsList extends React.Component {
   closeAllButton(){
     if(this.state.pageNumber != 1) {
       return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
-        {GS.I18n.t('Close all')}
+        {t('Close all')}
       </a></div>);
     }
   }
