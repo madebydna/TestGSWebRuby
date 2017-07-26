@@ -1,8 +1,7 @@
 // TODO: import modals
 // TODO: import session
 // TODO: import I18n
-// TODO: import notifications
-
+import * as notifications from '../util/notifications';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
@@ -25,11 +24,11 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
         .follow({showMessages: false})
         .done(function(){
           if (schoolName === undefined) {
-            GS.notifications.success(
+            notifications.success(
               GS.I18n.t('follow_schools.signed_in_message_with_no_school_name')
             );
           } else {
-            GS.notifications.success(
+            notifications.success(
               GS.I18n.t('follow_schools.signed_in_message') + ' ' + schoolName
             );
           }
@@ -82,7 +81,7 @@ const showFlashMessages = function(jqXHR) {
     data = jqXHR.responseJSON;
   }
   if (data.hasOwnProperty('flash')) {
-    GS.notifications.flash_from_hash(data.flash);
+    notifications.flash_from_hash(data.flash);
   }
 };
 
