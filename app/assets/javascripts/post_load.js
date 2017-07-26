@@ -3,7 +3,6 @@
 //= require resources/tipso
 //= require header
 //= require resources/fastclick
-// require resources/pep
 //= require resources/remodal
 //= require auth/auth
 //= require auth/facebook_auth
@@ -13,7 +12,6 @@
 //= require autocomplete
 //= require ./util/advertising.js
 //= require modals
-// require ./resources/parsley
 //= require resources/parsley.remote
 //= require resources/parsley.es.js
 //= require util/gs_parsley_validations
