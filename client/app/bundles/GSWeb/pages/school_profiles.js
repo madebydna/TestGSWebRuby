@@ -21,6 +21,7 @@ import { enableAutoAnchoring } from '../components/anchor_router';
 import * as footer from '../components/footer';
 import { signupAndFollowSchool } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
+import { impressionTracker } from '../util/impression_tracker';
 
 window.store = configureStore({
   school: gon.school
@@ -106,6 +107,33 @@ $(function() {
     $hiddenField.val(values.join(','));
     $label.toggleClass('active');
   });
-
 });
 
+$(window).on('load', function() {
+  var moduleIds = [
+    '#TestScores',
+    '#CollegeReadiness',
+    '#StudentProgress',
+    '#AdvancedCourses',
+    '#Equity',
+    '#EquityRaceEthnicity',
+    '#EquityLowIncome',
+    '#EquityDisabilities',
+    '#Students',
+    '#TeachersStaff',
+    '#Reviews',
+    '#ReviewSummary',
+    '#Neighborhood',
+    '#NearbySchools'
+  ];
+  var elementIds = [];
+  for (var x=0; x < moduleIds.length; x ++) {
+    var theId = moduleIds[x];
+    elementIds.push(theId);
+    elementIds.push(theId + '-empty');
+  }
+  impressionTracker({
+    elements: elementIds,
+    threshold: 50
+  });
+});

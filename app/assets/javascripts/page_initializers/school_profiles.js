@@ -86,32 +86,4 @@ $(function() {
     refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   })();
 
-  $(window).on('load', function() {
-    var moduleIds = [
-      '#TestScores',
-      '#CollegeReadiness',
-      '#StudentProgress',
-      '#AdvancedCourses',
-      '#Equity',
-      '#EquityRaceEthnicity',
-      '#EquityLowIncome',
-      '#EquityDisabilities',
-      '#Students',
-      '#TeachersStaff',
-      '#Reviews',
-      '#ReviewSummary',
-      '#Neighborhood',
-      '#NearbySchools'
-    ];
-    var elementIds = [];
-    for (var x=0; x < moduleIds.length; x ++) {
-      var theId = moduleIds[x];
-      elementIds.push(theId);
-      elementIds.push(theId + '-empty');
-    }
-    GS.impressionTracker({
-      elements: elementIds,
-      threshold: 50
-    });
-  });
 });
