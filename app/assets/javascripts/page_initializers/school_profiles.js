@@ -2,15 +2,6 @@ $(function() {
 
   GS.ad.addCompfilterToGlobalAdTargetingGon();
 
-  $('.js-nearby-toggle').find('button').on('click', function() {
-    var $this = $(this);
-    $this.addClass('active');
-    $this.siblings().removeClass('active');
-
-    var $contentPane = $('.js-nearby-content');
-    $contentPane.children().addClass('dn').filter('[data-target="' + $this.data('target') + '"]').removeClass('dn');
-  });
-
   // used by test scores in school profiles
   $('body').on('click', '.js-test-score-details', function () {
     var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
