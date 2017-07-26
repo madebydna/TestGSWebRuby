@@ -11,7 +11,6 @@
 //= require util/session
 //= require util/i18n
 //= require autocomplete
-//= require resources/typeahead_modified.bundle
 //= require ./util/advertising.js
 //= require modals
 // require ./resources/parsley
