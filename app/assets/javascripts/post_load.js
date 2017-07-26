@@ -2,7 +2,6 @@
 // NEW PROFILES POST_LOAD
 //= require resources/tipso
 //= require header
-//= require util/cached_script
 //= require resources/fastclick
 // require resources/pep
 //= require resources/remodal
