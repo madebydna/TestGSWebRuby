@@ -89,9 +89,12 @@ describe LegacyProfileRedirectController do
   describe '#school' do
     subject { controller.send(:school) }
 
+    let (:school) { FactoryGirl.create(:school) }
+    let (:id) { school.id }
+    let (:state) { school.state }
+
     before do
       allow(controller).to receive(:params).and_return(params)
-      FactoryGirl.create(:school, id: 1)
     end
 
     after do
@@ -99,25 +102,25 @@ describe LegacyProfileRedirectController do
     end
 
     describe 'when provided params mapping to a real school in the database' do
-      let(:params) { {state: 'ca', id: 1} }
+      let(:params) { {state: state, id: id} }
 
-      it { is_expected.to_not be_nil }
+      it { is_expected.to eq(school) }
     end
 
     describe 'when provided params not mapping to a real school in the database' do
-      let(:params) { {state: 'ca', id: 2} }
+      let(:params) { {state: state, id: 0} }
 
       it { is_expected.to be_nil }
     end
 
     describe 'when provided params missing an id' do
-      let(:params) { {state: 'ca'} }
+      let(:params) { {state: state} }
 
       it { is_expected.to be_nil }
     end
 
     describe 'when provided params missing a state' do
-      let(:params) { {id: 1} }
+      let(:params) { {id: id} }
 
       it { is_expected.to be_nil }
     end
@@ -130,11 +133,16 @@ describe LegacyProfileRedirectController do
   end
 
   describe '#show' do
-    subject { controller.show }
+    subject { response }
+
+    let (:school) { FactoryGirl.create(:school) }
+    let (:id) { school.id }
+    let (:city) { school.city.downcase.gsub(' ', '-') }
+    let (:state) { school.state_name.downcase.gsub(' ', '-') }
+    let (:state_abbr) { school.state }
 
     before do
-      allow(controller).to receive(:params).and_return(params)
-      FactoryGirl.create(:school, id: 1)
+      get 'show', id: id, state: state_abbr
     end
 
     after do
@@ -142,49 +150,32 @@ describe LegacyProfileRedirectController do
     end
 
     describe 'when provided params mapping to a real school in the database' do
-      let(:params) { {state: 'ca', id: 1} }
-
-      it 'should redirect to the profile URL' do
-        expect(controller).to receive(:redirect_to).with('/california/alameda/1-Alameda-High-School/', status: 301)
-        subject
-      end
+      it { is_expected.to redirect_to(school_path(school)) }
     end
 
     describe 'when provided params that contain a valid state but not a valid school id within that state' do
-      let(:params) { {state: 'ca', id: 2} }
+      let(:id) { 0 }
 
-      it 'should redirect to the state home' do
-        expect(controller).to receive(:redirect_to).with(state_path('california'), status: 302)
-        subject
-      end
+      it { is_expected.to redirect_to(state_path(state)) }
     end
 
-
     describe 'when provided params that contain a valid state but no id' do
-      let(:params) { {state: 'ca'} }
+      let(:id) { nil }
 
-      it 'should redirect to the state home' do
-        expect(controller).to receive(:redirect_to).with(state_path('california'), status: 302)
-        subject
-      end
+      it { is_expected.to redirect_to(state_path(state)) }
     end
 
     describe 'when provided params that do not contain a valid state' do
-      let(:params) { {state: 'aa', id: 1} }
+      let(:state_abbr) { 'aa' }
 
-      it 'should redirect to the home page' do
-        expect(controller).to receive(:redirect_to).with(home_path, status: 302)
-        subject
-      end
+      it { is_expected.to redirect_to(home_path) }
     end
 
     describe 'when provided no params' do
-      let (:params) { {} }
+      let (:state_abbr) { nil }
+      let (:id) { nil }
 
-      it 'should redirect to the home page' do
-        expect(controller).to receive(:redirect_to).with(home_path, status: 302)
-        subject
-      end
+      it { is_expected.to redirect_to(home_path) }
     end
   end
 end
