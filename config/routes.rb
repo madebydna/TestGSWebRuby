@@ -477,6 +477,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/school/mapSchool.page', to: 'legacy_profile_redirect#show'
   get '/school/testScores.page', to: 'legacy_profile_redirect#show'
   get '/school/teachersStudents.page', to: 'legacy_profile_redirect#show'
+  get '/school/research.page', to: 'legacy_profile_redirect#show'
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {

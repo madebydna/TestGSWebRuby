@@ -23,6 +23,7 @@ describe 'Legacy profile redirect requests' do
     /school/mapSchool.page?id=1&state=ca
     /school/testScores.page?id=1&state=ca
     /school/teachersStudents.page?id=1&state=ca
+    /school/research.page?id=1&state=ca
   ).each do |test_url|
       describe "provided #{test_url}" do
         let (:test_url) { test_url }
@@ -44,6 +45,7 @@ describe 'Legacy profile redirect requests' do
     /school/mapSchool.page?id=0&state=ca
     /school/testScores.page?id=0&state=ca
     /school/teachersStudents.page?id=0&state=ca
+    /school/research.page?state=ca
   ).each do |test_url|
       describe "provided #{test_url}" do
         let (:test_url) { test_url }
@@ -65,6 +67,7 @@ describe 'Legacy profile redirect requests' do
     /school/mapSchool.page?id=1
     /school/testScores.page?state=aa
     /school/teachersStudents.page
+    /school/research.page
   ).each do |test_url|
       describe "provided #{test_url}" do
         let (:test_url) { test_url }
