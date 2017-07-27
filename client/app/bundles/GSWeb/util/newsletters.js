@@ -1,8 +1,8 @@
-// TODO: import modals
 // TODO: import I18n
 import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
 import { isSignedIn } from '../util/session';
+import modalManager from '../components/modals/manager';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
@@ -10,8 +10,8 @@ export const signupAndGetNewsletter = function() {
   if (isSignedIn()) {
     greatNewsSignUp();
   } else {
-    GS.modal.manager
-      .showModal(GS.modal.EmailJoinModal)
+    modalManager
+      .showModal('EmailJoinModal')
       .done(greatNewsSignUp);
   }
 };
@@ -35,7 +35,7 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
           }
         });
     } else {
-      GS.modal.manager.showModal(GS.modal.SignupAndFollowSchoolModal).done(function(data) {
+      modalManager.showModal('SignupAndFollowSchoolModal').done(function(data) {
         schools(state, schoolId).follow({email: data.email});
       });
     }
@@ -52,7 +52,7 @@ const postSubscriptionViaAjax = function(subscriptionParams) {
   });
 };
 
-const sponsorsSignUp = function(options) {
+export const sponsorsSignUp = function(options) {
   var subscriptionParams = _.merge(
     {
       list: 'sponsor',
@@ -64,7 +64,7 @@ const sponsorsSignUp = function(options) {
   return postSubscriptionViaAjax(subscriptionParams);
 };
 
-const greatNewsSignUp = function(options) {
+export const greatNewsSignUp = function(options) {
   options = options || {};
   var subscriptionParams = _.merge(
     {

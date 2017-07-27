@@ -33,7 +33,7 @@ const config = {
   },
   plugins: [
      new webpack.optimize.CommonsChunkPlugin({
-       name: 'legacy_application',
+       name: 'school-profile-blocking',
        minChunks: Infinity,
     }),
     new webpack.DefinePlugin({

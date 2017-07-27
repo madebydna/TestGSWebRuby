@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import SpinnyWheel from '../spinny_wheel';
 import { isSignedIn } from '../../util/session';
+import modalManager from '../../components/modals/manager';
 
 export default class ReportReview extends React.Component {
 
@@ -77,7 +78,7 @@ export default class ReportReview extends React.Component {
       if (isSignedIn()) {
         this.postReviewReport();
       } else {
-        GS.modal.manager.showModal(GS.modal.ReportReviewModal)
+        modalManager.showModal('ReportReviewModal')
             .done(this.postReviewReport)
             .fail(function() {
               this.setState({error: 'Something went wrong logging you in'});

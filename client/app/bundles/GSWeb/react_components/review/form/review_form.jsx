@@ -5,6 +5,7 @@ import SpinnyWheel from '../../spinny_wheel';
 import { scrollToElement } from '../../../util/scrolling';
 import { t } from '../../../util/i18n';
 import { isSignedIn, getCurrentSession } from '../../../util/session';
+import modalManager from '../../../components/modals/manager';
 
 export default class ReviewForm extends React.Component {
 
@@ -263,7 +264,7 @@ export default class ReviewForm extends React.Component {
     if (isSignedIn()) {
       getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
     } else {
-      GS.modal.manager.showModal(GS.modal.SubmitReviewModal)
+      modalManager.showModal('SubmitReviewModal')
         .done(this.getSchoolUser)
         .fail(function() {
           this.updateReviewFormErrors({
@@ -277,7 +278,7 @@ export default class ReviewForm extends React.Component {
     let schoolUserModalOptions =  { state: this.props.state, schoolId: this.props.schoolId.toString() };
     let schoolUsers = data.user.school_users;
     if(this.noSchoolUserExists(schoolUsers)) {
-      GS.modal.manager.showModal( GS.modal.SchoolUserModal, schoolUserModalOptions )
+      modalManager.showModal('SchoolUserModal', schoolUserModalOptions )
         .done(this.sendReviewPost).fail(this.sendReviewPost);
     } else {
       this.sendReviewPost();

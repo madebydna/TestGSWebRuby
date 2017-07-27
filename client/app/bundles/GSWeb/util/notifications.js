@@ -1,6 +1,6 @@
-// TODO: import modals
 // TODO: import lodash methods
 // TODO: should modal look different for error messages?
+import modalManager from '../components/modals/manager';
 
 const topNotificationBarSelector = '#js-top-notification-bar';
 
@@ -21,25 +21,25 @@ export const closeNotificationMessage = function (wait) {
 
 export const error = function(message) {
   // TODO: style the modal differently depending on the type of message ?
-  GS.modal.manager.showModal(GS.modal.SuccessModal, {
+  modalManager.showModal('SuccessModal', {
     subheading: message
   });
 };
 
 export const notice = function(message) {
-  GS.modal.manager.showModal(GS.modal.SuccessModal, {
+  modalManager.showModal('SuccessModal', {
     subheading: message
   });
 };
 
 export const success = function(message) { 
-  GS.modal.manager.showModal(GS.modal.SuccessModal, {
+  modalManager.showModal('SuccessModal', {
     subheading: message
   });
 }
 
 export const warning = function(message) {
-  GS.modal.manager.showModal(GS.modal.SuccessModal, {
+  modalManager.showModal('SuccessModal', {
     subheading: message
   });
 };
