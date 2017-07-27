@@ -2,7 +2,7 @@
 // Requires jQuery
 // Requires jQuery.cookie
 
-// TODO: import memoizeAjaxRequest
+import memoizeAjaxRequest from './memoize_ajax_request';
 
 export const isSignedIn = function() {
   return $.cookie('community_www') != null || $.cookie('community_dev') != null;
@@ -14,7 +14,7 @@ export const getCurrentSession = function() {
   if (uri === undefined) {
     throw new Error('uri is undefined in getCurrentSession');
   }
-  return GS.util.memoizeAjaxRequest(
+  return memoizeAjaxRequest(
     'session',
     function() {
       return $.get(uri, null, 'json')
@@ -34,7 +34,7 @@ export const getSchoolUserDigest = function() {
     throw new Error('uri is undefined in getCurrentSession');
   }
   
-  return GS.util.memoizeAjaxRequest(
+  return memoizeAjaxRequest(
     memoizeId,
     function() {
       return $.get(uri, schoolData, 'json')
