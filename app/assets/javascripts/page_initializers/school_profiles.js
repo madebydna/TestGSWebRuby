@@ -2,32 +2,6 @@ $(function() {
 
   GS.ad.addCompfilterToGlobalAdTargetingGon();
 
-  // used by test scores in school profiles
-  $('body').on('click', '.js-test-score-details', function () {
-    var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
-    if(grades.css('display') == 'none') {
-      grades.slideDown();
-      $(this).find('span').removeClass('rotate-text-270');
-    }
-    else{
-      grades.slideUp();
-      $(this).find('span').addClass('rotate-text-270');
-    }
-  });
-
-  // for historical ratings
-  $('body').on('click', '.js-historical-button', function () {
-    var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
-    if(historical_data.css('display') == 'none') {
-      historical_data.slideDown();
-      $(this).find('div').html(GS.I18n.t('Hide past ratings'));
-      analyticsEvent('Profile', 'Historical Ratings', null, null, true);
-    }
-    else{
-      historical_data.slideUp();
-      $(this).find('div').html(GS.I18n.t('Past ratings'));
-    }
-  });
 
   GS.search.autocomplete.searchAutocomplete.init();
 
