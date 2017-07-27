@@ -10,7 +10,7 @@ const nodeEnv = devBuild ? 'development' : 'production';
 
 const config = {
   entry: {
-    'legacy_application': ['jquery'],
+    'legacy_application': ['jquery', 'jquery-ujs', 'jquery.cookie', 'lodash', 'jquery-unveil'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'webpack': [

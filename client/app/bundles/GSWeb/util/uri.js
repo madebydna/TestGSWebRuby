@@ -382,3 +382,12 @@ export function getQueryStringFromFormElements($elements) {
 export function changeFormAction(action, formObject) {
   $(formObject).attr("action", action);
 };
+
+// TODO: remove this after everything autocomplete and modals are modularized
+
+window.GS = window.GS || {};
+window.GS.uri = window.GS.uri || {};
+window.GS.uri.Uri = window.GS.uri.Uri || {};
+window.GS.uri.Uri.copyParam = copyParam;
+window.GS.uri.Uri.getHref = getHref;
+window.GS.uri.Uri.addQueryParamToUrl = addQueryParamToUrl;
