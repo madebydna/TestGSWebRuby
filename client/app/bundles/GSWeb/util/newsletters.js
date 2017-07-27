@@ -1,13 +1,13 @@
 // TODO: import modals
-// TODO: import session
 // TODO: import I18n
 import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
+import { isSignedIn } from '../util/session';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
 export const signupAndGetNewsletter = function() {
-  if (GS.session.isSignedIn()) {
+  if (isSignedIn()) {
     greatNewsSignUp();
   } else {
     GS.modal.manager
@@ -20,7 +20,7 @@ export const signupAndGetNewsletter = function() {
 // Triggers a signupAndFollow modal if not signed in.
 export const signupAndFollowSchool = function(state, schoolId, schoolName) {
   if (state && schoolId) {
-    if (GS.session.isSignedIn()) {
+    if (isSignedIn()) {
       schools(state, schoolId)
         .follow({showMessages: false})
         .done(function(){

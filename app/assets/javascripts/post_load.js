@@ -5,7 +5,6 @@
 //= require resources/fastclick
 //= require resources/remodal
 //= require util/gs_bind
-//= require util/session
 //= require autocomplete
 //= require ./util/advertising.js
 //= require modals

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import ReviewsList from './reviews_list';
 import ReviewForm from './form/review_form';
 import { t } from '../../util/i18n';
+import { isSignedIn, getSchoolUserDigest } from '../../util/session';
 
 export default class Reviews extends React.Component {
 
@@ -52,8 +53,8 @@ export default class Reviews extends React.Component {
   }
 
   reorderForCurrentUserIfSignedIn() {
-    if (GS && GS.session && GS.session.isSignedIn()) {
-      GS.session.getSchoolUserDigest().done(this.reorderForCurrentUser)
+    if (isSignedIn()) {
+      getSchoolUserDigest().done(this.reorderForCurrentUser)
     }
   }
 

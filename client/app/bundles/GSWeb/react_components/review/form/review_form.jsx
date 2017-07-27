@@ -4,6 +4,7 @@ import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
 import { scrollToElement } from '../../../util/scrolling';
 import { t } from '../../../util/i18n';
+import { isSignedIn, getCurrentSession } from '../../../util/session';
 
 export default class ReviewForm extends React.Component {
 
@@ -259,8 +260,8 @@ export default class ReviewForm extends React.Component {
 
   submitForm() {
     this.setState({disabled: true});
-    if (GS.session.isSignedIn()) {
-      GS.session.getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
+    if (isSignedIn()) {
+      getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
     } else {
       GS.modal.manager.showModal(GS.modal.SubmitReviewModal)
         .done(this.getSchoolUser)
