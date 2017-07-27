@@ -9,7 +9,7 @@
 //
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
-//= require jquery
+//= require legacy_application-bundle
 //= require jquery_ujs
 //= require jquery.cookie.js
 //= require resources/jquery.unveil.js

@@ -10,6 +10,7 @@ const nodeEnv = devBuild ? 'development' : 'production';
 
 const config = {
   entry: {
+    'legacy_application': ['jquery'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'webpack': [
@@ -31,6 +32,10 @@ const config = {
     },
   },
   plugins: [
+     new webpack.optimize.CommonsChunkPlugin({
+       name: 'legacy_application',
+       minChunks: Infinity,
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(nodeEnv),
@@ -39,6 +44,10 @@ const config = {
   ],
   module: {
     rules: [
+      {
+        test: require.resolve("jquery"),
+        loader: "expose-loader?$!expose-loader?jQuery"
+      },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader'
