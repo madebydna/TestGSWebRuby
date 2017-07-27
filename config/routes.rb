@@ -478,6 +478,10 @@ LocalizedProfiles::Application.routes.draw do
   get '/school/testScores.page', to: 'legacy_profile_redirect#show'
   get '/school/teachersStudents.page', to: 'legacy_profile_redirect#show'
   get '/school/research.page', to: 'legacy_profile_redirect#show'
+  get '/survey/form.page', to: 'legacy_profile_redirect#show'
+  get '/survey/results.page', to: 'legacy_profile_redirect#show'
+  get '/survey/start.page', to: 'legacy_profile_redirect#show'
+  get '/survey/startResults.page', to: 'legacy_profile_redirect#show'
 
   # Handle legacy cities.page
   get '/cities.page', to: redirect { |_, request|
