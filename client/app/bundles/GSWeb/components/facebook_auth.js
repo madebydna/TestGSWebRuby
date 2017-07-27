@@ -3,6 +3,7 @@
 
 // Facebook permissions that GS.org will ask for during FB.login()
 const facebookPermissions = 'email';
+const GS_FACEBOOK_AUTH_URL = "/gsr/session/facebook_auth";
 
 export const init = function () { };
 
@@ -147,7 +148,7 @@ export const login = function () {
 export const signinToFacebookThenGreatSchools = function() {
   let deferred = $.Deferred();
   login().done(function(facebookData) {
-    GS.auth.signinUsingFacebookData(facebookData).done(function(data) {
+    signinUsingFacebookData(facebookData).done(function(data) {
       deferred.resolve(data);
     }).fail(function(data) {
       deferred.reject();
@@ -158,10 +159,20 @@ export const signinToFacebookThenGreatSchools = function() {
   return deferred.promise();
 };
 
-const debugStatus = function() {
-  FB.getLoginStatus(function(response){
-     console.log(response);
-  });
+const convertFacebookSigninDataToGSSigninData = function(facebookData) {
+  return {
+    email: facebookData.email,
+    first_name: facebookData.first_name,
+    last_name: facebookData.last_name,
+    how: "facebook",
+    facebook_id: facebookData.id,
+    terms: true,
+    facebook_signed_request: facebookData.authResponse.signedRequest
+  };
+};
+
+const signinUsingFacebookData = function(facebookData) {
+  return $.post(GS_FACEBOOK_AUTH_URL, convertFacebookSigninDataToGSSigninData(facebookData));
 };
 
 // TODO: remove after modals moved to webpack since they reference
