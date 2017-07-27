@@ -1,3 +1,7 @@
+//= require ../util/gs_bind
+//= require ../resources/parsley.remote
+//= require ../resources/parsley.es.js
+
 //= require ./base_modal
 //= require ./join_modal
 //= require ./email_join_modal
