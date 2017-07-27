@@ -471,14 +471,12 @@ LocalizedProfiles::Application.routes.draw do
       district: /(?!preschools)[^\/]+/
   }
 
-  # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
-  get '/school/overview.page', to: redirect { |params, request|
-        if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
-          "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
-        else
-          '/status/error404.page'
-        end
-      }
+  get '/school/overview.page', to: 'legacy_profile_redirect#show'
+  get '/school/parentReviews.page', to: 'legacy_profile_redirect#show'
+  get '/school/rating.page', to: 'legacy_profile_redirect#show'
+  get '/school/mapSchool.page', to: 'legacy_profile_redirect#show'
+  get '/school/testScores.page', to: 'legacy_profile_redirect#show'
+  get '/school/teachersStudents.page', to: 'legacy_profile_redirect#show'
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
