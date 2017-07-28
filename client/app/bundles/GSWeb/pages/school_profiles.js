@@ -1,3 +1,6 @@
+// TODO: import ad addCompfilterToGlobalAdTargetingGon
+// TODO: import search autocomplete
+
 import configureStore from '../store/appStore';
 
 import 'jquery';
@@ -145,6 +148,18 @@ $(function() {
       $(this).find('div').html(t('Past ratings'));
     }
   });
+
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
+  GS.search.autocomplete.searchAutocomplete.init();
+
+  try {
+    $('.neighborhood img[data-src]').unveil(300, function() {
+      $(this).width('100%')
+    });
+  } catch (e) {}
+  try {
+    $('.innovate-logo').unveil(300);
+  } catch (e) {}
   
 });
 
