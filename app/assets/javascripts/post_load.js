@@ -6,6 +6,4 @@
 //= require ads/interstitial
 //= require page_initializers/school_profiles
 //= require page_initializers/interstitial_ad
-//= require ./resources/parsley.remote
-//= require ./resources/parsley.es.js
 //= require webpack-bundle

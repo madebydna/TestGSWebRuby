@@ -4,6 +4,8 @@ import 'jquery';
 import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';
+import '../vendor/parsley.remote';
+import '../vendor/parsley.es';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
