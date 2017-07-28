@@ -485,8 +485,7 @@ LocalizedProfiles::Application.routes.draw do
 
   # Handle legacy cities.page
   get '/cities.page', to: redirect { |_, request|
-
-    state = (request && request.query_parameters.present? && request.query_parameters[:state].present?) ? States.state_name(request.query_parameters[:state].downcase) : nil
+    state = (request && request.query_parameters.present? && request.query_parameters[:state].present?) ? States.state_path(request.query_parameters[:state].downcase) : nil
     if state && request.query_parameters[:city].present?
       "/#{state}/#{request.query_parameters[:city].downcase.gsub(' ', '-')}/"
     elsif state
