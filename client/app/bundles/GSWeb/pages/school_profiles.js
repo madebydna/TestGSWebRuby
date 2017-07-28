@@ -30,6 +30,7 @@ import * as backToTop from '../components/back_to_top';
 import { impressionTracker } from '../util/impression_tracker';
 import { t } from '../util/i18n';
 import * as facebook from '../components/facebook_auth';
+import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 
 window.store = configureStore({
   school: gon.school
@@ -97,6 +98,8 @@ $(function() {
       }
     );
   });
+
+  refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
   
   $('body').on('click', '.multi-select-button-group label', function() {
     var $label = $(this);
