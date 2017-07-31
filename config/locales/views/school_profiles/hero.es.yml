@@ -4,6 +4,7 @@ es:
       grade:
         one: GRADO
         other: GRADOS
+      coming_soon: ¡Muy pronto!
       greatschools_rating: CALIFICACIÓN DE GREATSCHOOLS
       greatschools_no_rating_private: Las escuelas privadas no tienen calificaciones
       greatschools_no_rating_public: Actualmente sin calificación
