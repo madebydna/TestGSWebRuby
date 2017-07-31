@@ -5,7 +5,8 @@ en:
         one: Grade
         other: Grades
       greatschools_rating: GreatSchools Rating
-      greatschools_rating_private: PRIVATE SCHOOLS HAVE NO RATINGS
+      greatschools_no_rating_private: Private schools are not rated
+      greatschools_no_rating_public: Currently unrated
       claimed: Claimed
       claimed_tooltip_html: >
         Administrators at this school have claimed this school's profile in order to edit general

@@ -83,7 +83,7 @@
             </div>
           </div>
         </div>
-      <% elsif @school.private_school? %>
+      <% else %>
           <div class="school-info__item school-info__gs-rating">
             <div class="gs-rating-with-label">
               <div class="gs-rating-with-label__rating">
@@ -92,11 +92,12 @@
                 </div>
               </div>
               <div class="gs-rating-with-label__label speech-bubble-dark left private-school">
-                <div><%= t('.greatschools_rating_private') %></div>
+                <% type_key = @school.private_school? ? 'private' : 'public' %>
+                <div><%= t(".greatschools_no_rating_#{type_key}") %></div>
                 <div><a data-content-type="info_box"
-                        data-content-html="<%= t('.summary_rating_info.unrated_private') %>"
+                        data-content-html="<%= t(".summary_rating_info.unrated_#{type_key}") %>"
                         class="gs-tipso info-circle tipso_style"
-                        data-ga-click-label="GS rating - private school"
+                        data-ga-click-label="GS rating - <%= type_key %> school"
                         href="javascript:void(0)"
                         data-remodal-target="modal_info_box"><span class="icon-question"></span>
                 </a></div>

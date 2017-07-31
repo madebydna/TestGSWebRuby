@@ -5,7 +5,8 @@ es:
         one: GRADO
         other: GRADOS
       greatschools_rating: CALIFICACIÓN DE GREATSCHOOLS
-      greatschools_rating_private: LAS ESCUELAS PRIVADAS NO TIENEN CALIFICACIONES
+      greatschools_no_rating_private: Las escuelas privadas no tienen calificaciones
+      greatschools_no_rating_public: Actualmente sin calificación
       claimed: Reclamado
       claimed_tooltip_html: >
         Los administradores de esta escuela han reclamado este perfil de escuela para editar y compartir más
