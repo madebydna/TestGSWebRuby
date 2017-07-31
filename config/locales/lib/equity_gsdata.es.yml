@@ -24,6 +24,55 @@ es:
         graduados de esta escuela que obtuvieron un grado "C" o superior en las A-G clases requeridas para ser elegible
         para la Universidad de CA y colegios de CA State.
         <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
+      LI Test scores overview narration:
+        _0_html: >
+          Esta muestra la Calificación de los Resultados de Exámenes para estudiantes de bajo ingresos. Grandes
+          diferencias puede sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan
+          para tener éxito.
+        _1_html: >
+          <p class="title negative">Muy preocupante:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
+          <span class="emphasis">muy por debajo</span> del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+        _2_html: >
+          <p class="title negative">Un signo preocupante:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
+          <span class="emphasis">por debajo</span> del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+        _3_html: >
+          <p class="title neutral">Vale la pena una mirada más profunda:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela
+          <span class="emphasis">son comparables</span> con el promedio estatal para todos los estudiantes, aunque
+          todavía por debajo de escuelas de rendimiento superior en el estado.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+        _4_html: >
+          <p class="title positive">Un signo prometedor:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están por
+          encima del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+        _5_html: >
+          <p class="title positive">¡Buenas noticias!:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están
+          <span class="emphasis">muy por encima</span> del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
       'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
       courses_title: Cursos avanzados
       Advanced coursework: Cursos avanzados
