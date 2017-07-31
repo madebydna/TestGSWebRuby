@@ -220,6 +220,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/videos/choose-high-school-video/', as: :choose_high_video
     get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
     get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
+    get '/gk/articles/like-a-sponge/', as: :podcast_for_parents
     get '/gk/partners', as: :gk_partners
     get '/gk/licensing', as: :gk_licensing
     get '/gk/sponsorship', as: :sponsorship
