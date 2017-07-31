@@ -25,6 +25,15 @@
       width: 15%; float:right;
     }
   }
+  a.gs-tipso:hover {
+    text-decoration: none;
+  }
+  .coming-soon {
+    font-size: 12px;
+    text-transform: none;
+    font-family: openssans-regular, sans-serif;
+    color: #2ba3dc;
+  }
   @media (min-width: 750px) {
     max-width: 120px;
     &.private-school{
