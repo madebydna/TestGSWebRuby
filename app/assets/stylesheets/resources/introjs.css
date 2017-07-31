@@ -122,15 +122,15 @@ tr.introjs-showElement > th {
 }
 
 .introjs-arrow {
-  border: 5px solid white;
+  border: 6px solid white;
   content:'';
   position: absolute;
 }
 .introjs-arrow.top {
-  top: -10px;
+  top: -12px;
   border-top-color:transparent;
   border-right-color:transparent;
-  border-bottom-color:white;
+  border-bottom-color:#159bd8;
   border-left-color:transparent;
 }
 .introjs-arrow.top-right {
@@ -138,7 +138,7 @@ tr.introjs-showElement > th {
   right: 10px;
   border-top-color:transparent;
   border-right-color:transparent;
-  border-bottom-color:white;
+  border-bottom-color:#159bd8;
   border-left-color:transparent;
 }
 .introjs-arrow.top-middle {
@@ -147,7 +147,7 @@ tr.introjs-showElement > th {
   margin-left: -5px;
   border-top-color:transparent;
   border-right-color:transparent;
-  border-bottom-color:white;
+  border-bottom-color:#159bd8;
   border-left-color:transparent;
 }
 .introjs-arrow.right {
@@ -156,7 +156,7 @@ tr.introjs-showElement > th {
   border-top-color:transparent;
   border-right-color:transparent;
   border-bottom-color:transparent;
-  border-left-color:white;
+  border-left-color:#159bd8;
 }
 .introjs-arrow.right-bottom {
   bottom:10px;
@@ -164,11 +164,11 @@ tr.introjs-showElement > th {
   border-top-color:transparent;
   border-right-color:transparent;
   border-bottom-color:transparent;
-  border-left-color:white;
+  border-left-color:#159bd8;
 }
 .introjs-arrow.bottom {
-  bottom: -10px;
-  border-top-color:white;
+  bottom: -12px;
+  border-top-color:#159bd8;
   border-right-color:transparent;
   border-bottom-color:transparent;
   border-left-color:transparent;
@@ -177,7 +177,7 @@ tr.introjs-showElement > th {
   left: -10px;
   top: 10px;
   border-top-color:transparent;
-  border-right-color:white;
+  border-right-color:#159bd8;
   border-bottom-color:transparent;
   border-left-color:transparent;
 }
@@ -185,12 +185,13 @@ tr.introjs-showElement > th {
   left: -10px;
   bottom:10px;
   border-top-color:transparent;
-  border-right-color:white;
+  border-right-color:#159bd8;
   border-bottom-color:transparent;
   border-left-color:transparent;
 }
 
 .introjs-tooltip {
+  border: 2px solid #159bd8;
   box-sizing: content-box;
   position: absolute;
   visibility: visible;

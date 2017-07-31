@@ -128,7 +128,8 @@ export function start() {
       hidePrev: true,
       hideNext: true,
       showProgress: false,
-      skipLabel: 'cancel'
+      skipLabel: 'cancel',
+      overlayOpacity: 0
     }).
     onafterchange(onStepSeen).
     onexit(onExitTour)
