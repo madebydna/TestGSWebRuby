@@ -52,6 +52,10 @@ export function addAnchorChangeCallback(callback) {
   window.addEventListener('hashchange', callback, false);
 }
 
+export function removeAnchorChangeCallback(callback) {
+  window.removeEventListener('hashchange', callback, false);
+}
+
 export function handleAnchor(token, callback) {
   let tokens = anchorTokens();
   if(tokens[0] == token) {

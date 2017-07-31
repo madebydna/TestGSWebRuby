@@ -6,7 +6,7 @@ import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 
-import { handleAnchor, addAnchorChangeCallback, scrollToAnchor } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor } from '../../components/anchor_router';
 
 export default class EquitySection extends React.Component {
 
@@ -69,6 +69,13 @@ export default class EquitySection extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    removeAnchorChangeCallback(() => {
+      this.selectTabMatchingAnchor();
+      scrollToAnchor();
+    });
+  }
+
   selectSectionContent(section_content) {
     let item = section_content[this.state.active];
     return <div className={'tabs-panel tabs-panel_selected'}>
@@ -76,7 +83,8 @@ export default class EquitySection extends React.Component {
           defaultTab={this.state.defaultSubSectionTab}
           key={this.state.active}
           equity_config={item["content"]}
-          parent_tab={this.props.section_content[this.state.active].title}
+          anchor={item.anchor}
+          parent_anchor={this.props.section_content[this.state.active].anchor}
       />
     </div>
   }

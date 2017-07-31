@@ -12,8 +12,7 @@ module SchoolProfiles
           component.school_cache_data_reader = school_cache_data_reader
           component.type = 'rating'
         end
-        overview_title = t('Overview')
-        { overview_title  => test_score_data } if overview_has_data?(test_score_data)
+        test_score_data.to_hash.merge(title: t('Overview'), anchor: 'Overview') if overview_has_data?(test_score_data)
       end
 
       def overview_has_data?(data_values)
