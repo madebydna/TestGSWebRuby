@@ -4,11 +4,11 @@ module SchoolProfiles
 
       def narration
         rating = school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
-        narration_rating = narration_identifier(rating).to_s
+        narration_rating = narration_key(rating)
         t(narration_rating, scope: 'lib.equity_gsdata.LI Test scores overview narration', subject: t(data_type)) # TODO: update scope after moving translations
       end
 
-      def narration_identifier(rating)
+      def narration_key(rating)
         if rating
           "_#{((rating.to_i + 1) / 2).floor}_html"
         else
