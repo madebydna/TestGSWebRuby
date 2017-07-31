@@ -79,7 +79,7 @@
 
             <div class="gs-rating-with-label__label">
               <%= t('.greatschools_rating') %>
-              <%= render 'info_circle', content: t('.gs_rating_info_text_html') %>
+              <%= render 'info_circle', content: t('.summary_rating_info.rated') %>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@
               <div class="gs-rating-with-label__label speech-bubble-dark left private-school">
                 <div><%= t('.greatschools_rating_private') %></div>
                 <div><a data-content-type="info_box"
-                        data-content-html="<%= t('.greatschools_rating_private_tooltip') %>"
+                        data-content-html="<%= t('.summary_rating_info.unrated_private') %>"
                         class="gs-tipso info-circle tipso_style"
                         data-ga-click-label="GS rating - private school"
                         href="javascript:void(0)"

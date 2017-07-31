@@ -6,12 +6,6 @@ en:
         other: Grades
       greatschools_rating: GreatSchools Rating
       greatschools_rating_private: PRIVATE SCHOOLS HAVE NO RATINGS
-      greatschools_rating_private_tooltip: >
-        GreatSchools is a national nonpartisan nonprofit organization. Our summary rating is a simple tool to help parents
-        compare schools within a state based on standardized test scores and other available data,
-        like student academic progress and college readiness. State and national education agencies do not report some
-        or all of this data for private schools like this one, so we are unable to provide a rating.
-        <a href='/gk/ratings/'>More about the GreatSchools Rating.</a>
       claimed: Claimed
       claimed_tooltip_html: >
         Administrators at this school have claimed this school's profile in order to edit general
@@ -29,7 +23,26 @@ en:
       school_type: Type
       school_website: School website
       students_enrolled: Students
-      gs_rating_info_text_html: "GreatSchools is a national nonpartisan nonprofit organization. Our rating is a simple tool that helps you compare schools within a state based on test scores and other available data, like student academic progress and college readiness. <div><a href='/gk/ratings/' target='_blank'>About the GreatSchools Rating.</a></div>"
+      summary_rating_info:
+        unrated_private: >
+          <p>GreatSchools is a national nonprofit organization. Our Summary Rating is a tool to help parents compare
+          schools within a state based on standardized test scores and other data where available, like student
+          academic progress and college readiness. State and national education agencies do not report some or all
+          of this data for private schools like this one, so we are unable to provide a rating.</p>
+          <p><a href='/gk/ratings/' target='_blank'>More about the GreatSchools Rating.</a></p>
+        unrated_public: >
+          <p>GreatSchools is a national nonprofit organization. Our Summary Rating is a tool to help parents compare
+          schools within a state based on standardized test scores and other data where available, like student
+          academic progress and college readiness. For some schools, we do not have enough data from state or national
+          education agencies to provide a rating.</p>
+          <p><a href='/gk/ratings/' target='_blank'>More about the GreatSchools Rating.</a></p>
+        rated: >
+          <p>GreatSchools is a national nonprofit organization. Our summary rating helps you compare schools within
+          your state. Currently, our rating is based on test scores and, for some states, student academic progress
+          and college readiness.</p>
+          <p>Coming soon, GreatSchools will offer a new summary rating incorporating many of the measures of quality
+          that you see on your school profile. Stay tuned....</p>
+          <p><a href='/gk/ratings/' target='_blank'>More about the GreatSchools Rating.</a></p>
       public: public
       edit: Edit
     
