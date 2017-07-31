@@ -39,8 +39,8 @@ module SchoolProfiles
       )
     end
 
-    def equity_courses_props
-      @_equity_courses_hash ||= [
+    def race_ethnicity_props
+      @_race_ethnicity_props ||= [
         {
           title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
           anchor: 'Test_scores',
