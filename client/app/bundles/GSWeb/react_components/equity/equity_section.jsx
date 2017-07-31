@@ -130,8 +130,7 @@ export default class EquitySection extends React.Component {
   }
 
   render() {
-    let { title, anchor, rating, icon_classes } = this.props;
-    let section_content = this.props.section_content;
+    let { title, anchor, rating, icon_classes, section_content } = this.props;
     let ratingCircle = this.drawRatingCircle(rating, icon_classes);
     let link_name = this.linkName(anchor);
     if (section_content) {
