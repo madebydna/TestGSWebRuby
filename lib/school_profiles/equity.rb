@@ -283,5 +283,9 @@ module SchoolProfiles
       @_faq_disabilities ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.disabilities'),
                                      content: I18n.t(:content_html, scope: 'lib.equity.faq.disabilities'))
     end
+
+    def race_ethnicity_discipline_and_attendance_visible?
+      (race_ethnicity_props.find { |h| h[:anchor] == 'Discipline_and_attendance' })[:data].present?
+    end
   end
 end

@@ -6,7 +6,7 @@ import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 
-import { handleAnchor } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, scrollToAnchor } from '../../components/anchor_router';
 
 export default class EquitySection extends React.Component {
 
@@ -48,7 +48,7 @@ export default class EquitySection extends React.Component {
     )
   }
 
-  componentDidMount() {
+  selectTabMatchingAnchor() {
     handleAnchor(
       this.props.anchor, tokens => {
         let section_content = this.props.section_content;
@@ -59,6 +59,14 @@ export default class EquitySection extends React.Component {
         this.setState({ active: index });
       }
     );
+  }
+
+  componentDidMount() {
+    this.selectTabMatchingAnchor();
+    addAnchorChangeCallback(() => {
+      this.selectTabMatchingAnchor();
+      scrollToAnchor();
+    });
   }
 
   selectSectionContent(section_content) {
