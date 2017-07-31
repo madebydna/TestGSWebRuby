@@ -21,18 +21,18 @@
     <div class="col-xs-12 col-lg-9">
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Race ethnicity'),
-                          anchor: 'Race/ethnicity',
+                          anchor: 'Race_ethnicity',
                           analytics_id: 'EquityRaceEthnicity',
                           subtitle: t('.Race ethnicity subtitle'),
                           info_text: t('.Race ethnicity tooltip'),
                           icon_classes: t('.Race ethnicity icon'),
                           sources: equity.sources,
-                          data: equity.equity_courses_hash,
+                          data: equity.equity_courses_props,
                           faq: equity.faq_race_ethnicity,
                           qualaroo_module_link: equity.qualaroo_module_link(:race_ethnicity) })%>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Low-income students'),
-                          anchor: 'Low-income students',
+                          anchor: 'Low-income_students',
                           analytics_id: 'EquityLowIncome',
                           subtitle:  t('.Low income subtitle'),
                           info_text: t('.Low income tooltip'),
@@ -44,7 +44,7 @@
                           qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Students with Disabilities'),
-                          anchor: 'Students with Disabilities',
+                          anchor: 'Students_with_Disabilities',
                           analytics_id: 'EquityDisabilities',
                           subtitle:  t('.Students with Disabilities subtitle'),
                           info_text: t('.Student with disabilities tooltip'),

@@ -11,16 +11,20 @@ import { handleAnchor } from '../../components/anchor_router';
 export default class EquitySection extends React.Component {
 
   static propTypes = {
+    title: React.PropTypes.string,
+    anchor: React.PropTypes.string,
+    subtitle: React.PropTypes.string,
+    info_text: React.PropTypes.string,
+    icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
+    rating: React.PropTypes.number,
+    message: React.PropTypes.string,
     qualaroo_module_link: React.PropTypes.string,
-    equity_config: React.PropTypes.shape({
-      section_info: React.PropTypes.object,
-      section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
-        subject: React.PropTypes.string,
-        component: React.PropTypes.object,
-        explanation: React.PropTypes.element
-      }))
-    }),
+    section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
+      subject: React.PropTypes.string,
+      component: React.PropTypes.object,
+      explanation: React.PropTypes.element
+    })),
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired
@@ -45,28 +49,10 @@ export default class EquitySection extends React.Component {
   }
 
   componentDidMount() {
-    let mapping = {
-      'Raza/etnicidad': 'Race_ethnicity',
-      'Race/ethnicity': 'Race_ethnicity',
-      'Low-income students': 'Low-income_students',
-      'De bajos Ingresos': 'Low-income_students',
-      'Estudiantes con discapacidades': 'Students_with_Disabilities',
-      'Students with Disabilities': 'Students_with_Disabilities'
-    };
     handleAnchor(
-      mapping[this.props.equity_config["section_info"].anchor], tokens => {
-        let tabNameAnchorMap = {
-          'Test scores': 'Test_scores',
-          'Graduation rates': 'Graduation_rates',
-          'Advanced coursework': 'Advanced_coursework',
-          'Discipline & attendance': 'Discipline_and_attendance',
-          'Resultados de exámenes': 'Test_scores',
-          'Índices de Graduación': 'Graduation_rates',
-          'Cursos avanzados': 'Advanced_coursework',
-          'Disciplina y asistencia': 'Discipline_and_attendance'
-        };
-        let section_content = this.props.equity_config["section_content"];
-        let index = section_content.findIndex((content) => tabNameAnchorMap[content["section_title"]] == tokens[0]);
+      this.props.anchor, tokens => {
+        let section_content = this.props.section_content;
+        let index = section_content.findIndex((content) => content["anchor"] == tokens[0]);
         if(index == -1) {
           index = 0;
         }
@@ -82,7 +68,7 @@ export default class EquitySection extends React.Component {
           defaultTab={this.state.defaultSubSectionTab}
           key={this.state.active}
           equity_config={item["content"]}
-          parent_tab={this.props.equity_config["section_content"][this.state.active].section_title}
+          parent_tab={this.props.section_content[this.state.active].title}
       />
     </div>
   }
@@ -114,42 +100,36 @@ export default class EquitySection extends React.Component {
     return name.split(' ').join('_').replace('/', '_');
   }
 
-  sectionTitle(sectionInfo) {
-    var subtitle = '';
-    var message = '';
-    if (sectionInfo.subtitle) {
-      subtitle = sectionInfo.subtitle;
-    }
-    if (sectionInfo.message) {
-      message = sectionInfo.message;
-    }
+  sectionTitle() {
     return (
-        <div className="title-container">
-          <div className="title">
-            {sectionInfo.title}
-            {this.drawInfoCircle(sectionInfo.info_text)}
-          </div>
-          {subtitle}
-          {message}
+      <div className="title-container">
+        <div className="title">
+          {this.props.title}
+          {this.drawInfoCircle(this.props.info_text)}
         </div>
+        {this.props.subtitle}
+        {this.props.message}
+      </div>
     )
   }
 
   render() {
-    let section_info = this.props.equity_config["section_info"];
-    let section_content = this.props.equity_config["section_content"];
-    let rating = this.drawRatingCircle(section_info.rating, section_info.icon_classes);
-    let link_name = this.linkName(section_info.anchor);
+    let { title, anchor, rating, icon_classes } = this.props;
+    let section_content = this.props.section_content;
+    let ratingCircle = this.drawRatingCircle(rating, icon_classes);
+    let link_name = this.linkName(anchor);
     if (section_content) {
-      return <div className="equity-section" data-ga-click-label={section_info.title}>
+      return <div className="equity-section" data-ga-click-label={title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
-        <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
+        <div className="title-bar">{ratingCircle}{this.sectionTitle()}</div>
         <div className="tab-buttons">
-          <SectionNavigation key="sectionNavigation"
-                           items={section_content}
-                           active={this.state.active}
-                           google_tracking={section_info.title}
-                           onTabClick={this.handleTabClick.bind(this)}/>
+          <SectionNavigation
+            key="sectionNavigation"
+            items={section_content}
+            active={this.state.active}
+            google_tracking={title}
+            onTabClick={this.handleTabClick.bind(this)}
+          />
         </div>
         <div className="top-tab-panel">
           {this.selectSectionContent(section_content)}
@@ -161,8 +141,8 @@ export default class EquitySection extends React.Component {
     else {
       return <div className="equity-section">
         <a className="anchor-mobile-offset" name={link_name}></a>
-        <div className="title-bar">{rating}{this.sectionTitle(section_info)}</div>
-        </div>
+        <div className="title-bar">{ratingCircle}{this.sectionTitle()}</div>
+      </div>
     }
   }
 
