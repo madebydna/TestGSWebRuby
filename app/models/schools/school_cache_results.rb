@@ -84,6 +84,8 @@ class SchoolCacheResults
         CachedPerformanceMethods
       when 'gsdata'
         CachedGsdataMethods
+      when 'directory_census'
+        DirectoryCensusMethods
     end
   end
 
