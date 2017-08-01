@@ -18,3 +18,33 @@
 button.start-tour {
   @include button;
 }
+
+.school-profile-tour-modal {
+  h3 {
+    margin-top: 0px;
+  }
+  .tour-modal-arrow {
+    position: absolute;
+    width: 0; height: 0;
+    border: 8px solid;
+    pointer-events: none;
+    border-top-color: #fff;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+    top: 100%;
+    right: 48px;
+  }
+  display: inline-block;
+  text-align: center;
+  width: 300px;
+  height: 185px;
+  padding: 30px;
+  position: fixed;
+  background: #fff;
+  right: 10px;
+  bottom: 100px;
+  //border: 2px solid #ff0000;
+  border-radius: 3px;
+  box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
+}
