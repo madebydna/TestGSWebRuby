@@ -53,6 +53,7 @@ $(function() {
     'Students_with_Disabilities': '#EquityDisabilities .equity-section',
     'Students': '#Students',
     'Teachers_staff': '#TeachersStaff',
+    'Reviews': '#Reviews',
     'Neighborhood': '#Neighborhood'
   });
   generateEthnicityChart(gon.ethnicity);

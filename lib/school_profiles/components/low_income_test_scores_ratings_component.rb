@@ -3,7 +3,17 @@ module SchoolProfiles
     class LowIncomeTestScoresRatingsComponent < Component
 
       def narration
-        t('LI Test scores overview narration', scope: 'lib.equity_gsdata', subject: t(data_type)) # TODO: update scope after moving translations
+        rating = school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
+        narration_rating = narration_key(rating)
+        t(narration_rating, scope: 'lib.equity_gsdata.LI Test scores overview narration', subject: t(data_type)) # TODO: update scope after moving translations
+      end
+
+      def narration_key(rating)
+        if rating
+          "_#{((rating.to_i + 1) / 2).floor}_html"
+        else
+          '_0_html'
+        end
       end
 
       def normalized_values
