@@ -101,9 +101,9 @@ class Cacher
     cachers_for_data_type(data_type).each do |cacher_class|
       begin
         cacher_class.new(school).cache if cacher_class.active?
-      # rescue => error
-      #   error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
-      #   GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
+      rescue => error
+        error_vars = { data_type: data_type, school_state: school.state, school_id: school.id }
+        GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
       end
     end
   end
@@ -111,13 +111,12 @@ class Cacher
   def self.create_cache(school, cache_key)
     begin
       cacher_class = cacher_for(cache_key)
-      # require 'pry'; binding.pry
-      # return unless cacher_class.active?
+      return unless cacher_class.active?
       cacher = cacher_class.new(school)
       cacher.cache
-    # rescue => error
-    #   error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
-    #   GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
+    rescue => error
+      error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
+      GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
     end
   end
 

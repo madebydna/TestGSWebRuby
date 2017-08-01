@@ -81,12 +81,10 @@ class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
   def build_hash_for_cache
     cache_hash = census_query_results.each_with_object({}) do |result, hash|
       hash[result.label] ||= []
-      # additional_data = build_hash_for_data_set(result)
-      # hash[result.label] << additional_data if additional_data
       hash[result.label] << build_hash_for_data_set(result)
     end
     validate!(cache_hash)
-    cache_hash.merge!(school_directory_hash)
+    cache_hash.merge!(school_object_hash)
   end
 
   def school_directory_keys
@@ -97,12 +95,6 @@ class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
     school_directory_keys.each_with_object({}) do |key, hash|
       hash[key] = [{ school_value: school.send(key) }] # the array wrap is for consistency
     end
-  end
-
-  def school_directory_hash
-    {
-        directory_data: school_object_hash
-    }
   end
 
   def district_directory_query
