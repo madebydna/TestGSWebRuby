@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import SingleBarViz from './single_bar_viz';
 
 export default class Rating extends React.Component {
 
