@@ -11,8 +11,8 @@ export default class SectionNavigation extends React.Component {
                 onClick={this.onClick.bind(this, index)}
                 data-ga-click-category='Profile'
                 data-ga-click-action={this.googleTrackingAction()}
-                data-ga-click-label={item.section_title}>
-        {item.section_title}
+                data-ga-click-label={item.title}>
+        {item.title}
       </a>
         {this.addDivider(index)}</div>;
     }.bind(this));

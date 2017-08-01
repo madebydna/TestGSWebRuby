@@ -141,7 +141,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
             type = type.charAt(0).toUpperCase() + type.slice(1);
         }
         var url = school.links.profile;
-        var reviewsUrl = url + '/reviews/';
+        var reviewsUrl = url + '/#Reviews';
         url = GS.I18n.preserveLanguageParam(url);
         reviewsUrl = GS.I18n.preserveLanguageParam(reviewsUrl);
 
@@ -234,7 +234,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
     // finds GS rating within a list item, and changes its class to show correct rating
     var updateRatingIconInListItem = function($listItem, newGSRating, school) {
       if (newGSRating && newGSRating > 0 && newGSRating < 11) {
-        var qualityUrl = school.links.profile + '/quality/';
+        var qualityUrl = school.links.profile + '/';
         qualityUrl = GS.I18n.preserveLanguageParam(qualityUrl);
         var gsRatingLink = $listItem.find('.js-gs-rating-link');
         var $ratingIcon = gsRatingLink.attr('href', qualityUrl).find('.js-gs-rating-icon');
