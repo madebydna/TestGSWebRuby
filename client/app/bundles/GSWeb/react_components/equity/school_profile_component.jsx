@@ -4,7 +4,7 @@ import TestScores from './graphs/test_scores';
 import PersonBar from '../visualizations/person_bar';
 import BasicDataModuleRow from '../school_profiles/basic_data_module_row';
 import PlainNumber from './graphs/plain_number';
-import Rating from './graphs/rating';
+import RatingWithBar from './graphs/rating_with_bar';
 import EquitySection from './equity_section';
 import NoDataModuleCta from '../no_data_module_cta';
 
@@ -81,7 +81,7 @@ export default class SchoolProfileComponent extends React.Component {
           component = <div>
             {values.map((value, index) =>
                 <BasicDataModuleRow {...value} key={index}>
-                  <Rating {...value} />
+                  <RatingWithBar {...value} />
                 </BasicDataModuleRow>)
             }
           </div>
