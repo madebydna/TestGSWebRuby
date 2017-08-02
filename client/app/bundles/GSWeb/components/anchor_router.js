@@ -4,7 +4,7 @@ let haveAutoScrolled = false;
 let anchorMap;
 let autoAnchorAttemptIntervalId;
 
-const HASH_SEPARATOR = "|";
+const HASH_SEPARATOR = "*";
 $(function() {
   $('body').on('click', '.js-updateLocationHash', function () {
     changeLocationHash($(this).attr('data-anchor'));

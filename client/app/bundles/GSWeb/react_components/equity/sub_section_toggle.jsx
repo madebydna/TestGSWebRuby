@@ -29,10 +29,6 @@ export default class SubSectionToggle extends React.Component {
     };
   }
 
-  tabNames() {
-    return this.props.equity_config.map(c => c.subject);
-  }
-
   selectTabMatchingAnchor() {
     handleThirdAnchor(
       this.props.parent_anchor, tokens => {
@@ -79,7 +75,7 @@ export default class SubSectionToggle extends React.Component {
     return <div>
       <div className="sub-section-navigation">
         <SectionSubNavigation
-          items={this.tabNames()}
+          items={this.props.equity_config}
           active={this.state.active}
           onTabClick={this.handleTabClick.bind(this)}
           parent_anchor={this.props.parent_anchor}

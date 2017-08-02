@@ -5,7 +5,7 @@ export default class SectionNavigation extends React.Component {
   render(){
     var active = this.props.active;
     var items = _.map(this.props.items, function(item, index) {
-      let anchorLink = this.props.parent_anchor + hashSeparatorAnchor() + formatAnchorString(item.title);
+      let anchorLink = this.props.parent_anchor + hashSeparatorAnchor() + formatAnchorString(item.anchor);
       return <div key={index} className="tab-container">
         <a href="javascript:void(0)"
                 data-anchor={anchorLink}
