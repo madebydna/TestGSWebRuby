@@ -20,6 +20,21 @@ button.start-tour {
 }
 
 .school-profile-tour-modal {
+  display: inline-block;
+  text-align: center;
+  width: 300px;
+  //height: 185px;
+  padding: 30px 40px;
+  position: fixed;
+  background: #fff;
+  right: 10px;
+  bottom: 110px;
+  border: 2px solid #159bd8;
+  border-radius: 3px;
+  box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
+  @include media-breakpoint-up(md) {
+    bottom: 70px;
+  }
   h3 {
     margin-top: 0px;
   }
@@ -28,23 +43,19 @@ button.start-tour {
     width: 0; height: 0;
     border: 8px solid;
     pointer-events: none;
-    border-top-color: #fff;
+    border-top-color: #159bd8;
     border-right-color: transparent;
     border-left-color: transparent;
     border-bottom-color: transparent;
     top: 100%;
     right: 48px;
   }
-  display: inline-block;
-  text-align: center;
-  width: 300px;
-  height: 185px;
-  padding: 30px;
-  position: fixed;
-  background: #fff;
-  right: 10px;
-  bottom: 100px;
-  //border: 2px solid #ff0000;
-  border-radius: 3px;
-  box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
+  button {
+    margin-bottom: 15px;
+  }
+  #close-school-tour {
+    font-size: 11px;
+    color: #1d1d1d;
+    cursor: pointer;
+  }
 }

@@ -1,4 +1,6 @@
-<%= render 'tour_modal' %>
+<% unless has_declined_school_profile_tour? %>
+   <%= render 'tour_modal' %>
+<% end %>
 <div
    class="tour-teaser gs-tipso"
    data-remodal-target="modal_info_box"

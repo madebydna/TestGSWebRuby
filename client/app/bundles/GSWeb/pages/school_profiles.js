@@ -81,6 +81,22 @@ $(function() {
       }
     );
   });
+
+  function setCookieExpiration() {
+    var expires = "";
+    var date = new Date();
+    date.setTime(date.getTime() + (182*24*60*60*1000));
+    expires = "; expires=" + date.toUTCString();
+    return expires;
+  }
+
+  // The tour modal will appear by default unless the user clicks 'Not right now'
+  // When clicked we update the cookie to reflect the user's preference and make
+  // sure the modal isn't displayed again.
+  $('#close-school-tour').click(function(){
+    $('.school-profile-tour-modal').remove();
+    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+  })
   
   $('body').on('click', '.multi-select-button-group label', function() {
     var $label = $(this);
@@ -102,8 +118,13 @@ $(function() {
 
   $('body').on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
+    // This is the modal that appears unless the user clicks 'Not right now'
+    let schoolTourModal = $('.school-profile-tour-modal');
     if(remodal.length > 0) {
       remodal.remodal().close();
+    }
+    if(schoolTourModal.length) {
+      schoolTourModal.remove();
     }
     scrollToElement('#hero');
     introJs.start();

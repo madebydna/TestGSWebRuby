@@ -55,6 +55,14 @@ module SessionConcerns
     stored_location.present?
   end
 
+  def school_profile_tour_preference
+    read_cookie_value :decline_school_profile_tour
+  end
+
+  def has_declined_school_profile_tour?
+    school_profile_tour_preference.present?
+  end
+
   # Redirect to the URI stored by the most recent store_location call or to the passed default.
   def redirect_back_or_default(default = request.referrer || original_url) # TODO: change default
     stored_location = read_cookie_value :return_to
