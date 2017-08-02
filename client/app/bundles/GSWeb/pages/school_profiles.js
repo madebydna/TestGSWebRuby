@@ -90,12 +90,17 @@ $(function() {
     return expires;
   }
 
+  function setSchoolTourCookie() {
+    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+  }
+
   // The tour modal will appear by default unless the user clicks 'Not right now'
   // When clicked we update the cookie to reflect the user's preference and make
   // sure the modal isn't displayed again.
   $('#close-school-tour').click(function(){
     $('.school-profile-tour-modal').remove();
-    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="start-tour js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    setSchoolTourCookie();
   })
   
   $('body').on('click', '.multi-select-button-group label', function() {
@@ -128,6 +133,8 @@ $(function() {
     }
     scrollToElement('#hero');
     introJs.start();
+    // Don't show the tour modal if the user takes the tour
+    setSchoolTourCookie();
     return false;
   }).show();
 
