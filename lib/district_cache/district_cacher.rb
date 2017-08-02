@@ -6,6 +6,7 @@ class DistrictCacher
   # :feed_test_scores
   # :ratings
   # :district_schools_summary
+  # :directory_census
 
   def initialize(district)
     @district = district
@@ -36,7 +37,10 @@ class DistrictCacher
     {
         feed_test_scores:      TestScoresCaching::DistrictTestScoresCacher,
         ratings: DistrictRatingsCacher,
-        district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher
+        district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
+        # directory_census: DistrictDirectoryCensusCacher
+
+        directory_census: DistrictDirectoryCensusCacher
     }[key.to_s.to_sym]
   end
 
@@ -58,12 +62,14 @@ class DistrictCacher
   def self.registered_cachers
     @registered_cachers ||= [
         TestScoresCaching::DistrictTestScoresCacher,
-        DistrictRatingsCacher
+        DistrictRatingsCacher,
+        DistrictDirectoryCensusCacher
     ]
   end
 
   def self.create_cache(district, cache_key)
     begin
+      # require 'pry'; binding.pry
       cacher_class = cacher_for(cache_key)
         return unless cacher_class.active?
       cacher = cacher_class.new(district)

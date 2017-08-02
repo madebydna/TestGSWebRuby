@@ -1,10 +1,7 @@
-class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
-  include CacheValidation
+class DistrictDirectoryCensusCacher < DistrictCacher
+  include DistrictCacheValidation
 
   CACHE_KEY = 'directory_census'
-  DIRECTORY_FIELDS = %w(city county district_id DISTRICT_NAME fax FIPScounty id (district doesn't have id) lat level level_code
-                        lon name nces_code phone SCHOOL SUMMARY state_id state street subtype type UNIVERSAL_ID UNIVERSAL_DISTRICT_ID
-                        URL (has 'types' - pointing to tabs... just point to profile page?) home_page_url zipcode)
   DIRECTORY_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 129, 131, 133]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
@@ -34,24 +31,28 @@ class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
     :directory_census == data_type
   end
 
+  def self.active?
+    ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
+  end
+
   def census_query
-    CensusDataSetQuery.new(school.state)
-      .with_data_types(DIRECTORY_CENSUS_DATA_TYPES)
-      .with_school_values(school.id)
-      .with_census_descriptions(school.type)
+    CensusDataSetQuery.new(district.state)
+        .with_data_types(DIRECTORY_CENSUS_DATA_TYPES)
+        .with_district_values(district.id)
+        .with_census_descriptions('Public')
   end
 
   def census_query_results #census only
     @_census_query_results ||= (
-      census_data = CensusDataResults.new(census_query.to_a).filter_to_max_year_per_data_type!
+      census_data = CensusDataDistrictResults.new(census_query.to_a).filter_to_max_year_per_data_type!
       census_data.map do |obj|
-        CharacteristicsCaching::QueryResultDecorator.new(school.state, obj)
+        CharacteristicsCaching::QueryResultDecorator.new(district.state, obj)
       end.compact
     )
   end
 
   def build_hash_for_data_set(result)
-    return nil unless result.school_value
+    return nil unless result.district_value
     data_attributes.each_with_object({}) do |key, hash|
       value = result.try(key)
       if value
@@ -72,7 +73,7 @@ class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
         :breakdown,
         :created,
         :grade,
-        :school_value,
+        :district_value,
         :source,
         :year
     ]
@@ -84,21 +85,17 @@ class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
       hash[result.label] << build_hash_for_data_set(result)
     end
     validate!(cache_hash)
-    cache_hash.merge!(school_object_hash)
+    cache_hash.merge!(district_object_hash)
   end
 
-  def school_directory_keys
-    %w(county district_id city fax FIPScounty id lat level level_code lon name nces_code phone state state_id street subtype type home_page_url zipcode)
+  def district_directory_keys
+    %w(county id city fax FIPScounty lat level level_code lon name nces_code phone state state_id street home_page_url zipcode)
   end
 
-  def school_object_hash
-    school_directory_keys.each_with_object({}) do |key, hash|
-      hash[key] = [{ school_value: school.send(key) }] # the array wrap is for consistency
+  def district_object_hash
+    district_directory_keys.each_with_object({}) do |key, hash|
+      hash[key] = [{ district_value: district.send(key) }] # the array wrap is for consistency
     end
-  end
-
-  def self.active?
-    ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
   end
 
 end

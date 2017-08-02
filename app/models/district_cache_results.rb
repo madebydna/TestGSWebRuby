@@ -67,6 +67,8 @@ class DistrictCacheResults
         DistrictCachedRatingsMethods
       when 'district_schools_summary'
         DistrictCachedDistrictSchoolsSummaryMethods
+      when 'directory_census'
+        DistrictCachedDirectoryCensusMethods
     end
   end
 

@@ -2,7 +2,7 @@ class DistrictCache < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'district_cache'
   attr_accessible :name, :district_id, :state, :value, :updated
-  KEYS = [:test_scores]
+  KEYS = [:test_scores, :directory_census]
 
   def self.for_district(name, district_id, state)
     DistrictCache.where(name: name, district_id: district_id, state: state).first()
