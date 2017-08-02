@@ -8,6 +8,7 @@ export default class SubSectionToggle extends React.Component {
   static propTypes = {
     defaultTab: React.PropTypes.string,
     parent_anchor: React.PropTypes.string,
+    top_anchor: React.PropTypes.string,
     equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
       anchor: React.PropTypes.string,
       subject: React.PropTypes.string,
@@ -82,6 +83,7 @@ export default class SubSectionToggle extends React.Component {
           active={this.state.active}
           onTabClick={this.handleTabClick.bind(this)}
           parent_anchor={this.props.parent_anchor}
+          top_anchor={this.props.top_anchor}
         />
       </div>
       {this.renderContent()}

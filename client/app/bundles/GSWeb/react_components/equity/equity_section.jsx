@@ -6,7 +6,7 @@ import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 
-import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor, formatAnchorString } from '../../components/anchor_router';
 
 export default class EquitySection extends React.Component {
 
@@ -84,6 +84,7 @@ export default class EquitySection extends React.Component {
           key={this.state.active}
           equity_config={item["content"]}
           anchor={item.anchor}
+          top_anchor={formatAnchorString(this.props.anchor)}
           parent_anchor={this.props.section_content[this.state.active].anchor}
       />
     </div>
@@ -112,10 +113,6 @@ export default class EquitySection extends React.Component {
     }
   }
 
-  linkName(name){
-    return name.split(' ').join('_').replace('/', '_');
-  }
-
   sectionTitle() {
     return (
       <div className="title-container">
@@ -132,13 +129,14 @@ export default class EquitySection extends React.Component {
   render() {
     let { title, anchor, rating, icon_classes, section_content } = this.props;
     let ratingCircle = this.drawRatingCircle(rating, icon_classes);
-    let link_name = this.linkName(anchor);
+    let link_name = formatAnchorString(anchor);
     if (section_content) {
       return <div className="equity-section" data-ga-click-label={title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
         <div className="title-bar">{ratingCircle}{this.sectionTitle()}</div>
         <div className="tab-buttons">
           <SectionNavigation
+            parent_anchor={link_name}
             key="sectionNavigation"
             items={section_content}
             active={this.state.active}

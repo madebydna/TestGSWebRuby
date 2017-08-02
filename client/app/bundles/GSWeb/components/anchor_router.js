@@ -4,8 +4,19 @@ let haveAutoScrolled = false;
 let anchorMap;
 let autoAnchorAttemptIntervalId;
 
+const HASH_SEPARATOR = "|";
+$(function() {
+  $('body').on('click', '.js-updateLocationHash', function () {
+    changeLocationHash($(this).attr('data-anchor'));
+  });
+});
+
+function changeLocationHash(hashToSet) {
+  history.replaceState(undefined, undefined, "#"+hashToSet);
+}
+
 function anchorTokens() {
-  let tokens = document.location.hash.slice(1).split('|');
+  let tokens = document.location.hash.slice(1).split(HASH_SEPARATOR);
   return tokens;
 }
 
@@ -47,6 +58,14 @@ function attemptAutoAnchor() {
 }
 
 //////////////////////////////////////////////////////////////////////////////
+
+export function formatAnchorString(str) {
+  return str.split(' ').join('_').replace('/', '_');
+}
+
+export function hashSeparatorAnchor() {
+  return HASH_SEPARATOR;
+}
 
 export function addAnchorChangeCallback(callback) {
   window.addEventListener('hashchange', callback, false);
