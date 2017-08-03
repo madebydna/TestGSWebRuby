@@ -34,6 +34,7 @@ import { impressionTracker } from '../util/impression_tracker';
 import { t } from '../util/i18n';
 import * as facebook from '../components/facebook_auth';
 import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
+import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
 
 window.store = configureStore({
   school: gon.school
@@ -59,6 +60,8 @@ $(function() {
     );
     toggle.init().add_onclick();
   })();
+
+  initAnchorHashUpdater();
 
   enableAutoAnchoring({
     'Test_scores': '#TestScores .rating-container__rating',
