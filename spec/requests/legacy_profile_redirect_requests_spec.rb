@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-def expect_redirect_to(path, status=301)
-  expect(response.status).to eq(status)
-  expect(response.headers['Location']).to eq("http://www.example.com#{path}")
-end
-
 describe 'Legacy profile redirect requests' do
+  def expect_redirect(path, status=301)
+    expect(response.status).to eq(status)
+    expect(response.headers['Location']).to eq("http://www.example.com#{path}")
+  end
+
   describe 'provided parameters mapping to a valid school' do
     before do
       FactoryGirl.create(:school, id: 1)
@@ -33,7 +33,7 @@ describe 'Legacy profile redirect requests' do
         let (:test_url) { test_url }
 
         it 'redirects to the correct profile URL' do
-          expect_redirect_to '/california/alameda/1-Alameda-High-School/'
+          expect_redirect '/california/alameda/1-Alameda-High-School/'
         end
       end
     end
@@ -59,7 +59,7 @@ describe 'Legacy profile redirect requests' do
         let (:test_url) { test_url }
 
         it 'redirects to the correct state home URL' do
-          expect_redirect_to '/california/', 302
+          expect_redirect '/california/', 302
         end
       end
     end
@@ -85,7 +85,7 @@ describe 'Legacy profile redirect requests' do
         let (:test_url) { test_url }
 
         it 'redirects to the homepage' do
-          expect_redirect_to '/', 302
+          expect_redirect '/', 302
         end
       end
     end

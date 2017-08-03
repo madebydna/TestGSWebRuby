@@ -1,18 +1,21 @@
 import React, { PropTypes } from 'react';
+import { formatAnchorString, hashSeparatorAnchor } from '../../../components/anchor_router';
 
 export default class SectionNavigation extends React.Component {
   render(){
     var active = this.props.active;
     var items = _.map(this.props.items, function(item, index) {
+      let anchorLink = this.props.parent_anchor + hashSeparatorAnchor() + formatAnchorString(item.anchor);
       return <div key={index} className="tab-container">
         <a href="javascript:void(0)"
+                data-anchor={anchorLink}
                 key={index}
-                className={'tab-title js-gaClick' + (active === index ? ' tab-selected' : '')}
+                className={'tab-title js-gaClick js-updateLocationHash' + (active === index ? ' tab-selected' : '')}
                 onClick={this.onClick.bind(this, index)}
                 data-ga-click-category='Profile'
                 data-ga-click-action={this.googleTrackingAction()}
-                data-ga-click-label={item.section_title}>
-        {item.section_title}
+                data-ga-click-label={item.title}>
+        {item.title}
       </a>
         {this.addDivider(index)}</div>;
     }.bind(this));

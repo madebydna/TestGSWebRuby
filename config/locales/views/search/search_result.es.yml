@@ -5,7 +5,8 @@ es:
       greatschools_rating_html: 'Calificación<br />de GreatSchools'
       homes_for_sale_html: Casas&nbsp;en&nbsp;venta
       miles: millas
-      no_reviews: No hay comentarios de la Comunidad
+      no_reviews: No hay comentarios
+      first_to_review: Sé el primero en comentar
       reviews:
         one: "%{count} evaluacion"
         other: "%{count} evaluaciones"

@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { t } from '../../../util/i18n';
+import SingleBarViz from './single_bar_viz';
 
 export default class BarGraphBase extends React.Component {
 
@@ -17,23 +18,6 @@ export default class BarGraphBase extends React.Component {
 
   constructor(props) {
     super(props);
-    this.mapColor = this.mapColor.bind(this);
-  }
-
-  // helper method to map a score to a color for bars
-  mapColor(value) {
-    return {
-      1: '#F26B16',
-      2: '#E78818',
-      3: '#DCA21A',
-      4: '#D2B81B',
-      5: '#BDC01E',
-      6: '#A3BE1F',
-      7: '#86B320',
-      8: '#6BA822',
-      9: '#559F24',
-      10: '#439326'
-    }[Math.ceil(value/10)]
   }
 
   validStateAverageValue() {
@@ -44,10 +28,6 @@ export default class BarGraphBase extends React.Component {
       parseInt(state_average) > 0 && 
       parseInt(state_average) <= 100
     );
-  }
-
-  renderKey(){
-    return this.props.breakdown + Math.random();
   }
 
   renderStateAverage() {
@@ -66,20 +46,12 @@ export default class BarGraphBase extends React.Component {
   }
 
   render() {
-    let numerical_value = this.props.score;
-    let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(this.props.score)};
-    let style_grey_width = {width: 100-numerical_value+"%" };
-
     return (
       <div className="bar-graph-container">
         <div className="score">{this.props.label}%</div>
         <div className="viz">
           <div className="item-bar">
-            <div className="single-bar-viz">
-              <div className="color-row" style={style_score_width}></div>
-              <div className="grey-row" style={style_grey_width}></div>
-              {this.renderStateAverageArrow(this.props.state_average)}
-            </div>
+            <SingleBarViz score={this.props.score} state_average={this.props.state_average} />
           </div>
           {this.renderStateAverage(this.props.state_average)}
         </div>
