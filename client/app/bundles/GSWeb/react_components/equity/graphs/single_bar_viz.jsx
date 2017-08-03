@@ -39,22 +39,30 @@ export default class SingleBarViz extends React.Component {
   }
 
   renderStateAverageArrow(){
-    if(this.validStateAverageValue(this.props.state_average)) {
-      let style_arrow_up = {left: this.props.state_average + "%", top:'11px'}
-      return <div className="arrow-up"><span style={style_arrow_up}></span></div>
+    if(this.validStateAverageValue()) {
+      let style_arrow_up = {
+        left: this.props.state_average + "%",
+        top: '11px'
+      }
+      return <div className="arrow-up">
+        <span style={style_arrow_up}></span>
+      </div>
     }
   }
 
   render() {
     let numerical_value = this.props.score;
-    let style_score_width = {width: numerical_value+"%", backgroundColor: this.mapColor(this.props.score)};
-    let style_grey_width = {width: 100-numerical_value+"%" };
+    let style_score_width = {
+      width: numerical_value + "%",
+      backgroundColor: this.mapColor(this.props.score)
+    };
+    let style_grey_width = { width: 100 - numerical_value + "%" };
 
     return (
       <div className="single-bar-viz">
         <div className="color-row" style={style_score_width}></div>
         <div className="grey-row" style={style_grey_width}></div>
-        {this.props.state_average && this.renderStateAverageArrow(this.props.state_average)}
+        {this.props.state_average && this.renderStateAverageArrow()}
       </div>
     )
   }
