@@ -110,6 +110,8 @@ module StructuredMarkup
       .include(UrlHelper)
       .new
 
+    urlHelperMethods.default_url_options = {trailing_slash: true}
+
     crumbs = [
       [
         state_breadcrumb_text(school.state),
