@@ -24,37 +24,44 @@ let firstTutorial = [
   {
     element: 'div.logo',
     intro: GS.I18n.t('tour1.step1'),
-    position: 'bottom'
+    position: 'bottom',
+    gaLabel: 'about'
   },
   {
     element: '.rs-gs-rating',
     intro: GS.I18n.t('tour1.step2_title_html') + GS.I18n.t('tour1.step2'),
-    position: 'bottom'
+    position: 'bottom',
+    gaLabel: 'summary-rating'
   },
   {
     element: '#TestScores .module-header',
     intro: GS.I18n.t('tour1.step3_title_html') + GS.I18n.t('tour1.step3'),
-    position: 'top'
+    position: 'top',
+    gaLabel: 'academics'
   },
   {
     element: '#EquityRaceEthnicity .title-bar',
     intro: GS.I18n.t('tour1.step4_title_html') + GS.I18n.t('tour1.step4'),
-    position: 'top'
+    position: 'top',
+    gaLabel: 'equity'
   },
   {
     element: '#osp-school-info .module-header',
     intro: GS.I18n.t('tour1.step5_title_html') + GS.I18n.t('tour1.step5'),
-    position: 'top'
+    position: 'top',
+    gaLabel: 'environment'
   },
   {
     element: '#Reviews',
     intro: GS.I18n.t('tour1.step6_title_html') + GS.I18n.t('tour1.step6'),
-    position: 'top'
+    position: 'top',
+    gaLabel: 'reviews'
   },
   {
     element: '#NearbySchools .title-bar',
     intro: GS.I18n.t('tour1.step7_title_html') + GS.I18n.t('tour1.step7'),
-    position: 'top'
+    position: 'top',
+    gaLabel: 'nearby'
   },
   {
     element: '.school-info',
@@ -164,8 +171,9 @@ let intro;
 const homesAndRentalsSelector = '#homes-and-rentals';
 
 const onStepSeen = function(targetElement) {
-  let stepNum = intro._currentStep + 1;
-  window.analyticsEvent('Profile', 'tutorial-public', stepNum);
+  let stepNum = intro._currentStep;
+  let gaLabel = firstTutorial[stepNum].gaLabel;
+  window.analyticsEvent('Profile', 'tutorial-public', gaLabel || (stepNum + 1), true);
 }
 
 const onExitTour = function() {
