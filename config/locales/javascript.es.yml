@@ -157,3 +157,20 @@ es:
     Past ratings: Clasificaciones anteriores
     Hide past ratings: Esconde clasificaciones anteriores
     Parent tip: Consejo para padres
+    tour1:
+      step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
+      step2_title: El Resumen de Calificaciones
+      step2: El Resumen de Calificaciones ofrece una visión rápida de la calidad de esta escuela en comparación a otras escuelas en el estado.
+      step3_title: ACADÉMICA
+      step3: Esta sección muestra calificaciones e información sobre temas clave para el éxito académico, incluyendo resultados de exámenes y más.
+      step4_title: Equidad
+      step4: ¿Cómo trabaja esta escuela con los distintos grupos de estudiantes?  Tener calificaciones bajas puede significar que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan.
+      step5_title: Medio Ambiente
+      step5: ¿Quiere saber más de la escuela? Esta sección le muestra la demografía de estudiantes, los índices de estudiantes por consejero, vecindarios, y más.
+      step6_title: Opiniones
+      step6: Aquí, los padres y otros en la comunidad escolar comparten sus experiencias con esta escuela.
+      step7_title: Todas las escuelas cercanas
+      step7: Desplace el cursor para ver otras escuelas cercanas de alto rendimiento y poder entender más las opciones de educación en su área.
+      step8_title: Consejos Útiles
+      step8: '<div class="icon-question></div>'
+      step9: ''

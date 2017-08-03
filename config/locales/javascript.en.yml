@@ -156,3 +156,22 @@ en:
     Past ratings: Past ratings
     Hide past ratings: Hide past ratings
     Parent tip: Parent tip
+    tour1:
+      step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
+      step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'
+      step2: The Summary Rating provides an overall snapshot of this school’s quality, based on multiple measures, compared to other public schools in the state.
+      step3_title_html: '<div class="tutorial-header">Academics</div><br/>'
+      step3: This section shows ratings and data for key themes related to academic success including test scores and more.
+      step4_title_html: '<div class="tutorial-header">Equity</div><br/>'
+      step4: How well are different student groups served at this school? Low ratings may mean some student groups are not getting the support they need.
+      step5_title_html: '<div class="tutorial-header">Environment</div><br/>'
+      step5: Want to learn more about the school? This section shows student demographics, student & counselor ratios, neighborhood, and more.
+      step6_title_html: '<div class="tutorial-header">Reviews</div><br/>'
+      step6: Here, parents and others in the school community share their experiences with this school. Please share your experience too!
+      step7_title_html: '<div class="tutorial-header">Nearby schools</div><br/>'
+      step7: Scroll through nearby high-performing schools so you can better understand the school options in your area.
+      step8_title_html: '<div class="tutorial-header">Helpful hints</div><br/>'
+      step8:
+      step9:
+
+

@@ -131,12 +131,21 @@ $(function() {
     if(schoolTourModal.length) {
       schoolTourModal.remove();
     }
-    scrollToElement('#hero');
-    introJs.start();
+    scrollToElement('div.logo');
+    introJs.startFirstTutorial();
     // Don't show the tour modal if the user takes the tour
     setSchoolTourCookie();
     return false;
   }).show();
+
+  $('body').on('click', '.js-start-second-tour, #close-school-tour', function(){
+      introJs.startSecondTutorial();
+      return false;
+  }).show();
+
+  $('body').on('click', '#close-school-tour', function() {
+    introJs.exit();
+  });
 
 });
 
