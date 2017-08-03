@@ -1,7 +1,7 @@
-class DistrictDirectoryCensusCacher < DistrictCacher
+class FeedDistrictCharacteristicsCacher < DistrictCacher
   include DistrictCacheValidation
 
-  CACHE_KEY = 'directory_census'
+  CACHE_KEY = 'feed_district_characteristics'
   DIRECTORY_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 129, 131, 133]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
@@ -26,9 +26,8 @@ class DistrictDirectoryCensusCacher < DistrictCacher
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license
 
-
   def self.listens_to?(data_type)
-    :directory_census == data_type
+    :feed_district_characteristics == data_type
   end
 
   def self.active?
@@ -85,17 +84,6 @@ class DistrictDirectoryCensusCacher < DistrictCacher
       hash[result.label] << build_hash_for_data_set(result)
     end
     validate!(cache_hash)
-    cache_hash.merge!(district_object_hash)
-  end
-
-  def district_directory_keys
-    %w(county id city fax FIPScounty lat level level_code lon name nces_code phone state state_id street home_page_url zipcode)
-  end
-
-  def district_object_hash
-    district_directory_keys.each_with_object({}) do |key, hash|
-      hash[key] = [{ district_value: district.send(key) }] # the array wrap is for consistency
-    end
   end
 
 end

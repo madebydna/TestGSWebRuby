@@ -2,9 +2,6 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
   include CacheValidation
 
   CACHE_KEY = 'feed_characteristics'
-  DIRECTORY_FIELDS = %w(city county district_id DISTRICT_NAME fax FIPScounty id (district doesn't have id) lat level level_code
-                        lon name nces_code phone SCHOOL SUMMARY state_id state street subtype type UNIVERSAL_ID UNIVERSAL_DISTRICT_ID
-                        URL (has 'types' - pointing to tabs... just point to profile page?) home_page_url zipcode)
   DIRECTORY_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 129, 131, 133]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
