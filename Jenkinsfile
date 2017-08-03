@@ -98,7 +98,7 @@ def runJSRSpecs(groups, branchNum) {
 def makeBranch(branches, groups, branchNum) {
     branches["group${branchNum+1}"] = {
         node('slave') {
-            checkoutCode()
+            checkout scm
             cleanTmp()
             bundleInstall()
             cleanDatabase()
@@ -119,7 +119,7 @@ def makeBranch(branches, groups, branchNum) {
 def makeJSBranch(branches, groups, branchNum) {
     branches["jsgroup${branchNum+1}"] = {
         node('slave') {
-            checkoutCode()
+            checkout scm
             cleanTmp()
             bundleInstall()
             cleanDatabase()
