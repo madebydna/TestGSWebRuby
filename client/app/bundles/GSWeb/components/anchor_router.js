@@ -5,11 +5,12 @@ let anchorMap;
 let autoAnchorAttemptIntervalId;
 
 const HASH_SEPARATOR = "*";
-$(function() {
+
+export function initAnchorHashUpdater() {
   $('body').on('click', '.js-updateLocationHash', function () {
     changeLocationHash($(this).attr('data-anchor'));
   });
-});
+}
 
 function changeLocationHash(hashToSet) {
   history.replaceState(undefined, undefined, "#"+hashToSet);

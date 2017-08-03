@@ -17,7 +17,7 @@ import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
-import { enableAutoAnchoring } from '../components/anchor_router';
+import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
 
 window.store = configureStore({
   school: gon.school
@@ -43,6 +43,8 @@ $(function() {
     );
     toggle.init().add_onclick();
   })();
+
+  initAnchorHashUpdater();
 
   enableAutoAnchoring({
     'Test_scores': '#TestScores .rating-container__rating',
