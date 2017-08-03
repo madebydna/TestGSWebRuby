@@ -11,7 +11,8 @@ class Cacher
   # :esp_response
   # :feed_test_scores
   # :gsdata
-  # :directory_census
+  # :directory
+  # :feed_characteristics
 
   def initialize(school)
     @school = school
@@ -65,7 +66,8 @@ class Cacher
         feed_test_scores: FeedTestScoresCacher,
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:          RatingsCaching::RatingsCacher,
-        directory_census: DirectoryCensusCaching::DirectoryCensusCacher
+        directory:        DirectoryCaching::DirectoryCacher,
+        feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
 
@@ -93,7 +95,8 @@ class Cacher
       FeedTestScoresCacher,
       GsdataCaching::GsdataCacher,
       RatingsCaching::RatingsCacher,
-      DirectoryCensusCaching::DirectoryCensusCacher
+      DirectoryCaching::DirectoryCacher,
+      FeedCharacteristicsCaching::FeedCharacteristicsCacher
     ]
   end
 

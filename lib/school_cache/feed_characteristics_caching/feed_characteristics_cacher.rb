@@ -1,7 +1,7 @@
-class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
+class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
   include CacheValidation
 
-  CACHE_KEY = 'directory_census'
+  CACHE_KEY = 'feed_characteristics'
   DIRECTORY_FIELDS = %w(city county district_id DISTRICT_NAME fax FIPScounty id (district doesn't have id) lat level level_code
                         lon name nces_code phone SCHOOL SUMMARY state_id state street subtype type UNIVERSAL_ID UNIVERSAL_DISTRICT_ID
                         URL (has 'types' - pointing to tabs... just point to profile page?) home_page_url zipcode)
@@ -31,7 +31,7 @@ class DirectoryCensusCaching::DirectoryCensusCacher < Cacher
 
 
   def self.listens_to?(data_type)
-    :directory_census == data_type
+    :feed_characteristics == data_type
   end
 
   def census_query
