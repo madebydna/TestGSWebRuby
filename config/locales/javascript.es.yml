@@ -157,20 +157,48 @@ es:
     Past ratings: Clasificaciones anteriores
     Hide past ratings: Esconde clasificaciones anteriores
     Parent tip: Consejo para padres
+    Continue: Continuar
+    Not right now: No en este momento
     tour1:
       step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
-      step2_title: El Resumen de Calificaciones
+      step2_title_html: '<div class="tutorial-header">El Resumen de Calificaciones</div><br/>'
       step2: El Resumen de Calificaciones ofrece una visión rápida de la calidad de esta escuela en comparación a otras escuelas en el estado.
-      step3_title: ACADÉMICA
+      step3_title_html: '<div class="tutorial-header">ACADÉMICA</div><br/>'
       step3: Esta sección muestra calificaciones e información sobre temas clave para el éxito académico, incluyendo resultados de exámenes y más.
-      step4_title: Equidad
+      step4_title_html: '<div class="tutorial-header">Equidad</div><br/>'
       step4: ¿Cómo trabaja esta escuela con los distintos grupos de estudiantes?  Tener calificaciones bajas puede significar que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan.
-      step5_title: Medio Ambiente
+      step5_title_html: '<div class="tutorial-header">Medio Ambiente</div><br/>'
       step5: ¿Quiere saber más de la escuela? Esta sección le muestra la demografía de estudiantes, los índices de estudiantes por consejero, vecindarios, y más.
-      step6_title: Opiniones
+      step6_title_html: '<div class="tutorial-header">Opiniones</div><br/>'
       step6: Aquí, los padres y otros en la comunidad escolar comparten sus experiencias con esta escuela.
-      step7_title: Todas las escuelas cercanas
+      step7_title_html: '<div class="tutorial-header">Todas las escuelas cercanas</div><br/>'
       step7: Desplace el cursor para ver otras escuelas cercanas de alto rendimiento y poder entender más las opciones de educación en su área.
-      step8_title: Consejos Útiles
-      step8: '<div class="icon-question></div>'
-      step9: ''
+      step8_title_html: '<div class="tutorial-header">Consejos Útiles</div><br/>'
+      step8_p1: Haga clic en “?” para ver más información y respuestas a preguntas comunes.
+      step8_p2:  “Consejos para padres” le mostrará información útil para ayudar a que su hijo tenga éxito en la escuela.
+      step8_p3:  Click on "Sources" to view where the data comes from.
+      step9_html: '<div></div><h1>¡Terminado!</h1><div><br/>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><button class="start-tour js-start-second-tour active">Continuar</button><br><br/><div> <a id="close-school-tour" style="cursor: pointer;">No en este momento</a></div></div>'
+    tour2:
+      step1_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
+      step1: Aquí verá un resumen de los niveles de competencia de esta escuela en materias importantes, en base a resultados de exámenes y comparados con el promedio estatal, con “Consejos para Padres” que puede usar para informarse más.
+      step2_title_html: '<div class="tutorial-header">Preparación universitaria</div><br/>'
+      step2: ¿Cómo prepara esta escuela a sus estudiantes para la Universidad? Esta sección ofrece información sobre exámenes de ingreso a la Universidad, cursos de Ubicación Avanzada (AP), índices de graduación y más.
+      step3_title_html: '<div class="tutorial-header">Progreso estudiantil</div><br/>'
+      step3: El Índice de Progreso de Estudiantes da una idea de cuánto han mejorado académicamente los estudiantes en esta escuela cada año (también conocido como “crecimiento”) en comparación a otras escuelas en el estado.
+      step4_title_html: '<div class="tutorial-header">Cursos avanzados</div><br/>'
+      step4: Esta sección analiza si esta escuela está alentando a un gran número de estudiantes a tomar cursos avanzados, en general y en áreas de materias clave.
+      step5_title_html: '<div class="tutorial-header">Cursos avanzados de STEM</div><br/>'
+      step5: Tomar cursos avanzados de STEM (ciencia, tecnología, ingeniería y matemática) hoy es más importante que nunca para los estudiantes. Esta sección resalta la participación de esta escuela en cursos avanzados de STEM.
+      step6_title_html: '<div class="tutorial-header">Raza/etnicidad</div><br/>'
+      step6: Esta sección ayuda a entender si una escuela está trabajando bien con todos sus estudiantes, considerando información como resultados de exámenes e índices de suspensión en distintos grupos raciales y étnicos en esta escuela.
+      step7_title_html: '<div class="tutorial-header">Estudiantes de bajos</div><br/>'
+      step7: Esta sección analiza si esta escuela está trabajando bien con sus estudiantes de familias de bajos ingresos, considerando información como resultados de exámenes e índices de graduación.
+      step8_title_html: '<div class="tutorial-header">Estudiantes con discapacidades</div><br/>'
+      step8: En esta sección puede obtener información sobre resultados de exámenes, ausentismo crónico e índices de suspensión en esta escuela para estudiantes que tienen discapacidades físicas o de aprendizaje, en comparación a promedios del estado.
+      step9_title_html: '<div class="tutorial-header">Información general</div><br/>'
+      step9: Aquí encontrará información como los horarios de la escuela, opciones de transporte, cómo inscribirse, clubes y más.
+      step10_title_html: '<div class="tutorial-header">Estudiantes</div><br/>'
+      step10: La sección de Estudiantes ofrece el detalle de la diversidad en la población de estudiantes de esta escuela.
+      step11_title_html: '<div class="tutorial-header">Profesores y personal</div><br/>'
+      step11: Acá puede obtener más información sobre el índice de estudiantes por maestro o consejero, antigüedad de los maestros y más.
+      step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;¡Terminado!</h1></div><div><br/><p>Gracias por ver nuestros nuevos perfiles.&nbsp;<br>&nbsp;</p><div>¿Esto estuvo útil? <a id="school-tour-feedback" style="cursor: pointer;">Danos tu opinion</a></div></div></div>'

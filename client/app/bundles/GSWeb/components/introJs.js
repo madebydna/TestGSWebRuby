@@ -11,13 +11,13 @@ const t = function(string) {
 let firstTutorialLastStep = {
     element: '.school-name-container',
     highlightClass: 'no-highlight',
-    intro: '<div></div><h1>All done!</h1><div><br/>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><button class="start-tour js-start-second-tour active">Continue</button><br><br/><div> <a id="close-school-tour">Not right now </a></div></div>'
+    intro: GS.I18n.t('tour1.step9_html')
 };
 
 let secondTutorialLastStep = {
   element: '.school-name-container',
   highlightClass: 'no-highlight',
-  intro: '<div><img alt="" height="42" src="http://orangestripes.com/gschool/owl/owl-2-copy-4.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;All done!</h1></div><div><br/><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><div>Was this useful? <a>Give us your feedback</a></div></div></div>'
+  intro: GS.I18n.t('tour2.step12')
 };
 
 let firstTutorial = [
@@ -65,100 +65,65 @@ let firstTutorial = [
   },
   {
     element: '.school-info',
-    intro: GS.I18n.t('tour1.step8_title_html') + GS.I18n.t('tour1.step8'),
-    position: 'auto'
-  },
-    {
-    element: '#CollegeReadiness .module-header',
-    intro: 'How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.',
-    position: 'top'
-  },
-  {
-    element: '#AdvancedCourses .module-header',
-    intro: 'This section looks how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.',
-    position: 'top'
-  },
-  {
-    element: '#StudentProgress .module-header',
-    intro: 'The <strong>Student Progress Rating</strong> gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.',
-    position: 'top'
-  },
-  {
-    element: '#EquityLowIncome .title-bar',
-    intro: 'This section looks at how well this school is serving its students from low-income families, looking at information like test scores and graduation rates.',
-    position: 'top'
-  },
-  {
-    element: '#EquityDisabilities .title-bar',
-    intro: 'From this section, you can learn about test scores, chronic absenteeism and suspension rates at this school for students who have physical or learning disabilities, compared to state averages.',
-    position: 'top'
-  },
-  {
-    element: '#Students .module-header',
-    intro: 'The Students section offers a snapshot of the diversity of the student population at this school.',
-    position: 'top'
-  },
-  {
-    element: '#TeachersStaff .module-header',
-    intro: GS.I18n.t('tour1.step7'),
-    position: 'top'
+    highlightClass: 'no-highlight',
+    intro: GS.I18n.t('tour1.step8_title_html') + '<div class="info-circle"><span class="icon-question"></span></div>' + '<br><br>' + GS.I18n.t('tour1.step8_p1') + '<br><br>' + '<p class="parent-tip"><img src="/assets/school_profiles/owl.png"><span class="speech-bubble left">Parent tips</span></p>' + GS.I18n.t('tour1.step8_p2') + '<br><br>' + '<div style="font-size: 18px; color: blue;">Sources</div>' + '<br>'+ GS.I18n.t('tour1.step8_p3')
   }
 ];
 
 let secondTutorial = [
   {
       element: '#TestScores .module-header',
-      intro: 'Here you\'ll find a snapshot of this school\'s proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.',
+      intro: GS.I18n.t('tour2.step1_title_html') + GS.I18n.t('tour2.step1'),
       position: 'top'
   },
   {
       element: '#CollegeReadiness .module-header',
-      intro: 'How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.',
-      position: 'top'
-  },
-  {
-      element: '#AdvancedCourses .module-header',
-      intro: 'This section looks how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.',
+      intro: GS.I18n.t('tour2.step2_title_html') + GS.I18n.t('tour2.step2'),
       position: 'top'
   },
   {
       element: '#StudentProgress .module-header',
-      intro: 'The <strong>Student Progress Rating</strong> gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.',
+      intro: GS.I18n.t('tour2.step3_title_html') + GS.I18n.t('tour2.step3'),
+      position: 'top'
+  },
+  {
+      element: '#AdvancedCourses .module-header',
+      intro: GS.I18n.t('tour2.step4_title_html') + GS.I18n.t('tour2.step4'),
+      position: 'top'
+  },
+  {
+      element: '#AdvancedCourses .module-header',
+      intro: GS.I18n.t('tour2.step5_title_html') + GS.I18n.t('tour2.step5'),
       position: 'top'
   },
   {
       element: '#EquityRaceEthnicity .title-bar',
-      intro: 'This section helps you understand how well a school is serving all of its students, looking at information like test scores and suspension rates for different racial and ethnic groups at this school.',
+      intro: GS.I18n.t('tour2.step6_title_html') + GS.I18n.t('tour2.step6'),
       position: 'top'
   },
   {
       element: '#EquityLowIncome .title-bar',
-      intro: 'This section looks at how well this school is serving its students from low-income families, looking at information like test scores and graduation rates.',
+      intro: GS.I18n.t('tour2.step7_title_html') + GS.I18n.t('tour2.step7'),
       position: 'top'
   },
   {
       element: '#EquityDisabilities .title-bar',
-      intro: 'From this section, you can learn about test scores, chronic absenteeism and suspension rates at this school for students who have physical or learning disabilities, compared to state averages.',
+      intro: GS.I18n.t('tour2.step8_title_html') + GS.I18n.t('tour2.step8'),
       position: 'top'
   },
   {
-      element: '#osp-school-info .title-bar',
-      intro: 'Here you will find information like the school\'s hours, transportation options, how to enroll, clubs and more.',
+      element: '#osp-school-info .module-header',
+      intro: GS.I18n.t('tour2.step9_title_html') + GS.I18n.t('tour2.step9'),
       position: 'top'
   },
   {
       element: '#Students .module-header',
-      intro: 'The Students section offers a snapshot of the diversity of the student population at this school.',
+      intro: GS.I18n.t('tour2.step10_title_html') + GS.I18n.t('tour2.step10'),
       position: 'top'
   },
   {
       element: '#TeachersStaff .module-header',
-      intro: 'Here you can find out more about the student per teacher or counselor ratios, teacher tenure and more.',
-      position: 'top'
-  },
-  {
-      element: '#Reviews',
-      intro: 'Here, parents and others in the school community share their experiences with this school. ',
+      intro: GS.I18n.t('tour2.step11_title_html') + GS.I18n.t('tour2.step11'),
       position: 'top'
   }
 ]

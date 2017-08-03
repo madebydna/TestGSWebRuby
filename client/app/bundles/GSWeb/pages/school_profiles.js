@@ -138,7 +138,11 @@ $(function() {
     return false;
   }).show();
 
-  $('body').on('click', '.js-start-second-tour, #close-school-tour', function(){
+  $('body').on('click', '#school-tour-feedback', function(){
+
+  })
+
+  $('body').on('click', '.js-start-second-tour', function(){
       introJs.startSecondTutorial();
       return false;
   }).show();
