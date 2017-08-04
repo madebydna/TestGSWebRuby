@@ -176,6 +176,8 @@ en:
       step8_p1: Click on the "?" to view more info and answers to frequently asked questions.
       step8_p2: Parent tips will show useful info to help your child succeed in school.
       step8_p3: Click on "Sources" to view where the data comes from.
+      step8_parent_tips: Parent tips
+      step8_sources: Sources
       step9_html: '<div></div><h1>All done!</h1><div><br/>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><button class="start-tour js-start-second-tour active">Continue</button><br><br/><div> <a id="close-school-tour" style="cursor: pointer;">Not right now </a></div></div>'
     tour2:
       step1_title_html: '<div class="tutorial-header">Test scores</div><br/>'
@@ -185,7 +187,7 @@ en:
       step3_title_html: '<div class="tutorial-header">Student progress</div><br/>'
       step3: The Student Progress Rating gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.
       step4_title_html: '<div class="tutorial-header">Advanced courses</div><br/>'
-      step4: This section looks how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.
+      step4: This section looks at how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.
       step5_title_html: '<div class="tutorial-header">Advanced STEM courses</div><br/>'
       step5: Taking advanced STEM (science, technology, engineering, and math) courses is more important than ever for today's students.
       step6_title_html: '<div class="tutorial-header">Race/ethnicity</div><br/>'
