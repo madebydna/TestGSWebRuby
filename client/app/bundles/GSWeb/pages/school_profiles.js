@@ -33,7 +33,10 @@ import { impressionTracker } from '../util/impression_tracker';
 import { t } from '../util/i18n';
 import * as facebook from '../components/facebook_auth';
 import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
+import * as introJs from '../components/introJs';
+import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
+
 
 window.store = configureStore({
   school: gon.school
@@ -106,6 +109,27 @@ $(function() {
   });
 
   refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
+
+  function setCookieExpiration() {
+    var expires = "";
+    var date = new Date();
+    date.setTime(date.getTime() + (182*24*60*60*1000));
+    expires = "; expires=" + date.toUTCString();
+    return expires;
+  }
+
+  function setSchoolTourCookie() {
+    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+  }
+
+  // The tour modal will appear by default unless the user clicks 'Not right now'
+  // When clicked we update the cookie to reflect the user's preference and make
+  // sure the modal isn't displayed again.
+  $('#close-school-tour').click(function(){
+    $('.school-profile-tour-modal').remove();
+    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="start-tour js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    setSchoolTourCookie();
+  })
   
   $('body').on('click', '.multi-select-button-group label', function() {
     var $label = $(this);
@@ -164,6 +188,37 @@ $(function() {
     $('.innovate-logo').unveil(300);
   } catch (e) {}
   
+  $('body').on('click', '.js-start-tour', function() {
+    let remodal = $('.js-start-tour').closest('.remodal');
+    // This is the modal that appears unless the user clicks 'Not right now'
+    let schoolTourModal = $('.school-profile-tour-modal');
+    if(remodal.length > 0) {
+      remodal.remodal().close();
+    }
+    if(schoolTourModal.length) {
+      schoolTourModal.remove();
+    }
+    scrollToElement('div.logo');
+    introJs.startFirstTutorial();
+    // Don't show the tour modal if the user takes the tour
+    setSchoolTourCookie();
+    return false;
+  }).show();
+
+  $('body').on('click', '#school-tour-feedback', function(){
+    let surveyUrl = 'https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=' + gon.school.state + '&school=' + gon.school.id;
+    window.open(surveyUrl);
+  })
+
+  $('body').on('click', '.js-start-second-tour', function(){
+      introJs.startSecondTutorial();
+      return false;
+  }).show();
+
+  $('body').on('click', '#close-school-tour', function() {
+    introJs.exit();
+  });
+
 });
 
 $(window).on('load', function() {
