@@ -26,7 +26,6 @@ import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
-import { enableAutoAnchoring } from '../components/anchor_router';
 import * as footer from '../components/footer';
 import { signupAndFollowSchool } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
