@@ -38,18 +38,24 @@ shared_context 'Basic High School' do
   end
 
 shared_context 'Delaware public school' do
-  let!(:school) { School.on_db(:de).create!(id: 1, type: 'public', state: 'de', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry') }
-  after { clean_models :de, School }
+  let (:school) { School.new(id: 1, type: 'public', state: 'de', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry') }
+  before do
+    allow(controller).to receive(:school).and_return(school)
   end
+end
 
 shared_context 'Delaware charter school' do
-  let!(:school) { School.on_db(:de).create(id: 1, type: 'charter', state: 'de', city: 'Pyrenees', name: 'Beauxbatons Academy of Magic') }
-  after { clean_models :de, School }
+  let (:school) { School.new(id: 1, type: 'charter', state: 'de', city: 'Pyrenees', name: 'Beauxbatons Academy of Magic') }
+  before do
+    allow(controller).to receive(:school).and_return(school)
   end
+end
 
 shared_context 'Delaware private school' do
-  let!(:school) { School.on_db(:de).create(id: 1, type: 'private', state: 'de', city: 'Sweden', name: 'Durmstrang Institute') }
-  after { clean_models :de, School }
+  let (:school) { School.new(id: 1, type: 'private', state: 'de', city: 'Sweden', name: 'Durmstrang Institute') }
+  before do
+    allow(controller).to receive(:school).and_return(school)
+  end
 end
 
 ### Navigation ###
