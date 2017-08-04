@@ -193,7 +193,7 @@ if (gon.advertising_enabled) {
   };
 
   GS.ad.addCompfilterToGlobalAdTargetingGon = function () {
-    var randomCompFilterValue = _.random(1,4).toString();
+    var randomCompFilterValue = (Math.floor(Math.random()*4)+1).toString();
     if (!gon.ad_set_targeting) {
       gon.ad_set_targeting = {};
     }

@@ -1,6 +1,7 @@
 // TODO: import lodash methods
 // TODO: should modal look different for error messages?
 import modalManager from '../components/modals/manager';
+import { findKey } from 'lodash';
 
 const topNotificationBarSelector = '#js-top-notification-bar';
 
@@ -65,7 +66,7 @@ export const flash_message = function(type, message) {
 //                       'another message'
 //                     ],
 export const flash_from_hash = function(hash) {
-  var type = _.findKey(hash, function(type, messages) {
+  var type = findKey(hash, function(type, messages) {
     return messages.length > 0;
   });
   if (type) {

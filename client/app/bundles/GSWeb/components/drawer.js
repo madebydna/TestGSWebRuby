@@ -1,11 +1,11 @@
 import checkRequiredProps from '../util/checkRequiredProps';
 import Toggle from './toggle';
 import { t } from '../util/i18n';
-// TODO: import lodash assign
+import { assign } from 'lodash';
 // TODO: import jquery
 
 export function makeDrawer($container) {
-  var toggle = _.assign(new Toggle($container));
+  var toggle = assign(new Toggle($container));
   toggle.effect = "slideToggle";
   toggle.addCallback(
     toggle.updateButtonTextCallback(t('show_less'), t('show_more'))

@@ -6,6 +6,7 @@ import { scrollToElement } from '../../../util/scrolling';
 import { t } from '../../../util/i18n';
 import { isSignedIn, getCurrentSession } from '../../../util/session';
 import modalManager from '../../../components/modals/manager';
+import { forOwn, each, reduce, isEmpty } from 'lodash';
 
 export default class ReviewForm extends React.Component {
 
@@ -157,7 +158,7 @@ export default class ReviewForm extends React.Component {
   buildReviewsData() {
     let selectedResponses = this.state.selectedResponses;
     let reviewsData = [];
-    _.forOwn(selectedResponses, function (reviewResponse, questionId) {
+    forOwn(selectedResponses, function (reviewResponse, questionId) {
       reviewsData.push(
         {
           review_question_id: questionId,
@@ -220,7 +221,7 @@ export default class ReviewForm extends React.Component {
 
   errorMessageForQuestion(validationFuncs, comment) {
     var error;
-    _.each(validationFuncs, function(func) {
+    each(validationFuncs, function(func) {
       var message = func(comment);
       if (message) {
         error = message;
@@ -242,8 +243,8 @@ export default class ReviewForm extends React.Component {
 
   validateForm() {
    var selectedResponses = this.state.selectedResponses;
-   var errorMessages = _.reduce(selectedResponses, this.validateResponse, {});
-   var formValid = _.isEmpty(errorMessages);
+   var errorMessages = reduce(selectedResponses, this.validateResponse, {});
+   var formValid = isEmpty(errorMessages);
     this.setState ({
       errorMessages: errorMessages,
       formErrors: !formValid
@@ -347,7 +348,7 @@ export default class ReviewForm extends React.Component {
 
   reviewsErrors(reviews) {
     let reviewsErrors = {};
-    _.forOwn(reviews, function (review, questionId) {
+    forOwn(reviews, function (review, questionId) {
       if (review.error_messages) {
         reviewsErrors[questionId] = review.error_messages[0];
       }

@@ -1,3 +1,5 @@
+import { throttle } from 'lodash';
+
 /**
 * Refreshes an ad exactly once when the user scrolls past 50% in some container.
 * Requires the container to be at least minHeight. If the container ever grows
@@ -27,7 +29,7 @@ const refreshAdOnScroll = function(adDivId, containerSelector, minHeight) {
     }
   };
 
-  $(window).on(eventName, _.throttle(refreshAdIfEligible, scrollListenFrequency));
+  $(window).on(eventName, throttle(refreshAdIfEligible, scrollListenFrequency));
 };
 
 export default refreshAdOnScroll;

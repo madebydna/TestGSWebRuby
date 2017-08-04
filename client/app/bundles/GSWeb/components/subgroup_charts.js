@@ -1,6 +1,7 @@
 import * as tooltips from '../util/tooltip';
 import { getScript } from '../util/dependency';
 import { t } from '../util/i18n';
+import { map, forOwn, values, remove } from 'lodash';
 //TODO: import jQuery
 
 var subgroupSliceColor = '#34A4DA';
@@ -37,7 +38,7 @@ var buildSubgroupData = function (parsedData) {
 };
 
 var buildGenderData = function(parsedGenderData) {
-  var genderData = _.map(parsedGenderData, function(data) {
+  var genderData = map(parsedGenderData, function(data) {
     var returnValue = {
       name: data.name,
         y: data.schoolValueFloat,
@@ -55,7 +56,7 @@ var subgroupNameToChartId = function(subgroupName) {
 var parseGenderCharacteristicsData = function(genderData) {
   var validParsedGenderData = true;
   var parsedGenderData = [];
- _.forOwn(genderData, function (data, key) {
+  forOwn(genderData, function (data, key) {
    var parsedData = parseCharacteristicsCache(data, key)
    if (! validParsedData(parsedData) ) {
       validParsedGenderData = null;
@@ -90,8 +91,8 @@ var parseCharacteristicsCache = function(data, key) {
 };
 
 var validParsedData = function (parsedData) {
-  var values =  _.values(parsedData)
-  var missingValues = _.remove(values, function(v) {
+  let v =  values(parsedData)
+  var missingValues = remove(v, function(v) {
     return !v;
   });
   return missingValues.length == 0;
@@ -249,7 +250,7 @@ var generateSubgroupPieCharts = function () {
   if (gon.subgroup) {
     var subgroupData = gon.subgroup;
     getScript(gon.dependencies['highcharts']).done(function () {
-      _.forOwn(subgroupData, renderSubgroupChart);
+      forOwn(subgroupData, renderSubgroupChart);
       if (gon.gender) {
         var genderData = gon.gender;
         renderGenderChart(genderData);

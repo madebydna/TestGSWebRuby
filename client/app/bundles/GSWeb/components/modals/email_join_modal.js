@@ -1,5 +1,6 @@
 import BaseModal from './base_modal';
 import { sponsorsSignUp } from '../../util/newsletters';
+import { create, assign, merge } from 'lodash';
 
 const EmailJoinModal = function($, options) {
   // Call BaseModal's constructor first, using this modal as the context
@@ -30,11 +31,11 @@ const EmailJoinModal = function($, options) {
 
 // Assign EmailJoinModal's prototype to a new object that inherits BaseModal's prototype.
 // Make sure to set EmailJoinModal's prototype's constructor property
-EmailJoinModal.prototype = _.create(BaseModal.prototype, {
+EmailJoinModal.prototype = create(BaseModal.prototype, {
   'constructor': BaseModal
 });
 
-_.assign(EmailJoinModal.prototype, {
+assign(EmailJoinModal.prototype, {
 
   $getSubmitButton: function $getSubmitButton() {
     return this.$getJoinForm().find('button[type="submit"]');
@@ -90,9 +91,9 @@ _.assign(EmailJoinModal.prototype, {
       this.signUpForSponsorsList(),
       this.createStudents()
     ).done(function(data1, data2) {
-      _this.getDeferred().resolve(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
+      _this.getDeferred().resolve(merge({}, jqXHR, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {
-      _this.getDeferred().reject(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
+      _this.getDeferred().reject(merge({}, jqXHR, data1, data2, _this.getModalData()));
     });
 
     this.allowInteractions();

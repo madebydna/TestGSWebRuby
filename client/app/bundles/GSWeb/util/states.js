@@ -1,4 +1,5 @@
 //TODO: Import lodash functions
+import { invert, values, isString } from 'lodash';
 
 const statesHash = {
  'alabama': 'al',
@@ -55,9 +56,9 @@ const statesHash = {
  'wyoming': 'wy'
 };
 
-const abbreviationHash = _.invert(statesHash);
+const abbreviationHash = invert(statesHash);
 
-const stateAbbreviations = _.values(statesHash);
+const stateAbbreviations = values(statesHash);
 
 const anyStateNameRegex = function() {
   var components = _(statesHash).keys().map(function(stateName) {
@@ -72,7 +73,7 @@ const isStateName = function(str) {
 };
 
 const abbreviation = function(str) {
-  if (!_.isString(str)) {
+  if (!isString(str)) {
     return undefined;
   }
 
@@ -86,7 +87,7 @@ const abbreviation = function(str) {
 };
 
 const name = function(str) {
-  if (!_.isString(str) || str.length !== 2) {
+  if (!isString(str) || str.length !== 2) {
     return;
   }
 

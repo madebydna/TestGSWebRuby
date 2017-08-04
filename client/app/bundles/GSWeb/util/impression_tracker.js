@@ -1,5 +1,5 @@
-// TODO: import throttle from lodash
 // TODO: import/refactor checkForVisibilty
+import { throttle } from 'lodash';
 
 let callCount = 0;
 
@@ -56,5 +56,5 @@ export const impressionTracker = function(config) {
     }
   };
 
-  $(window).on(eventName, _.throttle(checkAllForVisibility, 500));
+  $(window).on(eventName, throttle(checkAllForVisibility, 500));
 }

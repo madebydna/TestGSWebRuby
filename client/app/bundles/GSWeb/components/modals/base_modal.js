@@ -4,6 +4,7 @@ import manager from './manager';
 import { addQueryParamToUrl } from '../../util/uri';
 import { preserveLanguageParam } from '../../util/i18n';
 import log from '../../util/log';
+import { assign, merge } from 'lodash';
 
 // BaseModal constructor function
 const BaseModal = function($, options) {
@@ -19,7 +20,7 @@ const BaseModal = function($, options) {
 };
 
 // Add some functions to BaseModal prototype. All modals should share these functions
-_.assign(BaseModal.prototype, {
+assign(BaseModal.prototype, {
   getCssClass: function getCssClass() {
     return this.cssClass;
   },
@@ -69,7 +70,7 @@ _.assign(BaseModal.prototype, {
       var eventTrackingData = this.getEventTrackingData(modalEventType);
       if (eventTrackingData !== undefined) {
         dataLayer.push(
-          _.merge({
+          merge({
             'event': 'analyticsEvent'
           }, eventTrackingData)
         );

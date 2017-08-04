@@ -3,6 +3,7 @@ import * as notifications from '../util/notifications';
 import { t, preserveLanguageParam } from '../util/i18n';
 import { isSignedIn } from '../util/session';
 import modalManager from '../components/modals/manager';
+import { merge, pick } from 'lodash';
 
 // Subscribe a user to the GreatNews newsletter.
 // Triggers a join modal if not signed in.
@@ -53,12 +54,12 @@ const postSubscriptionViaAjax = function(subscriptionParams) {
 };
 
 export const sponsorsSignUp = function(options) {
-  var subscriptionParams = _.merge(
+  var subscriptionParams = merge(
     {
       list: 'sponsor',
       message: "You've signed up to receive sponsors updates"
     },
-    _.pick(options, 'email')
+    pick(options, 'email')
   );
 
   return postSubscriptionViaAjax(subscriptionParams);
@@ -66,11 +67,11 @@ export const sponsorsSignUp = function(options) {
 
 export const greatNewsSignUp = function(options) {
   options = options || {};
-  var subscriptionParams = _.merge(
+  var subscriptionParams = merge(
     {
       list: 'greatnews'
     },
-    _.pick(options, 'email')
+    pick(options, 'email')
   );
 
   return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
@@ -110,11 +111,11 @@ const schools = function(states, schoolIds, options) {
     var url = '/gsr/user/favorites/';
     url = preserveLanguageParam(url);
     var data = {
-      'favorite_school': _.merge(
+      'favorite_school': merge(
         {
           'school_id': schoolIds,
           'state': states
-        }, _.pick(options, 'email')
+        }, pick(options, 'email')
       )
     };
     if (driver) {

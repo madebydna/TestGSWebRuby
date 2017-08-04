@@ -1,3 +1,4 @@
+import { create } from 'lodash';
 import JoinModal from './join_modal';
 
 const ReportReviewModal = function($, options) {
@@ -8,7 +9,7 @@ const ReportReviewModal = function($, options) {
   this.modalUrl = '/gsr/modals/report_review_modal';
 };
 
-ReportReviewModal.prototype = _.create(JoinModal.prototype, {
+ReportReviewModal.prototype = create(JoinModal.prototype, {
   'constructor': JoinModal
 });
 

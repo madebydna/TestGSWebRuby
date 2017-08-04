@@ -9,6 +9,7 @@ import SchoolUserModal from './school_user_modal';
 import SignupAndFollowSchoolModal from './signup_and_follow_school_modal';
 import SubmitReviewModal from './submit_review_modal';
 import SuccessModal from './success_modal';
+import { pull } from 'lodash';
 
 const MODALS = {
   EmailJoinForCompareSchoolsModal: EmailJoinForCompareSchoolsModal, 
@@ -109,7 +110,7 @@ const manager = (function ($) {
   };
 
   var removeModalFromStack = function(modal) {
-    modalsBeingDisplayed = _.pull(modalsBeingDisplayed, modal);
+    modalsBeingDisplayed = pull(modalsBeingDisplayed, modal);
   };
 
   var addModalToStack = function(modal) {

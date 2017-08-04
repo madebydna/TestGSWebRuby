@@ -66,7 +66,7 @@ _.assign(GS.modal.BaseModal.prototype, {
       var eventTrackingData = this.getEventTrackingData(modalEventType);
       if (eventTrackingData !== undefined) {
         dataLayer.push(
-          _.merge({
+          merge({
             'event': 'analyticsEvent'
           }, eventTrackingData)
         );

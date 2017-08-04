@@ -1,4 +1,4 @@
-// TODO: import lodash methods
+import { create } from 'lodash';
 
 import EmailJoinModal from './email_join_modal';
 
@@ -20,7 +20,7 @@ const EmailJoinForCompareSchoolsModal = function($, options) {
   };
 };
 
-EmailJoinForCompareSchoolsModal.prototype = _.create(EmailJoinModal.prototype, {
+EmailJoinForCompareSchoolsModal.prototype = create(EmailJoinModal.prototype, {
   'constructor': EmailJoinModal
 });
 

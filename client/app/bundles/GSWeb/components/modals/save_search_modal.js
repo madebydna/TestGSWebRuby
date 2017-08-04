@@ -1,4 +1,5 @@
 import JoinModal from './join_modal';
+import { create } from 'lodash';
 
 const SaveSearchModal = function($, options) {
     JoinModal.call(this, $, options);
@@ -8,7 +9,7 @@ const SaveSearchModal = function($, options) {
     this.modalUrl = '/gsr/modals/save_search_modal';
 };
 
-SaveSearchModal.prototype = _.create(JoinModal.prototype, {
+SaveSearchModal.prototype = create(JoinModal.prototype, {
     'constructor': JoinModal
 });
 

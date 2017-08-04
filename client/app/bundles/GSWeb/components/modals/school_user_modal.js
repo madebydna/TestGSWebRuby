@@ -1,6 +1,7 @@
 import BaseModal from './base_modal';
 import { addQueryParamToUrl } from '../../util/uri';
 import { preserveLanguageParam } from '../../util/i18n';
+import { create, assign } from 'lodash';
 
 const SchoolUserModal = function($, options) {
   BaseModal.call(this, $, options);
@@ -17,11 +18,11 @@ const SchoolUserModal = function($, options) {
   var schoolUserValue;
 };
 
-SchoolUserModal.prototype = _.create(BaseModal.prototype, {
+SchoolUserModal.prototype = create(BaseModal.prototype, {
   'constructor': BaseModal
 });
 
-_.assign(SchoolUserModal.prototype, {
+assign(SchoolUserModal.prototype, {
 
   getUrlWithParams: function getUrlWIthParams() {
     var url = this.getModalUrl();

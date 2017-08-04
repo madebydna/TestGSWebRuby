@@ -1,4 +1,5 @@
 import EmailJoinModal from './email_join_modal';
+import { create } from 'lodash';
 
 const SignupAndFollowSchoolModal = function($, options) {
   EmailJoinModal.call(this, $, options);
@@ -28,7 +29,7 @@ const SignupAndFollowSchoolModal = function($, options) {
   };
 };
 
-SignupAndFollowSchoolModal.prototype = _.create(EmailJoinModal.prototype, {
+SignupAndFollowSchoolModal.prototype = create(EmailJoinModal.prototype, {
   'constructor': EmailJoinModal
 });
 

@@ -1,3 +1,5 @@
+import { create, assign } from 'lodash';
+
 // TODO: import Facebook methods
 import BaseModal from './base_modal';
 import { signinToFacebookThenGreatSchools } from '../../components/facebook_auth';
@@ -20,11 +22,11 @@ const JoinModal = function($, options) {
   };
 };
 
-JoinModal.prototype = _.create(BaseModal.prototype, {
+JoinModal.prototype = create(BaseModal.prototype, {
   'constructor': BaseModal
 });
 
-_.assign(JoinModal.prototype, {
+assign(JoinModal.prototype, {
 
     $getJoinSubmitButton: function $getJoinSubmitButton() {
         return this.$getJoinForm().find('button[type="submit"]');

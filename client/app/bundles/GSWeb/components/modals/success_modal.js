@@ -3,6 +3,7 @@
 import JoinModal from './join_modal';
 import { addQueryParamToUrl } from '../../util/uri';
 import BaseModal from './base_modal';
+import { create, assign } from 'lodash';
 
 const SuccessModal = function($, options) {
     JoinModal.call(this, $, options);
@@ -20,11 +21,11 @@ const SuccessModal = function($, options) {
     }
 };
 
-SuccessModal.prototype = _.create(BaseModal.prototype, {
+SuccessModal.prototype = create(BaseModal.prototype, {
     'constructor': BaseModal
 });
 
-_.assign(SuccessModal.prototype, {
+assign(SuccessModal.prototype, {
 
   initialize: function initialize() {
     this.initializeShowHideBehavior();

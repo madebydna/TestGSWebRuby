@@ -36,7 +36,7 @@ import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
-
+import { assign } from 'lodash';
 
 window.store = configureStore({
   school: gon.school
@@ -55,7 +55,7 @@ ReactOnRails.register({
 
 $(function() {
   (function() {
-    var toggle = _.assign(new Toggle($('#hero').find('.school-info')));
+    var toggle = assign(new Toggle($('#hero').find('.school-info')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
         toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
