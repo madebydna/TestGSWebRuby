@@ -61,6 +61,7 @@ function attemptAutoAnchor() {
 //////////////////////////////////////////////////////////////////////////////
 
 export function formatAnchorString(str) {
+  if(typeof str === 'undefined' || str == '' || str === null) return '';
   return str.split(' ').join('_').replace('/', '_');
 }
 
