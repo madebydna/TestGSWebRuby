@@ -76,23 +76,31 @@ describe SchoolCompareDecorator do
        'state_average'=>0.0}
   ]}
 
-  let(:ratings_hash) {[
-      {'data_type_id'=>164,
-       'year'=>2014,
-       'school_value_text'=>nil,
-       'school_value_float'=>10.0,
-       'name'=>'Test score rating'},
-      {'data_type_id'=>165,
-       'year'=>2014,
-       'school_value_text'=>nil,
-       'school_value_float'=>8.0,
+  let(:ratings_hash) do
+    [
+      {
+        'data_type_id'=>164,
+        'year'=>2014,
+        'school_value_text'=>nil,
+        'school_value_float'=>10.0,
+        'name'=>'Test score rating'
       },
-      {'data_type_id'=>174,
-       'year'=>2014,
-       'school_value_text'=>nil,
-       'school_value_float'=>10.0,
-       'name'=>'GreatSchools rating'}
-  ]}
+      {
+        'data_type_id'=>165,
+        'year'=>2014,
+        'school_value_text'=>nil,
+        'school_value_float'=>8.0,
+      },
+      {
+        'data_type_id'=>174,
+        'year'=>2014,
+        'school_value_text'=>nil,
+        'school_value_float'=>10.0,
+        'name'=>'GreatSchools rating',
+        'breakdown' => 'All students'
+      }
+    ]
+  end
 
   init_school_with_cache
   let(:decorated_school) { SchoolCompareDecorator.new(school_with_cache) }

@@ -208,10 +208,10 @@ module SchoolProfiles
           state: school.state,
           trailing_slash: false
       )
-      subject = 'Claim your school’s profile on GreatSchools.org!'
       crlf = '%0D%0A'
 
       if school.claimed?
+        subject = 'Update your school’s GreatSchools profile page!'
         body = %(
             Dear #{recipient_name},#{crlf}
         #{crlf}
@@ -227,6 +227,7 @@ module SchoolProfiles
             (your name)
           ).gsub(/^\s+/, '')
       else
+        subject = 'Claim your school’s profile on GreatSchools.org!'
         body = %(
             Dear #{recipient_name},#{crlf}
         #{crlf}

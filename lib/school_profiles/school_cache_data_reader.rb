@@ -90,12 +90,12 @@ module SchoolProfiles
     end
 
     def equity_ratings_breakdown(breakdown)
-      if decorated_school.performance && decorated_school.performance['GreatSchools rating']
-        breakdown_results = decorated_school.performance['GreatSchools rating'].select { |bd|
+      if decorated_school.test_scores_all_rating_hash
+        breakdown_results = decorated_school.test_scores_all_rating_hash.select { |bd|
           bd['breakdown'] == breakdown
         }
         if breakdown_results.is_a?(Array) && !breakdown_results.empty?
-               breakdown_results.first['school_value']
+          breakdown_results.first['school_value_float']
         end
       end
     end

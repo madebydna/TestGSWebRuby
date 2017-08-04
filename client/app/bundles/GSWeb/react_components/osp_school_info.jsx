@@ -63,7 +63,7 @@ export default class OspSchoolInfo extends React.Component {
   render() {
     if (this.props.content ) {
       let stuff = this.props.content;
-      let items = stuff.map((h) => ({section_title: h.title}));
+      let items = stuff.map((h) => ({title: h.title}));
       let infoText = 'Replace this with real copy';
       return (<div id="osp-school-info" data-ga-click-label="General Information">
         <a className="anchor-mobile-offset" name="General_info"/>

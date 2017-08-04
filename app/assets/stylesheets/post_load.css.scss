@@ -79,6 +79,7 @@
 @import "components/info-window";
 @import "components/school-list";
 @import "components/anchor-button";
+@import 'components/rating-with-bar';
 // more components
 @import "gs/objects/spinny_wheel.css.scss";
 @import "gs/objects/modal_layout";
@@ -99,6 +100,7 @@
 @import 'school_profiles/hero.scss';
 @import 'school_profiles/toc.scss';
 @import 'school_profiles/school_profile_sticky_cta';
+@import 'school_profiles/school_profile_tutorial';
 @import 'school_profiles/review_form';
 @import 'school_profiles/students_container';
 @import 'school_profiles/subgroups';
@@ -112,6 +114,7 @@
 @import 'school_profiles/speech_bubbles';
 @import 'school_profiles/info_text_and_circle';
 @import 'school_profiles/historical_ratings';
+@import 'school_profiles/tour_button';
 @import 'gs/osp-school-info';
 
 @import 'pages/district-boundaries/district_boundaries_page';
@@ -120,3 +123,4 @@
 @import 'resources/tipso'; // used on school profiles
 @import 'resources/remodal'; // used on profiles / used by modals
 @import 'resources/remodal-default-theme'; // used on profiles / used by modals
+@import 'resources/introjs';

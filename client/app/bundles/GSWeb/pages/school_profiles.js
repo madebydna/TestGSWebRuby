@@ -17,7 +17,11 @@ import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
-import { enableAutoAnchoring } from '../components/anchor_router';
+import * as introJs from '../components/introJs';
+import { scrollToElement } from '../util/scrolling';
+
+import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
+
 
 window.store = configureStore({
   school: gon.school
@@ -44,6 +48,8 @@ $(function() {
     toggle.init().add_onclick();
   })();
 
+  initAnchorHashUpdater();
+
   enableAutoAnchoring({
     'Test_scores': '#TestScores .rating-container__rating',
     'College_readiness': '#CollegeReadiness .rating-container__rating',
@@ -53,6 +59,7 @@ $(function() {
     'Students_with_Disabilities': '#EquityDisabilities .equity-section',
     'Students': '#Students',
     'Teachers_staff': '#TeachersStaff',
+    'Reviews': '#Reviews',
     'Neighborhood': '#Neighborhood'
   });
   generateEthnicityChart(gon.ethnicity);
@@ -79,6 +86,27 @@ $(function() {
       }
     );
   });
+
+  function setCookieExpiration() {
+    var expires = "";
+    var date = new Date();
+    date.setTime(date.getTime() + (182*24*60*60*1000));
+    expires = "; expires=" + date.toUTCString();
+    return expires;
+  }
+
+  function setSchoolTourCookie() {
+    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+  }
+
+  // The tour modal will appear by default unless the user clicks 'Not right now'
+  // When clicked we update the cookie to reflect the user's preference and make
+  // sure the modal isn't displayed again.
+  $('#close-school-tour').click(function(){
+    $('.school-profile-tour-modal').remove();
+    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="start-tour js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    setSchoolTourCookie();
+  })
   
   $('body').on('click', '.multi-select-button-group label', function() {
     var $label = $(this);
@@ -96,6 +124,37 @@ $(function() {
     }
     $hiddenField.val(values.join(','));
     $label.toggleClass('active');
+  });
+
+  $('body').on('click', '.js-start-tour', function() {
+    let remodal = $('.js-start-tour').closest('.remodal');
+    // This is the modal that appears unless the user clicks 'Not right now'
+    let schoolTourModal = $('.school-profile-tour-modal');
+    if(remodal.length > 0) {
+      remodal.remodal().close();
+    }
+    if(schoolTourModal.length) {
+      schoolTourModal.remove();
+    }
+    scrollToElement('div.logo');
+    introJs.startFirstTutorial();
+    // Don't show the tour modal if the user takes the tour
+    setSchoolTourCookie();
+    return false;
+  }).show();
+
+  $('body').on('click', '#school-tour-feedback', function(){
+    let surveyUrl = 'https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=' + gon.school.state + '&school=' + gon.school.id;
+    window.open(surveyUrl);
+  })
+
+  $('body').on('click', '.js-start-second-tour', function(){
+      introJs.startSecondTutorial();
+      return false;
+  }).show();
+
+  $('body').on('click', '#close-school-tour', function() {
+    introJs.exit();
   });
 
 });

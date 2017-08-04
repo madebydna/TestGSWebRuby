@@ -220,6 +220,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/videos/choose-high-school-video/', as: :choose_high_video
     get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
     get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
+    get '/gk/articles/like-a-sponge/', as: :podcasts
     get '/gk/partners', as: :gk_partners
     get '/gk/licensing', as: :gk_licensing
     get '/gk/sponsorship', as: :sponsorship
@@ -471,14 +472,29 @@ LocalizedProfiles::Application.routes.draw do
       district: /(?!preschools)[^\/]+/
   }
 
-  # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
-  get '/school/overview.page', to: redirect { |params, request|
-        if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
-          "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
-        else
-          '/status/error404.page'
-        end
-      }
+  get '/school/overview.page', to: 'legacy_profile_redirect#show'
+  get '/school/parentReviews.page', to: 'legacy_profile_redirect#show'
+  get '/school/rating.page', to: 'legacy_profile_redirect#show'
+  get '/school/mapSchool.page', to: 'legacy_profile_redirect#show'
+  get '/school/testScores.page', to: 'legacy_profile_redirect#show'
+  get '/school/teachersStudents.page', to: 'legacy_profile_redirect#show'
+  get '/school/research.page', to: 'legacy_profile_redirect#show'
+  get '/survey/form.page', to: 'legacy_profile_redirect#show'
+  get '/survey/results.page', to: 'legacy_profile_redirect#show'
+  get '/survey/start.page', to: 'legacy_profile_redirect#show'
+  get '/survey/startResults.page', to: 'legacy_profile_redirect#show'
+
+  # Handle legacy cities.page
+  get '/cities.page', to: redirect { |_, request|
+    state = (request && request.query_parameters.present? && request.query_parameters[:state].present?) ? States.state_path(request.query_parameters[:state].downcase) : nil
+    if state && request.query_parameters[:city].present?
+      "/#{state}/#{request.query_parameters[:city].downcase.gsub(' ', '-')}/"
+    elsif state
+      "/#{state}/"
+    else
+      '/'
+    end
+  }
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
