@@ -9,12 +9,21 @@ describe Api::NearbySchoolsController do
       clean_dbs :gs_schooldb, :ca
     end
 
-    context 'with no schools' do
-      it 'should return an empty response' do
-        school = FactoryGirl.create(:school)
-        get :show, state: school.state, id: school.id
-        expect(JSON.parse(response.body)).to be_empty
-      end
+    let(:school) do
+      FactoryGirl.create(
+        :school,
+        name: 'school a',
+        lat: 37.7647364,
+        lon: -122.2470357
+      )
+    end
+
+    let(:no_results) do
+      {
+        num_found: 0,
+        start: 0,
+        results: []
+      }
     end
 
     it 'when not given school should return 404' do
@@ -22,31 +31,82 @@ describe Api::NearbySchoolsController do
       expect(response.status).to be(404)
     end
 
+    it 'accepts and uses overall_gs_rating_param' do
+      expect(SchoolSearchService).to(
+        receive(:by_location).
+        with(hash_including(filters: hash_including(overall_gs_rating: ['8','9','10']))).
+        and_return(no_results)
+      )
+      get :show, state: school.state, id: school.id, overall_gs_rating: [8,9,10]
+    end
+
+    it 'omits overall_gs_rating when param not present' do
+      expect(SchoolSearchService).to(
+        receive(:by_location).
+        with(hash_including(filters: {level_code: [] })).
+        and_return(no_results)
+      )
+      get :show, state: school.state, id: school.id
+    end
+
+    context 'with no schools' do
+      before do
+        expect(SchoolSearchService).to receive(:by_location).and_return(no_results)
+      end
+
+      it 'should return an empty response' do
+        get :show, state: school.state, id: school.id
+        expect(JSON.parse(response.body)).to be_empty
+      end
+    end
+
     context 'with nearby schools' do
       let(:schools) do
         [
-          FactoryGirl.create(
-            :school,
+          FactoryGirl.build(
+            :school_search_result,
+            id: 1,
             name: 'school a',
-            lat: 37.7647364,
-            lon: -122.2470357
+            city: 'alameda',
+            state: 'ca',
+            type: 'public',
+            review_count: 2,
+            community_rating: 3.0,
+            distance: 1
           ),
-          FactoryGirl.create(
-            :school,
+          FactoryGirl.build(
+            :school_search_result,
+            id: 2,
             name: 'school b',
-            lat: 37.7647365,
-            lon: -122.2470358
+            city: 'alameda',
+            state: 'ca',
+            type: 'private',
+            review_count: 2,
+            community_rating: 3.0,
+            distance: 1.5
           ),
-          FactoryGirl.create(
-            :school,
+          FactoryGirl.build(
+            :school_search_result,
+            id: 3,
             name: 'school c',
-            lat: 37.7647366,
-            lon: -122.2470359
+            city: 'alameda',
+            state: 'ca',
+            type: 'charter',
+            review_count: 2,
+            community_rating: 3.0,
+            distance: 3
           )
         ]
       end
       let(:nearby_schools) { schools[1..-1] }
-      let(:school) { schools.first }
+
+      before do
+        expect(SchoolSearchService).to receive(:by_location).and_return({
+          num_found: 3,
+          start: 0,
+          results: schools
+        })
+      end
 
       it 'should return a 200 status code' do
         get :show, state: school.state, id: school.id
@@ -76,21 +136,6 @@ describe Api::NearbySchoolsController do
         expect(response_array.size).to eq(1)
       end
 
-      it 'obeys the offset param' do
-        get :show, state: school.state, id: school.id, offset: 1
-        response_array = JSON.parse(response.body)
-        expect(response_array.size).to eq(1)
-        expected_nearby_school = nearby_schools.last
-        expect(
-          response_array.find do |hash|
-            {
-              'name' => expected_nearby_school.name,
-              'state' => expected_nearby_school.state 
-            }.to_a - hash.to_a
-          end
-        ).to be_present
-      end
-
       it 'obeys the max limit' do
         stub_const('Api::NearbySchoolsController::MAX_LIMIT', 1)
         get :show, state: school.state, id: school.id, limit: 2
@@ -105,41 +150,18 @@ describe Api::NearbySchoolsController do
         expect(response_array.first['links']['show']).to be_present
       end
 
-      context 'when schools have reviews' do
-        before { give_reviews_to_schools(schools) }
-        it 'contain number_of_reviews and average_rating in each response' do
-          pending
-          fail
-          get :show, state: school.state, id: school.id
-          response_array = JSON.parse(response.body)
-          expect(response_array).to be_present
-          response_array.each do |hash|
-            expect(hash).to have_key('number_of_reviews')
-            expect(hash).to have_key('average_rating')
-            expect(hash['number_of_reviews']).to be(2)
-            expect(hash['average_rating']).to be(3.0)
-          end
+      it 'contain number_of_reviews and average_rating in each response' do
+        get :show, state: school.state, id: school.id
+        response_array = JSON.parse(response.body)
+        expect(response_array).to be_present
+        response_array.each do |hash|
+          expect(hash).to have_key('number_of_reviews')
+          expect(hash).to have_key('average_rating')
+          expect(hash['number_of_reviews']).to be(2)
+          expect(hash['average_rating']).to be(3.0)
         end
       end
-    end
-  end
-
-  def give_reviews_to_schools(schools)
-    schools.each do |s|
-      FactoryGirl.create(
-        :five_star_review,
-        state: s.state,
-        school_id: s.id,
-        review_question_id: 1,
-        answer_value: 1
-      )
-      FactoryGirl.create(
-        :five_star_review,
-        state: s.state,
-        school_id: s.id,
-        review_question_id: 1,
-        answer_value: 5
-      )
+      
     end
   end
 end

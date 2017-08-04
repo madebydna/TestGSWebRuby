@@ -5,6 +5,8 @@ module SchoolProfiles
 
     attr_accessor :content
 
+    DEEP_LINK_HASH_SEPARATOR = '*'
+
     def initialize(test_scores, college_readiness, student_progress, equity, students, teacher_staff, courses, stem_courses, school)
       @test_scores = test_scores
       @college_readiness = college_readiness
@@ -48,6 +50,11 @@ module SchoolProfiles
       hash = {}
       arr = []
       arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
+
+      if @equity.race_ethnicity_discipline_and_attendance_visible?
+        arr << {column: 'Environment', label: 'discipline_and_attendance', present: true, rating: nil, anchor: 'Race_ethnicity'+DEEP_LINK_HASH_SEPARATOR+'Discipline_and_attendance'}
+      end
+
       arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}
       arr << {column: 'Environment', label: 'neighborhood', present: true, rating: nil, anchor: 'Neighborhood'}
       hash[:environment] = arr

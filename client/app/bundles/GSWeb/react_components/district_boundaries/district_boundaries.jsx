@@ -5,6 +5,7 @@ import * as google_map_extensions from '../../components/map/google_maps_extensi
 import createInfoWindow from './info_window';
 import Map from './map';
 import MapMarker from './map_marker';
+import DefaultMapMarker from './default_map_marker';
 import Polygon from './polygon';
 import ConnectedSearchBar from './connected_search_bar';
 import * as markerTypes from '../../components/map/markers';
@@ -92,6 +93,11 @@ export default class DistrictBoundaries extends React.Component {
       }
       return <MapMarker type={markerTypes.DISTRICT} {...props} />
     }));
+    if (this.props.lat && this.props.lon) {
+      let props = {lat: this.props.lat, lon: this.props.lon};
+      props.key = 'locationMarkerl' + this.props.lat + 'l' + this.props.lon;
+      markers = markers.concat(<DefaultMapMarker {...props} />);
+    }
     return markers;
   }
 
@@ -143,9 +149,10 @@ export default class DistrictBoundaries extends React.Component {
     return (
       <div className="district-boundaries-component">
         <DistrictBoundariesLegend legendContainerForCtaId="js-legend-container-for-cta" style={{display: 'none'}}/>
-        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView} googleMapsInitialized={this.state.googleMapsInitialized} />
+        <ConnectedSearchBar onClickMapView={this.showMapView} onClickListView={this.showListView}
+                            googleMapsInitialized={this.state.googleMapsInitialized} mapSelected={this.state.listHidden}/>
         { this.props.schools.length > 0 && 
-          <SchoolList className={ this.state.listHidden ? 'closed' : '' } />
+          <SchoolList showMapView={this.showMapView} className={ this.state.listHidden ? 'closed' : '' } />
         }
           <div className={ this.state.mapHidden ? 'map closed' : 'map'}>
             <SpinnyWheel active={this.props.loading}>

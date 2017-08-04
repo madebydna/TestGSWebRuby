@@ -131,6 +131,7 @@ shared_context 'click osp nav link element with text:' do |text|
     button = osp_page.osp_nav.nav_buttons(text: text).first
     button.click
   end
+  after { clean_models :gs_schooldb, UpdateQueue, OspFormResponse }
 end
 
 shared_context 'fill in OSP Registration with valid values' do |email|
@@ -556,5 +557,6 @@ shared_context 'click OSP mobile nav' do |form|
   before do
     click_button 'Basic Information'
   end
+  after { clean_models :gs_schooldb, UpdateQueue, OspFormResponse }
   subject { find('.js-submitTrigger', text: form) }
 end

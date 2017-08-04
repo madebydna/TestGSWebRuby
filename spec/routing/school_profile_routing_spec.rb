@@ -33,18 +33,6 @@ describe 'school profile routing' do
     expect( get '/1/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'1/alameda/1-Alameda-High-School')
   end
 
-  it 'should not handle old style overview URL with invalid params: /school/overview.page?id=1&state=ZZ' do
-    expect( get '/school/overview.page?id=1&state=ZZ' ).to(
-      route_to('error#page_not_found', path: 'school/overview', format: 'page', id: '1', state: 'ZZ')
-    )
-    expect( get '/school/overview.page?id=1' ).to(
-      route_to('error#page_not_found', path: 'school/overview', format: 'page', id: '1')
-    )
-    expect( get '/school/overview.page' ).to(
-      route_to('error#page_not_found', path: 'school/overview', format: 'page')
-    )
-  end
-
   describe 'non-pk school scope' do
 
     let(:route_params) do

@@ -1,0 +1,13 @@
+.rating-with-bar {
+  display: table;
+
+  > .rating {
+    display: table-cell;
+  }
+
+  > .bar {
+    display: table-cell;
+    width: 100%;
+    padding-left: 10px;
+  }
+}

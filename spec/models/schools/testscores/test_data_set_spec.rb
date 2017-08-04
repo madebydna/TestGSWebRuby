@@ -52,4 +52,32 @@ describe TestDataSet do
       it {expect(subject.base_performance_query(school).to_a).to be_empty}
     end
   end
+
+  describe '.ratings_for_school' do
+    let(:school) { FactoryGirl.build(:school, id: 1) }
+    describe 'query criteria' do
+      subject { TestDataSet.ratings_for_school(school) }
+      it { is_expected.to_not include('breakdown') }
+      # couldn't figure out a straightforward way to check
+      # joined fields like TDT classification or school_id. Could call
+      # .to_sql on the ActiveRelation and then do a substring match
+      its('where_values_hash.active') { is_expected.to eq(1) }
+
+      its('to_sql') { is_expected.to include("display_target like '%ratings%'") }
+      its('to_sql') { is_expected.to include("classification = 'gs_rating'") }
+    end
+  end
+
+  describe '.historic_ratings_for_school' do
+    let(:school) { FactoryGirl.build(:school, id: 1) }
+    describe 'query criteria' do
+      subject { TestDataSet.historic_ratings_for_school(school, [1,2], [3,4]) }
+      its(:where_values_hash) { is_expected.to include('breakdown_id') }
+      its('where_values_hash.breakdown_id') { is_expected.to eq(1) }
+      its('where_values_hash.data_type_id') { is_expected.to eq([1,2]) }
+      its('where_values_hash.active') { is_expected.to eq(1) }
+      its('to_sql') { is_expected.to include("classification = 'gs_rating'") }
+    end
+  end
+
 end

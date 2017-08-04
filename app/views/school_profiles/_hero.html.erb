@@ -68,42 +68,45 @@
     </div>
 
     <div class="school-info">
-      <% if hero.gs_rating %>
-        <div class="school-info__item school-info__gs-rating">
-          <div class="gs-rating-with-label">
+      <div class="school-info__item school-info__gs-rating">
+        <div class="gs-rating-with-label">
+          <% if hero.gs_rating %>
             <div class="gs-rating-with-label__rating">
               <div class="rs-gs-rating circle-rating--large-responsive circle-rating--<%= hero.gs_rating %>">
                 <%= hero.gs_rating %><span class="rating-circle-small">/10</span>
               </div>
             </div>
-
             <div class="gs-rating-with-label__label">
+              <a data-remodal-target="modal_info_box"
+                 data-content-type="info_box"
+                 data-content-html="<%= t('.summary_rating_info.rated') %>"
+                 class="gs-tipso"
+                 href="javascript:void(0)">
+                <span class="coming-soon"><%= t('.coming_soon') %></span>
+                <span class="info-circle"><span class="icon-question"></span></span>
+              </a>
               <%= t('.greatschools_rating') %>
-              <%= render 'info_circle', content: t('.gs_rating_info_text_html') %>
             </div>
-          </div>
+          <% else %>
+            <div class="gs-rating-with-label__rating">
+              <div class="label-owl">
+                <span><%= image_tag('school_profiles/owl_in_light_blue_circle.png') %></span>
+              </div>
+            </div>
+            <div class="gs-rating-with-label__label speech-bubble-dark left private-school">
+              <% type_key = @school.private_school? ? 'private' : 'public' %>
+              <div><%= t(".greatschools_no_rating_#{type_key}") %></div>
+              <div><a data-content-type="info_box"
+                      data-content-html="<%= t(".summary_rating_info.unrated_#{type_key}") %>"
+                      class="gs-tipso info-circle tipso_style"
+                      data-ga-click-label="GS rating - <%= type_key %> school"
+                      href="javascript:void(0)"
+                      data-remodal-target="modal_info_box"><span class="icon-question"></span>
+              </a></div>
+            </div>
+          <% end %>
         </div>
-      <% elsif @school.private_school? %>
-          <div class="school-info__item school-info__gs-rating">
-            <div class="gs-rating-with-label">
-              <div class="gs-rating-with-label__rating">
-                <div class="label-owl">
-                  <span><%= image_tag('school_profiles/owl_in_light_blue_circle.png') %></span>
-                </div>
-              </div>
-              <div class="gs-rating-with-label__label speech-bubble-dark left private-school">
-                <div><%= t('.greatschools_rating_private') %></div>
-                <div><a data-content-type="info_box"
-                        data-content-html="<%= t('.greatschools_rating_private_tooltip') %>"
-                        class="gs-tipso info-circle tipso_style"
-                        data-ga-click-label="GS rating - private school"
-                        href="javascript:void(0)"
-                        data-remodal-target="modal_info_box"><span class="icon-question"></span>
-                </a></div>
-              </div>
-            </div>
-          </div>
-      <% end %>
+      </div>
       <div class="school-info__item school-info__five-star-rating school-info-reviews-mobile"
            onclick="analyticsEvent('Profile', 'Review CTA Clicked','Hero stars'); window.location.href='#Reviews';">
         <div class="label"><%= t('.reviews') %></div>

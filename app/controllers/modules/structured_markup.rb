@@ -58,18 +58,21 @@ module StructuredMarkup
   def self.reviews_array(school_reviews)
     school_reviews.having_comments.map do |review|
       review = SchoolProfileReviewDecorator.decorate(review)
-      {
-        "@type" => "Review",
-        "datePublished" => review.created,
-        "reviewBody" => review.comment,
-        "author" => review.user_type,
-        "reviewRating" => {
-          "@type" => "Rating",
-          "bestRating" => "5",
-          "ratingValue" => review.numeric_answer_value,
-          "worstRating" => "1"
-        }   
+      markup = {
+          "@type" => "Review",
+          "datePublished" => review.created,
+          "reviewBody" => review.comment,
+          "author" => review.user_type
       }
+      if review.numeric_answer_value
+        markup['reviewRating'] = {
+            '@type' => 'Rating',
+            'bestRating' => '5',
+            'ratingValue' => review.numeric_answer_value,
+            'worstRating' => '1'
+        }
+      end
+      markup
     end
   end
 
@@ -106,6 +109,8 @@ module StructuredMarkup
       .include(Rails.application.routes.url_helpers)
       .include(UrlHelper)
       .new
+
+    urlHelperMethods.default_url_options = {trailing_slash: true}
 
     crumbs = [
       [

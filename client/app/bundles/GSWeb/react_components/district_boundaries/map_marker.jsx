@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import createMarkerFactory from '../../components/map/markers';
+import DefaultMapMarker from './default_map_marker';
 
-export default class MapMarker extends React.Component {
+export default class MapMarker extends DefaultMapMarker {
   static propTypes = {
     googleMaps: React.PropTypes.object,
     map: React.PropTypes.object,
@@ -12,7 +13,7 @@ export default class MapMarker extends React.Component {
     rating: React.PropTypes.string,
     onClick: React.PropTypes.func,
     selected: React.PropTypes.bool
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -44,14 +45,5 @@ export default class MapMarker extends React.Component {
     if(!this.props.selected && nextProps.selected && this.marker) {
       this.props.openInfoWindow(this.marker);
     }
-  }
-
-  componentWillUnmount() {
-    google.maps.event.clearListeners(this.marker, 'click');
-    this.marker.setMap(null);
-  }
-
-  render() {
-    return null;
   }
 }

@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <link rel="preload" href="<%= asset_path('school_profiles/hero_bg.jpg') %>" as="image">
+<% end %>
 <div class="overlay" style="display:none"></div>
 <div class="school-profile">
     <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
@@ -31,15 +34,20 @@
               <% if @school_profile.student_progress.visible? %>
                 <%= render 'student_progress', student_progress: @school_profile.student_progress %>
               <% end %>
-              <% if @school_profile.courses.visible? %>
-                <%= render 'courses', courses: @school_profile.courses %>
-              <% elsif @school_profile.stem_courses.visible? %>
-                <%= render(
-                  'stem_courses',
-                  stem_courses: @school_profile.stem_courses
-                ) %>
-              <% elsif @school.includes_level_code?(%w[m h]) %>
-                <%= render 'courses', courses: @school_profile.courses %>
+
+              <% if @school.includes_level_code?(%w[m h]) %>
+                <% if !@school.middle_school? && @school_profile.courses.visible? %>
+                  <% # for multi level and high schools, show advanced courses data if we can %>
+                  <%= render 'courses', courses: @school_profile.courses %>
+                <% elsif @school_profile.stem_courses.visible? %>
+                  <% # if multi level / high school didnt have advanced courses, or for middle schools, show stem data if we can %>
+                  <%= render(
+                    'stem_courses',
+                    stem_courses: @school_profile.stem_courses
+                  ) %>
+                <% else %>
+                  <%= render 'courses', courses: @school_profile.courses %>
+                <% end %>
               <% end %>
             </div>
           </div>

@@ -19,7 +19,6 @@ module SchoolProfiles
             component.title = 'Percentage AP enrolled grades 9-12'
             component.type = 'person'
           end
-
         ]
       end
 

@@ -17,7 +17,8 @@ export default class SearchBar extends React.Component {
     level: React.PropTypes.string,
     additionalSchoolType: React.PropTypes.string,
     onClickMapView: React.PropTypes.func,
-    onClickListView: React.PropTypes.func
+    onClickListView: React.PropTypes.func,
+    mapSelected: React.PropTypes.bool
   }
 
   constructor(props) {
@@ -32,8 +33,8 @@ export default class SearchBar extends React.Component {
     this.state = {
       searchTerm: props.searchTerm,
       showFilters: false,
-      mapSelected: true,
-      listSelected: false
+      mapSelected: props.mapSelected,
+      listSelected: !props.mapSelected
     }
   }
 
@@ -42,6 +43,12 @@ export default class SearchBar extends React.Component {
       if(this.state.searchTerm) {
         this.search();
       }
+    }
+    if (prevProps.mapSelected !== this.props.mapSelected) {
+      this.setState({
+        mapSelected: this.props.mapSelected,
+        listSelected: !this.props.mapSelected
+      })
     }
   }
 

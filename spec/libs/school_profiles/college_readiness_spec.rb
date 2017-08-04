@@ -279,6 +279,30 @@ describe SchoolProfiles::CollegeReadiness do
     end
   end
 
+  describe '#sources_for_view' do
+    subject { college_readiness.sources_for_view(hash) }
+    let(:hash) { valid_hash }
+    let(:valid_hash) do
+      {
+        'data_type' => 'foo',
+        'description' => 'description',
+        'source' => 'foo',
+        'year' => 2014
+      }
+    end
+
+    it { is_expected.to be_a(String) }
+
+    context 'with missing source' do
+      let(:hash) { valid_hash.except('source') }
+      it { is_expected.to be_a(String) }
+    end
+    context 'with missing year' do
+      let(:hash) { valid_hash.except('year') }
+      it { is_expected.to be_a(String) }
+    end
+  end
+
   describe '#ordered_data_types' do
     it 'should return configured data types in correct order' do
       config = [
