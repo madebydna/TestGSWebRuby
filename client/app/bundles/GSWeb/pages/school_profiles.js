@@ -139,7 +139,8 @@ $(function() {
   }).show();
 
   $('body').on('click', '#school-tour-feedback', function(){
-
+    let surveyUrl = 'https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=' + gon.school.state + '&school=' + gon.school.id;
+    window.open(surveyUrl);
   })
 
   $('body').on('click', '.js-start-second-tour', function(){

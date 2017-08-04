@@ -57,6 +57,7 @@ let firstTutorial = [
   {
     element: '#Reviews',
     intro: GS.I18n.t('tour1.step6_title_html') + GS.I18n.t('tour1.step6'),
+    highlightClass: 'no-highlight',
     position: 'top',
     gaLabel: 'reviews'
   },
