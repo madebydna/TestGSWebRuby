@@ -24,10 +24,10 @@ let secondTutorialLastStep = {
 
 let firstTutorial = [
   {
-    element: 'img.logo_size',
+    element: '.logo',
     intro: GS.I18n.t('tour1.step1'),
     highlightClass: 'no-highlight',
-    position: 'bottom',
+    position: 'below',
     gaLabel: 'about'
   },
   {
@@ -64,13 +64,14 @@ let firstTutorial = [
   {
     element: '#NearbySchools .button-bar',
     intro: GS.I18n.t('tour1.step7_title_html') + GS.I18n.t('tour1.step7'),
+    highlightClass: 'no-highlight',
     position: 'top',
     gaLabel: 'nearby'
   },
   {
     element: '#TestScores .module-header',
     highlightClass: 'no-highlight',
-    intro: GS.I18n.t('tour1.step8_title_html') + '<div class="info-circle"><span class="icon-question"></span></div>' + '<br><br>' + GS.I18n.t('tour1.step8_p1') + '<br><br>' + '<p class="parent-tip"><img src="/assets/school_profiles/owl.png"><span class="speech-bubble left">Parent tips</span></p>' + GS.I18n.t('tour1.step8_p2') + '<br><br>' + '<div style="font-size: 18px; color: blue;">Sources</div>' + '<br>'+ GS.I18n.t('tour1.step8_p3'),
+    intro: GS.I18n.t('tour1.step8_title_html') + '<div class="info-circle"><span class="icon-question"></span></div>' + '<br><br>' + GS.I18n.t('tour1.step8_p1') + '<br><br>' + '<p class="parent-tip"><img src="/assets/school_profiles/owl.png"><span class="speech-bubble left">' + GS.I18n.t('tour1.step8_parent_tips') + '</span></p>' + GS.I18n.t('tour1.step8_p2') + '<br><br>' + '<div style="font-size: 18px; color: blue;">' + GS.I18n.t('tour1.step8_sources') + '</div>' + '<br>'+ GS.I18n.t('tour1.step8_p3'),
     gaLabel: 'hints'
   }
 ];
@@ -101,7 +102,7 @@ let secondTutorial = [
     gaLabel: 'adv-courses'
   },
   {
-    element: '#AdvancedCourses .module-header',
+    element: '.stem-module .module-header',
     intro: GS.I18n.t('tour2.step5_title_html') + GS.I18n.t('tour2.step5'),
     position: 'top',
     gaLabel: 'stem-courses'
@@ -142,7 +143,7 @@ let secondTutorial = [
     position: 'top',
     gaLabel: 'teachers'
   }
-]
+];
 
 
 let numberOfVisibleSteps;
@@ -166,9 +167,11 @@ const onExitTour = function() {
 };
 
 const handleLastStep = function() {
-  if (numberOfVisibleSteps == intro._currentStep + 1) {
+  if (numberOfVisibleSteps === intro._currentStep + 1) {
     $('.introjs-bullets, .introjs-tooltipbuttons').hide();
     $('.introjs-tooltip').css({'text-align':'center', 'padding': '20px'});
+  } else {
+    $('.introjs-bullets, .introjs-tooltipbuttons').show();
   }
 };
 

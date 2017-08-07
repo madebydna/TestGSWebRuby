@@ -176,7 +176,9 @@ es:
       step8_title_html: '<div class="tutorial-header">Consejos Útiles</div><br/>'
       step8_p1: Haga clic en “?” para ver más información y respuestas a preguntas comunes.
       step8_p2:  “Consejos para padres” le mostrará información útil para ayudar a que su hijo tenga éxito en la escuela.
-      step8_p3:  Click on "Sources" to view where the data comes from.
+      step8_p3:  Haga clic en “Fuentes”  para ver de dónde viene la información.
+      step8_parent_tips: Consejos para padres
+      step8_sources: Fuentes
       step9_html: '<div></div><h1>¡Terminado!</h1><div><br/>¿Tiene unos minutos más? Infórmese más en las secciones de Contenido Académico, Igualdad y Ambiente de la escuela.</div><br/><button class="start-tour js-start-second-tour active">Continuar</button><br><br/><div> <a id="close-school-tour" style="cursor: pointer;">No en este momento</a></div></div>'
     tour2:
       step1_title_html: '<div class="tutorial-header">Resultados de exámenes</div><br/>'
@@ -191,7 +193,7 @@ es:
       step5: Tomar cursos avanzados de STEM (ciencia, tecnología, ingeniería y matemática) hoy es más importante que nunca para los estudiantes. Esta sección resalta la participación de esta escuela en cursos avanzados de STEM.
       step6_title_html: '<div class="tutorial-header">Raza/etnicidad</div><br/>'
       step6: Esta sección ayuda a entender si una escuela está trabajando bien con todos sus estudiantes, considerando información como resultados de exámenes e índices de suspensión en distintos grupos raciales y étnicos en esta escuela.
-      step7_title_html: '<div class="tutorial-header">Estudiantes de bajos</div><br/>'
+      step7_title_html: '<div class="tutorial-header">Estudiantes de bajos ingresos</div><br/>'
       step7: Esta sección analiza si esta escuela está trabajando bien con sus estudiantes de familias de bajos ingresos, considerando información como resultados de exámenes e índices de graduación.
       step8_title_html: '<div class="tutorial-header">Estudiantes con discapacidades</div><br/>'
       step8: En esta sección puede obtener información sobre resultados de exámenes, ausentismo crónico e índices de suspensión en esta escuela para estudiantes que tienen discapacidades físicas o de aprendizaje, en comparación a promedios del estado.
