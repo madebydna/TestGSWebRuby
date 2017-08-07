@@ -182,7 +182,7 @@ const getFilteredSteps = function(tutorial) {
 }
 
 export function exit() {
-  introJs().exit();
+  intro.exit();
 }
 
 const startTutorial = function(tutorial, lastStep) {
