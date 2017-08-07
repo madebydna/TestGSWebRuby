@@ -13,12 +13,11 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const config = {
   entry: {
     'school-profile-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
-    // 'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/parsley.remote', './app/bundles/GSWeb/vendor/remodal', 'jquery-unveil'],
+    'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/parsley.remote', './app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal'],
     'widget': ['./app/bundles/GSWeb/widget'],
+    'interstitial': ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
-    'webpack': [
-      './app/bundles/GSWeb/application'
-    ]
+    'school-profiles': [ './app/bundles/GSWeb/school_profiles' ]
   },
 
   output: {
@@ -36,7 +35,13 @@ const config = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['school-profile-blocking'],
+      name: 'school-profile-blocking',
+      chunks: ['school-profile-blocking', 'commons', 'school-profiles', 'district-boundaries', 'widget'],
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'commons',
+      chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
     new webpack.DefinePlugin({

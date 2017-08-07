@@ -11,6 +11,8 @@ Rails.application.config.assets.precompile += [
     'post_load.js',
     'shared_post_load.js',
     'widget-bundle.js',
+    'interstitial-bundle.js',
+    'school-profiles-bundle.js',
     'post_load.css',
     'deprecated_application.css',
     'deprecated_application.js',
