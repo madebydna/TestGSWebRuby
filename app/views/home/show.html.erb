@@ -1,46 +1,68 @@
 <% content_for :head do %>
     <!-- This is because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags -->
-    <meta name="description" content="Compare K-12 school ratings nationwide to find the best schools. View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
+    <meta name="description" content="View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education." />
+    <meta name="google-site-verification" content="zOi8EZHiVs8q_pVV2RM11ic3q0hnJXTIphoISsEyUUw" />
 <% end %>
 
 <% content_for :javascript_includes do %>
     <script>
         $(function() {
-            GS.util.setupImages({ selector: '.is-scaled', desktopImage: '<%= image_path('home/homepage_hero.jpg')%>', mobileImage: '<%= image_path('home/hero_mobile.jpg')%>', classes:'scaling' });
-            GS.util.setupImages({ selector: '.is-scaled-banner', desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>', mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>', classes:'scaling' });
-        })
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled',
+              desktopImage: '<%= image_path('home/slideshow/home_1600_6.jpg')%>',
+              mobileImage: '<%= image_path('home/slideshow/home_480_6.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled-banner',
+              desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>',
+              mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+        });
     </script>
 <% end %>
 
-<% if @homepage_banner_prop == 'true' %>
-  <%= render 'search_hero_short' %>
-  <% #= render 'highschool_milestones_banner' %>
-  <%= render 'sel_banner_kung_fu' %>
-  <%# = render 'cue_card_banner' %>
-<% else %>
-  <%= render 'search_hero' %>
-<% end %>
+<div id="home-page" class="gs-bootstrap container-fluid">
 
-<% if @show_ads %>
+  <%= render layout: 'hero' do %>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
+      <div class="mtxl hidden-xs"></div>
+      <div class="oa text_fff pal darken brs">
+        <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('home.hero.heading') %></h1>
+        <div class="subtitle uc mtl"><%= t('home.hero.subheading') %></div>
+        <%= render partial: 'home/search_form' %>
+
+        <div class="parent-content uc">
+          <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
+          <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
+          <span class="phs">|</span>
+          <%= link_to t('home.hero.school_life_html'), school_life_url %>
+          <span class="phs">|</span>
+          <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %>
+          <%= link_to t('home.hero.reading_html'), reading_url %>
+          <span class="phs">|</span>
+          <%= link_to t('home.hero.math_html'), math_url %>
+          <span class="phs">|</span>
+          <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url %>
+          <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url %>
+          <span class="phs">|</span>
+          <%= link_to t('home.hero.back_to_school_html'), back_to_school_url %>
+
+        </div>
+      </div>
+    </div>
+    <% end %>
+
   <div class="row">
-    <div class="col-xs-12">
-      <%= render 'layouts/ad_layer', page: :Homepage, slot: :Custom, view: :desktop, visible_for: 'visible-lg visible-md'%>
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+      <p class="mission-text"><%= t('.mission-text') %></p>
+      <p class="tac pbl uc"><a href="/gk/about/" class="font-size-xl"><%= t('.learn-more') %></a></p>
     </div>
   </div>
-<% end %>
+</div>
 
-<%= render 'browse_by_city' %>
-
-<%= render 'shared/email_signup' %>
-
-<%= render 'greatkids_articles' %>
-
-<%= render 'offers' %>
-
-<%= render 'quote' %>
-
-<%= render 'who_we_are' %>
-
-<%= render 'our_supporters' %>
-
-<%= render 'nav/home_footer' %>

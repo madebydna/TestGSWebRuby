@@ -5,6 +5,15 @@ class DistrictCacheQuery
     @district_ids_per_state = {}
   end
 
+  def include_objects(objects)
+    objects = Array.wrap(objects)
+    objects_by_state = objects.group_by(&:state)
+    objects_by_state.each_pair do |state, objects_for_state|
+      include_districts(state, objects_for_state.map(&:id))
+    end
+    self
+  end
+
   def include_cache_keys(cache_keys)
     @cache_keys += Array.wrap(cache_keys)
     @cache_keys.uniq
@@ -21,7 +30,7 @@ class DistrictCacheQuery
 
   def matching_districts_clause
     arel = DistrictCache.arel_table
-    q ||= arel.grouping(false: true) # false = true in query prevents needing to special-case code below
+    q ||= Arel::Nodes::Grouping.new(Arel::Nodes::SqlLiteral.new('false = true')) # false = true prevents needing to special-case code below
     @district_ids_per_state.each_pair do |state, district_ids_for_state|
       q = q.or(
         q.grouping(

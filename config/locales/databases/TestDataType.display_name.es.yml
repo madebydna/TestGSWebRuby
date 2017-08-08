@@ -32,8 +32,8 @@ es:
   CA API Statewide Rank: CA API Clasificación estatal
   CA API Total: CA API total
   CA Similar Schools Comparison Predicted Rating: CA Escuelas similares Comparación de puntuaciones predicha
-  California Academic Performance Index (API) Base: Índice de Rendimiento Académico de California (API) Base
-  California Academic Performance Index (API) Growth: Índice de Rendimiento Académico de California (API) Crecimiento
+  California Academic Performance Index (API) Base: "Índice de Rendimiento Académico de California (API) Base"
+  California Academic Performance Index (API) Growth: "Índice de Rendimiento Académico de California (API) Crecimiento"
   California Assessment of Student Performance and Progress (CAASPP): Evaluación de California del rendimiento de los estudiantes y el Progreso (CAASPP)
   California High School Exit Examination: Examen de Egreso de la Escuela
   California Sixth Edition Survey (CAT6) Percent Scoring at or Above 50th Percentile: Encuesta de California Sexta Edición (CAT6) que alcanzaron el porcentaje o por encima de 50 porciento
@@ -169,7 +169,7 @@ es:
   Ohio Achievement Assessments (OAA): Las evaluaciones de logro de Ohio (OAA)
   Ohio Graduation Tests (OGT): Exámenes de Graduación de Ohio (OGT)
   Ohio Graduation Tests (OGT) (Private Schools): Las pruebas Ohio graduación (OGT) (Escuelas Privadas)
-  Ohio Performance Index Ranking: Índice de Rendimiento Ohio clasificación
+  Ohio Performance Index Ranking: "Índice de Rendimiento Ohio clasificación"
   Ohio Proficiency Test: Examen de Nivel de Ohio
   Ohio Value-Added Measure: Ohio Valor Añadido-Medida
   Oklahoma A-F School Grade: Oklahoma A-F Primaria
@@ -225,3 +225,18 @@ es:
   Wisconsin Student Assessment System (WSAS) (Private Schools): Sistema de Evaluación de Estudiantes de Wisconsin (WSAS) (escuelas privadas)
   Wyoming Comprehensive Assessment System (WyCAS): Sistema de evaluación global de Wyoming (WyCAS)
   blank: blanco
+  West Virginia General Summative Assessment: Evaluación general de Virginia Occidental sumativa
+  Colorado Read Growth Grade: Colorado Lee Crecimiento Grado
+  Colorado Overall School Grade: Colorado general de la escuela primaria
+  Colorado School Rank: Rango de Escuela de Colorado
+  Colorado Student Achievement Trend: Tendencia Logro Estudiantil de Colorado
+  Badger Exam: Badger Exam
+  Alaska Measure of Progress (AMP): Medida de Alaska de Progreso (AMP)
+  Student Assessment of Growth and Excellence (SAGE): Evaluación de Estudiantes de crecimiento y la excelencia (SAGE)
+  Colorado ELA Achievement Grade: Colorado ELA Grado Logro
+  Colorado ELA Growth Grade: Colorado ELA Crecimiento Grado
+  READ Act: Ley LEER
+  College and Career Ready Assessments (READY): Evaluaciones de Colegio y Career Ready (READY)
+  Mississippi Assessment Program: Programa de Evaluación de Mississippi
+  Mississippi Assessment Program End-Of-Course: Programa de evaluación de Mississippi Fin de curso
+  Forward: Adelante

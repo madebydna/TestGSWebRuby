@@ -46,7 +46,7 @@ class Hash
   def gs_recursive_each_with_clone(&blk)
     new_hash = clone
     each do |k, v|
-      if Hash === v
+      if v.is_a? Hash
         v.gs_recursive_each_with_clone(&blk)
         blk.call([new_hash, k, v])
       else
@@ -66,16 +66,16 @@ class Hash
     self
   end
 
-  def seek(*_keys_)
+  def seek(*keys)
     last_level    = self
     sought_value  = nil
 
-    _keys_.each_with_index do |_key_, _idx_|
-      if last_level.is_a?(Hash) && last_level.has_key?(_key_)
-        if _idx_ + 1 == _keys_.length
-          sought_value = last_level[_key_]
+    keys.each_with_index do |key, idx|
+      if last_level.is_a?(Hash) && last_level.has_key?(key)
+        if idx + 1 == keys.length
+          sought_value = last_level[key]
         else
-          last_level = last_level[_key_]
+          last_level = last_level[key]
         end
       else
         break
@@ -92,6 +92,12 @@ class Hash
         seed[key] = seed[key].gs_sort_by_key(true, &block)
       end
       seed
+    end
+  end
+
+  def gs_dig(*path)
+    path.inject(self) do |location, key|
+      location.respond_to?(:keys) ? location[key] : nil
     end
   end
 end

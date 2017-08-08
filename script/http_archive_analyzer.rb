@@ -219,7 +219,7 @@ if ARGV && ARGV[0] && ARGV[1]
   file_name = ARGV[0]
   report = ARGV[1]
   detail = ARGV[2]
-  detail = false if detail == nil
+  detail = false if detail.nil?
   analyzer = HttpArchiveAnalyzer.new(file_name)
   analyzer.send("#{report}_report", detail)
 end

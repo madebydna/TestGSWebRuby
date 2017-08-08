@@ -78,6 +78,12 @@ shared_examples_for 'a controller that can save a favorite school' do
       allow(School).to receive(:find_by_state_and_id).and_return school
     end
 
+    it 'should fail gracefully if user does not exist' do
+      allow(controller).to receive(:current_user).and_return nil
+      expect(GSLogger).to_not receive :error
+      subject
+    end
+
     with_shared_context 'when school already favorited' do
       include_examples 'should not save the school as a favorite'
     end
@@ -98,10 +104,8 @@ shared_examples_for 'a controller that can save a favorite school' do
     end
 
     it 'should fail gracefully if school not found' do
-      pending 'TODO: Flash error in controller instead of raise error'
-      fail
       expect(user).to_not receive(:add_favorite_school!)
-      expect(controller).to receive :flash_error
+      expect(controller).to receive(:flash_error).with("We're sorry, something went wrong processing your request.")
       controller.send :add_favorite_school, {}
     end
 

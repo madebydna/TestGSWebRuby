@@ -8,13 +8,13 @@ describe SchoolSearchResultReviewInfoAppender do
       let(:solr_results) do
         [
           SchoolSearchResult.new({
-            'school_database_state' => 'CA',
+            'school_database_state' => %w(ak alaska),
             'school_id' => 1,
             'school_review_count_ruby' => 1, # old value from Solr. We want to test that this isn't being used
             'community_rating' => 1
           }),
           SchoolSearchResult.new({
-            'school_database_state' => 'CA',
+            'school_database_state' => %w(ca california),
             'school_id' => 2,
             'school_review_count_ruby' => 1, # old value from Solr. We want to test that this isn't being used
             'community_rating' => 1
@@ -24,9 +24,9 @@ describe SchoolSearchResultReviewInfoAppender do
       subject { appender.add_review_info_to_school_search_results! }
       before do
         allow(appender).to receive(:school_cache_results) do
-          query_results = [1, 2].map do |id|
+          query_results = [['AK', 1], ['CA', 2]].map do |(state, id)|
             school_cache = SchoolCache.new
-            school_cache.state = 'CA'
+            school_cache.state = state
             school_cache.school_id = id
             school_cache.name = 'reviews_snapshot'
             school_cache.value = {
@@ -66,6 +66,3 @@ describe SchoolSearchResultReviewInfoAppender do
   end
 
 end
-
-
-

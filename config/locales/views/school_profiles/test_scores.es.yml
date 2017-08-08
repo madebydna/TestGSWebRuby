@@ -1,0 +1,10 @@
+es:
+  school_profiles:
+    test_scores:
+      title: Test scores
+      subtitle_html: 'Averigua <!--<a href="/gk/articles/state-standardized-test-scores-issues-to-consider/?lang=es">-->lo que los resultados de los exámenes estatales realmente te dicen<!--</a>--> acerca de una escuela - y lo que no te dicen'
+      source: Source
+      sources: Fuentes
+      historical:
+        title: Clasificaciones anteriores de GreatSchools de los Resultados de Exámenes
+        subtitle: Este gráfico muestra cómo la Calificación de GreatSchools de los Resultados de Exámenes de esta escuela ha cambiado con el tiempo.

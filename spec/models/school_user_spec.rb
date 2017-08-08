@@ -15,33 +15,18 @@ describe SchoolUser do
   end
 
   describe '#user_type' do
-    context 'when user is not esp member' do
-      {
-        nil => :unknown,
-        'unknown' => :unknown,
-        'parent' => :parent,
-        'community member' => :'community member',
-        'foo' => :unknown
-      }.each_pair do |value_from_db, expected_value|
-        with_shared_context 'when user type has value', value_from_db do
-          its(:user_type) { is_expected.to eq expected_value }
-        end
-      end
+    before do
+      expect(subject).to_not receive(:approved_osp_user?)
     end
-    context 'when user is an esp member' do
-      before do
-        allow(subject).to receive(:approved_osp_user?).and_return true
-      end
-      {
-        nil => :principal,
-        'unknown' => :principal,
-        'community member' => :'community member',
-        'parent' => :parent,
-        'foo' => :principal
-      }.each_pair do |value_from_db, expected_value|
-        with_shared_context 'when user type has value', value_from_db do
-          its(:user_type) { is_expected.to eq expected_value }
-        end
+    {
+      nil => :unknown,
+      'unknown' => :unknown,
+      'parent' => :parent,
+      'community member' => :'community member',
+      'foo' => :unknown
+    }.each_pair do |value_from_db, expected_value|
+      with_shared_context 'when user type has value', value_from_db do
+        its(:user_type) { is_expected.to eq expected_value }
       end
     end
   end
@@ -196,9 +181,68 @@ describe SchoolUser do
 
     it 'should return the first unanswered topic' do
       allow(user).to receive(:reviews_for_school).and_return(reviews)
-      allow(ReviewTopic).to receive(:all).and_return(topics)
+      allow(ReviewTopic).to receive(:active).and_return(topics)
       expect(subject).to eq(topics[1])
     end
   end
 
+  describe "#find_active_review_by_question_id" do
+    let(:user) { FactoryGirl.create(:verified_user) }
+    let(:school) { FactoryGirl.create(:a_high_school) }
+    let(:reviews) { FactoryGirl.create_list(:review, 5) }
+    let(:review_questions) { FactoryGirl.create_list(:review_question, 5) }
+    before do
+      (0..4).to_a.each do |n|
+        reviews[n].question = review_questions[n]
+        reviews[n].user = user
+        reviews[n].school = school
+        reviews[n].save
+      end
+    end
+    after do
+      clean_models User, School, Review, ReviewQuestion, ReviewTopic
+    end
+    it 'should return only the review for current user, given school, matching review question' do
+      expect(subject.find_active_review_by_question_id(review_questions[3].id))
+        .to eq(reviews[3])
+    end
+  end
+
+  describe '.make_from_esp_membership' do
+    context 'when school user already exists for esp membership' do
+      it 'does not overwrite existing school_user' do
+        esp_membership = double(
+          member_id: 1,
+          state: 'ca',
+          school_id: 1
+        )
+        school_user = double(
+          new_record?: false
+        )
+        expect(SchoolUser).to receive(:find_by).and_return(school_user)
+        expect(school_user).to_not receive(:'user_type=')
+        expect(school_user).to_not receive(:save!)
+        SchoolUser.make_from_esp_membership(esp_membership)
+      end
+    end
+    context 'when school user does not exist for esp membership' do
+      it 'does not set user type or save the school user' do
+        esp_membership = double(
+          member_id: 1,
+          state: 'ca',
+          school_id: 1
+        )
+        school_user = double(
+          new_record?: true
+        )
+        expect(SchoolUser).to receive(:find_by).and_return(nil)
+        expect(SchoolUser).to receive(:new).and_return(school_user)
+        expect(school_user).to receive(:'user_type=').with('principal')
+        expect(school_user).to receive(:save!)
+        SchoolUser.make_from_esp_membership(esp_membership)
+      end
+
+    end
+
+  end
 end

@@ -6,6 +6,7 @@ class ReviewTopic < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   has_many :review_questions, inverse_of: :review_topic
+  has_many :active_review_questions, -> { where(active: true) }, class_name: 'ReviewQuestion'
 
   alias_attribute :school_level_code, :school_level
 

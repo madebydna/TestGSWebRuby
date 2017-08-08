@@ -5,7 +5,7 @@ GS.util.BackToTop = GS.util.BackToTop || (function() {
     var scroll_offset = 220;
     var scroll_duration = 500;
     var back_to_top_active = true;
-    var back_to_top_min_width = 1024;
+    var back_to_top_min_width = 300;
 
     if( $( window ).width() < back_to_top_min_width ) {
       back_to_top_active = false;
@@ -33,6 +33,11 @@ GS.util.BackToTop = GS.util.BackToTop || (function() {
     $('.back-to-top').click(function(event) {
       event.preventDefault();
       $('html, body').animate({scrollTop: 0}, scroll_duration);
+      return false;
+    });
+    $('.back-to-top').hover(function(event) {
+      event.preventDefault();
+      $('.back-to-top > .top-text').stop().toggle('400ms');
       return false;
     });
   };

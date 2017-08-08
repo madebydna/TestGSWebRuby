@@ -8,12 +8,13 @@ class NearbySchoolsCaching::Methodologies::ClosestSchools < NearbySchoolsCaching
     def schools(school, opts)
       return [] unless school.lat.present? && school.lon.present?
       limit = opts[:limit] || 5
+      offset = opts[:offset] || 0
       query = "
         SELECT #{basic_nearby_schools_fields}, '#{NAME}' as methodology,
         #{distance_from_school(school)} as distance
         FROM school
         WHERE #{basic_nearby_schools_conditions(school)}
-        ORDER BY distance LIMIT #{limit}
+        ORDER BY distance LIMIT #{limit} OFFSET #{offset}
       "
       School.on_db(school.shard).find_by_sql(query)
     end

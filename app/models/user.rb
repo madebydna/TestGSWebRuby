@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
 
   has_many :saved_searches, foreign_key: 'member_id'
   has_many :review_votes, foreign_key: 'member_id'
+  has_many :school_users, foreign_key: 'member_id'
 
   validates_presence_of :email
   validates :email, uniqueness: { case_sensitive: false }
@@ -80,7 +81,7 @@ class User < ActiveRecord::Base
   end
 
   def update_auto_graduate(value)
-    unless value == 'true' || value == 'false' || value == nil
+    unless value == 'true' || value == 'false' || value.nil?
       raise ArgumentError.new('Must provide true or false (as strings) or nil')
     end
     self.child_age = value

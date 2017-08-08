@@ -1,6 +1,6 @@
 var GS = GS || {};
 
-GS.I18n = GS.I18n || (function() {
+GS.I18n = GS.I18n || (function($) {
   var translationsHash;
   var defaultLocale = 'en';
 
@@ -8,14 +8,26 @@ GS.I18n = GS.I18n || (function() {
     options = options || {};
     // defaults to empty string if no matching translation and no default provided
     var defaultValue = options['default'] || '';
+    var parameters = options['parameters'] || '';
     var translationValue = translationsHash[key];
     if(translationValue !== undefined) {
+      translationValue = replaceParameters(translationValue, parameters);
       return translationValue;
     } else {
       GS.util.log('Translation for ' + key + ' not found. Defaulting to ' + defaultValue);
       return defaultValue;
     }
   };
+
+  var replaceParameters = function(tv, p){
+    var tranHash = tv;
+    if(p != '') {
+      $.each(p, function (k, v) {
+        tranHash = tranHash.replace("{" + k + "}", v);
+      });
+    }
+    return tranHash;
+  }
 
   // used in tests
   var setTranslationsHash = function(hash) {
@@ -71,4 +83,4 @@ GS.I18n = GS.I18n || (function() {
     preserveLanguageParam: preserveLanguageParam,
     initLanguageLinkListener: initLanguageLinkListener,
   }
-})();
+})(jQuery);

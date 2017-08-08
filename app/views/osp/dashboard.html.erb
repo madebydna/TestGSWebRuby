@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h1><%= t('.header') %></h1>
+    </div>
+  </div>
+
+  <% if @superuser %>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><%= t('.superuser_intro') %>:</p>
+      </div>
+    </div>
+    <%= form_tag('', method: 'get') do %>
+        <div class="row">
+          <div class="col-xs-4 col-sm-3 col-md-2">
+            <%= label_tag(:state, t('.state_label')) %>
+          </div>
+          <div class="col-xs-8 col-sm-9 col-md-10">
+            <%= text_field_tag(:state) %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-4 col-sm-3 col-md-2">
+            <%= label_tag(:schoolId, t('.school_label')) %>
+          </div>
+          <div class="col-xs-8 col-sm-9 col-md-10">
+            <%= text_field_tag(:schoolId) %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <%= submit_tag(t('.submit_button')) %>
+          </div>
+        </div>
+    <% end %>
+  <% else %>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><%= t('.demigod_intro') %></p>
+        <ul>
+          <% @schools.each do |s| %>
+              <li><%= link_to(s.name, osp_page_path(:state =>s.state, :schoolId => s.id, :page => 1)) %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<br/>
+<br/>
+<br/>

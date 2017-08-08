@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'features/examples/footer_examples'
+require 'features/page_objects/state_hub_page'
 
 describe 'State Page' do
   describe 'layout' do
@@ -12,8 +14,9 @@ describe 'State Page' do
     end
     after(:each) { clean_dbs :gs_schooldb }
 
-    it 'has the navigation element' do
-      expect(page).to have_selector '.navbar-static'
+    describe 'footer' do
+      subject { StateHubPage.new }
+      include_examples 'should have a footer'
     end
 
     it 'has the search hero' do

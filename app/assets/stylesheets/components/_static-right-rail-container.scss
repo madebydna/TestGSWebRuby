@@ -1,0 +1,24 @@
+.static-container{
+  position: relative;
+  margin: auto;
+  padding: 0px 10px;
+  max-width: 1170px;
+  @include media-breakpoint-up(sm) {
+    padding: 0px 15px;
+  }
+
+  @include media-breakpoint-up(md) {
+    > .right_rail {
+      position: absolute;
+      right: 0px;
+      width: 300px;
+      height: 100%;
+    }
+
+    > .content {
+      position: relative;
+      // 300 for right rail and 15 for gutter
+      margin-right: 315px;
+    }
+  }
+}

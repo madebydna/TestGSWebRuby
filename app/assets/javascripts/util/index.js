@@ -10,7 +10,6 @@
 //= require ./handlebars
 // require ./i18n
 //= require ./localStorage
-//= require ./optimizely
 //= require ./photo_upload
 //= require ./popup
 //  require ./responsive_images
@@ -29,3 +28,4 @@
 //= require ./gs_rating
 //= require ./sync_heights
 //= require ./send_updates
+//= require ./multi_select_button_group

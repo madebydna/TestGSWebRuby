@@ -1,0 +1,39 @@
+<% @first_topic_id_to_show %>
+<% if @show_role_question
+  display_review_questions = false
+  display_role_question = true 
+else 
+  display_review_questions = true
+  display_role_question = false 
+end %>
+
+<hr/>
+<div class="js-topicalReviewQuestionsContainer">
+  <div class="plm mbl">
+    <h2><%= t('.title') %></h2>
+
+    <p class=""><%= t('.sub_title') %>&nbsp;
+      <%= link_to t('.learn_more'), review_guidelines_url %>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 <%= 'col-sm-8' if @show_ads %>">
+    <%= render 'deprecated_school_profile/reviews/modules/member_role_question_module', display: display_role_question %>
+      <%= render 'deprecated_school_profile/reviews/modules/question_navigation' %>
+      <div id="topicalReviewQuestionCarousel" class="js-reviewQuestionCarouselContainer <%= display_review_questions ? '' : 'dn' %>">
+        <div class="js-reviewQuestionCarousel" data-gs-first-topic-id="<%= @first_topic_id_to_show %>">
+          <%= render partial: "deprecated_school_profile/reviews/modules/topical_review_question_module",
+                     collection: @school.topical_review_question_hash.values.inject([]) { |array, questions| array += questions }, as: :question
+          %>
+        </div>
+      </div>
+    </div>
+    <% if @show_ads %>
+        <div class="col-xs-12 col-sm-4 ptxl mbl">
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :desktop %>
+          <%= render 'layouts/ad_layer', page: @ad_page_name, slot: 'CTA'.to_sym, view: :mobile %>
+        </div>
+    <% end %>
+  </div>
+</div>

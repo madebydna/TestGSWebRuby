@@ -1,8 +1,8 @@
-class SchoolProfileDetailsController < SchoolProfileController
+class SchoolProfileDetailsController < DeprecatedSchoolProfileController
   protect_from_forgery
 
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def details
     #Set the pagename before setting other omniture props.

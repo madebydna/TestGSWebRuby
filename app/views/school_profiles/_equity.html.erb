@@ -1,0 +1,58 @@
+<% title = t('.title') %>
+<a class="anchor-mobile-offset" name="Equity"></a>
+<div id="Equity" class="equity-container rs-equity">
+  <div class="row">
+    <div class="col-xs-12 col-lg-3">
+      <div class="rating-container__title">
+        <%= title %>
+        <% if @school.state == 'CA' %>
+          <%= link_to 'http://innovateschools.org/greatschools/' do %>
+            <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+              class: 'innovate-logo mobile',
+              data: {src: image_path('innovate_logo_mobile.png')}) %>
+            <%= image_tag(
+              'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+              class: 'innovate-logo desktop',
+              data: {src: image_path('innovate_logo_desktop.png')}) %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-xs-12 col-lg-9">
+      <%= react_component('SchoolProfileComponent', props: {
+                          title: t('.Race ethnicity'),
+                          anchor: 'Race_ethnicity',
+                          analytics_id: 'EquityRaceEthnicity',
+                          subtitle: t('.Race ethnicity subtitle'),
+                          info_text: t('.Race ethnicity tooltip'),
+                          icon_classes: t('.Race ethnicity icon'),
+                          sources: equity.sources,
+                          data: equity.race_ethnicity_props,
+                          faq: equity.faq_race_ethnicity,
+                          qualaroo_module_link: equity.qualaroo_module_link(:race_ethnicity) })%>
+      <%= react_component('SchoolProfileComponent', props: {
+                          title: t('.Low-income students'),
+                          anchor: 'Low-income_students',
+                          analytics_id: 'EquityLowIncome',
+                          subtitle:  t('.Low income subtitle'),
+                          info_text: t('.Low income tooltip'),
+                          icon_classes: t('.Low income icon'),
+                          sources: equity.sources,
+                          rating: equity.rating_low_income,
+                          data: equity.low_income_section_props,
+                          faq: equity.faq_low_income,
+                          qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
+      <%= react_component('SchoolProfileComponent', props: {
+                          title: t('.Students with Disabilities'),
+                          anchor: 'Students_with_Disabilities',
+                          analytics_id: 'EquityDisabilities',
+                          subtitle:  t('.Students with Disabilities subtitle'),
+                          info_text: t('.Student with disabilities tooltip'),
+                          icon_classes: t('.Student with disabilities icon'),
+                          sources: equity.sources,
+                          data: equity.students_with_disabilities_section_props,
+                          faq: equity.faq_disabilities,
+                          qualaroo_module_link: equity.qualaroo_module_link(:students_with_disabilities)})  %>
+    </div>
+  </div>
+</div>

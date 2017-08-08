@@ -99,8 +99,8 @@ def its(attribute, *options, &block)
   its_caller = caller.select {|file_line| file_line !~ %r(/lib/rspec/its) }
   describe(attribute.to_s, :caller => its_caller) do
     let(:__its_subject) do
-      if Array === attribute
-        if Hash === subject
+      if attribute.is_a? Array
+        if subject.is_a? Hash
           attribute.inject(subject) {|inner, attr| inner[attr] }
         else
           subject[*attribute]
@@ -108,7 +108,11 @@ def its(attribute, *options, &block)
       else
         attribute_chain = attribute.to_s.split('.')
         attribute_chain.inject(subject) do |inner_subject, attr|
-          inner_subject.send(attr)
+          if inner_subject.is_a?(Hash)
+            inner_subject.send(:'[]', attr)
+          else
+            inner_subject.send(attr)
+          end
         end
       end
     end

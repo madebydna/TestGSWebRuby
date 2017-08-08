@@ -34,4 +34,20 @@ FactoryGirl.define do
     notes "MyString"
     charter_only 0
   end
+
+  factory :alameda_city_unified, class: District do
+    state_id 1
+    city "Alameda"
+    county "Alameda"
+    name "Alameda City Unified"
+    state "CA"
+    active 1
+  end
+
+  factory :oakland_unified, class: District do
+    city "Oakland"
+    name "Oakland Unified School District"
+    state "CA"
+    active 1
+  end
 end

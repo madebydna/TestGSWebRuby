@@ -42,7 +42,8 @@
   <div class="clearfix mtl">
     <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> cities</h2></div>
     <div class="fl ptm">
-      <%= link_to("See all cities", city_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+
+      <%= link_to("See all cities", cities_list_path(@state[:long].titleize.gsub(' ','_'), @state[:short].upcase)) %>
     </div>
   </div>
   <div class="toggle-cities pbxl ptl clearfix notranslate">
@@ -76,7 +77,7 @@
     <div class="clearfix mtl">
         <div class="fl mrl"><h2 class="mvn"><span class="notranslate"><%= state.name %></span> school districts</h2></div>
       <div class="fl ptm">
-        <%= link_to("See all districts", district_list_path(gs_legacy_url_encode(@state[:long].capitalize), @state[:short].upcase)) %>
+        <%= link_to("See all districts", districts_list_path(@state[:long].titleize.gsub(' ','_'), @state[:short].upcase)) %>
       </div>
     </div>
       <div class="toggle-districts pbxl ptl clearfix notranslate">
@@ -99,5 +100,3 @@
 <% end %>
 
 </br>
-
-<%= render 'nav/state_footer', state: @state %>

@@ -1,0 +1,17 @@
+.breadcrumbs {
+  background-color: $blue-darker;
+  color: $gray-dark;
+  padding: $spacing-medium 0;
+
+  a {
+   color: $white;
+  }
+
+  span {
+   padding-right: $spacing-small;
+  }
+
+  span:last-child {
+    padding-right: 0;
+  }
+}

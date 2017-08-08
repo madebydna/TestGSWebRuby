@@ -1,0 +1,95 @@
+#toc {
+  $chevron_color: #c1d2d9;
+
+  .toc-container-box {
+    margin: 53px auto 88px auto;
+    @include media-breakpoint-up(sm) {
+      margin-right: 0px;
+    }
+  }
+
+  .info-circle {
+    margin-bottom: 3px;
+  }
+
+  .icon-chevron-right {
+    color: $chevron_color;
+    float: right;
+    font-size: 10px;
+  }
+
+  .denominator {
+    font-size: 7px;
+  }
+
+  .toc-section-title {
+    font-size: 20px;
+    font-family: opensans-semibold;
+    padding-bottom: 0px;
+    vertical-align: middle;
+    @include media-breakpoint-up(sm) {
+      padding-bottom: 26px;
+    }
+  }
+
+  .toc-entry {
+    margin-right: 30px;
+    margin-bottom: 5px;
+    border-bottom: solid 1px #dbe6eb;
+    padding-bottom: 5px;
+    vertical-align: middle;
+
+    @include media-breakpoint-down(xs) {
+      margin-right: 0px;
+    }
+
+    a {
+      color: $brand-primary;
+      font-family: opensans-semibold;
+      line-height: 34px;
+    }
+  }
+
+  .toc-entry:last-child {
+    padding-bottom: 0px;
+    border-bottom: none;
+  }
+
+  .gs-rating {
+    border-radius: 50%;
+    height: 34px;
+    width: 34px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 32px;
+    color: #FFF;
+    float: right;
+    margin-right: 7px;
+  }
+
+  .gs-badge {
+    border-radius: 50%;
+    height: 34px;
+    width: 34px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 24px;
+    color: #FFF;
+    background-color: #2ba3dc;
+    margin-right: 10px;
+  }
+
+  .gs-link {
+    float: right;
+  }
+
+  .gs-link-text {
+    float: left;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .toc-entry:last-child {
+      padding-bottom: 10px;
+    }
+  }
+}

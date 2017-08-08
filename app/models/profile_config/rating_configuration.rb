@@ -58,11 +58,15 @@ class RatingConfiguration
 
   def use_school_value_float?
     star_rating['use_school_value_float'].to_s == 'true' ||
-    overall['use_school_value_float'].to_s == 'true'
+    Array.wrap(overall).first['use_school_value_float'].to_s == 'true'
   end
 
   def description_key
     configuration['description_key']
+  end
+
+  def level_code
+    overall['level_code']
   end
 
   def data_type_id
@@ -70,6 +74,8 @@ class RatingConfiguration
   end
 
   def school_value(data_set)
+    return data_set['school_value_float'] if data_set['data_type_id'] == 289
+
     if use_school_value_float?
       data_set['school_value_float'].round if data_set['school_value_float']
     else
@@ -81,37 +87,52 @@ class RatingConfiguration
     rating_hash = overall_rating_hash(results, school)
     subrating_hash = subrating_hash(results, school)
     methodology_url = methodology_url(school)
-    if subrating_hash.present? && rating_hash.present?
-      rating_hash['rating_breakdowns'] = subrating_hash
-    end
-    if rating_hash['overall_rating'] && methodology_url
-      rating_hash['methodology_url'] = methodology_url 
-    end
-    if rating_hash['overall_rating'] == 'nr'
-      rating_hash['what_is_not_rated'] = what_is_not_rated
+    if rating_hash.present?
+      Array.wrap(rating_hash).each do |rh|
+        if subrating_hash.present?
+          rh['rating_breakdowns'] = subrating_hash
+        end
+        if rh['overall_rating'] && methodology_url
+          rh['methodology_url'] = methodology_url 
+        end
+        if rh['overall_rating'] == 'nr'
+          rh['what_is_not_rated'] = what_is_not_rated
+        end
+      end
     end
     rating_hash
   end
 
   def overall_rating_hash(results, school)
-    hash = {}
-    if use_gs_rating?
-      rating = school.school_metadata.overallRating
+    if overall.is_a?(Array)
+      return overall.map do |overall_config|
+        cloned_configuration = @configuration.dup
+        cloned_configuration['overall'] = overall_config
+        RatingConfiguration.new(state, cloned_configuration).overall_rating_hash(results, school)
+      end
     else
-      data_set = results.detect { |tds| tds['data_type_id'] == data_type_id }
-      rating = school_value(data_set) if data_set
+      hash = {}
+      if use_gs_rating?
+        rating = school.school_metadata.overallRating
+      else
+        data_set = results.detect do |tds|
+          tds['data_type_id'] == data_type_id &&
+            (level_code.nil? || tds['level_code'] == level_code)
+        end
+        rating = school_value(data_set) if data_set
+      end
+      if use_gs_rating? && rating.blank? && !school.preschool?
+        rating = 'nr'
+      end
+      if rating.present?
+        hash = {
+          'description' => description,
+          'label' => label,
+          'overall_rating' => rating
+        }
+      end
+      hash
     end
-    if use_gs_rating? && rating.blank? && !school.preschool?
-      rating = 'nr'
-    end
-    if rating.present?
-      hash = {
-        'description' => description,
-        'label' => label,
-        'overall_rating' => rating
-      }
-    end
-    hash
   end
 
   def subrating_hash(results, school)
@@ -123,7 +144,8 @@ class RatingConfiguration
 
     rating_breakdowns.each do |key, breakdown_hash|
       matching_data_set = breakdown_data_sets.detect do |data_set|
-        data_set['data_type_id'] == breakdown_hash['data_type_id']
+        data_set['data_type_id'] == breakdown_hash['data_type_id'] &&
+          (breakdown_hash['level_code'].nil? || data_set['level_code'] == breakdown_hash['level_code'])
       end
       next if matching_data_set.nil?
 
@@ -151,12 +173,12 @@ class RatingConfiguration
     methodology_url = nil
     return methodology_url unless overall.present?
 
-    key = overall['methodology_url_key']
+    key = Array.wrap(overall).first['methodology_url_key']
     if key.present?
       methodology_url = school.school_metadata[key.to_sym].presence
     end
 
-    methodology_url ||= overall['default_methodology_url']
+    methodology_url ||= Array.wrap(overall).first['default_methodology_url']
   end
 
   def private_school_disclaimer

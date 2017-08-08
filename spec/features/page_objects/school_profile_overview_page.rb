@@ -12,7 +12,7 @@ class SchoolProfileOverviewPage < SitePrism::Page
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
-  section :header, HeaderSection, '.navbar-static'
+  section :header, HeaderSection, '.header_un'
   element :write_a_review_button, 'button', text: 'Write a review'
   element :apply_now_button, 'button', text: 'Apply now'
 
@@ -52,7 +52,9 @@ class SchoolProfileOverviewPage < SitePrism::Page
   section :gs_rating , 'overall-gs-rating' do
 
   end
-
+  section :state_rating, '.rs-state-rating' do
+    elements :labels, '.rs-rating-label' 
+  end
 
   element :zillow_header, 'h2', text:'Nearby homes and rentals'
 

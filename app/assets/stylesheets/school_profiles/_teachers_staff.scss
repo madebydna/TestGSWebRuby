@@ -1,0 +1,26 @@
+.teachers-staff{
+
+  .module-header {
+    min-height: 50px;
+    .circle-rating--medium {
+      float: left;
+      @include media-breakpoint-down(xs) {
+        margin-top: $spacing-medium;
+      }
+      .icon-user {
+        font-size: 26px;
+      }
+    }
+    .title-container {
+      padding: 0 $spacing-medium;
+      overflow: hidden;
+      .title {
+        margin: 0;
+      }
+    }
+  }
+
+  .rating-score-item__label {
+    padding-right: 13px;
+  }
+}

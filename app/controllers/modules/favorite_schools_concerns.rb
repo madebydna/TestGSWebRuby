@@ -10,6 +10,8 @@ module FavoriteSchoolsConcerns
       user = User.find_by_email(params[:email]) if params[:email]
       user ||= current_user
 
+      raise(ArgumentError, "can't find user from email param \"#{params[:email]}\" or cookie") if user.nil?
+
       if school_id.present? && state.present?
         school_id = school_id.split(/,/)
         state = state.split(/,/)
@@ -39,8 +41,11 @@ module FavoriteSchoolsConcerns
 
       }
       flash_notice t('actions.my_school_list.school_added_subscribed', school_name: school_names.to_sentence(locale: I18n.locale)).html_safe
-  rescue => e
-      flash_error e.message
+    rescue ArgumentError
+      flash_error t('actions.generic_error')
+    rescue => e
+      GSLogger.error(:misc, e, message:'Error saving user favorites', vars: params)
+      flash_error t('actions.generic_error')
     end
   end
 

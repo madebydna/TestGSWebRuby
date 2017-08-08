@@ -1,0 +1,5 @@
+es:
+  deprecated_school_profile:
+    data_layouts:
+      sub_ratings:
+        score_range: LAS CALIFICACIONES SON DEL 1 AL 10

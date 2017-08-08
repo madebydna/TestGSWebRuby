@@ -5,6 +5,10 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   decorates :review
   delegate_all
 
+  def five_star_rating?
+    review.question.question == 'How would you rate your experience at this school?'
+  end
+
   def answer_markup
     default_text = t('decorators.school_profile_review_decorator.no_rating') # non five-star ratings must have answer specified, no always use 'no rating'
     if review.question.overall?
@@ -18,6 +22,17 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     unless review.answers.empty?
       h.db_t(review.answers.first.answer_value)
     end
+  end
+
+  def numeric_answer_value
+    v = answer_value
+    return v if v.nil? || v.to_i > 0
+    # This assumes the comma-separated list of reviews answers
+    # are ordered from strongly disagree to strongly agree, which is currently
+    # true
+    index = question.responses.split(',').map(&:downcase).index(v.downcase)
+    return nil if index.nil?
+    return index + 1
   end
 
   def topic
@@ -54,13 +69,20 @@ class SchoolProfileReviewDecorator < Draper::Decorator
   end
 
   def user_type
-    if review.school_user_or_default.unknown?
+    school_user = review.school_user || SchoolUser.new
+
+    # WARNING: Changing user type strings requires updating the avatar mapping in user_reviews.rb
+    if school_user.unknown?
       t('decorators.school_profile_review_decorator.community_member')
-    elsif review.school_user_or_default.principal?
+    elsif school_user.principal?
       t('decorators.school_profile_review_decorator.school_leader')
     else
-      h.db_t(review.school_user_or_default.user_type)
+      h.db_t(school_user.user_type)
     end
+  end
+
+  def user_type_label
+    "A #{user_type}"
   end
 
   def has_comment?
@@ -99,6 +121,14 @@ class SchoolProfileReviewDecorator < Draper::Decorator
     text = t('decorators.school_profile_review_decorator.you_selected_html')
     text << h.content_tag('span', submitted_value, class: 'open-sans_cb')
     text.html_safe
+  end
+
+  def answer_label
+    return nil if five_star_rating?
+    question_answer_text =
+      review.question.question[0].downcase +
+      review.question.question[1..-2]
+      t("#{answer} that #{question_answer_text}_html")
   end
 
   def created

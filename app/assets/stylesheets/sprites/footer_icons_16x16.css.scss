@@ -1,0 +1,38 @@
+/* -------------------------------------------------------------------------------------------*/
+
+/* **************** SPRITE ***************** */
+
+.iconx16-footer-icons {
+  @include sprite-file(16, 16, "icons/footer_icons_16x16.png");
+}
+
+/* **************** LOCAL MIXIN ***************** */
+
+@mixin iconx16-pos($x_offset, $y_offset) {
+  background-position: ($x_offset * -16)+px ($y_offset * -16)+px;
+}
+
+/* **************** VIEWPORT ***************** */
+
+
+.i-16-f-facebook {
+  @include iconx16-pos(0, 0);
+  @extend .iconx16-footer-icons
+}
+.i-16-f-twitter {
+  @include iconx16-pos(1, 0);
+  @extend .iconx16-footer-icons
+}
+.i-16-f-pinterest {
+  @include iconx16-pos(2, 0);
+  @extend .iconx16-footer-icons
+}
+.i-16-f-youtube {
+  @include iconx16-pos(3, 0);
+  @extend .iconx16-footer-icons
+}
+.i-16-f-instagram {
+  @include iconx16-pos(4, 0);
+  @extend .iconx16-footer-icons
+}
+

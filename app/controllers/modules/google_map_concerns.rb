@@ -5,9 +5,9 @@ module GoogleMapConcerns
     gon.map_points = @map_schools.map do |school|
       begin
         map_points = SchoolSearchResultDecorator.decorate(school).google_map_data_point
-        map_points[:communityRatingStars] = school.community_rating.nil? ? '' : school.community_rating#(draw_stars_16 school.community_rating)
+        map_points[:communityRatingStars] = school.community_rating.nil? ? '' : school.community_rating #(draw_stars_16 school.community_rating)
         map_points[:profileUrl] = (school.profile_path.present?) ? school.profile_path : "/#{@state[:long]}/city/#{school.id}-school"
-        map_points[:reviewUrl] = "#{map_points[:profileUrl]}/reviews"
+        map_points[:reviewUrl] = "#{map_points[:profileUrl]}#Reviews"
         map_points[:zillowUrl] = zillow_url(school)
         school.latitude.nil? ? next : map_points[:lat] = school.latitude
         school.longitude.nil? ? next : map_points[:lng] = school.longitude
@@ -38,7 +38,7 @@ module GoogleMapConcerns
       if options_hash[:show_bubble]
         overview_url = school_path(school)
         map_points[:profileUrl] =  overview_url.present? ? overview_url : "/#{@state[:long]}/city/#{school.id}-school"
-        map_points[:reviewUrl] = "#{map_points[:profileUrl]}/reviews"
+        map_points[:reviewUrl] = "#{map_points[:profileUrl]}#Reviews"
         map_points[:street] = decorated_school.street
         map_points[:city] = decorated_school.city
         map_points[:state] = decorated_school.state
@@ -47,7 +47,7 @@ module GoogleMapConcerns
         map_points[:gradeRange] = decorated_school.grade_range
         map_points[:schoolType] = decorated_school.school_type
         map_points[:numReviews] = (decorated_school.review_count.nil? || decorated_school.community_rating.nil?) ? 0 : decorated_school.review_count
-        map_points[:communityRatingStars] = decorated_school.community_rating.nil? ? '' : decorated_school.community_rating#(draw_stars_16 school.community_rating)
+        map_points[:communityRatingStars] = decorated_school.community_rating.nil? ? '' : decorated_school.community_rating #(draw_stars_16 school.community_rating)
       end
 
       decorated_school.lat.nil? ? next : map_points[:lat] = decorated_school.lat
@@ -60,6 +60,15 @@ module GoogleMapConcerns
     sprite_files = {}
     sprite_files['imageUrlOffPage'] = view_context.image_path('icons/dots_icons_10x10.png')
     sprite_files['imageUrlOnPage'] = view_context.image_path('icons/pins_29x40.png')
+
+    gon.sprite_files = sprite_files
+
+  end
+
+  def assign_sprite_files_though_gon_widget
+    sprite_files = {}
+    sprite_files['imageUrlPrivateSchools'] = view_context.image_path('icons/google_map_pins/private_school_markers.png')
+    sprite_files['imageUrlPublicSchools'] = view_context.image_path('icons/google_map_pins/public_school_markers.png')
 
     gon.sprite_files = sprite_files
 

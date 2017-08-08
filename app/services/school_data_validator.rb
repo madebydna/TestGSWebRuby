@@ -18,7 +18,7 @@ module SchoolDataValidator
 
     def valid_grad_rates
       BREAKDOWN_LIST.each_with_object([]) do |breakdown, valid_list|
-        ['2013', '2014'].each do | year |
+        ['2013', '2014', '2015'].each do | year |
           [nil, '_sortable_asc'].each do | sort |
             valid_list << "sd_4_year_high_school_graduation_rate_#{breakdown}_#{year}#{sort}"
           end
@@ -28,7 +28,7 @@ module SchoolDataValidator
 
     def valid_a_through_g
       BREAKDOWN_LIST.each_with_object([]) do |breakdown, valid_list|
-        ['2014'].each do | year |
+        ['2014', '2015'].each do | year |
           [nil, '_sortable_asc'].each do | sort |
             valid_list << "sd_Percent_of_students_who_meet_UC_CSU_entrance_requirements_#{breakdown}_#{year}#{sort}"
           end
@@ -39,7 +39,7 @@ module SchoolDataValidator
     def valid_caaspp
       (BREAKDOWN_LIST + ['Students_without_disabilities']).each_with_object([]) do |breakdown, valid_list|
         ['Math', 'English_Language_Arts'].each do | subject |
-          ['2015'].each do | year |
+          ['2015','2016'].each do | year |
             [nil, '_sortable_asc'].each do | sort |
               valid_list << "sd_California_Assessment_of_Student_Performance_and_Progress_CAASPP_#{subject}_#{breakdown}_#{year}#{sort}"
             end

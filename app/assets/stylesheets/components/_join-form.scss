@@ -1,0 +1,154 @@
+.join-and-login {
+  text-align: left;
+
+  div.well {
+    background-color: #fff;
+  }
+
+  li {
+    text-align: left;
+  }
+
+  .parsley-errors-list {
+    margin: 0;
+    padding: 0px;
+  }
+
+  legend {
+    color: inherit;
+    font-size: inherit;
+    border: none;
+    margin: 0 0 5px 0;
+  }
+
+  fieldset {
+    margin: 20px 0 0 0;
+    border: none;
+    padding: 0;
+  }
+
+  button {
+    height: 55px;
+    background-color: #2ba3dc;
+    border: 1px solid white;
+    border-radius: 4px;
+    color: #ffffff;
+    width: 100%;
+    @include media-breakpoint-up(sm) {
+      height: 60px;
+    }
+  }
+
+  .btn-facebook {
+    font-size: $font-size-l3;
+    background-color: #4b6ea8;
+    .icon-facebook {
+      margin-right: 10px;
+    }
+  }
+
+  button.submit {
+    text-transform: uppercase;
+    font-size: $font-size-l1;
+  }
+
+  input {
+    padding: 20px;
+    width: 100%;
+    height: $form-field-large-height;
+    border: 1px solid $form-field-border-color;
+    border-radius: $form-field-border-radius;
+    background-color: #f5f9fa;
+  }
+
+  input.checkbox {
+    height: 15px;
+    width: 15px;
+    padding: 0;
+  }
+
+  .checkbox-and-label {
+    display: table;
+    @extend .clearfix;
+    font-size: $font-size-base;
+    a {
+      font-size: $font-size-base;
+    }
+    input, label {
+      display: table-cell;
+    }
+    label {
+      padding: 0 0 0 5px;
+      margin: 0;
+    }
+  }
+
+  .multi-select-button-group {
+    @include button-group;
+    > label {
+      border-radius: 0px !important;
+      width: 50px;
+      padding: 0;
+    }
+    @include media-breakpoint-up(xs) {
+      font-size: $font-size-s1;
+      display: block;
+      & + .multi-select-button-group {
+        > label {
+          border-top: none;
+        }
+      }
+    }
+  }
+  .multi-select-button-group:last-of-type {
+    > label:last-child {
+      width: 51px;
+    }
+  }
+
+  .tou {
+    margin-top: 5px;
+    color: #666;
+    font-size: $font-size-s2;
+    a {
+      font-size: $font-size-s2;
+    }
+    @include media-breakpoint-up(sm) {
+      font-size: $font-size-s1;
+      a {
+        font-size: $font-size-s1;
+      }
+    }
+  }
+
+  .divider {
+    margin: 20px 0 20px 0;
+    text-align: center;
+  }
+
+  .line {
+    line-height: 0.5;
+    text-align: center;
+  }
+  .line span {
+    display: inline-block;
+    position: relative;  
+  }
+  .line span:before,
+  .line span:after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    border-bottom: 1px solid #dbe6eb;
+    top: 0;
+    width: 100px;
+  }
+  .line span:before {
+    right: 100%;
+    margin-right: 15px;
+  }
+  .line span:after {
+    left: 100%;
+    margin-left: 15px;
+  }
+}

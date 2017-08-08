@@ -1,9 +1,0 @@
----
-en:
-  school_profile:
-    overview:
-      details_overview:
-        osp_callout:
-          button: Claim this school
-          callout_html: "Claim your school profile page to update and add information."
-          intro_callout: Do you work at this school?

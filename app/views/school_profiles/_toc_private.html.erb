@@ -1,0 +1,35 @@
+<% claimed_string = claimed.to_s %>
+
+<div id="toc_private">
+  <div class="toc-private-header">
+    <% translation_type = 'school_profiles.show_profile.' + claimed_string + '_header' %>
+    <ul>
+      <li><%= t(translation_type + '.first_bullet') %></li>
+      <li><%= t(translation_type + '.second_bullet_html') %></li>
+    </ul>
+    <ul>
+      <li><%= t(translation_type + '.third_bullet') %></li>
+      <% if mailto %>
+        <li><%= link_to(t(translation_type + '.fourth_bullet'), mailto) %></li>
+      <% else %>
+        <li><%= t(translation_type + '.fourth_bullet') %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="toc-private-container-box">
+    <div class="row">
+      <% t('school_profiles.show_profile.toc').each do |column_data| %>
+        <div class="col-xs-12 col-sm-4">
+          <div class="toc-private-section">
+            <div class="toc-private-section-title">
+              <a href=<%= column_data[:anchor] %>><%= column_data[:title].upcase %></a>
+            </div>
+            <div>
+              <%= column_data[:description] %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

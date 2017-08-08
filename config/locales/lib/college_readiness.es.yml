@@ -1,0 +1,83 @@
+es:
+  lib:
+    college_readiness:
+      info_text: "Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles."
+      'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
+      'GreatSchools Rating': 'Calificaciones de GreatSchools de la Preparación Universitaria'
+      'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
+      'SAT percent participation': 'Participación SAT'
+      ACT participation: 'Participación ACT'
+      'Percentage AP enrolled grades 9-12': 'Participación en cursos AP'
+      '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
+      Percent of students who meet UC/CSU entrance requirements: Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU
+      'Percentage of students passing 1 or more AP exams grades 9-12': 'El porcentaje de estudiantes que pasaron uno o más exámenes AP grados 9°-12°'
+      'source': Fuente
+      faq:
+        cta: ¿Notas que algo falta o confunde?
+        content_html: >
+          <p>Información de la preparación universitaria procede de agencias del estado o nacionales de educación (haz clic en el enlace "Fuentes" para más detalles).</p>
+          <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP o participó en uno de los dos exámenes de preparación universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar). También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
+          <p>Todavía tiene preguntas? Visite nuestra página de <a href="/gk/faq/">preguntas frecuentes</a>.</p>
+      data_point_info_texts:
+        '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
+        'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
+        'Average SAT score_new': 'El SAT es una prueba de admisión universitaria, que en 2016 tenía un total de 1600 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
+        'SAT percent participation': 'El índice  de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
+        'Average ACT score': 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de  36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre  los estudiantes de esta escuela.'
+        'ACT participation':  'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
+        'AP Course Participation': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+        'Percent of students who meet UC/CSU entrance requirements': >
+               Este es el porcentaje de estudiantes graduados de esta escuela que recibieron una "C" o superior en los cursos
+               A-G requeridos para ser elegibles para atender a alguna de las escuelas de la
+               Universidad de California y Universidad del Estado de California.
+               <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtenga más información</a>.
+        'Percentage of students passing 1 or more AP exams grades 9-12': 'El índice de aprobación de los exámenes de “AP” (Cursos Avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes.'
+        'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+      narration:
+        _1_html: >
+          <h3 class="negative">Muy preocupante:</h3>
+          <p>Esta escuela está muy por debajo del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
+          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases avanzadas y ayudar a los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
+        _2_html: >
+          <h3 class="negative">Un signo preocupante:</h3>
+          <p>Esta escuela está <span class="emphasis">por debajo</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
+          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases avanzadas y ayudar a los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
+        _3_html: >
+          <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
+          <p>Esta escuela está <span class="emphasis">comparable</span> al promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional, pero dependiendo del estado, promedio puede significar que sólo una minoría de los estudiantes están preparados para la universidad y la carrera.</p>
+          <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
+        _4_html: >
+          <h3 class="positive">Un signo prometedor:</h3>
+          <p>Esta escuela está <span class="emphasis">por encima</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />
+        _5_html: >
+          <h3 class="positive">¡Buenas noticias!:</h3>
+          <p>Esta escuela está <span class="emphasis">muy por encima</span> del promedio estatal en medidas de
+          preparación universitario y de la preparación (o carrera) profesional</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          <hr />

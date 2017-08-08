@@ -51,6 +51,10 @@ describe Loader do
       end
     end
 
-
+    context "with a data type gsdata" do
+      it "should return GsdataLoading::Loader" do
+        expect(Loader.determine_loading_class("non osp","gsdata")).to eq(GsdataLoading::Loader)
+      end
+    end
   end
 end

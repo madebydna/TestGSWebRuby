@@ -1,27 +1,50 @@
 require 'optparse'
-
-OptionParser.new do |opts|
-  opts.banner = "Usage: i18n_database_check.rb [-f]"
-
-  opts.on('-f', '--file [FILE]', 'Write output to specified file') do |v|
-    $stdout.reopen(v, "w")
-    $stdout.sync = true
-  end
-
-  # Cannot use -h and --help since that will be interpreted by rails runner and spit out rails runner usage
-  opts.on_tail('-?', '--usage', 'Show this message') do
-    puts opts
-    exit
-  end
-end.parse!
+require_relative '../lib/i18n/manager.rb'
 
 
 # Example
 # DATABASE_URL=mysql2://USER:PASSWORD@rodb-qa.greatschools.org/gs_schooldb bundle exec rails runner script/missing_database_translation_checker.rb -f /tmp/missing_database_translation_checker_output.txt
 class MissingDatabaseTranslationChecker
 
-  def self.run
+  def self.report
     MissingDatabaseTranslationChecker.new.run
+  end
+
+  def self.translate(table)
+    hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
+    hash.select! { |key, _| key.start_with?(table) }
+    hash.each do |db_dot_table_dot_column, missing_strings|
+      table_dot_column = db_dot_table_dot_column.split('.')[1..-1].join('.')
+      ::GsI18n::Manager.translate_and_add_db_value(
+        table_dot_column,
+        missing_strings,
+        true
+      )
+    end
+  end
+
+  # Add keys and values for a table, but use the English text for all locales
+  # rather than using Google Translate to translate the text
+  def self.add(table)
+    hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
+    hash.select! { |key, _| key.start_with?(table) }
+    hash.each do |db_dot_table_dot_column, missing_strings|
+      table_dot_column = db_dot_table_dot_column.split('.')[1..-1].join('.')
+      ::GsI18n::Manager.translate_and_add_db_value(
+        table_dot_column,
+        missing_strings,
+        false
+      )
+    end
+  end
+
+  def self.reformat(table)
+    hash = MissingDatabaseTranslationChecker.new.missing_translations_hash
+    hash.select! { |key, _| key.start_with?(table) }
+    hash.each do |db_dot_table_dot_column, missing_strings|
+      table_dot_column = db_dot_table_dot_column.split('.')[1..-1].join('.')
+      ::GsI18n::Manager.reformat(table_dot_column)
+    end
   end
 
   def initialize
@@ -46,23 +69,23 @@ class MissingDatabaseTranslationChecker
         table: :'gs_schooldb.ethnicity',
         column: :name
       },
-      {
-        table: :'gs_schooldb.hub_config',
-        column: :value,
-        filters: [
-          /^true$/,
-          /^false$/,
-          /\.jpg$/,
-          /\.png$/,
-          /\.gs$/,
-          /^https?:/,
-          /^([^a-zA-Z])+$/,
-          /^schools\/\?/,
-          /\#\d+$/,
-          /^\/[a-z\/-]+$/,
-          /Parent Portal .{3} doorway to answers/
-        ]
-      },
+      # {
+      #   table: :'gs_schooldb.hub_config',
+      #   column: :value,
+      #   filters: [
+      #     /^true$/,
+      #     /^false$/,
+      #     /\.jpg$/,
+      #     /\.png$/,
+      #     /\.gs$/,
+      #     /^https?:/,
+      #     /^([^a-zA-Z])+$/,
+      #     /^schools\/\?/,
+      #     /\#\d+$/,
+      #     /^\/[a-z\/-]+$/,
+      #     /Parent Portal .{3} doorway to answers/
+      #   ]
+      # },
       {
         table: :'localized_profiles.response_values',
         column: :response_label
@@ -119,6 +142,10 @@ class MissingDatabaseTranslationChecker
       {
         table: :'gs_schooldb.test_description',
         column: :description
+      },
+      {
+        table: :'gs_schooldb.census_description',
+        column: :source
       }
     ]
     @missing_translation_messages = []
@@ -135,6 +162,13 @@ class MissingDatabaseTranslationChecker
       column_check = new_column_checker(hash[:table], hash[:column], hash)
       @missing_translation_messages += column_check.missing_translation_messages
       puts column_check.report
+    end
+  end
+
+  def missing_translations_hash
+    @config.each_with_object({}) do |hash, aggregate_hash|
+      column_check = new_column_checker(hash[:table], hash[:column], hash)
+      aggregate_hash.merge!(column_check.missing_translations_hash)
     end
   end
 
@@ -173,6 +207,12 @@ class MissingDatabaseTranslationChecker
 
     def missing_translation_messages
       missing_translations.map { |key| "Missing translation '#{key}' for #{table}.#{column}"}
+    end
+
+    def missing_translations_hash
+      {
+        "#{table}.#{column}" => missing_translations
+      }
     end
 
     def missing_translations
@@ -251,4 +291,47 @@ class MissingDatabaseTranslationChecker
   end
 end
 
-MissingDatabaseTranslationChecker.run
+options = OpenStruct.new
+options.command = :report
+OptionParser.new do |opts|
+
+  opts.banner = "Usage: i18n_database_check.rb [-f]"
+
+  opts.on('-f', '--file [FILE]', 'Write output to specified file') do |v|
+    $stdout.reopen(v, "w")
+    $stdout.sync = true
+  end
+
+  opts.on('-tTABLE', '--translate=TABLE', 'Google translate missing strings for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+    options.command = :translate
+    options.table = table
+  end
+
+  opts.on('-aTABLE', '--add=TABLE', 'Add English text for all locales for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+    options.command = :add
+    options.table = table
+  end
+
+  opts.on('-rTABLE', '--reformat=TABLE', 'Reformat files for dot-notated db, table, and optionally column. E.g. gs_schooldb.TestSubject') do |table|
+    options.command = :reformat
+    options.table = table
+  end
+
+  # Cannot use -h and --help since that will be interpreted by rails runner and spit out rails runner usage
+  opts.on_tail('-?', '--usage', 'Show this message') do
+    puts args
+    exit
+  end
+  options
+end.parse!
+
+case options.command
+when :report
+  MissingDatabaseTranslationChecker.report
+when :translate
+  MissingDatabaseTranslationChecker.translate(options.table)
+when :add
+  MissingDatabaseTranslationChecker.add(options.table)
+when :reformat
+  MissingDatabaseTranslationChecker.reformat(options.table)
+end

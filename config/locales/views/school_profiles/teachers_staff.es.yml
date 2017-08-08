@@ -1,0 +1,7 @@
+es:
+  school_profiles:
+    teachers_staff:
+      title: 'Profesores y personal'
+      source: 'Fuente'
+      sources: Fuentes
+      subtitle_html: 'A menudo los padres valoran clases pequeñas, pero la verdad es más complicada.'

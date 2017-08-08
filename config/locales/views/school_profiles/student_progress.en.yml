@@ -1,0 +1,8 @@
+en:
+  school_profiles:
+    student_progress:
+      title: Student progress
+      sources: Sources
+      historical:
+        title: Past GreatSchools Student Progress Ratings
+        subtitle: This chart shows how this school's GreatSchools Student Progress Rating has changed over time.

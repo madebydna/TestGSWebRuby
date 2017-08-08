@@ -1,0 +1,10 @@
+es:
+  school_profiles:
+    neighborhood:
+      title: Vecindario
+      attendance_zone: Ver la zona de asistencia de esta escuela
+      school_leader_label: Líder de la escuela
+      facebook: Página de Facebook
+      school_website: Página web de la escuela
+      nearby_homes: Casas cercanas en venta
+      school_leader_email: Correo electrónico del líder de la escuela

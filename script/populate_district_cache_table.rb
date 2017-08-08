@@ -1,5 +1,5 @@
 def all_cache_keys
-  ['ratings','feed_test_scores']
+  ['ratings','feed_test_scores', 'district_schools_summary']
 end
 
 def all_states
@@ -59,7 +59,10 @@ parsed_arguments.each do |args|
   cache_keys = args[:cache_keys]
   districts_where = args[:districts_where]
   states.each do |state|
+    puts
+    puts "Working on: #{state}"
     cache_keys.each do |cache_key|
+      puts "     doing #{cache_key}"
       if districts_where
         District.on_db(state.downcase.to_sym).where(districts_where).each do |district|
           DistrictCacher.create_cache(district, cache_key)

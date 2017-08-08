@@ -2,6 +2,7 @@
 en:
   javascript:
     close: Close
+    edit: Edit
     learn_more_html: Learn More &raquo;
     fatal_error: An unexpected error occurred while loading the page. Please try refreshing the page.
     fewer_filters: Fewer filters
@@ -28,7 +29,7 @@ en:
       private: private
       public: public
     search_form:
-      long_placeholder: Enter city, zip code, address or school name
+      long_placeholder: Find a great school
       short_placeholder: City, zip, address or school
     saved_search_validation_error: Please name your search
     strong_fit: 'Strong fit'
@@ -44,6 +45,164 @@ en:
     weak_fit: Weak fit
     wrong_state_error_start_html: '<strong>You&#39re currently comparing schools in&nbsp'
     wrong_state_error_end_html: '</strong><a class="pointer js-compareSchoolsSubmit">&nbspcompare schools now&nbsp</a>or<a class="pointer js-clearSchoolsSubmit" data-dismiss="alert">&nbspclear schools&nbsp</a><strong>to compare in this location.</strong>'
+#    added for equity
+    of students: '% of students'
+    students: students
+    State avg: 'State avg:'
+    State average: State average
+    School value: School value
+    RE Test scores narration: >
+      This shows results across different races/ethnicities on {subject} test given to students once a year. Big
+      differences may suggest that some student groups are not getting the support they need to succeed.
+    RE Grad rates narration: >
+      This shows graduation rates for different races/ethnicities. Big differences may suggest that some students are
+      not getting the support they need to succeed.
+    RE UC/CSU eligibility narration: >
+      This shows the percentages of graduates who have taken the A-G required classes needed to be eligible for
+      University of CA and CA state schools. <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a> about these requirements.
+    'SD Test scores narration': >
+      <p class="narrative-content">This shows results for students with disabilities on a {subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+      <hr />
+      <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+      <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
+    Test scores: Test scores
+    Graduation rates: Graduation rates
+    'UC/CSU eligibility': 'UC/CSU eligibility'
+    was_this_useful: Was this useful?
+    give_us_your_feedback: Give us your feedback
+    See notes: Sources
+    show_more: Show more
+    show_less: Show less
+    english-learners: Students learning English
+    english-learners-info-text: This group includes all students classified as English language learners.
+    students-participating-in-free-or-reduced-price-lunch-program: Students from low-income families
+    students-participating-in-free-or-reduced-price-lunch-program-info-text: The students from low-income families designation is based on the percentage of students at this school who are eligible for free or reduced-price lunch.
+    Gender: Gender
+    Male: Male
+    Female: Female
+    Strongly disagree: Strongly disagree
+    Disagree: Disagree
+    Neutral: Neutral
+    Agree: Agree
+    Strongly agree: Strongly agree
+    Review Guidelines: Review guidelines
+    Cancel: Cancel
+    Submit: Submit
+    Required: Required
+    Review this School: Review this school
+    Review this school: Review this school
+    Overall experience: Overall experience
+    Recent Comments: Recent comments
+    Be the first to review this school: Be the first to review this school
+    Tell us why: Tell us why
+    What is your relationship to this school?: 'What is your relationship to this school?'
+    all set: 'All set! We have submitted your review. Thank you for helping other families by sharing your experiences.'
+    Parent: Parent
+    Current student: Current student
+    Teacher: Teacher
+    School leader: School leader
+    Community member: Community member
+    Nearest high-performing: Nearest high-performing
+    Nearby schools: Nearby schools
+    'Submitted ': 'Submitted '
+    'by a ': 'by a '
+    More: More
+    Terrible: Terrible
+    Bad: Bad
+    Average: Average
+    Good: Good
+    Great: Great
+    You: You
+    review_not_saved: 'Your review has not been saved.'
+    review_word_min: 'Please be sure your review is 7 words or more in length'
+    review_char_limit: 'Sorry, we have a 2,500 character limit for reviews.  Please shorten your review to save it.'
+    review_thank_you: 'Thanks for your opinion! Please share some thoughts on this school in order to save your reviews.'
+    Submitting: Submitting
+    Report Review: Report Review
+    Report: Report
+    Show more: Show more
+    Show less: Show less
+    Review: Review
+    Close all: Close all
+    Review Reported: Review Reported
+    no_data_message: 'This information is currently not available. '
+    notify_me: "Keep me updated on this school, including when new data is published."
+    Advanced courses: Advanced courses
+    advanced_courses_subheading_html: A rigorous course load can help your student prepare for and get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/#Grade_and_rigorous_class">Learn more</a>.
+    advanced_courses_tooltip: The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign languages compared to the state average.
+    advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
+    general_information_tooltip: In this section, school administrators have provided general information about this school, like hours, enrollment, classes and extracurriculars.
+    General Information: General information
+    profile_data_sources_and_info: 'GreatSchools profile data sources &amp; information'
+    subjects: Subjects
+    rating_html: 'Rating&nbsp;'
+    courses: courses
+    course: course
+    grade: Grade
+    details: Details
+    source: Source
+    Homes for sale: Homes for sale
+    Homes for rent: Homes for rent
+    Homes for sale near: Homes for sale near
+    Rentals near: Rentals near
+    See more listings near this school: See more listings near this school
+    Find out what your home is worth: Find out what your home is worth
+    beds: beds
+    baths: baths
+    bed: bed
+    bath: bath
+    sqft: sqft
+    Studio: Studio
+    Past ratings: Past ratings
+    Hide past ratings: Hide past ratings
+    Parent tip: Parent tip
+    Continue: Continue
+    Not right now: Not right now
+    tour1:
+      step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
+      step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'
+      step2: The Summary Rating provides an overall snapshot of this school’s quality, based on multiple measures, compared to other public schools in the state.
+      step3_title_html: '<div class="tutorial-header">Academics</div><br/>'
+      step3: This section shows ratings and data for key themes related to academic success including test scores and more.
+      step4_title_html: '<div class="tutorial-header">Equity</div><br/>'
+      step4: How well are different student groups served at this school? Low ratings may mean some student groups are not getting the support they need.
+      step5_title_html: '<div class="tutorial-header">Environment</div><br/>'
+      step5: Want to learn more about the school? This section shows student demographics, student & counselor ratios, neighborhood, and more.
+      step6_title_html: '<div class="tutorial-header">Reviews</div><br/>'
+      step6: Here, parents and others in the school community share their experiences with this school. Please share your experience too!
+      step7_title_html: '<div class="tutorial-header">Nearby schools</div><br/>'
+      step7: Scroll through nearby high-performing schools so you can better understand the school options in your area.
+      step8_title_html: '<div class="tutorial-header">Helpful hints</div><br/>'
+      step8_p1: Click on the "?" to view more info and answers to frequently asked questions.
+      step8_p2: Parent tips will show useful info to help your child succeed in school.
+      step8_p3: Click on "Sources" to view where the data comes from.
+      step8_parent_tips: Parent tips
+      step8_sources: Sources
+      step9_html: '<div></div><h1>All done!</h1><div><br/>Have a few more minutes? Learn<br/>more about the school&apos;s Academics,<br/>Equity and Environment sections.</div><br/><button class="start-tour js-start-second-tour active">Continue</button><br><br/><div> <a id="close-school-tour" style="cursor: pointer;">Not right now </a></div></div>'
+    tour2:
+      step1_title_html: '<div class="tutorial-header">Test scores</div><br/>'
+      step1: Here you'll find a snapshot of this school's proficiency levels in key subjects, based on test scores and compared to state averages, with "Parent tips" you can use to learn more.
+      step2_title_html: '<div class="tutorial-header">College readiness</div><br/>'
+      step2: How well does this school prepare its students for college? This section offers information about college entrance tests, Advanced Placement (AP) coursework, graduation rates and more.
+      step3_title_html: '<div class="tutorial-header">Student progress</div><br/>'
+      step3: The Student Progress Rating gives you a sense of how much academic improvement students at this school have made year-over-year (also known as “growth”) compared with other schools in the state.
+      step4_title_html: '<div class="tutorial-header">Advanced courses</div><br/>'
+      step4: This section looks at how well this school is doing in encouraging a large number of its students to take advanced courses, both overall and within key subject areas.
+      step5_title_html: '<div class="tutorial-header">Advanced STEM courses</div><br/>'
+      step5: Taking advanced STEM (science, technology, engineering, and math) courses is more important than ever for today's students.
+      step6_title_html: '<div class="tutorial-header">Race/ethnicity</div><br/>'
+      step6: This section helps you understand how well a school is serving all of its students, looking at information like test scores and suspension rates for different racial and ethnic groups at this school.
+      step7_title_html: '<div class="tutorial-header">Low-income students</div><br/>'
+      step7: This section looks at how well this school is serving its students from low-income families, looking at information like test scores and graduation rates.
+      step8_title_html: '<div class="tutorial-header">Students with disabilities</div><br/>'
+      step8: From this section, you can learn about test scores, chronic absenteeism and suspension rates at this school for students who have physical or learning disabilities, compared to state averages.
+      step9_title_html: '<div class="tutorial-header">General information</div><br/>'
+      step9: Here you will find information like the school's hours, transportation options, how to enroll, clubs and more.
+      step10_title_html: '<div class="tutorial-header">Students</div><br/>'
+      step10: The Students section offers a snapshot of the diversity of the student population at this school.
+      step11_title_html: '<div class="tutorial-header">Teachers & staff</div><br/>'
+      step11: Here you can find out more about the student per teacher or counselor ratios, teacher tenure and more.
+      step12: '<div><img alt="" height="42" src="/assets/school_profiles/owl.png" style="vertical-align: sub;" width="39" />&nbsp;<h1 style="display:inline-block;">&nbsp;All done!</h1></div><div><br/><p>Thank you for taking time to walk through our new profiles.&nbsp;<br>&nbsp;</p><div>Was this useful? <a id="school-tour-feedback" style="cursor: pointer;">Give us your feedback</a></div></div></div>'
 
 
 

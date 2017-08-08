@@ -25,7 +25,8 @@ class Admin::SchoolsController < ApplicationController
   def school_reviews(school)
     relation = Review.
       where(school_id: school.id, state: school.state).
-      eager_load(:answers, question: :review_topic).
+      eager_load(:school_user, :answers, question: :review_topic).
+      preload(user: :user_profile, flags: :user, notes: :user).
       order(created: :desc)
 
     if params[:topic]
@@ -45,6 +46,7 @@ class Admin::SchoolsController < ApplicationController
 
       reviews.each do |review|
         review.notes.build
+        review.school = @school
       end
       reviews
     )

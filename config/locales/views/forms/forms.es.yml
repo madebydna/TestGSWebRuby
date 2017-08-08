@@ -1,0 +1,25 @@
+---
+  es:
+    forms:
+      email address: Dirección de correo electrónico
+      sign up: Ingresar
+      log in: Iniciar sesión
+      done: Hecho
+      password: Contraseña
+      forgot your password: ¿Olvidaste tu contraseña?
+      GreatSchools terms of use: GreatSchools Términos de Uso
+      privacy policy: Política de privacidad
+      already have an account: ¿Tener una cuenta?
+      dont have an account: ¿No tienes una cuenta?
+      or: o
+      log in with Facebook: Iniciar sesión usando Facebook
+      sign up with Facebook: Inscríbase en Facebook
+      sign up with your email: Inscríbete usando su correo electrónico
+      log in with your email: Inicie sesión con su correo electrónico
+      submit review: Enviar
+      email_required_error: Por favor introduzca una dirección de correo eléctronico.
+      signup_success: Gracias! Ahora estás registrado.
+      sponsors_signup: Por favor, envíenme la crianza de información y promociones especiales de los socios cuidadosamente escogidos GreatSchools.
+      terms_of_use_html: Al suscribirse, acepto los %{terms_of_use_link} y %{privacy_policy_link}.
+      parsley_required_message: Por favor introduzca una dirección de correo eléctronico.
+      parsley_remote_message_html: "Parece que ya tiene una cuenta. <a href='#login' data-toggle='tab'>Iniciar sesión</a>."

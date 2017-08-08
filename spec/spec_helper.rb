@@ -72,6 +72,28 @@ Rails.application.routes.default_url_options[:trailing_slash] = true
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+Capybara::Webkit.configure do |config|
+  # config.debug = true
+  config.block_unknown_urls # doesnt seem to block urls in all cases
+  config.block_url "http://www.google-analytics.com"
+  config.block_url "https://stats.g.doubleclick.net"
+  config.block_url "http://pixel.quantserve.com"
+  config.block_url "http://bs.serving-sys.com"
+  config.block_url "http://partner.googleadservices.com"
+  config.block_url "https://www.dsply.com"
+  config.block_url "http://gateway.answerscloud.com"
+  config.block_url "https://www.google.com"
+  config.block_url "http://staticxx.facebook.com"
+  config.block_url "https://www.facebook.com"
+  config.block_url "http://www.googletagmanager.com"
+  config.block_url "http://csi.gstatic.com"
+  config.block_url "https://securepubads.g.doubleclick.net"
+  config.block_url "connect.facebook.net"
+  config.block_url "maps.googleapis.com"
+  config.block_url "www.googletagservices.com"
+  config.block_url "tpc.googlesyndication.com"
+end
+
 RSpec.configure do |config|
   config.backtrace_exclusion_patterns = [
     /\/lib\d*\/ruby\//,

@@ -77,10 +77,6 @@ class TestScoresCaching::DistrictQueryResultDecorator
     self['state_value_text'] || self['state_value_float']
   end
 
-  def data_type_id
-    self['data_type_id']
-  end
-
   def breakdown_id
     self['breakdown_id']
   end

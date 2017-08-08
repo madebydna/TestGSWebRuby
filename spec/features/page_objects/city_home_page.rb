@@ -2,12 +2,13 @@ require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/modules/flash_messages'
 require 'features/page_objects/modules/breadcrumbs'
 require 'features/page_objects/modules/top_rated_schools_section'
-
+require 'features/page_objects/modules/footer'
 
 class CityHomePage < SitePrism::Page
   include EmailJoinModal
   include FlashMessages
   include Breadcrumbs
+  include Footer
 
   section :top_rated_schools_section, PageObjects::TopRatedSchools::Section, '#top-rated-schools-in-city'
 

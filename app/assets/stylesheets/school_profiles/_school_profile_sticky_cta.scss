@@ -1,0 +1,92 @@
+$cta_background: #FFFFFF;
+$cta_shadow: #CCCCCC;
+$cta_button_border: #dbe6eb;
+$cta_icon_color: #2ba3dc; // Regular GS Blue
+$cta_icon_hover_color: #55b5e3; // Light GS Blue
+$cta_icon_active_color: #2282b0; // Medium GS Blue
+
+#profile-sticky-container {
+  &.fixed-top {
+    position: fixed;
+    top: 0;
+  }
+
+  &.non-fixed-top {
+    position: relative;
+  }
+
+  &.align-bottom {
+    position: absolute;
+    bottom: 0px;
+  }
+}
+
+#cta {
+
+  &.cta-container {
+    width: 299px;
+    height: 84px;
+    background-color: $cta_background;
+    box-shadow: 0px 2px 5px 3px $cta_shadow;
+
+    > div:first-child,
+    > div:nth-child(2) {
+      border-right: 1px solid $cta_button_border;
+    }
+  }
+
+  .cta-button {
+    width: 99px;
+    height: 84px;
+    float: left;
+    text-align: center;
+    padding-top: 19px;
+
+    a {
+      color: inherit;
+      font: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      > div:first-child{
+        color: $cta_icon_color;
+      }
+
+      > div:first-child:hover {
+        color: $cta_icon_hover_color;
+      }
+
+      > div:first-child:active {
+        color: $cta_icon_active_color;
+      }
+    }
+  }
+
+  @media (max-width: 991px) {
+    .cta-button {
+      width: 33%;
+      height: 50px;
+      float: left;
+      text-align: center;
+      padding-top: 10px;
+      margin:auto;
+
+      a > div {
+        vertical-align: top;
+        display:inline-block;
+      }
+    }
+
+    &.cta-container {
+      width: 100%;
+      height: 50px;
+      position: fixed;
+      bottom: 0px;
+      clear: both;
+      left:0px;
+      z-index : 1;
+    }
+  }
+}

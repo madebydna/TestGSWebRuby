@@ -1,0 +1,9 @@
+es:
+  deprecated_school_profile:
+    data_layouts:
+      sticky_nearby_schools:
+        more_quality_schools_html: <a href="%{link}">¡Encuentra más</a> escuelas de calidad cerca!
+        top_nearby_schools: MEJOR CERCANAS
+        closest_top_schools:
+          one: ESCUELA MAS CERCANA DE ALTO DESEMPEÑO (%{distance} MILLA)
+          other: ESCUELA MAS CERCANA DE ALTO DESEMPEÑO (%{distance} MILLAS)

@@ -2,5 +2,5 @@
 en:
   modals:
     save_search_modal:
-      header: Save your search.
+      heading: Save your search.
       subheading: Before we can save your search, you’ll need to log in or create an account.

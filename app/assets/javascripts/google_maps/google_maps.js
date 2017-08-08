@@ -135,6 +135,10 @@ GS.googleMap = GS.googleMap || (function() {
                       schoolId: point.id
                   };
 
+                  if (!(parseInt(point.gsRating) > 0 && parseInt(point.gsRating) < 11)) {
+                      point.gsRating = '';
+                  }
+
                   if (point['zIndex'] != undefined) {
                       markerOptions['zIndex'] = point['zIndex']
                   }
@@ -237,8 +241,10 @@ GS.googleMap = GS.googleMap || (function() {
               markup += '</div>'; //
               markup += '<div class="mts col-xs-5 col-sm-4 font-size-small ">'; //sprites
               //markup += '<div class="pbs">' + '<span class="vam mrs iconx24-icons i-24-new-ratings-';
-              markup += '<div class="pbs"><div class="fl vam mrs gs-rating-sm ' + GS.rating.getRatingPerformanceLevel(point.gsRating) + '">';
-              markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
+              if (point.gsRating != '') {
+                  markup += '<div class="pbs"><div class="fl vam mrs gs-rating-sm ' + GS.rating.getRatingPerformanceLevel(point.gsRating) + '">';
+                  markup += '<div>' + point.gsRating + '</div></div>' + mapPinRatingText() +  '</div>';
+              }
 
               if(point.fitScore > 0){
                   if (point.strongFit){

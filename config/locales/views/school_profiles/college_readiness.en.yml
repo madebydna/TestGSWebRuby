@@ -1,0 +1,11 @@
+en:
+  school_profiles:
+    college_readiness:
+      title: College readiness
+      subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
+      source: Source
+      sources: Sources
+      historical:
+        title: Past GreatSchools College Readiness Ratings
+        subtitle: This chart shows how this school's GreatSchools College Readiness Rating has changed over time.
+

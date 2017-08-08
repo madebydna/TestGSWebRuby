@@ -1,0 +1,35 @@
+<% content = @school_profile.toc.content %>
+<% tooltips_info = {} %>
+<% tooltips_info['ACADEMICS'] = '.info_texts.academics_html'  %>
+<% tooltips_info['EQUITY'] = '.info_texts.equity_html'  %>
+<% tooltips_info['ENVIRONMENT'] = '.info_texts.environment_html'  %>
+
+<div id="toc">
+  <div class="toc-container-box">
+    <div class="row">
+      <% content.each do |section| %>
+        <% section.each do |column,data| %>
+          <div class="col-xs-12 col-sm-4" id="<%= column.to_s + '-tour-anchor'%>" <!-- last one (for environment) was also hidden-sm-down -->
+            <div class="toc-section-title">
+              <%= t(".#{column.to_s.upcase}") %>&nbsp;<a data-remodal-target="modal_info_box"
+                                     data-content-type="info_box"
+                                     data-content-html="<%= t(tooltips_info[column.to_s.upcase]) %>"
+                                     class="gs-tipso info-circle"
+                                     data-ga-click-label="TOC - <%= column.to_s.upcase %>"
+                                     href="javascript:void(0)"><span class="icon-question"></span>
+            </a>
+
+            </div>
+            <% data.each do |hash| %>
+              <% if (1..10).to_a.map(&:to_s).include?(hash[:rating].to_s)  %>
+                <%= render 'toc_entry_rating', rating: hash[:rating], title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
+              <% else %>
+                <%= render 'toc_entry_badge', icon: nil, title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

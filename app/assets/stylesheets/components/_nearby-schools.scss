@@ -1,0 +1,154 @@
+.nearby-schools {
+  $border-color: #dbe6eb;
+  $color-toggle-button-border: #c1d2d9;
+  $color-toggle-button-gradient: #f4f5f6;
+  $color-toggle-button-active: #2ba3dc;
+  $color-toggle-button-text: #28292a;
+  margin-top: 20px;
+
+  .title-bar {
+    text-align: center;
+    @include media-breakpoint-up(sm) {
+      text-align: right;
+    }
+  }
+
+  .title {
+    font-family: 'Robotoslab-Bold';
+    margin-bottom: 20px;
+    font-size: 26px;
+
+    @include media-breakpoint-up(sm) {
+      float: left;
+    }
+  }
+
+  .button-bar {
+    display: inline-block;
+    .button-group {
+      @include button-group;
+      label {
+        white-space: normal;
+      }
+    }
+  }
+
+  .slider {
+    display: table-row;
+  }
+  .slider-body {
+    display: table-cell;
+    width: 100%;
+    @include media-breakpoint-only(xs) {
+      padding: 15px 0px;
+    }
+  }
+  .prev, .next {
+    display: table-cell;
+    cursor: auto;
+    vertical-align: middle;
+    padding: 0px 5px;
+    font-size: 20px;
+    span {
+      color: #c1d2d9;
+    }
+    @include media-breakpoint-only(xs) {
+      background-color: #F6F6F6;
+    }
+    &.active {
+      cursor: pointer;
+      span {
+        color: #7a8488;
+      }
+    }
+  }
+  .prev {
+    @include media-breakpoint-up(sm) {
+      padding-right: 20px;
+    }
+  }
+  .next {
+    @include media-breakpoint-up(sm) {
+      padding-left: 20px;
+    }
+  }
+
+  .nearby-school {
+    display: block;
+    overflow: hidden;
+    @include media-breakpoint-up(md) {
+      display: table-cell;
+      width: 33%;
+      margin: auto;
+    }
+  }
+
+  .nearby-school + .nearby-school {
+    @include media-breakpoint-up(xs) {
+      margin: 15px 0 0 0;
+      border-top: 1px solid $border-color;
+      padding: 15px 0 0 0;
+    }
+    @include media-breakpoint-up(md) {
+      margin: 0 0 0 15px;
+      border-left: 1px solid $border-color;
+      border-top: none;
+      padding: 0 15px;
+    }
+  }
+}
+
+.nearby-school {
+  $font-color: #71787e;
+  $link-color: #2ba3dc;
+  color: $font-color;
+  font-size: 13px;
+  vertical-align: top;
+
+  .circle-rating {
+    margin: auto;
+    margin-bottom: 5px;
+  }
+  .icon-star {
+    font-size: 9px;
+  }
+
+  > div {
+    display: inline-block;
+  }
+  .rating {
+    width: 50px;
+    vertical-align: top;
+    text-align: center;
+    margin: auto;
+  }
+  .no-rating {
+    display: none;
+  }
+  .rating + div {
+    padding-left: 15px;
+    width: -moz-calc(100% - 55px);
+    width: -webkit-calc(100% - 55px);
+    width: calc(100% - 55px);
+  }
+  .no-rating + div {
+    padding-left: 68px;
+    @include media-breakpoint-up(md) {
+      padding-left: 40px;
+      padding-right: 25px;
+    }
+  }
+
+  a {
+    color: $link-color;
+    font-size: 16px;
+    font-family: 'opensans-semibold';
+  }
+  .school-info {
+    span + span {
+      border-left: 1px solid $border-color;
+      margin-left: 5px;
+      padding-left: 5px;
+    }
+  }
+}

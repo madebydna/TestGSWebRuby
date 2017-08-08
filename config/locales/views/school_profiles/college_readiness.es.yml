@@ -1,0 +1,10 @@
+es:
+  school_profiles:
+    college_readiness:
+      title: Preparación universitaria
+      subtitle_html: Obtenga más información acerca de cómo ayudar a su hijo a graduarse listo para la universidad.<!-- <a href="/gk/articles/jump-start-college-planning/?lang=es" target="_blank">Vea cómo.</a> -->
+      source: Fuente
+      sources: Fuentes
+      historical:
+        title: Clasificaciones anteriores de GreatSchools de la Preparación Universitaria
+        subtitle: Este gráfico muestra cómo la Calificación de GreatSchools de la Preparación Universitaria de esta escuela ha cambiado con el tiempo.

@@ -89,6 +89,19 @@ describe ReviewScoping do
     end
   end
 
+  describe '#by_topic_answers' do
+    with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
+      it 'should return a hash' do
+        expect(subject.by_topic_answers).to be_a(Hash)
+      end
+      it 'should extend each array with ReviewScoping and ReviewCalculations modules' do
+        subject.by_topic_answers.each do |key, answers_array|
+          expect(answers_array).to respond_to(:five_star_rating_reviews, :has_principal_review?, :score_distribution)
+        end
+      end
+    end
+  end
+
   describe '#five_star_rating_reviews' do
     with_shared_context 'with 5 five star reviews users: 2 parent, 1 students, 1 teacher, 1 principal; 2 teacher effectiveness users: 1 principal, 1 unknown' do
       it 'should return an array' do
@@ -196,9 +209,9 @@ describe ReviewScoping do
       it 'should return array' do
         expect(subject.having_answers).to be_a(Array)
       end
-      it 'should return an array with two reviews' do
-        expect(subject.having_answers.count).to eq(2)
-        expect(subject.having_answers).to eq([review_with_answer, review_with_answer2])
+      it 'should return an array with three reviews' do
+        expect(subject.having_answers.count).to eq(3)
+        expect(subject.having_answers).to eq([review_with_answer, review_with_answer2, review_without_answer])
       end
       it 'should extend the array with ReviewScoping and ReviewCalculations modules' do
         expect(subject.having_answers).to respond_to(:five_star_rating_reviews, :has_principal_review?, :score_distribution)

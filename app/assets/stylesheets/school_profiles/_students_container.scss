@@ -1,0 +1,45 @@
+.students-container{
+  margin-bottom: 40px;
+
+  .module-header {
+    min-height: 50px;
+    .circle-rating--medium {
+      float: left;
+      @include media-breakpoint-down(xs) {
+         margin-top: $spacing-medium;
+      }
+      .icon-users {
+       font-size: 26px;
+      }
+    }
+    .title-container {
+      padding: 0 $spacing-medium;
+      overflow: hidden;
+      .title {
+        margin: 0;
+      }
+    }
+  }
+
+  .legend-square{
+    width:12px;
+    height:12px;
+    display:inline-block;
+    margin-right: 10px;
+  }
+
+  .legend-title{
+    display: inline-block;
+    font-size: 12px;
+  }
+
+  .legend-separator{
+    padding: 10px 0;
+    border-bottom: 1px solid #EEEEEE;
+    cursor: pointer;
+
+    &:hover{
+      background-color: #f9f9f9;
+    }
+  }
+}

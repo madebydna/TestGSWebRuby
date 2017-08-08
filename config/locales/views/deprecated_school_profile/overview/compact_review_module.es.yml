@@ -1,0 +1,7 @@
+---
+es:
+  deprecated_school_profile:
+    overview:
+      compact_review_module:
+        more: más
+        user_type_html: Enviado por un %{user_type}

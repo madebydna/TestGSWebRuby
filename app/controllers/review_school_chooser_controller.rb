@@ -33,7 +33,7 @@ class ReviewSchoolChooserController < ApplicationController
   def review_topic
     @review_topic ||= (
       topic_id = params[:topic] ||= 1
-      ReviewTopic.find_by(id: topic_id) || ReviewTopic.find_by(id: 1)
+      ReviewTopic.find_by(id: topic_id, active: 1) || ReviewTopic.find_by(id: 1)
     )
   end
 

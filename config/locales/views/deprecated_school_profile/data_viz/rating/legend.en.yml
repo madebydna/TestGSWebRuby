@@ -1,0 +1,6 @@
+en:
+  deprecated_school_profile:
+    data_viz:
+      rating:
+        legend:
+          legend: Ratings are out of 10

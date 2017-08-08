@@ -57,7 +57,7 @@ class SchoolDataHash
         type: I18n.db_t(cachified_school.type).to_s.titleize,
         city: cachified_school.city,
         state: cachified_school.state,
-        url: link_helper.school_path(@cachified_school, lang: I18n.locale)
+        url: link_helper.send(:school_path, @cachified_school, lang: I18n.locale)
       }
     })
   end

@@ -2,12 +2,4 @@
   en:
     modals:
       email_join_modal:
-        body_html: <p>Get our best articles, worksheets, and more delivered weekly to your inbox</p>
-        header: Get our best articles, worksheets, and more delivered weekly to your inbox.
-        signup_button: Sign up
-        signup_success: Thanks! You're now signed up.
-        sponsors_signup: Please send me parenting information and special promotions from GreatSchools' carefully chosen partners.
-        terms_of_use_html: By signing up, I agree to the %{terms_of_use_link}
-        greatschools_terms_of_use: GreatSchools Terms of Use.
-        privacy_policy: Privacy Policy.
-
+        heading: Get our best articles, worksheets, and more delivered weekly to your inbox.

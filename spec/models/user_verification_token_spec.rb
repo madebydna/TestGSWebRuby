@@ -59,7 +59,7 @@ describe UserVerificationToken do
     context 'with user in database' do
       it 'should call generate on token generator' do
         user_verification_token = UserVerificationToken.new(1)
-        token_generator = user_verification_token.instance_variable_get(:@token_generator)
+        # token_generator = user_verification_token.instance_variable_get(:@token_generator)
         expect(user_verification_token).to receive(:generate)
         user_verification_token.generate
       end
@@ -80,7 +80,7 @@ describe UserVerificationToken do
       let!(:user) { FactoryGirl.create(:user, id: 1) }
 
       it 'should set user instance variable to user' do
-        expect(UserVerificationToken.new(1).instance_variable_get(:@user)).
+        expect(UserVerificationToken.new(1).instance_variable_get(:@_user)).
           to eq(user)
       end
 
@@ -96,11 +96,6 @@ describe UserVerificationToken do
     end
 
     context 'with no user in database' do
-      it 'should set user instance variable to nil' do
-        user_verification_token = UserVerificationToken.new(1)
-        expect(user_verification_token.instance_variable_get(:@user)).to eq(nil)
-      end
-
       it 'should return nil' do
         user_verification_token = UserVerificationToken.new(1)
         expect(user_verification_token.user).to eq(nil)

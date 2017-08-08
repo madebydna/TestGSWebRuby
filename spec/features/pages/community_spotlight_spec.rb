@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'features/examples/community_spotlight_examples'
 require 'features/contexts/collection_configs'
 
-describe 'community spotlight page', js: true do
+describe 'community spotlight page', js: true, brittle: true do
 
   # TODO
   # - General page stuff:

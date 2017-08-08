@@ -1,0 +1,66 @@
+h2, .h2 { font-family: $headings-font-family-robotoslab-light; font-size: 32px; color: $gray-darkest}
+h5, .h5 { text-transform: uppercase; letter-spacing: 1px;}
+h6, .h6 { font-family: 'opensans-italic'; }
+h1.lg-roboto {
+  font-size: 30px;
+  font-family: 'RobotoSlab-Light';
+  @media (min-width: $screen-sm-min) {
+    font-size: 50px;
+  }
+}
+
+@media (max-width:480px){
+  h1{font-size:26px; font-family: $headings-font-family-bold}
+  h2, .h2{font-size:26px; font-family: $headings-font-family-robotoslab-light;}
+}
+
+.font-size-medium {font-size: $font-size-medium} // TODO: remove from nav search buttons
+
+p, a {
+  @include base-font-styles();
+}
+
+@mixin ghost-text() {
+  color: $gray-dark;
+  font-size: 12px;
+}
+
+.advertisement-text {
+  @include ghost-text();
+  width: 100px;
+}
+
+.sponsored-by-text {
+  @include ghost-text();
+  padding: 0 0 5px 10px;
+}
+
+@media (max-width:480px) {
+  h1 { font-size:26px; font-family: $headings-font-family-bold; }
+  h2, .h2 { font-size:26px; font-family: $headings-font-family-robotoslab-light; }
+}
+
+@media (min-width:481px) and (max-width:768px) {
+  h1{font-size:32px;}
+  h2, .h2{font-size:26px;}
+}
+
+// used by Report Review button on new profile. TODO: remove and fix report review button
+.hidden-xs-inline {
+  @media (min-width: $screen-sm-min) {
+    display: inline !important;
+  }
+  @extend .hidden-xs;
+}
+
+// allows ie to resize images better. TODO: not typography
+img {
+  -ms-interpolation-mode: bicubic;
+}
+
+//Parsley error message display. TODO: move somewhere else
+.parsley-errors-list{
+  padding-left: 0;
+  color: $state-danger-text;
+  list-style-type: none;
+}

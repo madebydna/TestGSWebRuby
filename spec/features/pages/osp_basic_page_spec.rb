@@ -3,7 +3,6 @@ require 'features/examples/page_examples'
 require 'features/contexts/queue_daemon_contexts'
 require 'features/contexts/compare_schools_contexts'
 require 'features/examples/osp_examples'
-require 'features/examples/footer_examples'
 require 'features/contexts/osp_contexts'
 require 'features/examples/osp_examples'
 require 'features/examples/footer_examples'
@@ -23,10 +22,13 @@ describe 'OSP Basic Page' do
       include_example 'should have basic school information'
       include_example 'should have school address'
       include_example 'should have need help link'
-
+      describe 'footer' do
+        subject { OspPage.new }
+        include_examples 'should have a footer'
+      end
     end
 
-    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture', 'Facilities & Staff']
+    osp_forms = ['Basic Information', 'Academics', 'Extracurriculars & Culture']
 
     describe_desktop do
       osp_forms.each do |form|
@@ -83,7 +85,18 @@ describe 'OSP Basic Page' do
 
         #testing that nav auto-submits form
         with_shared_context 'click osp nav link element with text:', 'Academics' do
+          describe 'footer' do
+            subject { OspPage.new }
+            include_examples 'should have a footer'
+          end
           include_example 'Before Care and Canoe buttons should be active'
+        end
+
+        with_shared_context 'click osp nav link element with text:', 'Extracurriculars' do
+          describe 'footer' do
+            subject { OspPage.new }
+            include_examples 'should have a footer'
+          end
         end
 
         describe_mobile do

@@ -1,0 +1,21 @@
+es:
+  lib:
+    review_questions:
+      How would you rate your experience at this school?: '¿Cómo calificaría su experiencia en esta escuela?'
+      'Please share an overall message with parents and community members who are learning about your school': Please share an overall message with parents and community members who are learning about your school.
+      Do you feel this school develops honesty, integrity, and fairness in its students?: Do you feel this school develops honesty, integrity, and fairness in its students?
+      'Please share how your school develops honesty, integrity, and fairness in students': Please share how your school develops honesty, integrity, and fairness in students.
+      Do you feel this school develops compassion, caring, and empathy in its students?: Do you feel this school develops compassion, caring, and empathy in its students?
+      'Please share how your school develops compassion, caring, and empathy in students': Please share how your school develops compassion, caring, and empathy in students.
+      Do you feel this school develops respect in its students?: Do you feel this school develops respect in its students?
+      'Please share how your school develops respect in students': Please share how your school develops respect in students.
+      Do you feel this school develops persistence, grit, and determination in its students?: Do you feel this school develops persistence, grit, and determination in its students?
+      Please share how your school develops persistence, grit, and determination in students: Please share how your school develops persistence, grit, and determination in students.
+      'This school has an effective approach to homework:': 'Esta escuela tiene un enfoque efectivo hacia <span class="blue-highlight">la tarea</span>:'
+      'Teachers at this school are effective:': '<span class="blue-highlight">Los profesores</span> de esta escuela son efectivos:'
+      'Leadership at this school is effective:': '<span class="blue-highlight">El liderazgo</span> (la dirección) en esta escuela es efectivo (a):'
+      Is there someone at this school who you want to say "thanks" to?: Is there someone at this school who you want to say "thanks" to?
+      Is there someone, or a group of people, at your school to whom you'd like to say "thanks"?: Is there someone, or a group of people, at your school to whom you'd like to say "thanks"?
+      'This school develops strong character in its students, like integrity, compassion and respect:': 'Esta escuela desarrolla un <span class="blue-highlight">carácter</span> firme en sus estudiantes, como integridad, compasión y respeto:'
+      'This school effectively supports students with learning differences:': 'Esta escuela apoya efectivamente a estudiantes con <span class="blue-highlight">diferencias de aprendizaje</span>:'
+      'This school effectively deals with bullying:': 'Esta escuela efectivamente maneja <span class="blue-highlight">el bullying</span>:'

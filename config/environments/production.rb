@@ -39,7 +39,8 @@ LocalizedProfiles::Application.configure do
   }
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  #config.serve_static_assets = false	# Old, deprecated option
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.js_compressor  = :uglifier
@@ -62,8 +63,8 @@ LocalizedProfiles::Application.configure do
   # and use secure cookies.
   # config.force_ssl = true
 
-  # See everything in the log (default is :info)
-  # config.log_level = :debug
+  # Set logging level
+  config.log_level = :info
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -93,7 +94,7 @@ LocalizedProfiles::Application.configure do
     'codemirror/themes/night.css'
   ]
   config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
-  config.assets.precompile += %w[ *.png *.jpeg *.jpg *.gif ]
+  config.assets.precompile += %w(*.png *.jpeg *.jpg *.gif)
   config.assets.precompile += ["cycle/jquery.cycle2.js", "cycle/jquery.cycle2.carousel.js", "cycle/carousel_init.js"]
 
   # Disable delivery errors, bad email addresses will be ignored

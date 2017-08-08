@@ -3,9 +3,10 @@ en:
   search:
     search_result:
       greatschools_rating_html: GreatSchools<br />Rating
-      homes_for_sale: Homes for sale
+      homes_for_sale_html: Homes&nbsp;for&nbsp;sale
       miles: miles
-      no_reviews: No Community Reviews
+      no_reviews: No reviews
+      first_to_review: Be the first to review
       reviews:
         one: "%{count} review"
         other: "%{count} reviews"

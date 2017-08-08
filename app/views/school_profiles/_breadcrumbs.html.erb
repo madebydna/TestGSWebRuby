@@ -1,0 +1,15 @@
+<% breadcrumbs # An +Array+ of +Hash+es, each +Hash+ containing a breadcrumb text and url %>
+<% unless breadcrumbs.nil? || breadcrumbs.empty? %>
+  <div class="breadcrumbs">
+    <div class="container">
+      <% breadcrumbs.each_with_index do |(text, url), index| %>
+        <span><%= ' > ' if index > 0 %></span>
+        <% if url.nil? %>
+          <span><%= text %></span>
+        <% else %>
+          <span><%= link_to text, url %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

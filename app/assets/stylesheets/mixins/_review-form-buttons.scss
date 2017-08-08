@@ -1,0 +1,57 @@
+@mixin review-form-buttons {
+  $color-button-background: #fff;
+  $color-dark-gray-text: #2e3438;
+  $color-button-border: #c1d2d9;
+  $color-button-hover-border: rgba(113, 120, 126, 0.5);
+  $color-button-active-border: rgba(113, 120, 126, 0.8);
+  $color-gs-blue: #2ba3dc;
+  $color-gs-blue-hover: #55b5e3;
+  $color-gs-blue-active: #2282b0;
+  $color-error: #d94373;
+  $button-padding: 8px 17px;
+
+  .button {
+    font-family: opensans-semibold;
+    background-color: $color-button-background;
+    color: $color-dark-gray-text;
+    padding: $button-padding;
+    cursor: pointer;
+    border: solid 1px $color-button-border;
+    border-radius: 0px;
+    font-size: $font-size-s1;
+    text-transform: uppercase;
+
+    &:hover {
+      border: solid 1px $color-button-hover-border;
+    }
+
+    &:active {
+      border: solid 1px $color-button-active-border;
+    }
+  }
+
+  .button.cta {
+    background-color: $color-gs-blue;
+    color: #fff;
+    border: solid 1px $color-gs-blue;
+
+    &:hover {
+      border: solid 1px $color-gs-blue-hover;
+      background-color: $color-gs-blue-hover;
+    }
+
+    &:active {
+      border: solid 1px $color-gs-blue-active;
+      background-color: $color-gs-blue-active;
+    }
+  }
+
+  .button:first-of-type {
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+  }
+  .button:last-of-type {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+  }
+}

@@ -1,0 +1,17 @@
+<% review %>
+
+<% review = SchoolProfileReviewDecorator.decorate(review) %>
+<div class="topical-review">
+  <div class="average-rating-column">
+    <span class="answer-icon <%= review.answer.downcase.gsub(' ', '-') %>"></span>
+  </div>
+  <div class="text-column">
+    <div class="answer">
+      <%= review.answer_label %>
+    </div>
+
+    <div class="comment">
+      <%= render 'shortened_text', text: review.comment, length: 200 %>
+    </div>
+  </div>
+</div>

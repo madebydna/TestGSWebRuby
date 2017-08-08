@@ -21,42 +21,19 @@ FactoryGirl.define do
 
     factory :teacher_question do
       association :review_topic, factory: :teachers_topic, strategy: :build
-      question 'How effective do you feel the teachers are at this school?'
-      principal_question 'Please share how your school develops effective teachers.'
-      responses 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'
-      layout 'radio_button'
-    end
-
-    factory :honesty_question do
-      association :review_topic, factory: :honesty_topic, strategy: :build
-      question 'Do you agree that this school develops honesty / integrity in its students?'
-      principal_question 'Please share how your school develops honesty, integrity, and fairness in students.'
-      responses 'Strongly disagree,Moderately disagree,Neither agree nor disagree,Moderately agree,Strongly agree'
-      layout 'radio_button'
-    end
-
-    factory :empathy_question do
-      association :review_topic, factory: :empathy_topic, strategy: :build
-      question 'Do you agree that this school develops compassion / caring / empathy in its students?'
-      principal_question 'Please share how your school develops compassion, caring, and empathy in students.'
-      responses 'Strongly disagree,Moderately disagree,Neither agree nor disagree,Moderately agree,Strongly agree'
+      question 'Teachers at this school are effective:'
+      principal_question 'Teachers at this school are effective:'
+      responses 'Strongly disagree,Disagree,Neutral,Agree,Strongly agree'
       layout 'radio_button'
     end
 
     factory :homework_question do
       association :review_topic, factory: :homework_topic, strategy: :build
-      question 'How do you feel about the amount of homework given at this school?'
-      principal_question 'Please share your school\'s approach to homework.'
-      responses 'Too much,Just the right amount,Not enough,Don\'t know'
+      question 'This school has an effective approach to homework:'
+      principal_question 'This school has an effective approach to homework:'
+      responses 'Strongly disagree,Disagree,Neutral,Agree,Strongly agree'
       layout 'radio_button'
     end
 
-    factory :gratitude_question do
-      association :review_topic, factory: :gratitude_topic, strategy: :build
-      question 'Is there someone at this school who you want to say "thanks" to?'
-      principal_question 'Is there someone, or a group of people, at your school to whom you\'d like to say "thanks"?'
-      responses 'School leader,Teacher,Staff member,Parent,Student'
-      layout 'radio_button'
-    end
   end
 end

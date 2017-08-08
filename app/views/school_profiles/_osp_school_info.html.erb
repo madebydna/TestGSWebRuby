@@ -1,0 +1,44 @@
+<% osp_link %>
+<% school_profile %>
+<% mailto_start = '' %>
+<% mailto_end = '' %>
+<% if school_profile.mailto %>
+  <% mailto_start = "<a href='#{school_profile.mailto}'>" %>
+  <% mailto_end = '</a>' %>
+<% end %>
+
+<div style="margin-bottom: 40px;">
+  <% if school_profile.claimed && school_profile.tab_config.present? %>
+    <%= react_component('OspSchoolInfo', props: {
+      content: school_profile.tab_config,
+      osp_link: osp_link,
+      source_name: school_profile.source_name,
+      qualaroo_module_link: school_profile.qualaroo_module_link}) %>
+  <% else %>
+    <div id="osp-school-info" class="rating-container">
+      <a class="anchor-mobile-offset" name="General_info"></a>
+      <div class="rating-container__rating">
+        <div class="module-header">
+          <div class="circle-rating--equity-blue circle-rating--medium">
+            <span class="icon-user"></span>
+          </div>
+          <div class="title-container">
+            <div class="title"><%= t('.title') %>
+              <a class="anchor-button"
+                 href="<%= osp_link %>">
+                <div><%= t('.edit') %></div>
+              </a>
+            </div>
+            <div class="ptm">
+              <span class="no-data"><%= t('.subtitle') %></span>
+              <ul style="padding: 20px">
+                <li class="no-data"><%= t('.bullet_1_html') %><br /><br /></li>
+                <li class="no-data"><%= t('.bullet_2_html', mailto_start: mailto_start.html_safe, mailto_end: mailto_end.html_safe) %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

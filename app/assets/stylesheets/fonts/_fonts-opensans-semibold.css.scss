@@ -1,0 +1,16 @@
+@font-face {
+  font-family: 'opensans-semibold';
+  src:  url('Open-Sans-600.eot?');
+  src:  local('?'),
+  asset-url('Open-Sans-600.woff') format('woff'),
+  asset-url('Open-Sans-600.ttf')  format('truetype'),
+  asset-url('Open-Sans-600.svg#opensans-semibold') format('svg');
+  font-weight: 400;
+  font-style: normal;
+}
+
+.open-sans_semibold {
+  font-family: 'opensans-semibold';
+  font-weight: 400;
+  font-style: normal;
+}

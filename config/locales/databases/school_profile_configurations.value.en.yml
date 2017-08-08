@@ -8,10 +8,9 @@ en:
   Achievement - Performance Index: Achievement - Performance Index
   California Academic Performance Index (API) Score: California Academic Performance Index (API) Score
   Climate rating: Climate rating
-  College and Career Ready Performance Index: College and Career Ready Performance
-    Index
+  College and Career Ready Performance Index: College and Career Ready Performance Index
   College readiness rating: College readiness rating
-  Colorado school grade: Colorado school grade
+  Colorado school grade: Colorado School Grade
   ESD_url: ESD_url
   Excellent Schools Detroit Rating: Excellent Schools Detroit Rating
   GS_rating_url: GS_rating_url
@@ -62,3 +61,67 @@ en:
   whats_this_growth: whats_this_growth
   whats_this_psr: whats_this_psr
   whats_this_test_scores: whats_this_test_scores
+  Colorado Overall Achievement Grade: Colorado Overall Achievement Grade
+  Colorado Reading Achievement Grade: Colorado Reading Achievement Grade
+  Colorado Math Achievement Grade: Colorado Math Achievement Grade
+  Colorado Writing Achievement Grade: Colorado Writing Achievement Grade
+  Colorado Overall Growth Grade: Colorado Overall Growth Grade
+  Colorado Reading Growth Grade: Colorado Reading Growth Grade
+  Colorado Math Growth Grade: Colorado Math Growth Grade
+  Colorado Writing Growth Grade: Colorado Writing Growth Grade
+  Colorado ELL Growth Grade: Colorado ELL Growth Grade
+  Colorado Student Achievement Grade: Colorado Student Achievement Grade
+  Colorado Student Growth Trend: Colorado Student Growth Trend
+  Colorado Overall Three Year Trend: Colorado Overall Three Year Trend
+  about_colorado_school_grade: about_colorado_school_grade
+  e: e
+  Elementary School - Colorado Overall Achievement Grade: Elementary School - Colorado Overall Achievement Grade
+  Elementary School - Colorado Reading Achievement Grade: Elementary School - Colorado Reading Achievement Grade
+  Elementary School - Colorado Math Achievement Grade: Elementary School - Colorado Math Achievement Grade
+  Elementary School - Colorado Writing Achievement Grade: Elementary School - Colorado Writing Achievement Grade
+  Elementary School - Colorado Overall Growth Grade: Elementary School - Colorado Overall Growth Grade
+  Elementary School - Colorado Reading Growth Grade: Elementary School - Colorado Reading Growth Grade
+  Elementary School - Colorado Math Growth Grade: Elementary School - Colorado Math Growth Grade
+  Elementary School - Colorado Writing Growth Grade: Elementary School - Colorado Writing Growth Grade
+  Elementary School - Colorado ELL Growth Grade: Elementary School - Colorado ELL Growth Grade
+  Elementary School - Colorado Student Achievement Grade: Elementary School - Colorado Student Achievement Grade
+  Elementary School - Colorado Student Growth Trend: Elementary School - Colorado Student Growth Trend
+  Elementary School - Colorado Overall Three Year Trend: Elementary School - Colorado Overall Three Year Trend
+  m: m
+  Middle School - Colorado Overall Achievement Grade: Middle School - Colorado Overall Achievement Grade
+  Middle School - Colorado Reading Achievement Grade: Middle School - Colorado Reading Achievement Grade
+  Middle School - Colorado Math Achievement Grade: Middle School - Colorado Math Achievement Grade
+  Middle School - Colorado Writing Achievement Grade: Middle School - Colorado Writing Achievement Grade
+  Middle School - Colorado Overall Growth Grade: Middle School - Colorado Overall Growth Grade
+  Middle School - Colorado Reading Growth Grade: Middle School - Colorado Reading Growth Grade
+  Middle School - Colorado Math Growth Grade: Middle School - Colorado Math Growth Grade
+  Middle School - Colorado Writing Growth Grade: Middle School - Colorado Writing Growth Grade
+  Middle School - Colorado ELL Growth Grade: Middle School - Colorado ELL Growth Grade
+  Middle School - Colorado Student Achievement Grade: Middle School - Colorado Student Achievement Grade
+  Middle School - Colorado Student Growth Trend: Middle School - Colorado Student Growth Trend
+  Middle School - Colorado Overall Three Year Trend: Middle School - Colorado Overall Three Year Trend
+  h: h
+  High School - Colorado Overall Achievement Grade: High School - Colorado Overall Achievement Grade
+  High School - Colorado Reading Achievement Grade: High School - Colorado Reading Achievement Grade
+  High School - Colorado Math Achievement Grade: High School - Colorado Math Achievement Grade
+  High School - Colorado Writing Achievement Grade: High School - Colorado Writing Achievement Grade
+  High School - Colorado Overall Growth Grade: High School - Colorado Overall Growth Grade
+  High School - Colorado Reading Growth Grade: High School - Colorado Reading Growth Grade
+  High School - Colorado Math Growth Grade: High School - Colorado Math Growth Grade
+  High School - Colorado Writing Growth Grade: High School - Colorado Writing Growth Grade
+  High School - Colorado ELL Growth Grade: High School - Colorado ELL Growth Grade
+  High School - Colorado Student Achievement Grade: High School - Colorado Student Achievement Grade
+  High School - Colorado Student Growth Trend: High School - Colorado Student Growth Trend
+  High School - Colorado Overall Three Year Trend: High School - Colorado Overall Three Year Trend
+  Elementary School: Elementary School
+  Middle School: Middle School
+  High School: High School
+  Elementary School - Colorado School Rank: Elementary School - Colorado School Rank
+  Elementary School - Colorado ELA Achievement Grade: Elementary School - Colorado ELA Achievement Grade
+  Elementary School - Colorado ELA Growth Grade: Elementary School - Colorado ELA Growth Grade
+  Middle School - Colorado School Rank: Middle School - Colorado School Rank
+  Middle School - Colorado ELA Achievement Grade: Middle School - Colorado ELA Achievement Grade
+  Middle School - Colorado ELA Growth Grade: Middle School - Colorado ELA Growth Grade
+  High School - Colorado School Rank: High School - Colorado School Rank
+  High School - Colorado ELA Achievement Grade: High School - Colorado ELA Achievement Grade
+  High School - Colorado ELA Growth Grade: High School - Colorado ELA Growth Grade

@@ -12,9 +12,10 @@ class CitiesController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
+  before_action :set_no_index
 
   def show
-    write_meta_tags
+    # write_meta_tags
     @cities = popular_cities
     @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
@@ -48,6 +49,7 @@ class CitiesController < ApplicationController
       ad_setTargeting_through_gon
       gon.pagename = 'GS:City:Home'
       data_layer_through_gon
+      #overwrites tags set by write_meta_tags above
       set_city_home_metadata
     end
   end
@@ -276,7 +278,12 @@ class CitiesController < ApplicationController
       state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
       additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
 
-      title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
+
+      if @state[:short].casecmp('pa').zero?
+        title = "View The Best Schools in #{@city.titleize}, #{@state[:short].upcase} | School Ratings for Public & Private"
+      else
+        title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
+      end
 
       set_meta_tags keywords: keywords,
         description: description,

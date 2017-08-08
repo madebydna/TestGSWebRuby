@@ -24,10 +24,10 @@ class Filter
     if self.has_children
       self.filters.inject({}) do |hash, f|
         map = f.build_map.inject({}) do |h, (k, v)|
-          hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}) ; hash
+          hash.has_key?(k) ? hash[k].merge!(v) : hash.merge!({k => v}); hash
         end
         map[name] ||= {} # This allows for sections to not all be for the same key
-        [*f.name].each { |name| map[name].merge!({label: f.label}) } if f.display_type == :title ; map
+        [*f.name].each { |name| map[name].merge!({label: f.label}) } if f.display_type == :title; map
       end
     else
       { self.name => { self.value => self.unique_label } }

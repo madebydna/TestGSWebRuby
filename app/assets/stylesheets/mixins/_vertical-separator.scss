@@ -1,0 +1,12 @@
+@mixin vertical-seperator($which-side: 'left', $space: 10px, $color: #c1d2d9) {
+  @if $which-side == 'left' {
+    border-left: 1px solid $color;
+    margin-left: $space;
+    padding-left: $space;
+  } @else {
+    border-right: 1px solid $color;
+    margin-right: $space;
+    padding-right: $space;
+  }
+
+}

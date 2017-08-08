@@ -8,7 +8,7 @@ class SigninController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:destroy]
   skip_before_action :write_locale_session
 
-  layout 'application'
+  layout 'deprecated_application'
   public
 
   # store this join / login url only if another location isn't stored
@@ -47,7 +47,7 @@ class SigninController < ApplicationController
 
   # handles registration and login
   def create
-     if joining?
+    if joining?
       user, error = register      # join
       flash_notice t('controllers.signin.create.success') unless error
     else
@@ -66,7 +66,9 @@ class SigninController < ApplicationController
         redirect_to (post_registration_redirect_url)
       end
     else
-      render json: { is_new_user: joining? }, status: 200
+      @is_new_user = joining?
+      @user = user
+      render 'show', format: :json
     end
   end
 
@@ -105,7 +107,7 @@ class SigninController < ApplicationController
   end
 
   def post_registration_confirmation
-    redirect_url = params[:redirect]
+    redirect_url = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : user_profile_or_home
 
     if logged_in?
       executed_deferred_action
@@ -118,43 +120,12 @@ class SigninController < ApplicationController
     end
   end
 
-  # send to FB to login via Facebook Connect
-  def facebook_connect
-    redirect_to(FacebookAccess.facebook_connect_url(facebook_callback_url))
-  end
-
-  # callback action at completion of Facebook Connect
-  def facebook_callback
-    code = params['code']
-    access_token = code ? FacebookAccess.facebook_code_to_access_token(code, facebook_callback_url) : nil
-    unless access_token
-      Rails.logger.debug('Could not log in with Facebook.')
-      flash_error I18n.t('controllers.signin.create.facebook_login_error')
-      redirect_to signin_url
-      return nil
-    end
-
-    # attempt login with FB info
-    user, error = facebook_login(access_token)
-
-    log_user_in user if error.nil?
-
-    executed_deferred_action
-    unless already_redirecting?
-      redirect_uri =nil
-      if cookies[:redirect_uri]
-        redirect_uri = cookies[:redirect_uri]
-        delete_cookie :redirect_uri
-      end
-      redirect_to (overview_page_for_last_school || redirect_uri || user_profile_or_home)
-    end
-  end
-
   def verify_email
     token = params[:id]
     token = CGI.unescape(token) if token
     time = params[:date]
-    success_redirect = params[:redirect] || my_account_url
+
+    success_redirect = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : my_account_url
     error_message = I18n.t('controllers.signin.verify_email.error')
 
     user_authenticator_and_verifier = UserAuthenticatorAndVerifier.new(token, time)
@@ -171,6 +142,12 @@ class SigninController < ApplicationController
   end
 
   def facebook_auth
+    unless params['email'] && params['facebook_signed_request']
+      flash_error t('actions.generic_error')
+      GSLogger.error(:misc, nil, message:'facebook_auth request with missing params (either email or facebook_signed_request', vars: {params: params})
+      render json: {}, status: 422
+      return
+    end
     begin
       authentication_command = FacebookSignedRequestSigninCommand.new_from_request_params(params)
       authentication_command.join_or_signin do |user, error, is_new_user|
@@ -181,10 +158,13 @@ class SigninController < ApplicationController
           executed_deferred_action
           flash_notice(t('actions.account.created_via_facebook')) if is_new_user
         end
-        render json: {is_new_user: is_new_user}, status: 200 unless already_redirecting?
+        @is_new_user = is_new_user
+        @user = user
+        render 'show' unless already_redirecting?
       end
     rescue => e
       flash_error t('actions.generic_error')
+      GSLogger.error(:misc, e, message:'Error authenticating with Facebook', vars: {params: params})
       render json: {}, status: 422
     end
   end
@@ -193,7 +173,7 @@ class SigninController < ApplicationController
     token = params[:id]
     token = CGI.unescape(token) if token
     time = params[:date]
-    success_redirect = params[:redirect] || my_account_path
+    success_redirect = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : my_account_path
     error_message = I18n.t('controllers.forgot_password_controller.token_invalid')
 
     user_authenticator_and_verifier = UserAuthenticatorAndVerifier.new(token, time)
@@ -223,7 +203,7 @@ class SigninController < ApplicationController
 
     if existing_user
       if !existing_user.has_password? # Users without passwords (signed up via newsletter) are not considered users, so those aren't real accounts
-        error = I18n.t('controllers.signin.create.email_without_password_error_html', join_path: join_path).html_safe
+        error = I18n.t('forms.errors.email.account_without_password', forgot_password_path: forgot_password_path).html_safe
       elsif !(existing_user.password_is? params[:password])
         error = I18n.t('controllers.signin.create.password_invalid_error_html', join_url: join_url).html_safe
       end
@@ -275,118 +255,8 @@ class SigninController < ApplicationController
     request.xhr?
   end
 
-  # handles authentication from a signed request, passed via JS API
-  class FacebookSignedRequestSigninCommand
-    attr_accessor :app_secret, :signed_request, :email, :params
-
-    def self.new_from_request_params(params)
-      params = params.dup
-      facebook_signed_request = params.delete('facebook_signed_request')
-      email = params.delete('email')
-      self.new(facebook_signed_request, email, params)
-    end
-
-    def initialize(signed_request, email, params = {})
-      self.app_secret = ENV_GLOBAL['facebook_app_secret']
-      self.signed_request = signed_request
-      self.email = email
-      self.params = params
-      raise 'Facebook signed request invalid' unless valid_request?
-    end
-
-    def valid_request?
-      @_valid_request ||= MiniFB.verify_signed_request(app_secret, signed_request)
-    end
-
-    def find_or_create_user
-      if existing_user
-        return existing_user, nil, false
-      else
-        user, error = create_user
-        return user, error, true
-      end
-    end
-
-    def join_or_signin(&block)
-      user, error, is_new_user = find_or_create_user
-      block.call(user, error, is_new_user)
-    end
-
-    def existing_user?
-      existing_user != nil
-    end
-
-    def existing_user
-      return @_existing_user if defined? @_existing_user
-      @_existing_user = User.find_by_email(email)
-    end
-
-    def user_attributes_from_params
-      attributes = {}
-      attributes[:facebook_id] = params['facebook_id'] if params['facebook_id']
-      attributes[:first_name] = params['first_name'] if params['first_name']
-      attributes[:last_name] = params['last_name'] if params['last_name']
-      attributes
-    end
-
-    def create_user
-      user = User.new_facebook_user(user_attributes_from_params)
-      user.email = email
-      unless user.save
-        return nil, user.errors.messages.first[1].first
-      end
-      return user, nil
-    end
-
-  end
-
   def set_verify_email_google_event(user)
     event_label = user.provisional_or_approved_osp_user? ? 'osp' : 'regular'
     insert_into_ga_event_cookie('registration', 'verified email', event_label, nil, true) 
   end
-
-  class UserAuthenticatorAndVerifier
-
-    def initialize(token, time)
-      @token = token
-      @time = time
-      @already_verified = false
-    end
-
-    def user
-      parse_email_verification_token.user
-    end
-
-    def parse_email_verification_token
-      @_parse_email_verification_token ||= (
-      EmailVerificationToken.parse @token, @time
-      )
-    end
-
-    def already_verified?
-      @already_verified
-    end
-
-    def token_valid?
-      begin
-        token = parse_email_verification_token
-        return !(token.expired? || token.user.nil?) 
-      rescue => e
-        # GS.logger.error :misc, nil, {message: e}
-        return false
-      end
-    end
-
-    def authenticated?
-      return token_valid? && user.valid?
-    end
-
-    def verify_and_publish_reviews!
-      @already_verified = user.email_verified?
-      user.verify!
-      user.save
-      user.publish_reviews!
-    end
-  end
-
 end

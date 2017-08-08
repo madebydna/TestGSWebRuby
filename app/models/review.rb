@@ -8,7 +8,7 @@ class Review < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
   self.table_name = 'reviews'
 
-  attr_accessible :member_id, :user, :school_id, :school, :state, :review_question_id, :comment, :answers_attributes
+  attr_accessible :member_id, :user, :school_id, :school, :state, :review_question_id, :comment, :answers_attributes, :run_unique_active_reviews_validation
   alias_attribute :school_state, :state
   attr_writer :moderated
 
@@ -20,21 +20,20 @@ class Review < ActiveRecord::Base
   has_many :votes, class_name: 'ReviewVote', foreign_key: 'review_id', inverse_of: :review
   accepts_nested_attributes_for :answers, allow_destroy: true
 
-  # See http://pivotallabs.com/rails-associations-with-multiple-foreign-keys/ and comments
+  # See http://www.kpheasey.com/2016/05/16/ruby-on-rails-association-through-multiple-foreign-keys/
   # See the primary key and foreign key of association which will make ActiveRecord join Review to SchoolUser
   # using member_id. But we need two use two more keys. Specify state and school ID in association's condition block
   # Need to check for JoinAssociation:
-  # - If school_user is being included/preloaded onto a join, do 1st part of condition using arel_table
-  # - If review is a single model, perform 2nd part of condition
+  # - If school_user is being included/preloaded onto a join, do second part of the condition 
+  # - If review is a single model, perform 1st part of the condition part of condition
   belongs_to :school_user,
-             ->(join_or_model) do
-               if join_or_model.is_a?(JoinDependency::JoinAssociation)
-                 where(state: Review.arel_table[:state], school_id: Review.arel_table[:school_id])
-               else
+               ->(join_or_model) do
+               if join_or_model.is_a?(Review)
                  where(state: join_or_model.state, school_id: join_or_model.school_id)
+               else
+                 where('school_members.state = reviews.state AND school_members.school_id = reviews.school_id')
                end
              end, foreign_key: 'member_id', primary_key: 'member_id', class_name: 'SchoolUser'
-
 
   scope :flagged, -> { eager_load(:flags).where('review_flags.active' => true) }
   scope :not_flagged, -> { eager_load(:flags).where( 'review_flags.active = 0 OR review_flags.review_id IS NULL' ) }
@@ -45,19 +44,20 @@ class Review < ActiveRecord::Base
   scope :five_star_review, -> { joins(question: :review_topic).where('review_topics.id = 1') }
 
   # TODO: i18n this message
-  validates_uniqueness_of(
-    :member_id,
+  validates_uniqueness_of( :member_id,
     scope: [:school_id, :state, :review_question_id, :active],
     conditions: -> { where(active: 1) },
-    message: 'You have already submitted a review for this topic.'
-  )
+    message: 'You have already submitted a review for this topic.',
+   if: :should_run_unique_active_reviews?)
+
   validates :state, presence: true, inclusion: {in: States.state_hash.values.map(&:upcase), message: "%{value} is not a valid state"}
   validates_presence_of :school
   validates_presence_of :user
   validates :comment, length: {
-      maximum: 2400,
+      maximum: 2800,
   }
   validate :comment_minimum_length, unless: '@moderated == true'
+  validates_presence_of :comment, if: 'overall? == true && active'
 
   before_save :calculate_and_set_active, unless: '@moderated == true'
   before_save :remove_answers_for_principals, unless: '@moderated == true'
@@ -67,15 +67,30 @@ class Review < ActiveRecord::Base
     log_review_changed(state, school_id, member_id)
   end
 
+  def should_run_unique_active_reviews?
+    unique = @run_unique_active_reviews_validation
+    @run_unique_active_reviews_validation = true
+    return true if unique.nil?
+    return unique
+  end
+
+  def disable_unique_active_reviews_validation_temporarily
+    @run_unique_active_reviews_validation = false
+  end
+
   def status
     active? ? :active : :inactive
   end
 
   def comment_minimum_length
     # TODO: Internationalize the error string
-    if comment.present? && comment.split(' ').length < 15
-      errors.add(:comment, "comment is too short (minimum is 15 words")
+    if comment.present? && comment.split(' ').length < 7
+      errors.add(:comment, "comment is too short (minimum is 7 words)")
     end
+  end
+
+  def overall?
+    question && question.overall?
   end
 
   def comment
@@ -148,15 +163,6 @@ class Review < ActiveRecord::Base
       return self
     end
 
-    def check_for_local_school
-      if school && school.state == 'DE' && (school.type == 'public' || school.type == 'charter')
-        self.reasons << ReviewFlag::LOCAL_SCHOOL
-        comment << ' ' if self.comment.present?
-        self.comment << IS_DELAWARE_SCHOOL_ERROR
-      end
-      return self
-    end
-
     def check_for_held_school
       if school.held?
         self.reasons << ReviewFlag::HELD_SCHOOL
@@ -189,7 +195,6 @@ class Review < ActiveRecord::Base
 
     def auto_moderate
       check_alert_words
-      check_for_local_school
       check_for_student_user_type_with_comment
       check_for_principal_user_type
       check_for_held_school
@@ -261,7 +266,12 @@ class Review < ActiveRecord::Base
   end
 
   def answer
-    answers.first.value if answers.first
+    if answers.first
+      answer_response = answers.first.value
+    else
+      answer_response = 'Neutral'
+    end
+    answer_response
   end
 
   def answer_label
@@ -289,6 +299,25 @@ class Review < ActiveRecord::Base
       answers.each { |answer| answer.destroy }
 
     end
+  end
+
+  def self.average_five_star_rating(state, school_ids)
+    result = Review.connection.execute(Review.five_star_review_sql(state, school_ids))
+    result.each_with_object({}) do |array, hash|
+      hash[array.first] = OpenStruct.new.tap do |struct|
+        struct.number_of_reviews = array[1]
+        struct.average_rating = array[2]
+      end
+    end
+  end
+
+  def self.five_star_review_sql(state, school_ids)
+    "select school_id, count(*) as num_reviews, round(avg(answer_value)) as rating from reviews r " +
+    "inner join review_answers ra on r.id=ra.review_id " +
+    "where state='" +  state + "' and school_id in (" + school_ids.join(',') + ") " +
+    "and r.active=1 and r.review_question_id=1 " +
+    "and answer_value between 1 and 5 "+
+    "group by school_id";
   end
 
 end

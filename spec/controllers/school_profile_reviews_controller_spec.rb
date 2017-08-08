@@ -13,50 +13,6 @@ describe SchoolProfileReviewsController do
     expect(controller.action_methods - ['reviews', 'create']).to eq(Set.new)
   end
 
-  describe 'GET reviews' do
-    before do
-      stub_const('SchoolProfileReviewsController::MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW', 3)
-      allow(controller).to receive(:find_school).and_return(school)
-      allow(PageConfig).to receive(:new).and_return(page_config)
-      allow(page_config).to receive(:name).and_return('reviews')
-    end
-
-    it 'should set the list of reviews' do
-      reviews = FactoryGirl.build_list(:review, 2)
-      school_reviews = double('SchoolReviews', reviews: reviews).as_null_object
-      expect(SchoolReviews).to receive(:new).and_return(school_reviews)
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:school_reviews]).to eq(school_reviews)
-    end
-
-    it 'should look up the correct school' do
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:school]).to eq(school)
-    end
-
-    it 'should set canonical url to profile page when less than min reviews' do
-      school_reviews = double('SchoolReviews', number_of_reviews_with_comments: 2).as_null_object
-      expect(SchoolReviews).to receive(:new).and_return(school_reviews)
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq(school_url(school))
-    end
-
-    it 'should set canonical url to profile page when euqal to  min reviews' do
-      school_reviews = double('SchoolReviews', number_of_reviews_with_comments: 3).as_null_object
-      expect(SchoolReviews).to receive(:new).and_return(school_reviews)
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq(school_url(school))
-    end
-
-    it 'should set canonical url to reviews page when more than max reviews for rel canonical' do
-      school_reviews = double('SchoolReviews', number_of_reviews_with_comments: 4).as_null_object
-      expect(SchoolReviews).to receive(:new).and_return(school_reviews)
-      get 'reviews', controller.view_context.school_params(school)
-      expect(assigns[:canonical_url]).to eq(school_reviews_url(school))
-    end 
-
-  end
-
   describe '#create' do
     let(:school) { FactoryGirl.create(:alameda_high_school) }
     let(:review_params) do

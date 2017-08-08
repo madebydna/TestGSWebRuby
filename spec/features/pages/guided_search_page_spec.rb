@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'features/examples/footer_examples'
+require 'features/page_objects/guided_search'
 
 
 def setup(collection_id, nickname)
@@ -15,9 +17,14 @@ feature 'Guided Search Page' do
       visit '/delaware/guided-search'
     end
 
+    describe 'footer' do
+      subject { GuidedSearchPage.new }
+      include_examples 'should have a footer'
+    end
+
     it 'includes a basic page layout with nav bar ' do
       # Header
-      expect(page).to have_selector('.navbar')
+      expect(page).to have_selector('.header_un')
     end
     it 'includes Help me find a school title module on page' do
       expect(page).to have_selector( 'h3', 'Discover schools that match your needs')

@@ -14,55 +14,113 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// REMOVE ME! We need to figure out @extend usage first though.
-@import "gs/variables";
-@import "resources/bootstrap/bootstrap";
-@import "gs/mixins";
-@import "sprites/*";
-@import "gs/buttons";
-@import "gs/fonts-opensans";
-@import "gs/fonts-opensans-condbold";
-@import "gs/fonts-amaticsc";
-@import "gs/fonts-robotoslab-light";
-@import "gs/spacing";
-@import "gs/typography";
+// reset css
+@import "resources/normalize";
+
+// bootstrap
+@import "resources/bootstrap/smaller_bootstrap";
+
+
+// variables, mixins, base styles
+@import "variables/variables";
+@import "mixins/*";
+@import "gs/mixins"; // deprecated
 @import "gs/form";
-//@import "resources/bootstrap/bootstrap/gs-variables";
-//@import "resources/bootstrap/bootstrap/variables";
-//@import "resources/bootstrap/bootstrap/mixins";
-@import "gs/tables";
-@import "resources/tables";
-@import "resources/galleria.classic";
-@import "resources/bootstrap/social-buttons";
-@import "resources/bootstrap-select";
-@import "resources/slick";
-@import "gs/school_profile";
-@import "gs/objects/performance";
-@import "gs/objects/rating_background";
-@import "gs/objects/box_group";
-@import "gs/search_compare";
-@import "gs/objects/signin_layout";
-@import "gs/objects/district_city_layout";
-@import "gs/objects/topical_reviews_layout";
+@import "base/spacing";
+@import "base/typography";
+
+// TODO: clean this up
+@import "gs/bring-back-bootstrap"; // depends on responsive-utilities mixins
+
+
+// fonts
+@import "fonts/fonts-opensans-regular";
+@import "fonts/fonts-opensans-semibold";
+@import "fonts/fonts-robotoslab-bold";
+
+
+// icons / sprites
+@import "fonts/gs-icon-font";
+@import "sprites/avatars_33x33";
+@import "sprites/avatars_65x65";
+
+
+// components
+@import 'components/show-more';
+@import 'components/five-star-rating';
+@import 'components/badge-and-content';
+@import 'components/ad-slot';
+@import 'components/gs-rating-with-label';
+@import 'components/person-bar-viz';
+@import 'components/static-right-rail-container';
+@import "components/breadcrumbs";
+@import "components/rating-container";
+@import "components/circle-rating";
+@import "components/circle-rating-with-label";
+@import "components/diamond-rating";
+@import "components/square-rating";
+@import "components/rating-score-item";
+@import "components/bar-graph-display";
+@import "components/five-stars";
+@import "components/review-list";
+@import "components/review";
+@import "components/review-summary";
+@import "components/report-review";
+@import "components/five-star-question-cta";
+@import "components/join-form";
+@import "components/nearby-schools";
+@import "components/homes-and-rentals";
+@import "components/neighborhood";
+@import "components/school-user-modal";
+@import "components/info-circle";
+@import "components/module-header";
+@import "components/ratio-viz";
+@import "components/back-to-top";
+@import "components/info-window";
+@import "components/school-list";
+@import "components/anchor-button";
+@import 'components/rating-with-bar';
+// more components
+@import "gs/objects/spinny_wheel.css.scss";
 @import "gs/objects/modal_layout";
-@import "gs/objects/community_spotlights";
-@import "gs/objects/community";
-@import "gs/objects/share_menu";
-@import "gs/objects/review_school_chooser";
-@import "resources/datatables/jquery.datatables";
-@import "gs/style_guide/style_guide";
-@import "gs/objects/osp_landing_page";
-@import "gs/objects/sel_promo_banner";
-@import "gs/objects/sel_promo_banner_kung_fu";
-@import "gs/objects/cc_promo_banner";
-@import "gs/bring-back-bootstrap";
-@import "gs/data-viz";
-@import "gs/objects/partner_promos";
-@import "gs/nav-guided-search";
-@import "gs/nav-osp";
-@import "gs/objects/zillow_module";
-@import "gs/objects/sticky_nearby_schools";
-@import "gs/objects/compact_review_module";
-@import "gs/objects/external_link_callout";
-@import "gs/objects/rectangle_inset";
-@import "gs/objects/home.css.scss";
+@import "pages/districts-cities-list";
+@import 'gs/modal_tooltip';
+
+
+// footer-specific
+@import "gs/objects/footer";
+@import "sprites/footer_icons_16x16";
+
+// page specific
+@import "pages/interstitial";
+@import "pages/page-not-found";
+
+// school profile specific
+@import 'school_profiles/module_feedback';
+@import 'school_profiles/hero.scss';
+@import 'school_profiles/toc.scss';
+@import 'school_profiles/school_profile_sticky_cta';
+@import 'school_profiles/school_profile_tutorial';
+@import 'school_profiles/review_form';
+@import 'school_profiles/students_container';
+@import 'school_profiles/subgroups';
+@import 'school_profiles/teachers_staff';
+@import "school_profiles/school_profile";
+@import 'gs/equity';
+@import 'school_profiles/advanced_courses';
+@import 'school_profiles/toc_private';
+@import 'school_profiles/auto_narration';
+@import 'school_profiles/sourcing';
+@import 'school_profiles/speech_bubbles';
+@import 'school_profiles/info_text_and_circle';
+@import 'school_profiles/historical_ratings';
+@import 'school_profiles/tour_button';
+@import 'gs/osp-school-info';
+
+@import 'pages/district-boundaries/district_boundaries_page';
+
+// third party libraries
+@import 'resources/tipso'; // used on school profiles
+@import 'resources/remodal'; // used on profiles / used by modals
+@import 'resources/remodal-default-theme'; // used on profiles / used by modals
+@import 'resources/introjs';

@@ -2,6 +2,7 @@ require 'spec_helper'
 require 'features/page_objects/forgot_password_page'
 require 'features/page_objects/join_page'
 require 'features/page_objects/reset_password_page'
+require 'features/examples/footer_examples'
 
 describe 'Forgot password page' do
 
@@ -21,6 +22,8 @@ describe 'Forgot password page' do
   it { is_expected.to be_displayed }
   it { is_expected.to have_email_field }
   it { is_expected.to have_continue_button }
+
+  include_examples 'should have a footer'
 
   context 'when I enter email that has no user', js: true do
     let (:user) { FactoryGirl.build(:user) }

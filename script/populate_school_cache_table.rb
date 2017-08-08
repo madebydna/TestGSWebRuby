@@ -1,5 +1,5 @@
 def all_cache_keys
-  ['ratings','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance']
+  ['ratings','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance', 'gsdata']
 end
 
 def nightly_states
@@ -62,9 +62,12 @@ parsed_arguments.each do |args|
   cache_keys = args[:cache_keys]
   schools_where = args[:schools_where]
   states.each do |state|
+    puts
+    puts "Working on: #{state}"
     # Remove the next line to have all mean all states again
     next if ARGV[0] == 'all' && !nightly_states.include?(state)
     cache_keys.each do |cache_key|
+      puts "     doing #{cache_key}"
       if schools_where
         School.on_db(state.downcase.to_sym).where(schools_where).each do |school|
           Cacher.create_cache(school, cache_key)

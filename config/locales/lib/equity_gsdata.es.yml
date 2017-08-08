@@ -1,0 +1,137 @@
+es:
+  lib:
+    equity_gsdata:
+      Overview: Descripción general
+      Graduation rates: Índices de Graduación
+      Test scores: Resultados de exámenes
+      RE Test scores narration: >
+        Esto muestra resultados de diferentes razas y etnicidades en un examen de %{subject} dado a los estudiantes
+        una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el
+        apoyo que necesitan para tener éxito.
+      RE Test scores overview narration: >
+        Esta muestra la Calificación de los Resultados de Exámenes para diferentes razas o etnias. Grandes diferencias
+        puede sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.
+      RE Grad rates narration: >
+        Esto muestra las tasas de graduación de diferentes razas o etnias. Grandes diferencias puede sugerir que algunos
+        estudiantes no están recibiendo el apoyo que necesitan para tener éxito.
+      RE UC/CSU eligibility narration: >
+        No todos los estudiantes graduados de la escuela secundaria han tomado las clases que necesitan para ser
+        elegible para aplicar a la Universidad de CA o escuelas estatales de CA. Esto muestra los porcentajes de
+        graduados de esta escuela que obtuvieron un grado "C" o superior en las A-G clases requeridas para ser elegible
+        para la Universidad de CA y colegios de CA State.
+        <a href="/gk/articles/no-pierda-de-vista-estos-requisitos-para-entrar-a-la-universidad/?lang=es">Obtenga más información acerca de estos requisitos.</a>
+      LI Test scores overview narration:
+        _0_html: >
+          Esta muestra la Calificación de los Resultados de Exámenes para estudiantes de bajo ingresos. Grandes
+          diferencias puede sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan
+          para tener éxito.
+        _1_html: >
+          <p class="title negative">Muy preocupante:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
+          <span class="emphasis">muy por debajo</span> del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+        _2_html: >
+          <p class="title negative">Un signo preocupante:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
+          <span class="emphasis">por debajo</span> del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+        _3_html: >
+          <p class="title neutral">Vale la pena una mirada más profunda:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela
+          <span class="emphasis">son comparables</span> con el promedio estatal para todos los estudiantes, aunque
+          todavía por debajo de escuelas de rendimiento superior en el estado.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+        _4_html: >
+          <p class="title positive">Un signo prometedor:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están por
+          encima del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+        _5_html: >
+          <p class="title positive">¡Buenas noticias!:</p>
+          <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están
+          <span class="emphasis">muy por encima</span> del promedio estatal para todos los estudiantes.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+      'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
+      courses_title: Cursos avanzados
+      Advanced coursework: Cursos avanzados
+      discipline_title: Disciplina y asistencia
+      disabilities_title: Estudiantes con discapacidades
+      Students with IDEA catagory disabilities: Estudiantes con discapacidades
+      Percentage AP enrolled grades 9-12: Porcentaje tomando cursos AP
+      Number of Advanced Courses Taken per Student: Cursos avanzados por estudiantes
+      English Language Arts: Inglés
+      African American: Afroamericanos
+      Black: Afroamericanos
+      White: Blancos
+      Asian or Pacific Islander: Asiático o Isleños del Pacífico
+      All: Todos
+      Multiracial: Dos o más razas
+      Two or more races: Dos o más razas
+      American Indian/Alaska Native: Los indios americanos / nativos de Alaska
+      Native American: Los indios americanos / nativos de Alaska
+      Pacific Islander: Islas del Pacífico
+      Hawaiian Native/Pacific Islander: Islas del Pacífico
+      Native Hawaiian or Other Pacific Islander: Islas del Pacífico
+      Economically disadvantaged: De bajos ingresos
+      Not economically disadvantaged: Sin ingresos bajos
+      Advanced courses: Cursos avanzados
+      data_point_info_texts:
+        'Percentage AP enrolled grades 9-12': 'Esto muestra el porcentaje de estudiantes tomando cursos avanzados (AP).'
+        'Number of Advanced Courses Taken per Student': 'Esto muestra el promedio de cursos avanzados tomadas por los estudiantes de esta escuela.'
+        'Advanced Course Rating': >
+          Las calificaciones de los cursos avanzados reflejan el número de cursos avanzados de Inglés,
+          Ciencias/Tecnología/Ingeniería/Matemáticas (STEM), Ciencias Sociales, e Idiomas, que ha tomado cada
+          estudiante por raza/grupo étnico, comparado con el promedio del estado.
+      Students with disabilities: Estudiantes con discapacidades
+      'Discipline & attendance': Disciplina y asistencia
+      'Percentage of students suspended out of school': '% de estudiantes suspendidos'
+      'Percentage of students chronically absent (15+ days)': '% de estudiantes crónicamente ausentes'
+      Student with disabilities tooltip: >
+        Este grupo incluye a todos los estudiantes con discapacidades físicas o de aprendizaje que
+        reciben servicios de educación especial y servicios relacionados a sus discapacidades.
+      narration:
+        ER:
+          'Percentage of students chronically absent (15+ days)': >
+            <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+            <hr />
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+          'Percentage of students suspended out of school': >
+            <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+            <hr />
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+        SD:
+          'Percentage of students chronically absent (15+ days)': >
+            <p class="narrative-content">Esto muestra el porcentaje de estudiantes con discapacidades ausentes 15 días o más en esta escuela en comparación con el promedio estatal. Altos índices de absentismo significa menos tiempo para la enseñanza y el aprendizaje.</p>
+            <hr />
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+          'Percentage of students suspended out of school': >
+            <p class="narrative-content">Este índice muestra la suspensión de los estudiantes con discapacidades en esta escuela en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+            <hr />
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+          'Test scores': >
+            <p class="narrative-content">Esto muestra los resultados para los estudiantes con discapacidades en un examen de %{subject} dado a los estudiantes una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el apoyo que necesitan para tener éxito.</p>
+            <hr />
+            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+            <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que los estudiantes con discapacidades obtengan resultados académicos exitosos.</p>

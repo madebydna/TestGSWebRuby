@@ -37,7 +37,7 @@ GS.modal.EmailJoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 _.assign(GS.modal.EmailJoinModal.prototype, {
 
   $getSubmitButton: function $getSubmitButton() {
-    return this.$getJoinForm().find('button');
+    return this.$getJoinForm().find('button[type="submit"]');
   },
 
   $getJoinForm: function $getJoinForm() {
@@ -56,17 +56,45 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     return this.$getJoinForm().find('#sponsors_list').prop('checked');
   },
 
-  submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
-    var _this = this;
+  signUpForSponsorsList: function signUpForSponsorsList() {
     if (this.shouldSignUpForSponsor()) {
-      GS.subscription.sponsorsSignUp(this.getModalData()).done(function(data) {
-        _this.getDeferred().resolve(_.merge(jqXHR, _this.getModalData()));
-      }).fail(function(data) {
-        _this.getDeferred().reject(_.merge(data, _this.getModalData()));
+      return GS.subscription.sponsorsSignUp(this.getModalData());
+    } else {
+      return $.when();
+    }
+  },
+
+  createStudents: function createStudents() {
+    var grades = this.getGrades();
+
+    if(grades.length > 0) {
+      return $.post(
+        '/gsr/api/students',
+        this.getModalData(),
+        null,
+        'json'
+      ).then(function(data) {
+        return data.responseJSON;
+      }, function(data) {
+        return data.responseJSON;
       });
     } else {
-      this.getDeferred().resolve(_.merge(jqXHR, _this.getModalData()));
+      return $.when();
     }
+  },
+
+  submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
+    var _this = this;
+
+    $.when(
+      this.signUpForSponsorsList(),
+      this.createStudents()
+    ).done(function(data1, data2) {
+      _this.getDeferred().resolve(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
+    }).fail(function(data1, data2) {
+      _this.getDeferred().reject(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
+    });
+
     this.allowInteractions();
   },
 
@@ -74,10 +102,20 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     return this.$getJoinForm().find('input[name=email]').val();
   },
 
+  getGrades: function getGrades() {
+    var gradesList = this.$getJoinForm().find('input[name=grades]').val();
+    if (gradesList) {
+      return gradesList.split(',');
+    } else {
+      return [];
+    }
+  },
+
   // returns data from this modal. Will be passed along when modal's promise is resolved/rejected
   getModalData: function getModalData() {
     return {
-      email: this.getEmail()
+      email: this.getEmail(),
+      grades: this.getGrades()
     }
   },
 
@@ -87,6 +125,8 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
   },
 
   initializeForm: function initializeForm() {
+    this.$getJoinForm().parsley();
+
     return this.$getJoinForm().
       on('submit', this.preventInteractions.gs_bind(this)).
       on('ajax:success', this.submitSuccessHandler.gs_bind(this)).

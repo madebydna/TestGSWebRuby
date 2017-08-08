@@ -1,0 +1,84 @@
+en:
+  lib:
+    college_readiness:
+      info_text: "This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and  AP coursework when available."
+      'title': 'GreatSchools profile data sources &amp; information'
+      'GreatSchools Rating': 'GreatSchools College Readiness Rating'
+      'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
+      'SAT percent participation': 'SAT participation rate'
+      ACT participation:  'ACT participation rate'
+      'Percentage AP enrolled grades 9-12': 'AP course participation'
+      '4-year high school graduation rate': '4-year high school graduation rate'
+      Percent of students who meet UC/CSU entrance requirements: 'Percent of students who meet UC/CSU entrance requirements'
+      'Percentage of students passing 1 or more AP exams grades 9-12': 'Percentage of students passing 1 or more AP exams grades 9-12'
+      'source': 'Source'
+      faq:
+        cta: Notice something missing or confusing?
+        content_html: >
+          <p>College readiness information comes from state or national education agencies (click on the "Sources" link for details).</p>
+          <p>When information is missing in our display, it's most likely because this school did not offer an AP course or participate in one of the two college readiness tests, the ACT or SAT (some states mandate which college readiness test schools use). It's also possible that the missing data was not included in the data we received from the state.</p>
+          <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
+      data_point_info_texts:
+        '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
+        'Average SAT score': 'The SAT is a college admissions test which in 2015 had a total of 2400 possible points. This score reflects the average SAT score for students at this school. In 2016 the SAT changed to a 1600 point scale. Check back soon for updated information for this school.'
+        'Average SAT score_new': 'The SAT is a college admissions test which in 2016 had a total of 1600 possible points. This score reflects the average SAT score for students at this school.'
+        'SAT percent participation': 'The SAT participation rate reflects the percentage of eligible students at this school who took the SAT.'
+        'Average ACT score': 'The ACT is a college admissions test with a total of 36 possible points. This score reflects the average ACT score for students at this school.'
+        'ACT participation':  'The ACT participation rate shows the percentage of eligible students at this school who took the ACT.'
+        'AP Course Participation': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
+        'Percent of students who meet UC/CSU entrance requirements': >
+          This is the percentage of graduates from this school who got a “C” or higher in the A-G courses required for
+          eligibility at University of California and California State University schools.
+          <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a>.
+        'Percentage of students passing 1 or more AP exams grades 9-12': 'The AP exam pass rate reflects how many students at this school got a passing score on at least one AP exam.'
+        'Percentage AP enrolled grades 9-12': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
+      narration:
+        _1_html: >
+          <h3 class="negative">Very concerning:</h3>
+          <p>This school is <span class="emphasis">far below</span> the state average in key measures of college and career readiness.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _2_html: >
+          <h3 class="negative">A worrisome sign:</h3>
+          <p>This school is <span class="emphasis">below</span> the state average in key measures of college and career readiness.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the schools what it’s doing to improve access to advanced classes and help prepare students for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _3_html: >
+          <h3 class="neutral">Worth a deeper look:</h3>
+          <p>This school is <span class="emphasis">about the same as</span> the state average in key measures of college and career readiness, but depending on the state,
+          average can mean only a minority of students are ready for college and career.</p>
+          <p>(Remember: <span class="emphasis">high graduation rates don't mean much</span> if students are graduating
+          without the coursework and test scores they need to succeed.)</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _4_html: >
+          <h3 class="positive">A promising sign:</h3>
+          <p>This school is <span class="emphasis">above</span> the state average in key measures of college and career readiness. </p>
+          <p>Even at schools with strong college and career readiness, there may be students who are not getting
+          the opportunities they need to succeed.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />
+        _5_html: >
+          <h3 class="positive">Good news!</h3>
+          <p>This school is <span class="emphasis">far above</span> the state average in key measures of college and career readiness.</p>
+          <p>Even at schools with strong college and career readiness, there may be students who are not getting
+          the opportunities they need to succeed.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
+          <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          <hr />

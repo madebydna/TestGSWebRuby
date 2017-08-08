@@ -1,4 +1,7 @@
+require 'features/page_objects/modules/footer'
+
 class  ReviewSchoolChooserPage < SitePrism::Page
+  include Footer
 
   class ReviewHighlightSection < SitePrism::Section
     element :school_link, '.link-darkgray'

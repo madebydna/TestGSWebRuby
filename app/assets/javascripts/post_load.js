@@ -1,22 +1,35 @@
 // This combined file will be loaded after load complete by js.
-//= require auth
+// NEW PROFILES POST_LOAD
+//= require resources/tipso
+//= require header
+//= require util/cached_script
+//= require util/review_helpers
+//= require resources/fastclick
+// require resources/pep
+//= require resources/remodal
+//= require auth/auth
+//= require auth/facebook_auth
+//= require util/gs_bind
+//= require util/session
+//= require util/i18n
 //= require autocomplete
-//= require jquery_ujs
-//= require wiselinks
-//= require ads
-//= require resources
-//= require ./localized_profiles/search_results
-//= require util
-//= require search
-//= require google_maps
-//= require localized_profiles
-//= require topical_reviews
-//= require guided_search
-//= require account_management
-//= require community_scorecards
-//= require dropzone.min
+//= require resources/typeahead_modified.bundle
+//= require util/handlebars
+//= require util/url_params
+//= require ./util/advertising.js
 //= require modals
-//= require page_initializers
-//= require zillow
-
-
+// require ./resources/parsley
+//= require resources/parsley.remote
+//= require resources/parsley.es.js
+//= require util/gs_parsley_validations
+//= require loaders/facebook
+//= require util/states
+//= require util/notifications
+//= require util/subscription
+//= require util/send_updates
+//= require util/back_to_top
+//= require ads/interstitial
+//= require util/impression_tracker
+//= require page_initializers/school_profiles
+//= require page_initializers/interstitial_ad
+//= require webpack-bundle

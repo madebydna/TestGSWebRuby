@@ -3,7 +3,7 @@ class CategoryPlacementPresenter
   attr_reader :category_placement
 
   VIEW_DIRECTORY = Rails.root.join('app', 'views')
-  DATA_LAYOUTS_DIRECTORY = 'school_profile/data_layouts'
+  DATA_LAYOUTS_DIRECTORY = 'deprecated_school_profile/data_layouts'
 
   def initialize(category_placement, page_config, template)
     @category_placement = category_placement

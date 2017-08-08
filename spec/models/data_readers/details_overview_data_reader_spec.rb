@@ -405,7 +405,7 @@ describe DetailsOverviewDataReader do
         {
           "Facilities"=>['sports_fields', 'audiovisual', 'cafeteria'],
           "Foreign language"=>['mandarin'],
-          "English language learners"=>{"All Students"=> 77.3},
+          "English language learners"=>{"All students"=> 77.3},
           "Student ethnicity"=>{"Asian"=>57.5758,"Hispanic"=>24.2424, "Black"=>8.0808, "Pacific Islander"=>3.0303, "White"=>2.52525, "Two or more races"=>1.51515, "Filipino"=>1.51515 }
         }
       end
@@ -445,7 +445,7 @@ describe DetailsOverviewDataReader do
       end
       let(:results) do
         {
-          "English language learners"=>{"All Students"=> 77.3},
+          "English language learners"=>{"All students"=> 77.3},
           "Student ethnicity"=>{"Asian"=>57.5758,"Hispanic"=>24.2424, "Black"=>8.0808, "Pacific Islander"=>3.0303, "White"=>2.52525, "Two or more races"=>1.51515, "Filipino"=>1.51515 }
         }
       end
@@ -475,7 +475,7 @@ describe DetailsOverviewDataReader do
 
           "Facilities"=>['sports_fields'],
           "Foreign language"=>['mandarin'],
-          "English language learners"=>{"All Students"=> 77.3},
+          "English language learners"=>{"All students"=> 77.3},
           "Student ethnicity"=>{"Asian"=>57.5758,"Hispanic"=>43.2424 }
         }
       end
@@ -497,7 +497,7 @@ describe DetailsOverviewDataReader do
       let(:charactersitics_and_osp_results) {
         {
           "Facilities"=>['sports_fields', 'audiovisual', 'cafeteria'],
-          "English language learners"=>{"All Students"=> 77.3},
+          "English language learners"=>{"All students"=> 77.3},
           "Student ethnicity"=>{"White"=>98.00,"Filipino"=>2.00}
         }
       }

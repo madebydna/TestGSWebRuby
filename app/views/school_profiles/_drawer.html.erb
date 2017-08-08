@@ -1,0 +1,10 @@
+<% suffix ||= nil %>
+
+<div class="js-drawer show-more show-more--closed" data-ga-category="<%= ga_category %>" data-ga-label="<%= ga_label %>">
+  <div class="show-more__items js-toggle-target" style="display:none;">
+    <%= yield %>
+  </div>
+  <div class="show-more__button js-toggle-button">
+    <%= [t('javascript.show_more'), suffix].compact.join(' ') %>
+  </div>
+</div>

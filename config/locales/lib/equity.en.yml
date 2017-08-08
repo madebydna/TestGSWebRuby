@@ -1,0 +1,38 @@
+en:
+  lib:
+    equity:
+      'title': 'GreatSchools profile data sources &amp; information'
+      '4-year high school graduation rate': '4-year high school graduation rate'
+      'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
+      'source': 'Source'
+      faq:
+        race_ethnicity:
+          cta: Notice something missing or confusing?
+          content_html: >
+            <p><span class="emphasis">Missing a race or ethnicity?</span> When the population of a subgroup is too small to provide reliable data, it does not show up in the display. This may cause certain races/ethnicities to not be included in some charts within this section.</p>
+            <p><span class="emphasis">How do we come up with the race/ethnicity labels?</span> We display the language used by the State Department of Education to describe student race/ethnicity information.</p>
+            <ul>
+            <li>The “All students” number displayed represents the number of students at the school who participated in testing.</li>
+            <li>The “% of students” information reflects the portion of the overall student population at the school that each subgroup represents. For more about student demographics at this school, visit the “Students” section below.</li>
+            </ul>
+            <p><span class="emphasis">How do we decide which subjects to display?</span> Test subjects shown represent those taken by the largest number of students at this school.</p>
+            <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page.</a></p>
+        low_income:
+          cta: Notice something missing or confusing?
+          content_html: >
+            <p><span class="emphasis">How do we decide which subjects to display?</span> We display the three tests taken by the largest number of students at this school.</p>
+            <p><span class="emphasis">Note:</span> The “All students” number displayed represents the number of students at the school who participated in testing. The Low-income “% of students” information represents the portion of overall students at the school who are from low-income families.</p>
+            <ul>
+            <li>For more information about low-income definitions, see the “?” at the top of the module.</li>
+            <li>For more about overall student demographics at this school, visit the “Students” section below.</li>
+            </ul>
+            <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
+        disabilities:
+          cta: Notice something missing or confusing?
+          content_html: >
+            <p><span class="emphasis">How do we decide which subjects to display?</span> We display the three tests taken by the largest number of students at this school.</p>
+            <p><span class="emphasis">What does the “State average” data show?</span> In this chart, the state average show the state average for Students with disabilities (not for all students) across the state. This allows you to compare results for students with disabilities at this school to similar student populations at other schools in the state.</p>
+            <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
+      data_point_info_texts:
+        '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
+        'Percent of students who meet UC/CSU entrance requirements': 'This is the percentage of graduates from this school who completed the A-G courses required for eligibility at University of California and California State University schools.'

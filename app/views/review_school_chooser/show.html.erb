@@ -11,31 +11,30 @@
 <div class="review_school_chooser <%= @gs_bootstrap %>">
   <header>
     <div class="container-fluid">
-      <h1 class="lg-roboto">
-        <%= decorated_topic.header %>
-      </h1>
-    </div>
+      <h1 class="lg-roboto"><%= decorated_topic.header || t('decorators.review_topic_decorator.topic_1_header') %></h1></div>
   </header>
 
   <section class="top">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="review-highlight col-xs-12 col-sm-8 col-sm-offset-2 col-offset-md-2 col-offset-lg-2">
-          <p><%= decorated_topic.sample_review_intro.html_safe  %></p>
-          <div class="review row">
-            <div class="visible-sm visible-md visible-lg col-sm-2">
-              <div class="fl iconx48-icons i-48-green-quotes"></div>
+      <div class="container-fluid">
+        <div class="row">
+          <% if decorated_topic.sample_review_intro %>
+            <div class="review-highlight col-xs-12 col-sm-8 col-sm-offset-2 col-offset-md-2 col-offset-lg-2">
+              <p><%= decorated_topic.sample_review_intro.html_safe  %></p>
+              <div class="review row">
+                <div class="visible-sm visible-md visible-lg col-sm-2">
+                  <div class="fl iconx48-icons i-48-green-quotes"></div>
+                </div>
+                <div class="col-sm-8">
+                  <span class="small-quotes">"</span><%= decorated_topic.sample_review  %><span class="small-quotes">"</span>
+                </div>
+                <div class="visible-sm visible-md visible-lg col-sm-2">
+                  <div class="fr iconx48-icons i-48-green-quotes-upsidedown"></div>
+                </div>
+              </div>
             </div>
-            <div class="col-sm-8">
-              <span class="small-quotes">"</span><%= decorated_topic.sample_review  %><span class="small-quotes">"</span>
-            </div>
-            <div class="visible-sm visible-md visible-lg col-sm-2">
-              <div class="fr iconx48-icons i-48-green-quotes-upsidedown"></div>
-            </div>
-          </div>
+          <% end %>
         </div>
       </div>
-    </div>
     <div class="review-school-picker-module">
       <h1><%= t('.school_picker_header_1') %></h1>
       <%=  render 'shared/school_picker', linkClass: 'search-link-black'  %>
@@ -74,5 +73,3 @@
   </section>
 <% end %>
 </div>
-
-<%= render partial: 'nav/home_footer' %>

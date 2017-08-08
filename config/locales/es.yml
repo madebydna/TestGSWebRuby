@@ -42,6 +42,11 @@ es:
   activerecord:
     errors:
       models:
+        review:
+          attributes:
+            comment:
+              too_long: Su comentario sólo puede ser de hasta %{count} caracteres.
+              too_short: Utilice al menos %{count} palabras en su comentario.
         school_rating:
           attributes:
             comments:
@@ -111,3 +116,5 @@ es:
       words_connector: " o "
       two_words_connector: " y "
       last_word_connector: " o al menos "
+  search:
+    placeholder: Ciudad, código postal, la dirección o la escuela

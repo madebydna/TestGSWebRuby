@@ -61,6 +61,10 @@ module CachedCharacteristicsMethods
     census_value('Head official name')
   end
 
+  def school_leader_email
+    census_value('Head official email address')
+  end
+
   def ethnicity_data
     characteristics['Ethnicity'] || []
   end
@@ -76,6 +80,14 @@ module CachedCharacteristicsMethods
     else
       NO_ETHNICITY_SYMBOL
     end
+  end
+
+  def college_readiness(display_and_key_type)
+    @_college_readiness ||= (
+      display_and_key_type.map do | hash |
+        {:display_type => hash[:display_type], :data => characteristics[hash[:data_key]]}
+      end
+    )
   end
 
   def graduates_high_school
@@ -102,6 +114,10 @@ module CachedCharacteristicsMethods
 
   def free_and_reduced_lunch
     style_school_value_as_percent('Students participating in free or reduced-price lunch program')
+  end
+
+  def free_or_reduced_price_lunch_data
+    characteristics['Students participating in free or reduced-price lunch program'] || []
   end
 
   def formatted_ethnicity_data

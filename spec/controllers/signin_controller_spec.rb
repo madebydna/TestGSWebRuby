@@ -6,7 +6,7 @@ describe SigninController do
   before { request.host = 'localhost'; request.port = 3000 }
   it { should respond_to :new }
 
-  it_behaves_like 'controller with authentication'
+  # it_behaves_like 'controller with authentication'
 
   describe '#store_location' do
     it 'should store_location when #new method called on controller' do
@@ -24,19 +24,17 @@ describe SigninController do
   end
 
   describe '#post_registration_confirmation' do
-    before do
-      allow(controller).to receive(:redirect_to) { }
-      allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
-    end
     context 'when logged in' do
       before do
+        allow(controller).to receive(:redirect_to) { }
+        allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
         allow(controller).to receive(:logged_in?) { true }
       end
       context 'and redirect_url exists in params' do
         before do
           controller.params[:redirect] = 'localhost:3000'
         end
-        it 'should execute defered action' do
+        it 'should execute deferred action' do
           expect(controller).to receive(:executed_deferred_action)
           controller.post_registration_confirmation
         end
@@ -46,8 +44,37 @@ describe SigninController do
         before do
           controller.params[:redirect] = nil
         end
-        it 'should execute defered action' do
+        it 'should execute deferred action' do
           expect(controller).to receive(:executed_deferred_action)
+          controller.post_registration_confirmation
+        end
+      end
+    end
+    context 'redirecting' do
+      context 'with a valid redirect url' do
+        let (:valid_url) { 'http://www.greatschools.org/account/?flash=success' }
+        before do
+          allow(controller).to receive(:logged_in?) { true }
+          controller.params[:redirect] = valid_url
+          allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+        end
+        it 'should redirect to specified url' do
+          expect(controller).to receive(:executed_deferred_action)
+          expect(controller).to receive(:redirect_to).with(valid_url)
+          controller.post_registration_confirmation
+        end
+      end
+
+      context 'with an invalid redirect url' do
+        let (:invalid_url) { 'http://www.greatschools.org.malicious.cn/account/?flash=success' }
+        before do
+          allow(controller).to receive(:logged_in?) { true }
+          controller.params[:redirect] = invalid_url
+          allow(controller).to receive(:user_profile_or_home) { 'localhost:3000' }
+        end
+        it 'should redirect to specified url' do
+          expect(controller).to receive(:executed_deferred_action)
+          expect(controller).to receive(:redirect_to).with('localhost:3000')
           controller.post_registration_confirmation
         end
       end
@@ -58,14 +85,44 @@ describe SigninController do
 
     describe 'authenticate' do
       it 'should call authenticate if post contained password info' do
-        expect(controller).to receive(:authenticate).and_return([nil, 'reject'])
+        expect(controller).to receive(:authenticate).and_return([nil, 'err_msg'])
         get :create, password: 'abc'
+      end
+
+      context 'using xhr' do
+        it 'when xhr should return an error' do
+          expect(controller).to receive(:authenticate).and_return([nil, 'err_msg'])
+          xhr :post, :create, password: 'abc'
+          expect(response.status).to eq(422)
+        end
+
+        context 'successful login' do
+          after do
+            clean_dbs :gs_schooldb
+          end
+
+          it 'should log the user in' do
+            user = instance_double(User)
+            expect(controller).to receive(:authenticate).and_return([user, nil])
+            expect(controller).to receive(:log_user_in).with(user)
+            xhr :post, :create, password: 'abc'
+          end
+
+          it 'should render user data' do
+            user = create(:verified_user, password: 'password')
+            xhr :post, :create, format: :json, email: user.email, password: 'password'
+            expect(response.status).to eq(200)
+            json = response.body
+            # hash = JSON.parse(response.body)
+            # expect(hash).to have_key('user')
+          end
+        end
       end
 
       context 'authentication error' do
         before do
-          expect(controller).to receive(:authenticate).and_return([nil, 'reject'])
-          expect(controller).to receive(:flash_error).with('reject')
+          expect(controller).to receive(:authenticate).and_return([nil, 'err_msg'])
+          expect(controller).to receive(:flash_error).with('err_msg')
         end
 
         it 'should flash the error if one occurs' do
@@ -135,8 +192,8 @@ describe SigninController do
 
       context 'registration error' do
         before do
-          expect(controller).to receive(:register).and_return([nil, 'reject'])
-          expect(controller).to receive(:flash_error).with('reject')
+          expect(controller).to receive(:register).and_return([nil, 'err_msg'])
+          expect(controller).to receive(:flash_error).with('err_msg')
         end
 
         it 'should flash the error if one occurs' do
@@ -266,10 +323,10 @@ describe SigninController do
       expect(controller.send :authenticate).to eq([ user, nil ])
     end
 
-    it 'should return an existing user and error message to sign up for an account if the account has no password' do
+    it 'should return an existing user and error message to set password if the account has no password' do
       expect(User).to receive(:with_email).and_return(user)
       expect(user).to receive(:has_password?).and_return(false)
-      expect(I18n).to receive(:t).with('controllers.signin.create.email_without_password_error_html', anything).and_return('account without password error message')
+      expect(I18n).to receive(:t).with('forms.errors.email.account_without_password', anything).and_return('account without password error message')
       expect(controller.send :authenticate).to eq([ user, 'account without password error message' ])
     end
 
@@ -282,137 +339,6 @@ describe SigninController do
     it 'should return an existing user if one exists and it matches given password and no error message.' do
       expect(User).to receive(:with_email).and_return(user)
       expect(controller.send :authenticate).to eq([ user, nil ])
-    end
-  end
-
-  describe '#facebook_connect' do
-    it 'redirects to a facebook uri' do
-      get :facebook_connect
-      redirect_uri = 'https://graph.facebook.com/oauth/authorize' +
-                     '?client_id=178930405559082&' +
-                     'redirect_uri=http%3A%2F%2Flocalhost%2Fgsr%2Fsession%2Ffacebook_callback%2F&scope=email'
-      expect(response).to redirect_to(redirect_uri)
-    end
-  end
-
-  describe '#facebook_callback' do
-    def stub_fb_login_fail
-      allow(controller).to receive(:facebook_login) { [nil, double('error')] }
-    end
-
-    def stub_fb_login_success
-      user = double('user', id: 1, auth_token: 'foo', provisional_or_approved_osp_user?: 'foo')
-      allow(user).to receive(:provisional?).and_return(false)
-      allow(controller).to receive(:current_user) { user }
-      allow(controller).to receive(:facebook_login) { [user, nil] }
-    end
-
-    context 'without an access code' do
-      before(:each) do
-        allow(FacebookAccess).to receive(:facebook_code_to_access_token) { nil } # make it so the method returns the code or nil
-      end
-
-      it 'logs and flashes an error' do
-        error_message = 'Could not log in with Facebook.'
-        expect(Rails.logger).to receive(:debug).at_least(1).times
-        get :facebook_callback
-        expect(flash[:error][0]).to eq(error_message)
-      end
-
-      it 'redirects to the signin url' do
-        get :facebook_callback
-        expect(response).to redirect_to(signin_path)
-      end
-    end
-
-    context 'with an access code' do
-      before(:each) do
-        allow(FacebookAccess).to receive(:facebook_code_to_access_token) { 'foobar' }
-      end
-
-      it 'executes deferred actions' do
-        stub_fb_login_fail
-        allow(controller).to receive(:executed_deferred_action).and_return(nil)
-        get :facebook_callback, code: 'fb-code'
-      end
-
-      context 'logging user into facebook' do
-        it 'logs in the user' do
-          allow(controller).to receive(:facebook_login) { [double('user'), nil] }
-          allow(controller).to receive(:log_user_in)
-          get :facebook_callback, code: 'fb-code'
-        end
-      end
-
-      context 'error from loggin into facebook' do
-        it 'does not log in the user' do
-          stub_fb_login_fail
-          expect(controller).to_not receive(:log_user_in)
-          get :facebook_callback, code: 'fb-code'
-        end
-      end
-
-      describe 'redirecting' do
-        context 'when deferred actions redirect' do
-          it 'delegates the redirect to the deferred action' do
-            stub_fb_login_fail
-            allow(controller).to receive(:executed_deferred_action) do
-              controller.redirect_to city_path('michigan', 'detroit')
-            end
-
-            get :facebook_callback, code: 'fb-code'
-            expect(response).to redirect_to(city_path('michigan', 'detroit'))
-          end
-        end
-
-        context 'without deferred action redirects' do
-          context 'after visiting a school reviews page' do
-            it 'redirects to the overview path for that school' do
-              stub_fb_login_fail
-              allow(controller).to receive(:overview_page_for_last_school) { '/overview-url-double' }
-              get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/overview-url-double')
-            end
-          end
-
-          context 'with a redirect_uri cookie set' do
-            it 'prefers school overview' do
-              stub_fb_login_fail
-              cookies[:redirect_uri] = '/cookie-redirect-path'
-              allow(controller).to receive(:overview_page_for_last_school) { '/overview-url-double' } # prefer cookie
-              get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/overview-url-double')
-            end
-            it 'should not decode square brackets if redirect_uri contains encoded square brackets' do
-              stub_fb_login_fail
-              cookies[:redirect_uri] = '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
-              allow(controller).to receive(:overview_page_for_last_school) { nil }
-              get :facebook_callback, code: 'fb-code'
-              expect(subject).to redirect_to '/delaware/dover/schools?st%5B%5D=public&st%5B%5D=charter'
-              expect(subject.request.url).not_to include '['
-              expect(subject.request.url).not_to include ']'
-            end
-          end
-
-          context 'logged in' do
-            it 'redirects to the account page' do
-              stub_fb_login_success
-              allow(controller).to receive(:overview_page_for_last_school) { nil }
-              get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to('/account/')
-            end
-          end
-
-          context 'not logged in' do
-            it 'redirects to the home page' do
-              stub_fb_login_fail
-              allow(controller).to receive(:overview_page_for_last_school) { nil }
-              get :facebook_callback, code: 'fb-code'
-              expect(response).to redirect_to(home_url)
-            end
-          end
-        end
-      end
     end
   end
 
@@ -456,9 +382,14 @@ describe SigninController do
         expect(subject).to redirect_to my_account_url
       end
 
-      it 'should redirect to url existing on verification link' do
-        valid_params.merge!(redirect: 'google.com')
-        expect(subject).to redirect_to 'google.com'
+      it 'should redirect to url existing on verification link if valid' do
+        valid_params.merge!(redirect: 'http://www.greatschools.org')
+        expect(subject).to redirect_to 'http://www.greatschools.org'
+      end
+
+      it 'should redirect to account page if redirect specified in link is invalid' do
+        valid_params.merge!(redirect: 'http://www.greatschools.org.google.com')
+        expect(subject).to redirect_to my_account_url
       end
 
       it 'should save the user' do
@@ -514,9 +445,14 @@ describe SigninController do
           expect(subject).to redirect_to my_account_url
         end
 
-        it 'should redirect to url existing on verification link' do
-          valid_params.merge!(redirect: 'google.com')
-          expect(subject).to redirect_to 'google.com'
+        it 'should redirect to url existing on verification link if valid' do
+          valid_params.merge!(redirect: 'https://www.greatschools.org/')
+          expect(subject).to redirect_to 'https://www.greatschools.org/'
+        end
+
+        it 'should redirect to account page if url existing on verification link is invalid' do
+          valid_params.merge!(redirect: 'https://www.greatschools.org.google.com')
+          expect(subject).to redirect_to my_account_url
         end
       end
     end
@@ -547,89 +483,23 @@ describe SigninController do
       it_should_behave_like 'something went wrong'
     end
 
-  end
-
-  describe SigninController::FacebookSignedRequestSigninCommand do
-    let(:user) { double('user') }
-    let(:params) do
-      {
-          'email' => 'example@greatschools.org',
-          'facebook_signed_request' => 123
-      }
-    end
-    subject(:command) do
-      command = SigninController::FacebookSignedRequestSigninCommand.new_from_request_params(params)
-    end
-
-    context 'when signed request is not valid' do
-      before do
-        allow(MiniFB).to receive(:verify_signed_request).
-                              with(ENV_GLOBAL['facebook_app_secret'], params['facebook_signed_request']).
-                              and_return(false)
+    describe '#facebook_auth' do
+      it 'renders 422 when required parameters are missing' do
+        xhr :post, :facebook_auth
+        expect(response.status).to eq(422)
       end
-      it 'raises an exception' do
-        expect { SigninController::FacebookSignedRequestSigninCommand.new_from_request_params(params) }.to raise_error
-      end
-    end
 
-    describe '#find_or_create_user' do
-      context 'when user exists' do
-        before do
-          expect(MiniFB).to receive(:verify_signed_request).
-                                with(ENV_GLOBAL['facebook_app_secret'], params['facebook_signed_request']).
-                                and_return(true)
-          allow(command).to receive(:existing_user).and_return(user)
-        end
-        it 'should return the user' do
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(result_user).to eq(user)
-        end
-        it 'should report that user was preexisting' do
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(is_new_user).to be_falsey
-        end
-        it 'should not return an error' do
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(error).to be_nil
-        end
-      end
-      context 'when user does not exist' do
-        let(:user) { User.new }
-        before do
-          expect(MiniFB).to receive(:verify_signed_request).
-                                with(ENV_GLOBAL['facebook_app_secret'], params['facebook_signed_request']).
-                                and_return(true)
-          allow(user).to receive(:save) { true }
-          expect(User).to receive(:new).and_return(user)
-        end
-        it 'should set the correct email address' do
-          allow(command).to receive(:existing_user).and_return(nil)
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(result_user.email).to eq(params['email'])
-        end
-        it 'should return a new user' do
-          allow(command).to receive(:existing_user).and_return(nil)
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(result_user).to eq(user)
-        end
-        it 'should report that user was preexisting' do
-          allow(command).to receive(:existing_user).and_return(nil)
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(is_new_user).to be_truthy
-        end
-        it 'should not return an error' do
-          allow(command).to receive(:existing_user).and_return(nil)
-          result_user, error, is_new_user = command.find_or_create_user
-          expect(error).to be_nil
-        end
-        %w[first_name last_name facebook_id].each do |attribute|
-          it "should set #{attribute} if provided" do
-            params[attribute] = 'Foo'
-            allow(command).to receive(:existing_user).and_return(nil)
-            result_user, error, is_new_user = command.find_or_create_user
-            expect(result_user.send(attribute)).to eq('Foo')
-          end
-        end
+      it 'does something when provided parameters' do
+        command = double
+        email = 'aroy@greatschools.org'
+        signed = '1234'
+        expect(FacebookSignedRequestSigninCommand).
+            to receive(:new).
+                with(signed, email, hash_excluding(:email, :facebook_signed_request)).
+                and_return(command)
+        expect(command).to receive(:join_or_signin)
+        allow(controller).to receive(:params).and_return 'email' => email, 'facebook_signed_request' => signed
+        controller.facebook_auth
       end
     end
   end
@@ -652,8 +522,17 @@ describe SigninController do
       let(:invalid_token) { 'foo' }
       let(:redirect) { '/foo' }
 
+      context 'given a bad redirect url' do
+        let(:bad_redirect) { 'http://foo.bar.taz/' }
+        before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: bad_redirect) }
+
+        it 'should redirect to the account page' do
+          expect(controller).to receive(:redirect_to).with(my_account_path)
+          controller.send :authenticate_token_and_redirect
+        end
+      end
       context 'given a valid token' do
-        before { allow(controller).to receive(:params).and_return(id: valid_token, date: valid_time, redirect: redirect) }
+        before { allow(controller).to receive(:params).and_return(id: CGI.escape(valid_token), date: valid_time, redirect: redirect) }
 
         it 'should verify the user\'s email' do
           allow(controller).to receive(:redirect_to).with(password_url)
@@ -698,51 +577,5 @@ describe SigninController do
         end
       end
     end
-  end
-
-  describe SigninController::UserAuthenticatorAndVerifier do
-    let(:user) { FactoryGirl.create(:new_user) }
-    let(:token_and_time) { EmailVerificationToken.token_and_date(user) }
-    let(:token) { token_and_time[0] }
-    let(:time) { token_and_time[1] }
-    subject { SigninController::UserAuthenticatorAndVerifier.new(token, time) }
-
-    context 'when given nils and blanks' do
-      [
-        [nil, nil],
-        ['', nil],
-        [nil, ''],
-        ['', '']
-      ].each do |token, time|
-        subject { SigninController::UserAuthenticatorAndVerifier.new(token, time) }
-        it { is_expected.to_not be_token_valid }
-      end
-    end
-
-    context 'with a malformed token' do
-      subject { SigninController::UserAuthenticatorAndVerifier.new('invalid_token', time) }
-      it { is_expected.to_not be_token_valid }
-    end
-
-    context 'when date is in the future' do
-      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 10.days.from_now) }
-      it { is_expected.to_not be_token_valid }
-    end
-
-    context 'when date is a second ago' do
-      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.second.ago) }
-      it { is_expected.to be_token_valid }
-    end
-
-    context 'when date is yesterday' do
-      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 1.days.ago) }
-      it { is_expected.to be_token_valid }
-    end
-
-    context 'when date is malformed' do
-      let(:token_and_time) { EmailVerificationToken.token_and_date(user, 'fubar date') }
-      it { is_expected.to_not be_token_valid }
-    end
-
   end
 end

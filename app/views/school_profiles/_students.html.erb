@@ -1,0 +1,59 @@
+<% ethnicity_data = students.ethnicity_data %>
+<% title = t('.title') %>
+<% subtitle = t('.subtitle_html') %>
+<% content = students.sources_for_view %>
+
+<% # If you change these colors they need to be changed in ethnicity_pie_chart.js %>
+<% ethnicity_colors = %w(#0f69c4 #2bdc99 #f1830f #f1e634 #6f2eb4 #ef60d0 #ca3154 #999EFF) %>
+<% analytics_id = 'Students' %>
+<% analytics_id += '-empty' unless students.visible? %>
+
+<a class="anchor-mobile-offset" name="Students"></a>
+<div id="<%= analytics_id %>" class="students-container" data-ga-click-label="Students">
+  <div class="rating-container__rating">
+    <div class="module-header">
+      <div class="circle-rating--equity-blue circle-rating--medium">
+        <span class="icon-users"></span>
+      </div>
+      <div class="title-container">
+        <span class="title"><%= title %></span></br>
+        <span><%= subtitle %></span>
+        <%= render 'no_data_for_module', title: title unless students.visible? %>
+      </div>
+    </div>
+  </div>
+  <% if students.visible? %>
+    <% if ethnicity_data.present? %>
+      <div class="row">
+        <div class="col-xs-12 col-sm-7">
+          <div id="ethnicity-graph"></div>
+        </div>
+        <div class="col-xs-12 col-sm-5">
+          <% ethnicity_data.each_with_index do |val, index |  %>
+            <% value = Float(val[:school_value]) rescue nil  %>
+            <% value.round if value %>
+            <div class="legend-separator js-highlightPieChart clearfix" data-slice-id="<%= index %>" style="" >
+              <div class="legend-square" style="float:left;background-color: <%= ethnicity_colors[index] %>"></div>
+              <div class="legend-title" style="float:left;"><%= val[:breakdown] %></div>
+              <% if value %>
+                <% v = value.round%>
+                <% v = '<1' if v == 0 %>
+                <div class="legend-title" style="float: right"><%= v %>%</div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="subgroups">
+      <div class="row">
+
+      </div>
+    </div>
+    <div class="gender"> </div>
+    <div>
+      <%= render 'sources_link_to_modal', content: content %>
+      <%= render 'module_feedback', content: students.qualaroo_module_link %>
+    </div>
+  <% end %>
+</div>

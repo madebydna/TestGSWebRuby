@@ -8,7 +8,7 @@ Lots of file refactored into auth.js
 GS.facebook = GS.facebook || (function ($) {
 
     // Facebook permissions that GS.org will ask for during FB.login()
-    var facebookPermissions = 'public_profile, email, user_friends';
+    var facebookPermissions = 'email';
 
     // Resolved on first successful FB login and on every page load if FB status is signed in; never rejected
     var successfulLoginDeferred = $.Deferred();
@@ -99,6 +99,68 @@ GS.facebook = GS.facebook || (function ($) {
       return deferred.promise()
     };
 
+    var getEmailPermission = function () {
+      var deferred = $.Deferred();
+      var permission = false;
+      FB.api('/me/permissions', function (response) {
+        permissions = response.data || [];
+        for(var i = 0; i < permissions.length; i++) {
+          if(permissions[i].permission == 'email' && permissions[i].status == 'granted') {
+            permission = true;
+          }
+        }
+        deferred.resolve(permission);
+      });
+      return deferred.promise();
+    };
+
+    var getFacebookData = function () {
+      var deferred = $.Deferred();
+      FB.api('/me?fields=email', function (facebookData) {
+        if (!facebookData || facebookData.error) {
+          // problem occurred
+          deferred.reject(facebookData.error.message);
+        } else {
+          deferred.resolve(facebookData);
+        }
+      });
+      return deferred.promise();
+    };
+
+    var loginToFacebook = function () {
+      var deferred = $.Deferred();
+
+      FB.login(function (response) {
+        if (response.authResponse) {
+          deferred.resolve(response.authResponse);
+        } else {
+          deferred.reject();
+        }
+      }, {
+        scope: facebookPermissions,
+        response_type: "token"
+      });
+
+      return deferred.promise();
+    };
+
+    var askForEmailPermissionAgain = function () {
+      var deferred = $.Deferred();
+
+      FB.login(function (response) {
+        if (response.authResponse) {
+          deferred.resolve(response.authResponse);
+        } else {
+          deferred.reject();
+        }
+      }, {
+        scope: 'email',
+        auth_type: 'rerequest'
+      });
+
+      return deferred.promise();
+    };
+
     // should log user into FB and GS (backend creates GS account if none exists)
     // Does not currently do refresh after logging in, just updates site header
     // resolves deferreds and updates login flags
@@ -110,23 +172,55 @@ GS.facebook = GS.facebook || (function ($) {
         firstSuccessfulLoginDeferred.resolve();
       });
 
-      FB.login(function (response) {
-        if (response.authResponse) {
-          FB.api('/me', function (facebookData) {
-            if (!facebookData || facebookData.error) {
-              // problem occurred
-              loginAttemptDeferred.reject(facebookData.error.message);
-            } else {
-              facebookData.authResponse = response.authResponse;
-              loginAttemptDeferred.resolve(facebookData);
-            }
-          });
-        } else {
+      // make a FB login request
+      // when that is done, see if we were approved or denied user's email
+      // if we have permission to get the email, then get it and we're done
+      // if didnt get permission, re-ask for permission and repeat above:
+      //   check if we have permission, if so get the email, done
+      // if we didn't get permission after re-asking, reject the login
+
+      loginToFacebook().done(function(authResponse) {
+        getEmailPermission().done(function(haveEmailPermission) {
+          if(haveEmailPermission) {
+            getFacebookData().done(function(facebookData) {
+              if(facebookData.email) {
+                facebookData.authResponse = authResponse;
+                loginAttemptDeferred.resolve(facebookData);
+              } else {
+                loginAttemptDeferred.reject();
+              }
+            }).fail(function(errorMessage) {
+              loginAttemptDeferred.reject(errorMessage);
+            });
+          } else {
+            askForEmailPermissionAgain().done(function() {
+              getEmailPermission().done(function(haveEmailPermission) {
+                if(haveEmailPermission) {
+                  getFacebookData().done(function(facebookData) {
+                    if(facebookData.email) {
+                      facebookData.authResponse = authResponse;
+                      loginAttemptDeferred.resolve(facebookData);
+                    } else {
+                      loginAttemptDeferred.reject();
+                    }
+                  }).fail(function(errorMessage) {
+                    loginAttemptDeferred.reject(errorMessage);
+                  });
+                } else {
+                  loginAttemptDeferred.reject('Please share your Facebook email address in order to log in with Facebook');
+                }
+              }).fail(function() {
+                loginAttemptDeferred.reject();
+              });
+            }).fail(function() {
+              loginAttemptDeferred.reject();
+            });
+          }
+        }).fail(function() {
           loginAttemptDeferred.reject();
-        }
-      }, {
-        scope: facebookPermissions,
-        response_type: "token"
+        });
+      }).fail(function() {
+        loginAttemptDeferred.reject();
       });
 
       return loginAttemptDeferred;
@@ -138,10 +232,10 @@ GS.facebook = GS.facebook || (function ($) {
         GS.auth.signinUsingFacebookData(facebookData).done(function(data) {
           deferred.resolve(data);
         }).fail(function(data) {
-          deferred.reject(data);
+          deferred.reject();
         });
       }).fail(function(data) {
-          deferred.reject(data);
+        deferred.reject();
       });
       return deferred.promise();
     };

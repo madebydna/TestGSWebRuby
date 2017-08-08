@@ -1,5 +1,6 @@
 class School < ActiveRecord::Base
   include SchoolReviewConcerns
+  include SchoolRouteConcerns
 
   LEVEL_CODES = {
     primary: 'p',
@@ -17,7 +18,7 @@ class School < ActiveRecord::Base
   self.table_name='school'
   include StateSharding
 
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active
+  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
   attr_writer :collections
   has_many :school_metadatas
   belongs_to :district
@@ -124,12 +125,16 @@ class School < ActiveRecord::Base
     (level_code_array & (Array(arr_levels))).any?
   end
 
+  def includes_type? (types)
+    (type.downcase.split(',') & (Array(types))).any?
+  end
+
   def private_school?
-    type == 'private'
+    type.downcase == 'private'
   end
 
   def public_or_charter?
-    ['public', 'charter'].include?(type)
+    ['public', 'charter'].include?(type.downcase)
   end
 
   def preschool?
@@ -167,7 +172,8 @@ class School < ActiveRecord::Base
   #Temporary work around, since with db charmer we cannot directly say school.district.name.
   #It looks at the wrong database in that case.
   def district
-    @district ||= District.on_db(self.shard).where(id: self.district_id).first
+    return @district if defined?(@district)
+    @district = District.on_db(self.shard).where(id: self.district_id).first
   end
 
   # returns true if school is on held school list (associated with school reviews)
@@ -194,10 +200,6 @@ class School < ActiveRecord::Base
 
   def held_school?
     HeldSchool.exists?(state: state, school_id: id)
-  end
-
-  def neighbors
-    super.on_db(shard)
   end
 
   def show_ads
@@ -263,6 +265,14 @@ class School < ActiveRecord::Base
     includes_level_code?(%w[e m])  &&  !preschool?
   end
 
+  def middle_school?
+    level_code == 'm'
+  end
+
+  def high_school?
+    level_code == 'h'
+  end
+
   SCHOOL_CACHE_KEYS = %w(characteristics esp_responses progress_bar test_scores nearby_schools)
 
   def cache_results
@@ -289,8 +299,35 @@ class School < ActiveRecord::Base
     collection.schools
   end
 
+  def facebook_url
+    cache_results.values_for(EspKeys::FACEBOOK_URL).first || metadata.facebook_url
+  end
+
   def demo_school?
     notes.present? && notes.match("GREATSCHOOLS_DEMO_SCHOOL_PROFILE")
+  end
+
+  def self.query_distance_function(lat, lon)
+    miles_center_of_earth = 3959
+    "(
+    #{miles_center_of_earth} *
+     acos(
+       cos(radians(#{lat})) *
+       cos( radians(school.lat) ) *
+       cos(radians(school.lon) - radians(#{lon})) +
+       sin(radians(#{lat})) *
+       sin( radians(school.lat) )
+     )
+   )".squish
+  end
+
+  def claimed?
+    @_claimed ||= 
+      EspMembership.where(
+          active: 1,
+          state: state,
+          school_id: id
+      ).present?
   end
 
   # def notes

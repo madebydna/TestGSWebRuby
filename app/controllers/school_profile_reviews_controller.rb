@@ -1,10 +1,10 @@
-class SchoolProfileReviewsController < SchoolProfileController
+class SchoolProfileReviewsController < DeprecatedSchoolProfileController
   protect_from_forgery
 
   include DeferredActionConcerns
   include ReviewControllerConcerns
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def reviews
     @school_reviews.add_number_of_votes_method_to_each
@@ -37,8 +37,9 @@ class SchoolProfileReviewsController < SchoolProfileController
     if logged_in?
       review, errors = build_review_params(review_params).save_new_review
       if errors
+        GSLogger.error(:reviews, nil, vars: review_params, message: 'Error trying to save a user\'s review: ' + errors.try(:first).to_s)
         status = :unprocessable_entity
-        json_message = errors
+        json_message = errors.first
       else
         status = :created
         json_message = {
@@ -56,19 +57,27 @@ class SchoolProfileReviewsController < SchoolProfileController
     end
   end
 
-private
+  private
 
-# Based on SEO consultant's advice, reviews tab will rel canonical to overview
-# tab as when the overview is diaplaying all the textual reviews.
-# The review tab will rel canonical to itself when there is at least one 
-# review that is not shown on overview
+  # Based on SEO consultant's advice, reviews tab will rel canonical to overview
+  # tab as when the overview is displaying all the textual reviews.
+  # The review tab will rel canonical to itself when there is at least one
+  # review that is not shown on overview
 
-def canonical_url
+  def canonical_url
     rel_canonical_to_overview? ? school_url(@school) : school_reviews_url(@school)
   end
 
   def rel_canonical_to_overview?
     @school_reviews.number_of_reviews_with_comments <= MAX_NUMBER_OF_REVIEWS_ON_OVERVIEW
+  end
+
+  def set_hreflang
+    url = school_reviews_url(@school)
+    @hreflang ||= {}
+    @hreflang[:en] = remove_query_params_from_url(url, [:lang])
+    @hreflang[:es] = add_query_params_to_url(url, true, {lang: :es})
+    @hreflang
   end
 
   def review_params

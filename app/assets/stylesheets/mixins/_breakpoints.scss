@@ -1,0 +1,60 @@
+// These mixins are designed to be used with boostrap 3 breakpoints and will need to be updated if we adopt bootstrap 4 breakpoints
+//
+$default-min-screen-size: 0;
+$min-screen-size: $default-min-screen-size;
+
+// large screen size that should never be used to be used as a default for max
+$default-max-screen-size: 8000px;
+$max-screen-size: $default-max-screen-size;
+
+@mixin media-breakpoint-up($size) {
+  @if $size == lg {
+    $min-screen-size: $screen-lg-min;
+  } @else if $size == md {
+    $min-screen-size: $screen-md-min;
+  } @else if $size == sm {
+    $min-screen-size: $screen-sm-min;
+   } @else {
+    $min-screen-size: 0px;
+  } 
+  @media (min-width: $min-screen-size) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-down($size) {
+  @if $size == md {
+    $max-screen-size: ($screen-lg-min - 1);
+  } @else if $size == sm {
+    $max-screen-size: ($screen-md-min - 1);
+  } @else if $size == xs {
+    $max-screen-size: ($screen-sm-min - 1);
+  } @else {
+    $max-screen-size: $default-max-screen-size;
+  }
+  @media (max-width: $max-screen-size) {
+    @content;
+  }
+}
+
+@mixin media-breakpoint-only($size) {
+  @if $size == 'lg' {
+    $min-screen-size: $screen-lg-min;
+    $max-screen-size: $default-max-screen-size;
+  } @else if $size == 'md' {
+    $max-screen-size: ($screen-lg-min - 1);
+    $min-screen-size: $screen-md-min;
+  } @else if $size == 'sm' {
+    $max-screen-size: ($screen-md-min - 1);
+    $min-screen-size: $screen-sm-min;
+  } @else if $size == 'xs' {
+    $max-screen-size: ($screen-sm-min - 1);
+    $min-screen-size: $default-min-screen-size;
+  } @else {
+    $max-screen-size: $screen-lg-max;
+    $min-screen-size: $default-min-screen-size;
+  }
+  @media (min-width: $min-screen-size) and (max-width: $max-screen-size) {
+    @content;
+  }
+}

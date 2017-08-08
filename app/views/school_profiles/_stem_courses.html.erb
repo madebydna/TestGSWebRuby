@@ -1,0 +1,18 @@
+<% level_codes = @school.level_codes & %w[m h] %>
+<% if level_codes.length > 1 %>
+  <% level = 'mixed' %>
+<% else %>
+  <% level = level_codes.first %>
+<% end %>
+
+<%= react_component('StemCourses', props: {
+  courses: stem_courses.stem_courses_hashes,
+  sources: stem_courses.stem_courses_sources,
+  title: t('.title'),
+  titleTooltipText: t('.title_tooltip_text_html'),
+  subtitle: t(".#{level}.subtitle_html"),
+  parentTip: t(".#{level}.parent_tip_html"),
+  faqCta: t('.faq_cta'),
+  faqContent: t(".#{level}.faq_content_html", faq_path: faq_path),
+  qualaroo_module_link: stem_courses.qualaroo_module_link
+}) %>

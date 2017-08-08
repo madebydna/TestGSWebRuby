@@ -4,16 +4,29 @@ class HomeController < ApplicationController
   before_action :ad_setTargeting_through_gon
   before_action :data_layer_through_gon
   before_action :set_login_redirect
+  before_action :set_no_index
 
-  layout 'application'
+  layout "deprecated_application"
 
   def show
+
     @show_ads = PropertyConfig.advertising_enabled?
 
     @canonical_url = home_url
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
-    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-      keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
+    set_meta_tags title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
+      keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools',
+                  og: {
+                      title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
+                      type: 'website',
+                      url: home_url,
+                      site_name: 'GreatSchools'
+                  },
+                  twitter: {
+                      card: 'Summary',
+                      site: '@GreatSchools',
+                      description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'
+                  }
     @homepage_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     set_omniture_pagename
     gon.pagename = "Homepage"

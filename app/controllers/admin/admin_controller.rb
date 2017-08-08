@@ -3,7 +3,7 @@ class Admin::AdminController < ApplicationController
 
   before_action :init_page
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def help
 

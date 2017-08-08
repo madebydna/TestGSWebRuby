@@ -1,0 +1,24 @@
+es:
+  school_profiles:
+    show_profile:
+      overview: RESUMEN
+      false_header:
+        first_bullet: ¿Eres un administrador de esta escuela?
+        second_bullet_html: <a href="/official-school-profile/">Reclame el perfil de tu escuela</a> para editar información general y compartir qué hace tu escuela única. <a href="/gk/schools/">Obtenga más información.</a>
+        third_bullet: ¿Es usted un padre o estudiante en esta escuela?
+        fourth_bullet: Alienta a los líderes escolares para que reclamen este perfil de escuela.
+      true_header:
+        first_bullet: ¿Eres un administrador de esta escuela? Mantén la información de tu escuela actualizada.
+        second_bullet_html: <a href="/official-school-profile/dashboard/">Mantén la información de tu escuela actualizada.<a>
+        third_bullet: ¿Es usted un padre o estudiante en esta escuela?
+        fourth_bullet: Alienta a los líderes escolares para actualizar el perfil de su escuela.
+      toc:
+        - title: informaciÓn general
+          description: Averigue las horas, inscripción, clases, deportes y más acerca de esta escuela.
+          anchor: '#General_info'
+        - title: estudiantes
+          description: Vea la diversidad estudiantil en esta escuela.
+          anchor: '#Students'
+        - title: vecindario
+          description: Obtenga más información de la ubicación e información de contacto de esta escuela y explore otras escuelas cercanas.
+          anchor: '#Neighborhood'

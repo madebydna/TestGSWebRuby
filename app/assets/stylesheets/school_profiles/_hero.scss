@@ -1,0 +1,228 @@
+#hero {
+  $rating-star-filled-color: #ffc800;
+  $rating-star-empty-color: #65859f;
+  $hero-background-color: #08497b;
+  $hero-font-color: white;
+  $color-see-more: #26abe2;
+
+  background-image: image_url('school_profiles/hero_bg.jpg');
+  color: $hero-font-color;
+  font-size: $font-size-base;
+
+  a:not(.info-circle) {
+    color: $hero-font-color;
+    font-size: $font-size-base;
+  }
+
+  .info-circle {
+    background-color: #3f658d;
+  }
+
+  h1 {
+    padding-top: 10px;
+    font-family: 'RobotoSlab-Bold';
+    font-size: $font-size-l7;
+    font-weight: 900;
+    @include media-breakpoint-down(sm) {
+      text-align: center;
+      font-size: $font-size-l4;
+      padding-top: 0;
+    }
+  }
+
+  .school-contact, .school-info {
+    display: block;
+  }
+
+  .school-contact {
+    padding-top: 1rem;
+  }
+
+
+  .school-contact__item:first-of-type {
+    padding-left: 0px;
+  }
+  .school-contact__item:last-of-type {
+    padding-right: 0px;
+  }
+
+  .school-info {
+    padding: 15px 0 10px 0;
+  }
+
+  .school-info__item:first-of-type {
+    padding-left: 0px;
+  }
+  .school-info__item:last-of-type {
+    padding-right: 0px;
+  }
+
+  .school-contact__item {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px 0;
+    @media(min-width: 750px) {
+      display: inline-block;
+      padding: 0 10px 5px 0;
+      margin: 0 10px 0 0;
+      border-right: 1px solid rgba(255, 255, 255, .17);
+      text-align: left;
+      max-width: none;
+    }
+  }
+
+  .school-contact__more {
+    display: none;
+    @include media-breakpoint-up(sm){
+      display: inline-block;
+    }
+  }
+
+  .school-contact__item:last-of-type {
+    border-right: none;
+  }
+
+  .school-contact__address,
+  .school-contact__phone,
+  .school-contact__home-page-url {
+    .badge {
+      display: inline-block;
+      padding-top: 3px;
+    }
+  }
+
+  .school-info {
+    margin: auto;
+    text-align: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    @include media-breakpoint-up(md) {
+      text-align: left;
+      width: 100%;
+    }
+    @include media-breakpoint-down(sm) {
+      .school-info-reviews-mobile {
+        padding-right: 0px;
+      }
+    }
+    a.see-more {
+      margin-top: 10px;
+      color: $color-see-more;
+      display: block;
+      @include media-breakpoint-up(md) {
+        display: none;
+      }
+    }
+  }
+
+  .school-info__item {
+    display: inline-block;
+    padding: 0 34px;
+    border-left: 1px solid rgba(255, 255, 255, .17);
+    @include media-breakpoint-down(xs)  {
+      padding: 0 10px;
+    }
+    font-size: $font-size-l4;
+    font-family: 'opensans-semibold';
+    text-align: center;
+  }
+
+  .school-info__item:first-of-type {
+    border-left: none;
+  }
+
+  .school-info__item:nth-last-of-type(-n+4) {
+    @include media-breakpoint-down(sm) {
+      display: none;
+    }
+  }
+
+  .vertical-items {
+    margin: 20px auto 0;
+    max-width: 275px;
+  }
+
+  .school-info__item-mobile {
+    border-bottom: 1px solid rgba(255, 255, 255, .17);
+    text-align: left;
+    padding: 2px 0;
+
+    @include media-breakpoint-up(md) {
+      display: none;
+    }
+
+    span:not(.label) {
+      float: right;
+    }
+  }
+
+  .school-info__gs-rating {
+    .icon-hint {
+      margin-left: -1px; 
+    }
+  }
+
+  .school-info__five-star-rating {
+    cursor: pointer;
+    @include media-breakpoint-down(xs) {
+      font-size: $font-size-base;
+    }
+  }
+
+  .label {
+    opacity: 0.6;
+    font-size: $font-size-l1;
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .label-owl {
+    font-size: $font-size-l1;
+    font-weight: 600;
+    line-height: 1.8;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .osp-badge {
+    vertical-align: middle;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background: image_url('school_profiles/claimed_badge.png') no-repeat;
+  }
+
+  .osp-label {
+    vertical-align: middle;
+    font-size: 16px;
+    font-family: opensans-semibold;
+    color: #2ba3dc;
+  }
+
+  .school-name-container {
+    >h1.school-name {
+      display: inline-block;
+      margin-right: 25px;
+    }
+    >span{
+      display:inline-block;
+      vertical-align: text-bottom
+    }
+    @include media-breakpoint-down(xs) {
+      text-align: center;
+      >h1.school-name {
+        display: block;
+        margin-right: 0px;
+      }
+      >span{
+        display:block;
+      }
+    }
+  }
+}
+

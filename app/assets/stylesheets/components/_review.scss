@@ -1,0 +1,270 @@
+
+
+
+.user-reviews-container {
+  font-size: $font-size-l2;
+  text-align: center;
+  @include media-breakpoint-up(sm) {
+    text-align: left;
+  }
+
+  .user-info-column {
+    padding-right: 5px;
+    @include media-breakpoint-up(sm) {
+      text-align: left;
+    }
+  }
+
+  .review-list-column {
+    @include media-breakpoint-up(sm) {
+      margin-top: -10px;
+    }
+    .topical-review {
+      padding-top: 15px;
+    }
+  }
+
+  .avatar {
+    margin: auto;
+  }
+  .user-type {
+    text-align: center;
+    color: $gray-text-color;
+    margin-top: 5px;
+    @include media-breakpoint-up(sm) {
+      margin-top: 10px;
+    }
+  }
+
+  .type-and-date {
+    margin-top: 10px;
+    color: $gray-text-color;
+    font-size: $font-size-s1;
+  }
+
+  .topical-review-button-bar {
+    margin-top: $spacing-small;
+
+    .topical-review-report {
+      display: inline-block;
+    }
+
+    a {
+      color: $color-link;
+      display: block;
+      font-size: $font-size-s1;
+      font-style: italic;
+    }
+
+    .reported {
+      background-color: $color-reported;
+      color: white;
+      padding: $spacing-small $spacing-medium;
+      font-size: $font-size-l1;
+    }
+  }
+
+  .review-button-bar {
+    margin-top: $spacing-large;
+
+    .icon-flag {
+      color: $color-report-flag;
+    }
+
+    > .button {
+      border-radius: 2px;
+      border: solid 1px $color-button-border;
+      background-image: linear-gradient(to bottom, #fff, $color-gradient-button-dark);
+      font-size: $font-size-l1;
+      font-family: opensans-semibold;
+      padding: $spacing-small $spacing-medium;
+      color: $color-dark-gray-text;
+      margin-right: $spacing-small;
+      cursor: pointer;
+
+      &:hover {
+        border: solid 1px $color-button-hover-border;
+      }
+
+      &:active {
+        border: solid 1px $color-button-active-border;
+        background: $color-gradient-button-active none;
+      }
+    }
+
+    > .button.reported {
+      background: $color-reported none;
+      font-family: opensans-regular;
+      color: white;
+      border: none;
+      cursor: default;
+
+      .icon-flag {
+        color: $color-report-flag-reported;
+      }
+    }
+  }
+}
+
+.five-star-review {
+  .header {
+    font-size: $font-size-l3;
+    font-family: opensans-semibold;
+    @include media-breakpoint-up(sm) {
+      display: inline-block;
+    }
+  }
+
+  .answer {
+    margin-top: 5px;
+    @include media-breakpoint-up(sm) {
+      margin-top: 10px;
+      padding-left: 10px;
+      display: inline-block;
+    }
+    .five-stars {
+      font-size: $font-size-l2;
+      .empty-star {
+        color: #dbe6eb;
+      }
+    }
+  }
+
+  .comment {
+    text-align: left;
+    margin-top: 5px;
+    line-height: 1.7;
+    @include media-breakpoint-up(sm) {
+      margin-top: 10px;
+    }
+  }
+}
+
+.topical-review {
+
+  @include clearfix;
+  text-align: left;
+
+  > .topical-review-summary {
+    $text_color: #2e3438;
+    padding: 20px 0 20px 0;
+    font-size: 12px;
+    font-family: 'opensans-regular';
+    //color: $text_color; //might need to be in elements instead
+
+    .topical-title {
+      text-align: center;
+      font-size: 20px;
+      padding: 20px 0;
+      text-transform: uppercase;
+      font-family: 'opensans-semibold';
+      @include media-breakpoint-up(sm) {
+        text-align: left;
+      }
+    }
+
+    .topical_item {
+      padding: 5px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+      margin: 5px;
+      float: left;
+      font-size: 12px;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .topic-icon {
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .topic-details {
+      display: inline-block;
+      padding-left: 5px;
+      vertical-align: middle;
+    }
+  }
+
+  > .average-rating-column {
+    float: left;
+    width: 30px;
+  }
+  > .text-column {
+    margin-left: 30px
+  }
+  .answer {
+    font-size: 14px;
+    font-family: opensans-semibold;
+    .review-grade-intro{
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .review-title-blue{
+      color: $brand-primary;
+    }
+  }
+  .comment {
+    padding-top: 5px;
+  }
+  .answer-icon {
+    font-family: icon-greatschools;
+  }
+
+  .strongly-disagree {
+    @extend .icon-dislike;
+    color: $color-5-scale-strongly-disagree;
+  }
+  .disagree {
+    @extend .icon-dislike;
+    color: $color-5-scale-disagree;
+  }
+  .neutral {
+    @extend .icon-neutral;
+    color: $color-5-scale-neutral;
+  }
+  .agree {
+    @extend .icon-like;
+    color: $color-5-scale-agree;
+  }
+  .strongly-agree {
+    @extend .icon-like;
+    color: $color-5-scale-strongly-agree;
+  }
+  &.review-distribution {
+    h4 {
+      margin: 0 0 $spacing-large;
+      line-height: 1.44;
+    }
+    .blue-highlight {
+      color: $brand-primary;
+    }
+  }
+  .rating-bar-viz {
+    overflow: visible;
+    white-space: nowrap;
+    font-size: 12px;
+
+    .answer-icon {
+      display: inline-block;
+      vertical-align: top;
+    }
+    .title {
+      vertical-align: top;
+      margin-left: 10px;
+      width: 140px;
+      display: inline-block;
+    }
+    .bar {
+      display: inline-block;
+      height: 15px;
+      margin-left: 10px;
+    }
+    .answer-count {
+      vertical-align: top;
+      margin-left: 10px;
+    }
+  }
+  .rating-bar-viz ~ .rating-bar-viz {
+    margin-top: 5px;
+  }
+}

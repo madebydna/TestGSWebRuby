@@ -8,13 +8,14 @@ class TestScoresCaching::BreakdownsCacher < TestScoresCaching::TestScoresCacher
         (
           # The site only shows subgroup ratings for all students. So here we grab all the non-subgroup data
           # and add in the grade All subgroup data.
-          TestDataSet.fetch_test_scores(school, breakdown_id: 1) +
-          TestDataSet.fetch_test_scores(school, grade: 'All')
+          TestDataSet.fetch_test_scores(school)
         ).select do |result|
           data_type_id = result.data_type_id
           # skip this if no corresponding test data type
           test_data_types && test_data_types[data_type_id].present?
         end
+        results.extend(TestScoreCalculations).select_items_with_max_year!
+        results = inject_grade_all(results)
         results.map { |obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj) }
     )
   end

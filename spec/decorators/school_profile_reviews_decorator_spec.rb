@@ -42,9 +42,9 @@ describe SchoolProfileReviewsDecorator, type: :view do
     context 'when it is not an overall topic' do
       let(:score_distribution) do
         {
-            foo: 2,
-            bar: 6,
-            baz: 3
+            'foo' => 2,
+            'bar' => 6,
+            'baz' => 3
         }
       end
       before do
@@ -60,7 +60,7 @@ describe SchoolProfileReviewsDecorator, type: :view do
       end
 
       it 'should display the number of occurrences' do
-        expect(subject).to match "(#{6}&nbsp;responses)"
+        expect(subject).to match '(6&nbsp;responses)'
       end
 
       context 'when there are no answers and therefore an empty score distribution' do
@@ -157,11 +157,9 @@ describe SchoolProfileReviewsDecorator, type: :view do
     let(:reviews) do
       FactoryGirl.build_list(:teacher_effectiveness_review, 2, question: question1)
     end
-    before do
-    end
-    it 'should do something' do
+    it 'should have the right question text' do
       allow(subject).to receive_message_chain(:first_topic, :first_question).and_return (question1)
-      expect(subject.question_text).to eq("How effective do you feel the teachers are at this school?")
+      expect(subject.question_text).to eq(question1.question)
     end
   end
 end

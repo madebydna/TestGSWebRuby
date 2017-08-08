@@ -2,34 +2,39 @@ require 'features/page_objects/modules/join_modals'
 require 'features/page_objects/modules/flash_messages'
 require 'features/page_objects/modules/top_nav_section'
 
-
 class HomePage < SitePrism::Page
-
-  include EmailJoinModal
-  include FlashMessages
-  include TopNavSection
 
   set_url_matcher /localhost:\d+\/$/
 
-  element :search_hero_section, 'h1', text: 'Welcome to GreatSchools'
-  element :browse_by_city_header, 'h3', text: 'Browse by city'
-  section :browse_by_cities_section, '.rs-browse-by-cities' do
-    elements :cities, '.city'
+  element :header, 'h1', text: 'Guide your child to a great future'
+  element :school_search_button, 'form[name=schoolResultsSearchForm] button.search-btn'
+  element :search_field, "input[name=locationSearchString]"
+  element :gk_link, ".gk_article_dropdown"
+
+  def user_fill_in_school_search
+    search_field.set('Alameda high school')
   end
-  section :email_signup_section, '.js-shared-email-signup' do
-    element :submit_button, '.hidden-xs button', text: 'Sign up'
+
+  def click_school_search
+    school_search_button.click
   end
-  element :greatkids_articles_section, 'h2', text: 'Set your child up for success!' # See FactoryGirl external_content.rb
-  section :offers_section, '.rs-offers-section' do
-    element :for_families_link, 'a', text: 'For families'
-    element :for_schools_link, 'a', text: 'For schools'
-    element :write_a_review_link, 'a', text: 'Write a review'
-    element :search_by_address_link, 'a', text: 'Search by address'
+
+  def user_fill_in_article_search
+    article_search_field.set('emotional smarts')
   end
-  element :quote_section, '.rs-quote-section'
-  element :who_we_are_section, 'h2', text: 'Who we are'
-  element :our_supporters_section, 'h2', text: 'Our supporters'
-  element :common_core_banner_section, 'h2', text: 'GreatKids State Test Guide for Parents'
-  element :high_school_milestones_section, 'h1', text: 'MILESTONES'
+
+  def click_article_search
+    article_search_button.click
+  end
+
+  def click_dropdown
+    gk_link.click
+  end
+
+  class GkDropdown < SitePrism::Section
+    elements :content_links, 'a'
+  end
+
+  section :gk_content_dropdown, GkDropdown, '.gk-dropdown'
 
 end

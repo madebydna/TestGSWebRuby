@@ -1,0 +1,21 @@
+<% modal_css_class %>
+<% heading %>
+
+<%= render layout: 'modal_layout', locals: {
+  heading: heading,
+  modal_css_class: "join-and-login #{modal_css_class}"
+} do %>
+  <%= form_tag(
+    register_email_path,
+    method: :post,
+    remote: true,
+    id: 'signup-school-form',
+    'data-parsley-namespace'=>"data-parsley-"
+  ) do %>
+    <%= token_tag form_authenticity_token %>
+    <%= render 'forms/email_fieldset' %>
+    <%= render 'forms/grades_fieldset' %>
+    <%= render 'forms/sponsors_fieldset' %>
+    <%= render 'forms/join_button_and_tou_fieldset' %>
+  <% end %>
+<% end %>

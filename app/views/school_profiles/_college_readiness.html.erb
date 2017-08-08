@@ -1,0 +1,52 @@
+<% college_readiness %>
+<% title = t('.title') %>
+<% subtitle = t('.subtitle_html') %>
+<% rating = college_readiness.rating %>
+<% qualaroo_module_link = college_readiness.qualaroo_module_link %>
+<% info_text = college_readiness.info_text  %>
+<% data_values = college_readiness.data_values || [] %>
+<% initial_size = 3 %>
+<% content = college_readiness.sources %>
+<% analytics_id = 'CollegeReadiness' %>
+<% analytics_id += '-empty' unless data_values.present? %>
+<% narration = college_readiness.narration %>
+
+<div id="<%= analytics_id %>" class="rating-container rs-college-readiness" data-ga-click-label="College readiness">
+  <a class="anchor-mobile-offset" name="College_readiness"></a>
+  <div class="rating-container__rating js-historical-module">
+    <%= render "module_header",
+      circle_color_modifier: rating,
+      circle_content: rating,
+      title: title,
+      subtitle: subtitle,
+      info_text: info_text,
+      has_data: data_values.present?,
+      show_historical_ratings: college_readiness.show_historical_ratings?
+    %>
+    <%=
+      if college_readiness.show_historical_ratings?
+        render 'historical_ratings', historical_ratings: college_readiness.historical_ratings,
+               title: t('.historical.title'), subtitle: t('.historical.subtitle')
+      end
+    %>
+    <% if data_values.present? %>
+      <div class="panel">
+        <% if narration %>
+          <div class="auto-narration"><%= narration %></div>
+        <% end %>
+        <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+
+        <% if data_values.size > initial_size %>
+          <div class="rating-container__more-items">
+            <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'College Readiness', suffix: title } do %>
+              <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+            <% end %>
+          </div>
+        <% end %>
+        <%= render partial: 'info_text_and_circle', locals: {cta: college_readiness.faq.cta, content: college_readiness.faq.content } if data_values.present? %>
+      </div>
+      <%= render 'sources_link_to_modal', content: content %>
+      <%= render 'module_feedback', content: qualaroo_module_link %>
+    <% end %>
+  </div>
+</div>

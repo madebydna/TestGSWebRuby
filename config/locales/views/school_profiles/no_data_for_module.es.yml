@@ -1,0 +1,5 @@
+es:
+  school_profiles:
+    no_data_for_module:
+      message: "Esta información no está actualmente disponible. "
+      call_to_action: "Mantenganme informado en esta escuela, incluso cuando se publican nuevos datos."

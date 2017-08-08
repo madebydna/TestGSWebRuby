@@ -1,6 +1,8 @@
 var GS = GS || {}
 GS.util = GS.util || {};
 
+var _kiq = _kiq || [];
+
 GS.util.log = function (msg) {
     if (window.console) {
         console.log(msg);
@@ -15,6 +17,22 @@ GS.util.wrapFunction = function(fn, context, params) {
   return function() {
     fn.apply(context, params);
   };
+};
+
+
+GS.store = GS.store || {};
+GS.store.state = GS.store.state || {};
+GS.util.memoizeAjaxRequest = function(key, promiseMaker) {
+  var deferred = $.Deferred();
+  var val = GS.store.state[key];
+  if(val !== undefined) {
+    deferred.resolve(val);
+    return deferred;
+  } else {
+    return promiseMaker().done(function(response) {
+      GS.store.state[key] = response;
+    });
+  }
 };
 
 GS.util.deleteAjaxCall = function(obj, hash) {

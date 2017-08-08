@@ -6,10 +6,9 @@ es:
   Academic Status: Situación Académica
   Achievement - Indicators Met: Achievement - Indicators Met
   Achievement - Performance Index: Achievement - Performance Index
-  California Academic Performance Index (API) Score: Índice de Rendimiento Académico de California (API)
+  California Academic Performance Index (API) Score: "Índice de Rendimiento Académico de California (API)"
   Climate rating: Climate rating
-  College and Career Ready Performance Index: College and Career Ready Performance
-    Index
+  College and Career Ready Performance Index: College and Career Ready Performance Index
   College readiness rating: Calificación universitaria
   Colorado school grade: Calificacione de Escuela de Colorado
   ESD_url: ESD_url
@@ -29,7 +28,7 @@ es:
   State Rating: State Rating
   State Rating - OSSE Classification: Valoración de Estado - Clasificación OSSE
   Student growth rating: Calificación de crecimiento
-  Test score rating: 'Calificación de examenes'
+  Test score rating: Calificación de examenes
   footnote_climate: footnote_climate
   footnote_growth: footnote_growth
   footnote_psr: footnote_psr
@@ -62,3 +61,67 @@ es:
   whats_this_growth: whats_this_growth
   whats_this_psr: whats_this_psr
   whats_this_test_scores: whats_this_test_scores
+  Colorado Overall Achievement Grade: Grado de Colorado En general Logro
+  Colorado Reading Achievement Grade: Colorado Lectura Grado Logro
+  Colorado Math Achievement Grade: Colorado Matemáticas Grado Logro
+  Colorado Writing Achievement Grade: La escritura de Colorado Grado Logro
+  Colorado Overall Growth Grade: En general colorado crecimiento Grado
+  Colorado Reading Growth Grade: Colorado Lectura Crecimiento Grado
+  Colorado Math Growth Grade: Colorado Matemáticas Crecimiento Grado
+  Colorado Writing Growth Grade: La escritura de Colorado Crecimiento Grado
+  Colorado ELL Growth Grade: Colorado ELL Crecimiento Grado
+  Colorado Student Achievement Grade: Grado Logro Estudiantil de Colorado
+  Colorado Student Growth Trend: Estudiantes de Colorado crecimiento de la tendencia
+  Colorado Overall Three Year Trend: En general colorado Tres tendencia del año
+  about_colorado_school_grade: about_colorado_school_grade
+  e: e
+  Elementary School - Colorado Overall Achievement Grade: Escuela Primaria - Colorado general Logro Grado
+  Elementary School - Colorado Reading Achievement Grade: Escuela Primaria - Colorado Reading Achievement Grado
+  Elementary School - Colorado Math Achievement Grade: Escuela Primaria - Colorado Math Logro Grado
+  Elementary School - Colorado Writing Achievement Grade: Escuela Primaria - Colorado Escritura Logro Grado
+  Elementary School - Colorado Overall Growth Grade: Escuela Primaria - Colorado general Crecimiento Grado
+  Elementary School - Colorado Reading Growth Grade: Escuela Primaria - Colorado Lectura Crecimiento Grado
+  Elementary School - Colorado Math Growth Grade: Escuela Primaria - Matemáticas Colorado Crecimiento Grado
+  Elementary School - Colorado Writing Growth Grade: Escuela Primaria - Colorado Escritura Crecimiento Grado
+  Elementary School - Colorado ELL Growth Grade: Escuela Primaria - Colorado ELL Crecimiento Grado
+  Elementary School - Colorado Student Achievement Grade: Escuela Primaria - Logro Estudiantil de Colorado Grado
+  Elementary School - Colorado Student Growth Trend: Escuela Primaria - Estudiantes de Colorado crecimiento de la tendencia
+  Elementary School - Colorado Overall Three Year Trend: Escuela Primaria - Colorado general Tendencia de tres años
+  m: m
+  Middle School - Colorado Overall Achievement Grade: Escuela secundaria - Colorado general Logro Grado
+  Middle School - Colorado Reading Achievement Grade: Escuela secundaria - Colorado Reading Achievement Grado
+  Middle School - Colorado Math Achievement Grade: Escuela secundaria - Colorado Math Logro Grado
+  Middle School - Colorado Writing Achievement Grade: Escuela secundaria - Colorado Escritura Logro Grado
+  Middle School - Colorado Overall Growth Grade: Escuela secundaria - Colorado de crecimiento general Grado
+  Middle School - Colorado Reading Growth Grade: Escuela secundaria - Colorado de lectura Crecimiento Grado
+  Middle School - Colorado Math Growth Grade: Escuela secundaria - Colorado Matemáticas Crecimiento Grado
+  Middle School - Colorado Writing Growth Grade: Escuela secundaria - Colorado Escritura Crecimiento Grado
+  Middle School - Colorado ELL Growth Grade: Escuela secundaria - Colorado ELL Crecimiento Grado
+  Middle School - Colorado Student Achievement Grade: Escuela Media - Logro Estudiantil de Colorado Grado
+  Middle School - Colorado Student Growth Trend: Escuela Media - Estudiantes de Colorado crecimiento de la tendencia
+  Middle School - Colorado Overall Three Year Trend: Escuela secundaria - Colorado general Tendencia de tres años
+  h: h
+  High School - Colorado Overall Achievement Grade: High School secundaria - Colorado Grado total Logro
+  High School - Colorado Reading Achievement Grade: High School secundaria - Colorado Reading Achievement Grado
+  High School - Colorado Math Achievement Grade: High School secundaria - Colorado Matemáticas Grado Logro
+  High School - Colorado Writing Achievement Grade: High School secundaria - Colorado Escritura Logro Grado
+  High School - Colorado Overall Growth Grade: High School secundaria - Colorado de crecimiento general Grado
+  High School - Colorado Reading Growth Grade: High School secundaria - Colorado de lectura Crecimiento Grado
+  High School - Colorado Math Growth Grade: High School secundaria - Colorado Matemáticas Crecimiento Grado
+  High School - Colorado Writing Growth Grade: High School secundaria - Colorado Escritura Crecimiento Grado
+  High School - Colorado ELL Growth Grade: High School secundaria - Colorado ELL Crecimiento Grado
+  High School - Colorado Student Achievement Grade: High School secundaria - Colorado Estudiante Grado Logro
+  High School - Colorado Student Growth Trend: High School secundaria - Estudiantes de Colorado crecimiento de la tendencia
+  High School - Colorado Overall Three Year Trend: High School secundaria - Colorado general Tendencia de tres años
+  Elementary School: Escuela primaria
+  Middle School: Escuela intermedia
+  High School: Escuela secundaria
+  Elementary School - Colorado School Rank: Escuela Primaria - Rango Escuela de Colorado
+  Elementary School - Colorado ELA Achievement Grade: Escuela Primaria - Colorado ELA Logro Grado
+  Elementary School - Colorado ELA Growth Grade: Escuela Primaria - Colorado ELA Crecimiento Grado
+  Middle School - Colorado School Rank: Escuela Media - Rango Escuela de Colorado
+  Middle School - Colorado ELA Achievement Grade: Escuela secundaria - Colorado ELA Logro Grado
+  Middle School - Colorado ELA Growth Grade: Escuela secundaria - Colorado ELA Crecimiento Grado
+  High School - Colorado School Rank: High School secundaria - Rango Escuela de Colorado
+  High School - Colorado ELA Achievement Grade: High School secundaria - Colorado ELA Grado Logro
+  High School - Colorado ELA Growth Grade: High School secundaria - Colorado ELA Crecimiento Grado

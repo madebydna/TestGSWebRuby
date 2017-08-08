@@ -1,0 +1,61 @@
+$small: 24px;
+
+.gs-info-window {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: normal;
+
+  .iw-school-name {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .iw-school-address,
+  .iw-school-type {
+    margin-bottom: 5px;
+  }
+
+  .iw-review {
+    //width:65%;
+    //float:left;
+  }
+
+  //.iw-home {
+  //  width:35%;
+  //  float:left;
+  //  text-align: right;
+  //}
+
+  .iw-house {
+    color: #666666;
+  }
+
+  a {
+    text-decoration: none;
+    color: #26abe2;
+  }
+  .rating-circle {
+    margin-right:5px;
+  }
+  .circle-rating--small {
+    @include circle-rating($small);
+    font-family: Arial, sans-serif;
+  }
+
+  .circle-side-text{
+    display: inline-block;
+  }
+
+  .diamond-rating--small {
+    @include diamond-rating(18px);
+    display: inline-block;
+    font-family: Arial, sans-serif;
+  }
+
+  .diamond-side-text{
+    display: inline-block;
+    margin-left: 3px;
+  }
+
+}
+

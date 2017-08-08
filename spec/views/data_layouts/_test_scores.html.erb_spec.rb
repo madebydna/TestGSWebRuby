@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'school_profile/data_layouts/_test_scores.html.erb' do
+describe 'deprecated_school_profile/data_layouts/_test_scores.html.erb' do
 
   let(:data) { {} }
   let(:category_placement) { FactoryGirl.create(:leaf_category_placement_no_parent) }
@@ -20,7 +20,7 @@ describe 'school_profile/data_layouts/_test_scores.html.erb' do
   it "doesn't error when data is empty" do
     allow_any_instance_of(BarCharts::BasicBarChart).to receive(:script_tag).and_return(nil)
     expect do
-      render partial: 'school_profile/data_layouts/test_scores',
+      render partial: 'deprecated_school_profile/data_layouts/test_scores',
              locals: {
                category: category_placement.category,
                category_placement: category_placement,
@@ -37,7 +37,7 @@ describe 'school_profile/data_layouts/_test_scores.html.erb' do
     it "doesn't raise an error" do
       allow_any_instance_of(BarCharts::BasicBarChart).to receive(:script_tag).and_return(nil)
       expect do
-        render partial: 'school_profile/data_layouts/test_scores',
+        render partial: 'deprecated_school_profile/data_layouts/test_scores',
                locals: {
                  category: category_placement.category,
                  category_placement: category_placement,
@@ -56,7 +56,7 @@ describe 'school_profile/data_layouts/_test_scores.html.erb' do
     it "doesn't raise an error" do
       allow_any_instance_of(BarCharts::BasicBarChart).to receive(:script_tag).and_return(nil)
       expect do
-        render partial: 'school_profile/data_layouts/test_scores',
+        render partial: 'deprecated_school_profile/data_layouts/test_scores',
                locals: {
                  category: category_placement.category,
                  category_placement: category_placement,
@@ -75,7 +75,7 @@ describe 'school_profile/data_layouts/_test_scores.html.erb' do
     it "doesn't raise an error" do
       allow_any_instance_of(BarCharts::BasicBarChart).to receive(:script_tag).and_return(nil)
       expect do
-        render partial: 'school_profile/data_layouts/test_scores',
+        render partial: 'deprecated_school_profile/data_layouts/test_scores',
                locals: {
                  category: category_placement.category,
                  category_placement: category_placement,

@@ -15,14 +15,6 @@ class AlertWord < ActiveRecord::Base
     end
   end
 
-  def really_bad
-    read_attribute(:really_bad) == "\x01" ? true : false
-  end
-
-  def really_bad?
-    really_bad
-  end
-
   def self.all_words
     Rails.cache.fetch('alert_word/all_words', expires_in: 1.hour) do
       all_rows = on_db(:community).all

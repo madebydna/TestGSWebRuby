@@ -1,0 +1,23 @@
+<% content_for :page_javascripts do %>
+  <%= javascript_include_tag "shared_post_load", async: true %>
+  <%= javascript_include_tag "district-boundaries-bundle", async: true %>
+<% end %>
+<% content_for :page_stylesheets do %>
+  <%= stylesheet_link_tag "district-boundaries", async: true %>
+<% end %>
+
+<div id="district-boundaries-page">
+  <div class="header">
+    <h1><%= t('.heading.') %> <%= render 'school_profiles/info_circle', content: t('.subheading_html') %></h1>
+    <div class="js-react-on-rails-component legend-cta"
+       data-remodal-target="modal_info_box"
+       data-content-type="react"
+       data-component-name="DistrictBoundariesLegend"
+       data-dom-id="js-legend-container-for-cta"
+       data-props="{}"
+       href="javascript:void(0)">
+      <button>View legend</button>
+    </div>
+  </div>
+  <%= react_component('ConnectedDistrictBoundaries') %>
+</div>

@@ -210,6 +210,58 @@ describe SearchController do
       end
     end
 
+    context 'When there are Indianapolis PreK filters selected' do
+      indypk_allows = Proc.new {
+        allow(controller).to receive(:should_apply_filter?).and_return(false)
+        allow(controller).to receive(:should_apply_filter?).with(:indypk).and_return(true)
+      }
+
+      context 'with nothing selected' do
+        let(:params_hash) { {'indypk' => ''}}
+        it 'should not set any filters' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq({})
+        end
+      end
+
+      context 'with omwpk' do
+        let(:params_hash) { {'indypk' => 'omwpk'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_omwpk: true)
+        end
+      end
+
+      context 'with ccdf' do
+        let(:params_hash) { {'indypk' => 'ccdf'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_ccdf: true)
+        end
+      end
+
+      context 'with indy_psp' do
+        let(:params_hash) { {'indypk' => 'indypsp'}}
+        it 'should set the right filter' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_indypsp: true)
+        end
+      end
+
+      context 'with all filters' do
+        let(:params_hash) { {'indypk' => %w(indypsp ccdf omwpk)}}
+        it 'should set the right filters' do
+          instance_exec &indypk_allows
+          filters = controller.send(:parse_filters, params_hash)
+          expect(filters).to eq(indy_indypsp: true, indy_ccdf: true, indy_omwpk: true)
+        end
+      end
+    end
+
   end
 
   context 'When there is colorado_rating in filter params' do
@@ -316,7 +368,7 @@ describe SearchController do
     end
     with_shared_context 'when ads are enabled' do
       include_example 'sets at least one google ad targeting attribute'
-      include_examples 'sets specific google ad targeting attributes', %w[compfilter env]
+      include_examples 'sets specific google ad targeting attributes', %w[env]
     end
   end
 
@@ -464,6 +516,65 @@ describe SearchController do
         controller.instance_variable_set(:@filter_values, [])
         controller.send(:add_filters_to_gtm_data_layer)
         expect(controller.instance_variable_get('@data_layer_gon_hash')['GS Search Filters Applied']).to be_nil
+      end
+    end
+  end
+
+  describe '#by_zip' do
+    let (:subject) { get :by_zip, params_hash }
+
+    context 'error handling' do
+      before { expect(BpZip).to_not receive(:find_by_zip) }
+
+      context 'zipCode is missing' do
+        let (:params_hash) { {} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is 4 digits' do
+        let (:params_hash) { {zipCode: '1234'} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is 6 digits' do
+        let (:params_hash) { {zipCode: '123456'} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is empty' do
+        let (:params_hash) { {zipCode: ''} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'zipCode is 5 alphanumeric' do
+        let (:params_hash) { {zipCode: '1234b'} }
+        it { is_expected.to redirect_to(home_path) }
+      end
+    end
+
+    context 'with valid zipCode' do
+      let(:params_hash) { {zipCode: '94111'} }
+
+      context 'that is not in database' do
+        it { is_expected.to redirect_to(home_path) }
+      end
+
+      context 'that is in the database' do
+        let(:zip) { BpZip.new(Zip: '94111', Name: 'San Francisco', State: 'CA', Lat: 37.7988, Lon: -122.401) }
+        let(:expected_params) { {
+            locationSearchString: zip.zip,
+            normalizedAddress: zip.zip,
+            zipCode: zip.zip,
+            locationType: 'postal_code',
+            city: zip.name,
+            state: zip.state,
+            lat: zip.lat,
+            lon: zip.lon
+        } }
+
+        before { expect(BpZip).to receive(:find_by_zip).with('94111').and_return(zip) }
+
+        it { is_expected.to redirect_to(search_path(expected_params)) }
       end
     end
   end

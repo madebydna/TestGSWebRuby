@@ -1,0 +1,79 @@
+// Grays
+// -------------------------
+$gray-base-color:        #000;
+$gray-darkest:           #333; // This was not calculating to #333
+$gray-darker:            #777; // We want this to be #777
+$gray-dark:              lighten($gray-base-color, 60%); // #999
+$gray:                   lighten($gray-base-color, 80%); // #ccc
+$gray-light:             lighten($gray-base-color, 90%); // #ebebeb
+$gray-lighter:           #f4f4f4;
+
+$text-color:            $gray-darkest;
+
+// Brand colors
+// -------------------------
+$brand-primary:                #26ABE2;
+$brand-primary-darker:         #4788be;
+$brand-primary-dark:           #2880b9;
+$brand-primary-darkest:        #195074;
+$brand-primary-light:          lighten($brand-primary, 40%); // #66B5D1
+$brand-primary-lighter:        lighten($brand-primary, 47%); // #F5FAFC
+
+$brand-secondary:                 #ffb725;
+$brand-secondary-dark:            #926100;
+$gk-brand-primary:                #f45c20;
+
+
+// Please add any new colors here
+$form-field-border-color: #c1d2d9;
+
+
+
+
+// Other Colors
+// -------------------------
+$blue-dark:               #0D6A99;
+$blue-darker:             #002c47;
+$ocean-blue:              #F5FBFD;
+$green-light:             #69b684;
+$medium-green:            #8cbe3b;
+$neutral-color:           #444444;
+$dirt-green:              #07251e;
+$clay-green:              #3f4e4b;
+$wallpaper-green:         #93c83e;
+$absence-gray:            #2b2b2b;
+$emphasis-color:          #E6705C;
+$lighter-green:           #add36e;
+$indigo:                  #195074;
+$blue-green:              #25b798;
+$pale-yellow:             #f7ffe3;
+$bright-yellow:           #fad700;
+$dark-green:              #135c4c;
+$lighter-black:           #222;
+$module-gray:             $gray-lighter;
+$module-gray-stroke:      #dedede;
+$dark-steel-gray:         #1d1d1d;
+$light-ash-gray:          #777777;
+$light-blue-background:   #e6ebf5;
+$gray-link-color:         $light-ash-gray;
+$gray-link-hover-color:   darken($light-ash-gray, 15%);
+$white:                   #FFFFFF;
+
+//Review module
+// -------------------------
+$review-red: #db0000;
+
+//Review.scss uses these
+// -------------------------
+$color-report-flag: #d94373;
+$color-report-flag-reported: #fff;
+$color-link: #666;
+$color-reported: #d94373;
+$color-button-border: #c1d2d9;
+$color-button-hover-border: rgba(113, 120, 126, 0.5);
+$color-button-active-border: rgba(113, 120, 126, 0.8);
+$color-dark-gray-text: #2e3438;
+$color-gradient-button-dark: #f4f5f6;
+$color-gradient-button-active: #edf3f5;
+$gray-text-color: #71787e;
+

@@ -18,7 +18,7 @@ class SearchController < ApplicationController
   before_action :require_state_instance_variable, only: [:city_browse, :district_browse]
   before_action :use_gs_bootstrap
 
-  layout 'application'
+  layout 'deprecated_application'
 
   #ToDo SOFT_FILTERS_KEYS be generated dynamically by the filter builder class
   SOFT_FILTER_KEYS = %w(beforeAfterCare dress_code boys_sports girls_sports transportation school_focus class_offerings enrollment summer_program voucher_type spec_ed)
@@ -31,13 +31,7 @@ class SearchController < ApplicationController
 
 
   def default_search
-      gon.pagename = "DefaultSearchPage"
-      set_meta_tags title: 'Find a School In Your State | GreatSchools',
-                    description: 'Find and compare schools across the country by searching near an address or by name. Search for public, private, and charter schools, preschools, elementary, middle, and high schools.'
-
-      render 'search/default_search'
-
-
+    redirect_to "/", :status => 301
   end
 
 
@@ -81,7 +75,7 @@ class SearchController < ApplicationController
     gon.allow_compare = can_compare?
     set_login_redirect
     @city_browse = true
-    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
+    require_city_instance_variable { redirect_to state_path(gs_legacy_url_encode(@state[:long])); return }
 
     setup_search_results!(Proc.new { |search_options| SchoolSearchService.city_browse(search_options) }) do |search_options|
       search_options.merge!({state: state_abbreviation, city: @city.name})
@@ -106,7 +100,7 @@ class SearchController < ApplicationController
     gon.allow_compare = can_compare?
     set_login_redirect
     @district_browse = true
-    require_city_instance_variable { redirect_to state_path(@state[:long]); return }
+    require_city_instance_variable { redirect_to state_path(gs_legacy_url_encode(@state[:long])); return }
 
     district_name = params[:district_name]
     district_name = URI.unescape district_name # url decode
@@ -114,7 +108,7 @@ class SearchController < ApplicationController
     @district = params[:district_name] ? District.on_db(state_abbreviation.downcase.to_sym).where(name: district_name, active:1).first : nil
 
     if @district.nil?
-      redirect_to city_path(@state[:long], @city.name)
+      redirect_to city_path(gs_legacy_url_encode(@state[:long]), gs_legacy_url_encode(@city.name))
       return
     end
 
@@ -189,6 +183,22 @@ class SearchController < ApplicationController
     end
   end
 
+  def by_zip
+    zip = zip_param
+    if zip.present?
+      redirect_to search_path(lat: zip.lat,
+                              lon: zip.lon,
+                              state: zip.state,
+                              city: zip.name,
+                              locationType: 'postal_code',
+                              normalizedAddress: zip.zip,
+                              locationSearchString: zip.zip,
+                              zipCode: zip.zip)
+    else
+      redirect_to home_path
+    end
+  end
+
   def setup_search_results!(search_method)
     setup_filter_display_map
     @params_hash = parse_array_query_string(request.query_string)
@@ -249,9 +259,9 @@ class SearchController < ApplicationController
     if sorting_by_fit? && filtering_search? && !hide_fit?
       setup_fit_scores(school_results, @params_hash)
       sort_by_fit(school_results)
-      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+      @schools = school_results[relative_offset..(relative_offset+@page_size-1)]
     else
-      @schools = school_results[relative_offset .. (relative_offset+@page_size-1)]
+      @schools = school_results[relative_offset..(relative_offset+@page_size-1)]
       setup_fit_scores(@schools, @params_hash) if filtering_search?
     end
 
@@ -260,7 +270,7 @@ class SearchController < ApplicationController
     # then the user wants results 200-225 (relative), where 200 is calculated by subtracting 25 (the solr offset) from
     # 225 (the user requested offset)
     relative_offset = @results_offset - solr_offset
-    @schools = school_results[relative_offset .. (relative_offset+@page_size-1)] || []
+    @schools = school_results[relative_offset..(relative_offset+@page_size-1)] || []
 
     if params[:limit]
       if params[:limit].to_i > 0
@@ -271,7 +281,7 @@ class SearchController < ApplicationController
     end
 
     (map_start, map_end) = calculate_map_range solr_offset
-    @map_schools = school_results[map_start .. map_end] || []
+    @map_schools = school_results[map_start..map_end] || []
     SchoolSearchResultReviewInfoAppender.add_review_info_to_school_search_results!(@map_schools)
 
     # mark the results that appear in the list so the map can handle them differently
@@ -319,6 +329,12 @@ class SearchController < ApplicationController
   end
 
   protected
+
+  def zip_param
+    return @_zip_param if defined?(@_zip_param)
+    zip_code = params[:zipCode]
+    @_zip_param = (zip_code.present? && zip_code =~ /^\d{5}$/) ? BpZip.find_by_zip(zip_code) : nil
+  end
 
   def radius_param
     @radius = params_hash['distance'].presence || DEFAULT_RADIUS
@@ -400,6 +416,15 @@ class SearchController < ApplicationController
       path_to_quality_ratings.collect! { |rating| rating.gsub('_',' ').humanize } if path_to_quality_ratings.present?
 
       filters[:ptq_rating] = path_to_quality_ratings unless path_to_quality_ratings.empty?
+    end
+
+    if should_apply_filter?(:indypk) || params_hash.include?('indypk')
+      indypk_params = params_hash['indypk']
+      indypk_params = [*indypk_params]
+      filters[:indy_omwpk] = true if indypk_params.include?('omwpk')
+      filters[:indy_ccdf] = true if indypk_params.include?('ccdf')
+      filters[:indy_indypsp] = true if indypk_params.include?('indypsp')
+      filters[:indy_scholarships] = true if indypk_params.include?('scholarships')
     end
 
     if should_apply_filter?(:gstq_rating) || params_hash.include?('gstq_rating')
@@ -599,12 +624,12 @@ class SearchController < ApplicationController
     gon.state_abbr = state_abbreviation
     gon.show_ads = @show_ads
     gon.city_name = if @city
-                  @city.name
-                elsif params[:city]
-                  params[:city]
-                else
-                  ''
-                end
+                      @city.name
+                    elsif params[:city]
+                      params[:city]
+                    else
+                      ''
+                    end
   end
 
   def add_filters_to_gtm_data_layer

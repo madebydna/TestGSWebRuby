@@ -30,4 +30,54 @@ describe SchoolCacheQuery do
     end
   end
 
+  describe '#matching_schools_clause' do
+    subject { query.matching_schools_clause }
+    context 'with no state or schools' do
+      let(:query) do
+        SchoolCacheQuery.new
+      end
+      it { is_expected.to eq('(false = true)') }
+    end
+    context 'with one state and no schools' do
+      let(:query) do
+        SchoolCacheQuery.new.tap do |q|
+          q.include_schools('CA', [])
+        end
+      end
+      it { is_expected.to eq('(false = true)') }
+    end
+    context 'with two states and no schools' do
+      let(:query) do
+        SchoolCacheQuery.new.tap do |q|
+          q.include_schools('CA', []).include_schools('DE', [])
+        end
+      end
+      it { is_expected.to eq('(false = true)') }
+    end
+    context 'with one state and one school' do
+      let(:query) do
+        SchoolCacheQuery.new.tap do |q|
+          q.include_schools('CA', [1])
+        end
+      end
+      it { is_expected.to eq("((false = true) OR (`school_cache`.`state` = 'CA' AND `school_cache`.`school_id` IN (1)))") }
+    end
+    context 'with one state and two schools' do
+      let(:query) do
+        SchoolCacheQuery.new.tap do |q|
+          q.include_schools('CA', [1,2])
+        end
+      end
+      it { is_expected.to eq("((false = true) OR (`school_cache`.`state` = 'CA' AND `school_cache`.`school_id` IN (1, 2)))") }
+    end
+    context 'with two states and two schools each' do
+      let(:query) do
+        SchoolCacheQuery.new.tap do |q|
+          q.include_schools('CA', [1,2]).include_schools('DE', [3,4])
+        end
+      end
+      it { is_expected.to eq("(((false = true) OR (`school_cache`.`state` = 'CA' AND `school_cache`.`school_id` IN (1, 2))) OR (`school_cache`.`state` = 'DE' AND `school_cache`.`school_id` IN (3, 4)))") }
+    end
+  end
+
 end

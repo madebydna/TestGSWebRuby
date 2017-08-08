@@ -1,0 +1,11 @@
+$star-filled-color: #ffc800;
+$star-empty-color: #65859f;
+
+.five-stars {
+  .filled-star {
+    color: $star-filled-color;
+  }
+  .empty-star {
+    color: $star-empty-color;
+  }
+}

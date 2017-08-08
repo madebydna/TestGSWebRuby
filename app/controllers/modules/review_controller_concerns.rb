@@ -73,7 +73,8 @@ module ReviewControllerConcerns
     end
 
     def review_attributes
-      params.merge(user:user,school: school )
+      params[:comment].gsub!("\r\n", "\n") if params[:comment]
+      params.merge(user:user, school: school)
     end
 
     def existing_review
@@ -123,24 +124,49 @@ module ReviewControllerConcerns
 
         review = Review.find review_id rescue nil
         if review
-          review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
-          review_flag.user = current_user
+          existing_flag = ReviewFlag.find_by(member_id: current_user.id, review_id: review.id, active: 1)
+          if existing_flag.present?
+            review_flag = existing_flag
+            review_flag.comment = comment
+            review_flag.created = Time.now
+          else
+            review_flag = review.build_review_flag(comment, ReviewFlag::USER_REPORTED)
+            review_flag.user = current_user
+          end
           if review_flag.save
-            flash_success t('actions.report_review.reported')
+            if request.xhr?
+              render json: {}, status: :ok
+            else
+              flash_success t('actions.report_review.reported')
+            end
           else
             GSLogger.error(:reviews, nil, vars: review_flag.attributes, message: "Unable to save ReviewFlag: #{review_flag.errors.first}")
+            if request.xhr?
+              render json: {}, status: :internal_server_error
+            else
+              flash_error t('actions.generic_error')
+            end
+          end
+        else
+          if request.xhr?
+            render json: {}, status: :internal_server_error
+          else
             flash_error t('actions.generic_error')
           end
+        end
+      rescue => e
+        GSLogger.error(:reviews, e, message: 'Unable to save ReviewFlag')
+        if request.xhr?
+          render json: {}, status: :internal_server_error
         else
           flash_error t('actions.generic_error')
         end
-      rescue => e
-        Rails.logger.debug e
-        flash_error t('actions.generic_error')
       end
     end
 
-    redirect_to reviews_page_for_last_school
+    unless request.xhr?
+      redirect_to reviews_page_for_last_school
+    end
   end
 
 end

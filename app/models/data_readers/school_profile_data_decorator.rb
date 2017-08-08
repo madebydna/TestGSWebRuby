@@ -144,7 +144,9 @@ module SchoolProfileDataDecorator
   end
 
   def state_rating
-    rating_data.fetch('state_rating',{}).fetch('overall_rating',nil)
+    Array.wrap(rating_data.fetch('state_rating',{})).map do |rating|
+      rating
+    end
   end
 
   def pcsb_rating
@@ -261,6 +263,7 @@ module SchoolProfileDataDecorator
         parent = leaf.parent
         if footnotes.present?
           footnotes.each do |footnote|
+            next if footnote[:source].nil?
             year = footnote[:year]
             label = (leaf.root? || parent.root?) ? leaf.title : parent.title
             footnote_year = year.to_s.to_i == 0 ? '' : ", #{year.to_i - 1}-#{year}"

@@ -1,0 +1,34 @@
+<div id="profile-sticky-container" class="js-profile-sticky">
+  <div id="cta" class="non-fixed-top cta-container">
+    <div class="cta-button">
+      <a href="#Reviews" class="js-gaClick"
+         data-ga-click-category='Profile'
+         data-ga-click-action='Review CTA Clicked'
+         data-ga-click-label='StickyCTA'>
+        <div class="icon-pencil"></div>
+        <div><%= t('.Review') %></div>
+      </a>
+    </div>
+    <div class="cta-button">
+      <a class="js-followThisSchool js-gaClick" href="#" onclick="return false;"
+         data-ga-click-category='Profile'
+         data-ga-click-action='Save CTA Clicked'
+         data-ga-click-label='StickyCTA'>
+        <div class="icon-heart"></div>
+        <div><%= t('.Save') %></div>
+      </a>
+    </div>
+    <div class="cta-button">
+      <a href="#NearbySchools" class="js-gaClick"
+         data-ga-click-category='Profile'
+         data-ga-click-action='Compare CTA Clicked'
+         data-ga-click-label='StickyCTA'>
+        <div class="icon-nearby_1"></div>
+        <div><%= t('.Nearby schools_html') %></div>
+      </a>
+    </div>
+  </div>
+  <div class="clearfloat mbl"></div>
+  <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+             width: 300, height: 250, css_class: 'hidden-xs hidden-sm' %>
+</div>

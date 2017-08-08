@@ -701,7 +701,9 @@
     var css = {
         wrapper: {
             position: "relative",
-            display: "inline-block"
+// ModifiedBehavior changed wrapper css from inline-block to block to fix
+// toggleing of universal nav search on firefox
+            display: "block"
         },
         hint: {
             position: "absolute",
@@ -721,7 +723,7 @@
         },
         dropdown: {
             position: "absolute",
-            top: "100%",
+            top: "34px",
             left: "0",
             zIndex: "100",
             display: "none"

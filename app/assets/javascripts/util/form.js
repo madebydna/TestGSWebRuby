@@ -272,7 +272,7 @@ $(function() {
                 }
             }
         }
-        searchOptions['locationSearchString'] = encodeURIComponent(GS.search.schoolSearchForm.getSearchQuery());
+        searchOptions['locationSearchString'] = encodeURIComponent(GS.search.schoolSearchForm.getSearchQuery('.js-guidedSearch'));
         // pull values from any selects here
         searchOptions['distance'] = $('#js-guided-distance').val() || 5;
         searchOptions['gradeLevels%5B%5D'] = $('#js-guided-grades').val();

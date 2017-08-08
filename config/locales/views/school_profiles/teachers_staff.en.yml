@@ -1,0 +1,7 @@
+en:
+  school_profiles:
+    teachers_staff:
+      title: 'Teachers & staff'
+      source: 'Source'
+      sources: Sources
+      subtitle_html: 'Parents often value small class sizes, but the <a href="/gk/articles/class-size/">truth is more complicated</a>.'

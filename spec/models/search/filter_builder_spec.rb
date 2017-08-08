@@ -295,6 +295,21 @@ describe FilterBuilder do
         }].each_with_index do |filter_map, index|
         assert_filter_structure(filter_map, index)
       end
+      describe 'it has Indianapolis PreK filters' do
+        #Todo Make better method for looking for a specific filter
+        #one that recursively goes through the filter tree looking for a filter
+        # 3rd panel, 4th group
+        subject { filters.filters[2].filters[3].filters }
+        it 'has omwpk' do
+          expect(subject.find{ |el| [el.name, el.value] == [:indypk, :omwpk] }).to_not be_nil
+        end
+        it 'has ccdf' do
+          expect(subject.find{ |el| [el.name, el.value] == [:indypk, :ccdf] }).to_not be_nil
+        end
+        it 'has indy psp' do
+          expect(subject.find{ |el| [el.name, el.value] == [:indypk, :indypsp] }).to_not be_nil
+        end
+      end
     end
     context 'in Michigan' do
       let (:filters) { FilterBuilder.new('MI', nil, false).filters }

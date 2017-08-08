@@ -1,0 +1,71 @@
+#home-page {
+
+ .search-btn  {
+    height: 46px;
+    vertical-align: middle;
+    color: white;
+    background-color: #26abe2;
+    border-color: #26abe2;
+    border-bottom-width: 3px;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    font-family: "opensans-bold", Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    white-space: nowrap;
+    padding: 8px 20px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -webkit-user-select: none;
+   }
+
+   .search-btn:hover {
+     background-color: #009edc;
+     border-color: #2880b9;
+   }
+
+  .mission-text {
+    text-align: center;
+    font-family: "RobotoSlab-Light", sans-serif;
+    font-weight: 900;
+    font-size: 40px;
+    color: $gray-darker;
+    padding: 30px 0px 0px;
+    @media (max-width: $screen-md-max) {
+      font-size: 32px;
+      color: $gray-darker;
+      padding: 30px 0px 0px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 24px;
+      color: $gray-darker;
+      padding: 30px 0px 0px;
+    }
+    @media (max-width: $screen-xs-max) {
+      font-size: 20px;
+      color: $gray-darker;
+      padding: 30px 0px 0px;
+    }
+  }
+  .darken {
+    overflow: visible;
+    background: rgba(0, 0, 0, 0.65);
+  }
+  .parent-content {
+    margin-top: $spacing-large;
+    width: 340px;
+    @media (max-width: $screen-sm-min) {
+      width: 300px;
+      a {
+        font-size: $font-size-small;
+      }
+    }
+  }
+}

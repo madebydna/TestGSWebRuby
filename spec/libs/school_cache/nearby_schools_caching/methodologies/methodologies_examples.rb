@@ -6,6 +6,7 @@ shared_examples_for 'methodologies that use lat lons' do
     FactoryGirl.create(:alameda_high_school,
                        id: 1,
                        state: 'CA',
+                       lat: nil,
                        lon: 144,
                        level_code: 'h'
                       )
@@ -16,6 +17,7 @@ shared_examples_for 'methodologies that use lat lons' do
                        id: 1,
                        state: 'CA',
                        lat: 32,
+                       lon: nil,
                        level_code: 'h'
                       )
   end

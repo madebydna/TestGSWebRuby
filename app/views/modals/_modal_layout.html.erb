@@ -1,0 +1,18 @@
+<% heading %>
+
+<div class="remodal js-gsModal <%= modal_css_class %>" tabindex="-1" role="dialog" aria-labeledby="<%= modal_css_class %>Label" aria-hidden="true">
+  <div class="gs-modal-dialog modal-dialog">
+      <span class="remodal-cancel close" aria-label="Close" data-remodal-action="cancel" style="background-color: #ffffff">
+        <span>&times;</span>
+      </span>
+      <div class="modal-body">
+        <div class="heading"><%= heading %></div>
+        <% if local_assigns[:subheading] %>
+          <div class="subheading"><%= subheading %></div>
+        <% end %>
+        <div class="body">
+          <%= yield %>
+        </div>
+      </div>
+  </div>
+</div>

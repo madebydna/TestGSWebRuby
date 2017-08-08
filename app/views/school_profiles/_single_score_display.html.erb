@@ -1,0 +1,56 @@
+<% score_data %>
+<% score = score_data.score.float_value %>
+<% score_label = score_data.formatted_score %>
+<% state_score = score_data.state_average.try(:float_value) %>
+<% state_label = score_data.formatted_state_average %>
+<% range = score_data.range %>
+<% range ||= (0..100) %>
+<% min_value = range.min %>
+<% max_value = range.max %>
+<% score_percentage = 100.0 * ((score.to_f - min_value) / (max_value - min_value)) %>
+<% grey_score = 100.to_f - score_percentage %>
+<% state_average_percentage = 100.0 * ((state_score.to_f - min_value) / (max_value - min_value)) %>
+<% score_rating = (score_percentage / 10.0).truncate + 1 %>
+<% score_rating = [10, score_rating].min # 100% gets an 11 per previous line %>
+<div>
+  <div class="row bar-graph-display">
+    <div class="test-score-container clearfix">
+      <div class="col-xs-12 col-sm-5 subject"><%= score_data.label %></div>
+      <div class="col-sm-1"></div>
+      <div class="col-xs-9 col-sm-4">
+        <div class="bar-graph-container">
+          <div class="score"><%= score_label %></div>
+          <div class="viz">
+            <div class="item-bar">
+              <div class="single-bar-viz">
+                <div class="color-row rating_<%= score_rating %>" style="width:<%= score_percentage %>%"></div>
+                <div class="grey-row" style="width:<%= grey_score %>%"></div>
+                <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+                  <div class="arrow-up"><span style="top: 11px;left:<%= state_average_percentage %>%"></span></div>
+                <% end %>
+              </div>
+            </div>
+            <div class="state-average">
+              <% if (0..100).cover?(state_average_percentage) && !state_score.nil? %>
+                <%= t('school_profiles.rating_score_item.state_average') + ': ' + state_label %>
+              <% end %>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-xs-3 col-sm-2">
+        <% if score_data.grades.present? %>
+          <div class="details js-test-score-details"><%= t('school_profiles.rating_score_item.details') %> <span class="icon-caret-down rotate-text-270 move-icon"></span></div>
+        <% end %>
+      </div>
+    </div>
+    <% if score_data.grades.present? %>
+      <div class="grades" style="display: none;">
+        <% score_data.grades.each do |data_value| %>
+          <%= render partial: 'single_grade_display', locals: { score_data: data_value } %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

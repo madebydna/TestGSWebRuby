@@ -3,12 +3,16 @@
 <head>
   <%= display_meta_tags %>
   <%= yield :stylesheet_includes %>
+  <%= yield :page_stylesheets %>
+  <link rel="preload" href="<%= asset_path('icon-greatschools.woff?6dfdhg', format:'woff') %>" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="<%= asset_path('Roboto-Slab-700.woff', format:'woff') %>" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="<%= asset_path('Open-Sans-600.woff', format:'woff') %>" as="font" type="font/woff" crossorigin>
+  <link rel="preload" href="<%= asset_path('opensans-regular-webfont.woff', format:'woff') %>" as="font" type="font/woff" crossorigin>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= stylesheet_link_tag    "print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= render 'optimizely/install' %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
@@ -16,6 +20,7 @@
     <meta name="google-translate-customization" content="f2de2b2d5878217a-6b29fa5c63ed04fa-g4b85244d931270bb-10" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <%= @no_index %>
 
   <!-- For third-generation iPad with high-resolution Retina display: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'144x144', href: image_path('icons/favicons/GS_favicon_144x144.png') %>
@@ -26,22 +31,32 @@
   <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
   <%= content_tag :link, nil, rel: 'apple-touch-icon-precomposed', sizes:'32x32', href: image_path('icons/favicons/GS_favicon_32x32.png') %>
 
-  <link rel="alternate" hreflang="en" href="<%= (@hreflang.present? && @hreflang.has_key?(:en)) ? @hreflang[:en] : url_for(params.merge(lang: nil,  state: params[:state].try(:gsub,' ','-'))) %>" />
-  <link rel="alternate" hreflang="es" href="<%= (@hreflang.present? && @hreflang.has_key?(:es)) ? @hreflang[:es] : url_for(params.merge(lang: 'es', state: params[:state].try(:gsub,' ','-'))) %>" />
-
-  <% if @canonical_url.present? %>
-    <link rel="canonical" href="<%= @canonical_url %>" />
-  <% else %>
-    <% Rails.logger.warn "Warning: Page #{request.original_url} has no rel canonical set" %>
-  <% end %>
   <%= yield :head %>
+
+  <% json_ld_hash.each do |hash| %>
+    <script type="application/ld+json"><%= raw hash.to_json %></script>
+  <% end %>
+
+  <!-- Start Visual Website Optimizer Asynchronous Code -->
+  <script type='text/javascript'>
+    var _vwo_code=(function(){
+      var account_id=280775,
+      settings_tolerance=2000,
+      library_tolerance=2500,
+      use_existing_jquery=true,
+      /* DO NOT EDIT BELOW THIS LINE */
+      f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
+  </script>
+  <!-- End Visual Website Optimizer Asynchronous Code -->
 </head>
 <body class="open-sans">
 
 <%= render 'google_tag_manager/push_to_data_layer' %>
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
-<%= render 'nav/topnav', hub_params: @hub_params %>
+
+<%= render 'nav/topnav_universal_html' %>
+
 <%= render :partial => 'layouts/top_notification_bar' %>
 
 <div class="dn">
@@ -52,11 +67,15 @@
 
 <%=  render 'omniture/quantcast' %>
 
-<a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top mrm"></span><%= t('.top') %></a>
+<a href="#" class="back-to-top"><span class="top-icon icon-up"></span><span class="top-text"><%= t('.top') %></span></a>
+
+<%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
-<%= stylesheet_link_tag "post_load", :async => true %>
-<%= javascript_include_tag "post_load", :async => true %>
+<%= stylesheet_link_tag("post_load", :async => true) unless content_for?(:page_stylesheets) %>
+<%= javascript_include_tag "post_load", :async => true unless content_for?(:page_javascripts) %>
 <%= yield :javascript_includes %>
+<%= yield :page_javascripts %>
+<div class="remodal modal modal_info_box" data-remodal-options="hashTracking: false" data-remodal-id="modal_info_box">Add Spinny</div>
 </body>
 </html>

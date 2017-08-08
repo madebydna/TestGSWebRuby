@@ -33,24 +33,19 @@ describe 'school profile routing' do
     expect( get '/1/alameda/1-Alameda-High-School/' ).to route_to('error#page_not_found', path:'1/alameda/1-Alameda-High-School')
   end
 
-  it 'should not handle old style overview URL with invalid params: /school/overview.page?id=1&state=ZZ' do
-    expect( get '/school/overview.page?id=1&state=ZZ' ).to(
-      route_to('error#page_not_found', path: 'school/overview', format: 'page', id: '1', state: 'ZZ')
-    )
-    expect( get '/school/overview.page?id=1' ).to(
-      route_to('error#page_not_found', path: 'school/overview', format: 'page', id: '1')
-    )
-    expect( get '/school/overview.page' ).to(
-      route_to('error#page_not_found', path: 'school/overview', format: 'page')
-    )
-  end
-
   describe 'non-pk school scope' do
+
+    let(:route_params) do
+      {
+        school_name: "Alameda-High-School",
+        schoolId: "1",
+      }
+    end
     [
       ['overview', '', 'school'],
-      ['reviews', 'reviews/', 'school_reviews'],
-      ['quality', 'quality/', 'school_quality'],
-      ['details', 'details/', 'school_details'],
+      ['reviews', 'reviews/', 'school'],
+      ['quality', 'quality/', 'school'],
+      ['details', 'details/', 'school'],
     ].each do |(action, path, path_helper)|
       describe "#{action} tab" do
         [
@@ -58,6 +53,9 @@ describe 'school profile routing' do
             ['two-word state', 'new-jersey', 'nj']
         ].each do |(state_description, state, state_abbr)|
           describe "In a #{state_description}" do
+          before do
+            route_params[:state] = state
+          end
             {
                 'one-word city' => 'minneapolis',
                 'two-word city' => 'maple-grove',
@@ -67,22 +65,34 @@ describe 'school profile routing' do
             }.each do |city_description, city|
               describe "In a #{city_description}" do
                 before do
-                  @school = FactoryGirl.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'e,m,h')
+                  route_params[:city] = city.sub('%23','#')
+                  @school = FactoryGirl.build(:school_with_new_profile,
+                                              state: state_abbr,
+                                              city: city.sub('%23', '#').sub('-', ' '),
+                                              id: 1,
+                                              name: 'alameda high school',
+                                              level_code: 'e,m,h',
+                                              new_profile_school: 5
+                                             )
                   expect(@school).not_to be_preschool
                 end
+
                 it "has a route for #{action}" do
+                  unless path == ''
+                    route_params[:path] = path.gsub('/','')
+                  end
                   expect( get "/#{state}/#{city}/1-Alameda-High-School/#{path}" ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                    to route_to('school_profiles#show', route_params)
                 end
 
                 it "has a path helper for #{action}" do
-                  expect( get(send("#{path_helper}_path", @school)) ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                    expect( get(send("#{path_helper}_path", @school)) ).
+                      to route_to('school_profiles#show', route_params )
                 end
 
                 it "has a url helper for #{action}" do
                   expect( get(send("#{path_helper}_url", @school)) ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                    to route_to('school_profiles#show', route_params)
                 end
               end
             end
@@ -93,11 +103,17 @@ describe 'school profile routing' do
   end
 
   describe 'pk school scope' do
+    let(:route_params) do
+      {
+          school_name: "Alameda-High-School",
+          schoolId: "1",
+      }
+    end
     [
         ['overview', '', 'school'],
-        ['reviews', 'reviews/', 'school_reviews'],
-        ['quality', 'quality/', 'school_quality'],
-        ['details', 'details/', 'school_details'],
+        ['reviews', 'reviews/', 'school'],
+        ['quality', 'quality/', 'school'],
+        ['details', 'details/', 'school'],
     ].each do |(action, path, path_helper)|
       describe "#{action} tab" do
         [
@@ -105,6 +121,9 @@ describe 'school profile routing' do
             ['two-word state', 'new-jersey', 'nj']
         ].each do |(state_description, state, state_abbr)|
           describe "In a #{state_description}" do
+            before do
+              route_params[:state] = state
+            end
             {
                 'one-word city' => 'minneapolis',
                 'two-word city' => 'maple-grove',
@@ -114,22 +133,26 @@ describe 'school profile routing' do
             }.each do |city_description, city|
               describe "In a #{city_description}" do
                 before do
+                  route_params[:city] = city.sub('%23','#')
                   @school = FactoryGirl.build(:school, state: state_abbr, city: city.sub('%23', '#').sub('-', ' '), id: 1, name: 'alameda high school', level_code: 'p')
                   expect(@school).to be_preschool
                 end
                 it "has a route for #{action}" do
+                  unless path == ''
+                    route_params[:other] = path.gsub('/','')
+                  end
                   expect( get "/#{state}/#{city}/preschools/Alameda-High-School/1/#{path}" ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                      to route_to('school_profiles#show', route_params )
                 end
 
                 it "has a path helper for #{action}" do
                   expect( get(send("#{path_helper}_path", @school)) ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                      to route_to('school_profiles#show', route_params )
                 end
 
                 it "has a url helper for #{action}" do
                   expect( get(send("#{path_helper}_url", @school)) ).
-                      to route_to("school_profile_#{action}##{action}", state: state, city: city.sub('%23', '#'), schoolId: '1', school_name: 'Alameda-High-School' )
+                      to route_to('school_profiles#show', route_params )
                 end
               end
             end

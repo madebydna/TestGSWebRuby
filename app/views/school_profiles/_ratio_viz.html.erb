@@ -1,0 +1,26 @@
+<% score_data %>
+<div class="rating-container__score-item">
+  <div class="rating-score-item">
+    <div class="row">
+      <div class="col-xs-6 rating-score-item__label">
+        <%= score_data.label %>
+        <% if score_data.info_text %>
+          <%= render 'info_circle', content: score_data.info_text %>
+        <% end %>
+      </div>
+      <div class="col-xs-6">
+        <div class="rating-score-item__score">
+          <%= score_data.formatted_score %>
+          <span class="ratio-viz">:1</span>
+        </div>
+        <% if score_data.formatted_state_average.present? %>
+          <div class="rating-score-item__state-average">
+            <%= t('school_profiles.rating_score_item.state_average') %>: <%= score_data.formatted_state_average %>
+            <span class="ratio-viz-state-avg">:1</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>

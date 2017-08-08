@@ -17,6 +17,15 @@ class SchoolProfileDecorator < Draper::Decorator
     "#{street} #{city}, #{state} #{zipcode}"
   end
 
+  def full_address_markup
+    truncate_length = 45
+    "<span itemprop=\"address\" itemscope=\"\" itemtype=\"http://schema.org/PostalAddress\">" \
+        "<span itemprop=\"streetAddress\" content=\"#{street}\">#{street.truncate(truncate_length)}</span> " \
+        "<span itemprop=\"addressLocality\" content=\"#{city}\">#{city}</span>, " \
+        "<span itemprop=\"addressRegion\">#{state}</span> " \
+        "<span itemprop=\"postalCode\">#{zipcode}</span></span>".html_safe
+  end
+
   def city_state
     [city, state].join(', ')
   end
@@ -44,6 +53,7 @@ class SchoolProfileDecorator < Draper::Decorator
     address.gsub(/\s+/,'+').gsub(/'/,'')
   end
 
+  # DEPRECATED -- please use StructuredMarkup
   def state_breadcrumb_text
     text =
       if state == 'DC'
@@ -53,6 +63,7 @@ class SchoolProfileDecorator < Draper::Decorator
       end
   end
 
+  # DEPRECATED -- please use StructuredMarkup
   def city_breadcrumb_text
     text =
       if state == 'DC'
@@ -115,4 +126,14 @@ class SchoolProfileDecorator < Draper::Decorator
  def facebook_url
    cache_results.values_for(EspKeys::FACEBOOK_URL).first || metadata.facebook_url
  end
+
+  def get_all_students_data(hash)
+    hash.each do |student_data|
+      # require 'pry'
+      # binding.pry
+      # if student_data['breakdown'].to_s == 'All students'
+      #   return student_data
+      # end
+    end
+  end
 end

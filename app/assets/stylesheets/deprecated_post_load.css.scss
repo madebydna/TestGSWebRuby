@@ -1,0 +1,74 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+ */
+// Place all the styles related to the Pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// REMOVE ME! We need to figure out @extend usage first though.
+@import "variables/variables";
+@import "resources/bootstrap/bootstrap";
+@import "mixins/*";
+@import "gs/mixins";
+@import "sprites/*";
+@import "gs/buttons";
+@import "fonts/fonts-opensans";
+@import "fonts/fonts-opensans-condbold";
+@import "fonts/fonts-opensans-semibold";
+@import "gs/fonts/fonts-amaticsc";
+@import "fonts/fonts-robotoslab-light";
+@import "base/deprecated_spacing";
+@import "base/deprecated_typography";
+@import "gs/form";
+@import "gs/tables";
+@import "resources/tables";
+@import "resources/galleria.classic";
+@import "resources/bootstrap/social-buttons";
+@import "resources/bootstrap-select";
+@import "resources/slick";
+@import "gs/school_profile";
+@import "gs/objects/performance";
+@import "gs/objects/rating_background";
+@import "gs/objects/box_group";
+@import "gs/search_compare";
+@import "gs/objects/signin_layout";
+@import "gs/objects/district_city_layout";
+@import "gs/objects/topical_reviews_layout";
+@import "gs/objects/modal_layout";
+@import "gs/objects/community_spotlights";
+@import "gs/objects/community";
+@import "gs/objects/share_menu";
+@import "gs/objects/review_school_chooser";
+@import "resources/datatables/jquery.datatables";
+@import "gs/style_guide/style_guide";
+@import "gs/objects/osp_landing_page";
+@import "gs/objects/sel_promo_banner";
+@import "gs/objects/cc_promo_banner";
+@import "gs/bring-back-bootstrap";
+@import "gs/data-viz";
+@import "gs/objects/partner_promos";
+@import "gs/nav-guided-search";
+@import "gs/nav-osp";
+@import "gs/objects/zillow_module";
+@import "gs/objects/sticky_nearby_schools";
+@import "gs/objects/compact_review_module";
+@import "gs/objects/external_link_callout";
+@import "gs/objects/rectangle_inset";
+@import "gs/objects/home.css.scss";
+@import "gs/objects/footer.css.scss";
+@import "components/back-to-top";
+@import "resources/remodal";
+@import "resources/remodal-default-theme";
+
+.button-group {
+  @include button-group;
+}

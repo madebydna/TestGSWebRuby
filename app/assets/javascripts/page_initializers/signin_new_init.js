@@ -17,9 +17,9 @@ if(gon.pagename == 'signin/new'){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
             // variables on the clone and send to omniture.
-            var omnitureObject = GS.track.getOmnitureObject();
-            omnitureObject.pageName = SIGNIN_PAGENAME;
-            omnitureObject.hier1 = SIGNIN_HIER;
+            // var omnitureObject = GS.track.getOmnitureObject();
+            // omnitureObject.pageName = SIGNIN_PAGENAME;
+            // omnitureObject.hier1 = SIGNIN_HIER;
             location.hash = '';
         });
 
@@ -27,9 +27,9 @@ if(gon.pagename == 'signin/new'){
             //Since we are sending data to omniture asynchronously on clicking of the tabs,
             //do not modify the underlying global GS.track.baseOmnitureObject. Instead clone it, set
             // variables on the clone and send to omniture.
-            var omnitureObject = GS.track.getOmnitureObject();
-            omnitureObject.pageName = JOIN_PAGENAME;
-            omnitureObject.hier1 = JOIN_HIER;
+            // var omnitureObject = GS.track.getOmnitureObject();
+            // omnitureObject.pageName = JOIN_PAGENAME;
+            // omnitureObject.hier1 = JOIN_HIER;
             location.hash = '#';
         });
 

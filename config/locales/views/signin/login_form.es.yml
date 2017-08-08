@@ -2,13 +2,8 @@
 es:
   signin:
     login_form:
-      email_label: Dirección de correo electrónico
-      email_required_error: Por favor introduzca una dirección de correo eléctronico.
-      facebook_signin_button: Iniciar sesión usando Facebook
-      forgot_password_link: ¿Olvidaste tu contraseña?
       have_an_account_label: ¿Tener una cuenta?
-      login_button: Iniciar sesión
       no_account_label: ¿No tienes una cuenta?
       or: o
-      password_label: Contraseña
       signup_tab: Registrese
+      log in with Facebook: Iniciar sesión usando Facebook

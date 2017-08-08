@@ -68,6 +68,7 @@ GS.modal.manager = GS.modal.manager || (function ($) {
           addModalToStack(modal);
           modal.initialize();
           modal.show().done(function (data) {
+            removeModalFromStack(modal);
             modalDeferred.resolveWith(this, [data]);
           }).fail(function (data) {
             modalDeferred.rejectWith(this, [data]);

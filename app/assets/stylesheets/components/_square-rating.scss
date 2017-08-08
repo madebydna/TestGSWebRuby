@@ -1,0 +1,7 @@
+.square-rating {
+  @include square-rating($font-size-h1);
+}
+
+.square-rating--small {
+  @include square-rating($small)
+}

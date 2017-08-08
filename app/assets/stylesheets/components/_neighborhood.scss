@@ -1,0 +1,148 @@
+.neighborhood {
+  $link-text-color: #2ba3dc;
+  $contact-icon-color: #c1d2d9;
+  $background-color: #f6f9fa;
+  margin-top: 20px;
+
+  @include media-breakpoint-up(sm) {
+    padding: 30px 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  max-width: 1170px;
+
+  .title {
+    font-family: 'Robotoslab-Bold';
+    font-size: 18px;
+    text-align: left;
+    @include media-breakpoint-down(xs) {
+      text-align: center;
+    }
+  }
+
+
+
+  & a {
+    color: $link-text-color;
+  }
+
+  & span {
+    vertical-align: middle;
+    white-space: nowrap;
+
+  }
+
+  .homes-for-sale {
+    button {
+      cursor: pointer;
+      border-radius: 2px;
+      width: 100%;
+      min-height: 32px;
+      padding: 5px 10px;
+      margin-top: 10px;
+      color: white;
+      background-color: $link-text-color;
+      font-size: 12px;
+      text-align: center;
+      font-family: "opensans-regular";
+      &.nearby-homes{
+        background-color: #FFFFFF;
+        color: $link-text-color;
+      }
+    }
+
+  }
+
+  .map-container {
+    position: relative;
+    max-width: 1200px;
+    padding-bottom: 30px;
+    margin: auto;
+    @include media-breakpoint-up(sm) {
+      min-height: 450px;
+    }
+  }
+
+    .static-map {
+      @include media-breakpoint-down(sm) {
+        display: none;
+      }
+    }
+
+    .map-overlay {
+
+      .overlay-container {
+        max-width: 400px;
+        font-family: "opensans-regular";
+        background-color: $background-color;
+        @include media-breakpoint-up(sm) {
+          box-shadow: 0 27px 26px 0 rgba(0, 0, 0, 0.14);
+          background-color: #FFFFFF;
+        }
+        margin-left: 20px;
+        padding: 10px;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+        @include media-breakpoint-down(xs) {
+          position: relative;
+          margin: auto;
+          padding: 20px 30px;
+          top: 0;
+          left: 0;
+          margin-top: 20px;
+        }
+        .contact-address {
+          font-size: 18px;
+          float: left;
+          margin: 20px;
+          @include media-breakpoint-down(xs) {
+            margin: auto;
+            //padding: 0 30px;
+            float: none;
+          }
+        }
+        .contact-address.small-text {
+          font-size: 14px;
+        }
+        .contact-item {
+          font-size: 14px;
+          margin-top: 15px;
+          @include media-breakpoint-up(sm) {
+            margin: 20px;
+          }
+          clear: left;
+          .contact-row {
+            //margin-bottom: 5px;
+            vertical-align: middle;
+          }
+          .contact-icon-box {
+            width: 20px;
+            float: left;
+            margin-right: 20px;
+            text-align: center;
+            @include media-breakpoint-down(xs) {
+              margin-right: 10px;
+            }
+          }
+          .school-leader {
+            font-family: "opensans-semibold";
+          }
+          .contact-icon {
+            color: $contact-icon-color;
+            vertical-align: middle;
+          }
+          & a {
+            vertical-align: middle;
+          }
+        }
+    }
+  }
+}
+.school-profile{
+  .neighborhood {
+    .icon-user {
+      font-size: 14px;
+    }
+  }
+}

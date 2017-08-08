@@ -120,34 +120,30 @@ module UrlHelper
     "#{ENV_GLOBAL['catalog_server']}/#{path}".gsub('//','/').gsub('//','/').sub(':/', '://')
   end
 
-  %w(school school_details school_quality school_reviews school_user ).each do |helper_name|
+  %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      if school == nil
+      if school.nil?
         params = school_params_hash params_hash
-        is_preschool = params_hash[:preschool]
       else
         params = school_params school
         params.merge! params_hash
-        is_preschool = school.preschool?
       end
 
-      if is_preschool
-        send "pre#{helper_name}_path", params
-      else
-        super params
-      end
+      super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
       params = school_params school
       params.merge! params_hash
-      if school.preschool?
-        # If we dont add the pk subdomain here, the url's subdomain will default to non-pk subdomain
-        # and although the user will get to the right page when they click the link,
-        # it will happen via a 301 redirect, which we dont want
-        send "pre#{helper_name}_url", (params.merge(host: ENV_GLOBAL['app_pk_host']))
-      else
-        super params
-      end
+      super params
+    end
+  end
+
+  %w(school_details school_quality school_reviews).each do |helper_name|
+    define_method "#{helper_name}_path" do |school, params_hash = {}|
+      school_path school, params_hash
+    end
+    define_method "#{helper_name}_url" do |school, params_hash = {}|
+      school_url school, params_hash
     end
   end
 
@@ -259,7 +255,7 @@ module UrlHelper
   def prepend_http ( url )
     return_url = url
     unless url[/\Ahttp:\/\//] || url[/\Ahttps:\/\//]
-      return_url = "http://#{url}"
+      return_url = "https://#{url}"
     end
     return_url
   end

@@ -16,8 +16,11 @@ describe TestScoresCaching::BreakdownsCacher do
 
     it 'should keep only known data type ids' do
       allow(test_scores_cacher).to receive(:test_data_types).and_return(test_data_types)
-      expect(TestDataSet).to receive(:fetch_test_scores).and_return [Struct.new(:data_type_id).new(17), Struct.new(:data_type_id).new(18)]
-      expect(TestDataSet).to receive(:fetch_test_scores).and_return [Struct.new(:data_type_id).new(19)]
+      expect(TestDataSet).to receive(:fetch_test_scores).and_return [
+        Struct.new(:data_type_id, :subject_id, :year, :grade, :breakdown_id).new(17, nil, nil, 'All', nil),
+        Struct.new(:data_type_id, :subject_id, :year, :grade, :breakdown_id).new(18, nil, nil, 'All', nil),
+        Struct.new(:data_type_id, :subject_id, :year, :grade, :breakdown_id).new(19, nil, nil, 'All', nil)
+      ]
       expect(test_scores_cacher.query_results).not_to be_empty
       expect(test_scores_cacher.query_results.map {|q| q.data_type_id}.sort).to eq([17,19])
     end
@@ -62,8 +65,10 @@ describe TestScoresCaching::BreakdownsCacher do
                     'Math' => {
                       2010 => {
                         number_students_tested: 100,
+                        state_number_tested: nil,
                         score: '10',
-                        state_average: '20'
+                        state_average: '20',
+                        flags: nil
                       }
                     }
                   }

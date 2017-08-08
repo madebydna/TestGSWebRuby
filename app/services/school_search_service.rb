@@ -115,15 +115,17 @@ class SchoolSearchService
 
   def self.parse_school_results(solr_results)
     normalized_results = []
-    solr_results['response']['docs'].each do |school_search_result|
-      normalized_results << parse_school_document(school_search_result)
+    if solr_results.present? && solr_results['response'].present?
+      solr_results['response']['docs'].each do |school_search_result|
+        normalized_results << parse_school_document(school_search_result)
+      end
+      {
+          num_found: solr_results['response']['numFound'],
+          start: solr_results['response']['start'],
+          results: normalized_results,
+          spellcheck: parse_spellcheck_results(solr_results)
+      }
     end
-    {
-        num_found: solr_results['response']['numFound'],
-        start: solr_results['response']['start'],
-        results: normalized_results,
-        spellcheck: parse_spellcheck_results(solr_results)
-    }
   end
 
   def self.parse_spellcheck_results(solr_results)
@@ -233,6 +235,10 @@ class SchoolSearchService
       if filters.include?(:ptq_rating)
         filter_arr << "+path_to_quality_rating:(\"#{filters[:ptq_rating].compact.join('" "')}\")"
       end
+      filter_arr << '+omwpk_provider:true' if filters.include?(:indy_omwpk)
+      filter_arr << '+ccdf_provider:true' if filters.include?(:indy_ccdf)
+      filter_arr << '+indypsp_provider:true' if filters.include?(:indy_indypsp)
+      filter_arr << '+scholarships_offered:true' if filters.include?(:indy_scholarships)
       if filters.include?(:gstq_rating)
         filter_arr << "+great_start_to_quality_rating:(#{filters[:gstq_rating].compact.join(' ')})"
       end

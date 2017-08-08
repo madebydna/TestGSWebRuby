@@ -1,0 +1,98 @@
+// Ratings Colors
+// --------------------------
+$ratingNR: #777777;
+$rating1: #F26B16;
+$rating2: #E78818;
+$rating3: #DCA21A;
+$rating4: #D2B81B;
+$rating5: #BDC01E;
+$rating6: #A3BE1F;
+$rating7: #86B320;
+$rating8: #6BA822;
+$rating9: #559F24;
+$rating10: #439326;
+
+
+// Ratings Sizes
+// --------------------------
+$xtra-small: 26px;
+$small: 38px;
+$medium: 50px;
+$large: 62px;
+
+.circle-rating {
+  @include circle-rating($font-size-h1);
+}
+
+.circle-rating--large-responsive {
+  @include circle-rating(62px);
+  @include media-breakpoint-only(xs) {
+    @include circle-rating(38px);
+  }
+}
+
+.circle-rating--1 {
+  background-color: $rating1;
+}
+
+.circle-rating--2 {
+  background-color: $rating2;
+}
+
+.circle-rating--3 {
+  background-color: $rating3;
+}
+
+.circle-rating--4 {
+  background-color: $rating4;
+}
+
+.circle-rating--5 {
+  background-color: $rating5;
+}
+
+.circle-rating--6 {
+  background-color: $rating6;
+}
+
+.circle-rating--7 {
+  background-color: $rating7;
+}
+
+.circle-rating--8 {
+  background-color: $rating8;
+}
+
+.circle-rating--9 {
+  background-color: $rating9;
+}
+
+.circle-rating--10 {
+  background-color: $rating10;
+}
+
+.circle-rating--equity-blue {
+  @include circle-rating($medium);
+  background-color: #22a4dd;
+  span {
+    font-size: $medium * .5;
+  }
+}
+
+.circle-rating--xtra-small {
+  @include circle-rating($xtra-small)
+}
+
+.circle-rating--small {
+  @include circle-rating($small)
+}
+
+.circle-rating--medium {
+  @include circle-rating($medium)
+}
+
+.circle-rating--large {
+  @include circle-rating($large)
+}
+
+

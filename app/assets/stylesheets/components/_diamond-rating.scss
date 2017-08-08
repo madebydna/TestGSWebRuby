@@ -1,0 +1,7 @@
+.diamond-rating {
+  @include diamond-rating($font-size-h1);
+}
+
+.diamond-rating--small {
+  @include diamond-rating($small * .7)
+}

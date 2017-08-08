@@ -1,0 +1,33 @@
+<% historical_ratings %>
+<% title %>
+<% subtitle ||= ''%>
+
+<div class="historical-ratings js-historical-target" style="display:none;">
+  <div class="title">
+    <h4><%= title %></h4>
+    <p><%= subtitle %></p>
+  </div>
+  <div class="row panel">
+    <div class="col-xs-12 col-md-5">
+      <div class="header">
+        <div><%= t('.rating') %></div>
+        <%= t('.year') %>
+      </div>
+      <% historical_ratings.each do |rating| %>
+        <div class="rating-row clearfix">
+          <div class="gs-rating-inline circle-rating--xtra-small circle-rating--<%=rating['school_value_float']%>">
+            <%= rating['school_value_float'] %><span class="rating-circle-small">/10</span>
+          </div>
+          <%= rating['year'] %>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-xs-12 col-md-6 col-md-offset-1 text">
+      <p class="parent-tip">
+        <%= image_tag("/assets/school_profiles/owl.png") %>
+        <span class="speech-bubble left"><%= t('.notes').capitalize %></span>
+      </p>
+      <%= t('.footnote_html') %>
+    </div>
+  </div>
+</div>

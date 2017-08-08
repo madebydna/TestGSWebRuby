@@ -1,6 +1,8 @@
 require 'features/page_objects/modules/flash_messages'
+require 'features/page_objects/modules/footer'
 
 class ForgotPasswordPage < SitePrism::Page
+  include Footer
   include FlashMessages
 
   set_url_matcher /\/account\/forgot-password\//

@@ -1,0 +1,55 @@
+en:
+  nav:
+    footer:
+      support_greatschools: Support GreatSchools in this effort!
+      donate_now: Donate Now!
+      about_gs:
+        heading: Empowering parents
+        body: GreatSchools is the leading national nonprofit empowering parents
+          to unlock educational opportunities for their children. We provide
+          school information and parenting resources to help millions of
+          American families choose the right school, support learning at home,
+          and guide their children to great futures.
+      link_list_1:
+        heading: Join us
+        links:
+          - route: supporters
+            text: Supporters
+          - route: gk_licensing
+            text: Licensing
+          - route: sponsorship
+            text: Sponsorship
+          - route: advertising
+            text: Advertising
+          - route: careers
+            text: Careers
+      link_list_2:
+        heading: Learn more
+        links:
+          - route: privacy
+            text: Privacy policy
+          - route: terms_of_use
+            text: Terms of use
+          - route: about
+            text: About us
+          - route: contact_us
+            text: Contact us
+      connect_links:
+        heading: Connect
+        links:
+          - url: https://www.facebook.com/greatschools
+            icon: facebook
+            text: Facebook
+          - url: https://www.twitter.com/greatschools
+            icon: twitter
+            text: Twitter
+          - url: https://pinterest.com/greatschools/
+            icon: pinterest
+            text: Pinterest
+          - url: https://www.youtube.com/greatschools
+            icon: youtube
+            text: YouTube
+          - url: https://www.instagram.com/greatschools/
+            icon: instagram
+            text: Instagram
+      newsletter: Newsletter

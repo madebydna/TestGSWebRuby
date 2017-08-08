@@ -60,7 +60,7 @@ class SchoolProfileReviewsPage < SitePrism::Page
     elements :review_comment, '.js-topicalReviewComment'
   end
 
-  set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/reviews\/(#.+)?$/
+  set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/(#.+)?$/
 
   section :review_module, ReviewsSection, '#topicalReviewQuestionCarousel'
   section :visible_review_question, ReviewQuestionVisible, ".js-topicalReviewContainer.slick-active"
