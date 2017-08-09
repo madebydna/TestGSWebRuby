@@ -259,5 +259,4 @@ $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML
   });
-  GS.facebook.init();
 });
