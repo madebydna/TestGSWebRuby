@@ -37,6 +37,12 @@ class CharacteristicsCaching::QueryResultDecorator
     value
   end
 
+  def district_value
+    value = data_set_with_values.district_value
+    value = SafeHtmlUtils.html_escape_allow_entities(value) if value.is_a?(String)
+    value
+  end
+
   def district_average
     data_set_with_values.district_value
   end

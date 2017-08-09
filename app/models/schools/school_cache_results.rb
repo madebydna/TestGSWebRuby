@@ -84,6 +84,10 @@ class SchoolCacheResults
         CachedPerformanceMethods
       when 'gsdata'
         CachedGsdataMethods
+      when 'feed_characteristics'
+        CachedFeedCharacteristicsMethods
+      when 'directory'
+        CachedDirectoryMethods
     end
   end
 
