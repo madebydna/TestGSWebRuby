@@ -40,6 +40,7 @@ require 'support/rspec_custom_masters'
 require 'support/rspec_its'
 require 'support/rspec_extensions'
 require 'webmock/rspec'
+$LOAD_PATH.unshift File.expand_path('../../script', __FILE__)
 # require 'rspec_profiler'
 
 def disconnect_connection_pools(db)
