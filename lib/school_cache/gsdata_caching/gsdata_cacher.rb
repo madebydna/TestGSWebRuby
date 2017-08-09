@@ -15,7 +15,8 @@ class GsdataCaching::GsdataCacher < Cacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154].freeze
+  # 158: Equity rating
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158].freeze
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
     'gender',
