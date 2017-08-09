@@ -36,12 +36,12 @@ const config = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'school-profile-blocking',
-      chunks: ['school-profile-blocking', 'commons', 'school-profiles', 'district-boundaries', 'widget'],
+      chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
+      chunks: ['school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
     new webpack.DefinePlugin({
