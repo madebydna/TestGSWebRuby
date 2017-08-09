@@ -5,6 +5,7 @@ import * as google_maps from '../components/map/google_maps';
 import { logWidgetCodeRequest } from '../api_clients/widget_logs';
 import ValidatingInput from './validating_input';
 import * as validations from '../components/validations';
+import { putIntoQueryString } from '../util/uri';
 
 export default class Widget extends React.Component {
   constructor(params) {
@@ -73,7 +74,7 @@ export default class Widget extends React.Component {
       'zoom'
     ];
     let q = '';
-    params.forEach(k => q = GS.uri.Uri.putIntoQueryString(q, k, encodeURIComponent(this.state[k]), true));
+    params.forEach(k => q = putIntoQueryString(q, k, encodeURIComponent(this.state[k]), true));
 
     return this.state.baseUrl + q;
   }
