@@ -13,7 +13,7 @@ class SchoolFeedDecorator < Draper::Decorator
 
   def feed_test_scores
     @_feed_test_scores ||= FeedTestScoresCacheHash.new(
-      school_cache.cache_data['feed_test_scores']
+      school_cache.cache_data['feed_test_scores'] || {}
     )
   end
 
