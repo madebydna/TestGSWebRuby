@@ -1,6 +1,12 @@
 // TODO: import logging
-// TODO: import getValueOfQueryParam and copyParam and getHref and getPath and
-// goToPage 
+import {
+  getQueryStringFromObject,
+  getHref,
+  getValueOfQueryParam,
+  copyParam,
+  getPath
+} from './uri';
+import log from './log';
 
 const defaultLocale = 'en';
 let translationsHash;
@@ -15,7 +21,7 @@ const translate = function(key, options) {
     translationValue = replaceParameters(translationValue, parameters);
     return translationValue;
   } else {
-    GS.util.log('Translation for ' + key + ' not found. Defaulting to ' + defaultValue);
+    log('Translation for ' + key + ' not found. Defaulting to ' + defaultValue);
     return defaultValue;
   }
 };
@@ -43,8 +49,8 @@ const getTranslationsHash = function() {
 
 
 const preserveLanguageParam = function(url) {
-  var current_url = GS.uri.Uri.getHref();
-  return GS.uri.Uri.copyParam('lang', current_url, url);
+  var current_url = getHref();
+  return copyParam('lang', current_url, url);
 };
 
 const initLanguageLinkListener = function() {
@@ -53,23 +59,23 @@ const initLanguageLinkListener = function() {
     analyticsEvent('language selection', 'global nav bar', label, 'gaClickValue not defined');
 
     var queryString = getQueryStringWithLang(this);
-    GS.uri.Uri.goToPage(GS.uri.Uri.getPath() + queryString);
+    goToPage(getPath() + queryString);
   })
 
   var getQueryStringWithLang = function(elem) {
     var language = $(elem).data('language');
-    var queryData = GS.uri.Uri.getQueryData();
+    var queryData = getQueryData();
     if (language !== null && language.length > 0) {
       queryData['lang'] = language;
     } else {
       delete queryData.lang;
     }
-    return GS.uri.Uri.getQueryStringFromObject(queryData);
+    return getQueryStringFromObject(queryData);
   };
 };
 
 const currentLocale = function() {
-  let locale = GS.uri.Uri.getValueOfQueryParam('lang');
+  let locale = getValueOfQueryParam('lang');
   return locale || defaultLocale;
 };
 
