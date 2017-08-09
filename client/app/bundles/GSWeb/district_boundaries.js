@@ -6,6 +6,7 @@ import ConnectedDistrictBoundaries from './react_components/district_boundaries/
 import { getValueOfQueryParam } from './util/uri';
 import * as tooltips from './util/tooltip';
 import * as remodal from './util/remodal';
+import './vendor/tipso';
 
 window.store = configureStore({
   districtBoundaries: {

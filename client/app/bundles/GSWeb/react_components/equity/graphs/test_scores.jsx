@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import TestScoreBarGraphWithGrades from './test_score_bar_graph_with_grades';
+import { uniq } from 'lodash';
 
 export default class TestScores extends React.Component {
 
@@ -39,7 +40,7 @@ export default class TestScores extends React.Component {
 
   duplicateBreakdowns(breakdowns){
     var initialCount = breakdowns.length;
-    var uniqueCount = _.uniq(breakdowns, 'breakdown').length;
+    var uniqueCount = uniq(breakdowns, 'breakdown').length;
     return (initialCount > uniqueCount);
   }
 

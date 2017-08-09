@@ -1,4 +1,5 @@
 //TODO: import $
+import { throttle, debounce } from 'lodash';
 
 export function fixToTopWhenBelowY($elem, startYFunc, endYFunc, conditionCallback) {
   var updateElementPosition = function() {
@@ -18,6 +19,6 @@ export function fixToTopWhenBelowY($elem, startYFunc, endYFunc, conditionCallbac
     }
   }
 
-  $(window).on('scroll', _.throttle(updateElementPosition, 50));
-  $(window).on('resize', _.debounce(updateElementPosition, 100));
+  $(window).on('scroll', throttle(updateElementPosition, 50));
+  $(window).on('resize', debounce(updateElementPosition, 100));
 }

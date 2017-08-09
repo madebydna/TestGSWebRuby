@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { t } from '../../../util/i18n';
 import SingleBarViz from './single_bar_viz';
 
 export default class BarGraphBase extends React.Component {
@@ -32,7 +33,7 @@ export default class BarGraphBase extends React.Component {
   renderStateAverage() {
     if(this.validStateAverageValue(this.props.state_average)) {
       return (<div className="state-average">
-        {GS.I18n.t('State avg')} {this.props.state_average_label || this.props.state_average}%
+        {t('State avg')} {this.props.state_average_label || this.props.state_average}%
       </div>)
     }
   }

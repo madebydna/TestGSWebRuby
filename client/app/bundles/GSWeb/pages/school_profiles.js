@@ -1,5 +1,14 @@
+// TODO: import ad addCompfilterToGlobalAdTargetingGon
+// TODO: import search autocomplete
+
 import configureStore from '../store/appStore';
 
+import 'jquery';
+import '../vendor/tipso';
+import '../vendor/fastclick';
+import '../vendor/remodal';
+import '../vendor/parsley.remote';
+import '../vendor/parsley.es';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
@@ -17,11 +26,17 @@ import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
+import * as footer from '../components/footer';
+import { signupAndFollowSchool } from '../util/newsletters';
+import * as backToTop from '../components/back_to_top';
+import { impressionTracker } from '../util/impression_tracker';
+import { t } from '../util/i18n';
+import * as facebook from '../components/facebook_auth';
+import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
-
 import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
-
+import { assign } from 'lodash';
 
 window.store = configureStore({
   school: gon.school
@@ -40,10 +55,10 @@ ReactOnRails.register({
 
 $(function() {
   (function() {
-    var toggle = _.assign(new Toggle($('#hero').find('.school-info')));
+    var toggle = assign(new Toggle($('#hero').find('.school-info')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
-        toggle.updateButtonTextCallback(GS.I18n.t('show_less'), GS.I18n.t('show_more'))
+        toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
     );
     toggle.init().add_onclick();
   })();
@@ -68,6 +83,12 @@ $(function() {
   remodal.init();
   generateSubgroupPieCharts();
   stickyCTA.init();
+  footer.setupNewsletterLink();
+  backToTop.init();
+
+  $('.js-followThisSchool').on('click', function () {
+    signupAndFollowSchool(gon.school.state, gon.school.id);
+  });
 
   $('.rating-container__title').each(function() {
     var $elem = $(this);
@@ -86,6 +107,8 @@ $(function() {
       }
     );
   });
+
+  refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
 
   function setCookieExpiration() {
     var expires = "";
@@ -126,6 +149,45 @@ $(function() {
     $label.toggleClass('active');
   });
 
+  // used by test scores in school profiles
+  $('body').on('click', '.js-test-score-details', function () {
+    var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
+    if(grades.css('display') == 'none') {
+      grades.slideDown();
+      $(this).find('span').removeClass('rotate-text-270');
+    }
+    else{
+      grades.slideUp();
+      $(this).find('span').addClass('rotate-text-270');
+    }
+  });
+
+  // for historical ratings
+  $('body').on('click', '.js-historical-button', function () {
+    var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
+    if(historical_data.css('display') == 'none') {
+      historical_data.slideDown();
+      $(this).find('div').html(t('Hide past ratings'));
+      analyticsEvent('Profile', 'Historical Ratings', null, null, true);
+    }
+    else{
+      historical_data.slideUp();
+      $(this).find('div').html(t('Past ratings'));
+    }
+  });
+
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
+  GS.search.autocomplete.searchAutocomplete.init();
+
+  try {
+    $('.neighborhood img[data-src]').unveil(300, function() {
+      $(this).width('100%')
+    });
+  } catch (e) {}
+  try {
+    $('.innovate-logo').unveil(300);
+  } catch (e) {}
+  
   $('body').on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
@@ -159,3 +221,42 @@ $(function() {
 
 });
 
+$(window).on('load', function() {
+  var moduleIds = [
+    '#TestScores',
+    '#CollegeReadiness',
+    '#StudentProgress',
+    '#AdvancedCourses',
+    '#Equity',
+    '#EquityRaceEthnicity',
+    '#EquityLowIncome',
+    '#EquityDisabilities',
+    '#Students',
+    '#TeachersStaff',
+    '#Reviews',
+    '#ReviewSummary',
+    '#Neighborhood',
+    '#NearbySchools'
+  ];
+  var elementIds = [];
+  for (var x=0; x < moduleIds.length; x ++) {
+    var theId = moduleIds[x];
+    elementIds.push(theId);
+    elementIds.push(theId + '-empty');
+  }
+  impressionTracker({
+    elements: elementIds,
+    threshold: 50
+  });
+});
+
+$.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+  var appId = gon.facebook_app_id;
+  FB.init({
+    appId: appId,
+    version    : 'v2.2',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
+});

@@ -2,6 +2,11 @@ import React, { PropTypes } from 'react';
 import FiveStarQuestionCTA from './five_star_question_cta';
 import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
+import { scrollToElement } from '../../../util/scrolling';
+import { t } from '../../../util/i18n';
+import { isSignedIn, getCurrentSession } from '../../../util/session';
+import modalManager from '../../../components/modals/manager';
+import { forOwn, each, reduce, isEmpty } from 'lodash';
 
 export default class ReviewForm extends React.Component {
 
@@ -51,7 +56,7 @@ export default class ReviewForm extends React.Component {
 
   promptUserWhenNavigatingAway(e) {
     if (this.state.unsavedChanges) {
-      e.returnValue = GS.I18n.t('review_not_saved');
+      e.returnValue = t('review_not_saved');
       return e.returnValue;
     }
   }
@@ -86,7 +91,7 @@ export default class ReviewForm extends React.Component {
         displayAllQuestions: false
       }
     );
-    GS.reviewHelpers.scrollToReviewSummary();
+    scrollToElement('.review-summary');
   }
 
   fiveStarQuestionSelect(value, id) {
@@ -153,7 +158,7 @@ export default class ReviewForm extends React.Component {
   buildReviewsData() {
     let selectedResponses = this.state.selectedResponses;
     let reviewsData = [];
-    _.forOwn(selectedResponses, function (reviewResponse, questionId) {
+    forOwn(selectedResponses, function (reviewResponse, questionId) {
       reviewsData.push(
         {
           review_question_id: questionId,
@@ -175,7 +180,7 @@ export default class ReviewForm extends React.Component {
       .replace( /\n /, "\n" )
       .split(' ').length;
     if (7 > numberWords) {
-      return GS.I18n.t('review_word_min');
+      return t('review_word_min');
     } else {
       return null;
     }
@@ -183,7 +188,7 @@ export default class ReviewForm extends React.Component {
 
   requiredCommentValidator(string) {
     if ( !string || string.length == 0) {
-      return GS.I18n.t('review_thank_you');
+      return t('review_thank_you');
     } else {
       return null;
     }
@@ -191,7 +196,7 @@ export default class ReviewForm extends React.Component {
 
   maxCharactersValidator(string) {
     if (string && string.legnth != 0 && string.length > 2400) {
-      return GS.I18n.t('review_char_limit');;
+      return t('review_char_limit');;
     } else {
       return null;
     }
@@ -216,7 +221,7 @@ export default class ReviewForm extends React.Component {
 
   errorMessageForQuestion(validationFuncs, comment) {
     var error;
-    _.each(validationFuncs, function(func) {
+    each(validationFuncs, function(func) {
       var message = func(comment);
       if (message) {
         error = message;
@@ -238,8 +243,8 @@ export default class ReviewForm extends React.Component {
 
   validateForm() {
    var selectedResponses = this.state.selectedResponses;
-   var errorMessages = _.reduce(selectedResponses, this.validateResponse, {});
-   var formValid = _.isEmpty(errorMessages);
+   var errorMessages = reduce(selectedResponses, this.validateResponse, {});
+   var formValid = isEmpty(errorMessages);
     this.setState ({
       errorMessages: errorMessages,
       formErrors: !formValid
@@ -257,10 +262,10 @@ export default class ReviewForm extends React.Component {
 
   submitForm() {
     this.setState({disabled: true});
-    if (GS.session.isSignedIn()) {
-      GS.session.getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
+    if (isSignedIn()) {
+      getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
     } else {
-      GS.modal.manager.showModal(GS.modal.SubmitReviewModal)
+      modalManager.showModal('SubmitReviewModal')
         .done(this.getSchoolUser)
         .fail(function() {
           this.updateReviewFormErrors({
@@ -274,7 +279,7 @@ export default class ReviewForm extends React.Component {
     let schoolUserModalOptions =  { state: this.props.state, schoolId: this.props.schoolId.toString() };
     let schoolUsers = data.user.school_users;
     if(this.noSchoolUserExists(schoolUsers)) {
-      GS.modal.manager.showModal( GS.modal.SchoolUserModal, schoolUserModalOptions )
+      modalManager.showModal('SchoolUserModal', schoolUserModalOptions )
         .done(this.sendReviewPost).fail(this.sendReviewPost);
     } else {
       this.sendReviewPost();
@@ -343,7 +348,7 @@ export default class ReviewForm extends React.Component {
 
   reviewsErrors(reviews) {
     let reviewsErrors = {};
-    _.forOwn(reviews, function (review, questionId) {
+    forOwn(reviews, function (review, questionId) {
       if (review.error_messages) {
         reviewsErrors[questionId] = review.error_messages[0];
       }
@@ -371,12 +376,12 @@ export default class ReviewForm extends React.Component {
     }
     return(
       <div className="form-actions clearfix">
-        <a href={guidelinesLink} target="_blank">{GS.I18n.t('Review Guidelines')}</a>
-        <button className="button" onClick={this.cancelForm}>{GS.I18n.t('Cancel')}</button>
+        <a href={guidelinesLink} target="_blank">{t('Review Guidelines')}</a>
+        <button className="button" onClick={this.cancelForm}>{t('Cancel')}</button>
         <button className="button cta"
           disabled= {this.state.disabled}
           onClick={this.onSubmit}>
-          {GS.I18n.t(submitText)}
+          {t(submitText)}
         </button>
         {/* { this.state.formErrors ? this.renderFormErrorMessage() : null } */}
       </div>

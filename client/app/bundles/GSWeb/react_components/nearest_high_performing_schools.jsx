@@ -3,6 +3,7 @@ import { Provider, connect } from 'react-redux';
 import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list';
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
 import ButtonGroup from './buttongroup';
+import { t } from '../util/i18n';
 
 class NearestHighPerformingSchools extends React.Component {
 
@@ -19,7 +20,7 @@ class NearestHighPerformingSchools extends React.Component {
   }
 
   tabNames() {
-    return [GS.I18n.t('Nearest high-performing'), GS.I18n.t('Nearby schools')]
+    return [t('Nearest high-performing'), t('Nearby schools')]
   }
 
   tabSwitched(index) {
