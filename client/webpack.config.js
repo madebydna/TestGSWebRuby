@@ -50,7 +50,6 @@ const config = {
       },
     }),
     new webpack.optimize.UglifyJsPlugin(),
-    new BundleAnalyzerPlugin(),
     new LodashModuleReplacementPlugin()
   ],
   module: {
@@ -87,4 +86,9 @@ if (devBuild) {
 } else {
   console.log('Webpack production build for Rails'); // eslint-disable-line no-console
 }
+
+if (process.env.ANALYZE) {
+  config.plugins.push(new BundleAnalyzerPlugin());
+}
+
 module.exports = config;
