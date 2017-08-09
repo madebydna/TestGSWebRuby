@@ -116,7 +116,7 @@ function uriAbsoluteToGsOrg(uri) {
 }
 
 function uriAbsoluteToLocalhost(uri) {
-  localhostMatch = /^http:\/\/localhost(?:\/|:|$).*/;
+  let localhostMatch = /^http:\/\/localhost(?:\/|:|$).*/;
   return uri.match(localhostMatch);
 }
 
