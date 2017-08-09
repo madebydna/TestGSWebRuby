@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'feeds/feed_builders/test_score/test_score_feed'
+require_relative '../../../../../script/feeds/feed_builders/test_score/test_score_feed'
 
 describe Feeds::TestScoreFeed do
 
