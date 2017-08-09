@@ -85,12 +85,6 @@ if(window.hasOwnProperty('gon') && gon.hasOwnProperty('translations')) {
   setTranslationsHash(gon.translations);
 }
 
-// TODO: Remove when we move modals into webpack
-window.GS = window.GS || {};
-window.GS.I18n = window.GS.I18n || {};
-window.GS.I18n.preserveLanguageParam = preserveLanguageParam;
-window.GS.I18n.t = translate;
-
 export {
   setTranslationsHash as _setTranslationsHash,
   getTranslationsHash as getTranslationsHash,

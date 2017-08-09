@@ -141,11 +141,3 @@ const schools = function(states, schoolIds, options) {
     follow: follow
   };
 };
-
-
-// TODO: remove once modal JS is modularized
-window.GS = window.GS || {};
-window.GS.subscription = window.GS.subscription || {};
-window.GS.subscription.sponsorsSignUp = sponsorsSignUp;
-window.GS.subscription.greatNewsSignUp = greatNewsSignUp;
-window.GS.subscription.schools = schools;

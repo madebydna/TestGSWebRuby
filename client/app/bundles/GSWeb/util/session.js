@@ -41,8 +41,3 @@ export const getSchoolUserDigest = function() {
     }
   );
 };
-
-// TODO: Remove after everything is in webpack
-window.GS = window.GS || {};
-window.GS.session = window.GS.session || {};
-window.GS.session.isSignedIn = isSignedIn;

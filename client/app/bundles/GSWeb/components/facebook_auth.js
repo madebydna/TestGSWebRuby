@@ -174,12 +174,3 @@ const convertFacebookSigninDataToGSSigninData = function(facebookData) {
 const signinUsingFacebookData = function(facebookData) {
   return $.post(GS_FACEBOOK_AUTH_URL, convertFacebookSigninDataToGSSigninData(facebookData));
 };
-
-// TODO: remove after modals moved to webpack since they reference
-// GS.facebook.whatever
-window.GS = window.GS || {};
-window.GS.facebook = window.GS.facebook || {};
-window.GS.facebook.init = init;
-window.GS.facebook.login = login;
-window.GS.facebook.logout = logout;
-window.GS.facebook.signinToFacebookThenGreatSchools = signinToFacebookThenGreatSchools;
