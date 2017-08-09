@@ -12,7 +12,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const config = {
   entry: {
-    'school-profile-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
+    'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
     'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/parsley.remote', './app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
@@ -35,7 +35,7 @@ const config = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'school-profile-blocking',
+      name: 'commons-blocking',
       chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
