@@ -53,14 +53,14 @@ describe Feeds::Arguments do
     its(:district_ids) { is_expected.to eq(['1','2','3']) }
   end
 
-  context 'when specifying locations as nil' do
-    let(:input_argument_string) { build_arguments(locations: nil) }
-    its(:locations) { is_expected.to be_nil }
+  context 'when specifying location as nil' do
+    let(:input_argument_string) { build_arguments(location: nil) }
+    its(:location) { is_expected.to be_nil }
   end
 
-  context 'when specifying locations as /foo,/bar' do
-    let(:input_argument_string) { build_arguments(locations: '/foo,/bar') }
-    its(:locations) { is_expected.to eq(['/foo', '/bar']) }
+  context 'when specifying location as /foo,/bar' do
+    let(:input_argument_string) { build_arguments(location: '/foo,/bar') }
+    its(:location) { is_expected.to eq('/foo,/bar') }
   end
 
   context 'when specifying names as nil' do
@@ -89,7 +89,7 @@ describe Feeds::Arguments do
     arg_array << (hash[:states] || 'ca')
     arg_array << (hash[:school_ids] || '')
     arg_array << (hash[:district_ids] || '')
-    arg_array << (hash[:locations] || '')
+    arg_array << (hash[:location] || '')
     arg_array << (hash[:names] || '')
     arg_array << (hash[:batch_size] || '')
     arg_string = arg_array.join(':')
