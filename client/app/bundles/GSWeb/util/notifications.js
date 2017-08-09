@@ -79,13 +79,3 @@ export const flashMessagesInAjaxResponse = function(response) {
     return flash_from_hash(response.flash);
   }
 };
-
-// TODO: move this somewhere else ?
-jQuery(document).ready(function() {
-  $getNotificationContainer().on('click', '.close', function () {
-    $(this).closest('.alert').remove();
-  });
-
-  closeNotificationMessage(10000);
-});
-
