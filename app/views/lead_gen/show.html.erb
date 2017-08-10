@@ -115,7 +115,6 @@
         var $form = jQuery(this);
         var params = $form.serialize();
         jQuery.post($form.prop('action'), params).done(function(data) {
-          console.log(data);
           if (data && data.success && data.success === true) {
             $wrapper.find('.form').addClass('hidden');
             $wrapper.find('.success').removeClass('hidden');
