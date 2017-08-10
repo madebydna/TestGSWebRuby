@@ -1,0 +1,137 @@
+<% campaign_code = params[:cc] %>
+<html>
+<head>
+  <title>Request more information</title>
+  <style type="text/css">
+    html, body {
+      font: 10.5px Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .leadGenWrapper {
+      margin: 0;
+      padding: 0;
+      width: 300px;
+      height: 250px;
+    <% if campaign_code.present? %>
+      background: url('http://qa.greatschools.org/catalog/ads/leadGen/img/<%= campaign_code %>.png') no-repeat;
+    <% end %>
+    }
+
+    input, select {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .full {
+      width: 133px;
+    }
+
+    .part {
+      width: 100px;
+    }
+
+    .body {
+      padding: 110px 14px 0;
+      height: 140px;
+      position: relative;
+    }
+
+    .right {
+      position: absolute;
+      left: 161px; /* 14 + 133 + 14 = 161 */
+      width: 125px;
+      color: white;
+    }
+
+    .invalid {
+      color: red;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 12px;
+    }
+
+    .success {
+      padding: 0 25px;
+      font-size: 14px;
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <%= javascript_include_tag :jquery %>
+</head>
+</html>
+
+<div class="leadGenWrapper">
+  <div class="body">
+    <div class="success hidden">
+      Thank you for submitting your information! A representative from the school will be in contact with you soon.
+    </div>
+    <div class="form">
+      <div class="right intro">
+        Please provide your contact information and a representative from the school will contact you shortly.
+      </div>
+      <div class="right invalid hidden">
+        Please enter: full name, email and grade level.
+      </div>
+      <%= form_tag({controller: 'lead_gen', action: 'save'}, method: 'post') do %>
+          <%= hidden_field_tag(:campaign, campaign_code) %>
+          <%= text_field_tag(:full_name, '', placeholder: 'First and last name', class: 'full') %>
+          <%= text_field_tag(:email, '', placeholder: 'Email address', class: 'full') %>
+          <%= text_field_tag(:phone, '', placeholder: 'Phone number', class: 'full') %>
+          <%= select_tag(:level, options_for_select(
+              [['Grade level', nil], %w(Preschool p), %w(Elementary e), %w(Middle m), %w(High h)]), class: 'part') %>
+          <%= submit_tag('Submit', class: 'part') %>
+      <% end %>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $wrapper = jQuery('.leadGenWrapper');
+    var is_valid = function() {
+      var passed = true;
+      if ($wrapper.find('input[name=full_name]').val() === '') {
+        passed = false;
+      }
+      if ($wrapper.find('input[name=email]').val() === '') {
+        passed = false;
+      }
+      if ($wrapper.find('select[name=level]').val() === '') {
+        passed = false;
+      }
+
+      return passed;
+    };
+
+    $wrapper.find('form').on('submit', function() {
+      $wrapper.find('.right').addClass('hidden');
+      if (is_valid()) {
+        $wrapper.find('input[type=submit]').hide();
+
+        var $form = jQuery(this);
+        var params = $form.serialize();
+        jQuery.post($form.prop('action'), params).done(function(data) {
+          console.log(data);
+          if (data && data.success && data.success === true) {
+            $wrapper.find('.form').addClass('hidden');
+            $wrapper.find('.success').removeClass('hidden');
+          } else {
+            $wrapper.find('input[type=submit]').show();
+            $wrapper.find('.invalid').removeClass('hidden');
+          }
+        }).fail(function() {
+          $wrapper.find('input[type=submit]').show();
+          $wrapper.find('.invalid').removeClass('hidden');
+        })
+      } else {
+        $wrapper.find('.invalid').removeClass('hidden');
+      }
+      return false;
+    })
+  </script>
+</div>
