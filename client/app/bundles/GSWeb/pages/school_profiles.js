@@ -1,5 +1,4 @@
 // TODO: import ad addCompfilterToGlobalAdTargetingGon
-// TODO: import search autocomplete
 
 import configureStore from '../store/appStore';
 
@@ -38,6 +37,7 @@ import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
 import { assign } from 'lodash';
+import { initHeader } from '../header';
 
 window.store = configureStore({
   school: gon.school
@@ -55,6 +55,8 @@ ReactOnRails.register({
 });
 
 $(function() {
+  initHeader();
+
   (function() {
     var toggle = assign(new Toggle($('#hero').find('.school-info')));
     toggle.effect = "slideToggle";
@@ -178,7 +180,6 @@ $(function() {
   });
 
   GS.ad.addCompfilterToGlobalAdTargetingGon();
-  GS.search.autocomplete.searchAutocomplete.init();
 
   try {
     $('.neighborhood img[data-src]').unveil(300, function() {

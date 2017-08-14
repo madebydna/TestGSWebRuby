@@ -12,7 +12,7 @@ const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
 const config = {
   entry: {
-    'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
+    'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie', './app/bundles/GSWeb/header'],
     'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/parsley.remote', './app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
@@ -64,6 +64,15 @@ const config = {
         loader: 'file-loader'
       },
       {
+        test: /\.handlebars$/,
+        loader: 'handlebars-loader',
+        query: { 
+          helperDirs: [
+            __dirname + "/app/bundles/GSWeb/components/autocomplete/handlebars_helpers"
+          ]
+        }
+      },
+      {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
@@ -78,6 +87,9 @@ const config = {
       },
     ],
   },
+  node: {
+    fs: "empty"
+  }
 };
 
 
