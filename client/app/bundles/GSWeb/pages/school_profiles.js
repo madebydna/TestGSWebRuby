@@ -4,6 +4,7 @@
 import configureStore from '../store/appStore';
 
 import 'jquery';
+import 'jquery-unveil';
 import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';
