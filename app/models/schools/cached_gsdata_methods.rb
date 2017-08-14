@@ -8,4 +8,12 @@ module CachedGsdataMethods
     gsdata['Equity Rating'].first['school_value']
   end
 
+  def equity_description
+    gsdata['description']
+  end
+
+  def equity_methodology
+    gsdata['methodology']
+  end
+
 end

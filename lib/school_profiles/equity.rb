@@ -152,6 +152,10 @@ module SchoolProfiles
     end
 
     def sources
+      description = equity_description
+      description = data_label(description) if description
+      methodology = equity_methodology
+      methodology = data_label(methodology) if methodology
       content = ''
       if (equity_test_scores.ethnicity_test_scores_visible? || equity_test_scores.low_income_test_scores_visible?)
         content << get_test_source_data
@@ -172,6 +176,13 @@ module SchoolProfiles
           string << sources_for_view(hash)
         end
         content << '</div>'
+      end
+      if description || methodology
+        content << '<p>'
+        content << description if description
+        content << ' ' if description && methodology
+        content << methodology if methodology
+        content << '</p>'
       end
       if equity_data_sources.present?
         content << '<div class="sourcing">'
@@ -296,6 +307,14 @@ module SchoolProfiles
 
     def equity_rating
       @school_cache_data_reader.equity_overview_rating
+    end
+
+    def equity_description
+      @school_cache_data_reader.equity_description
+    end
+
+    def equity_methodology
+      @school_cache_data_reader.equity_methodology
     end
 
     def narration_key_from_rating
