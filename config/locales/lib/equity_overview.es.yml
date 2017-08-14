@@ -9,51 +9,51 @@ es:
         <br>
         <a href="http://www.greatschools.org/gk/ratings/" style="cursor: pointer;">Aprenda más acerca de esta
         clasificación. </a>
-      narrative.1_html: >
+      narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>Esta escuela no sirve a los estudiantes de las comunidades más desfavorecidas del estado así como otras
         escuelas en el estado.</p>
-        <br><br/>
+        <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Compare esta calificación a la calificación General de GreatSchools. Hay una gran
         diferencia? Inicie una conversación con un maestro o otros padres sobre cómo interpretar esta información.
         ¿Qué está haciendo la escuela para ayudar a todos los estudiantes a tener éxito? ¿Cómo puedes ayudar?</p>
-      narrative.2_html: >
+      narrative_2_html: >
         <h3 class="negative">Un signo preocupante:</h3>
         <p>Esta escuela no sirve a los estudiantes de las comunidades más desfavorecidas del estado así como otras
         escuelas en el estado.</p>
-        <br><br/>
+        <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Compare esta calificación a la calificación General de GreatSchools. Hay una gran
         diferencia? Inicie una conversación con un maestro o otros padres sobre cómo interpretar esta información.
         ¿Qué está haciendo la escuela para ayudar a todos los estudiantes a tener éxito? ¿Cómo puedes ayudar?</p>
-      narrative.3_html: >
+      narrative_3_html: >
         <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
         <p>Esta escuela está sirviendo a los estudiantes de las comunidades más desfavorecidas del estado así como
         otras escuelas en el estado.</p>
-        <br><br/>
+        <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Compare esta calificación a la calificación General de GreatSchools. Hay una gran
         diferencia? Inicie una conversación con un maestro o otros padres sobre cómo interpretar esta información.
         ¿Qué está haciendo la escuela para ayudar a todos los estudiantes a tener éxito? ¿Cómo puedes ayudar?</p>
-      narrative.4_html: >
+      narrative_4_html: >
         <h3 class="positive">Un signo prometedor:</h3>
         <p>Esta escuela está sirviendo a los estudiantes de las comunidades más desfavorecidas del estado mejor
         que otras escuelas en el estado.</p>
-        <br><br/>
+        <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que cierren la brecha entre diferentes grupos de estudiantes están haciendo
         algo bien! Inicie una conversación con un maestro o otros padres de la escuela acerca de lo que está haciendo
         la escuela.</p>
-      narrative.5_html: >
+      narrative_5_html: >
        <h3 class="positive">¡Buenas noticias!:</h3>
         <p>Esta escuela está sirviendo a los estudiantes de las comunidades más desfavorecidas del estado mucho mejor
         que otras escuelas en el estado.</p>
-        <br><br/>
+        <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que cierren la brecha entre diferentes grupos de estudiantes están haciendo
