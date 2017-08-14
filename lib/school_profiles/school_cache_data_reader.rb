@@ -69,6 +69,10 @@ module SchoolProfiles
       decorated_school.student_growth_rating
     end
 
+    def equity_overview_rating
+      decorated_school.equity_overview_rating
+    end
+
     def student_progress_rating_year
       decorated_school.student_growth_rating_year
     end

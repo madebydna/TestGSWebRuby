@@ -19,6 +19,7 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
+      <%= render 'equity_overview', equity_overview: equity %>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Race ethnicity'),
                           anchor: 'Race_ethnicity',

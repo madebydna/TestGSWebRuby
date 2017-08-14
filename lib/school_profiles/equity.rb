@@ -287,5 +287,41 @@ module SchoolProfiles
     def race_ethnicity_discipline_and_attendance_visible?
       (race_ethnicity_props.find { |h| h[:anchor] == 'Discipline_and_attendance' })[:data].present?
     end
+
+    def narration
+      return nil unless has_data?
+      key = narration_key_from_rating
+      I18n.t(key).html_safe if key
+    end
+
+    def equity_rating
+      @school_cache_data_reader.equity_overview_rating
+    end
+
+    def narration_key_from_rating
+      bucket = {
+        1 => 1,
+        2 => 1,
+        3 => 2,
+        4 => 2,
+        5 => 3,
+        6 => 3,
+        7 => 4,
+        8 => 4,
+        9 => 5,
+        10 => 5
+      }[equity_rating.to_i]
+      return nil unless bucket
+      "lib.equity_overview.narrative_#{bucket}_html"
+    end
+
+    def info_text
+      I18n.t('lib.equity_overview.info_text')
+    end
+
+    def has_data?
+      equity_rating.present? && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
+    end
+
   end
 end

@@ -36,6 +36,10 @@ module CachedRatingsMethods
     school_rating_by_id(165)
   end
 
+  def equity_overview_rating
+    school_rating_by_id(158)
+  end
+
   def student_growth_rating_year
     school_rating_year_by_id(165)
   end

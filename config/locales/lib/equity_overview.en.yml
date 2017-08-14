@@ -1,0 +1,53 @@
+en:
+  lib:
+    equity_overview:
+      'title': 'Equity overview'
+      info_text: >
+        The Equity Overview Rating looks at how well this school is serving the needs of its disadvantaged students
+        relative to all its students, compared to other schools in the state, based on test scores provided from the
+        state Department of Education.
+        <br>
+        <a href="http://www.greatschools.org/gk/ratings/" style="cursor: pointer;">Learn more about this rating.</a>
+      narrative_1_html: >
+        <h3 class="negative">Very concerning:</h3>
+        <p>This school is not serving students from the state's most disadvantaged communities as well as
+        other schools in the state. </p>
+        <br><br/>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Compare this rating to the overall GreatSchools Summary Rating. Is there a big gap? Start
+        a conversation with a teacher or a fellow parent about how to interpret this information. What’s the school
+        doing to help all students succeed? How can you help?</p>
+      narrative_2_html: >
+        <h3 class="negative">A worrisome sign:</h3>
+        <p>This school is not serving students from the state's most disadvantaged communities as well as
+        other schools in the state. </p>
+        <br><br/>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Compare this rating to the overall GreatSchools Summary Rating. Is there a big gap? Start
+        a conversation with a teacher or a fellow parent about how to interpret this information. What’s the school
+        doing to help all students succeed? How can you help?</p>
+      narrative_3_html: >
+        <h3 class="neutral">Worth a deeper look:</h3>
+        <p>This school is not serving students from the state's most disadvantaged communities as well as
+        other schools in the state. </p>
+        <br><br/>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Compare this rating to the overall GreatSchools Summary Rating. Is there a big gap? Start
+        a conversation with a teacher or a fellow parent about how to interpret this information. What’s the school
+        doing to help all students succeed? How can you help?</p>
+      narrative_4_html: >
+        <h3 class="positive">A promising sign:</h3>
+        <p>This school is not serving students from the state's most disadvantaged communities as well as
+        other schools in the state. </p>
+        <br><br/>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Schools that close the gap between different student groups are doing something right!
+        Start a conversation with a teacher or a fellow parent about what’s the school doing. </p>
+      narrative_5_html: >
+       <h3 class="positive">Good news!</h3>
+        <p>This school is not serving students from the state's most disadvantaged communities as well as
+        other schools in the state. </p>
+        <br><br/>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Schools that close the gap between different student groups are doing something right!
+        Start a conversation with a teacher or a fellow parent about what’s the school doing. </p>
