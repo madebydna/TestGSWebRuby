@@ -131,7 +131,7 @@ $(function() {
   // sure the modal isn't displayed again.
   $('#close-school-tour').click(function(){
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="start-tour js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
     setSchoolTourCookie();
   })
   
@@ -218,7 +218,7 @@ $(function() {
       return false;
   }).show();
 
-  $('body').on('click', '#close-school-tour', function() {
+  $('body').on('click', '#close-school-tour, .js-close-school-tour', function() {
     introJs.exit();
   });
 
