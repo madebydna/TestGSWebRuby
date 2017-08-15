@@ -16,4 +16,4 @@ const init = function() {
   }
 }
 
-export { init as initHeader }
+export { init }

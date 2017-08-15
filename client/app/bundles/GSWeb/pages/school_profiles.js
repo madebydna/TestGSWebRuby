@@ -37,7 +37,8 @@ import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
 import { assign } from 'lodash';
-import { initHeader } from '../header';
+import { init as initHeader } from '../header';
+import '../util/advertising';
 
 window.store = configureStore({
   school: gon.school
