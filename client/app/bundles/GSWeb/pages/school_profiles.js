@@ -77,6 +77,7 @@ $(function() {
   // has to go above tooltips.initialize();
   if (hasDeclinedTour()) {
     $('.tour-teaser').addClass('gs-tipso');
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
     $('.school-profile-tour-modal').removeClass('hidden');
   }
@@ -147,6 +148,7 @@ $(function() {
     $('.school-profile-tour-modal').remove();
     $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
     setCookie(PROFILE_TOUR_COOKIE, true);
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   });
 
   let $body = $('body');

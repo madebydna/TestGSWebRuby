@@ -157,6 +157,7 @@ const onExitTour = function() {
   if(stepNum < numberOfVisibleSteps) {
     window.analyticsEvent('Profile', 'tutorial-public', 'cancel-step ' + stepNum);
   }
+  $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
 };
 
 const handleLastStep = function() {
