@@ -9,7 +9,7 @@
     <div class="row">
       <% content.each do |section| %>
         <% section.each do |column,data| %>
-          <div class="col-xs-12 col-sm-4" id="<%= column.to_s + '-tour-anchor'%>" <!-- last one (for environment) was also hidden-sm-down -->
+          <div class="col-xs-12 col-sm-4" id="<%= column.to_s + '-tour-anchor'%>">
             <div class="toc-section-title">
               <%= t(".#{column.to_s.upcase}") %>&nbsp;<a data-remodal-target="modal_info_box"
                                      data-content-type="info_box"

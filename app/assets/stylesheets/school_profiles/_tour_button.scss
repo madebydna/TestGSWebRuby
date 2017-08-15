@@ -58,4 +58,8 @@ button.tour-cta {
     color: #1d1d1d;
     cursor: pointer;
   }
+
+  &.hidden {
+    display: none;
+  }
 }
