@@ -2403,6 +2403,40 @@
       "from": "gzip-size@>=3.0.0 <4.0.0",
       "resolved": "https://registry.npmjs.org/gzip-size/-/gzip-size-3.0.0.tgz"
     },
+    "handlebars": {
+      "version": "4.0.10",
+      "from": "handlebars@>=4.0.2 <5.0.0",
+      "resolved": "https://registry.npmjs.org/handlebars/-/handlebars-4.0.10.tgz",
+      "dependencies": {
+        "async": {
+          "version": "1.5.2",
+          "from": "async@>=1.4.0 <2.0.0",
+          "resolved": "https://registry.npmjs.org/async/-/async-1.5.2.tgz"
+        },
+        "source-map": {
+          "version": "0.4.4",
+          "from": "source-map@>=0.4.4 <0.5.0",
+          "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.4.4.tgz"
+        }
+      }
+    },
+    "handlebars-loader": {
+      "version": "1.5.0",
+      "from": "handlebars-loader@>=1.5.0 <2.0.0",
+      "resolved": "https://registry.npmjs.org/handlebars-loader/-/handlebars-loader-1.5.0.tgz",
+      "dependencies": {
+        "async": {
+          "version": "0.2.10",
+          "from": "async@>=0.2.10 <0.3.0",
+          "resolved": "https://registry.npmjs.org/async/-/async-0.2.10.tgz"
+        },
+        "loader-utils": {
+          "version": "1.0.4",
+          "from": "loader-utils@>=1.0.0 <1.1.0",
+          "resolved": "https://registry.npmjs.org/loader-utils/-/loader-utils-1.0.4.tgz"
+        }
+      }
+    },
     "har-schema": {
       "version": "1.0.5",
       "from": "har-schema@>=1.0.5 <2.0.0",
