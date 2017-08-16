@@ -9,7 +9,7 @@ import {
 } from '../api_clients/homes_and_rentals';
 import ButtonGroup from './buttongroup';
 import AnchorButton from './anchor_button';
-import zillowLogo from '../../../../../app/assets/images/zillow_logo_sm.png';
+import zillowLogo from 'zillow_logo_sm.png';
 import { t } from '../util/i18n';
 
 export default class HomesAndRentals extends React.Component {

@@ -10,6 +10,7 @@ const nodeEnv = devBuild ? 'development' : 'production';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
+
 const config = {
   entry: {
     'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
@@ -28,11 +29,16 @@ const config = {
   },
 
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.png'],
     alias: {
       react: path.resolve('./node_modules/react'),
       'react-dom': path.resolve('./node_modules/react-dom'),
     },
+    modules: [
+      path.resolve('./app/bundles/GSWeb'),
+      path.resolve('../app/assets/images'),
+      path.resolve('./node_modules')
+    ]
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
