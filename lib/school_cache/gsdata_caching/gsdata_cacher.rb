@@ -99,13 +99,9 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
-      begin
-        if result.data_type_id == 158 # equity rating
-          h[:description] = data_description_value("whats_this_equity#{school.state}") || data_description_value('whats_this_equity')
-          h[:methodology] = data_description_value("footnote_equity#{school.state}") || data_description_value('footnote_equity')
-        end
-      rescue => error
-        puts error
+      if result.data_type_id == 158 # equity rating
+        h[:description] = data_description_value("whats_this_equity#{school.state}") || data_description_value('whats_this_equity')
+        h[:methodology] = data_description_value("footnote_equity#{school.state}") || data_description_value('footnote_equity')
       end
     end
   end
