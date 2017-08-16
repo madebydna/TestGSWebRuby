@@ -16,8 +16,6 @@ module SchoolParamsConcerns
   def require_school
     @school = find_school if params[:schoolId].to_i > 0 || params[:school_id].to_i > 0
 
-    @school.extend SchoolProfileDataDecorator
-
     if @school.blank?
       if city_param
         redirect_to city_path(city_params(state_param, city_param)), status: :found
