@@ -15,7 +15,6 @@ const SchoolUserModal = function($, options) {
   this.schoolUserForm;
   this.selectButtons;
   this.schoolUserValue;
-  var schoolUserValue;
 };
 
 SchoolUserModal.prototype = create(BaseModal.prototype, {
@@ -33,15 +32,16 @@ assign(SchoolUserModal.prototype, {
     return url;
   },
 
-  selectSchoolUserValue: function() {
-    var value = this.dataset.schoolUser;
-    schoolUserValue.attr('value', value);
-    $(this).siblings().removeClass('active');
-    $(this).addClass('active');
+  selectSchoolUserValue: function(event) {
+    let $elem = $(event.currentTarget);
+    let value = event.currentTarget.dataset.schoolUser;
+    this.schoolUserValue.attr('value', value);
+    $elem.siblings().removeClass('active');
+    $elem.addClass('active');
   },
 
   setSelectSchoolUserHandler: function() {
-    this.selectButtons.on('click',this.selectSchoolUserValue);
+    this.selectButtons.on('click',this.selectSchoolUserValue.bind(this));
   },
 
   submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
@@ -71,7 +71,6 @@ assign(SchoolUserModal.prototype, {
     this.schoolUserForm = this.$getFirstForm();
     this.selectButtons = this.schoolUserForm.find('.js-schoolUserSelect');
     this.schoolUserValue = this.schoolUserForm.find('.js-schoolUserValue');
-    schoolUserValue = this.schoolUserValue;
   },
 
   initialize: function initialize() {
