@@ -5,6 +5,7 @@ en:
       '4-year high school graduation rate': '4-year high school graduation rate'
       'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
       'source': 'Source'
+      'Great schools rating': 'GreatSchools Equity Overview Rating'
       faq:
         race_ethnicity:
           cta: Notice something missing or confusing?

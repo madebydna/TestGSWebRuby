@@ -7,11 +7,12 @@ module SchoolProfiles
 
     DEEP_LINK_HASH_SEPARATOR = '*'
 
-    def initialize(test_scores, college_readiness, student_progress, equity, students, teacher_staff, courses, stem_courses, school)
+    def initialize(test_scores, college_readiness, student_progress, equity, equity_overview, students, teacher_staff, courses, stem_courses, school)
       @test_scores = test_scores
       @college_readiness = college_readiness
       @student_progress = student_progress
       @equity = equity
+      @equity_overview = equity_overview
       @students = students
       @teacher_staff = teacher_staff
       @courses = courses
@@ -39,7 +40,9 @@ module SchoolProfiles
     def equity
       hash = {}
       arr = []
-      arr << {column: 'Equity', label: 'equity_overview', present: true, rating: @equity.equity_rating, anchor: 'Equity_overview'}
+      if @equity_overview.has_rating?
+        arr << {column: 'Equity', label: 'equity_overview', present: true, rating: @equity_overview.equity_rating, anchor: 'Equity_overview'}
+      end
       arr << {column: 'Equity', label: 'race_ethnicity', present: true, rating: nil, anchor: 'Race_ethnicity'}
       arr << {column: 'Equity', label: 'low_income', present: true, rating: @equity.rating_low_income.to_f.round, anchor: 'Low-income_students'}
       arr << {column: 'Equity', label: 'disabilities', present: true, rating: nil, anchor: 'Students_with_Disabilities'}
