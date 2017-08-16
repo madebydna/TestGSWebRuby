@@ -16,7 +16,6 @@
 //= require ./overview_init
 //= require ./quality_init
 //= require ./review_school_chooser_init
-//= require ./reviews_init
 //= require ./reviews_new_init
 //= require ./search_init
 //= require ./signin_new_init
