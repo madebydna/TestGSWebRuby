@@ -49,6 +49,9 @@ class RatingsCaching::RatingsCacher < Cacher
       elsif data_set.data_type_id == 165 # growth rating
         hash[:description] = data_description_value('whats_this_growth')
         hash[:methodology] = data_description_value("footnote_growth#{school.state}")
+      elsif data_set.data_type_id == 166 # college readiness rating
+        hash[:description] = data_description_value('whats_this_psr')
+        hash[:methodology] = data_description_value("footnote_psr#{school.state}")
       end
       hash
     end

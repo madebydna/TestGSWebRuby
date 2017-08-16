@@ -252,16 +252,34 @@ module SchoolProfiles
       NEW_SAT_STATES.include?(state.to_s.downcase) && year.to_i >= NEW_SAT_YEAR
     end
 
+    def rating_description
+      hash = @school_cache_data_reader.college_readiness_rating_hash
+      hash['description'] if hash
+    end
+
+    def rating_methodology
+      hash = @school_cache_data_reader.college_readiness_rating_hash
+      hash['methodology'] if hash
+    end
+
     def sources
+      description = rating_description
+      description = data_label(description) if description
+      methodology = rating_methodology
+      methodology = data_label(methodology) if methodology
       content = '<div class="sourcing">'
       content << '<h1>' + data_label('title') + '</h1>'
-      if rating_year.present?
-        content << '<div>'
-        content << '<h4>' + data_label('GreatSchools Rating') + '</h4>'
-        content << '<p>' + data_label('Rating text') + '</p>'
-        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + '</p>'
-        content << '</div>'
+      content << '<div>'
+      content << '<h4>' + data_label('GreatSchools Rating') + '</h4>'
+      if description || methodology
+        content << '<p>'
+        content << description if description
+        content << ' ' if description && methodology
+        content << methodology if methodology
+        content << '</p>'
       end
+      content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + '</p>'
+      content << '</div>'
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)
       end
