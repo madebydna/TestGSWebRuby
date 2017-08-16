@@ -44,6 +44,10 @@ module CachedRatingsMethods
     school_rating_hash_by_id(165)
   end
 
+  def college_readiness_rating_hash
+    school_rating_hash_by_id(166)
+  end
+
   def college_readiness_rating
     school_rating_by_id(166)
   end

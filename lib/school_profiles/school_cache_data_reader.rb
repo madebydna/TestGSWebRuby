@@ -77,6 +77,10 @@ module SchoolProfiles
       decorated_school.student_growth_rating_hash
     end
 
+    def college_readiness_rating_hash
+      decorated_school.college_readiness_rating_hash
+    end
+
     def test_scores_rating_hash
       decorated_school.test_scores_rating_hash
     end
