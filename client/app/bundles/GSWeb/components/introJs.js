@@ -149,7 +149,7 @@ const onStepSeen = function(targetElement, tutorial) {
   let stepNum = intro._currentStep;
   let gaLabel = tutorial[stepNum].gaLabel;
   window.analyticsEvent('Profile', 'tutorial-public', gaLabel || (stepNum + 1), true);
-}
+};
 
 const onExitTour = function() {
   $(homesAndRentalsSelector).show();
@@ -197,7 +197,7 @@ const startTutorial = function(tutorial, lastStep) {
     scrollPadding: 80
   }).
   onafterchange(function(targetElement){
-    onStepSeen(targetElement, tutorial);
+    onStepSeen(targetElement, allSteps);
   }).
   onexit(onExitTour).
   onbeforechange(handleLastStep);
