@@ -1,5 +1,11 @@
 .module_feedback {
   display: inline-block;
+  .anchor-button {
+    height: 24px;
+  }
+  .anchor-button + .anchor-button {
+    margin-left: 5px;
+  }
 }
 @include media-breakpoint-down(xs) {
   .module_feedback_desktop_divider{
@@ -9,3 +15,4 @@
     display: block;
   }
 }
+
