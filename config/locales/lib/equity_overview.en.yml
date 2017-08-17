@@ -2,6 +2,9 @@ en:
   lib:
     equity_overview:
       'title': 'Equity overview'
+      'sources_title': 'GreatSchools profile data sources &amp; information'
+      'source': 'Source'
+      'Great schools rating': 'GreatSchools Equity Overview Rating'
       info_text: >
         The Equity Overview Rating looks at how well this school is serving the needs of its disadvantaged students
         relative to all its students, compared to other schools in the state, based on test scores provided from the

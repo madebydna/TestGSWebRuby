@@ -4,7 +4,6 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
-      @equity_overview_struct = build_equity_overview_struct
     end
 
     def qualaroo_module_link(module_sym)
@@ -19,29 +18,24 @@ module SchoolProfiles
       methodology = data_label(methodology) if methodology
       source = "#{source_name}, #{source_year}"
       content << '<div class="sourcing">'
-      content << '<h1>' + data_label('.title') + '</h1>'
-      content << '<p>'
-      content << '<h4>' + data_label('Great schools rating') + '</h4>'
+      content << '<h1>' + static_label('sources_title') + '</h1>'
+      content << '<div>'
+      content << '<h4>' + static_label('Great schools rating') + '</h4>'
       if description || methodology
-        content << description if description
-        content << '</p><p>' if description && methodology
-        content << methodology if methodology
-        content << '</p>'
+        content << "<p>#{description}</p>" if description
+        content << "<p>#{methodology}</p>" if methodology
       end
       content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + '</p>'
+      content << '</div>'
       content << '</div>'
     end
 
     def data_label(key)
-      I18n.t(key.to_sym, scope: 'lib.equity', default: I18n.db_t(key, default: key))
+      I18n.t(key.to_sym, scope: 'lib.equity_overview', default: I18n.db_t(key, default: key))
     end
 
     def static_label(key)
-      I18n.t(key.to_sym, scope: 'lib.equity', default: key)
-    end
-
-    def data_label_info_text(key)
-      I18n.t(key.to_sym, scope: 'lib.equity.data_point_info_texts')
+      I18n.t(key.to_sym, scope: 'lib.equity_overview', default: key)
     end
 
     def narration
@@ -51,23 +45,23 @@ module SchoolProfiles
     end
 
     def equity_rating
-      @equity_overview_struct.rating
+      equity_overview_struct.rating
     end
 
     def equity_description
-      @equity_overview_struct.description
+      equity_overview_struct.description
     end
 
     def equity_methodology
-      @equity_overview_struct.methodology
+      equity_overview_struct.methodology
     end
 
     def source_name
-      @equity_overview_struct.source_name
+      equity_overview_struct.source_name
     end
 
     def source_year
-      @equity_overview_struct.year
+      equity_overview_struct.year
     end
 
     def narration_key_from_rating
@@ -97,26 +91,24 @@ module SchoolProfiles
 
     protected
 
-    def build_equity_overview_struct
+    def equity_overview_struct
+      @_equity_overview_struct ||= (
       if @school_cache_data_reader.gsdata_data('Equity Rating').present?
-        values = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating'].select { |h| h.has_key?('school_value') }
-        values = values.select do |h|
-          (!h.has_key?('breakdowns') && !h.has_key?('breakdown')) ||
-            h['breakdown'] == 'All students'
-        end
+        equity_overview_data = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating'].select { |h| h.has_key?('school_value') }
+        equity_overview_data = equity_overview_data.select {|h| !h.has_key?('breakdowns')}
 
         # If more than one school_value, grab first one but log error
         GSLogger.error(:misc, nil,
                        message:"Failed to find unique data point for data type 'Equity Rating' in the gsdata cache",
                        vars: {school: {state: @school_cache_data_reader.school.state,
                                        id: @school_cache_data_reader.school.id}
-                       }) if values.size > 1
-        unless values.empty?
-          school_value = values.first['school_value']
-          description = values.first['description']
-          methodology = values.first['methodology']
-          year = values.first['source_year']
-          source_name = values.first['source_name']
+                       }) if equity_overview_data.size > 1
+        unless equity_overview_data.empty?
+          school_value = equity_overview_data.first['school_value']
+          description = equity_overview_data.first['description']
+          methodology = equity_overview_data.first['methodology']
+          year = equity_overview_data.first['source_year']
+          source_name = equity_overview_data.first['source_name']
         end
       end
       OpenStruct.new.tap do |eo|
@@ -126,6 +118,7 @@ module SchoolProfiles
         eo.year = year
         eo.source_name = source_name
       end
+      )
     end
 
   end

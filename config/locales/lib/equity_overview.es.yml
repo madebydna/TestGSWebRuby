@@ -2,7 +2,9 @@ es:
   lib:
     equity_overview:
       'title': 'Perspectiva de la equidad'
+      'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'Great schools rating': 'La Calificación General de Equidad de GreatSchools'
+      'source': 'Fuente'
       info_text: >
         La Calificación General de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
