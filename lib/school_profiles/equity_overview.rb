@@ -4,7 +4,7 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
-      @equity_overview_hash = build_equity_overview_hash
+      @equity_overview_struct = build_equity_overview_struct
     end
 
     def qualaroo_module_link(module_sym)
@@ -24,18 +24,18 @@ module SchoolProfiles
       methodology = equity_methodology
       methodology = data_label(methodology) if methodology
       source = "#{source_name}, #{source_year}"
+      content << '<div class="sourcing">'
+      content << '<h1>' + data_label('.title') + '</h1>'
+      content << '<p>'
+      content << '<h4>' + data_label('Great schools rating') + '</h4>'
       if description || methodology
-        content << '<div class="sourcing">'
-        content << '<h1>' + data_label('.title') + '</h1>'
-        content << '<p>'
-        content << '<h4>' + data_label('Great schools rating') + '</h4>'
         content << description if description
         content << '</p><p>' if description && methodology
         content << methodology if methodology
         content << '</p>'
-        content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + '</p>'
-        content << '</div>'
       end
+      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + '</p>'
+      content << '</div>'
     end
 
     def data_label(key)
@@ -57,23 +57,23 @@ module SchoolProfiles
     end
 
     def equity_rating
-      @equity_overview_hash.rating
+      @equity_overview_struct.rating
     end
 
     def equity_description
-      @equity_overview_hash.description
+      @equity_overview_struct.description
     end
 
     def equity_methodology
-      @equity_overview_hash.methodology
+      @equity_overview_struct.methodology
     end
 
     def source_name
-      @equity_overview_hash.source_name
+      @equity_overview_struct.source_name
     end
 
     def source_year
-      @equity_overview_hash.year
+      @equity_overview_struct.year
     end
 
     def narration_key_from_rating
@@ -103,7 +103,7 @@ module SchoolProfiles
 
     protected
 
-    def build_equity_overview_hash
+    def build_equity_overview_struct
       if @school_cache_data_reader.gsdata_data('Equity Rating').present?
         values = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating'].select { |h| h.has_key?('school_value') }
         values = values.select do |h|
@@ -126,11 +126,11 @@ module SchoolProfiles
         end
       end
       OpenStruct.new.tap do |eo|
-        eo.rating = school_value.nil? ? nil : school_value
-        eo.description = description.nil? ? nil : description
-        eo.methodology = methodology.nil? ? nil : methodology
-        eo.year = year.nil? ? nil : year
-        eo.source_name = source_name.nil? ? nil : source_name
+        eo.rating = school_value
+        eo.description = description
+        eo.methodology = methodology
+        eo.year = year
+        eo.source_name = source_name
       end
     end
 
