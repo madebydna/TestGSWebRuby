@@ -1,8 +1,8 @@
 require 'spec_helper'
 require 'features/page_objects/review_school_chooser_page'
-require 'features/page_objects/school_profile_reviews_page'
 require 'features/contexts/review_school_chooser_contexts'
 require 'features/examples/footer_examples'
+require 'features/page_objects/school_profiles_page'
 
 describe 'Review School Chooser Page' do
   with_shared_context 'Visit Review School Chooser Page for topic 1' do
@@ -14,7 +14,7 @@ describe 'Review School Chooser Page' do
 
     on_subject :click_on_school_link, js: true do
      it 'should navigate to a school profile reviews page' do
-       expect(SchoolProfileReviewsPage.new).to be_displayed
+       expect(SchoolProfilesPage.new).to be_displayed
      end
     end
     with_subject :recent_reviews do
