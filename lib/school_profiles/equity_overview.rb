@@ -11,12 +11,6 @@ module SchoolProfiles
       qualaroo_iframe(module_sym, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
     end
 
-    def equity_test_scores
-      @_equity_test_scores ||= (
-      SchoolProfiles::EquityTestScores.new(school_cache_data_reader: @school_cache_data_reader)
-      )
-    end
-
     def equity_overview_sources
       content = ''
       description = equity_description
