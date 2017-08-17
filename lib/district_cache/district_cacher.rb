@@ -77,6 +77,7 @@ class DistrictCacher
     rescue => error
       error_vars = { cache_key: cache_key, district_state: district.state, district_id: district.id }
       GSLogger.error(:district_cache, error, vars: error_vars, message: 'Failed to build district cache')
+      raise
     end
   end
 
