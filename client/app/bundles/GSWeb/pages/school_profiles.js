@@ -230,6 +230,7 @@ $(window).on('load', function() {
     '#CollegeReadiness',
     '#StudentProgress',
     '#AdvancedCourses',
+    '#EquityOverview',
     '#Equity',
     '#EquityRaceEthnicity',
     '#EquityLowIncome',
