@@ -17,7 +17,7 @@ let secondTutorialLastStep = {
 
 let firstTutorial = [
   {
-    element: '.logo',
+    element: null,
     intro: t('tour1.step1'),
     highlightClass: 'no-highlight',
     position: 'below',
@@ -171,9 +171,9 @@ const handleLastStep = function() {
 
 const getFilteredSteps = function(tutorial) {
   return tutorial.filter(function(obj) {
-      return $(obj.element).length;
+      return obj.element === null || $(obj.element).length;
   });
-}
+};
 
 export function exit() {
   intro.exit();
@@ -193,7 +193,8 @@ const startTutorial = function(tutorial, lastStep) {
     showProgress: false,
     skipLabel: 'cancel',
     overlayOpacity: 0,
-    exitOnOverlayClick: true
+    exitOnOverlayClick: true,
+    scrollPadding: 80
   }).
   onafterchange(function(targetElement){
     onStepSeen(targetElement, tutorial);
@@ -202,7 +203,7 @@ const startTutorial = function(tutorial, lastStep) {
   onbeforechange(handleLastStep);
   $(homesAndRentalsSelector).hide();
   intro.start();
-}
+};
 
 // Ensure that first tutorial is exited before new tutorial fires
 function exitLastTour(){
@@ -210,7 +211,7 @@ function exitLastTour(){
     intro.exit();
     resolve();
   });
-};
+}
 
 export function startFirstTutorial() {
   startTutorial(firstTutorial, firstTutorialLastStep);
