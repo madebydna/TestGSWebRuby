@@ -1,9 +1,13 @@
 <% content %>
 <% qualaroo_yes_url = content + '&a=0' %>
 <% qualaroo_no_url = content + '&a=1' %>
+<% unless defined?(divider) %>
+  <% divider = true %>
+<% end %>
 
 <div class="module_feedback">
-  <span class="module_feedback_desktop_divider">&nbsp;|&nbsp;</span><%= t('lib.test_scores.was_this_useful') %>
+  <% if divider %><span class="module_feedback_desktop_divider">&nbsp;|&nbsp;</span><% end %>
+  <%= t('lib.test_scores.was_this_useful') %>
   <span>
     <%=
       link_to(I18n.db_t('Yes'), qualaroo_yes_url, class: 'anchor-button')
