@@ -20,10 +20,15 @@
     }
   }
 
+  .tab-buttons {
+    margin-top: 15px;
+  }
+
+  .panel {
+    margin-top: 0px;
+  }
+
   .response:first-child {
-    //p {
-    //  //font-family: opensans-semibold;
-    //}
     p:before, p:after {
       content: '"';
     }
@@ -34,36 +39,7 @@
     font-size: 14px;
   }
 
-  //.private-school-info-container {
-  //  background-color: #f6f9fa;
-  //  display: inline-block;
-  //}
-
-  .info-pane {
-    background-color: #FFFFFF;
-    margin: 10px;
-    padding: 10px;
-  }
-
-  .source-bar {
-    font-size: 14px;
-    font-family: 'opensans-regular';
-  }
-
-  .title-bar {
-    margin-top: 10px;
-    font-family: opensans-semibold;
-    font-size: 18px;
-    background-color: #f6f9fa;
-    padding: 20px 10px;
-
-    .icon-users{
-      font-size: 26px;
-      margin: 10px;
-    }
-  }
-
-  .module-header, .title-bar {
+  .module-header {
     .anchor-button {
       float: right;
       height: 28px;

@@ -12,14 +12,7 @@
     }
     max-width: 1170px;
   }
-
-  .source-link {
-    text-align: center;
-    padding-top: 5px;
-    @include media-breakpoint-up(sm) {
-      text-align: left;
-    }
-  }
+  
   @include media-breakpoint-down(xs) {
     .anchor-mobile-offset {
       display: block;
@@ -55,6 +48,13 @@
     font-size: 16px;
     line-height: 32px;
     margin-left: 7px;
+  }
+
+  .sources-link {
+    float: left;
+    @include media-breakpoint-down(xs) {
+      float: none;
+    }
   }
 }
 

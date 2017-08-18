@@ -1,6 +1,6 @@
 // TODO: import ad addCompfilterToGlobalAdTargetingGon
 
-import configureStore from '../store/appStore';
+import { getStore } from '../store/appStore';
 
 import 'jquery';
 import 'jquery-unveil';
@@ -40,9 +40,7 @@ import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
 
-window.store = configureStore({
-  school: gon.school
-});
+window.store = getStore();
 
 ReactOnRails.register({
   SchoolProfileComponent,

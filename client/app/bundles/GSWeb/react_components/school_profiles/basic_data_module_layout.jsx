@@ -2,29 +2,32 @@ import React from 'react';
 
 
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, footer
+  id, className, icon, title, subtitle, body, footer, tabs
 }) => {
   return (
-    <div id={id} className={'rating-container ' + className } data-ga-click-label={title}>
+    <div>
       <a className="anchor-mobile-offset" name={id}></a>
-      <div className="rating-container__rating">
-
-        <div className="module-header">
-          <div className="icon">{icon}</div>
-          <div className="title-container">
-            <span className="title">{title}</span>
-            <div dangerouslySetInnerHTML={{__html: subtitle}}/>
+      <div id={id} className={'rating-container ' + className } data-ga-click-label={title}>
+        <div className="rating-container__rating">
+          <div className="module-header">
+            <div className="icon">{icon}</div>
+            <div className="title-container">
+              <span className="title">{title}</span>
+              <div dangerouslySetInnerHTML={{__html: subtitle}}/>
+            </div>
           </div>
-        </div>
 
-        { body &&
-          <div className="panel">
-            {body}
+          { tabs }
+
+          { body &&
+            <div className="panel">
+              {body}
+            </div>
+          }
+
+          <div className="module-footer">
+            {footer}
           </div>
-        }
-
-        <div>
-          {footer}
         </div>
       </div>
     </div>
