@@ -179,7 +179,7 @@ class WordpressInterfaceController < ApplicationController
   end
 
   def create_subscriptions(user_id, list_arr, state)
-    list_arr.each do |list_name|
+    Array.wrap(list_arr).each do |list_name|
       if list_name.present? && SUPPORTED_LISTS.include?(list_name)
         s = Subscription.find_by_member_id_and_list(user_id, list_name)
         if (s.blank?)
