@@ -238,8 +238,8 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         qualityUrl = GS.I18n.preserveLanguageParam(qualityUrl);
         var gsRatingLink = $listItem.find('.js-gs-rating-link');
         var $ratingIcon = gsRatingLink.attr('href', qualityUrl).find('.js-gs-rating-icon');
-        $ratingIcon.addClass(GS.rating.getRatingPerformanceLevel(newGSRating));
-        $ratingIcon.find('div').html(newGSRating);
+        $ratingIcon.removeClass('circle-rating--5').addClass('circle-rating--' + newGSRating);
+        $ratingIcon.html(newGSRating + "<span class='denominator'>/10</span>");
       } else {
           var $gsRatingLink = $listItem.find('.js-gs-rating-link');
           $gsRatingLink.remove();

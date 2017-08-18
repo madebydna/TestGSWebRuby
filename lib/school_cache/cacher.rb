@@ -120,6 +120,7 @@ class Cacher
     rescue => error
       error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
       GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
+      raise
     end
   end
 
