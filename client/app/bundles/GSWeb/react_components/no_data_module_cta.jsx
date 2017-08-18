@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from '../util/i18n';
 
 const followSchoolForDataUpdates = function (event) {
   var state = GS.stateAbbreviationFromUrl();
@@ -8,10 +9,10 @@ const followSchoolForDataUpdates = function (event) {
 
 const NoDataModuleCta = ({moduleName}) => (
   <div className="ptm">
-    <span className="no-data" dangerouslySetInnerHTML={{__html: GS.I18n.t('no_data_message')}} />
+    <span className="no-data" dangerouslySetInnerHTML={{__html: t('no_data_message')}} />
     <a href="javascript:void(0)"
        className="js-followThisSchool js-gaClick"
-       onClick={followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: GS.I18n.t('notify_me')}}
+       onClick={followSchoolForDataUpdates} dangerouslySetInnerHTML={{__html: t('notify_me')}}
        data-ga-click-category='Profile'
        data-ga-click-action='Notify from empty data module'
        data-ga-click-label={moduleName} />

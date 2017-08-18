@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import TextArea from './text_area';
+import { t } from '../../../util/i18n';
 
 export default class Question extends React.Component {
 
@@ -84,7 +85,7 @@ export default class Question extends React.Component {
     return(
       <div className="tell-us-link" onClick={this.handleTellUsWhyClick}>
         <span className="icon-pencil"></span>
-        {GS.I18n.t('Tell us why')}&hellip;
+        {t('Tell us why')}&hellip;
        </div>
     );
   }

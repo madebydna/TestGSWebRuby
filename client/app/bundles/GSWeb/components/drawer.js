@@ -1,13 +1,14 @@
 import checkRequiredProps from '../util/checkRequiredProps';
 import Toggle from './toggle';
-// TODO: import lodash assign
+import { t } from '../util/i18n';
+import { assign } from 'lodash';
 // TODO: import jquery
 
 export function makeDrawer($container) {
-  var toggle = _.assign(new Toggle($container));
+  var toggle = assign(new Toggle($container));
   toggle.effect = "slideToggle";
   toggle.addCallback(
-    toggle.updateButtonTextCallback(GS.I18n.t('show_less'), GS.I18n.t('show_more'))
+    toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
   );
   toggle.addCallback(
     toggle.updateContainerClassCallback('show-more--open','show-more--closed')

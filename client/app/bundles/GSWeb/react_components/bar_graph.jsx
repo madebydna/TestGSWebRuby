@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { getScript } from '../util/dependency';
+import { merge } from 'lodash';
 
 export default class BarGraph extends React.Component {
   static defaultProps = {
@@ -102,7 +103,7 @@ export default class BarGraph extends React.Component {
     let callback = function() {
       $(function() {
         let config = this.config();
-        config = _.merge({}, config, { series: this.props.series });
+        config = merge({}, config, { series: this.props.series });
         $('#' + this.props.graphId).highcharts(config);
       }.bind(this));
     }.bind(this);

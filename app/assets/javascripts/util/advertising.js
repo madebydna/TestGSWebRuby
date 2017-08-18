@@ -1,3 +1,4 @@
+window.GS = window.GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];
@@ -193,7 +194,7 @@ if (gon.advertising_enabled) {
   };
 
   GS.ad.addCompfilterToGlobalAdTargetingGon = function () {
-    var randomCompFilterValue = _.random(1,4).toString();
+    var randomCompFilterValue = (Math.floor(Math.random()*4)+1).toString();
     if (!gon.ad_set_targeting) {
       gon.ad_set_targeting = {};
     }

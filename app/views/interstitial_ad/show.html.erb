@@ -17,3 +17,7 @@
     </div>
   </div>
 </div>
+<% content_for :page_javascripts do %>
+  <%= javascript_include_tag "shared_post_load", async: false %>
+  <%= javascript_include_tag "interstitial-bundle", async: true %>
+<% end %>

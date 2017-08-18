@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import { formatAnchorString, hashSeparatorAnchor } from '../../../components/anchor_router';
+import { map } from 'lodash';
 
 export default class SectionNavigation extends React.Component {
   render(){
     var active = this.props.active;
-    var items = _.map(this.props.items, function(item, index) {
+    var items = this.props.items.map(function(item, index) {
       let anchorLink = '';
       let addJSHashUpdate = '';
       if(item.anchor){
@@ -25,7 +26,7 @@ export default class SectionNavigation extends React.Component {
         {this.addDivider(index)}</div>;
     }.bind(this));
     if(items != undefined ) return <div className="clearfix space-below">{items}</div>;
-  }
+  };
 
   addDivider(index){
     var last_item = this.props.items.length - 1;

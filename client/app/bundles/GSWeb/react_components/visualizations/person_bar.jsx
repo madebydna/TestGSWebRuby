@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { t } from '../../util/i18n';
 
 export default class PersonBar extends React.Component {
   static propTypes = {
@@ -33,7 +34,7 @@ export default class PersonBar extends React.Component {
   }
 
   translateString(str){
-    return GS.I18n.t(str);
+    return t(str);
   }
 
   validStateAverageValue() {
@@ -52,7 +53,7 @@ export default class PersonBar extends React.Component {
       let style_override = {paddingLeft: '0px'};
 
       return (<div className="state-average" style={style_override}>
-        {GS.I18n.t('State avg')} {this.props.state_average_label || this.props.state_average}%
+        {t('State avg')} {this.props.state_average_label || this.props.state_average}%
       </div>)
     }
   }

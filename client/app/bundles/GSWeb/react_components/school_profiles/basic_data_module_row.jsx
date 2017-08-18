@@ -1,18 +1,11 @@
 import React from 'react';
 import QuestionMarkTooltip from './question_mark_tooltip';
+import { t } from '../../util/i18n';
 
 // TODOs:
 // - rename subject css class
 // - rename bar-graph-container css class
 // - improve renderStudentPercentage
-
-const t = function(string) {
-  if (window.GS && GS.I18n && GS.I18n.t) {
-    return GS.I18n.t(string) || string;
-  } else {
-    return string;
-  }
-}
 
 const BasicDataModuleRow = ({
   breakdown,                // The short text description of the data type
@@ -29,12 +22,12 @@ const BasicDataModuleRow = ({
     if(display_percentages){
       if(percentage == '200' || breakdown == 'All students' || breakdown == 'Todos los estudiantes'){
         if(number_students_tested > 0) {
-          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({number_students_tested} {GS.I18n.t('students')})</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({number_students_tested} {t('students')})</span>
         }
       }
       else {
         if (percentage > 0) {
-          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({percentage}{GS.I18n.t('of students')} )</span>
+          return <span className="subject-subtext"> <br className="br_except_for_mobile" />({percentage}{t('of students')} )</span>
         }
       }
     }

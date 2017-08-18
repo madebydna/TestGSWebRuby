@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { t } from '../util/i18n';
 
 export default class ReviewDistribution extends React.Component {
 
@@ -21,7 +22,7 @@ export default class ReviewDistribution extends React.Component {
     return (
         <div className="rating-bar-viz">
           <span className={iconClassName}/>
-          <span className="title">{GS.I18n.t(answer)}</span>
+          <span className="title">{t(answer)}</span>
           <span className={barColorClassName} style={style}/>
           <span className="answer-count">{answerCount}</span>
         </div>

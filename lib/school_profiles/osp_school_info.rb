@@ -215,13 +215,9 @@ module SchoolProfiles
         body = %(
             Dear #{recipient_name},#{crlf}
         #{crlf}
-            You have “claimed” your school’s GreatSchools.org profile page,
-            which means you can add and edit information at any time.
-            This is a powerful way to ensure parents see up-to-date information
-            about your school and what makes it special.#{crlf}
+            You have “claimed” your school’s GreatSchools.org profile page, which means you can add and edit information at any time. This is a powerful way to ensure parents see up-to-date information about your school and what makes it special.#{crlf}
         #{crlf}
-            It’s been awhile since you’ve made updates to your school’s page;
-            log in at #{ERB::Util.url_encode(osp_url)} to share what’s new.#{crlf}
+            It’s been awhile since you’ve made updates to your school’s page; log in at #{ERB::Util.url_encode(osp_url)} to share what’s new.#{crlf}
         #{crlf}
             Thank you,#{crlf}
             (your name)
@@ -231,13 +227,9 @@ module SchoolProfiles
         body = %(
             Dear #{recipient_name},#{crlf}
         #{crlf}
-            GreatSchools.org offers school administrators like you the ability
-            to “claim” your school’s GreatSchools profile page so you can add
-            and edit information. It’s a great way to help tell your school’s
-            story and ensure parents see robust and accurate information.#{crlf}
+            GreatSchools.org offers school administrators like you the ability to “claim” your school’s GreatSchools profile page so you can add and edit information. It’s a great way to help tell your school’s story and ensure parents see robust and accurate information.#{crlf}
         #{crlf}
-            Get started by claiming your school’s profile page
-            here: #{ERB::Util.url_encode(osp_url)}#{crlf}
+            Get started by claiming your school’s profile page here: #{ERB::Util.url_encode(osp_url)}#{crlf}
         #{crlf}
             Thank you,#{crlf}
             (your name)

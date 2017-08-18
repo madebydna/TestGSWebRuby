@@ -1,5 +1,7 @@
 import * as tooltips from '../util/tooltip';
 import { getScript } from '../util/dependency';
+import { t } from '../util/i18n';
+import { map, forOwn, values, remove } from 'lodash';
 //TODO: import jQuery
 
 var subgroupSliceColor = '#34A4DA';
@@ -9,13 +11,13 @@ var colorMap = {
   'Male': '#34A4DA'
 };
 var titleMap = {
-  'students-participating-in-free-or-reduced-price-lunch-program': GS.I18n.t('students-participating-in-free-or-reduced-price-lunch-program'),
-  'english-learners': GS.I18n.t('english-learners')
+  'students-participating-in-free-or-reduced-price-lunch-program': t('students-participating-in-free-or-reduced-price-lunch-program'),
+  'english-learners': t('english-learners')
 };
 
 var infoTextMap = {
-  'students-participating-in-free-or-reduced-price-lunch-program': GS.I18n.t('students-participating-in-free-or-reduced-price-lunch-program-info-text'),
-  'english-learners': GS.I18n.t('english-learners-info-text')
+  'students-participating-in-free-or-reduced-price-lunch-program': t('students-participating-in-free-or-reduced-price-lunch-program-info-text'),
+  'english-learners': t('english-learners-info-text')
 };
 
 var buildSubgroupData = function (parsedData) {
@@ -36,7 +38,7 @@ var buildSubgroupData = function (parsedData) {
 };
 
 var buildGenderData = function(parsedGenderData) {
-  var genderData = _.map(parsedGenderData, function(data) {
+  var genderData = map(parsedGenderData, function(data) {
     var returnValue = {
       name: data.name,
         y: data.schoolValueFloat,
@@ -54,7 +56,7 @@ var subgroupNameToChartId = function(subgroupName) {
 var parseGenderCharacteristicsData = function(genderData) {
   var validParsedGenderData = true;
   var parsedGenderData = [];
- _.forOwn(genderData, function (data, key) {
+  forOwn(genderData, function (data, key) {
    var parsedData = parseCharacteristicsCache(data, key)
    if (! validParsedData(parsedData) ) {
       validParsedGenderData = null;
@@ -89,8 +91,8 @@ var parseCharacteristicsCache = function(data, key) {
 };
 
 var validParsedData = function (parsedData) {
-  var values =  _.values(parsedData)
-  var missingValues = _.remove(values, function(v) {
+  let v =  values(parsedData)
+  var missingValues = remove(v, function(v) {
     return !v;
   });
   return missingValues.length == 0;
@@ -111,7 +113,7 @@ var generateInfoCircle = function(content) {
 }
 
 var generateGenderContainer = function(parsedGenderData) {
-  var chartTitle = GS.I18n.t('Gender');
+  var chartTitle = t('Gender');
   var chartId = 'gender';
   var containerHtml = "<div class='subgroup col-xs-6 col-sm-4 col-md-6 col-lg-4'><div class='title gender'>" + chartTitle + "</div><div id='" + chartId + "'></div></div>";
   $('.subgroups > .row').append(containerHtml);
@@ -142,7 +144,7 @@ var renderGenderChart = function(data, key) {
       margin: 0,
       reversed: true,
       labelFormatter: function() {
-        return GS.I18n.t(this.name, {default: this.name});
+        return t(this.name, {default: this.name});
       }
     },
     title: {
@@ -248,7 +250,7 @@ var generateSubgroupPieCharts = function () {
   if (gon.subgroup) {
     var subgroupData = gon.subgroup;
     getScript(gon.dependencies['highcharts']).done(function () {
-      _.forOwn(subgroupData, renderSubgroupChart);
+      forOwn(subgroupData, renderSubgroupChart);
       if (gon.gender) {
         var genderData = gon.gender;
         renderGenderChart(genderData);

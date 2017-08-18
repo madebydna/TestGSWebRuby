@@ -1,5 +1,6 @@
 import checkRequiredProps from '../util/checkRequiredProps';
 import log from '../util/log';
+import { assign } from 'lodash';
 
 const Toggle = function($container) {
   this.$container = $container;
@@ -12,7 +13,7 @@ const Toggle = function($container) {
   return this;
 }
 
-_.assign(Toggle.prototype, {
+assign(Toggle.prototype, {
   $: jQuery,
 
   log: log,

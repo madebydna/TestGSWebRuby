@@ -20,21 +20,6 @@ GS.util.wrapFunction = function(fn, context, params) {
 };
 
 
-GS.store = GS.store || {};
-GS.store.state = GS.store.state || {};
-GS.util.memoizeAjaxRequest = function(key, promiseMaker) {
-  var deferred = $.Deferred();
-  var val = GS.store.state[key];
-  if(val !== undefined) {
-    deferred.resolve(val);
-    return deferred;
-  } else {
-    return promiseMaker().done(function(response) {
-      GS.store.state[key] = response;
-    });
-  }
-};
-
 GS.util.deleteAjaxCall = function(obj, hash) {
   var $self = obj;
   hash = hash || {};

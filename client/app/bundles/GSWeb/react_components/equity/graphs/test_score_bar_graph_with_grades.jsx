@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import BarGraphBase from './bar_graph_base';
 import BasicDataModuleRow from '../../school_profiles/basic_data_module_row';
 import BasicDataModuleDrawerRow from '../../school_profiles/basic_data_module_drawer_row';
+import { t } from '../../../util/i18n';
 
 export default class TestScoreBarGraphWithGrades extends React.Component {
 
@@ -24,7 +25,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
 
   renderDetailsLink(grades) {
     if (grades != null && grades != undefined && grades.constructor === Array && grades.length > 0) {
-      return <div className="details js-test-score-details">{GS.I18n.t('details')}  <span className="icon-caret-down rotate-text-270 move-icon"></span></div>
+      return <div className="details js-test-score-details">{t('details')}  <span className="icon-caret-down rotate-text-270 move-icon"></span></div>
     }
   }
 
@@ -37,7 +38,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
 
         { this.props.grades && 
           this.props.grades.map((test_data_for_grade, index) => {
-            let label = <span> {GS.I18n.t('grade')} {test_data_for_grade.grade} </span>
+            let label = <span> {t('grade')} {test_data_for_grade.grade} </span>
             return (
               <div className="grades" style={{display: 'none'}} key={index}>
                 <BasicDataModuleDrawerRow {...test_data_for_grade} label={label}>

@@ -67,6 +67,10 @@ class DistrictCacheResults
         DistrictCachedRatingsMethods
       when 'district_schools_summary'
         DistrictCachedDistrictSchoolsSummaryMethods
+      when 'feed_district_characteristics'
+        FeedDistrictCachedCharacteristicsMethods
+      when 'district_directory'
+
     end
   end
 

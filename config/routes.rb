@@ -472,6 +472,9 @@ LocalizedProfiles::Application.routes.draw do
       district: /(?!preschools)[^\/]+/
   }
 
+  get '/ads/leadGen.page', to: 'lead_gen#show'
+  post '/ads/leadGen.page', to: 'lead_gen#save'
+
   get '/school/overview.page', to: 'legacy_profile_redirect#show'
   get '/school/parentReviews.page', to: 'legacy_profile_redirect#show'
   get '/school/rating.page', to: 'legacy_profile_redirect#show'

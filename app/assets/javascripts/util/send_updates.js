@@ -16,14 +16,13 @@ GS.sendUpdates = (function() {
 
   // Sign up the user to follow a school.
   // Triggers a signupAndFollow modal if not signed in.
-  var signupAndFollowSchool = function(state, schoolId) {
+  var signupAndFollowSchool = function(state, schoolId, schoolName) {
     if (state && schoolId) {
       if (GS.session.isSignedIn()) {
         GS.subscription
           .schools(state, schoolId)
           .follow({showMessages: false})
           .done(function(){
-            var schoolName = GS.schoolNameFromUrl();
             if (schoolName === undefined) {
               GS.notifications.success(
                 GS.I18n.t('follow_schools.signed_in_message_with_no_school_name')
