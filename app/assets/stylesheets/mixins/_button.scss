@@ -1,0 +1,22 @@
+@mixin button(
+  $height: $form-field-medium-height,
+  $active-background-color: #2ba3dc,
+  $active-color: #fff) {
+
+  background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+  border: 1px solid $form-field-border-color;
+  border-radius: $form-field-border-radius;
+  cursor: pointer;
+  display: table-cell;
+  padding: 0px 15px;
+  height: $height;
+  outline: none;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  &.active {
+    background-color: $active-background-color;
+    color: $active-color;
+    background-image: none;
+  }
+}

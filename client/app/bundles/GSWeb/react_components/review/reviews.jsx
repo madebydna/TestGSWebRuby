@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import ReviewsList from './reviews_list';
 import ReviewForm from './form/review_form';
+import { t } from '../../util/i18n';
+import { isSignedIn, getSchoolUserDigest } from '../../util/session';
 
 export default class Reviews extends React.Component {
 
@@ -51,8 +53,8 @@ export default class Reviews extends React.Component {
   }
 
   reorderForCurrentUserIfSignedIn() {
-    if (GS && GS.session && GS.session.isSignedIn()) {
-      GS.session.getSchoolUserDigest().done(this.reorderForCurrentUser)
+    if (isSignedIn()) {
+      getSchoolUserDigest().done(this.reorderForCurrentUser)
     }
   }
 
@@ -127,10 +129,10 @@ export default class Reviews extends React.Component {
     let reviewFormContent = null;
     let recentComments = null;
     if(this.state.reviews.length > 0) {
-      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, GS.I18n.t('Review this school'));
-      recentComments = this.renderReviewLayout(this.renderReviewsList, GS.I18n.t('Recent Comments'));
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, t('Review this school'));
+      recentComments = this.renderReviewLayout(this.renderReviewsList, t('Recent Comments'));
     } else {
-      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, GS.I18n.t('Be the first to review this school'));
+      reviewFormContent = this.renderReviewLayout(this.renderReviewForm, t('Be the first to review this school'));
     }
     return (
       <div>

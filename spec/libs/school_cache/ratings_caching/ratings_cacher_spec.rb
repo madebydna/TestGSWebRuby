@@ -129,6 +129,10 @@ describe RatingsCaching::RatingsCacher do
           OpenStruct.new(
             test_data_type: OpenStruct.new(display_name: 'foo'),
             data_type_id: 2
+          ),
+          OpenStruct.new(
+            test_data_type: OpenStruct.new(display_name: 'foo'),
+            data_type_id: 166
           )
         ]
       )
@@ -142,6 +146,11 @@ describe RatingsCaching::RatingsCacher do
     it 'adds description and methodology to growth rating' do
       expect(subject[2]).to have_key(:description)
       expect(subject[2]).to have_key(:methodology)
+    end
+
+    it 'adds description and methodology to college readiness rating' do
+      expect(subject[4]).to have_key(:description)
+      expect(subject[4]).to have_key(:methodology)
     end
 
     it 'should not add methodology to other data sets' do

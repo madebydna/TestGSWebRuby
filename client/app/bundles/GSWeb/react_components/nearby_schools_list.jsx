@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import NearbySchool from './nearby_school';
 import SpinnyWheel from './spinny_wheel';
+import { t } from '../util/i18n';
 
 class NearbySchoolsList extends React.Component {
 
@@ -64,7 +65,7 @@ class NearbySchoolsList extends React.Component {
         GSRating={school.gs_rating}
         averageRating={school.average_rating}
         schoolName={school.name}
-        schoolType={GS.I18n.t('school_types.' + school.type)}
+        schoolType={t('school_types.' + school.type)}
         gradeRange={school.level}
         city={school.city}
         state={school.state}

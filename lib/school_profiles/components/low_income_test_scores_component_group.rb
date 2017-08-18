@@ -15,8 +15,7 @@ module SchoolProfiles
           component.type = 'rating'
           component.valid_breakdowns = VALID_BREAKDOWNS
         end
-        overview_title = t('Overview')
-        { overview_title  => test_score_data } if overview_has_data?(test_score_data)
+        test_score_data.to_hash.merge(title: t('Overview'), anchor: 'Overview') if overview_has_data?(test_score_data)
       end
 
       def overview_has_data?(data_values)

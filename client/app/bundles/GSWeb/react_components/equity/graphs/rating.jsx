@@ -12,9 +12,9 @@ export default class Rating extends React.Component {
 
   render() {
     return (
-          <div className="tar">
-            <span className={"gs-rating-circle-inline circle-rating--xtra-small circle-rating--" + this.props.score}>{this.props.score}<span class="denominator">/10</span></span>
-          </div>
+      <div className="tar">
+        <span className={"gs-rating-circle-inline circle-rating--xtra-small circle-rating--" + this.props.score}>{this.props.score}<span className="denominator">/10</span></span>
+      </div>
     )
   }
 }

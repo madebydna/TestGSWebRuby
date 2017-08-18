@@ -6,6 +6,8 @@ class DistrictCacher
   # :feed_test_scores
   # :ratings
   # :district_schools_summary
+  # :district_directory
+  # :feed_district_characteristics
 
   def initialize(district)
     @district = district
@@ -36,7 +38,9 @@ class DistrictCacher
     {
         feed_test_scores:      TestScoresCaching::DistrictTestScoresCacher,
         ratings: DistrictRatingsCacher,
-        district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher
+        district_schools_summary: DistrictSchoolsSummary::DistrictSchoolsSummaryCacher,
+        district_directory: DistrictDirectoryCacher,
+        feed_district_characteristics: FeedDistrictCharacteristicsCacher
     }[key.to_s.to_sym]
   end
 
@@ -58,7 +62,9 @@ class DistrictCacher
   def self.registered_cachers
     @registered_cachers ||= [
         TestScoresCaching::DistrictTestScoresCacher,
-        DistrictRatingsCacher
+        DistrictRatingsCacher,
+        DistrictDirectoryCacher,
+        FeedDistrictCharacteristicsCacher
     ]
   end
 
@@ -71,6 +77,7 @@ class DistrictCacher
     rescue => error
       error_vars = { cache_key: cache_key, district_state: district.state, district_id: district.id }
       GSLogger.error(:district_cache, error, vars: error_vars, message: 'Failed to build district cache')
+      raise
     end
   end
 

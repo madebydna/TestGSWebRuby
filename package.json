@@ -10,6 +10,11 @@
     "postinstall": "cd client && npm install",
     "rails-server": "echo 'visit http://localhost:3000' && foreman start -f Procfile.dev",
     "test": "cd client && npm test",
-    "build:production": "cd client && npm run build:production"
+    "test:watch": "cd client && npm run test -- --watch",
+    "build:development": "cd client && npm run build:development",
+    "build:test": "cd client && npm run build:test",
+    "build:production": "cd client && npm run build:production",
+    "analyze": "cd client && npm run analyze",
+    "rspec": "cd client && npm run rspec"
   }
 }

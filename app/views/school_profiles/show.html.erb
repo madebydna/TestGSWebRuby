@@ -1,3 +1,6 @@
+<% content_for :head do %>
+  <link rel="preload" href="<%= asset_path('school_profiles/hero_bg.jpg') %>" as="image">
+<% end %>
 <div class="overlay" style="display:none"></div>
 <div class="school-profile">
     <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
@@ -53,7 +56,7 @@
         <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
                    width: 320, height: 50, css_class: 'mbl' %>
         <div>
-          <%= render 'equity', equity: @school_profile.equity %>
+          <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
         </div>
 
           <div class="environment-container">
@@ -111,3 +114,5 @@
       </div>
     <% end %>
 </div>
+
+<%= render 'tour_button' %>

@@ -1,6 +1,6 @@
-import publicSchoolPng from '../../../../../../app/assets/images/icons/google_map_pins/public_school_markers.png';
-import privateSchoolPng from '../../../../../../app/assets/images/icons/google_map_pins/private_school_markers.png';
-import districtPng from '../../../../../../app/assets/images/icons/google_map_pins/district_markers.png';
+import publicSchoolPng from 'icons/google_map_pins/public_school_markers.png';
+import privateSchoolPng from 'icons/google_map_pins/private_school_markers.png';
+import districtPng from 'icons/google_map_pins/district_markers.png';
 
 export const PUBLIC_SCHOOL = 'PUBLIC_SCHOOL';
 export const PRIVATE_SCHOOL = 'PRIVATE_SCHOOL';

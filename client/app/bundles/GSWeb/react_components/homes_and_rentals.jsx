@@ -9,7 +9,8 @@ import {
 } from '../api_clients/homes_and_rentals';
 import ButtonGroup from './buttongroup';
 import AnchorButton from './anchor_button';
-import zillowLogo from '../../../../../app/assets/images/zillow_logo_sm.png';
+import zillowLogo from 'zillow_logo_sm.png';
+import { t } from '../util/i18n';
 
 export default class HomesAndRentals extends React.Component {
 
@@ -27,7 +28,7 @@ export default class HomesAndRentals extends React.Component {
 
   constructor(props) {
     super(props);
-    this.tabNames = [GS.I18n.t('Homes for sale'), GS.I18n.t('Homes for rent')];
+    this.tabNames = [t('Homes for sale'), t('Homes for rent')];
     this.renderHome = this.renderHome.bind(this);
     this.numberOfListings = 3;
 
@@ -40,8 +41,8 @@ export default class HomesAndRentals extends React.Component {
 
   title() {
     return [
-      GS.I18n.t('Homes for sale near'),
-      GS.I18n.t('Rentals near')
+      t('Homes for sale near'),
+      t('Rentals near')
     ][this.state.tabIndex] + ' ' + this.props.schoolName;
   }
 
@@ -140,8 +141,8 @@ export default class HomesAndRentals extends React.Component {
           { this.renderHomesAndRentals() }
         </div>
         <div className="cta-buttons">
-          <AnchorButton rel="nofollow" target="_blank" href={pricingPageUrl()}>{ GS.I18n.t('Find out what your home is worth') }</AnchorButton>
-          <AnchorButton rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ GS.I18n.t('See more listings near this school') }</AnchorButton>
+          <AnchorButton rel="nofollow" target="_blank" href={pricingPageUrl()}>{ t('Find out what your home is worth') }</AnchorButton>
+          <AnchorButton rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ t('See more listings near this school') }</AnchorButton>
           <img src={zillowLogo} />
         </div>
       </div>

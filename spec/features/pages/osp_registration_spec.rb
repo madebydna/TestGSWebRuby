@@ -33,54 +33,6 @@ describe 'OSP Registration page' do
     end
   end
 
-  with_shared_context 'Delaware public school' do
-    with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
-      describe_desktop do
-        include_example 'should have element with text', 'h4', 'HOGWARTS SCHOOL OF WITCHCRAFT AND WIZARDRY'
-      end
-
-      describe_mobile do
-        include_example 'should have element with text', 'p', 'HOGWARTS SCHOOL OF WITCHCRAFT AND WIZARDRY'
-      end
-
-      describe_mobile_and_desktop do
-        include_example 'should have element with text', 'label', 'Email address'
-      end
-    end
-  end
-
-  with_shared_context 'Delaware charter school' do
-    with_shared_context 'visit registration page as a public or charter DE as a not signed in osp user' do
-      describe_desktop do
-        include_example 'should have element with text', 'h4', 'BEAUXBATONS ACADEMY OF MAGIC'
-      end
-
-      describe_mobile do
-        include_example 'should have element with text', 'p', 'BEAUXBATONS ACADEMY OF MAGIC'
-      end
-
-      describe_mobile_and_desktop do
-        include_example 'should have element with text', 'label', 'Email address'
-      end
-    end
-  end
-
-  with_shared_context 'Delaware private school' do
-    with_shared_context 'visit registration page with school state and school' do
-      describe_desktop do
-        include_example 'should have element with text', 'h4', 'DURMSTRANG INSTITUTE'
-      end
-
-      describe_mobile do
-        include_example 'should have element with text', 'p', 'DURMSTRANG INSTITUTE'
-      end
-
-      describe_mobile_and_desktop do
-        include_example 'should have element with text', 'label', 'Email address'
-      end
-    end
-  end
-
   with_shared_context 'Basic High School' do
     with_shared_context 'visit registration page with school state and school' do
       describe 'footer' do

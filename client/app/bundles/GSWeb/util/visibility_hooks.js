@@ -1,3 +1,5 @@
+import { throttle } from 'lodash';
+
 // requires jquery already loaded
 export function checkForVisibility(selector, threshold = 0) {
   let $elem = $(selector);
@@ -23,7 +25,7 @@ export function checkForVisibility(selector, threshold = 0) {
 export function setVisibilityCallback(selector, callback, threshold = 0) {
   let frequency = 500;
   let scrollEvent = 'scroll.' + new Date().getTime();
-  $(window).on(scrollEvent, _.throttle(function() {
+  $(window).on(scrollEvent, throttle(function() {
     if(checkForVisibility(selector, threshold)) {
       $(window).off(scrollEvent);
       callback.call(this);

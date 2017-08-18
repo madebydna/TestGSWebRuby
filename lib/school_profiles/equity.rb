@@ -39,27 +39,59 @@ module SchoolProfiles
       )
     end
 
-    def equity_courses_hash
-      @_equity_courses_hash ||= {
-        I18n.t('Test scores', scope:'lib.equity_gsdata') => @test_scores.to_hash,
-        I18n.t('Graduation rates', scope:'lib.equity_gsdata') => @graduation_rate.to_hash,
-        I18n.t('Advanced coursework', scope:'lib.equity_gsdata') => @advanced_coursework.to_hash,
-        I18n.t('Discipline & attendance', scope:'lib.equity_gsdata') => @discipline_and_attendance.to_hash
-      }
+    def race_ethnicity_props
+      @_race_ethnicity_props ||= [
+        {
+          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: @test_scores.to_hash
+        },
+        {
+          title: I18n.t('Graduation rates', scope:'lib.equity_gsdata'),
+          anchor: 'Graduation_rates',
+          data: @graduation_rate.to_hash
+        },
+        {
+          title: I18n.t('Advanced coursework', scope:'lib.equity_gsdata'),
+          anchor: 'Advanced_coursework',
+          data: @advanced_coursework.to_hash
+        },
+        {
+          title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
+          anchor: 'Discipline_and_attendance',
+          data: @discipline_and_attendance.to_hash
+        }
+      ]
     end
 
     def low_income_section_props
-      @_low_income_section_props ||= {
-        I18n.t('Test scores', scope:'lib.equity_gsdata') => @low_income_test_scores.to_hash,
-        I18n.t('Graduation rates', scope:'lib.equity_gsdata') => @low_income_graduation_rate.to_hash,
-      }
+      @_low_income_section_props ||= [
+        {
+          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: @low_income_test_scores.to_hash
+        },
+        {
+          title: I18n.t('Graduation rates', scope:'lib.equity_gsdata'),
+          anchor: 'Graduation_rates',
+          data: @low_income_graduation_rate.to_hash
+        }
+      ]
     end
 
     def students_with_disabilities_section_props
-      @_students_with_disabilities_section_props ||= {
-        I18n.t('Test scores', scope:'lib.equity_gsdata') => @students_with_disabilities_test_scores_component_group.to_hash,
-        I18n.t('Discipline & attendance', scope:'lib.equity_gsdata') => @students_with_disabilities_discipline_and_attendance_group.to_hash,
-      }
+      @_students_with_disabilities_section_props ||= [
+        {
+          title: I18n.t('Test scores', scope:'lib.equity_gsdata'),
+          anchor: 'Test_scores',
+          data: @students_with_disabilities_test_scores_component_group.to_hash
+        },
+        {
+          title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
+          anchor: 'Discipline_and_attendance',
+          data: @students_with_disabilities_discipline_and_attendance_group.to_hash
+        }
+      ]
     end
 
     def equity_data_sources
@@ -128,6 +160,7 @@ module SchoolProfiles
         content << '<h1>' + data_label('.title') + '</h1>'
         content << '</div>'
       end
+
       if characteristics_low_income_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
@@ -141,11 +174,13 @@ module SchoolProfiles
         end
         content << '</div>'
       end
+
       if equity_data_sources.present?
         content << '<div class="sourcing">'
         content << gsdata_sources_for_view(equity_data_sources)
         content << '</div>'
       end
+
       content
     end
 
@@ -251,5 +286,14 @@ module SchoolProfiles
       @_faq_disabilities ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.disabilities'),
                                      content: I18n.t(:content_html, scope: 'lib.equity.faq.disabilities'))
     end
+
+    def race_ethnicity_discipline_and_attendance_visible?
+      (race_ethnicity_props.find { |h| h[:anchor] == 'Discipline_and_attendance' })[:data].present?
+    end
+
+    def has_data?
+      equity_rating.present? && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
+    end
+
   end
 end

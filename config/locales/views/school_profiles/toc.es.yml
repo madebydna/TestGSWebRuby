@@ -14,6 +14,8 @@ es:
       teachers_staff_html: Profesores y personal
       neighborhood: Vecindario
       advanced_courses: Cursos avanzados
+      discipline_and_attendance: Disciplina y asistencia
+      equity_overview: 'Perspectiva de la equidad'
       info_texts:
         academics_html: Esta sección incluye puntajes en los exámenes estatales para esta escuela, y cuando está disponible,  información de el progreso del estudiante y preparación universitaria.
         environment_html: Esta sección le ofrece más información sobre la demografía estudiantil, el vecindario y más.

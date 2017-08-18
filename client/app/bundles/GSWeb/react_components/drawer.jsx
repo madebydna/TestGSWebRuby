@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { t } from '../util/i18n';
 
 const Drawer = React.createClass({
   getInitialState: function() {
@@ -31,9 +32,9 @@ const Drawer = React.createClass({
   render: function() {
     let label;
     if (this.state.open) {
-      label = this.props.openLabel || GS.I18n.t('Show less');
+      label = this.props.openLabel || t('Show less');
     } else {
-      label = this.props.closedLabel || GS.I18n.t('Show more');
+      label = this.props.closedLabel || t('Show more');
     }
     return(
       <div className={"show-more show-more--" + (this.state.open ? 'open' : 'closed')}>
