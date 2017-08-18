@@ -42,10 +42,10 @@ export default class EquitySection extends React.Component {
 
   footer(sources, qualaroo_module_link) {
     return (
-        <div>
-          <InfoBox content={sources} >{ t('See notes') }</InfoBox>
-          <GiveUsFeedback content={qualaroo_module_link} />
-        </div>
+      <div className="module-footer">
+        <InfoBox content={sources} >{ t('See notes') }</InfoBox>
+        <GiveUsFeedback content={qualaroo_module_link} />
+      </div>
     )
   }
 

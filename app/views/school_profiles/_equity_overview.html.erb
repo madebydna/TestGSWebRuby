@@ -23,9 +23,12 @@
       </div>
     </div>
 
+    <div class="module-footer">
+      <%= render 'sources_link_to_modal', content: sources %>
+      <%= render 'module_feedback', content: equity_overview.qualaroo_module_link(:race_ethnicity) %>
+    </div>
+
   </div>
 
-  <%= render 'sources_link_to_modal', content: sources %>
-  <%= render 'module_feedback', content: equity_overview.qualaroo_module_link(:race_ethnicity) %>
 
 </div>

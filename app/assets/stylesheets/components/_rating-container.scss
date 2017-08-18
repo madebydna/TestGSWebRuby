@@ -12,6 +12,23 @@ $border-color: #dbe6eb;
   }
 }
 
+.rating-container {
+  background-color: #f6f9fa;
+  // this needs to be changed to immediate descendent when
+  // .rating-container__rating is removed from surrounding div
+  .module-footer {
+    padding-right: 10px;
+    @include clearfix;
+  }
+}
+.equity-section {
+  // this needs to be changed to immediate descendent when
+  // .rating-container__rating is removed from surrounding div
+  .module-footer {
+    @include clearfix;
+  }
+}
+
 .rating-container__title {
   text-align: center;
   @include media-breakpoint-up(sm) {
