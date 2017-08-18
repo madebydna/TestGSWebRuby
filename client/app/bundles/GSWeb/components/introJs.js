@@ -1,6 +1,12 @@
 import { introJs } from 'intro.js';
 import { t } from '../util/i18n';
 
+let numberOfVisibleSteps;
+
+let intro;
+
+const homesAndRentalsSelector = '#homes-and-rentals';
+
 let firstTutorialLastStep = {
   element: '.school-name-container',
   highlightClass: 'no-highlight',
@@ -138,12 +144,6 @@ let secondTutorial = [
   }
 ];
 
-
-let numberOfVisibleSteps;
-
-let intro;
-
-const homesAndRentalsSelector = '#homes-and-rentals';
 
 const onStepSeen = function(targetElement, tutorial) {
   let stepNum = intro._currentStep;
