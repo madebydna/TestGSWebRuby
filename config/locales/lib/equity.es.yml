@@ -5,6 +5,7 @@ es:
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
       'Percent of students who meet UC/CSU entrance requirements': 'Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU'
       'source': 'Fuente'
+      'Great schools rating': 'La Calificación General de Equidad de GreatSchools'
       faq:
         race_ethnicity:
           cta: ¿Notas que algo falta o confunde?
@@ -36,3 +37,4 @@ es:
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Percent of students who meet UC/CSU entrance requirements': 'Este es el porcentaje de estudiantes graduados de esta escuela que completaron los cursos A-G requeridos para ser elegibles para atender a alguna de las escuelas de la Universidad de California y Universidad del Estado de California.'
+      description: Some description

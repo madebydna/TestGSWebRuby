@@ -160,6 +160,7 @@ module SchoolProfiles
         content << '<h1>' + data_label('.title') + '</h1>'
         content << '</div>'
       end
+
       if characteristics_low_income_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
@@ -173,11 +174,13 @@ module SchoolProfiles
         end
         content << '</div>'
       end
+
       if equity_data_sources.present?
         content << '<div class="sourcing">'
         content << gsdata_sources_for_view(equity_data_sources)
         content << '</div>'
       end
+
       content
     end
 
@@ -287,5 +290,10 @@ module SchoolProfiles
     def race_ethnicity_discipline_and_attendance_visible?
       (race_ethnicity_props.find { |h| h[:anchor] == 'Discipline_and_attendance' })[:data].present?
     end
+
+    def has_data?
+      equity_rating.present? && equity_rating.to_s.downcase != 'nr' && equity_rating.to_i.between?(1, 10)
+    end
+
   end
 end
