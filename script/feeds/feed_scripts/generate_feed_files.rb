@@ -21,7 +21,7 @@ module Feeds
     end
 
     def generate
-      arguments = Feeds::Arguments.new
+      arguments = Feeds::Arguments.new(ARGV[0])
       arguments.states.each do |state|
         begin
           Feeds::FeedLog.log.debug "Starting Feed Generation for state #{state}"
@@ -30,6 +30,7 @@ module Feeds
           Feeds::FeedLog.log.debug "Ending Feed Generation for state #{state}"
         rescue => e
           Feeds::FeedLog.log.error e
+          raise e
         end
       end
     end
@@ -53,6 +54,7 @@ module Feeds
               Feeds::FeedLog.log.debug "--- Time taken to generate feed : FeedType: #{feed}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime '%H:%M:%S:%L'}"
             rescue => e
               Feeds::FeedLog.log.error e
+              raise e
             end
      end
     end

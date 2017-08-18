@@ -11,7 +11,7 @@ export default class ResponseData extends React.Component {
   }
 
   listOfAnswers(response_key, answers) {
-    let styling;
+    let styling = {};
     if (answers[0] == 'Data not provided by the school' || answers[0] == 'Datos no provistos por la escuela') {
       styling = {color: 'slategray'};
     }
@@ -22,6 +22,7 @@ export default class ResponseData extends React.Component {
           answerHref = 'http://' + answerHref;
         }
         answer = <a target="_blank" href={answerHref}>{answer}</a>;
+        styling.wordWrap = 'break-word';
       }
       if(answers.length > 1) {
         return <li style={styling} style={{listStyle: 'disc'}}>{answer}</li>

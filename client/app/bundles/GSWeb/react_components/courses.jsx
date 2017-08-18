@@ -5,6 +5,7 @@ import InfoTextAndCircle from './info_text_and_circle';
 import NoDataModuleCta from './no_data_module_cta';
 import InfoBox from './school_profiles/info_box';
 import GiveUsFeedback from './school_profiles/give_us_feedback';
+import { t } from '../util/i18n';
 
 export default class Courses extends React.Component {
 
@@ -30,16 +31,16 @@ export default class Courses extends React.Component {
 
   footer(sources, qualaroo_module_link) {
     return (
-        <div>
-          <InfoBox content={sources} >{ this.t('See notes') }</InfoBox>
-          <GiveUsFeedback content={qualaroo_module_link} />
-        </div>
+      <div className="module-footer">
+        <InfoBox content={sources} >{ t('See notes') }</InfoBox>
+        <GiveUsFeedback content={qualaroo_module_link} />
+      </div>
     )
   }
 
   sourcesToHtml() {
     let html = '<div class="sourcing">';
-    html += '<h1>' + this.t('profile_data_sources_and_info') + '</h1>';
+    html += '<h1>' + t('profile_data_sources_and_info') + '</h1>';
     Object.keys(this.props.sources).forEach((category) => {
       let categorySourceHash = this.props.sources[category];
       html += '<div>';
@@ -56,20 +57,12 @@ export default class Courses extends React.Component {
           description = descriptionObj;
         }
         html += '<p>' + description + '</p>';
-        html += '<p><span class="emphasis">' + this.t('source') + '</span>: ' + name + ', ' + year + '</p>';
+        html += '<p><span class="emphasis">' + t('source') + '</span>: ' + name + ', ' + year + '</p>';
       });
       html += '</div>';
     });
     html += '</div>';
     return html;
-  }
-
-  t(string) {
-    if (window.GS && GS.I18n && GS.I18n.t) {
-      return GS.I18n.t(string);
-    } else {
-      return string;
-    }
   }
 
   render() {
@@ -91,14 +84,14 @@ export default class Courses extends React.Component {
           <div className="module-header">
               { ratingHtml }
             <div className="title-container">
-              <span className="title">{this.t('Advanced courses')} </span>
+              <span className="title">{t('Advanced courses')} </span>
               <a data-remodal-target="modal_info_box"
                 data-content-type="info_box"
-                data-content-html={GS.I18n.t('advanced_courses_tooltip')}
+                data-content-html={t('advanced_courses_tooltip')}
                 className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
                 <span className="icon-question"></span>
               </a>
-              <div dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}></div>
+              <div dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></div>
             </div>
           </div>
 
@@ -107,12 +100,12 @@ export default class Courses extends React.Component {
             <div dangerouslySetInnerHTML={{__html: this.props.narration}}></div>
           </div>
           <div className="rating-container__score-item course-subject-header">
-            <span dangerouslySetInnerHTML={{__html: this.t('subjects')}}></span>
+            <span dangerouslySetInnerHTML={{__html: t('subjects')}}></span>
             <span>
-              <span dangerouslySetInnerHTML={{__html: this.t('rating_html')}}></span>
+              <span dangerouslySetInnerHTML={{__html: t('rating_html')}}></span>
               <a data-remodal-target="modal_info_box"
                 data-content-type="info_box"
-                data-content-html={this.t('advanced_courses_rating_tooltip')}
+                data-content-html={t('advanced_courses_rating_tooltip')}
                 className="gs-tipso info-circle tipso_style"
                 href="javascript:void(0)">
                 <span className="icon-question"></span>
@@ -124,8 +117,8 @@ export default class Courses extends React.Component {
               <div className="rating-container__more-items">
                 <Drawer
                   content={courseSubjectsForDrawer}
-                  closedLabel={GS.I18n.t('Show more') + ' ' + this.t('Advanced courses')}
-                  openLabel={GS.I18n.t('Show less') + ' ' + this.t('Advanced courses')}
+                  closedLabel={t('Show more') + ' ' + t('Advanced courses')}
+                  openLabel={t('Show less') + ' ' + t('Advanced courses')}
                 /> 
               </div>
           }
@@ -143,8 +136,8 @@ export default class Courses extends React.Component {
               <span className="icon-user"></span>
             </div>
             <div className="title-container">
-              <div className="title">{this.t('Advanced courses')}</div>
-              <span dangerouslySetInnerHTML={{__html: this.t('advanced_courses_subheading_html')}}></span>
+              <div className="title">{t('Advanced courses')}</div>
+              <span dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></span>
               <NoDataModuleCta moduleName="Advanced courses"/>
             </div>
           </div>

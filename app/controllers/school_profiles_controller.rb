@@ -65,6 +65,7 @@ class SchoolProfilesController < ApplicationController
         sp.last_modified_date = last_modified_date
         sp.neighborhood = neighborhood
         sp.equity = equity
+        sp.equity_overview = equity_overview
         sp.toc = toc
         sp.breadcrumbs = breadcrumbs
         sp.teachers_staff = teachers_staff
@@ -134,7 +135,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, students, teachers_staff, courses, stem_courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, school)
   end
 
   def test_scores
@@ -165,6 +166,12 @@ class SchoolProfilesController < ApplicationController
 
   def equity
     SchoolProfiles::Equity.new(
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def equity_overview
+    SchoolProfiles::EquityOverview.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end

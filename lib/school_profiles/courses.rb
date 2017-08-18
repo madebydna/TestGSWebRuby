@@ -23,14 +23,16 @@ module SchoolProfiles
                         content: I18n.t(:content_html, scope: 'lib.advanced_courses.faq'))
     end
 
+    def most_recent_rating_hash
+      @_most_recent_rating_hash ||= (data['Advanced Course Rating'] || []).select { |h| h['breakdowns'].nil? }.max_by {|h| h['source_year'] }
+    end
+
     def rating_year
-      @_rating_year ||= ((data['Advanced Course Rating'] || []).find { |h| h['breakdowns'].nil? } || {})['source_year']
+      @_rating_year ||= (most_recent_rating_hash || {})['source_year']
     end
 
     def rating
-      @_rating ||=
-        ((data['Advanced Course Rating'] || [])
-          .find { |h| h['breakdowns'].nil? } || {})['school_value']
+      @_rating ||= (most_recent_rating_hash || {})['school_value']
     end
 
     def narration
@@ -207,8 +209,9 @@ module SchoolProfiles
     # ]
     def course_ratings_subjects
       @_course_ratings_subjects ||= (
+      max_year = rating_year || (data['Advanced Course Rating'] || []).map { |h| h['source_year'] }.max
         (data['Advanced Course Rating'] || [])
-          .select { |h| h['breakdown_tags'] == 'course_subject_group'}
+          .select { |h| h['breakdown_tags'] == 'course_subject_group' && h['source_year'] == max_year }
       )
     end
 

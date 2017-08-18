@@ -77,6 +77,10 @@ module SchoolProfiles
       decorated_school.student_growth_rating_hash
     end
 
+    def college_readiness_rating_hash
+      decorated_school.college_readiness_rating_hash
+    end
+
     def test_scores_rating_hash
       decorated_school.test_scores_rating_hash
     end
@@ -160,7 +164,17 @@ module SchoolProfiles
     end
 
     def gsdata_data(*keys)
-      decorated_school.gsdata.slice(*keys)
+      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(k, values), new_hash|
+        values = values.map do |h|
+          h = h.clone
+          if h['breakdowns']
+            h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
+            h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
+          end
+          h
+        end
+        new_hash[k] = values
+      end
     end
 
     # Returns a hash that includes the percentage and sourcing info

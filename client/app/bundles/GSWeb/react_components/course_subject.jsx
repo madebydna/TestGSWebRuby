@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { t } from '../util/i18n';
 
 export default class CourseSubject extends React.Component {
 
@@ -29,14 +30,6 @@ export default class CourseSubject extends React.Component {
     });
   }
 
-  t(string) {
-    if (window.GS && GS.I18n && GS.I18n.t) {
-      return GS.I18n.t(string);
-    } else {
-      return string;
-    }
-  }
-
   renderCoursesCount(){
     var underline_none = 'none';
     var text_no_underline = {textDecoration: underline_none};
@@ -46,9 +39,9 @@ export default class CourseSubject extends React.Component {
     }
     let course_word = '';
     if (this.props.courses.length === 1) {
-      course_word = this.t('course');
+      course_word = t('course');
     } else {
-      course_word = this.t('courses');
+      course_word = t('courses');
     }
     if( this.props.courses.length > 0 ){
       return (
@@ -63,7 +56,7 @@ export default class CourseSubject extends React.Component {
       var colorWhite = {color: white};
       return (
           <span>
-            {this.props.courses.length} <span>{this.t('courses')}</span>
+            {this.props.courses.length} <span>{t('courses')}</span>
             <span className={carets} style={colorWhite} />
           </span>
       );

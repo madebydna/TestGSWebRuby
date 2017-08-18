@@ -48,7 +48,8 @@
 
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "post_load", :async => true %>
-<%= javascript_include_tag "post_load", :async => true %>
+<%= javascript_include_tag "post_load", :async => true unless content_for?(:page_javascripts) %>
 <%= yield :javascript_includes %>
+<%= yield :page_javascripts %>
 </body>
 </html>

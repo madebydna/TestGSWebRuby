@@ -5,6 +5,7 @@ import SectionNavigation from './tabs/section_navigation';
 import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
+import { t } from '../../util/i18n';
 
 import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor, formatAnchorString } from '../../components/anchor_router';
 
@@ -41,10 +42,10 @@ export default class EquitySection extends React.Component {
 
   footer(sources, qualaroo_module_link) {
     return (
-        <div>
-          <InfoBox content={sources} >{ GS.I18n.t('See notes') }</InfoBox>
-          <GiveUsFeedback content={qualaroo_module_link} />
-        </div>
+      <div className="module-footer">
+        <InfoBox content={sources} >{ t('See notes') }</InfoBox>
+        <GiveUsFeedback content={qualaroo_module_link} />
+      </div>
     )
   }
 

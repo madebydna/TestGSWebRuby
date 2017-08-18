@@ -1,4 +1,5 @@
 import { viewport } from '../util/viewport';
+import { throttle, debounce } from 'lodash';
 //TODO: import jQuery
 
 var ctaProfileOffset;
@@ -9,8 +10,8 @@ var init = function () {
   cta = $('.js-profile-sticky');
   // only init when cta is on the page. :)
   if (isCTADefined()) {
-    $(window).on('scroll', _.throttle(recalculateCTAResize, 50));
-    $(window).on('resize', _.debounce(recalculateCTAResize, 100));
+    $(window).on('scroll', throttle(recalculateCTAResize, 50));
+    $(window).on('resize', debounce(recalculateCTAResize, 100));
 
     recalculateCTAResize();
   }

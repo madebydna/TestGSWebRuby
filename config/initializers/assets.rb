@@ -11,6 +11,8 @@ Rails.application.config.assets.precompile += [
     'post_load.js',
     'shared_post_load.js',
     'widget-bundle.js',
+    'interstitial-bundle.js',
+    'school-profiles-bundle.js',
     'post_load.css',
     'deprecated_application.css',
     'deprecated_application.js',
@@ -31,7 +33,8 @@ Rails.application.config.assets.precompile += [
     'main.css', #for style-guide
     'main.js', #for style-guide
     'picturefill.min.js', #for style-guide
-    'highcharts.js'
+    'highcharts.js',
+    'just_jquery.js'
 ]
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

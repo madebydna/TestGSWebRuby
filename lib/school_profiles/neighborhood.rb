@@ -1,5 +1,6 @@
 module SchoolProfiles
   class Neighborhood
+    include Qualaroo
     include ActionView::Helpers::AssetUrlHelper
 
     MAX_CHARS_LENGTH = 37
@@ -55,6 +56,10 @@ module SchoolProfiles
           )
         end
       end
+    end
+
+    def qualaroo_module_link
+      qualaroo_iframe(:neighborhood, @school.state, @school.id)
     end
 
     private

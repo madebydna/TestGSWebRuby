@@ -3,6 +3,7 @@ import Question from './question';
 import FiveStarRating from './five_star_rating';
 import SelectBoxes from './select_boxes';
 import TextArea from './text_area';
+import { t } from '../../../util/i18n';
 
 export default class Questions extends React.Component {
 
@@ -78,7 +79,7 @@ export default class Questions extends React.Component {
     />)
     return(<Question
       id = {question.id}
-      subtext = { GS.I18n.t("Required") }
+      subtext = { t("Required") }
       questionCounter = {this.props.questions.length + 1}
       title = {question.title}
       layout = {layoutComponent}

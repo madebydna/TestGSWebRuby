@@ -10,6 +10,7 @@ module Feeds
     include Feeds::FeedDataHelper
     include Feeds::TestRatingFeedDataReader
     include Feeds::TestRatingFeedTransformer
+    include Feeds::FeedConstants
 
 
     def initialize(attributes = {})

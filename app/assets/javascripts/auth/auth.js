@@ -18,15 +18,11 @@ GS.auth = GS.auth || (function() {
       };
     };
 
-    var signin = function(data) {
-    };
-
     var signinUsingFacebookData = function(facebookData) {
       return $.post(GS_FACEBOOK_AUTH_URL, convertFacebookSigninDataToGSSigninData(facebookData));
     };
 
     return {
-      signin: signin,
       signinUsingFacebookData: signinUsingFacebookData
     };
 

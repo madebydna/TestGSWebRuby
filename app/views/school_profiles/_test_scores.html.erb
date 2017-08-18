@@ -65,10 +65,12 @@
       <% end %>
       <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
     </div>
-    <% if data_values.present? %>
-      <%= render 'sources_link_to_modal', content: content %>
-      <%= render 'module_feedback', content: qualaroo_module_link %>
-    <% end %>
+    <div class="module-footer">
+      <% if data_values.present? %>
+        <%= render 'sources_link_to_modal', content: content %>
+        <%= render 'module_feedback', content: qualaroo_module_link %>
+      <% end %>
+    </div>
   <% end %>
   </div>
 </div>

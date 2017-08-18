@@ -1,3 +1,5 @@
+var GS = GS || {};
+
 GS.uri = GS.uri || {};
 
 GS.uri.Uri = function() {

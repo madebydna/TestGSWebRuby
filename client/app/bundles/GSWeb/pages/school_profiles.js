@@ -1,5 +1,14 @@
-import configureStore from '../store/appStore';
+// TODO: import ad addCompfilterToGlobalAdTargetingGon
 
+import { getStore } from '../store/appStore';
+
+import 'jquery';
+import 'jquery-unveil';
+import '../vendor/tipso';
+import '../vendor/fastclick';
+import '../vendor/remodal';
+import '../vendor/parsley.remote';
+import '../vendor/parsley.es';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
@@ -17,15 +26,21 @@ import OspSchoolInfo from '../react_components/osp_school_info';
 import Toggle from '../components/toggle';
 import HomesAndRentals from '../react_components/homes_and_rentals';
 import StemCourses from '../react_components/school_profiles/stem_courses';
+import * as footer from '../components/footer';
+import { signupAndFollowSchool } from '../util/newsletters';
+import * as backToTop from '../components/back_to_top';
+import { impressionTracker } from '../util/impression_tracker';
+import { t } from '../util/i18n';
+import * as facebook from '../components/facebook_auth';
+import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
-
 import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
+import { assign } from 'lodash';
+import { init as initHeader } from '../header';
+import '../util/advertising';
 
-
-window.store = configureStore({
-  school: gon.school
-});
+window.store = getStore();
 
 ReactOnRails.register({
   SchoolProfileComponent,
@@ -39,14 +54,31 @@ ReactOnRails.register({
 });
 
 $(function() {
+  initHeader();
+
   (function() {
-    var toggle = _.assign(new Toggle($('#hero').find('.school-info')));
+    var toggle = assign(new Toggle($('#hero').find('.school-info')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
-        toggle.updateButtonTextCallback(GS.I18n.t('show_less'), GS.I18n.t('show_more'))
+        toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
     );
     toggle.init().add_onclick();
   })();
+
+  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour';
+
+  function hasDeclinedTour() {
+    let pattern = "^(.*;)?\\s*" + PROFILE_TOUR_COOKIE + "\\s*=true";
+    return new RegExp(pattern).test(document.cookie);
+  }
+
+  // has to go above tooltips.initialize();
+  if (hasDeclinedTour()) {
+    $('.tour-teaser').addClass('gs-tipso');
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
+  } else {
+    $('.school-profile-tour-modal').removeClass('hidden');
+  }
 
   initAnchorHashUpdater();
 
@@ -68,6 +100,12 @@ $(function() {
   remodal.init();
   generateSubgroupPieCharts();
   stickyCTA.init();
+  footer.setupNewsletterLink();
+  backToTop.init();
+
+  $('.js-followThisSchool').on('click', function () {
+    signupAndFollowSchool(gon.school.state, gon.school.id);
+  });
 
   $('.rating-container__title').each(function() {
     var $elem = $(this);
@@ -87,6 +125,8 @@ $(function() {
     );
   });
 
+  refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
+
   function setCookieExpiration() {
     var expires = "";
     var date = new Date();
@@ -95,8 +135,8 @@ $(function() {
     return expires;
   }
 
-  function setSchoolTourCookie() {
-    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+  function setCookie(name, value) {
+    document.cookie = name + '=' + value + setCookieExpiration() + "; path=/";
   }
 
   // The tour modal will appear by default unless the user clicks 'Not right now'
@@ -104,11 +144,14 @@ $(function() {
   // sure the modal isn't displayed again.
   $('#close-school-tour').click(function(){
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="start-tour js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
-    setSchoolTourCookie();
-  })
-  
-  $('body').on('click', '.multi-select-button-group label', function() {
+    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    setCookie(PROFILE_TOUR_COOKIE, true);
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
+  });
+
+  let $body = $('body');
+
+  $body.on('click', '.multi-select-button-group label', function() {
     var $label = $(this);
     var $hiddenField = $label.closest('fieldset').find('input[type=hidden]');
     var values = $hiddenField.val().split(',');
@@ -126,7 +169,45 @@ $(function() {
     $label.toggleClass('active');
   });
 
-  $('body').on('click', '.js-start-tour', function() {
+  // used by test scores in school profiles
+  $body.on('click', '.js-test-score-details', function () {
+    var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
+    if(grades.css('display') == 'none') {
+      grades.slideDown();
+      $(this).find('span').removeClass('rotate-text-270');
+    }
+    else{
+      grades.slideUp();
+      $(this).find('span').addClass('rotate-text-270');
+    }
+  });
+
+  // for historical ratings
+  $body.on('click', '.js-historical-button', function () {
+    var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
+    if(historical_data.css('display') == 'none') {
+      historical_data.slideDown();
+      $(this).find('div').html(t('Hide past ratings'));
+      analyticsEvent('Profile', 'Historical Ratings', null, null, true);
+    }
+    else{
+      historical_data.slideUp();
+      $(this).find('div').html(t('Past ratings'));
+    }
+  });
+
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
+
+  try {
+    $('.neighborhood img[data-src]').unveil(300, function() {
+      $(this).width('100%')
+    });
+  } catch (e) {}
+  try {
+    $('.innovate-logo').unveil(300);
+  } catch (e) {}
+
+  $body.on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
     let schoolTourModal = $('.school-profile-tour-modal');
@@ -139,23 +220,63 @@ $(function() {
     scrollToElement('div.logo');
     introJs.startFirstTutorial();
     // Don't show the tour modal if the user takes the tour
-    setSchoolTourCookie();
+    setCookie(PROFILE_TOUR_COOKIE, true);
     return false;
   }).show();
 
-  $('body').on('click', '#school-tour-feedback', function(){
+  $body.on('click', '#school-tour-feedback', function(){
     let surveyUrl = 'https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=' + gon.school.state + '&school=' + gon.school.id;
     window.open(surveyUrl);
-  })
+  });
 
-  $('body').on('click', '.js-start-second-tour', function(){
+  $body.on('click', '.js-start-second-tour', function(){
       introJs.startSecondTutorial();
       return false;
   }).show();
 
-  $('body').on('click', '#close-school-tour', function() {
+  $body.on('click', '#close-school-tour, .js-close-school-tour', function() {
     introJs.exit();
   });
 
 });
 
+$(window).on('load', function() {
+  var moduleIds = [
+    '#TestScores',
+    '#CollegeReadiness',
+    '#StudentProgress',
+    '#AdvancedCourses',
+    '#EquityOverview',
+    '#Equity',
+    '#EquityRaceEthnicity',
+    '#EquityLowIncome',
+    '#EquityDisabilities',
+    '#Students',
+    '#TeachersStaff',
+    '#Reviews',
+    '#ReviewSummary',
+    '#Neighborhood',
+    '#NearbySchools'
+  ];
+  var elementIds = [];
+  for (var x=0; x < moduleIds.length; x ++) {
+    var theId = moduleIds[x];
+    elementIds.push(theId);
+    elementIds.push(theId + '-empty');
+  }
+  impressionTracker({
+    elements: elementIds,
+    threshold: 50
+  });
+});
+
+$.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+  var appId = gon.facebook_app_id;
+  FB.init({
+    appId: appId,
+    version    : 'v2.2',
+    status     : true, // check login status
+    cookie     : true, // enable cookies to allow the server to access the session
+    xfbml      : true  // parse XFBML
+  });
+});

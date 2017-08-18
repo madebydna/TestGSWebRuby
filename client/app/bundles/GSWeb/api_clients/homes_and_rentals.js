@@ -1,4 +1,5 @@
 import { addQueryParamToUrl } from '../util/uri';
+import { t } from '../util/i18n';
 
 function getHomesAndRentalsServiceUrl() {
   if(gon) {
@@ -40,22 +41,22 @@ export function decorateListing(listing) {
   let bedrooms = function() {
     let beds = parseFloat(listing.bedrooms);
     if(isNaN(beds) || beds == 0) {
-      return GS.I18n.t('Studio');
+      return t('Studio');
     } else {
-      return parseFloat(listing.bedrooms) + ' ' + GS.I18n.t('beds');
+      return parseFloat(listing.bedrooms) + ' ' + t('beds');
     }
   };
 
   let bathrooms = function() {
     if(listing.bathrooms) {
       // parseFloat trims 1.0 down to 1
-      return parseFloat(listing.bathrooms) + ' ' + GS.I18n.t('baths');
+      return parseFloat(listing.bathrooms) + ' ' + t('baths');
     }
   };
 
   let size = function() {
     if(listing.finishedSqFt && listing.finishedSqFt != '0') {
-      return listing.finishedSqFt + ' ' + GS.I18n.t('sqft');
+      return listing.finishedSqFt + ' ' + t('sqft');
     }
   };
 

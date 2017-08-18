@@ -7,6 +7,7 @@ describe SchoolProfiles::Toc do
   let(:test_scores) {double('test_scores')}
   let(:student_progress) {double('student_progress')}
   let(:college_readiness) {double('college_readiness')}
+  let(:equity_overview) {double('equity_overview')}
   let(:equity) {double('equity')}
   let(:students) {double('students')}
   let(:teacher_staff) {double('teacher_staff')}
@@ -14,7 +15,7 @@ describe SchoolProfiles::Toc do
   let(:stem_courses) {double('stem_courses')}
 
   subject(:toc) do
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, students, teacher_staff, courses, stem_courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity_overview,equity, students, teacher_staff, courses, stem_courses, school)
   end
 
   it { is_expected.to respond_to(:content) }

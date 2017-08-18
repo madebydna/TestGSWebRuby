@@ -49,6 +49,13 @@ class TestDataSet < ActiveRecord::Base
     where(where_statements.join(' OR '))
   }
 
+  scope :latest_active_feed_data_set, -> {
+    where(:active => 1).
+    where('display_target LIKE ?','%feed%').
+    max_by(&:year)
+  }
+
+  scope :with_data_type, ->(data_type) { where(data_type_id: data_type.id) }
   scope :with_no_subject_breakdowns, -> { where(subject_id: 1) }
   scope :all_students, -> { where(breakdown_id: 1) }
 

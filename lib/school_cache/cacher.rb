@@ -11,6 +11,8 @@ class Cacher
   # :esp_response
   # :feed_test_scores
   # :gsdata
+  # :directory
+  # :feed_characteristics
 
   def initialize(school)
     @school = school
@@ -63,7 +65,9 @@ class Cacher
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
         feed_test_scores: FeedTestScoresCacher,
         gsdata:           GsdataCaching::GsdataCacher,
-        ratings:          RatingsCaching::RatingsCacher
+        ratings:          RatingsCaching::RatingsCacher,
+        directory:        DirectoryCaching::DirectoryCacher,
+        feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
   end
 
@@ -90,7 +94,9 @@ class Cacher
       ProgressBarCaching::ProgressBarCacher,
       FeedTestScoresCacher,
       GsdataCaching::GsdataCacher,
-      RatingsCaching::RatingsCacher
+      RatingsCaching::RatingsCacher,
+      DirectoryCaching::DirectoryCacher,
+      FeedCharacteristicsCaching::FeedCharacteristicsCacher
     ]
   end
 
@@ -114,6 +120,7 @@ class Cacher
     rescue => error
       error_vars = { cache_key: cache_key, school_state: school.state, school_id: school.id }
       GSLogger.error(:school_cache, error, vars: error_vars, message: 'Failed to build school cache')
+      raise
     end
   end
 

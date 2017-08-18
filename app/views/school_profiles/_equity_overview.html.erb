@@ -1,0 +1,34 @@
+<% title = t('lib.equity_overview.title') %>
+<% rating = equity_overview.equity_rating %>
+<% info_text = equity_overview.info_text  %>
+<% narration = equity_overview.narration %>
+<% sources = equity_overview.equity_overview_sources %>
+<% analytics_id = 'EquityOverview' %>
+
+<div id="<%= analytics_id %>" class="rating-container rs-equity_overview" data-ga-click-label="Equity overview">
+  <a class="anchor-mobile-offset" name="Equity_overview"></a>
+  <div class="rating-container__rating">
+    <%= render 'module_header',
+               circle_color_modifier: rating,
+               circle_content: rating,
+               title: title,
+               info_text: info_text,
+               has_data: true
+
+    %>
+
+    <div class="panel">
+      <div class="auto-narration">
+        <%= narration %>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <%= render 'sources_link_to_modal', content: sources %>
+      <%= render 'module_feedback', content: equity_overview.qualaroo_module_link(:equity_overview) %>
+    </div>
+
+  </div>
+
+
+</div>
