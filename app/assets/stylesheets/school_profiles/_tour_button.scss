@@ -1,3 +1,5 @@
+$blue-border: #159bd8;
+
 .tour-teaser {
   position: fixed;
   bottom: 50px;
@@ -23,13 +25,12 @@ button.tour-cta {
   display: inline-block;
   text-align: center;
   width: 300px;
-  //height: 185px;
   padding: 30px 40px;
   position: fixed;
-  background: #f6f9fa;
+  background: $gray-light-blue;
   right: 10px;
   bottom: 110px;
-  border: 3px solid #159bd8;
+  border: 3px solid $blue-border;
   border-radius: 3px;
   box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
   @include media-breakpoint-up(md) {
@@ -43,7 +44,7 @@ button.tour-cta {
     width: 0; height: 0;
     border: 10px solid;
     pointer-events: none;
-    border-top-color: #159bd8;
+    border-top-color: $blue-border;
     border-right-color: transparent;
     border-left-color: transparent;
     border-bottom-color: transparent;
@@ -55,7 +56,7 @@ button.tour-cta {
   }
   #close-school-tour {
     font-size: 11px;
-    color: #1d1d1d;
+    color: $dark-steel-gray;
     cursor: pointer;
   }
 
