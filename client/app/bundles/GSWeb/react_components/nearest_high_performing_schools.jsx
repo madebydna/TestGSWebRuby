@@ -4,6 +4,7 @@ import TopPerformingNearbySchoolsList from './top_performing_nearby_schools_list
 import NearbySchoolsByDistanceList from './nearby_schools_by_distance_list';
 import ButtonGroup from './buttongroup';
 import { t } from '../util/i18n';
+import GiveUsFeedback from 'react_components/school_profiles/give_us_feedback';
 
 class NearestHighPerformingSchools extends React.Component {
 
@@ -88,6 +89,7 @@ class NearestHighPerformingSchools extends React.Component {
         <div className="content">
           { this.renderContentPanes() }
         </div>
+        <GiveUsFeedback module='nearby_schools' divider={false} />
       </div>
     </div>);
   }

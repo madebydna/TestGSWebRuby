@@ -1,6 +1,6 @@
 // TODO: import ad addCompfilterToGlobalAdTargetingGon
 
-import configureStore from '../store/appStore';
+import { getStore } from '../store/appStore';
 
 import 'jquery';
 import 'jquery-unveil';
@@ -40,9 +40,7 @@ import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
 
-window.store = configureStore({
-  school: gon.school
-});
+window.store = getStore();
 
 ReactOnRails.register({
   SchoolProfileComponent,
@@ -66,6 +64,21 @@ $(function() {
     );
     toggle.init().add_onclick();
   })();
+
+  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour';
+
+  function hasDeclinedTour() {
+    let pattern = "^(.*;)?\\s*" + PROFILE_TOUR_COOKIE + "\\s*=true";
+    return new RegExp(pattern).test(document.cookie);
+  }
+
+  // has to go above tooltips.initialize();
+  if (hasDeclinedTour()) {
+    $('.tour-teaser').addClass('gs-tipso');
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
+  } else {
+    $('.school-profile-tour-modal').removeClass('hidden');
+  }
 
   initAnchorHashUpdater();
 
@@ -122,8 +135,8 @@ $(function() {
     return expires;
   }
 
-  function setSchoolTourCookie() {
-    document.cookie = "decline_school_profile_tour=true" + setCookieExpiration() + "; path=/";
+  function setCookie(name, value) {
+    document.cookie = name + '=' + value + setCookieExpiration() + "; path=/";
   }
 
   // The tour modal will appear by default unless the user clicks 'Not right now'
@@ -131,11 +144,14 @@ $(function() {
   // sure the modal isn't displayed again.
   $('#close-school-tour').click(function(){
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="start-tour js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
-    setSchoolTourCookie();
-  })
-  
-  $('body').on('click', '.multi-select-button-group label', function() {
+    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    setCookie(PROFILE_TOUR_COOKIE, true);
+    $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
+  });
+
+  let $body = $('body');
+
+  $body.on('click', '.multi-select-button-group label', function() {
     var $label = $(this);
     var $hiddenField = $label.closest('fieldset').find('input[type=hidden]');
     var values = $hiddenField.val().split(',');
@@ -154,7 +170,7 @@ $(function() {
   });
 
   // used by test scores in school profiles
-  $('body').on('click', '.js-test-score-details', function () {
+  $body.on('click', '.js-test-score-details', function () {
     var grades = $(this).closest('.bar-graph-display').parent().find('.grades');
     if(grades.css('display') == 'none') {
       grades.slideDown();
@@ -167,7 +183,7 @@ $(function() {
   });
 
   // for historical ratings
-  $('body').on('click', '.js-historical-button', function () {
+  $body.on('click', '.js-historical-button', function () {
     var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
     if(historical_data.css('display') == 'none') {
       historical_data.slideDown();
@@ -190,8 +206,8 @@ $(function() {
   try {
     $('.innovate-logo').unveil(300);
   } catch (e) {}
-  
-  $('body').on('click', '.js-start-tour', function() {
+
+  $body.on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
     let schoolTourModal = $('.school-profile-tour-modal');
@@ -204,21 +220,21 @@ $(function() {
     scrollToElement('div.logo');
     introJs.startFirstTutorial();
     // Don't show the tour modal if the user takes the tour
-    setSchoolTourCookie();
+    setCookie(PROFILE_TOUR_COOKIE, true);
     return false;
   }).show();
 
-  $('body').on('click', '#school-tour-feedback', function(){
+  $body.on('click', '#school-tour-feedback', function(){
     let surveyUrl = 'https://s.qualaroo.com/45194/9da69ac2-e50b-4c8d-84c1-9df4e8671481?state=' + gon.school.state + '&school=' + gon.school.id;
     window.open(surveyUrl);
-  })
+  });
 
-  $('body').on('click', '.js-start-second-tour', function(){
+  $body.on('click', '.js-start-second-tour', function(){
       introJs.startSecondTutorial();
       return false;
   }).show();
 
-  $('body').on('click', '#close-school-tour', function() {
+  $body.on('click', '#close-school-tour, .js-close-school-tour', function() {
     introJs.exit();
   });
 

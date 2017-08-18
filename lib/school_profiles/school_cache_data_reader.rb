@@ -164,7 +164,17 @@ module SchoolProfiles
     end
 
     def gsdata_data(*keys)
-      decorated_school.gsdata.slice(*keys)
+      decorated_school.gsdata.slice(*keys).each_with_object({}) do |(k, values), new_hash|
+        values = values.map do |h|
+          h = h.clone
+          if h['breakdowns']
+            h['breakdowns'] = h['breakdowns'].gsub('All students except 504 category,','')
+            h['breakdowns'] = h['breakdowns'].gsub(/,All students except 504 category$/,'')
+          end
+          h
+        end
+        new_hash[k] = values
+      end
     end
 
     # Returns a hash that includes the percentage and sourcing info
