@@ -13,7 +13,8 @@ module Qualaroo
       :general_information_private => '228904ba-a897-4581-8bf1-c49be0a3f259',
       :teachers_staff => '32af259e-27ef-44ae-a9e0-5b37ab9064ff',
       :students => '2daad497-0079-46c5-822d-5bf15f1aeff3',
-      :neighborhood => 'e0d8fc09-ff65-44d3-940f-935b31143df6'
+      :neighborhood => 'e0d8fc09-ff65-44d3-940f-935b31143df6',
+      :equity_overview => 'cdfc875c-df4c-4183-bcf9-f832a9238831'
   }
 
   def qualaroo_link(module_sym, state, school_id)
