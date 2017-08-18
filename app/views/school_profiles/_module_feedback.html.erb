@@ -1,16 +1,13 @@
 <% content %>
 <% qualaroo_yes_url = content + '&a=0' %>
 <% qualaroo_no_url = content + '&a=1' %>
-<% unless defined?(divider) %>
-  <% divider = true %>
-<% end %>
 
 <div class="module_feedback">
   <%= t('lib.test_scores.was_this_useful') %>
   <span>
     <%=
       link_to(I18n.db_t('Yes'), qualaroo_yes_url, class: 'anchor-button')
-      %><!-- adding any whitespace here affects layout --><%=
+      %><%# adding any whitespace here affects layout %><%=
       link_to(I18n.db_t('No'), qualaroo_no_url, class: 'anchor-button')
     %>
   </span>
