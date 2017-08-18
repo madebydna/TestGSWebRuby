@@ -7,6 +7,10 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 let store;
 
 const configureStore = (initialState = {}) => {
+  if(store) {
+    return store;
+  }
+
   let middlewareApplier = composeWithDevTools(applyMiddleware(
     thunk,
     NearbySchoolsMiddleware
@@ -18,9 +22,15 @@ const configureStore = (initialState = {}) => {
   return store;
 };
 
+const getStore = function() {
+  return configureStore({
+    school: gon.school
+  });
+}
+
 const getState = function() {
-  store.getState();
+  return getStore().getState();
 }
 
 export default configureStore;
-export { getState }
+export { getStore, getState }
