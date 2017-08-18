@@ -1,0 +1,10 @@
+<% size ||= 'medium' %>
+<% value ||= 'NR' %>
+
+<% if value != 'NR' && value.to_i < 11 && value.to_i > 0 %>
+  <% css_class ||= '' %>
+  <% rating_class = "gs-rating circle-rating--#{value} circle-rating--#{size}" %>
+  <span class="<%= "#{rating_class} #{css_class}" %>">
+    <%= value %><span class="denominator">/10</span>
+  </span>
+<% end %>

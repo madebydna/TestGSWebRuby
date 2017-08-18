@@ -15,7 +15,7 @@
   }
 }
 
-button.start-tour {
+button.tour-cta {
   @include button;
 }
 
@@ -57,5 +57,9 @@ button.start-tour {
     font-size: 11px;
     color: #1d1d1d;
     cursor: pointer;
+  }
+
+  &.hidden {
+    display: none;
   }
 }

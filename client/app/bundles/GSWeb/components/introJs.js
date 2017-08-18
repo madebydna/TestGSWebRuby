@@ -17,7 +17,7 @@ let secondTutorialLastStep = {
 
 let firstTutorial = [
   {
-    element: '.logo',
+    element: null,
     intro: t('tour1.step1'),
     highlightClass: 'no-highlight',
     position: 'below',
@@ -149,7 +149,7 @@ const onStepSeen = function(targetElement, tutorial) {
   let stepNum = intro._currentStep;
   let gaLabel = tutorial[stepNum].gaLabel;
   window.analyticsEvent('Profile', 'tutorial-public', gaLabel || (stepNum + 1), true);
-}
+};
 
 const onExitTour = function() {
   $(homesAndRentalsSelector).show();
@@ -157,6 +157,7 @@ const onExitTour = function() {
   if(stepNum < numberOfVisibleSteps) {
     window.analyticsEvent('Profile', 'tutorial-public', 'cancel-step ' + stepNum);
   }
+  $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
 };
 
 const handleLastStep = function() {
@@ -170,9 +171,9 @@ const handleLastStep = function() {
 
 const getFilteredSteps = function(tutorial) {
   return tutorial.filter(function(obj) {
-      return $(obj.element).length;
+      return obj.element === null || $(obj.element).length;
   });
-}
+};
 
 export function exit() {
   intro.exit();
@@ -192,16 +193,17 @@ const startTutorial = function(tutorial, lastStep) {
     showProgress: false,
     skipLabel: 'cancel',
     overlayOpacity: 0,
-    exitOnOverlayClick: true
+    exitOnOverlayClick: true,
+    scrollPadding: 80
   }).
   onafterchange(function(targetElement){
-    onStepSeen(targetElement, tutorial);
+    onStepSeen(targetElement, allSteps);
   }).
   onexit(onExitTour).
   onbeforechange(handleLastStep);
   $(homesAndRentalsSelector).hide();
   intro.start();
-}
+};
 
 // Ensure that first tutorial is exited before new tutorial fires
 function exitLastTour(){
@@ -209,7 +211,7 @@ function exitLastTour(){
     intro.exit();
     resolve();
   });
-};
+}
 
 export function startFirstTutorial() {
   startTutorial(firstTutorial, firstTutorialLastStep);
