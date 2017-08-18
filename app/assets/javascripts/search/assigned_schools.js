@@ -239,7 +239,7 @@ GS.search.assignedSchools = GS.search.assignedSchools || (function() {
         var gsRatingLink = $listItem.find('.js-gs-rating-link');
         var $ratingIcon = gsRatingLink.attr('href', qualityUrl).find('.js-gs-rating-icon');
         $ratingIcon.removeClass('circle-rating--5').addClass('circle-rating--' + newGSRating);
-        $ratingIcon.html(newGSRating + "<span class='denominator'>/10</span>");
+        $ratingIcon.html(newGSRating);
       } else {
           var $gsRatingLink = $listItem.find('.js-gs-rating-link');
           $gsRatingLink.remove();
