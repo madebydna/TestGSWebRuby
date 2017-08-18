@@ -9,7 +9,6 @@ shared_context 'Visit Review School Chooser Page for topic 1' do
       ut1847 = School.on_db(:ut).new(id: 1847, type: 'public', state: 'ut', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry')
       ut1847.id = 1847
       ut1847.on_db(:ut).save
-      FactoryGirl.create(:page, name: 'Reviews')
       visit review_choose_school_path
     end
 

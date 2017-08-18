@@ -1,9 +1,0 @@
----
-es:
-  deprecated_school_profile:
-    data_viz:
-      data_display_toggle:
-        ethnicity: Etnicidad
-        gender: Género
-        grouped_by: Agrupados por %{breakdown}
-        program: Socioeconomía y programas

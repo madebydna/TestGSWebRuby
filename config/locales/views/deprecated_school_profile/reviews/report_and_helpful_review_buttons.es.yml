@@ -1,8 +1,0 @@
----
-es:
-  deprecated_school_profile:
-    reviews:
-      report_and_helpful_review_buttons:
-        close: Cerrar formulario
-        report_review: Reportar este comentario
-        review_reported: Usted ha reportado este comentario
