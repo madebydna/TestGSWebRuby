@@ -4,7 +4,6 @@
 # Retrieves CensusData and builds hashes in various formats
 #
 class CensusDataReader
-  include CachedCategoryDataConcerns
   attr_accessor :school
 
   SCHOOL_CACHE_KEYS = ['characteristics']
