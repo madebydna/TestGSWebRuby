@@ -33,6 +33,10 @@ class School < ActiveRecord::Base
     School.on_db(state.downcase.to_sym).find id rescue nil
   end
 
+  def self.ids_by_state(state)
+    School.on_db(state.downcase.to_sym).active.order(:id).select(:id).map(&:id)
+  end
+
   def self.within_district(district)
     on_db(district.shard).active.where(district_id: district.id)
   end
