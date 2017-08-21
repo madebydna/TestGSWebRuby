@@ -71,7 +71,7 @@ module Feeds
 
     def self.census_info
       char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id)
-      single_data_object('census-info', char_data) if char_data
+      single_data_object('census-info', char_data) if char_data.compact.present?
     end
 
     def self.cache_value(data_set, name)
