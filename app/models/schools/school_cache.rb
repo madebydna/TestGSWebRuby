@@ -6,11 +6,13 @@ class SchoolCache < ActiveRecord::Base
   ETHNICITY = :Ethnicity
   ENROLLMENT = :Enrollment
 
-  KEYS = [:characteristics, :esp_responses, :nearby_schools, :progress_bar, :ratings, :reviews_snapshot, :test_scores ,:feed_test_scores, :directory_census, :directory]
+  KEYS = [:characteristics, :esp_responses, :nearby_schools, :progress_bar, :ratings, :reviews_snapshot, :test_scores ,:feed_test_scores, :directory, :feed_characteristics]
 
   def self.for_school(name, school_id, state)
     SchoolCache.where(name: name, school_id: school_id, state: state).first()
   end
+
+
 
   def self.for_schools_keys(keys, school_ids, state)
     school_data = Hash.new { |h,k| h[k] = {} }

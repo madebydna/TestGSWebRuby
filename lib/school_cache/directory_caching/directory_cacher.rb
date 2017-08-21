@@ -16,6 +16,11 @@ class DirectoryCaching::DirectoryCacher < Cacher
       hash[key] = [{ school_value: school.send(key) }] # the array wrap is for consistency
     end
     validate!(cache_hash)
+    cache_hash.merge!(school_object_extra_fields)
+  end
+
+  def school_object_extra_fields
+
   end
 
   def self.active?

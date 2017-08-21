@@ -2,6 +2,10 @@ module Feeds
   module FeedConstants
       FEED_CACHE_KEYS = %w(feed_test_scores ratings)
 
+      DIRECTORY_FEED_SCHOOL_CACHE_KEYS = %w(directory feed_characteristics)
+
+      DIRECTORY_FEED_DISTRICT_CACHE_KEYS = %w(district_directory feed_district_characteristics)
+
       WITH_NO_BREAKDOWN = 'with_no_breakdown'
 
       WITH_ALL_BREAKDOWN = 'wth_all_breakdown'
@@ -10,7 +14,8 @@ module Feeds
           'test_scores' => 'local-gs-test-feed',
           'test_subgroup' => 'local-gs-test-subgroup-feed',
           'test_rating' => 'local-gs-test-rating-feed',
-          'official_overall' => 'local-gs-official-overall-rating-feed'
+          'official_overall' => 'local-gs-official-overall-rating-feed',
+          'official_overall' => 'local-greatschools-feed'
       }
 
       RATINGS_ID_RATING_FEED_MAPPING = {
@@ -28,13 +33,15 @@ module Feeds
           'test_scores' => 'http://www.greatschools.org/feeds/greatschools-test.xsd',
           'test_subgroup' => 'http://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
           'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
-          'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd'
+          'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
+          'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd'
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
           'test_subgroup' => 'gs-test-subgroup-feed',
           'test_rating' => 'gs-test-rating-feed',
-          'official_overall' => 'gs-official-overall-rating-feed'
+          'official_overall' => 'gs-official-overall-rating-feed',
+          'directory_feed' => 'gs-local-feed'
       }
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
@@ -49,7 +56,7 @@ module Feeds
       DEFAULT_BATCH_SIZE = 1
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall)
+        %w(test_scores test_subgroup test_rating official_overall, directory_feed)
       end
 
       def all_states
