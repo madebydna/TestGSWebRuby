@@ -6,9 +6,9 @@
   <%= t('lib.test_scores.was_this_useful') %>
   <span>
     <%=
-      link_to(I18n.db_t('Yes'), qualaroo_yes_url, class: 'anchor-button')
+      link_to(I18n.db_t('Yes'), qualaroo_yes_url, class: 'anchor-button', target: '_blank')
       %><%# adding any whitespace here affects layout %><%=
-      link_to(I18n.db_t('No'), qualaroo_no_url, class: 'anchor-button')
+      link_to(I18n.db_t('No'), qualaroo_no_url, class: 'anchor-button', target: '_blank')
     %>
   </span>
 </div>
