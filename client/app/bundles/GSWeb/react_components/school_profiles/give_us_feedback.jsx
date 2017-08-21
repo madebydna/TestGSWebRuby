@@ -12,8 +12,8 @@ const GiveUsFeedback = ({className='', content, module=null, divider=true, child
     <div className="module_feedback">
       {t('was_this_useful')}&nbsp;
       <span>
-        <a href={qualaroo_yes_url} className='anchor-button'>{t('yes')}</a>
-        <a href={qualaroo_no_url} className='anchor-button'>{t('no')}</a>
+        <a href={qualaroo_yes_url} className='anchor-button' target='_blank'>{t('yes')}</a>
+        <a href={qualaroo_no_url} className='anchor-button' target='_blank'>{t('no')}</a>
       </span>
     </div>
   );
