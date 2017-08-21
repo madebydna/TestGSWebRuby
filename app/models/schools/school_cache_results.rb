@@ -11,6 +11,10 @@ class SchoolCacheResults
     @school_data
   end
 
+  def data_hash
+    @school_data
+  end
+
   def decorate_schools(schools)
     [*schools].map do |school|
       decorated = SchoolCacheDecorator.new(school, @school_data[[school.state.upcase, school.id]] || {})
@@ -30,7 +34,7 @@ class SchoolCacheResults
   end
 
   def get_cache_object_for_school(state, school_id)
-    hash = @school_data[[state.upcase, school_id]]
+    hash = school_data_hash[[state.upcase, school_id]]
     if hash
       hash.send(:extend, HashWithSchoolCacheData)
       hash.keys.each do |key|
