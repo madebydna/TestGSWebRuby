@@ -1,4 +1,2 @@
-// This file is used by school profile, district boundaries, and interstitial
-// layouts (and maybe more)
-
+//= skip_minification
 //= require commons-blocking-bundle
