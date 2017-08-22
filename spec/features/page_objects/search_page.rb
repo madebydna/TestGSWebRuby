@@ -10,7 +10,7 @@ class SearchPage < SitePrism::Page
 
   sections :school_search_results, '.js-schoolSearchResult' do
     element :orange_stars, '.i-16-orange-star'
-    element :gs_rating, '.gs-rating-sm'
+    element :gs_rating, '.gs-rating'
 
     def number_of_reviews
       root_element.find('.js-reviewCount').text.to_i
