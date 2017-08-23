@@ -24,15 +24,26 @@ module SchoolProfiles
     end
 
     def most_recent_rating_hash
-      @_most_recent_rating_hash ||= (data['Advanced Course Rating'] || []).select { |h| h['breakdowns'].nil? }.max_by {|h| h['source_year'] }
+      @_most_recent_rating_hash ||=
+        advanced_course_ratings
+        .having_no_breakdown
+        .most_recent
     end
 
     def rating_year
-      @_rating_year ||= (most_recent_rating_hash || {})['source_year']
+      @_rating_year ||= most_recent_rating_hash.try(:source_year)
     end
 
     def rating
-      @_rating ||= (most_recent_rating_hash || {})['school_value']
+      @_rating ||= most_recent_rating_hash.try(:school_value)
+    end
+
+    def advanced_course_ratings
+      @_advanced_course_ratings ||= (
+        (data['Advanced Course Rating'] || [])
+        .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+        .extend(GsdataCaching::GsDataValue::CollectionMethods)
+      )
     end
 
     def narration
@@ -129,19 +140,20 @@ module SchoolProfiles
       # }
       @courses_by_subject ||= (
       (data['Course Enrollment'] || [])
-        .select { |h| h['breakdown_tags'] =~ /advanced/ }
-        .each_with_object({}) do |h, accum|
+        .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+        .select { |dv| dv.breakdown_tags =~ /advanced/ }
+        .each_with_object({}) do |dv, accum|
           # tags that match *_index
-          subjects = h['breakdown_tags']
+          subjects = dv.breakdown_tags
             .split(',')
             .select { |s| s[-6..-1] == '_index' } 
 
           subjects.each do |subject|
             accum[subject] ||= []
             accum[subject] << {
-              'name' => h['breakdowns'],
-              'source' => h['source_name'],
-              'year' => h['source_year']
+              'name' => dv.breakdowns,
+              'source' => dv.source_name,
+              'year' => dv.source_year
             }
           end
         end
@@ -174,9 +186,9 @@ module SchoolProfiles
     # }
     def course_subject_group_ratings
       @_course_subject_group_ratings ||= (
-        course_ratings_subjects.each_with_object({}) do |hash, accum|
-          subject = hash['breakdowns']
-          accum[subject] = hash['school_value'].to_i
+        course_ratings_subjects.each_with_object({}) do |dv, accum|
+          subject = dv.breakdowns
+          accum[subject] = dv.school_value.to_i
         end
       )
     end
@@ -209,9 +221,8 @@ module SchoolProfiles
     # ]
     def course_ratings_subjects
       @_course_ratings_subjects ||= (
-      max_year = rating_year || (data['Advanced Course Rating'] || []).map { |h| h['source_year'] }.max
-        (data['Advanced Course Rating'] || [])
-          .select { |h| h['breakdown_tags'] == 'course_subject_group' && h['source_year'] == max_year }
+        max_year = rating_year || advanced_course_ratings.year_of_most_recent
+        advanced_course_ratings.select { |h| h.breakdown_tags == 'course_subject_group' && h.source_year == max_year }
       )
     end
 
