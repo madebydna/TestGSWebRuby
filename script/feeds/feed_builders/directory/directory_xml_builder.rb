@@ -5,21 +5,17 @@ module Feeds
 
     attr_accessor :state_feed, :school_feed, :district_feed, :state_info_feed
 
-    def generate_feed(root_element, schema, feed_file_path, school_feed, district_feed)
+    def generate_feed(root_element, schema, feed_file_path, school_feed, district_feed, state_feed)
       @root_element = root_element
       @schema = schema
       @feed_file_path = feed_file_path
       within_root_node do
-        # Generate State Test Master Data
-        # Generates test info tag
-        # write_xml_tag(state_info_feed.to_hashes, 'test')
-
-        # Generate state test data tag
-        # state_feed.each_result { |data| write_xml_tag(data, 'test-result') }
-        # Generate School Info
-        school_feed.each_result { |data| write_xml_tag(data, 'school') }
+q        # Generate state-feed data tag
+        state_feed.state_result { |data| write_xml_tag(data, 'state-feed') }
         # Generate District Info
         district_feed.each_result { |data| write_xml_tag(data, 'district') }
+        # Generate School Info
+        school_feed.each_result { |data| write_xml_tag(data, 'school') }
       end
 
       close_file

@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified">
+
+    <xs:include schemaLocation="greatschools-common.xsd"/>
+
+    <xs:element name="gs-local-feed">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="state-feed" maxOccurs="1"/>
+                <xs:element ref="district" maxOccurs="unbounded" />
+                <xs:element ref="school" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="state-feed">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element ref="state-name" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="state" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="census-info" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="district">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element ref="state-id" minOccurs="0"/>
+                <xs:element ref="nces-code" minOccurs="0"/>
+                <xs:element ref="name"/>
+                <xs:element ref="description"/>
+                <xs:element ref="street"/>
+                <xs:element ref="city"/>
+                <xs:element ref="state"/>
+                <xs:element ref="zip"/>
+                <xs:element ref="county"/>
+                <xs:element ref="fipscounty" minOccurs="0"/>
+                <xs:element ref="level"/>
+                <xs:element ref="level-code"/>
+                <xs:element ref="lat" minOccurs="0"/>
+                <xs:element ref="lon" minOccurs="0"/>
+                <xs:element ref="phone" minOccurs="0"/>
+                <xs:element ref="fax" minOccurs="0"/>
+                <xs:element ref="web-site"/>
+                <xs:element ref="url" minOccurs="1" maxOccurs="unbounded"/>
+                <xs:element ref="census-info" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="school">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="universal-id"/>
+                <xs:element ref="id"/>
+                <xs:element ref="state-id" minOccurs="0"/>
+                <xs:element ref="nces-code" minOccurs="0"/>
+                <xs:element ref="name"/>
+                <xs:element ref="description"/>
+                <xs:element ref="street"/>
+                <xs:element ref="city"/>
+                <xs:element ref="state"/>
+                <xs:element ref="zip"/>
+                <xs:element ref="county"/>
+                <xs:element ref="fipscounty" minOccurs="0"/>
+                <xs:element ref="level"/>
+                <xs:element ref="level-code"/>
+                <xs:element ref="district-id"/>
+                <xs:element ref="lat"/>
+                <xs:element ref="lon"/>
+                <xs:element ref="phone" minOccurs="0"/>
+                <xs:element ref="fax" minOccurs="0"/>
+                <xs:element ref="web-site"/>
+                <xs:element ref="subtype"/>
+                <xs:element ref="type"/>
+                <xs:element ref="district-name" minOccurs="0" />
+                <xs:element ref="universal-district-id" minOccurs="0" />
+                <xs:element ref="district-spending" minOccurs="0" />
+                <xs:element ref="url" minOccurs="2" maxOccurs="unbounded" />
+                <xs:element ref="census-info" minOccurs="0" maxOccurs="1" />
+                <xs:element ref="school-summary" minOccurs="0" maxOccurs="1" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="state-name">
+        <xs:annotation>
+            <xs:documentation>The long name of the state</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="20"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="name">
+        <xs:annotation>
+            <xs:documentation>Entity name</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="127"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="district-name">
+        <xs:annotation>
+            <xs:documentation>The name of the district a school belongs in</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="127"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="state-id">
+        <xs:annotation>
+            <xs:documentation>The ID assigned to this entity by a state's department of education</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="31"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="vendor-id">
+        <xs:annotation>
+            <xs:documentation>Third party vendor id that delivered this school's directory data.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="31"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="city">
+        <xs:annotation>
+            <xs:documentation>City name</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="127"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="state">
+        <xs:annotation>
+            <xs:documentation>2 Letter State abbreviation</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="2"/>
+                <xs:maxLength value="2"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="street">
+        <xs:annotation>
+            <xs:documentation>Street address</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="127"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="type">
+        <xs:annotation>
+            <xs:documentation>Type of school</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="public"/>
+                <xs:enumeration value="private"/>
+                <xs:enumeration value="charter"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="county">
+        <xs:annotation>
+            <xs:documentation>County name</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="127"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="preschool-subtype">
+        <xs:annotation>
+            <xs:documentation>Preschool Subtype</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="0"/>
+                <xs:maxLength value="255"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="subtype">
+        <xs:annotation>
+            <xs:documentation>School Subtype</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="0"/>
+                <xs:maxLength value="255"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="district-id" type="xs:nonNegativeInteger"/>
+    <xs:element name="district-spending" type="xs:nonNegativeInteger"/>
+    <xs:element name="enrollment" type="xs:nonNegativeInteger"/>
+
+    <xs:element name="fax">
+        <xs:annotation>
+            <xs:documentation>Fax number</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="31"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="fipscounty">
+        <xs:annotation>
+            <xs:documentation>County Fips Code</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:length value="5"/>
+                <xs:pattern value="(([^0].*)|(0[^0].*))"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="head-official-name">
+        <xs:annotation>
+            <xs:documentation>Head official's name</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="255"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="lat" type="xs:decimal"/>
+
+    <xs:element name="level">
+        <xs:annotation>
+            <xs:documentation>Grade(s) span of school or district.  Examples are: 6-8, K-12, 3-5, 4, UG
+            A level of 'UG' or a blank string indicates that the grade span is not known.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="30"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="lon" type="xs:decimal"/>
+
+    <xs:element name="nces-code">
+        <xs:annotation>
+            <xs:documentation>NcesId of the entity</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="1"/>
+                <xs:maxLength value="31"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="phone">
+        <xs:annotation>
+            <xs:documentation>Phone number of the entity</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="31"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="zip">
+        <xs:annotation>
+            <xs:documentation>Zipcode for the entity</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="15"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="census-info">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="student-teacher-ratio" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Student to teacher ratio
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="head-official-name" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Head official name may be the principal or another head administrator
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="0"/>
+                                        <xs:maxLength value="255"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="head-official-email" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Head official Email may be the principal or another head administrator
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="0"/>
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="enrollment" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Enrollment
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:int"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="membership" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Membership
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:int"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="bilingual-education" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Bilingual Education (y/n)</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="special-education" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Special Education (y/n)</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="extended-care" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Extended Care (y/n)</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="computers-in-classroom" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Computers In Classroom (y/n)</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="low-age" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Low Age</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="high-age" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>High Age</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="percent-free-and-reduced-price-lunch" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Percent Free or Reduced price lunch qualifiers
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+
+                 <xs:element name="teacher-data" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Teacher data
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element name="data-type" minOccurs="0"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+
+
+                <xs:element name="percent-students-with-limited-english-proficiency" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Students with limited disability
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="percent-economically-disadvantaged" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Percent Students economically disadvantaged
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="per-pupil-spending" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Total Per Pupil Spending
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="total-per-pupil-spending" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Total Per Pupil Spending
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="average-salary" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Average Salary
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="graduation-rate" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Graduation rate
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="class-size" minOccurs="0" maxOccurs="30">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Class size.  If grade is not specified, then it's a entity wide count
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="grade" minOccurs="0">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="30"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <xs:element name="ethnicity" minOccurs="0" maxOccurs="30">
+                    <xs:annotation>
+                        <xs:documentation>
+                            Student Ethnicity
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="universal-id"/>
+                            <xs:element name="name">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:minLength value="1"/>
+                                        <xs:maxLength value="100"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="value" type="xs:float"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element ref="level-code" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="url">
+        <xs:annotation>
+            <xs:documentation>
+                Url to GreatSchools.org page
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="type" use="required">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="School Overview"/>
+                                <xs:enumeration value="Parent Reviews"/>
+                                <xs:enumeration value="Ratings"/>
+                                <xs:enumeration value="Student/Teacher"/>
+                                <xs:enumeration value="District Overview"/>
+                                <xs:enumeration value="Test Scores"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                    <xs:attribute name="universal-id" use="required" />
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="web-site">
+        <xs:annotation>
+            <xs:documentation>
+                A school's or district's website.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:minLength value="0"/>
+                <xs:maxLength value="255"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="gs-rating">
+        <xs:annotation>
+            <xs:documentation>GreatSchools Rating (Out of 10)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:int"/>
+        </xs:simpleType>
+    </xs:element>
+
+</xs:schema>

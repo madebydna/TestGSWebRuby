@@ -23,6 +23,12 @@ module Feeds
       new(state, nil, data_type, 'State')
     end
 
+    def state_result
+      if block_given?
+        yield(DirectoryStateDataBuilder.build_data(@state))
+      end
+    end
+
     def each_result
       if block_given?
         @ids.each do |id|
