@@ -623,7 +623,6 @@ Style/DoubleNegation:
     - 'app/models/modules/user_review_concerns.rb'
     - 'doc/examples_and_gotchas/single_line_conditionals.rb'
     - 'lib/email_validator.rb'
-    - 'lib/path_with_period.rb'
     - 'lib/safe_html_utils.rb'
     - 'script/missing_database_translation_checker.rb'
     - 'spec/features/page_objects/school_moderation_page.rb'

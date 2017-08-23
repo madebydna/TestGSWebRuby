@@ -1,7 +1,6 @@
 
 LocalizedProfiles::Application.routes.draw do
   require 'states'
-  require 'path_with_period'
 
   root 'home#show'
   get ENV_GLOBAL['home_path'], as: :home, to: 'home#show'
@@ -534,10 +533,6 @@ LocalizedProfiles::Application.routes.draw do
 
   #Handle old School list SEO pages (has to come below cities_list and districts_list routes)
   get '/schools/:state_name/:state_abbr/', to: 'schools_list#show', as: :schools_list
-
-  constraints(PathWithPeriod) do
-    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]
-  end
 
   # error handlers
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found, via: [:get, :post]
