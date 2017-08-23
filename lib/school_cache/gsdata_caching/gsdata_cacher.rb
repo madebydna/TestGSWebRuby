@@ -95,6 +95,7 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:breakdown_tags] = breakdown_tags if breakdown_tags
       h[:school_value] = result.value
       h[:source_year] = result.date_valid.year
+      h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
       h[:state_value] = state_value if state_value
       h[:district_value] = district_value if district_value
       h[:display_range] = district_value if display_range
@@ -107,7 +108,7 @@ class GsdataCaching::GsdataCacher < Cacher
   end
 
   def validate_result_hash(result_hash, data_type_id)
-    required_keys = [:school_value, :source_year, :source_name]
+    required_keys = [:school_value, :source_date_valid, :source_name]
     missing_keys = required_keys - result_hash.keys
     if missing_keys.count > 0
       GSLogger.error(
