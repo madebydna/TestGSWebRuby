@@ -29,7 +29,7 @@ export function enableAutoAnchoring(map) {
 
 function highlightForAMoment(selector) {
   let backgroundColor = $(selector).css('background-color');
-  $(selector).css('background-color', '#ffff93', 'important');
+  $(selector).css('background-color', '#cbe2ec', 'important');
   setTimeout(() => $(selector).css('background-color', '', ''), 750);
 }
 
@@ -44,7 +44,25 @@ function scrollAndHighlight(selector) {
   });
 }
 
+function scrollWithoutHighlight(selector) {
+  haveAutoScrolled = true;
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  scrollToElement(selector, () => {
+    window.clearInterval(autoAnchorAttemptIntervalId);
+  });
+}
+
 export function scrollToAnchor() {
+  let firstToken = anchorTokens()[0];
+  let selector = anchorMap[firstToken];
+  if(selector && $(selector).length > 0) {
+    scrollWithoutHighlight(selector);
+  }
+}
+
+function scrollToAnchorAndHighlight() {
   let firstToken = anchorTokens()[0];
   let selector = anchorMap[firstToken];
   if(selector && $(selector).length > 0) {
@@ -54,7 +72,7 @@ export function scrollToAnchor() {
 
 function attemptAutoAnchor() {
   if(!haveAutoScrolled) {
-    scrollToAnchor();
+    scrollToAnchorAndHighlight();
   }
 }
 
