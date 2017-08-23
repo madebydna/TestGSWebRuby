@@ -6,6 +6,9 @@ require_relative 'single_data_object'
 require_relative 'directory_xml_builder'
 require_relative 'characteristics_data_builder'
 require_relative 'directory_data_builder'
+require_relative 'directory_state_data_builder'
+
+require 'states'
 
 
 module Feeds
@@ -25,18 +28,18 @@ module Feeds
 
       self.school_feed = EntityDirectoryFeed.for_schools(state, @school_ids, @data_type)
       self.district_feed = EntityDirectoryFeed.for_districts(state, @district_ids, @data_type)
-      # self.state_feed = EntityDirectoryFeed.for_states(state, @data_type)
+      self.state_feed = EntityDirectoryFeed.for_states(state, @data_type)
       # self.state_info_feed = Feeds::StateInfoFeed.new(state, data_type)
     end
 
     def generate_feed(format='')
       case format
         when 'xml'
-          DirectoryXmlBuilder.new.generate_feed(@root_element, @schema, @feed_file_path, school_feed, district_feed)
+          DirectoryXmlBuilder.new.generate_feed(@root_element, @schema, @feed_file_path, school_feed, district_feed, state_feed)
         when 'json'
         when 'flat'
         else
-          DirectoryXmlBuilder.new.generate_feed(@root_element, @schema, @feed_file_path, school_feed, district_feed)
+          DirectoryXmlBuilder.new.generate_feed(@root_element, @schema, @feed_file_path, school_feed, district_feed, state_feed)
       end
     end
 

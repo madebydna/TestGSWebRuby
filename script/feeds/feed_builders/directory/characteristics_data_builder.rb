@@ -110,11 +110,9 @@ module Feeds
     ].freeze
 
     def self.characteristics_format(characteristics_data_set, universal_id)
-      char_arr = []
-      characteristics_data_set.each do | cds |
-        char_arr << build_data(cds.first, cds.second, universal_id)
-      end
-      char_arr.flatten
+      characteristics_data_set.map do | cds |
+        build_data(cds.first, cds.second, universal_id)
+      end.flatten
     end
 
     def self.build_data(key, data, universal_id)
@@ -166,18 +164,16 @@ module Feeds
 
     def self.ethnicity(data, universal_id, data_type)
       if data
-        arr = []
-        data.each do |d|
+        data.map do |d|
           if d && d['school_value']
             options = {}
             options[:value] = d['school_value'].to_f.round(1)
             options[:name] = d['original_breakdown'] || d['breakdown']
             options[:year] = d['year']
             options[:universal_id] = universal_id
-            arr << build_structure('ethnicity', options)
+            build_structure('ethnicity', options)
           end
         end
-        arr
       end
     end
 
