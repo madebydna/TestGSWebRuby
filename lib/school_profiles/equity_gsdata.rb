@@ -6,8 +6,6 @@ module SchoolProfiles
     SUBJECT_ALL_PERCENTAGE = 200 # This is also used in react to determine different layout in ethnicity for All students
     STUDENTS_WITH_DISABILITIES = 'Students with disabilities'
     STUDENTS_WITH_IDEA_CATEGORY_DISABILITIES = 'Students with IDEA catagory disabilities'
-    DISCIPLINE_FLAG = 'Discipline Disparity Flag'
-    ABSENCE_FLAG = 'Absence Disparity Flag'
     COURSES = 1
     DISCIPLINE = 2
     DISABILITIES = 3
@@ -67,31 +65,6 @@ module SchoolProfiles
       equity_gsdata_discipline_hash
       equity_gsdata_disabilities_hash
       @sources
-    end
-
-    def discipline_flag?
-      @_discipline_flag ||= (
-        flag_hash = discipline_attendance_hashes[DISCIPLINE_FLAG]
-        flag_hash.present? && flag_hash['school_value'] == '1'
-      )
-    end
-
-    def attendance_flag?
-      @_discipline_flag ||= (
-        flag_hash = discipline_attendance_hashes[ABSENCE_FLAG]
-        flag_hash.present? && flag_hash['school_value'] == '1'
-      )
-    end
-
-    def discipline_attendance_hashes
-      @_discipline_attendance_hashes ||= (
-        data_hashes = @school_cache_data_reader.gsdata_data(DISCIPLINE_FLAG, ABSENCE_FLAG)
-        max_year = data_hashes.map { |(_, array_of_hashes)| array_of_hashes.map { |h| h['source_year'].to_i}.max }.max
-        data_hashes.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
-          most_recent_all_students = array_of_hashes.find { |h| h['source_year'].to_i == max_year && !h.has_key?('breakdowns') }
-          output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
-        end
-      )
     end
 
     private

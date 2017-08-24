@@ -1,7 +1,7 @@
 module SchoolProfiles
   module Components
     class Component
-      attr_accessor :school_cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns
+      attr_accessor :school_cache_data_reader, :data_type, :title, :type, :precision, :valid_breakdowns, :flagged
       attr_writer :narration
 
       def initialize(precision: 0)
@@ -89,7 +89,8 @@ module SchoolProfiles
         {
           narration: narration,
           type: type,
-          values: values 
+          values: values,
+          flagged: @flagged
         }
       end
 

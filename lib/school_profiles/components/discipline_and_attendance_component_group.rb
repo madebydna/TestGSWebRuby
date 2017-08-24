@@ -12,6 +12,7 @@ module SchoolProfiles
             component.title = 'Percentage of students suspended out of school'
             component.type = 'person_reversed'
             component.narration = t('narration.ER.Percentage of students suspended out of school')
+            component.flagged = school_cache_data_reader.discipline_flag?
           end,
           GsdataComponent.new.tap do |component|
             component.school_cache_data_reader = school_cache_data_reader
@@ -19,6 +20,7 @@ module SchoolProfiles
             component.title = 'Percentage of students chronically absent (15+ days)'
             component.type = 'person_reversed'
             component.narration = t('narration.ER.Percentage of students chronically absent (15+ days)')
+            component.flagged = school_cache_data_reader.attendance_flag?
           end
         ]
       end
