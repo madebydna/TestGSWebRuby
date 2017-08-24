@@ -1,6 +1,6 @@
 import { scrollToElement } from '../util/scrolling';
 let autoAnchoring = false;
-let haveAutoScrolled = false;
+let haveScrolled = false;
 let anchorMap;
 let autoAnchorAttemptIntervalId;
 
@@ -22,9 +22,15 @@ function anchorTokens() {
 }
 
 export function enableAutoAnchoring(map) {
+  addAnchorChangeCallback(() => disableAutoAnchoring());
   autoAnchoring = true;
   anchorMap = map;
   autoAnchorAttemptIntervalId = window.setInterval(attemptAutoAnchor, 100);
+}
+
+function disableAutoAnchoring(map) {
+  autoAnchoring = false;
+  window.clearInterval(autoAnchorAttemptIntervalId);
 }
 
 function highlightForAMoment(selector) {
@@ -34,27 +40,23 @@ function highlightForAMoment(selector) {
 }
 
 function scrollAndHighlight(selector) {
-  haveAutoScrolled = true;
+  haveScrolled = true;
   if ('scrollRestoration' in window.history) {
     window.history.scrollRestoration = 'manual';
   }
-  scrollToElement(selector, () => {
-    highlightForAMoment(selector);
-    window.clearInterval(autoAnchorAttemptIntervalId);
-  });
+  scrollToElement(selector, () => highlightForAMoment(selector));
 }
 
 function scrollWithoutHighlight(selector) {
-  haveAutoScrolled = true;
+  haveScrolled = true;
   if ('scrollRestoration' in window.history) {
     window.history.scrollRestoration = 'manual';
   }
-  scrollToElement(selector, () => {
-    window.clearInterval(autoAnchorAttemptIntervalId);
-  });
+  scrollToElement(selector);
 }
 
 export function scrollToAnchor() {
+  disableAutoAnchoring();
   let firstToken = anchorTokens()[0];
   let selector = anchorMap[firstToken];
   if(selector && $(selector).length > 0) {
@@ -63,6 +65,7 @@ export function scrollToAnchor() {
 }
 
 function scrollToAnchorAndHighlight() {
+  disableAutoAnchoring();
   let firstToken = anchorTokens()[0];
   let selector = anchorMap[firstToken];
   if(selector && $(selector).length > 0) {
@@ -71,7 +74,7 @@ function scrollToAnchorAndHighlight() {
 }
 
 function attemptAutoAnchor() {
-  if(!haveAutoScrolled) {
+  if(!haveScrolled) {
     scrollToAnchorAndHighlight();
   }
 }
