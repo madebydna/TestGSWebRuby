@@ -103,6 +103,9 @@ class GsdataCaching::GsdataCacher < Cacher
       if result.data_type_id == 158 # equity rating
         h[:description] = data_description_value("whats_this_equity#{school.state}") || data_description_value('whats_this_equity')
         h[:methodology] = data_description_value("footnote_equity#{school.state}") || data_description_value('footnote_equity')
+      elsif result.data_type_id == 159 # academic progress rating
+        h[:description] = data_description_value("whats_this_academic_progress#{school.state}") || data_description_value('whats_this_academic_progress')
+        h[:methodology] = data_description_value("footnote_academic_progress#{school.state}") || data_description_value('footnote_academic_progress')
       end
     end
   end
