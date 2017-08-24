@@ -12,12 +12,27 @@ class GsdataCaching::GsDataValue
       max_by { |dv| dv.source_date_valid }
     end
 
+    def having_most_recent_date
+      max_source_date_valid = map(&:source_date_valid).max
+      select { |dv| dv.source_date_valid == max_source_date_valid }.tap { |a| a.extend(CollectionMethods) }
+    end
+
     def having_no_breakdown
       select { |dv| dv.breakdowns.nil? }.tap { |a| a.extend(CollectionMethods) }
     end
 
     def having_school_value
-      select { |dv| dv.school_value.present? }
+      select { |dv| dv.school_value.present? }.tap { |a| a.extend(CollectionMethods) }
+    end
+
+    def expect_only_one(message, other_helpful_vars)
+      GSLogger.error(
+        :misc,
+        nil,
+        message: "Expected to find unique gsdata value: #{message}",
+        vars: other_helpful_vars
+      ) if size > 1
+      return first
     end
   end
 
@@ -29,7 +44,9 @@ class GsdataCaching::GsDataValue
     :source_year,
     :source_date_valid,
     :source_name,
-    :data_type
+    :data_type,
+    :description,
+    :methodology
 
   def source_year
     source_date_valid ? source_date_valid[0..3] : @source_year

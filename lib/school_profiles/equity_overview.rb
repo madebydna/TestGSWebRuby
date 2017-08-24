@@ -93,30 +93,32 @@ module SchoolProfiles
 
     def equity_overview_struct
       @_equity_overview_struct ||= (
+      equity_overview_data = nil
       if @school_cache_data_reader.gsdata_data('Equity Rating').present?
-        equity_overview_data = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating'].select { |h| h.has_key?('school_value') }
-        equity_overview_data = equity_overview_data.select {|h| !h.has_key?('breakdowns')}
+        equity_overview_data = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating']
 
-        # If more than one school_value, grab first one but log error
-        GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type 'Equity Rating' in the gsdata cache",
-                       vars: {school: {state: @school_cache_data_reader.school.state,
-                                       id: @school_cache_data_reader.school.id}
-                       }) if equity_overview_data.size > 1
-        unless equity_overview_data.empty?
-          school_value = equity_overview_data.first['school_value']
-          description = equity_overview_data.first['description']
-          methodology = equity_overview_data.first['methodology']
-          year = equity_overview_data.first['source_year']
-          source_name = equity_overview_data.first['source_name']
-        end
+        equity_overview_data = equity_overview_data.map do |hash|
+          GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: 'Equity Rating'))
+        end.extend(GsdataCaching::GsDataValue::CollectionMethods)
+
+        equity_overview_data = equity_overview_data
+          .having_school_value
+          .having_no_breakdown
+          .having_most_recent_date
+          .expect_only_one(
+            'Equity rating',
+            school: {
+              state: @school_cache_data_reader.school.state,
+              id: @school_cache_data_reader.school.id
+            }
+          )
       end
       OpenStruct.new.tap do |eo|
-        eo.rating = school_value
-        eo.description = description
-        eo.methodology = methodology
-        eo.year = year
-        eo.source_name = source_name
+        eo.rating = equity_overview_data.school_value
+        eo.description = equity_overview_data.description
+        eo.methodology = equity_overview_data.methodology
+        eo.year = equity_overview_data.source_year
+        eo.source_name = equity_overview_data.source_name
       end
       )
     end
