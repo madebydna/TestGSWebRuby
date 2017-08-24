@@ -114,11 +114,11 @@ module SchoolProfiles
           )
       end
       OpenStruct.new.tap do |eo|
-        eo.rating = equity_overview_data.school_value
-        eo.description = equity_overview_data.description
-        eo.methodology = equity_overview_data.methodology
-        eo.year = equity_overview_data.source_year
-        eo.source_name = equity_overview_data.source_name
+        eo.rating = equity_overview_data.try(:school_value)
+        eo.description = equity_overview_data.try(:description)
+        eo.methodology = equity_overview_data.try(:methodology)
+        eo.year = equity_overview_data.try(:source_year)
+        eo.source_name = equity_overview_data.try(:source_name)
       end
       )
     end
