@@ -56,7 +56,9 @@ module SchoolProfiles
       arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
 
       if @equity.race_ethnicity_discipline_and_attendance_visible?
-        arr << {column: 'Environment', label: 'discipline_and_attendance', present: true, rating: nil, anchor: 'Race_ethnicity'+DEEP_LINK_HASH_SEPARATOR+'Discipline_and_attendance'}
+        arr << {column: 'Environment', label: 'discipline_and_attendance', present: true, rating: nil,
+                anchor: 'Race_ethnicity'+DEEP_LINK_HASH_SEPARATOR+'Discipline_and_attendance',
+                flagged: @equity.discipline_attendance_flag? }
       end
 
       arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}

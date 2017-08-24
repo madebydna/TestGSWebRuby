@@ -106,6 +106,10 @@ module SchoolProfiles
       @_equity_disabilities_hash ||= equity_data.equity_gsdata_disabilities_hash
     end
 
+    def discipline_attendance_flag?
+      equity_data.discipline_flag? || equity_data.attendance_flag?
+    end
+
     def equity_data
       @_equity_data ||= SchoolProfiles::EquityGsdata.new(school_cache_data_reader: @school_cache_data_reader)
     end
