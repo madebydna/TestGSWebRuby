@@ -16,8 +16,9 @@
     </tr>
     </thead>
     <tbody>
-      <% @osp_submissions.each do |osp| %>
-        <tr style="background: <%= osp.set_highlight_color%>">
+      <% @osp_memberships.each do |_osp| %>
+        <% osp = OspModerationDecorator.decorate(_osp)%>
+        <tr style="background: <%= osp.highlight_color(@osp_memberships)%>">
           <td><input class="osp-member" type="checkbox" id="<%=osp.id%>"></td>
           <td>
             <strong><%= link_to(osp.school.name, root_path + "#{States.state_name(osp.state.downcase)}/city/#{osp.school_id}-school-name") if osp.school%></strong><br>
@@ -44,7 +45,7 @@
 <script type="text/javascript" charset="utf-8">
 
   const collectOspMembershipIds = function(){
-//    Create tuples for each osp_member in format [id, notes]
+//    If box is checked, create tuple in format [id, notes]
     let ospMemberArray = [];
     $('.osp-member').each(function() {
       var that = $(this);
