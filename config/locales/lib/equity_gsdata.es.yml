@@ -109,16 +109,36 @@ es:
         reciben servicios de educación especial y servicios relacionados a sus discapacidades.
       narration:
         ER:
-          'Percentage of students chronically absent (15+ days)': >
-            <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
-            <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-            <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
-          'Percentage of students suspended out of school': >
-            <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
-            <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-            <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+          normal:
+            'Percentage of students chronically absent (15+ days)': >
+              <p class="narrative-content">Esto muestra el porcentaje de alumnos ausentes 15 días o más a través de diferentes razas y etnias en esta escuela, en comparación con el promedio estatal. Altos índices de absentismo y suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+            'Percentage of students suspended out of school': >
+              <p class="narrative-content">Esto demuestra los índices de suspensiones fuera de la escuela entre diferentes razas/etnias en esta escuela, en comparación con el promedio estatal. Altos índices de suspensiones significa menos tiempo para la enseñanza y el aprendizaje.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+          disparity:
+            'Percentage of students chronically absent (15+ days)': >
+              <h3 class="negative"><span class="icon-flag"></span>Muy preocupante:</h3>
+              <p>Esta escuela tiene grandes diferencias en los niveles de ausentismo crónico entre distintos grupos
+              de estudiantes. Cuando los estudiantes no están en la escuela, no aprenden tanto. Pregúntele a la
+              escuela por qué existe esta desigualdad y lo que está haciendo para asegurar que las políticas de
+              asistencia sean justas.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
+            'Percentage of students suspended out of school': >
+              <h3 class="negative"><span class="icon-flag"></span>Muy preocupante:</h3>
+              <p>Esta escuela tiene grandes diferencias en los índices de suspensión entre distintos grupos
+              de estudiantes. Cuando los estudiantes no están en la escuela, no aprenden tanto. Pregúntele a la escuela
+              por qué suspende desproporcionadamente a algunos grupos de estudiantes y lo que está haciendo para
+              asegurar que las políticas de disciplina sean justas.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+              <p class="footnote"><a href="/gk/articles/la-disciplina-en-las-escuelas-se-aproxima-a-la-pacificacion/?lang=es">Vea cómo</a> algunas escuelas están utilizando métodos innovadores para mejorar la disciplina y la asistencia.</p>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">Esto muestra el porcentaje de estudiantes con discapacidades ausentes 15 días o más en esta escuela en comparación con el promedio estatal. Altos índices de absentismo significa menos tiempo para la enseñanza y el aprendizaje.</p>

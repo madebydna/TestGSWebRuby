@@ -5,6 +5,8 @@ module SchoolProfiles
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
     SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses)
+    DISCIPLINE_FLAG = 'Discipline Disparity Flag'
+    ABSENCE_FLAG = 'Absence Disparity Flag'
 
     attr_reader :school, :school_cache_keys
 
@@ -175,6 +177,31 @@ module SchoolProfiles
         end
         new_hash[k] = values
       end
+    end
+
+    def discipline_flag?
+      @_discipline_flag ||= (
+        flag_hash = discipline_attendance_hashes[DISCIPLINE_FLAG]
+        flag_hash.present? && flag_hash['school_value'] == '1'
+      )
+    end
+
+    def attendance_flag?
+      @_attendance_flag ||= (
+        flag_hash = discipline_attendance_hashes[ABSENCE_FLAG]
+        flag_hash.present? && flag_hash['school_value'] == '1'
+      )
+    end
+
+    def discipline_attendance_hashes
+      @_discipline_attendance_hashes ||= (
+        data_hashes = gsdata_data(DISCIPLINE_FLAG, ABSENCE_FLAG)
+        max_year = data_hashes.map { |(_, array_of_hashes)| array_of_hashes.map { |h| h['source_year'].to_i}.max }.max
+        data_hashes.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+          most_recent_all_students = array_of_hashes.find { |h| h['source_year'].to_i == max_year && !h.has_key?('breakdowns') }
+          output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
+        end
+      )
     end
 
     # Returns a hash that includes the percentage and sourcing info

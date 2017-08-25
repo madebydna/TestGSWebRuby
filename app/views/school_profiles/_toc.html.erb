@@ -24,7 +24,7 @@
               <% if (1..10).to_a.map(&:to_s).include?(hash[:rating].to_s)  %>
                 <%= render 'toc_entry_rating', rating: hash[:rating], title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
               <% else %>
-                <%= render 'toc_entry_badge', icon: nil, title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor] %>
+                <%= render 'toc_entry_badge', icon: nil, title: t(".#{hash[:label].to_s}"), anchor: hash[:anchor], flagged: hash[:flagged] %>
               <% end %>
             <% end %>
           </div>

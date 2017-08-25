@@ -5,6 +5,7 @@ export default class SectionSubNavigation extends React.Component {
   render(){
     var active = this.props.active;
     var items = this.props.items.map(function(hash, index) {
+      let flagged = hash.flagged || false;
       let anchor = this.props.top_anchor + hashSeparatorAnchor() + this.props.parent_anchor + hashSeparatorAnchor() + formatAnchorString(hash.anchor);
       return <a href="javascript:void(0)"
                 data-anchor={anchor}
@@ -15,9 +16,16 @@ export default class SectionSubNavigation extends React.Component {
                 data-ga-click-action='Equity Ethnicity Button'
                 data-ga-click-label={hash.subject}>
         {hash.subject}
+        {this.addFlag(flagged)}
       </a>;
     }.bind(this));
     return <div className="sub-nav-group">{items}</div>;
+  }
+
+  addFlag(flag) {
+    if (flag === true) {
+      return <span className="icon-flag red"/>
+    }
   }
 
   onClick(index) {

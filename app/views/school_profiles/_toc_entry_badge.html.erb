@@ -1,6 +1,7 @@
 <% icon %>
 <% title %>
 <% anchor %>
+<% flagged %>
 
 <div class="clearfix toc-entry">
   <a href="#<%= anchor %>"
@@ -11,4 +12,14 @@
     <span><%= title %></span>
     <span class="icon-chevron-right"></span>
   </a>
+  <% if flagged %>
+    <a data-remodal-target="modal_info_box"
+       data-content-type="info_box"
+       data-content-html="<%= t('school_profiles.toc.info_texts.discipline_flag') %>"
+       class="gs-tipso indicator-box red"
+       data-ga-click-label="TOC - discipline/attendance flag"
+       href="javascript:void(0)">
+      <span class="icon-flag"></span>
+    </a>
+  <% end %>
 </div>

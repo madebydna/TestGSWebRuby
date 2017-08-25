@@ -35,7 +35,7 @@ export default class SchoolProfileComponent extends React.Component {
     super(props);
   }
 
-  subjectConfig(name, anchor, type, values, narration) {
+  subjectConfig(name, anchor, type, values, narration, flagged) {
     if (values) {
       // This is for titles in the test scores
       if(!(values instanceof Array)){
@@ -89,7 +89,8 @@ export default class SchoolProfileComponent extends React.Component {
           subject: name,
           anchor: anchor,
           component: component,
-          explanation: <div dangerouslySetInnerHTML={{__html: narration}} />
+          explanation: <div dangerouslySetInnerHTML={{__html: narration}} />,
+          flagged: flagged === true
         };
       }
     }
@@ -108,8 +109,8 @@ export default class SchoolProfileComponent extends React.Component {
 
     let sectionContent = this.props.data.map(subjectProps => {
       let data = subjectProps.data || [];
-      let content = data.map(({title, anchor, type, values, narration} = {}) => {
-        return this.subjectConfig(title, anchor, type, values, narration);
+      let content = data.map(({title, anchor, type, values, narration, flagged} = {}) => {
+        return this.subjectConfig(title, anchor, type, values, narration, flagged);
       })
       if (content.length > 0) {
         return { ...subjectProps, content: content };
