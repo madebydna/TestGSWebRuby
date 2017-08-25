@@ -65,7 +65,7 @@ describe SchoolProfiles::TeachersStaff do
 
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:gsdata_data).once
-      expect(subject.data_type_hashes).to be_empty
+      expect(subject.data_values_by_data_type).to be_empty
     end
   end
 
