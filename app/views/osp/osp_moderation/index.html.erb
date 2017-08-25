@@ -1,0 +1,76 @@
+<div style="width: 90%; margin: auto; padding: 30px 0;">
+
+  <%= render partial: 'osp/osp_moderation/reviewer_actions_buttons' %>
+
+  <table class="table table-striped" style="margin: auto;">
+    <thead>
+    <tr style="background: #5B5B5B; color: white; font-size: 14px;">
+      <th></th>
+      <th>School</th>
+      <th>Email</th>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Job title</th>
+      <th>Web url</th>
+      <th>Note</th>
+    </tr>
+    </thead>
+    <tbody>
+      <% @osp_submissions.each do |osp| %>
+        <tr style="background: <%= osp.set_highlight_color%>">
+          <td><input class="osp-member" type="checkbox" id="<%=osp.id%>"></td>
+          <td>
+            <strong><%= link_to(osp.school.name, root_path + "#{States.state_name(osp.state.downcase)}/city/#{osp.school_id}-school-name") if osp.school%></strong><br>
+            State: <%= osp.state%><br>
+            School id: <%= osp.school_id%>
+          </td>
+          <td><%= osp.user.email%></td>
+          <td><%= osp.user.id%></td>
+          <td><%= osp.user.first_name.capitalize%> <%= osp.user.last_name.capitalize%></td>
+          <td><%= osp.job_title%></td>
+          <td><%= osp.web_url%></td>
+          <td>
+            <textarea class="osp-notes"><%= osp.note %></textarea>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= render(partial: 'osp/osp_moderation/pagination_links') unless @pagination_link_count <= 1 %>
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+
+  const collectOspMembershipIds = function(){
+//    Create tuples for each osp_member in format [id, notes]
+    let ospMemberArray = [];
+    $('.osp-member').each(function() {
+      var that = $(this);
+      if (that.is(':checked')) {
+        ospMemberArray.push([that.attr('id'), that.parent().parent().find('textarea.osp-notes').val()]);
+      }
+    });
+    return ospMemberArray;
+  };
+
+
+  $('body').on('click', '.submit-osp-membership', function(){
+    let status = $(this).attr('data-id');
+    let memberArray = collectOspMembershipIds();
+//    Don't fire ajax call unless user has selected osp-members to update
+    if (memberArray.length > 0) {
+      $.ajax({
+        method: 'POST',
+        url: '/admin/osp-moderation/update',
+        data: {member_array: memberArray, status: status},
+        success: function () {
+          location.reload();
+        }
+      });
+    } else {
+      alert('Please check at least one box before clicking the buttons!');
+    }
+  })
+</script>
