@@ -32,12 +32,13 @@ module SchoolProfiles
     def stem_courses_hashes
       stem_data.each_with_object([]) do |(data_type, bd_hashes), accum|
         bd_hashes.each do |bd_hash|
-          unless bd_hash.has_key?('breakdowns') ## no breakdowns means "all students" in gsdata
+          data_value = GsdataCaching::GsDataValue.from_hash(bd_hash.merge(data_type: data_type))
+          unless data_value.breakdowns.present? ## no breakdowns means "all students" in gsdata
             accum << {
                 breakdown: I18n.t(data_type, scope: 'school_profiles.stem_courses', default:{})[:label],
-                score: bd_hash['school_value'].to_f,
-                label: "#{bd_hash['school_value']}",
-                state_average: bd_hash['state_value'].to_f,
+                score: data_value.school_value.to_f,
+                label: "#{data_value.school_value}",
+                state_average: data_value.state_value.to_f,
                 visualization: data_types_and_visualizations[data_type],
                 tooltip_html: I18n.t(data_type, scope: 'school_profiles.stem_courses', default:{})[:tooltip_html]
             }
@@ -49,11 +50,12 @@ module SchoolProfiles
     def stem_courses_sources
       stem_data.each_with_object([]) do |(data_type, bd_hashes), accum|
         bd_hashes.each do |bd_hash|
-          unless bd_hash.has_key?('breakdowns') ## no breakdowns means "all students" in gsdata
+          data_value = GsdataCaching::GsDataValue.from_hash(bd_hash.merge(data_type: data_type))
+          unless data_value.breakdowns.present? ## no breakdowns means "all students" in gsdata
             accum << {
               data_type: I18n.t(data_type, scope: 'school_profiles.stem_courses', default:{})[:label],
-              source_year: bd_hash['source_year'],
-              source_name: I18n.db_t(bd_hash['source_name'])
+              source_year: data_value.source_year,
+              source_name: I18n.db_t(data_value.source_name)
             }
           end
         end
