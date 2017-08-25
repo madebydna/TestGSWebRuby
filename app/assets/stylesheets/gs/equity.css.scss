@@ -155,8 +155,15 @@
       color: $narrative_gray_text;
 
     }
+    h3 .icon-flag {
+      font-size: 20px;
+      margin-right: 5px;
+    }
     .negative {
       color: $narrative_negative;
+      .icon-flag {
+        color: #ff3f2b;
+      }
     }
     .positive{
       color: $narrative_positive;
