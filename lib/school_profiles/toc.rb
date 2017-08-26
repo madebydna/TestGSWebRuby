@@ -7,7 +7,7 @@ module SchoolProfiles
 
     DEEP_LINK_HASH_SEPARATOR = '*'
 
-    def initialize(test_scores, college_readiness, student_progress, equity, equity_overview, students, teacher_staff, courses, stem_courses, school)
+    def initialize(test_scores, college_readiness, student_progress, equity, equity_overview, students, teacher_staff, courses, stem_courses, academic_progress, school)
       @test_scores = test_scores
       @college_readiness = college_readiness
       @student_progress = student_progress
@@ -17,6 +17,7 @@ module SchoolProfiles
       @teacher_staff = teacher_staff
       @courses = courses
       @stem_courses = stem_courses
+      @academic_progress = academic_progress
       @school = school
     end
 
@@ -29,6 +30,9 @@ module SchoolProfiles
       end
       if @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
+      end
+      if @academic_progress.visible? && !@student_progress.has_data?
+        arr << {column: 'Academics', label: 'academic_progress', present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
       end
       if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
         arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}

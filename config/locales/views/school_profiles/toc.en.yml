@@ -5,6 +5,7 @@ en:
       test_scores: Test scores
       college_readiness: College readiness
       student_progress: Student progress
+      academic_progress: Academic progress
       EQUITY: EQUITY
       race_ethnicity: Race/ethnicity
       low_income: Low-income students

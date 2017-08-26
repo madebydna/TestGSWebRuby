@@ -1,9 +1,9 @@
 es:
   lib:
     academic_progress:
-      'title': 'Academic progress'
-      'sources_title': 'GreatSchools profile data sources &amp; information'
-      'source': 'Source'
+      'title': 'Progreso Académico'
+      'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
+      'source': 'Fuente'
       'Great schools rating': 'GreatSchools Academic Progress Rating'
       info_text: >
         <p>La Calificación del Progreso Académico ayuda a medir cuánto los estudiantes aprenden en un año, en comparación con
