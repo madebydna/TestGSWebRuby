@@ -77,6 +77,7 @@ class SchoolProfilesController < ApplicationController
         sp.mailto = osp_school_info.mailto
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
+        sp.academic_progress = academic_progress
       end
     )
   end
@@ -173,6 +174,13 @@ class SchoolProfilesController < ApplicationController
   def equity_overview
     SchoolProfiles::EquityOverview.new(
       school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def academic_progress
+    SchoolProfiles::AcademicProgress.new(
+        school,
+        school_cache_data_reader: school_cache_data_reader
     )
   end
 

@@ -1,0 +1,73 @@
+en:
+  lib:
+    academic_progress:
+      'title': 'Academic progress'
+      'sources_title': 'GreatSchools profile data sources &amp; information'
+      'source': 'Source'
+      'Great schools rating': 'GreatSchools Academic Progress Rating'
+      info_text: >
+        <p>The Academic Progress Rating helps measure how much students learn in a year, compared to their peers across the state.</p>
+        <p>Student growth is one of the best ways to assess how teachers and schools help students learn. Many states' Department
+        of Education provide student growth data and for those states, we use this data to calculate a Student Progress Rating.</p>
+        <p>This state does not publish student growth data, so we use other available data to estimate student learning over
+        time. Specifically, for states missing growth data, we calculate our Academic Progress Rating by comparing year-over-year
+        test scores by grade and subject at this school to all schools in the state.</p>
+      narrative_1_html: >
+        <h3 class="negative">Very concerning:</h3>
+        <p>Students at this school are making <span class="emphasis">far less</span> academic progress given where their class was last year, compared
+        to students at other schools in the state.</p>
+        <p>Depending on the school’s test scores, academic progress means different things.</p>
+        <p><span class="emphasis">Very low progress with low test scores</span> means that students are starting at a low
+        point and as a class, are falling even farther behind their peers in classes in other schools.</p>
+        <p><span class="emphasis">Very low progress with high test scores</span> means students have strong academic skills
+        but that students, as a class, are below grade-to-grade gains in other classes in the state.</p>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+      narrative_2_html: >
+        <h3 class="negative">A worrisome sign:</h3>
+        <p>Students at this school are making <span class="emphasis">less</span> academic progress given where their class
+        was last year, compared to students at other schools in the state.</p>
+        <p>Depending on the school’s test scores, academic progress means different things.</p>
+        <p><span class="emphasis">Low progress with low test scores</span> means that students are starting at a low point
+        and as a class, are falling farther behind their peers in classes in other schools</p>
+        <p><span class="emphasis">Low progress with high test scores</span> means students have strong academic skills but
+        that students, as a class, are below grade-to-grade gains in other classes in the state.</p>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
+      narrative_3_html: >
+        <h3 class="neutral">Worth a deeper look:</h3>
+        <p>Students at this school are making <span class="emphasis">average</span> academic progress given where their class
+        was last year, compared to students at other schools in the state.</p>
+        <p>Average academic progress means different things. In some states, the <span class="emphasis">average progress is
+        so low,</span> a majority of students are not ready for college and career.  It also depends on the school’s actual test scores.</p>
+        <p><span class="emphasis">Average progress with low test scores</span> means that students are starting at a low
+        point but as a class, are keeping up with peers in classes in other schools.</p>
+        <p><span class="emphasis">Average progress with high test scores</span> means students have strong academic skills
+        and that students, as a class, are similar to grade-to-grade gains in other classes in the state. </p>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help students
+        grow and reach their full potential.</p>
+      narrative_4_html: >
+        <h3 class="positive">A promising sign:</h3>
+        <p>Students at this school are making <span class="emphasis">more</span> academic progress given where their class
+        was last year, compared to students at other schools in the state.</p>
+        <p>Strong academic progress means different things. In some states, the <span class="emphasis">average progress is
+        so low,</span> that even strong progress may not prepare a majority of students for college and career.  It also depends
+        on the school’s test scores.</p>
+        <p><span class="emphasis">Strong progress with low test scores</span> means that students are starting at a low point
+        but as a class, are exceeding grade-to-grade gains in other classes.</p>
+        <p><span class="emphasis">Strong progress with high test scores</span> means students have strong academic skills
+        and that students, as a class, are above grade-to-grade gains in other classes in the state.</p>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s continued success.</p>
+      narrative_5_html: >
+        <h3 class="positive">Good news!</h3>
+        <p>Students at this school are making <span class="emphasis">far more</span> academic progress given where their class
+        was last year, compared to students at other schools in the state.</p>
+        <p>High academic progress means different things, depending on the school’s test scores.</p>
+        <p><span class="emphasis">High progress with low test scores</span> means that students are starting at a low point
+        but the school is doing a great job at supporting their academic growth compared to most other schools.</p>
+        <p><span class="emphasis">High progress with high test scores</span> means students have strong academic skills and
+        that students, as a class, are above grade-to-grade gains in other classes in the state.</p>
+        <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
+        <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>

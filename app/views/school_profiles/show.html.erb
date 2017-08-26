@@ -34,6 +34,9 @@
               <% if @school_profile.student_progress.visible? %>
                 <%= render 'student_progress', student_progress: @school_profile.student_progress %>
               <% end %>
+              <% if @school_profile.academic_progress.visible? %>
+                  <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
+              <% end %>
 
               <% if @school.includes_level_code?(%w[m h]) %>
                 <% if !@school.middle_school? && @school_profile.courses.visible? %>
