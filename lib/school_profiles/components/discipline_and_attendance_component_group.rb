@@ -25,6 +25,8 @@ module SchoolProfiles
             component.flagged = school_cache_data_reader.attendance_flag?
           end
         ]
+        # Make sure the flagged component is visible by default when opening the group
+        @components.reverse! if !@components[0].flagged && @components[1].flagged
       end
 
       def t(string, options = {})
