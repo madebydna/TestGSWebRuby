@@ -16,7 +16,8 @@ class GsdataCaching::GsdataCacher < Cacher
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
   # 158: Equity rating
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158].freeze
+  # 159: Academic Progress Rating
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159].freeze
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
@@ -135,6 +136,9 @@ class GsdataCaching::GsdataCacher < Cacher
       if result.data_type_id == 158 # equity rating
         h[:description] = data_description_value("whats_this_equity#{school.state}") || data_description_value('whats_this_equity')
         h[:methodology] = data_description_value("footnote_equity#{school.state}") || data_description_value('footnote_equity')
+      elsif result.data_type_id == 159 # academic progress rating
+        h[:description] = data_description_value("whats_this_academic_progress#{school.state}") || data_description_value('whats_this_academic_progress')
+        h[:methodology] = data_description_value("footnote_academic_progress#{school.state}") || data_description_value('footnote_academic_progress')
       end
     end
   end

@@ -77,6 +77,7 @@ class SchoolProfilesController < ApplicationController
         sp.mailto = osp_school_info.mailto
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
+        sp.academic_progress = academic_progress
       end
     )
   end
@@ -135,7 +136,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, academic_progress, school)
   end
 
   def test_scores
@@ -173,6 +174,13 @@ class SchoolProfilesController < ApplicationController
   def equity_overview
     SchoolProfiles::EquityOverview.new(
       school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def academic_progress
+    SchoolProfiles::AcademicProgress.new(
+        school,
+        school_cache_data_reader: school_cache_data_reader
     )
   end
 

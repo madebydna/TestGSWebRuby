@@ -1,0 +1,36 @@
+<% academic_progress %>
+<% title = t('lib.academic_progress.title') %>
+<% rating = academic_progress.academic_progress_rating %>
+<% info_text = academic_progress.info_text  %>
+<% narration = academic_progress.narration %>
+<% sources = academic_progress.academic_progress_sources %>
+<% analytics_id = 'AcademicProgress' %>
+<% analytics_id += '-empty' unless academic_progress.has_data? %>
+
+<div id="<%= analytics_id %>" class="rating-container rs-equity_overview" data-ga-click-label="Academic progress">
+  <a class="anchor-mobile-offset" name="Academic_progress"></a>
+  <div class="rating-container__rating">
+    <%= render 'module_header',
+               circle_color_modifier: rating,
+               circle_content: rating,
+               title: title,
+               info_text: info_text,
+               has_data: academic_progress.has_data?
+
+    %>
+
+    <div class="panel">
+      <div class="auto-narration">
+        <%= narration %>
+      </div>
+    </div>
+
+    <div class="module-footer">
+      <%= render 'sources_link_to_modal', content: sources %>
+      <%= render 'module_feedback', content: academic_progress.qualaroo_module_link(:academic_progress) %>
+    </div>
+
+  </div>
+
+
+</div>

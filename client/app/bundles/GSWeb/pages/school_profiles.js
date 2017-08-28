@@ -92,7 +92,8 @@ $(function() {
     'Students': '#Students',
     'Teachers_staff': '#TeachersStaff',
     'Reviews': '#Reviews',
-    'Neighborhood': '#Neighborhood'
+    'Neighborhood': '#Neighborhood',
+    'Academic_progress': '#AcademicProgress .rating-container__rating'
   });
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
