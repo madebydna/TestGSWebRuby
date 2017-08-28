@@ -106,20 +106,21 @@ export default class SchoolProfileComponent extends React.Component {
       icon_classes: this.props.icon_classes
     };
 
-    let sectionContent = this.props.data.map(subjectProps => {
-      let data = subjectProps.data || [];
-      let content = data.map(({title, anchor, type, values, narration} = {}) => {
-        return this.subjectConfig(title, anchor, type, values, narration);
-      })
-      if (content.length > 0) {
-        return { ...subjectProps, content: content };
-      }
-    }).filter(o => o != null);
+    // let sectionContent = this.props.data.map(subjectProps => {
+    //   let data = subjectProps.data || [];
+    //   let content = data.map(({title, anchor, type, values, narration} = {}) => {
+    //     return this.subjectConfig(title, anchor, type, values, narration);
+    //   })
+    //   if (content.length > 0) {
+    //     return { ...subjectProps, content: content };
+    //   }
+    // }).filter(o => o != null);
+    let sectionContent = {};
 
     if(sectionContent.length > 0) {
       sectionConfig['section_content'] = sectionContent;
     } else {
-      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} />
+      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} message={this.props.anchor + '_no_data'} />
     }
 
     return sectionConfig;

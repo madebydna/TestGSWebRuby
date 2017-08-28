@@ -51,6 +51,7 @@ en:
     State avg: 'State avg:'
     State average: State average
     School value: School value
+    Race_ethnicity_no_data: This section reflects how well this school serves students from different races and ethnicities.
     RE Test scores narration: >
       This shows results across different races/ethnicities on {subject} test given to students once a year. Big
       differences may suggest that some student groups are not getting the support they need to succeed.
@@ -65,6 +66,8 @@ en:
       <hr />
       <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
       <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
+    Low-income_students_no_data: This section reflects how well this school serves students from low-income families.
+    Students_with_Disabilities_no_data: This section reflects how well this school serves students with disabilities.
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
@@ -125,12 +128,13 @@ en:
     Review: Review
     Close all: Close all
     Review Reported: Review Reported
-    no_data_message: 'This information is currently not available. '
-    notify_me: "Keep me updated on this school, including when new data is published."
+    no_data_message: 'Currently, this information is not available. '
+    notify_me: "Update me when new information is published on this school's profile."
     Advanced courses: Advanced courses
     advanced_courses_subheading_html: A rigorous course load can help your student prepare for and get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/#Grade_and_rigorous_class">Learn more</a>.
     advanced_courses_tooltip: The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign languages compared to the state average.
     advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
+    advanced_courses_no_data: This section shows the advanced courses offered at this school and the level of student participation in these courses.
     general_information_tooltip: In this section, school administrators have provided general information about this school, like hours, enrollment, classes and extracurriculars.
     General Information: General information
     profile_data_sources_and_info: 'GreatSchools profile data sources &amp; information'

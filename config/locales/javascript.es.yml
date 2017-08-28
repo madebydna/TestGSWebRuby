@@ -51,6 +51,7 @@ es:
     State avg: Promedio del estado
     State average: Promedio del estado
     School value: Valor de la escuela
+    Race_ethnicity_no_data: Esta sección refleja cómo esta escuela trabaja con estudiantes de distintas razas y etnicidades.
     RE Test scores narration: >
       Esto muestra resultados de diferentes razas y etnicidades en un examen de {subject} dado a los estudiantes
       una vez al año. Grandes diferencias pueden sugerir que algunos grupos de estudiantes no están recibiendo el
@@ -66,6 +67,8 @@ es:
       <hr />
       <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
       <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a que los estudiantes con discapacidades obtengan resultados académicos exitosos.</p>
+    Low-income_students_no_data: Esta sección refleja cómo esta escuela trabaja con estudiantes de familias de bajos ingresos.
+    Students_with_Disabilities_no_data: Esta sección refleja cómo esta escuela trabaja con estudiantes con discapacidades.
     Test scores: 'Resultados de exámenes'
     Graduation rates: 'Índices de Graduación'
     'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
@@ -132,6 +135,7 @@ es:
     advanced_courses_subheading_html: Cursos riguroso también pueden ayudar a que tu estudiante se prepare y entre a la universidad.
     advanced_courses_tooltip: La Calificación de Cursos Avanzados refleja el número de cursos tomados por estudiantes de esta escuela en inglés, STEM, ciencias sociales y idiomas extranjeros, en comparación con el promedio estatal.
     advanced_courses_rating_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela, en comparación con el promedio estatal.
+    advanced_courses_no_data: Esta sección muestra los cursos avanzados que se ofrecen en esta escuela y el nivel de participación de los estudiantes en estos cursos.
     general_information_tooltip: En esta sección, los administradores de la escuela han proporcionado información general sobre esta escuela, como horas, inscripción, clases y actividades extracurriculares.
     General Information: Información general
     profile_data_sources_and_info: 'Las fuentes de datos y informacion de los perfiles de GreatSchools'

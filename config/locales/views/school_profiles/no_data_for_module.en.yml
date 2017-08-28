@@ -1,5 +1,20 @@
 en:
   school_profiles:
     no_data_for_module:
-      message: "This information is currently not available. "
-      call_to_action: "Keep me updated on this school, including when new data is published."
+      message: "Currently, this information is unavailable. "
+      message_test_scores_html: >
+        This section includes test score information by subject and grade.
+        <br></br>
+      message_college_readiness_html: >
+       This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
+       <br></br>
+      message_student_progress_html: >
+        This section shows how much academic progress (also called “growth”) students at this school are making given where they were last year, compared to similar students in the state.
+        <br></br>
+      message_academic_progress_html: >
+        This section looks at academic growth in this school by comparing year-over-year test scores by grade and subject at this school to all schools in the state.
+        <br></br>
+      message_teachers_and_staff_html: >
+        This section includes information about school staff, including the ratio of students to teachers, and teacher tenure and certification.
+        <br></br>
+      call_to_action: "Update me on when new information is published on this school's profile."

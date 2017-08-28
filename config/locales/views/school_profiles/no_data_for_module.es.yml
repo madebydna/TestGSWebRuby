@@ -1,5 +1,20 @@
 es:
   school_profiles:
     no_data_for_module:
-      message: "Esta información no está actualmente disponible. "
+      message: "Actualmente esta información no está disponible. "
+      message_test_scores_html: >
+              This section includes test score information by subject and grade.
+              <br></br>
+      message_college_readiness_html: >
+       This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
+       <br></br>
+      message_student_progress_html: >
+        This section shows how much academic progress (also called “growth”) students at this school are making given where they were last year, compared to similar students in the state.
+        <br></br>
+      message_academic_progress_html: >
+        This section looks at academic growth in this school by comparing year-over-year test scores by grade and subject at this school to all schools in the state.
+        <br></br>
+      message_academic_teachers_and_staff_html: >
+        Esta sección incluye información sobre el personal de la escuela, incluyendo el índice de estudiantes por maestro, y la antigüedad y certificación de los maestros.
+        <br></br>
       call_to_action: "Mantenganme informado en esta escuela, incluso cuando se publican nuevos datos."
