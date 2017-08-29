@@ -10,7 +10,7 @@ export default class TestScoreBarGraphWithGrades extends React.Component {
     breakdown: React.PropTypes.string.isRequired,
     score: React.PropTypes.number.isRequired,
     label: React.PropTypes.string.isRequired,
-    percentage: React.PropTypes.string,
+    percentage: React.PropTypes.number,
     display_percentages: React.PropTypes.bool,
     number_students_tested: React.PropTypes.number,
     state_average: React.PropTypes.number,

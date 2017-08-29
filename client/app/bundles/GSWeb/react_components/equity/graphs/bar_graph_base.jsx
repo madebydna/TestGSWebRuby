@@ -5,15 +5,10 @@ import SingleBarViz from './single_bar_viz';
 export default class BarGraphBase extends React.Component {
 
   static propTypes = {
-    breakdown: React.PropTypes.string.isRequired,
     score: React.PropTypes.number.isRequired,
     label: React.PropTypes.string.isRequired,
-    percentage: React.PropTypes.string,
-    display_percentages: React.PropTypes.bool,
-    number_students_tested: React.PropTypes.number,
     state_average: React.PropTypes.number,
-    state_average_label: React.PropTypes.string,
-    invertedRatings:  React.PropTypes.bool
+    state_average_label: React.PropTypes.string
   }
 
   constructor(props) {
