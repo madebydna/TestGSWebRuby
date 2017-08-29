@@ -3,6 +3,7 @@ import { create, assign } from 'lodash';
 // TODO: import Facebook methods
 import BaseModal from './base_modal';
 import { signinToFacebookThenGreatSchools } from '../../components/facebook_auth';
+import { runValidations as runFormValidations } from 'components/validating_forms';
 
 const JoinModal = function($, options) {
   BaseModal.call(this, $, options);
@@ -54,7 +55,7 @@ assign(JoinModal.prototype, {
         this.$getSigninSubmitButton().prop('disabled', false);
     },
 
-    submitSuccessHandler: function submitSuccessHandler(event, data, _, jqXHR) {
+    submitSuccessHandler: function submitSuccessHandler(data) {
         this.getDeferred().resolveWith(this, [data]);
         this.allowInteractions();
     },
@@ -70,14 +71,14 @@ assign(JoinModal.prototype, {
         this.allowInteractions();
     },
 
-     submitSignInFailHandler: function submitSignInFailHandler(event, jqXHR, options, data) {
+    submitSignInFailHandler: function submitSignInFailHandler(jqXHR) {
         var defaultMessage = 'There was an error signing into your account.';
         var inLineErrorMessage = this.getInLineErrorMessage(defaultMessage, jqXHR);
         jQuery('.js-signin-email-errors').html(inLineErrorMessage);
         this.allowInteractions();
     },
 
-    submitJoinFailHandler: function submitJoinFailHandler(event, jqXHR, options, data) {
+    submitJoinFailHandler: function submitJoinFailHandler(jqXHR) {
         var defaultMessage = 'There were was an error registering your account.';
         var inLineErrorMessage = this.getInLineErrorMessage(defaultMessage, jqXHR);
         jQuery('.js-join-email-errors').html(inLineErrorMessage);
@@ -100,18 +101,43 @@ assign(JoinModal.prototype, {
      });
     },
 
-    initializeForm: function initializeForm() {
-        this.$getJoinForm().parsley();
-        this.$getSigninForm().parsley();
+    joinSubmitHandler: function joinSubmitHandler(event) {
+      runFormValidations(event.currentTarget).
+        done(() => {
+          this.preventInteractions();
+          this.postJoinForm()
+            .done(this.submitSuccessHandler.bind(this))
+            .fail(this.submitJoinFailHandler.bind(this));
+        })
+      return false;
+    },
 
-        this.$getJoinForm().
-            on('submit', this.preventInteractions.bind(this)).
-            on('ajax:success', this.submitSuccessHandler.bind(this)).
-            on('ajax:error', this.submitJoinFailHandler.bind(this));
-        this.$getSigninForm().
-            on('submit', this.preventInteractions.bind(this)).
-            on('ajax:success', this.submitSuccessHandler.bind(this)).
-            on('ajax:error', this.submitSignInFailHandler.bind(this));
+    signinSubmitHandler: function signinSubmitHandler(event) {
+      runFormValidations(event.currentTarget).
+        done(() => {
+          this.preventInteractions();
+          this.postSigninForm()
+            .done(this.submitSuccessHandler.bind(this))
+            .fail(this.submitSignInFailHandler.bind(this));
+        })
+      return false;
+    },
+
+    postJoinForm: function postJoinForm() {
+      let data = this.$getJoinForm().serialize();
+      let action = this.$getJoinForm().attr('action');
+      return $.post(action, data);
+    },
+
+    postSigninForm: function postSigninForm() {
+      let data = this.$getSigninForm().serialize();
+      let action = this.$getSigninForm().attr('action');
+      return $.post(action, data);
+    },
+
+    initializeForm: function initializeForm() {
+        this.$getJoinForm().on('submit', this.joinSubmitHandler.bind(this));
+        this.$getSigninForm().on('submit', this.signinSubmitHandler.bind(this));
     },
 
     showJoinTab: function showJoinTab() {
