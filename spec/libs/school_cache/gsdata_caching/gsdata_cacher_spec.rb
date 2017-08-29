@@ -65,7 +65,6 @@ describe GsdataCaching::GsdataCacher do
       state_value: 1,
       district_value: 1,
       source_name: 'Sample Source',
-      source_year: 2014,
       source_date_valid: '20140101 00:00:00'
     }
   end

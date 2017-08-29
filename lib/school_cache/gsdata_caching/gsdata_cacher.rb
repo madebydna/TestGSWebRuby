@@ -100,7 +100,7 @@ class GsdataCaching::GsdataCacher < Cacher
     if discipline_quartile == '4' && discipline_subgroup_flag == '1'
       hash['Discipline Disparity Flag'] << {
           school_value: '1',
-          source_year: component_hash[161].first[:source_year],
+          source_date_valid: component_hash[161].first[:source_date_valid],
           source_name: component_hash[161].first[:source_name]
       }
     end
@@ -109,7 +109,7 @@ class GsdataCaching::GsdataCacher < Cacher
     if absence_quartile == '4' && absence_subgroup_flag == '1'
       hash['Absence Disparity Flag'] << {
           school_value: '1',
-          source_year: component_hash[162].first[:source_year],
+          source_date_valid: component_hash[162].first[:source_date_valid],
           source_name: component_hash[162].first[:source_name]
       }
     end
