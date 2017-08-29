@@ -25,6 +25,21 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.school_value.present? }.tap { |a| a.extend(CollectionMethods) }
     end
 
+    def having_no_breakdown_or_breakdown_in(breakdowns)
+      select { |dv| dv.breakdowns.blank? || Array.wrap(breakdowns).include?(dv.breakdowns) }
+        .tap { |a| a.extend(CollectionMethods) }
+    end
+
+    def having_breakdown_in(breakdowns)
+      select { |dv| Array.wrap(breakdowns).include?(dv.breakdowns) }
+        .tap { |a| a.extend(CollectionMethods) }
+    end
+
+    def remove_504_category_breakdown_from_each!
+      each(&:remove_504_category_breakdown!)
+        .tap { |a| a.extend(CollectionMethods) }
+    end
+
     def expect_only_one(message, other_helpful_vars)
       GSLogger.error(
         :misc,
@@ -50,5 +65,14 @@ class GsdataCaching::GsDataValue
 
   def source_year
     source_date_valid ? source_date_valid[0..3] : @source_year
+  end
+
+  def remove_504_category_breakdown!
+    if self.breakdowns.present?
+      self.breakdowns = 
+        breakdowns
+          .gsub('All students except 504 category,','')
+          .gsub(/,All students except 504 category$/,'')
+    end
   end
 end

@@ -94,7 +94,6 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:breakdowns] = breakdowns if breakdowns
       h[:breakdown_tags] = breakdown_tags if breakdown_tags
       h[:school_value] = result.value
-      h[:source_year] = result.date_valid.year
       h[:source_date_valid] = result.date_valid.strftime('%Y%m%d %T')
       h[:state_value] = state_value if state_value
       h[:district_value] = district_value if district_value
