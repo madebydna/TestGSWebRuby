@@ -40,7 +40,7 @@ export default class TestScores extends React.Component {
 
   duplicateBreakdowns(breakdowns){
     var initialCount = breakdowns.length;
-    var uniqueCount = uniq(breakdowns, 'breakdown').length;
+    let uniqueCount = uniq(breakdowns.map((data) => data['breakdown'])).length;
     return (initialCount > uniqueCount);
   }
 
