@@ -22,13 +22,14 @@ function anchorTokens() {
 }
 
 export function enableAutoAnchoring(map) {
-  addAnchorChangeCallback(() => disableAutoAnchoring());
+  addAnchorChangeCallback(scrollToAnchor);
+  addAnchorChangeCallback(disableAutoAnchoring);
   autoAnchoring = true;
   anchorMap = map;
   autoAnchorAttemptIntervalId = window.setInterval(attemptAutoAnchor, 100);
 }
 
-function disableAutoAnchoring(map) {
+function disableAutoAnchoring() {
   autoAnchoring = false;
   window.clearInterval(autoAnchorAttemptIntervalId);
 }

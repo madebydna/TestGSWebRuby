@@ -7,7 +7,7 @@ import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
 
-import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor, formatAnchorString } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
 
 export default class EquitySection extends React.Component {
 
@@ -64,17 +64,11 @@ export default class EquitySection extends React.Component {
 
   componentDidMount() {
     this.selectTabMatchingAnchor();
-    addAnchorChangeCallback(() => {
-      this.selectTabMatchingAnchor();
-      scrollToAnchor();
-    });
+    addAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
   componentWillUnmount() {
-    removeAnchorChangeCallback(() => {
-      this.selectTabMatchingAnchor();
-      scrollToAnchor();
-    });
+    removeAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
   selectSectionContent(section_content) {
