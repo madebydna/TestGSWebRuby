@@ -7,8 +7,6 @@ import 'jquery-unveil';
 import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';
-import '../vendor/parsley.remote';
-import '../vendor/parsley.es';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
@@ -39,6 +37,7 @@ import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor
 import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
+import * as validatingInputs from 'components/validating_inputs';
 
 window.store = getStore();
 
@@ -237,6 +236,8 @@ $(function() {
   $body.on('click', '#close-school-tour, .js-close-school-tour', function() {
     introJs.exit();
   });
+
+  validatingInputs.addFilteringEventListener('body');
 
 });
 
