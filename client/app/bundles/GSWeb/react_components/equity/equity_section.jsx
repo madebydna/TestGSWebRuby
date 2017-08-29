@@ -14,7 +14,7 @@ export default class EquitySection extends React.Component {
   static propTypes = {
     title: React.PropTypes.string,
     anchor: React.PropTypes.string,
-    subtitle: React.PropTypes.string,
+    subtitle: React.PropTypes.object,
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
