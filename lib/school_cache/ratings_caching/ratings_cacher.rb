@@ -11,12 +11,31 @@ class RatingsCaching::RatingsCacher < Cacher
       state: school.state,
       name: 'ratings'
     )
+    school_overall_rating = nil
     if current_ratings.present?
       json = (current_rating_hashes + historic_rating_hashes).to_json
       school_cache.update_attributes!(:value => json, :updated => Time.now)
-    elsif school_cache && school_cache.id.present?
-      SchoolCache.destroy(school_cache.id)
+      current_ratings.each do |h|
+        school_overall_rating = h.school_value_float.to_i if (
+          h.data_type_id == 174 &&
+          h.subject_id == 1 &&
+          h.breakdown_id == 1 &&
+          h.school_value_float.present?
+        )
+      end
+      replace_rating_into_school_metadata(school.id, school.state.downcase, school_overall_rating) if school_overall_rating.present?
+    else
+      delete_rating_row_from_school_metadata(school.id, school.state.downcase)
+      SchoolCache.destroy(school_cache.id) if (school_cache && school_cache.id.present?)
     end
+  end
+
+  def replace_rating_into_school_metadata(school_id, state, rating)
+    SchoolMetadata.on_db("#{state}_rw").where(school_id: school_id, meta_key: 'overallRating').first_or_create(meta_value: rating.to_s)
+  end
+
+  def delete_rating_row_from_school_metadata(school_id, state)
+    SchoolMetadata.on_db("#{state}_rw").where(school_id: school_id, meta_key: 'overallRating').delete_all
   end
 
   def current_ratings

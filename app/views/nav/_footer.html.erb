@@ -14,7 +14,7 @@
             <ul>
               <% t('.link_list_1')[:links].each do |link| %>
                 <li>
-                  <%= link_to(link[:text], link[:url] || send(link[:route] + '_path')) %>
+                  <%= link_to(link[:text], link[:url] || send(link[:route] + '_path', lang: nil)) %>
                 </li>
               <% end %>
             </ul>
@@ -25,7 +25,7 @@
               <li><a href="javascript:void(0)" class="js-send-me-updates-button-footer"><%= t('.newsletter') %></a></li>
               <% t('.link_list_2')[:links].each do |link| %>
                 <li>
-                  <%= link_to(link[:text], link[:url] || send(link[:route] + '_path')) %>
+                  <%= link_to(link[:text], link[:url] || send(link[:route] + '_path', lang: nil)) %>
                 </li>
               <% end %>
             </ul>
