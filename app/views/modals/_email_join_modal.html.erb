@@ -8,6 +8,7 @@
   <%= form_tag(
     register_email_path,
     method: :post,
+    remote: true,
     id: 'signup-school-form',
     'data-parsley-namespace'=>"data-parsley-"
   ) do %>

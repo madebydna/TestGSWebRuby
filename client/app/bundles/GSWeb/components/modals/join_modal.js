@@ -136,6 +136,10 @@ assign(JoinModal.prototype, {
     },
 
     initializeForm: function initializeForm() {
+        this.$getJoinForm().data('remote', 'false');
+        this.$getSigninForm().data('remote', 'false');
+        this.$getJoinForm().removeAttr('data-remote');
+        this.$getSigninForm().removeAttr('data-remote');
         this.$getJoinForm().on('submit', this.joinSubmitHandler.bind(this));
         this.$getSigninForm().on('submit', this.signinSubmitHandler.bind(this));
     },

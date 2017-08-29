@@ -147,6 +147,8 @@ assign(EmailJoinModal.prototype, {
   },
 
   initializeForm: function initializeForm() {
+    this.$getJoinForm().data('remote', 'false');
+    this.$getJoinForm().removeAttr('data-remote');
     return this.$getJoinForm().on('submit', this.joinSubmitHandler.bind(this));
   },
 
