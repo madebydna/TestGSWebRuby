@@ -10,7 +10,7 @@ module Feeds
       @schema = schema
       @feed_file_path = feed_file_path
       within_root_node do
-q        # Generate state-feed data tag
+        # Generate state-feed data tag
         state_feed.state_result { |data| write_xml_tag(data, 'state-feed') }
         # Generate District Info
         district_feed.each_result { |data| write_xml_tag(data, 'district') }
