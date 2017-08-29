@@ -5,12 +5,13 @@
     {
       id: "join-email",
       placeholder: "#{t('email address', scope: 'forms')}",
-      class: 'js-join-email',
+      class: 'js-join-email js-validating-input',
       'data-parsley-required' => "true",
       'data-parsley-type' => "email",
       'data-parsley-trigger' => "change",
       'data-parsley-required-message' => t('parsley_required_message', scope: 'forms'),
-      'data-parsley-error-container' => ".js-join-email-errors"
+      'data-parsley-error-container' => ".js-join-email-errors",
+      'data-async-validations' => 'emailRequired,emailFormat'
     }
   ) %>
 <div class="js-join-email-errors"></div>

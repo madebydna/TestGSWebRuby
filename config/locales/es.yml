@@ -35,6 +35,8 @@ es:
         login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de inscribirse en el boletín de GreatSchool
       greatnews:
         login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de inscribirse en el boletín de GreatSchool
+      sponsor:
+        login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de seguir esta escuela.
       mystat:
         login_required: Por favor Inicie sesión o registro de su correo electrónico con el fin de seguir esta escuela.
       mystat_private:

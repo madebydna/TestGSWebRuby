@@ -1,6 +1,7 @@
 import BaseModal from './base_modal';
 import { sponsorsSignUp } from '../../util/newsletters';
 import { create, assign, merge } from 'lodash';
+import { runValidations as runFormValidations } from 'components/validating_forms';
 
 const EmailJoinModal = function($, options) {
   // Call BaseModal's constructor first, using this modal as the context
@@ -59,7 +60,10 @@ assign(EmailJoinModal.prototype, {
 
   signUpForSponsorsList: function signUpForSponsorsList() {
     if (this.shouldSignUpForSponsor()) {
-      return sponsorsSignUp(this.getModalData());
+      return sponsorsSignUp(this.getModalData()).then(
+        (data) => data.responseJSON || data,
+        (data) => data.responseJSON || data
+      );
     } else {
       return $.when();
     }
@@ -84,16 +88,16 @@ assign(EmailJoinModal.prototype, {
     }
   },
 
-  submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
+  submitSuccessHandler: function submitSuccessHandler(data) {
     var _this = this;
 
     $.when(
       this.signUpForSponsorsList(),
       this.createStudents()
     ).done(function(data1, data2) {
-      _this.getDeferred().resolve(merge({}, jqXHR, data1, data2, _this.getModalData()));
+      _this.getDeferred().resolve(merge({}, data, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {
-      _this.getDeferred().reject(merge({}, jqXHR, data1, data2, _this.getModalData()));
+      _this.getDeferred().reject(merge({}, data, data1, data2, _this.getModalData()));
     });
 
     this.allowInteractions();
@@ -120,18 +124,32 @@ assign(EmailJoinModal.prototype, {
     }
   },
 
-  submitFailHandler: function submitFailHandler(event, jqXHR, options, data) {
-    this.getDeferred().rejectWith(this, [jqXHR]);
+  joinSubmitHandler: function joinSubmitHandler(event) {
+    runFormValidations(event.currentTarget).
+      done(() => {
+        this.preventInteractions();
+        this.postJoinForm()
+          .done(this.submitSuccessHandler.bind(this))
+          .fail(this.submitFailHandler.bind(this));
+      })
+    return false;
+  },
+
+  postJoinForm: function postJoinForm() {
+    let data = this.$getJoinForm().serialize();
+    let action = this.$getJoinForm().attr('action');
+    return $.post(action, data);
+  },
+
+  submitFailHandler: function submitFailHandler(data) {
+    this.getDeferred().reject(data);
     this.allowInteractions();
   },
 
   initializeForm: function initializeForm() {
-    this.$getJoinForm().parsley();
-
-    return this.$getJoinForm().
-      on('submit', this.preventInteractions.bind(this)).
-      on('ajax:success', this.submitSuccessHandler.bind(this)).
-      on('ajax:error', this.submitFailHandler.bind(this));
+    this.$getJoinForm().data('remote', 'false');
+    this.$getJoinForm().removeAttr('data-remote');
+    return this.$getJoinForm().on('submit', this.joinSubmitHandler.bind(this));
   },
 
   initialize: function initialize() {
