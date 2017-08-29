@@ -112,7 +112,7 @@ module Feeds
     def self.characteristics_format(characteristics_data_set, universal_id)
       characteristics_data_set.map do | cds |
         build_data(cds.first, cds.second, universal_id)
-      end.flatten
+      end.flatten if characteristics_data_set
     end
 
     def self.build_data(key, data, universal_id)
