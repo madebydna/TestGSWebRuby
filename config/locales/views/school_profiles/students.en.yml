@@ -2,6 +2,9 @@ en:
   school_profiles:
     students:
       title: Students
+      no_data_html: >
+        This section includes information about student demographics at this school.
+        <br></br>
       subtitle_html: Studies show that diversity in school leads to long-term benefits for students. <a href="/gk/articles/why-diversity-in-classrooms-matters/" target="_blank">Discover why!</a>
       source: Source
       sources: Sources

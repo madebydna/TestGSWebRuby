@@ -100,27 +100,30 @@ export default class SchoolProfileComponent extends React.Component {
     let sectionConfig = {
       title: this.props.title,
       anchor: this.props.anchor,
-      subtitle: <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />,
+      subtitle: function(){
+        if (this.props.subtitle.length > 0) {
+          return <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />
+        } else return "";
+      },
       rating: this.props.rating,
       info_text: this.props.info_text,
       icon_classes: this.props.icon_classes
     };
 
-    // let sectionContent = this.props.data.map(subjectProps => {
-    //   let data = subjectProps.data || [];
-    //   let content = data.map(({title, anchor, type, values, narration} = {}) => {
-    //     return this.subjectConfig(title, anchor, type, values, narration);
-    //   })
-    //   if (content.length > 0) {
-    //     return { ...subjectProps, content: content };
-    //   }
-    // }).filter(o => o != null);
-    let sectionContent = {};
+    let sectionContent = this.props.data.map(subjectProps => {
+      let data = subjectProps.data || [];
+      let content = data.map(({title, anchor, type, values, narration} = {}) => {
+        return this.subjectConfig(title, anchor, type, values, narration);
+      })
+      if (content.length > 0) {
+        return { ...subjectProps, content: content };
+      }
+    }).filter(o => o != null);
 
     if(sectionContent.length > 0) {
       sectionConfig['section_content'] = sectionContent;
     } else {
-      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} message={this.props.anchor + '_no_data'} />
+      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} />
     }
 
     return sectionConfig;

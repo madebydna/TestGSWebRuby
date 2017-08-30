@@ -9,7 +9,7 @@ const followSchoolForDataUpdates = function (event) {
 
 const NoDataModuleCta = ({moduleName, message}) => (
   <div className="ptm">
-    <span className="no-data" dangerouslySetInnerHTML={{__html: t(message)}} />
+    <span className="no-data" dangerouslySetInnerHTML={{__html: message}} />
     <div className="ptm">
       <span className="no-data ptm" dangerouslySetInnerHTML={{__html: t('no_data_message')}} />
       <a href="javascript:void(0)"

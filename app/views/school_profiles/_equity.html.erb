@@ -30,6 +30,7 @@
                           sources: equity.sources,
                           data: equity.race_ethnicity_props,
                           faq: equity.faq_race_ethnicity,
+                          no_data_summary: t('.Race ethnicity no data'),
                           qualaroo_module_link: equity.qualaroo_module_link(:race_ethnicity) })%>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Low-income students'),
@@ -42,6 +43,7 @@
                           rating: equity.rating_low_income,
                           data: equity.low_income_section_props,
                           faq: equity.faq_low_income,
+                          no_data_summary: t('.Low income no data'),
                           qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
       <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Students with Disabilities'),
@@ -53,7 +55,9 @@
                           sources: equity.sources,
                           data: equity.students_with_disabilities_section_props,
                           faq: equity.faq_disabilities,
+                          no_data_summary: t('.Disabilities no data'),
                           qualaroo_module_link: equity.qualaroo_module_link(:students_with_disabilities)})  %>
+
     </div>
   </div>
 </div>

@@ -1,23 +1,9 @@
 <% title %>
-<% if title == 'Test scores'%>
-    <% message = t('.message_test_scores_html')%>
-<% elsif title == 'Student progress'%>
-    <% message = t('.message_college_readiness_html')%>
-<% elsif title == 'College readiness' %>
-    <% message = t('.message_college_readiness_html')%>
-<% elsif title == 'Academic progress' %>
-    <% message = t('.message_academic_progress_html')%>
-<% elsif title == 'Teachers & staff' %>
-    <% message = t('.message_teachers_and_staff_html')%>
-<% else %>
-    <% GSLogger.warn(:misc, nil, message: 'Module without data cannot be matched to a translation. Did someone change the module title?') %>
-    <% message = ''%>
-<% end %>
-<% call_to_action = t('.call_to_action') %>
 <div class="ptm">
-  <span class="no-data"><%= message %> </span><span class="no-data"><%=t('.message')%></span><a href="javascript:void(0)" class="js-followThisSchool js-gaClick"
+  <%# no_data_summary is customized for each module (see no_data_html in the module's yml file) %>
+  <span class="no-data"><%= no_data_summary %> </span><span class="no-data"><%=t('.message')%></span><a href="javascript:void(0)" class="js-followThisSchool js-gaClick"
                                                  data-ga-click-category='Profile'
                                                  data-ga-click-action='Notify from empty data module'
-                                                 data-ga-click-label='<%= title %>'><%= call_to_action %></a>
+                                                 data-ga-click-label='<%= title %>'><%= t('.call_to_action') %></a>
 </div>
 

@@ -14,13 +14,14 @@ export default class EquitySection extends React.Component {
   static propTypes = {
     title: React.PropTypes.string,
     anchor: React.PropTypes.string,
-    subtitle: React.PropTypes.string,
+    subtitle: React.PropTypes.func,
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
     rating: React.PropTypes.number,
     message: React.PropTypes.string,
     qualaroo_module_link: React.PropTypes.string,
+    no_data_summary: React.PropTypes.string,
     section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
       subject: React.PropTypes.string,
       component: React.PropTypes.object,
