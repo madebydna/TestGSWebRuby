@@ -102,17 +102,21 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
       if result.data_type_id == 158 # equity rating
-        h[:description] = source_description_and_methodology_values('whats_this_equity')
-        h[:methodology] = source_description_and_methodology_values('footnote_equity')
+        h[:description] = description('equity')
+        h[:methodology] = methodology('equity')
       elsif result.data_type_id == 159 # academic progress rating
-        h[:description] = source_description_and_methodology_values('whats_this_academic_progress')
-        h[:methodology] = source_description_and_methodology_values('footnote_academic_progress')
+        h[:description] = description('academic_progress')
+        h[:methodology] = methodology('academic_progress')
       end
     end
   end
 
-  def source_description_and_methodology_values(key)
-    data_description_value(key + "#{school.state}") || data_description_value(key)
+  def description(name)
+    data_description_value("whats_this_#{name}#{school.state}") || data_description_value("whats_this_#{name}")
+  end
+
+  def methodology(name)
+    data_description_value("footnote_#{name}#{school.state}") || data_description_value("footnote_#{name}")
   end
 
   def validate_result_hash(result_hash, data_type_id)
