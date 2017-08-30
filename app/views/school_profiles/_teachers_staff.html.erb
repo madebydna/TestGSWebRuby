@@ -1,37 +1,35 @@
 <% teachers_staff %>
 <% data_values = teachers_staff.data_values %>
-<% content = teachers_staff.sources %>
 <% initial_size = 3 %>
-<% analytics_id = 'TeachersStaff' %>
-<% analytics_id += '-empty' unless data_values.present? %>
+<% title = t('.title') %>
 
-<div id="<%= analytics_id %>" class="teachers-staff" data-ga-click-label="Teachers and staff">
-  <a class="anchor-mobile-offset" name="Teachers_staff"></a>
-  <div class="rating-container__rating">
-    <div class="module-header">
-      <div class="circle-rating--equity-blue circle-rating--medium">
-        <span class="icon-user"></span>
-      </div>
-      <div class="title-container">
-        <span class="title"><%= t('.title') %></span></br>
-        <span><%= t('.subtitle_html') %></span>
-        <%= render 'no_data_for_module', title: t('.title') unless data_values.present? %>
-      </div>
+<% content_for(:header, flush: true) do %>
+  <div class="module-header">
+    <div class="circle-rating--equity-blue circle-rating--medium">
+      <span class="icon-user"></span>
+    </div>
+    <div class="title-container">
+      <span class="title"><%= title %></span></br>
+      <span><%= t('.subtitle_html') %></span>
+      <%= render 'no_data_for_module', title: title unless data_values.present? %>
     </div>
   </div>
-  <% if data_values.present? %>
-    <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+<% end %>
 
-    <% if data_values.size > initial_size %>
-        <div class="rating-container__more-items">
-          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Teachers Staff', suffix: t('.title') }  do %>
-              <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
-          <% end %>
-        </div>
-    <% end %>
-    <div>
-      <%= render 'sources_link_to_modal', content: content %>
-      <%= render 'module_feedback', content: teachers_staff.qualaroo_module_link %>
+<%= render layout: 'basic_data_module_layout', locals: {
+  has_data: data_values.present?,
+  name: 'Teachers staff',
+  css_class: 'teachers-staff',
+  ga_click_label: 'Teachers and staff',
+  sources_link: teachers_staff.sources,
+  qualaroo_link: teachers_staff.qualaroo_module_link
+} do %>
+  <%= render partial: 'rating_score_item', collection: data_values.take(initial_size), as: :score_data %>
+  <% if data_values.size > initial_size %>
+    <div class="rating-container__more-items">
+      <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Teachers Staff', suffix: title }  do %>
+        <% render partial: 'rating_score_item', collection: data_values[initial_size..-1], as: :score_data %>
+      <% end %>
     </div>
   <% end %>
-</div>
+<% end %>

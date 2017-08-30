@@ -7,13 +7,9 @@
 <% data_values = test_scores.subject_scores || [] %>
 <% initial_size = 3 %>
 <% content = test_scores.sources %>
-<% analytics_id = 'TestScores' %>
-<% analytics_id += '-empty' unless data_values.present? %>
 <% narration = test_scores.narration %>
 
-<div id="<%= analytics_id %>" class="rating-container rs-test-scores" data-ga-click-label="Test scores">
-  <a class="anchor-mobile-offset" name="Test_scores"></a>
-  <div class="rating-container__rating js-historical-module">
+<% content_for(:header, flush: true) do %>
     <%= render "module_header",
       circle_color_modifier: rating,
       circle_content: rating,
@@ -23,54 +19,53 @@
       has_data: data_values.present?,
       show_historical_ratings: test_scores.show_historical_ratings?
     %>
+<% end %>
 
+<% content_for(:historical_ratings, flush: true) do %>
     <%=
       if test_scores.show_historical_ratings?
         render 'historical_ratings', historical_ratings: test_scores.historical_ratings,
                title: t('.historical.title'), subtitle: t('.historical.subtitle')
       end
     %>
+<% end %>
 
+<%= render layout: 'basic_data_module_layout', locals: {
+  has_data: data_values.present?,
+  name: 'Test scores',
+  sources_link: test_scores.sources,
+  qualaroo_link: qualaroo_module_link,
+  narration: narration
+} do %>
   <% subjects = data_values.map(&:label) %>
   <% total_items = data_values.size %>
   <% last_test_name = nil %>
 
   <% render_test_names = subjects.uniq.size < subjects.size %>
+
   <% if data_values.present? %>
-    <div class="panel">
-      <% if narration %>
-        <div class="auto-narration"><%= narration %></div>
-      <% end %>
-      <% data_values.take(initial_size).each do |data_value| %>
-        <% if render_test_names && last_test_name != data_value.test_label %>
-          <div class="item-heading"><%= data_value.test_label %></div>
-        <% end %>
-
-        <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
-        <% last_test_name = data_value.test_label %>
+    <% data_values.take(initial_size).each do |data_value| %>
+      <% if render_test_names && last_test_name != data_value.test_label %>
+        <div class="item-heading"><%= data_value.test_label %></div>
       <% end %>
 
-      <% if total_items > initial_size %>
-        <div class="rating-container__more-items">
-          <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores', suffix: t('lib.test_scores.Test scores') } do %>
-            <% data_values.drop(initial_size).each do |data_value| %>
-              <% if render_test_names && last_test_name != data_value.test_label %>
-                <div class="item-heading"><%= data_value.test_label %></div>
-              <% end %>
-              <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
-              <% last_test_name = data_value.test_label %>
+      <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
+      <% last_test_name = data_value.test_label %>
+    <% end %>
+
+    <% if total_items > initial_size %>
+      <div class="rating-container__more-items">
+        <%= render layout:'drawer', locals: { :ga_category => 'Profile', :ga_label => 'Test Scores', suffix: t('lib.test_scores.Test scores') } do %>
+          <% data_values.drop(initial_size).each do |data_value| %>
+            <% if render_test_names && last_test_name != data_value.test_label %>
+              <div class="item-heading"><%= data_value.test_label %></div>
             <% end %>
+            <%= render partial: 'single_score_display', locals: { score_data: data_value } %>
+            <% last_test_name = data_value.test_label %>
           <% end %>
-        </div>
-      <% end %>
-      <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
-    </div>
-    <div class="module-footer">
-      <% if data_values.present? %>
-        <%= render 'sources_link_to_modal', content: content %>
-        <%= render 'module_feedback', content: qualaroo_module_link %>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= render partial: 'info_text_and_circle', locals: {cta: test_scores.faq.cta, content: test_scores.faq.content } if data_values.present? %>
   <% end %>
-  </div>
-</div>
+<% end %>

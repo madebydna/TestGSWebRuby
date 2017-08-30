@@ -1,34 +1,18 @@
-<% title = t('lib.equity_overview.title') %>
-<% rating = equity_overview.equity_rating %>
-<% info_text = equity_overview.info_text  %>
-<% narration = equity_overview.narration %>
-<% sources = equity_overview.equity_overview_sources %>
-<% analytics_id = 'EquityOverview' %>
+<% content_for(:header, flush: true) do %>
+  <%= render 'module_header',
+    circle_color_modifier: equity_overview.equity_rating,
+    circle_content: equity_overview.equity_rating,
+    title: t('lib.equity_overview.title'),
+    info_text: equity_overview.info_text,
+    has_data: true
+  %>
+<% end %>
 
-<div id="<%= analytics_id %>" class="rating-container rs-equity_overview" data-ga-click-label="Equity overview">
-  <a class="anchor-mobile-offset" name="Equity_overview"></a>
-  <div class="rating-container__rating">
-    <%= render 'module_header',
-               circle_color_modifier: rating,
-               circle_content: rating,
-               title: title,
-               info_text: info_text,
-               has_data: true
-
-    %>
-
-    <div class="panel">
-      <div class="auto-narration">
-        <%= narration %>
-      </div>
-    </div>
-
-    <div class="module-footer">
-      <%= render 'sources_link_to_modal', content: sources %>
-      <%= render 'module_feedback', content: equity_overview.qualaroo_module_link(:equity_overview) %>
-    </div>
-
-  </div>
-
-
-</div>
+<%= render layout: 'basic_data_module_layout', locals: {
+  has_data: true,
+  name: 'Equity overview',
+  sources_link: equity_overview.equity_overview_sources,
+  qualaroo_link: equity_overview.qualaroo_module_link(:equity_overview),
+  narration: equity_overview.narration
+} do %>
+<% end %>

@@ -4,39 +4,32 @@
 <% info_text = student_progress.info_text  %>
 <% narration = student_progress.narration %>
 <% sources = student_progress.sources %>
-<% analytics_id = 'StudentProgress' %>
-<% analytics_id += '-empty' unless student_progress.has_data? %>
 
-<div id="<%= analytics_id %>" class="rating-container rs-student_progress" data-ga-click-label="Student progress">
-  <a class="anchor-mobile-offset" name="Student_progress"></a>
-  <div class="rating-container__rating js-historical-module">
-    <%= render 'module_header',
-               circle_color_modifier: rating,
-               circle_content: rating,
-               title: title,
-               info_text: info_text,
-               has_data: student_progress.has_data?,
-               show_historical_ratings: student_progress.show_historical_ratings?
-    %>
+<% content_for(:header, flush: true) do %>
+  <%= render 'module_header',
+    circle_color_modifier: rating,
+    circle_content: rating,
+    title: title,
+    info_text: info_text,
+    has_data: student_progress.has_data?,
+    show_historical_ratings: student_progress.show_historical_ratings?
+  %>
+<% end %>
 
-    <%=
-      if student_progress.show_historical_ratings?
-        render 'historical_ratings', historical_ratings: student_progress.historical_ratings,
-               title: t('.historical.title'), subtitle: t('.historical.subtitle')
-      end
-    %>
+<% content_for(:historical_ratings, flush: true) do %>
+  <%=
+    if student_progress.show_historical_ratings?
+      render 'historical_ratings', historical_ratings: student_progress.historical_ratings,
+        title: t('.historical.title'), subtitle: t('.historical.subtitle')
+    end
+  %>
+<% end %>
 
-    <% if student_progress.has_data? %>
-      <div class="panel">
-        <div class="auto-narration">
-          <%= narration %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <% if student_progress.has_data? %>
-    <%= render 'sources_link_to_modal', content: sources %>
-    <%= render 'module_feedback', content: student_progress.qualaroo_module_link %>
-  <% end %>
-</div>
+<%= render layout: 'basic_data_module_layout', locals: {
+  has_data: student_progress.has_data?,
+  name: 'Student progress',
+  sources_link: student_progress.sources,
+  qualaroo_link: student_progress.qualaroo_module_link,
+  narration: narration
+} do %>
+<% end %>

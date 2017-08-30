@@ -1,0 +1,34 @@
+<% has_data %>
+<% name %>
+<% analytics_id ||= name.gs_capitalize_words.gsub(' ', '') %>
+<% analytics_id += '-empty' unless has_data %>
+<% css_class ||= "rs-#{name.gsub(' ', '-').downcase}" %>
+<% ga_click_label ||= name %>
+<% anchor ||= name.gsub(' ', '_') %>
+<% qualaroo_link %>
+
+<div id="<%= analytics_id %>" class="rating-container <%= css_class %>" data-ga-click-label="<%= ga_click_label%>">
+  <a class="anchor-mobile-offset" name="<%= anchor %>"></a>
+  <div class="rating-container__rating js-historical-module">
+    <% if content_for? :header %>
+      <%= yield :header %>
+    <% end %>
+
+    <% if content_for :historical_ratings %>
+      <%= yield :historical_ratings %>
+    <% end %>
+
+    <% if has_data %>
+      <div class="panel">
+        <% if local_assigns[:narration] && narration.present? %>
+          <div class="auto-narration"><%= narration %></div>
+        <% end %>
+        <%= yield %>
+      </div>
+      <div class="module-footer">
+        <%= render 'sources_link_to_modal', content: sources_link if local_assigns[:sources_link] %>
+        <%= render 'module_feedback', content: qualaroo_link %>
+      </div>
+    <% end %>
+  </div>
+</div>
