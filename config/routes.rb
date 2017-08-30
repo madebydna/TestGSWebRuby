@@ -294,6 +294,9 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     resources :data_load_schedules, path: '/data-planning'
+
+    get '/duplicate-membership', to: 'osp_demigod#show'
+    post '/duplicate-membership', to: 'osp_demigod#create'
   end
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
