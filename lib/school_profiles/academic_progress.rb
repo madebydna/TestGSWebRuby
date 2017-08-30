@@ -9,7 +9,7 @@ module SchoolProfiles
     end
 
     def qualaroo_module_link(module_sym)
-      qualaroo_iframe(module_sym, @school_cache_data_reader.school.state, @school_cache_data_reader.school.id.to_s)
+      qualaroo_iframe(module_sym, @school.state, @school.id.to_s)
     end
 
     def academic_progress_rating
@@ -78,11 +78,9 @@ module SchoolProfiles
       content << '<h1>' + static_label('sources_title') + '</h1>'
       content << '<div>'
       content << '<h4>' + static_label('Great schools rating') + '</h4>'
-      if description || methodology
-        content << "<p>#{description}</p>" if description
-        content << "<p>#{methodology}</p>" if methodology
-      end
-      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + '</p>'
+      content << "<p>#{description}</p>" if description
+      content << "<p>#{methodology}</p>" if methodology
+      content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + '</p>'
       content << '</div>'
       content << '</div>'
     end
@@ -114,8 +112,8 @@ module SchoolProfiles
                                    .expect_only_one(
                                        'Academic Progress Rating',
                                        school: {
-                                           state: @school_cache_data_reader.school.state,
-                                           id: @school_cache_data_reader.school.id
+                                           state: @school.state,
+                                           id: @school.id
                                        }
                                    )
       end

@@ -3,6 +3,7 @@
   $color_negative: #cb5c35;
   $color_neutral: #ab8f0e;
   $color_positive: #367a1e;
+  $color_gray_bar: #edf2f5;
 
   font-size: 16px;
 
@@ -38,7 +39,7 @@
   }
 
   .side-bar {
-    border-left: 5px #edf2f5 solid;
+    border-left: 5px $color_gray_bar solid;
     padding-left: 20px;
   }
 }
