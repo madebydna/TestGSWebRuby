@@ -77,12 +77,6 @@
         border-bottom-left-radius: 4px;
       }
 
-      .icon-flag {
-        &.red {
-          color: #ff3f2b;
-        }
-        margin-left: 5px;
-      }
     }
 
     .sub-tab-selected {
@@ -225,6 +219,13 @@
     @include media-breakpoint-up(lg) {
       display: block;
       height: 120px;
+    }
+  }
+
+  .icon-flag {
+    margin-left: 5px;
+    &.red {
+      color: #ff3f2b;
     }
   }
 }
