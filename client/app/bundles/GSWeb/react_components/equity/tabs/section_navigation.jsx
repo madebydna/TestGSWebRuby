@@ -23,8 +23,8 @@ export default class SectionNavigation extends React.Component {
                 data-ga-click-action={this.googleTrackingAction()}
                 data-ga-click-label={item.title}>
         {item.title}
-      </a>
         {this.addFlag(flagged)}
+      </a>
         {this.addDivider(index)}</div>;
     }.bind(this));
     if(items != undefined ) return <div className="clearfix space-below">{items}</div>;
@@ -39,7 +39,7 @@ export default class SectionNavigation extends React.Component {
 
   addFlag(flag) {
     if (flag === true) {
-      return <span className="indicator-box red"><span className="icon-flag"/></span>
+      return <span className="red icon-flag"/>
     }
   }
 
