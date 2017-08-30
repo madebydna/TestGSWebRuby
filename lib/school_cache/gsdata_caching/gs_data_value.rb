@@ -21,6 +21,10 @@ class GsdataCaching::GsDataValue
       select { |dv| dv.breakdowns.nil? }.tap { |a| a.extend(CollectionMethods) }
     end
 
+    def having_one_breakdown
+      select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.tap { |a| a.extend(CollectionMethods) }
+    end
+
     def having_school_value
       select { |dv| dv.school_value.present? }.tap { |a| a.extend(CollectionMethods) }
     end
