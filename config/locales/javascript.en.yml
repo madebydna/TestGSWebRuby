@@ -51,7 +51,6 @@ en:
     State avg: 'State avg:'
     State average: State average
     School value: School value
-    Race_ethnicity_no_data: This section reflects how well this school serves students from different races and ethnicities.
     RE Test scores narration: >
       This shows results across different races/ethnicities on {subject} test given to students once a year. Big
       differences may suggest that some student groups are not getting the support they need to succeed.
@@ -66,8 +65,6 @@ en:
       <hr />
       <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
       <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
-    Low-income_students_no_data: This section reflects how well this school serves students from low-income families.
-    Students_with_Disabilities_no_data: This section reflects how well this school serves students with disabilities.
     Test scores: Test scores
     Graduation rates: Graduation rates
     'UC/CSU eligibility': 'UC/CSU eligibility'
