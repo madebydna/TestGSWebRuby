@@ -4,16 +4,12 @@
 <% title = t('.title') %>
 
 <% content_for(:header, flush: true) do %>
-  <div class="module-header">
-    <div class="circle-rating--equity-blue circle-rating--medium">
-      <span class="icon-user"></span>
-    </div>
-    <div class="title-container">
-      <span class="title"><%= title %></span></br>
-      <span><%= t('.subtitle_html') %></span>
-      <%= render 'no_data_for_module', title: title unless data_values.present? %>
-    </div>
-  </div>
+  <%= render "module_header",
+    icon: 'user',
+    title: title,
+    subtitle: t('.subtitle_html'),
+    has_data: data_values.present?
+  %>
 <% end %>
 
 <%= render layout: 'basic_data_module_layout', locals: {

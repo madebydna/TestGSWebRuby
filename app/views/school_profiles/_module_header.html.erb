@@ -1,5 +1,4 @@
- <% circle_color_modifier %>
- <% circle_content  %>
+ <% rating ||= nil %>
  <% title %>
  <% subtitle ||= nil %>
  <% info_text = info_text || nil %>
@@ -10,15 +9,15 @@
  <div class="module-header">
    <div class="row">
      <div class="col-xs-12 <%= columns_historical %>">
-     <% unless circle_content.nil? || circle_content == 'NR' %>
-         <div class="circle-rating--<%= circle_color_modifier %> circle-rating--medium">
-           <%= circle_content %><span class="rating-circle-small">/10</span>
+       <% if rating.present? && rating != 'NR' %>
+         <div class="circle-rating--<%= rating %> circle-rating--medium">
+           <%= rating %><span class="rating-circle-small">/10</span>
          </div>
-     <% else %>
+       <% elsif icon %>
          <div class="circle-rating--equity-blue circle-rating--medium">
-           <span class="icon-user"></span>
+           <span class="icon-<%= icon %>"></span>
          </div>
-     <% end %>
+       <% end %>
        <div class="title-container">
          <div>
            <span class="title">

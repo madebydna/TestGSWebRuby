@@ -1,7 +1,6 @@
 <% content_for(:header, flush: true) do %>
   <%= render 'module_header',
-    circle_color_modifier: equity_overview.equity_rating,
-    circle_content: equity_overview.equity_rating,
+    rating: equity_overview.equity_rating,
     title: t('lib.equity_overview.title'),
     info_text: equity_overview.info_text,
     has_data: true
