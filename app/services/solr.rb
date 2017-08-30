@@ -6,10 +6,11 @@ class Solr
   def initialize(options = {})
     if options[:state_short].present? && options[:collection_id].present?
       @state_short, @collection_id = options[:state_short], options[:collection_id]
-      @connection = RSolr.connect(url: ENV_GLOBAL['solr.ro.server.url'])
-    else
-      @connection = RSolr.connect(url: ENV_GLOBAL['solr.ro.server.url'])
     end
+    open_timeout = ENV_GLOBAL['solr.ro.timeout.open'] || 10
+    read_timeout = ENV_GLOBAL['solr.ro.timeout.read'] || 10
+    @connection = RSolr.connect(url: ENV_GLOBAL['solr.ro.server.url'],
+                                open_timeout: open_timeout, read_timeout: read_timeout)
   end
 
   def school_name_suggest(options)
