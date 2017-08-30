@@ -2,9 +2,9 @@
   <%=	 image_tag 'school_profiles/owl.png' %> &nbsp;
   <% (0...@pagination_link_count).each do |page_num| %>
     <% if page_num == (params[:start].to_i)/10 %>
-      <%= link_to page_num, "/admin/osp-moderation?start=#{page_num*10}", {style: 'font-size: 20px; margin-right: 4px; color: red;'}%>
+      <%= link_to page_num + 1, "/admin/osp-moderation?start=#{page_num*10}", {style: 'font-size: 20px; margin-right: 4px; color: red;'}%>
     <% else %>
-      <%= link_to page_num, "/admin/osp-moderation?start=#{page_num*10}", {style: 'font-size: 20px; margin-right: 4px;'}%>
+      <%= link_to page_num + 1, "/admin/osp-moderation?start=#{page_num*10}", {style: 'font-size: 20px; margin-right: 4px;'}%>
     <% end %>
   <% end %>
   &nbsp;

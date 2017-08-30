@@ -1,4 +1,5 @@
 class EspMembership < ActiveRecord::Base
+  include PhotoUploadConcerns
 
   self.table_name = 'esp_membership'
 
@@ -24,6 +25,34 @@ class EspMembership < ActiveRecord::Base
 
   def provisional?
     status == 'provisional'
+  end
+
+  def approve_provisional_osp_user_data
+    osp_form_responses = OspFormResponse.where(esp_membership_id: id)
+    osp_form_responses.each do |osp_form_response|
+      create_update_queue_row!(osp_form_response.response)
+    end
+    approve_all_images_for_member(id)
+    EspMembership.find_by(id: id, status: 'approved', active: true).tap do |em|
+      SchoolUser.make_from_esp_membership(em) if em
+    end
+  end
+
+  def create_update_queue_row!(response_blob)
+    begin
+      error = UpdateQueue.create(
+        source: :osp_form,
+        priority: 2,
+        update_blob: response_blob
+      ).errors.full_messages
+
+      GSLogger.error(:osp, nil, vars: params, message: "Didnt save osp response to update_queue table #{[*error].first}") if error.present?
+      error
+
+    rescue => error
+      GSLogger.error(:osp, error, vars: params, message: 'Didnt save osp response to update_queue table')
+      error.presence || ["An error occured"]
+    end
   end
 
 end

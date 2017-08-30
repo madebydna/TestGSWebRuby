@@ -18,12 +18,16 @@
     <tbody>
       <% @osp_memberships.each do |_osp| %>
         <% osp = OspModerationDecorator.decorate(_osp)%>
-        <tr style="background: <%= osp.highlight_color(@osp_memberships)%>">
+        <% highlight = osp.highlight_color%>
+        <tr>
+        <% if highlight %>
+          <td style="background: <%=highlight%>"><input class="osp-member" type="checkbox" id="<%=osp.id%>"></td>
+        <% else %>
           <td><input class="osp-member" type="checkbox" id="<%=osp.id%>"></td>
+        <%end%>
           <td>
-            <strong><%= link_to(osp.school.name, root_path + "#{States.state_name(osp.state.downcase)}/city/#{osp.school_id}-school-name") if osp.school%></strong><br>
-            State: <%= osp.state%><br>
-            School id: <%= osp.school_id%>
+            <strong><%= link_to(osp.school.name, root_path + "#{States.state_path(osp.state.downcase)}/city/#{osp.school_id}-school-name", target: :_blank) if osp.school%></strong><br>
+           <%= osp.state%>-<%= osp.school_id%>
           </td>
           <td><%= osp.user.email%></td>
           <td><%= osp.user.id%></td>
@@ -48,26 +52,29 @@
 //    If box is checked, create tuple in format [id, notes]
     let ospMemberArray = [];
     $('.osp-member').each(function() {
-      var that = $(this);
-      if (that.is(':checked')) {
-        ospMemberArray.push([that.attr('id'), that.parent().parent().find('textarea.osp-notes').val()]);
+      var $this = $(this);
+      if ($this.is(':checked')) {
+        ospMemberArray.push([$this.attr('id'), $this.closest('tr').find('textarea.osp-notes').val()]);
       }
     });
     return ospMemberArray;
   };
 
 
-  $('body').on('click', '.submit-osp-membership', function(){
+  $('.submit-osp-membership').find('button').on('click', function(){
     let status = $(this).attr('data-id');
     let memberArray = collectOspMembershipIds();
 //    Don't fire ajax call unless user has selected osp-members to update
     if (memberArray.length > 0) {
       $.ajax({
         method: 'POST',
-        url: '/admin/osp-moderation/update',
+        url: '/admin/osp-moderation',
         data: {member_array: memberArray, status: status},
         success: function () {
           location.reload();
+        },
+        error: function(){
+          alert('A problem occurred while trying to process your request. Try refreshing the page and submitting again. Contact support if you continue to receive this message.')
         }
       });
     } else {
