@@ -1,10 +1,13 @@
 import React from 'react';
 import { t } from '../util/i18n';
+import { getState }  from 'store/appStore';
+import { signupAndFollowSchool } from 'util/newsletters';
 
 const followSchoolForDataUpdates = function (event) {
-  var state = GS.stateAbbreviationFromUrl();
-  var schoolId = GS.schoolIdFromUrl();
-  return GS.sendUpdates.signupAndFollowSchool(state, schoolId);
+  let school = getState().school;
+  if(school) {
+    return signupAndFollowSchool(school.state, school.id);
+  }
 };
 
 const NoDataModuleCta = ({moduleName}) => (
