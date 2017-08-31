@@ -19,10 +19,10 @@
                    width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
 
         <a class="anchor-mobile-offset" name="Academics"></a>
-        <div class="academics-container">
+        <div class="profile-section">
           <div class="row">
             <div class="col-xs-12 col-lg-3">
-              <div class="rating-container__title">
+              <div class="section-title">
                 <%= t('.academics') %>
               </div>
             </div>
@@ -59,21 +59,21 @@
           <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
         </div>
 
-          <div class="environment-container">
-            <div class="row">
-              <div class="col-xs-12 col-lg-3">
-                <div class="rating-container__title">
-                  <%= t('.environment') %>
-                </div>
-              </div>
-              <div class="col-xs-12 col-lg-9">
-                <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
-                <%= render 'osp_school_info', osp_link: osp_link, school_profile: @school_profile %>
-                <%= render 'students', students: @school_profile.students %>
-                <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+        <div class="profile-section">
+          <div class="row">
+            <div class="col-xs-12 col-lg-3">
+              <div class="section-title">
+                <%= t('.environment') %>
               </div>
             </div>
+            <div class="col-xs-12 col-lg-9">
+              <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
+              <%= render 'osp_school_info', osp_link: osp_link, school_profile: @school_profile %>
+              <%= render 'students', students: @school_profile.students %>
+              <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+            </div>
           </div>
+        </div>
 
         <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
                    width: 320, height: 50, css_class: 'mbl' %>

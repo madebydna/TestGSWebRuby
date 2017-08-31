@@ -82,12 +82,12 @@ $(function() {
   initAnchorHashUpdater();
 
   enableAutoAnchoring({
-    'Test_scores': '#TestScores .rating-container__rating',
-    'College_readiness': '#CollegeReadiness .rating-container__rating',
-    'Advanced_courses': '#AdvancedCourses .rating-container__rating',
-    'Low-income_students': '#EquityLowIncome .equity-section',
-    'Race_ethnicity': '#EquityRaceEthnicity .equity-section',
-    'Students_with_Disabilities': '#EquityDisabilities .equity-section',
+    'Test_scores': '#TestScores .profile-module',
+    'College_readiness': '#CollegeReadiness .profile-module',
+    'Advanced_courses': '#AdvancedCourses .profile-module',
+    'Low-income_students': '#EquityLowIncome .profile-module',
+    'Race_ethnicity': '#EquityRaceEthnicity .profile-module',
+    'Students_with_Disabilities': '#EquityDisabilities .profile-module',
     'Students': '#Students',
     'Teachers_staff': '#TeachersStaff',
     'Reviews': '#Reviews',
@@ -106,7 +106,7 @@ $(function() {
     signupAndFollowSchool(gon.school.state, gon.school.id);
   });
 
-  $('.rating-container__title').each(function() {
+  $('.profile-section .section-title').each(function() {
     var $elem = $(this);
     var minWidth = 1200;
 

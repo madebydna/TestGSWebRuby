@@ -107,19 +107,19 @@ let secondTutorial = [
     gaLabel: 'stem-courses'
   },
   {
-    element: '#EquityRaceEthnicity .title-bar',
+    element: '#EquityRaceEthnicity .module-header',
     intro: t('tour2.step6_title_html') + t('tour2.step6'),
     position: 'top',
     gaLabel: 'race'
   },
   {
-    element: '#EquityLowIncome .title-bar',
+    element: '#EquityLowIncome .module-header',
     intro: t('tour2.step7_title_html') + t('tour2.step7'),
     position: 'top',
     gaLabel: 'low-income'
   },
   {
-    element: '#EquityDisabilities .title-bar',
+    element: '#EquityDisabilities .module-header',
     intro: t('tour2.step8_title_html') + t('tour2.step8'),
     position: 'top',
     gaLabel: 'disabilities'

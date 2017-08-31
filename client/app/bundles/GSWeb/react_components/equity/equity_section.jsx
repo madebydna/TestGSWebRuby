@@ -126,30 +126,34 @@ export default class EquitySection extends React.Component {
     let ratingCircle = this.drawRatingCircle(rating, icon_classes);
     let link_name = formatAnchorString(anchor);
     if (section_content) {
-      return <div className="equity-section" data-ga-click-label={title}>
+      return <div className="rating-container" data-ga-click-label={title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
-        <div className="module-header">{ratingCircle}{this.sectionTitle()}</div>
-        <div className="tab-buttons">
-          <SectionNavigation
-            parent_anchor={link_name}
-            key="sectionNavigation"
-            items={section_content}
-            active={this.state.active}
-            google_tracking={title}
-            onTabClick={this.handleTabClick.bind(this)}
-          />
+        <div className="profile-module">
+          <div className="module-header">{ratingCircle}{this.sectionTitle()}</div>
+          <div className="tab-buttons">
+            <SectionNavigation
+              parent_anchor={link_name}
+              key="sectionNavigation"
+              items={section_content}
+              active={this.state.active}
+              google_tracking={title}
+              onTabClick={this.handleTabClick.bind(this)}
+            />
+          </div>
+          <div className="panel">
+            {this.selectSectionContent(section_content)}
+            <InfoTextAndCircle {...this.props.faq} />
+          </div>
+          { this.footer(this.props.sources, this.props.qualaroo_module_link) }
         </div>
-        <div className="top-tab-panel">
-          {this.selectSectionContent(section_content)}
-          <InfoTextAndCircle {...this.props.faq} />
-        </div>
-        { this.footer(this.props.sources, this.props.qualaroo_module_link) }
       </div>
     }
     else {
-      return <div className="equity-section">
+      return <div className="rating-container">
         <a className="anchor-mobile-offset" name={link_name}></a>
-        <div className="module-header">{ratingCircle}{this.sectionTitle()}</div>
+        <div className="profile-module">
+          <div className="module-header">{ratingCircle}{this.sectionTitle()}</div>
+        </div>
       </div>
     }
   }

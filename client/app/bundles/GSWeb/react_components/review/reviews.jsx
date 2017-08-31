@@ -109,10 +109,10 @@ export default class Reviews extends React.Component {
     let reviewsSectionStyle = { 'marginTop': '30px' }
     return(
       <div id="Reviews" style={reviewsSectionStyle}>
-        <div className="rating-container">
+        <div className="rating-container profile-section">
           <div className="row">
             <div className="col-xs-12 col-lg-3">
-              <div className="rating-container__title">
+              <div className="section-title">
                 { title }
               </div>
             </div>

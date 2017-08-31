@@ -8,12 +8,12 @@ const BasicDataModuleLayout = ({
     <div>
       <a className="anchor-mobile-offset" name={id}></a>
       <div id={id} className={'rating-container ' + className } data-ga-click-label={title}>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
             <div className="icon">{icon}</div>
             <div className="title-container">
               <span className="title">{title}</span>
-              <div dangerouslySetInnerHTML={{__html: subtitle}}/>
+              <div dangerouslySetInnerHTML={{__html: subtitle}} />
             </div>
           </div>
 

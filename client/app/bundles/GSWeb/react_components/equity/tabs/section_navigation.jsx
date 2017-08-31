@@ -25,7 +25,7 @@ export default class SectionNavigation extends React.Component {
       </a>
         {this.addDivider(index)}</div>;
     }.bind(this));
-    if(items != undefined ) return <div className="clearfix space-below">{items}</div>;
+    if(items != undefined ) return <div className="clearfix">{items}</div>;
   };
 
   addDivider(index){
