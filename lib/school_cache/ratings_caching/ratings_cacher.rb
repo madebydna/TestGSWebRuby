@@ -37,7 +37,7 @@ class RatingsCaching::RatingsCacher < Cacher
   def delete_rating_row_from_school_metadata(school_id, state)
     if ENV['RAILS_ENV'] == 'production'
       ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations['mysql_production_rw'])
-      SchoolMetadata.on_db("#{state}").where(school_id: school_id, meta_key: 'overallRating').delete_all
+      SchoolMetadata.on_db("#{state}_rw").where(school_id: school_id, meta_key: 'overallRating').delete_all
     end
   end
 
