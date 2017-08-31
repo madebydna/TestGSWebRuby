@@ -19,6 +19,8 @@ class SchoolProfilesController < ApplicationController
     else
       @school_profile = school_profile
     end
+    cache_time = ENV_GLOBAL['school_profile_cache_time']
+    expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
   end
 
   private
