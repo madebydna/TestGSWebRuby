@@ -56,15 +56,18 @@ class ApplicationController < ActionController::Base
     return if ENV_GLOBAL['connection_pooling_enabled']
     begin
       ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
-        if pool.connected? # && pool.connections.present?
+        if pool.connected?
           pool.disconnect!
-          #if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
-          #  pool.disconnect!
-          #end
         end
       end
     rescue => e
       GSLogger.error(:misc, e, message:'Failed to explicitly close connections')
+    end
+
+    begin
+    ActiveRecord::Base.connection.clear_active_connections! 
+    rescue => e
+      GSLogger.error(:misc, e, message:'Failed to explicitly close localized_profiles connection')
     end
   end
 
