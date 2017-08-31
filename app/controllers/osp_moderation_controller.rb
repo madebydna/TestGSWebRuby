@@ -10,15 +10,15 @@ class OspModerationController < ApplicationController
   end
 
   def update
-    member_array = params[:member_array].map {|_, val| [val.first.to_i, val.second]}
+    member_array = params[:member_array].values.map {|a| {id: a.first, notes: a.second}}
     status = params[:status]
     http_status = 200
     if STATUS_WHITELIST.include?(status)
       # If user clicks 'update', only update notes.  Otherwise, update status as well.
       if status == 'osp-notes'
-        member_array.each {|member| EspMembership.find(member.first).update(note: member.second)}
+        member_array.each {|member| EspMembership.find(member[:id]).update(note: member[:notes])}
       else
-        member_array.each {|member| EspMembership.find(member.first).update(note: member.second, status: status)}
+        member_array.each {|member| EspMembership.find(member[:id]).update(note: member[:notes], status: status)}
       end
     else
       GSLogger.warn(:misc, nil, message: 'Failed to update EspMembership: action not allowed or supported.', vars: {
@@ -31,7 +31,7 @@ class OspModerationController < ApplicationController
 
   private
 
-  def fetch_ten_memberships(offset)
+  def fetch_one_page_of_memberships(offset)
     EspMembership.where('status = ? or status = ?', 'provisional', 'processing')
       .offset(offset)
       .limit(10)
@@ -49,9 +49,9 @@ class OspModerationController < ApplicationController
     # This is the main pagination method for this page. It tries to load the right memberships based on the value of
     # params[:start].  If that value is out-of-bounds, it defaults to the first ten memberships.
     if params[:start] && params[:start].to_i.between?(0, membership_size)
-      @osp_memberships = fetch_ten_memberships((params[:start].to_i/10)*10)
+      @osp_memberships = fetch_one_page_of_memberships((params[:start].to_i/10)*10)
     else
-      @osp_memberships = fetch_ten_memberships(0)
+      @osp_memberships = fetch_one_page_of_memberships(0)
     end
   end
 
