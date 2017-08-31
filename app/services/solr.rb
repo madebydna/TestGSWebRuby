@@ -2,15 +2,16 @@ class Solr
 
   LUCENE_SPECIAL_CHARACTERS = %w|\\ + - ! ( ) { } [ ] ^ " ~ * ? :|
   OPTIONAL_TERMS = %w|n s e w ave avenu avenue care charter city citi county counti dai day district east ed elementary elementry elementari fort ft grade height heights high hill ht hts isd intermediate intermediat junior k kindergarten magnet middle middl montessori north nurseri nursery point port pr pre prek pre-k pre k pre-kindergarten preschool primary primar pt school schools road senior south street west and & or of|
+  DEFAULT_TIMEOUT = 10
 
   def initialize(options = {})
     if options[:state_short].present? && options[:collection_id].present?
       @state_short, @collection_id = options[:state_short], options[:collection_id]
     end
-    open_timeout = ENV_GLOBAL['solr.ro.timeout.open'] || 10
-    read_timeout = ENV_GLOBAL['solr.ro.timeout.read'] || 10
+    open_timeout = ENV_GLOBAL['solr.ro.timeout.open'] || DEFAULT_TIMEOUT
+    read_timeout = ENV_GLOBAL['solr.ro.timeout.read'] || DEFAULT_TIMEOUT
     @connection = RSolr.connect(url: ENV_GLOBAL['solr.ro.server.url'],
-                                open_timeout: open_timeout, read_timeout: read_timeout)
+                                open_timeout: open_timeout.to_f, read_timeout: read_timeout.to_f)
   end
 
   def school_name_suggest(options)
