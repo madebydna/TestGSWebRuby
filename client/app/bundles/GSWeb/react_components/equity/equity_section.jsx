@@ -7,14 +7,14 @@ import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
 
-import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor, formatAnchorString } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
 
 export default class EquitySection extends React.Component {
 
   static propTypes = {
     title: React.PropTypes.string,
     anchor: React.PropTypes.string,
-    subtitle: React.PropTypes.func,
+    subtitle: React.PropTypes.object,
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
@@ -43,10 +43,10 @@ export default class EquitySection extends React.Component {
 
   footer(sources, qualaroo_module_link) {
     return (
-        <div>
-          <InfoBox content={sources} >{ t('See notes') }</InfoBox>
-          <GiveUsFeedback content={qualaroo_module_link} />
-        </div>
+      <div className="module-footer">
+        <InfoBox content={sources} >{ t('See notes') }</InfoBox>
+        <GiveUsFeedback content={qualaroo_module_link} />
+      </div>
     )
   }
 
@@ -65,17 +65,11 @@ export default class EquitySection extends React.Component {
 
   componentDidMount() {
     this.selectTabMatchingAnchor();
-    addAnchorChangeCallback(() => {
-      this.selectTabMatchingAnchor();
-      scrollToAnchor();
-    });
+    addAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
   componentWillUnmount() {
-    removeAnchorChangeCallback(() => {
-      this.selectTabMatchingAnchor();
-      scrollToAnchor();
-    });
+    removeAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
   selectSectionContent(section_content) {

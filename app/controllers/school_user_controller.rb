@@ -1,6 +1,6 @@
-class SchoolUserController < DeprecatedSchoolProfileController
-
+class SchoolUserController < ApplicationController
   def create
+    @school = school
     json_message = {}
     status = :ok
     school_user = nil
@@ -39,6 +39,18 @@ class SchoolUserController < DeprecatedSchoolProfileController
   end
 
   private
+
+  def school
+    return @_school if defined?(@_school)
+    @_school = School.find_by_state_and_id(get_school_params[:state_abbr], get_school_params[:id])
+  end
+
+  def get_school_params
+    params.permit(:schoolId, :school_id, :state)
+    params[:id] = params[:schoolId] || params[:school_id]
+    params[:state_abbr] = States.abbreviation(params[:state].gsub('-', ' '))
+    params
+  end
 
   def school_user_params
     params.

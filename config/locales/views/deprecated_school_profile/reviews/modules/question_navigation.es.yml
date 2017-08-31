@@ -1,8 +1,0 @@
----
-es:
-  deprecated_school_profile:
-    reviews:
-      modules:
-        question_navigation:
-          next_topic: Tema siguiente
-          previous_topic: Tema anterior

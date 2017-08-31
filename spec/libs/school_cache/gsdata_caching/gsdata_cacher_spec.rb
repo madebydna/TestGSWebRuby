@@ -10,7 +10,7 @@ describe GsdataCaching::GsdataCacher do
       school = build(:alameda_high_school)
       gsdb_cacher = GsdataCaching::GsdataCacher.new(school)
       breakdowns = ['AA', 'BB', 1]
-      date_valid = Time.zone.parse('Jan 1 2014').to_s
+      date_valid = Time.zone.parse('Jan 1 2014')
       data_type_one_values = build_school_values(1,
                                                  'Data Type 1',
                                                  date_valid,
@@ -64,7 +64,7 @@ describe GsdataCaching::GsdataCacher do
       state_value: 1,
       district_value: 1,
       source_name: 'Sample Source',
-      source_year: 2014
+      source_date_valid: '20140101 00:00:00'
     }
   end
 

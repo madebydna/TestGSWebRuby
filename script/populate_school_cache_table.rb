@@ -76,7 +76,7 @@ parsed_arguments.each do |args|
             Cacher.create_cache(school, cache_key)
           rescue => error
             had_any_errors = true
-            pp error
+            puts "School #{school.state}-#{school.id} : #{error}"
           end
         end
       else
@@ -85,7 +85,7 @@ parsed_arguments.each do |args|
             Cacher.create_cache(school, cache_key)
           rescue => error
             had_any_errors = true
-            pp error
+            puts "School #{school.state}-#{school.id} : #{error}"
           end
         end
       end

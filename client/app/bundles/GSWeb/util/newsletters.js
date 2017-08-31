@@ -38,6 +38,10 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
     } else {
       modalManager.showModal('SignupAndFollowSchoolModal').done(function(data) {
         schools(state, schoolId).follow({email: data.email});
+      }).fail(function(data) {
+        if(data.error) {
+          notifications.error(data.error);
+        }
       });
     }
   }
@@ -59,7 +63,7 @@ export const sponsorsSignUp = function(options) {
       list: 'sponsor',
       message: "You've signed up to receive sponsors updates"
     },
-    pick(options, 'email')
+    pick(options, ['email'])
   );
 
   return postSubscriptionViaAjax(subscriptionParams);
@@ -71,7 +75,7 @@ export const greatNewsSignUp = function(options) {
     {
       list: 'greatnews'
     },
-    pick(options, 'email')
+    pick(options, ['email'])
   );
 
   return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
@@ -115,7 +119,7 @@ const schools = function(states, schoolIds, options) {
         {
           'school_id': schoolIds,
           'state': states
-        }, pick(options, 'email')
+        }, pick(options, ['email'])
       )
     };
     if (driver) {

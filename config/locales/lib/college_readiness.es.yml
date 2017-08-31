@@ -7,7 +7,7 @@ es:
       'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
       'SAT percent participation': 'Participación SAT'
       ACT participation: 'Participación ACT'
-      'Percentage SAT/ACT participation grades 11-12': 'Participación SAT/ACT'
+      'Percentage SAT/ACT participation grades 11-12': 'Índice de participación en SAT/ACT'
       'Percentage AP enrolled grades 9-12': 'Participación en cursos AP'
       '4-year high school graduation rate': 'Índice de graduación de escuelas preparatorias de 4 años'
       Percent of students who meet UC/CSU entrance requirements: Porcentaje de alumnos que cumplen con los requisitos de elegibilidad para UC/CSU
@@ -24,7 +24,7 @@ es:
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
         'Average SAT score_new': 'El SAT es una prueba de admisión universitaria, que en 2016 tenía un total de 1600 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela.'
         'SAT percent participation': 'El índice  de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
-        'Percentage SAT/ACT participation grades 11-12': 'El índice  de participación en el SAT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el SAT.'
+        'Percentage SAT/ACT participation grades 11-12': 'El índice de participación en SAT/ACT refleja el porcentaje de estudiantes elegibles en los grados 11 y 12 de esta escuela que tomaron el SAT o ACT.'
         'Average ACT score': 'El ACT es un examen de admisión universitaria, cuyo puntaje más alto es de  36 puntos. Esta calificación refleja el puntaje promedio de las calificaciones en el ACT entre  los estudiantes de esta escuela.'
         'ACT participation':  'El índice de participación en el ACT refleja el porcentaje de estudiantes elegibles de esta escuela que tomaron el ACT.'
         'AP Course Participation': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'

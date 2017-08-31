@@ -1,4 +1,5 @@
 LocalizedProfiles::Application.configure do
+  require_relative '../../lib/conditional_uglifier'
   require 'socket'
   hostname = "#{Socket.gethostname}"
 
@@ -43,7 +44,7 @@ LocalizedProfiles::Application.configure do
   config.serve_static_files = false
 
   # Compress JavaScripts and CSS
-  config.assets.js_compressor  = :uglifier
+  config.assets.js_compressor  = ConditionalUglifier.new
   config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
@@ -81,7 +82,7 @@ LocalizedProfiles::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
   config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
 
-  config.assets.js_compressor  = :uglifier
+  config.assets.js_compressor  = ConditionalUglifier.new
   config.assets.css_compressor = :sass
 
   # Precompile additional assets (application.js, application.css, and all

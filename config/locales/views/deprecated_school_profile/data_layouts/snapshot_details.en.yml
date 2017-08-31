@@ -1,8 +1,0 @@
----
-en:
-  deprecated_school_profile:
-    data_layouts:
-      snapshot_details:
-        programs: Programs
-        students: Students
-        teachers: Teachers

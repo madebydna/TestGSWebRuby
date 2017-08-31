@@ -15,7 +15,7 @@ module Feeds
     end
 
     # delagate some accessor methods to wrapped object
-    [:subject, :year, :breakdown, :grade, :level].each do |method|
+    [:subject, :year, :breakdown, :grade, :level, :breakdown_id].each do |method|
       define_method(method) do
         test_data_object.send(method)
       end

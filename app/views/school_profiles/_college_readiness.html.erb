@@ -46,8 +46,10 @@
         <% end %>
         <%= render partial: 'info_text_and_circle', locals: {cta: college_readiness.faq.cta, content: college_readiness.faq.content } if data_values.present? %>
       </div>
-      <%= render 'sources_link_to_modal', content: content %>
-      <%= render 'module_feedback', content: qualaroo_module_link %>
+      <div class="module-footer">
+        <%= render 'sources_link_to_modal', content: content %>
+        <%= render 'module_feedback', content: qualaroo_module_link %>
+      </div>
     <% end %>
   </div>
 </div>

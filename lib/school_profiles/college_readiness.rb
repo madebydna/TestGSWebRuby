@@ -221,7 +221,7 @@ module SchoolProfiles
         state = @school_cache_data_reader.school.state
         RatingScoreItem.new.tap do |item|
           item.label = data_label(data_type)
-          item.year = hash['year'] || hash['source_year']
+          item.year = hash['year'] || ((hash['source_date_valid'] || '')[0..3]).presence || hash['source_year']
           if data_type == SAT_SCORE
             item.info_text = data_label_info_text(sat_score_info_text_key(state, item.year))
             item.range = sat_score_range(state, item.year)
@@ -287,7 +287,7 @@ module SchoolProfiles
     end
 
     def sources_for_view(hash)
-      year = hash['year'] || hash['source_year']
+      year = hash['year'] || ((hash['source_date_valid'] || '')[0..3]).presence || hash['source_year']
       source = hash['source'] || hash['source_name']
       str = '<div>'
       str << '<h4>' + data_label(hash['data_type']) + '</h4>'

@@ -69,7 +69,7 @@ parsed_arguments.each do |args|
             DistrictCacher.create_cache(district, cache_key)
           rescue => error
             had_any_errors = true
-            pp error
+            puts "District #{district.state}-#{district.id} : #{error}"
           end
         end
       else
@@ -78,7 +78,7 @@ parsed_arguments.each do |args|
             DistrictCacher.create_cache(district, cache_key)
           rescue => error
             had_any_errors = true
-            pp error
+            puts "District #{district.state}-#{district.id} : #{error}"
           end
         end
       end

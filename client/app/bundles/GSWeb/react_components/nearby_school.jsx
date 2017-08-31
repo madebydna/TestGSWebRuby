@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 export default class NearbySchool extends React.Component {
 
   static propTypes = {
-    GSRating: React.PropTypes.string,
+    GSRating: React.PropTypes.number,
     averageRating: React.PropTypes.number,
     schoolName: React.PropTypes.string,
     schoolType: React.PropTypes.string,

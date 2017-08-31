@@ -93,9 +93,12 @@ const manager = (function ($) {
             removeModalFromStack(modal);
             modalDeferred.resolveWith(this, [data]);
           }).fail(function (data) {
+            // all fail callbacks (including ones chained on by showModal 
+            // caller) are executed before the always callbacks. So we need
+            // to remove modal from the stack before caller tries to
+            // show new modal (for displaying error message)
+            removeModalFromStack(modal); 
             modalDeferred.rejectWith(this, [data]);
-          }).always(function () {
-            removeModalFromStack(modal);
           });
         }).fail(function (data) {
           modalDeferred.rejectWith(this, [data]);

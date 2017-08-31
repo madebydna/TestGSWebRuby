@@ -1,9 +1,0 @@
-<% link_value = :help_me_e_video %>
-<% link_value = :help_me_h_video if @school.level_code_array.include? 'h' %>
-<% link_value = :help_me_m_video if @school.level_code_array.include? 'm' %>
-<% link_value = :help_me_e_video if @school.level_code_array.include? 'e' %>
-<% link_value = :help_me_e_video if @school.level_code_array.include? 'p' %>
-
-<div class="tac pal mtm"><span><%= t('.need_help') %></span>
-    <%= link_to t('.we_can_help_html'), link_value %>
-</div>

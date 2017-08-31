@@ -1,6 +1,8 @@
 ---
 es:
   javascript:
+    'yes': 'Sí'
+    'no': 'No'
     edit: Editar
     close: Cerrar
     learn_more_html: Aprender Mas &raquo;
@@ -70,7 +72,6 @@ es:
     Graduation rates: 'Índices de Graduación'
     'UC/CSU eligibility': 'La elegibilidad a la UC/CSU'
     was_this_useful: ¿Esto estuvo útil?
-    give_us_your_feedback: Danos tu opinion
     See notes: Fuentes
     show_more: Mostrar más
     show_less: Mostrar menos

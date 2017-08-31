@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import SectionSubNavigation from './tabs/section_sub_navigation';
 import EquityContentPane from './equity_content_pane';
-import { handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor } from '../../components/anchor_router';
+import { handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback } from '../../components/anchor_router';
 
 export default class SubSectionToggle extends React.Component {
 
@@ -19,7 +19,7 @@ export default class SubSectionToggle extends React.Component {
 
   constructor(props) {
     super(props);
-    this.selectTabMatchingAnchorAndScroll = this.selectTabMatchingAnchorAndScroll.bind(this);
+    this.selectTabMatchingAnchor = this.selectTabMatchingAnchor.bind(this);
     let defaultTabIndex = 0;
     if(props.defaultTab) {
       defaultTabIndex = this.tabNames().indexOf(props.defaultTab);
@@ -43,18 +43,13 @@ export default class SubSectionToggle extends React.Component {
     );
   }
 
-  selectTabMatchingAnchorAndScroll() {
-    this.selectTabMatchingAnchor();
-    scrollToAnchor();
-  }
-
   componentDidMount() {
     this.selectTabMatchingAnchor();
-    addAnchorChangeCallback(this.selectTabMatchingAnchorAndScroll);
+    addAnchorChangeCallback(this.selectTabMatchingAnchor);
   }
 
   componentWillUnmount() {
-    removeAnchorChangeCallback(this.selectTabMatchingAnchorAndScroll);
+    removeAnchorChangeCallback(this.selectTabMatchingAnchor);
   }
 
   buttonAnchorName(value) {

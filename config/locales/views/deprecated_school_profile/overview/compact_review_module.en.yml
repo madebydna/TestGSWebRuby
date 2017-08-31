@@ -1,7 +1,0 @@
----
-en:
-  deprecated_school_profile:
-    overview:
-      compact_review_module:
-        more: more
-        user_type_html: 'Submitted by a %{user_type}'

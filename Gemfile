@@ -17,17 +17,7 @@ gem 'jquery-cookie-rails'
 # USED: reviews_moderation_init.js
 gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 
-# RailsAdmin is a Rails engine that provides an easy-to-use interface for managing your data.
-# USED: in profile admin. See config in config/initializers/rails_admin.rb
-gem 'rails_admin', '0.6.4'
-
 gem 'kaminari', '0.16.1'
-
-# We added this to rails-admin, as a way to edit json inline
-gem 'codemirror-rails'
-
-# Authentication, used for rails-admin
-gem 'devise', '4.2.0'
 
 # Provide various react builds to your asset bundle
 # Transform .jsx in the asset pipeline
@@ -44,10 +34,6 @@ gem 'db-charmer', git: 'git://github.com/kovyrin/db-charmer.git', branch: 'rails
 # This automatically supplements ActiveRecord::Base and "protects" any columns that conflict with default AR methods
 # TODO: to decide if we need this, we would have to examine the column names for all ActiveRecord models
 gem 'safe_attributes'
-
-# allows use of .haml (see _form.html.haml)
-# USED: rails admin
-gem 'haml', '4.0.3'
 
 # Hashie is a simple collection of useful Hash extensions
 # USED: primarily Hashie::Mash all over the place.
@@ -75,18 +61,6 @@ gem 'wiselinks'
 
 # USED: In FB authentication. See SigninController or related
 gem 'mini_fb'
-
-# Uses the materialized path pattern to implement a tree on a model
-# USED: CategoryPlacement model in profile admin
-gem 'ancestry'
-
-# gem to extend railsadmin with a view for working with models that are trees
-# USED: for profile admin. See config/initializers/rails_admin.rb
-gem 'rails_admin_nestable', git: 'https://github.com/gs-samson/rails_admin_nestable.git'
-
-# Gives syntax highlighting functionality for code displayed on page
-# USED: under views/admin/admin
-gem 'coderay'
 
 # SEO plugin for Ruby on Rails applications.
 # USED: all over the place. Search for set_meta_tags
