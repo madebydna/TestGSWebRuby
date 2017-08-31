@@ -35,13 +35,14 @@ class RatingsCaching::RatingsCacher < Cacher
   end
 
   def delete_rating_row_from_school_metadata(school_id, state)
-    # query = "delete from _#{state}.school_metadata where school_id = #{school_id} and meta_key='overallRating';"
-    # SchoolMetadata.connection.execute(query)
-
     SchoolMetadata.on_db("#{state}_rw") do
-      query = "delete from _#{state}.school_metadata where school_id = #{school_id} and meta_key='overallRating';"
+      query = "delete from #{table_name_prefix(state)}school_metadata where school_id = #{school_id} and meta_key='overallRating';"
       SchoolMetadata.connection.execute(query)
     end
+  end
+
+  def table_name_prefix(state)
+    "#{Rails.configuration.database_configuration["#{Rails.env}"][state]['database']}."
   end
 
   def current_ratings
