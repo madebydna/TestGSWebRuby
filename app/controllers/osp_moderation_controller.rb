@@ -42,7 +42,7 @@ class OspModerationController < ApplicationController
 
   def membership_size
     @_membership_size ||= EspMembership.where('status = ? or status = ?', 'provisional', 'processing')
-                            .joins(:user).where('email_verified = ?', true).size
+                            .joins(:user).where('email_verified = ?', true).count
   end
 
   def display_selected_memberships
