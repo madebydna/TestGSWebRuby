@@ -24,31 +24,8 @@
     padding: 10px;
     margin-bottom: 50px;
   }
-  .title-bar {
-    padding-bottom: 20px;
 
-    .title-container {
-      overflow: hidden;
-    }
-    .title {
-      font-size: 18px;
-      font-family: opensans-semibold;
-      @include media-breakpoint-up(sm) {
-        font-size: 20px;
-      }
-      a {
-        margin-left: $spacing-small;
-      }
-    }
-
-    .rating-layout {
-      margin-right: 10px;
-      vertical-align: middle;
-      font-size: 24px;
-      float: left;
-    }
-  }
-  .sub-section-navigation{
+  .sub-section-navigation {
     padding: 20px;
     text-align: center;
 
@@ -86,6 +63,7 @@
   }
 
   .tab-buttons {
+    margin-top: 15px;
     .tab-container {
       display: inline-block;
       margin: 0px 0px 10px;
