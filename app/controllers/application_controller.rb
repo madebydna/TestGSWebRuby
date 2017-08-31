@@ -63,13 +63,6 @@ class ApplicationController < ActionController::Base
     rescue => e
       GSLogger.error(:misc, e, message:'Failed to explicitly close connections')
     end
-
-    begin
-    #ActiveRecord::Base.connection_handler.clear_active_connections!
-    ActiveRecord::Base.disconnect!
-    rescue => e
-      GSLogger.error(:misc, e, message:'Failed to explicitly close localized_profiles connection')
-    end
   end
 
   def host
