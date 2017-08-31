@@ -52,14 +52,15 @@ class ApplicationController < ActionController::Base
     # This used to be done with the rack_after_reply gem.
     # Because it was out of date, we removed it and switched this to a
     # regular after_filter. See PT-1616 for more information.
-    return unless @school.present?
+    #return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
     begin
       ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
         if pool.connected? && pool.connections.present?
-          if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
-            pool.disconnect!
-          end
+          pool.disconnect!
+          #if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
+          #  pool.disconnect!
+          #end
         end
       end
     rescue => e
