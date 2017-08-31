@@ -100,11 +100,7 @@ export default class SchoolProfileComponent extends React.Component {
     let sectionConfig = {
       title: this.props.title,
       anchor: this.props.anchor,
-      subtitle: function(){
-        if (this.props.subtitle.length > 0) {
-          return <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />
-        } else return "";
-      },
+      subtitle: <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />,
       rating: this.props.rating,
       info_text: this.props.info_text,
       icon_classes: this.props.icon_classes
