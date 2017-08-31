@@ -126,8 +126,8 @@ en:
     Review: Review
     Close all: Close all
     Review Reported: Review Reported
-    no_data_message: 'This information is currently not available. '
-    notify_me: "Keep me updated on this school, including when new data is published."
+    no_data_message: 'Currently, this information is not available. '
+    notify_me: "Update me when new information is published on this school's profile."
     Advanced courses: Advanced courses
     advanced_courses_subheading_html: A rigorous course load can help your student prepare for and get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/#Grade_and_rigorous_class">Learn more</a>.
     advanced_courses_tooltip: The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign languages compared to the state average.

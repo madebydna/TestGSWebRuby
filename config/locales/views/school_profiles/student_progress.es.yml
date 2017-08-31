@@ -2,6 +2,9 @@ es:
   school_profiles:
     student_progress:
       title: Progreso estudiantil
+      no_data_html: >
+        Esta sección muestra el progreso académico (también llamado “crecimiento”) de los estudiantes en esta escuela considerando donde estaban el año pasado, comparado a estudiantes similares en el estado.
+        <br></br>
       sources: Fuentes
       historical:
         title: Clasificaciones anteriores de GreatSchools del Progreso del Estudiante

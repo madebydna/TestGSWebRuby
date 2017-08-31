@@ -2,6 +2,9 @@ en:
   school_profiles:
     teachers_staff:
       title: 'Teachers & staff'
+      no_data_html: >
+        This section includes information about school staff, including the ratio of students to teachers, and teacher tenure and certification.
+        <br></br>
       source: 'Source'
       sources: Sources
       subtitle_html: 'Parents often value small class sizes, but the <a href="/gk/articles/class-size/">truth is more complicated</a>.'

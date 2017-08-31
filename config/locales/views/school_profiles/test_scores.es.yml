@@ -1,6 +1,9 @@
 es:
   school_profiles:
     test_scores:
+      no_data_html: >
+        Esta sección incluye información sobre el resultado de los exámenes por materia y grado.
+        <br></br>
       title: Test scores
       subtitle_html: 'Averigua <!--<a href="/gk/articles/state-standardized-test-scores-issues-to-consider/?lang=es">-->lo que los resultados de los exámenes estatales realmente te dicen<!--</a>--> acerca de una escuela - y lo que no te dicen'
       source: Source

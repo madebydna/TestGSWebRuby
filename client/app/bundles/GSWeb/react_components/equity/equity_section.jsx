@@ -21,6 +21,7 @@ export default class EquitySection extends React.Component {
     rating: React.PropTypes.number,
     message: React.PropTypes.string,
     qualaroo_module_link: React.PropTypes.string,
+    no_data_summary: React.PropTypes.string,
     section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
       subject: React.PropTypes.string,
       component: React.PropTypes.object,
