@@ -1,8 +1,8 @@
-class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
-  include CacheValidation
+class StateCharacteristicsCacher < StateCacher
+  include StateCacheValidation
 
-  CACHE_KEY = 'feed_characteristics'
-  DIRECTORY_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 129, 131, 133]
+  CACHE_KEY = 'state_characteristics'
+  STATE_CHARACTERISTICS_CENSUS_DATA_TYPES = [1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 17, 23, 26, 28, 30, 33, 41, 42, 103, 129, 131, 133]
   # 1 - Percentage of teachers in their first year
   # 2 - Bachelor's degree
   # 3 - Master's degree
@@ -26,29 +26,31 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
   # 131 - Percent classes taught by highly qualified teachers
   # 133 - Teachers with valid license
 
-
   def self.listens_to?(data_type)
-    :feed_characteristics == data_type
+    :state_characteristics == data_type
+  end
+
+  def self.active?
+    ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
   end
 
   def census_query
-    CensusDataSetQuery.new(school.state)
-      .with_data_types(DIRECTORY_CENSUS_DATA_TYPES)
-      .with_school_values(school.id)
-      .with_census_descriptions(school.type)
+    CensusDataSetQuery.new(state)
+        .with_data_types(STATE_CHARACTERISTICS_CENSUS_DATA_TYPES)
+        .with_census_descriptions('Public')
   end
 
   def census_query_results #census only
     @_census_query_results ||= (
-      census_data = CensusDataResults.new(census_query.to_a).filter_to_max_year_per_data_type!
-      census_data.map do |obj|
-        CharacteristicsCaching::QueryResultDecorator.new(school.state, obj)
-      end.compact
+    census_data = CensusDataStateResults.new(census_query.to_a).filter_to_max_year_per_data_type!
+    census_data.map do |obj|
+      CharacteristicsCaching::QueryResultDecorator.new(@state, obj)
+    end.compact
     )
   end
 
   def build_hash_for_data_set(result)
-    return nil unless result.school_value
+    # return nil unless result.district_value
     data_attributes.each_with_object({}) do |key, hash|
       value = result.try(key)
       if value
@@ -69,7 +71,7 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
         :breakdown,
         :created,
         :grade,
-        :school_value,
+        :state_value,
         :source,
         :year
     ]
@@ -81,10 +83,6 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
       hash[result.label] << build_hash_for_data_set(result)
     end
     validate!(cache_hash)
-  end
-
-  def self.active?
-    ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])
   end
 
 end
