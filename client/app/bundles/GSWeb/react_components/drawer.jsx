@@ -9,7 +9,7 @@ const Drawer = React.createClass({
   },
 
   propTypes: {
-    content: React.PropTypes.string.isRequired,
+    content: React.PropTypes.node.isRequired,
     openLabel: React.PropTypes.string,
     closedLabel: React.PropTypes.string,
     trackingCategory: React.PropTypes.string,

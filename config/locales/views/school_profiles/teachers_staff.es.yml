@@ -1,6 +1,9 @@
 es:
   school_profiles:
     teachers_staff:
+      no_data_html: >
+        Esta sección incluye información sobre el personal de la escuela, incluyendo el índice de estudiantes por maestro, y la antigüedad y certificación de los maestros.
+        <br></br>
       title: 'Profesores y personal'
       source: 'Fuente'
       sources: Fuentes

@@ -23,6 +23,7 @@ export const closeNotificationMessage = function (wait) {
 export const error = function(message) {
   // TODO: style the modal differently depending on the type of message ?
   modalManager.showModal('SuccessModal', {
+    heading: 'Whoops!',
     subheading: message
   });
 };

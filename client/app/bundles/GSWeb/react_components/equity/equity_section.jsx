@@ -7,20 +7,21 @@ import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
 
-import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, scrollToAnchor, formatAnchorString } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
 
 export default class EquitySection extends React.Component {
 
   static propTypes = {
     title: React.PropTypes.string,
     anchor: React.PropTypes.string,
-    subtitle: React.PropTypes.string,
+    subtitle: React.PropTypes.object,
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
     rating: React.PropTypes.number,
     message: React.PropTypes.string,
     qualaroo_module_link: React.PropTypes.string,
+    no_data_summary: React.PropTypes.string,
     section_content: React.PropTypes.arrayOf(React.PropTypes.shape({
       subject: React.PropTypes.string,
       component: React.PropTypes.object,
@@ -64,17 +65,11 @@ export default class EquitySection extends React.Component {
 
   componentDidMount() {
     this.selectTabMatchingAnchor();
-    addAnchorChangeCallback(() => {
-      this.selectTabMatchingAnchor();
-      scrollToAnchor();
-    });
+    addAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
   componentWillUnmount() {
-    removeAnchorChangeCallback(() => {
-      this.selectTabMatchingAnchor();
-      scrollToAnchor();
-    });
+    removeAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
   selectSectionContent(section_content) {

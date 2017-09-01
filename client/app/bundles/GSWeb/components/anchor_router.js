@@ -1,6 +1,6 @@
 import { scrollToElement } from '../util/scrolling';
 let autoAnchoring = false;
-let haveAutoScrolled = false;
+let haveScrolled = false;
 let anchorMap;
 let autoAnchorAttemptIntervalId;
 
@@ -22,29 +22,51 @@ function anchorTokens() {
 }
 
 export function enableAutoAnchoring(map) {
+  addAnchorChangeCallback(scrollToAnchor);
+  addAnchorChangeCallback(disableAutoAnchoring);
   autoAnchoring = true;
   anchorMap = map;
   autoAnchorAttemptIntervalId = window.setInterval(attemptAutoAnchor, 100);
 }
 
+function disableAutoAnchoring() {
+  autoAnchoring = false;
+  window.clearInterval(autoAnchorAttemptIntervalId);
+}
+
 function highlightForAMoment(selector) {
   let backgroundColor = $(selector).css('background-color');
-  $(selector).css('background-color', '#ffff93', 'important');
+  $(selector).css('background-color', '#cbe2ec', 'important');
   setTimeout(() => $(selector).css('background-color', '', ''), 750);
 }
 
 function scrollAndHighlight(selector) {
-  haveAutoScrolled = true;
+  haveScrolled = true;
   if ('scrollRestoration' in window.history) {
     window.history.scrollRestoration = 'manual';
   }
-  scrollToElement(selector, () => {
-    highlightForAMoment(selector);
-    window.clearInterval(autoAnchorAttemptIntervalId);
-  });
+  scrollToElement(selector, () => highlightForAMoment(selector));
+}
+
+function scrollWithoutHighlight(selector) {
+  haveScrolled = true;
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  scrollToElement(selector);
 }
 
 export function scrollToAnchor() {
+  disableAutoAnchoring();
+  let firstToken = anchorTokens()[0];
+  let selector = anchorMap[firstToken];
+  if(selector && $(selector).length > 0) {
+    scrollWithoutHighlight(selector);
+  }
+}
+
+function scrollToAnchorAndHighlight() {
+  disableAutoAnchoring();
   let firstToken = anchorTokens()[0];
   let selector = anchorMap[firstToken];
   if(selector && $(selector).length > 0) {
@@ -53,8 +75,8 @@ export function scrollToAnchor() {
 }
 
 function attemptAutoAnchor() {
-  if(!haveAutoScrolled) {
-    scrollToAnchor();
+  if(!haveScrolled) {
+    scrollToAnchorAndHighlight();
   }
 }
 

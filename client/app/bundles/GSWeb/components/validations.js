@@ -9,6 +9,7 @@ export const EMAIL_REQUIRED = 'emailRequired';
 export const VALID_EMAIL_REQUIRED = 'validEmailRequired';
 export const VALID_URL_REQUIRED = 'validUrlRequired';
 export const TERMS_REQUIRED = 'termsRequired';
+export const EMAIL_AVAILABLE = 'emailAvailable';
 
 const emailFormat = (...args) => functions.emailFormat('Please enter a valid email address', ...args);
 const urlFormat = (...args) => functions.urlFormat('Please enter a valid URL', ...args);
@@ -17,13 +18,33 @@ const urlRequired = (...args) => functions.required('A valid URL is required', .
 const validEmailRequired = composeValidations(emailFormat, emailRequired);
 const validUrlRequired = composeValidations(urlFormat, urlRequired);
 const termsRequired = (...args) => functions.checkRequired('You must agree to the widget terms of service', ...args);
+const emailAvailable = (...args) => functions.emailAvailable('Looks like you already have an account. <a href="#login" data-toggle="tab">Log in</a>', ...args);
 
 const validations = {
   [EMAIL_FORMAT]: emailFormat,
   [EMAIL_REQUIRED]: emailRequired,
   [VALID_EMAIL_REQUIRED]: validEmailRequired,
   [VALID_URL_REQUIRED]: validUrlRequired,
-  [TERMS_REQUIRED]: termsRequired
+  [TERMS_REQUIRED]: termsRequired,
+  [EMAIL_AVAILABLE]: emailAvailable
+}
+
+export const runAsyncValidation = function(validation, value) {
+  if(!validations[validation]) {
+    throw validation + ' is not a registered validation';
+  }
+  let deferred = $.Deferred();
+  let result = validations[validation](value);
+  if(Array.isArray(result)) {
+    if(result.length == 0) {
+      deferred.resolve(result);
+    } else {
+      deferred.reject(result);
+    }
+  } else {
+    deferred = $.when(result);
+  }
+  return deferred.promise();
 }
 
 export default validations;

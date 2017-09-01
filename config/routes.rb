@@ -1,9 +1,6 @@
 
 LocalizedProfiles::Application.routes.draw do
   require 'states'
-  require 'path_with_period'
-
-  devise_for :admins, path: '/admin/gsr/school-profiles'
 
   root 'home#show'
   get ENV_GLOBAL['home_path'], as: :home, to: 'home#show'
@@ -252,8 +249,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/examples-and-gotchas', action: :examples_and_gotchas
 
     scope '/school-profiles', as: :school_profiles do
-      get '/help', to: 'admin#help'
-      mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
     get '/style-guide/', to: 'style_guide#index'
@@ -305,7 +300,6 @@ LocalizedProfiles::Application.routes.draw do
   post '/gsr/reviews/', to: 'reviews#create', as: :create_reviews
   post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
   post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
-  get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
@@ -539,10 +533,6 @@ LocalizedProfiles::Application.routes.draw do
 
   #Handle old School list SEO pages (has to come below cities_list and districts_list routes)
   get '/schools/:state_name/:state_abbr/', to: 'schools_list#show', as: :schools_list
-
-  constraints(PathWithPeriod) do
-    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]
-  end
 
   # error handlers
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found, via: [:get, :post]

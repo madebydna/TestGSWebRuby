@@ -36,9 +36,9 @@ const visualizationMap = {
 };
 
 const listOfVisualizations = function(courses) {
-  return courses.map((course) => {
+  return courses.map((course, index) => {
     let Vis = visualizationMap[course.visualization];
-    return <BasicDataModuleRow {...course}>
+    return <BasicDataModuleRow {...course} key={index}>
       <Vis {...course} state_average_label={stateAverageLabel(course.state_average)} />
     </BasicDataModuleRow>
   });

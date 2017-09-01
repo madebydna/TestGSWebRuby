@@ -5,10 +5,6 @@ class Admin::AdminController < ApplicationController
 
   layout 'deprecated_application'
 
-  def help
-
-  end
-
   def info
 
   end

@@ -3,7 +3,7 @@ en:
     osp_school_info:
       title: General Information
       edit: Edit
-      subtitle: Find out about this school’s hours, enrollment, classes, sports, and more.
+      subtitle: Here you can learn about this school’s hours, enrollment, sports, classes and more. An administrator from this school will need to “claim” the profile to add this information.
       bullet_1_html: >
         Are you an administrator at this school?<br />
         <a href="/official-school-profile/">Claim your school’s profile</a>
