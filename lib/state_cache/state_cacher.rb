@@ -5,9 +5,9 @@ class StateCacher
   # Known data types:
   # :state_characteristics
 
-  def initialize(state)
-    @state = state
-  end
+  # def initialize(state)
+  #   @state = state
+  # end
 
   def cache
     final_hash = build_hash_for_cache
@@ -29,42 +29,42 @@ class StateCacher
     raise NotImplementedError
   end
 
-  def self.cacher_for(key)
+  def cacher_for(key)
     {
         state_characteristics: StateCharacteristicsCacher
     }[key.to_s.to_sym]
   end
 
 
-  def self.active?
+  def active?
     true
   end
 
   # Should return true if param is a data type cacher depends on. See top of class for known data type symbols
-  def self.listens_to?(_)
+  def listens_to?(_)
     raise NotImplementedError
   end
 
-  def self.cachers_for_data_type(data_type)
+  def cachers_for_data_type(data_type)
     data_type_sym = data_type.to_s.to_sym
     registered_cachers.select {|cacher| cacher.listens_to? data_type_sym }
   end
 
-  def self.registered_cachers
+  def registered_cachers
     @registered_cachers ||= [
        StateCharacteristicsCacher
     ]
   end
 
-  def self.create_cache(cache_key)
+  def create_cache(state, cache_key)
     begin
       cacher_class = cacher_for(cache_key)
       return unless cacher_class.active?
       cacher = cacher_class.new(@state)
       cacher.cache
     rescue => error
-      error_vars = { cache_key: cache_key, district_state: district.state, district_id: district.id }
-      GSLogger.error(:district_cache, error, vars: error_vars, message: 'Failed to build district cache')
+      error_vars = { cache_key: cache_key, state: @state}
+      GSLogger.error(:state_cache, error, vars: error_vars, message: 'Failed to build state cache')
       raise
     end
   end

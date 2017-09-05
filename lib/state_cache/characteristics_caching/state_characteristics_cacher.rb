@@ -37,6 +37,7 @@ class StateCharacteristicsCacher < StateCacher
   def census_query
     CensusDataSetQuery.new(state)
         .with_data_types(STATE_CHARACTERISTICS_CENSUS_DATA_TYPES)
+        .with_state_values
         .with_census_descriptions('Public')
   end
 
@@ -50,11 +51,11 @@ class StateCharacteristicsCacher < StateCacher
   end
 
   def build_hash_for_data_set(result)
-    # return nil unless result.district_value
+    return nil unless result.state_average
     data_attributes.each_with_object({}) do |key, hash|
       value = result.try(key)
       if value
-        hash[key] = value
+        key == :state_average ? hash[:state_value] = value : hash[key] = value
         if key == :breakdown
           if (config = result.data_set_with_values.try(:census_data_config_entry))
             hash[key] = config.label
@@ -71,7 +72,7 @@ class StateCharacteristicsCacher < StateCacher
         :breakdown,
         :created,
         :grade,
-        :state_value,
+        :state_average,
         :source,
         :year
     ]

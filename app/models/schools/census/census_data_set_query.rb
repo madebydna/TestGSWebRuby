@@ -62,6 +62,10 @@ class CensusDataSetQuery
     load_state_values if include_state_values?
     load_census_descriptions if include_census_descriptions?
     load_config_entries
+    # if state_values.present?
+    #   require 'pry'
+    #   binding.pry
+    # end
     data_sets
   end
   alias_method :to_a, :results
@@ -107,6 +111,8 @@ class CensusDataSetQuery
   def load_state_values
     return if @state_values_loaded
     data_set_ids_to_state_values = state_values.group_by(&:data_set_id)
+
+
     data_sets.each do |data_set|
       state_values = Array(data_set_ids_to_state_values[data_set.id])
       association = data_set.association(:census_data_state_values)
@@ -114,6 +120,7 @@ class CensusDataSetQuery
       association.target.concat(state_values)
       state_values.each { |r| association.set_inverse_instance(r) }
     end
+
     @state_values_loaded = true
   end
 
