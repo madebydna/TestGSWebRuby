@@ -175,7 +175,8 @@ module SchoolProfiles
     end
 
     def rating_year
-      @school_cache_data_reader.gs_rating_year.to_s
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['year'].to_s if hash
     end
 
     def visible?
