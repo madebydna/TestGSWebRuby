@@ -1,7 +1,7 @@
 require 'addressable/uri'
 class OspApprovalEmail < AbstractExactTargetMailer
 
-  self.exact_target_email_key = 'ESP-approval'
+  self.exact_target_email_key = 'OSP-verification'
   self.priority = 'High' # Valid options = Low | Medium | High
 
   def self.deliver_to_user(user, school, link)

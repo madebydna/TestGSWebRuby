@@ -62,8 +62,8 @@
 
 
   $('.submit-osp-membership').find('button').on('click', function(){
-    let status = $(this).attr('data-id');
-    let memberArray = collectOspMembershipIds();
+    var status = $(this).attr('data-id');
+    var memberArray = collectOspMembershipIds();
 //    Don't fire ajax call unless user has selected osp-members to update
     if (memberArray.length > 0) {
       $.ajax({

@@ -1,7 +1,7 @@
 class OspModerationController < ApplicationController
   include OspHelper
 
-  STATUS_WHITELIST = %w(approved, rejected, disabled, osp-notes)
+  STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
 
   def index
     display_selected_memberships
@@ -15,10 +15,14 @@ class OspModerationController < ApplicationController
     http_status = 200
     if STATUS_WHITELIST.include?(status)
       # If user clicks 'update', only update notes.  Otherwise, update status as well.
-      if status == 'osp-notes'
-        member_array.each {|member| EspMembership.find(member[:id]).update(note: member[:notes])}
-      else
-        member_array.each {|member| EspMembership.find(member[:id]).update(note: member[:notes], status: status)}
+      member_array.each do |member|
+        membership = EspMembership.find(member[:id])
+        if status == 'osp-notes'
+          membership.update(note: member[:notes])
+        else
+          membership.update(note: member[:notes], status: status)
+          send_email_to_osp(membership, status)
+        end
       end
     else
       GSLogger.warn(:misc, nil, message: 'Failed to update EspMembership: action not allowed or supported.', vars: {
