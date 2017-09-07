@@ -1,6 +1,9 @@
 en:
   school_profiles:
     college_readiness:
+      no_data_html: >
+        This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
+        <br></br>
       title: College readiness
       subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
       source: Source

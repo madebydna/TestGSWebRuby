@@ -5,6 +5,7 @@
  <% has_data %>
  <% show_historical_ratings ||= false %>
  <% columns_historical = show_historical_ratings ? 'col-md-8' : 'col-md-12' %>
+ <% no_data_summary ||= '' %>
 
  <div class="module-header">
    <div class="row">
@@ -31,7 +32,7 @@
            <span><%= subtitle %></span>
          <% end %>
          <% unless has_data %>
-           <%= render 'no_data_for_module', title: title %>
+           <%= render 'no_data_for_module', title: title, no_data_summary: no_data_summary %>
          <% end %>
        </div>
      </div>

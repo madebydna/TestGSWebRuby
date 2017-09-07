@@ -119,7 +119,7 @@ export default class SchoolProfileComponent extends React.Component {
     if(sectionContent.length > 0) {
       sectionConfig['section_content'] = sectionContent;
     } else {
-      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} />
+      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} />
     }
 
     return sectionConfig;
