@@ -16,7 +16,9 @@ class GsdataCaching::GsdataCacher < Cacher
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
   # 158: Equity rating
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158].freeze
+  # 159: Academic Progress Rating
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159].freeze
+  DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
     'gender',
@@ -42,7 +44,7 @@ class GsdataCaching::GsdataCacher < Cacher
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
       cache_hash[result.name] << result_hash
-    end
+    end.merge(discipline_attendance_flags)
   end
 
   def self.listens_to?(data_type)
@@ -84,6 +86,37 @@ class GsdataCaching::GsdataCacher < Cacher
 
   private
 
+  def discipline_attendance_flags
+    hash = Hash.new { |h, k| h[k] = [] }
+    component_results = DataValue.find_by_school_and_data_types(school,DISCIPLINE_ATTENDANCE_IDS)
+    component_hash = component_results.each_with_object(Hash.new { |h, k| h[k] = [] }) do |result, cache_hash|
+      result_hash = result_to_hash(result)
+      validate_result_hash(result_hash, result.data_type_id)
+      cache_hash[result.data_type_id] << result_hash unless result_hash.has_key?(:breakdowns)
+    end
+
+    discipline_quartile = component_hash[161].present? ? component_hash[161].first[:school_value] : nil
+    discipline_subgroup_flag = component_hash[163].present? ? component_hash[163].first[:school_value] : nil
+    if discipline_quartile == '4' && discipline_subgroup_flag == '1'
+      hash['Discipline Disparity Flag'] << {
+          school_value: '1',
+          source_date_valid: component_hash[161].first[:source_date_valid],
+          source_name: component_hash[161].first[:source_name]
+      }
+    end
+    absence_quartile = component_hash[162].present? ? component_hash[162].first[:school_value] : nil
+    absence_subgroup_flag = component_hash[164].present? ? component_hash[164].first[:school_value] : nil
+    if absence_quartile == '4' && absence_subgroup_flag == '1'
+      hash['Absence Disparity Flag'] << {
+          school_value: '1',
+          source_date_valid: component_hash[162].first[:source_date_valid],
+          source_name: component_hash[162].first[:source_name]
+      }
+    end
+
+    hash
+  end
+
   def result_to_hash(result)
     breakdowns = result.breakdowns
     breakdown_tags = result.breakdown_tags
@@ -100,10 +133,21 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
       if result.data_type_id == 158 # equity rating
-        h[:description] = data_description_value("whats_this_equity#{school.state}") || data_description_value('whats_this_equity')
-        h[:methodology] = data_description_value("footnote_equity#{school.state}") || data_description_value('footnote_equity')
+        h[:description] = description('equity')
+        h[:methodology] = methodology('equity')
+      elsif result.data_type_id == 159 # academic progress rating
+        h[:description] = description('academic_progress')
+        h[:methodology] = methodology('academic_progress')
       end
     end
+  end
+
+  def description(name)
+    data_description_value("whats_this_#{name}#{school.state}") || data_description_value("whats_this_#{name}")
+  end
+
+  def methodology(name)
+    data_description_value("footnote_#{name}#{school.state}") || data_description_value("footnote_#{name}")
   end
 
   def validate_result_hash(result_hash, data_type_id)

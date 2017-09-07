@@ -59,7 +59,8 @@ module SchoolProfiles
         {
           title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
           anchor: 'Discipline_and_attendance',
-          data: @discipline_and_attendance.to_hash
+          data: @discipline_and_attendance.to_hash,
+          flagged: discipline_attendance_flag?
         }
       ]
     end
@@ -104,6 +105,10 @@ module SchoolProfiles
 
     def equity_disabilities_hash
       @_equity_disabilities_hash ||= equity_data.equity_gsdata_disabilities_hash
+    end
+
+    def discipline_attendance_flag?
+      @school_cache_data_reader.discipline_flag? || @school_cache_data_reader.attendance_flag?
     end
 
     def equity_data

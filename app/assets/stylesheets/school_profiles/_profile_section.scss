@@ -1,0 +1,56 @@
+.profile-section {
+  .section-title {
+    text-align: center;
+    @include media-breakpoint-up(sm) {
+      text-align: left;
+    }
+    font-size: 20px;
+    text-transform: uppercase;
+    font-family: "opensans-semibold";
+    padding: 20px 0;
+    @media (min-width: 970px) {
+      padding-top: 0;
+    }
+
+    a {
+      // innovate logo
+      @include media-breakpoint-up(lg) {
+        display: block;
+        height: 120px;
+      }
+    }
+    img.innovate-logo {
+      &.mobile {
+        @include media-breakpoint-up(sm) {
+          display: none;
+        }
+      }
+      &.desktop {
+        @include media-breakpoint-only(xs) {
+          display: none;
+        }
+      }
+      @include media-breakpoint-up(xs) {
+        width: 99px;
+        position: absolute;
+        right: 0px;
+      }
+      @include media-breakpoint-up(sm) {
+        width: 160px;
+        float: right;
+        position: static;
+      }
+      @include media-breakpoint-up(lg) {
+        width: 205px;
+        display: block;
+      }
+    }
+  }
+
+  .profile-module {
+    padding-left: 10px;
+    background: $light-gray;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}

@@ -80,7 +80,7 @@ export default class Courses extends React.Component {
     if (subjects.length > 0 && num_courses > 0)
       return (<div id="AdvancedCourses" className="advanced-courses rating-container" data-ga-click-label="Advanced courses">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
               { ratingHtml }
             <div className="title-container">
@@ -119,7 +119,7 @@ export default class Courses extends React.Component {
                   content={courseSubjectsForDrawer}
                   closedLabel={t('Show more') + ' ' + t('Advanced courses')}
                   openLabel={t('Show less') + ' ' + t('Advanced courses')}
-                /> 
+                />
               </div>
           }
           <InfoTextAndCircle {...this.props.faq} />
@@ -130,7 +130,7 @@ export default class Courses extends React.Component {
     else
       return <div id="AdvancedCourses-empty" className="advanced-courses rating-container">
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
             <div className="circle-rating--equity-blue circle-rating--medium">
               <span className="icon-user"></span>
@@ -138,7 +138,7 @@ export default class Courses extends React.Component {
             <div className="title-container">
               <div className="title">{t('Advanced courses')}</div>
               <span dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></span>
-              <NoDataModuleCta moduleName="Advanced courses"/>
+              <NoDataModuleCta moduleName="Advanced courses" message={this.props.no_data_summary}/>
             </div>
           </div>
         </div>

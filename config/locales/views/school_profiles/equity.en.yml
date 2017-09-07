@@ -9,6 +9,7 @@ en:
       Race ethnicity tooltip: >
         This section reflects test scores and other important measures for students at this school across different races/ethnicities. <br/><br/> Note: When the population of a subgroup is too small to provide reliable data, that subgroup does not show up in the display. This may cause certain races/ethnicities to not be included in some charts within this section.
       Race ethnicity icon: 'icon-pie'
+      Race ethnicity no data: This section reflects how well this school serves students from different races and ethnicities.
       'Low-income students': 'Low-income students'
       Low income subtitle: >
         Is your school helping all students succeed?
@@ -18,8 +19,10 @@ en:
         The low-income rating reflects state test scores for students at this school who qualify for free or
         reduced-price lunch compared to all students in the state.
       Low income icon: 'icon-pie'
+      Low income no data: This section reflects how well this school serves students from low-income families.
       Students with Disabilities: Students with disabilities
       Students with Disabilities subtitle: <br />
       Student with disabilities tooltip: >
         This group includes all students with physical or learning disabilities who receive special education and related services.  <a href='/gk/articles/special-education-a-practical-primer/'>Learn more</a>.
       Student with disabilities icon: 'icon-disability-2'
+      Disabilities no data: This section reflects how well this school serves students with disabilities.
