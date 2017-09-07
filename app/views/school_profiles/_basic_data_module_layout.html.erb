@@ -10,8 +10,8 @@
 <div id="<%= analytics_id %>" class="rating-container <%= css_class %>" data-ga-click-label="<%= ga_click_label%>">
   <a class="anchor-mobile-offset" name="<%= anchor %>"></a>
   <div class="profile-module js-historical-module">
-    <% if content_for? :header %>
-      <%= yield :header %>
+    <% if content_for? :profile_module_header %>
+      <%= yield :profile_module_header %>
     <% end %>
 
     <% if content_for :historical_ratings %>

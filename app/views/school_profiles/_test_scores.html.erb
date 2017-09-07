@@ -9,7 +9,7 @@
 <% content = test_scores.sources %>
 <% narration = test_scores.narration %>
 
-<% content_for(:header, flush: true) do %>
+<% content_for(:profile_module_header, flush: true) do %>
     <%= render "module_header",
       rating: rating,
       title: t('lib.test_scores.Test scores'),
