@@ -23,3 +23,4 @@
       terms_of_use_html: Al suscribirse, acepto los %{terms_of_use_link} y %{privacy_policy_link}.
       parsley_required_message: Por favor introduzca una dirección de correo eléctronico.
       parsley_remote_message_html: "Parece que ya tiene una cuenta. <a href='#login' data-toggle='tab'>Iniciar sesión</a>."
+      choose_grade: "Choose your child's grade to receive related emails:"

@@ -11,7 +11,9 @@ GOOGLE_CLIENT_ID: "gme-greatschoolsinc"
 facebook_app_id: "178930405559082"
 facebook_app_secret: "db1795c48c3b404b7c480e48df3985c2"
 solr.ro.server.url: "http://omega.greatschools.org:8580/main/"
-solr.rw.server.url:  "http://omega.greatschools.org:8580/main/"
+solr.ro.timeout.open: 10
+solr.ro.timeout.read: 10
+solr.rw.server.url: "http://omega.greatschools.org:8580/main/"
 cdn_host: 'http://www.gscdn.org'
 gtm_container_id: 'GTM-N9TK8P'
 advertising_env: "dev"

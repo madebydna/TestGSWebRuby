@@ -5,17 +5,20 @@ module SchoolProfiles
         school_cache_data_reader
           .gsdata_data(data_type).fetch(data_type, [])
           .map { |h| h.merge('breakdowns' => (h['breakdowns'] || 'All students').split(',')) }
-          .select { |h| h['breakdowns'].size < 2 }
-          .map { |h| normalize_test_scores_hash(h) }
+          .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+          .extend(GsdataCaching::GsDataValue::CollectionMethods)
+          .having_one_breakdown
+          .having_most_recent_date
+          .map { |h| normalize_gsdata_value(h) }
       end
 
-      def normalize_test_scores_hash(hash)
-        breakdown = (hash['breakdowns'] - ['All students except 504 category']).first
+      def normalize_gsdata_value(value)
+        breakdown = (value.breakdowns - ['All students except 504 category']).first
         {
-          breakdown: breakdown,
-          score: hash['school_value'],
-          state_average: hash['state_value'],
-          percentage: value_to_s(ethnicities_to_percentages[breakdown])
+            breakdown: breakdown,
+            score: value.school_value,
+            state_average: value.state_value,
+            percentage: value_to_s(ethnicities_to_percentages[breakdown])
         }
       end
     end

@@ -28,7 +28,7 @@ module SchoolProfiles
       {
         :cache => :characteristics,
         :data_key => UC_CSU_ENTRANCE,
-        :visualization => :single_bar_viz,
+        :visualization => :person_bar_viz,
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
