@@ -149,8 +149,16 @@ en:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
-          'Test scores': >
-            <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
-            <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
+          'Test scores':
+            # one - subject begins with a vowel e.g. an English
+            # other - subject begins with a consonant e.g. a Math
+            one: >
+              <p class="narrative-content">This shows results for students with disabilities on an %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
+            other: >
+              <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
