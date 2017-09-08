@@ -120,5 +120,4 @@ export function nearbyHomesUrl(city, state) {
 
 export function pricingPageUrl() {
   return 'https://www.trulia.com/sell/?ts=greatschools&tscamp=mainlink'
-  // return addQueryParamToUrl('utm_campaign', 'profileseller', addCampaignCode('https://www.zillow.com/how-much-is-my-home-worth/?sem=true'));
 };
