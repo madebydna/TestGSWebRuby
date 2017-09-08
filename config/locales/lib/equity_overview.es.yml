@@ -8,6 +8,13 @@ es:
       'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'Great schools rating': 'La Calificación General de Equidad de GreatSchools'
       'source': 'Fuente'
+      section:
+        one: la sección
+        other: las secciones
+      race_ethnicity: Raza/etnicidad
+      low_income: Bajos-ingresos
+      and: y
+      section_list: "%{section_word} %{section_names}"
       info_text: >
         La Calificación General de Equidad mira lo bien que esta escuela está atendiendo las necesidades de sus
         estudiantes en desventaja con relación a todos sus estudiantes, en comparación a otras escuelas en el estado,
@@ -17,51 +24,52 @@ es:
         clasificación. </a>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
-        <p>Esta escuela no sirve a los estudiantes de las comunidades más desfavorecidas del estado así como otras
-        escuelas en el estado.</p>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
+        comparación a otros estudiantes en el estado, y esta escuela puede tener grandes diferencias en logro académico.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
-        <p class="footnote">Compare esta calificación a la calificación General de GreatSchools. Hay una gran
-        diferencia? Inicie una conversación con un maestro o otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a todos los estudiantes a tener éxito? ¿Cómo puedes ayudar?</p>
+        <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
+        escuela. ¿Hay diferencias grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
+        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?</p>
       narrative_2_html: >
         <h3 class="negative">Un signo preocupante:</h3>
-        <p>Esta escuela no sirve a los estudiantes de las comunidades más desfavorecidas del estado así como otras
-        escuelas en el estado.</p>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
+        comparación a otros estudiantes en el estado, y esta escuela puede tener diferencias significativas en
+        logro académico.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
-        <p class="footnote">Compare esta calificación a la calificación General de GreatSchools. Hay una gran
-        diferencia? Inicie una conversación con un maestro o otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a todos los estudiantes a tener éxito? ¿Cómo puedes ayudar?</p>
+        <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
+        escuela. ¿Hay diferencias grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
+        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?</p>
       narrative_3_html: >
         <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
-        <p>Esta escuela está sirviendo a los estudiantes de las comunidades más desfavorecidas del estado así como
-        otras escuelas en el estado.</p>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
+        otros estudiantes en el estado, pero esta escuela todavía puede tener diferencias en logro académico.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
-        <p class="footnote">Compare esta calificación a la calificación General de GreatSchools. Hay una gran
-        diferencia? Inicie una conversación con un maestro o otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a todos los estudiantes a tener éxito? ¿Cómo puedes ayudar?</p>
+        <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
+        escuela. ¿Hay diferencias grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
+        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?</p>
       narrative_4_html: >
         <h3 class="positive">Un signo prometedor:</h3>
-        <p>Esta escuela está sirviendo a los estudiantes de las comunidades más desfavorecidas del estado mejor
-        que otras escuelas en el estado.</p>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
+         estudiantes en el estado, aunque esta escuela todavía puede tener diferencias en logro académico.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
-        <p class="footnote">¡Las escuelas que cierren la brecha entre diferentes grupos de estudiantes están haciendo
-        algo bien! Inicie una conversación con un maestro o otros padres de la escuela acerca de lo que está haciendo
-        la escuela.</p>
+        <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
+        haciendo algo bien! Explore %{sections} para informarse más. Hable con un maestro u otros padres sobre cómo
+        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.</p>
       narrative_5_html: >
-       <h3 class="positive">¡Buenas noticias!:</h3>
-        <p>Esta escuela está sirviendo a los estudiantes de las comunidades más desfavorecidas del estado mucho mejor
-        que otras escuelas en el estado.</p>
+        <h3 class="positive">¡Buenas noticias!:</h3>
+        <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
+        otros estudiantes en el estado, y esta escuela está eliminando con éxito las diferencias en logro académico.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
-        <p class="footnote">¡Las escuelas que cierren la brecha entre diferentes grupos de estudiantes están haciendo
-        algo bien! Inicie una conversación con un maestro o otros padres de la escuela acerca de lo que está haciendo
-        la escuela.</p>
+        <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
+        haciendo algo bien! Explore %{sections} para informarse más. Hable con un maestro u otros padres sobre cómo
+        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.</p>
