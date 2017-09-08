@@ -1,3 +1,7 @@
 .anchor-button {
   @include anchor-button;
+  &.bold-anchor div{
+    font-family: $font-family-base-bold;
+  }
 }
+
