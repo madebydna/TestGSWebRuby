@@ -141,7 +141,7 @@ export default class HomesAndRentals extends React.Component {
           { this.renderHomesAndRentals() }
         </div>
         <div className="cta-buttons">
-          <AnchorButton className="bold-anchor" rel="nofollow" target="_blank" href={pricingPageUrl()}>{ t('Find out what your home is worth') }</AnchorButton>
+          <AnchorButton className="bold-anchor" rel="nofollow" target="_blank" href={pricingPageUrl()}><span className="icon-house prs"></span>{ t('Find out what your home is worth') }</AnchorButton>
           <AnchorButton className="bold-anchor"  rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ t('See more listings near this school') }</AnchorButton>
           <img src={zillowLogo} />
         </div>
