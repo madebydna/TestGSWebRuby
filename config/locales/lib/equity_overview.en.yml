@@ -2,6 +2,9 @@ en:
   lib:
     equity_overview:
       'title': 'Equity overview'
+      subtitle_html: >
+        Is this school offering opportunity for all its students, or leaving some kids behind?
+        Successful schools are working to <a href="%{article_path}">close the achievement gap</a>.
       'sources_title': 'GreatSchools profile data sources &amp; information'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'

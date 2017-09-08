@@ -2,6 +2,7 @@
   <%= render 'module_header',
     rating: equity_overview.equity_rating,
     title: t('lib.equity_overview.title'),
+    subtitle: t('lib.equity_overview.subtitle_html', article_path: article_achievement_gap_path),
     info_text: equity_overview.info_text,
     has_data: true
   %>
