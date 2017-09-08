@@ -100,10 +100,10 @@
 
 .tiles {
   display: table;
-  margin: 30px auto 0 auto;
+  max-width: 1030px;
+  margin: 30px auto 0;
   @include media-breakpoint-up(md) {
     display: block;
-    margin: 30px -10px 0 -10px;
   }
 }
 
