@@ -21,6 +21,8 @@ es:
       sources: Fuentes
       was_this_useful: ¿Esto estuvo útil?
       give_us_your_feedback: Danos tu opinion
+      Subject: Materias
+      percent_proficient: '% a nivel de grado'
       faq:
         cta: ¿Notas que algo falta o confunde?
         content_html: >

@@ -44,6 +44,8 @@
   <% render_test_names = subjects.uniq.size < subjects.size %>
 
   <% if data_values.present? %>
+    <%= render partial: 'test_scores_column_headers' %>
+
     <% data_values.take(initial_size).each do |data_value| %>
       <% if render_test_names && last_test_name != data_value.test_label %>
         <div class="item-heading"><%= data_value.test_label %></div>
