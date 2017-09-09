@@ -2,6 +2,7 @@ class OspModerationController < ApplicationController
   include OspHelper
 
   STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
+  PARAMS_WHITELIST = %w(state school_id member_id email)
 
   def index
     display_selected_memberships
@@ -31,6 +32,27 @@ class OspModerationController < ApplicationController
       http_status = 422
     end
     render json: {}, status: http_status
+  end
+
+  def osp_search
+    @permitted_params = request.query_parameters.select{|param, val| PARAMS_WHITELIST.include?(param) && val.present? }.symbolize_keys
+    if (@permitted_params[:state] || @permitted_params[:school_id]) && @permitted_params.length <= 1
+    elsif @permitted_params.empty?
+    elsif @permitted_params[:email]
+      if User.where(email: @permitted_params[:email]).present?
+        member_id = User.find_by(email: @permitted_params[:email]).id
+        @osp_memberships = EspMembership.where(member_id: member_id).where(@permitted_params.except(:email, :member_id))
+                           .joins(:user).where('email_verified = ?', true)
+                           .extend(SchoolAssociationPreloading)
+                           .preload_associated_schools!
+      end
+    else
+      @osp_memberships = EspMembership.where(@permitted_params.except(:email))
+                           .joins(:user).where('email_verified = ?', true)
+                           .extend(SchoolAssociationPreloading)
+                           .preload_associated_schools!
+    end
+    render 'osp/osp_moderation/osp_search'
   end
 
   private
