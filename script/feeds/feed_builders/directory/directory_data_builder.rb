@@ -2,13 +2,6 @@ module Feeds
   class DirectoryDataBuilder
     include Feeds::FeedConstants
 
-    # this is a white list of keys we are looking for
-    DIRECTORY_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type)
-    DIRECTORY_KEYS = %w(nces_code FIPScounty phone fax district_name district-spending school_summary)
-
-    #  REQUIRED - universal_id zipcode home_page_url url
-    DIRECTORY_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url state_id universal_district_id census_info)
-
     def self.build_data(hash, state, model)
       @value_key = model.downcase + '_value'
       @model = model

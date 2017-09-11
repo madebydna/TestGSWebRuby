@@ -55,6 +55,121 @@ module Feeds
 
       DEFAULT_BATCH_SIZE = 1
 
+      # this is a white list of keys we are looking for
+      DIRECTORY_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type)
+      DIRECTORY_KEYS = %w(nces_code FIPScounty phone fax district_name district-spending school_summary)
+
+      #  REQUIRED - universal_id zipcode home_page_url url
+      DIRECTORY_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url state_id universal_district_id census_info)
+
+      # this is a white list of keys we are looking for - executes a method to handle type of data
+      CHARACTERISTICS_MAPPING = [
+          {
+              key: 'Enrollment',
+              method: 'enrollment'
+          },
+          {
+              key: 'Ethnicity',
+              method: 'ethnicity'
+          },
+          {
+              key: 'Students participating in free or reduced-price lunch program',
+              method: 'free_or_reduced_lunch_program'
+          },
+          {
+              key: 'Head official name',
+              method: 'straight_text_value',
+              data_type: 'head-official-name'
+          },
+          {
+              key: 'Head official email address',
+              method: 'straight_text_value',
+              data_type: 'head-official-email'
+          },
+          {
+              key: 'English learners',
+              method: 'students_with_limited_english_proficiency'
+          },
+          {
+              key: 'Student teacher ratio',
+              method: 'student_teacher_ratio'
+          },
+          {
+              key: 'Students who are economically disadvantaged',
+              method: 'percent_economically_disadvantaged'
+          },
+          {
+              key: 'Average years of teacher experience',
+              method: 'teacher_data',
+              data_type: 'average teacher experience years'
+          },
+          {
+              key: 'Average years of teaching in district',
+              method: 'teacher_data',
+              data_type: 'average years teaching in district'
+          },
+          {
+              key: 'Percent classes taught by highly qualified teachers',
+              method: 'teacher_data',
+              data_type: 'percent classes taught by highly qualified teachers'
+          },
+          {
+              key: 'Percent classes taught by non-highly qualified teachers',
+              method: 'teacher_data',
+              data_type: 'percent classes taught by non highly qualified teachers'
+          },
+          {
+              key: 'Percentage of teachers in their first year',
+              method: 'teacher_data',
+              data_type: 'percent teachers in first year'
+          },
+          {
+              key: 'Teaching experience 0-3 years',
+              method: 'teacher_data',
+              data_type: 'percent teachers with 3 years or less experience'
+          },
+          {
+              key: 'at least 5 years teaching experience',
+              method: 'teacher_data',
+              data_type: 'percent teachers with at least 5 years experience'
+          },
+          {
+              key: "Bachelor's degree",
+              method: 'teacher_data',
+              data_type: 'percent teachers with bachelors degree'
+          },
+          {
+              key: "Doctorate's degree",
+              method: 'teacher_data',
+              data_type: 'percent teachers with doctorate degree'
+          },
+          {
+              key: "Master's degree",
+              method: 'teacher_data',
+              data_type: 'percent teachers with masters degree'
+          },
+          {
+              key: "Master's degree or higher",
+              method: 'teacher_data',
+              data_type: 'percent teachers with masters or higher'
+          },
+          {
+              key: 'Teachers with no valid license',
+              method: 'teacher_data',
+              data_type: 'percent teachers with no valid license'
+          },
+          {
+              key: 'Other degree',
+              method: 'teacher_data',
+              data_type: 'percent teachers with other degree'
+          },
+          {
+              key: 'Teachers with valid license',
+              method: 'teacher_data',
+              data_type: 'percent teachers with valid license'
+          }
+      ].freeze
+
       def all_feeds
         %w(test_scores test_subgroup test_rating official_overall, directory_feed)
       end
