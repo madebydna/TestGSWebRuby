@@ -109,7 +109,8 @@ module Feeds
         }
     ].freeze
 
-    def self.characteristics_format(characteristics_data_set, universal_id)
+    def self.characteristics_format(characteristics_data_set, universal_id, model)
+      @model = model
       characteristics_data_set.map do | cds |
         build_data(cds.first, cds.second, universal_id)
       end.flatten if characteristics_data_set
@@ -121,9 +122,9 @@ module Feeds
     end
 
     def self.students_with_limited_english_proficiency(data, universal_id, data_type=nil)
-      if data && data.first && data.first['school_value']
+      if data && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first['school_value'].to_f.round(3)
+        options[:value] = data.first[value_var].to_f.round(3)
         options[:year] = data.first['year']
         options[:universal_id] = universal_id
         build_structure('percent-students-with-limited-english-proficiency', options)
@@ -131,9 +132,9 @@ module Feeds
     end
 
     def self.straight_text_value(data, universal_id, data_type)
-      if data && data.first && data.first['school_value']
+      if data && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first['school_value']
+        options[:value] = data.first[value_var]
         options[:year] = data.first['year']
         options[:universal_id] = universal_id
         build_structure(data_type, options)
@@ -141,9 +142,9 @@ module Feeds
     end
 
     def self.teacher_data(data, universal_id, data_type)
-      if data && data.first && data.first['school_value']
+      if data && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first['school_value'].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(1)
         options[:data_type] = data_type
         options[:year] = data.first['year']
         options[:universal_id] = universal_id
@@ -153,9 +154,9 @@ module Feeds
 
     def self.enrollment(data, universal_id, data_type)
       hash = data.find { | h | h['grade'].blank? } if data
-      if hash && hash['school_value']
+      if hash && hash[value_var]
         options = {}
-        options[:value] = hash['school_value'].to_i
+        options[:value] = hash[value_var].to_i
         options[:year] = hash['year']
         options[:universal_id] = universal_id
         build_structure('enrollment', options)
@@ -163,11 +164,12 @@ module Feeds
     end
 
     def self.ethnicity(data, universal_id, data_type)
+
       if data
         data.map do |d|
-          if d && d['school_value']
+          if d && d[value_var]
             options = {}
-            options[:value] = d['school_value'].to_f.round(1)
+            options[:value] = d[value_var].to_f.round(1)
             options[:name] = d['original_breakdown'] || d['breakdown']
             options[:year] = d['year']
             options[:universal_id] = universal_id
@@ -178,9 +180,9 @@ module Feeds
     end
 
     def self.free_or_reduced_lunch_program(data, universal_id, data_type)
-      if data && data.first && data.first['school_value']
+      if data && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first['school_value'].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(1)
         options[:year] = data.first['year']
         options[:universal_id] = universal_id
         build_structure('percent-free-and-reduced-price-lunch', options)
@@ -189,9 +191,9 @@ module Feeds
 
     #TODO find sample in db to see what type of rounding needed
     def self.student_teacher_ratio(data, universal_id, data_type)
-      if data && data.first && data.first['school_value']
+      if data && data.first && data.first[value_var]
         options = {}
-        options[:value] = data.first['school_value'].to_f.round(1)
+        options[:value] = data.first[value_var].to_f.round(1)
         options[:year] = data.first['year']
         options[:universal_id] = universal_id
         build_structure('student-teacher-ratio', options)
@@ -204,6 +206,10 @@ module Feeds
 
     def self.capture_misses(key)
       single_data_object(key, 'missed')
+    end
+
+    def self.value_var
+      @model.downcase+'_value'
     end
 
     def self.build_structure(key, options={})

@@ -18,30 +18,6 @@ class StateCache < ActiveRecord::Base
     state_data
   end
 
-  # def self.cached_results_for(districts, keys)
-  #   query = StateCacheQuery.new.include_cache_keys(keys)
-  #   [*districts].each do |district|
-  #     query.include_districts(district.state, district.id)
-  #   end
-  #   DistrictCacheResults.new(keys, query.query_and_use_cache_keys)
-  # end
-  #
-  # self::KEYS.each do |key|
-  #   method_name = "cached_#{key}_data"
-  #   define_singleton_method(method_name) do |district|
-  #     cache_key = "#{method_name}"
-  #     if district.instance_variable_get("@#{cache_key}")
-  #       return district.instance_variable_get("@#{cache_key}")
-  #     end
-  #     cached_data = if (district_cache = self.for_district(key,district.id,district.state))
-  #                     district_cache.cache_data(symbolize_names: true)
-  #                   else
-  #                     {}
-  #                   end
-  #     district.instance_variable_set("@#{cache_key}", cached_data)
-  #   end
-  # end
-
   def cache_data(options = {})
     JSON.parse(value, options) rescue {}
   end

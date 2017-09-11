@@ -30,13 +30,18 @@ module Feeds
     end
 
     def self.census_info
-      characteristics_hash = {} # need to build a pretty hash to feed into the monster
-      char_data = CharacteristicsDataBuilder.characteristics_format(characteristics_hash, @universal_id)
+      characteristics_hash = state_data # need to build a pretty hash to feed into the monster
+      char_data = CharacteristicsDataBuilder.characteristics_format(characteristics_hash, @universal_id, 'state')
       single_data_object('census-info', char_data) if char_data.compact.present?
     end
 
     def self.single_data_object(name, value, attrs=nil)
       SingleDataObject.new(name, value, attrs)
+    end
+
+    def self.state_data
+      state_characteristics_data = StateCache.for_state('state_characteristics', @state)
+      state_characteristics_data.cache_data if state_characteristics_data
     end
 
   end
