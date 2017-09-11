@@ -87,6 +87,11 @@
       }
     }
   }
+}
 
+@include media-breakpoint-only(xs) {
+  .test-score-column-header {
+    display:none;
+  }
 }
 

@@ -17,8 +17,10 @@ class GsdataCaching::GsdataCacher < Cacher
   # 154: Percentage of Students Enrolled
   # 158: Equity rating
   # 159: Academic Progress Rating
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159].freeze
   DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
+
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 175, 176, 177, 178, 179, 180, 181, 182, 186].freeze
+
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
     'gender',
