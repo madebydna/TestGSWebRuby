@@ -1,5 +1,5 @@
-module DistrictCacheFormat
-  include DistrictCacheValidation
+module StateCacheFormat
+  include StateCacheValidation
 
   def build_hash_for_cache
     hash = {}
@@ -37,32 +37,32 @@ module DistrictCacheFormat
 
     historical_data = @all_results.select do | data_set |
       data_set.data_type_id == data_type_id &&
-      data_set.subject_id == subject_id &&
-      data_set.breakdown_id == breakdown_id
+          data_set.subject_id == subject_id &&
+          data_set.breakdown_id == breakdown_id
     end
 
     set_hash_values!(historical_data, hash)
   rescue => e
     GSLogger.error(
-      :school_cache,
-      e,
-      message: 'failed in building historical data for district',
-      vars: {district:district.id, state: district.state}
+        :school_cache,
+        e,
+        message: 'failed in building historical data for district',
+        vars: {state: district.state}
     )
   end
 
   def data_keys
     [
-      :breakdown,
-      :created,
-      :district_average,
-      :grade,
-      :performance_level,
-      :school_value,
-      :source,
-      :state_average,
-      :subject,
-      :year
+        :breakdown,
+        :created,
+        :district_average,
+        :grade,
+        :performance_level,
+        :school_value,
+        :source,
+        :state_average,
+        :subject,
+        :year
     ]
   end
 
