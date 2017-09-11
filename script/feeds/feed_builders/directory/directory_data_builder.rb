@@ -14,22 +14,35 @@ module Feeds
 
       arr = []
 
-      DIRECTORY_KEYS_REQUIRED.each do | key |
-        value = cache_value(@directory_hash,key)
-        key_string = key.to_s.gsub('_', '-').downcase
-        arr << single_data_object(key_string, value)
+      DIRECTORY_FEED_FORCE_ORDER.each do | key |
+        if DIRECTORY_KEYS_SPECIAL.include? key
+          # require 'pry'
+          # binding.pry
+          sdo = send(key)
+          arr << sdo if sdo
+        else
+          value = cache_value(@directory_hash,key)
+          key_string = key.to_s.gsub('_', '-').downcase
+          arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
+        end
       end
 
-      DIRECTORY_KEYS.each do | key |
-        value = cache_value(@directory_hash,key)
-        key_string = key.to_s.gsub('_', '-').downcase
-        arr << single_data_object(key_string, value) if value.present?
-      end
-
-      DIRECTORY_KEYS_SPECIAL.each do | key |
-        sdo = send(key)
-        arr << sdo if sdo
-      end
+      # DIRECTORY_KEYS_REQUIRED.each do | key |
+      #   value = cache_value(@directory_hash,key)
+      #   key_string = key.to_s.gsub('_', '-').downcase
+      #   arr << single_data_object(key_string, value)
+      # end
+      #
+      # DIRECTORY_KEYS.each do | key |
+      #   value = cache_value(@directory_hash,key)
+      #   key_string = key.to_s.gsub('_', '-').downcase
+      #   arr << single_data_object(key_string, value) if value.present?
+      # end
+      #
+      # DIRECTORY_KEYS_SPECIAL.each do | key |
+      #   sdo = send(key)
+      #   arr << sdo if sdo
+      # end
 
       arr.flatten
     end
