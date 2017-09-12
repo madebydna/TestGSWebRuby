@@ -96,6 +96,8 @@
 @import "pages/page-not-found";
 
 // school profile specific
+@import 'school_profiles/profile_section';
+@import 'school_profiles/profile_module';
 @import 'school_profiles/module_feedback';
 @import 'school_profiles/hero.scss';
 @import 'school_profiles/toc.scss';

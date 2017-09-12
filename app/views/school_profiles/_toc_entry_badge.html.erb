@@ -1,6 +1,7 @@
 <% icon %>
 <% title %>
 <% anchor %>
+<% flagged %>
 
 <div class="clearfix toc-entry">
   <a href="#<%= anchor %>"
@@ -11,4 +12,13 @@
     <span><%= title %></span>
     <span class="icon-chevron-right"></span>
   </a>
+  <% if flagged %>
+    <a class="js-gaClick flag"
+       data-ga-click-category='Profile'
+       data-ga-click-action='TOC Clicked'
+       data-ga-click-label="TOC - discipline/attendance flag"
+       href="#<%= anchor %>">
+      <span class="icon-flag red"></span>
+    </a>
+  <% end %>
 </div>

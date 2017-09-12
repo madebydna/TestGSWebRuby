@@ -12,6 +12,7 @@ export default class SectionNavigation extends React.Component {
         addJSHashUpdate = ' js-updateLocationHash';
         anchorLink = this.props.parent_anchor + hashSeparatorAnchor() + formatAnchorString(item.anchor);
       }
+      let flagged = item.flagged || false;
       return <div key={index} className="tab-container">
         <a href="javascript:void(0)"
                 data-anchor={anchorLink}
@@ -22,16 +23,23 @@ export default class SectionNavigation extends React.Component {
                 data-ga-click-action={this.googleTrackingAction()}
                 data-ga-click-label={item.title}>
         {item.title}
+        {this.addFlag(flagged)}
       </a>
         {this.addDivider(index)}</div>;
     }.bind(this));
-    if(items != undefined ) return <div className="clearfix space-below">{items}</div>;
+    if(items != undefined ) return <div className="clearfix">{items}</div>;
   };
 
   addDivider(index){
     var last_item = this.props.items.length - 1;
     if(index != last_item){
       return <span className="divider" />
+    }
+  }
+
+  addFlag(flag) {
+    if (flag === true) {
+      return <span className="red icon-flag"/>
     }
   }
 

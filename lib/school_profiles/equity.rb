@@ -59,7 +59,8 @@ module SchoolProfiles
         {
           title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
           anchor: 'Discipline_and_attendance',
-          data: @discipline_and_attendance.to_hash
+          data: @discipline_and_attendance.to_hash,
+          flagged: discipline_attendance_flag?
         }
       ]
     end
@@ -104,6 +105,10 @@ module SchoolProfiles
 
     def equity_disabilities_hash
       @_equity_disabilities_hash ||= equity_data.equity_gsdata_disabilities_hash
+    end
+
+    def discipline_attendance_flag?
+      @school_cache_data_reader.discipline_flag? || @school_cache_data_reader.attendance_flag?
     end
 
     def equity_data
@@ -264,12 +269,12 @@ module SchoolProfiles
       @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
     end
 
-    def ethnicity_visible?
-      equity_test_scores.ethnicity_test_scores_visible? || characteristics['4-year high school graduation rate'].present? || characteristics['Percent of students who meet UC/CSU entrance requirements'].present?
+    def race_ethnicity_visible?
+      race_ethnicity_props.map { |h| h[:data] }.any?(&:present?)
     end
 
     def low_income_visible?
-      equity_test_scores.low_income_test_scores_visible? || characteristics_low_income_visible?
+      low_income_section_props.map { |h| h[:data] }.any?(&:present?)
     end
 
     def faq_race_ethnicity

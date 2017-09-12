@@ -19,6 +19,8 @@ class SchoolProfilesController < ApplicationController
     else
       @school_profile = school_profile
     end
+    cache_time = ENV_GLOBAL['school_profile_cache_time']
+    expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
   end
 
   private
@@ -78,6 +80,7 @@ class SchoolProfilesController < ApplicationController
         sp.mailto = osp_school_info.mailto
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
+        sp.academic_progress = academic_progress
       end
     )
   end
@@ -141,7 +144,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, academic_progress, school)
   end
 
   def test_scores
@@ -178,7 +181,15 @@ class SchoolProfilesController < ApplicationController
 
   def equity_overview
     @_equity_overview ||= SchoolProfiles::EquityOverview.new(
-      school_cache_data_reader: school_cache_data_reader
+      school_cache_data_reader: school_cache_data_reader,
+      equity: equity
+    )
+  end
+
+  def academic_progress
+    SchoolProfiles::AcademicProgress.new(
+        school,
+        school_cache_data_reader: school_cache_data_reader
     )
   end
 

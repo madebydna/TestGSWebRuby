@@ -39,6 +39,7 @@ describe GsdataCaching::GsdataCacher do
       breakdown_two_result_hashes = breakdowns.map do |bd|
         build_result_hash(bd, tags)
       end
+      allow(gsdb_cacher).to receive(:discipline_attendance_flags).and_return({})
       result = {
         'Data Type 1' => breakdown_one_result_hashes,
         'Data Type 2' => breakdown_two_result_hashes

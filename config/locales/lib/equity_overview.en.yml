@@ -2,9 +2,19 @@ en:
   lib:
     equity_overview:
       'title': 'Equity overview'
+      subtitle_html: >
+        Is this school offering opportunity for all its students, or leaving some kids behind?
+        Successful schools are working to <a href="%{article_path}">close the achievement gap</a>.
       'sources_title': 'GreatSchools profile data sources &amp; information'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
+      section:
+        one: section
+        other: sections
+      race_ethnicity: Race/ethnicity
+      low_income: Low-income
+      and: and
+      section_list: "%{section_names} %{section_word}"
       info_text: >
         The Equity Overview Rating looks at how well this school is serving the needs of its disadvantaged students
         relative to all its students, compared to other schools in the state, based on test scores provided from the
@@ -13,44 +23,46 @@ en:
         <a href="http://www.greatschools.org/gk/ratings/" style="cursor: pointer;">Learn more about this rating.</a>
       narrative_1_html: >
         <h3 class="negative">Very concerning:</h3>
-        <p>This school is not serving students from the state's most disadvantaged communities as well as
-        other schools in the state. </p>
+        <p>Disadvantaged students at this school may be falling far behind other students in the state,
+        and this school may have large achievement gaps.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
-        <p class="footnote">Compare this rating to the overall GreatSchools Summary Rating. Is there a big gap? Start
-        a conversation with a teacher or a fellow parent about how to interpret this information. What’s the school
-        doing to help all students succeed? How can you help?</p>
+        <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
+        Are there big gaps? Start a conversation with a teacher or a fellow parent about how to interpret this
+        information. What's the school doing to help all students succeed? How can you help?</p>
       narrative_2_html: >
         <h3 class="negative">A worrisome sign:</h3>
-        <p>This school is not serving students from the state's most disadvantaged communities as well as
-        other schools in the state. </p>
+        <p>Disadvantaged students at this school may be falling behind other students in the state, and this school
+        may have significant achievement gaps.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
-        <p class="footnote">Compare this rating to the overall GreatSchools Summary Rating. Is there a big gap? Start
-        a conversation with a teacher or a fellow parent about how to interpret this information. What’s the school
-        doing to help all students succeed? How can you help?</p>
+        <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
+        Are there big gaps? Start a conversation with a teacher or a fellow parent about how to interpret this
+        information.  What's the school doing to help all students succeed? How can you help?</p>
       narrative_3_html: >
         <h3 class="neutral">Worth a deeper look:</h3>
-        <p>This school is serving students from the state's most disadvantaged communities about as well as
-        other schools in the state. </p>
+        <p>Disadvantaged students at this school are performing about as well as other students in the state, but this
+        school may still have achievement gaps.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
-        <p class="footnote">Compare this rating to the overall GreatSchools Summary Rating. Is there a big gap? Start
-        a conversation with a teacher or a fellow parent about how to interpret this information. What’s the school
-        doing to help all students succeed? How can you help?</p>
+        <p class="footnote">Look at the %{sections} below to see how different student groups are doing at this school.
+        Are there big gaps? Start a conversation with a teacher or a fellow parent about how to interpret this
+        information. What’s the school doing to help all students succeed? How can you help?</p>
       narrative_4_html: >
         <h3 class="positive">A promising sign:</h3>
-        <p>This school is serving students from the state’s most disadvantaged communities better than other schools
-        in the state.</p>
+        <p>Disadvantaged students at this school are performing better than other students in the state,
+        though this school may still have achievement gaps.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Schools that close the gap between different student groups are doing something right!
-        Start a conversation with a teacher or a fellow parent about what’s the school doing. </p>
+        Explore the %{sections} below to learn more. Start a conversation with a teacher or a fellow parent about
+        how this school is helping all its students succeed – and how can you help.</p>
       narrative_5_html: >
-       <h3 class="positive">Good news!</h3>
-        <p>This school is serving students from the state’s most disadvantaged communities much better than other
-        schools in the state.</p>
+        <h3 class="positive">Good news!</h3>
+        <p>Disadvantaged students at this school are performing far better than other students in the state, and this
+        school is successfully closing the achievement gap.</p>
         <hr>
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
         <p class="footnote">Schools that close the gap between different student groups are doing something right!
-        Start a conversation with a teacher or a fellow parent about what’s the school doing. </p>
+        Explore the %{sections} below to learn more. Start a conversation with a teacher or a fellow parent about
+        how this school is helping all its students succeed – and how can you help.</p>

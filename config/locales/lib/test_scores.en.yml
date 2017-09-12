@@ -21,6 +21,8 @@ en:
       sources: Sources
       was_this_useful: Was this useful?
       give_us_your_feedback: Give us your feedback
+      Subject: Subject
+      percent_proficient: '% Proficient'
       faq:
         cta: Notice something missing or confusing?
         content_html: >
