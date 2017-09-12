@@ -1,0 +1,39 @@
+<div style="font-size: 11px;">
+  <%# tooltip header %>
+  <div style="text-align: left;">
+    <div style="display: inline-block; float: right;">
+      <span class="gs-rating circle-rating--<%= 8 %> circle-rating--small">
+          <%= 8 %><span class="denominator">/10</span>
+    </div>
+    <div style="width: 250px;">
+      <div style="margin-bottom: 5px; font-family:opensans-semibold;"><%= t('.header.title')%></div>
+      <div style="font-size: 11px;"><%= t('.header.subtext_html')%></div>
+    </div>
+    <span style="color: gray;">Last updated: Stub</span>
+  </div>
+
+  <%# tooltip table %>
+  <div style="text-align: left; margin-top: 15px; color: gray;">
+    <span class="fifty_percent ib"><%= t('.table_content.Rating components')%></span>
+    <span class="twenty_five_percent ib"><%= t('.table_content.Weight')%></span>
+    <span class="pull_right ib"><%= t('.table_content.rating_flag')%></span>
+  </div>
+</div>
+
+
+
+<style>
+  .fifty_percent {
+    width: 50%;
+  }
+  .twenty_five_percent {
+    width: 24%;
+  }
+  .ib {
+    display: inline-block;
+  }
+  .pull_right {
+    float: right
+  }
+
+</style>

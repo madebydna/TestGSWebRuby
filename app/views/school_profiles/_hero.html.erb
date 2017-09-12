@@ -79,8 +79,11 @@
             <div class="gs-rating-with-label__label">
               <a data-remodal-target="modal_info_box"
                  data-content-type="info_box"
-                 data-content-html="<%= t('.summary_rating_info.rated') %>"
+                 data-content-html='<%= render 'summary_rating' %>'
                  class="gs-tipso"
+                 data-tipso-offsetY="50"
+                 data-tipso-width="320"
+                 data-tipso-position="bottom"
                  href="javascript:void(0)">
                 <span class="coming-soon"><%= t('.coming_soon') %></span>
                 <span class="info-circle"><span class="icon-question"></span></span>

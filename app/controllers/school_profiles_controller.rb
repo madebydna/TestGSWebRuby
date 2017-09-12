@@ -55,6 +55,7 @@ class SchoolProfilesController < ApplicationController
     @_school_profile ||= (
       OpenStruct.new.tap do |sp|
         sp.hero = hero
+        sp.summary_rating = summary_rating
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
         sp.student_progress = student_progress
@@ -134,56 +135,61 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
+  def summary_rating
+    SchoolProfiles::SummaryRating.new(test_scores, college_readiness, student_progress, equity_overview, courses, stem_courses, school)
+
+  end
+
   def toc
     SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, school)
   end
 
   def test_scores
-    SchoolProfiles::TestScores.new(
+    @_test_scores ||= SchoolProfiles::TestScores.new(
       school,
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def college_readiness
-    SchoolProfiles::CollegeReadiness.new(
+    @_college_readiness ||= SchoolProfiles::CollegeReadiness.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def student_progress
-    SchoolProfiles::StudentProgress.new(
+    @_student_progress ||= SchoolProfiles::StudentProgress.new(
         school,
         school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def students
-    SchoolProfiles::Students.new(
+    @_student ||= SchoolProfiles::Students.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def equity
-    SchoolProfiles::Equity.new(
+    @_equity ||= SchoolProfiles::Equity.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def equity_overview
-    SchoolProfiles::EquityOverview.new(
+    @_equity_overview ||= SchoolProfiles::EquityOverview.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def courses
-    SchoolProfiles::Courses.new(
+    @_courses ||= SchoolProfiles::Courses.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def stem_courses
-    SchoolProfiles::StemCourses.new(
+    @_stem_courses ||= SchoolProfiles::StemCourses.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
