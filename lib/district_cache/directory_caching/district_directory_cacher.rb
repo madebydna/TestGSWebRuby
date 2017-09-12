@@ -36,6 +36,8 @@ class DistrictDirectoryCacher < DistrictCacher
         hash[key] = [{ district_value: district.process_level }]
       elsif key == 'url'
         hash[key] = [{ district_value: district_url }]
+      elsif key == 'description'
+        hash[key] = [{ district_value: description }]
       end
     end
     validate!(special_cache_hash)
@@ -46,6 +48,13 @@ class DistrictDirectoryCacher < DistrictCacher
   def district_url
     district_params = district_params_from_district(district)
     URL_PREFIX + city_district_path(district_params) + '/'
+  end
+
+  def description
+    'In-depth district information including test scores and student stats for\n' +
+        district.name + '\n' +
+        district.city + '\n' +
+        district.state + '.'
   end
 
 end
