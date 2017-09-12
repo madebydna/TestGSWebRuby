@@ -17,9 +17,12 @@ class GsdataCaching::GsdataCacher < Cacher
   # 154: Percentage of Students Enrolled
   # 158: Equity rating
   # 159: Academic Progress Rating
-  DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
+  # 160: Summary Rating
+  # 175-182, 186: Summary Rating Weights
+  # 183: Discipline Flag
+  # 184: Absence Flag
 
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159, 160, 175, 176, 177, 178, 179, 180, 181, 182, 186].freeze
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159, 160, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 186].freeze
 
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
@@ -46,7 +49,7 @@ class GsdataCaching::GsdataCacher < Cacher
       result_hash = result_to_hash(result)
       validate_result_hash(result_hash, result.data_type_id)
       cache_hash[result.name] << result_hash
-    end.merge(discipline_attendance_flags)
+    end
   end
 
   def self.listens_to?(data_type)
@@ -87,37 +90,6 @@ class GsdataCaching::GsdataCacher < Cacher
   end
 
   private
-
-  def discipline_attendance_flags
-    hash = Hash.new { |h, k| h[k] = [] }
-    component_results = DataValue.find_by_school_and_data_types(school,DISCIPLINE_ATTENDANCE_IDS)
-    component_hash = component_results.each_with_object(Hash.new { |h, k| h[k] = [] }) do |result, cache_hash|
-      result_hash = result_to_hash(result)
-      validate_result_hash(result_hash, result.data_type_id)
-      cache_hash[result.data_type_id] << result_hash unless result_hash.has_key?(:breakdowns)
-    end
-
-    discipline_quartile = component_hash[161].present? ? component_hash[161].first[:school_value] : nil
-    discipline_subgroup_flag = component_hash[163].present? ? component_hash[163].first[:school_value] : nil
-    if discipline_quartile == '4' && discipline_subgroup_flag == '1'
-      hash['Discipline Disparity Flag'] << {
-          school_value: '1',
-          source_date_valid: component_hash[161].first[:source_date_valid],
-          source_name: component_hash[161].first[:source_name]
-      }
-    end
-    absence_quartile = component_hash[162].present? ? component_hash[162].first[:school_value] : nil
-    absence_subgroup_flag = component_hash[164].present? ? component_hash[164].first[:school_value] : nil
-    if absence_quartile == '4' && absence_subgroup_flag == '1'
-      hash['Absence Disparity Flag'] << {
-          school_value: '1',
-          source_date_valid: component_hash[162].first[:source_date_valid],
-          source_name: component_hash[162].first[:source_name]
-      }
-    end
-
-    hash
-  end
 
   def result_to_hash(result)
     breakdowns = result.breakdowns

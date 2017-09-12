@@ -5,8 +5,8 @@ module SchoolProfiles
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
     SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses)
-    DISCIPLINE_FLAG = 'Discipline Disparity Flag'
-    ABSENCE_FLAG = 'Absence Disparity Flag'
+    DISCIPLINE_FLAG = 'Discipline Flag'
+    ABSENCE_FLAG = 'Absence Flag'
 
     attr_reader :school, :school_cache_keys
 
