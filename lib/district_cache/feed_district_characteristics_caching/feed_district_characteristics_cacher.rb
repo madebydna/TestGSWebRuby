@@ -81,9 +81,10 @@ class FeedDistrictCharacteristicsCacher < DistrictCacher
   def build_hash_for_cache
     cache_hash = census_query_results.each_with_object({}) do |result, hash|
       hash[result.label] ||= []
-      hash[result.label] << build_hash_for_data_set(result)
+      result_set = build_hash_for_data_set(result)
+      hash[result.label] <<  result_set if result_set
     end
+    cache_hash.compact! if cache_hash
     validate!(cache_hash)
   end
-
 end

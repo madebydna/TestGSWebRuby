@@ -16,28 +16,30 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_special_keys
-    %w(url level district_name school_summary)
+    %w(url level district_name school_summary description_str)
   end
 
   def build_hash_for_cache
     school.extend(GradeLevelConcerns)
 
     cache_hash = school_directory_keys.each_with_object({}) do |key, hash|
-      hash[key] = [{ school_value: school.send(key) }] # the array wrap is for consistency
+      hash[key] = [{ school_value: school.send(key) }] if hash.present? # the array wrap is for consistency
     end
     validate!(cache_hash)
 
     special_cache_hash = school_special_keys.each_with_object({}) do |key, hash|
-      if key == 'level'
-        hash[key] = [{ school_value: school.process_level}]
-      elsif key == 'url'
-        hash[key] = [{ school_value: school_build_url }]
-      elsif key == 'district_name'
-        hash[key] = [{ school_value: district_name }]
-      elsif key == 'description'
-        hash[key] = [{ school_value: description }]
-      elsif key == 'school_summary'
-        hash[key] = [{ school_value: school_summary }]
+      if hash.present?
+        if key == 'level'
+          hash[key] = [{ school_value: school.process_level}]
+        elsif key == 'url'
+          hash[key] = [{ school_value: school_build_url }]
+        elsif key == 'district_name'
+          hash[key] = [{ school_value: district_name }]
+        elsif key == 'description'
+          hash[key] = [{ school_value: description_str }]
+        elsif key == 'school_summary'
+          hash[key] = [{ school_value: school_summary }]
+        end
       end
     end
     validate!(special_cache_hash)
@@ -55,7 +57,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
     district.first.name if district && district.first
   end
 
-  def description
+  def description_str
     'In-depth school information including test scores and student stats for\n' +
         school.name + '\n' +
         school.city + '\n' +

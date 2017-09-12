@@ -21,12 +21,9 @@ module Feeds
         else
           value = cache_value(@directory_hash,key)
           key_string = key.to_s.gsub('_', '-').downcase
-          if key == 'description' && value.blank?
-            # require 'pry'
-            # binding.pry
-            value = ' '
-          end
+          # remove particular keys from District - so if District and key in Exempt list don't show it
           if model != 'District' || !(DIRECTORY_DISTRICT_EXEMPT.include? key)
+            # if the key is required or it has a value add it to array to show
             arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
           end
         end
