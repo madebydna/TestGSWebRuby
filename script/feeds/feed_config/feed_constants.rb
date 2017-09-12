@@ -55,11 +55,13 @@ module Feeds
 
       DEFAULT_BATCH_SIZE = 1
 
+      DIRECTORY_DISTRICT_EXEMPT = %w(id district_id type subtype)
+
       # this is the required order for school and district content
-      DIRECTORY_FEED_FORCE_ORDER = %w(universal_id id state_id nces_code name description street city state zip county fipscounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id district_spending url census_info school_summary)
+      DIRECTORY_FEED_FORCE_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county fipscounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id district_spending url census_info school_summary)
 
       # this is a white list of keys we are looking for
-      DIRECTORY_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type)
+      DIRECTORY_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type web_site)
       # DIRECTORY_KEYS = %w(nces_code FIPScounty phone fax district_name district-spending school_summary)
 
       #  REQUIRED - universal_id zipcode home_page_url url
@@ -68,16 +70,8 @@ module Feeds
       # this is a white list of keys we are looking for - executes a method to handle type of data
       CHARACTERISTICS_MAPPING = [
           {
-              key: 'Enrollment',
-              method: 'enrollment'
-          },
-          {
-              key: 'Ethnicity',
-              method: 'ethnicity'
-          },
-          {
-              key: 'Students participating in free or reduced-price lunch program',
-              method: 'free_or_reduced_lunch_program'
+              key: 'Student teacher ratio',
+              method: 'student_teacher_ratio'
           },
           {
               key: 'Head official name',
@@ -90,16 +84,40 @@ module Feeds
               data_type: 'head-official-email'
           },
           {
-              key: 'English learners',
-              method: 'students_with_limited_english_proficiency'
+              key: 'Enrollment',
+              method: 'enrollment'
           },
+          # {
+          #     key: 'Membership',
+          #     method: 'membership'
+          # },
+          # {
+          #     key: 'Bilingual Education (y/n)',
+          #     method: 'bilingual-education'
+          # },
+          # {
+          #     key: 'Special Education (y/n)',
+          #     method: 'special-education'
+          # },
+          # {
+          #     key: 'Extended Care (y/n)',
+          #     method: 'extended-care'
+          # },
+          # {
+          #     key: 'Computers In Classroom (y/n)',
+          #     method: 'computers-in-classroom'
+          # },
+          # {
+          #     key: 'Low Age',
+          #     method: 'low-age'
+          # },
+          # {
+          #     key: 'High Age',
+          #     method: 'high-age'
+          # },
           {
-              key: 'Student teacher ratio',
-              method: 'student_teacher_ratio'
-          },
-          {
-              key: 'Students who are economically disadvantaged',
-              method: 'percent_economically_disadvantaged'
+              key: 'Students participating in free or reduced-price lunch program',
+              method: 'free_or_reduced_lunch_program'
           },
           {
               key: 'Average years of teacher experience',
@@ -157,6 +175,11 @@ module Feeds
               data_type: 'percent teachers with masters or higher'
           },
           {
+              key: 'Teachers with valid license',
+              method: 'teacher_data',
+              data_type: 'percent teachers with valid license'
+          },
+          {
               key: 'Teachers with no valid license',
               method: 'teacher_data',
               data_type: 'percent teachers with no valid license'
@@ -167,9 +190,36 @@ module Feeds
               data_type: 'percent teachers with other degree'
           },
           {
-              key: 'Teachers with valid license',
-              method: 'teacher_data',
-              data_type: 'percent teachers with valid license'
+              key: 'English learners',
+              method: 'students_with_limited_english_proficiency'
+          },
+          {
+              key: 'Students who are economically disadvantaged',
+              method: 'percent_economically_disadvantaged'
+          },
+          # {
+          #     key: 'Per Pupil Spending',
+          #     method: 'per-pupil-spending'
+          # },
+          # {
+          #     key: 'Total Per Pupil Spending',
+          #     method: 'total-per-pupil-spending'
+          # },
+          # {
+          #     key: 'Average Salary',
+          #     method: 'average-salary'
+          # },
+          # {
+          #     key: 'Graduation rate',
+          #     method: 'graduation-rate'
+          # },
+          # {
+          #     key: "Class size.  If grade is not specified, then it's a entity wide count",
+          #     method: 'class-size'
+          # },
+          {
+              key: 'Ethnicity',
+              method: 'ethnicity'
           }
       ].freeze
 

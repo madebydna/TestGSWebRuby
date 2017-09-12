@@ -16,33 +16,21 @@ module Feeds
 
       DIRECTORY_FEED_FORCE_ORDER.each do | key |
         if DIRECTORY_KEYS_SPECIAL.include? key
-          # require 'pry'
-          # binding.pry
           sdo = send(key)
           arr << sdo if sdo
         else
           value = cache_value(@directory_hash,key)
           key_string = key.to_s.gsub('_', '-').downcase
-          arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
+          if key == 'description' && value.blank?
+            # require 'pry'
+            # binding.pry
+            value = ' '
+          end
+          if model != 'District' || !(DIRECTORY_DISTRICT_EXEMPT.include? key)
+            arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
+          end
         end
       end
-
-      # DIRECTORY_KEYS_REQUIRED.each do | key |
-      #   value = cache_value(@directory_hash,key)
-      #   key_string = key.to_s.gsub('_', '-').downcase
-      #   arr << single_data_object(key_string, value)
-      # end
-      #
-      # DIRECTORY_KEYS.each do | key |
-      #   value = cache_value(@directory_hash,key)
-      #   key_string = key.to_s.gsub('_', '-').downcase
-      #   arr << single_data_object(key_string, value) if value.present?
-      # end
-      #
-      # DIRECTORY_KEYS_SPECIAL.each do | key |
-      #   sdo = send(key)
-      #   arr << sdo if sdo
-      # end
 
       arr.flatten
     end

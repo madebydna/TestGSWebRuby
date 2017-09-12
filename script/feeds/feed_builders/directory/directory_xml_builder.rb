@@ -51,7 +51,7 @@ module Feeds
       if data.present?
         xml_builder.tag! tag_name do
           data.each do | d_obj |
-            if d_obj && d_obj.value.present? && d_obj.key.present?
+            if d_obj && d_obj.key.present?
               if d_obj.value.is_a?(Array)
                 write_xml_tag(d_obj.value, d_obj.key )
               else

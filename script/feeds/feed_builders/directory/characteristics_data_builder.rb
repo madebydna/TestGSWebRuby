@@ -4,14 +4,14 @@ module Feeds
 
     def self.characteristics_format(characteristics_data_set, universal_id, model)
       @model = model
-      characteristics_data_set.map do | cds |
-        build_data(cds.first, cds.second, universal_id)
+      CHARACTERISTICS_MAPPING.map do | cm |
+        build_data(cm, characteristics_data_set, universal_id)
       end.flatten if characteristics_data_set
     end
 
-    def self.build_data(key, data, universal_id)
-      characteristic = CHARACTERISTICS_MAPPING.find{ |characteristics| characteristics[:key] == key }
-      characteristic ? send(characteristic[:method], data, universal_id, characteristic[:data_type] ) : capture_misses(key)
+    def self.build_data(characteristics_map, characteristics_data_set, universal_id)
+      char_data_set = characteristics_data_set.find{ |cds| characteristics_map[:key] == cds.first }
+      send(characteristics_map[:method], char_data_set.second, universal_id, characteristics_map[:data_type] ) if char_data_set
     end
 
     def self.students_with_limited_english_proficiency(data, universal_id, data_type=nil)
