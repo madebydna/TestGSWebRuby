@@ -72,7 +72,9 @@ _.assign(GS.modal.BaseModal.prototype, {
         );
       }
     } catch (e) {
-      GS.util.log(e);
+      if (window.console) {
+        console.log(e);
+      }
     }
   },
 
