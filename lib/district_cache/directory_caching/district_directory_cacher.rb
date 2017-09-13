@@ -20,7 +20,7 @@ class DistrictDirectoryCacher < DistrictCacher
   end
 
   def district_special_keys
-    %w(level url description_str)
+    %w(level url description)
   end
 
   def build_hash_for_cache
@@ -37,7 +37,7 @@ class DistrictDirectoryCacher < DistrictCacher
       elsif key == 'url'
         hash[key] = [{ district_value: district_url }]
       elsif key == 'description'
-        hash[key] = [{ district_value: description_str }]
+        hash[key] = [{ district_value: description }]
       end
     end
     validate!(special_cache_hash)
@@ -50,11 +50,8 @@ class DistrictDirectoryCacher < DistrictCacher
     URL_PREFIX + city_district_path(district_params) + '/'
   end
 
-  def description_str
-    'In-depth district information including test scores and student stats for\n' +
-        district.name + '\n' +
-        district.city + '\n' +
-        district.state + '.'
+  def description
+    "In-depth district information including test scores and student stats for\n#{district.name}\n#{district.city}\n#{district.state}."
   end
 
 end

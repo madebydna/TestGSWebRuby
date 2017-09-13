@@ -14,6 +14,9 @@ module Feeds
 
       arr = []
 
+
+      # TODO - I should create a white list for school which I have and a white list for district
+      # then create a required set for each then use const_get to grab the correct one
       DIRECTORY_FEED_FORCE_ORDER.each do | key |
         if DIRECTORY_KEYS_SPECIAL.include? key
           sdo = send(key)
@@ -93,7 +96,7 @@ module Feeds
     end
 
     def self.cache_object(data_set, name)
-      data_set[name].find{|obj| obj[@value_key]} if data_set[name]
+      data_set[name].find{|obj| obj[@value_key]} if data_set && data_set[name]
     end
 
     def self.single_data_object(name, value, attrs=nil)
