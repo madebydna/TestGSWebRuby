@@ -1,0 +1,57 @@
+<% rating_table_rows = @school_profile.summary_rating.content %>
+<% summary_rating = @school_profile.summary_rating.summary_rating if @school_profile.summary_rating %>
+<% last_updated = @school_profile.summary_rating.last_updated %>
+
+<div class="summary_rating_tooltip" style="font-size: 11px;">
+  <%# tooltip header %>
+  <div style="text-align: left;">
+    <div style="display: inline-block; float: right;">
+      <span class="gs-rating circle-rating--<%= summary_rating %> circle-rating--small">
+          <%= summary_rating %><span class="denominator">/10</span>
+    </div>
+    <div style="width: 250px;">
+      <div style="margin-bottom: 5px; font-family:opensans-semibold;"><%= t('.header.title')%></div>
+      <div style="font-size: 11px;"><%= t('.header.subtext_html')%></div>
+    </div>
+    <% if last_updated %>
+      <span style="color: gray;">Last updated: <%= last_updated %></span>
+    <% end %>
+  </div>
+
+  <%# tooltip table %>
+  <div style="text-align: left; margin: 15px 0 5px 0; color: gray;">
+    <span class="forty_five_percent ib"><%= t('.table_content.Rating components')%></span>
+    <span class="twenty_five_percent ib" style="text-align: center;"><%= t('.table_content.Weight')%></span>
+    <span class="pull_right ib"><%= t('.table_content.rating_flag')%></span>
+  </div>
+  <% rating_table_rows.each do |row| %>
+    <div style="border-top: 1px solid #D3D3D3; text-align: left; height: 30px; margin-bottom: 5px;">
+      <span class="forty_five_percent ib" style="line-height: 30px;"><%=row[:title]%></span>
+      <span class="twenty_five_percent ib" style="text-align: center;"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
+      <% if ['Attendance', 'Discipline'].include?(row[:title])%>
+          <span style="margin-top: 4px;" class="pull_right ib icon-flag"></span>
+      <% else%>
+        <span style="margin-top: 4px;" class="pull_right ib gs-rating circle-rating--<%= row[:rating] %> circle-rating--xtra-small">
+            <%= row[:rating] %><span class="denominator">/10</span>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+
+
+<style>
+  .forty_five_percent {
+    width: 45%;
+  }
+  .twenty_five_percent {
+    width: 24%;
+  }
+  .ib {
+    display: inline-block;
+  }
+  .pull_right {
+    float: right
+  }
+
+</style>

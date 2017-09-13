@@ -1,6 +1,7 @@
 class Api::NearbySchoolsController < ApplicationController
   DEFAULT_LIMIT = 6
   MAX_LIMIT = 6
+  CACHE_TIME = 12.hours
 
   before_filter :require_school
 
@@ -26,6 +27,7 @@ class Api::NearbySchoolsController < ApplicationController
       end
     end
     @array_of_nearby_school_hashes = array_of_nearby_school_hashes
+    expires_in(CACHE_TIME, public: true, must_revalidate: true)
     render 'api/nearby_schools/show'
   end
 
