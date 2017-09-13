@@ -78,15 +78,33 @@
                 <%= hero.gs_rating %><span class="rating-circle-small">/10</span>
               </div>
             </div>
-            <div class="gs-rating-with-label__label">
-              <a data-remodal-target="modal_info_box"
-                 data-content-type="info_box"
-                 data-content-html="<%= t(".#{new_rating_key}summary_rating_info.rated") %>"
-                 class="gs-tipso"
-                 href="javascript:void(0)">
-                <span class="coming-soon"><%= t(".#{new_rating_key}coming_soon") %></span>
-                <span class="info-circle"><span class="icon-question"></span></span>
-              </a>
+              <% if @school.state.downcase == 'ca' %>
+                <div class="gs-rating-with-label__label">
+                  <a data-remodal-target="modal_info_box"
+                     data-content-type="info_box"
+                     data-content-html='<%= render 'summary_rating' %>'
+                     class="gs-tipso"
+                     data-tipso-offsetX="80"
+                     data-tipso-offsetY="22"
+                     data-tipso-width="320"
+                     data-tipso-position="right"
+                     href="javascript:void(0)">
+                    <span class="coming-soon"><%= t(".#{new_rating_key}coming_soon") %></span>
+                    <span class="info-circle"><span class="icon-question"></span></span>
+                  </a>
+              <% else %>
+                <div class="gs-rating-with-label__label">
+                  <a data-remodal-target="modal_info_box"
+                     data-content-type="info_box"
+                     data-content-html="<%= t(".#{new_rating_key}summary_rating_info.rated") %>"
+                     class="gs-tipso"
+                     href="javascript:void(0)">
+                    <span class="coming-soon"><%= t(".#{new_rating_key}coming_soon") %></span>
+                    <span class="info-circle"><span class="icon-question"></span></span>
+                  </a>
+                  <%= t('.greatschools_rating') %>
+                </div>
+              <% end %>
               <%= t('.greatschools_rating') %>
             </div>
           <% else %>

@@ -15,12 +15,23 @@ class GsdataCaching::GsdataCacher < Cacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
+  # 155: Test Score Rating
   # 158: Equity rating
   # 159: Academic Progress Rating
   # 160: Summary Rating
-  # 175-182, 186: Summary Rating Weights
+  # 175: Summary Rating Weight: Advanced Course Rating
+  # 176: Summary Rating Weight: Test Score Rating
+  # 177: Summary Rating Weight: College Readiness Rating
+  # 178: Summary Rating Weight: Student Progress Rating
+  # 179: Summary Rating Weight: Equity Rating
+  # 180: Summary Rating Weight: Academic Progress Rating
+  # 181: Summary Rating Weight: Discipline Flag
+  # 182: Summary Rating Weight: Absence Flag
   # 183: Discipline Flag
   # 184: Absence Flag
+  # 186: Summary Rating Weight: Equity Adjustment Factor
+
+  DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
 
   DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159, 160, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 186].freeze
 
