@@ -2537,9 +2537,9 @@
       "resolved": "https://registry.npmjs.org/jquery-ujs/-/jquery-ujs-1.2.2.tgz"
     },
     "jquery-unveil": {
-      "version": "1.3.2",
-      "from": "jquery-unveil@latest",
-      "resolved": "https://registry.npmjs.org/jquery-unveil/-/jquery-unveil-1.3.2.tgz"
+      "version": "1.3.0",
+      "from": "jquery-unveil@1.3.0",
+      "resolved": "https://registry.npmjs.org/jquery-unveil/-/jquery-unveil-1.3.0.tgz"
     },
     "jquery.cookie": {
       "version": "1.4.1",
