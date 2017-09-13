@@ -12,6 +12,15 @@ en:
         Rating components: Rating components
         Weight: Weight
         rating_flag: 'Rating/flag'
+        Test Scores: Test Scores
+        Student Progress: Student Progress
+        Academic Progress: Academic Progress
+        College Readiness: College Readiness
+        Advanced Courses: Advanced Courses
+        Equity Overview: Equity Overview
+        Equity Adjustment Factor: Equity adjustment factor
+        Discipline: Discipline flag
+        Attendance: Attendance flag
 
 
 
