@@ -4,9 +4,6 @@ module DistrictsMetaTagsConcerns
     state = @state[:short].upcase
     city = @city.gs_capitalize_first
     district = @district.name
-    current_yr = Date.today.year
-    # Testing different title tag for Pennsylvania pages
-    return "#{district}: See #{current_yr} School Ratings in #{city}, #{state}" if state.casecmp('PA').zero?
     "#{district} in #{city}, #{state} | GreatSchools"
   end
 
@@ -20,4 +17,4 @@ module DistrictsMetaTagsConcerns
     "#{district} Schools, #{district} Public Schools, #{district} School Ratings, Best #{district} Schools"
   end
 
-  end
+end

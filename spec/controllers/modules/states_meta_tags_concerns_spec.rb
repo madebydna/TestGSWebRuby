@@ -15,14 +15,6 @@ describe StatesMetaTagsConcerns do
         expect(subject.send(:states_show_title)).to eql("California Schools - California State School Ratings - Public and Private")
       end
     end
-
-
-    context 'where state is Pennsylvania' do
-      before { subject.instance_variable_set(:@state, {:short => 'pa', :long => 'pennsylvania'}) }
-      it 'should return the correct title string' do
-        expect(subject.send(:states_show_title)).to eql("Pennsylvania State 2017 School Ratings | Public & Private")
-      end
-    end
   end
 
 end
