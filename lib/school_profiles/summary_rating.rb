@@ -37,7 +37,7 @@ module SchoolProfiles
 
     def build_content_for_summary_rating_table
       rating_array = [test_scores, student_progress, college_readiness, equity, courses, discipline, attendance]
-      rating_array.reject! {|row| row.nil? || row.empty?}
+      rating_array.reject! {|row| row.nil? || row.empty? || row[:weight].nil? || row[:rating].nil?}
       rating_array.sort_by {|row| row[:weight]}.reverse
     end
 
