@@ -75,23 +75,6 @@ describe 'City Home Page' do
     it_behaves_like 'page with top rated schools section'
   end
 
-  describe 'City rating' do
-    context 'with a city rating' do
-      let!(:city_rating) do
-        rating = FactoryGirl.build(:city_rating, city: 'St. Paul', rating: '10')
-        rating.on_db(:mn).save
-      end
-      before { visit city_path('minnesota', 'st.-paul') }
-      after { clean_dbs :mn }
-      it { is_expected.to have_city_rating }
-      its(:city_rating) { is_expected.to have_rating('10') }
-    end
-    context 'without city rating' do
-      it { is_expected.to have_city_rating }
-      its(:city_rating) { is_expected.to be_not_rated }
-    end
-  end
-
   describe 'breadcrumbs' do
     it { is_expected.to have_breadcrumbs }
     its('first_breadcrumb.title') { is_expected.to have_text('Minnesota') }
