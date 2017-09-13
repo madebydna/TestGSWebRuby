@@ -7,6 +7,9 @@ class HeaderController < ApplicationController
       format.js {
         render json: {header: content}, callback: params['callback']
       }
+      format.html {
+        render 'nav/header', layout: 'header'
+      }
     end
   end
 end

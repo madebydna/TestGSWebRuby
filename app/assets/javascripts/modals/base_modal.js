@@ -66,13 +66,15 @@ _.assign(GS.modal.BaseModal.prototype, {
       var eventTrackingData = this.getEventTrackingData(modalEventType);
       if (eventTrackingData !== undefined) {
         dataLayer.push(
-          merge({
+          jQuery.extend({
             'event': 'analyticsEvent'
           }, eventTrackingData)
         );
       }
     } catch (e) {
-      GS.util.log(e);
+      if (window.console) {
+        console.log(e);
+      }
     }
   },
 

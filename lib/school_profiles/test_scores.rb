@@ -110,25 +110,27 @@ module SchoolProfiles
       if subject_scores.present?
         content << '<div class="sourcing">'
         content << '<h1>' + data_label('title') + '</h1>'
-        content << '<div>'
-        content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
+        if rating.present? && rating != 'NR'
+          content << '<div>'
+          content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
 
-        description = rating_description
-        description = data_label(description) if description
-        methodology = rating_methodology
-        methodology = data_label(methodology) if methodology
-        if description || methodology
-          content << '<p>'
-          content << description if description
-          content << ' ' if description && methodology
-          content << methodology if methodology
+          description = rating_description
+          description = data_label(description) if description
+          methodology = rating_methodology
+          methodology = data_label(methodology) if methodology
+          if description || methodology
+            content << '<p>'
+            content << description if description
+            content << ' ' if description && methodology
+            content << methodology if methodology
+            content << '</p>'
+          end
+
+          content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
+          content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
           content << '</p>'
+          content << '</div>'
         end
-
-        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
-        content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
-        content << '</p>'
-        content << '</div>'
         data = subject_scores.each_with_object({}) do |rsi, output|
           output[rsi.test_label] ||= {}
           output[rsi.test_label][:test_label] = rsi.test_label

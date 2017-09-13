@@ -44,10 +44,10 @@ module StateCacheFormat
     set_hash_values!(historical_data, hash)
   rescue => e
     GSLogger.error(
-        :school_cache,
+        :state_cache,
         e,
-        message: 'failed in building historical data for district',
-        vars: {state: district.state}
+        message: 'failed in building historical data for state',
+        vars: {state: state}
     )
   end
 

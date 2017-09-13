@@ -20,15 +20,4 @@ describe DistrictsMetaTagsConcerns do
     end
   end
 
-  context 'where state is Pennsylvania' do
-    before do
-      subject.instance_variable_set(:@state, {:short => 'pa'})
-      subject.instance_variable_set(:@city, 'philadelphia')
-      subject.instance_variable_set(:@district, District.new(name: 'Philadelphia City School District'))
-    end
-    it 'should return the correct title string' do
-      expect(subject.send(:districts_show_title)).to eql("Philadelphia City School District: See 2017 School Ratings in Philadelphia, PA")
-    end
-  end
-
 end

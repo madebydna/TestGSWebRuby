@@ -16,14 +16,14 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_special_keys
-    %w(url level district_name school_summary)
+    %w(url level district_name school_summary description)
   end
 
   def build_hash_for_cache
     school.extend(GradeLevelConcerns)
 
     cache_hash = school_directory_keys.each_with_object({}) do |key, hash|
-      hash[key] = [{ school_value: school.send(key) }] # the array wrap is for consistency
+      hash[key] = [{ school_value: school.send(key) }]  # the array wrap is for consistency
     end
     validate!(cache_hash)
 
@@ -34,12 +34,13 @@ class DirectoryCaching::DirectoryCacher < Cacher
         hash[key] = [{ school_value: school_build_url }]
       elsif key == 'district_name'
         hash[key] = [{ school_value: district_name }]
+      elsif key == 'description'
+        hash[key] = [{ school_value: description }]
       elsif key == 'school_summary'
         hash[key] = [{ school_value: school_summary }]
       end
     end
     validate!(special_cache_hash)
-
     cache_hash.merge!(special_cache_hash)
   end
 
@@ -51,6 +52,10 @@ class DirectoryCaching::DirectoryCacher < Cacher
   def district_name
     district = District.find_by_state_and_ids(school.state, school.id)
     district.first.name if district && district.first
+  end
+
+  def description
+    "In-depth school information including test scores and student stats for\n#{school.name}\n#{school.city}\n#{school.state}."
   end
 
   def school_summary

@@ -14,35 +14,23 @@ module Feeds
 
       arr = []
 
+
+      # TODO - I should create a white list for school which I have and a white list for district
+      # then create a required set for each then use const_get to grab the correct one
       DIRECTORY_FEED_FORCE_ORDER.each do | key |
         if DIRECTORY_KEYS_SPECIAL.include? key
-          # require 'pry'
-          # binding.pry
           sdo = send(key)
           arr << sdo if sdo
         else
           value = cache_value(@directory_hash,key)
           key_string = key.to_s.gsub('_', '-').downcase
-          arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
+          # remove particular keys from District - so if District and key in Exempt list don't show it
+          if model != 'District' || !(DIRECTORY_DISTRICT_EXEMPT.include? key)
+            # if the key is required or it has a value add it to array to show
+            arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
+          end
         end
       end
-
-      # DIRECTORY_KEYS_REQUIRED.each do | key |
-      #   value = cache_value(@directory_hash,key)
-      #   key_string = key.to_s.gsub('_', '-').downcase
-      #   arr << single_data_object(key_string, value)
-      # end
-      #
-      # DIRECTORY_KEYS.each do | key |
-      #   value = cache_value(@directory_hash,key)
-      #   key_string = key.to_s.gsub('_', '-').downcase
-      #   arr << single_data_object(key_string, value) if value.present?
-      # end
-      #
-      # DIRECTORY_KEYS_SPECIAL.each do | key |
-      #   sdo = send(key)
-      #   arr << sdo if sdo
-      # end
 
       arr.flatten
     end
@@ -108,7 +96,7 @@ module Feeds
     end
 
     def self.cache_object(data_set, name)
-      data_set[name].find{|obj| obj[@value_key]} if data_set[name]
+      data_set[name].find{|obj| obj[@value_key]} if data_set && data_set[name]
     end
 
     def self.single_data_object(name, value, attrs=nil)

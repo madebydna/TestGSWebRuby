@@ -11,7 +11,7 @@ module StatesMetaTagsConcerns
   def states_show_title
     # Testing different title tag for Pennsylvania state page
     current_yr = Date.today.year
-    return "#{state_long_name_with_caps} State #{current_yr} School Ratings | Public & Private" if @state[:short].casecmp('pa').zero?
+    return "#{state_long_name_with_caps} #{current_yr} School Ratings | Public & Private" if @state[:short].casecmp('pa').zero?
     "#{state_long_name_with_caps} Schools - #{state_long_name_with_caps} State School Ratings - Public and Private"
   end
 

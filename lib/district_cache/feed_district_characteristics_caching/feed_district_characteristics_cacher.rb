@@ -54,7 +54,7 @@ class FeedDistrictCharacteristicsCacher < DistrictCacher
     return nil unless result.district_value
     data_attributes.each_with_object({}) do |key, hash|
       value = result.try(key)
-      if value
+      if value && hash.present?
         hash[key] = value
         if key == :breakdown
           if (config = result.data_set_with_values.try(:census_data_config_entry))
@@ -85,5 +85,4 @@ class FeedDistrictCharacteristicsCacher < DistrictCacher
     end
     validate!(cache_hash)
   end
-
 end
