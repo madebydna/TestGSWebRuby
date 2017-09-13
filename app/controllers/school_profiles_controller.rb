@@ -139,8 +139,11 @@ class SchoolProfilesController < ApplicationController
   end
 
   def summary_rating
-    SchoolProfiles::SummaryRating.new(test_scores, college_readiness, student_progress, equity_overview, courses, stem_courses, school)
-
+    SchoolProfiles::SummaryRating.new(
+      test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses,
+      school,
+      school_cache_data_reader: school_cache_data_reader
+    )
   end
 
   def toc
@@ -187,7 +190,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def academic_progress
-    SchoolProfiles::AcademicProgress.new(
+    @_academic_progress ||= SchoolProfiles::AcademicProgress.new(
         school,
         school_cache_data_reader: school_cache_data_reader
     )

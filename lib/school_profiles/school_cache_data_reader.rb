@@ -27,6 +27,10 @@ module SchoolProfiles
       ((1..10).to_a & [decorated_school.great_schools_rating]).first
     end
 
+    def summary_rating
+      decorated_school.summary_rating
+    end
+
     def gs_rating_year
       decorated_school.great_schools_rating_year
     end
@@ -179,6 +183,33 @@ module SchoolProfiles
       end
     end
 
+    def fetch_date_from_weight
+      # Pulls all of the weight data, selects the associated timestamps, and picks the most recent
+      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
+      return nil if rating_weight_hash.empty?
+      source_dates = rating_weight_hash.values.map {|weight_data| weight_data.first['source_date_valid']}
+      source_dates.map! {|dt_string| build_time_object(dt_string)}
+      format_date source_dates.compact.max
+    end
+
+    def build_time_object(dt_string)
+      begin
+      year = dt_string[0..3]
+      month = dt_string[4..5]
+      day = dt_string[6..7]
+      hour = dt_string[9..10]
+      minute = dt_string[11..12]
+      Time.new(year, month, day, hour, minute)
+      rescue StandardError => error
+        GSLogger.error(:summary_rating, error, vars: {school: decorated_school.id, state: decorated_school.state}, message: 'Error creating Time object using source_date_time value for Summary Rating')
+        nil
+      end
+    end
+
+    def format_date(dt_object)
+      dt_object.strftime('%b %d, %Y')
+    end
+
     def discipline_flag?
       @_discipline_flag ||= (
         flag_data_value = discipline_attendance_data_values[DISCIPLINE_FLAG]
@@ -190,6 +221,12 @@ module SchoolProfiles
       @_attendance_flag ||= (
         flag_data_value = discipline_attendance_data_values[ABSENCE_FLAG]
         flag_data_value.present? && flag_data_value.school_value == '1'
+      )
+    end
+
+    def equity_adjustment_factor?
+      @_equity_adjustment_factor ||= (
+        gsdata_data('Equity Adjustment Factor').present?
       )
     end
 
