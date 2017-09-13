@@ -23,7 +23,11 @@ class RatingsCaching::RatingsCacher < Cacher
           h.school_value_float.present?
         )
       end
-      replace_rating_into_school_metadata(school.id, school.state.downcase, school_overall_rating) if school_overall_rating.present?
+      if school_overall_rating.present?
+        replace_rating_into_school_metadata(school.id, school.state.downcase, school_overall_rating)
+      else
+        delete_rating_row_from_school_metadata(school.id, school.state.downcase)
+      end
     else
       delete_rating_row_from_school_metadata(school.id, school.state.downcase)
       SchoolCache.destroy(school_cache.id) if (school_cache && school_cache.id.present?)
