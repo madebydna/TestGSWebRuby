@@ -13,7 +13,7 @@ class RatingsCaching::RatingsCacher < Cacher
     )
     school_overall_rating = nil
     if current_ratings.present?
-      json = (current_rating_hashes + historic_rating_hashes).to_json
+      json = (current_rating_hashes + relevant_historical_rating_hashes).to_json
       school_cache.update_attributes!(:value => json, :updated => Time.now)
       current_ratings.each do |h|
         school_overall_rating = h.school_value_float.to_i if (
@@ -70,8 +70,18 @@ class RatingsCaching::RatingsCacher < Cacher
       end
   end
 
+  def current_rating_data_types
+    current_rating_hashes.select { |h| h['breakdown'] == 'All students'}.map { |h| h['data_type_id'] }
+  end
+
+  def relevant_historical_rating_hashes
+    current_rating_data_types.map do |data_type_id|
+      historic_rating_hashes.select { |h| h['data_type_id'] == data_type_id }
+    end
+  end
+
   def current_rating_hashes
-    current_ratings.map do |data_set|
+    @_current_rating_hashes ||= (current_ratings.map do |data_set|
       hash = data_set_to_hash(data_set)
       if data_set.data_type_id == 164 # test score rating
         hash[:description] = data_description_value('whats_this_test_scores')
@@ -84,11 +94,11 @@ class RatingsCaching::RatingsCacher < Cacher
         hash[:methodology] = data_description_value("footnote_psr#{school.state}")
       end
       hash
-    end
+    end)
   end
 
   def historic_rating_hashes
-    historic_ratings.map { |data_set| data_set_to_hash(data_set) }
+    @_historic_rating_hashes ||= (historic_ratings.map { |data_set| data_set_to_hash(data_set) })
   end
 
   def data_set_to_hash(data_set)

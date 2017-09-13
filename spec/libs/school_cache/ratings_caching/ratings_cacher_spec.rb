@@ -76,17 +76,20 @@ describe RatingsCaching::RatingsCacher do
             OpenStruct.new(
               id: 1,
               test_data_type: OpenStruct.new(display_name: 'foo'),
-              data_type_id: 10
+              data_type_id: 10,
+              breakdown_id: 1
             ),
             OpenStruct.new(
               id: 2,
               test_data_type: OpenStruct.new(display_name: 'foo'),
-              data_type_id: 20 
+              data_type_id: 20,
+              breakdown_id: 1
             )
           ]
         )
       end
       it 'should fetch historic ratings only for data types with current ratings' do
+        allow(cacher).to receive(:breakdown_name).and_return 'All students'
 
         expect(TestDataSet).to receive(:historic_ratings_for_school).with(
           eq(school),
