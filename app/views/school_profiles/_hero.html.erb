@@ -78,7 +78,7 @@
                 <%= hero.gs_rating %><span class="rating-circle-small">/10</span>
               </div>
             </div>
-              <% if @school.state.downcase == 'ca' %>
+              <% if new_rating %>
                 <div class="gs-rating-with-label__label">
                   <a data-remodal-target="modal_info_box"
                      data-content-type="info_box"
@@ -92,6 +92,8 @@
                     <span class="coming-soon"><%= t(".#{new_rating_key}coming_soon") %></span>
                     <span class="info-circle"><span class="icon-question"></span></span>
                   </a>
+                  <%= t('.greatschools_rating') %>
+                </div>
               <% else %>
                 <div class="gs-rating-with-label__label">
                   <a data-remodal-target="modal_info_box"
@@ -105,8 +107,6 @@
                   <%= t('.greatschools_rating') %>
                 </div>
               <% end %>
-              <%= t('.greatschools_rating') %>
-            </div>
           <% else %>
             <div class="gs-rating-with-label__rating">
               <div class="label-owl">

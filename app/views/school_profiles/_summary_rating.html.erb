@@ -28,7 +28,7 @@
     <div style="border-top: 1px solid #D3D3D3; text-align: left; height: 30px; margin-bottom: 5px;">
       <span class="forty_five_percent ib" style="line-height: 30px;"><%= t(".table_content.#{row[:title]}") %></span>
       <span class="twenty_five_percent ib" style="text-align: center;"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
-      <% if ['Attendance', 'Discipline'].include?(row[:title])%>
+      <% if ['Attendance flag', 'Discipline flag'].include?(row[:title])%>
           <span style="margin-top: 4px;" class="pull_right ib icon-flag"></span>
       <% else%>
         <span style="margin-top: 4px;" class="pull_right ib gs-rating circle-rating--<%= row[:rating] %> circle-rating--xtra-small">

@@ -78,13 +78,13 @@ module SchoolProfiles
 
     def discipline
       if @school_cache_data_reader.discipline_flag?
-        {title: 'Discipline', rating: '<span class="icon-flag red"></span>', weight: get_weight('Summary Rating Weight: Discipline Flag')}
+        {title: 'Discipline flag', rating: '<span class="icon-flag red"></span>', weight: get_weight('Summary Rating Weight: Discipline Flag')}
       end
     end
 
     def attendance
       if @school_cache_data_reader.attendance_flag?
-        {title: 'Attendance', rating: '<span class="icon-flag red"></span>', weight: get_weight('Summary Rating Weight: Absence Flag')}
+        {title: 'Attendance flag', rating: '<span class="icon-flag red"></span>', weight: get_weight('Summary Rating Weight: Absence Flag')}
       end
     end
 
