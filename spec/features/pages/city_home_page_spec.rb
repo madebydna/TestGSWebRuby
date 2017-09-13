@@ -8,7 +8,7 @@ require 'features/examples/footer_examples'
 
 describe 'City Home Page' do
   let!(:city) { create(:city, state: 'MN', name: 'St. Paul') }
-  after { clean_dbs :us_geo, :mn }
+  after { clean_dbs :us_geo, :mn, :gs_schooldb }
   subject(:page_object) do
     visit city_path('minnesota', 'st.-paul')
     CityHomePage.new
