@@ -190,34 +190,23 @@ module SchoolProfiles
         content << '</div>'
         content
       end
+      content
     end
 
     def test_source_data
       @test_source_data
     end
 
-    def test_source_no_rating
-      @_test_source_no_rating ||= (test_source_data.sources_without_rating_text)
-    end
-
-    def test_source_with_rating
-      @_test_source_with_rating ||= (
-        if test_source_data.rating.present? && test_source_data.rating != 'NR'
-          test_source_data.source_rating_text
-        end
-      )
-    end
-
     def race_ethnicity_sources
-      sources_html((test_source_with_rating + test_source_no_rating)) + sources
+      sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
     end
 
     def students_with_disabilities_sources
-      sources_html(test_source_no_rating) + sources
+      sources_html(test_source_data.sources_without_rating_text) + sources
     end
 
     def low_income_sources
-      sources_html((li_rating_sources + test_source_no_rating)) + sources
+      sources_html((li_rating_sources + test_source_data.sources_without_rating_text)) + sources
     end
 
     def sources_header
