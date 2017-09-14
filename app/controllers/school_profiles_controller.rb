@@ -317,7 +317,7 @@ class SchoolProfilesController < ApplicationController
     # Add a trailing slash to the request path, only if one doesn't already exist.
     unless canonical_path == with_trailing_slash(request.path)
       redirect_to add_query_params_to_url(
-                      canonical_path,
+                      school_url(school),
                       true,
                       request.query_parameters
                   ), status: :moved_permanently
