@@ -7,8 +7,8 @@ module Feeds
       @model = model
       @state = state
       keys = FeedConstants.const_get("DIRECTORY_FEED_#{model.upcase}_CACHE_KEYS")
-      @directory_hash = (keys && keys[0]) ? hash[keys[0]]  : {}
-      @characteristics_hash = (keys && keys[1]) ? hash[keys[1]] : {}
+      @directory_hash = hash[keys[0]]
+      @characteristics_hash = hash[keys[1]]
       id = cache_value(@directory_hash, 'id')
       @universal_id = UniversalId.calculate_universal_id(state, FeedConstants.const_get("ENTITY_TYPE_#{model.upcase}"), id)
 
@@ -84,7 +84,7 @@ module Feeds
     end
 
     def self.census_info
-      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model)
+      char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash
       single_data_object('census-info', char_data) if char_data && char_data.compact.present?
     end
 
