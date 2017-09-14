@@ -1,0 +1,30 @@
+en:
+  school_profiles:
+    summary_narration:
+      attendence: absenteeism
+      and: and
+      discipline: suspension
+      about_the_same: about the same
+      more: more
+      fewer: fewer
+      above: above
+      about: about
+      below: below
+      Summary Rating_html: >
+        This school is rated <span class="%{level}">%{rating_string} average</span> in school quality compared to other schools in the state.
+      Test Scores_html: >
+        Students here perform <span class="%{level}">%{rating_string} average</span> on state tests,
+      College Readiness_html: >
+        have <span class="%{level}">%{rating_string} average</span> college readiness measures,
+      Student Progress_html: >
+        are making <span class="%{level}">%{rating_string} average</span> year-over-year academic improvement,
+      Academic Progress_html: >
+        are making <span class="%{level}">%{rating_string} average</span> year-over-year academic improvement,
+      Advanced Course_html: >
+        take <span class="%{level}">%{rating_string}</span> advanced courses per student %{adverb} the state average,
+      Equity Overview_html: >
+        and this school has <span class="%{level}">%{rating_string} average</span> results in how well it’s serving disadvantaged students.
+      sentence_ender_html: >
+        and more information about this school can be found below.
+      discipline_and_attendence_html: >
+        Large disparities in <span class="negative">%{danda}</span> rates exist at this school, which is concerning.

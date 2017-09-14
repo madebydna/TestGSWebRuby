@@ -92,7 +92,7 @@ module SchoolProfiles
     end
 
     def to_percent(decimal)
-      (decimal*100).round.to_s + '%'
+      (decimal*100).round.to_s + '%' if decimal
     end
 
     def weights_within_range?

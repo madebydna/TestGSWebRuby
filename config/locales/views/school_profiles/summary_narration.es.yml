@@ -1,0 +1,30 @@
+es:
+  school_profiles:
+    summary_narration:
+      attendence: ausentismo
+      and: y
+      discipline: suspension
+      about_the_same: o los mismos
+      more: más
+      fewer: menos
+      above: por encima
+      about: a la altura
+      below: por debajo
+      'Summary Rating_html': >
+        Esta escuela está calificada <span class="%{level}">%{rating_string} del promedio</span> en calidad de la escuela en comparación a otras escuelas en el estado.
+      'Test Scores_html': >
+        Los estudiantes aquí se desempeñan <span class="%{level}">%{rating_string} del promedio</span> en exámenes estatales,
+      'College Readiness_html': >
+        tienen medidas de preparación a la Universidad <span class="%{level}">%{rating_string} del promedio</span>,
+      'Student Progress_html': >
+        están progresando académicamente año tras año <span class="%{level}">%{rating_string} del promedio</span>,
+      'Academic Progress_html': >
+        están progresando académicamente año tras año <span class="%{level}">%{rating_string} del promedio</span>,
+      'Advanced Course_html': >
+        toman <span class="%{level}">%{rating_string}</span> cursos avanzados por estudiantes que el promedio estatal,
+      'Equity Overview_html': >
+        y esta escuela tiene resultados <span class="%{level}">%{rating_string} del promedio</span> en cómo trabaja con los estudiantes más necesitados.
+      'sentence_ender_html': >
+        y más información sobre esta escuela se puede encontrar a continuación.
+      'discipline_and_attendence_html': >
+        En esta escuela existen grandes desigualdades en los índices de <span class="negative">%{danda}</span>, lo cual es preocupante.

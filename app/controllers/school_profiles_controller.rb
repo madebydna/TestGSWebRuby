@@ -58,6 +58,7 @@ class SchoolProfilesController < ApplicationController
       OpenStruct.new.tap do |sp|
         sp.hero = hero
         sp.summary_rating = summary_rating
+        sp.summary_narration = summary_narration
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
         sp.student_progress = student_progress
@@ -139,11 +140,19 @@ class SchoolProfilesController < ApplicationController
   end
 
   def summary_rating
-    SchoolProfiles::SummaryRating.new(
+    @_summary_rating ||= SchoolProfiles::SummaryRating.new(
       test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses,
       school,
       school_cache_data_reader: school_cache_data_reader
     )
+  end
+
+  def summary_narration
+    @_summary_narration ||= SchoolProfiles::SummaryNarration.new(
+        summary_rating,
+        school,
+        school_cache_data_reader: school_cache_data_reader
+    ).build_content
   end
 
   def toc

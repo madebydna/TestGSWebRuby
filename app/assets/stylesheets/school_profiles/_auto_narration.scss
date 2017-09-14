@@ -23,6 +23,19 @@
     }
   }
 
+  span{
+    font-weight: bold;
+    &.positive {
+      color: $color_positive;
+    }
+    &.neutral {
+      color: $color_neutral;
+    }
+    &.negative {
+      color: $color_negative;
+    }
+  }
+
   .emphasis {
     font-family: opensans-semibold, sans-serif;
   }
