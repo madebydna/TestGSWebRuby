@@ -178,7 +178,8 @@ class SchoolProfilesController < ApplicationController
 
   def equity
     @_equity ||= SchoolProfiles::Equity.new(
-      school_cache_data_reader: school_cache_data_reader
+        school_cache_data_reader: school_cache_data_reader,
+        test_source_data: test_scores
     )
   end
 

@@ -2,8 +2,9 @@ module SchoolProfiles
   class Equity
     include Qualaroo
 
-    def initialize(school_cache_data_reader:)
+    def initialize(school_cache_data_reader:, test_source_data:)
       @school_cache_data_reader = school_cache_data_reader
+      @test_source_data = test_source_data
 
       SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
           school_cache_data_reader: school_cache_data_reader
@@ -176,24 +177,23 @@ module SchoolProfiles
     end
 
     def li_rating_sources
-      content = nil
+      content = ''
       if equity_test_scores.low_income_test_scores_visible?
         source = "<span class='emphasis'>#{static_label('source')}:</span> #{static_label('GreatSchools')}, #{low_income_rating_year}"
-        methodology = rating_methodology.present? ? rating_methodology : ''
-        content = '<div>'
+        methodology = rating_methodology.present? ? data_label(rating_methodology) : ''
+        content << '<div>'
         content << '<h4>' + static_label('li_GreatSchools_Rating') + '</h4>'
         content << '<p>'
-        content << static_label('li_description') + ' ' + data_label(methodology)
+        content << static_label('li_description') + ' ' + methodology
         content << '</p>'
         content << '<p>' + source + ' | ' + static_label('li_see_more') + '</p>'
         content << '</div>'
         content
       end
-      @_li_rating_sources ||= content
     end
 
     def test_source_data
-      @_test_source_data ||= (TestScores.new(@school, school_cache_data_reader: @school_cache_data_reader))
+      @test_source_data
     end
 
     def test_source_no_rating
@@ -209,21 +209,29 @@ module SchoolProfiles
     end
 
     def race_ethnicity_sources
-      sources_header + test_source_with_rating + '</div>' + sources
+      sources_html((test_source_with_rating + test_source_no_rating)) + sources
     end
 
     def students_with_disabilities_sources
-      sources_header + test_source_no_rating + '</div>' + sources
+      sources_html(test_source_no_rating) + sources
     end
 
     def low_income_sources
-      sources_header + li_rating_sources + test_source_no_rating + '</div>' + sources
+      sources_html((li_rating_sources + test_source_no_rating)) + sources
     end
 
     def sources_header
       content = ''
       content << '<div class="sourcing">'
       content << '<h1>' + data_label('.title') + '</h1>'
+    end
+
+    def sources_footer
+      '</div>'
+    end
+
+    def sources_html(body)
+      sources_header + body + sources_footer
     end
 
     def sources
