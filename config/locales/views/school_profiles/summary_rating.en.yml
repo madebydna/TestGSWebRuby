@@ -6,9 +6,8 @@ en:
         subtext_html: >
           GreatSchools is a national nonprofit organization. Our new Summary Rating provides a multi-measured reflection
           of school quality based on the ratings components you see here.<br>
-          <a style="font-size: 11px;" href="https://www.greatschools.org/gk/ratings/" target="_blank">Learn more
-          about GreatSchools Ratings.</a>
-        last_updated: Last updated
+        Learn more: Learn more about the GreatSchools Ratings.
+        Last updated: Last updated
       table_content:
         Rating components: Rating components
         Weight: Weight

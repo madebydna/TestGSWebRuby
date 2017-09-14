@@ -78,16 +78,16 @@
                 <%= hero.gs_rating %><span class="rating-circle-small">/10</span>
               </div>
             </div>
-              <% if new_rating %>
+              <% if new_rating && @school_profile.summary_rating.weights_within_range? %>
                 <div class="gs-rating-with-label__label">
                   <a data-remodal-target="modal_info_box"
                      data-content-type="info_box"
                      data-content-html='<%= render 'summary_rating' %>'
                      class="gs-tipso"
-                     data-tipso-offsetX="80"
-                     data-tipso-offsetY="22"
-                     data-tipso-width="320"
-                     data-tipso-position="right"
+                     data-tipso-offsetX="30"
+                     data-tipso-offsetY="50"
+                     data-tipso-width="450"
+                     data-tipso-position="top"
                      href="javascript:void(0)">
                     <span class="coming-soon"><%= t(".#{new_rating_key}coming_soon") %></span>
                     <span class="info-circle"><span class="icon-question"></span></span>

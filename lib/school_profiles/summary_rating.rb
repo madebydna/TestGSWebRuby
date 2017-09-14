@@ -62,7 +62,7 @@ module SchoolProfiles
       if @equity_overview.has_rating?
         {title: 'Equity Overview', rating: @equity_overview.equity_rating, weight: get_weight('Summary Rating Weight: Equity Rating')}
       elsif @school_cache_data_reader.equity_adjustment_factor?
-        {title: 'Equity adjustment factor', }
+        {title: 'Equity adjustment factor', rating: '<span class="gs-rating circle-rating--xtra-small checkmark"></span>', weight: get_weight('Summary Rating Weight: Equity Adjustment Factor')}
       end
     end
 
@@ -88,20 +88,17 @@ module SchoolProfiles
       end
     end
 
-
-    # def summary_rating
-    #   #TODO fallback value if Summary Rating is not in the data cache?
-    #   if @school_cache_data_reader.gsdata_data('Summary Rating').present?
-    #     @_summary_rating ||= filter_rating('Summary Rating')
-    #   end
-    # end
-
     def last_updated
       @school_cache_data_reader.fetch_date_from_weight
     end
 
     def to_percent(decimal)
       (decimal*100).round.to_s + '%'
+    end
+
+    def weights_within_range?
+      return false unless @school_cache_data_reader.rating_weights
+      @school_cache_data_reader.rating_weights.reduce(:+).between?(90, 110)
     end
 
     private

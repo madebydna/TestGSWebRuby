@@ -192,6 +192,15 @@ module SchoolProfiles
       format_date source_dates.compact.max
     end
 
+    def rating_weights
+      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
+      return nil if rating_weight_hash.empty?
+      rating_weight_hash.values.map  do |weight_data|
+        return nil if (weight_data.first.nil? || weight_data.first['school_value'].nil?)
+        ((weight_data.first['school_value'].to_f)*100).round
+      end
+    end
+
     def build_time_object(dt_string)
       begin
       year = dt_string[0..3]
