@@ -32,7 +32,9 @@
         <span class="summary-rating-weight ib" style="text-align: center;"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
         <% if ['Attendance Flag', 'Discipline Flag'].include?(row[:title])%>
             <span class="summary-rating-value ib"><span class="icon-flag"></span></span>
-        <% else%>
+        <% elsif row[:title] == 'Equity Adjustment Factor' %>
+            <span class="summary-rating-value ib"><%= row[:rating] %></span>
+        <% else %>
           <span class="summary-rating-value ib"><span class="gs-rating circle-rating--<%= row[:rating] %> circle-rating--xtra-small">
             <%= row[:rating] %><span class="denominator">/10</span></span></span>
         <% end %>
