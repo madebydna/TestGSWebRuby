@@ -4,9 +4,12 @@ en:
       'title': 'Equity overview'
       subtitle_html: >
         Is this school offering opportunity for all its students, or leaving some kids behind?
-        Successful schools are working to <a href="%{article_path}">close the achievement gap</a>.
+        Successful schools are working to
+        <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/"> close the achievement
+        gap</a>.
       'sources_title': 'GreatSchools profile data sources &amp; information'
       'source': 'Source'
+      'see_more': 'See more: <a href="/gk/ratings/#equityrating">About this rating</a>'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
       section:
         one: section
@@ -20,7 +23,7 @@ en:
         relative to all its students, compared to other schools in the state, based on test scores provided from the
         state Department of Education.
         <br>
-        <a href="http://www.greatschools.org/gk/ratings/" style="cursor: pointer;">Learn more about this rating.</a>
+        <a href="/gk/ratings/#equityrating" style="cursor: pointer;">Learn more about this rating.</a>
       narrative_1_html: >
         <h3 class="negative">Very concerning:</h3>
         <p>Disadvantaged students at this school may be falling far behind other students in the state,

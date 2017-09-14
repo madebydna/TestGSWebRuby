@@ -4,6 +4,7 @@ es:
       'title': 'Progreso Académico'
       'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'source': 'Fuente'
+      'see_more': 'See more: <a href="/gk/ratings/#academicprogressrating">About this rating</a>'
       'Great schools rating': 'La Calificación de Progreso Académico de GreatSchools'
       info_text: >
         <p>La Calificación del Progreso Académico ayuda a medir cuánto los estudiantes aprenden en un año, en comparación con
@@ -15,6 +16,7 @@ es:
         el aprendizaje del estudiante a lo largo del tiempo. Especialmente, para los estados que les faltan datos de crecimiento,
         calculamos nuestra Calificación del Progreso Académico comparando año con año las calificaciones de grado y sujeto
         en esta escuela contra todas las escuelas en el estado.</p>
+        <p><a href="/gk/ratings/#academicprogressrating">Infórmese más sobre esta calificación.</a></p>
       narrative_1_html: >
         <h3 class="negative">Muy preocupante:</h3>
         <p>Los estudiantes de esta escuela están progresando <span class="emphasis">mucho menos</span> académicamente en comparación

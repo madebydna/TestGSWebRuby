@@ -6,6 +6,10 @@ en:
       'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
+      GreatSchools: GreatSchools
+      li_GreatSchools_Rating: GreatSchools Low-income Rating
+      li_description: The low-income rating reflects state test scores for students at this school who qualify for free or reduced-price lunch compared to all students in the state.
+      li_see_more: 'See more: <a href="/gk/ratings/#lowincomerating">About this rating</a>'
       faq:
         race_ethnicity:
           cta: Notice something missing or confusing?
@@ -17,7 +21,8 @@ en:
             <li>The “% of students” information reflects the portion of the overall student population at the school that each subgroup represents. For more about student demographics at this school, visit the “Students” section below.</li>
             </ul>
             <p><span class="emphasis">How do we decide which subjects to display?</span> Test subjects shown represent those taken by the largest number of students at this school.</p>
-            <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page.</a></p>
+            <p>Did you find the race/ethnicity equity information useful? What can we do better? <a href="https://s.qualaroo.com/45194/a0e5e5a5-d6d6-45c6-99e4-4e1e06863f89">Share your feedback.</a></p>
+            <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us">Visit our FAQ page.</a></p>
         low_income:
           cta: Notice something missing or confusing?
           content_html: >
@@ -27,13 +32,16 @@ en:
             <li>For more information about low-income definitions, see the “?” at the top of the module.</li>
             <li>For more about overall student demographics at this school, visit the “Students” section below.</li>
             </ul>
-            <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
+            <p>Did you find the low-income equity information useful? What can we do better? <a href="https://s.qualaroo.com/45194/6bb9534f-6abf-4feb-b262-db8059ba49ee">Share your feedback.</a></p>
+            <p><a href="/gk/ratings/#lowincomerating">Learn more about this rating</a></p>
+            <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us">Visit our FAQ page.</a></p>
         disabilities:
           cta: Notice something missing or confusing?
           content_html: >
             <p><span class="emphasis">How do we decide which subjects to display?</span> We display the three tests taken by the largest number of students at this school.</p>
             <p><span class="emphasis">What does the “State average” data show?</span> In this chart, the state average show the state average for Students with disabilities (not for all students) across the state. This allows you to compare results for students with disabilities at this school to similar student populations at other schools in the state.</p>
-            <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
+            <p>Did you find the students with disabilities information useful? What can we do better? <a href="https://s.qualaroo.com/45194/2cfa01ac-bd57-44a3-abb8-0684737688f1">Share your feedback.</a></p>
+            <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us">Visit our FAQ page</a>.</p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Graduation rates reflect how many students graduate from this school on time.'
         'Percent of students who meet UC/CSU entrance requirements': 'This is the percentage of graduates from this school who completed the A-G courses required for eligibility at University of California and California State University schools.'

@@ -26,7 +26,7 @@ module SchoolProfiles
         content << "<p>#{description}</p>" if description
         content << "<p>#{methodology}</p>" if methodology
       end
-      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + '</p>'
+      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + ' | ' + static_label('see_more') + '</p>'
       content << '</div>'
       content << '</div>'
     end

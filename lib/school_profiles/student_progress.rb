@@ -77,7 +77,7 @@ module SchoolProfiles
         content << methodology if methodology
         content << '</p>'
       end
-      content << '<p><span class="emphasis">' + label('source') + '</span>: ' + source + '</p>'
+      content << '<p><span class="emphasis">' + label('source') + '</span>: ' + source + ' | ' + label('see more') + '</p>'
       content << '</div>'
       content << '</div>'
       content

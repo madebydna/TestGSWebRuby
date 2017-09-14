@@ -127,7 +127,7 @@ module SchoolProfiles
           end
 
           content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
-          content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings"; target="_blank">' + data_label('More') + '</a>'
+          content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings/#testscorerating"; target="_blank">' + data_label('More') + '</a>'
           content << '</p>'
           content << '</div>'
         end
@@ -146,6 +146,48 @@ module SchoolProfiles
           string << sources_for_view(array)
         end
         content << '</div>'
+      end
+      content
+    end
+
+    def source_rating_text
+      content = '<div>'
+      content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
+
+      description = rating_description
+      description = data_label(description) if description
+      methodology = rating_methodology
+      methodology = data_label(methodology) if methodology
+      if description || methodology
+        content << '<p>'
+        content << description if description
+        content << ' ' if description && methodology
+        content << methodology if methodology
+        content << '</p>'
+      end
+
+      content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
+      content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings/#testscorerating"; target="_blank">' + data_label('More') + '</a>'
+      content << '</p>'
+      content << '</div>'
+      content
+    end
+
+    def sources_without_rating_text
+      content = ''
+      data = subject_scores.each_with_object({}) do |rsi, output|
+        output[rsi.test_label] ||= {}
+        output[rsi.test_label][:test_label] = rsi.test_label
+        output[rsi.test_label][:subject] ||= []
+        output[rsi.test_label][:subject] << rsi.label
+        output[rsi.test_label][:test_description] = rsi.description
+        output[rsi.test_label][:source] = rsi.source
+        output[rsi.test_label][:year] = rsi.year
+        output[rsi.test_label][:flags] ||= []
+        output[rsi.test_label][:flags] << rsi.flags
+      end
+      content << data.reduce('') do |string, array|
+        string << sources_for_view(array)
       end
       content
     end

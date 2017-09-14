@@ -80,7 +80,7 @@ module SchoolProfiles
       content << '<h4>' + static_label('Great schools rating') + '</h4>'
       content << "<p>#{description}</p>" if description
       content << "<p>#{methodology}</p>" if methodology
-      content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + '</p>'
+      content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + ' | ' + static_label('see_more') + '</p>'
       content << '</div>'
       content << '</div>'
     end

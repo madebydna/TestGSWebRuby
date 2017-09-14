@@ -156,16 +156,78 @@ module SchoolProfiles
       end
     end
 
+    def low_income_rating_year
+      low_income_results = @school_cache_data_reader.test_scores_all_rating_hash.select { |bd|
+        bd['breakdown'] == 'Economically disadvantaged'
+      }
+      if low_income_results.is_a?(Array) && !low_income_results.empty?
+        low_income_results.first['year']
+      end
+    end
+
+    def rating_methodology
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['methodology'] if hash
+    end
+
+    def rating_description
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['description'] if hash
+    end
+
+    def li_rating_sources
+      content = nil
+      if equity_test_scores.low_income_test_scores_visible?
+        source = "<span class='emphasis'>#{static_label('source')}:</span> #{static_label('GreatSchools')}, #{low_income_rating_year}"
+        methodology = rating_methodology.present? ? rating_methodology : ''
+        content = '<div>'
+        content << '<h4>' + static_label('li_GreatSchools_Rating') + '</h4>'
+        content << '<p>'
+        content << static_label('li_description') + ' ' + data_label(methodology)
+        content << '</p>'
+        content << '<p>' + source + ' | ' + static_label('li_see_more') + '</p>'
+        content << '</div>'
+        content
+      end
+      @_li_rating_sources ||= content
+    end
+
+    def test_source_data
+      @_test_source_data ||= (TestScores.new(@school, school_cache_data_reader: @school_cache_data_reader))
+    end
+
+    def test_source_no_rating
+      @_test_source_no_rating ||= (test_source_data.sources_without_rating_text)
+    end
+
+    def test_source_with_rating
+      @_test_source_with_rating ||= (
+        if test_source_data.rating.present? && test_source_data.rating != 'NR'
+          test_source_data.source_rating_text
+        end
+      )
+    end
+
+    def race_ethnicity_sources
+      sources_header + test_source_with_rating + '</div>' + sources
+    end
+
+    def students_with_disabilities_sources
+      sources_header + test_source_no_rating + '</div>' + sources
+    end
+
+    def low_income_sources
+      sources_header + li_rating_sources + test_source_no_rating + '</div>' + sources
+    end
+
+    def sources_header
+      content = ''
+      content << '<div class="sourcing">'
+      content << '<h1>' + data_label('.title') + '</h1>'
+    end
+
     def sources
       content = ''
-      if (equity_test_scores.ethnicity_test_scores_visible? || equity_test_scores.low_income_test_scores_visible?)
-        content << get_test_source_data
-      else
-        content << '<div class="sourcing">'
-        content << '<h1>' + data_label('.title') + '</h1>'
-        content << '</div>'
-      end
-
       if characteristics_low_income_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|

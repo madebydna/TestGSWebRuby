@@ -4,6 +4,7 @@ es:
       advanced_courses: Cursos avanzados
       rating_title: Calificaciones de GreatSchools de los Cursos Avanzados
       rating_description: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela en inglés, STEM, ciencias sociales y idiomas extranjeros, en comparación con el promedio estatal.
+      see_more: 'See more: <a href="/gk/ratings/#advancedcoursesrating">About this rating</a>'
       Arts: Arte
       ELA: Ingles
       FL: Idiomas extranjeros
@@ -27,7 +28,9 @@ es:
           <p>Clasificaciones se basan en una escala del 1 (bajo) al 10 (alto).
           Si una escuela no ofrece ningún tipo de cursos avanzados en una de las cuatro materias con una clasificación,
           esa materia recibirá un "1" para la calificación.</p>
-          <p>¿Todavía tiene preguntas? <a href='/gk/faq/'>Visite nuestra página de preguntas frecuentes.</a></p>
+          <p>¿Ha encontrado la información de cursos avanzados útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/d8fa4702-59cd-435c-a922-9409acaf81c8">Comparte tus comentarios.</a></p>
+          <p><a href="/gk/ratings/#advancedcoursesrating">Infórmese más sobre esta calificación.</a></p>
+          <p>¿Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us)">Visite nuestra página de preguntas frecuentes.</a></p>
       narration:
         _1_html: >
           <h3 class="negative">Muy preocupante:</h3>
