@@ -60,6 +60,9 @@ feed_log_level : 0
 # gsdata_db_host: dev-gsdata.greatschools.org
 # gsdata_db_username: foobarbaz
 # gsdata_db_password: foobarbaz
+db_read_timeout: 20
+db_write_timeout: 20
+db_connect_timeout: 5
 
 profiling_key: we<3performance
 profiling_output_path: /tmp
