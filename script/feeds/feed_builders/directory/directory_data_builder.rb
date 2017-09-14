@@ -6,29 +6,30 @@ module Feeds
       @value_key = model.downcase + '_value'
       @model = model
       @state = state
-      keys = FeedConstants.const_get("DIRECTORY_FEED_#{model.upcase}_CACHE_KEYS")
-      @directory_hash = hash[keys[0]]
-      @characteristics_hash = hash[keys[1]]
+
+      # Get some constants based on school or district
+      cache_keys          = FeedConstants.const_get("DIRECTORY_FEED_#{model.upcase}_CACHE_KEYS")
+      data_keys_all       = FeedConstants.const_get("DIRECTORY_#{model.upcase}_KEY_ORDER")
+      data_keys_special   = FeedConstants.const_get("DIRECTORY_#{model.upcase}_KEYS_SPECIAL")
+      data_keys_required  = FeedConstants.const_get("DIRECTORY_#{model.upcase}_KEYS_REQUIRED")
+
+      @directory_hash = hash[cache_keys[0]]
+      @characteristics_hash = hash[cache_keys[1]]
       id = cache_value(@directory_hash, 'id')
       @universal_id = UniversalId.calculate_universal_id(state, FeedConstants.const_get("ENTITY_TYPE_#{model.upcase}"), id)
 
       arr = []
 
-
-      # TODO - I should create a white list for school which I have and a white list for district
-      # then create a required set for each then use const_get to grab the correct one
-      DIRECTORY_FEED_FORCE_ORDER.each do | key |
-        if DIRECTORY_KEYS_SPECIAL.include? key
+      data_keys_all.each do | key |
+        if data_keys_special.include? key
           sdo = send(key)
           arr << sdo if sdo
         else
           value = cache_value(@directory_hash,key)
           key_string = key.to_s.gsub('_', '-').downcase
-          # remove particular keys from District - so if District and key in Exempt list don't show it
-          if model != 'District' || !(DIRECTORY_DISTRICT_EXEMPT.include? key)
             # if the key is required or it has a value add it to array to show
-            arr << single_data_object(key_string, value) if DIRECTORY_KEYS_REQUIRED.include? key || value.present?
-          end
+          arr << single_data_object(key_string, value) if data_keys_required.include? key || value.present?
+
         end
       end
 
@@ -78,10 +79,10 @@ module Feeds
       single_data_object('universal-district-id',uni_district_id) if district_id && uni_district_id && @model == 'School'
     end
 
-    def self.state_id
-      state = cache_value(@directory_hash,'state')
-      single_data_object('state-id',state_fips[state.upcase]) if state
-    end
+    # def self.state_id
+    #   state = cache_value(@directory_hash,'state')
+    #   single_data_object('state-id',state_fips[state.upcase]) if state
+    # end
 
     def self.census_info
       char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash

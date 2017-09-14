@@ -55,17 +55,17 @@ module Feeds
 
       DEFAULT_BATCH_SIZE = 1
 
-      DIRECTORY_DISTRICT_EXEMPT = %w(id district_id type subtype)
-
       # this is the required order for school and district content
-      DIRECTORY_FEED_FORCE_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county fipscounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id district_spending url census_info school_summary)
+      DIRECTORY_SCHOOL_KEY_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county fipscounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id district_spending url census_info school_summary)
+      DIRECTORY_DISTRICT_KEY_ORDER = %w(universal_id state_id nces_code name description street city state zipcode county fipscounty level level_code lat lon phone fax web_site url census_info)
 
       # this is a white list of keys we are looking for
-      DIRECTORY_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type web_site)
-      # DIRECTORY_KEYS = %w(nces_code FIPScounty phone fax district_name district-spending school_summary)
+      DIRECTORY_SCHOOL_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type web_site)
+      DIRECTORY_DISTRICT_KEYS_REQUIRED = %w(name description street city state county level level_code web_site)
 
       #  REQUIRED - universal_id zipcode home_page_url url
-      DIRECTORY_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url state_id universal_district_id census_info)
+      DIRECTORY_SCHOOL_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url universal_district_id census_info)
+      DIRECTORY_DISTRICT_KEYS_SPECIAL = %w(universal_id zipcode home_page_url url census_info)
 
       # this is a white list of keys we are looking for - executes a method to handle type of data
       CHARACTERISTICS_MAPPING = [

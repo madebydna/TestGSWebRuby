@@ -19,8 +19,8 @@ module Feeds
 
     def initialize(attributes = {})
       @state = attributes[:state]
-      @district_ids = attributes[:district_ids] || District.ids_by_state(@state)
-      @school_ids = attributes[:school_ids] || School.ids_by_state(@state)
+      @district_ids = attributes[:district_ids].present? ? attributes[:district_ids] :  District.ids_by_state(@state)
+      @school_ids = attributes[:school_ids].present? ? attributes[:school_ids] : School.ids_by_state(@state)
       @feed_file_path = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
@@ -29,7 +29,6 @@ module Feeds
       self.school_feed = EntityDirectoryFeed.for_schools(state, @school_ids, @data_type)
       self.district_feed = EntityDirectoryFeed.for_districts(state, @district_ids, @data_type)
       self.state_feed = EntityDirectoryFeed.for_states(state, @data_type)
-      # self.state_info_feed = Feeds::StateInfoFeed.new(state, data_type)
     end
 
     def generate_feed(format='')
