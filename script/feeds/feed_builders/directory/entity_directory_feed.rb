@@ -33,7 +33,7 @@ module Feeds
       if block_given?
         @ids.each do |id|
           data = objects_with_cache_data(id)
-          hash = DirectoryDataBuilder.build_data(data, @state, @model)
+          hash = DirectoryDataBuilder.build_data(data, @state, @model) if data
           yield(hash)
         end
       end
