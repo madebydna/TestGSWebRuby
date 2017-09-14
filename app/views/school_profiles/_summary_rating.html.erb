@@ -11,8 +11,8 @@
     </div>
     <div class="header-text">
       <div style="margin-bottom: 5px; font-family:opensans-semibold;"><%= t('.header.title')%></div>
-      <div><%= t('.header.subtext_html')%></div>
-      <a href="<%= ratings_path %>"><%= t('.header.Learn more')%></a>
+      <div><%= t('.header.subtext_html')%><a href="<%= ratings_path %>"><%= t('.header.Learn more')%></a></div>
+
     </div>
   </div>
 
@@ -23,16 +23,19 @@
     <span class="value-column ib"><%= t('.table_content.rating_flag')%></span>
   </div>
   <% rating_table_rows.each do |row| %>
+    <% if row[:title] == 'Equity Adjustment Factor' %>
+      <% circle_color = 'gray' %>
+    <% else %>
+      <% circle_color = row[:rating] %>
+    <% end %>
     <div class="rating-table-row pad-row">
       <div>
         <span class="summary-rating-title ib js-rating-details"><%= t(".table_content.#{row[:title]}") %><span class="icon-caret-down rotate-text-270 move-icon"></span></span>
         <span class="summary-rating-weight ib" style="text-align: center;"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
         <% if ['Attendance Flag', 'Discipline Flag'].include?(row[:title])%>
             <span class="summary-rating-value ib"><span class="icon-flag"></span></span>
-        <% elsif row[:title] == 'Equity Adjustment Factor' %>
-            <span class="summary-rating-value ib"><%= row[:rating] %></span>
         <% else %>
-          <span class="summary-rating-value ib"><span class="gs-rating circle-rating--<%= row[:rating] %> circle-rating--xtra-small">
+          <span class="summary-rating-value ib"><span class="gs-rating circle-rating--<%= circle_color %> circle-rating--xtra-small">
             <%= row[:rating] %><span class="denominator">/10</span></span></span>
         <% end %>
       </div>

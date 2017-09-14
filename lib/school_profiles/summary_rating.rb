@@ -61,7 +61,7 @@ module SchoolProfiles
       if @equity_overview.has_rating?
         {title: 'Equity Overview', rating: @equity_overview.equity_rating, weight: get_school_value_for('Summary Rating Weight: Equity Rating')}
       elsif @school_cache_data_reader.equity_adjustment_factor?
-        {title: 'Equity Adjustment Factor', rating: '<span class="gs-rating circle-rating--xtra-small checkmark"></span>', weight: get_school_value_for('Summary Rating Weight: Equity Adjustment Factor')}
+        {title: 'Equity Adjustment Factor', rating: get_school_value_for('Equity Adjustment Factor').round, weight: get_school_value_for('Summary Rating Weight: Equity Adjustment Factor')}
       end
     end
 

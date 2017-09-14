@@ -71,6 +71,10 @@ $large: 62px;
   background-color: $rating10;
 }
 
+.circle-rating--gray {
+  background-color: $ratingNR;
+}
+
 .circle-rating--equity-blue {
   @include circle-rating($medium);
   background-color: #22a4dd;
