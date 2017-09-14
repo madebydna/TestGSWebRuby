@@ -11,7 +11,7 @@
         <%= render 'school_profile_sticky_cta' %>
       </div>
       <div class="content">
-        <%= render 'summary_narration' %>
+          <%= render 'summary_narration' if @school_profile.summary_narration.present? %>
 
         <div>
           <%= render 'toc' %>
