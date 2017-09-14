@@ -12,7 +12,7 @@ es:
       table_content:
         Rating components: Elementos de las calificaciones
         Weight: Peso
-        rating_flag: Calificaciones
+        rating_flag: "Calificaciones&nbsp;/ advertencia"
         Test Scores: Resultados de Exámenes
         Test Scores Description: >
           Las Calificaciones de GreatSchools de los Resultados de Exámenes reflejan los resultados de los

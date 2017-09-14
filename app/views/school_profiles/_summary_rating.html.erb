@@ -14,16 +14,13 @@
       <div><%= t('.header.subtext_html')%></div>
       <a href="<%= ratings_path %>"><%= t('.header.Learn more')%></a>
     </div>
-    <% if last_updated %>
-      <div class="last-updated gray pad-row"><%= t('.header.Last updated') + ':  ' + last_updated %></div>
-    <% end %>
   </div>
 
   <%# tooltip table %>
   <div class="table-header gray">
     <span class="summary-rating-title ib"><%= t('.table_content.Rating components')%></span>
     <span class="summary-rating-weight ib" style="text-align: center; vertical-align: top;"><%= t('.table_content.Weight')%></span>
-    <span class="pull_right ib"><%= t('.table_content.rating_flag')%></span>
+    <span class="value-column ib"><%= t('.table_content.rating_flag')%></span>
   </div>
   <% rating_table_rows.each do |row| %>
     <div class="rating-table-row pad-row">
@@ -44,12 +41,7 @@
       </div>
     </div>
   <% end %>
+  <% if last_updated %>
+      <div class="last-updated gray pad-row"><%= t('.header.Last updated') + ':  ' + last_updated %></div>
+  <% end %>
 </div>
-
-
-
-<style>
-
-
-
-</style>

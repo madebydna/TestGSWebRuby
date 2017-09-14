@@ -1,6 +1,7 @@
 .summary_rating_tooltip {
   text-align: left;
   font-size: 13px;
+  vertical-align: top;
   a {font-size: 13px;}
   span.icon-flag {
     color: #ff3f2b;
@@ -18,29 +19,43 @@
     width: 86%;
   }
   .table-header {
+    margin-top: 15px;
     padding: 4px 0 4px 0;
+    .value-column {
+      width: 100%;
+      max-width: 33%;
+      //min-width: 30%;
+      text-align: right;
+    }
   }
   .last-updated {
-    margin-top: 15px;
-    border-bottom: 1px solid $gray;
+    //margin-top: 15px;
+    border-top: 1px solid $gray;
+    font-size: 12px;
   }
   .rating-table-row {
     border-top: 1px solid $gray;
     text-align: left;
+    * { vertical-align: top;}
     //margin-bottom: 5px;
   }
   .rating-table-description {
     display: none;
-    width: 48%;
+    margin: 5px 0;
+    //width: 48%;
   }
   .summary-rating-title {
     width: 48%;
+    vertical-align: top;
   }
   .summary-rating-weight {
-    width: 20%;
+    min-width: 30px;
+    text-align: center;
   }
   .summary-rating-value {
-    width: 25%;
+    width: 100%;
+    //min-width: 30%;
+    max-width: 33%;
     text-align: right;
     //padding-right: 7px;
   }
