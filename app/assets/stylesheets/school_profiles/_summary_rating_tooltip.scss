@@ -3,4 +3,15 @@
     color: #ff3f2b;
     font-size: 16px;
   }
+  .js-rating-details {
+    color: #00b3ee;
+    cursor: pointer;
+    span {
+      vertical-align: middle;
+      margin-left: 3px;
+    }
+  }
+  .rating-table-description {
+    width: 45%;
+  }
 }

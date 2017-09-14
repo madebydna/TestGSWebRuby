@@ -25,15 +25,20 @@
     <span class="pull_right ib"><%= t('.table_content.rating_flag')%></span>
   </div>
   <% rating_table_rows.each do |row| %>
-    <div style="border-top: 1px solid #D3D3D3; text-align: left; height: 30px; margin-bottom: 5px;">
-      <span class="forty_five_percent ib" style="line-height: 30px;"><%= t(".table_content.#{row[:title]}") %></span>
-      <span class="twenty_five_percent ib" style="text-align: center;"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
-      <% if ['Attendance flag', 'Discipline flag'].include?(row[:title])%>
-          <span style="margin-top: 4px;" class="pull_right ib icon-flag"></span>
-      <% else%>
-        <span style="margin-top: 4px;" class="pull_right ib gs-rating circle-rating--<%= row[:rating] %> circle-rating--xtra-small">
-            <%= row[:rating] %><span class="denominator">/10</span>
-      <% end %>
+    <div class="rating_table_row" style="border-top: 1px solid #D3D3D3; text-align: left; margin-bottom: 5px;">
+      <div>
+        <span class="forty_five_percent ib js-rating-details" style="line-height: 30px;"><%= t(".table_content.#{row[:title]}") %><span class="icon-caret-down rotate-text-270 move-icon"></span></span>
+        <span class="twenty_five_percent ib" style="text-align: center;"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
+        <% if ['Attendance Flag', 'Discipline Flag'].include?(row[:title])%>
+            <span style="margin-top: 4px;" class="pull_right ib icon-flag"></span>
+        <% else%>
+          <span style="margin-top: 4px;" class="pull_right ib gs-rating circle-rating--<%= row[:rating] %> circle-rating--xtra-small">
+              <%= row[:rating] %><span class="denominator">/10</span>
+        <% end %>
+      </div>
+      <div class="rating-table-description" style="display: none;">
+        <%= t(".table_content.#{row[:title]} Description")%>
+      </div>
     </div>
   <% end %>
 </div>
