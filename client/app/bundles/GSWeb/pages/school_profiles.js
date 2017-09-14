@@ -182,6 +182,19 @@ $(function() {
     }
   });
 
+  // for summary rating tooltip
+  $body.on('click', '.js-rating-details', function () {
+    var ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
+    if(ratingDescription.css('display') == 'none') {
+      ratingDescription.slideDown();
+      $(this).find('span').removeClass('rotate-text-270');
+    }
+    else{
+      ratingDescription.slideUp();
+      $(this).find('span').addClass('rotate-text-270');
+    }
+  });
+
   // for historical ratings
   $body.on('click', '.js-historical-button', function () {
     var historical_data = $(this).closest('.js-historical-module').find('.js-historical-target');
