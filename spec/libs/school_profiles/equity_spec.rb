@@ -5,7 +5,8 @@ describe SchoolProfiles::Equity do
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
   subject(:equity) do
     SchoolProfiles::Equity.new(
-      school_cache_data_reader: school_cache_data_reader
+      school_cache_data_reader: school_cache_data_reader,
+      test_source_data: nil
     )
   end
 
