@@ -17,6 +17,10 @@
   }
   .header-text {
     width: 86%;
+    > :first-child {
+      margin-bottom: 5px;
+      font-family: 'opensans-semibold';
+    }
   }
   .table-header {
     margin-top: 15px;
@@ -51,6 +55,7 @@
   .summary-rating-weight {
     min-width: 30px;
     text-align: center;
+    vertical-align: top;
   }
   .summary-rating-value {
     width: 100%;

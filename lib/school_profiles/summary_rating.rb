@@ -3,20 +3,20 @@ module SchoolProfiles
 
     attr_reader :school
 
-    delegate :gs_rating, to: :school_cache_data_reader
-
-    # ALLOWED_RATINGS = {
-    #   'Test Score Rating' => {rating_component: t('Test Scores'), weight: 'Summary Rating Weight: Test Score Rating' },
-    #   'Student Progress Rating' => {rating_component: t('Student Progress'), weight: 'Summary Rating Weight: Student Progress Rating'},
-    #   'Academic Progress Rating' => {rating_component: t('Academic Progress'), weight: 'Summary Rating Weight: Academic Progress Rating'},
-    #   'College Readiness Rating' => {rating_component: t('College Readiness'), weight: 'Summary Rating Weight: College Readiness Rating'},
-    #   'Advanced Course Rating' => {rating_component: t('Advanced Courses'), weight: 'Summary Rating Weight: Advanced Course Rating'},
-    #   'Equity Rating' => {rating_component: t('Equity Overview'), weight: 'Summary Rating Weight: Equity Rating'},
-    #   'Equity Adjustment Factor' => {rating_component: t('Equity adjustment factor'), weight: 'Summary Rating Weight: Equity Adjustment Factor'},
-    #   'Discipline flag' => {rating_component: t('Discipline'), weight: 'Summary Rating Weight: Discipline Flag'},
-    #   'Attendance flag' => {rating_component: t('Attendance'), weight: 'Summary Rating Weight: Absence Flag'}
-    # }
-    # ['Summary Rating Weight: Test Score Rating']
+    # The methods below rely on this mapping to pass along the correct title and weight to the summary tooltip.
+    # NB: The 'weight' strings correspond to matching keys is the gsdata cache. Only change if the cache keys are also changing!
+    # The titles are passed to the tooltip as is.
+    RATING_WEIGHTS = {
+      'Test Score Rating' => {title: 'Test Scores', weight: 'Summary Rating Weight: Test Score Rating' },
+      'Academic Progress Rating' => {title: 'Academic Progress', weight: 'Summary Rating Weight: Academic Progress Rating'},
+      'Student Progress Rating' => {title: 'Student Progress', weight: 'Summary Rating Weight: Student Progress Rating'},
+      'College Readiness Rating' => {title: 'College Readiness', weight: 'Summary Rating Weight: College Readiness Rating'},
+      'Equity Rating' => {title: 'Equity Overview', weight: 'Summary Rating Weight: Equity Rating'},
+      'Equity Adjustment Factor' => {title: 'Equity Adjustment Factor', weight: 'Summary Rating Weight: Equity Adjustment Factor'},
+      'Advanced Course Rating' => {title: 'Advanced Courses', weight: 'Summary Rating Weight: Advanced Course Rating'},
+      'Discipline Flag' => {title: 'Discipline Flag', weight: 'Summary Rating Weight: Discipline Flag'},
+      'Attendance Flag' => {title: 'Attendance Flag', weight: 'Summary Rating Weight: Absence Flag'}
+    }
 
     def initialize(test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses, school, school_cache_data_reader:)
       @test_scores = test_scores
@@ -42,54 +42,50 @@ module SchoolProfiles
     end
 
     def test_scores
-      {title: 'Test Scores', rating: @test_scores.rating, weight: get_school_value_for('Summary Rating Weight: Test Score Rating')} if @test_scores.visible?
+      {title: RATING_WEIGHTS['Test Score Rating'][:title], rating: @test_scores.rating, weight: get_school_value_for(RATING_WEIGHTS['Test Score Rating'][:weight])} if @test_scores.visible?
     end
 
     def student_progress
       if @academic_progress.visible? && !@student_progress.has_data?
-        {title: 'Academic Progress', rating: @academic_progress.academic_progress_rating, weight: get_school_value_for('Summary Rating Weight: Academic Progress Rating')}
+        {title: RATING_WEIGHTS['Academic Progress Rating'][:title], rating: @academic_progress.academic_progress_rating, weight: get_school_value_for(RATING_WEIGHTS['Academic Progress Rating'][:weight])}
       elsif @student_progress.visible?
-        {title: 'Student Progress', rating: @student_progress.rating, weight: get_school_value_for('Summary Rating Weight: Student Progress Rating')}
+        {title: RATING_WEIGHTS['Student Progress Rating'][:title], rating: @student_progress.rating, weight: get_school_value_for(RATING_WEIGHTS['Student Progress Rating'][:weight])}
       end
     end
 
     def college_readiness
-      {title: 'College Readiness', rating: @college_readiness.rating, weight: get_school_value_for('Summary Rating Weight: College Readiness Rating')} if @school.level_code =~ /h/
+      {title: RATING_WEIGHTS['College Readiness Rating'][:title], rating: @college_readiness.rating, weight: get_school_value_for(RATING_WEIGHTS['College Readiness Rating'][:weight])} if @school.level_code =~ /h/
     end
 
     def equity
       if @equity_overview.has_rating?
-        {title: 'Equity Overview', rating: @equity_overview.equity_rating, weight: get_school_value_for('Summary Rating Weight: Equity Rating')}
+        {title: RATING_WEIGHTS['Equity Rating'][:title], rating: @equity_overview.equity_rating, weight: get_school_value_for(RATING_WEIGHTS['Equity Rating'][:weight])}
       elsif @school_cache_data_reader.equity_adjustment_factor?
-        {title: 'Equity Adjustment Factor', rating: get_school_value_for('Equity Adjustment Factor').round, weight: get_school_value_for('Summary Rating Weight: Equity Adjustment Factor')}
+        {title: RATING_WEIGHTS['Equity Adjustment Factor'][:title], rating: get_school_value_for('Equity Adjustment Factor').round, weight: get_school_value_for(RATING_WEIGHTS['Equity Adjustment Factor'][:weight])}
       end
     end
 
     def equity_overview
       if @equity_overview.has_rating?
-        {title: 'Equity Overview', rating: @equity_overview.equity_rating, weight: get_school_value_for('Summary Rating Weight: Equity Rating')}
+        {title: RATING_WEIGHTS['Equity Rating'][:title], rating: @equity_overview.equity_rating, weight: get_school_value_for(RATING_WEIGHTS['Equity Rating'][:weight])}
       end
     end
 
     def courses
       if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
-        {title: 'Advanced Courses', rating: @courses.rating, weight: get_school_value_for('Summary Rating Weight: Advanced Course Rating')}
+        {title: RATING_WEIGHTS['Advanced Course Rating'][:title], rating: @courses.rating, weight: get_school_value_for(RATING_WEIGHTS['Advanced Course Rating'][:weight])}
       end
-    end
-
-    def summary_rating
-      @school_cache_data_reader.gs_rating
     end
 
     def discipline
       if @school_cache_data_reader.discipline_flag?
-        {title: 'Discipline Flag', rating: '<span class="icon-flag red"></span>', weight: get_school_value_for('Summary Rating Weight: Discipline Flag')}
+        {title: RATING_WEIGHTS['Discipline Flag'][:title], rating: :flag, weight: get_school_value_for(RATING_WEIGHTS['Discipline Flag'][:weight])}
       end
     end
 
     def attendance
       if @school_cache_data_reader.attendance_flag?
-        {title: 'Attendance Flag', rating: '<span class="icon-flag red"></span>', weight: get_school_value_for('Summary Rating Weight: Absence Flag')}
+        {title: RATING_WEIGHTS['Attendance Flag'][:title], rating: :flag, weight: get_school_value_for(RATING_WEIGHTS['Attendance Flag'][:weight])}
       end
     end
 
@@ -104,6 +100,10 @@ module SchoolProfiles
     def weights_within_range?
       return false unless @school_cache_data_reader.rating_weights
       @school_cache_data_reader.rating_weights.reduce(:+).between?(90, 110)
+    end
+
+    def gs_rating
+      @school_cache_data_reader.gs_rating
     end
 
     private
