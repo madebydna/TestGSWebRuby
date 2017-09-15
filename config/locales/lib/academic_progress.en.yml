@@ -4,7 +4,7 @@ en:
       'title': 'Academic progress'
       'sources_title': 'GreatSchools profile data sources &amp; information'
       'source': 'Source'
-      'see_more': 'See more: <a href="/gk/ratings/#academicprogressrating">About this rating</a>'
+      'see_more': 'See more: <a href="/gk/ratings/#academicprogressrating" target="_blank">About this rating</a>'
       'Great schools rating': 'GreatSchools Academic Progress Rating'
       info_text: >
         <p>The Academic Progress Rating helps measure how much students learn in a year, compared to their peers across the state.</p>
@@ -13,7 +13,7 @@ en:
         <p>This state does not publish student growth data, so we use other available data to estimate student learning over
         time. Specifically, for states missing growth data, we calculate our Academic Progress Rating by comparing year-over-year
         test scores by grade and subject at this school to all schools in the state.</p>
-        <p><a href="/gk/ratings/#academicprogressrating">Learn more about this rating.</a></p>
+        <p><a href="/gk/ratings/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
       narrative_1_html: >
         <h3 class="negative">Very concerning:</h3>
         <p>Students at this school are making <span class="emphasis">far less</span> academic progress given where their class was last year, compared

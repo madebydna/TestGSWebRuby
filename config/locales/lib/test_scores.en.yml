@@ -14,7 +14,7 @@ en:
       'See more': 'See more'
       'More': 'About this rating'
       Test scores: Test scores
-      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating'>Learn more about this rating.</a></p>"
+      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source
@@ -33,9 +33,9 @@ en:
           due to suppression. States are required to suppress grade/subject data if the number of test-taking students
           is too small. This can mean that some grade-level scores that are part of the overall score cannot be
           displayed individually.</p>
-          <p>Did you find the information about test scores useful? What can we do better? Share your feedback.</p>
-          <p><a href="/gk/ratings/#testscorerating">Learn more about this rating.</a></p>
-          <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us">Visit our FAQ page</a>.</p>
+          <p>Did you find the information about test scores useful? What can we do better? <a href="https://s.qualaroo.com/45194/1547acf4-6133-4d98-b2e0-5eb28ca1ec04" target="_blank">Share your feedback.</a></p>
+          <p><a href="/gk/ratings/#testscorerating" target="_blank">Learn more about this rating.</a></p>
+          <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
           <h3 class="negative">Very concerning:</h3>
