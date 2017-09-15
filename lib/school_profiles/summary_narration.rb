@@ -112,19 +112,11 @@ module SchoolProfiles
     end
 
     def discipline_and_attendence
-      rating_attendance = @school_cache_data_reader.attendance_flag?
-      rating_discipline = @school_cache_data_reader.discipline_flag?
-      str = ''
-      if rating_attendance
-        str = I18n.t('school_profiles.summary_narration.attendance')
-        if rating_discipline
-          str += ' '+I18n.t('school_profiles.summary_narration.and')+' '
-          str += I18n.t('school_profiles.summary_narration.discipline')
-        end
-      elsif rating_discipline
-        str = I18n.t('school_profiles.summary_narration.discipline')
-      end
-      str.present? ? I18n.t('school_profiles.summary_narration.discipline_and_attendance_html', danda: str) : ''
+      flags = []
+      flags << I18n.t('school_profiles.summary_narration.attendance') if @school_cache_data_reader.attendance_flag?
+      flags << I18n.t('school_profiles.summary_narration.discipline') if @school_cache_data_reader.discipline_flag?
+      clause = flags.join(' ' + I18n.t('school_profiles.summary_narration.and') + ' ')
+      clause.present? ? I18n.t('school_profiles.summary_narration.discipline_and_attendance_html', danda: clause) : ''
     end
   end
 end
