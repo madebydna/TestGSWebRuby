@@ -87,7 +87,7 @@ module SchoolProfiles
     end
 
     def advanced_course_rating
-      rating = rating_by_title('Advanced Course')
+      rating = rating_by_title('Advanced Courses')
       rating_string, level, adverb = advanced_levels(rating) if rating.present?
       rating.present? ? I18n.t('school_profiles.summary_narration.Advanced Course_html', rating_string: rating_string, level: level , adverb: adverb ) : ''
     end
