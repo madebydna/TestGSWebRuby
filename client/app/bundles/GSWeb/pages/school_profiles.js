@@ -82,16 +82,17 @@ $(function() {
   initAnchorHashUpdater();
 
   enableAutoAnchoring({
-    'Test_scores': '#TestScores .rating-container__rating',
-    'College_readiness': '#CollegeReadiness .rating-container__rating',
-    'Advanced_courses': '#AdvancedCourses .rating-container__rating',
-    'Low-income_students': '#EquityLowIncome .equity-section',
-    'Race_ethnicity': '#EquityRaceEthnicity .equity-section',
-    'Students_with_Disabilities': '#EquityDisabilities .equity-section',
+    'Test_scores': '#TestScores .profile-module',
+    'College_readiness': '#CollegeReadiness .profile-module',
+    'Advanced_courses': '#AdvancedCourses .profile-module',
+    'Low-income_students': '#EquityLowIncome .profile-module',
+    'Race_ethnicity': '#EquityRaceEthnicity .profile-module',
+    'Students_with_Disabilities': '#EquityDisabilities .profile-module',
     'Students': '#Students',
     'Teachers_staff': '#TeachersStaff',
     'Reviews': '#Reviews',
-    'Neighborhood': '#Neighborhood'
+    'Neighborhood': '#Neighborhood',
+    'Academic_progress': '#AcademicProgress .rating-container__rating'
   });
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
@@ -106,7 +107,7 @@ $(function() {
     signupAndFollowSchool(gon.school.state, gon.school.id);
   });
 
-  $('.rating-container__title').each(function() {
+  $('.profile-section .section-title').each(function() {
     var $elem = $(this);
     var minWidth = 1200;
 
@@ -124,13 +125,18 @@ $(function() {
     );
   });
 
+  $('.js-moreRevealLink').on('click', function () {
+    $(this).hide();
+    $(this).siblings('.js-moreReveal').css('display', '');
+  });
+
   refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
 
   function setCookieExpiration() {
-    var expires = "";
+    var half_year = 182*24*60*60*1000
     var date = new Date();
-    date.setTime(date.getTime() + (182*24*60*60*1000));
-    expires = "; expires=" + date.toUTCString();
+    date.setTime(date.getTime() + half_year);
+    var expires = "; expires=" + date.toUTCString();
     return expires;
   }
 
@@ -177,6 +183,19 @@ $(function() {
     }
     else{
       grades.slideUp();
+      $(this).find('span').addClass('rotate-text-270');
+    }
+  });
+
+  // for summary rating tooltip
+  $body.on('click', '.js-rating-details', function () {
+    var ratingDescription = $(this).closest('.rating-table-row').find('.rating-table-description');
+    if(ratingDescription.css('display') == 'none') {
+      ratingDescription.slideDown();
+      $(this).find('span').removeClass('rotate-text-270');
+    }
+    else{
+      ratingDescription.slideUp();
       $(this).find('span').addClass('rotate-text-270');
     }
   });

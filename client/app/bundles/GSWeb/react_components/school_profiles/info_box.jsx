@@ -7,7 +7,7 @@ const InfoBox = ({className='', content, children}) => {
       data-content-type="info_box"
       data-content-html={content}
       className={className}
-      href="javascript:void(0)">{children}
+      href="javascript:void(0)"><span className="source-link"><span className="icon-new-info"></span> {children}</span>
     </a>
   );
 };

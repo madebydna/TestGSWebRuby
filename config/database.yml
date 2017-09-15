@@ -14,6 +14,9 @@ mysql: &mysql
   encoding: utf8
   pool: 7
   username: root
+  read_timeout: 20
+  write_timeout: 20
+  connect_timeout: 5
 
 mysql_rw_server: &mysql_rw_server
   <<: *mysql

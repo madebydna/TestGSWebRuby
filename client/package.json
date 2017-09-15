@@ -34,7 +34,7 @@
     "intro.js": "^2.5.0",
     "jquery": "^1.11.1",
     "jquery-ujs": "^1.2.2",
-    "jquery-unveil": "^1.3.2",
+    "jquery-unveil": "1.3.0",
     "jquery.cookie": "^1.4.1",
     "jsx-to-string": "^1.0.0",
     "react": "^15.0.0",

@@ -10,7 +10,9 @@ es:
       greatschools_terms_of_use: GreatSchools Terms of Use.
       greatnews_title: GreatSchools weekly (preK-12)
       greatnews_subtitle: A weekly roundup of our best articles, videos, and more.
-      heading: Manage your newsletter preferences
+      heading: "Manage your:"
+      newsletter_preferences: Newsletter preferences
+      email_updates: School email updates
       newsletters_heading: Newsletters
       sponsor_title: From our partners
       sponsor_subtitle: Special offers and info from GreatSchools' carefully chosen partners.

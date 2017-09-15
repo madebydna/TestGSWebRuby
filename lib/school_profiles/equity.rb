@@ -2,8 +2,9 @@ module SchoolProfiles
   class Equity
     include Qualaroo
 
-    def initialize(school_cache_data_reader:)
+    def initialize(school_cache_data_reader:, test_source_data:)
       @school_cache_data_reader = school_cache_data_reader
+      @test_source_data = test_source_data
 
       SchoolProfiles::NarrativeLowIncomeGradRateAndEntranceReq.new(
           school_cache_data_reader: school_cache_data_reader
@@ -59,7 +60,8 @@ module SchoolProfiles
         {
           title: I18n.t('Discipline & attendance', scope:'lib.equity_gsdata'),
           anchor: 'Discipline_and_attendance',
-          data: @discipline_and_attendance.to_hash
+          data: @discipline_and_attendance.to_hash,
+          flagged: discipline_attendance_flag?
         }
       ]
     end
@@ -104,6 +106,10 @@ module SchoolProfiles
 
     def equity_disabilities_hash
       @_equity_disabilities_hash ||= equity_data.equity_gsdata_disabilities_hash
+    end
+
+    def discipline_attendance_flag?
+      @school_cache_data_reader.discipline_flag? || @school_cache_data_reader.attendance_flag?
     end
 
     def equity_data
@@ -151,16 +157,74 @@ module SchoolProfiles
       end
     end
 
+    def low_income_rating_year
+      low_income_results = @school_cache_data_reader.test_scores_all_rating_hash.select { |bd|
+        bd['breakdown'] == 'Economically disadvantaged'
+      }
+      if low_income_results.is_a?(Array) && !low_income_results.empty?
+        low_income_results.first['year']
+      end
+    end
+
+    def rating_methodology
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['methodology'] if hash
+    end
+
+    def rating_description
+      hash = @school_cache_data_reader.test_scores_rating_hash
+      hash['description'] if hash
+    end
+
+    def li_rating_sources
+      content = ''
+      if equity_test_scores.low_income_test_scores_visible?
+        source = "<span class='emphasis'>#{static_label('source')}:</span> #{static_label('GreatSchools')}, #{low_income_rating_year}"
+        methodology = rating_methodology.present? ? data_label(rating_methodology) : ''
+        content << '<div>'
+        content << '<h4>' + static_label('li_GreatSchools_Rating') + '</h4>'
+        content << '<p>'
+        content << static_label('li_description') + ' ' + methodology
+        content << '</p>'
+        content << '<p>' + source + ' | ' + static_label('li_see_more') + '</p>'
+        content << '</div>'
+        content
+      end
+      content
+    end
+
+    def test_source_data
+      @test_source_data
+    end
+
+    def race_ethnicity_sources
+      sources_html((test_source_data.source_rating_text + test_source_data.sources_without_rating_text)) + sources
+    end
+
+    def students_with_disabilities_sources
+      sources_html(test_source_data.sources_without_rating_text) + sources
+    end
+
+    def low_income_sources
+      sources_html((li_rating_sources + test_source_data.sources_without_rating_text)) + sources
+    end
+
+    def sources_header
+      content = ''
+      content << '<div class="sourcing">'
+      content << '<h1>' + data_label('.title') + '</h1>'
+    end
+
+    def sources_footer
+      '</div>'
+    end
+
+    def sources_html(body)
+      sources_header + body + sources_footer
+    end
+
     def sources
       content = ''
-      if (equity_test_scores.ethnicity_test_scores_visible? || equity_test_scores.low_income_test_scores_visible?)
-        content << get_test_source_data
-      else
-        content << '<div class="sourcing">'
-        content << '<h1>' + data_label('.title') + '</h1>'
-        content << '</div>'
-      end
-
       if characteristics_low_income_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
@@ -264,12 +328,12 @@ module SchoolProfiles
       @school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
     end
 
-    def ethnicity_visible?
-      equity_test_scores.ethnicity_test_scores_visible? || characteristics['4-year high school graduation rate'].present? || characteristics['Percent of students who meet UC/CSU entrance requirements'].present?
+    def race_ethnicity_visible?
+      race_ethnicity_props.map { |h| h[:data] }.any?(&:present?)
     end
 
     def low_income_visible?
-      equity_test_scores.low_income_test_scores_visible? || characteristics_low_income_visible?
+      low_income_section_props.map { |h| h[:data] }.any?(&:present?)
     end
 
     def faq_race_ethnicity

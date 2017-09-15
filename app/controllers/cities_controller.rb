@@ -41,7 +41,6 @@ class CitiesController < ApplicationController
         @show_ads = CollectionConfig.show_ads(collection_configs)
       end
 
-      @city_rating = CityRating.get_rating(@state[:short], @city)
       @top_schools = all_schools_by_rating_desc(@city_object,4)
       @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
       @show_ads = @show_ads && PropertyConfig.advertising_enabled?

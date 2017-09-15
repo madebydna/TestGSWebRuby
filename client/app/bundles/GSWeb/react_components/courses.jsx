@@ -80,7 +80,7 @@ export default class Courses extends React.Component {
     if (subjects.length > 0 && num_courses > 0)
       return (<div id="AdvancedCourses" className="advanced-courses rating-container" data-ga-click-label="Advanced courses">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
               { ratingHtml }
             <div className="title-container">
@@ -130,7 +130,7 @@ export default class Courses extends React.Component {
     else
       return <div id="AdvancedCourses-empty" className="advanced-courses rating-container">
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
             <div className="circle-rating--equity-blue circle-rating--medium">
               <span className="icon-user"></span>

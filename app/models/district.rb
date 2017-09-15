@@ -15,6 +15,10 @@ class District < ActiveRecord::Base
       where(id: ids).active
   end
 
+  def self.ids_by_state(state)
+    District.on_db(state.downcase.to_sym).active.order(:id).select(:id).map(&:id)
+  end
+
   def boilerplate_object
     @boilerplate_object ||= DistrictBoilerplate.find_for_district(self).first
   end

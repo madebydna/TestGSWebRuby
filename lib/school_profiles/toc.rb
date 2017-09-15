@@ -7,7 +7,7 @@ module SchoolProfiles
 
     DEEP_LINK_HASH_SEPARATOR = '*'
 
-    def initialize(test_scores, college_readiness, student_progress, equity, equity_overview, students, teacher_staff, courses, stem_courses, school)
+    def initialize(test_scores, college_readiness, student_progress, equity, equity_overview, students, teacher_staff, courses, stem_courses, academic_progress, school)
       @test_scores = test_scores
       @college_readiness = college_readiness
       @student_progress = student_progress
@@ -17,6 +17,7 @@ module SchoolProfiles
       @teacher_staff = teacher_staff
       @courses = courses
       @stem_courses = stem_courses
+      @academic_progress = academic_progress
       @school = school
     end
 
@@ -27,9 +28,19 @@ module SchoolProfiles
       if @school.level_code =~ /h/
         arr << {column: 'Academics', label: 'college_readiness', present: true, rating: @college_readiness.rating, anchor: 'College_readiness'}
       end
-      if @student_progress.visible?
+
+      # NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
+      # The SP module has a no-data state, while The AP module DOES NOT have a no-data state.
+      # AP.visible? checks to see if the school has AP data AND if the school is (e,m)
+      # SP.visible? checks to see if the school has SP data OR if the school is (e,m)
+      # We only show the AP module if the school has data for AP AND the school is (e,m) AND the school DOES NOT have data for SP
+      # Else, if the school is (e,m), we show SP, whether SP has data, or not (no-data state)
+      if @academic_progress.visible? && !@student_progress.has_data?
+        arr << {column: 'Academics', label: 'academic_progress', present: true, rating: @academic_progress.academic_progress_rating, anchor: 'Academic_progress'}
+      elsif @student_progress.visible?
         arr << {column: 'Academics', label: 'student_progress', present: true, rating: @student_progress.rating, anchor: 'Student_progress'}
       end
+
       if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
         arr << {column: 'Academics', label: 'advanced_courses', present: true, rating: @courses.rating, anchor: 'Advanced_courses'}
       end
@@ -56,7 +67,9 @@ module SchoolProfiles
       arr << {column: 'Environment', label: 'students', present: true, rating: nil, anchor: 'Students'}
 
       if @equity.race_ethnicity_discipline_and_attendance_visible?
-        arr << {column: 'Environment', label: 'discipline_and_attendance', present: true, rating: nil, anchor: 'Race_ethnicity'+DEEP_LINK_HASH_SEPARATOR+'Discipline_and_attendance'}
+        arr << {column: 'Environment', label: 'discipline_and_attendance', present: true, rating: nil,
+                anchor: 'Race_ethnicity'+DEEP_LINK_HASH_SEPARATOR+'Discipline_and_attendance',
+                flagged: @equity.discipline_attendance_flag? }
       end
 
       arr << {column: 'Environment', label: 'teachers_staff_html', present: true, rating: nil, anchor: 'Teachers_staff'}

@@ -196,6 +196,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
+    httpclient (2.8.3)
     httpi (2.2.4)
       rack
     i18n (0.8.0)
@@ -249,9 +250,9 @@ GEM
       actionpack (>= 3.2.0, <= 5.1.0)
     method_source (0.8.2)
     mime-types (1.25.1)
-    mini_fb (2.1.0)
+    mini_fb (2.2.0)
       hashie
-      rest_client
+      httpclient
     mini_portile2 (2.0.0)
     mini_racer (0.1.7)
       libv8 (~> 5.3)
@@ -262,7 +263,7 @@ GEM
     nenv (0.2.0)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
-    netrc (0.7.9)
+    netrc (0.11.0)
     nokogiri (1.6.7)
       mini_portile2 (~> 2.0.0.rc2)
     nori (2.4.0)
@@ -346,8 +347,10 @@ GEM
       rainbow (~> 2.1)
     request_store (1.0.5)
     require_all (1.3.2)
-    rest_client (1.8.1)
-      netrc (~> 0.7.7)
+    rest-client (2.0.2)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     rgeo (0.5.3)
     rgeo-activerecord (4.0.5)
       activerecord (~> 4.2)
@@ -556,7 +559,7 @@ DEPENDENCIES
   rails_best_practices
   react_on_rails (~> 6)
   request_store (~> 1.0.3)
-  rest_client (= 1.8.1)
+  rest-client (= 2.0.2)
   rgeo
   rgeo-activerecord (= 4.0.5)
   rsolr

@@ -5,6 +5,8 @@ module SchoolProfiles
     # reviews_snapshot - for review info in the profile hero
     # nearby_schools - for nearby schools module
     SCHOOL_CACHE_KEYS = %w(ratings characteristics reviews_snapshot test_scores nearby_schools performance gsdata esp_responses)
+    DISCIPLINE_FLAG = 'Discipline Flag'
+    ABSENCE_FLAG = 'Absence Flag'
 
     attr_reader :school, :school_cache_keys
 
@@ -175,6 +177,76 @@ module SchoolProfiles
         end
         new_hash[k] = values
       end
+    end
+
+    def fetch_date_from_weight
+      # Pulls all of the weight data, selects the associated timestamps, and picks the most recent
+      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
+      return nil if rating_weight_hash.empty?
+      source_dates = rating_weight_hash.values.map {|weight_data| weight_data.first['source_date_valid']}
+      source_dates.map! {|dt_string| build_time_object(dt_string)}
+      format_date source_dates.compact.max
+    end
+
+    def rating_weights
+      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
+      return nil if rating_weight_hash.empty?
+      rating_weight_hash.values.map  do |weight_data|
+        return nil if (weight_data.first.nil? || weight_data.first['school_value'].nil?)
+        ((weight_data.first['school_value'].to_f)*100).round
+      end
+    end
+
+    def build_time_object(dt_string)
+      begin
+      year = dt_string[0..3]
+      month = dt_string[4..5]
+      day = dt_string[6..7]
+      hour = dt_string[9..10]
+      minute = dt_string[11..12]
+      Time.new(year, month, day, hour, minute)
+      rescue StandardError => error
+        GSLogger.error(:summary_rating, error, vars: {school: decorated_school.id, state: decorated_school.state}, message: 'Error creating Time object using source_date_time value for Summary Rating')
+        nil
+      end
+    end
+
+    def format_date(dt_object)
+      dt_object.strftime('%b %d, %Y')
+    end
+
+    def discipline_flag?
+      @_discipline_flag ||= (
+        flag_data_value = discipline_attendance_data_values[DISCIPLINE_FLAG]
+        flag_data_value.present? && flag_data_value.school_value == '1'
+      )
+    end
+
+    def attendance_flag?
+      @_attendance_flag ||= (
+        flag_data_value = discipline_attendance_data_values[ABSENCE_FLAG]
+        flag_data_value.present? && flag_data_value.school_value == '1'
+      )
+    end
+
+    def equity_adjustment_factor?
+      @_equity_adjustment_factor ||= (
+        gsdata_data('Equity Adjustment Factor').present?
+      )
+    end
+
+    def discipline_attendance_data_values
+      @_discipline_attendance_data_values ||= (
+        data_hashes = gsdata_data(DISCIPLINE_FLAG, ABSENCE_FLAG)
+        data_hashes.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+          most_recent_all_students = array_of_hashes
+            .map { |hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name)) }
+            .extend(GsdataCaching::GsDataValue::CollectionMethods)
+            .having_no_breakdown
+            .most_recent
+          output_hash[data_type_name] = most_recent_all_students if most_recent_all_students
+        end
+      )
     end
 
     # Returns a hash that includes the percentage and sourcing info

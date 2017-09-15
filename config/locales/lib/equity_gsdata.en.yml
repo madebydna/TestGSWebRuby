@@ -106,16 +106,38 @@ en:
         <a href="/gk/articles/special-education-a-practical-primer/">Learn more</a>.
       narration:
         ER:
-          'Percentage of students chronically absent (15+ days)': >
-            <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
-            <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
-          'Percentage of students suspended out of school': >
-            <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
-            <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          normal:
+            'Percentage of students chronically absent (15+ days)': >
+              <p class="narrative-content">This shows the percentage of students absent 15 or more days across different races/ethnicities at this school compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+            'Percentage of students suspended out of school': >
+              <p class="narrative-content">This shows the out-of-school suspension rates across different races/ethnicities at this school compared to the state average. High suspension rates mean less time for teaching and learning.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+          disparity:
+            'Percentage of students chronically absent (15+ days)': >
+              <div class="auto-narration">
+                <h3 class="title negative"><span class="icon-flag"></span>Very concerning:</h3>
+                <p>This school has big differences in the levels of chronic absenteeism between different student groups.
+                When students aren't in school, they don't learn as much. Ask the school why this disparity exists and
+                what it's doing to make sure that attendance policies are fair.</p>
+                <hr />
+                <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+                <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+              </div>
+            'Percentage of students suspended out of school': >
+              <div class="auto-narration">
+                <h3 class="title negative"><span class="icon-flag"></span>Very concerning:</h3>
+                <p>This school has big differences in the suspension rates of different student groups. When students
+                aren't in school, they don't learn as much. Ask the school why it disproportionately suspends some
+                groups of students and what it's doing to make sure that discipline policies are fair.</p>
+                <hr />
+                <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+                <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
+              </div>
         SD:
           'Percentage of students chronically absent (15+ days)': >
             <p class="narrative-content">This shows the percentage of students with disabilities absent for 15 or more days compared to the state average. High absenteeism rates mean less time for teaching and learning.</p>
@@ -127,8 +149,16 @@ en:
             <hr />
             <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
             <p class="footnote"><a href="/gk/articles/discipline-in-schools-moves-toward-peacemaking/">See how</a> some schools are using innovative approaches to improve discipline and attendance.</p>
-          'Test scores': >
-            <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
-            <hr />
-            <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
-            <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
+          'Test scores':
+            # one - subject begins with a vowel e.g. an English
+            # other - subject begins with a consonant e.g. a Math
+            one: >
+              <p class="narrative-content">This shows results for students with disabilities on an %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>
+            other: >
+              <p class="narrative-content">This shows results for students with disabilities on a %{subject} test given once a year. Big differences may suggest that some student groups are not getting the support they need to succeed.</p>
+              <hr />
+              <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+              <p class="footnote">Ask the school how it’s helping students with disabilities succeed.</p>

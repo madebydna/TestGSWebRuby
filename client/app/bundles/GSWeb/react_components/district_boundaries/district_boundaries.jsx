@@ -84,7 +84,7 @@ export default class DistrictBoundaries extends React.Component {
       }
     });
     markers = markers.concat(this.props.districts.map(d => {
-      let props = {title: d.name, rating: d.rating, lat: d.lat, lon: d.lon};
+      let props = {title: d.name, rating: null, lat: d.lat, lon: d.lon};
       props.key = 'd' + d.state + d.id;
       props.createInfoWindow = () => createInfoWindow(d);
       props.onClick = () => this.props.selectDistrict(d.id, d.state);

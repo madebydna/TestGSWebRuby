@@ -96,6 +96,8 @@
 @import "pages/page-not-found";
 
 // school profile specific
+@import 'school_profiles/profile_section';
+@import 'school_profiles/profile_module';
 @import 'school_profiles/module_feedback';
 @import 'school_profiles/hero.scss';
 @import 'school_profiles/toc.scss';
@@ -115,6 +117,7 @@
 @import 'school_profiles/info_text_and_circle';
 @import 'school_profiles/historical_ratings';
 @import 'school_profiles/tour_button';
+@import 'school_profiles/summary_rating_tooltip';
 @import 'gs/osp-school-info';
 
 @import 'pages/district-boundaries/district_boundaries_page';

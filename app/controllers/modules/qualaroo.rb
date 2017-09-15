@@ -14,7 +14,8 @@ module Qualaroo
       :teachers_staff => '32af259e-27ef-44ae-a9e0-5b37ab9064ff',
       :students => '2daad497-0079-46c5-822d-5bf15f1aeff3',
       :neighborhood => 'e0d8fc09-ff65-44d3-940f-935b31143df6',
-      :equity_overview => 'cdfc875c-df4c-4183-bcf9-f832a9238831'
+      :equity_overview => 'cdfc875c-df4c-4183-bcf9-f832a9238831',
+      :academic_progress => 'ddbbd6fd-9ef6-4213-8925-cb342c3c36fe'
   }
 
   def qualaroo_link(module_sym, state, school_id)

@@ -79,7 +79,7 @@ export function decorateListing(listing) {
       if(document.documentElement.clientWidth < 768) {
         return listing.largeImageLink.replace('/p_b/', '/p_b/');
       } else {
-        return listing.largeImageLink.replace('/p_b/', '/p_e/');
+        return listing.largeImageLink.replace('/p_b/', '/p_c/');
       }
     },
 
@@ -119,5 +119,5 @@ export function nearbyHomesUrl(city, state) {
 };
 
 export function pricingPageUrl() {
-  return addQueryParamToUrl('utm_campaign', 'profileseller', addCampaignCode('https://www.zillow.com/how-much-is-my-home-worth/?sem=true'));
+  return 'https://www.trulia.com/sell/?ts=greatschools&tscamp=mainlink'
 };

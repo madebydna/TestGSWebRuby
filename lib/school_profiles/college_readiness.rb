@@ -278,7 +278,7 @@ module SchoolProfiles
         content << methodology if methodology
         content << '</p>'
       end
-      content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + '</p>'
+      content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | ' + data_label('see more') + '</p>'
       content << '</div>'
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)

@@ -228,6 +228,8 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/school-life/', as: :school_life
     get '/gk/category/academics/reading-2/', as: :reading
     get '/gk/category/academics/math-2/', as: :math
+    get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
+    get '/gk/ratings/',  as: :ratings
 
 
     get '/status/error404.page'

@@ -64,7 +64,7 @@ parsed_arguments.each do |args|
     cache_keys.each do |cache_key|
       puts "     doing #{cache_key}"
       if districts_where
-        District.on_db(state.downcase.to_sym).where(districts_where).each do |district|
+        District.on_db(state.downcase.to_sym).where(districts_where).active.each do |district|
           begin
             DistrictCacher.create_cache(district, cache_key)
           rescue => error
@@ -73,7 +73,7 @@ parsed_arguments.each do |args|
           end
         end
       else
-        District.on_db(state.downcase.to_sym).all.each do |district|
+        District.on_db(state.downcase.to_sym).all.active.each do |district|
           begin
             DistrictCacher.create_cache(district, cache_key)
           rescue => error
