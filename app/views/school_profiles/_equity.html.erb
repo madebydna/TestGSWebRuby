@@ -7,11 +7,10 @@
         <%= title %>
         <% if @school.state == 'CA' %>
           <%= link_to 'http://innovateschools.org/greatschools/' do %>
-            <%= image_tag('data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+            <%= image_tag(image_path('pixel.png'),
               class: 'innovate-logo mobile',
               data: {src: image_path('innovate_logo_mobile.png')}) %>
-            <%= image_tag(
-              'data:image/gif;base64,R0lGODlhAQABAJEAAAAAAP///////wAAACH5BAEAAAIALAAAAAABAAEAAAICVAEAOw==',
+            <%= image_tag(image_path('pixel.png'),
               class: 'innovate-logo desktop',
               data: {src: image_path('innovate_logo_desktop.png')}) %>
           <% end %>
