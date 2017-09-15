@@ -67,17 +67,6 @@ module SchoolProfiles
       end
     end
 
-    # def rating_by_title(title)
-    #   rating_obj = @src.content.select {|hash| hash[:title] == title }
-    #   rating_obj.first[:rating] if rating_obj.present? && rating_obj.first.present?
-    # end
-
-    # def standard_rating(title)
-    #   rating = rating_by_title(title)
-    #   rating_string, level = rating_three_levels(rating) if rating.present?
-    #   rating.present? ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
-    # end
-
     def standard_rating_by_obj(rating, title)
       rating_string, level = rating_three_levels(rating) if rating.present?
       rating.present? ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
