@@ -4,6 +4,9 @@
   @include media-breakpoint-only(xs) {
     font-size: $font-size-base;
   }
+  .gs-tipso {
+    text-decoration: none;
+  }
 }
 
 .gs-rating-with-label__rating {

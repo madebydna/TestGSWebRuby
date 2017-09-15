@@ -27,10 +27,6 @@ module SchoolProfiles
       ((1..10).to_a & [decorated_school.great_schools_rating]).first
     end
 
-    def summary_rating
-      decorated_school.summary_rating
-    end
-
     def gs_rating_year
       decorated_school.great_schools_rating_year
     end
