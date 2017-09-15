@@ -21,12 +21,11 @@ module SchoolProfiles
         end
         arr.compact!
         inject_more(arr)
-        # str.join(' ')
       end
     end
 
     def inject_more(arr)
-      if arr.length > 5
+      if arr.length > 4
       #   do the more thing after 3
         str = arr[0..2].join(' ')
         str += '<a class="js-moreRevealLink" href="javascript:void(0)">... More</a><span class="js-moreReveal" style="display:none">'
@@ -68,16 +67,16 @@ module SchoolProfiles
       end
     end
 
-    def rating_by_title(title)
-      rating_obj = @src.content.select {|hash| hash[:title] == title }
-      rating_obj.first[:rating] if rating_obj.present? && rating_obj.first.present?
-    end
+    # def rating_by_title(title)
+    #   rating_obj = @src.content.select {|hash| hash[:title] == title }
+    #   rating_obj.first[:rating] if rating_obj.present? && rating_obj.first.present?
+    # end
 
-    def standard_rating(title)
-      rating = rating_by_title(title)
-      rating_string, level = rating_three_levels(rating) if rating.present?
-      rating.present? ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
-    end
+    # def standard_rating(title)
+    #   rating = rating_by_title(title)
+    #   rating_string, level = rating_three_levels(rating) if rating.present?
+    #   rating.present? ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
+    # end
 
     def standard_rating_by_obj(rating, title)
       rating_string, level = rating_three_levels(rating) if rating.present?
@@ -105,29 +104,25 @@ module SchoolProfiles
       standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
     end
 
-    # def academic_progress_rating
-    #   obj = @src.student_progress
-    #   standard_rating_by_obj(obj[:rating], obj[:title])
-    # end
-
     def advanced_course_rating
-      rating = rating_by_title('Advanced Courses')
+      obj = @src.courses
+      rating = obj[:rating] if obj.present?
       rating_string, level, adverb = advanced_levels(rating) if rating.present?
       rating.present? ? I18n.t('school_profiles.summary_narration.Advanced Course_html', rating_string: rating_string, level: level , adverb: adverb ) : ''
     end
 
     def sentence_ender
-      rating = rating_by_title('Equity Overview')
-      if rating.present?
-        standard_rating('Equity Overview')
+      obj = @src.equity_overview
+      if obj.present?
+        standard_rating_by_obj(obj[:rating], obj[:title])
       else
         I18n.t('school_profiles.summary_narration.sentence_ender_html')
       end
     end
 
     def discipline_and_attendence
-      rating_attendance = rating_by_title('Attendance Flag').present?
-      rating_discipline = rating_by_title('Discipline Flag').present?
+      rating_attendance = @school_cache_data_reader.attendance_flag?
+      rating_discipline = @school_cache_data_reader.discipline_flag?
       str = ''
       if rating_attendance
         str = I18n.t('school_profiles.summary_narration.attendance')

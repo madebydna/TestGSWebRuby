@@ -65,6 +65,12 @@ module SchoolProfiles
       end
     end
 
+    def equity_overview
+      if @equity_overview.has_rating?
+        {title: 'Equity Overview', rating: @equity_overview.equity_rating, weight: get_school_value_for('Summary Rating Weight: Equity Rating')}
+      end
+    end
+
     def courses
       if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
         {title: 'Advanced Courses', rating: @courses.rating, weight: get_school_value_for('Summary Rating Weight: Advanced Course Rating')}
