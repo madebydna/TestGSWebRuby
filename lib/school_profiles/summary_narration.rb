@@ -99,7 +99,7 @@ module SchoolProfiles
       obj = @src.courses
       rating = obj[:rating] if obj.present?
       rating_string, level, adverb = advanced_levels(rating) if rating.present?
-      rating.present? ? I18n.t('school_profiles.summary_narration.Advanced Course_html', rating_string: rating_string, level: level , adverb: adverb ) : ''
+      rating.present? ? I18n.t('school_profiles.summary_narration.Advanced Courses_html', rating_string: rating_string, level: level , adverb: adverb ) : ''
     end
 
     def sentence_ender

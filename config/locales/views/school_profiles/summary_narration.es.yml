@@ -20,7 +20,7 @@ es:
         están progresando académicamente año tras año <a href="#Student_progress">%{rating_string} del promedio</a>,
       'Academic Progress_html': >
         están progresando académicamente año tras año <a href="#Academic_progress">%{rating_string} del promedio</a>,
-      'Advanced Course_html': >
+      'Advanced Courses_html': >
         toman <a href="#Advanced_courses">%{rating_string}</a> cursos avanzados por estudiantes que el promedio estatal,
       'Equity Overview_html': >
         y esta escuela tiene resultados <a href="#Equity_overview">%{rating_string} del promedio</a> en cómo trabaja con los estudiantes más necesitados.
