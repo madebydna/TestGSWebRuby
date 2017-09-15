@@ -1,7 +1,7 @@
 en:
   school_profiles:
     summary_narration:
-      attendence: absenteeism
+      attendance: absenteeism
       and: and
       discipline: suspension
       about_the_same: about the same
@@ -26,5 +26,5 @@ en:
         and this school has <a href="#Equity_overview">%{rating_string} average</a> results in how well it’s serving disadvantaged students.
       sentence_ender_html: >
         and more information about this school can be found below.
-      discipline_and_attendence_html: >
+      discipline_and_attendance_html: >
         Large disparities in <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a> rates exist at this school, which is concerning.

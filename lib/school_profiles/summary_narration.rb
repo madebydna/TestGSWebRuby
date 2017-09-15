@@ -5,21 +5,36 @@ module SchoolProfiles
 
     delegate :gs_rating, to: :school_cache_data_reader
 
-    SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating academic_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
+    SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
 
     def initialize(sr, school, school_cache_data_reader:)
-      @src = sr.content
+      @src = sr
       @school = school
       @school_cache_data_reader = school_cache_data_reader
     end
 
     def build_content
       if @src.present?
-        str = ''
+        arr = []
         SUMMARY_RATING_METHODS.each do | method |
-          str += send(method)
+          arr << send(method)
         end
+        arr.compact!
+        inject_more(arr)
+        # str.join(' ')
+      end
+    end
+
+    def inject_more(arr)
+      if arr.length > 5
+      #   do the more thing after 3
+        str = arr[0..2].join(' ')
+        str += '<a class="js-moreRevealLink" href="javascript:void(0)">... More</a><span class="js-moreReveal" style="display:none">'
+        str += arr[3..arr.length].join(' ')
+        str += '</span>'
         str
+      else
+        arr.join(' ')
       end
     end
 
@@ -54,12 +69,17 @@ module SchoolProfiles
     end
 
     def rating_by_title(title)
-      rating_obj = @src.select {|hash| hash[:title] == title }
+      rating_obj = @src.content.select {|hash| hash[:title] == title }
       rating_obj.first[:rating] if rating_obj.present? && rating_obj.first.present?
     end
 
     def standard_rating(title)
       rating = rating_by_title(title)
+      rating_string, level = rating_three_levels(rating) if rating.present?
+      rating.present? ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
+    end
+
+    def standard_rating_by_obj(rating, title)
       rating_string, level = rating_three_levels(rating) if rating.present?
       rating.present? ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
     end
@@ -71,20 +91,24 @@ module SchoolProfiles
     end
 
     def test_scores_rating
-      standard_rating('Test Scores')
+      obj = @src.test_scores
+      standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
     end
 
     def college_readiness_rating
-      standard_rating('College Readiness')
+      obj = @src.college_readiness
+      standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
     end
 
     def student_progress_rating
-      standard_rating('Student Progress')
+      obj = @src.student_progress
+      standard_rating_by_obj(obj[:rating], obj[:title]) if obj.present?
     end
 
-    def academic_progress_rating
-      standard_rating('Academic Progress')
-    end
+    # def academic_progress_rating
+    #   obj = @src.student_progress
+    #   standard_rating_by_obj(obj[:rating], obj[:title])
+    # end
 
     def advanced_course_rating
       rating = rating_by_title('Advanced Courses')
@@ -102,11 +126,11 @@ module SchoolProfiles
     end
 
     def discipline_and_attendence
-      rating_attendence = rating_by_title('Attendance Flag').present?
+      rating_attendance = rating_by_title('Attendance Flag').present?
       rating_discipline = rating_by_title('Discipline Flag').present?
       str = ''
-      if rating_attendence
-        str = I18n.t('school_profiles.summary_narration.attendence')
+      if rating_attendance
+        str = I18n.t('school_profiles.summary_narration.attendance')
         if rating_discipline
           str += ' '+I18n.t('school_profiles.summary_narration.and')+' '
           str += I18n.t('school_profiles.summary_narration.discipline')
@@ -114,7 +138,7 @@ module SchoolProfiles
       elsif rating_discipline
         str = I18n.t('school_profiles.summary_narration.discipline')
       end
-      str.present? ? I18n.t('school_profiles.summary_narration.discipline_and_attendence_html', danda: str) : ''
+      str.present? ? I18n.t('school_profiles.summary_narration.discipline_and_attendance_html', danda: str) : ''
     end
   end
 end

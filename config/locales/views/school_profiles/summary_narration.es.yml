@@ -1,7 +1,7 @@
 es:
   school_profiles:
     summary_narration:
-      attendence: ausentismo
+      attendance: ausentismo
       and: y
       discipline: suspension
       about_the_same: o los mismos
@@ -26,5 +26,5 @@ es:
         y esta escuela tiene resultados <a href="#Equity_overview">%{rating_string} del promedio</a> en cómo trabaja con los estudiantes más necesitados.
       'sentence_ender_html': >
         y abajo se puede encontrar más información sobre esta escuela.
-      'discipline_and_attendence_html': >
+      'discipline_and_attendance_html': >
         En esta escuela existen grandes desigualdades en los índices de <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a>, lo cual es preocupante.

@@ -125,13 +125,18 @@ $(function() {
     );
   });
 
+  $('.js-moreRevealLink').on('click', function () {
+    $(this).hide();
+    $(this).siblings('.js-moreReveal').css('display', '');
+  });
+
   refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
 
   function setCookieExpiration() {
-    var expires = "";
+    var half_year = 182*24*60*60*1000
     var date = new Date();
-    date.setTime(date.getTime() + (182*24*60*60*1000));
-    expires = "; expires=" + date.toUTCString();
+    date.setTime(date.getTime() + half_year);
+    var expires = "; expires=" + date.toUTCString();
     return expires;
   }
 
