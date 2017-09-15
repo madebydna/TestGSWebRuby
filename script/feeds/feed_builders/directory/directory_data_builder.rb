@@ -28,7 +28,7 @@ module Feeds
           value = cache_value(@directory_hash,key)
           key_string = key.to_s.gsub('_', '-').downcase
             # if the key is required or it has a value add it to array to show
-          arr << single_data_object(key_string, value) if data_keys_required.include? key || value.present?
+          arr << single_data_object(key_string, value) if ((data_keys_required.include? key) || value.present?)
 
         end
       end
@@ -78,11 +78,6 @@ module Feeds
       uni_district_id = UniversalId.calculate_universal_id(@state, ENTITY_TYPE_DISTRICT, district_id)
       single_data_object('universal-district-id',uni_district_id) if district_id && uni_district_id && @model == 'School'
     end
-
-    # def self.state_id
-    #   state = cache_value(@directory_hash,'state')
-    #   single_data_object('state-id',state_fips[state.upcase]) if state
-    # end
 
     def self.census_info
       char_data = CharacteristicsDataBuilder.characteristics_format(@characteristics_hash, @universal_id, @model) if @characteristics_hash
