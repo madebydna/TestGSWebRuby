@@ -128,6 +128,7 @@ $(function() {
   $('.js-moreRevealLink').on('click', function () {
     $(this).hide();
     $(this).siblings('.js-moreReveal').css('display', '');
+    analyticsEvent('Profile', 'Show More', 'Summary Auto-narrative');
   });
 
   refreshAdOnScroll('Profiles_First_Ad', '.static-container', 1200);
