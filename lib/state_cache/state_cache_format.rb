@@ -26,30 +26,30 @@ module StateCacheFormat
         end
       end
     end
-    build_historical_data!(result, hash)
+    # build_historical_data!(result, hash)
     hash
   end
 
-  def build_historical_data!(data, hash)
-    subject_id = data.send(:subject_id)
-    breakdown_id = data.send(:breakdown_id)
-    data_type_id = data.send(:data_type_id)
-
-    historical_data = @all_results.select do | data_set |
-      data_set.data_type_id == data_type_id &&
-          data_set.subject_id == subject_id &&
-          data_set.breakdown_id == breakdown_id
-    end
-
-    set_hash_values!(historical_data, hash)
-  rescue => e
-    GSLogger.error(
-        :state_cache,
-        e,
-        message: 'failed in building historical data for state',
-        vars: {state: state}
-    )
-  end
+  # def build_historical_data!(data, hash)
+  #   subject_id = data.send(:subject_id)
+  #   breakdown_id = data.send(:breakdown_id)
+  #   data_type_id = data.send(:data_type_id)
+  #
+  #   historical_data = @all_results.select do | data_set |
+  #     data_set.data_type_id == data_type_id &&
+  #         data_set.subject_id == subject_id &&
+  #         data_set.breakdown_id == breakdown_id
+  #   end
+  #
+  #   set_hash_values!(historical_data, hash)
+  # rescue => e
+  #   GSLogger.error(
+  #       :state_cache,
+  #       e,
+  #       message: 'failed in building historical data for state',
+  #       vars: {state: state}
+  #   )
+  # end
 
   def data_keys
     [

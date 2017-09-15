@@ -7,7 +7,7 @@ module Feeds
 
     def self.build_data(state)
       @state = state.upcase
-      @universal_id = UniversalId.calculate_universal_id(@state)
+      @universal_id = UniversalId.calculate_universal_id(@state).to_i.to_s
 
       arr = []
       DIRECTORY_STATE_KEYS.each do | key |
