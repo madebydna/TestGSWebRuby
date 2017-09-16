@@ -50,7 +50,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def district_name
-    district = District.find_by_state_and_ids(school.state, school.id)
+    district = District.find_by_state_and_ids(school.state, school.district_id)
     district.first.name if district && district.first
   end
 
