@@ -20,7 +20,7 @@ en:
         are making <a href="#Student_progress">%{rating_string} average</a> year-over-year academic improvement,
       Academic Progress_html: >
         are making <a href="#Academic_progress">%{rating_string} average</a> year-over-year academic improvement,
-      Advanced Course_html: >
+      Advanced Courses_html: >
         take <a href="#Advanced_courses">%{rating_string}</a> advanced courses per student %{adverb} the state average,
       Equity Overview_html: >
         and this school has <a href="#Equity_overview">%{rating_string} average</a> results in how well it’s serving disadvantaged students.
