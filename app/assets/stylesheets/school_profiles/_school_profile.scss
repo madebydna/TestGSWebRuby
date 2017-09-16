@@ -40,10 +40,14 @@
     line-height: 32px;
     margin-left: 7px;
   }
-
+  a.noTextDecoration{
+    text-decoration: none;
+  }
   .sources-link {
     float: left;
-
+    > a:hover{
+      text-decoration: none;
+    }
     @include media-breakpoint-down(xs) {
       float: none;
     }

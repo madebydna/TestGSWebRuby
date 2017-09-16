@@ -14,7 +14,7 @@ module SchoolProfiles
     end
 
     def build_content
-      if @src.present?
+      if @src.present? && @school_cache_data_reader.gs_rating.present?
         arr = []
         SUMMARY_RATING_METHODS.each do | method |
           arr << send(method)
