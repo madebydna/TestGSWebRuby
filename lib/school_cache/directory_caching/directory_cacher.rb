@@ -46,7 +46,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
 
   def school_build_url
     school_params = school_params(school)
-    URL_PREFIX + school_path(school_params) + '/'
+    school_params.reject { | r,v | v.present? }.blank? ? URL_PREFIX + school_path(school_params) + '/' : ''
   end
 
   def district_name
@@ -55,7 +55,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def description
-    "In-depth school information including test scores and student stats for\n#{school.name}\n#{school.city}\n#{school.state}."
+    "\nIn-depth school information including test scores and student stats for\n#{school.name}\n#{school.city}\n#{school.state}.\n"
   end
 
   def school_summary

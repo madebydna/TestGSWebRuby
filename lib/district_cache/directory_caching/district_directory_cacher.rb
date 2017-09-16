@@ -47,11 +47,11 @@ class DistrictDirectoryCacher < DistrictCacher
 
   def district_url
     district_params = district_params_from_district(district)
-    URL_PREFIX + city_district_path(district_params) + '/'
+    district_params.reject { | r,v | v.present? }.blank? ? (URL_PREFIX + city_district_path(district_params) + '/') : ''
   end
 
   def description
-    "In-depth district information including test scores and student stats for\n#{district.name}\n#{district.city}\n#{district.state}."
+    "\nIn-depth district information including test scores and student stats for\n#{district.name}\n#{district.city}\n#{district.state}.\n"
   end
 
 end
