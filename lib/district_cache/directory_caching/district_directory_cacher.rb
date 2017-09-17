@@ -63,7 +63,7 @@ class DistrictDirectoryCacher < DistrictCacher
   end
 
   def description
-    "\nIn-depth district information including test scores and student stats for\n#{district.name}\n#{district.city}\n#{district.state}.\n"
+    "\nIn-depth district information including test scores and student stats for\n#{district.name},\n#{district.city},\n#{district.state}.\n"
   end
 
 end

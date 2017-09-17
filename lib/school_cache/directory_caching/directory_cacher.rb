@@ -67,7 +67,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def description
-    "\nIn-depth school information including test scores and student stats for\n#{school.name}\n#{school.city}\n#{school.state}.\n"
+    "\nIn-depth school information including test scores and student stats for\n#{school.name},\n#{school.city},\n#{school.state}.\n"
   end
 
   def school_summary

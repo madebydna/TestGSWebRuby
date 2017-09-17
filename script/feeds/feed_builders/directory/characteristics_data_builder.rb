@@ -15,7 +15,7 @@ module Feeds
     end
 
     def self.students_with_limited_english_proficiency(data, universal_id, data_type=nil)
-      if data && data.first && data.first[value_var]
+      if data.present? && data.first && data.first[value_var]
         options = {}
         options[:value] = data.first[value_var].to_f.round(3)
         options[:year] = data.first['year']
@@ -25,7 +25,7 @@ module Feeds
     end
 
     def self.straight_text_value(data, universal_id, data_type)
-      if data && data.first && data.first[value_var]
+      if data.present? && data.first && data.first[value_var]
         options = {}
         options[:value] = data.first[value_var]
         options[:year] = data.first['year']
@@ -35,7 +35,7 @@ module Feeds
     end
 
     def self.teacher_data(data, universal_id, data_type)
-      if data && data.first && data.first[value_var]
+      if data.present? && data.first && data.first[value_var]
         options = {}
         options[:value] = data.first[value_var].to_f.round(1)
         options[:data_type] = data_type
@@ -46,7 +46,8 @@ module Feeds
     end
 
     def self.enrollment(data, universal_id, data_type)
-      hash = data.find { | h | h['grade'].blank? } if data
+      data.compact!
+      hash = data.find { | h | h['grade'].blank? } if data.present?
       if hash && hash[value_var]
         options = {}
         options[:value] = hash[value_var].to_i
@@ -57,8 +58,8 @@ module Feeds
     end
 
     def self.ethnicity(data, universal_id, data_type)
-
-      if data
+      data.compact!
+      if data.present?
         data.map do |d|
           if d && d[value_var]
             options = {}
@@ -73,7 +74,7 @@ module Feeds
     end
 
     def self.free_or_reduced_lunch_program(data, universal_id, data_type)
-      if data && data.first && data.first[value_var]
+      if data.present? && data.first && data.first[value_var]
         options = {}
         options[:value] = data.first[value_var].to_f.round(1)
         options[:year] = data.first['year']
@@ -83,7 +84,7 @@ module Feeds
     end
 
     def self.student_teacher_ratio(data, universal_id, data_type)
-      if data && data.first && data.first[value_var]
+      if data.present? && data.first && data.first[value_var]
         options = {}
         options[:value] = data.first[value_var].to_f.round(1)
         options[:year] = data.first['year']
