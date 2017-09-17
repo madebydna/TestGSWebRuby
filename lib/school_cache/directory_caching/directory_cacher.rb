@@ -45,8 +45,6 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_build_url
-    require 'pry'
-    binding.pry
     school_params = school_params(school)
     school_params.reject { | r,v | v.present? }.blank? && school_params.length == 4 ? URL_PREFIX + school_path(school_params) + '/' : ''
   end
