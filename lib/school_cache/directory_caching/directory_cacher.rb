@@ -57,8 +57,6 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def home_page_url
-    require 'pry'
-    binding.pry
     prepend_http(school.home_page_url) if school.home_page_url.present?
   end
 
