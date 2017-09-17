@@ -43,7 +43,7 @@ module Feeds
     end
 
     def self.home_page_url
-      single_data_object('website',cache_value(@directory_hash,'home_page_url'))
+      single_data_object('web-site',cache_value(@directory_hash,'home_page_url'))
     end
 
     def self.zipcode
