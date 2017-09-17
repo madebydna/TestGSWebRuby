@@ -12,11 +12,11 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_directory_keys
-    %w(county district_id city fax FIPScounty id lat level_code lon name nces_code phone state state_id street subtype type home_page_url zipcode)
+    %w(county district_id city fax FIPScounty id lat level_code lon name nces_code phone state state_id street subtype type  zipcode)
   end
 
   def school_special_keys
-    %w(url level district_name school_summary description)
+    %w(url level district_name school_summary description home_page_url)
   end
 
   def build_hash_for_cache
@@ -38,6 +38,8 @@ class DirectoryCaching::DirectoryCacher < Cacher
         hash[key] = [{ school_value: description }]
       elsif key == 'school_summary'
         hash[key] = [{ school_value: school_summary }]
+      elsif key == 'home_page_url'
+        hash[key] = [{ school_value: home_page_url }]
       end
     end
     validate!(special_cache_hash)
@@ -52,6 +54,12 @@ class DirectoryCaching::DirectoryCacher < Cacher
   def district_name
     district = District.find_by_state_and_ids(school.state, school.district_id)
     district.first.name if district && district.first
+  end
+
+  def home_page_url
+    require 'pry'
+    binding.pry
+    prepend_http(school.home_page_url) if school.home_page_url.present?
   end
 
   def description
