@@ -12,11 +12,11 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_directory_keys
-    %w(county district_id city fax FIPScounty id lat level_code lon name nces_code phone state state_id street subtype type  zipcode)
+    %w(county district_id city fax id lat level_code lon name nces_code phone state state_id street subtype type zipcode)
   end
 
   def school_special_keys
-    %w(url level district_name school_summary description home_page_url)
+    %w(url level district_name school_summary description home_page_url FIPScounty)
   end
 
   def build_hash_for_cache
@@ -40,10 +40,16 @@ class DirectoryCaching::DirectoryCacher < Cacher
         hash[key] = [{ school_value: school_summary }]
       elsif key == 'home_page_url'
         hash[key] = [{ school_value: home_page_url }]
+      elsif key == 'FIPScounty'
+        hash[key] = [{ school_value: county }]
       end
     end
     validate!(special_cache_hash)
     cache_hash.merge!(special_cache_hash)
+  end
+
+  def county
+    school.FIPScounty.to_s.rjust(5, '0') if school.FIPScounty.present?
   end
 
   def school_build_url
