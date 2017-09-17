@@ -41,14 +41,14 @@ class DirectoryCaching::DirectoryCacher < Cacher
       elsif key == 'home_page_url'
         hash[key] = [{ school_value: home_page_url }]
       elsif key == 'FIPScounty'
-        hash[key] = [{ school_value: county }]
+        hash[key] = [{ school_value: fipscounty }]
       end
     end
     validate!(special_cache_hash)
     cache_hash.merge!(special_cache_hash)
   end
 
-  def county
+  def fipscounty
     school.FIPScounty.to_s.rjust(5, '0') if school.FIPScounty.present?
   end
 
