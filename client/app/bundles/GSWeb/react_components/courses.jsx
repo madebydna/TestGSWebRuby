@@ -77,7 +77,7 @@ export default class Courses extends React.Component {
       ratingHtml = <span className='circle-rating--equity-blue circle-rating--medium'><span className="icon-advanced"/></span>
     }
 
-    if (subjects.length > 0 && num_courses > 0)
+    if (subjects.length > 0)
       return (<div id="AdvancedCourses" className="advanced-courses rating-container" data-ga-click-label="Advanced courses">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
         <div className="profile-module">
