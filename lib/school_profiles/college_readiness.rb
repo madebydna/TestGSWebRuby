@@ -263,23 +263,25 @@ module SchoolProfiles
     end
 
     def sources
-      description = rating_description
-      description = data_label(description) if description
-      methodology = rating_methodology
-      methodology = data_label(methodology) if methodology
       content = '<div class="sourcing">'
       content << '<h1>' + data_label('title') + '</h1>'
-      content << '<div>'
-      content << '<h4>' + data_label('GreatSchools Rating') + '</h4>'
-      if description || methodology
-        content << '<p>'
-        content << description if description
-        content << ' ' if description && methodology
-        content << methodology if methodology
-        content << '</p>'
+      if rating.present?
+        description = rating_description
+        description = data_label(description) if description
+        methodology = rating_methodology
+        methodology = data_label(methodology) if methodology
+        content << '<div>'
+        content << '<h4>' + data_label('GreatSchools Rating') + '</h4>'
+        if description || methodology
+          content << '<p>'
+          content << description if description
+          content << ' ' if description && methodology
+          content << methodology if methodology
+          content << '</p>'
+        end
+        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | ' + data_label('see more') + '</p>'
+        content << '</div>'
       end
-      content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | ' + data_label('see more') + '</p>'
-      content << '</div>'
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)
       end
