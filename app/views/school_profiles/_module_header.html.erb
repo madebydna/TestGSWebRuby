@@ -3,13 +3,11 @@
  <% subtitle ||= nil %>
  <% info_text = info_text || nil %>
  <% has_data %>
- <% show_historical_ratings ||= false %>
- <% columns_historical = show_historical_ratings ? 'col-md-8' : 'col-md-12' %>
  <% no_data_summary ||= '' %>
 
  <div class="module-header">
    <div class="row">
-     <div class="col-xs-12 <%= columns_historical %>">
+     <div class="col-xs-12 col-md-8">
        <% if rating.present? && rating != 'NR' %>
          <div class="circle-rating--<%= rating %> circle-rating--medium">
            <%= rating %><span class="rating-circle-small">/10</span>
@@ -36,7 +34,6 @@
          <% end %>
        </div>
      </div>
-   <% if show_historical_ratings %>
      <div class="col-xs-12 col-md-4 show-history-button">
        <div>
          <button class="js-sharing-button">
@@ -44,6 +41,5 @@
          </button>
        </div>
      </div>
-   <% end %>
    </div>
 </div>
