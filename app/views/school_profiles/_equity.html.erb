@@ -18,8 +18,13 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <%= render('equity_overview', equity_overview: equity_overview) if equity_overview.has_rating? %>
-      <%= react_component('SchoolProfileComponent', props: {
+      <% if equity_overview.has_rating? %>
+        <div class="profile-section-slot">
+          <%= render('equity_overview', equity_overview: equity_overview) %>
+        </div>
+      <% end %>
+      <div class="profile-section-slot">
+        <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Race ethnicity'),
                           anchor: 'Race_ethnicity',
                           analytics_id: 'EquityRaceEthnicity',
@@ -31,7 +36,9 @@
                           faq: equity.faq_race_ethnicity,
                           no_data_summary: t('.Race ethnicity no data'),
                           qualaroo_module_link: equity.qualaroo_module_link(:race_ethnicity) })%>
-      <%= react_component('SchoolProfileComponent', props: {
+      </div>
+      <div class="profile-section-slot">
+        <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Low-income students'),
                           anchor: 'Low-income_students',
                           analytics_id: 'EquityLowIncome',
@@ -44,7 +51,9 @@
                           faq: equity.faq_low_income,
                           no_data_summary: t('.Low income no data'),
                           qualaroo_module_link: equity.qualaroo_module_link(:low_income_students) })  %>
-      <%= react_component('SchoolProfileComponent', props: {
+      </div>
+      <div class="profile-section-slot">
+        <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Students with Disabilities'),
                           anchor: 'Students_with_Disabilities',
                           analytics_id: 'EquityDisabilities',
@@ -57,6 +66,7 @@
                           no_data_summary: t('.Disabilities no data'),
                           qualaroo_module_link: equity.qualaroo_module_link(:students_with_disabilities)})  %>
 
+      </div>
     </div>
   </div>
 </div>

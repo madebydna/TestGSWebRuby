@@ -1,6 +1,8 @@
+$space-between-profile-modules: $spacing-extra-large;
+
 .school-profile {
-  .content > div {
-    margin-top: 30px;
+  .content > div, .profile-section {
+    margin-top: $space-between-profile-modules;
   }
 
   .nearby-schools {

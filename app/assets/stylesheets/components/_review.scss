@@ -147,7 +147,6 @@
 
   > .topical-review-summary {
     $text_color: #2e3438;
-    padding: 20px 0 20px 0;
     font-size: 12px;
     font-family: 'opensans-regular';
     //color: $text_color; //might need to be in elements instead
@@ -155,12 +154,16 @@
     .topical-title {
       text-align: center;
       font-size: 20px;
-      padding: 20px 0;
+      margin-top: 20px;
       text-transform: uppercase;
       font-family: 'opensans-semibold';
       @include media-breakpoint-up(sm) {
         text-align: left;
       }
+    }
+
+    .topical_items {
+      margin: 10px -5px;
     }
 
     .topical_item {

@@ -11,9 +11,10 @@
         <%= render 'school_profile_sticky_cta' %>
       </div>
       <div class="content">
+        <div class="profile-section">
           <%= render 'summary_narration' if @school_profile.summary_narration.present? %>
-
-        <div>
+        </div>
+        <div class="profile-section">
           <%= render 'toc' %>
         </div>
         <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
@@ -28,9 +29,13 @@
               </div>
             </div>
             <div class="col-xs-12 col-lg-9">
-              <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+              <div class="profile-section-slot">
+                <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+              </div>
               <% if @school_profile.show_high_school_data %>
-                <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+                <div class="profile-section-slot">
+                  <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+                </div>
               <% end %>
 
               <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
@@ -41,24 +46,30 @@
                 Else, if the school is (e,m), we show SP, whether SP has data, or not (no-data state)
               %>
               <% if @school_profile.academic_progress.visible? && !@school_profile.student_progress.has_data? %>
+                <div class="profile-section-slot">
                   <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
+                </div>
               <% elsif @school_profile.student_progress.visible? %>
+                <div class="profile-section-slot">
                   <%= render 'student_progress', student_progress: @school_profile.student_progress %>
+                </div>
               <% end %>
 
               <% if @school.includes_level_code?(%w[m h]) %>
-                <% if !@school.middle_school? && @school_profile.courses.visible? %>
-                  <% # for multi level and high schools, show advanced courses data if we can %>
-                  <%= render 'courses', courses: @school_profile.courses %>
-                <% elsif @school_profile.stem_courses.visible? %>
-                  <% # if multi level / high school didnt have advanced courses, or for middle schools, show stem data if we can %>
-                  <%= render(
-                    'stem_courses',
-                    stem_courses: @school_profile.stem_courses
-                  ) %>
-                <% else %>
-                  <%= render 'courses', courses: @school_profile.courses %>
-                <% end %>
+                <div class="profile-section-slot">
+                  <% if !@school.middle_school? && @school_profile.courses.visible? %>
+                    <% # for multi level and high schools, show advanced courses data if we can %>
+                    <%= render 'courses', courses: @school_profile.courses %>
+                  <% elsif @school_profile.stem_courses.visible? %>
+                    <% # if multi level / high school didnt have advanced courses, or for middle schools, show stem data if we can %>
+                    <%= render(
+                      'stem_courses',
+                      stem_courses: @school_profile.stem_courses
+                    ) %>
+                  <% else %>
+                    <%= render 'courses', courses: @school_profile.courses %>
+                  <% end %>
+                </div>
               <% end %>
             </div>
           </div>
@@ -79,9 +90,16 @@
             </div>
             <div class="col-xs-12 col-lg-9">
               <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
-              <%= render 'osp_school_info', osp_link: osp_link, school_profile: @school_profile %>
-              <%= render 'students', students: @school_profile.students %>
-              <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+
+              <div class="profile-section-slot">
+                <%= render 'osp_school_info', osp_link: osp_link, school_profile: @school_profile %>
+              </div>
+              <div class="profile-section-slot">
+                <%= render 'students', students: @school_profile.students %>
+              </div>
+              <div class="profile-section-slot">
+                <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+              </div>
             </div>
           </div>
         </div>
@@ -89,7 +107,7 @@
         <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
                    width: 320, height: 50, css_class: 'mbl' %>
 
-        <div>
+        <div class="profile-section">
           <%= render 'review_summary', reviews: @school_profile.reviews %>
         </div>
 
