@@ -24,6 +24,7 @@ class OspModerationController < ApplicationController
         else
           membership.update(note: member[:notes], status: status)
           send_email_to_osp(membership, status)
+          membership.approve_provisional_osp_user_data if status == 'approved'
         end
       end
     else
@@ -38,6 +39,7 @@ class OspModerationController < ApplicationController
   def osp_search
     @permitted_params = request.query_parameters.select{|param, val| PARAMS_WHITELIST.include?(param) && val.present? }.symbolize_keys
     if (@permitted_params[:state] || @permitted_params[:school_id]) && @permitted_params.length <= 1
+      # Can't perform search if only state or id (need both)
     elsif @permitted_params.empty?
     elsif @permitted_params[:email]
       if User.where(email: @permitted_params[:email]).present?
