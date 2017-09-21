@@ -120,18 +120,20 @@
       </div>
     </div>
 
-    <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+    <div class="profile-section">
+      <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
                width: 320, height: 50, css_class: 'mbl' %>
+    </div>
 
-    <div>
+    <div class="profile-section">
       <%= render 'homes_and_rentals', school: @school %>
     </div>
 
-    <div>
+    <div class="profile-section">
       <%= render 'neighborhood', neighborhood: @school_profile.neighborhood %>
     </div>
 
-    <div>
+    <div class="profile-section">
       <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
     </div>
 

@@ -1,7 +1,7 @@
 $space-between-profile-modules: $spacing-extra-large;
 
 .school-profile {
-  .content > div, .profile-section {
+  .static-container > .content > div, .profile-section {
     margin-top: $space-between-profile-modules;
   }
 
