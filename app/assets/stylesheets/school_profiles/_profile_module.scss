@@ -72,6 +72,9 @@
 
   .tab-buttons {
     margin-top: 15px;
+    @include media-breakpoint-only(xs) {
+      padding: 0px 10px;
+    }
     .tab-container {
       display: inline-block;
       margin: 0px 0px 10px;
@@ -97,10 +100,6 @@
         margin: 10px;
         font-size: 12px;
       }
-
-    }
-    .space-below {
-      padding-bottom: 10px;
     }
   }
 
