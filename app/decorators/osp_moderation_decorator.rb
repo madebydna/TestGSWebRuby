@@ -7,7 +7,9 @@ class OspModerationDecorator < Draper::Decorator
   end
 
   def requesting_multi_access?
-    EspMembership.where(member_id: member_id, status: 'approved').present?
+    # Conditions: 1) currently evaluating esp_membership is not approved, 2) there is another approved
+    # esp_membership with the same member_id
+    EspMembership.where(member_id: member_id, status: 'approved').present? && status != 'approved'
   end
 
   def active_memberships?

@@ -1,44 +1,9 @@
+<%= javascript_include_tag "osp_admin", "data-turbolinks-track" => true %>
+
 <div style="width: 90%; margin: auto; padding: 30px 0;">
   <%= link_to 'Search OSP requests', osp_search_path %>
   <%= render partial: 'osp/osp_moderation/reviewer_actions_buttons' %>
   <%= render partial: 'osp/osp_moderation/osp_table' %>
   <%= render(partial: 'osp/osp_moderation/pagination_links') unless @pagination_link_count <= 1 %>
-
 </div>
 
-<script type="text/javascript" charset="utf-8">
-
-  const collectOspMembershipIds = function(){
-//    If box is checked, create tuple in format [id, notes]
-    let ospMemberArray = [];
-    $('.osp-member').each(function() {
-      var $this = $(this);
-      if ($this.is(':checked')) {
-        ospMemberArray.push([$this.attr('id'), $this.closest('tr').find('textarea.osp-notes').val()]);
-      }
-    });
-    return ospMemberArray;
-  };
-
-
-  $('.submit-osp-membership').find('button').on('click', function(){
-    var status = $(this).attr('data-id');
-    var memberArray = collectOspMembershipIds();
-//    Don't fire ajax call unless user has selected osp-members to update
-    if (memberArray.length > 0) {
-      $.ajax({
-        method: 'POST',
-        url: '/admin/osp-moderation',
-        data: {member_array: memberArray, status: status},
-        success: function () {
-          location.reload();
-        },
-        error: function(){
-          alert('A problem occurred while trying to process your request. Try refreshing the page and submitting again. Contact support if you continue to receive this message.')
-        }
-      });
-    } else {
-      alert('Please check at least one box before clicking the buttons!');
-    }
-  })
-</script>

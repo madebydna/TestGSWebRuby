@@ -1,5 +1,6 @@
 class OspModerationController < ApplicationController
   include OspHelper
+  layout "application"
 
   STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
   PARAMS_WHITELIST = %w(state school_id member_id email)
