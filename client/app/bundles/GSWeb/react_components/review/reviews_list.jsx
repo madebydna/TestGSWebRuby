@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import UserReviews from './user_reviews';
-import { scrollToElement } from '../../util/scrolling';
-import { t } from '../../util/i18n';
+import { scrollToElement } from 'util/scrolling';
+import { t } from 'util/i18n';
+import { size as viewportSize } from 'util/viewport';
 
 export default class ReviewsList extends React.Component {
 
@@ -19,18 +20,20 @@ export default class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
     this.REVIEW_CHUNK_SIZE = 5;
-    var currentUserReportedReviews = [];
+    let currentUserReportedReviews = [];
 
     // TODO: This needs to be hooked up somewhere. Maybe from props?
     this.state = {
       currentUserReportedReviews: currentUserReportedReviews,
-      pageNumber: 1
+      offset: 0,
+      limit: this.startingLimit()
     };
     this.reviewReportedCallback = this.reviewReportedCallback.bind(this);
     this.renderReviewSubmitMessage = this.renderReviewSubmitMessage.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleCloseAllClick = this.handleCloseAllClick.bind(this);
   }
+
 
   renderReviewSubmitMessage() {
     if ( this.props.reviewSubmitMessage.message ) {
@@ -47,27 +50,14 @@ export default class ReviewsList extends React.Component {
   }
 
   displayReviews() {
-    return this.props.reviews.slice(0,this.countToDisplay()).map(this.renderOneUsersReviews.bind(this));
-  }
-
-  countToDisplay(){
-    let last_to_show = this.currentMaxValue();
-    if(this.lastPage()) last_to_show = this.props.reviews.length;
-    return last_to_show;
-  }
-
-  currentMaxValue() {
-    // this returns the slice position in an array, hence the -1
-    return (this.REVIEW_CHUNK_SIZE * this.state.pageNumber - 1);
+    return this.props.reviews.slice(this.state.offset, this.state.limit)
+      .map(this.renderOneUsersReviews.bind(this));
   }
 
   //returns a boolean
-  lastPage(){
-    // need to add a +1 to compensate for array shift
-    let last_to_show = this.currentMaxValue() + 1;
-    return (this.props.reviews.length <= last_to_show);
+  isLastPage(){
+    return this.props.reviews.length <= this.state.limit;
   }
-
 
   reviewReportedCallback(reviewId) {
     if (reviewId) {
@@ -90,19 +80,33 @@ export default class ReviewsList extends React.Component {
     />)
   }
 
+  startingLimit() {
+    let limit = this.REVIEW_CHUNK_SIZE;
+    if(viewportSize() == 'xs') {
+      limit = 1;
+    }
+
+    if(limit > this.props.reviews.length) nextLimit = this.props.reviews.length;
+    return limit;
+  }
+
+  nextLimit() {
+    let limit = this.state.limit + this.REVIEW_CHUNK_SIZE;
+    if(limit > this.props.reviews.length) limit = this.props.reviews.length;
+    return limit;
+  }
+
   handleClick() {
-    // analyticsEvent(this.props.trackingCategory, this.props.trackingAction+' Less');
-    let pageToOpen = this.state.pageNumber + 1;
-    this.setState({pageNumber: pageToOpen});
+    this.setState({limit: this.nextLimit()});
   }
 
   handleCloseAllClick() {
-    this.setState({pageNumber: 1});
+    this.setState({limit: this.startingLimit()});
     scrollToElement('.review-summary');
   }
 
   showMoreButton(){
-    if(!this.lastPage()) {
+    if(!this.isLastPage()) {
       return (<div className="show-more__button" onClick={this.handleClick}>
         {t('Show more')}
       </div>);
@@ -110,7 +114,7 @@ export default class ReviewsList extends React.Component {
   }
 
   closeAllButton(){
-    if(this.state.pageNumber != 1) {
+    if(this.state.limit > this.startingLimit()) {
       return (<div className="tac ptm"><a onClick={this.handleCloseAllClick}>
         {t('Close all')}
       </a></div>);
