@@ -1,0 +1,23 @@
+@import "resources/bootstrap/bootstrap";
+
+.api_account_form {
+  .field_with_errors { display: inline; }
+  div {
+    margin-bottom: 12px;
+    input:not([type="submit"]), textarea, select {
+      border: 1px solid #bbb;
+      width: 75%;
+      float: right;
+      padding: 5px;
+      border-radius: 3px;
+      background: #F3F3F3;
+    }
+    label {
+      line-height: 30px;
+    }
+    input[type="radio"] {
+      width: 20px;
+      float: none;
+    }
+  }
+}

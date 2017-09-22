@@ -1,0 +1,84 @@
+
+<% select_options = [['Education', 'education'], ['Finance', 'finance'], ['Government', 'government'],
+                    ['Media - Journalism', 'media'], ['Real Estate', 'real estate'], ['Technology', 'technology'],
+                    ['Other', 'other']]%>
+
+<div class="api_account_form" style="margin-top: 30px;">
+  <%= form_for([:admin, @api_account]) do |f| %>
+      <%= render 'error_messages' %>
+    <div>
+      <%= f.label :name %>
+      <%= f.text_field :name, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :organization %>
+      <%= f.text_field :organization, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :email %>
+      <%= f.text_field :email, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :website %>
+      <%= f.text_field :website, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :phone %>
+      <%= f.text_field :phone, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :industry %>
+      <%= f.select :industry, options_for_select(select_options, selected: @api_account.industry), include_blank: true, required: true %>
+    </div>
+
+    <% unless params["action"].downcase == 'new' %>
+        <div>
+          <%= f.label :account_added, disabled: true %>
+          <%= f.date_field :account_added %>
+        </div>
+
+        <div>
+          <%= f.label :account_updated, disabled: true %>
+          <%= f.date_field :account_updated %>
+        </div>
+
+        <div>
+          <%= f.label :api_key, disabled: true %>
+          <%= f.text_field :api_key %>
+        </div>
+    <% end %>
+
+    <div>
+      <%= f.radio_button :type, 'f' %>
+      <%= f.label :type_f, 'Free' %>
+      <%= f.radio_button :type, 'p' %>
+      <%= f.label :type_p, 'Premium' %>
+    </div>
+
+    <div>
+      <%= f.label :intended_use %>
+      <%= f.text_area :intended_use, required: true %>
+    </div>
+
+    <div style="text-align: center;margin-top: 40px;">
+        <%= f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
+        <% if params["action"].downcase == 'edit' %>
+          <a id="api" class="btn btn-warning" data-id="<%=@api_account.id%>" style="margin-left: 15px;width: 150px;">
+            Generate API Key</a>
+          <%= link_to "Delete account", admin_api_account_path(@api_account), method: :delete,
+                      data: { confirm: "You sure?" }, class: "btn btn-danger",
+                      style: "margin-left: 15px;width: 150px;" %>
+        <% end %>
+    </div>
+
+
+
+  <% end %>
+</div>
+
+<div style="text-align: left; margin-bottom: 40px;"><%= link_to 'Back to all accounts', admin_api_accounts_path %></div>

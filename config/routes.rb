@@ -246,6 +246,8 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
+    resources :api_accounts, except: [:show]
+    post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
     get '/omniture-test', action: :omniture_test, as: :omniture_test
     get '/info', action: :info
     get '/examples-and-gotchas', action: :examples_and_gotchas
