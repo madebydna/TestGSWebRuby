@@ -1,5 +1,5 @@
-<% arr = @school_profile.summary_narration %>
-<% qualaroo_link = 'https://s.qualaroo.com/45194/97b3505a-16c7-4b57-a737-b090f1880b47' %>
+<% arr = @school_profile.summary_narration.build_content %>
+<% qualaroo_link = @school_profile.summary_narration.qualaroo_module_link %>
 
 <div class="auto-narration summary-narration">
   <span>
@@ -15,6 +15,5 @@
       <%= arr.join(' ').html_safe %>
       <%= render 'module_feedback', content: qualaroo_link %>
   <% end %>
-
   </span>
 </div>
