@@ -4,10 +4,10 @@
   $color-toggle-button-gradient: #f4f5f6;
   $color-toggle-button-active: #2ba3dc;
   $color-toggle-button-text: #28292a;
-  margin-top: 20px;
 
   .title-bar {
     text-align: center;
+    margin-bottom: 30px;
     @include media-breakpoint-up(sm) {
       text-align: right;
     }

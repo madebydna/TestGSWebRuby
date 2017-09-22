@@ -1,5 +1,11 @@
 .profile-module {
   $flag-color: #ff3f2b;
+  @include media-breakpoint-only(xs) {
+    border-bottom: solid 1px #dbe6eb;
+    border-top: solid 1px #dbe6eb;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
 
   .tabs-panel {
     display: none;
@@ -58,11 +64,17 @@
     background-color: #fff;
     @include media-breakpoint-down(xs) {
       padding: 10px 10px;
+      margin: 10px 0 5px 0;
+      border-left: none;
+      border-right: none;
     }
   }
 
   .tab-buttons {
     margin-top: 15px;
+    @include media-breakpoint-only(xs) {
+      padding: 0px 10px;
+    }
     .tab-container {
       display: inline-block;
       margin: 0px 0px 10px;
@@ -88,10 +100,6 @@
         margin: 10px;
         font-size: 12px;
       }
-
-    }
-    .space-below {
-      padding-bottom: 10px;
     }
   }
 
