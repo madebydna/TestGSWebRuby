@@ -73,7 +73,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def subtype
-    school.subtype.gsub 'yr_round', 'year_round'
+    school.subtype.gsub 'yr_round', 'year_round' if school.subtype.present?
   end
 
   def school_summary
