@@ -86,7 +86,7 @@ export default class ReviewsList extends React.Component {
       limit = 1;
     }
 
-    if(limit > this.props.reviews.length) nextLimit = this.props.reviews.length;
+    if(limit > this.props.reviews.length) limit = this.props.reviews.length;
     return limit;
   }
 
