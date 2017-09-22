@@ -12,11 +12,11 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_directory_keys
-    %w(county district_id city fax id lat level_code lon name nces_code phone state state_id street subtype type zipcode)
+    %w(county district_id city fax id lat level_code lon name nces_code phone state state_id street type zipcode)
   end
 
   def school_special_keys
-    %w(url level district_name school_summary description home_page_url FIPScounty)
+    %w(url level district_name school_summary description home_page_url FIPScounty subtype)
   end
 
   def build_hash_for_cache
@@ -42,6 +42,8 @@ class DirectoryCaching::DirectoryCacher < Cacher
         hash[key] = [{ school_value: home_page_url }]
       elsif key == 'FIPScounty'
         hash[key] = [{ school_value: fipscounty }]
+      elsif key == 'subtype'
+        hash[key] = [{ school_value: subtype }]
       end
     end
     validate!(special_cache_hash)
@@ -68,6 +70,10 @@ class DirectoryCaching::DirectoryCacher < Cacher
 
   def description
     "\nIn-depth school information including test scores and student stats for\n#{school.name},\n#{school.city},\n#{school.state}.\n"
+  end
+
+  def subtype
+    school.subtype.gsub 'yr_round', 'year_round'
   end
 
   def school_summary
