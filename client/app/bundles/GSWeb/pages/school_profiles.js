@@ -56,7 +56,7 @@ $(function() {
   initHeader();
 
   (function() {
-    var toggle = assign(new Toggle($('#hero').find('.school-info')));
+    var toggle = assign(new Toggle($('#hero').find('.school-contact')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
         toggle.updateButtonTextCallback(t('show_less'), t('show_more'))

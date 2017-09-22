@@ -32,6 +32,27 @@ module SchoolProfiles
       academic_progress_struct.source_year
     end
 
+    def test_score_rating
+      @school_cache_data_reader.test_scores_rating
+    end
+
+    def narration_component_by_test_score
+      ts_rating = test_score_rating.to_i  if test_score_rating
+      if (1..4).cover?(ts_rating)
+        I18n.t("lib.academic_progress.narrative.#{rating_by_quintile}_low_html")
+      elsif (7..10).cover?(ts_rating)
+        I18n.t("lib.academic_progress.narrative.#{rating_by_quintile}_high_html")
+      else
+        # just to be explicit
+        ''
+      end
+    end
+
+    def rating_by_quintile
+      r = academic_progress_rating.to_i
+      (r / 2).to_i + (r % 2) if r
+    end
+
     def narration_key_from_rating
       bucket = {
           1 => 1,
@@ -46,13 +67,14 @@ module SchoolProfiles
           10 => 5
       }[academic_progress_rating.to_i]
       return nil unless bucket
-      "lib.academic_progress.narrative_#{bucket}_html"
+      "lib.academic_progress.narrative.#{bucket}_html"
+
     end
 
     def narration
       return nil unless has_data?
       key = narration_key_from_rating
-      I18n.t(key).html_safe if key
+      I18n.t(key, test_score_dependent_content: narration_component_by_test_score).html_safe if key
     end
 
     def data_label(key)

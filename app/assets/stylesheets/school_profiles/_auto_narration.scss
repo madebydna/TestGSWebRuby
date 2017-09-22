@@ -42,4 +42,13 @@
     border-left: 5px $color_gray_bar solid;
     padding-left: 20px;
   }
+
+  &.summary-narration {
+    font-size: 14px;
+    .module_feedback {
+      float:none;
+      display: block;
+      padding: 15px 0 0;
+    }
+  }
 }

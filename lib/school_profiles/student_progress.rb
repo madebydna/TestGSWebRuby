@@ -16,6 +16,10 @@ module SchoolProfiles
       @school_cache_data_reader.student_progress_rating
     end
 
+    def test_score_rating
+      @school_cache_data_reader.test_scores_rating
+    end
+
     def historical_ratings
       @school_cache_data_reader.historical_student_progress_ratings
     end
@@ -31,7 +35,23 @@ module SchoolProfiles
     def narration
       return nil unless has_data?
       key = narration_key_from_rating
-      I18n.t(key).html_safe if key
+      I18n.t(key, test_score_dependent_content: narration_component_by_test_score).html_safe if key
+    end
+
+    def narration_component_by_test_score
+      ts_rating = test_score_rating.to_i  if test_score_rating
+      if (1..4).cover?(ts_rating)
+        I18n.t("lib.student_progress.narrative.#{rating_by_quintile}_low_html")
+      elsif (7..10).cover?(ts_rating)
+        I18n.t("lib.student_progress.narrative.#{rating_by_quintile}_high_html")
+      else
+        ''
+      end
+    end
+
+    def rating_by_quintile
+      r = rating.to_i
+      (r / 2).to_i + (r % 2) if r
     end
 
     def narration_key_from_rating
