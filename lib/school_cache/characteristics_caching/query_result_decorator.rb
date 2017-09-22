@@ -86,6 +86,10 @@ class CharacteristicsCaching::QueryResultDecorator
     data_set_with_values.school_modified
   end
 
+  def district_created
+    data_set_with_values.district_modified
+  end
+
   def performance_level
     DisplayRange.for({
       data_type:    'census',
