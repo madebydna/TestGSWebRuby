@@ -3,7 +3,8 @@ class Admin::ApiAccountsController < ApplicationController
   layout false
 
   def index
-    @api_accounts = ApiAccount.all
+    display_selected_api_accounts
+    @pagination_link_count = api_account_size/100 + 1
   end
 
   def create
@@ -51,6 +52,24 @@ class Admin::ApiAccountsController < ApplicationController
   def api_account_params
     params.require(:api_account).permit(:name, :organization, :email, :website,
                                   :phone, :industry, :intended_use, :type, :account_updated)
+  end
+
+  def fetch_one_page_of_api_accounts(offset)
+    ApiAccount.offset(offset).limit(100)
+  end
+
+  def api_account_size
+    @_membership_size ||= ApiAccount.count
+  end
+
+  def display_selected_api_accounts
+    # This is the main pagination method for this page. It tries to load the right api accounts based on the value of
+    # params[:start].  If that value is out-of-bounds, it defaults to the first 100 accounts.
+    if params[:start] && params[:start].to_i.between?(0, api_account_size)
+      @api_accounts = fetch_one_page_of_api_accounts((params[:start].to_i/10)*100)
+    else
+      @api_accounts = fetch_one_page_of_api_accounts(0)
+    end
   end
 
 end
