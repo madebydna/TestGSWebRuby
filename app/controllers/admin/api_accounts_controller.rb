@@ -1,6 +1,6 @@
 class Admin::ApiAccountsController < ApplicationController
   before_action :find_account, only: [:edit, :update, :destroy, :create_api_key]
-  layout false
+  layout 'admin'
 
   def index
     display_selected_api_accounts
@@ -32,7 +32,7 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def destroy
-    @api_account.destroy
+    @api_account.update(api_key: nil)
     redirect_to admin_api_accounts_path
   end
 
