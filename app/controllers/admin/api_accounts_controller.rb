@@ -66,7 +66,7 @@ class Admin::ApiAccountsController < ApplicationController
     # This is the main pagination method for this page. It tries to load the right api accounts based on the value of
     # params[:start].  If that value is out-of-bounds, it defaults to the first 100 accounts.
     if params[:start] && params[:start].to_i.between?(0, api_account_size)
-      @api_accounts = fetch_one_page_of_api_accounts((params[:start].to_i/10)*100)
+      @api_accounts = fetch_one_page_of_api_accounts((params[:start].to_i/100)*100)
     else
       @api_accounts = fetch_one_page_of_api_accounts(0)
     end
