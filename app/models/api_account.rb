@@ -22,4 +22,3 @@ class ApiAccount < ActiveRecord::Base
   end
 end
 
-# TODO: create admin_tools_layout.html.erb for this, osp, etc.
