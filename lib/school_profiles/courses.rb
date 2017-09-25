@@ -242,7 +242,7 @@ module SchoolProfiles
       end
       subject_hash = { t(:advanced_courses) => subject_sources }
       rating_hash = if rating.present?
-                      {t(:rating_title) => {['GreatSchools', (rating_year + ' | ' + t(:see_more))] => t(:rating_description)}}
+                      {t(:rating_title) => {['GreatSchools', (rating_year.to_s + ' | ' + t(:see_more))] => t(:rating_description)}}
                     else
                       {}
                     end
