@@ -1,34 +1,32 @@
-<% content_for :header do %>
-   <h3>Api Accounts</h3>
-<% end %>
-<% content_for :body do %>
-  <%= link_to 'Create new account', new_admin_api_account_path, style: "margin-top: 30px; display: inline-block;" %>
 
-  <table class="table table-striped" style="margin-bottom: 40px;">
-    <thead style="background: #777878; color: white;">
-    <tr>
-      <th>Name</th>
-      <th>Organization</th>
-      <th>Email</th>
-      <th>Active</th>
-      <th>Added</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @api_accounts.each do |account| %>
-        <tr>
-          <td><%= link_to account.name, edit_admin_api_account_path(account.id) %></td>
-          <td><%= account.organization %></td>
-          <td><%= account.email %></td>
-          <td><%= account.api_key ? 'yes' : 'no' %></td>
-          <td><%= account.account_added.strftime('%m/%d/%Y') %></td>
-        </tr>
-    <% end %>
-    </tbody>
-  </table>
+<h3>Api Accounts</h3>
 
-  <%= render 'pagination_links' %>
-<% end %>
+<%= link_to 'Create new account', new_admin_api_account_path, style: "margin-top: 30px; display: inline-block;" %>
+
+<table class="table table-striped" style="margin-bottom: 40px;">
+  <thead style="background: #777878; color: white;">
+  <tr>
+    <th>Name</th>
+    <th>Organization</th>
+    <th>Email</th>
+    <th>Active</th>
+    <th>Added</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @api_accounts.each do |account| %>
+      <tr>
+        <td><%= link_to account.name, edit_admin_api_account_path(account.id) %></td>
+        <td><%= account.organization %></td>
+        <td><%= account.email %></td>
+        <td><%= account.api_key ? 'yes' : 'no' %></td>
+        <td><%= account.account_added.strftime('%m/%d/%Y') %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<%= render 'pagination_links' %>
 
 
 

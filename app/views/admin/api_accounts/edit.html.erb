@@ -1,23 +1,21 @@
 
-<% content_for :header do %>
-  <h3>View/Edit Api Account</h3>
-<% end %>
-<br>
-<% content_for :body do  %>
-  <%= render partial: 'api_account_form'%>
 
-  <script type="text/javascript" charset="utf-8">
-    $('#api').on('click', function(){
-      var id = $(this).data('id');
-      $.ajax({
-        type: 'post',
-        url: '<%= admin_create_api_key_path %>',
-        data: { id: id },
-        success: function(payload) {
-          $('#api_account_api_key').css('background', '#C7E4EC').val(payload.apiKey);
-        }
-      });
+<h3>View/Edit Api Account</h3><br>
+
+<%= render partial: 'api_account_form'%>
+
+<script type="text/javascript" charset="utf-8">
+  $('#api').on('click', function(){
+    var id = $(this).data('id');
+    $.ajax({
+      type: 'post',
+      url: '<%= admin_create_api_key_path %>',
+      data: { id: id },
+      success: function(payload) {
+        $('#api_account_api_key').css('background', '#C7E4EC').val(payload.apiKey);
+      }
     });
-  </script>
-<% end %>
+  });
+</script>
+
 
