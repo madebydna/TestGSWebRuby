@@ -41,6 +41,6 @@ class ApiAccount < ActiveRecord::Base
     end
   end
 
-  
+
 end
 
