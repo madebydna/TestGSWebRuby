@@ -16,68 +16,68 @@ en:
         <p><a href="/gk/ratings/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
       narrative:
         1_low_html: >
-          <p class="side-bar"><span class="emphasis">Very low progress with low test scores</span> means that students are starting at a low
-          point and as a class, are falling even farther behind their peers in classes in other schools.</p>
+          <p class="side-bar"><span class="emphasis">Very low progress with low test scores</span> means students are
+          starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
         1_high_html: >
-          <p class="side-bar"><span class="emphasis">Very low progress with high test scores</span> means students have strong academic skills
-          but that students, as a class, are below grade-to-grade gains in other classes in the state.</p>
+          <p class="side-bar"><span class="emphasis">Very low progress with high test scores</span> means students
+          have strong academic skills but are making smaller gains than their peers at other schools in the state. </p>
         1_html: >
           <h3 class="negative">Very concerning:</h3>
-          <p>Students at this school are making <span class="emphasis">far less</span> academic progress given where their class was last year, compared
+          <p>Students at this school are making <span class="emphasis">far less</span> academic progress from one grade to the next, compared
           to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
         2_low_html: >
-          <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means that students are starting at a low point
-          and as a class, are falling farther behind their peers in classes in other schools.</p>
+          <p class="side-bar"><span class="emphasis">Low progress with low test scores</span> means students are
+          starting at a low point and are falling even farther behind their peers at other schools in the state.</p>
         2_high_html: >
-          <p class="side-bar"><span class="emphasis">Low progress with high test scores</span> means students have strong academic skills but
-          that students, as a class, are below grade-to-grade gains in other classes in the state.</p>
+          <p class="side-bar"><span class="emphasis">Low progress with high test scores</span> means students have
+          strong academic skills but are making smaller gains than their peers at other schools in the state. </p>
         2_html: >
           <h3 class="negative">A worrisome sign:</h3>
-          <p>Students at this school are making <span class="emphasis">less</span> academic progress given where their class
-          was last year, compared to students at other schools in the state.</p>
+          <p>Students at this school are making <span class="emphasis">less</span> academic progress from one grade to the next,
+          compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to improve its programs.</p>
         3_low_html: >
-          <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means that students are starting at a low
-          point but as a class, are keeping up with peers in classes in other schools.</p>
+          <p class="side-bar"><span class="emphasis">Average progress with low test scores</span> means students are
+          starting at a low point but are progressing at about the same rate as their peers at other schools in the state.</p>
         3_high_html: >
-          <p class="side-bar"><span class="emphasis">Average progress with high test scores</span> means students have strong academic skills
-          and that students, as a class, are similar to grade-to-grade gains in other classes in the state.</p>
+          <p class="side-bar"><span class="emphasis">Average progress with high test scores</span>  means students have
+          strong academic skills and are progressing at about the same rate as their peers at other schools in the state.</p>
         3_html: >
           <h3 class="neutral">Worth a deeper look:</h3>
-          <p>Students at this school are making <span class="emphasis">average</span> academic progress given where their class
-          was last year, compared to students at other schools in the state.</p>
+          <p>Students at this school are making <span class="emphasis">average</span> academic progress from one grade to the next,
+          compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and how it might use this information to help students
           grow and reach their full potential.</p>
         4_low_html: >
-          <p class="side-bar"><span class="emphasis">Strong progress with low test scores</span> means that students are starting
-          at a low point but as a class, are exceeding grade-to-grade gains in other classes.</p>
+          <p class="side-bar"><span class="emphasis">Above average progress with low test scores</span> means students
+          are starting at a low point but are making larger gains than their peers at other schools in the state.</p>
         4_high_html: >
-          <p class="side-bar"><span class="emphasis">Strong progress with high test scores</span> means students have strong academic skills
-          and that students, as a class, are above grade-to-grade gains in other classes in the state.</p>
+          <p class="side-bar"><span class="emphasis">Strong progress with high test scores</span> means students have
+          strong academic skills and are making bigger gains than their peers at in other schools in the state.</p>
         4_html: >
           <h3 class="positive">A promising sign:</h3>
-          <p>Students at this school are making <span class="emphasis">more</span> academic progress given where their class
-          was last year, compared to students at other schools in the state.</p>
+          <p>Students at this school are making <span class="emphasis">more</span> academic progress from one grade to the next,
+          compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s continued success.</p>
         5_low_html: >
-          <p class="side-bar"><span class="emphasis">High progress with low test scores</span> means that students are starting at a low point
-          but the school is doing a great job at supporting their academic growth compared to most other schools.</p>
+          <p class="side-bar"><span class="emphasis">Very strong progress with low test scores</span> means students are
+          starting at a low point, but compared to most other schools in the state, this school is doing a great job of supporting students’ academic growth.</p>
         5_high_html: >
-          <p class="side-bar"><span class="emphasis">High progress with high test scores</span> means students have strong academic skills and
-          that students, as a class, are above grade-to-grade gains in other classes in the state.</p>
+          <p class="side-bar"><span class="emphasis">Very strong progress with high test scores</span> means students
+          have strong academic skills and are making bigger gains than their peers at other schools in the state.</p>
         5_html: >
           <h3 class="positive">Good news!</h3>
-          <p>Students at this school are making <span class="emphasis">far more</span> academic progress given where their class
-          was last year, compared to students at other schools in the state.</p>
+          <p>Students at this school are making <span class="emphasis">far more</span> academic progress from one grade to the next,
+          compared to students at other schools in the state.</p>
           %{test_score_dependent_content}
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip:</span></p>
           <p class="footnote">Ask the school how it interprets this rating and what you can do to support the school’s success.</p>
