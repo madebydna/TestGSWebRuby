@@ -42,7 +42,7 @@ module SchoolProfiles
       level = narration_level(test_scores_rating.to_i)
       rbq = rating_by_quintile(rating)
       if level.present? && rbq.present?
-        I18n.t("lib.academic_progress.narrative.#{rbq}_#{level}_html")
+        I18n.t("lib.student_progress.narrative.#{rbq}_#{level}_html")
       else
         ''
       end
