@@ -60,6 +60,15 @@
       <%= f.label :type_p, 'Premium' %>
     </div>
 
+    <div class="api_checkbox_options" style="display: <%= @api_account.type == 'f' ? 'none' : 'block' %>;">
+      <label><input type="checkbox" value="gs_rating" id="gs_rating">GS Rating</label>
+      <label><input type="checkbox" value="community" id="community">Community</label>
+      <label><input type="checkbox" value="parent_rating" id="parent_rating">Parent rating</label>
+      <label><input type="checkbox" value="full_review" id="full_review">Full review</label>
+      <label><input type="checkbox" value="user" id="user">User management</label>
+      <%= f.hidden_field :api_options, value: nil, id: 'api_options' %>
+    </div>
+
     <div>
       <%= f.label :intended_use %>
       <%= f.text_area :intended_use, required: true %>
@@ -70,13 +79,62 @@
         <% if params["action"].downcase == 'edit' %>
           <a id="api" class="btn btn-warning" data-id="<%=@api_account.id%>" style="margin-left: 15px;width: 150px;">
             Generate API Key</a>
-          <%# link_to won't work for api_accounts#destroy without jquery_ujs. %>
-          <%= button_to "Deactivate account", admin_api_account_path(@api_account), method: :delete,
+          <%= f.submit "Deactivate account", name: "delete_key",
                       class: "btn btn-danger", style: "margin-left: 15px;width: 150px;" %>
         <% end %>
     </div>
 
   <% end %>
+
 </div>
 
 <div style="text-align: left; margin-bottom: 40px;"><%= link_to 'Back to all accounts', admin_api_accounts_path %></div>
+
+
+<script type="text/javascript" charset="utf-8">
+
+  const checkboxVals = ['gs_rating', 'community', 'parent_rating', 'full_review', 'user'];
+  const savedApiOpts = '<%= @api_opts %>';
+
+  var checkSavedOptions = function() {
+    $.each(checkboxVals, function(idx, option) {
+      if (savedApiOpts.indexOf(option) >= 0) {
+        $(`#${option}`).prop('checked', true);
+      }
+    })
+  }
+
+  var collectApiOptions = function(){
+    var apiOptionsArray = []
+    $('input:checkbox').each(function(idx) {
+      var checkBox = $(this);
+      if ( checkBox.is(':checked') ) {
+        apiOptionsArray.push(checkBox.val());
+      }
+    })
+    $('#api_options').val(apiOptionsArray);
+  }
+
+  $('form').submit(function(){
+    collectApiOptions();
+    return true;
+  });
+
+  $('#api_account_type_p').on('click', function(){
+    $('.api_checkbox_options').css('display', 'block');
+    checkSavedOptions();
+  });
+
+  $('#api_account_type_f').on('click', function(){
+    $('.api_checkbox_options').css('display', 'none');
+    $('input:checkbox').each(function(idx) {
+      $(this).prop('checked', false)
+    });
+  });
+
+  $(document).ready(checkSavedOptions);
+
+
+
+
+</script>

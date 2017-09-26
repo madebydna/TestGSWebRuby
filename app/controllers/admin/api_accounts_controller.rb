@@ -7,9 +7,14 @@ class Admin::ApiAccountsController < ApplicationController
     @pagination_link_count = api_account_size/100 + 1
   end
 
+  def new
+    @api_account = ApiAccount.new
+  end
+
   def create
     @api_account = ApiAccount.new(api_account_params)
-    if @api_account.save
+    if @api_account.save!
+      handle_api_options
       redirect_to edit_admin_api_account_path(@api_account)
     else
       render 'new'
@@ -17,29 +22,31 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def edit
+    @api_opts = @api_account.api_config.value if @api_account.api_config
   end
 
   def update
+    if params[:delete_key]
+      delete_api_key && return
+    end
     if @api_account.update_attributes(api_account_params.merge({account_updated: Time.now}))
+      handle_api_options
       redirect_to edit_admin_api_account_path(@api_account)
     else
       render 'edit'
     end
   end
 
-  def new
-    @api_account = ApiAccount.new
-  end
-
-  def destroy
-    @api_account.update(api_key: nil)
+  def delete_api_key
+    @api_account.update(api_key: nil, type: 'f')
+    @api_account.delete_api_config
     redirect_to admin_api_accounts_path
   end
 
   def create_api_key
     prior_key = @api_account.api_key
-    NewApiKeyEmail.deliver_to_api_user(@api_account) if prior_key.nil?
     @api_account.save_unique_api_key
+    NewApiKeyEmail.deliver_to_api_user(@api_account) if prior_key.nil?
     render json: { apiKey: @api_account.api_key}
   end
 
@@ -50,8 +57,19 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def api_account_params
-    params.require(:api_account).permit(:name, :organization, :email, :website,
+    params.require(:api_account).permit(:id, :name, :organization, :email, :website,
                                   :phone, :industry, :intended_use, :type, :account_updated)
+  end
+
+  def handle_api_options
+    api_opts = params[:api_account][:api_options]
+    if api_opts && @api_account.api_config
+      @api_account.api_config.update(value: api_opts)
+    elsif api_opts
+      @api_account.build_api_config(account_id: @api_account.id, value: api_opts, name: 'premium_options').save!
+    elsif params[:api_account][:type] == 'f'
+      @api_account.delete_api_config
+    end
   end
 
   def fetch_one_page_of_api_accounts(offset)
