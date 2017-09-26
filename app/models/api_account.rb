@@ -9,6 +9,8 @@ class ApiAccount < ActiveRecord::Base
 
   validates :name, :organization, :email, :website, :phone, :industry, :intended_use, :type, presence: true
   validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}
+  before_save :clean_up_api_config
+
 
   def save_unique_api_key
     key = generate_api_key
@@ -32,5 +34,13 @@ class ApiAccount < ActiveRecord::Base
     ApiConfig.delete_all(account_id: self.id)
   end
 
+  def clean_up_api_config
+    if self.type == 'f'
+      self.api_key = nil
+      delete_api_config
+    end
+  end
+
+  
 end
 

@@ -67,8 +67,6 @@ class Admin::ApiAccountsController < ApplicationController
       @api_account.api_config.update(value: api_opts)
     elsif api_opts
       @api_account.build_api_config(account_id: @api_account.id, value: api_opts, name: 'premium_options').save!
-    elsif params[:api_account][:type] == 'f'
-      @api_account.delete_api_config
     end
   end
 
