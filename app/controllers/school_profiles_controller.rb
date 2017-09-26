@@ -152,7 +152,7 @@ class SchoolProfilesController < ApplicationController
         summary_rating,
         school,
         school_cache_data_reader: school_cache_data_reader
-    ).build_content
+    )
   end
 
   def toc

@@ -53,6 +53,9 @@ class FeedCharacteristicsCaching::FeedCharacteristicsCacher < Cacher
       value = result.try(key)
       if value
         hash[key] = value
+        if key == :year && value == 0
+          hash[key] = result.created.year if result.created && result.created.year
+        end
         if key == :breakdown
           if (config = result.data_set_with_values.try(:census_data_config_entry))
             hash[key] = config.label

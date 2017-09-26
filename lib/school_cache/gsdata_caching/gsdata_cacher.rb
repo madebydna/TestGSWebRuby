@@ -124,6 +124,9 @@ class GsdataCaching::GsdataCacher < Cacher
       elsif result.data_type_id == 159 # academic progress rating
         h[:description] = description('academic_progress')
         h[:methodology] = methodology('academic_progress')
+      elsif [183, 184].include?(result.data_type_id) # discipline & attendance flag
+        h[:description] = description('discipline_attendance')
+        h[:methodology] = methodology('discipline_attendance')
       end
     end
   end

@@ -1,20 +1,21 @@
-<% arr = @school_profile.summary_narration %>
-<% qualaroo_link = 'https://s.qualaroo.com/45194/97b3505a-16c7-4b57-a737-b090f1880b47' %>
+<% arr = @school_profile.summary_narration.build_content %>
+<% qualaroo_link = @school_profile.summary_narration.qualaroo_module_link %>
 
-<div class="auto-narration summary-narration">
-  <span>
-  <% if arr.length > 4 %>
-      <% more = t('.more').capitalize %>
-      <%= arr[0..2].join(' ').html_safe %>
-      <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
-      <span class="js-moreReveal" style="display:none">
-      <%= arr[3..arr.length].join(' ').html_safe %>
-      <%= render 'module_feedback', content: qualaroo_link %>
-      </span>
-  <% else %>
-      <%= arr.join(' ').html_safe %>
-      <%= render 'module_feedback', content: qualaroo_link %>
-  <% end %>
-
-  </span>
-</div>
+<% if arr.present? %>
+  <div class="auto-narration summary-narration">
+    <span>
+    <% if arr.length > 4 %>
+        <% more = t('.more').capitalize %>
+        <%= arr[0..2].join(' ').html_safe %>
+        <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
+        <span class="js-moreReveal" style="display:none">
+        <%= arr[3..arr.length].join(' ').html_safe %>
+        <%= render 'module_feedback', content: qualaroo_link %>
+        </span>
+    <% else %>
+        <%= arr.join(' ').html_safe %>
+        <%= render 'module_feedback', content: qualaroo_link %>
+    <% end %>
+    </span>
+  </div>
+<% end %>
