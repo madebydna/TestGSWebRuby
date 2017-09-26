@@ -2,9 +2,13 @@
 <% select_options = [['Education', 'education'], ['Finance', 'finance'], ['Government', 'government'],
                     ['Media - Journalism', 'media'], ['Real Estate', 'real estate'], ['Technology', 'technology'],
                     ['Other', 'other']]%>
+<%# sets the correct method used by the form %>
+<% action_method_mapping = {'new' => :post, 'edit' => :put} %>
+<% action = action_method_mapping[params[:action]] %>
+
 
 <div class="api_account_form" style="margin-top: 30px;">
-  <%= form_for([:admin, @api_account], method: :put) do |f| %>
+  <%= form_for([:admin, @api_account], method: action) do |f| %>
       <%= render 'error_messages' %>
     <div>
       <%= f.label :name %>

@@ -4,8 +4,7 @@ class ApiAccount < ActiveRecord::Base
   default_scope {order(account_added: :desc)}
   # api_accounts includes column with name 'type', which Rails uses for single-table inheritance
   self.inheritance_column = nil
-  has_one :api_config, class_name: 'ApiConfig', foreign_key: :account_id, inverse_of: :api_account
-  accepts_nested_attributes_for :api_config
+  has_one :api_config, class_name: 'ApiConfig', foreign_key: :account_id
 
   validates :name, :organization, :email, :website, :phone, :industry, :intended_use, :type, presence: true
   validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}
