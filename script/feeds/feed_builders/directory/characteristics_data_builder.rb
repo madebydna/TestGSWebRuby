@@ -73,6 +73,16 @@ module Feeds
       end
     end
 
+    def self.percent_economically_disadvantaged(data, universal_id, data_type=nil)
+      if data.present? && data.first && data.first[value_var]
+        options = {}
+        options[:value] = data.first[value_var].to_f.round(3)
+        options[:year] = data.first['year']
+        options[:universal_id] = universal_id
+        build_structure('percent-economically-disadvantaged', options)
+      end
+    end
+
     def self.free_or_reduced_lunch_program(data, universal_id, data_type)
       if data.present? && data.first && data.first[value_var]
         options = {}

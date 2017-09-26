@@ -2,10 +2,9 @@
   $link-text-color: #2ba3dc;
   $contact-icon-color: #c1d2d9;
   $background-color: #f6f9fa;
-  margin-top: 20px;
 
   @include media-breakpoint-up(sm) {
-    padding: 30px 15px;
+    padding: 0px 15px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -56,7 +55,6 @@
   .map-container {
     position: relative;
     max-width: 1200px;
-    padding-bottom: 30px;
     margin: auto;
     @include media-breakpoint-up(sm) {
       min-height: 450px;

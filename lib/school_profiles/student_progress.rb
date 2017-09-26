@@ -16,7 +16,7 @@ module SchoolProfiles
       @school_cache_data_reader.student_progress_rating
     end
 
-    def test_score_rating
+    def test_scores_rating
       @school_cache_data_reader.test_scores_rating
     end
 
@@ -35,23 +35,30 @@ module SchoolProfiles
     def narration
       return nil unless has_data?
       key = narration_key_from_rating
-      I18n.t(key, test_score_dependent_content: narration_component_by_test_score).html_safe if key
+      I18n.t(key, test_score_dependent_content: narration_text_segment_by_test_score).html_safe if key
     end
 
-    def narration_component_by_test_score
-      ts_rating = test_score_rating.to_i  if test_score_rating
-      if (1..4).cover?(ts_rating)
-        I18n.t("lib.student_progress.narrative.#{rating_by_quintile}_low_html")
-      elsif (7..10).cover?(ts_rating)
-        I18n.t("lib.student_progress.narrative.#{rating_by_quintile}_high_html")
+    def narration_text_segment_by_test_score
+      level = narration_level(test_scores_rating.to_i)
+      rbq = rating_by_quintile(rating)
+      if level.present? && rbq.present?
+        I18n.t("lib.student_progress.narrative.#{rbq}_#{level}_html")
       else
         ''
       end
     end
 
-    def rating_by_quintile
-      r = rating.to_i
-      (r / 2).to_i + (r % 2) if r
+    def narration_level(ts_rating)
+      if (1..4).cover?(ts_rating)
+        'low'
+      elsif (7..10).cover?(ts_rating)
+        'high'
+      end
+    end
+
+    def rating_by_quintile(sp_rating)
+      r = sp_rating.to_i
+      (r / 2).to_i + (r % 2) if r && (1..10).cover?(r)
     end
 
     def narration_key_from_rating

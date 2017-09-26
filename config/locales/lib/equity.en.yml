@@ -6,6 +6,7 @@ en:
       'Percent of students who meet UC/CSU entrance requirements': 'Percent of graduates who meet UC/CSU eligibility requirements'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
+      discipline_attendance_flag: GreatSchools discipline & attendance flag
       GreatSchools: GreatSchools
       li_GreatSchools_Rating: GreatSchools Low-income Rating
       li_description: The low-income rating reflects state test scores for students at this school who qualify for free or reduced-price lunch compared to all students in the state.

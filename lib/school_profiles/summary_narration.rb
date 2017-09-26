@@ -1,5 +1,6 @@
 module SchoolProfiles
   class SummaryNarration
+    include Qualaroo
 
     attr_reader :school
 
@@ -21,6 +22,10 @@ module SchoolProfiles
         end
         arr.compact!
       end
+    end
+
+    def qualaroo_module_link
+      qualaroo_link(:summary_narration, @school.state, @school.id.to_s)
     end
 
     def rating_three_levels(rating)
