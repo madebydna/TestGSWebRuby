@@ -36,7 +36,6 @@ class ApiAccount < ActiveRecord::Base
 
   def clean_up_api_config
     if self.type == 'f'
-      self.api_key = nil
       delete_api_config
     end
   end

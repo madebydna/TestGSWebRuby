@@ -9,7 +9,6 @@
 
   $('#api').on('click', function(){
     var id = $(this).data('id');
-    if (savedApiOpts.length > 0) {
       $.ajax({
         type: 'post',
         url: '<%= admin_create_api_key_path %>',
@@ -18,9 +17,6 @@
           $('#api_account_api_key').css('background', '#C7E4EC').val(payload.apiKey);
         }
       });
-    } else {
-      alert('"Premium" option must be checked and saved before an api key can be assigned.')
-    }
   });
 </script>
 

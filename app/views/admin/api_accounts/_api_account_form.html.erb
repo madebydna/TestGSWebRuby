@@ -65,7 +65,6 @@
       <label><input type="checkbox" value="community" id="community">Community</label>
       <label><input type="checkbox" value="parent_rating" id="parent_rating">Parent rating</label>
       <label><input type="checkbox" value="full_review" id="full_review">Full review</label>
-      <label><input type="checkbox" value="user" id="user">User management</label>
       <%= f.hidden_field :api_options, value: nil, id: 'api_options' %>
     </div>
 
@@ -117,6 +116,10 @@
 
   $('form').submit(function(){
     collectApiOptions();
+    if ($('#api_options').val() <= 0 && $('#api_account_type_p').is(':checked')) {
+      alert('Cannot save "Premium" without adding at least one API option');
+      return false;
+    }
     return true;
   });
 
