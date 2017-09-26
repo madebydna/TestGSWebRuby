@@ -6,6 +6,7 @@ import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
+import SharingModal from '../school_profiles/sharing_modal';
 
 import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
 
@@ -130,7 +131,32 @@ export default class EquitySection extends React.Component {
       return <div className="rating-container" data-ga-click-label={title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
         <div className="profile-module">
-          <div className="module-header">{ratingCircle}{this.sectionTitle()}</div>
+          <div className="module-header">
+            <div className="row">
+              <div className="col-xs-12 col-md-8">
+                {ratingCircle}{this.sectionTitle()}
+              </div>
+              <div className="col-xs-12 col-md-4 show-history-button">
+                <div>
+                  <button className="js-sharing-button">
+                    <a data-remodal-target="modal_info_box"
+                       data-content-type="info_box"
+                       data-content-html={SharingModal}
+                       className="gs-tipso"
+                       data-tipso-offsetX="50"
+                       data-tipso-offsetY="60"
+                       data-tipso-width="318"
+                       data-tipso-position="left"
+                       href="javascript:void(0)">
+                      <div class="dib">
+                        share
+                      </div>
+                    </a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="tab-buttons">
             <SectionNavigation
               parent_anchor={link_name}

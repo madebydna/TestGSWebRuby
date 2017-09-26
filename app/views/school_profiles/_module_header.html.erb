@@ -37,7 +37,19 @@
      <div class="col-xs-12 col-md-4 show-history-button">
        <div>
          <button class="js-sharing-button">
-           <div class="dib"><%= t('.share') %></div>
+           <a data-remodal-target="modal_info_box"
+              data-content-type="info_box"
+              data-content-html='<%= render 'sharing_modal' %>'
+              class="gs-tipso"
+              data-tipso-offsetX="50"
+              data-tipso-offsetY="60"
+              data-tipso-width="318"
+              data-tipso-position="left"
+              href="javascript:void(0)">
+             <div class="dib">
+               <%= t('.share') %>
+             </div>
+           </a>
          </button>
        </div>
      </div>

@@ -1,0 +1,43 @@
+.sharing-modal {
+  $text-color: #1fa2df;
+  $border-and-icon-color: #c1d2d9;
+  $permalink-box-color: #fafafa;
+
+  .sharing-row {
+    text-align: left;
+    padding: 20px 0;
+    border-bottom: 1px solid $border-and-icon-color;
+    &:last-child {
+      border-bottom: none;
+      @include media-breakpoint-up(sm) {
+        display: none;
+      }
+    }
+    &:nth-last-child(2) {
+      @include media-breakpoint-up(sm) {
+        border-bottom: none;
+      }
+    }
+
+    .sharing-row-text {
+      color: $text-color;
+    }
+  }
+
+  .sharing-icon-box {
+    width: 20px;
+    float: left;
+    margin-right: 15px;
+    text-align: center;
+    color: $border-and-icon-color;
+  }
+
+  .permalink {
+    width: 175px;
+    margin-left: 35px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid $border-and-icon-color;
+    background-color: $permalink-box-color;
+  }
+}
