@@ -3,23 +3,6 @@
 import modalManager from '../components/modals/manager';
 import { findKey } from 'lodash';
 
-const topNotificationBarSelector = '#js-top-notification-bar';
-
-export const $getNotificationContainer = function() {
-  return $(topNotificationBarSelector);
-};
-
-export const closeNotificationMessage = function (wait) {
-  $getNotificationContainer().children().each(function () {
-    var $this = $(this);
-    setTimeout(function () {
-      if ($this.hasClass("alert")) {
-        $this.remove();
-      }
-    }, wait);
-  });
-};
-
 export const error = function(message) {
   // TODO: style the modal differently depending on the type of message ?
   modalManager.showModal('SuccessModal', {
