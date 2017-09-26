@@ -23,13 +23,6 @@ let secondTutorialLastStep = {
 
 let firstTutorial = [
   {
-    element: null,
-    intro: t('tour1.step1'),
-    highlightClass: 'no-highlight',
-    position: 'below',
-    gaLabel: 'about'
-  },
-  {
     element: '.rs-gs-rating',
     intro: t('tour1.step2_title_html') + t('tour1.step2'),
     position: 'below',
