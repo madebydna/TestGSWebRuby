@@ -4,6 +4,7 @@
  <% info_text = info_text || nil %>
  <% has_data %>
  <% no_data_summary ||= '' %>
+<% share_content = share_content || nil %>
 
  <div class="module-header">
    <div class="row">
@@ -39,7 +40,7 @@
          <button class="js-sharing-button">
            <a data-remodal-target="modal_info_box"
               data-content-type="info_box"
-              data-content-html='<%= render 'sharing_modal' %>'
+              data-content-html='<%= share_content %>'
               class="gs-tipso tipso_style"
               data-tipso-width="318"
               data-tipso-position="left"

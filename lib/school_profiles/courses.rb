@@ -3,6 +3,7 @@ module SchoolProfiles
   class Courses
     include Qualaroo
     include SharingTooltipModal
+    include Rails.application.routes.url_helpers
     include UrlHelper
 
     SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
@@ -55,7 +56,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Courses', 'http://www.greatschools.org/california/alameda/1-AAAA/')
+      share_tooltip_modal('Advanced_courses', school_url(@school_cache_data_reader.school))
     end
 
 

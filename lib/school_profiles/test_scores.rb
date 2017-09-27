@@ -3,6 +3,9 @@ module SchoolProfiles
 
     attr_reader :school, :school_cache_data_reader
     include Qualaroo
+    include SharingTooltipModal
+    include Rails.application.routes.url_helpers
+    include UrlHelper
 
     GRADES_DISPLAY_MINIMUM = 1
     N_TESTED = 'n_tested'
@@ -103,6 +106,10 @@ module SchoolProfiles
 
     def sort_by_number_tested_descending(scores)
       scores.sort_by { |k| k[:number_students_tested] || 0 }.reverse if scores.present?
+    end
+
+    def share_content
+      share_tooltip_modal('Test_scores', school_url(@school))
     end
 
     def sources
