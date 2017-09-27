@@ -1,0 +1,83 @@
+<div class="content">
+  <div class="callfirst">
+    <h2>City Overview</h2> Returns information about a city. All calls to City Overview are in this format:
+    <div class="sample_url">http://api.greatschools.org/cities/[components]?[parameters]</div>
+  </div>
+  <div class="call">
+    <h2>Components</h2> Components of the url describe what type of data you would like. They are separated by forward slashes.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>state*</td>
+          <td>Two letter state abbreviation</td>
+          <td>ak
+            <br>CA</td>
+        </tr>
+        <tr class="required">
+          <td>city*</td>
+          <td>Name of city, with spaces replaced with hyphens. If the city name has hyphens, replace those with underscores. Any other special characters should be URL-encoded</td>
+          <td>San Francisco becomes "San-Francisco"
+            <br>Cardiff-By-The-Sea becomes "Cardiff_By_The_Sea"
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+  </div>
+  <div class="call">
+    <h2>Parameters</h2> The "key" parameter is what you use to send us your API key.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+    Examples of usage:
+    <div class="example_url">http://api.greatschools.org/cities/CA/San-Francisco?key=[yourAPIKey]</div>
+    Returns city information for San Francisco, CA
+  </div>
+  <div class="call">
+    <h2>Sample Request</h2>
+    <div class="sample_url">http://api.greatschools.org/cities/AK/Anchorage?key=[yourAPIKey]</div>
+    Returns city information for Anchorage, AK
+  </div>
+  <div class="call">
+    <h2>Sample Response</h2>
+    <textarea cols="" rows="" readonly="readonly" wrap="off" class="sampleTextArea">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;city&gt;
+    &lt;name&gt;Anchorage&lt;/name&gt;
+    &lt;rating&gt;7&lt;/rating&gt;
+    &lt;totalSchools&gt;103&lt;/totalSchools&gt;
+    &lt;elementarySchools&gt;76&lt;/elementarySchools&gt;
+    &lt;middleSchools&gt;41&lt;/middleSchools&gt;
+    &lt;highSchools&gt;33&lt;/highSchools&gt;
+    &lt;publicSchools&gt;74&lt;/publicSchools&gt;
+    &lt;charterSchools&gt;6&lt;/charterSchools&gt;
+    &lt;privateSchools&gt;23&lt;/privateSchools&gt;
+&lt;/city&gt;</textarea>
+  </div>
+  <div class="call">
+    <h2>Have Questions?</h2>
+    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
+      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
+    </div>
+  </div>
+</div>

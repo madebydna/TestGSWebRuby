@@ -245,6 +245,8 @@ LocalizedProfiles::Application.routes.draw do
     resources :students
   end
 
+  match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
+
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     get '/omniture-test', action: :omniture_test, as: :omniture_test
     get '/info', action: :info

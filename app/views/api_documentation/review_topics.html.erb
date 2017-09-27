@@ -1,0 +1,90 @@
+<div class="content">
+  <div class="callfirst">
+    <h3>Review Topics</h3> Returns a list of topics available for topical reviews. It also includes tags associated with each topic:
+    <div class="sample_url">http://api.greatschools.org/reviews/reviewTopics?[parameters]</div>
+  </div>
+  <div class="call">
+    <h3>Parameters</h3> The "key" parameter is what you use to send us your API key. Other parameters are optional and used to describe how you would like to receive the data.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+    Examples of usage:
+    <div class="example_url">http://api.greatschools.org/reviews/reviewTopics?key=[yourAPIkey]</div>
+    Returns a list of topics available for topical reviews. It also includes tags associated with each topic.
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">http://api.greatschools.org/reviews/reviewTopics?key=[yourAPIkey]</div>
+    Returns a list of topics available for topical reviews. It also includes tags associated with each topic.
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea rows="" cols="" readonly="readonly" wrap="off" class="sampleTextArea">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;reviewTopics&gt;
+  &lt;reviewTopic&gt;
+    &lt;id&gt;1&lt;/id&gt;
+    &lt;name&gt;Special Education&lt;/name&gt;
+    &lt;reviewTags&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;1&lt;/id&gt;
+        &lt;name&gt;Learning &amp; attention issues&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;2&lt;/id&gt;
+        &lt;name&gt;Reading&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;3&lt;/id&gt;
+        &lt;name&gt;Attention or hyperactivity&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;4&lt;/id&gt;
+        &lt;name&gt;Writing&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;5&lt;/id&gt;
+        &lt;name&gt;Math&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;6&lt;/id&gt;
+        &lt;name&gt;Speech&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;7&lt;/id&gt;
+        &lt;name&gt;Listening comprehension&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;8&lt;/id&gt;
+        &lt;name&gt;Social skills&lt;/name&gt;
+      &lt;/reviewTag&gt;
+      &lt;reviewTag&gt;
+        &lt;id&gt;9&lt;/id&gt;
+        &lt;name&gt;Organization &amp; planning&lt;/name&gt;
+      &lt;/reviewTag&gt;
+    &lt;/reviewTags&gt;
+  &lt;/reviewTopic&gt;
+&lt;/reviewTopics&gt;
+        </textarea>
+  </div>
+  <div class="call">
+    <h3>Have Questions?</h3>
+    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
+      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
+    </div>
+  </div>
+</div>
