@@ -151,10 +151,10 @@ export default class EquitySection extends React.Component {
         <div className="profile-module">
           <div className="module-header">
             <div className="row">
-              <div className="col-xs-12 col-md-8">
+              <div className="col-xs-12 col-md-10">
                 {ratingCircle}{this.sectionTitle()}
               </div>
-              <div className="col-xs-12 col-md-4 show-history-button">
+              <div className="col-xs-12 col-md-2 show-history-button">
                 <div>
                   {this.sharingModal()}
                 </div>
