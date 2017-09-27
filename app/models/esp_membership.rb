@@ -11,13 +11,14 @@ class EspMembership < ActiveRecord::Base
   attr_accessible :member_id, :created, :updated, :state, :school_id, :status,:active,:job_title,:web_url,:note
   attr_accessor :school
 
-
+  default_scope {order(created: :desc)}
   scope :active, -> { where(active: 1) }
 
   # 'status' is either 'approved', 'pre-approved', 'provisional', 'rejected', or 'disabled'
   scope :approved_or_provisional, -> { where(status: ['approved', 'provisional']) }
 
   scope :for_school, ->(school) { where(school_id: school.id, state: school.state) }
+
 
   def approved?
     status == 'approved' && active == true
