@@ -107,6 +107,12 @@ $(function() {
     signupAndFollowSchool(gon.school.state, gon.school.id);
   });
 
+  $('body').on('click', '.js-sharingLinks', function () {
+    var cat = $(this).data("link") +"::"+ $(this).data("type");
+    analyticsEvent('Profile', 'Share', cat);
+    window.open($(this).data("link")+encodeURI($(this).data("url")), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');return false;
+  });
+
   $('.profile-section .section-title').each(function() {
     var $elem = $(this);
     var minWidth = 1200;

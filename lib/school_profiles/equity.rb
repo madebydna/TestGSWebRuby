@@ -211,15 +211,15 @@ module SchoolProfiles
     end
 
     def race_ethnicity_share_content
-      share_tooltip_modal
+      share_tooltip_modal('Race_ethnicity', 'http://www.greatschools.org/california/alameda/1-AAAA/')
     end
 
     def students_with_disabilities_share_content
-      share_tooltip_modal
+      share_tooltip_modal('Dis', 'http://www.greatschools.org/california/alameda/1-AAAA/')
     end
 
     def low_income_share_content
-      share_tooltip_modal
+      share_tooltip_modal('low', 'http://www.greatschools.org/california/alameda/1-AAAA/')
     end
 
     def sources_header
