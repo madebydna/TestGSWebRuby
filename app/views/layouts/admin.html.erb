@@ -7,7 +7,7 @@
   </head>
   <body class="open-sans">
     <div style="padding: 30px;width: 70%; margin: auto;">
-      <span style="float: right;"><%= image_tag('nav/gs_logo.png', size:'119x50', alt:'GreatSchools.org')%></span>
+      <span style="float: right;"><%= link_to image_tag('nav/gs_logo.png', size:'119x50', alt:'GreatSchools.org'), root_path%></span>
       <%= yield %>
     </div>
   </body>

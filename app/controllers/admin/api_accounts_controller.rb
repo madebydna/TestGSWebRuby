@@ -37,6 +37,10 @@ class Admin::ApiAccountsController < ApplicationController
     end
   end
 
+  def register
+    @api_account = ApiAccount.new
+  end
+
   def delete_api_key
     @api_account.update(api_key: nil, type: 'f')
     @api_account.delete_api_config

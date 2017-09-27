@@ -1,0 +1,61 @@
+
+<% select_options = [['Education', 'education'], ['Finance', 'finance'], ['Government', 'government'],
+                     ['Media - Journalism', 'media'], ['Real Estate', 'real estate'], ['Technology', 'technology'],
+                     ['Other', 'other']]%>
+<%# sets the correct method used by the form %>
+<% action_method_mapping = {'new' => :post, 'edit' => :put} %>
+<% action = action_method_mapping[params[:action]] %>
+
+
+<div class="api_account_form" style="margin-top: 30px;">
+  <%= form_for([:admin, @api_account], method: action) do |f| %>
+      <%= render 'error_messages' %>
+      <div>
+        <%= f.label :name %>
+        <%= f.text_field :name, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :organization %>
+        <%= f.text_field :organization, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :email %>
+        <%= f.text_field :email, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :website %>
+        <%= f.text_field :website, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :phone %>
+        <%= f.text_field :phone, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :industry %>
+        <%= f.select :industry, options_for_select(select_options, selected: @api_account.industry), include_blank: true, required: true %>
+      </div>
+
+      <div>
+        <%= f.label :intended_use %>
+        <%= f.text_area :intended_use, required: true %>
+      </div>
+
+      <div>
+        <input id="terms" name="termsApproved" type="checkbox">
+        <label for="terms">I agree to the GreatSchools
+          <a>Terms of Use</a>.
+        </label>&nbsp;<strong class="errorMessage1 formErrorText"></strong>
+      </div>
+      <div style="text-align: center;margin-top: 40px;">
+        <%= f.submit "Submit request", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
+      </div>
+
+  <% end %>
+
+</div>
+
