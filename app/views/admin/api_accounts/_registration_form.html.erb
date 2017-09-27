@@ -45,11 +45,10 @@
         <%= f.text_area :intended_use, required: true %>
       </div>
 
+      <br>
       <div>
-        <input id="terms" name="termsApproved" type="checkbox">
-        <label for="terms">I agree to the GreatSchools
-          <a>Terms of Use</a>.
-        </label>&nbsp;<strong class="errorMessage1 formErrorText"></strong>
+        <label><input type="checkbox" class="api_tou">I agree to the GreatSchools <a>Terms of Use</a></label>
+        <label><input type="checkbox" class="api_tou">I agree to pay for all overage fees that range between $0.08/call to $0.01/call once I exceed the 3,000 daily call limit.</label>
       </div>
       <div style="text-align: center;margin-top: 40px;">
         <%= f.submit "Submit request", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
@@ -58,4 +57,23 @@
   <% end %>
 
 </div>
+
+<script type="text/javascript" charset="utf-8">
+
+  var checkCheckBoxes = function(){
+    $('input[type="checkbox"]').each(function(idx) {
+      if (!$(this).is(':checked')) { return false }
+    });
+  }
+
+  $('form').submit(function(){
+    collectApiOptions();
+    if ($('#api_options').val() <= 0 && $('#api_account_type_p').is(':checked')) {
+      alert('Cannot save "Premium" without adding at least one API option');
+      return false;
+    }
+    return true;
+  });
+</script>
+
 

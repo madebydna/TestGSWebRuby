@@ -1,4 +1,23 @@
 @import "resources/bootstrap/bootstrap";
+@import "variables/colors";
+
+.admin_header {
+  text-align: right;
+  margin: 2% 0;
+  //padding: 1%;
+}
+
+.admin_body {
+  div {
+    margin: 1%;
+  }
+  .api-title {
+    background: $blue-darker;
+    padding: 8px;
+    color: white;
+    border-radius: 3px;
+  }
+}
 
 .api_account_form {
   .field_with_errors { display: inline; }
@@ -12,8 +31,9 @@
       border-radius: 3px;
       background: #F3F3F3;
     }
-    label {
+    label:not('.api_tou') {
       line-height: 30px;
+      width: 24%;
     }
     input[type="radio"], input[type="checkbox"] {
       width: 20px;
@@ -21,3 +41,4 @@
     }
   }
 }
+
