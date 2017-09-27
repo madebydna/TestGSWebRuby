@@ -62,10 +62,11 @@ let firstTutorial = [
     gaLabel: 'nearby'
   },
   {
-    element: null,
+    element: '#NearbySchools .button-bar',
     highlightClass: 'no-highlight',
     intro: t('tour1.step8_title_html') + '<div class="info-circle"><span class="icon-question"></span></div>' + '<br><br>' + t('tour1.step8_p1') + '<br><br>' + '<p class="parent-tip"><img src="' + owlPng + '"><span class="speech-bubble left">' + t('tour1.step8_parent_tips') + '</span></p>' + t('tour1.step8_p2') + '<br><br>' + '<div style="font-size: 18px; color: blue;">' + t('tour1.step8_sources') + '</div>' + '<br>'+ t('tour1.step8_p3'),
-    gaLabel: 'hints'
+    gaLabel: 'hints',
+    position: 'top'
   }
 ];
 
