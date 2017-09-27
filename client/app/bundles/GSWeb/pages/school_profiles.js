@@ -77,7 +77,7 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
-    $('.school-profile-tour-modal').removeClass('hidden');
+    $('.js-school-profile-tour-modal').removeClass('hidden');
   }
 
   initAnchorHashUpdater();
@@ -230,7 +230,7 @@ $(function() {
   $body.on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
-    let schoolTourModal = $('.school-profile-tour-modal');
+    let schoolTourModal = $('.js-school-profile-tour-modal');
     if(remodal.length > 0) {
       remodal.remodal().close();
     }
