@@ -209,6 +209,74 @@ module SchoolProfiles
       sources_html((li_rating_sources + test_source_data.sources_without_rating_text)) + sources
     end
 
+    def race_ethnicity_share_content
+      share_content
+    end
+
+    def students_with_disabilities_share_content
+      share_content
+    end
+
+    def low_income_share_content
+      share_content
+    end
+
+    def share_content
+      sections = [
+          {icon: 'icon-mail', link: 'Email'},
+          {icon: 'icon-facebook', link: 'Facebook'},
+          {icon: 'icon-twitter', link: 'Twitter'},
+          {icon: 'icon-link', link: 'Permalink'},
+          {icon: 'icon-share', link: 'SMS'}
+      ]
+
+      str = '<div class="sharing-modal">'
+      sections.each do | hash |
+        str += '<div class="sharing-row">'
+        str += '<div class="sharing-icon-box">'
+        str += '<span class="'+hash[:icon]+'"></span>'
+        str += '</div>'
+        str += '<span class="sharing-row-text">'+hash[:link]+'</span>'
+        str += '<div><input class="permalink" type="text" value="link goes here" /></div>' if hash[:link] == 'Permalink'
+        str += '</div>'
+      end
+      str + '</div>'
+  #     <div class="sharing-row">
+  #     <div class="sharing-icon-box">
+  #     <span class="icon-mail"></span>
+  #   </div>
+  #     <span class="sharing-row-text">Email</span>
+  # </div>
+  #     <div class="sharing-row">
+  #     <div class="sharing-icon-box">
+  #     <span class="icon-facebook"></span>
+  #   </div>
+  #     <span class="sharing-row-text">Facebook</span>
+  # </div>
+  #     <div class="sharing-row">
+  #     <div class="sharing-icon-box">
+  #     <span class="icon-twitter"></span>
+  #   </div>
+  #     <span class="sharing-row-text">Twitter</span>
+  # </div>
+  #     <div class="sharing-row">
+  #     <div class="sharing-icon-box">
+  #     <span class="icon-link"></span>
+  #   </div>
+  #     <span class="sharing-row-text">Permalink</span>
+  #   <div>
+  #     <input class="permalink" type="text" value="link goes here" />
+  #     </div>
+  # </div>
+  #     <div class="sharing-row">
+  #     <div class="sharing-icon-box">
+  #     <span class="icon-share"></span>
+  #   </div>
+  #     <span class="sharing-row-text">SMS</span>
+  # </div>
+  #     </div>
+    end
+
     def sources_header
       content = ''
       content << '<div class="sourcing">'

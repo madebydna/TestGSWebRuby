@@ -6,7 +6,6 @@ import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
-import SharingModal from '../school_profiles/sharing_modal';
 
 import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
 
@@ -19,6 +18,7 @@ export default class EquitySection extends React.Component {
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
+    share_content: React.PropTypes.string,
     rating: React.PropTypes.number,
     message: React.PropTypes.string,
     qualaroo_module_link: React.PropTypes.string,
@@ -48,6 +48,24 @@ export default class EquitySection extends React.Component {
         <InfoBox content={sources} >{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={qualaroo_module_link} />
       </div>
+    )
+  }
+
+  sharingModal() {
+    return (
+        <button>
+          <a data-remodal-target="modal_info_box"
+           data-content-type="info_box"
+           data-content-html={this.props.share_content}
+           className="gs-tipso"
+           data-tipso-width="318"
+           data-tipso-position="left"
+           href="javascript:void(0)">
+            <div className="dib">
+              Share
+            </div>
+          </a>
+        </button>
     )
   }
 
@@ -138,21 +156,7 @@ export default class EquitySection extends React.Component {
               </div>
               <div className="col-xs-12 col-md-4 show-history-button">
                 <div>
-                  <button className="js-sharing-button">
-                    <a data-remodal-target="modal_info_box"
-                       data-content-type="info_box"
-                       data-content-html={SharingModal}
-                       className="gs-tipso"
-                       data-tipso-offsetX="50"
-                       data-tipso-offsetY="60"
-                       data-tipso-width="318"
-                       data-tipso-position="left"
-                       href="javascript:void(0)">
-                      <div class="dib">
-                        share
-                      </div>
-                    </a>
-                  </button>
+                  {this.sharingModal()}
                 </div>
               </div>
             </div>
