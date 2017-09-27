@@ -1,5 +1,6 @@
 module CitiesMetaTagsConcerns
   def cities_show_title
+    return "View The Best Schools in #{@city.titleize}, #{@state[:short].upcase} | School Ratings for Public & Private" if %w(pa nj co in).include?(@state[:short].downcase)
     "#{@city.titleize} Schools - #{@city.titleize} #{@state[:long].titleize} School Ratings - Public and Private"
   end
 
