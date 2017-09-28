@@ -53,11 +53,11 @@ module SharingTooltipModal
     new_params = {}
     new_params[:utm_source] = 'profile'
     new_params[:utm_medium] = 'Facebook'
-    new_params[:t] = content_text
-    new_params[:lang] = current_language.to_s if current_language != 'en'
+    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
+    facebook_str = '&t=' + content_text
+    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-siteparams="' + facebook_str + '" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
   end
 
   def twitter_link(url, module_name, school_name, link)
@@ -69,7 +69,7 @@ module SharingTooltipModal
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
     twitter_str = '&via=GreatSchools&text='+content_text
-    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-twitter="' + twitter_str + '" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
+    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-siteparams="' + twitter_str + '" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
   end
 
   def current_language

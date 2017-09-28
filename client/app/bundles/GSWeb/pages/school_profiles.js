@@ -109,8 +109,8 @@ $(function() {
 
   $('body').on('click', '.js-sharingLinks', function () {
     var url = $(this).data("link") + encodeURIComponent($(this).data("url"));
-    if($(this).data("twitter") !== undefined) {
-      url +=  $(this).data("twitter");
+    if($(this).data("siteparams") !== undefined) {
+      url +=  $(this).data("siteparams");
     }
     PopupCenter(url, $(this).data("type"), 700, 300)
     return false;
