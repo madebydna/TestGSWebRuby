@@ -62,7 +62,7 @@ export default class EquitySection extends React.Component {
            data-tipso-position="left"
            href="javascript:void(0)">
             <div className="dib">
-              Share
+              {t('Share')}
             </div>
           </a>
         </button>

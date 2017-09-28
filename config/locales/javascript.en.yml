@@ -1,6 +1,7 @@
 ---
 en:
   javascript:
+    Share: Share
     'yes': 'Yes'
     'no': 'No'
     close: Close
