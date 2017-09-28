@@ -10,7 +10,9 @@
     <ul>
       <li><%= t(translation_type + '.third_bullet') %></li>
       <% if mailto %>
-        <li><%= link_to(t(translation_type + '.fourth_bullet'), mailto) %></li>
+        <li><%= link_to(t(translation_type + '.fourth_bullet'), mailto, class: 'js-gaClick',
+                        'data-ga-click-category' => 'Profile', 'data-ga-click-action' => 'Email school',
+                        'data-ga-click-label' => 'Private') %></li>
       <% else %>
         <li><%= t(translation_type + '.fourth_bullet') %></li>
       <% end %>
