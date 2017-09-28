@@ -21,13 +21,6 @@ button.tour-cta {
   @include button;
 }
 
-.profile-tour-border {
-  display: inline-block;
-  padding: 20px 30px;
-  border: 3px solid $blue-border;
-  margin: 0;
-}
-
 .school-profile-tour-modal {
   display: inline-block;
   text-align: center;
