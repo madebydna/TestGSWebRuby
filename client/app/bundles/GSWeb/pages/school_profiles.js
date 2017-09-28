@@ -136,6 +136,11 @@ $(function() {
     }
   }
 
+  $('body').on('click', '.js-permaLink', function () {
+    $(this).select();
+    return false;
+  });
+
   $('body').on('click', '.js-emailSharingLinks', function () {
     var cat = $(this).data("link") +"::"+ $(this).data("type");
     analyticsEvent('Profile', 'Share', cat);

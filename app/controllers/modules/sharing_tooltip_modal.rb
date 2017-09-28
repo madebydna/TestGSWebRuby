@@ -55,7 +55,7 @@ module SharingTooltipModal
     new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div><input class="permalink js-slTracking" type="text" value="'+ url_new +'" /></div>'
+    '<div><input class="permalink js-permaLink js-slTracking" type="text" value="'+ url_new +'" /></div>'
   end
 
   def facebook_link(url, module_name, school_name, link)
