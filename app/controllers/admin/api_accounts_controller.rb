@@ -86,7 +86,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   def api_account_params
     params.require(:api_account).permit(:id, :name, :organization, :email, :website,
-                                  :phone, :industry, :intended_use, :type, :account_updated)
+                                  :phone, :industry, :intended_use, :type, :account_updated, :email_confirmation)
   end
 
   def handle_api_options

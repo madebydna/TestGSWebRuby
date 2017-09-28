@@ -9,6 +9,7 @@ class ApiAccount < ActiveRecord::Base
   validates :name, :organization, :email, :website, :phone, :industry, :intended_use, presence: true
   validates :type, presence: true, allow_nil: true
   validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}
+  validates_confirmation_of :email, message: 'does not match email.'
   before_save :clean_up_api_config, :ensure_type
 
 
