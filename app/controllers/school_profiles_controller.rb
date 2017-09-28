@@ -311,7 +311,6 @@ class SchoolProfilesController < ApplicationController
     canonical_url = school_url(school)
     set_meta_tags title: meta_tags.title,
                   description: meta_tags.description,
-                  keywords: meta_tags.keywords,
                   canonical: canonical_url,
                   alternate: {
                       en: remove_query_params_from_url(canonical_url, [:lang]),

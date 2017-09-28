@@ -41,17 +41,4 @@ describe SchoolProfileMetaTags do
       expect(subject).to eq 'Alameda High School in Washington, DC. Read parent reviews and get the scoop on the school environment, teachers, students, programs and services available from this preschool.'
     end
   end
-
-  describe '#keywords' do
-    subject { helper.keywords }
-
-    it 'sets keywords correctly' do
-      expect(subject).to eq 'Alameda High School, Alameda High School Alameda, Alameda High School Alameda California, Alameda High School Alameda CA, Alameda High School California, Alameda High School overview'
-    end
-
-    it 'handles preschools' do
-      school.level_code = 'p'
-      expect(subject).to eq 'Alameda High School, Alameda High School Alameda, Alameda High School Alameda California, Alameda High School Alameda CA, Alameda High School California, Alameda High School overview'
-    end
-  end
 end

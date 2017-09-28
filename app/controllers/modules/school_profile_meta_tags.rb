@@ -39,16 +39,4 @@ class SchoolProfileMetaTags
     end
     return_description_str
   end
-
-  def keywords
-    name = @school.name.clone
-    return_keywords_str  =''
-    return_keywords_str << name
-    return_keywords_str << ', ' + name + ' ' + @school.city
-    return_keywords_str << ', ' + name + ' ' + @school.city + ' ' + @school.state_name.capitalize
-    return_keywords_str << ', ' + name + ' ' + @school.city + ' ' + @school.state
-    return_keywords_str << ', ' + name + ' ' + @school.state_name.capitalize
-    return_keywords_str << ', ' + name + ' overview'
-    return_keywords_str
-  end
 end

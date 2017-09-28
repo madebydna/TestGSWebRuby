@@ -61,6 +61,11 @@
 
       -webkit-flex-flow: column-reverse;
       flex-flow: column-reverse;
+
+      .mobile-address {
+        padding-top: 10px;
+        display: block;
+      }
     }
     .vertical-items {
       margin: 20px auto 0;
@@ -73,6 +78,10 @@
 
     .school-contact {
       padding-top: 0;
+
+      .school-contact__address {
+        display: none;
+      }
     }
   }
 
@@ -247,6 +256,10 @@
         display:block;
       }
     }
+  }
+
+  .mobile-address {
+    display: none;
   }
 }
 

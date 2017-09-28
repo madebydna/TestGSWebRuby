@@ -1,0 +1,57 @@
+<%= javascript_include_tag "osp_admin", "data-turbolinks-track" => true %>
+<div style="width: 90%; margin: auto; padding: 30px 0;">
+  <%= link_to 'Back to Pending OSP Requests', osp_moderation_index_path%>
+  <h2>OSP Search</h2>
+    <%= render partial: 'osp/osp_moderation/reviewer_actions_buttons' %>
+  <div style="padding: 20px 0 20px;">
+    <div class="search_row_input">
+      <span>State/School id</span>
+      <span class="pull_right">
+        <select name="" id="states">
+          <option value="" selected></option>
+        <% States.abbreviations.each do |state| %>
+            <option value="<%=state.upcase%>"><%=state.upcase%></option>
+        <% end %>
+        </select>
+        <span><input id="schoolId" type="text"></span>
+      </span>
+    </div>
+    <div class="search_row_input">
+      <span>User Account id</span>
+      <span class="pull_right"><input id="memberId" type="text"></span>
+    </div>
+    <div class="search_row_input">
+      <span>Email</span>
+      <span class="pull_right"><input id="memberEmail" type="text"></span>
+    </div>
+  </div>
+  <button class="btn" id="submitOspSearch">Search</button>
+  <br><br>
+  <%= render partial: 'osp/osp_moderation/osp_table' %>
+</div>
+
+
+<style>
+  .search_row_input {
+    height: 35px;
+    position: relative;
+    padding: 10px 10px 10px 0;
+  }
+  .pull_right {
+    position: absolute;
+    left: 150px;
+    top: 5px;
+  }
+</style>
+
+<script type="text/javascript" charset="utf-8">
+  $('#submitOspSearch').on('click', function(){
+    var state = $('#states option:selected').text() || "";
+    var schoolId = $('#schoolId').val() || "";
+    var memberId = $('#memberId').val() || "";
+    var memberEmail = $('#memberEmail').val() || "";
+    var url = window.location.origin + "/admin/gsr/osp-search"
+    var queryParameters = "?state="+state+"&school_id="+schoolId+"&member_id="+memberId+"&email="+memberEmail
+    window.location.href = url + queryParameters
+  })
+</script>

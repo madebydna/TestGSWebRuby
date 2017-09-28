@@ -367,6 +367,10 @@ LocalizedProfiles::Application.routes.draw do
   get '/account/password', to: 'password#show'
 
 
+  get '/admin/gsr/osp-moderation', to: 'osp_moderation#index', as: :osp_moderation_index
+  post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
+  get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
+
   scope '/community/:collection_id-:collection_name',
     as: :community,
     constraints: {
