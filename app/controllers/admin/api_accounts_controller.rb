@@ -11,13 +11,14 @@ class Admin::ApiAccountsController < ApplicationController
     @api_account = ApiAccount.new
   end
 
+  # The forms that post to this action are used by users and admins. Different handling for each.
   def create
     @api_account = ApiAccount.new(api_account_params)
-    if @api_account.save!
+    if @api_account.save
       handle_api_options
-      redirect_to edit_admin_api_account_path(@api_account)
+      handle_email_and_redirect
     else
-      render 'new'
+      display_correct_form
     end
   end
 
@@ -41,6 +42,9 @@ class Admin::ApiAccountsController < ApplicationController
     @api_account = ApiAccount.new
   end
 
+  def success
+  end
+
   def delete_api_key
     @api_account.update(api_key: nil, type: 'f')
     @api_account.delete_api_config
@@ -55,6 +59,26 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   private
+
+  def handle_email_and_redirect
+    if params[:api_account][:registration]
+      # Handles form submission by api requester
+      ApiRequestReceivedEmail.deliver_to_api_key_requester(@api_account)
+      ApiRequestToModerateEmail.deliver_to_admin(@api_account)
+      redirect_to request_api_key_success_path
+    else
+      # Handles form submission by GS admin
+      redirect_to edit_admin_api_account_path(@api_account)
+    end
+  end
+
+  def display_correct_form
+    if params[:api_account][:registration]
+      render 'register'
+    else
+      render 'new'
+    end
+  end
 
   def find_account
     @api_account = ApiAccount.find(params[:id])

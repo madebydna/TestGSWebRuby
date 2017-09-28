@@ -40,7 +40,7 @@
       <%= f.select :industry, options_for_select(select_options, selected: @api_account.industry), include_blank: true, required: true %>
     </div>
 
-    <% unless params["action"].downcase == 'new' %>
+    <% unless ['new', 'create'].include?(params[:action].downcase) %>
         <div>
           <%= f.label :account_added, disabled: true %>
           <%= f.date_field :account_added %>

@@ -235,8 +235,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/status/error404.page'
   end
 
-  get '/api/request-api-key', to: 'admin/api_accounts#register', as: :request_api_key
-  post '/api/request-api-key', to: 'admin/api_accounts#create'
+  get '/api/request-api-key/', to: 'admin/api_accounts#register', as: :request_api_key
+  get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
+  post '/api/request-api-key/', to: 'admin/api_accounts#create'
 
 
   namespace :api, controller: 'api', path:'/gsr/api' do
