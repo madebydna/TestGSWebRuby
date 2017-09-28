@@ -225,6 +225,9 @@ module SchoolProfiles
 
     def sources
       content = ''
+
+      content << discipline_attendance_flag_sources if discipline_attendance_flag?
+
       if characteristics_low_income_visible?
         content << '<div class="sourcing">'
         content << characteristics_sources_low_income.reduce('') do |string, (key, hash)|
@@ -245,6 +248,29 @@ module SchoolProfiles
         content << '</div>'
       end
 
+      content
+    end
+
+    def discipline_attendance_flag_sources
+      content = ''
+      # There are two data types for the discipline & attendance flags, but they want to display only a single source
+      # block. The discipline_attendance_data_values method already ensures that we get only the most recent flags, so
+      # after that I don't care which one we extract the sourcing data from.
+      data_obj = @school_cache_data_reader.discipline_attendance_data_values.values.first
+      if data_obj
+        content << '<div class="sourcing">'
+        content <<  '<div>'
+        content <<   '<h4>' + static_label(:discipline_attendance_flag) + '</h4>'
+        # Data Product has asked for just the description to be displayed
+        description = data_obj.description
+        flag_year = data_obj.source_year
+        source_name = data_obj.source_name
+        content <<   '<p>' + data_label(description) + '</p>' if description
+        content <<   '<p><span class="emphasis">' + static_label('source') + '</span>: '
+        content <<     data_label(source_name) + ', ' + flag_year + '</p>'
+        content <<  '</div>'
+        content << '</div>'
+      end
       content
     end
 

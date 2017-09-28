@@ -10,7 +10,7 @@ describe CitiesMetaTagsConcerns do
 
   context 'with a city instance var set' do
     city = 'Oakland'
-    state = {:long => 'California'}
+    state = {long: 'California', short: 'ca' }
     before do
       subject.instance_variable_set(:@city, city)
       subject.instance_variable_set(:@state, state)

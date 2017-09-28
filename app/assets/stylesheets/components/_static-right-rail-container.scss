@@ -21,4 +21,13 @@
       margin-right: 315px;
     }
   }
+
+  .ad-slot {
+    margin-left: -10px;
+    margin-right: -10px;
+    @include media-breakpoint-up(sm) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }

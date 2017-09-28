@@ -34,7 +34,10 @@ Rails.application.config.assets.precompile += [
     'main.js', #for style-guide
     'picturefill.min.js', #for style-guide
     'highcharts.js',
-    'just_jquery.js'
+    'just_jquery.js',
+    'admin_tools.css',
+    'osp_admin.js'
+
 ]
 # Add client/assets/ folders to asset pipeline's search path.
 # If you do not want to move existing images and fonts from your Rails app

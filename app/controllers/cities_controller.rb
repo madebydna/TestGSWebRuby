@@ -278,7 +278,7 @@ class CitiesController < ApplicationController
       additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
 
 
-      if @state[:short].casecmp('pa').zero?
+      if %w(pa nj co in).include?(@state[:short].downcase)
         title = "View The Best Schools in #{@city.titleize}, #{@state[:short].upcase} | School Ratings for Public & Private"
       else
         title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
