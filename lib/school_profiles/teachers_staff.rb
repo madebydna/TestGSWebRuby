@@ -42,7 +42,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Teachers_staff', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
+      share_tooltip_modal('Teachers_staff', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link

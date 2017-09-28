@@ -3,8 +3,6 @@ module SchoolProfiles
   class Courses
     include Qualaroo
     include SharingTooltipModal
-    include Rails.application.routes.url_helpers
-    include UrlHelper
 
     SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
     SUBJECT_RATING_SUPPRESSION = %w(arts_index health_index vocational_hands_on_index)
@@ -56,7 +54,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Advanced_courses', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
+      share_tooltip_modal('Advanced_courses', @school_cache_data_reader.school)
     end
 
 

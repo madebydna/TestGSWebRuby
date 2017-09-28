@@ -1,4 +1,11 @@
 module SharingTooltipModal
+  extend ActiveSupport::Concern
+
+  included do
+    include Rails.application.routes.url_helpers
+    include UrlHelper
+  end
+
   SHARE_LINKS = [
       {icon: 'icon-mail', link_name: 'Email', link: 'mailto:'},
       {icon: 'icon-facebook', link_name: 'Facebook', link:'https://www.facebook.com/sharer/sharer.php?u='},  #, link: '"https://www.facebook.com/sharer/sharer.php?u=' + URLENCODED_URL + '&t=' + TITLE + '"'},
@@ -16,11 +23,13 @@ module SharingTooltipModal
 
   # https://www.greatschools.org/california/atherton/6951-Menlo-Atherton-High-School/?utm_source=profile&utm_medium=twitter#Test_scores
 
-  def share_tooltip_modal(anchor, url, school_name)
+  def share_tooltip_modal(anchor, school)
+    url = school_url(school)
+
     str = '<div class="sharing-modal">'
     SHARE_LINKS.each do | hash |
       if hash[:link_name] == 'Email'
-        str += '<div class="sharing-row js-emailSharingLinks" data-link="'+hash[:link]+email_query_string(anchor, url, school_name)+'">'
+        str += '<div class="sharing-row js-emailSharingLinks" data-link="'+hash[:link]+email_query_string(anchor, url, school.name)+'">'
       elsif hash[:link].present?
         str += '<div class="sharing-row js-sharingLinks" data-url="'+url+'" data-type="'+hash[:link_name]+'" data-anchor="'+anchor+'" data-link="'+hash[:link]+'">'
       else

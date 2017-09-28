@@ -4,8 +4,7 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
     include Qualaroo
     include SharingTooltipModal
-    include Rails.application.routes.url_helpers
-    include UrlHelper
+
 
     GRADES_DISPLAY_MINIMUM = 1
     N_TESTED = 'n_tested'
@@ -109,7 +108,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Test_scores', school_url(@school), @school_cache_data_reader.school.name)
+      share_tooltip_modal('Test_scores', @school)
     end
 
     def sources

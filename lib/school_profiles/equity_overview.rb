@@ -2,8 +2,6 @@ module SchoolProfiles
   class EquityOverview
     include Qualaroo
     include SharingTooltipModal
-    include Rails.application.routes.url_helpers
-    include UrlHelper
 
     def initialize(school_cache_data_reader:, equity:)
       @school_cache_data_reader = school_cache_data_reader
@@ -11,7 +9,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Equity_overview', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
+      share_tooltip_modal('Equity_overview', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link(module_sym)

@@ -2,8 +2,6 @@ module SchoolProfiles
   class StudentProgress
     include Qualaroo
     include SharingTooltipModal
-    include Rails.application.routes.url_helpers
-    include UrlHelper
     
     attr_reader :school, :school_cache_data_reader
 
@@ -13,7 +11,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Student_progress', school_url(@school_cache_data_reader.school), @school.name)
+      share_tooltip_modal('Student_progress', @school)
     end
 
     def qualaroo_module_link
