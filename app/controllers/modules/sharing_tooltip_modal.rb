@@ -52,7 +52,7 @@ module SharingTooltipModal
     new_params = {}
     new_params[:utm_source] = 'profile'
     new_params[:utm_medium] = 'Permalink'
-    new_params[:lang] = language if language != 'en'
+    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
     '<div><input class="permalink" type="text" value="'+ url_new +'" /></div>'
@@ -64,7 +64,7 @@ module SharingTooltipModal
     new_params[:utm_source] = 'profile'
     new_params[:utm_medium] = 'Facebook'
     new_params[:t] = content_text
-    new_params[:lang] = language if language != 'en'
+    new_params[:lang] = current_language.to_s if current_language != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
     '<div class="sharing-row js-sharingLinks" data-url="'+url_new+'" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
@@ -77,14 +77,14 @@ module SharingTooltipModal
     new_params[:utm_medium] = 'Twitter'
     new_params[:via] = 'GreatSchools'
     new_params[:text] = content_text
-    new_params[:lang] = language if language != 'en'
+    new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
     '<div class="sharing-row js-sharingLinks" data-url="'+url_new+'" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
   end
 
-  def language
-    @_language || I18n.locale
+  def current_language
+    @_current_language ||= I18n.locale
   end
 
   def email_subject(anchor, school_name)
