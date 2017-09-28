@@ -13,15 +13,6 @@ module SharingTooltipModal
       {icon: 'icon-link', link_name: 'Permalink'}
   ]
 
-  FACEBOOK_BASE_SHARE_URL = 'https://www.facebook.com/sharer/sharer.php?u='
-  TWITTER_BASE_SHARE_URL = 'https://twitter.com/share?url='
-  URLENCODED_URL = ''
-  TITLE = ''
-  TWITTER_HANDLE = ''
-  TEXT = ''
-
-  # https://www.greatschools.org/california/atherton/6951-Menlo-Atherton-High-School/?utm_source=profile&utm_medium=twitter#Test_scores
-
   def share_tooltip_modal(anchor, school)
     url = school_url(school)
     school_name = school.name
