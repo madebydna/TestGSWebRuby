@@ -4,7 +4,7 @@
                      ['Other', 'other']]%>
 
 <div class="api_account_form">
-  <%= form_for([:admin, @api_account], method: :post) do |f| %>
+  <%= form_for @api_account, url: post_request_api_key_path, method: :post do |f| %>
     <%= render 'error_messages' %>
     <div>
       <%= f.label :name, 'Company name' %>

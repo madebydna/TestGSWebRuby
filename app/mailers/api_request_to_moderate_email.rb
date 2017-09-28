@@ -1,7 +1,7 @@
 class ApiRequestToModerateEmail < AbstractExactTargetMailer
 
   self.exact_target_email_key = '2017_API_account_request'
-  self.priority = 'High'
+  self.priority = 'Medium'
 
   def self.deliver_to_admin(api_account)
     exact_target_email_attributes = {

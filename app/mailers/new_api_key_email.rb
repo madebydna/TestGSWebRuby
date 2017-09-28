@@ -1,7 +1,7 @@
 class NewApiKeyEmail < AbstractExactTargetMailer
 
   self.exact_target_email_key = 'api_registration_approved'
-  self.priority = 'High'
+  self.priority = 'Low'
 
   def self.deliver_to_api_user(api_account)
     exact_target_email_attributes = {
