@@ -16,14 +16,20 @@ module OspHelper
     if status == 'approved'
       OspApprovalEmail.deliver_to_user(membership.user,
                                        School.on_db(membership.state.downcase).find(membership.school_id),
-                                       osp_dashboard_url(membership.school_id, membership.state.downcase))
+                                       generate_osp_dashboard_url(membership.school_id, membership.state.downcase))
     elsif status == 'rejected'
       OspRejectionEmail.deliver_to_user(membership.user, School.on_db(membership.state.downcase).find(membership.school_id))
     end
   end
 
-  def osp_dashboard_url(school_id, state)
-    root_url + "school/esp/form.page?page=1&schoolId=#{school_id.to_s}&state=#{state.downcase}"
+  def generate_osp_dashboard_url(school_id, state)
+    osp_page_url(
+      {
+        :page => 1,
+        :schoolId => school_id,
+        :state => state.downcase
+      }
+    )
   end
 
 
