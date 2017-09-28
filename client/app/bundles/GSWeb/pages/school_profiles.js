@@ -108,7 +108,11 @@ $(function() {
   });
 
   $('body').on('click', '.js-sharingLinks', function () {
-    PopupCenter($(this).data("link")+encodeURI($(this).data("url")), $(this).data("type"), 700, 300)
+    var url = $(this).data("link") + encodeURIComponent($(this).data("url"));
+    if($(this).data("twitter") !== undefined) {
+      url +=  $(this).data("twitter");
+    }
+    PopupCenter(url, $(this).data("type"), 700, 300)
     return false;
   });
 

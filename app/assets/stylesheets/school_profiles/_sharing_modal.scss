@@ -9,10 +9,8 @@
     padding: 20px 0;
     border-bottom: 1px solid $border-and-icon-color;
 
-    &:nth-last-child(2) {
-      @include media-breakpoint-up(sm) {
-        border-bottom: none;
-      }
+    &:last-child {
+      border-bottom: none;
     }
 
     .sharing-row-text {

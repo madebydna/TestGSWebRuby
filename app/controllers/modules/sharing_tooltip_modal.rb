@@ -65,12 +65,11 @@ module SharingTooltipModal
     new_params = {}
     new_params[:utm_source] = 'profile'
     new_params[:utm_medium] = 'Twitter'
-    new_params[:via] = 'GreatSchools'
-    new_params[:text] = content_text
     new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
+    twitter_str = '&via=GreatSchools&text='+content_text
+    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-twitter="' + twitter_str + '" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
   end
 
   def current_language

@@ -1,4 +1,5 @@
 import React from 'react';
+import { t } from '../../util/i18n';
 
 
 const sharingModal = function(share_content) {
