@@ -1,6 +1,7 @@
 class OspModerationController < ApplicationController
   include OspHelper
   layout "application"
+  before_action :set_tags, only: [:index, :osp_search]
 
   STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
   PARAMS_WHITELIST = %w(state school_id member_id email)
@@ -83,6 +84,10 @@ class OspModerationController < ApplicationController
     else
       @osp_memberships = fetch_one_page_of_memberships(0)
     end
+  end
+
+  def set_tags
+    set_meta_tags title: 'GreatSchools Admin'
   end
 
 end
