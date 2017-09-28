@@ -29,7 +29,7 @@ module SharingTooltipModal
     str = '<div class="sharing-modal">'
     SHARE_LINKS.each do | hash |
       if hash[:link_name] == 'Email'
-        str += '<div class="sharing-row js-emailSharingLinks" data-link="'+hash[:link]+email_query_string(anchor, url, school_name)+'">'
+        str += '<div class="sharing-row js-emailSharingLinks js-slTracking" data-link="'+hash[:link]+email_query_string(anchor, url, school_name)+'">'
       elsif hash[:link_name] == 'Facebook'
         str += facebook_link(url, anchor, school_name, hash[:link])
       elsif hash[:link_name] == 'Twitter'
@@ -55,7 +55,7 @@ module SharingTooltipModal
     new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div><input class="permalink" type="text" value="'+ url_new +'" /></div>'
+    '<div><input class="permalink js-slTracking" type="text" value="'+ url_new +'" /></div>'
   end
 
   def facebook_link(url, module_name, school_name, link)
@@ -67,7 +67,7 @@ module SharingTooltipModal
     new_params[:lang] = current_language.to_s if current_language != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div class="sharing-row js-sharingLinks" data-url="'+url_new+'" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
+    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
   end
 
   def twitter_link(url, module_name, school_name, link)
@@ -80,7 +80,7 @@ module SharingTooltipModal
     new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div class="sharing-row js-sharingLinks" data-url="'+url_new+'" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
+    '<div class="sharing-row js-sharingLinks js-slTracking" data-url="'+url_new+'" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
   end
 
   def current_language

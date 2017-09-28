@@ -108,9 +108,13 @@ $(function() {
   });
 
   $('body').on('click', '.js-sharingLinks', function () {
+    PopupCenter($(this).data("link")+encodeURI($(this).data("url")), $(this).data("type"), 700, 300)
+    return false;
+  });
+
+  $('body').on('click', '.js-slTracking', function () {
     var cat = $(this).data("module") +"::"+ $(this).data("type");
     analyticsEvent('Profile', 'Share', cat);
-    PopupCenter($(this).data("link")+encodeURI($(this).data("url")), $(this).data("type"), 700, 300)
     return false;
   });
 
