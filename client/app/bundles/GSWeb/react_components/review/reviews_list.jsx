@@ -83,7 +83,7 @@ export default class ReviewsList extends React.Component {
   startingLimit() {
     let limit = this.REVIEW_CHUNK_SIZE;
     if(viewportSize() == 'xs') {
-      limit = 1;
+      limit = 2;
     }
 
     if(limit > this.props.reviews.length) limit = this.props.reviews.length;
