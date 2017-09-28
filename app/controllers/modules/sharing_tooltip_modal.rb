@@ -10,8 +10,7 @@ module SharingTooltipModal
       {icon: 'icon-mail', link_name: 'Email', link: 'mailto:'},
       {icon: 'icon-facebook', link_name: 'Facebook', link:'https://www.facebook.com/sharer/sharer.php?u='},  #, link: '"https://www.facebook.com/sharer/sharer.php?u=' + URLENCODED_URL + '&t=' + TITLE + '"'},
       {icon: 'icon-twitter', link_name: 'Twitter', link:'https://twitter.com/share?url='},  #, link: '"https://twitter.com/share?url=' + URLENCODED_URL + '&via=@GreatSchools&text=' + TEXT + '"'},
-      {icon: 'icon-link', link_name: 'Permalink'},
-      {icon: 'icon-share', link_name: 'SMS'}
+      {icon: 'icon-link', link_name: 'Permalink'}
   ]
 
   FACEBOOK_BASE_SHARE_URL = 'https://www.facebook.com/sharer/sharer.php?u='
