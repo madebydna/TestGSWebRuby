@@ -4,14 +4,6 @@ def hash_to_query_string(hash)
   hash.present? ? ('?' + hash.sort.collect {|(k,v)| "#{k}=#{[*v].first}"}.join('&')) : ''
 end
 
-# Search browse no longer includes st/gradeLevel in the canonical or next/prev
-def browse_hash_to_query_string(hash)
-  pruned_hash = hash.dup
-  pruned_hash.delete('st')
-  pruned_hash.delete('gradeLevels')
-  pruned_hash.present? ? ('?' + pruned_hash.sort.collect {|(k,v)| "#{k}=#{[*v].first}"}.join('&')) : ''
-end
-
 shared_examples_for 'by location with city meta tags' do
   before do
     controller.instance_variable_set(:@params_hash, local_config[:params].merge({'city' => local_config[:city_name]}))
@@ -243,9 +235,9 @@ describe SearchMetaTagsConcerns do
           end
 
           context 'on page 1' do
-            url = url_prefix + browse_hash_to_query_string(params_base)
+            url = url_prefix + hash_to_query_string(params_base)
             prev_url = nil
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
             let(:url) { url }
             let(:params) {params_base}
 
@@ -260,9 +252,9 @@ describe SearchMetaTagsConcerns do
           context 'on page 2' do
             before { controller.instance_variable_set(:@results_offset, 25) }
 
-            url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
-            prev_url = url_prefix + browse_hash_to_query_string(params_base)
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '3'}))
+            url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
+            prev_url = url_prefix + hash_to_query_string(params_base)
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '3'}))
             let(:url) { url }
             let(:params) {params_base.merge({'page' => '2'})}
 
@@ -286,8 +278,8 @@ describe SearchMetaTagsConcerns do
           end
 
           context 'on page 1' do
-            url = url_prefix + browse_hash_to_query_string(params_base)
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
+            url = url_prefix + hash_to_query_string(params_base)
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
             prev_url = nil
             let(:url) { url }
             let(:params) {params_base}
@@ -303,9 +295,9 @@ describe SearchMetaTagsConcerns do
           context 'on page 2' do
             before { controller.instance_variable_set(:@results_offset, 25) }
 
-            url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
-            prev_url = url_prefix +  browse_hash_to_query_string(params_base)
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '3'}))
+            url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
+            prev_url = url_prefix +  hash_to_query_string(params_base)
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '3'}))
             let(:url) { url }
             let(:params) {params_base.merge({'page' => '2'})}
 
@@ -440,9 +432,9 @@ describe SearchMetaTagsConcerns do
           end
 
           context 'on page 1' do
-            url = url_prefix + browse_hash_to_query_string(params_base)
+            url = url_prefix + hash_to_query_string(params_base)
             prev_url = nil
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
             let(:url) { url }
             let(:params) {params_base}
 
@@ -454,9 +446,9 @@ describe SearchMetaTagsConcerns do
           context 'on page 2' do
             before { controller.instance_variable_set(:@results_offset, 25) }
 
-            url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
-            prev_url = url_prefix + browse_hash_to_query_string(params_base)
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '3'}))
+            url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
+            prev_url = url_prefix + hash_to_query_string(params_base)
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '3'}))
             let(:url) { url }
             let(:params) {params_base.merge({'page' => '2'})}
 
@@ -480,8 +472,8 @@ describe SearchMetaTagsConcerns do
             before do
             end
 
-            url = url_prefix + browse_hash_to_query_string(params_base)
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
+            url = url_prefix + hash_to_query_string(params_base)
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
             prev_url = nil
             let(:url) { url }
             let(:params) {params_base}
@@ -494,9 +486,9 @@ describe SearchMetaTagsConcerns do
           context 'on page 2' do
             before { controller.instance_variable_set(:@results_offset, 25) }
 
-            url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '2'}))
-            prev_url = url_prefix +  browse_hash_to_query_string(params_base)
-            next_url = url_prefix + browse_hash_to_query_string(params_base.merge({'page' => '3'}))
+            url = url_prefix + hash_to_query_string(params_base.merge({'page' => '2'}))
+            prev_url = url_prefix +  hash_to_query_string(params_base)
+            next_url = url_prefix + hash_to_query_string(params_base.merge({'page' => '3'}))
             let(:url) { url }
             let(:params) {params_base.merge({'page' => '2'})}
 
