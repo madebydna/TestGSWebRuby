@@ -165,6 +165,14 @@ module UrlHelper
     path = verify_email_url(verification_link_params)
   end
 
+  # remove hash/anchor if it exists - write anchor to current url.
+  # @param  s [String] a full URL or URL path
+  def set_anchor(s, anchor)
+    uri = Addressable::URI.parse(s)
+    uri.fragment = anchor.present? ? anchor : ''
+    uri.to_s
+  end
+
   #
   # Adds a hash of query params to a given path or URL.
   # @param  s [String] a full URL or URL path

@@ -18,6 +18,7 @@ export default class EquitySection extends React.Component {
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
+    share_content: React.PropTypes.string,
     rating: React.PropTypes.number,
     message: React.PropTypes.string,
     qualaroo_module_link: React.PropTypes.string,
@@ -47,6 +48,24 @@ export default class EquitySection extends React.Component {
         <InfoBox content={sources} >{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={qualaroo_module_link} />
       </div>
+    )
+  }
+
+  sharingModal() {
+    return (
+        <button>
+          <a data-remodal-target="modal_info_box"
+           data-content-type="info_box"
+           data-content-html={this.props.share_content}
+           className="gs-tipso"
+           data-tipso-width="318"
+           data-tipso-position="left"
+           href="javascript:void(0)">
+            <div className="dib">
+              Share
+            </div>
+          </a>
+        </button>
     )
   }
 
@@ -130,7 +149,18 @@ export default class EquitySection extends React.Component {
       return <div className="rating-container" data-ga-click-label={title}>
         <a className="anchor-mobile-offset" name={link_name}></a>
         <div className="profile-module">
-          <div className="module-header">{ratingCircle}{this.sectionTitle()}</div>
+          <div className="module-header">
+            <div className="row">
+              <div className="col-xs-12 col-md-10">
+                {ratingCircle}{this.sectionTitle()}
+              </div>
+              <div className="col-xs-12 col-md-2 show-history-button">
+                <div>
+                  {this.sharingModal()}
+                </div>
+              </div>
+            </div>
+          </div>
           <div className="tab-buttons">
             <SectionNavigation
               parent_anchor={link_name}
