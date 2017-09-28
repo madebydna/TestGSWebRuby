@@ -25,13 +25,15 @@ module SharingTooltipModal
 
   def share_tooltip_modal(anchor, school)
     url = school_url(school)
-
+    school_name = school.name
     str = '<div class="sharing-modal">'
     SHARE_LINKS.each do | hash |
       if hash[:link_name] == 'Email'
-        str += '<div class="sharing-row js-emailSharingLinks" data-link="'+hash[:link]+email_query_string(anchor, url, school.name)+'">'
-      elsif hash[:link].present?
-        str += '<div class="sharing-row js-sharingLinks" data-url="'+url+'" data-type="'+hash[:link_name]+'" data-anchor="'+anchor+'" data-link="'+hash[:link]+'">'
+        str += '<div class="sharing-row js-emailSharingLinks" data-link="'+hash[:link]+email_query_string(anchor, url, school_name)+'">'
+      elsif hash[:link_name] == 'Facebook'
+        str += facebook_link(url, anchor, school_name, hash[:link])
+      elsif hash[:link_name] == 'Twitter'
+        str += twitter_link(url, anchor, school_name, hash[:link])
       else
         str += '<div class="sharing-row">'
       end
@@ -40,10 +42,49 @@ module SharingTooltipModal
       str += '<span class="'+hash[:icon]+'"></span>'
       str += '</div>'
       str += '<span class="sharing-row-text">'+hash[:link_name]+'</span>'
-      str += '<div><input class="permalink" type="text" value="'+ url +'" /></div>' if hash[:link_name] == 'Permalink'
+      str += perma_link(url, anchor, hash[:link]) if hash[:link_name] == 'Permalink'
       str += '</div>'
     end
     str + '</div>'
+  end
+
+  def perma_link(url, module_name, link)
+    new_params = {}
+    new_params[:utm_source] = 'profile'
+    new_params[:utm_medium] = 'Permalink'
+    new_params[:lang] = language if language != 'en'
+    url_new = add_query_params_to_url(url, false, new_params)
+    url_new = set_anchor(url_new, module_name)
+    '<div><input class="permalink" type="text" value="'+ url_new +'" /></div>'
+  end
+
+  def facebook_link(url, module_name, school_name, link)
+    content_text = school_name + ' - ' + module_name.gsub('_', ' ')
+    new_params = {}
+    new_params[:utm_source] = 'profile'
+    new_params[:utm_medium] = 'Facebook'
+    new_params[:t] = content_text
+    new_params[:lang] = language if language != 'en'
+    url_new = add_query_params_to_url(url, false, new_params)
+    url_new = set_anchor(url_new, module_name)
+    '<div class="sharing-row js-sharingLinks" data-url="'+url_new+'" data-type="Facebook" data-module="'+module_name+'" data-link="'+link+'">'
+  end
+
+  def twitter_link(url, module_name, school_name, link)
+    content_text = school_name + ' - ' + module_name.gsub('_', ' ')
+    new_params = {}
+    new_params[:utm_source] = 'profile'
+    new_params[:utm_medium] = 'Twitter'
+    new_params[:via] = 'GreatSchools'
+    new_params[:text] = content_text
+    new_params[:lang] = language if language != 'en'
+    url_new = add_query_params_to_url(url, false, new_params)
+    url_new = set_anchor(url_new, module_name)
+    '<div class="sharing-row js-sharingLinks" data-url="'+url_new+'" data-type="Twitter" data-module="'+module_name+'" data-link="'+link+'">'
+  end
+
+  def language
+    @_language || I18n.locale
   end
 
   def email_subject(anchor, school_name)

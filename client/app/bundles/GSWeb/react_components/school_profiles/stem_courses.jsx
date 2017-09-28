@@ -44,6 +44,24 @@ const listOfVisualizations = function(courses) {
   });
 }
 
+
+function sharingModal() {
+  return (
+      <button>
+        <a data-remodal-target="modal_info_box"
+           data-content-type="info_box"
+           data-content-html={this.props.share_content}
+           className="gs-tipso"
+           data-tipso-width="318"
+           data-tipso-position="left"
+           href="javascript:void(0)">
+          <div className="dib">
+            Share
+          </div>
+        </a>
+      </button>
+  )
+}
 const sourcesToHtml = function(sources) {
   let html = '<div class="sourcing">';
   html += '<h1>GreatSchools profile data sources &amp; information</h1>';
@@ -63,7 +81,8 @@ const sourcesToHtml = function(sources) {
 const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link }) => {
 
   let titleElement = <span>
-    {title} <QuestionMarkTooltip content={titleTooltipText} />
+    {title}&nbsp;<QuestionMarkTooltip content={titleTooltipText} />
+    {sharingModal()}
   </span>;
 
   let body = <div>

@@ -108,7 +108,7 @@ $(function() {
   });
 
   $('body').on('click', '.js-sharingLinks', function () {
-    var cat = $(this).data("link") +"::"+ $(this).data("type");
+    var cat = $(this).data("module") +"::"+ $(this).data("type");
     analyticsEvent('Profile', 'Share', cat);
     window.open($(this).data("link")+encodeURI($(this).data("url")), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
     return false;
