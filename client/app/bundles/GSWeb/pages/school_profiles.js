@@ -142,8 +142,6 @@ $(function() {
   });
 
   $('body').on('click', '.js-emailSharingLinks', function () {
-    var cat = $(this).data("link") +"::"+ $(this).data("type");
-    analyticsEvent('Profile', 'Share', cat);
     window.location.href = ($(this).data("link"));
     return false;
   });
