@@ -59,7 +59,7 @@ $(function() {
     var toggle = assign(new Toggle($('#hero').find('.school-contact')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
-        toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
+        toggle.updateButtonTextCallback(t('show_less'), t('see_more_contact'))
     );
     toggle.init().add_onclick();
   })();
