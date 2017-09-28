@@ -95,7 +95,6 @@ def search_district_browse_meta_tag_hash_tests(context_config)
   {
       canonical: context_config[:canonical],
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{context_config[:district_name]}, #{context_config[:state_long]}",
-      keywords: context_config[:keywords],
       title: context_config[:title],
       prev: context_config[:prev_url],
       next: context_config[:next_url]
@@ -422,7 +421,6 @@ describe SearchMetaTagsConcerns do
                             end
       context_config.merge!(
           {
-              keywords: "#{district_name} Schools, #{city_name} School District, #{city_name} #{state_long} School District, School District #{city_name}, #{district_name} Public Schools, #{district_name} Charter Schools",
               city_name: city_name,
               state_long: state_long,
               district_name: district_name

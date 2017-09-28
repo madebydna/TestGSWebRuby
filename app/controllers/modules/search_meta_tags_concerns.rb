@@ -116,7 +116,6 @@ module SearchMetaTagsConcerns
     {
       title: "#{school_type.text}#{level_code.text}#{level_code.school}in #{@district.name}#{pagination_text(false)} - #{@city.name}, #{@city.state} | GreatSchools",
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{@district.name}, #{@city.state}",
-      keywords: "#{@district.name} Schools, #{@city.name} School District, #{@city.name} #{@state[:long]} School District, School District #{@city.name}, #{@district.name} Public Schools, #{@district.name} Charter Schools",
       canonical: (canonical_url),
       prev: (prev_url ||= nil),
       next: (next_url ||= nil)
