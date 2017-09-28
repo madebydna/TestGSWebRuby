@@ -109,7 +109,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Test_scores', school_url(@school))
+      share_tooltip_modal('Test_scores', school_url(@school), @school_cache_data_reader.school.name)
     end
 
     def sources

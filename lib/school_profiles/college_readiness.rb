@@ -85,7 +85,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('College_readiness', school_url(@school_cache_data_reader.school))
+      share_tooltip_modal('College_readiness', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
     end
 
     def qualaroo_module_link

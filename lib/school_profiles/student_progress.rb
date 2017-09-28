@@ -13,7 +13,7 @@ module SchoolProfiles
     end
 
     def share_content
-      share_tooltip_modal('Student_progress', school_url(@school_cache_data_reader.school))
+      share_tooltip_modal('Student_progress', school_url(@school_cache_data_reader.school), @school.name)
     end
 
     def qualaroo_module_link

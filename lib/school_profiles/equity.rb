@@ -213,15 +213,15 @@ module SchoolProfiles
     end
 
     def race_ethnicity_share_content
-      share_tooltip_modal('Race_ethnicity', school_url(@school_cache_data_reader.school))
+      share_tooltip_modal('Race_ethnicity', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
     end
 
     def students_with_disabilities_share_content
-      share_tooltip_modal('Students_with_Disabilities', school_url(@school_cache_data_reader.school))
+      share_tooltip_modal('Students_with_Disabilities', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
     end
 
     def low_income_share_content
-      share_tooltip_modal('Low-income_students', school_url(@school_cache_data_reader.school))
+      share_tooltip_modal('Low-income_students', school_url(@school_cache_data_reader.school), @school_cache_data_reader.school.name)
     end
 
     def sources_header
