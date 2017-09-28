@@ -8,12 +8,7 @@
     text-align: left;
     padding: 20px 0;
     border-bottom: 1px solid $border-and-icon-color;
-    &:last-child {
-      border-bottom: none;
-      @include media-breakpoint-up(sm) {
-        display: none;
-      }
-    }
+
     &:nth-last-child(2) {
       @include media-breakpoint-up(sm) {
         border-bottom: none;
