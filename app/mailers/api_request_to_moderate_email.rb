@@ -13,7 +13,7 @@ class ApiRequestToModerateEmail < AbstractExactTargetMailer
       API_intended_use: api_account.intended_use
     }
 
-    deliver('athaler@greatschools.org', exact_target_email_attributes)
+    deliver('api-request@greatschools.org', exact_target_email_attributes)
   end
 
 end
