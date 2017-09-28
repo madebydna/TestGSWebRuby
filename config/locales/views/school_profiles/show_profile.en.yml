@@ -16,9 +16,12 @@ en:
         - title: overview
           description: Find out about this school’s hours, enrollment, classes, sports, and more.
           anchor: '#General_info'
+          event_label: Overview
         - title: students
           description: See a snapshot of student diversity at this school.
           anchor: '#Students'
+          event_label: Students
         - title: neighborhood
           description: Learn more about this school’s location and contact information, and explore other nearby schools.
           anchor: '#Neighborhood'
+          event_label: Neighborhood

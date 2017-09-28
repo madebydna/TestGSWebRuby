@@ -16,9 +16,12 @@ es:
         - title: informaciÓn general
           description: Averigue las horas, inscripción, clases, deportes y más acerca de esta escuela.
           anchor: '#General_info'
+          event_label: Overview
         - title: estudiantes
           description: Vea la diversidad estudiantil en esta escuela.
           anchor: '#Students'
+          event_label: Students
         - title: vecindario
           description: Obtenga más información de la ubicación e información de contacto de esta escuela y explore otras escuelas cercanas.
           anchor: '#Neighborhood'
+          event_label: Neighborhood
