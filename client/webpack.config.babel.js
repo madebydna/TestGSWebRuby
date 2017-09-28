@@ -4,12 +4,14 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const StatsPlugin = require('stats-webpack-plugin');
 
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
+import AssetMapPlugin from 'asset-map-webpack-plugin';
 
 const config = {
   entry: {
@@ -42,6 +44,8 @@ const config = {
     ]
   },
   plugins: [
+    new AssetMapPlugin('asset_map.json', null),
+
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons-blocking',
       chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
@@ -72,7 +76,17 @@ const config = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file-loader'
+        loaders: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]-[hash].[ext]'
+            }
+          },
+          {
+            loader: 'image-webpack-loader'
+          }
+        ],
       },
       {
         test: /\.handlebars$/,

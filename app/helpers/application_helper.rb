@@ -12,6 +12,14 @@ module ApplicationHelper
     super(path, *args, &blk)
   end
 
+  def webpack_asset_path(name, **options)
+    asset_path(WebpackAssets.lookup(name), **options)
+  end
+
+  def webpack_asset_url(name, **options)
+    asset_url(WebpackAssets.lookup(name), **options)
+  end
+
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
   # Default implementation of capitalize in rails will uppercase first letter and downcase the rest of the string
   def capitalize_if_string(object)
