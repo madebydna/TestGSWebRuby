@@ -13,7 +13,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   def create
     @api_account = ApiAccount.new(api_account_params)
-    if @api_account.save!
+    if @api_account.save
       handle_api_options
       redirect_to edit_admin_api_account_path(@api_account)
     else
