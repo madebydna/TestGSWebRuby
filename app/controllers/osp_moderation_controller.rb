@@ -22,9 +22,10 @@ class OspModerationController < ApplicationController
         if status == 'osp-notes'
           membership.update(note: member[:notes])
         else
+          # before_save in esp_membership.rb will set active to true if status == 'approved'
           membership.update(note: member[:notes], status: status)
-          send_email_to_osp(membership, status)
           membership.approve_provisional_osp_user_data if status == 'approved'
+          send_email_to_osp(membership, status)
         end
       end
     else

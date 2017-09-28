@@ -18,6 +18,7 @@ class EspMembership < ActiveRecord::Base
   scope :approved_or_provisional, -> { where(status: ['approved', 'provisional']) }
 
   scope :for_school, ->(school) { where(school_id: school.id, state: school.state) }
+  before_save :set_active_if_approved
 
 
   def approved?
@@ -53,6 +54,12 @@ class EspMembership < ActiveRecord::Base
     rescue => error
       GSLogger.error(:osp, error, vars: params, message: 'Didnt save osp response to update_queue table')
       error.presence || ["An error occured"]
+    end
+  end
+
+  def set_active_if_approved
+    if self.status == 'approved'
+      self.active = true
     end
   end
 
