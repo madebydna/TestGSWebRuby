@@ -113,7 +113,7 @@ $(function() {
     if($(this).data("siteparams") !== undefined) {
       url +=  $(this).data("siteparams");
     }
-    PopupCenter(url, $(this).data("type"), 700, 300)
+    popupCenter(url, $(this).data("type"), 700, 300)
     return false;
   });
 
@@ -123,7 +123,7 @@ $(function() {
     return false;
   });
 
-  function PopupCenter(url, title, w, h) {
+  function popupCenter(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
     var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
@@ -141,11 +141,19 @@ $(function() {
     }
   }
 
+  function touchDevice(){
+    return (('ontouchstart' in window)
+    || (navigator.maxTouchPoints > 0)
+    || (navigator.msMaxTouchPoints > 0));
+  }
+
   $('body').on('click', '.js-permaLink', function () {
-    $(this).focus();
-    $(this).select();
-    document.execCommand("copy");
-    $(this).siblings().css('display', 'block');
+    if(!touchDevice()) {
+      $(this).focus();
+      $(this).select();
+      document.execCommand("copy");
+      $(this).siblings().css('display', 'block');
+    }
     return false;
   });
 
