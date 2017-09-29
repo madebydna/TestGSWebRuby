@@ -18,7 +18,7 @@ class EspMembership < ActiveRecord::Base
   scope :approved_or_provisional, -> { where(status: ['approved', 'provisional']) }
 
   scope :for_school, ->(school) { where(school_id: school.id, state: school.state) }
-  before_save :set_active_if_approved
+  before_save :set_active
 
 
   def approved?
@@ -57,9 +57,12 @@ class EspMembership < ActiveRecord::Base
     end
   end
 
-  def set_active_if_approved
+  # Ensures that the 'active' attribute is set appropriately
+  def set_active
     if self.status == 'approved'
       self.active = true
+    elsif ['disabled', 'rejected'].include?(self.status)
+      self.active = false
     end
   end
 
