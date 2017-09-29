@@ -1,0 +1,104 @@
+<div class="content">
+  <div class="callfirst">
+    <h3>Browse Districts</h3> Returns a list of school districts in a city. All calls for a Browse Districts are in this format:
+    <div class="sample_url">https://api.greatschools.org/districts/[components]?[parameters]</div>
+  </div>
+  <div class="call">
+    <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>state*</td>
+          <td>Two letter state abbreviation</td>
+          <td>ak
+            <br>CA</td>
+        </tr>
+        <tr class="required">
+          <td>city*</td>
+          <td>Name of city, with spaces replaced with hyphens. If the city name has hyphens, replace those with underscores. Any other special characters should be URL-encoded</td>
+          <td>San Francisco becomes "San-Francisco"
+            <br>Cardiff-By-The-Sea becomes "Cardiff_By_The_Sea"
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+  </div>
+  <div class="call">
+    <h3>Parameters</h3> The "key" parameter is what you use to send us your API key.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+    Examples of usage:
+    <div class="example_url">https://api.greatschools.org/districts/CA/San-Francisco?key=[yourAPIKey]</div>
+    Returns a list of school districts in San Francisco, CA
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">https://api.greatschools.org/districts/CA/San-Francisco?key=[yourAPIKey]</div>
+    Returns a list of school districts in San Francisco, CA
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea cols="" rows="" readonly="readonly" wrap="off" class="sampleTextArea">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;districts&gt;
+    &lt;district&gt;
+        &lt;name&gt;San Francisco Unified School District&lt;/name&gt;
+        &lt;ncesCode&gt;0634410&lt;/ncesCode&gt;
+        &lt;districtRating&gt;6&lt;/districtRating&gt;
+        &lt;address&gt;555 Franklin St.,
+            San Francisco, CA 94102
+        &lt;/address&gt;
+        &lt;phone&gt;(415) 241-6000&lt;/phone&gt;
+        &lt;fax&gt;(415) 241-6012&lt;/fax&gt;
+        &lt;website&gt;https://www.sfusd.k12.ca.us&lt;/website&gt;
+        &lt;gradeRange&gt;K-12 &amp; ungraded&lt;/gradeRange&gt;
+        &lt;totalSchools&gt;121&lt;/totalSchools&gt;
+        &lt;elementarySchools&gt;84&lt;/elementarySchools&gt;
+        &lt;middleSchools&gt;36&lt;/middleSchools&gt;
+        &lt;highSchools&gt;34&lt;/highSchools&gt;
+        &lt;publicSchools&gt;113&lt;/publicSchools&gt;
+        &lt;charterSchools&gt;8&lt;/charterSchools&gt;
+    &lt;/district&gt;
+    &lt;district&gt;
+        &lt;name&gt;San Francisco County Office of Education&lt;/name&gt;
+        &lt;ncesCode&gt;0691111&lt;/ncesCode&gt;
+        &lt;districtRating&gt;1&lt;/districtRating&gt;
+        &lt;address&gt;555 Franklin St.,
+            San Francisco, CA 94102
+        &lt;/address&gt;
+        &lt;phone&gt;(415) 241-6000&lt;/phone&gt;
+        &lt;fax&gt;(415) 241-6012&lt;/fax&gt;
+        &lt;website&gt;https://www.sfusd.k12.ca.us&lt;/website&gt;
+        &lt;gradeRange&gt;K-12&lt;/gradeRange&gt;
+        &lt;totalSchools&gt;4&lt;/totalSchools&gt;
+        &lt;elementarySchools&gt;2&lt;/elementarySchools&gt;
+        &lt;middleSchools&gt;3&lt;/middleSchools&gt;
+        &lt;highSchools&gt;4&lt;/highSchools&gt;
+        &lt;publicSchools&gt;4&lt;/publicSchools&gt;
+        &lt;charterSchools&gt;0&lt;/charterSchools&gt;
+    &lt;/district&gt;
+&lt;/districts&gt;</textarea>
+  </div>
+</div>

@@ -230,6 +230,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/academics/math-2/', as: :math
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
+    get '/gk/api-terms-use', as: :api_terms_of_use
 
 
     get '/status/error404.page'
@@ -249,6 +250,8 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
   end
+
+  match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     resources :api_accounts, except: [:show, :destroy]
