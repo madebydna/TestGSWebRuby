@@ -20,7 +20,7 @@ const config = {
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
     'jquery': ['jquery'],
-    'osp-admin': ['./app/bundles/GSWeb/osp_admin']
+    'admin-tools': ['./app/bundles/GSWeb/admin_tools']
   },
 
   output: {

@@ -37,7 +37,7 @@ Rails.application.config.assets.precompile += [
     'api_documentation.css',
     'just_jquery.js',
     'admin_tools.css',
-    'osp_admin.js'
+    'admin_tools.js'
 
 ]
 # Add client/assets/ folders to asset pipeline's search path.

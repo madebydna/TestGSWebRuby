@@ -62,6 +62,19 @@ $(function() {
     paramInputMap[key].val(location.queryString[key])
   });
 
+  const allChecked = function() {
+    return ($('#tou').is(':checked') && $('#payment').is(':checked'))
+  }
+
+  $('form#new_api_account').submit(function(){
+    // The form is used by admins and users. Users must check two boxes before submitting form.
+    if ($('#tou').length && !allChecked()) {
+      alert('Please review and agree to the Terms of Use and payment conditions before submitting your request.');
+      return false;
+    }
+    return true;
+  });
+
 });
 
 
