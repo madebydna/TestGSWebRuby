@@ -11,13 +11,26 @@ class Admin::ApiAccountsController < ApplicationController
     @api_account = ApiAccount.new
   end
 
+  # Handles admin-initiated api account creation
   def create
     @api_account = ApiAccount.new(api_account_params)
-    if @api_account.save!
+    if @api_account.save
       handle_api_options
       redirect_to edit_admin_api_account_path(@api_account)
     else
       render 'new'
+    end
+  end
+
+  # Handles user-initiated api account creation
+  def create_api_account
+    @api_account = ApiAccount.new(api_account_params)
+    if @api_account.save
+      ApiRequestReceivedEmail.deliver_to_api_key_requester(@api_account)
+      ApiRequestToModerateEmail.deliver_to_admin(@api_account)
+      redirect_to request_api_key_success_path
+    else
+      render 'register'
     end
   end
 
@@ -35,6 +48,13 @@ class Admin::ApiAccountsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def register
+    @api_account = ApiAccount.new
+  end
+
+  def success
   end
 
   def delete_api_key
@@ -58,7 +78,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   def api_account_params
     params.require(:api_account).permit(:id, :name, :organization, :email, :website,
-                                  :phone, :industry, :intended_use, :type, :account_updated)
+                                  :phone, :industry, :intended_use, :type, :account_updated, :email_confirmation)
   end
 
   def handle_api_options

@@ -5,7 +5,7 @@
       </div>
       <ul>
         <% @api_account.errors.messages.each do |key, msg| %>
-            <li><%= (key.to_s.capitalize + ' ' + msg[0]) if msg[0] %></li>
+            <li><%= (key.to_s.capitalize + ' ' + msg[0]).humanize if msg[0] %></li>
         <% end %>
       </ul>
     </div>

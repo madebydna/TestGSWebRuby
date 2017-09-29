@@ -6,9 +6,11 @@ class ApiAccount < ActiveRecord::Base
   self.inheritance_column = nil
   has_one :api_config, class_name: 'ApiConfig', foreign_key: :account_id
 
-  validates :name, :organization, :email, :website, :phone, :industry, :intended_use, :type, presence: true
+  validates :name, :organization, :email, :website, :phone, :industry, :intended_use, presence: true
+  validates :type, presence: true, allow_nil: true
   validates :email, format: {with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i}
-  before_save :clean_up_api_config
+  validates_confirmation_of :email, message: 'does not match email.'
+  before_save :clean_up_api_config, :ensure_type
 
 
   def save_unique_api_key
@@ -37,6 +39,10 @@ class ApiAccount < ActiveRecord::Base
     if self.type == 'f'
       delete_api_config
     end
+  end
+
+  def ensure_type
+    self.type = 'f' if self.type.nil?
   end
 
 

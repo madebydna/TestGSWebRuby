@@ -1,0 +1,155 @@
+<div class="content">
+  <div class="callfirst">
+    <h3>Nearby Schools</h3> Returns a list of schools closest to the center of a city, ZIP Code or address. All calls for Nearby Schools are in this format:
+    <div class="sample_url">https://api.greatschools.org/schools/nearby?[parameters]</div>
+  </div>
+  <div class="call">
+    <h3>Parameters</h3> The "key" parameter is what is used to identify your specific API key to GreatSchools. The "state" parameter tells us what State you would like the results for and is required. You must provide at least one of the following, "city", "zip", "address", or "lat" and "lon" describing the location in order to receive the list of schools near that coordinate. Other parameters are optional.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+        <tr>
+          <td>state*</td>
+          <td>2 letter state abbreviation
+          </td>
+          <td>CT</td>
+        </tr>
+        <tr>
+          <td>zip</td>
+          <td>5 digit zip code
+          </td>
+          <td>06107</td>
+        </tr>
+        <tr>
+          <td>city</td>
+          <td>URL-encoded city name
+          </td>
+          <td>San+Francisco</td>
+        </tr>
+        <tr>
+          <td>address</td>
+          <td>URL-encoded address
+          </td>
+          <td>684+New+Britain+Ave</td>
+        </tr>
+        <tr>
+          <td>lat</td>
+          <td>latitude
+          </td>
+          <td>37.758862</td>
+        </tr>
+        <tr>
+          <td>lon</td>
+          <td>longitude
+          </td>
+          <td>-122.411406</td>
+        </tr>
+        <tr>
+          <td>schoolType</td>
+          <td>Type of school you wish to appear in the list</td>
+          <td>Valid values: "public", "charter", "private", or any combination separated by hyphens, like "public-charter"</td>
+        </tr>
+        <tr>
+          <td>levelCode</td>
+          <td>Level of school you wish to appear in the list</td>
+          <td>Valid values: "elementary-schools", "middle-schools", "high-schools" </td>
+        </tr>
+        <tr>
+          <td>radius</td>
+          <td>Miles radius to confine search to.
+            <br>default: 5
+            <br>maximum: 50
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>limit</td>
+          <td>Maximum number of schools to return. This defaults to 200.
+          </td>
+          <td>100</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+    Examples of usage:
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;address=160+Spear+St&amp;city=San+Francisco&amp;state=CA&amp;zip=94105&amp;schoolType=public-charter&amp;levelCode=elementary-schools&amp;radius=10&amp;limit=100</div>
+    Returns up to 100 public and charter elementary schools within 10 miles of 160 Spear St, San Francisco, CA 94105
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;city=San+Francisco&amp;state=CA</div>
+    Returns up to 200 schools within 5 miles of San Francisco, CA
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105</div>
+    Returns up to 200 schools within 5 miles of ZIP Code 94105 in California
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;lat=37.758862&amp;lon=-122.411406</div>
+    Returns up to 200 schools within 5 miles of latitude 35.274494, longitude -119.005623 in California
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105&amp;limit=2</div>
+    Returns 2 California schools within 5 miles of ZIP Code 94105 in California
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea rows="" cols="" readonly="readonly" wrap="off" class="sampleTextArea">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+      &lt;schools&gt;
+      &lt;school&gt;
+      &lt;gsId&gt;11536&lt;/gsId&gt;
+      &lt;name&gt;Youth Chance High School&lt;/name&gt;
+      &lt;type&gt;private&lt;/type&gt;
+      &lt;gradeRange&gt;10-12&lt;/gradeRange&gt;
+      &lt;enrollment&gt;25&lt;/enrollment&gt;
+      &lt;city&gt;San Francisco&lt;/city&gt;
+      &lt;state&gt;CA&lt;/state&gt;
+      &lt;address&gt;169 Steuart Street,
+      San Francisco, CA  94105&lt;/address&gt;
+      &lt;phone&gt;(415) 615-1337&lt;/phone&gt;
+      &lt;ncesId&gt;A9900759&lt;/ncesId&gt;
+      &lt;lat&gt;37.7924&lt;/lat&gt;
+      &lt;lon&gt;-122.3921&lt;/lon&gt;
+      &lt;overviewLink&gt;
+      https://www.greatschools.org/cgi-bin/ca/private/11536?s_cid=gsapi
+      &lt;/overviewLink&gt;
+      &lt;ratingsLink&gt;
+      https://www.greatschools.org/school/rating.page?state=CA&amp;id=11536&amp;s_cid=gsapi
+      &lt;/ratingsLink&gt;
+      &lt;reviewsLink&gt;
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11536&amp;s_cid=gsapi
+      &lt;/reviewsLink&gt;
+      &lt;/school&gt;
+      &lt;school&gt;
+      &lt;gsId&gt;8097&lt;/gsId&gt;
+      &lt;name&gt;Notre Dame des Victoires School&lt;/name&gt;
+      &lt;type&gt;private&lt;/type&gt;
+      &lt;gradeRange&gt;K-8&lt;/gradeRange&gt;
+      &lt;enrollment&gt;275&lt;/enrollment&gt;
+      &lt;city&gt;San Francisco&lt;/city&gt;
+      &lt;state&gt;CA&lt;/state&gt;
+      &lt;address&gt;659 Pine St,
+      San Francisco, CA  94108&lt;/address&gt;
+      &lt;phone&gt;(415) 421-0069&lt;/phone&gt;
+      &lt;ncesId&gt;00072439&lt;/ncesId&gt;
+      &lt;lat&gt;37.791412&lt;/lat&gt;
+      &lt;lon&gt;-122.406784&lt;/lon&gt;
+      &lt;overviewLink&gt;
+      https://www.greatschools.org/cgi-bin/ca/private/8097?s_cid=gsapi
+      &lt;/overviewLink&gt;
+      &lt;ratingsLink&gt;
+      https://www.greatschools.org/school/rating.page?state=CA&amp;id=8097&amp;s_cid=gsapi
+      &lt;/ratingsLink&gt;
+      &lt;reviewsLink&gt;
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=8097&amp;s_cid=gsapi
+      &lt;/reviewsLink&gt;
+      &lt;/school&gt;
+      &lt;/schools&gt;
+    </textarea>
+  </div>
+</div>

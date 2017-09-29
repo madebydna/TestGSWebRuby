@@ -67,6 +67,7 @@ export default class OspSchoolInfo extends React.Component {
       return (
         <div id="osp-school-info" data-ga-click-label="General Information">
         <BasicDataModuleLayout
+          share_content=""
           id = 'General_info'
           className='equity-container'
           icon = { <GeneralInfoIcon/> }

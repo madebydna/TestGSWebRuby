@@ -1,15 +1,14 @@
- <% rating ||= nil %>
- <% title %>
- <% subtitle ||= nil %>
- <% info_text = info_text || nil %>
- <% has_data %>
- <% show_historical_ratings ||= false %>
- <% columns_historical = show_historical_ratings ? 'col-md-8' : 'col-md-12' %>
- <% no_data_summary ||= '' %>
+<% rating ||= nil %>
+<% title %>
+<% subtitle ||= nil %>
+<% info_text = info_text || nil %>
+<% has_data %>
+<% no_data_summary ||= '' %>
+<% share_content = share_content || nil %>
 
  <div class="module-header">
    <div class="row">
-     <div class="col-xs-12 <%= columns_historical %>">
+     <div class="col-xs-12 col-md-10">
        <% if rating.present? && rating != 'NR' %>
          <div class="circle-rating--<%= rating %> circle-rating--medium">
            <%= rating %><span class="rating-circle-small">/10</span>
@@ -36,15 +35,24 @@
          <% end %>
        </div>
      </div>
-   <% if show_historical_ratings %>
-     <div class="col-xs-12 col-md-4 show-history-button">
-       <div>
-         <button class="js-historical-button">
-           <span class="icon-clock"></span>
-           <div class="dib"><%= t('.past_ratings') %></div>
-         </button>
-       </div>
+     <div class="col-xs-12 col-md-2 show-history-button">
+       <% if has_data %>
+         <div>
+           <button class="js-sharing-button">
+             <a data-remodal-target="modal_info_box"
+                data-content-type="info_box"
+                data-content-html='<%= share_content %>'
+                class="gs-tipso tipso_style"
+                data-tipso-width="318"
+                data-tipso-position="left"
+                href="javascript:void(0)">
+               <div class="dib">
+                 <%= t('.share') %>
+               </div>
+             </a>
+           </button>
+         </div>
+       <% end %>
      </div>
-   <% end %>
    </div>
 </div>

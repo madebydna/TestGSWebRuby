@@ -77,7 +77,7 @@ describe 'Education Community Partner Page' do
     keywords_tag = meta_tags.select { |tag| tag[:name] == 'keywords' }
 
     expect(description_tag).to_not be_nil
-    expect(keywords_tag).to_not be_nil
+    expect(keywords_tag).to be_empty
   end
 
   it 'displays partner information' do
@@ -141,7 +141,7 @@ describe 'State Education Community Partner Page' do
     keywords_tag = meta_tags.select { |tag| tag[:name] == 'keywords' }
 
     expect(description_tag).to_not be_nil
-    expect(keywords_tag).to_not be_nil
+    expect(keywords_tag).to be_empty
   end
 
   it 'displays partner information' do

@@ -28,28 +28,15 @@ button.tour-cta {
   padding: 30px 40px;
   position: fixed;
   background: $gray-light-blue;
-  right: 10px;
-  bottom: 110px;
+  left: 0;
+  right: 0;
+  top: 30%;
+  margin: 0 auto;
   border: 3px solid $blue-border;
   border-radius: 3px;
   box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
-  @include media-breakpoint-up(md) {
-    bottom: 70px;
-  }
   h3 {
     margin-top: 0px;
-  }
-  .tour-modal-arrow {
-    position: absolute;
-    width: 0; height: 0;
-    border: 10px solid;
-    pointer-events: none;
-    border-top-color: $blue-border;
-    border-right-color: transparent;
-    border-left-color: transparent;
-    border-bottom-color: transparent;
-    top: 100%;
-    right: 45px;
   }
   button {
     margin-bottom: 15px;

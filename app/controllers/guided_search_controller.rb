@@ -20,7 +20,6 @@ class GuidedSearchController < ApplicationController
         gon.pagename = 'GS:GuidedSchoolSearch'
         set_meta_tags(
           title: "Your Personalized #{nav_helper.topnav_title} School Search | GreatSchools",
-          keywords: "#{nav_helper.topnav_title} school wizard, #{nav_helper.topnav_title} schools, #{nav_helper.topnav_title} school guided search",
           description: "Use this 5-step guide to discover #{nav_helper.topnav_title} schools that match your
                         child\'s unique needs and preferences including programs and extracurriculars, school
                         focus areas, transportation, and daily schedules."

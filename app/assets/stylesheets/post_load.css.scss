@@ -80,6 +80,7 @@
 @import "components/school-list";
 @import "components/anchor-button";
 @import 'components/rating-with-bar';
+@import "components/vertical-nav";
 // more components
 @import "gs/objects/spinny_wheel.css.scss";
 @import "gs/objects/modal_layout";
@@ -118,6 +119,7 @@
 @import 'school_profiles/historical_ratings';
 @import 'school_profiles/tour_button';
 @import 'school_profiles/summary_rating_tooltip';
+@import 'school_profiles/sharing_modal';
 @import 'gs/osp-school-info';
 
 @import 'pages/district-boundaries/district_boundaries_page';

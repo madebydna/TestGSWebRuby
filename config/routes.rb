@@ -230,10 +230,16 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/academics/math-2/', as: :math
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
+    get '/gk/api-terms-use', as: :api_terms_of_use
 
 
     get '/status/error404.page'
   end
+
+  get '/api/request-api-key/', to: 'admin/api_accounts#register', as: :request_api_key
+  get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
+  post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
+
 
   namespace :api, controller: 'api', path:'/gsr/api' do
     resource :session
@@ -244,6 +250,8 @@ LocalizedProfiles::Application.routes.draw do
     resource :widget_logs, only: [:create]
     resources :students
   end
+
+  match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
     resources :api_accounts, except: [:show, :destroy]
@@ -298,6 +306,9 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     resources :data_load_schedules, path: '/data-planning'
+
+    get '/duplicate-membership', to: 'osp_demigod#show'
+    post '/duplicate-membership', to: 'osp_demigod#create'
   end
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review

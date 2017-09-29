@@ -88,7 +88,7 @@ module SearchMetaTagsConcerns
   def search_city_browse_meta_tag_hash
     school_type, level_code, page = search_params_for_meta_tags
     lang = (I18n.locale == I18n.default_locale ? {} : {'lang' => I18n.locale.to_s})
-    params = page.param.merge(lang)
+    params = school_type.param.merge(level_code.param).merge(page.param).merge(lang)
     url_without_params = canonical_url_without_params(@state[:long], @city.name)
 
     canonical_url = url_without_params + hash_to_query_string(params)
@@ -107,7 +107,7 @@ module SearchMetaTagsConcerns
   def search_district_browse_meta_tag_hash
     school_type, level_code, page = search_params_for_meta_tags
     lang = (I18n.locale == I18n.default_locale ? {} : {'lang' => I18n.locale.to_s})
-    params = page.param.merge(lang)
+    params = school_type.param.merge(level_code.param).merge(page.param).merge(lang)
     url_without_params = canonical_url_without_params(@state[:long], @city.name)
 
     canonical_url = url_without_params + hash_to_query_string(params)
@@ -116,7 +116,6 @@ module SearchMetaTagsConcerns
     {
       title: "#{school_type.text}#{level_code.text}#{level_code.school}in #{@district.name}#{pagination_text(false)} - #{@city.name}, #{@city.state} | GreatSchools",
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{@district.name}, #{@city.state}",
-      keywords: "#{@district.name} Schools, #{@city.name} School District, #{@city.name} #{@state[:long]} School District, School District #{@city.name}, #{@district.name} Public Schools, #{@district.name} Charter Schools",
       canonical: (canonical_url),
       prev: (prev_url ||= nil),
       next: (next_url ||= nil)

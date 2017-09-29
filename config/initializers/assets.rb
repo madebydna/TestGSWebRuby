@@ -34,6 +34,7 @@ Rails.application.config.assets.precompile += [
     'main.js', #for style-guide
     'picturefill.min.js', #for style-guide
     'highcharts.js',
+    'api_documentation.css',
     'just_jquery.js',
     'admin_tools.css',
     'osp_admin.js'

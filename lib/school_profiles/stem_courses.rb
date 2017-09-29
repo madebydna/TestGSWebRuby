@@ -1,11 +1,16 @@
 module SchoolProfiles
   class StemCourses
     include Qualaroo
+    include SharingTooltipModal
 
     attr_reader :school_cache_data_reader
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def share_content
+      share_tooltip_modal('Advanced_courses', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link

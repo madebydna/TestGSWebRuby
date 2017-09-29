@@ -2,13 +2,19 @@
 <html>
   <head>
     <title>GreatSchools Admin</title>
+    <%= stylesheet_link_tag 'post_load'%>
     <%= stylesheet_link_tag 'admin_tools'%>
     <%= javascript_include_tag 'just_jquery' %>
   </head>
   <body class="open-sans">
-    <div style="padding: 30px;width: 70%; margin: auto;">
-      <span style="float: right;"><%= image_tag('nav/gs_logo.png', size:'119x50', alt:'GreatSchools.org')%></span>
-      <%= yield %>
+    <div class="container">
+      <div class="admin_header">
+        <%= link_to image_tag('nav/gs_logo.png', size:'119x50', alt:'GreatSchools.org'), root_path%>
+      </div>
+
+      <div class="admin_body">
+        <%= yield %>
+      </div>
     </div>
   </body>
 </html>
