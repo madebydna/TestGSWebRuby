@@ -77,7 +77,7 @@ const config = {
           {
             loader: 'file-loader',
             options: {
-              name: '[name]-[hash].[ext]'
+              name: '[name]_[hash].[ext]'
             }
           },
           {
