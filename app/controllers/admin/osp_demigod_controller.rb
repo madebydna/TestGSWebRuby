@@ -1,4 +1,5 @@
 class Admin::OspDemigodController < ApplicationController
+  protect_from_forgery
   layout 'no_header_and_footer'
 
   def show
