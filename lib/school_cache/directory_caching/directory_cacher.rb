@@ -60,8 +60,12 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def district_name
-    district = District.find_by_state_and_ids(school.state, school.district_id)
+    district = district_obj
     district.first.name if district && district.first
+  end
+
+  def district_obj
+    @_district_obj ||= District.find_by_state_and_ids(school.state, school.district_id)
   end
 
   def home_page_url
@@ -77,8 +81,26 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_summary
-    # not sure what to do with this one.
-    ''
+    rating = school.great_schools_rating
+    (1..10).cover?(rating.to_i) ? school_summary_rated(rating) : school_summary_not_rated
+  end
+
+  def district_url(district)
+    district_params = district_params_from_district(district)
+    district_params.reject { | r,v | v.present? }.blank? ? (URL_PREFIX + city_district_path(district_params) + '/') : ''
+  end
+
+  def district_url_link
+    "<a href='#{district_url(district_obj.first)}'>#{district_name}</a>"
+  end
+
+  def school_summary_not_rated
+    "#{school.name}, a #{school.type} school located in #{school.city}, #{school.state}, serves grades #{school.process_level} in the #{district_url_link}."
+  end
+
+  def school_summary_rated(rating)
+    str = "#{school.name}, a #{school.type} school located in #{school.city}, #{school.state}, serves grades #{school.process_level} in the #{district_url_link}."
+    str + "It has received a GreatSchools Rating of #{rating} out of 10, based on a variety of school quality measures."
   end
 
   def self.active?

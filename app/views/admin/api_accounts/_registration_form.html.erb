@@ -57,19 +57,5 @@
   <% end %>
 </div>
 
-<script type="text/javascript" charset="utf-8">
-
-  var allChecked = function() {
-    return ($('#tou').is(':checked') && $('#payment').is(':checked'))
-  }
-
-  $('form').submit(function(){
-    if (!allChecked()) {
-      alert('Please review and agree to the Terms of Use and payment conditions before submitting your request.');
-      return false;
-    }
-    return true;
-  });
-</script>
 
 

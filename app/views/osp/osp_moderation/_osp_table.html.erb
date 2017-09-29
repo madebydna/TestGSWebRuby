@@ -9,6 +9,7 @@
     <th>Id</th>
     <th>Name</th>
     <th>Job title</th>
+    <th>Status</th>
     <th>Web url</th>
     <th>Note</th>
   </tr>
@@ -32,6 +33,7 @@
           <td><%= osp.user.id%></td>
           <td><%= osp.user.first_name.capitalize%> <%= osp.user.last_name.capitalize%></td>
           <td><%= osp.job_title%></td>
+          <td><%= osp.status %></td>
           <td><%= osp.web_url%></td>
           <td>
             <textarea class="osp-notes"><%= osp.note %></textarea>
