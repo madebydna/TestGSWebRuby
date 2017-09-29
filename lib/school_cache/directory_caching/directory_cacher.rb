@@ -12,11 +12,11 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def school_directory_keys
-    %w(county district_id city fax FIPScounty id lat level_code lon name nces_code phone state state_id street subtype type home_page_url zipcode)
+    %w(county district_id city fax id lat level_code lon name nces_code phone state state_id street type zipcode)
   end
 
   def school_special_keys
-    %w(url level district_name school_summary description)
+    %w(url level district_name school_summary description home_page_url FIPScounty subtype)
   end
 
   def build_hash_for_cache
@@ -38,24 +38,42 @@ class DirectoryCaching::DirectoryCacher < Cacher
         hash[key] = [{ school_value: description }]
       elsif key == 'school_summary'
         hash[key] = [{ school_value: school_summary }]
+      elsif key == 'home_page_url'
+        hash[key] = [{ school_value: home_page_url }]
+      elsif key == 'FIPScounty'
+        hash[key] = [{ school_value: fipscounty }]
+      elsif key == 'subtype'
+        hash[key] = [{ school_value: subtype }]
       end
     end
     validate!(special_cache_hash)
     cache_hash.merge!(special_cache_hash)
   end
 
+  def fipscounty
+    school.FIPScounty.to_s.rjust(5, '0') if school.FIPScounty.present?
+  end
+
   def school_build_url
     school_params = school_params(school)
-    URL_PREFIX + school_path(school_params) + '/'
+    school_params.reject { | r,v | v.present? }.blank? && school_params.length == 4 ? URL_PREFIX + school_path(school_params) + '/' : ''
   end
 
   def district_name
-    district = District.find_by_state_and_ids(school.state, school.id)
+    district = District.find_by_state_and_ids(school.state, school.district_id)
     district.first.name if district && district.first
   end
 
+  def home_page_url
+    prepend_http(school.home_page_url) if school.home_page_url.present?
+  end
+
   def description
-    "In-depth school information including test scores and student stats for\n#{school.name}\n#{school.city}\n#{school.state}."
+    "\nIn-depth school information including test scores and student stats for\n#{school.name},\n#{school.city},\n#{school.state}.\n"
+  end
+
+  def subtype
+    school.subtype.gsub 'yr_round', 'year_round' if school.subtype.present?
   end
 
   def school_summary

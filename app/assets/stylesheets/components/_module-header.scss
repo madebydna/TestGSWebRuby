@@ -1,4 +1,7 @@
 .module-header {
+  @include media-breakpoint-only(xs) {
+    padding: 0 10px;
+  }
   min-height: 50px;
 
   .circle-rating--medium, .circle-rating--equity-blue {

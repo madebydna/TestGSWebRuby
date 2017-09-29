@@ -38,8 +38,7 @@ class DistrictsController < ApplicationController
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
     description_method = "#{method_base}_description".to_sym
-    keywords_method = "#{method_base}_keywords".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+    set_meta_tags title: send(title_method), description: send(description_method)
   end
 
   def district

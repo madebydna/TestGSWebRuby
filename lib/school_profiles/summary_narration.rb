@@ -1,5 +1,6 @@
 module SchoolProfiles
   class SummaryNarration
+    include Qualaroo
 
     attr_reader :school
 
@@ -20,23 +21,11 @@ module SchoolProfiles
           arr << send(method)
         end
         arr.compact!
-        inject_more(arr)
       end
     end
 
-    def inject_more(arr)
-      if arr.length > 4
-      #   do the more thing after 3
-        more = I18n.t('school_profiles.summary_narration.more').capitalize
-        str = arr[0..2].join(' ')
-        str += '<a class="js-moreRevealLink" href="javascript:void(0)">... ' + more + '</a>'
-        str += '<span class="js-moreReveal" style="display:none">'
-        str += arr[3..arr.length].join(' ')
-        str += '</span>'
-        str
-      else
-        arr.join(' ')
-      end
+    def qualaroo_module_link
+      qualaroo_link(:summary_narration, @school.state, @school.id.to_s)
     end
 
     def rating_three_levels(rating)

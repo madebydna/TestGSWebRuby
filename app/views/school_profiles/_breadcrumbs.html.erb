@@ -1,13 +1,20 @@
 <% breadcrumbs # An +Array+ of +Hash+es, each +Hash+ containing a breadcrumb text and url %>
+<% mobile_cutoff = 2 %>
 <% unless breadcrumbs.nil? || breadcrumbs.empty? %>
   <div class="breadcrumbs">
     <div class="container">
       <% breadcrumbs.each_with_index do |(text, url), index| %>
+        <% if index > mobile_cutoff %>
+          <span class="hidden-xs-inline">
+        <% end %>
         <span><%= ' > ' if index > 0 %></span>
         <% if url.nil? %>
           <span><%= text %></span>
         <% else %>
           <span><%= link_to text, url %></span>
+        <% end %>
+        <% if index > mobile_cutoff %>
+          </span>
         <% end %>
       <% end %>
     </div>

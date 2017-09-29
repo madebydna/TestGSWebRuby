@@ -56,8 +56,8 @@ module Feeds
       DEFAULT_BATCH_SIZE = 1
 
       # this is the required order for school and district content
-      DIRECTORY_SCHOOL_KEY_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county fipscounty level level_code district_id lat lon phone fax web_site subtype type district_name universal_district_id district_spending url census_info school_summary)
-      DIRECTORY_DISTRICT_KEY_ORDER = %w(universal_id state_id nces_code name description street city state zipcode county fipscounty level level_code lat lon phone fax web_site url census_info)
+      DIRECTORY_SCHOOL_KEY_ORDER = %w(universal_id id state_id nces_code name description street city state zipcode county FIPScounty level level_code district_id lat lon phone fax home_page_url subtype type district_name universal_district_id district_spending url census_info school_summary)
+      DIRECTORY_DISTRICT_KEY_ORDER = %w(universal_id state_id nces_code name description street city state zipcode county FIPScounty level level_code lat lon phone fax home_page_url url census_info)
 
       # this is a white list of keys we are looking for
       DIRECTORY_SCHOOL_KEYS_REQUIRED = %w(id name description street city state county level level_code district_id lat lon subtype type web_site)

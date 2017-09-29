@@ -64,7 +64,7 @@ parsed_arguments.each do |args|
     cache_keys.each do |cache_key|
       puts "     doing #{cache_key}"
       if schools_where
-        School.on_db(state.downcase.to_sym).where(schools_where).active.each do |school|
+        School.on_db(state.downcase.to_sym).where(schools_where).each do |school|
           begin
             Cacher.create_cache(school, cache_key)
           rescue => error
@@ -73,7 +73,7 @@ parsed_arguments.each do |args|
           end
         end
       else
-        School.on_db(state.downcase.to_sym).all.active.each do |school|
+        School.on_db(state.downcase.to_sym).all.each do |school|
           begin
             Cacher.create_cache(school, cache_key)
           rescue => error

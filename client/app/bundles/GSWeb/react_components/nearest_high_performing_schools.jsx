@@ -86,7 +86,7 @@ class NearestHighPerformingSchools extends React.Component {
             { this.renderTabs() }
           </div>
         </div>
-        <div className="content">
+        <div>
           { this.renderContentPanes() }
         </div>
         <GiveUsFeedback module='nearby_schools' divider={false} />

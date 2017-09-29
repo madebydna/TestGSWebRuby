@@ -60,10 +60,10 @@ const sourcesToHtml = function(sources) {
   return html;
 }
 
-const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link }) => {
+const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqContent, courses, sources, qualaroo_module_link, share_content }) => {
 
   let titleElement = <span>
-    {title} <QuestionMarkTooltip content={titleTooltipText} />
+    {title}&nbsp;<QuestionMarkTooltip content={titleTooltipText} />
   </span>;
 
   let body = <div>
@@ -77,6 +77,7 @@ const StemModule = ({title, titleTooltipText, parentTip, subtitle, faqCta, faqCo
   return <div>
     <a className="anchor-mobile-offset" name="Advanced_courses"></a>
     <BasicDataModuleLayout
+      share_content = {share_content}
       className='stem-module'
       icon = { <MicroscopeCircleIcon /> }
       title = { titleElement }

@@ -22,7 +22,6 @@ class CompareSchoolsController < ApplicationController
 
     set_meta_tags title: page_title,
                   description:'Compare schools to find the right school for your family',
-                  keywords:'Compare schools, school comparison',
                   robots: 'noindex'
     set_omniture_data
     set_data_layer_variables

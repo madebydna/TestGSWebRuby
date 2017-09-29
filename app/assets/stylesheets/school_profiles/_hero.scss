@@ -40,8 +40,50 @@
 
   .school-contact {
     padding-top: 1rem;
+    a.see-more {
+      margin: 10px 0;
+      color: $color-see-more;
+      display: block;
+      text-align: center;
+      @include media-breakpoint-up(md) {
+        display: none;
+      }
+    }
   }
 
+  @include media-breakpoint-down(sm) {
+    .mobile-reverse {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+
+      -webkit-flex-flow: column-reverse;
+      flex-flow: column-reverse;
+
+      .mobile-address {
+        padding-top: 10px;
+        display: block;
+      }
+    }
+    .vertical-items {
+      margin: 20px auto 0;
+      max-width: 275px;
+    }
+
+    .js-toggle-target {
+      display: none;
+    }
+
+    .school-contact {
+      padding-top: 0;
+
+      .school-contact__address {
+        display: none;
+      }
+    }
+  }
 
   .school-contact__item:first-of-type {
     padding-left: 0px;
@@ -112,14 +154,6 @@
         padding-right: 0px;
       }
     }
-    a.see-more {
-      margin-top: 10px;
-      color: $color-see-more;
-      display: block;
-      @include media-breakpoint-up(md) {
-        display: none;
-      }
-    }
   }
 
   .school-info__item {
@@ -138,18 +172,13 @@
     border-left: none;
   }
 
-  .school-info__item:nth-last-of-type(-n+4) {
+  .school-info__item:nth-last-of-type(-n+3) {
     @include media-breakpoint-down(sm) {
       display: none;
     }
   }
 
-  .vertical-items {
-    margin: 20px auto 0;
-    max-width: 275px;
-  }
-
-  .school-info__item-mobile {
+  .school-contact__item-mobile {
     border-bottom: 1px solid rgba(255, 255, 255, .17);
     text-align: left;
     padding: 2px 0;
@@ -227,6 +256,10 @@
         display:block;
       }
     }
+  }
+
+  .mobile-address {
+    display: none;
   }
 }
 

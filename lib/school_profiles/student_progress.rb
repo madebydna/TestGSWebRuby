@@ -1,11 +1,17 @@
 module SchoolProfiles
   class StudentProgress
     include Qualaroo
+    include SharingTooltipModal
+    
     attr_reader :school, :school_cache_data_reader
 
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def share_content
+      share_tooltip_modal('Student_progress', @school)
     end
 
     def qualaroo_module_link
@@ -14,6 +20,10 @@ module SchoolProfiles
 
     def rating
       @school_cache_data_reader.student_progress_rating
+    end
+
+    def test_scores_rating
+      @school_cache_data_reader.test_scores_rating
     end
 
     def historical_ratings
@@ -31,7 +41,30 @@ module SchoolProfiles
     def narration
       return nil unless has_data?
       key = narration_key_from_rating
-      I18n.t(key).html_safe if key
+      I18n.t(key, test_score_dependent_content: narration_text_segment_by_test_score).html_safe if key
+    end
+
+    def narration_text_segment_by_test_score
+      level = narration_level(test_scores_rating.to_i)
+      rbq = rating_by_quintile(rating)
+      if level.present? && rbq.present?
+        I18n.t("lib.student_progress.narrative.#{rbq}_#{level}_html")
+      else
+        ''
+      end
+    end
+
+    def narration_level(ts_rating)
+      if (1..4).cover?(ts_rating)
+        'low'
+      elsif (7..10).cover?(ts_rating)
+        'high'
+      end
+    end
+
+    def rating_by_quintile(sp_rating)
+      r = sp_rating.to_i
+      (r / 2).to_i + (r % 2) if r && (1..10).cover?(r)
     end
 
     def narration_key_from_rating
