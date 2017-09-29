@@ -1,6 +1,6 @@
 class Admin::OspDemigodController < ApplicationController
   protect_from_forgery
-  layout 'no_header_and_footer'
+  layout 'admin'
 
   def show
 
@@ -9,24 +9,14 @@ class Admin::OspDemigodController < ApplicationController
   def create
     @errors = errors
     if @errors.present?
-      render 'show'
-      return
+      @previous_ids = school_ids
+      @member_id = member_id
+      @state = state
+    else
+      duplicate_memberships
+      @success = 'Operation successful'
     end
-
-    # params[:member_id]
-    # params[:state]
-    # params[:school_ids]
-
-    # 1) validate params
-    #   if errors
-    #     @errors = errors
-    #     render 'create'
-    #     return
-    #   end
-    # 2) duplicate memberships
-    #   school_ids.each do |id|
-    #     EspMembership.create(member_id: member_id, state: state, school_id: id, status: 'approved', active: true, job_title: existing_membership.job_title)
-    #   end
+    render 'show'
   end
 
   private
@@ -78,7 +68,7 @@ class Admin::OspDemigodController < ApplicationController
   end
 
   def state
-    params[:state]
+    params[:state].downcase if params[:state]
   end
 
   def school_ids
@@ -98,11 +88,13 @@ class Admin::OspDemigodController < ApplicationController
     school_ids_array.each do |id|
       EspMembership.create(
         member_id: member_id,
-        state: state,
+        state: state.upcase,
         school_id: id,
         status: 'approved',
         active: true,
-        job_title: existing_membership.job_title
+        job_title: existing_membership.job_title,
+        created: Time.now,
+        updated: Time.now
       )
     end
   end

@@ -27,6 +27,14 @@
       margin-bottom: 20px;
     }
   }
+  .demigod-form {
+    width: 75%;
+    margin: auto;
+    margin-top: 70px;
+    label {width: 90px;}
+    input[name="commit"] {margin-top: 30px;}
+
+  }
   .content > ul {
     margin-left: 30px;
   }
@@ -69,6 +77,8 @@
     }
   }
 }
+
+
 
 
 
