@@ -53,7 +53,6 @@ class OspModerationController < ApplicationController
       end
     else
       @osp_memberships = EspMembership.where(@permitted_params.except(:email))
-                           .joins(:user).where('email_verified = ?', true)
                            .extend(SchoolAssociationPreloading)
                            .preload_associated_schools!
     end
