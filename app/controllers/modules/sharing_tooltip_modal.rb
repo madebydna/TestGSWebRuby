@@ -32,20 +32,21 @@ module SharingTooltipModal
       str += '<span class="'+hash[:icon]+'"></span>'
       str += '</div>'
       str += '<span class="sharing-row-text">'+hash[:link_name]+'</span>'
-      str += perma_link(url, anchor, hash[:link]) if hash[:link_name] == 'Permalink'
+      str += perma_link(url, anchor) if hash[:link_name] == 'Permalink'
       str += '</div>'
     end
     str + '</div>'
   end
 
-  def perma_link(url, module_name, link)
+  def perma_link(url, module_name)
     new_params = {}
     new_params[:utm_source] = 'profile'
     new_params[:utm_medium] = 'Permalink'
     new_params[:lang] = current_language.to_s if current_language.to_s != 'en'
     url_new = add_query_params_to_url(url, false, new_params)
     url_new = set_anchor(url_new, module_name)
-    '<div><input class="permalink js-permaLink js-slTracking" type="text" value="'+ url_new +'" /></div>'
+    acknowledgement = I18n.t('controllers.school_profile_controller.Copied to clipboard')
+    '<div><input class="permalink js-permaLink js-slTracking" type="text" value="'+ url_new +'" /><span class="acknowledgement">' + acknowledgement + '</span></div>'
   end
 
   def facebook_link(url, module_name, school_name, link)

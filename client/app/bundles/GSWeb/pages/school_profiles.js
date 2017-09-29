@@ -143,6 +143,8 @@ $(function() {
 
   $('body').on('click', '.js-permaLink', function () {
     $(this).select();
+    document.execCommand("copy");
+    $(this).siblings().css('display', 'block');
     return false;
   });
 
