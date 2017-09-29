@@ -14,12 +14,12 @@ describe Admin::OspDemigodController do
     end
 
     describe 'with no matching user in database' do
-      it { should include('User not found') }
+      it { should include("User #{params[:member_id]} not found") }
     end
 
     describe 'with valid user in database' do
       before do
-        user = FactoryGirl.create(:verified_user, :with_approved_esp_membership)
+        user = FactoryGirl.create(:verified_user, :with_approved_esp_membership, school_id: 12345)
         params[:member_id] = user.id
       end
 
@@ -43,7 +43,7 @@ describe Admin::OspDemigodController do
           expect(subject).to be_empty
         end
 
-        it 'returns empty array if even for single school ids' do
+        it 'returns empty array even for single school id' do
           params[:school_ids] = params[:school_ids].split(',').first.to_s
           expect(subject).to be_empty
         end
@@ -90,9 +90,9 @@ describe Admin::OspDemigodController do
       end
 
       describe 'with wrongly formatted school ids' do
-        before { params[:school_ids] = '1 2,3' }
+        before { params[:school_ids] = '1 2,3,5 6' }
 
-        it { should eq(['Invalid school id \'1 2\'']) }
+        it { should eq(['Invalid school id \'1 2\'', 'Invalid school id \'5 6\'']) }
       end
 
       describe 'with an invalid school_id/state combination' do
@@ -118,5 +118,38 @@ describe Admin::OspDemigodController do
       it { should include('Unverified email') }
     end
 
+    describe 'with verified user with no existing membership' do
+      before do
+        user = FactoryGirl.create(:verified_user)
+        params[:member_id] = user.id
+        school_1 = FactoryGirl.create(:school)
+        school_2 = FactoryGirl.create(:school)
+        params[:school_ids] = [school_1.id,school_2.id].join(',')
+      end
+
+      after do
+        clean_models(User, School)
+        clean_dbs :gs_schooldb, :ca
+      end
+
+      it { should include('Member does not have existing, approved OSP membership') }
+    end
+
+    describe 'with user having existing membership to one of the schools' do
+      before do
+        school_1 = FactoryGirl.create(:school)
+        school_2 = FactoryGirl.create(:school)
+        params[:school_ids] = [school_1.id,school_2.id].join(',')
+        user = FactoryGirl.create(:verified_user, :with_approved_esp_membership, school_id: school_1.id, state: 'ca')
+        params[:member_id] = user.id
+      end
+
+      after do
+        clean_models(User, School)
+        clean_dbs :gs_schooldb, :ca
+      end
+
+      it { should include("Member has existing membership to school #{params[:school_ids].split(',').first}") }
+    end
   end
 end
