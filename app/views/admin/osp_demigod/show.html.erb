@@ -1,0 +1,28 @@
+<div class="demigod-form">
+  <h1>Duplicate Memberships</h1>
+  <p>This form allows you to duplicate an existing esp_membership</p>
+
+  <p style="color: green;"><%= @success %></p>
+
+  <% (@errors || []).each do |error| %>
+      <ul>
+        <li style="color: red;"><%= error %> </li>
+      </ul>
+  <% end %>
+  <%= form_tag do %>
+
+      <%= label_tag :member_id, 'Member id' %>
+      <%= text_field_tag :member_id, @member_id %>
+      <br>
+      <%= label_tag :state %>
+      <%= text_field_tag :state, @state %>
+      <br>
+      <%= label_tag :school_ids %>
+      <%= text_field_tag :school_ids, @previous_ids %>
+      <br>
+      <%= submit_tag%>
+  <% end %>
+
+
+
+</div>
