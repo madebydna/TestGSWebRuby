@@ -38,6 +38,7 @@ import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
+import owlPng from 'school_profiles/owl.png';
 
 window.store = getStore();
 
@@ -76,7 +77,7 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
-    $('.school-profile-tour-modal').removeClass('hidden');
+    $('.js-school-profile-tour-modal').removeClass('hidden');
   }
 
   initAnchorHashUpdater();
@@ -193,7 +194,7 @@ $(function() {
   // sure the modal isn't displayed again.
   $('#close-school-tour').click(function(){
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    $('.tour-teaser').tipso({content: '<div><div><h3><img src="' + owlPng + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
     setCookie(PROFILE_TOUR_COOKIE, true);
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   });
@@ -272,7 +273,7 @@ $(function() {
   $body.on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
-    let schoolTourModal = $('.school-profile-tour-modal');
+    let schoolTourModal = $('.js-school-profile-tour-modal');
     if(remodal.length > 0) {
       remodal.remodal().close();
     }
