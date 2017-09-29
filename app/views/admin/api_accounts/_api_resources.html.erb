@@ -1,22 +1,48 @@
-<div>
-  <h4>Getting Started</h4>
-    <div class="api_resource_links">
-      <%= link_to 'Request API Key', request_api_key_path %>
-      <%= link_to 'Terms of Use', 'https://www.greatschools.org/api/docs/terms.page', target: "_blank"%>
-    </div>
-  <h4>Documentation</h4>
-  <div class="api_resource_links">
-    <%= link_to 'Technical Overview', 'https://www.greatschools.org/api/docs/main.page' %>
-    <%= link_to 'Browse Schools', 'https://www.greatschools.org/api/docs/browseSchools.page' %>
-    <%= link_to 'Nearby Schools', 'https://www.greatschools.org/api/docs/nearbySchools.page' %>
-    <%= link_to 'School Profile', 'https://www.greatschools.org/api/docs/schoolProfile.page' %>
-    <%= link_to 'School Search', 'https://www.greatschools.org/api/docs/schoolSearch.page' %>
-    <%= link_to 'School Reviews', 'https://www.greatschools.org/api/docs/schoolReviews.page' %>
-    <%= link_to 'Review Topics', 'https://www.greatschools.org/api/docs/reviewTopics.page' %>
-    <%= link_to 'School Test Scores', 'https://www.greatschools.org/api/docs/schoolTestScores.page' %>
-    <%= link_to 'School Census Data', 'https://www.greatschools.org/api/docs/schoolCensusData.page' %>
-    <%= link_to 'City Overview', 'https://www.greatschools.org/api/docs/cityBrowse.page' %>
-    <%= link_to 'Nearby Cities', 'https://www.greatschools.org/api/docs/citiesNearby.page' %>
-    <%= link_to 'Browse Districts', 'https://www.greatschools.org/api/docs/districtBrowse.page' %>
-  </div>
-</div>
+      <h4>Getting Started</h4>
+      <ul class="vertical-nav" role="navigation">
+        <li>
+          <%= link_to('Register', '/api/request-api-key/') %>
+        </li>
+        <li>
+          <%= link_to('Terms of Use', api_terms_of_use_url, target: '_blank') %>
+        </li>
+      </ul>
+      <h4>Documentation</h4>
+      <ul class="vertical-nav" role="navigation">
+        <li>
+          <%= link_to('Technical Overview', api_docs_url(page: :'technical-overview')) %>
+        </li>
+        <li>
+          <%= link_to('Browse Schools', api_docs_url(page: :'browse-schools')) %>
+        </li>
+        <li>
+          <%= link_to('Nearby Schools', api_docs_url(page: :'nearby-schools')) %>
+        </li>
+        <li>
+          <%= link_to('School Profile', api_docs_url(page: :'school-profile')) %>
+        </li>
+        <li>
+          <%= link_to('School Search', api_docs_url(page: :'school-search')) %>
+        </li>
+        <li>
+          <%= link_to('School Reviews', api_docs_url(page: :'school-reviews')) %>
+        </li>
+        <li>
+          <%= link_to('Review Topics', api_docs_url(page: :'review-topics')) %>
+        </li>
+        <li>
+          <%= link_to('School Test Scores', api_docs_url(page: :'school-test-scores')) %>
+        </li>
+        <li>
+          <%= link_to('School Census Data', api_docs_url(page: :'school-census-data')) %>
+        </li>
+        <li>
+          <%= link_to('City Overview', api_docs_url(page: :'city-overview')) %>
+        </li>
+        <li>
+          <%= link_to('Nearby Cities', api_docs_url(page: :'nearby-cities')) %>
+        </li>
+        <li>
+          <%= link_to('Browse Districts', api_docs_url(page: :'browse-districts')) %>
+        </li>
+      </ul>

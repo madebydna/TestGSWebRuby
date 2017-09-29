@@ -1,0 +1,99 @@
+<div class="content">
+  <div class="callfirst">
+    <h3>School Test Scores</h3> Returns test and rank data for a specific school. All calls for School Test Scores are in this format:
+    <div class="sample_url">https://api.greatschools.org/school/tests/[components]?[parameters]</div>
+  </div>
+  <div class="call">
+    <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>state*</td>
+          <td>Two letter state abbreviation</td>
+          <td>ak
+            <br>CA</td>
+        </tr>
+        <tr>
+          <td>gsID*</td>
+          <td>Numeric id of school
+            <br>This gsID is included in other listing requests like Browse Schools and Nearby Schools</td>
+          <td>1</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+  </div>
+  <div class="call">
+    <h3>Parameters</h3> The "key" parameter is what you use to send us your API key.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">https://api.greatschools.org/school/tests/CA/1?key=[yourkey]</div>
+    Returns test scores for school in California with GreatSchools ID of 1
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea rows="" cols="" readonly="readonly" wrap="off" class="sampleTextArea">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+  &lt;testResults&gt;
+    &lt;schoolName&gt;Flagstaff High School&lt;/schoolName&gt;
+    &lt;rank&gt;
+      &lt;name&gt;AZ GS Rating&lt;/name&gt;
+      &lt;scale&gt;1-10&lt;/scale&gt;
+      &lt;year&gt;2008&lt;/year&gt;
+      &lt;description&gt;
+      GreatSchools Ratings for Arizona are based on the 2007-2008 Arizona's Instrument to Measure Standards (AIMS) reading, writing and math results. GreatSchools compared the test results for each grade and subject across all Arizona schools and divided them into 1 through 10 ratings (10 is the best). Please note, private schools are not required to release test results, so ratings are available only for public schools. GreatSchools Ratings cannot be compared across states, because of differences in the states' standardized testing programs. Keep in mind that when comparing schools using GreatSchools Ratings it's important to factor in other information, including the quality of each school's teachers, the school culture, special programs, etc.
+      &lt;/description&gt;
+      &lt;score&gt;9.0&lt;/score&gt;
+    &lt;/rank&gt;
+    &lt;test&gt;
+      &lt;name&gt;Arizona's Instrument to Measure Standards&lt;/name&gt;
+      &lt;id&gt;AZ00137&lt;/id&gt;
+      &lt;description&gt;
+      In 2007-2008 Arizona's Instrument to Measure Standards (AIMS) was used to test students in reading, writing and mathematics in grades 3 through 8 and 10, and in science in grades 4, 8 and high school.  AIMS is a standards-based test, which means that it measures how well students have mastered Arizona's learning standards. Students must pass the grade 10 AIMS in order to graduate. The goal is for all students to meet or exceed state standards on the test.
+      &lt;/description&gt;
+      &lt;abbreviation&gt;AIMS&lt;/abbreviation&gt;
+      &lt;scale&gt;% meeting or exceeding standards&lt;/scale&gt;
+      &lt;levelCode&gt;e,m,h&lt;/levelCode&gt;
+      &lt;testResult&gt;
+        &lt;gradeName&gt;10&lt;/gradeName&gt;
+        &lt;score&gt;81.0&lt;/score&gt;
+        &lt;subjectName&gt;Writing&lt;/subjectName&gt;
+        &lt;testId&gt;AZ00137&lt;/testId&gt;
+        &lt;year&gt;2008&lt;/year&gt;
+      &lt;/testResult&gt;
+      &lt;testResult&gt;
+        &lt;gradeName&gt;10&lt;/gradeName&gt;
+        &lt;score&gt;17.0&lt;/score&gt;
+        &lt;subjectName&gt;Reading&lt;/subjectName&gt;
+        &lt;testId&gt;AZ00137&lt;/testId&gt;
+        &lt;year&gt;2008&lt;/year&gt;
+      &lt;/testResult&gt;
+    &lt;/test&gt;
+  &lt;/testResults&gt;
+    </textarea>
+  </div>
+</div>

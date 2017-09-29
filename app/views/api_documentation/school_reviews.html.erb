@@ -1,0 +1,191 @@
+<div class="content">
+  <div class="callfirst">
+    <h3>School Reviews</h3> Returns a list of the most recent reviews for a school or for any schools in a city. All calls for School Reviews are in this format:
+    <div class="sample_url">https://api.greatschools.org/reviews/[components]?[parameters]</div>
+  </div>
+  <div class="call">
+    <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>school or city</td>
+          <td>Return reviews for a school or for any schools in a city</td>
+          <td>Valid values: "school" or "city"
+          </td>
+        </tr>
+        <tr class="required">
+          <td>state*</td>
+          <td>Two letter state abbreviation</td>
+          <td>ak
+            <br>CA</td>
+        </tr>
+        <tr>
+          <td>city name</td>
+          <td>Name of city, with spaces replaced with hyphens. If the city name has hyphens, replace those with underscores.</td>
+          <td>San Francisco becomes "San-Francisco"
+            <br>Cardiff-By-The-Sea becomes "Cardiff_By_The_Sea"
+          </td>
+        </tr>
+        <tr>
+          <td>gsID</td>
+          <td>Numeric id of school
+            <br>This gsID is included in other listing requests like Browse Schools and Nearby Schools</td>
+          <td>1</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+  </div>
+  <div class="call">
+    <h3>Parameters</h3> The "key" parameter is what you use to send us your API key. Other parameters are optional and used to describe how you would like to receive the data.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+        <tr>
+          <td>cutoffAge</td>
+          <td>Reviews must have been published after this many days ago to be returned. Only valid for the recent reviews in a city call.
+          </td>
+          <td>7</td>
+        </tr>
+        <tr>
+          <td>limit</td>
+          <td>Maximum number of reviews to return. This defaults to 5.</td>
+          <td>10</td>
+        </tr>
+        <tr>
+          <td>topicId</td>
+          <td>To return topical school reviews, specify the topic id.</td>
+          <td>1</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+    Examples of usage:
+    <div class="example_url">https://api.greatschools.org/reviews/school/CA/1?key=[yourAPIkey]</div>
+    Returns 5 most recent reviews for the school in California with GreatSchools ID of 1.
+    <div class="example_url">https://api.greatschools.org/reviews/school/CA/1?key=[yourAPIkey]&amp;topicId=1</div>
+    Returns 5 most recent topical reviews with topic id of 1 for the school in California with GreatSchools ID of 1.
+    <div class="example_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=10&amp;cutoffAge=7</div>
+    Returns the 10 most recent reviews for schools in the city of Alameda, CA. Only returns reviews from the past 7 days.
+    <div class="example_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=10&amp;cutoffAge=7&amp;topicId=1</div>
+    Returns the 10 most recent topical reviews with topic id of 1 for schools in the city of Alameda, CA. Only returns reviews from the past 7 days.
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=2</div>
+    Returns 2 most recent reviews for schools in the city of Alameda, CA.
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea rows="" cols="" readonly="readonly" wrap="off" class="sampleTextArea">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;reviews&gt;
+  &lt;review&gt;
+    &lt;schoolName&gt;Alameda High School&lt;/schoolName&gt;
+    &lt;schoolAddress&gt;2201 Encinal Ave.,
+    Alameda, CA  94501&lt;/schoolAddress&gt;
+    &lt;reviewLink&gt;
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps398220
+    &lt;/reviewLink&gt;
+    &lt;rating&gt;3&lt;/rating&gt;
+    &lt;submitter&gt;former student&lt;/submitter&gt;
+    &lt;postedDate&gt;2006/06/06&lt;/postedDate&gt;
+    &lt;comments&gt;
+    The staff gets on the level of the students and everything is kaotic.
+    &lt;/comments&gt;
+  &lt;/review&gt;
+  &lt;review&gt;
+    &lt;schoolName&gt;Alameda High School&lt;/schoolName&gt;
+    &lt;schoolAddress&gt;2201 Encinal Ave.,
+    Alameda, CA  94501&lt;/schoolAddress&gt;
+    &lt;reviewLink&gt;
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps354422
+    &lt;/reviewLink&gt;
+    &lt;rating&gt;3&lt;/rating&gt;
+    &lt;submitter&gt;parent&lt;/submitter&gt;
+    &lt;postedDate&gt;2006/03/12&lt;/postedDate&gt;
+    &lt;comments&gt;
+    I have hasd 2 children at Alameda High and I find the school to be 'okay. As a large public high school, with a huge variation of academic abilities, it is extremely important for parents to stay in touch with course choices and expectations of teachers to ensure their child's basic education. Their music and drama programs are excellent - don't know about sports. Easy to lose your way in such a large environment - stay in touch with counselors and teachers.
+    &lt;/comments&gt;
+  &lt;/review&gt;
+&lt;/reviews&gt;
+    </textarea>
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=2&amp;topicId=1</div>
+    Returns 2 most recent topical reviews with topic id of 1 for schools in the city of Alameda, CA.
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea rows="" cols="" readonly="readonly" wrap="off" class="sampleTextArea">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;reviews&gt;
+  &lt;review&gt;
+    &lt;schoolName&gt;Alameda High School&lt;/schoolName&gt;
+    &lt;schoolAddress&gt;2201 Encinal Avenue, Alameda, CA 94501&lt;/schoolAddress&gt;
+    &lt;reviewLink&gt;
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps124
+    &lt;/reviewLink&gt;
+    &lt;topicalRating&gt;2&lt;/topicalRating&gt;
+    &lt;reviewTags&gt;
+    &lt;reviewTag&gt;
+    &lt;name&gt;Writing&lt;/name&gt;
+    &lt;/reviewTag&gt;
+    &lt;reviewTag&gt;
+    &lt;name&gt;Reading&lt;/name&gt;
+    &lt;/reviewTag&gt;
+    &lt;reviewTag&gt;
+    &lt;name&gt;Learning &amp; attention issues&lt;/name&gt;
+    &lt;/reviewTag&gt;
+    &lt;/reviewTags&gt;
+    &lt;submitter&gt;parent&lt;/submitter&gt;
+    &lt;postedDate&gt;2014/02/06&lt;/postedDate&gt;
+    &lt;topic&gt;Special Education&lt;/topic&gt;
+    &lt;comments&gt;
+    A reasonable sample comment about the topic.
+    &lt;/comments&gt;
+  &lt;/review&gt;
+  &lt;review&gt;
+    &lt;schoolName&gt;Alameda High School&lt;/schoolName&gt;
+    &lt;schoolAddress&gt;2201 Encinal Avenue, Alameda, CA 94501&lt;/schoolAddress&gt;
+    &lt;reviewLink&gt;
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps96
+    &lt;/reviewLink&gt;
+    &lt;topicalRating&gt;4&lt;/topicalRating&gt;
+    &lt;reviewTags&gt;
+    &lt;reviewTag&gt;
+    &lt;name&gt;Learning &amp; attention issues&lt;/name&gt;
+    &lt;/reviewTag&gt;
+    &lt;reviewTag&gt;
+    &lt;name&gt;Reading&lt;/name&gt;
+    &lt;/reviewTag&gt;
+    &lt;/reviewTags&gt;
+    &lt;submitter&gt;parent&lt;/submitter&gt;
+    &lt;postedDate&gt;2013/12/23&lt;/postedDate&gt;
+    &lt;topic&gt;Special Education&lt;/topic&gt;
+    &lt;comments&gt;
+    A reasonable sample comment about the topic.
+    &lt;/comments&gt;
+  &lt;/review&gt;
+&lt;/reviews&gt;</textarea>
+  </div>
+</div>
