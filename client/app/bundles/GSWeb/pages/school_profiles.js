@@ -38,6 +38,7 @@ import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
+import owlPng from 'school_profiles/owl.png';
 
 window.store = getStore();
 
@@ -59,7 +60,7 @@ $(function() {
     var toggle = assign(new Toggle($('#hero').find('.school-contact')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
-        toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
+        toggle.updateButtonTextCallback(t('show_less'), t('see_more_contact'))
     );
     toggle.init().add_onclick();
   })();
@@ -76,7 +77,7 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
-    $('.school-profile-tour-modal').removeClass('hidden');
+    $('.js-school-profile-tour-modal').removeClass('hidden');
   }
 
   initAnchorHashUpdater();
@@ -105,6 +106,52 @@ $(function() {
 
   $('.js-followThisSchool').on('click', function () {
     signupAndFollowSchool(gon.school.state, gon.school.id);
+  });
+
+  $('body').on('click', '.js-sharingLinks', function () {
+    var url = $(this).data("link") + encodeURIComponent($(this).data("url"));
+    if($(this).data("siteparams") !== undefined) {
+      url +=  $(this).data("siteparams");
+    }
+    PopupCenter(url, $(this).data("type"), 700, 300)
+    return false;
+  });
+
+  $('body').on('click', '.js-slTracking', function () {
+    var cat = $(this).data("module") +"::"+ $(this).data("type");
+    analyticsEvent('Profile', 'Share', cat);
+    return false;
+  });
+
+  function PopupCenter(url, title, w, h) {
+    // Fixes dual-screen position                         Most browsers      Firefox
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    var newWindow = window.open(url, title, 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left);
+
+    // Puts focus on the newWindow
+    if (window.focus) {
+      newWindow.focus();
+    }
+  }
+
+  $('body').on('click', '.js-permaLink', function () {
+    $(this).focus();
+    $(this).select();
+    document.execCommand("copy");
+    $(this).siblings().css('display', 'block');
+    return false;
+  });
+
+  $('body').on('click', '.js-emailSharingLinks', function () {
+    window.location.href = ($(this).data("link"));
+    return false;
   });
 
   $('.profile-section .section-title').each(function() {
@@ -150,7 +197,7 @@ $(function() {
   // sure the modal isn't displayed again.
   $('#close-school-tour').click(function(){
     $('.school-profile-tour-modal').remove();
-    $('.tour-teaser').tipso({content: '<div><div><h3>Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
+    $('.tour-teaser').tipso({content: '<div><div><h3><img src="' + owlPng + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
     setCookie(PROFILE_TOUR_COOKIE, true);
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   });
@@ -229,7 +276,7 @@ $(function() {
   $body.on('click', '.js-start-tour', function() {
     let remodal = $('.js-start-tour').closest('.remodal');
     // This is the modal that appears unless the user clicks 'Not right now'
-    let schoolTourModal = $('.school-profile-tour-modal');
+    let schoolTourModal = $('.js-school-profile-tour-modal');
     if(remodal.length > 0) {
       remodal.remodal().close();
     }

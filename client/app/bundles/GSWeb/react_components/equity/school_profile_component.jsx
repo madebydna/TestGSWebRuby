@@ -17,6 +17,7 @@ export default class SchoolProfileComponent extends React.Component {
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
+    share_content: React.PropTypes.string,
     rating: React.PropTypes.number,
     data: React.PropTypes.array,
     analytics_id: React.PropTypes.string,
@@ -132,6 +133,7 @@ export default class SchoolProfileComponent extends React.Component {
 
     equitySection = <EquitySection
       sources={this.props.sources}
+      share_content={this.props.share_content}
       faq={this.props.faq}
       qualaroo_module_link={this.props.qualaroo_module_link}
       {...equitySectionProps}

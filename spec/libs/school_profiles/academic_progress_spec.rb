@@ -11,7 +11,7 @@ describe SchoolProfiles::AcademicProgress do
     )
   end
 
-  it { is_expected.to respond_to(:narration_text_segment_by_test_score) }
+  # it { is_expected.to respond_to(:narration_text_segment_by_test_score) }
   it { is_expected.to respond_to(:test_scores_rating) }
   it { is_expected.to respond_to(:academic_progress_rating) }
 
@@ -54,66 +54,47 @@ describe SchoolProfiles::AcademicProgress do
     end
   end
 
-  describe 'narration_level(rating)' do
-    it '0 returns nil ' do
-      expect(subject.narration_level(0)).to eq(nil)
-    end
-
-    it '1 returns low ' do
-      expect(subject.narration_level(1)).to eq('low')
-    end
-
-    it '4 returns low ' do
-      expect(subject.narration_level(4)).to eq('low')
-    end
-
-    it '10 returns high ' do
-      expect(subject.narration_level(10)).to eq('high')
-    end
-
-    it '7 returns high ' do
-      expect(subject.narration_level(7)).to eq('high')
-    end
-
-    it '6 returns nil ' do
-      expect(subject.narration_level(6)).to eq(nil)
-    end
-
-    it 'nil returns nil ' do
-      expect(subject.narration_level(nil)).to eq(nil)
+  describe 'rating_by_quintile(ap_rating)' do
+    subject { academic_progress.rating_by_quintile(academic_progress_rating) }
+    {
+        0 => nil,
+        1 => 1,
+        2 => 1,
+        3 => 2,
+        4 => 2,
+        5 => 3,
+        6 => 3,
+        7 => 4,
+        8 => 4,
+        9 => 5,
+        10 => 5,
+        11 => nil,
+        nil => nil
+    }.each do |(input_rating, expected_level)|
+      context "With a academic progress rating of #{input_rating}" do
+        let (:academic_progress_rating) { input_rating }
+        it { is_expected.to eq(expected_level) }
+      end
     end
   end
 
-  describe 'rating_by_quintile(ap_rating)' do
-    it '0 returns nil ' do
-      expect(subject.rating_by_quintile(0)).to eq(nil)
-    end
-
-    it '1 returns low ' do
-      expect(subject.rating_by_quintile(1)).to eq(1)
-    end
-
-    it '4 returns low ' do
-      expect(subject.rating_by_quintile(4)).to eq(2)
-    end
-
-    it '10 returns high ' do
-      expect(subject.rating_by_quintile(10)).to eq(5)
-    end
-
-    it '7 returns high ' do
-      expect(subject.rating_by_quintile(7)).to eq(4)
-    end
-
-    it '6 returns nil ' do
-      expect(subject.rating_by_quintile(6)).to eq(3)
-    end
-
-    it 'nil returns nil ' do
-      expect(subject.rating_by_quintile(nil)).to eq(nil)
-    end
-    it '1000 returns nil ' do
-      expect(subject.rating_by_quintile(1000)).to eq(nil)
+  describe 'narration_level(rating)' do
+    subject { academic_progress.narration_level(test_score_rating) }
+    {
+        0 => nil,
+        1 => 'low',
+        4 => 'low',
+        5 => nil,
+        6 => nil,
+        7 => 'high',
+        10 => 'high',
+        11 => nil,
+        nil => nil
+    }.each do |(input_rating, expected_level)|
+      context "With a test score rating of #{input_rating}" do
+        let (:test_score_rating) { input_rating }
+        it { is_expected.to eq(expected_level) }
+      end
     end
   end
 

@@ -1,11 +1,17 @@
 module SchoolProfiles
   class StudentProgress
     include Qualaroo
+    include SharingTooltipModal
+    
     attr_reader :school, :school_cache_data_reader
 
     def initialize(school, school_cache_data_reader:)
       @school = school
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def share_content
+      share_tooltip_modal('Student_progress', @school)
     end
 
     def qualaroo_module_link

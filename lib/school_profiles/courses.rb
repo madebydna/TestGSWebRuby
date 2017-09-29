@@ -2,6 +2,7 @@ require 'set'
 module SchoolProfiles
   class Courses
     include Qualaroo
+    include SharingTooltipModal
 
     SUBJECT_ORDER = %w(ela_index stem_index hss_index fl_index arts_index health_index vocational_hands_on_index)
     SUBJECT_RATING_SUPPRESSION = %w(arts_index health_index vocational_hands_on_index)
@@ -50,6 +51,10 @@ module SchoolProfiles
       return nil unless rating.present? && (1..10).cover?(rating.to_i)
       key = '_' + ((rating.to_i / 2) + (rating.to_i % 2)).to_s + '_html'
       I18n.t(key, scope: 'lib.advanced_courses.narration', default: I18n.db_t(key, default: key)).html_safe
+    end
+
+    def share_content
+      share_tooltip_modal('Advanced_courses', @school_cache_data_reader.school)
     end
 
 

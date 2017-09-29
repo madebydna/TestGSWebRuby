@@ -1,10 +1,15 @@
 module SchoolProfiles
   class EquityOverview
     include Qualaroo
+    include SharingTooltipModal
 
     def initialize(school_cache_data_reader:, equity:)
       @school_cache_data_reader = school_cache_data_reader
       @equity = equity
+    end
+
+    def share_content
+      share_tooltip_modal('Equity_overview', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link(module_sym)
