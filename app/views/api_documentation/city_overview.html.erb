@@ -1,7 +1,7 @@
 <div class="content">
   <div class="callfirst">
     <h2>City Overview</h2> Returns information about a city. All calls to City Overview are in this format:
-    <div class="sample_url">http://api.greatschools.org/cities/[components]?[parameters]</div>
+    <div class="sample_url">https://api.greatschools.org/cities/[components]?[parameters]</div>
   </div>
   <div class="call">
     <h2>Components</h2> Components of the url describe what type of data you would like. They are separated by forward slashes.
@@ -51,12 +51,12 @@
     </table>
     <div class="footnote">*required</div>
     Examples of usage:
-    <div class="example_url">http://api.greatschools.org/cities/CA/San-Francisco?key=[yourAPIKey]</div>
+    <div class="example_url">https://api.greatschools.org/cities/CA/San-Francisco?key=[yourAPIKey]</div>
     Returns city information for San Francisco, CA
   </div>
   <div class="call">
     <h2>Sample Request</h2>
-    <div class="sample_url">http://api.greatschools.org/cities/AK/Anchorage?key=[yourAPIKey]</div>
+    <div class="sample_url">https://api.greatschools.org/cities/AK/Anchorage?key=[yourAPIKey]</div>
     Returns city information for Anchorage, AK
   </div>
   <div class="call">
@@ -73,11 +73,5 @@
     &lt;charterSchools&gt;6&lt;/charterSchools&gt;
     &lt;privateSchools&gt;23&lt;/privateSchools&gt;
 &lt;/city&gt;</textarea>
-  </div>
-  <div class="call">
-    <h2>Have Questions?</h2>
-    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
-      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
-    </div>
   </div>
 </div>

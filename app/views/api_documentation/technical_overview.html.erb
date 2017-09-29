@@ -1,46 +1,55 @@
 <div class="grid_11">
   <div class="callfirst">
     <h3>Technical Overview</h3>
-    <div class="mainRequest">The GreatSchools API is a <a target="_blank" href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>-based
+    <div class="mainRequest">The GreatSchools API is a <a target="_blank" href="https://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>-based
       web service. </div>
       <div class="mainRequest">
-      Note that all path components and parameters must be properly <a target="_blank" href="http://en.wikipedia.org/wiki/Url_encoding">URL-encoded</a>.
+      Note that all path components and parameters must be properly <a target="_blank" href="https://en.wikipedia.org/wiki/Url_encoding">URL-encoded</a>.
     </div>
   </div>
   <div class="call">
     <h3>Requests</h3>
     <div class="mainRequest">
-      <a href="/api/docs/browseSchools.page">Browse Schools</a>
+      <%= link_to('Browse Schools', api_docs_url(page: :'browse-schools')) %>
     </div>
     Returns a list of schools in a city.
     <div class="mainRequest">
-      <a href="/api/docs/nearbySchools.page">Nearby Schools</a>
+      <%= link_to('Nearby Schools', api_docs_url(page: :'nearby-schools')) %>
     </div>
     Returns a list of schools closest to the center of a city,
     ZIP Code or address.
-    <div class="mainRequest"><a href="/api/docs/schoolProfile.page">School Profile</a></div>
+    <div class="mainRequest">
+      <%= link_to('School Profile', api_docs_url(page: :'school-profile')) %>
+    </div>
     Returns a profile data for a specific school.
-    <div class="mainRequest"><a href="/api/docs/schoolSearch.page">School Search</a></div>
+    <div class="mainRequest">
+      <%= link_to('School Search', api_docs_url(page: :'school-search')) %>
+    </div>
     Returns a list of schools based on a search string.
-    <div class="mainRequest"><a href="/api/docs/schoolReviews.page">School Reviews</a></div>
+    <div class="mainRequest">
+      <%= link_to('School Reviews', api_docs_url(page: :'school-reviews')) %>
+    </div>
     Returns a list of the most recent reviews for a school
     or for any schools in a city.
-    <div class="mainRequest"><a href="/api/docs/schoolTestScores.page">School Test Scores</a></div>
-    Returns test and rank data for a specific school.
-    <div class="mainRequest"><a href="/api/docs/schoolCensusData.page">School Census Data</a></div>
-    Returns census and profile data for a school.
-    <div class="mainRequest"><a href="/api/docs/cityBrowse.page">City Overview</a></div>
-    Returns information about a city.
-    <div class="mainRequest"><a href="/api/docs/citiesNearby.page">Nearby Cities</a></div>
-    Returns a list of cities near another city.
-    <div class="mainRequest"><a href="/api/docs/districtBrowse.page">Browse Districts</a></div>
-    Returns a list of school districts in a city.
-  </div>
-  <div class="call">
-    <h3>Have Questions?</h3>
-    <div class="questions">To ask questions or to report bugs please email
-      api-support@greatschools.org. Please do not abuse our API. Review the
-      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
+    <div class="mainRequest">
+      <%= link_to('School Test Scores', api_docs_url(page: :'school-test-scores')) %>
     </div>
+    Returns test and rank data for a specific school.
+    <div class="mainRequest">
+      <%= link_to('School Census Data', api_docs_url(page: :'school-census-data')) %>
+    </div>
+    Returns census and profile data for a school.
+    <div class="mainRequest">
+      <%= link_to('City Overview', api_docs_url(page: :'city-overview')) %>
+    </div>
+    Returns information about a city.
+    <div class="mainRequest">
+      <%= link_to('Nearby Cities', api_docs_url(page: :'nearby-cities')) %>
+    </div>
+    Returns a list of cities near another city.
+    <div class="mainRequest">
+      <%= link_to('Browse Districts', api_docs_url(page: :'browse-districts')) %>
+    </div>
+    Returns a list of school districts in a city.
   </div>
 </div>

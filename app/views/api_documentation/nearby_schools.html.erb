@@ -1,7 +1,7 @@
 <div class="content">
   <div class="callfirst">
     <h3>Nearby Schools</h3> Returns a list of schools closest to the center of a city, ZIP Code or address. All calls for Nearby Schools are in this format:
-    <div class="sample_url">http://api.greatschools.org/schools/nearby?[parameters]</div>
+    <div class="sample_url">https://api.greatschools.org/schools/nearby?[parameters]</div>
   </div>
   <div class="call">
     <h3>Parameters</h3> The "key" parameter is what is used to identify your specific API key to GreatSchools. The "state" parameter tells us what State you would like the results for and is required. You must provide at least one of the following, "city", "zip", "address", or "lat" and "lon" describing the location in order to receive the list of schools near that coordinate. Other parameters are optional.
@@ -83,18 +83,18 @@
     </table>
     <div class="footnote">*required</div>
     Examples of usage:
-    <div class="example_url">http://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;address=160+Spear+St&amp;city=San+Francisco&amp;state=CA&amp;zip=94105&amp;schoolType=public-charter&amp;levelCode=elementary-schools&amp;radius=10&amp;limit=100</div>
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;address=160+Spear+St&amp;city=San+Francisco&amp;state=CA&amp;zip=94105&amp;schoolType=public-charter&amp;levelCode=elementary-schools&amp;radius=10&amp;limit=100</div>
     Returns up to 100 public and charter elementary schools within 10 miles of 160 Spear St, San Francisco, CA 94105
-    <div class="example_url">http://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;city=San+Francisco&amp;state=CA</div>
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;city=San+Francisco&amp;state=CA</div>
     Returns up to 200 schools within 5 miles of San Francisco, CA
-    <div class="example_url">http://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105</div>
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105</div>
     Returns up to 200 schools within 5 miles of ZIP Code 94105 in California
-    <div class="example_url">http://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;lat=37.758862&amp;lon=-122.411406</div>
+    <div class="example_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;lat=37.758862&amp;lon=-122.411406</div>
     Returns up to 200 schools within 5 miles of latitude 35.274494, longitude -119.005623 in California
   </div>
   <div class="call">
     <h3>Sample Request</h3>
-    <div class="sample_url">http://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105&amp;limit=2</div>
+    <div class="sample_url">https://api.greatschools.org/schools/nearby?key=[yourAPIKey]&amp;state=CA&amp;zip=94105&amp;limit=2</div>
     Returns 2 California schools within 5 miles of ZIP Code 94105 in California
   </div>
   <div class="call">
@@ -116,13 +116,13 @@
       &lt;lat&gt;37.7924&lt;/lat&gt;
       &lt;lon&gt;-122.3921&lt;/lon&gt;
       &lt;overviewLink&gt;
-      http://www.greatschools.org/cgi-bin/ca/private/11536?s_cid=gsapi
+      https://www.greatschools.org/cgi-bin/ca/private/11536?s_cid=gsapi
       &lt;/overviewLink&gt;
       &lt;ratingsLink&gt;
-      http://www.greatschools.org/school/rating.page?state=CA&amp;id=11536&amp;s_cid=gsapi
+      https://www.greatschools.org/school/rating.page?state=CA&amp;id=11536&amp;s_cid=gsapi
       &lt;/ratingsLink&gt;
       &lt;reviewsLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11536&amp;s_cid=gsapi
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11536&amp;s_cid=gsapi
       &lt;/reviewsLink&gt;
       &lt;/school&gt;
       &lt;school&gt;
@@ -140,22 +140,16 @@
       &lt;lat&gt;37.791412&lt;/lat&gt;
       &lt;lon&gt;-122.406784&lt;/lon&gt;
       &lt;overviewLink&gt;
-      http://www.greatschools.org/cgi-bin/ca/private/8097?s_cid=gsapi
+      https://www.greatschools.org/cgi-bin/ca/private/8097?s_cid=gsapi
       &lt;/overviewLink&gt;
       &lt;ratingsLink&gt;
-      http://www.greatschools.org/school/rating.page?state=CA&amp;id=8097&amp;s_cid=gsapi
+      https://www.greatschools.org/school/rating.page?state=CA&amp;id=8097&amp;s_cid=gsapi
       &lt;/ratingsLink&gt;
       &lt;reviewsLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=8097&amp;s_cid=gsapi
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=8097&amp;s_cid=gsapi
       &lt;/reviewsLink&gt;
       &lt;/school&gt;
       &lt;/schools&gt;
     </textarea>
-  </div>
-  <div class="call">
-    <h3>Have Questions?</h3>
-    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
-      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
-    </div>
   </div>
 </div>

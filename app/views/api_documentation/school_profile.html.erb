@@ -1,7 +1,7 @@
 <div class="content">
   <div class="callfirst">
     <h3>School Profile</h3> Returns a profile data for a specific school. All calls for School Profiles are in this format:
-    <div class="sample_url">http://api.greatschools.org/schools/[components]?[parameters]</div>
+    <div class="sample_url">https://api.greatschools.org/schools/[components]?[parameters]</div>
   </div>
   <div class="call">
     <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
@@ -52,7 +52,7 @@
   </div>
   <div class="call">
     <h3>Sample Request</h3>
-    <div class="sample_url">http://api.greatschools.org/schools/CA/1?key=[yourkey]</div>
+    <div class="sample_url">https://api.greatschools.org/schools/CA/1?key=[yourkey]</div>
     Returns school profile for school in California with GreatSchools ID of 1
   </div>
   <div class="call">
@@ -73,18 +73,18 @@
       Alameda, CA  94501&lt;/address&gt;
       &lt;phone&gt;(510) 337-7022&lt;/phone&gt;
       &lt;fax&gt;(510) 521-4740&lt;/fax&gt;
-      &lt;website&gt;http://ahs.alameda.k12.ca.us/&lt;/website&gt;
+      &lt;website&gt;https://ahs.alameda.k12.ca.us/&lt;/website&gt;
       &lt;ncesId&gt;060177000041&lt;/ncesId&gt;
       &lt;lat&gt;37.764267&lt;/lat&gt;
       &lt;lon&gt;-122.24818&lt;/lon&gt;
       &lt;overviewLink&gt;
-      http://www.greatschools.org/modperl/browse_school/ca/1?s_cid=gsapi
+      https://www.greatschools.org/modperl/browse_school/ca/1?s_cid=gsapi
       &lt;/overviewLink&gt;
       &lt;ratingsLink&gt;
-      http://www.greatschools.org/school/rating.page?state=CA&amp;id=1&amp;s_cid=gsapi
+      https://www.greatschools.org/school/rating.page?state=CA&amp;id=1&amp;s_cid=gsapi
       &lt;/ratingsLink&gt;
       &lt;reviewsLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi
       &lt;/reviewsLink&gt;
       &lt;parentReviews&gt;
       &lt;review&gt;
@@ -92,7 +92,7 @@
       &lt;schoolAddress&gt;2201 Encinal Ave.,
       Alameda, CA  94501&lt;/schoolAddress&gt;
       &lt;reviewLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps398220
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps398220
       &lt;/reviewLink&gt;
       &lt;rating&gt;3&lt;/rating&gt;
       &lt;submitter&gt;former student&lt;/submitter&gt;
@@ -106,7 +106,7 @@
       &lt;schoolAddress&gt;2201 Encinal Ave.,
       Alameda, CA  94501&lt;/schoolAddress&gt;
       &lt;reviewLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps354422
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps354422
       &lt;/reviewLink&gt;
       &lt;rating&gt;3&lt;/rating&gt;
       &lt;submitter&gt;parent&lt;/submitter&gt;
@@ -120,7 +120,7 @@
       &lt;schoolAddress&gt;2201 Encinal Ave.,
       Alameda, CA  94501&lt;/schoolAddress&gt;
       &lt;reviewLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps214510
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps214510
       &lt;/reviewLink&gt;
       &lt;rating&gt;4&lt;/rating&gt;
       &lt;submitter&gt;parent&lt;/submitter&gt;
@@ -134,7 +134,7 @@
       &lt;schoolAddress&gt;2201 Encinal Ave.,
       Alameda, CA  94501&lt;/schoolAddress&gt;
       &lt;reviewLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps154770
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps154770
       &lt;/reviewLink&gt;
       &lt;rating&gt;4&lt;/rating&gt;
       &lt;submitter&gt;parent&lt;/submitter&gt;
@@ -148,7 +148,7 @@
       &lt;schoolAddress&gt;2201 Encinal Ave.,
       Alameda, CA  94501&lt;/schoolAddress&gt;
       &lt;reviewLink&gt;
-      http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps105868
+      https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps105868
       &lt;/reviewLink&gt;
       &lt;rating&gt;3&lt;/rating&gt;
       &lt;submitter&gt;former student&lt;/submitter&gt;
@@ -161,11 +161,5 @@
       &lt;/school&gt;
 
     </textarea>
-  </div>
-  <div class="call">
-    <h3>Have Questions?</h3>
-    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
-      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
-    </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="content">
     <div class="callfirst">
         <h3>School Search</h3> Returns a list of schools based on a search string. All calls for School Search are in this format:
-        <div class="sample_url">http://api.greatschools.org/search/schools/?[parameters]</div>
+        <div class="sample_url">https://api.greatschools.org/search/schools/?[parameters]</div>
     </div>
     <div class="call">
         <h3>Parameters</h3> The "key" parameter is what you use to send us your API key.
@@ -50,14 +50,14 @@
         </table>
         <div class="footnote">*required</div>
         Examples of usage:
-        <div class="example_url">http://api.greatschools.org/search/schools?key=[yourAPIKey]&amp;state=CA&amp;q=Alameda</div>
+        <div class="example_url">https://api.greatschools.org/search/schools?key=[yourAPIKey]&amp;state=CA&amp;q=Alameda</div>
         Searches for schools using the query string "Alameda" in California
-        <div class="example_url">http://api.greatschools.org/search/schools?key=[yourAPIKey]&amp;state=CA&amp;q=Alameda&amp;sort=alpha&amp;levelCode=elementary-schools&amp;limit=10</div>
+        <div class="example_url">https://api.greatschools.org/search/schools?key=[yourAPIKey]&amp;state=CA&amp;q=Alameda&amp;sort=alpha&amp;levelCode=elementary-schools&amp;limit=10</div>
         Searches for no more than 10 elementary schools using the query string "Alameda" in California, returned in alphabetical order
     </div>
     <div class="call">
         <h3>Sample Request</h3>
-        <div class="sample_url">http://api.greatschools.org/search/schools?key=[yourAPIKey]&amp;state=CA&amp;q=Alameda+Christian&amp;limit=2</div>
+        <div class="sample_url">https://api.greatschools.org/search/schools?key=[yourAPIKey]&amp;state=CA&amp;q=Alameda+Christian&amp;limit=2</div>
         Returns 2 search results for "Alameda Christian" in California
     </div>
     <div class="call">
@@ -80,9 +80,9 @@
             &lt;ncesId&gt;00079445&lt;/ncesId&gt;
             &lt;lat&gt;37.768623&lt;/lat&gt;
             &lt;lon&gt;-122.243965&lt;/lon&gt;
-            &lt;overviewLink&gt;http://www.greatschools.org/cgi-bin/ca/private/8485?s_cid=gsapi&lt;/overviewLink&gt;
-            &lt;ratingsLink&gt;http://www.greatschools.org/school/rating.page?state=CA&amp;id=8485&amp;s_cid=gsapi&lt;/ratingsLink&gt;
-            &lt;reviewsLink&gt;http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=8485&amp;s_cid=gsapi&lt;/reviewsLink&gt;
+            &lt;overviewLink&gt;https://www.greatschools.org/cgi-bin/ca/private/8485?s_cid=gsapi&lt;/overviewLink&gt;
+            &lt;ratingsLink&gt;https://www.greatschools.org/school/rating.page?state=CA&amp;id=8485&amp;s_cid=gsapi&lt;/ratingsLink&gt;
+            &lt;reviewsLink&gt;https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=8485&amp;s_cid=gsapi&lt;/reviewsLink&gt;
         &lt;/school&gt;
         &lt;school&gt;
             &lt;gsId&gt;24205&lt;/gsId&gt;
@@ -99,17 +99,11 @@
             &lt;ncesId&gt;A0500218&lt;/ncesId&gt;
             &lt;lat&gt;37.72749&lt;/lat&gt;
             &lt;lon&gt;-122.2401&lt;/lon&gt;
-            &lt;overviewLink&gt;http://www.greatschools.org/cgi-bin/ca/private/24205?s_cid=gsapi&lt;/overviewLink&gt;
-            &lt;ratingsLink&gt;http://www.greatschools.org/school/rating.page?state=CA&amp;id=24205&amp;s_cid=gsapi&lt;/ratingsLink&gt;
-            &lt;reviewsLink&gt;http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=24205&amp;s_cid=gsapi&lt;/reviewsLink&gt;
+            &lt;overviewLink&gt;https://www.greatschools.org/cgi-bin/ca/private/24205?s_cid=gsapi&lt;/overviewLink&gt;
+            &lt;ratingsLink&gt;https://www.greatschools.org/school/rating.page?state=CA&amp;id=24205&amp;s_cid=gsapi&lt;/ratingsLink&gt;
+            &lt;reviewsLink&gt;https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=24205&amp;s_cid=gsapi&lt;/reviewsLink&gt;
         &lt;/school&gt;
     &lt;/schools&gt;
                     </textarea>
-    </div>
-    <div class="call">
-        <h3>Have Questions?</h3>
-        <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
-            <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
-        </div>
     </div>
 </div>

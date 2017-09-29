@@ -63,60 +63,67 @@
 <div id="api-documentation" class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-4">
-      <h4>GreatSchools API</h4>
+      <h4>Getting Started</h4>
       <ul class="vertical-nav" role="navigation">
         <li>
-          <%= link_to('Getting Started', api_docs_url(page: :getting_started)) %>
+          <%= link_to('Register', '/api/request-api-key/') %>
         </li>
         <li>
-          <%= link_to('Terms of Use', api_docs_url(page: :terms)) %>
+          <%= link_to('Terms of Use', api_terms_of_use_url, target: '_blank') %>
         </li>
       </ul>
       <h4>Documentation</h4>
       <ul class="vertical-nav" role="navigation">
         <li>
-          <%= link_to('Technical Overview', api_docs_url(page: :technical_overview)) %>
+          <%= link_to('Technical Overview', api_docs_url(page: :'technical-overview')) %>
         </li>
         <li>
-          <%= link_to('Browse Schools', api_docs_url(page: :browse_schools)) %>
+          <%= link_to('Browse Schools', api_docs_url(page: :'browse-schools')) %>
         </li>
         <li>
-          <%= link_to('Nearby Schools', api_docs_url(page: :nearby_schools)) %>
+          <%= link_to('Nearby Schools', api_docs_url(page: :'nearby-schools')) %>
         </li>
         <li>
-          <%= link_to('School Profile', api_docs_url(page: :school_profile)) %>
+          <%= link_to('School Profile', api_docs_url(page: :'school-profile')) %>
         </li>
         <li>
-          <%= link_to('School Search', api_docs_url(page: :school_search)) %>
+          <%= link_to('School Search', api_docs_url(page: :'school-search')) %>
         </li>
         <li>
-          <%= link_to('School Reviews', api_docs_url(page: :school_reviews)) %>
+          <%= link_to('School Reviews', api_docs_url(page: :'school-reviews')) %>
         </li>
         <li>
-          <%= link_to('Review Topics', api_docs_url(page: :review_topics)) %>
+          <%= link_to('Review Topics', api_docs_url(page: :'review-topics')) %>
         </li>
         <li>
-          <%= link_to('School Test Scores', api_docs_url(page: :school_test_scores)) %>
+          <%= link_to('School Test Scores', api_docs_url(page: :'school-test-scores')) %>
         </li>
         <li>
-          <%= link_to('School Census Data', api_docs_url(page: :school_census_data)) %>
+          <%= link_to('School Census Data', api_docs_url(page: :'school-census-data')) %>
         </li>
         <li>
-          <%= link_to('City Overview', api_docs_url(page: :city_overview)) %>
+          <%= link_to('City Overview', api_docs_url(page: :'city-overview')) %>
         </li>
         <li>
-          <%= link_to('Nearby Cities', api_docs_url(page: :nearby_cities)) %>
+          <%= link_to('Nearby Cities', api_docs_url(page: :'nearby-cities')) %>
         </li>
         <li>
-          <%= link_to('Browse Districts', api_docs_url(page: :browse_districts)) %>
+          <%= link_to('Browse Districts', api_docs_url(page: :'browse-districts')) %>
         </li>
       </ul>
     </div>
     <div class="col-xs-12 col-sm-8">
       <%= content_for?(:content) ? yield(:content) : yield %>
+      <div class="call">
+        <h3>Have Questions?</h3>
+        <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
+          <%= link_to("Terms of Use", api_terms_of_use_url, target: '_blank') %>.
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<br/>
 
 <%=  render 'omniture/quantcast' %>
 

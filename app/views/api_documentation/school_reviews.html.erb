@@ -1,7 +1,7 @@
 <div class="content">
   <div class="callfirst">
     <h3>School Reviews</h3> Returns a list of the most recent reviews for a school or for any schools in a city. All calls for School Reviews are in this format:
-    <div class="sample_url">http://api.greatschools.org/reviews/[components]?[parameters]</div>
+    <div class="sample_url">https://api.greatschools.org/reviews/[components]?[parameters]</div>
   </div>
   <div class="call">
     <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
@@ -79,18 +79,18 @@
     </table>
     <div class="footnote">*required</div>
     Examples of usage:
-    <div class="example_url">http://api.greatschools.org/reviews/school/CA/1?key=[yourAPIkey]</div>
+    <div class="example_url">https://api.greatschools.org/reviews/school/CA/1?key=[yourAPIkey]</div>
     Returns 5 most recent reviews for the school in California with GreatSchools ID of 1.
-    <div class="example_url">http://api.greatschools.org/reviews/school/CA/1?key=[yourAPIkey]&amp;topicId=1</div>
+    <div class="example_url">https://api.greatschools.org/reviews/school/CA/1?key=[yourAPIkey]&amp;topicId=1</div>
     Returns 5 most recent topical reviews with topic id of 1 for the school in California with GreatSchools ID of 1.
-    <div class="example_url">http://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=10&amp;cutoffAge=7</div>
+    <div class="example_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=10&amp;cutoffAge=7</div>
     Returns the 10 most recent reviews for schools in the city of Alameda, CA. Only returns reviews from the past 7 days.
-    <div class="example_url">http://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=10&amp;cutoffAge=7&amp;topicId=1</div>
+    <div class="example_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=10&amp;cutoffAge=7&amp;topicId=1</div>
     Returns the 10 most recent topical reviews with topic id of 1 for schools in the city of Alameda, CA. Only returns reviews from the past 7 days.
   </div>
   <div class="call">
     <h3>Sample Request</h3>
-    <div class="sample_url">http://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=2</div>
+    <div class="sample_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=2</div>
     Returns 2 most recent reviews for schools in the city of Alameda, CA.
   </div>
   <div class="call">
@@ -103,7 +103,7 @@
     &lt;schoolAddress&gt;2201 Encinal Ave.,
     Alameda, CA  94501&lt;/schoolAddress&gt;
     &lt;reviewLink&gt;
-    http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps398220
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps398220
     &lt;/reviewLink&gt;
     &lt;rating&gt;3&lt;/rating&gt;
     &lt;submitter&gt;former student&lt;/submitter&gt;
@@ -117,7 +117,7 @@
     &lt;schoolAddress&gt;2201 Encinal Ave.,
     Alameda, CA  94501&lt;/schoolAddress&gt;
     &lt;reviewLink&gt;
-    http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps354422
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps354422
     &lt;/reviewLink&gt;
     &lt;rating&gt;3&lt;/rating&gt;
     &lt;submitter&gt;parent&lt;/submitter&gt;
@@ -131,7 +131,7 @@
   </div>
   <div class="call">
     <h3>Sample Request</h3>
-    <div class="sample_url">http://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=2&amp;topicId=1</div>
+    <div class="sample_url">https://api.greatschools.org/reviews/city/CA/Alameda?key=[yourAPIkey]&amp;limit=2&amp;topicId=1</div>
     Returns 2 most recent topical reviews with topic id of 1 for schools in the city of Alameda, CA.
   </div>
   <div class="call">
@@ -143,7 +143,7 @@
     &lt;schoolName&gt;Alameda High School&lt;/schoolName&gt;
     &lt;schoolAddress&gt;2201 Encinal Avenue, Alameda, CA 94501&lt;/schoolAddress&gt;
     &lt;reviewLink&gt;
-    http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps124
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps124
     &lt;/reviewLink&gt;
     &lt;topicalRating&gt;2&lt;/topicalRating&gt;
     &lt;reviewTags&gt;
@@ -168,7 +168,7 @@
     &lt;schoolName&gt;Alameda High School&lt;/schoolName&gt;
     &lt;schoolAddress&gt;2201 Encinal Avenue, Alameda, CA 94501&lt;/schoolAddress&gt;
     &lt;reviewLink&gt;
-    http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps96
+    https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=1&amp;s_cid=gsapi&amp;lr=true#ps96
     &lt;/reviewLink&gt;
     &lt;topicalRating&gt;4&lt;/topicalRating&gt;
     &lt;reviewTags&gt;
@@ -187,11 +187,5 @@
     &lt;/comments&gt;
   &lt;/review&gt;
 &lt;/reviews&gt;</textarea>
-  </div>
-  <div class="call">
-    <h3>Have Questions?</h3>
-    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
-      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
-    </div>
   </div>
 </div>

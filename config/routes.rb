@@ -230,6 +230,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/academics/math-2/', as: :math
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
+    get '/gk/api-terms-use', as: :api_terms_of_use
 
 
     get '/status/error404.page'

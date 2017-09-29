@@ -1,7 +1,7 @@
 <div class="content">
   <div class="callfirst">
     <h3>Browse Schools</h3> Returns a list of schools in a city. All calls for a Browse Schools are in this format:
-    <div class="sample_url">http://api.greatschools.org/schools/[components]?[parameters]</div>
+    <div class="sample_url">https://api.greatschools.org/schools/[components]?[parameters]</div>
   </div>
   <div class="call">
     <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
@@ -74,16 +74,16 @@
     </table>
     <div class="footnote">*required</div>
     Examples of usage:
-    <div class="example_url">http://api.greatschools.org/schools/CA/Alameda?key=[yourAPIkey]</div>
+    <div class="example_url">https://api.greatschools.org/schools/CA/Alameda?key=[yourAPIkey]</div>
     Returns up to 200 schools in the city of Alameda, CA
-    <div class="example_url">http://api.greatschools.org/schools/CA/Alameda?key=[yourAPIkey]&amp;limit=-1</div>
+    <div class="example_url">https://api.greatschools.org/schools/CA/Alameda?key=[yourAPIkey]&amp;limit=-1</div>
     Returns all schools in the city of Alameda, CA
-    <div class="example_url">http://api.greatschools.org/schools/CA/San-Francisco/private/middle-schools?key=[yourAPIkey]&amp;sort=parent_rating&amp;limit=5</div>
+    <div class="example_url">https://api.greatschools.org/schools/CA/San-Francisco/private/middle-schools?key=[yourAPIkey]&amp;sort=parent_rating&amp;limit=5</div>
     Returns 5 private middle schools in San Francisco, CA, sorting by parent rating
   </div>
   <div class="call">
     <h3>Sample Request</h3>
-    <div class="sample_url">http://api.greatschools.org/schools/CA/Truckee?key=[yourAPIkey]&amp;limit=2</div>
+    <div class="sample_url">https://api.greatschools.org/schools/CA/Truckee?key=[yourAPIkey]&amp;limit=2</div>
     Returns 2 schools in Truckee, CA
   </div>
   <div class="call">
@@ -105,13 +105,13 @@
         Truckee, CA  96161&lt;/address&gt;
         &lt;phone&gt;(530) 582-2750&lt;/phone&gt;
         &lt;fax&gt;(530) 582-7640&lt;/fax&gt;
-        &lt;website&gt;http://www.ttusd.org&lt;/website&gt;
+        &lt;website&gt;https://www.ttusd.org&lt;/website&gt;
         &lt;ncesId&gt;063877011005&lt;/ncesId&gt;
         &lt;lat&gt;39.3454&lt;/lat&gt;
         &lt;lon&gt;-120.1735&lt;/lon&gt;
-        &lt;overviewLink&gt;http://www.greatschools.org/modperl/browse_school/ca/13978?s_cid=gsapi&lt;/overviewLink&gt;
-        &lt;ratingsLink&gt;http://www.greatschools.org/school/rating.page?state=CA&amp;id=13978&amp;s_cid=gsapi&lt;/ratingsLink&gt;
-        &lt;reviewsLink&gt;http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=13978&amp;s_cid=gsapi&lt;/reviewsLink&gt;
+        &lt;overviewLink&gt;https://www.greatschools.org/modperl/browse_school/ca/13978?s_cid=gsapi&lt;/overviewLink&gt;
+        &lt;ratingsLink&gt;https://www.greatschools.org/school/rating.page?state=CA&amp;id=13978&amp;s_cid=gsapi&lt;/ratingsLink&gt;
+        &lt;reviewsLink&gt;https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=13978&amp;s_cid=gsapi&lt;/reviewsLink&gt;
         &lt;/school&gt;
         &lt;school&gt;
         &lt;gsId&gt;11039&lt;/gsId&gt;
@@ -131,18 +131,12 @@
         &lt;ncesId&gt;063877006175&lt;/ncesId&gt;
         &lt;lat&gt;39.3259&lt;/lat&gt;
         &lt;lon&gt;-120.2147&lt;/lon&gt;
-        &lt;overviewLink&gt;http://www.greatschools.org/modperl/browse_school/ca/11039?s_cid=gsapi&lt;/overviewLink&gt;
-        &lt;ratingsLink&gt;http://www.greatschools.org/school/rating.page?state=CA&amp;id=11039&amp;s_cid=gsapi&lt;/ratingsLink&gt;
-        &lt;reviewsLink&gt;http://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11039&amp;s_cid=gsapi&lt;/reviewsLink&gt;
+        &lt;overviewLink&gt;https://www.greatschools.org/modperl/browse_school/ca/11039?s_cid=gsapi&lt;/overviewLink&gt;
+        &lt;ratingsLink&gt;https://www.greatschools.org/school/rating.page?state=CA&amp;id=11039&amp;s_cid=gsapi&lt;/ratingsLink&gt;
+        &lt;reviewsLink&gt;https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11039&amp;s_cid=gsapi&lt;/reviewsLink&gt;
         &lt;/school&gt;
         &lt;/schools&gt;
 
       </textarea>
-  </div>
-  <div class="call">
-    <h3>Have Questions?</h3>
-    <div class="questions">To ask questions or to report bugs please email api-support@greatschools.org. Please do not abuse our API. Review the
-      <%= link_to("Terms of Use", api_docs_url(page: 'terms_of_use')) %>.
-    </div>
   </div>
 </div>
