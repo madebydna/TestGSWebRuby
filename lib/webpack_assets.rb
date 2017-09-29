@@ -1,10 +1,10 @@
 module WebpackAssets 
-  def self.lookup(name)
-    self.asset_map[name]
+  def self.lookup_image(name)
+    self.fingerprinted_image_hash[name]
   end
 
-  def self.asset_map
-    return @_asset_map if @_asset_map
+  def self.fingerprinted_image_hash
+    return @_fingerprinted_image_hash if @_fingerprinted_image_hash
 
     images_base_path = 'app/assets/images/'
 
@@ -21,7 +21,8 @@ module WebpackAssets
       hash[asset_tail] = fingerprinted_asset
     end
 
-    @_asset_map = translated unless Rails.env.development?
+    # don't memoize in development
+    @_fingerprinted_image_hash = translated unless Rails.env.development?
 
     return translated
   end
@@ -29,11 +30,10 @@ module WebpackAssets
   def self.asset_manifest
     manifest_filename = 'asset_map.json'
 
-    return @_asset_manifest if @_asset_manifest
-    @_asset_manifest = JSON.parse(
+    JSON.parse(
       File.read(
         Rails.root.join(
-          'app/assets/webpack', # Rails.configuration.webpack.output_dir,
+          'app/assets/webpack',
           manifest_filename
         )
       )

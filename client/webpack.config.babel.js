@@ -4,13 +4,10 @@
 
 const webpack = require('webpack');
 const path = require('path');
-const StatsPlugin = require('stats-webpack-plugin');
-
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-
 import AssetMapPlugin from 'asset-map-webpack-plugin';
 
 const config = {

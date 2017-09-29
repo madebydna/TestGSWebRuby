@@ -12,12 +12,12 @@ module ApplicationHelper
     super(path, *args, &blk)
   end
 
-  def webpack_asset_path(name, **options)
-    asset_path(WebpackAssets.lookup(name), **options)
+  def webpack_image_path(name, **options)
+    asset_path(WebpackAssets.lookup_image(name), **options)
   end
 
-  def webpack_asset_url(name, **options)
-    asset_url(WebpackAssets.lookup(name), **options)
+  def webpack_image_url(name, **options)
+    asset_url(WebpackAssets.lookup_image(name), **options)
   end
 
   # In this method, capitalize means to uppercase the first letter of a phrase and leave the rest untouched.
