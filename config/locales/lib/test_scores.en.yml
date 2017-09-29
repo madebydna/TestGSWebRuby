@@ -4,7 +4,7 @@ en:
       'English Language Arts': English
       English: English
       'title': 'GreatSchools profile data sources &amp; information'
-      'GreatSchools Rating': 'GreatSchools Test Scores Rating'
+      'GreatSchools Rating': 'GreatSchools Test Score Rating'
       'Rating text': 'The GreatSchools Rating is a simple tool that helps you compare schools based on test scores and other available data, including student academic growth and college readiness. GreatSchools is always working to improve the rating and add more information when state education agencies make school quality data publicly available.'
       n_tested: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject weighted by the number of students tested in each grade.'
       straight_avg: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject based on a non-weighted average of the scores in each grade. We are not able to provide a weighted average because the number of test-taking students in each grade is not available.'
@@ -12,22 +12,30 @@ en:
       'source': 'Source'
       note: Note
       'See more': 'See more'
-      'More': 'More about GreatSchools ratings'
+      'More': 'About this rating'
       Test scores: Test scores
-      info_text: "The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide."
+      info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
       'Math': Math
       Science: Science
       Source: Source
       sources: Sources
       was_this_useful: Was this useful?
       give_us_your_feedback: Give us your feedback
+      Subject: Subject
+      percent_proficient: '% Proficient'
       faq:
         cta: Notice something missing or confusing?
         content_html: >
           <p>The test scores and state averages we display come from the State Department of Education (DOE).
           When information is missing in our display, it is because the information was not included in the data we
           received from the DOE.</p>
-          <p>Still have questions? <a href="/gk/faq/">Visit our FAQ page</a>.</p>
+          <p>Why are grade-level scores sometimes different from the overall score for a subject? Most likely this is
+          due to suppression. States are required to suppress grade/subject data if the number of test-taking students
+          is too small. This can mean that some grade-level scores that are part of the overall score cannot be
+          displayed individually.</p>
+          <p>Did you find the information about test scores useful? What can we do better? <a href="https://s.qualaroo.com/45194/1547acf4-6133-4d98-b2e0-5eb28ca1ec04" target="_blank">Share your feedback.</a></p>
+          <p><a href="/gk/ratings/#testscorerating" target="_blank">Learn more about this rating.</a></p>
+          <p>Still have questions? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visit our FAQ page</a>.</p>
       narration:
         _1_html: >
           <h3 class="negative">Very concerning:</h3>

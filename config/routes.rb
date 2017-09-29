@@ -228,10 +228,17 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/school-life/', as: :school_life
     get '/gk/category/academics/reading-2/', as: :reading
     get '/gk/category/academics/math-2/', as: :math
+    get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
+    get '/gk/ratings/',  as: :ratings
 
 
     get '/status/error404.page'
   end
+
+  get '/api/request-api-key/', to: 'admin/api_accounts#register', as: :request_api_key
+  get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
+  post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
+
 
   namespace :api, controller: 'api', path:'/gsr/api' do
     resource :session
@@ -244,6 +251,8 @@ LocalizedProfiles::Application.routes.draw do
   end
 
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
+    resources :api_accounts, except: [:show, :destroy]
+    post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
     get '/omniture-test', action: :omniture_test, as: :omniture_test
     get '/info', action: :info
     get '/examples-and-gotchas', action: :examples_and_gotchas
@@ -360,6 +369,10 @@ LocalizedProfiles::Application.routes.draw do
   # a new password. The user must be logged in before they can see this form
   get '/account/password', to: 'password#show'
 
+
+  get '/admin/gsr/osp-moderation', to: 'osp_moderation#index', as: :osp_moderation_index
+  post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
+  get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
 
   scope '/community/:collection_id-:collection_name',
     as: :community,

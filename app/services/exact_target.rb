@@ -14,7 +14,9 @@ class ExactTarget
       convert_request_keys_to: :camelcase,
       # The following two changes get the request looking more like the sample provided by ExactTarget
       element_form_default: :unqualified, # do not attempt to qualify elements with namespace
-      namespace_identifier: nil # do not qualify the message body with a namespace
+      namespace_identifier: nil, # do not qualify the message body with a namespace
+      open_timeout: 10,
+      read_timeout: 10
     )
   end
 

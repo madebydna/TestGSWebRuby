@@ -19,6 +19,8 @@ class SchoolProfilesController < ApplicationController
     else
       @school_profile = school_profile
     end
+    cache_time = ENV_GLOBAL['school_profile_cache_time']
+    expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
   end
 
   private
@@ -55,6 +57,8 @@ class SchoolProfilesController < ApplicationController
     @_school_profile ||= (
       OpenStruct.new.tap do |sp|
         sp.hero = hero
+        sp.summary_rating = summary_rating
+        sp.summary_narration = summary_narration
         sp.test_scores = test_scores
         sp.college_readiness = college_readiness
         sp.student_progress = student_progress
@@ -77,6 +81,7 @@ class SchoolProfilesController < ApplicationController
         sp.mailto = osp_school_info.mailto
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
+        sp.academic_progress = academic_progress
       end
     )
   end
@@ -134,56 +139,81 @@ class SchoolProfilesController < ApplicationController
     )
   end
 
+  def summary_rating
+    @_summary_rating ||= SchoolProfiles::SummaryRating.new(
+      test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses,
+      school,
+      school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
+  def summary_narration
+    @_summary_narration ||= SchoolProfiles::SummaryNarration.new(
+        summary_rating,
+        school,
+        school_cache_data_reader: school_cache_data_reader
+    )
+  end
+
   def toc
-    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, school)
+    SchoolProfiles::Toc.new(test_scores, college_readiness, student_progress, equity, equity_overview, students, teachers_staff, courses, stem_courses, academic_progress, school)
   end
 
   def test_scores
-    SchoolProfiles::TestScores.new(
+    @_test_scores ||= SchoolProfiles::TestScores.new(
       school,
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def college_readiness
-    SchoolProfiles::CollegeReadiness.new(
+    @_college_readiness ||= SchoolProfiles::CollegeReadiness.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def student_progress
-    SchoolProfiles::StudentProgress.new(
+    @_student_progress ||= SchoolProfiles::StudentProgress.new(
         school,
         school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def students
-    SchoolProfiles::Students.new(
+    @_student ||= SchoolProfiles::Students.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def equity
-    SchoolProfiles::Equity.new(
-      school_cache_data_reader: school_cache_data_reader
+    @_equity ||= SchoolProfiles::Equity.new(
+        school_cache_data_reader: school_cache_data_reader,
+        test_source_data: test_scores
     )
   end
 
   def equity_overview
-    SchoolProfiles::EquityOverview.new(
-      school_cache_data_reader: school_cache_data_reader
+    @_equity_overview ||= SchoolProfiles::EquityOverview.new(
+      school_cache_data_reader: school_cache_data_reader,
+      equity: equity
+    )
+  end
+
+  def academic_progress
+    @_academic_progress ||= SchoolProfiles::AcademicProgress.new(
+        school,
+        school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def courses
-    SchoolProfiles::Courses.new(
+    @_courses ||= SchoolProfiles::Courses.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
 
   def stem_courses
-    SchoolProfiles::StemCourses.new(
+    @_stem_courses ||= SchoolProfiles::StemCourses.new(
       school_cache_data_reader: school_cache_data_reader
     )
   end
@@ -281,7 +311,6 @@ class SchoolProfilesController < ApplicationController
     canonical_url = school_url(school)
     set_meta_tags title: meta_tags.title,
                   description: meta_tags.description,
-                  keywords: meta_tags.keywords,
                   canonical: canonical_url,
                   alternate: {
                       en: remove_query_params_from_url(canonical_url, [:lang]),
@@ -297,7 +326,7 @@ class SchoolProfilesController < ApplicationController
     # Add a trailing slash to the request path, only if one doesn't already exist.
     unless canonical_path == with_trailing_slash(request.path)
       redirect_to add_query_params_to_url(
-                      canonical_path,
+                      school_url(school),
                       true,
                       request.query_parameters
                   ), status: :moved_permanently

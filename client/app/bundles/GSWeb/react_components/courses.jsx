@@ -13,6 +13,7 @@ export default class Courses extends React.Component {
     course_enrollments_and_ratings: PropTypes.object,
     sources: PropTypes.object,
     rating: PropTypes.string,
+    share_content: PropTypes.string,
     narration: PropTypes.string,
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
@@ -35,6 +36,24 @@ export default class Courses extends React.Component {
         <InfoBox content={sources} >{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={qualaroo_module_link} />
       </div>
+    )
+  }
+
+  sharingModal() {
+    return (
+        <button>
+          <a data-remodal-target="modal_info_box"
+             data-content-type="info_box"
+             data-content-html={this.props.share_content}
+             className="gs-tipso"
+             data-tipso-width="318"
+             data-tipso-position="left"
+             href="javascript:void(0)">
+            <div className="dib">
+              {t('Share')}
+            </div>
+          </a>
+        </button>
     )
   }
 
@@ -77,21 +96,31 @@ export default class Courses extends React.Component {
       ratingHtml = <span className='circle-rating--equity-blue circle-rating--medium'><span className="icon-advanced"/></span>
     }
 
-    if (subjects.length > 0 && num_courses > 0)
+
+    if (subjects.length > 0)
       return (<div id="AdvancedCourses" className="advanced-courses rating-container" data-ga-click-label="Advanced courses">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
-              { ratingHtml }
-            <div className="title-container">
-              <span className="title">{t('Advanced courses')} </span>
-              <a data-remodal-target="modal_info_box"
-                data-content-type="info_box"
-                data-content-html={t('advanced_courses_tooltip')}
-                className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
-                <span className="icon-question"></span>
-              </a>
-              <div dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></div>
+            <div className="row">
+              <div className="col-xs-12 col-md-10">
+                { ratingHtml }
+                <div className="title-container">
+                  <span className="title">{t('Advanced courses')} </span>
+                  <a data-remodal-target="modal_info_box"
+                    data-content-type="info_box"
+                    data-content-html={t('advanced_courses_tooltip')}
+                    className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
+                    <span className="icon-question"></span>
+                  </a>
+                  <div dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></div>
+                </div>
+              </div>
+              <div className="col-xs-12 col-md-2  show-history-button">
+                <div>
+                  {this.sharingModal()}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -119,7 +148,7 @@ export default class Courses extends React.Component {
                   content={courseSubjectsForDrawer}
                   closedLabel={t('Show more') + ' ' + t('Advanced courses')}
                   openLabel={t('Show less') + ' ' + t('Advanced courses')}
-                /> 
+                />
               </div>
           }
           <InfoTextAndCircle {...this.props.faq} />
@@ -130,7 +159,7 @@ export default class Courses extends React.Component {
     else
       return <div id="AdvancedCourses-empty" className="advanced-courses rating-container">
       <a className="anchor-mobile-offset" name="Advanced_courses"></a>
-        <div className="rating-container__rating">
+        <div className="profile-module">
           <div className="module-header">
             <div className="circle-rating--equity-blue circle-rating--medium">
               <span className="icon-user"></span>
@@ -138,7 +167,7 @@ export default class Courses extends React.Component {
             <div className="title-container">
               <div className="title">{t('Advanced courses')}</div>
               <span dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></span>
-              <NoDataModuleCta moduleName="Advanced courses"/>
+              <NoDataModuleCta moduleName="Advanced courses" message={this.props.no_data_summary}/>
             </div>
           </div>
         </div>

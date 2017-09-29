@@ -11,6 +11,10 @@ class DistrictCacheResults
     @district_data
   end
 
+  def data_hash
+    @district_data
+  end
+
   def decorate_districts(districts)
     [*districts].map do |district|
       decorated = DistrictCacheDecorator.new(district, @district_data[[district.state, district.id]] || {})

@@ -22,6 +22,9 @@ class ModalsController < ApplicationController
       format.js {
         render json: {data: content}, callback: params['callback']
       }
+      format.html {
+        render 'dependencies', layout: false
+      }
     end
   end
 

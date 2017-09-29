@@ -24,11 +24,74 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-star-empty:before {
-  content: "\e904";
+.icon-new-info:before {
+  content: "\e939";
+}
+.icon-nearby_1:before {
+  content: "\e943";
+}
+.icon-nearby_2:before {
+  content: "\e944";
+}
+.icon-clock:before {
+  content: "\e942";
+}
+.icon-microscope:before {
+  content: "\e941";
+}
+.icon-half-person:before {
+  content: "\e940";
+}
+.icon-general-info:before {
+  content: "\1f357";
+}
+.icon-advanced:before {
+  content: "\e93f";
+}
+.icon-Bulb:before {
+  content: "\e93e";
+}
+.icon-claimed .path1:before {
+  content: "\e93c";
+  color: rgb(112, 112, 112);
+}
+.icon-claimed .path2:before {
+  content: "\e93d";
+  margin-left: -1.0478515625em;
+  color: rgb(255, 255, 255);
+}
+.icon-claimed-active .path1:before {
+  content: "\e93a";
+  color: rgb(43, 163, 220);
+}
+.icon-claimed-active .path2:before {
+  content: "\e93b";
+  margin-left: -1.0478515625em;
+  color: rgb(255, 255, 255);
+}
+.icon-disability-2:before {
+  content: "\e922";
+}
+.icon-disability:before {
+  content: "\e945";
+}
+.icon-question:before {
+  content: "\e90b";
+}
+.icon-list:before {
+  content: "\e90a";
+}
+.icon-users:before {
+  content: "\e908";
 }
 .icon-checkmark:before {
   content: "\e907";
+}
+.icon-map-marker:before {
+  content: "\e906";
+}
+.icon-star-empty:before {
+  content: "\e904";
 }
 .icon-check-2:before {
   content: "\e905";
@@ -150,14 +213,6 @@
 .icon-chevron-right:before {
   content: "\e913";
 }
-.icon-chevron-left:before {
-  content: "\e913";
-  display: block; 
-  -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
-  -moz-transform: matrix(-1, 0, 0, 1, 0, 0);
-  -o-transform: matrix(-1, 0, 0, 1, 0, 0);
-  transform: matrix(-1, 0, 0, 1, 0, 0);
-}
 .icon-user:before {
   content: "\e912";
 }
@@ -190,37 +245,4 @@
 }
 .icon-share:before {
   content: "\e910";
-}
-.icon-users:before {
-  content: "\e908";
-}
-.icon-list:before {
-  content: "\e90a";
-}
-.icon-question:before {
-  content: "\e90b";
-}
-.icon-disability-2:before {
-  content: "\e922";
-}
-.icon-disability:before {
-  content: "\e939";
-}
-.icon-advanced:before {
-  content: "\e93f";
-}
-.icon-general-info:before {
-  content: "\1f357";
-}
-.icon-microscope:before {
-  content: "\e941";
-}
-.icon-clock:before {
-  content: "\e942";
-}
-.icon-nearby_1:before {
-  content: "\e943";
-}
-.icon-nearby_2:before {
-  content: "\e944";
 }

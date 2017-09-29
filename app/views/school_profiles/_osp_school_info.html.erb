@@ -7,7 +7,7 @@
   <% mailto_end = '</a>' %>
 <% end %>
 
-<div style="margin-bottom: 40px;">
+<div>
   <% if school_profile.claimed && school_profile.tab_config.present? %>
     <%= react_component('OspSchoolInfo', props: {
       content: school_profile.tab_config,
@@ -17,7 +17,7 @@
   <% else %>
     <div id="osp-school-info" class="rating-container">
       <a class="anchor-mobile-offset" name="General_info"></a>
-      <div class="rating-container__rating">
+      <div class="profile-module">
         <div class="module-header">
           <div class="circle-rating--equity-blue circle-rating--medium">
             <span class="icon-user"></span>

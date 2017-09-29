@@ -45,8 +45,7 @@ class Admin::PyocController <  ApplicationController
         :id4=>params[:id4].to_i}
        )
     set_meta_tags title:       "Choosing schools for Print your own chooser",
-                  description: "Choosing schools for Print your own chooser",
-                  keywords:    "Choosing schools for Print your own chooser"
+                  description: "Choosing schools for Print your own chooser"
     render 'pyoc/show'
 
   end

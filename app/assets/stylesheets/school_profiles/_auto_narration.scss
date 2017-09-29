@@ -3,6 +3,7 @@
   $color_negative: #cb5c35;
   $color_neutral: #ab8f0e;
   $color_positive: #367a1e;
+  $color_gray_bar: #edf2f5;
 
   font-size: 16px;
 
@@ -35,5 +36,19 @@
   .footnote {
     color: $color_gray_text;
     margin-bottom: 0;
+  }
+
+  .side-bar {
+    border-left: 5px $color_gray_bar solid;
+    padding-left: 20px;
+  }
+
+  &.summary-narration {
+    font-size: 14px;
+    .module_feedback {
+      float:none;
+      display: block;
+      padding: 15px 0 0;
+    }
   }
 }

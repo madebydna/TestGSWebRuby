@@ -106,13 +106,12 @@ export default class Reviews extends React.Component {
   }
 
   renderReviewLayout(componentFunction, title) {
-    let reviewsSectionStyle = { 'marginTop': '30px' }
     return(
-      <div id="Reviews" style={reviewsSectionStyle}>
-        <div className="rating-container">
+      <div id="Reviews">
+        <div className="rating-container profile-section">
           <div className="row">
             <div className="col-xs-12 col-lg-3">
-              <div className="rating-container__title">
+              <div className="section-title">
                 { title }
               </div>
             </div>
@@ -136,7 +135,7 @@ export default class Reviews extends React.Component {
     }
     return (
       <div>
-        <a className="anchor-mobile-offset" name="Reviews"></a>
+        <a className="anchor-mobile-offset" name="Reviews" style={{marginTop: '-90px'}}></a>
         { reviewFormContent }
         { recentComments }
       </div>

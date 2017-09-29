@@ -7,6 +7,9 @@ class FooterController < ApplicationController
       format.js {
         render json: {data: content}, callback: params['callback']
       }
+      format.html {
+        render 'nav/footer', layout: 'footer'
+      }
     end
   end
 end

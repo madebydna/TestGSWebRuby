@@ -123,7 +123,7 @@ class SchoolProfilesPage < SitePrism::Page
   end
 
   def has_test_score_subject?(label:nil, score:nil, state_average: nil)
-    test_score_items = self.test_scores.test_score_items.first
+    test_score_items = self.test_scores.test_score_items.second # because of column headers
     return false unless test_score_items.present?
 
     return false if label.present? && !test_score_items.label.text.include?(label)

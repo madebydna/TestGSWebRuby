@@ -9,7 +9,7 @@ import {
 } from '../api_clients/homes_and_rentals';
 import ButtonGroup from './buttongroup';
 import AnchorButton from './anchor_button';
-import zillowLogo from 'zillow_logo_sm.png';
+import zillowLogo from 'ZG_Logo_82x22.png';
 import { t } from '../util/i18n';
 
 export default class HomesAndRentals extends React.Component {
@@ -141,8 +141,8 @@ export default class HomesAndRentals extends React.Component {
           { this.renderHomesAndRentals() }
         </div>
         <div className="cta-buttons">
-          <AnchorButton rel="nofollow" target="_blank" href={pricingPageUrl()}>{ t('Find out what your home is worth') }</AnchorButton>
-          <AnchorButton rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ t('See more listings near this school') }</AnchorButton>
+          <AnchorButton className="bold-anchor" rel="nofollow" target="_blank" href={pricingPageUrl()}><span className="icon-house prs"></span>{ t('Find out what your home is worth') }</AnchorButton>
+          <AnchorButton className="bold-anchor"  rel="nofollow" target="_blank" href={nearbyHomesUrl(this.props.city, this.props.state)}>{ t('See more listings near this school') }</AnchorButton>
           <img src={zillowLogo} />
         </div>
       </div>

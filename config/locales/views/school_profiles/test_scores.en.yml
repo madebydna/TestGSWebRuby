@@ -1,6 +1,9 @@
 en:
   school_profiles:
     test_scores:
+      no_data_html: >
+        This section includes test score information by subject and grade.
+        <br></br>
       title: Test scores
       subtitle_html: 'Find out <a href="/gk/articles/state-standardized-test-scores-issues-to-consider/">what state standardized test scores really tell you</a> about a school – and what they don’t.'
       source: Source

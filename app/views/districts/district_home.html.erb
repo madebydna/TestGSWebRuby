@@ -48,17 +48,6 @@
     <% end %>
 
     <div class="<%= first_column_sizes %> prm ptm">
-      <div class="clearfix" style="width:100%;height:120px;background-color:#F5F5F5;">
-        <%= district.square_rating(class: 'fl') %>        
-        <div class="fl pal tal">
-          <span class="font-size-block notranslate">GreatSchools</span><br/>
-          <span class="font-size-xl">District rating</span>
-        </div>
-      </div>
-      <div class="row">
-        This district's rating is based on its schools' test results.
-        <%= link_to 'Learn more &raquo;'.html_safe, how_we_rate_schools_url %></p>
-      </div>
       <div class="row">
         <div class="col-lg-6 prl">
           <%= district.street %><br/>

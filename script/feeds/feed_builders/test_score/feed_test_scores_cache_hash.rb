@@ -2,6 +2,7 @@ require 'delegate'
 
 class FeedTestScoresCacheHash < SimpleDelegator
   include Feeds::FeedConstants
+  @@test_data_breakdowns_name_mapping = Hash[TestDataBreakdown.all.map { |bd| [bd.name, bd] }]
 
   def flatten
     hashes = []
@@ -18,6 +19,7 @@ class FeedTestScoresCacheHash < SimpleDelegator
                   hash = {
                     test_id: test_id,
                     breakdown: breakdown,
+                    breakdown_id: breakdown_id(breakdown),
                     grade: grade,
                     level: level,
                     subject: subject,
@@ -33,6 +35,11 @@ class FeedTestScoresCacheHash < SimpleDelegator
       end
     end
     hashes
+  end
+
+  def breakdown_id(breakdown_name)
+    name = breakdown_name == 'All' ? 'All students' : breakdown_name
+    @@test_data_breakdowns_name_mapping[name].try(:id)
   end
 
   def get_band_names(data)

@@ -17,6 +17,7 @@ export default class SchoolProfileComponent extends React.Component {
     info_text: React.PropTypes.string,
     icon_classes: React.PropTypes.string,
     sources: React.PropTypes.string,
+    share_content: React.PropTypes.string,
     rating: React.PropTypes.number,
     data: React.PropTypes.array,
     analytics_id: React.PropTypes.string,
@@ -35,7 +36,7 @@ export default class SchoolProfileComponent extends React.Component {
     super(props);
   }
 
-  subjectConfig(name, anchor, type, values, narration) {
+  subjectConfig(name, anchor, type, values, narration, flagged) {
     if (values) {
       // This is for titles in the test scores
       if(!(values instanceof Array)){
@@ -89,7 +90,8 @@ export default class SchoolProfileComponent extends React.Component {
           subject: name,
           anchor: anchor,
           component: component,
-          explanation: <div dangerouslySetInnerHTML={{__html: narration}} />
+          explanation: <div dangerouslySetInnerHTML={{__html: narration}} />,
+          flagged: flagged === true
         };
       }
     }
@@ -108,8 +110,8 @@ export default class SchoolProfileComponent extends React.Component {
 
     let sectionContent = this.props.data.map(subjectProps => {
       let data = subjectProps.data || [];
-      let content = data.map(({title, anchor, type, values, narration} = {}) => {
-        return this.subjectConfig(title, anchor, type, values, narration);
+      let content = data.map(({title, anchor, type, values, narration, flagged} = {}) => {
+        return this.subjectConfig(title, anchor, type, values, narration, flagged);
       })
       if (content.length > 0) {
         return { ...subjectProps, content: content };
@@ -119,7 +121,7 @@ export default class SchoolProfileComponent extends React.Component {
     if(sectionContent.length > 0) {
       sectionConfig['section_content'] = sectionContent;
     } else {
-      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} />
+      sectionConfig['message'] = <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} />
     }
 
     return sectionConfig;
@@ -131,6 +133,7 @@ export default class SchoolProfileComponent extends React.Component {
 
     equitySection = <EquitySection
       sources={this.props.sources}
+      share_content={this.props.share_content}
       faq={this.props.faq}
       qualaroo_module_link={this.props.qualaroo_module_link}
       {...equitySectionProps}

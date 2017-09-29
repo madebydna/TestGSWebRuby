@@ -33,9 +33,15 @@ export default function createInfoWindow(entity) {
     } else if (entity.type == 'district') {
       shape = 'square';
     }
-    return (
-      <div class={'rating_' + entity.rating + ' ' + shape +'-rating--small rating'}>{ratingText}</div>
-    );
+    if (entity.type == 'school') {
+      return (
+        <div class={'rating_' + entity.rating + ' ' + shape +'-rating--small rating'}>{ratingText}</div>
+      );
+    } else {
+      return (
+        <div></div>
+      );
+    }
   };
 
   let contentString = (

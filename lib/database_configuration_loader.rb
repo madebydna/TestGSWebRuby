@@ -43,6 +43,9 @@ class DatabaseConfigurationLoader
     db_host = ENV['db_host'] || ENV_GLOBAL['db_host']
     db_username = ENV['db_username'] || ENV_GLOBAL['db_username']
     db_password = ENV['db_password'] || ENV_GLOBAL['db_password']
+    db_read_timeout = (ENV['db_read_timeout'] || ENV_GLOBAL['db_read_timeout'] || 20).to_i
+    db_write_timeout = (ENV['db_write_timeout'] || ENV_GLOBAL['db_write_timeout'] || 20).to_i
+    db_connect_timeout = (ENV['db_connect_timeout'] || ENV_GLOBAL['db_connect_timeout'] || 5).to_i
 
     if db_host.present?
       config.gs_recursive_each_with_clone do |hash, key, value|
@@ -58,6 +61,11 @@ class DatabaseConfigurationLoader
       config.gs_recursive_each_with_clone do |hash, key, value|
         hash[key] = db_password if key == 'password' && hash['database'] != 'gsdata'
       end
+    end
+    config.gs_recursive_each_with_clone do |hash, key, _|
+      hash[key] = db_read_timeout    if key == 'read_timeout'    && db_read_timeout    > 0
+      hash[key] = db_write_timeout   if key == 'write_timeout'   && db_write_timeout   > 0
+      hash[key] = db_connect_timeout if key == 'connect_timeout' && db_connect_timeout > 0
     end
 
     gsdata_db_host = ENV['gsdata_db_host'] || ENV_GLOBAL['gsdata_db_host']

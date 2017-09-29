@@ -120,7 +120,7 @@ gem 'prawn-table', '~> 0.1.2'
 
 # A simple HTTP and REST client for Ruby
 # USED: In PhotoUploadConcerns (OSP)
-gem 'rest_client', '1.8.1'
+gem 'rest-client', '2.0.2'
 
 # Retrieve the binding of a method's caller.
 # USED: By GsLogger

@@ -4,10 +4,6 @@ def all_cache_keys
   ['ratings','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance', 'gsdata', 'feed_characteristics', 'directory']
 end
 
-def nightly_states
-  ['de','in']
-end
-
 def usage
   abort "\n\nUSAGE: rails runner script/populate_school_cache_table (all | [state]:[cache_keys]:[school_where])
 
@@ -28,7 +24,6 @@ def parse_arguments
          states: all_states,
          cache_keys: all_cache_keys
      }]
-    # TODO Limit nightly cache keys
   else
     args = []
     ARGV.each_with_index do |arg, i|
@@ -66,8 +61,6 @@ parsed_arguments.each do |args|
   states.each do |state|
     puts
     puts "Working on: #{state}"
-    # Remove the next line to have all mean all states again
-    next if ARGV[0] == 'all' && !nightly_states.include?(state)
     cache_keys.each do |cache_key|
       puts "     doing #{cache_key}"
       if schools_where

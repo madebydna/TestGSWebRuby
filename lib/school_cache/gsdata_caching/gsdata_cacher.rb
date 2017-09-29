@@ -15,8 +15,27 @@ class GsdataCaching::GsdataCacher < Cacher
   # 149: Percentage of teachers with less than three years experience
   # 152: Number of advanced courses per student
   # 154: Percentage of Students Enrolled
+  # 155: Test Score Rating
   # 158: Equity rating
-  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158].freeze
+  # 159: Academic Progress Rating
+  # 160: Summary Rating
+  # 175: Summary Rating Weight: Advanced Course Rating
+  # 176: Summary Rating Weight: Test Score Rating
+  # 177: Summary Rating Weight: College Readiness Rating
+  # 178: Summary Rating Weight: Student Progress Rating
+  # 179: Summary Rating Weight: Equity Rating
+  # 180: Summary Rating Weight: Academic Progress Rating
+  # 181: Summary Rating Weight: Discipline Flag
+  # 182: Summary Rating Weight: Absence Flag
+  # 183: Discipline Flag
+  # 184: Absence Flag
+  # 185: Equity Adjustment Factor
+  # 186: Summary Rating Weight: Equity Adjustment Factor
+
+  DISCIPLINE_ATTENDANCE_IDS = [161, 162, 163, 164]
+
+  DATA_TYPE_IDS = [23, 27, 35, 55, 59, 63, 71, 83, 91, 95, 99, 119, 133, 149, 150, 151, 152, 154, 158, 159, 160, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186].freeze
+
   BREAKDOWN_TAG_NAMES = [
     'ethnicity',
     'gender',
@@ -100,10 +119,24 @@ class GsdataCaching::GsdataCacher < Cacher
       h[:display_range] = district_value if display_range
       h[:source_name] = result.source_name
       if result.data_type_id == 158 # equity rating
-        h[:description] = data_description_value("whats_this_equity#{school.state}") || data_description_value('whats_this_equity')
-        h[:methodology] = data_description_value("footnote_equity#{school.state}") || data_description_value('footnote_equity')
+        h[:description] = description('equity')
+        h[:methodology] = methodology('equity')
+      elsif result.data_type_id == 159 # academic progress rating
+        h[:description] = description('academic_progress')
+        h[:methodology] = methodology('academic_progress')
+      elsif [183, 184].include?(result.data_type_id) # discipline & attendance flag
+        h[:description] = description('discipline_attendance')
+        h[:methodology] = methodology('discipline_attendance')
       end
     end
+  end
+
+  def description(name)
+    data_description_value("whats_this_#{name}#{school.state}") || data_description_value("whats_this_#{name}")
+  end
+
+  def methodology(name)
+    data_description_value("footnote_#{name}#{school.state}") || data_description_value("footnote_#{name}")
   end
 
   def validate_result_hash(result_hash, data_type_id)

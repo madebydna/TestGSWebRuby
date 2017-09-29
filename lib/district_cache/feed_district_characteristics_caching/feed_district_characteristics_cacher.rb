@@ -70,7 +70,7 @@ class FeedDistrictCharacteristicsCacher < DistrictCacher
   def data_attributes
     [
         :breakdown,
-        :created,
+        :district_created,
         :grade,
         :district_value,
         :source,
@@ -85,5 +85,4 @@ class FeedDistrictCharacteristicsCacher < DistrictCacher
     end
     validate!(cache_hash)
   end
-
 end

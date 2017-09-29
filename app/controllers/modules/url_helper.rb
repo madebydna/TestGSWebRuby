@@ -165,6 +165,14 @@ module UrlHelper
     path = verify_email_url(verification_link_params)
   end
 
+  # remove hash/anchor if it exists - write anchor to current url.
+  # @param  s [String] a full URL or URL path
+  def set_anchor(s, anchor)
+    uri = Addressable::URI.parse(s)
+    uri.fragment = anchor.present? ? anchor : ''
+    uri.to_s
+  end
+
   #
   # Adds a hash of query params to a given path or URL.
   # @param  s [String] a full URL or URL path
@@ -288,14 +296,14 @@ module UrlHelper
   # Input: hash for a school with id, state, city, name
   # Output: returns a string of the url to the profile
   def school_hash_to_url_for_profile(school_hash)
-   normalized_name =  encode_school_name(school_hash['name'])
-   city_name = gs_legacy_url_encode(school_hash['city'])
-   state_name = gs_legacy_url_encode(States.state_name(school_hash['state']))
-   school_id = school_hash['id']
-   return nil unless normalized_name && city_name && state_name && school_id
-   school_url = "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
-   school_url += "?lang=#{params[:lang]}" if params[:lang]
-   school_url
+    normalized_name =  encode_school_name(school_hash['name'])
+    city_name = gs_legacy_url_encode(school_hash['city'])
+    state_name = gs_legacy_url_encode(States.state_name(school_hash['state']))
+    school_id = school_hash['id']
+    return nil unless normalized_name && city_name && state_name && school_id
+    school_url = "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
+    school_url += "?lang=#{params[:lang]}" if params[:lang]
+    school_url
   end
 
 end

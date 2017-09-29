@@ -2,7 +2,7 @@
   $chevron_color: #c1d2d9;
 
   .toc-container-box {
-    margin: 53px auto 88px auto;
+    margin: 0 auto;
     @include media-breakpoint-up(sm) {
       margin-right: 0px;
     }
@@ -90,6 +90,15 @@
   @media only screen and (max-width: 768px) {
     .toc-entry:last-child {
       padding-bottom: 10px;
+    }
+  }
+
+  .flag {
+    .red {
+      color: #ff3f2b;
+    }
+    &:hover, &:focus {
+      text-decoration: none;
     }
   }
 }

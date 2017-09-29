@@ -1,9 +1,15 @@
 module SchoolProfiles
   class EquityOverview
     include Qualaroo
+    include SharingTooltipModal
 
-    def initialize(school_cache_data_reader:)
+    def initialize(school_cache_data_reader:, equity:)
       @school_cache_data_reader = school_cache_data_reader
+      @equity = equity
+    end
+
+    def share_content
+      share_tooltip_modal('Equity_overview', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link(module_sym)
@@ -25,7 +31,7 @@ module SchoolProfiles
         content << "<p>#{description}</p>" if description
         content << "<p>#{methodology}</p>" if methodology
       end
-      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + '</p>'
+      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + ' | ' + static_label('see_more') + '</p>'
       content << '</div>'
       content << '</div>'
     end
@@ -41,7 +47,7 @@ module SchoolProfiles
     def narration
       return nil unless has_rating?
       key = narration_key_from_rating
-      I18n.t(key).html_safe if key
+      I18n.t(key, sections: narration_sections).html_safe if key
     end
 
     def equity_rating
@@ -90,6 +96,19 @@ module SchoolProfiles
     end
 
     protected
+
+    def narration_sections
+      sections = []
+      if @equity.race_ethnicity_visible?
+        sections << "<a href=\"#Race_ethnicity\">#{static_label(:race_ethnicity)}</a>"
+      end
+      if @equity.low_income_visible?
+        sections << "<a href=\"#Low-income_students\">#{static_label(:low_income)}</a>"
+      end
+      I18n.t(:section_list, scope: 'lib.equity_overview',
+             section_names: sections.join(" #{static_label(:and)} "),
+             section_word: I18n.t(:section, scope: 'lib.equity_overview', count: sections.size))
+    end
 
     def equity_overview_struct
       @_equity_overview_struct ||= (

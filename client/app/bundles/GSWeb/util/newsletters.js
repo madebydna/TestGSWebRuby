@@ -39,7 +39,7 @@ export const signupAndFollowSchool = function(state, schoolId, schoolName) {
       modalManager.showModal('SignupAndFollowSchoolModal').done(function(data) {
         schools(state, schoolId).follow({email: data.email});
       }).fail(function(data) {
-        if(data.error) {
+        if(data && data.hasOwnProperty('error')) {
           notifications.error(data.error);
         }
       });

@@ -1,5 +1,5 @@
 module DistrictCacheFormat
-  include CacheValidation
+  include DistrictCacheValidation
 
   def build_hash_for_cache
     hash = {}
@@ -46,8 +46,8 @@ module DistrictCacheFormat
     GSLogger.error(
       :school_cache,
       e,
-      message: 'failed in building historical data for school',
-      vars: {school:school.id, state: school.state}
+      message: 'failed in building historical data for district',
+      vars: {district:district.id, state: district.state}
     )
   end
 
