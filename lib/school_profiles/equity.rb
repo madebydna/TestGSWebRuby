@@ -1,6 +1,7 @@
 module SchoolProfiles
   class Equity
     include Qualaroo
+    include SharingTooltipModal
 
     def initialize(school_cache_data_reader:, test_source_data:)
       @school_cache_data_reader = school_cache_data_reader
@@ -207,6 +208,18 @@ module SchoolProfiles
 
     def low_income_sources
       sources_html((li_rating_sources + test_source_data.sources_without_rating_text)) + sources
+    end
+
+    def race_ethnicity_share_content
+      share_tooltip_modal('Race_ethnicity', @school_cache_data_reader.school)
+    end
+
+    def students_with_disabilities_share_content
+      share_tooltip_modal('Students_with_Disabilities', @school_cache_data_reader.school)
+    end
+
+    def low_income_share_content
+      share_tooltip_modal('Low-income_students', @school_cache_data_reader.school)
     end
 
     def sources_header

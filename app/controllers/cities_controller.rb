@@ -152,8 +152,7 @@ class CitiesController < ApplicationController
         t('partner', scope: 'controllers.cities_controller') => nil
       }
       @canonical_url = city_education_community_partner_url(params[:state], params[:city])
-      set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
-                    description: partner_page_description(@partner[:page_name]),
+      set_meta_tags description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
       gon.pagename = 'GS:City:Partner'
       data_layer_through_gon
@@ -257,8 +256,7 @@ class CitiesController < ApplicationController
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
     description_method = "#{method_base}_description".to_sym
-    keywords_method = "#{method_base}_keywords".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+    set_meta_tags title: send(title_method), description: send(description_method)
   end
 
   def all_schools_by_rating_desc(city, count=0)
@@ -270,22 +268,17 @@ class CitiesController < ApplicationController
     description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
       "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
 
-    keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
-      "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
-      "#{@city.titleize} Private Schools"
-
       state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
       additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
 
 
-      if @state[:short].casecmp('pa').zero?
+      if %w(pa nj co in).include?(@state[:short].downcase)
         title = "View The Best Schools in #{@city.titleize}, #{@state[:short].upcase} | School Ratings for Public & Private"
       else
         title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
       end
 
-      set_meta_tags keywords: keywords,
-        description: description,
+      set_meta_tags description: description,
         title: title
   end
 

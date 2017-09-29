@@ -1,0 +1,1 @@
+//= require osp-admin-bundle

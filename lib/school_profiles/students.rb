@@ -1,6 +1,7 @@
 module SchoolProfiles
   class Students
     include Qualaroo
+    include SharingTooltipModal
 
     OTHER_BREAKDOWN_KEYS = [
         'English learners',
@@ -11,6 +12,10 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def share_content
+      share_tooltip_modal('Students', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link

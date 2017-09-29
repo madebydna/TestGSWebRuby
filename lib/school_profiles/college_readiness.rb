@@ -2,6 +2,7 @@ module SchoolProfiles
   class CollegeReadiness
     attr_reader :school_cache_data_reader
     include Qualaroo
+    include SharingTooltipModal
 
     FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
     UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
@@ -79,6 +80,10 @@ module SchoolProfiles
 
     def initialize(school_cache_data_reader:)
       @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def share_content
+      share_tooltip_modal('College_readiness', @school_cache_data_reader.school)
     end
 
     def qualaroo_module_link

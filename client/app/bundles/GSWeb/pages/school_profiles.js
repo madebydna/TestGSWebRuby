@@ -60,7 +60,7 @@ $(function() {
     var toggle = assign(new Toggle($('#hero').find('.school-contact')));
     toggle.effect = "slideToggle";
     toggle.addCallback(
-        toggle.updateButtonTextCallback(t('show_less'), t('show_more'))
+        toggle.updateButtonTextCallback(t('show_less'), t('see_more_contact'))
     );
     toggle.init().add_onclick();
   })();
@@ -106,6 +106,49 @@ $(function() {
 
   $('.js-followThisSchool').on('click', function () {
     signupAndFollowSchool(gon.school.state, gon.school.id);
+  });
+
+  $('body').on('click', '.js-sharingLinks', function () {
+    var url = $(this).data("link") + encodeURIComponent($(this).data("url"));
+    if($(this).data("siteparams") !== undefined) {
+      url +=  $(this).data("siteparams");
+    }
+    PopupCenter(url, $(this).data("type"), 700, 300)
+    return false;
+  });
+
+  $('body').on('click', '.js-slTracking', function () {
+    var cat = $(this).data("module") +"::"+ $(this).data("type");
+    analyticsEvent('Profile', 'Share', cat);
+    return false;
+  });
+
+  function PopupCenter(url, title, w, h) {
+    // Fixes dual-screen position                         Most browsers      Firefox
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+    var newWindow = window.open(url, title, 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=' + w + ',height=' + h + ',top=' + top + ',left=' + left);
+
+    // Puts focus on the newWindow
+    if (window.focus) {
+      newWindow.focus();
+    }
+  }
+
+  $('body').on('click', '.js-permaLink', function () {
+    $(this).select();
+    return false;
+  });
+
+  $('body').on('click', '.js-emailSharingLinks', function () {
+    window.location.href = ($(this).data("link"));
+    return false;
   });
 
   $('.profile-section .section-title').each(function() {

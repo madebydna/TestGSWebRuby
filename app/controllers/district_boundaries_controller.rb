@@ -25,7 +25,8 @@ class DistrictBoundariesController < ApplicationController
   def set_seo_meta_tags
     set_meta_tags title: meta_title,
                   description: meta_description,
-                  og: open_graph
+                  og: open_graph,
+                  canonical: district_boundary_url
   end
 
 end

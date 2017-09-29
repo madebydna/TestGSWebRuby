@@ -1,6 +1,7 @@
 ---
 en:
   javascript:
+    Share: Share
     'yes': 'Yes'
     'no': 'No'
     close: Close
@@ -74,6 +75,7 @@ en:
     See notes: Sources
     show_more: Show more
     show_less: Show less
+    see_more_contact: See contact info and more
     english-learners: Students learning English
     english-learners-info-text: This group includes all students classified as English language learners.
     students-participating-in-free-or-reduced-price-lunch-program: Students from low-income families
@@ -130,7 +132,7 @@ en:
     notify_me: "Update me when new information is published on this school's profile."
     Advanced courses: Advanced courses
     advanced_courses_subheading_html: A rigorous course load can help your student prepare for and get into college. <a href="/gk/articles/13-surprising-tips-applying-to-college/#Grade_and_rigorous_class">Learn more</a>.
-    advanced_courses_tooltip: The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign languages compared to the state average.
+    advanced_courses_tooltip: The Advanced Courses Rating reflects the number of advanced courses taken per student at this school in English, STEM, Social sciences, and Foreign languages compared to the state average. <a href="/gk/ratings/#advancedcoursesrating" target="_blank">Learn more about this rating.</a>
     advanced_courses_rating_tooltip: This rating reflects the number of advanced courses taken per student at this school compared to the state average.
     general_information_tooltip: In this section, school administrators have provided general information about this school, like hours, enrollment, classes and extracurriculars.
     General Information: General information
