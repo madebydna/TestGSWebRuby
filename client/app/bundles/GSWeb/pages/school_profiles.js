@@ -142,6 +142,7 @@ $(function() {
   }
 
   $('body').on('click', '.js-permaLink', function () {
+    $(this).focus();
     $(this).select();
     document.execCommand("copy");
     $(this).siblings().css('display', 'block');
