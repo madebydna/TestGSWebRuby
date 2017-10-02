@@ -65,7 +65,7 @@ $(function() {
     toggle.init().add_onclick();
   })();
 
-  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour';
+  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour'; // referenced in school_profiles_page.rb for specs
 
   function hasDeclinedTour() {
     let pattern = "^(.*;)?\\s*" + PROFILE_TOUR_COOKIE + "\\s*=true";

@@ -41,6 +41,7 @@ describe "Signed in and verified user" do
         school = create(:school_with_new_profile, id: 1)
         school_user = create(:school_user, user: user, school: school)
         page_object = SchoolProfilesPage.new
+        page_object.set_school_profile_tour_cookie
         five_star_review_question = create(:overall_rating_question, active: 1)
         topical_review_question = create(:review_question, active: 1)
         valid_comment = "A valid and wonderful comment on a school yeah!"
