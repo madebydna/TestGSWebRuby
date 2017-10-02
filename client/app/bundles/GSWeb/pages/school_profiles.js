@@ -291,7 +291,7 @@ $(function() {
     if(schoolTourModal.length) {
       schoolTourModal.remove();
     }
-    scrollToElement('div.logo');
+    scrollToElement('body');
     introJs.startFirstTutorial();
     // Don't show the tour modal if the user takes the tour
     setCookie(PROFILE_TOUR_COOKIE, true);
