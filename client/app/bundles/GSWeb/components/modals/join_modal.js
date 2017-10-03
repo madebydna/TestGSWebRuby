@@ -4,6 +4,7 @@ import { create, assign } from 'lodash';
 import BaseModal from './base_modal';
 import { signinToFacebookThenGreatSchools } from '../../components/facebook_auth';
 import { runValidations as runFormValidations } from 'components/validating_forms';
+import { loadFacebook } from 'util/facebook_loader';
 
 const JoinModal = function($, options) {
   BaseModal.call(this, $, options);
@@ -162,6 +163,7 @@ assign(JoinModal.prototype, {
     },
 
     initialize: function initialize() {
+      loadFacebook();
       this.initializeShowHideBehavior();
       this.initializeForm();
       this.initializeFacebookSignIn();
