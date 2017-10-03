@@ -53,19 +53,16 @@ export default class EquitySection extends React.Component {
 
   sharingModal() {
     return (
-        <button>
-          <a data-remodal-target="modal_info_box"
-           data-content-type="info_box"
-           data-content-html={this.props.share_content}
-           className="gs-tipso"
-           data-tipso-width="318"
-           data-tipso-position="left"
-           href="javascript:void(0)">
-            <div className="dib">
-              {t('Share')}
-            </div>
-          </a>
-        </button>
+      <a data-remodal-target="modal_info_box"
+        data-content-type="info_box"
+        data-content-html={this.props.share_content}
+        className="share-link gs-tipso"
+        data-tipso-width="318"
+        data-tipso-position="left"
+        href="javascript:void(0)">
+        <span className="icon-share"></span>&nbsp;
+        {t('Share')}
+      </a>
     )
   }
 
