@@ -102,7 +102,6 @@ module SchoolProfiles
 
     def grades_sort_by_grades_ascending(grades)
       grades.sort_by { |h| h.grade }
-
     end
 
     def sort_by_test_label_and_number_tested_descending(scores)
