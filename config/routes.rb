@@ -246,6 +246,9 @@ LocalizedProfiles::Application.routes.draw do
     resource :school_user_digest
     resource :nearby_schools
     resources :schools
+    resources :reviews do
+      get 'count', on: :collection
+    end
     resources :districts
     resource :widget_logs, only: [:create]
     resources :students
