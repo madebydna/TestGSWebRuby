@@ -79,9 +79,6 @@ const config = {
             options: {
               name: '[name]_[hash].[ext]'
             }
-          },
-          {
-            loader: 'image-webpack-loader'
           }
         ],
       },
