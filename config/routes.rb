@@ -379,6 +379,8 @@ LocalizedProfiles::Application.routes.draw do
   get '/admin/gsr/osp-moderation', to: 'osp_moderation#index', as: :osp_moderation_index
   post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
   get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
+  get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
+  post '/admin/gsr/osp/:id', to: 'osp_moderation#update', as: :osp_update
 
   scope '/community/:collection_id-:collection_name',
     as: :community,

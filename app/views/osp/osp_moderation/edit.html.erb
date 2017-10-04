@@ -1,0 +1,54 @@
+<%= javascript_include_tag "admin_tools", "data-turbolinks-track" => true %>
+
+<div style="width: 90%; margin: auto; padding: 30px 0;">
+  <%= link_to 'Back to Pending OSP Requests', osp_moderation_index_path %>
+  <h2>Edit OSP Info</h2>
+
+  <%= form_for @osp, url: osp_update_path, method: :post do |f| %>
+    <%= render '/osp/osp_moderation/error_messages' %>
+    <%= f.label :web_url %>
+    <%= f.text_field :web_url %>
+
+    <%= f.label :job_title%>
+    <%= f.select :job_title, [['Choose one', nil],['Administrative Asst.', 'administrative assistant'],
+                              ['Administrator (Other)', 'administrator (other)'],
+                              ['Admissions Rep', 'admissions representative'],
+                              ['Asst. Principal', 'assistant principal'],
+                              ['Communications Rep', 'communications representative'],
+                              ['Consultant', 'consultant'],
+                              ['Department Head', 'department head'],
+                              ['Development Rep', 'development representative'],
+                              ['Headmaster', 'headmaster'],
+                              ['President', 'president'],
+                              ['Principal', 'principal'],
+                              ['Registrar', 'registrar'],
+                              ['Special Ed Director', 'special education director'],
+                              ['Superintendent', 'superintendent'],
+                              ['Teacher', 'teacher'],
+                              ['Webmaster', 'webmaster']], class: 'selectpicker required role-select' %>
+      <%= fields_for @osp.user do |ff| %>
+          <%= ff.label :first_name %>
+          <%= ff.text_field :first_name %>
+
+          <%= ff.label :last_name %>
+          <%= ff.text_field :last_name %>
+
+          <%= ff.label :email %>
+          <%= ff.text_field :email %>
+      <% end %>
+      <%= f.label :note, 'Notes' %>
+      <%= f.text_field :note %>
+
+    <div style="text-align: center;margin-top: 40px;">
+      <%= f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
+    </div>
+
+  <% end %>
+
+</div>
+
+<style>
+  label, input {
+    display: block;
+  }
+</style>
