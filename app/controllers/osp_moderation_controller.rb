@@ -66,10 +66,11 @@ class OspModerationController < ApplicationController
     render '/osp/osp_moderation/edit'
   end
 
-  def update
-    @osp = EspMembership.find(params[:id])
+  def update_osp_list_member
+    # Need to load associated school in case update fails (and 'edit' template is rendered)
+    @osp = EspMembership.where(id: params[:id]).extend(SchoolAssociationPreloading).preload_associated_schools!.take
     @user = User.find(@osp.member_id)
-    if @osp.update(osp_params) && @user.update_attributes(user_params)
+    if @osp.update(osp_params.merge(updated: Time.now)) && @user.update_attributes(user_params)
       redirect_to :back
     else
       render 'osp/osp_moderation/edit'

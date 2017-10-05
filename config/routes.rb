@@ -380,7 +380,7 @@ LocalizedProfiles::Application.routes.draw do
   post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
   get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
   get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
-  post '/admin/gsr/osp/:id', to: 'osp_moderation#update', as: :osp_update
+  post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
 
   scope '/community/:collection_id-:collection_name',
     as: :community,

@@ -1,21 +1,23 @@
 
 
-<div>
+<div class="osp-edit">
   <%= link_to 'Back to Pending OSP Requests', osp_moderation_index_path %>
-  <h2>Edit OSP Info</h2>
+  <div>
+    <h2><%= @osp.school.name %> ( <span style="color: #D59FAE;"><%= @osp.school.state%>-<%= @osp.school.id%></span> )</h2>
+  </div>
 
-  <%= form_for @osp, url: osp_update_path, method: :post do |f| %>
+  <%= form_for @osp, url: osp_update_list_member_path, method: :post do |f| %>
     <%= render '/osp/osp_moderation/error_messages' %>
+
     <div>
-      <label>Member Id</label>
+      <label>Address</label>
+      <span><%= @osp.school.street %>, <%= @osp.school.city%>, <span></span><%= @osp.school.state%> <%= @osp.school.zipcode%></span>
+    </div>
+
+    <div>
+      <label>Membership Id</label>
       <span><%= @osp.member_id %></span>
     </div>
-
-    <div>
-      <label>School</label>
-      <span><%= @osp.school.name %></span>
-    </div>
-
 
     <%= fields_for @osp.user do |ff| %>
      <div>
@@ -54,6 +56,17 @@
                                 ['Teacher', 'teacher'],
                                 ['Webmaster', 'webmaster']], class: 'selectpicker required role-select' %>
     </div>
+
+    <div>
+      <%= f.label :note, 'Notes' %>
+      <%= f.text_area :note %>
+    </div>
+
+    <div>
+      <label>Status</label>
+      <span style="color: <%= @osp.status == 'approved' ? '#2874A6' : 'red' %>; font-family: 'opensans-semibold', sans-serif;"><%= @osp.status.capitalize %></span>
+    </div>
+
     <div>
       <label>Created</label>
       <span><%= @osp.created.strftime('%m/%d/%Y') %></span>
@@ -64,12 +77,7 @@
       <span><%= @osp.updated.strftime('%m/%d/%Y') %></span>
     </div>
     <div>
-      <%= f.label :note, 'Notes' %>
-      <%= f.text_area :note %>
-    </div>
-
-    <div style="margin-top: 40px;">
-      <%= f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
+      <%= f.submit "Save", class: "btn btn-primary osp-edit-submit", style: "width: 150px; margin-right: 15px;" %>
     </div>
 
   <% end %>
