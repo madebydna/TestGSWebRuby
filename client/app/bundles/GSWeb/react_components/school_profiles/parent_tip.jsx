@@ -1,11 +1,12 @@
 import React from 'react';
 import { t } from '../../util/i18n';
+import owlPng from 'school_profiles/owl.png';
 
 const ParentTip = ({children}) => {
   return (
     <div>
       <p className="parent-tip">
-        <img src="/assets/school_profiles/owl.png"/>
+        <img src={owlPng} />
         <span className="speech-bubble left">{t('Parent tip')}</span>
       </p> 
       <p className="footnote">
