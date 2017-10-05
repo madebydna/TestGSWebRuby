@@ -64,13 +64,18 @@ module Feeds
           if d && d[value_var]
             options = {}
             options[:value] = d[value_var].to_f.round(1)
-            options[:name] = d['original_breakdown'] || d['breakdown']
+            options[:name] = race_mapping(d['original_breakdown'], d['breakdown'])
             options[:year] = d['year']
             options[:universal_id] = universal_id
             build_structure('ethnicity', options)
           end
         end
       end
+    end
+
+    def self.race_mapping(b1, b2)
+      race = b1 || b2
+      race == 'African American' ? 'Black' : race
     end
 
     def self.percent_economically_disadvantaged(data, universal_id, data_type=nil)
