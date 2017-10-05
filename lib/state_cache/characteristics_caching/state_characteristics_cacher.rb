@@ -29,6 +29,10 @@ class StateCharacteristicsCacher < StateCacher
   def self.listens_to?(data_type)
     :state_characteristics == data_type
   end
+  
+  def initialize(state)
+    @state = state
+  end
 
   def self.active?
     ENV_GLOBAL['is_feed_builder'].present? && [true, 'true'].include?(ENV_GLOBAL['is_feed_builder'])

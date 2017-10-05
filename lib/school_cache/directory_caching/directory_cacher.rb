@@ -91,15 +91,19 @@ class DirectoryCaching::DirectoryCacher < Cacher
   end
 
   def district_url_link
-    "<a href='#{district_url(district_obj.first)}'>#{district_name}</a>"
+    if district_obj && district_obj.first
+      " in the <a href='#{district_url(district_obj.first)}'>#{district_name}</a>"
+    else
+      ''
+    end
   end
 
   def school_summary_not_rated
-    "#{school.name}, a #{school.type} school located in #{school.city}, #{school.state}, serves grades #{school.process_level} in the #{district_url_link}."
+    "#{school.name}, a #{school.type} school located in #{school.city}, #{school.state}, serves grades #{school.process_level}#{district_url_link}."
   end
 
   def school_summary_rated(rating)
-    str = "#{school.name}, a #{school.type} school located in #{school.city}, #{school.state}, serves grades #{school.process_level} in the #{district_url_link}."
+    str = "#{school.name}, a #{school.type} school located in #{school.city}, #{school.state}, serves grades #{school.process_level}#{district_url_link}."
     str + "It has received a GreatSchools Rating of #{rating} out of 10, based on a variety of school quality measures."
   end
 

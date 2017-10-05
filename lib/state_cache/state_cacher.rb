@@ -60,10 +60,10 @@ class StateCacher
     begin
       cacher_class = cacher_for(cache_key)
       return unless cacher_class.active?
-      cacher = cacher_class.new(@state)
+      cacher = cacher_class.new(state)
       cacher.cache
     rescue => error
-      error_vars = { cache_key: cache_key, state: @state}
+      error_vars = { cache_key: cache_key, state: state}
       GSLogger.error(:state_cache, error, vars: error_vars, message: 'Failed to build state cache')
       raise
     end

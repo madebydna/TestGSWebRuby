@@ -16,6 +16,13 @@ module SigninHelper
     end
   end
 
+  def sign_in_as_ssprouse
+    visit('/gsr/login/')
+    fill_in('email', with: 'ssprouse@greatschools.org')
+    fill_in('password', with: '0!apdoQu_3A')
+    click_button('Log in')
+  end
+
   def random_email
     "ssprouse+rspec_#{Time.now.strftime('%s')}@greatschools.org"
   end

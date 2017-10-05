@@ -112,6 +112,7 @@ RSpec.configure do |config|
   config.include UrlHelper
   config.include FactoryGirl::Syntax::Methods
   config.include WaitForAjax, type: :feature
+  config.include CookieHelper
   WebMock.disable_net_connect!(allow_localhost: true)
 
   # config.reporter.register_listener RSpecProfiler.new, :start, :example_started, :example_passed, :example_failed

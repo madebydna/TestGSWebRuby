@@ -6,8 +6,7 @@ require 'features/page_objects/modules/breadcrumbs'
 
 class SchoolProfilesPage < SitePrism::Page
   include Breadcrumbs
-  # include GSRating
-  # include Modals
+  include CookieHelper
 
   set_url_matcher /#{States.any_state_name_regex}\/[a-zA-Z\-.]+\/[0-9]+-[a-zA-Z\-.]+\/$/
 
@@ -144,4 +143,7 @@ class SchoolProfilesPage < SitePrism::Page
     props_for_react_component('Courses')
   end
 
+  def set_school_profile_tour_cookie
+    set_cookie('decline_school_profile_tour', true)
+  end
 end
