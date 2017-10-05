@@ -1,7 +1,13 @@
 // TODO: uses gon. abstract it out
 
+let facebookSdkRequestedYet = false;
+
 export function loadFacebook() {
-  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+  if(facebookSdkRequestedYet) return;
+
+  facebookSdkRequestedYet = true;
+
+  $.getScript('https://connect.facebook.net/en_US/sdk.js', function(){
     var appId = gon.facebook_app_id;
     FB.init({
       appId: appId,
