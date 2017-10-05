@@ -9,5 +9,5 @@ export function getAnswerCountsForQuestion(state, schoolId, questionId) {
     },
     null,
     'json'
-  );
+  ).then((data) => data.result);
 }
