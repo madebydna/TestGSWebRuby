@@ -7,16 +7,13 @@ es:
       'see_more': 'See more: <a href="/gk/ratings/#academicprogressrating" target="_blank">About this rating</a>'
       'Great schools rating': 'La Calificación de Progreso Académico de GreatSchools'
       info_text: >
-        <p>La Calificación del Progreso Académico ayuda a medir cuánto los estudiantes aprenden en un año, en comparación con
-        sus compañeros de todo el estado.</p>
-        <p>Crecimiento del estudiante es una de las mejores maneras de evaluar cómo los maestros y las escuelas ayudan a los
-        estudiantes a aprender. Muchos Departamentos de Educación del estado proporcionan datos de crecimiento del estudiante
-        y para esos estados, utilizamos estos datos para calcular una Calificación de el Progreso del Estudiante.</p>
-        <p>Este estado no publica datos de crecimiento del estudiante, por lo que utilizamos otros datos disponibles para estimar
-        el aprendizaje del estudiante a lo largo del tiempo. Especialmente, para los estados que les faltan datos de crecimiento,
-        calculamos nuestra Calificación del Progreso Académico comparando año con año las calificaciones de grado y sujeto
-        en esta escuela contra todas las escuelas en el estado.</p>
-        <p><a href="/gk/ratings/#academicprogressrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
+        <p style='text-align:left'>¿Cuánto ayudan las escuelas y los maestros a los estudiantes crecer cada año?</p>
+        <p style='text-align:left'>Muchos estados publican datos del crecimiento del estudiante para reflejar cuánto progreso estudiantes están
+        haciendo año tras año. Este estado no publica datos del crecimiento del estudiante. En cambio, estimamos con
+        nuestra Calificación del Progreso Académico el progreso del estudiante comparando año con año en las
+        calificaciones de grado y sujeto en esta escuela frente a todas las escuelas del estado que comenzaron con
+        similares niveles de conocimiento.</p>
+        <p style='text-align:left'><a href="/gk/ratings/#academicprogressrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
       narrative:
         1_low_html: >
           <p class="side-bar"><span class="emphasis">Muy poco progreso con bajas calificaciones en los exámenes</span>

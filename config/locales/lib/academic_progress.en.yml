@@ -7,13 +7,12 @@ en:
       'see_more': 'See more: <a href="/gk/ratings/#academicprogressrating" target="_blank">About this rating</a>'
       'Great schools rating': 'GreatSchools Academic Progress Rating'
       info_text: >
-        <p>The Academic Progress Rating helps measure how much students learn in a year, compared to their peers across the state.</p>
-        <p>Student growth is one of the best ways to assess how teachers and schools help students learn. Many states' Department
-        of Education provide student growth data and for those states, we use this data to calculate a Student Progress Rating.</p>
-        <p>This state does not publish student growth data, so we use other available data to estimate student learning over
-        time. Specifically, for states missing growth data, we calculate our Academic Progress Rating by comparing year-over-year
-        test scores by grade and subject at this school to all schools in the state.</p>
-        <p><a href="/gk/ratings/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
+        <p style='text-align:left'>How much do schools and teachers help students grow each year? </p>
+        <p style='text-align:left'>Many states publish student growth data to reflect how much progress students are making year-over-year.
+        This state doesn’t publish student growth data. Instead, our Academic Progress Rating estimates student
+        progress by comparing year-over-year test scores by grade and subject at this school compared to all schools
+        in the state that started with similar proficiency levels.</p>
+        <p style='text-align:left'><a href="/gk/ratings/#academicprogressrating" target="_blank">Learn more about this rating.</a></p>
       narrative:
         1_low_html: >
           <p class="side-bar"><span class="emphasis">Very low progress with low test scores</span> means students are
