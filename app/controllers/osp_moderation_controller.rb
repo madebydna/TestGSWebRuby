@@ -1,6 +1,6 @@
 class OspModerationController < ApplicationController
   include OspHelper
-  layout "application"
+  layout 'admin'
   before_action :set_tags, only: [:index, :osp_search]
 
   STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
@@ -61,7 +61,7 @@ class OspModerationController < ApplicationController
   end
 
   def edit
-    @osp = EspMembership.find(params[:id])
+    @osp = EspMembership.where(id: params[:id]).extend(SchoolAssociationPreloading).preload_associated_schools!.take
     @user = User.find(@osp.member_id)
     render '/osp/osp_moderation/edit'
   end

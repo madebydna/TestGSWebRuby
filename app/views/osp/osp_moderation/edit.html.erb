@@ -1,45 +1,74 @@
-<%= javascript_include_tag "admin_tools", "data-turbolinks-track" => true %>
 
-<div style="width: 90%; margin: auto; padding: 30px 0;">
+
+<div>
   <%= link_to 'Back to Pending OSP Requests', osp_moderation_index_path %>
   <h2>Edit OSP Info</h2>
 
   <%= form_for @osp, url: osp_update_path, method: :post do |f| %>
     <%= render '/osp/osp_moderation/error_messages' %>
-    <%= f.label :web_url %>
-    <%= f.text_field :web_url %>
+    <div>
+      <label>Member Id</label>
+      <span><%= @osp.member_id %></span>
+    </div>
 
-    <%= f.label :job_title%>
-    <%= f.select :job_title, [['Choose one', nil],['Administrative Asst.', 'administrative assistant'],
-                              ['Administrator (Other)', 'administrator (other)'],
-                              ['Admissions Rep', 'admissions representative'],
-                              ['Asst. Principal', 'assistant principal'],
-                              ['Communications Rep', 'communications representative'],
-                              ['Consultant', 'consultant'],
-                              ['Department Head', 'department head'],
-                              ['Development Rep', 'development representative'],
-                              ['Headmaster', 'headmaster'],
-                              ['President', 'president'],
-                              ['Principal', 'principal'],
-                              ['Registrar', 'registrar'],
-                              ['Special Ed Director', 'special education director'],
-                              ['Superintendent', 'superintendent'],
-                              ['Teacher', 'teacher'],
-                              ['Webmaster', 'webmaster']], class: 'selectpicker required role-select' %>
-      <%= fields_for @osp.user do |ff| %>
-          <%= ff.label :first_name %>
-          <%= ff.text_field :first_name %>
+    <div>
+      <label>School</label>
+      <span><%= @osp.school.name %></span>
+    </div>
 
-          <%= ff.label :last_name %>
-          <%= ff.text_field :last_name %>
 
-          <%= ff.label :email %>
-          <%= ff.text_field :email %>
-      <% end %>
+    <%= fields_for @osp.user do |ff| %>
+     <div>
+      <%= ff.label :first_name %>
+      <%= ff.text_field :first_name %>
+     </div>
+     <div>
+      <%= ff.label :last_name %>
+      <%= ff.text_field :last_name %>
+     </div>
+     <div>
+      <%= ff.label :email %>
+      <%= ff.text_field :email %>
+     </div>
+    <% end %>
+    <div>
+      <%= f.label :web_url %>
+      <%= f.text_field :web_url %>
+    </div>
+    <div>
+      <%= f.label :job_title%>
+      <%= f.select :job_title, [['Choose one', nil],['Administrative Asst.', 'administrative assistant'],
+                                ['Administrator (Other)', 'administrator (other)'],
+                                ['Admissions Rep', 'admissions representative'],
+                                ['Asst. Principal', 'assistant principal'],
+                                ['Communications Rep', 'communications representative'],
+                                ['Consultant', 'consultant'],
+                                ['Department Head', 'department head'],
+                                ['Development Rep', 'development representative'],
+                                ['Headmaster', 'headmaster'],
+                                ['President', 'president'],
+                                ['Principal', 'principal'],
+                                ['Registrar', 'registrar'],
+                                ['Special Ed Director', 'special education director'],
+                                ['Superintendent', 'superintendent'],
+                                ['Teacher', 'teacher'],
+                                ['Webmaster', 'webmaster']], class: 'selectpicker required role-select' %>
+    </div>
+    <div>
+      <label>Created</label>
+      <span><%= @osp.created.strftime('%m/%d/%Y') %></span>
+    </div>
+
+    <div>
+      <label>Updated</label>
+      <span><%= @osp.updated.strftime('%m/%d/%Y') %></span>
+    </div>
+    <div>
       <%= f.label :note, 'Notes' %>
-      <%= f.text_field :note %>
+      <%= f.text_area :note %>
+    </div>
 
-    <div style="text-align: center;margin-top: 40px;">
+    <div style="margin-top: 40px;">
       <%= f.submit "Save", class: "btn btn-primary", style: "width: 150px; margin-right: 15px;" %>
     </div>
 
@@ -47,8 +76,3 @@
 
 </div>
 
-<style>
-  label, input {
-    display: block;
-  }
-</style>
