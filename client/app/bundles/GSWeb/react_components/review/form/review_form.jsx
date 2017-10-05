@@ -307,7 +307,7 @@ export default class ReviewForm extends React.Component {
 
   handleFailSubmit(xhr, status, err) {
     let formErrors = JSON.parse(xhr.responseText);
-    if(formErrors) {
+    if(formErrors && formErrors.reviews) {
       let reviewsErrors = formErrors.reviews[0];
       if (reviewsErrors) {
         this.updateReviewFormErrors(reviewsErrors);
