@@ -2,6 +2,7 @@ en:
   lib:
     academic_progress:
       'title': 'Academic progress'
+      'subtitle': 'How much did this school help its students improve from one year to the next? This rating compares schools with similar proficiency levels to measure student progress over time.'
       'sources_title': 'GreatSchools profile data sources &amp; information'
       'source': 'Source'
       'see_more': 'See more: <a href="/gk/ratings/#academicprogressrating" target="_blank">About this rating</a>'

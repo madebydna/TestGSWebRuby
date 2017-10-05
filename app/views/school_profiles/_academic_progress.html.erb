@@ -4,11 +4,13 @@
 <% info_text = academic_progress.info_text  %>
 <% narration = academic_progress.narration %>
 <% sources = academic_progress.academic_progress_sources %>
+<% subtitle = t('lib.academic_progress.subtitle') %>
 
 <% content_for(:profile_module_header, flush: true) do %>
     <%= render 'module_header',
                rating: rating,
                title: title,
+               subtitle: subtitle,
                share_content: academic_progress.share_content,
                info_text: info_text,
                has_data: academic_progress.has_data?,
