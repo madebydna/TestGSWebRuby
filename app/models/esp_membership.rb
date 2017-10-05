@@ -6,7 +6,7 @@ class EspMembership < ActiveRecord::Base
   db_magic :connection => :gs_schooldb
 
   belongs_to :user, foreign_key: 'member_id'
-  accepts_nested_attributes_for :user
+  # accepts_nested_attributes_for :user
   has_many :osp_form_responses, :class_name => 'OspFormResponses'
 
   attr_accessible :member_id, :created, :updated, :state, :school_id, :status,:active,:job_title,:web_url,:note
