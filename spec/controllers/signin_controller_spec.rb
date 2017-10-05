@@ -355,6 +355,23 @@ describe SigninController do
       }
     }
 
+    context 'with a + in token' do
+      let(:user_authenticator_and_verifier) { instance_double(UserAuthenticatorAndVerifier) }
+      let(:id_str) { "d7FImQxLtZVjJY0+E+mwKg==#{user.id}" }
+      let(:time) { Time.now.asctime }
+      let(:valid_params) {{
+          id: id_str,
+          date: time
+      }}
+      subject(:response) { get :verify_email, valid_params }
+      before { allow(user_authenticator_and_verifier).to receive(:authenticated?).and_return false }
+
+      it 'should not improperly decode the parameter' do
+        expect(UserAuthenticatorAndVerifier).to receive(:new).with(id_str, time).and_return(user_authenticator_and_verifier)
+        subject
+      end
+    end
+
     shared_examples_for 'something went wrong' do
       it 'should flash an error message' do
         expect(controller).to receive(:flash_error)
