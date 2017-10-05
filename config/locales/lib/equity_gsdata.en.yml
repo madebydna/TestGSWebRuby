@@ -121,8 +121,9 @@ en:
             'Percentage of students chronically absent (15+ days)': >
               <div class="auto-narration">
                 <h3 class="title negative"><span class="icon-flag"></span>Very concerning:</h3>
-                <p>This school has big differences in the levels of chronic absenteeism between different student groups.
-                When students aren't in school, they don't learn as much. Ask the school why this disparity exists and
+                <p>This school has big differences between student groups in the percentage of students who missed 15
+                or more days of school.  When students aren't in school, they don't learn as much. Ask the school why
+                this disparity exists and
                 what it's doing to make sure that attendance policies are fair.</p>
                 <hr />
                 <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
