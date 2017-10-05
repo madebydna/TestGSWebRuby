@@ -21,7 +21,7 @@ class Api::ReviewsController < ApplicationController
   end
 
   def count
-    count_fields = (params[:fields] || []) & %w[review_question_id answer_value]
+    count_fields = Array.wrap(params[:fields]) & %w[review_question_id answer_value]
     relation ||= Review.where(criteria).active
     relation = relation.joins(:answers) if (%w[answer answer_value] & count_fields).present?
     render json: relation.group(count_fields).count
@@ -57,6 +57,6 @@ class Api::ReviewsController < ApplicationController
   end
 
   def fields
-    (params[:fields] || '').split(',').presence || DEFAULT_FIELDS
+    Array.wrap(params[:fields]).presence || DEFAULT_FIELDS
   end
 end
