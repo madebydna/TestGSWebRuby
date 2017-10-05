@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Admin::OspModerationController do
 
   let(:school) { FactoryGirl.create(:school) }
-  let(:user) { FactoryGirl.create(:verified_user, :with_approved_esp_membership, state: 'ca') }
+  let(:user) { FactoryGirl.create(:verified_user) }
   let(:esp_membership) { FactoryGirl.create(:esp_membership, :with_approved_status, member_id: user.id) }
   after { clean_dbs :gs_schooldb }
 
@@ -26,7 +26,7 @@ describe Admin::OspModerationController do
       it 'returns a validation error' do
         user2 = FactoryGirl.build(:user, email: user.email)
         user2.valid?
-        user2.errors[:email].should include("Sorry, but the email you chose has already been taken.")
+        expect(user2.errors[:email]).to include("Sorry, but the email you chose has already been taken.")
       end
     end
 
