@@ -17,6 +17,12 @@
     vertical-align: middle;
   }
 
+  .share-link {
+    &:hover, &:active {
+      text-decoration: none;
+    }
+  }
+
   .title {
     font-family: opensans-semibold;
     font-size: 18px;
