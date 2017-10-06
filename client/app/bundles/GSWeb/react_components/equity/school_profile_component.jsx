@@ -13,8 +13,9 @@ import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
+import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
+import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
 import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
-
 
 export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
@@ -70,30 +71,6 @@ export default class SchoolProfileComponent extends React.Component {
     removeAnchorChangeCallback(() => this.selectTabMatchingAnchor());
   }
 
-  footer(sources, qualaroo_module_link) {
-    return (
-      <div className="module-footer">
-        <InfoBox content={sources} >{ t('See notes') }</InfoBox>
-        <GiveUsFeedback content={qualaroo_module_link} />
-      </div>
-    )
-  }
-
-  sharingModal() {
-    return (
-      <a data-remodal-target="modal_info_box"
-        data-content-type="info_box"
-        data-content-html={this.props.share_content}
-        className="share-link gs-tipso"
-        data-tipso-width="318"
-        data-tipso-position="left"
-        href="javascript:void(0)">
-        <span className="icon-share"></span>&nbsp;
-        {t('Share')}
-      </a>
-    )
-  }
-
   selectTabMatchingAnchor() {
     let tabAnchors = this.filteredData().map(data => data.anchor)
     handleAnchor(
@@ -113,20 +90,6 @@ export default class SchoolProfileComponent extends React.Component {
 
   hasData() {
     return this.filteredData().length > 0
-  }
-
-  propsForSubPanes() {
-    let dataForActiveTab = this.filteredData()[this.state.active];
-    let props = dataForActiveTab.data.map(({title, anchor, type, values, narration, flagged} = {}) => {
-      return {
-        title: title,
-        anchor: anchor,
-        explanation: <div dangerouslySetInnerHTML={{__html: narration}} />,
-        flagged: flagged === true,
-        component: this.createDataComponent(type, values)
-      }; 
-    });
-    return props;
   }
 
   createDataComponent(type, values) {
@@ -180,21 +143,27 @@ export default class SchoolProfileComponent extends React.Component {
     return null;
   }
 
-  createSubSectionToggle() {
-    let anchorForCurrentlySelectedTab = this.filteredData()[this.state.active].anchor;
+  handleTabClick(index) {
+    this.setState({active: index})
+  }
+
+  sharingModal() {
     return (
-      <div className={'tabs-panel tabs-panel_selected'}>
-        <SubSectionToggle
-          key={this.state.active}
-          panes={this.propsForSubPanes()}
-          top_anchor={formatAnchorString(this.props.anchor)}
-          parent_anchor={anchorForCurrentlySelectedTab}
-        />
-      </div>
+      <a data-remodal-target="modal_info_box"
+        data-content-type="info_box"
+        data-content-html={this.props.share_content}
+        className="share-link gs-tipso"
+        data-tipso-width="318"
+        data-tipso-position="left"
+        href="javascript:void(0)">
+        <span className="icon-share"></span>&nbsp;
+        {t('Share')}
+      </a>
     )
   }
 
-  drawRatingCircle(rating, icon) {
+  icon() {
+    let rating = this.props.rating;
     let rating_html = '';
     if (rating && rating != '') {
       let circleClassName = 'circle-rating--medium circle-rating--'+rating;
@@ -202,37 +171,68 @@ export default class SchoolProfileComponent extends React.Component {
     }
     else{
       let circleClassName = 'circle-rating--equity-blue';
-      rating_html = <div className={circleClassName}><span className={icon}></span></div>;
+      rating_html = <div className={circleClassName}><span className={this.props.icon_classes}></span></div>;
     }
     return rating_html
   }
 
-  drawInfoCircle(infoText) {
-    if (infoText) {
-      return(<InfoCircle
-        content={infoText}
-      />
-      );
-    } else {
-      return null;
-    }
-  }
-
-  sectionTitle() {
+  title() {
     return (
-      <div className="title-container">
-        <div>
-          <span className="title">{this.props.title}</span>&nbsp;
-          {this.drawInfoCircle(this.props.info_text)}
-        </div>
-        <span dangerouslySetInnerHTML={{__html: this.props.subtitle}} />
-        { !this.hasData() && <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} /> }
+      <div>
+        { this.props.title }&nbsp;
+        { this.props.info_text && 
+          <QuestionMarkTooltip content={this.props.info_text} /> }
       </div>
     )
   }
 
-  handleTabClick(index) {
-    this.setState({active: index})
+  body() {
+    let dataForActiveTab = this.filteredData()[this.state.active];
+    if(!dataForActiveTab) return;
+    let subSectionPanes = dataForActiveTab.data.map(({title, anchor, type, values, narration, flagged} = {}) => ({
+      title: title,
+      anchor: anchor,
+      explanation: <div dangerouslySetInnerHTML={{__html: narration}} />,
+      flagged: flagged === true,
+      component: this.createDataComponent(type, values)
+    }));
+    return <div>
+      <div className={'tabs-panel tabs-panel_selected'}>
+        <SubSectionToggle
+          key={this.state.active}
+          panes={subSectionPanes}
+          top_anchor={formatAnchorString(this.props.anchor)}
+          parent_anchor={formatAnchorString(dataForActiveTab.anchor)}
+        />
+      </div>
+      <InfoTextAndCircle {...this.props.faq} />
+    </div>
+  }
+
+  tabs() {
+    return <div className="tab-buttons">
+      <SectionNavigation
+        parent_anchor={formatAnchorString(this.props.anchor)}
+        key="sectionNavigation"
+        items={this.filteredData()}
+        active={this.state.active}
+        google_tracking={this.props.title}
+        onTabClick={this.handleTabClick.bind(this)}
+      />
+    </div>
+  }
+
+  footer() {
+    return (
+      <div>
+        <InfoBox content={this.props.sources}>{ t('See notes') }</InfoBox>
+        <GiveUsFeedback content={this.props.qualaroo_module_link} />
+      </div>
+    )
+  }
+
+  noDataCta() {
+    return <NoDataModuleCta moduleName={this.props.title} message={this.props.no_data_summary} />
   }
 
   render() {
@@ -240,61 +240,22 @@ export default class SchoolProfileComponent extends React.Component {
     if (!this.hasData()) {
       analyticsId += '-empty'; // no data
     }
-    let { title, anchor, rating, icon_classes } = this.props;
-    let ratingCircle = this.drawRatingCircle(rating, icon_classes);
-    let link_name = formatAnchorString(anchor);
-    let sectionTitle = this.sectionTitle()
 
-    let content = null;
-    if (this.hasData()) {
-      return (
-        <div id={analyticsId}>
-          <div className="rating-container" data-ga-click-label={title}>
-            <a className="anchor-mobile-offset" name={link_name}></a>
-            <div className="profile-module">
-              <div className="module-header">
-                <div className="row">
-                  <div className="col-xs-12 col-md-10">
-                    {ratingCircle}{sectionTitle}
-                  </div>
-                  <div className="col-xs-12 col-md-2 show-history-button">
-                    <div>
-                      {this.sharingModal()}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="tab-buttons">
-                <SectionNavigation
-                  parent_anchor={link_name}
-                  key="sectionNavigation"
-                  items={this.filteredData()}
-                  active={this.state.active}
-                  google_tracking={title}
-                  onTabClick={this.handleTabClick.bind(this)}
-                />
-              </div>
-              <div className="panel">
-                {this.createSubSectionToggle()}
-                <InfoTextAndCircle {...this.props.faq} />
-              </div>
-              { this.footer(this.props.sources, this.props.qualaroo_module_link) }
-            </div>
-          </div>
-        </div>
-      )
-    } else {
-      return (
-        <div id={analyticsId}>
-          <div className="rating-container">
-            <a className="anchor-mobile-offset" name={link_name}></a>
-            <div className="profile-module">
-              <div className="module-header">{ratingCircle}{sectionTitle}</div>
-            </div>
-          </div>
-        </div>
-      )
-    }
+    return (
+      <div id={analyticsId}>
+        <BasicDataModuleLayout
+          share_content={ this.hasData() && this.props.share_content }
+          id={this.props.anchor}
+          className=''
+          icon={ this.icon() }
+          title={ this.title() }
+          subtitle={ this.props.subtitle }
+          no_data_cta={ !this.hasData() && this.noDataCta() }
+          footer={ this.hasData() && this.footer() }
+          body={ this.body() }
+          tabs={ this.tabs() }
+        />
+      </div>
+    )
   }
 };
-

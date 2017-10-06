@@ -22,7 +22,7 @@ const sharingModal = function(share_content) {
 
 
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, footer, tabs, share_content
+  id, className, icon, title, subtitle, body, footer, tabs, no_data_cta, share_content
 }) => {
   return (
     <div>
@@ -31,18 +31,21 @@ const BasicDataModuleLayout = ({
         <div className="profile-module">
           <div className="module-header">
             <div className="row">
-              <div className="col-xs-12 col-md-10">
+              <div className={share_content ? 'col-xs-12 col-md-10' : 'col-xs-12'}>
                 <div className="icon">{icon}</div>
                 <div className="title-container">
                   <span className="title">{title}</span>
                   <div dangerouslySetInnerHTML={{__html: subtitle}} />
+                  { no_data_cta }
                 </div>
               </div>
-              <div className="col-xs-12 col-md-2 show-history-button">
-                <div>
-                  {sharingModal(share_content)}
+              { share_content && 
+                <div className="col-xs-12 col-md-2 show-history-button">
+                  <div>
+                    {sharingModal(share_content)}
+                  </div>
                 </div>
-              </div>
+              }
             </div>
 
           </div>
