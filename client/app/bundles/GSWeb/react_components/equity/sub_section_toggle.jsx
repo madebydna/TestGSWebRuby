@@ -9,9 +9,9 @@ export default class SubSectionToggle extends React.Component {
     defaultTab: React.PropTypes.string,
     parent_anchor: React.PropTypes.string,
     top_anchor: React.PropTypes.string,
-    equity_config: React.PropTypes.arrayOf(React.PropTypes.shape({
+    panes: React.PropTypes.arrayOf(React.PropTypes.shape({
       anchor: React.PropTypes.string,
-      subject: React.PropTypes.string,
+      title: React.PropTypes.string,
       component: React.PropTypes.object,
       explanation: React.PropTypes.element
     }))
@@ -32,7 +32,7 @@ export default class SubSectionToggle extends React.Component {
   selectTabMatchingAnchor() {
     handleThirdAnchor(
       this.props.parent_anchor, tokens => {
-        let index = this.props.equity_config.findIndex((config) => {
+        let index = this.props.panes.findIndex((config) => {
           return this.buttonAnchorName(config.anchor) == tokens[0];
         });
         if(index == -1) {
@@ -59,25 +59,25 @@ export default class SubSectionToggle extends React.Component {
     return value.replace(/\s/g, "_");
   }
 
-  renderContent() {
-    let item = this.props.equity_config[this.state.active];
-    return <div className={'tabs-panel tabs-panel_selected'}>
-      <EquityContentPane key={this.state.active} graph={item["component"]} text={item["explanation"]} />
-    </div>
-  }
-
   render() {
+    let pane = this.props.panes[this.state.active];
+
     return <div>
       <div className="sub-section-navigation">
         <SectionSubNavigation
-          items={this.props.equity_config}
+          items={this.props.panes}
           active={this.state.active}
           onTabClick={this.handleTabClick.bind(this)}
           parent_anchor={this.props.parent_anchor}
           top_anchor={this.props.top_anchor}
         />
       </div>
-      {this.renderContent()}
+      <div className={'tabs-panel tabs-panel_selected'}>
+        <EquityContentPane
+          key={this.state.active}
+          graph={pane.component}
+          text={pane.explanation} />
+      </div>
     </div>
   }
 

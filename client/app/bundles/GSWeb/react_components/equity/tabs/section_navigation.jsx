@@ -1,8 +1,21 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types'; // importing from react is deprecated
 import { formatAnchorString, hashSeparatorAnchor } from '../../../components/anchor_router';
 import { map } from 'lodash';
 
 export default class SectionNavigation extends React.Component {
+  static propTypes = {
+    active: PropTypes.number,
+    google_tracking: PropTypes.string,
+    items: PropTypes.arrayOf(PropTypes.shape({
+      anchor: PropTypes.string,
+      flagged: PropTypes.bool,
+      title: PropTypes.string
+    })),
+    onTabClick: PropTypes.func,
+    parent_anchor: PropTypes.string
+  };
+
   render(){
     var active = this.props.active;
     var items = this.props.items.map(function(item, index) {
