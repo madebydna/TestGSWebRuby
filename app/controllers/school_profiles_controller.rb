@@ -315,6 +315,22 @@ class SchoolProfilesController < ApplicationController
                   alternate: {
                       en: remove_query_params_from_url(canonical_url, [:lang]),
                       es: add_query_params_to_url(canonical_url, true, {lang: :es})
+                  },
+                  og: {
+                      title: "Explore #{school.name} in #{school.city}, #{school.state}",
+                      description: "We're an independent nonprofit that provides parents with in-depth school quality information.",
+                      site_name: 'GreatSchools.org',
+                      image: {
+                          url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
+                          secure_url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
+                          height: 600,
+                          width: 1200,
+                          type: 'image/png',
+                          alt: 'GreatSchools is a non profit organization providing quality school information'
+
+                      },
+                      type: 'place',
+                      url: school_url(school)
                   }
   end
 
