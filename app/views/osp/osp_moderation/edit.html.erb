@@ -3,7 +3,7 @@
 <div class="osp-edit">
   <%= link_to 'Back to Pending OSP Requests', osp_moderation_index_path %>
   <div>
-    <h2><%= @osp.school.name %> ( <span style="color: #D59FAE;"><%= @osp.school.state%>-<%= @osp.school.id%></span> )</h2>
+    <h2><%= @school.name %> ( <span style="color: #D59FAE;"><%= @school.state%>-<%= @school.id%></span> )</h2>
   </div>
 
   <%= form_for @osp, url: osp_update_list_member_path, method: :post do |f| %>
@@ -11,7 +11,7 @@
 
     <div>
       <label>Address</label>
-      <span><%= @osp.school.street %>, <%= @osp.school.city%>, <span></span><%= @osp.school.state%> <%= @osp.school.zipcode%></span>
+      <span><%= @school.street %>, <%= @school.city%>, <span></span><%= @school.state%> <%= @school.zipcode%></span>
     </div>
 
     <div>
@@ -22,15 +22,15 @@
     <%= fields_for @osp.user do |ff| %>
      <div>
       <%= ff.label :first_name %>
-      <%= ff.text_field :first_name %>
+      <%= ff.text_field :first_name, required: true %>
      </div>
      <div>
       <%= ff.label :last_name %>
-      <%= ff.text_field :last_name %>
+      <%= ff.text_field :last_name, required: true %>
      </div>
      <div>
       <%= ff.label :email %>
-      <%= ff.text_field :email %>
+      <%= ff.text_field :email, required: true %>
      </div>
     <% end %>
     <div>
@@ -39,7 +39,7 @@
     </div>
     <div>
       <%= f.label :job_title%>
-      <%= f.select :job_title, [['Choose one', nil],['Administrative Asst.', 'administrative assistant'],
+      <%= f.select :job_title, [['Administrative Asst.', 'administrative assistant'],
                                 ['Administrator (Other)', 'administrator (other)'],
                                 ['Admissions Rep', 'admissions representative'],
                                 ['Asst. Principal', 'assistant principal'],
@@ -54,7 +54,8 @@
                                 ['Special Ed Director', 'special education director'],
                                 ['Superintendent', 'superintendent'],
                                 ['Teacher', 'teacher'],
-                                ['Webmaster', 'webmaster']], class: 'selectpicker required role-select' %>
+                                ['Webmaster', 'webmaster']], { :include_blank => '-- Choose One --' }, required: true,
+                                class: 'selectpicker required role-select' %>
     </div>
 
     <div>
