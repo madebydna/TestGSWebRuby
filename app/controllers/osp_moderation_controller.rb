@@ -39,28 +39,81 @@ class OspModerationController < ApplicationController
     render json: {}, status: http_status
   end
 
+  # def osp_search
+  #   @permitted_params = request.query_parameters.select{|param, val| PARAMS_WHITELIST.include?(param) && val.present? }.symbolize_keys
+  #   if (@permitted_params[:state] || @permitted_params[:school_id]) && @permitted_params.length <= 1
+  #     # Can't perform search if only state or id (need both)
+  #   elsif @permitted_params.empty?
+  #   elsif @permitted_params[:email]
+  #     if User.where(email: @permitted_params[:email]).present?
+  #       member_id = User.find_by(email: @permitted_params[:email]).id
+  #       @osp_memberships = EspMembership.where(member_id: member_id).where(@permitted_params.except(:email, :member_id))
+  #                          .joins(:user).where('email_verified = ?', true)
+  #                          .extend(SchoolAssociationPreloading)
+  #                          .preload_associated_schools!
+  #     end
+  #   else
+  #     @osp_memberships = EspMembership.where(@permitted_params.except(:email))
+  #                          .extend(SchoolAssociationPreloading)
+  #                          .preload_associated_schools!
+  #   end
+  #   render 'osp/osp_moderation/osp_search'
+  # end
+
   def osp_search
-    @permitted_params = request.query_parameters.select{|param, val| PARAMS_WHITELIST.include?(param) && val.present? }.symbolize_keys
-    if (@permitted_params[:state] || @permitted_params[:school_id]) && @permitted_params.length <= 1
-      # Can't perform search if only state or id (need both)
-    elsif @permitted_params.empty?
-    elsif @permitted_params[:email]
-      if User.where(email: @permitted_params[:email]).present?
-        member_id = User.find_by(email: @permitted_params[:email]).id
-        @osp_memberships = EspMembership.where(member_id: member_id).where(@permitted_params.except(:email, :member_id))
-                           .joins(:user).where('email_verified = ?', true)
-                           .extend(SchoolAssociationPreloading)
-                           .preload_associated_schools!
-      end
-    else
-      @osp_memberships = EspMembership.where(@permitted_params.except(:email))
-                           .extend(SchoolAssociationPreloading)
-                           .preload_associated_schools!
+    filter_params
+    if search_id_and_state?
+      fetch_osps(email: false)
+    elsif search_email?
+      fetch_osps(email: true)
+    elsif search_id_or_state? && params_count > 1
+      fetch_osps(email: false)
     end
     render 'osp/osp_moderation/osp_search'
   end
 
   private
+
+  def search_id_and_state?
+    filter_params[:state] && filter_params[:school_id]
+  end
+
+  def search_id_or_state?
+    filter_params[:state] || filter_params[:school_id]
+  end
+
+  def filter_params
+    @_filter_params ||= request.query_parameters.select{|param, val| PARAMS_WHITELIST.include?(param) && val.present? }.symbolize_keys
+  end
+
+  def search_email?
+    filter_params[:email]
+  end
+
+  def search_member_id?
+    filter_params[:member_id]
+  end
+
+  def params_count
+    filter_params.length
+  end
+
+  def fetch_osps(email:)
+    email = filter_params[:email]
+    search_params = filter_params.except(:email)
+    if search_email?
+      member = User.find_by(email: email)
+      member ? search_params[:member_id] = member.id : search_params.replace({})
+    end
+    search(search_params) unless search_params.empty?
+  end
+
+  def search(search_params)
+    @osp_memberships = EspMembership.where(search_params)
+                         .joins(:user).where('email_verified = ?', true)
+                         .extend(SchoolAssociationPreloading)
+                         .preload_associated_schools!
+  end
 
   def set_active(status)
     if ['rejected', 'disabled'].include?(status)
