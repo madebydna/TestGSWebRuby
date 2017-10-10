@@ -211,16 +211,22 @@ module SchoolProfiles
       year = array.last[:year]
       source = array.last[:source]
       flags = flags_for_sources(array.last[:flags].flatten.compact.uniq)
-      str = '<div>'
-      str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
-      str << "<p>#{array.last[:subject].join(', ')}</p>"
-      str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      if flags.present?
-        str << '<p><span class="emphasis">' + data_label('note') + '</span>: ' + data_label(flags) + '</p>'
+      source_content = I18n.db_t(source, default: source)
+      if source_content.present?
+        str = '<div>'
+        str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
+        str << "<p>#{array.last[:subject].join(', ')}</p>"
+        str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
+        if flags.present?
+          str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
+        end
+        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{year.to_s}</p>'"
+        str << '</div>'
+        str
+      else
+        ''
       end
-      str << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
-      str << '</div>'
-      str
+
     end
 
     def flags_for_sources(flag_array)
