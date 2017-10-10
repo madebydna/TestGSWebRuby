@@ -15,7 +15,7 @@ import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
 import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
 import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
-import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString } from '../../components/anchor_router';
+import { handleAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString, hashSeparatorAnchor } from '../../components/anchor_router';
 
 export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
@@ -147,6 +147,34 @@ export default class SchoolProfileComponent extends React.Component {
     this.setState({active: index})
   }
 
+  sectionNavigationTabs() {
+    return this.filteredData().map(function(item, index) {
+      let anchorLink = '';
+      let addJSHashUpdate = '';
+      if(item.anchor){
+        addJSHashUpdate = ' js-updateLocationHash';
+        anchorLink = formatAnchorString(this.props.anchor) + hashSeparatorAnchor() + formatAnchorString(item.anchor);
+      }
+      return (
+        <a href="javascript:void(0)"
+          data-anchor={anchorLink}
+          key={index}
+          className={'tab-title js-gaClick' + addJSHashUpdate}
+          onClick={this.handleTabClick.bind(this, index)}
+          data-ga-click-category='Profile'
+          data-ga-click-action={this.googleTrackingAction()}
+          data-ga-click-label={item.title}>
+          {item.title}
+          {item.flagged && <span className="red icon-flag"/>}
+        </a>
+      )
+    }.bind(this));
+  }
+
+  googleTrackingAction(){
+    return 'Equity '+this.props.google_tracking+' Tabs'
+  }
+
   sharingModal() {
     return (
       <a data-remodal-target="modal_info_box"
@@ -210,16 +238,13 @@ export default class SchoolProfileComponent extends React.Component {
   }
 
   tabs() {
-    return <div className="tab-buttons">
-      <SectionNavigation
-        parent_anchor={formatAnchorString(this.props.anchor)}
-        key="sectionNavigation"
-        items={this.filteredData()}
-        active={this.state.active}
-        google_tracking={this.props.title}
-        onTabClick={this.handleTabClick.bind(this)}
-      />
-    </div>
+    return (
+      <div className="tab-buttons">
+        <SectionNavigation active={this.state.active}>
+          {this.sectionNavigationTabs()}
+        </SectionNavigation>
+      </div>
+    )
   }
 
   footer() {
