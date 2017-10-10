@@ -12,6 +12,8 @@ es:
       below: por debajo
       'Summary Rating_html': >
         <span class="emphasis">Esta escuela está calificada %{rating_string} del promedio</span> en calidad de la escuela en comparación a otras escuelas en el estado.
+      Summary Rating_school_name_html: >
+        <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}.
       'Test Scores_html': >
         Los estudiantes aquí se desempeñan <a href="#Test_scores">%{rating_string} del promedio</a> en exámenes estatales,
       'College Readiness_html': >

@@ -306,11 +306,21 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
+  def meta_description(default)
+    content = summary_narration.build_content_with_school_name
+    if school.state.downcase == 'ca' && content.present?
+      content.join(' ').truncate(149)
+    else
+        default
+    end
+  end
+
   def set_seo_meta_tags
     meta_tags = SchoolProfileMetaTags.new(school)
+    description =meta_description(meta_tags.description)
     canonical_url = school_url(school)
     set_meta_tags title: meta_tags.title,
-                  description: meta_tags.description,
+                  description: description,
                   canonical: canonical_url,
                   alternate: {
                       en: remove_query_params_from_url(canonical_url, [:lang]),
