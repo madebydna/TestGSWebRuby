@@ -4,44 +4,35 @@ import { formatAnchorString, hashSeparatorAnchor } from '../../../components/anc
 
 export default class SectionSubNavigation extends React.Component {
   static propTypes = {
-    active: PropTypes.number,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      anchor: PropTypes.string,
-      title: PropTypes.string,
-      flagged: PropTypes.bool
-    })),
-    onTabClick: PropTypes.func,
-    parent_anchor: PropTypes.string,
-    top_anchor: PropTypes.string
+    active: PropTypes.number
   };
 
-  render(){
+  static defaultProps = {
+    active: 0
+  }
+
+  highlight(item) {
+    return React.cloneElement(
+      item,
+      {
+        className: item.props.className + ' sub-tab-selected',
+        onClick: this.props.onTabClick
+      }
+    )
+  }
+
+  render() {
+    if(!this.props.children) return null;
     var active = this.props.active;
-    var items = this.props.items.map(function(item, index) {
-      let flagged = item.flagged || false;
-      let anchor = this.props.top_anchor + hashSeparatorAnchor() + this.props.parent_anchor + hashSeparatorAnchor() + formatAnchorString(item.anchor);
-      return <a href="javascript:void(0)"
-                data-anchor={anchor}
-                key={index}
-                className={'sub-nav-item js-gaClick js-updateLocationHash' + (active === index ? ' sub-tab-selected' : '')}
-                onClick={this.onClick.bind(this, index)}
-                data-ga-click-category='Profile'
-                data-ga-click-action='Equity Ethnicity Button'
-                data-ga-click-label={item.title}>
-        {item.title}
-        {this.addFlag(flagged)}
-      </a>;
+    var items = this.props.children.map(function(item, index) {
+      if(active == index) {
+        item = this.highlight(item);
+      }
+      return item;
     }.bind(this));
-    return <div className="sub-nav-group">{items}</div>;
-  }
 
-  addFlag(flag) {
-    if (flag === true) {
-      return <span className="icon-flag red"/>
-    }
-  }
-
-  onClick(index) {
-    this.props.onTabClick(index);
-  }
+    return <div className="sub-section-navigation">
+      { items && <div className="sub-nav-group">{items}</div> }
+    </div>
+  };
 };
