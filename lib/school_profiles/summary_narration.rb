@@ -8,6 +8,8 @@ module SchoolProfiles
 
     SUMMARY_RATING_METHODS = %w(summary_rating test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
 
+    SUMMARY_RATING_METHODS_SCHOOL_NAME = %w(summary_rating_school_name test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
+
     def initialize(sr, school, school_cache_data_reader:)
       @src = sr
       @school = school
@@ -15,13 +17,27 @@ module SchoolProfiles
     end
 
     def build_content
+      @_summary_narration_build_content ||= (
+        if @src.present? && @school_cache_data_reader.gs_rating.present?
+          arr = []
+          SUMMARY_RATING_METHODS.each do | method |
+            arr << send(method)
+          end
+          arr.compact.delete_if(&:empty?)
+        end
+      )
+    end
+
+    def build_content_with_school_name
+      @_summary_narration_build_content ||= (
       if @src.present? && @school_cache_data_reader.gs_rating.present?
         arr = []
-        SUMMARY_RATING_METHODS.each do | method |
+        SUMMARY_RATING_METHODS_SCHOOL_NAME.each do | method |
           arr << send(method)
         end
-        arr.compact!
+        arr.compact.delete_if(&:empty?)
       end
+      )
     end
 
     def qualaroo_module_link
@@ -61,6 +77,13 @@ module SchoolProfiles
     def standard_rating_by_obj(rating, title)
       rating_string, level = rating_three_levels(rating) if rating.present?
       (rating.present? && rating.to_s != 'NR') ? I18n.t('school_profiles.summary_narration.'+title+'_html', rating_string: rating_string, level: level ) : ''
+    end
+
+    def summary_rating_school_name
+      rating = @school_cache_data_reader.gs_rating
+      rating_string, level = rating_three_levels(rating) if rating.present?
+      state_name = States.abbr_to_label(@school.state)
+      rating.present? ? I18n.t('school_profiles.summary_narration.Summary Rating_school_name_html', rating_string: rating_string, level: level, school_name: @school.name, state_name: state_name) : ''
     end
 
     def summary_rating
