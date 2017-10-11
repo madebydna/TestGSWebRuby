@@ -10,7 +10,6 @@ en:
       GreatSchools: GreatSchools
       li_GreatSchools_Rating: GreatSchools Low-income Rating
       li_description: The low-income rating reflects state test scores for students at this school who qualify for free or reduced-price lunch compared to all students in the state.
-      li_see_more: 'See more: <a href="/gk/ratings/#lowincomerating" target="_blank">About this rating</a>'
       faq:
         race_ethnicity:
           cta: Notice something missing or confusing?

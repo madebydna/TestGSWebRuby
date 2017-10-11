@@ -4,7 +4,7 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
     include Qualaroo
     include SharingTooltipModal
-
+    include RatingSourceConcerns
 
     GRADES_DISPLAY_MINIMUM = 1
     N_TESTED = 'n_tested'
@@ -122,25 +122,9 @@ module SchoolProfiles
         content << '<div class="sourcing">'
         content << '<h1>' + data_label('title') + '</h1>'
         if rating.present? && rating != 'NR'
-          content << '<div>'
-          content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
-
-          description = rating_description
-          description = data_label(description) if description
-          methodology = rating_methodology
-          methodology = data_label(methodology) if methodology
-          if description || methodology
-            content << '<p>'
-            content << description if description
-            content << ' ' if description && methodology
-            content << methodology if methodology
-            content << '</p>'
-          end
-
-          content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
-          content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings/#testscorerating"; target="_blank">' + data_label('More') + '</a>'
-          content << '</p>'
-          content << '</div>'
+          content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
+                                   description: rating_description, methodology: rating_methodology,
+                                   more_anchor: 'testscorerating')
         end
         data = subject_scores.each_with_object({}) do |rsi, output|
           output[rsi.test_label] ||= {}
@@ -162,28 +146,13 @@ module SchoolProfiles
     end
 
     def source_rating_text
-      content = ''
       if rating.present? && rating != 'NR'
-        content << '<div>'
-        content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
-        description = rating_description
-        description = data_label(description) if description
-        methodology = rating_methodology
-        methodology = data_label(methodology) if methodology
-        if description || methodology
-          content << '<p>'
-          content << description if description
-          content << ' ' if description && methodology
-          content << methodology if methodology
-          content << '</p>'
-        end
-
-        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
-        content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings/#testscorerating"; target="_blank">' + data_label('More') + '</a>'
-        content << '</p>'
-        content << '</div>'
+        rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
+                      description: rating_description, methodology: rating_methodology,
+                      more_anchor: 'testscorerating')
+      else
+        ''
       end
-      content
     end
 
     def sources_without_rating_text
@@ -220,7 +189,7 @@ module SchoolProfiles
         if flags.present?
           str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
         end
-        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{year.to_s}</p>'"
+        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{year.to_s}</p>"
         str << '</div>'
         str
       else
