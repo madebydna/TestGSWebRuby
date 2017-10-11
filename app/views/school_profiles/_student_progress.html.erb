@@ -1,5 +1,6 @@
 <% student_progress %>
 <% title = t('.title') %>
+<% subtitle = t('.subtitle') %>
 <% rating = student_progress.rating %>
 <% info_text = student_progress.info_text  %>
 <% narration = student_progress.narration %>
@@ -9,6 +10,7 @@
   <%= render 'module_header',
     rating: rating,
     title: title,
+   subtitle: subtitle,
     info_text: info_text,
     share_content: student_progress.share_content,
     icon: 'user',

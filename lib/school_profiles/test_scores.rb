@@ -82,6 +82,7 @@ module SchoolProfiles
       scores = scores.map do |hash|
         grades_from_hash = grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] } if grades_hash
         grades = build_rating_score_hash(grades_from_hash, nil) if grades_from_hash && grades_from_hash.count >= GRADES_DISPLAY_MINIMUM
+        grades = sort_by_grades_ascending(grades) if grades.present?
 
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash[:subject])
@@ -97,6 +98,10 @@ module SchoolProfiles
         end
       end if scores.present?
       scores
+    end
+
+    def sort_by_grades_ascending(grades)
+      grades.sort_by { |h| h.grade }
     end
 
     def sort_by_test_label_and_number_tested_descending(scores)
@@ -206,16 +211,22 @@ module SchoolProfiles
       year = array.last[:year]
       source = array.last[:source]
       flags = flags_for_sources(array.last[:flags].flatten.compact.uniq)
-      str = '<div>'
-      str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
-      str << "<p>#{array.last[:subject].join(', ')}</p>"
-      str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      if flags.present?
-        str << '<p><span class="emphasis">' + data_label('note') + '</span>: ' + data_label(flags) + '</p>'
+      source_content = I18n.db_t(source, default: source)
+      if source_content.present?
+        str = '<div>'
+        str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
+        str << "<p>#{array.last[:subject].join(', ')}</p>"
+        str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
+        if flags.present?
+          str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
+        end
+        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{year.to_s}</p>'"
+        str << '</div>'
+        str
+      else
+        ''
       end
-      str << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
-      str << '</div>'
-      str
+
     end
 
     def flags_for_sources(flag_array)

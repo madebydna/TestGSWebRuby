@@ -12,6 +12,8 @@ en:
       below: below
       Summary Rating_html: >
         <span class="emphasis">This school is rated %{rating_string} average</span> in school quality compared to other schools in the state.
+      Summary Rating_school_name_html: >
+        <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}.
       Test Scores_html: >
         Students here perform <a href="#Test_scores">%{rating_string} average</a> on state tests,
       College Readiness_html: >
