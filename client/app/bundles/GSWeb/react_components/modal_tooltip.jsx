@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactModal from 'react-modal';
 import withAnalyticsTracking from 'util/with_analytics_tracking';
 
 class ModalTooltip extends React.Component {
