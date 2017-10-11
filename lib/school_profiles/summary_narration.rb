@@ -17,27 +17,15 @@ module SchoolProfiles
     end
 
     def build_content
-      @_summary_narration_build_content ||= (
-        if @src.present? && @school_cache_data_reader.gs_rating.present?
-          arr = []
-          SUMMARY_RATING_METHODS.each do | method |
-            arr << send(method)
-          end
-          arr.compact.delete_if(&:empty?)
-        end
-      )
+      if @src.present? && @school_cache_data_reader.gs_rating.present?
+        SUMMARY_RATING_METHODS.map { |method| send(method) }.compact.delete_if(&:empty?)
+      end
     end
 
     def build_content_with_school_name
-      @_summary_narration_build_content ||= (
       if @src.present? && @school_cache_data_reader.gs_rating.present?
-        arr = []
-        SUMMARY_RATING_METHODS_SCHOOL_NAME.each do | method |
-          arr << send(method)
-        end
-        arr.compact.delete_if(&:empty?)
+        SUMMARY_RATING_METHODS_SCHOOL_NAME.map { |method| send(method) }.compact.delete_if(&:empty?)
       end
-      )
     end
 
     def qualaroo_module_link
