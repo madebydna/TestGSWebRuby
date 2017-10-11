@@ -7,6 +7,7 @@ import { t } from '../../../util/i18n';
 import { isSignedIn, getCurrentSession } from '../../../util/session';
 import modalManager from '../../../components/modals/manager';
 import { forOwn, each, reduce, isEmpty } from 'lodash';
+import { postReview } from 'api_clients/reviews';
 
 export default class ReviewForm extends React.Component {
 
@@ -296,23 +297,13 @@ export default class ReviewForm extends React.Component {
   }
 
   sendReviewPost(modalData) {
-    let data = this.buildFormData();
-    return $.ajax({
-      url: "/gsr/reviews",
-      method: 'POST',
-      data: data,
-      dataType: 'json'
-    }).done(this.handleSuccessfulSubmit).fail(this.handleFailSubmit);
+    return postReview(this.buildFormData())
+      .done(this.handleSuccessfulSubmit)
+      .fail(this.handleFailSubmit);
   }
 
-  handleFailSubmit(xhr, status, err) {
-    let formErrors = JSON.parse(xhr.responseText);
-    if(formErrors && formErrors.reviews) {
-      let reviewsErrors = formErrors.reviews[0];
-      if (reviewsErrors) {
-        this.updateReviewFormErrors(reviewsErrors);
-      }
-    }
+  handleFailSubmit(reviewErrors = {}) {
+    this.updateReviewFormErrors(reviewsErrors);
     this.setState({disabled: false});
   }
 

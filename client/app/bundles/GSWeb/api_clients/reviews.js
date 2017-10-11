@@ -11,3 +11,24 @@ export function getAnswerCountsForQuestion(state, schoolId, questionId) {
     'json'
   ).then((data) => data.result);
 }
+
+export function postReview(data) {
+  return $.ajax({
+    url: "/gsr/reviews",
+    method: 'POST',
+    data: data,
+    dataType: 'json'
+  }).then(
+    (result) => result,
+    (xhr) => {
+      let formErrors = JSON.parse(xhr.responseText);
+      if(formErrors && formErrors.reviews) {
+        let reviewsErrors = formErrors.reviews[0];
+        if (reviewsErrors) {
+          return reviewsErrors;
+        }
+      }
+      return {};
+    }
+  );
+}
