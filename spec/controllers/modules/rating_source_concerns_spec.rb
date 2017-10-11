@@ -71,9 +71,6 @@ describe RatingSourceConcerns do
         params[:more_anchor] = more_anchor
         expect(controller).to receive(:rating_static_label).with(:see_more).and_return('See more')
         expect(controller).to receive(:rating_static_label).with(:about_this_rating).and_return('About this rating')
-
-        allow_any_instance_of(ActionDispatch::Request).to receive(:subdomain).and_return('www')
-        default_url_options[:host] = 'greatschools.org'
       end
 
       it { is_expected.to include('See more') }
