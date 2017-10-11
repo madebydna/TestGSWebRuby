@@ -8,6 +8,7 @@ import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
+import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
 import NearestHighPerformingSchools from '../react_components/nearest_high_performing_schools';
@@ -44,6 +45,7 @@ window.store = getStore();
 
 ReactOnRails.register({
   SchoolProfileComponent,
+  StudentsWithDisabilities,
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,
