@@ -310,7 +310,7 @@ class SchoolProfilesController < ApplicationController
     content = summary_narration.build_content_with_school_name
     if school.state.downcase == 'ca' && content.present?
       c = content.join(' ')
-      ActionView::Base.full_sanitizer.sanitize(c).truncate(149)
+      ActionView::Base.full_sanitizer.sanitize(c).truncate(155)
     else
         default
     end
