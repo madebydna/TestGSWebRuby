@@ -9,6 +9,20 @@ describe 'Reviews API' do
   let(:errors) { json['errors'] }
 
   describe '#count' do
+    it 'handles case where no reviews in db and no filters given' do
+      get '/gsr/api/reviews/count', format: :json
+      expect(status).to eq(200)
+      expect(errors).to be_nil
+      expect(count).to eq(0)
+    end
+
+    it 'handles case where no reviews in db and some filters given' do
+      get '/gsr/api/reviews/count', format: :json, fields: %w[answer_value], review_question_id: 1
+      expect(status).to eq(200)
+      expect(errors).to be_nil
+      expect(count).to eq({})
+    end
+
     it 'handles no filters or group' do
       create(:five_star_review, state: 'AK', review_question_id: 1, answer_value: 'Yes')
       create(:five_star_review, state: 'AK', review_question_id: 1, answer_value: 'Yes')
