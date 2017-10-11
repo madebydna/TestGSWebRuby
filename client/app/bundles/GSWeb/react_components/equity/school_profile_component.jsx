@@ -286,8 +286,8 @@ export default class SchoolProfileComponent extends React.Component {
           subtitle={ this.props.subtitle }
           no_data_cta={ !this.hasData() && this.noDataCta() }
           footer={ this.hasData() && this.footer() }
-          body={ this.activePane() }
-          tabs={ this.tabsContainer() }
+          body={ this.hasData() && this.activePane() }
+          tabs={ this.hasData() && this.tabsContainer() }
         />
       </div>
     )
