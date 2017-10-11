@@ -87,7 +87,7 @@
     div {
       margin: 1.5% 1%;
     }
-    input:not([type="submit"]), select, textarea {
+    input[type="text"], select, textarea {
       padding: 6px;
       border-radius: 4px;
       background: #E9E9E9;

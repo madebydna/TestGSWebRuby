@@ -2,9 +2,7 @@
 
 <div class="osp-edit">
   <%= link_to 'Back to Pending OSP Requests', osp_moderation_index_path %>
-  <div>
-    <h2><%= @school.name %> ( <span style="color: #D59FAE;"><%= @school.state%>-<%= @school.id%></span> )</h2>
-  </div>
+  <h2><%= @school.name %> ( <span style="color: #D59FAE;"><%= @school.state%>-<%= @school.id%></span> )</h2>
 
   <%= form_for @osp, url: osp_update_list_member_path, method: :post do |f| %>
     <%= render '/osp/osp_moderation/error_messages' %>
