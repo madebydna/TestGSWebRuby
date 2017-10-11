@@ -93,7 +93,7 @@
       <div class="school-info">
         <div class="school-info__item school-info__gs-rating">
           <div class="gs-rating-with-label">
-            <% new_rating = %w[CA].include?(@school.state) %>
+            <% new_rating = %w[AR CA DC DE FL GA MA MD MO NC NJ NY OH OR TX WA WI].include?(@school.state) %>
             <% new_rating_key = new_rating ? 'new_' : '' %>
             <% if hero.gs_rating && new_rating && @school_profile.summary_rating.weights_within_range?%>
                 <a data-remodal-target="modal_info_box"
