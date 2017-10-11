@@ -39,6 +39,7 @@ import { init as initHeader } from '../header';
 import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
+import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
 
 window.store = getStore();
 
@@ -77,6 +78,7 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
+    minimizeQualarooNudges();
     $('.js-school-profile-tour-modal').removeClass('hidden');
   }
 

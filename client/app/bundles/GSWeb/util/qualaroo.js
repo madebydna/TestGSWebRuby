@@ -15,4 +15,19 @@ const qualarooLink = function(module) {
   return '';
 }
 
-export { qualarooLink }
+// Collapses 
+const minimizeNudges = function() {
+  if(window.minimizeQualarooNudges) {
+    window.minimizeQualarooNudges();
+  }
+}
+
+const maximizeNudges = function() {
+  // maximizes only if previous minimized
+  if(window.maximizeQualarooNudges) {
+    window.maximizeQualarooNudges();
+  }
+}
+
+
+export { qualarooLink, minimizeNudges, maximizeNudges }
