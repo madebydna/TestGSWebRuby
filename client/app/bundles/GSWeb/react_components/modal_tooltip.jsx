@@ -12,9 +12,9 @@ class ModalTooltip extends React.Component {
   }
 
   trigger(){
-    return <div ref={ref => this.triggerElement = ref} onClick={this.triggerClicked}>
+    return <span ref={ref => this.triggerElement = ref} onClick={this.triggerClicked}>
       {this.props.children}
-    </div>
+    </span>
   }
 
   triggerClicked() {
