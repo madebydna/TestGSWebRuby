@@ -8,9 +8,14 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
       hash.deep_merge!(build_hash_for_data_set(data_set_and_value)) # impl in subclass
     end
 
-    add_lowest_grade_to_hash(hash)
+    # need sources otherwise reject test
+    hash2 = hash.reject { | test, value | value['All'][:test_source].blank? }
+    if hash != hash2
+      GSLogger.error( :school_cache, nil, message: "Missing source in test_scores_cacher line 14", vars: hash)
+    end
 
-    hash
+    add_lowest_grade_to_hash(hash2)
+    hash2
   end
 
   def inject_grade_all(data_sets_and_values)
