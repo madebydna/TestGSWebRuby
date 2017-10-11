@@ -9,16 +9,18 @@ import NoDataModuleCta from '../no_data_module_cta';
 import InfoCircle from '../info_circle';
 import InfoTextAndCircle from '../info_text_and_circle'
 import SectionNavigation from './tabs/section_navigation';
-import SubSectionToggle from './sub_section_toggle';
 import InfoBox from '../school_profiles/info_box';
 import GiveUsFeedback from '../school_profiles/give_us_feedback';
 import { t } from '../../util/i18n';
 import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
 import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
-import { handleAnchor, handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString, hashSeparatorAnchor } from '../../components/anchor_router';
+import { handleAnchor, handleThirdAnchor, addAnchorChangeCallback, removeAnchorChangeCallback, formatAnchorString, formatAndJoinAnchors } from '../../components/anchor_router';
 import SectionSubNavigation from './tabs/section_sub_navigation';
 import EquityContentPane from './equity_content_pane';
 import TabsWithPanes from 'react_components/tabs_with_panes';
+import ModuleTab from 'react_components/school_profiles/module_tab';
+import ModuleSubTab from 'react_components/school_profiles/module_sub_tab';
+import SharingModal from 'react_components/school_profiles/sharing_modal';
 
 export default class SchoolProfileComponent extends React.Component {
   static propTypes = {
@@ -60,6 +62,7 @@ export default class SchoolProfileComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleTabClick = this.handleTabClick.bind(this);
     this.selectInnerTabMatchingAnchor = this.selectInnerTabMatchingAnchor.bind(this);
     this.state = {
       active: 0,
@@ -68,15 +71,17 @@ export default class SchoolProfileComponent extends React.Component {
   }
 
   componentDidMount() {
-    this.selectTabMatchingAnchor();
+    this.selectTabMatchingAnchor(() => this.selectInnerTabMatchingAnchor());
     addAnchorChangeCallback(() => this.selectTabMatchingAnchor());
+    addAnchorChangeCallback(() => this.selectInnerTabMatchingAnchor());
   }
 
   componentWillUnmount() {
     removeAnchorChangeCallback(() => this.selectTabMatchingAnchor());
+    removeAnchorChangeCallback(() => this.selectInnerTabMatchingAnchor());
   }
 
-  selectTabMatchingAnchor() {
+  selectTabMatchingAnchor(callback) {
     let tabAnchors = this.filteredData().map(data => data.anchor)
     handleAnchor(
       this.props.anchor, tokens => {
@@ -84,7 +89,7 @@ export default class SchoolProfileComponent extends React.Component {
         if(index == -1) {
           index = 0;
         }
-        this.setState({ active: index });
+        this.setState({ active: index }, callback);
       }
     );
   }
@@ -92,17 +97,14 @@ export default class SchoolProfileComponent extends React.Component {
   selectInnerTabMatchingAnchor() {
     let dataForActiveTab = this.filteredData()[this.state.active];
     if(!dataForActiveTab) return null;
+    let anchors = dataForActiveTab.data.map(({anchor} = {}) => anchor);
 
     handleThirdAnchor(
       formatAnchorString(dataForActiveTab.anchor), tokens => {
-        let index = this.panes().findIndex((pane) => {
-          let anchor = pane.props.children[1].props.anchor;
-          if(anchor) {
-            anchor = anchor.replace(/\s/g, "_");
-          }
-          return anchor == tokens[0];
+        let index = anchors.findIndex((anchor = '') => {
+          return anchor.replace(/\s/g, "_") == tokens[0];
         });
-        if(index != -1) {
+        if(index > -1) {
           this.setState({ activeInnerTab: index });
         }
       }
@@ -172,53 +174,6 @@ export default class SchoolProfileComponent extends React.Component {
     this.setState({active: index, activeInnerTab: 0})
   }
 
-  handleInnerTabClick(index) {
-    this.setState({activeInnerTab: index})
-  }
-
-  sectionNavigationTabs() {
-    return this.filteredData().map(function(item, index) {
-      let anchorLink = '';
-      let addJSHashUpdate = '';
-      if(item.anchor){
-        addJSHashUpdate = ' js-updateLocationHash';
-        anchorLink = formatAnchorString(this.props.anchor) + hashSeparatorAnchor() + formatAnchorString(item.anchor);
-      }
-      return (
-        <a href="javascript:void(0)"
-          data-anchor={anchorLink}
-          key={index}
-          className={'tab-title js-gaClick' + addJSHashUpdate}
-          onClick={this.handleTabClick.bind(this, index)}
-          data-ga-click-category='Profile'
-          data-ga-click-action={this.googleTrackingAction()}
-          data-ga-click-label={item.title}>
-          {item.title}
-          {item.flagged && <span className="red icon-flag"/>}
-        </a>
-      )
-    }.bind(this));
-  }
-
-  googleTrackingAction(){
-    return 'Equity '+this.props.google_tracking+' Tabs'
-  }
-
-  sharingModal() {
-    return (
-      <a data-remodal-target="modal_info_box"
-        data-content-type="info_box"
-        data-content-html={this.props.share_content}
-        className="share-link gs-tipso"
-        data-tipso-width="318"
-        data-tipso-position="left"
-        href="javascript:void(0)">
-        <span className="icon-share"></span>&nbsp;
-        {t('Share')}
-      </a>
-    )
-  }
-
   icon() {
     let rating = this.props.rating;
     let rating_html = '';
@@ -243,50 +198,37 @@ export default class SchoolProfileComponent extends React.Component {
     )
   }
 
-  panes() {
+  activePane() {
     let dataForActiveTab = this.filteredData()[this.state.active];
-    if(!dataForActiveTab) return null;
 
-    let subTabs = dataForActiveTab.data.map(({title, anchor, flagged} = {}, index) => {
-      return <a href="javascript:void(0)"
-        data-anchor={formatAnchorString(this.props.anchor) + hashSeparatorAnchor() + formatAnchorString(dataForActiveTab.anchor) + hashSeparatorAnchor() + formatAnchorString(anchor)}
-        key={index}
-        className={'sub-nav-item js-gaClick js-updateLocationHash'}
-        onClick={this.handleInnerTabClick.bind(this, index)}
-        data-ga-click-category='Profile'
-        data-ga-click-action={'Equity Ethnicity Button'}
-        data-ga-click-label={title}>
-        {title}
-        {flagged && <span className="red icon-flag"/>}
-      </a>
+    let subTabs = dataForActiveTab.data.map((item, index) => {
+      let anchorLink = formatAndJoinAnchors(this.props.anchor, dataForActiveTab.anchor, item.anchor)
+      return <ModuleSubTab {...item} key={index} anchorLink={anchorLink} />
     });
 
-    let subNav = <SectionSubNavigation active={this.state.activeInnerTab}>
+    let subNav = <SectionSubNavigation key={this.state.active}>
       {subTabs}
     </SectionSubNavigation>
 
-    return dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
+    let subPanes = dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
-      return <div>
-        {subNav}
-        <EquityContentPane anchor={anchor} graph={this.createDataComponent(type, values)} text={explanation} />
-      </div>
+      return (
+        <EquityContentPane
+          anchor={anchor}
+          graph={this.createDataComponent(type, values)}
+          text={explanation}
+        />
+      )
     })
-  }
-
-  body() {
-    let dataForActiveTab = this.filteredData()[this.state.active];
-    if(!dataForActiveTab) return null;
 
     return (
       <div>
         <div className={'tabs-panel tabs-panel_selected'}>
-          <SubSectionToggle
+          <TabsWithPanes
             key={this.state.active}
             active={this.state.activeInnerTab}
-            panes={this.panes()}
-            parent_anchor={formatAnchorString(dataForActiveTab.anchor)}
-            selectTabMatchingAnchor={this.selectInnerTabMatchingAnchor}
+            tabsContainer={subNav}
+            panes={subPanes}
           />
         </div>
         <InfoTextAndCircle {...this.props.faq} />
@@ -295,10 +237,20 @@ export default class SchoolProfileComponent extends React.Component {
   }
 
   tabs() {
+    return this.filteredData().map(function (item, index) {
+      let anchorLink;
+      if(item.anchor){
+        anchorLink = formatAndJoinAnchors(this.props.anchor, item.anchor);
+      }
+      return <ModuleTab {...item} key={index} anchorLink={anchorLink} />
+    }.bind(this))
+  }
+
+  tabsContainer() {
     return (
       <div className="tab-buttons">
-        <SectionNavigation active={this.state.active}>
-          {this.sectionNavigationTabs()}
+        <SectionNavigation active={this.state.active} onTabClick={this.handleTabClick} >
+          { this.tabs() }
         </SectionNavigation>
       </div>
     )
@@ -326,7 +278,7 @@ export default class SchoolProfileComponent extends React.Component {
     return (
       <div id={analyticsId}>
         <BasicDataModuleLayout
-          share_content={ this.hasData() && this.props.share_content }
+          share_content={ this.hasData() && <SharingModal content={this.props.share_content} /> }
           id={this.props.anchor}
           className=''
           icon={ this.icon() }
@@ -334,8 +286,8 @@ export default class SchoolProfileComponent extends React.Component {
           subtitle={ this.props.subtitle }
           no_data_cta={ !this.hasData() && this.noDataCta() }
           footer={ this.hasData() && this.footer() }
-          body={ this.body() }
-          tabs={ this.tabs() }
+          body={ this.activePane() }
+          tabs={ this.tabsContainer() }
         />
       </div>
     )

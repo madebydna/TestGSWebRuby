@@ -7,7 +7,6 @@ export default class SubSectionToggle extends React.Component {
 
   static propTypes = {
     active: React.PropTypes.number,
-    parent_anchor: React.PropTypes.string,
     panes: React.PropTypes.arrayOf(React.PropTypes.node)
   };
 
@@ -26,15 +25,6 @@ export default class SubSectionToggle extends React.Component {
     if(nextProps.active != this.props.active) {
       this.setState({active: nextProps.active})
     }
-  }
-
-  componentDidMount() {
-    this.props.selectTabMatchingAnchor();
-    addAnchorChangeCallback(this.props.selectTabMatchingAnchor);
-  }
-
-  componentWillUnmount() {
-    removeAnchorChangeCallback(this.props.selectTabMatchingAnchor);
   }
 
   render() {

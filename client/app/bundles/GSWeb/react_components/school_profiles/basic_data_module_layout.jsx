@@ -1,28 +1,8 @@
 import React from 'react';
 import { t } from '../../util/i18n';
 
-
-const sharingModal = function(share_content) {
-  if(share_content == '' || share_content == null) {
-    return;
-  }
-  return (
-    <a data-remodal-target="modal_info_box"
-       data-content-type="info_box"
-       data-content-html={share_content}
-       className="share-link gs-tipso"
-       data-tipso-width="318"
-       data-tipso-position="left"
-       href="javascript:void(0)">
-       <span className="icon-share"></span>&nbsp;
-       {t('Share')}
-    </a>
-  )
-}
-
-
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, footer, tabs, no_data_cta, share_content
+  id, className, icon, title, subtitle, body, footer, tabs, no_data_cta, sharing_modal
 }) => {
   return (
     <div>
@@ -31,7 +11,7 @@ const BasicDataModuleLayout = ({
         <div className="profile-module">
           <div className="module-header">
             <div className="row">
-              <div className={share_content ? 'col-xs-12 col-md-10' : 'col-xs-12'}>
+              <div className={sharing_modal ? 'col-xs-12 col-md-10' : 'col-xs-12'}>
                 <div className="icon">{icon}</div>
                 <div className="title-container">
                   <span className="title">{title}</span>
@@ -39,11 +19,9 @@ const BasicDataModuleLayout = ({
                   { no_data_cta }
                 </div>
               </div>
-              { share_content && 
+              { sharing_modal && 
                 <div className="col-xs-12 col-md-2 show-history-button">
-                  <div>
-                    {sharingModal(share_content)}
-                  </div>
+                  <div>{sharing_modal}</div>
                 </div>
               }
             </div>
@@ -69,7 +47,7 @@ const BasicDataModuleLayout = ({
 
 BasicDataModuleLayout.PropTypes = {
   className: React.PropTypes.string,
-  share_content: React.PropTypes.string,
+  sharing_modal: React.PropTypes.node,
   icon: React.PropTypes.object,
   title: React.PropTypes.object,
   titleTooltip: React.PropTypes.object,

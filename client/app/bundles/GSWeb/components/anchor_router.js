@@ -87,6 +87,10 @@ export function formatAnchorString(str) {
   return str.split(' ').join('_').replace('/', '_');
 }
 
+export function formatAndJoinAnchors(...anchors) {
+  return anchors.map(formatAnchorString).join(hashSeparatorAnchor());
+}
+
 export function hashSeparatorAnchor() {
   return HASH_SEPARATOR;
 }

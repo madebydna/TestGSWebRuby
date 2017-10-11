@@ -5,31 +5,52 @@ import { map } from 'lodash';
 
 export default class SectionNavigation extends React.Component {
   static propTypes = {
-    active: PropTypes.number
+    active: PropTypes.number,
+    onTabClick: PropTypes.func
   };
 
-  highlight(item) {
-    return React.cloneElement(
-      item,
-      {
-        className: item.props.className + ' tab-selected',
-        onClick: this.props.onTabClick
-      }
-    )
+  static defaultProps = {
+    active: 0,
+    onTabClick: () => {}
+  }
+
+  constructor(props) {
+    super(props);
+    this.onTabClick = this.onTabClick.bind(this);
+    this.state = {
+      active: props.active
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.active != this.props.active) {
+      this.setState({active: nextProps.active})
+    }
+  }
+
+  onTabClick(index) {
+    this.setState({active: index}, () => this.props.onTabClick(index))
+  }
+
+  tabs() {
+    if(!this.props.children) return null;
+    return this.props.children.map(function(tab, index) {
+      let highlight = this.state.active == index;
+      return [React.cloneElement(
+        tab,
+        {
+          onClick: () => this.onTabClick(index),
+          highlight: highlight
+        }
+      ), this.addDivider(index)]
+    }.bind(this));
   }
 
   render() {
-    if(!this.props.children) return null;
-    var active = this.props.active;
-    var items = this.props.children.map(function(item, index) {
-      if(active == index) {
-        item = this.highlight(item);
-      }
-      return <div key={index} className="tab-container">
-        {item}{this.addDivider(index)}
-      </div>
-    }.bind(this));
-    if(items != undefined ) return <div className="clearfix">{items}</div>;
+    let tabs = this.tabs();
+    return <div className="clearfix">
+      { tabs && <div className="tab-container">{tabs}</div> }
+    </div>
   };
 
   addDivider(index) {
