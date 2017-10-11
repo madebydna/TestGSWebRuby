@@ -11,7 +11,7 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
     # need sources otherwise reject test
     hash2 = hash.reject { | test, value | value['All'][:test_source].blank? }
     if hash != hash2
-      GSLogger.error( :school_cache, nil, message: "Missing source in test_scores_cacher line 14", vars: hash)
+      GSLogger.error( :school_cache, nil, message: "Missing source state-school #{school.state}-#{school.id}", vars: hash)
     end
 
     add_lowest_grade_to_hash(hash2)
