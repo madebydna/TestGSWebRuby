@@ -87,13 +87,14 @@ class OspModerationController < ApplicationController
         membership.update(note: member[:notes])
       else
         membership.update(note: member[:notes], status: @status, active: @active)
-        handle_approved(membership) if @status == 'approved'
+        # Handles publication of osp data and email triggers
+        post_update(membership)
       end
     end
   end
 
-  def handle_approved(membership)
-    membership.approve_provisional_osp_user_data
+  def post_update(membership)
+    membership.approve_provisional_osp_user_data if @status == 'approved'
     send_email_to_osp(membership, @status)
   end
 
