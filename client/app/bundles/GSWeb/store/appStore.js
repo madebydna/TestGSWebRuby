@@ -32,5 +32,12 @@ const getState = function() {
   return getStore().getState();
 }
 
+const withCurrentSchool = function(callback) {
+  let school = getStore().getState().school;
+  if(school) {
+    callback(school.state, school.id);
+  }
+}
+
 export default configureStore;
-export { getStore, getState }
+export { getStore, getState, withCurrentSchool }
