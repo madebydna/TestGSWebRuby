@@ -309,7 +309,8 @@ class SchoolProfilesController < ApplicationController
   def meta_description(default)
     content = summary_narration.build_content_with_school_name
     if school.state.downcase == 'ca' && content.present?
-      content.join(' ').truncate(149)
+      c = content.join(' ')
+      ActionView::Base.full_sanitizer.sanitize(c).truncate(149)
     else
         default
     end
