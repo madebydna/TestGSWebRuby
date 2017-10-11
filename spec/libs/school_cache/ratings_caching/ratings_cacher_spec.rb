@@ -90,13 +90,6 @@ describe RatingsCaching::RatingsCacher do
       end
       it 'should fetch historic ratings only for data types with current ratings' do
         allow(cacher).to receive(:breakdown_name).and_return 'All students'
-
-        expect(TestDataSet).to receive(:historic_ratings_for_school).with(
-          eq(school),
-          eq([10,20]),
-          eq([1,2])
-        ).and_return([])
-
         subject
       end
     end

@@ -13,7 +13,7 @@ class RatingsCaching::RatingsCacher < Cacher
     )
     school_overall_rating = nil
     if current_ratings.present?
-      json = (current_rating_hashes + relevant_historical_rating_hashes).to_json
+      json = current_rating_hashes.to_json
       school_cache.update_attributes!(:value => json, :updated => Time.now)
       current_ratings.each do |h|
         school_overall_rating = h.school_value_float.to_i if (
