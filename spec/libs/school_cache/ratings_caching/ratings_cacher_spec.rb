@@ -8,7 +8,7 @@ describe RatingsCaching::RatingsCacher do
 
   describe '#cache' do
     after(:each) do
-      clean_models :ca, School, TestDataSet, TestDataSchoolValue
+      clean_models :ca, School, TestDataSet, TestDataSchoolValue, SchoolMetadata
       clean_models TestDataType, SchoolCache, TestDataBreakdown, TestDataSubject
     end
 
@@ -18,6 +18,7 @@ describe RatingsCaching::RatingsCacher do
       let!(:test_data_type) do
         FactoryGirl.create(
           :test_data_type,
+          id: 174,
           classification: 'gs_rating'
         )
       end
@@ -47,6 +48,34 @@ describe RatingsCaching::RatingsCacher do
         expect(ratings[0]['data_type_id']).to eq(test_data_type.id)
         expect(ratings[0]['school_value_float']).to eq(2)
         expect(ratings[0]['school_value_text']).to eq('3')
+      end
+
+      it 'should insert school_metadata' do
+        subject
+
+        metadata = SchoolMetadata.on_db(:ca).where(school_id: school.id, meta_key: 'overallRating')
+        expect(metadata).to be_present
+      end
+
+      it 'handles a race condition in school_metadata by trying again' do
+        metadata_class = double('SchoolMetadata')
+        metadata = double('SchoolMetadata')
+        expect(SchoolMetadata).to receive(:on_db).exactly(3).times.and_return metadata_class
+        expect(metadata_class).to receive(:find_by).and_return nil
+        expect(metadata_class).to receive(:create).and_raise(ActiveRecord::RecordNotUnique, 'foo')
+        expect(metadata_class).to receive(:find_by).and_return metadata
+        expect(metadata).to receive(:update)
+        subject
+      end
+
+      it 'will not endlessly loop on school_metadata race conditions' do
+        metadata_class = double('SchoolMetadata')
+        expect(SchoolMetadata).to receive(:on_db).exactly(4).times.and_return metadata_class
+        expect(metadata_class).to receive(:find_by).and_return nil
+        expect(metadata_class).to receive(:create).and_raise(ActiveRecord::RecordNotUnique, 'foo')
+        expect(metadata_class).to receive(:find_by).and_return nil
+        expect(metadata_class).to receive(:create).and_raise(ActiveRecord::RecordNotUnique, 'foo')
+        expect { subject }.to raise_error(ActiveRecord::RecordNotUnique)
       end
     end
 
