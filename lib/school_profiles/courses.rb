@@ -247,7 +247,11 @@ module SchoolProfiles
       end
       subject_hash = { t(:advanced_courses) => subject_sources }
       rating_hash = if rating.present?
-                      {t(:rating_title) => {['GreatSchools', (rating_year.to_s + ' | ' + t(:see_more))] => t(:rating_description)}}
+                      source_str = "#{I18n.t(:calculated_in, scope: 'controllers.school_profile_controller')} #{rating_year} | "
+                      source_str << "<span class=\"emphasis\">#{I18n.t(:see_more, scope: 'controllers.school_profile_controller')}</span>: "
+                      source_str << "<a href=\"#{ratings_path(anchor: 'advancedcoursesrating')}\"; target=\"_blank\">"
+                      source_str << "#{I18n.t(:about_this_rating, scope: 'controllers.school_profile_controller')}</a>"
+                      {t(:rating_title) => {['GreatSchools', source_str] => t(:rating_description)}}
                     else
                       {}
                     end

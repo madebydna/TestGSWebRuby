@@ -11,8 +11,6 @@ es:
       n_tested_and_straight_avg: 'Para proporcionar una visión de la capacidad en esta escuela, calculamos una calificación general de los exámenes para cada categoría basadas en las puntuaciones obtenidas en cada grado. Cuando es posible, la total calificación es ponderado por el número de estudiantes evaluados en cada grado. Cuando el número de estudiantes tomando los exámenes en cada grado no está disponible, podemos calcular un promedio no ponderado.'
       'source': 'Fuente'
       note: Note
-      'See more': 'See more'
-      'More': 'More about GreatSchools ratings'
       Test scores: Resultados de exámenes
       info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
       'Math': Matemáticas
