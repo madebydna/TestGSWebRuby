@@ -3,19 +3,19 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
   CACHE_KEY = 'test_scores'
 
   def build_hash_for_cache
-    hash = {}
+    data_set = {}
     query_results.map do |data_set_and_value|
-      hash.deep_merge!(build_hash_for_data_set(data_set_and_value)) # impl in subclass
+      data_set.deep_merge!(build_hash_for_data_set(data_set_and_value)) # impl in subclass
     end
 
-    # need sources otherwise reject test
-    hash2 = hash.reject { | test, value | value['All'][:test_source].blank? }
-    if hash != hash2
-      GSLogger.error( :school_cache, nil, message: "Missing source state-school #{school.state}-#{school.id}", vars: hash)
+    # need source otherwise reject test
+    data_set_no_blank_sources = data_set.reject { | test, value | value['All'][:test_source].blank? }
+    if data_set != data_set_no_blank_sources
+      GSLogger.error( :school_cache, nil, message: "Missing source state-school #{school.state}-#{school.id}", vars: data_set)
     end
 
-    add_lowest_grade_to_hash(hash2)
-    hash2
+    add_lowest_grade_to_hash(data_set_no_blank_sources)
+    data_set_no_blank_sources
   end
 
   def inject_grade_all(data_sets_and_values)
