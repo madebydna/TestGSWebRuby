@@ -20,6 +20,6 @@ export function postReview(data) {
     dataType: 'json'
   }).then(
     (result) => result,
-    ({responseJSON} = {}) => responseJSON.errors
+    ({responseJSON = {}} = {}) => responseJSON.errors
   );
 }

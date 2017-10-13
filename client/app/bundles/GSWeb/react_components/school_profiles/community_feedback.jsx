@@ -3,8 +3,11 @@ import PropTypes from 'prop-types'; // importing from react is deprecated
 import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 import Question from '../review/form/question';
 import SelectBoxes from '../review/form/select_boxes';
-import {isSignedIn} from 'util/session';
+import { isSignedIn } from 'util/session';
 import modalManager from 'components/modals/manager';
+import { getCurrentSession } from 'api_clients/session';
+import { withCurrentSchool } from 'store/appStore';
+import { postReview } from 'api_clients/reviews';
 
 export default class CommunityFeedback extends React.Component {
 
@@ -26,6 +29,13 @@ export default class CommunityFeedback extends React.Component {
     this.responseSelected = this.responseSelected.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.textValueChanged = this.textValueChanged.bind(this);
+    this.ensureSchoolUser = this.ensureSchoolUser.bind(this);
+    this.handleReviewJoinModalFailure = this.handleReviewJoinModalFailure.bind(this);
+    this.handleSchoolUserModalFailure = this.handleSchoolUserModalFailure.bind(this);
+    this.handleGetCurrentSessionFailure = this.handleGetCurrentSessionFailure.bind(this);
+    this.sendReviewPost = this.sendReviewPost.bind(this);
+    this.handleFailSubmit = this.handleFailSubmit.bind(this);
+    this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
   }
 
   mockQuestion() {
@@ -50,33 +60,30 @@ export default class CommunityFeedback extends React.Component {
   }
 
   sendReviewPost(modalData) {
-    return postReview(this.buildFormData())
+    withCurrentSchool((state, id) => {
+      return postReview({
+        state: state,
+        school_id: id,
+        reviews_params: JSON.stringify([{
+          review_question_id: 11,
+          comment: this.state.textAreaValue,
+          answer_value: this.state.selectedResponse
+        }])
+      })
       .done(this.handleSuccessfulSubmit)
       .fail(this.handleFailSubmit);
+    });
   }
 
-  buildFormData() {
-    return {
-      review_question_id: 11,
-      comment: this.state.textAreaValue,
-      answer_value: this.state.selectedResponse
-    };
-  }
-
-
-  handleFailSubmit(errorsObject) {
-    setState({errors: errorsObject})
+  handleFailSubmit(errors = []) {
+    this.setState({errors: errors})
   }
 
   handleSuccessfulSubmit({reviews, message, user_reviews} = {}) {
-    setState({errors: {}, saved: true})
+    this.setState({errors: [], saved: true})
   }
 
-
-
   // TODO: render something when there are errors
-
-
 
   responseSelected(value, id) {
     this.setState(
@@ -138,20 +145,59 @@ export default class CommunityFeedback extends React.Component {
     return formValid;
   }
 
-
   submitForm() {
     this.setState({disabled: true});
     if (isSignedIn()) {
-      getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
+      getCurrentSession()
+        .done(this.ensureSchoolUser)
+        .fail(this.handleGetCurrentSessionFailure);
     } else {
       modalManager.showModal('SubmitReviewModal')
-        .done(this.getSchoolUser)
-        .fail(function() {
-          this.updateReviewFormErrors({
-            '1': 'Something went wrong logging you in'
-          });
-        }.bind(this));
+        .done(({user} = {}) => this.ensureSchoolUser(user))
+        .fail(this.handleReviewJoinModalFailure);
     }
+  }
+
+  ensureSchoolUser({school_users} = {}) {
+    withCurrentSchool(function(state, schoolId) {
+      if(this.noSchoolUserExists(school_users)) {
+        modalManager.showModal('SchoolUserModal', ({state, schoolId}) )
+          .done(this.sendReviewPost)
+          .fail(this.handleSchoolUserModalFailure);
+      } else {
+        this.sendReviewPost();
+      }
+    }.bind(this));
+  }
+
+  handleGetCurrentSessionFailure(errorsArray = []) {
+    this.setState({
+      disabled: false,
+      errorMessages: errorsArray
+    });
+  }
+
+  handleReviewJoinModalFailure() {
+    this.setState({
+      disabled: false,
+      errorMessages: ['Something went wrong logging you in']
+    });
+  }
+
+  handleSchoolUserModalFailure(error) {
+    this.setState({
+      disabled: false,
+      errorMessages: ['Something went wrong logging you in']
+    });
+  }
+
+  noSchoolUserExists(schoolUsers) {
+    let state = this.props.state;
+    let schoolId= this.props.schoolId;
+    let matchingSchoolUsers = schoolUsers.filter(function(schoolUser) {
+      return schoolUser.state === state && schoolUser.school_id === schoolId;
+    });
+    return matchingSchoolUsers.length === 0;
   }
 
   renderSuccess() {

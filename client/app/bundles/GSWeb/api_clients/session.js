@@ -13,7 +13,7 @@ export const getCurrentSession = function() {
     }
   ).then(
     ({user} = {}) => user,
-    ({responseJSON} = {}) => responseJSON.errors // array of error strings
+    ({responseJSON = {}} = {}) => responseJSON.errors // array of error strings
   );
 };
 
