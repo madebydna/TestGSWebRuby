@@ -1,32 +1,34 @@
 class OspModerationController < ApplicationController
   include OspHelper
-  layout "application"
-  before_action :set_tags, only: [:index, :osp_search]
-  before_action :set_update_vars, only: :update
+  layout "admin"
 
   STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
   PARAMS_WHITELIST = %w(state school_id member_id email)
 
   def index
+    set_tags
     display_selected_memberships
     @pagination_link_count = membership_size/10 + 1
     render 'osp/osp_moderation/index'
   end
 
   def update
+    http_status = 200
     member_array = params[:member_array].values.map {|a| {id: a.first, notes: a.second}}
-    if STATUS_WHITELIST.include?(@status)
+    if STATUS_WHITELIST.include?(admin_action)
       update_esp_member(member_array)
     else
       GSLogger.warn(:misc, nil, message: 'Failed to update EspMembership: action not allowed or supported.', vars: {
         params: params
       })
-      @http_status = 422
+      http_status = 422
     end
-    render json: {}, status: @http_status
+    render json: {}, status: http_status
+
   end
 
   def osp_search
+    set_tags
     filter_params
     unless search_id_or_state? && params_count < 2
       fetch_osps
@@ -52,6 +54,20 @@ class OspModerationController < ApplicationController
     filter_params.length
   end
 
+  def admin_action
+    @_admin_action ||= params[:status]
+  end
+
+  def active
+    @_active ||= (
+      if ['rejected', 'disabled'].include?(admin_action)
+        false
+      elsif admin_action == 'approved'
+        true
+      end
+    )
+  end
+
   def fetch_osps
     email = filter_params[:email]
     search_params = filter_params.except(:email)
@@ -69,24 +85,14 @@ class OspModerationController < ApplicationController
                          .preload_associated_schools!
   end
 
-  def set_update_vars
-    @http_status = 200
-    @status = params[:status]
-    if ['rejected', 'disabled'].include?(@status)
-      @active = false
-    elsif @status == 'approved'
-      @active = true
-    end
-  end
-
   def update_esp_member(member_array)
     # If user clicks 'update', only update notes.  Otherwise, update status as well.
     member_array.each do |member|
       membership = EspMembership.find(member[:id])
-      if @status == 'osp-notes'
+      if admin_action == 'osp-notes'
         membership.update(note: member[:notes])
       else
-        membership.update(note: member[:notes], status: @status, active: @active)
+        membership.update(note: member[:notes], status: admin_action, active: active)
         # Handles publication of osp data and email triggers
         post_update(membership)
       end
@@ -94,8 +100,8 @@ class OspModerationController < ApplicationController
   end
 
   def post_update(membership)
-    membership.approve_provisional_osp_user_data if @status == 'approved'
-    send_email_to_osp(membership, @status)
+    membership.approve_provisional_osp_user_data if admin_action == 'approved'
+    send_email_to_osp(membership, admin_action)
   end
 
   def fetch_one_page_of_memberships(offset)
