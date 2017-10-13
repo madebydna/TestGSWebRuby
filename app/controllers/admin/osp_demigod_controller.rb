@@ -29,7 +29,7 @@ class Admin::OspDemigodController < ApplicationController
 
     if school_ids.present?
       school_ids.split(',').each do |id_str|
-        error_array << "Invalid school id '#{id_str}'" unless id_str.to_i.to_s == id_str
+        error_array << "Invalid school id '#{id_str}'" unless id_str.strip.to_i.to_s == id_str.strip
       end
     else
       error_array << 'Missing school ids'
@@ -76,7 +76,7 @@ class Admin::OspDemigodController < ApplicationController
   end
 
   def school_ids_array
-    school_ids.split(',').map(&:to_i)
+    school_ids.split(',').map {|id| id.strip.to_i}
   end
 
   def existing_membership
