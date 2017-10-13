@@ -278,7 +278,7 @@ export default class SchoolProfileComponent extends React.Component {
     return (
       <div id={analyticsId}>
         <BasicDataModuleLayout
-          share_content={ this.hasData() && <SharingModal content={this.props.share_content} /> }
+          sharing_modal={ this.hasData() && <SharingModal content={this.props.share_content} /> }
           id={this.props.anchor}
           className=''
           icon={ this.icon() }
