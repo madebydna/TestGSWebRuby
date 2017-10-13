@@ -1,10 +1,11 @@
 <% gs_rating %>
 <% coming_soon %>
-<% greatschools_rating %>
+<% greatschools_rating_label %>
+<% tooltip_partial %>
 
 <a data-remodal-target="modal_info_box"
    data-content-type="info_box"
-   data-content-html='<%= render 'summary_rating' %>'
+   data-content-html='<%= render tooltip_partial %>'
    class="gs-tipso"
    data-tipso-offsetX="0"
    data-tipso-offsetY="-20"
@@ -19,6 +20,6 @@
   <div class="gs-rating-with-label__label">
     <span class="coming-soon"><%= coming_soon %></span>
     <span class="info-circle"><span class="icon-question"></span></span>
-    <span class="gsr-text"><%= greatschools_rating %></span>
+    <span class="gsr-text"><%= greatschools_rating_label %></span>
   </div>
 </a>

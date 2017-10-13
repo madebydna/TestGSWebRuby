@@ -96,19 +96,20 @@
             <% new_rating = %w[AR CA DC DE FL GA MA MD MO NC NJ NY OH OR TX WA WI].include?(@school.state) %>
             <% new_rating_key = new_rating ? 'new_' : '' %>
             <% if hero.gs_rating && new_rating && @school_profile.summary_rating.weights_within_range?%>
+              <% tooltip_partial = 'summary_rating' %>
+              <% greatschools_rating_label = t('.greatschools_rating') %>
+              <% coming_soon = t(".#{new_rating_key}coming_soon") %>
               <% if @school_profile.summary_rating.test_scores_only? %>
-                <%= render 'hero_rating_test_scores_only',
-                           gs_rating: hero.gs_rating,
-                           greatschools_rating: t('.greatschools_rating'),
-                           coming_soon: t('.update')
-                %>
-              <% else %>
-                <%= render 'hero_rating_summary',
-                           gs_rating: hero.gs_rating,
-                           greatschools_rating: t('.greatschools_rating'),
-                           coming_soon: t(".#{new_rating_key}coming_soon")
-                %>
+                <% tooltip_partial = 'hero_rating_test_scores_only_tooltip' %>
+                <% greatschools_rating_label = t('.greatschools_rating_with_star') %>
+                <% coming_soon = t('.update') %>
               <% end %>
+              <%= render 'hero_rating_summary',
+                         gs_rating: hero.gs_rating,
+                         greatschools_rating_label: greatschools_rating_label,
+                         coming_soon: coming_soon,
+                         tooltip_partial: tooltip_partial
+              %>
             <% elsif hero.gs_rating %>
               <%= render 'hero_rating_base',
                          gs_rating: hero.gs_rating,
