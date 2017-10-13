@@ -20,15 +20,6 @@ export function postReview(data) {
     dataType: 'json'
   }).then(
     (result) => result,
-    (xhr) => {
-      let formErrors = JSON.parse(xhr.responseText);
-      if(formErrors && formErrors.reviews) {
-        let reviewsErrors = formErrors.reviews[0];
-        if (reviewsErrors) {
-          return reviewsErrors;
-        }
-      }
-      return {};
-    }
+    ({responseJSON} = {}) => responseJSON.errors
   );
 }

@@ -4,7 +4,8 @@ import Questions from './questions';
 import SpinnyWheel from '../../spinny_wheel';
 import { scrollToElement } from '../../../util/scrolling';
 import { t } from '../../../util/i18n';
-import { isSignedIn, getCurrentSession } from '../../../util/session';
+import { isSignedIn } from '../../../util/session';
+import { getCurrentSession } from 'api_clients/session';
 import modalManager from '../../../components/modals/manager';
 import { forOwn, each, reduce, isEmpty } from 'lodash';
 import { postReview } from 'api_clients/reviews';
@@ -33,7 +34,7 @@ export default class ReviewForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
     this.textValueChanged = this.textValueChanged.bind(this);
     this.sendReviewPost = this.sendReviewPost.bind(this);
-    this.getSchoolUser = this.getSchoolUser.bind(this);
+    this.ensureSchoolUser = this.ensureSchoolUser.bind(this);
     this.updateReviewFormErrors = this.updateReviewFormErrors.bind(this);
     this.noSchoolUserExists = this.noSchoolUserExists.bind(this);
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
@@ -41,6 +42,9 @@ export default class ReviewForm extends React.Component {
     this.handleFailSubmit = this.handleFailSubmit.bind(this);
     this.promptUserWhenNavigatingAway = this.promptUserWhenNavigatingAway.bind(this);
     this.validateResponse = this.validateResponse.bind(this)
+    this.handleGetCurrentSessionFailure = this.handleGetCurrentSessionFailure.bind(this);
+    this.handleReviewJoinModalFailure = this.handleReviewJoinModalFailure.bind(this);
+    this.handleSchoolUserModalFailure = this.handleSchoolUserModalFailure.bind(this);
     window.onbeforeunload = this.promptUserWhenNavigatingAway;
     
     this.state = {
@@ -261,27 +265,55 @@ export default class ReviewForm extends React.Component {
     }
   }
 
+  handleGetCurrentSessionFailure(errorsArray = []) {
+    this.setState({
+      disabled: false,
+      errorMessages: {
+        '1': errorsArray[0]
+      }
+    });
+  }
+
+  handleReviewJoinModalFailure() {
+    this.setState({
+      disabled: false,
+      errorMessages: {
+        '1': 'Something went wrong logging you in'
+      }
+    });
+  }
+
   submitForm() {
     this.setState({disabled: true});
     if (isSignedIn()) {
-      getCurrentSession().done(this.getSchoolUser).fail(this.sendReviewPost);
+      getCurrentSession()
+        .done(this.ensureSchoolUser)
+        .fail(this.handleGetCurrentSessionFailure);
     } else {
       modalManager.showModal('SubmitReviewModal')
-        .done(this.getSchoolUser)
-        .fail(function() {
-          this.updateReviewFormErrors({
-            '1': 'Something went wrong logging you in'
-          });
-        }.bind(this));
+        .done(({user} = {}) => this.ensureSchoolUser(user))
+        .fail(this.handleReviewJoinModalFailure);
     }
   }
 
-  getSchoolUser(data) {
-    let schoolUserModalOptions =  { state: this.props.state, schoolId: this.props.schoolId.toString() };
-    let schoolUsers = data.user.school_users;
-    if(this.noSchoolUserExists(schoolUsers)) {
+  handleSchoolUserModalFailure(error) {
+    this.setState({
+      disabled: false,
+      errorMessages: {
+        '1': 'Something went wrong logging you in'
+      }
+    });
+  }
+
+  ensureSchoolUser({school_users} = {}) {
+    let schoolUserModalOptions =  {
+      state: this.props.state,
+      schoolId: this.props.schoolId.toString()
+    };
+    if(this.noSchoolUserExists(school_users)) {
       modalManager.showModal('SchoolUserModal', schoolUserModalOptions )
-        .done(this.sendReviewPost).fail(this.sendReviewPost);
+        .done(this.sendReviewPost)
+        .fail(this.handleSchoolUserModalFailure);
     } else {
       this.sendReviewPost();
     }
@@ -296,15 +328,19 @@ export default class ReviewForm extends React.Component {
     return matchingSchoolUsers.length === 0;
   }
 
-  sendReviewPost(modalData) {
+  sendReviewPost() {
     return postReview(this.buildFormData())
       .done(this.handleSuccessfulSubmit)
       .fail(this.handleFailSubmit);
   }
 
-  handleFailSubmit(reviewErrors = {}) {
-    this.updateReviewFormErrors(reviewsErrors);
-    this.setState({disabled: false});
+  handleFailSubmit(errorsArray = ['An error occured while saving your review']) {
+    this.setState({
+      disabled: false,
+      errorMessages: {
+        '1': errorsArray[0]
+      }
+    });
   }
 
   scrollToTopOfReviews() {

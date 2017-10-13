@@ -1,7 +1,7 @@
 class SchoolUserController < ApplicationController
   def create
     @school = school
-    json_message = {}
+    errors = []
     status = :ok
     school_user = nil
     user_type = school_user_params[:user_type]
@@ -11,17 +11,21 @@ class SchoolUserController < ApplicationController
       school_user.user_type = user_type if user_type
       unless school_user.save
         status = :unprocessable_entity
+        errors << 'There was a problem saving your relationship to this school'
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
       school_user.handle_saved_reviews_for_students_and_principals
       current_user.send_thank_you_email_for_school(@school)
     rescue Exception => e
+      errors << 'There was a problem saving your relationship to this school'
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
       status = :unprocessable_entity
     end
 
+    errors.uniq!
+
     respond_to do |format|
-      format.json { render json: json_message, status: status }
+      format.json { render json: { errors: errors }, status: status }
     end
   end
 
