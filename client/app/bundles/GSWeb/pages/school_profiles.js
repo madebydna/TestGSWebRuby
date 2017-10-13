@@ -8,6 +8,7 @@ import '../vendor/tipso';
 import '../vendor/fastclick';
 import '../vendor/remodal';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
+import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
 import NearestHighPerformingSchools from '../react_components/nearest_high_performing_schools';
@@ -44,6 +45,7 @@ window.store = getStore();
 
 ReactOnRails.register({
   SchoolProfileComponent,
+  StudentsWithDisabilities,
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,
@@ -65,7 +67,7 @@ $(function() {
     toggle.init().add_onclick();
   })();
 
-  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour';
+  const PROFILE_TOUR_COOKIE = 'decline_school_profile_tour'; // referenced in school_profiles_page.rb for specs
 
   function hasDeclinedTour() {
     let pattern = "^(.*;)?\\s*" + PROFILE_TOUR_COOKIE + "\\s*=true";
@@ -343,16 +345,5 @@ $(window).on('load', function() {
   impressionTracker({
     elements: elementIds,
     threshold: 50
-  });
-});
-
-$.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-  var appId = gon.facebook_app_id;
-  FB.init({
-    appId: appId,
-    version    : 'v2.2',
-    status     : true, // check login status
-    cookie     : true, // enable cookies to allow the server to access the session
-    xfbml      : true  // parse XFBML
   });
 });

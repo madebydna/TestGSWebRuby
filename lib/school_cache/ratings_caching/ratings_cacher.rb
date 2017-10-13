@@ -13,7 +13,7 @@ class RatingsCaching::RatingsCacher < Cacher
     )
     school_overall_rating = nil
     if current_ratings.present?
-      json = (current_rating_hashes + relevant_historical_rating_hashes).to_json
+      json = current_rating_hashes.to_json
       school_cache.update_attributes!(:value => json, :updated => Time.now)
       current_ratings.each do |h|
         school_overall_rating = h.school_value_float.to_i if (
@@ -35,7 +35,20 @@ class RatingsCaching::RatingsCacher < Cacher
   end
 
   def replace_rating_into_school_metadata(school_id, state, rating)
-    SchoolMetadata.on_db("#{state}_rw").where(school_id: school_id, meta_key: 'overallRating').first_or_create(meta_value: rating.to_s)
+    retry_count = 0
+    begin
+      existing_row = SchoolMetadata.on_db("#{state}_rw").find_by(school_id: school_id, meta_key: 'overallRating')
+      if existing_row
+        existing_row.update(meta_value: rating.to_s)
+      else
+        SchoolMetadata.on_db("#{state}_rw").create(school_id: school_id, meta_key: 'overallRating', meta_value: rating.to_s)
+      end
+    rescue ActiveRecord::RecordNotUnique
+      retry_count += 1
+      retry if retry_count < 2
+      GSLogger.error(:school_cache, nil, message: 'Endless loop inserting to school_metadata', vars: {school_id: school_id, state: state, rating: rating})
+      raise
+    end
   end
 
   def delete_rating_row_from_school_metadata(school_id, state)

@@ -2,6 +2,7 @@ es:
   school_profiles:
     student_progress:
       title: Progreso estudiantil
+      subtitle: 'Esta calificación mide cuánto los estudiantes de esta escuela mejoraron de un año al siguiente, en comparación con estudiantes con similares niveles de conocimiento en otras escuelas del estado.'
       no_data_html: >
         Esta sección muestra el progreso académico (también llamado “crecimiento”) de los estudiantes en esta escuela considerando donde estaban el año pasado, comparado a estudiantes similares en el estado.
         <br></br>

@@ -6,7 +6,7 @@ class OspRejectionEmail < AbstractExactTargetMailer
 
   def self.deliver_to_user(user, school)
     exact_target_email_attributes = {
-      user_name: user.first_name,
+      first_name: user.first_name,
       school_name: school.name
     }
     deliver(user.email, exact_target_email_attributes)

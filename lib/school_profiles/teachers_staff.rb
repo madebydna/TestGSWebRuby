@@ -2,8 +2,6 @@ module SchoolProfiles
   class TeachersStaff
     include Qualaroo
     include SharingTooltipModal
-    include Rails.application.routes.url_helpers
-    include UrlHelper
 
     attr_reader :school_cache_data_reader
 

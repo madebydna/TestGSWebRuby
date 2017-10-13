@@ -1,6 +1,6 @@
-<%= javascript_include_tag "osp_admin", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "admin_tools", "data-turbolinks-track" => true %>
 
-<div style="width: 90%; margin: auto; padding: 30px 0;">
+<div>
   <%= link_to 'Search OSP requests', osp_search_path %>
   <%= render partial: 'osp/osp_moderation/reviewer_actions_buttons' %>
   <%= render partial: 'osp/osp_moderation/osp_table' %>

@@ -103,7 +103,7 @@ module States
   end
 
   def self.abbr_to_label(state_abbr)
-    labels_hash[state_abbr]
+    labels_hash[state_abbr.downcase] if state_abbr.present?
   end
 
   def self.labels_hash

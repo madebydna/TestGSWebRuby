@@ -47,6 +47,12 @@ describe Admin::OspDemigodController do
           params[:school_ids] = params[:school_ids].split(',').first.to_s
           expect(subject).to be_empty
         end
+
+        it 'handles whitespace between comma-separated ids' do
+          params[:school_ids] = params[:school_ids].gsub(',', '  , ')
+
+          expect(subject).to be_empty
+        end
       end
 
       describe 'with inactive schools in db' do

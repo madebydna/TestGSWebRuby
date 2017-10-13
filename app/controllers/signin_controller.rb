@@ -122,7 +122,7 @@ class SigninController < ApplicationController
 
   def verify_email
     token = params[:id]
-    token = CGI.unescape(token) if token
+    token = CGI.unescape(token).gsub(' ', '+') if token
     time = params[:date]
 
     success_redirect = UrlUtils.valid_redirect_uri?(params[:redirect]) ? params[:redirect] : my_account_url

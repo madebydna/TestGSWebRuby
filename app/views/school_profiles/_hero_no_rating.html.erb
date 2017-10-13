@@ -1,0 +1,19 @@
+<% type_key %>
+<% tooltip_content %>
+<% greatschools_no_rating %>
+
+<div class="gs-rating-with-label__rating">
+  <div class="label-owl">
+    <span><%= image_tag('school_profiles/owl_in_light_blue_circle.png') %></span>
+  </div>
+</div>
+<div class="gs-rating-with-label__label speech-bubble-dark left private-school">
+  <div><%= greatschools_no_rating %></div>
+  <div><a data-content-type="info_box"
+          data-content-html="<%= tooltip_content %>"
+          class="gs-tipso info-circle tipso_style"
+          data-ga-click-label="GS rating - <%= type_key %> school"
+          href="javascript:void(0)"
+          data-remodal-target="modal_info_box"><span class="icon-question"></span>
+  </a></div>
+</div>

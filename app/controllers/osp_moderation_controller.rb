@@ -1,6 +1,6 @@
 class OspModerationController < ApplicationController
   include OspHelper
-  layout "application"
+  layout 'admin'
   before_action :set_tags, only: [:index, :osp_search]
 
   STATUS_WHITELIST = %w(approved rejected disabled osp-notes)
@@ -60,7 +60,33 @@ class OspModerationController < ApplicationController
     render 'osp/osp_moderation/osp_search'
   end
 
+  def edit
+    @osp = EspMembership.find(params[:id])
+    @school = School.on_db(@osp.state.downcase).find(@osp.school_id)
+    @user = User.find(@osp.member_id)
+    render '/osp/osp_moderation/edit'
+  end
+
+  def update_osp_list_member
+    @osp = EspMembership.find(params[:id])
+    @school = School.on_db(@osp.state.downcase).find(@osp.school_id)
+    @user = User.find(@osp.member_id)
+    if @osp.update(osp_params.merge(updated: Time.now)) && @user.update_attributes(user_params)
+      redirect_to :back
+    else
+      render 'osp/osp_moderation/edit'
+    end
+  end
+
   private
+
+  def osp_params
+    params.require(:esp_membership).permit(:job_title, :web_url, :note)
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :first_name, :last_name)
+  end
 
   def set_active(status)
     if ['rejected', 'disabled'].include?(status)

@@ -8,6 +8,7 @@ import { t } from '../util/i18n';
 import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
 import { GeneralInfoIcon } from 'react_components/school_profiles/circle_icons';
 import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
+import ModuleTab from 'react_components/school_profiles/module_tab';
 
 export default class OspSchoolInfo extends React.Component {
 
@@ -48,8 +49,6 @@ export default class OspSchoolInfo extends React.Component {
 
   render() {
     if (this.props.content ) {
-      let stuff = this.props.content;
-      let items = stuff.map((h) => ({title: h.title}));
       let titleElement = <div>
         { t('General Information') }
         &nbsp;<QuestionMarkTooltip content={t('general_information_tooltip')} />
@@ -58,10 +57,11 @@ export default class OspSchoolInfo extends React.Component {
 
       let tabs = <div className="tab-buttons">
         <SectionNavigation key="sectionNavigation"
-          items={items}
           active={this.state.activeTabIndex}
           google_tracking={'General_info'}
-          onTabClick={this.handleTabClick.bind(this)}/>
+          onTabClick={this.handleTabClick.bind(this)}>
+          {this.props.content.map((obj, index) => <ModuleTab {...obj} key={index} />)}
+        </SectionNavigation>
       </div>
 
       return (
@@ -73,7 +73,7 @@ export default class OspSchoolInfo extends React.Component {
           icon = { <GeneralInfoIcon/> }
           title = { titleElement }
           footer = { this.footer(this.props.source_name, this.props.qualaroo_module_link) }
-          body = { <div>{this.selectSectionContent(stuff)}</div> }
+          body = { <div>{this.selectSectionContent(this.props.content)}</div> }
           tabs = { tabs }
         />
       </div>

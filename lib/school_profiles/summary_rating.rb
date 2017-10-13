@@ -35,6 +35,10 @@ module SchoolProfiles
       @_content ||= build_content_for_summary_rating_table
     end
 
+    def test_scores_only?
+      content.present? && content.length == 1 && content[0][:title] == RATING_WEIGHTS['Test Score Rating'][:title]
+    end
+
     def build_content_for_summary_rating_table
       rating_array = [test_scores, student_progress, college_readiness, equity, courses, discipline, attendance]
       rating_array.reject! {|row| row.nil? || row.empty? || row[:weight].nil? || row[:rating].nil?}

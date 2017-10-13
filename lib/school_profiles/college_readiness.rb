@@ -3,6 +3,7 @@ module SchoolProfiles
     attr_reader :school_cache_data_reader
     include Qualaroo
     include SharingTooltipModal
+    include RatingSourceConcerns
 
     FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
     UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
@@ -13,7 +14,7 @@ module SchoolProfiles
     AP_ENROLLED = 'Percentage AP enrolled grades 9-12'
     AP_EXAMS_PASSED = 'Percentage of students passing 1 or more AP exams grades 9-12'
     ACT_SAT_PARTICIPATION = 'Percentage SAT/ACT participation grades 11-12'
-    NEW_SAT_STATES = %w(ca mi nj)
+    NEW_SAT_STATES = %w(ca ct mi nj)
     NEW_SAT_YEAR = 2016
     NEW_SAT_RANGE = (400..1600)
     OLD_SAT_RANGE = (600..2400)
@@ -270,22 +271,10 @@ module SchoolProfiles
     def sources
       content = '<div class="sourcing">'
       content << '<h1>' + data_label('title') + '</h1>'
-      if rating.present?
-        description = rating_description
-        description = data_label(description) if description
-        methodology = rating_methodology
-        methodology = data_label(methodology) if methodology
-        content << '<div>'
-        content << '<h4>' + data_label('GreatSchools Rating') + '</h4>'
-        if description || methodology
-          content << '<p>'
-          content << description if description
-          content << ' ' if description && methodology
-          content << methodology if methodology
-          content << '</p>'
-        end
-        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | ' + data_label('see more') + '</p>'
-        content << '</div>'
+      if rating.present? && rating != 'NR'
+        content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
+                                 description: rating_description, methodology: rating_methodology,
+                                 more_anchor: 'collegereadinessrating')
       end
       content << data_type_hashes.reduce('') do |string, hash|
         string << sources_for_view(hash)

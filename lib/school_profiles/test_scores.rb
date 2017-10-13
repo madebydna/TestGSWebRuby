@@ -4,7 +4,7 @@ module SchoolProfiles
     attr_reader :school, :school_cache_data_reader
     include Qualaroo
     include SharingTooltipModal
-
+    include RatingSourceConcerns
 
     GRADES_DISPLAY_MINIMUM = 1
     N_TESTED = 'n_tested'
@@ -82,6 +82,7 @@ module SchoolProfiles
       scores = scores.map do |hash|
         grades_from_hash = grades_hash.select { | score | score[:test_label] == hash[:test_label] && score[:subject] == hash[:subject] } if grades_hash
         grades = build_rating_score_hash(grades_from_hash, nil) if grades_from_hash && grades_from_hash.count >= GRADES_DISPLAY_MINIMUM
+        grades = sort_by_grades_ascending(grades) if grades.present?
 
         SchoolProfiles::RatingScoreItem.new.tap do |rating_score_item|
           rating_score_item.label = data_label(hash[:subject])
@@ -97,6 +98,10 @@ module SchoolProfiles
         end
       end if scores.present?
       scores
+    end
+
+    def sort_by_grades_ascending(grades)
+      grades.sort_by { |h| h.grade }
     end
 
     def sort_by_test_label_and_number_tested_descending(scores)
@@ -117,25 +122,9 @@ module SchoolProfiles
         content << '<div class="sourcing">'
         content << '<h1>' + data_label('title') + '</h1>'
         if rating.present? && rating != 'NR'
-          content << '<div>'
-          content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
-
-          description = rating_description
-          description = data_label(description) if description
-          methodology = rating_methodology
-          methodology = data_label(methodology) if methodology
-          if description || methodology
-            content << '<p>'
-            content << description if description
-            content << ' ' if description && methodology
-            content << methodology if methodology
-            content << '</p>'
-          end
-
-          content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
-          content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings/#testscorerating"; target="_blank">' + data_label('More') + '</a>'
-          content << '</p>'
-          content << '</div>'
+          content << rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
+                                   description: rating_description, methodology: rating_methodology,
+                                   more_anchor: 'testscorerating')
         end
         data = subject_scores.each_with_object({}) do |rsi, output|
           output[rsi.test_label] ||= {}
@@ -157,28 +146,13 @@ module SchoolProfiles
     end
 
     def source_rating_text
-      content = ''
       if rating.present? && rating != 'NR'
-        content << '<div>'
-        content << '<h4 >' + data_label('GreatSchools Rating') + '</h4>'
-        description = rating_description
-        description = data_label(description) if description
-        methodology = rating_methodology
-        methodology = data_label(methodology) if methodology
-        if description || methodology
-          content << '<p>'
-          content << description if description
-          content << ' ' if description && methodology
-          content << methodology if methodology
-          content << '</p>'
-        end
-
-        content << '<p><span class="emphasis">' + data_label('source') + '</span>: GreatSchools, ' + rating_year + ' | '
-        content << '<span class="emphasis">' + data_label('See more') + '</span>: <a href="/gk/ratings/#testscorerating"; target="_blank">' + data_label('More') + '</a>'
-        content << '</p>'
-        content << '</div>'
+        rating_source(year: rating_year, label: data_label('GreatSchools Rating'),
+                      description: rating_description, methodology: rating_methodology,
+                      more_anchor: 'testscorerating')
+      else
+        ''
       end
-      content
     end
 
     def sources_without_rating_text
@@ -206,16 +180,22 @@ module SchoolProfiles
       year = array.last[:year]
       source = array.last[:source]
       flags = flags_for_sources(array.last[:flags].flatten.compact.uniq)
-      str = '<div>'
-      str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
-      str << "<p>#{array.last[:subject].join(', ')}</p>"
-      str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
-      if flags.present?
-        str << '<p><span class="emphasis">' + data_label('note') + '</span>: ' + data_label(flags) + '</p>'
+      source_content = I18n.db_t(source, default: source)
+      if source_content.present?
+        str = '<div>'
+        str << '<h4>' + data_label(array.last[:test_label]) + '</h4>'
+        str << "<p>#{array.last[:subject].join(', ')}</p>"
+        str << "<p>#{I18n.db_t(array.last[:test_description])}</p>"
+        if flags.present?
+          str << "<p><span class='emphasis'>#{data_label('note')}</span>: #{data_label(flags)}</p>"
+        end
+        str << "<p><span class='emphasis'>#{data_label('source')}</span>: #{source_content}, #{year.to_s}</p>"
+        str << '</div>'
+        str
+      else
+        ''
       end
-      str << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + I18n.db_t(source, default: source) + ', ' + year.to_s + '</p>'
-      str << '</div>'
-      str
+
     end
 
     def flags_for_sources(flag_array)

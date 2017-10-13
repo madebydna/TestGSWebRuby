@@ -11,8 +11,6 @@ en:
       n_tested_and_straight_avg: 'To provide an at-a-glance view of proficiency at this school, we calculate an overall test score for each subject based on the scores in each grade. Where possible, the overall score is weighted by the number of students tested in each grade. When the number of test-taking students in each grade is not available, we calculate a non-weighted average.'
       'source': 'Source'
       note: Note
-      'See more': 'See more'
-      'More': 'About this rating'
       Test scores: Test scores
       info_text: "<p>The GreatSchools Test Score Rating reflects annual state test results for this school compared with scores statewide.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Learn more about this rating.</a></p>"
       'Math': Math
@@ -20,6 +18,7 @@ en:
       Source: Source
       sources: Sources
       was_this_useful: Was this useful?
+      was_this_useful_test_only: Would you like to see more than just test score information about this school?
       give_us_your_feedback: Give us your feedback
       Subject: Subject
       percent_proficient: '% Proficient'

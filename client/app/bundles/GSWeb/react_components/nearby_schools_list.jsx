@@ -121,7 +121,7 @@ class NearbySchoolsList extends React.Component {
       onClick = this.pageLeft;
     }
     return (<div className={"prev " + className} onClick={onClick}>
-      <span className="icon-chevron-left"></span>
+      <div className="icon-chevron-right flip-horizontally"></div>
     </div>);
   }
 
@@ -134,7 +134,7 @@ class NearbySchoolsList extends React.Component {
     }
     return (
       <div className={"next " + className} onClick={onClick}>
-        <span className="icon-chevron-right"></span>
+        <div className="icon-chevron-right"></div>
       </div>);
   }
 

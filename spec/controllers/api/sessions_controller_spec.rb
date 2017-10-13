@@ -11,9 +11,10 @@ describe Api::SessionsController do
         expect(response.status).to eq(403)
       end
 
-      it 'should return empty response' do
+      it 'should given error "Not logged in"' do
         get :show
-        expect(JSON.parse(response.body)).to be_empty
+        expect(JSON.parse(response.body)).to_not be_empty
+        expect(JSON.parse(response.body)['errors']).to eq(['Not logged in'])
       end
     end
 

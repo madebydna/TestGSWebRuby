@@ -1,0 +1,10 @@
+en:
+  school_profiles:
+    hero_rating_test_scores_only_tooltip:
+      Last updated: Last updated
+      Learn more: Learn more about GreatSchools’ Ratings.
+      Content: >
+        GreatSchools is a national nonprofit organization. In most states, we publish a Summary Rating that offers a
+        multidimensional view of school quality based on a range of factors, like test scores, equity, student or
+        academic progress and college readiness. This state does not provide enough data to calculate a Summary Rating,
+        so the rating reflected is based on each school’s Test Score Rating.

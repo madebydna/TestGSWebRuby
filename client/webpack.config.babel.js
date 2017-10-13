@@ -4,12 +4,11 @@
 
 const webpack = require('webpack');
 const path = require('path');
-
 const devBuild = process.env.NODE_ENV !== 'production';
 const nodeEnv = devBuild ? 'development' : 'production';
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-
+import AssetMapPlugin from 'asset-map-webpack-plugin';
 
 const config = {
   entry: {
@@ -20,7 +19,7 @@ const config = {
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
     'jquery': ['jquery'],
-    'osp-admin': ['./app/bundles/GSWeb/osp_admin']
+    'admin-tools': ['./app/bundles/GSWeb/admin_tools']
   },
 
   output: {
@@ -42,6 +41,8 @@ const config = {
     ]
   },
   plugins: [
+    new AssetMapPlugin('asset_map.json', null),
+
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons-blocking',
       chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
@@ -72,7 +73,14 @@ const config = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file-loader'
+        loaders: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name]_[hash].[ext]'
+            }
+          }
+        ],
       },
       {
         test: /\.handlebars$/,
