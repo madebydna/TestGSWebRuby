@@ -83,8 +83,6 @@ export default class CommunityFeedback extends React.Component {
     this.setState({errors: [], saved: true})
   }
 
-  // TODO: render something when there are errors
-
   responseSelected(value, id) {
     this.setState(
       {
@@ -101,20 +99,16 @@ export default class CommunityFeedback extends React.Component {
         textAreaValue: value
       }
     );
-    // this.validateForm();
   }
 
   onSubmit() {
     this.clearErrors();
-    // var formValid = this.validateForm();
-    // if (formValid) {
-      this.submitForm();
-      this.setState(
-        {
-          formSubmittedSuccessfully: true
-        }
-      );
-    // }
+    this.submitForm();
+    this.setState(
+      {
+        formSubmittedSuccessfully: true
+      }
+    );
   }
 
   clearErrors() {
@@ -122,27 +116,6 @@ export default class CommunityFeedback extends React.Component {
       errorMessages: {},
       formErrors: false
     });
-  }
-
-  validateResponse(errorMessages, response, questionId) {
-    var comment = response.comment;
-    var validationFuncs = this.getValidationsForQuestion(questionId);
-    var message = this.errorMessageForQuestion(validationFuncs, comment);
-    if (message) {
-      errorMessages[questionId] = message;
-    }
-    return errorMessages;
-  }
-
-  validateForm() {
-    var selectedResponses = this.state.selectedResponse;
-    var errorMessages = reduce(selectedResponses, this.validateResponse, {});
-    var formValid = isEmpty(errorMessages);
-    this.setState ({
-      errorMessages: errorMessages,
-      formErrors: !formValid
-    });
-    return formValid;
   }
 
   submitForm() {
