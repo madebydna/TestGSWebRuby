@@ -1,6 +1,8 @@
 import { introJs } from 'intro.js';
 import { t } from '../util/i18n';
 import owlPng from 'school_profiles/owl.png';
+import { minimizeNudges as minimizeQualarooNudges,
+         maximizeNudges as maximizeQualarooNudges } from 'util/qualaroo';
 
 let numberOfVisibleSteps;
 
@@ -147,6 +149,7 @@ const onStepSeen = function(targetElement, tutorial) {
 };
 
 const onExitTour = function() {
+  maximizeQualarooNudges();
   $(homesAndRentalsSelector).show();
   let stepNum = intro._currentStep + 1;
   if(stepNum < numberOfVisibleSteps) {
@@ -171,6 +174,7 @@ const getFilteredSteps = function(tutorial) {
 };
 
 export function exit() {
+  maximizeQualarooNudges();
   intro.exit();
 }
 
@@ -197,6 +201,7 @@ const startTutorial = function(tutorial, lastStep) {
   onexit(onExitTour).
   onbeforechange(handleLastStep);
   $(homesAndRentalsSelector).hide();
+  minimizeQualarooNudges();
   intro.start();
 };
 
