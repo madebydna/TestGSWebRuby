@@ -38,8 +38,8 @@ export default class ConnectedReviewDistributionModal extends React.Component {
 
   render() {
     if(this.state.distribution && Object.keys(this.state.distribution).length > 0 && this.props.question) {
-      return <ModalTooltip gaLabel="testing" content={this.reviewDistribution()}>
-        <span>View responses ({this.numberOfResponses()})</span>
+      return <ModalTooltip gaLabel="Community feedback - review summary" content={this.reviewDistribution()}>
+        <a href="javascript:void(0)">View responses ({this.numberOfResponses()})</a>
       </ModalTooltip>
     }
     return null;

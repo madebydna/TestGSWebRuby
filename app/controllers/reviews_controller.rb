@@ -14,12 +14,16 @@ class ReviewsController < ApplicationController
         response_hash = @reviews_form.hash_result
         status = :ok
       else
-        response_hash = @reviews_form.errors.to_json
+        response_hash = {}
+        response_hash[:errors] = Array.wrap(@reviews_form.errors.messages[:reviews]).first
         status = :unprocessable_entity
       end
     else
       status = :unprocessable_entity
-      response_hash = {redirect_url: join_url}
+      response_hash = {
+        redirect_url: join_url,
+        errors: ['You need to log in before you can save a review']
+      }
     end
     respond_to do |format|
       format.json { render json: response_hash, status: status}

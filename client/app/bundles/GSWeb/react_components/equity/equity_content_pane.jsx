@@ -4,7 +4,8 @@ export default class EquityContentPane extends React.Component {
 
   static propTypes = {
     graph: React.PropTypes.object.isRequired,
-    text: React.PropTypes.element.isRequired
+    text: React.PropTypes.element.isRequired,
+    anchor: React.PropTypes.string
   };
 
   constructor(props) {
@@ -17,11 +18,11 @@ export default class EquityContentPane extends React.Component {
   render() {
     let hr_style = ''
     return(
-      <div className="row">
-        <div className="top-content">{this.get_narrative()}<hr  /></div>
-
-        <div>{this.props.graph}</div>
-
+      <div className={'tabs-panel tabs-panel_selected'}>
+        <div className="row">
+          <div className="top-content">{this.get_narrative()}<hr  /></div>
+          <div>{this.props.graph}</div>
+        </div>
       </div>
     )
   }

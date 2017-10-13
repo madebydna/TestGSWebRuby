@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 
 export default class NearbySchool extends React.Component {
 
@@ -93,11 +92,6 @@ export default class NearbySchool extends React.Component {
           </div>
           <div>{this.distance()}</div>
         </div>
-
-        <ConnectedReviewDistributionModal
-          question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
-          questionId={11}
-        />
       </div>
     )
   }
