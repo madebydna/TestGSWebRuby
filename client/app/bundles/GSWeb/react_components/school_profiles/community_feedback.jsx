@@ -208,18 +208,26 @@ export default class CommunityFeedback extends React.Component {
     );
   }
 
+  submitButton() {
+    return (
+      <div className="form-actions clearfix">
+        <button className="button cta" onClick={this.onSubmit}>Submit</button>
+      </div>
+    );
+  }
+
   render() {
     let success;
+    let showSubmitButton;
     if (this.state.formSubmittedSuccessfully) {
       success = this.renderSuccess();
+    } else {
+      showSubmitButton = this.submitButton();
     }
     return (<div className="review-questions review-form-container">
       {success}
       {this.mockQuestion()}
-
-      <div className="form-actions clearfix">
-        <button className="button cta" onClick={this.onSubmit}>Submit</button>
-      </div>
+      {showSubmitButton}
 
       <ConnectedReviewDistributionModal
         question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
