@@ -51,6 +51,7 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def register
+    build_gon_object
     @api_account = ApiAccount.new
   end
 
@@ -71,6 +72,10 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   private
+
+  def build_gon_object
+    data_layer_gon_hash.merge!({ 'page_name' => 'GS:API:LandingPage', 'GS User Type' => 'API' })
+  end
 
   def find_account
     @api_account = ApiAccount.find(params[:id])
