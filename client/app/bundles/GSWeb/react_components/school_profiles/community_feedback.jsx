@@ -38,7 +38,7 @@ export default class CommunityFeedback extends React.Component {
     this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
   }
 
-  mockQuestion() {
+  moduleQuestion() {
     return (
       <Question id = {11}
                 subtext = {"Do you feel this school effectively supports students with learning differences?"}
@@ -203,7 +203,7 @@ export default class CommunityFeedback extends React.Component {
     }
     return (<div className="review-questions review-form-container">
       {success}
-      {this.mockQuestion()}
+      {this.moduleQuestion()}
       {showSubmitButton}
 
       <ConnectedReviewDistributionModal
