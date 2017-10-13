@@ -2,6 +2,7 @@ module SchoolProfiles
   class EquityOverview
     include Qualaroo
     include SharingTooltipModal
+    include RatingSourceConcerns
 
     def initialize(school_cache_data_reader:, equity:)
       @school_cache_data_reader = school_cache_data_reader
@@ -18,21 +19,11 @@ module SchoolProfiles
 
     def equity_overview_sources
       content = ''
-      description = equity_description
-      description = data_label(description) if description
-      methodology = equity_methodology
-      methodology = data_label(methodology) if methodology
-      source = "#{source_name}, #{source_year}"
       content << '<div class="sourcing">'
       content << '<h1>' + static_label('sources_title') + '</h1>'
-      content << '<div>'
-      content << '<h4>' + static_label('Great schools rating') + '</h4>'
-      if description || methodology
-        content << "<p>#{description}</p>" if description
-        content << "<p>#{methodology}</p>" if methodology
-      end
-      content << '<p><span class="emphasis">' + data_label('source') + '</span>: ' + source + ' | ' + static_label('see_more') + '</p>'
-      content << '</div>'
+      content << rating_source(year: source_year, label: static_label('Great schools rating'),
+                               description: equity_description, methodology: equity_methodology,
+                               more_anchor: 'equityrating')
       content << '</div>'
     end
 

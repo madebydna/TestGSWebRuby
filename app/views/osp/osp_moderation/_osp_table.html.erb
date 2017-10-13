@@ -1,4 +1,3 @@
-<%= stylesheet_link_tag "deprecated_application"%>
 
 <table class="table table-striped" style="margin: auto;">
   <thead>
@@ -28,6 +27,7 @@
           <td>
             <strong><%= link_to(osp.school.name, root_path + "#{States.state_path(osp.state.downcase)}/city/#{osp.school_id}-school-name", target: :_blank) if osp.school%></strong><br>
             <%= osp.state%>-<%= osp.school_id%>&nbsp;&nbsp;<%= link_to 'All records for this school', osp_search_path + '?state=' + osp.state + '&school_id=' + osp.school_id.to_s, {:style=>'font-size: 11px;'}%>
+            | <%= link_to 'Edit', osp_edit_path(osp.id), {:style=>'font-size: 11px; color: #E77495'} %>
           </td>
           <td><%= osp.user.email%></td>
           <td><%= osp.user.id%></td>

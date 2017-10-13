@@ -306,19 +306,20 @@ class SchoolProfilesController < ApplicationController
     end
   end
 
-  def meta_description(default)
-    content = summary_narration.build_content_with_school_name
-    if school.state.downcase == 'ca' && content.present?
-      c = content.join(' ')
-      ActionView::Base.full_sanitizer.sanitize(c).truncate(155)
-    else
-        default
+  def meta_description
+    if school.state.downcase == 'ca'
+      content = summary_narration.build_content_with_school_name
+      if content.present?
+        c = content.join(' ')
+        ActionView::Base.full_sanitizer.sanitize(c).truncate(155)
+      end
     end
   end
 
   def set_seo_meta_tags
     meta_tags = SchoolProfileMetaTags.new(school)
-    description =meta_description(meta_tags.description)
+    md  = meta_description
+    description = md.present? ? md : meta_tags.description
     canonical_url = school_url(school)
     set_meta_tags title: meta_tags.title,
                   description: description,
@@ -337,7 +338,7 @@ class SchoolProfilesController < ApplicationController
                           height: 600,
                           width: 1200,
                           type: 'image/png',
-                          alt: 'GreatSchools is a non profit organization providing quality school information'
+                          alt: 'GreatSchools is a non profit organization providing school quality information'
 
                       },
                       type: 'place',

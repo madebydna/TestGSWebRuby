@@ -2,6 +2,7 @@ module SchoolProfiles
   class Equity
     include Qualaroo
     include SharingTooltipModal
+    include RatingSourceConcerns
 
     def initialize(school_cache_data_reader:, test_source_data:)
       @school_cache_data_reader = school_cache_data_reader
@@ -180,16 +181,9 @@ module SchoolProfiles
     def li_rating_sources
       content = ''
       if equity_test_scores.low_income_test_scores_visible?
-        source = "<span class='emphasis'>#{static_label('source')}:</span> #{static_label('GreatSchools')}, #{low_income_rating_year}"
-        methodology = rating_methodology.present? ? data_label(rating_methodology) : ''
-        content << '<div>'
-        content << '<h4>' + static_label('li_GreatSchools_Rating') + '</h4>'
-        content << '<p>'
-        content << static_label('li_description') + ' ' + methodology
-        content << '</p>'
-        content << '<p>' + source + ' | ' + static_label('li_see_more') + '</p>'
-        content << '</div>'
-        content
+        content = rating_source(year: low_income_rating_year, label: static_label('li_GreatSchools_Rating'),
+                                 description: static_label('li_description'), methodology: rating_methodology,
+                                 more_anchor: 'lowincomerating')
       end
       content
     end

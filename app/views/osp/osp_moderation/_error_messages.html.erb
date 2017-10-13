@@ -1,0 +1,16 @@
+
+<% if @osp.errors.any? || @user.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        The form contains <%= pluralize(@osp.errors.count + @user.errors.count, "error") %>.
+      </div>
+      <ul>
+        <% @osp.errors.messages.each do |key, msg| %>
+            <li><%= (key.to_s.capitalize + ' ' + msg[0]).humanize if msg[0] %></li>
+        <% end %>
+        <% @user.errors.messages.each do |key, msg| %>
+            <li><%= msg.first %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>

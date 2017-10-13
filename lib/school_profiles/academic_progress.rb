@@ -2,6 +2,7 @@ module SchoolProfiles
   class AcademicProgress
     include Qualaroo
     include SharingTooltipModal
+    include RatingSourceConcerns
 
     attr_reader :school, :school_cache_data_reader
 
@@ -102,21 +103,12 @@ module SchoolProfiles
     end
 
     def academic_progress_sources
-      content = ''
-      description = academic_progress_rating_description
-      description = data_label(description) if description
-      methodology = academic_progress_rating_methodology
-      methodology = data_label(methodology) if methodology
-      source = "#{source_name}, #{source_year}"
-      content << '<div class="sourcing">'
+      content = '<div class="sourcing">'
       content << '<h1>' + static_label('sources_title') + '</h1>'
-      content << '<div>'
-      content << '<h4>' + static_label('Great schools rating') + '</h4>'
-      content << "<p>#{description}</p>" if description
-      content << "<p>#{methodology}</p>" if methodology
-      content << '<p><span class="emphasis">' + static_label('source') + '</span>: ' + source + ' | ' + static_label('see_more') + '</p>'
-      content << '</div>'
-      content << '</div>'
+      content << rating_source(year: source_year, label: static_label('Great schools rating'),
+                               description: academic_progress_rating_description, methodology: academic_progress_rating_methodology,
+                               more_anchor: 'academicprogressrating')
+      content
     end
 
     def has_data?
