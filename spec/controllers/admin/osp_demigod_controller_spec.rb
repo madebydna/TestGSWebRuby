@@ -49,7 +49,7 @@ describe Admin::OspDemigodController do
         end
 
         it 'handles whitespace between comma-separated ids' do
-          params[:school_ids] = params[:school_ids].split(', ').first.to_s
+          params[:school_ids] = params[:school_ids].split(', ')
 
           expect(subject).to be_empty
         end
