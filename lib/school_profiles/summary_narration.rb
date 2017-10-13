@@ -10,6 +10,8 @@ module SchoolProfiles
 
     SUMMARY_RATING_METHODS_SCHOOL_NAME = %w(summary_rating_school_name test_scores_rating college_readiness_rating student_progress_rating advanced_course_rating sentence_ender discipline_and_attendence)
 
+    SUMMARY_RATING_METHODS_TEST_SCORE_ONLY = %w(test_scores_only_before_more test_scores_only_after_more)
+
     def initialize(sr, school, school_cache_data_reader:)
       @src = sr
       @school = school
@@ -25,6 +27,12 @@ module SchoolProfiles
     def build_content_with_school_name
       if @src.present? && @school_cache_data_reader.gs_rating.present?
         SUMMARY_RATING_METHODS_SCHOOL_NAME.map { |method| send(method) }.compact.delete_if(&:empty?)
+      end
+    end
+
+    def build_content_test_score_only
+      if @src.present? && @school_cache_data_reader.gs_rating.present?
+        SUMMARY_RATING_METHODS_TEST_SCORE_ONLY.map { |method| send(method) }.compact.delete_if(&:empty?)
       end
     end
 
@@ -78,6 +86,16 @@ module SchoolProfiles
       rating = @school_cache_data_reader.gs_rating
       rating_string, level = rating_three_levels(rating) if rating.present?
       rating.present? ? I18n.t('school_profiles.summary_narration.Summary Rating_html', rating_string: rating_string, level: level ) : ''
+    end
+
+    def test_scores_only_before_more
+      rating = @school_cache_data_reader.gs_rating
+      rating_string, level = rating_three_levels(rating) if rating.present?
+      rating.present? ? I18n.t('school_profiles.summary_narration.Test scores only pre more_html', rating_string: rating_string, level: level ) : ''
+    end
+
+    def test_scores_only_after_more
+      I18n.t('school_profiles.summary_narration.Test scores only post more_html')
     end
 
     def test_scores_rating

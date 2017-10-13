@@ -1,22 +1,34 @@
-<% arr = @school_profile.summary_narration.build_content %>
-<% qualaroo_link = @school_profile.summary_narration.qualaroo_module_link %>
-<% BREAK_POINT_FOR_MORE = 3 %>
+<% sn = @school_profile.summary_narration %>
+<% arr = sn.build_content %>
+<% qualaroo_link = sn.qualaroo_module_link %>
+<% breakpoint_for_more = 3 %>
 
 <% if arr.present? %>
   <div class="auto-narration summary-narration">
     <span>
-    <% if arr.length > BREAK_POINT_FOR_MORE %>
+      <% if @school_profile.summary_rating.test_scores_only? %>
         <% more = t('.more').capitalize %>
-        <%= arr[0..1].join(' ').html_safe %>
+        <% arr = sn.build_content_test_score_only %>
+        <%= arr[0].html_safe %>
         <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
-        <span class="js-moreReveal" style="display:none">
-        <%= arr[2..arr.length].join(' ').html_safe %>
-        <%= render 'module_feedback', content: qualaroo_link %>
-        </span>
-    <% else %>
-        <%= arr.join(' ').html_safe %>
-        <%= render 'module_feedback', content: qualaroo_link %>
-    <% end %>
+            <span class="js-moreReveal" style="display:none">
+            <%= arr[1].html_safe %>
+              <%= render 'module_feedback', content: qualaroo_link, yml_key: 'was_this_useful_test_only' %>
+            </span>
+      <% else %>
+        <% if arr.length > breakpoint_for_more %>
+            <% more = t('.more').capitalize %>
+            <%= arr[0..1].join(' ').html_safe %>
+            <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
+            <span class="js-moreReveal" style="display:none">
+            <%= arr[2..arr.length].join(' ').html_safe %>
+            <%= render 'module_feedback', content: qualaroo_link %>
+            </span>
+        <% else %>
+            <%= arr.join(' ').html_safe %>
+            <%= render 'module_feedback', content: qualaroo_link %>
+        <% end %>
+      <% end %>
     </span>
   </div>
 <% end %>
