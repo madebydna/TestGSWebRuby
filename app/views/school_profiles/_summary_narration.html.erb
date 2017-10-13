@@ -1,15 +1,16 @@
 <% arr = @school_profile.summary_narration.build_content %>
 <% qualaroo_link = @school_profile.summary_narration.qualaroo_module_link %>
+<% BREAK_POINT_FOR_MORE = 3 %>
 
 <% if arr.present? %>
   <div class="auto-narration summary-narration">
     <span>
-    <% if arr.length > 4 %>
+    <% if arr.length > BREAK_POINT_FOR_MORE %>
         <% more = t('.more').capitalize %>
-        <%= arr[0..2].join(' ').html_safe %>
+        <%= arr[0..1].join(' ').html_safe %>
         <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
         <span class="js-moreReveal" style="display:none">
-        <%= arr[3..arr.length].join(' ').html_safe %>
+        <%= arr[2..arr.length].join(' ').html_safe %>
         <%= render 'module_feedback', content: qualaroo_link %>
         </span>
     <% else %>
