@@ -211,7 +211,11 @@ export default class CommunityFeedback extends React.Component {
   submitButton() {
     return (
       <div className="form-actions clearfix">
-        <button className="button cta" onClick={this.onSubmit}>Submit</button>
+        <button className="button cta js-gaClick"
+                data-ga-click-label="Students with disabilities - 11"
+                data-ga-click-action="Post subtopic review"
+                data-ga-click-category="Profile"
+                onClick={this.onSubmit}>Submit</button>
       </div>
     );
   }
@@ -232,6 +236,8 @@ export default class CommunityFeedback extends React.Component {
       <ConnectedReviewDistributionModal
         question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
         questionId={11}
+        gaLabel="Students with disabilities - 11"
+        gaAction="View subtopic responses"
       />
     </div>);
   }

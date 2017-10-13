@@ -3,8 +3,9 @@ import ReviewDistribution from './review_distribution';
 import { getAnswerCountsForQuestion } from 'api_clients/reviews';
 import { withCurrentSchool }  from 'store/appStore';
 import ModalTooltip from 'react_components/modal_tooltip';
+import withAnalyticsTracking from 'util/with_analytics_tracking';
 
-export default class ConnectedReviewDistributionModal extends React.Component {
+class ConnectedReviewDistributionModal extends React.Component {
 
   static propTypes = {
     questionId: React.PropTypes.number,
@@ -28,7 +29,14 @@ export default class ConnectedReviewDistributionModal extends React.Component {
       <ReviewDistribution
       distribution={{dist: this.state.distribution, question: this.props.question}}
       />
-      <br/><a href="#Reviews" style={{textAlign: 'center'}}>View comments</a>
+      <br/><a href="#Reviews"
+              className="js-gaClick"
+              style={{textAlign: 'center'}}
+              data-ga-click-label="Students with disabilities - 11"
+              data-ga-click-action="View subtopic comments"
+              data-ga-click-category="Profile">
+      View comments
+    </a>
     </div>
   }
 
@@ -38,10 +46,12 @@ export default class ConnectedReviewDistributionModal extends React.Component {
 
   render() {
     if(this.state.distribution && Object.keys(this.state.distribution).length > 0 && this.props.question) {
-      return <ModalTooltip gaLabel="Community feedback - review summary" content={this.reviewDistribution()}>
+      return <ModalTooltip gaLabel={this.props.gaLabel} gaAction={this.props.gaAction} content={this.reviewDistribution()}>
         <a href="javascript:void(0)">View responses ({this.numberOfResponses()})</a>
       </ModalTooltip>
     }
     return null;
   }
 }
+
+export default withAnalyticsTracking(ConnectedReviewDistributionModal);
