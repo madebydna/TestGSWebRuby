@@ -224,7 +224,7 @@ module Feeds
       ].freeze
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall, directory_feed)
+        %w(test_scores test_subgroup test_rating official_overall directory_feed)
       end
 
       def all_states
