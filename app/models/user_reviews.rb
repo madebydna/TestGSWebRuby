@@ -34,6 +34,7 @@ class UserReviews
   end
 
   def member_id
+    return nil unless reviews.present?
     reviews.first[:member_id]
   end
 
@@ -49,10 +50,12 @@ class UserReviews
       hash["school_user_digest"] = school_user_digest(member_id)
       hash["five_star_review"] = review_to_hash(five_star_review) if five_star_review
       hash["topical_reviews"] = topical_reviews.map { |r| review_to_hash(r) }
-      date = most_recent_date
-      hash["most_recent_date"] = I18n.l(date, format: "%B %d, %Y")
-      hash["user_type_label"] = user_type.gs_capitalize_first
-      hash["avatar"] = USER_TYPE_AVATARS[user_type]
+      if reviews.present?
+        date = most_recent_date
+        hash["most_recent_date"] = I18n.l(date, format: "%B %d, %Y")
+        hash["user_type_label"] = user_type.gs_capitalize_first
+        hash["avatar"] = USER_TYPE_AVATARS[user_type]
+      end
       hash["id"] = self.hash
     end
   end
