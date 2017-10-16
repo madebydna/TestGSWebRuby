@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from '../../util/i18n';
 
 const SharingModal = ({content}) => {
   return (
