@@ -9,7 +9,7 @@ class OspModerationController < ApplicationController
     set_tags
     display_selected_memberships
     @pagination_link_count = membership_size/10 + 1
-    render 'osp/osp_moderation/index'
+    render '/osp/osp_moderation/index'
   end
 
   def update
@@ -33,17 +33,17 @@ class OspModerationController < ApplicationController
     unless search_id_or_state? && params_count < 2
       fetch_osps
     end
-    render 'osp/osp_moderation/osp_search'
+    render '/osp/osp_moderation/osp_search'
   end
 
   def edit
     fetch_osp_school_user
-    render 'osp/osp_moderation/edit'
+    render '/osp/osp_moderation/edit'
   end
 
   def update_osp_list_member
     fetch_osp_school_user
-    if @osp.update(osp_params.merge(updated: Time.now)) && @user.update_attributes(user_params)
+    if osp.update(osp_params.merge(updated: Time.now)) && user.update_attributes(user_params)
       redirect_to :back
     else
       render 'osp/osp_moderation/edit'
@@ -52,10 +52,22 @@ class OspModerationController < ApplicationController
 
   private
 
+  def osp
+    @_osp ||= EspMembership.find(params[:id])
+  end
+
+  def school
+    @_school ||= School.on_db(osp.state.downcase).find(osp.school_id)
+  end
+
+  def user
+    @_user ||= User.find(osp.member_id)
+  end
+
   def fetch_osp_school_user
-    @osp = EspMembership.find(params[:id])
-    @school = School.on_db(@osp.state.downcase).find(@osp.school_id)
-    @user = User.find(@osp.member_id)
+    @osp = osp
+    @school = school
+    @user = user
   end
 
   def osp_params
