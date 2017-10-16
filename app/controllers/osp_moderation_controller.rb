@@ -38,6 +38,14 @@ class OspModerationController < ApplicationController
 
   private
 
+  def osp_params
+    params.require(:esp_membership).permit(:job_title, :web_url, :note)
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :first_name, :last_name)
+  end
+
   def search_id_or_state?
     filter_params[:state] || filter_params[:school_id]
   end
