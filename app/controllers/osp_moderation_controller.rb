@@ -37,16 +37,12 @@ class OspModerationController < ApplicationController
   end
 
   def edit
-    @osp = EspMembership.find(params[:id])
-    @school = School.on_db(@osp.state.downcase).find(@osp.school_id)
-    @user = User.find(@osp.member_id)
-    render '/osp/osp_moderation/edit'
+    fetch_osp_school_user
+    render 'osp/osp_moderation/edit'
   end
 
   def update_osp_list_member
-    @osp = EspMembership.find(params[:id])
-    @school = School.on_db(@osp.state.downcase).find(@osp.school_id)
-    @user = User.find(@osp.member_id)
+    fetch_osp_school_user
     if @osp.update(osp_params.merge(updated: Time.now)) && @user.update_attributes(user_params)
       redirect_to :back
     else
@@ -55,6 +51,12 @@ class OspModerationController < ApplicationController
   end
 
   private
+
+  def fetch_osp_school_user
+    @osp = EspMembership.find(params[:id])
+    @school = School.on_db(@osp.state.downcase).find(@osp.school_id)
+    @user = User.find(@osp.member_id)
+  end
 
   def osp_params
     params.require(:esp_membership).permit(:job_title, :web_url, :note)
