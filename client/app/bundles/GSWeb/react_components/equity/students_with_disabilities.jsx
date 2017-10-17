@@ -13,12 +13,7 @@ export default class StudentsWithDisabilities extends SchoolProfileComponent {
         anchorLink = formatAndJoinAnchors(this.props.anchor, item.anchor);
       }
       return <ModuleTab {...item} key={index} anchorLink={anchorLink} />
-    }.bind(this)).concat([
-      <ModuleTab
-        title="Community feedback"
-        key={this.filteredData().length}
-      />
-    ])
+    }.bind(this))
   }
 
   activePane() {
