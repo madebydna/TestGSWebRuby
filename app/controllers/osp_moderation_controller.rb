@@ -47,7 +47,7 @@ class OspModerationController < ApplicationController
     if osp.update(osp_params.merge(updated: Time.now)) && user.update_attributes(user_params)
       redirect_to :back
     else
-      render 'osp/osp_moderation/edit'
+      render '/osp/osp_moderation/edit'
     end
   end
 
