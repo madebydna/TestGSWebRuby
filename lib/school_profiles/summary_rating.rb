@@ -94,7 +94,7 @@ module SchoolProfiles
     end
 
     def last_updated
-      @school_cache_data_reader.fetch_date_from_weight
+      @school_cache_data_reader.find_when_last_updated('Summary Rating')
     end
 
     def to_percent(decimal)

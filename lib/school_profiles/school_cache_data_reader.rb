@@ -179,9 +179,9 @@ module SchoolProfiles
       end
     end
 
-    def fetch_date_from_weight
-      # Pulls all of the weight data, selects the associated timestamps, and picks the most recent
-      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating')}
+    def find_when_last_updated(key)
+      # Pulls all data in cache by key, finds the most recent timestamp, and returns a nicely formatted date
+      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?(key)}
       return nil if rating_weight_hash.empty?
       source_dates = rating_weight_hash.values.map do |weight_data|
         (weight_data.max_by {|val| val['source_date_valid']})['source_date_valid']
