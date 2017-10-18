@@ -1,7 +1,7 @@
 es:
   lib:
     college_readiness:
-      info_text: "<p>Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
+      info_text: "<p>Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.</p><p><a href='/gk/como-clasificamos/#collegereadinessrating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
       'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'GreatSchools Rating': 'Calificaciones de GreatSchools de la Preparación Universitaria'
       'Rating text': 'Esta clasificación muestra que bien los estudiantes de esta escuela están preparados para la universidad comparados a los estudiantes en otras escuelas en este estado, sobre medidas como las tasas de graduación, pruebas de ingreso universitario y los cursos de AP cuando están disponibles.'
@@ -19,7 +19,7 @@ es:
           <p>Información de la preparación universitaria procede de agencias del estado o nacionales de educación (haz clic en el enlace "Fuentes" para más detalles).</p>
           <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP o participó en uno de los dos exámenes de preparación universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar). También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
           <p>¿Ha encontrado la información de la preparación universitaria útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Comparte tus comentarios.</a></p>
-          <p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
+          <p><a href="/gk/como-clasificamos/#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'

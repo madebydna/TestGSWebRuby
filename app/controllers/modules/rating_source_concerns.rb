@@ -1,5 +1,6 @@
 module RatingSourceConcerns
   def rating_source(year:, label:, description:nil, methodology:nil, more_anchor:nil)
+    ratings_link = (@lang_spanish ? ratings_spanish_path(anchor: more_anchor, trailing_slash: true) : ratings_path(anchor: more_anchor, trailing_slash: true))
     content = '<div>'
     content << '<h4 >' + label + '</h4>'
 
@@ -14,7 +15,7 @@ module RatingSourceConcerns
     content << "#{rating_static_label(:calculated_in)} #{year} "
     if more_anchor
       content << "| <span class=\"emphasis\">#{rating_static_label(:see_more)}</span>: "
-      content << "<a href=\"#{ratings_path(anchor: more_anchor, trailing_slash: true)}\"; target=\"_blank\">#{rating_static_label(:about_this_rating)}</a>"
+      content << "<a href=\"#{ratings_link}\"; target=\"_blank\">#{rating_static_label(:about_this_rating)}</a>"
     end
     content << '</p>'
     content << '</div>'
