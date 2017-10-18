@@ -31,10 +31,11 @@ es:
       'discipline_and_attendance_html': >
         En esta escuela existen grandes desigualdades en los índices de <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a>, lo cual es preocupante.
       Test scores only pre more_html: >
-        <span class="emphasis">This school is rated %{rating_string} average</span> based on how its students perform
+        <span class="emphasis">Esta escuela está clasificada %{rating_string} promedio</span> basado en cómo sus estudiantes realizan
       Test scores only post more_html: >
-         on state tests compared with other schools in the state. Test scores are only one aspect of school quality,
-         however. In most states, we show a Summary Rating which  is based on multiple measures, including
-         information like college readiness, student progress, advanced coursework, and how well a school is serving
-         students from all racial/ethnic and socioeconomic groups. This state does not have sufficient information
-         for us to generate a Summary Rating, which is why we instead display the school’s Test Score Rating.
+        en los exámenes del estado en comparación con otras escuelas en el estado. Sin embargo, los resultados de los
+        exámenes son sólo un aspecto de la calidad de la escuela. En la mayoría de los estados, mostramos una
+        Calificación General que se basa en varias medidas, incluyendo información como preparación universitaria, el
+        progreso del estudiante, cursos avanzados, y cómo la escuela sirve a estudiantes de todos los grupos raciales,
+        étnicos y grupos socioeconómicos. Este estado no tiene información suficiente para generar una Calificación
+        General, que es la razón por la que mostramos la Calificación de los Resultados de Exámenes de esta escuela.

@@ -1,6 +1,7 @@
 <% rating_table_rows = @school_profile.summary_rating.content %>
 <% summary_rating = @school_profile.summary_rating.gs_rating %>
 <% last_updated = @school_profile.summary_rating.last_updated %>
+<% ratings_link = params[:lang] == 'es' ? ratings_spanish_path : ratings_path %>
 
 <div class="summary_rating_tooltip">
   <%# tooltip header %>
@@ -12,7 +13,7 @@
     </div>
     <div class="header-text">
       <div><%= t('.header.title')%></div>
-      <div><%= t('.header.subtext_html')%><a href="<%= ratings_path %>"><%= t('.header.Learn more')%></a></div>
+      <div><%= t('.header.subtext_html')%><a href="<%= ratings_link %>"><%= t('.header.Learn more')%></a></div>
     </div>
   </div>
 
