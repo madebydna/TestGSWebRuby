@@ -3,21 +3,13 @@ import PropTypes from 'prop-types'; // importing from react is deprecated
 import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 import Question from '../review/form/question';
 import SelectBoxes from '../review/form/select_boxes';
-import { isSignedIn } from 'util/session';
-import modalManager from 'components/modals/manager';
-import { getCurrentSession } from 'api_clients/session';
-import { withCurrentSchool } from 'store/appStore';
-import { postReview } from 'api_clients/reviews';
+import { isSignedIn } from '../../util/session';
+import modalManager from '../../components/modals/manager';
+import { getCurrentSession } from '../../api_clients/session';
+import { withCurrentSchool } from '../../store/appStore';
+import { postReview } from '../../api_clients/reviews';
 
 export default class CommunityFeedback extends React.Component {
-
-  static propTypes = {
-
-  };
-
-  static defaultProps = {
-
-  };
 
   constructor(props) {
     super(props)
@@ -70,7 +62,7 @@ export default class CommunityFeedback extends React.Component {
           answer_value: this.state.selectedResponse
         }])
       })
-      .done(this.handleSuccessfulSubmit)
+      .done(this.setState({errors: [], saved: true}))
       .fail(this.handleFailSubmit);
     });
   }
@@ -193,17 +185,30 @@ export default class CommunityFeedback extends React.Component {
     );
   }
 
+  renderErrors() {
+    if (this.state.errors) {
+      return (
+        <div style={{color: 'red'}}>
+          {this.state.errors['11']}
+        </div>
+      )
+    }
+  }
+
   render() {
     let success;
     let showSubmitButton;
-    if (this.state.formSubmittedSuccessfully) {
+
+    if (this.state.saved === true && this.state.errors.length === 0) {
       success = this.renderSuccess();
     } else {
       showSubmitButton = this.submitButton();
     }
+
     return (<div className="review-questions review-form-container">
       {success}
       {this.moduleQuestion()}
+      {this.renderErrors()}
       {showSubmitButton}
 
       <ConnectedReviewDistributionModal
