@@ -179,21 +179,6 @@ module SchoolProfiles
       end
     end
 
-    def weights_last_updated
-      # Pulls all summary rating data, finds most recent, and returns formatted date
-      rating_weight_hash = gsdata_data('Summary Rating')
-      last_updated_sr = rating_weight_hash.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
-        last_updated_val = array_of_hashes
-                             .map { |hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name)) }
-                             .extend(GsdataCaching::GsDataValue::CollectionMethods)
-                             .having_no_breakdown
-                             .most_recent
-        output_hash[data_type_name] = last_updated_val if last_updated_val
-      end
-      date_object = build_time_object last_updated_sr['Summary Rating'].source_date_valid
-      format_date date_object
-    end
-
     def rating_weights
       rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
       return nil if rating_weight_hash.empty?
