@@ -179,23 +179,27 @@ module SchoolProfiles
       end
     end
 
-    def find_when_last_updated(key)
-      # Pulls all data in cache by key, finds the most recent timestamp, and returns a nicely formatted date
-      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?(key)}
-      return nil if rating_weight_hash.empty?
-      source_dates = rating_weight_hash.values.map do |weight_data|
-        (weight_data.max_by {|val| val['source_date_valid']})['source_date_valid']
+    def weights_last_updated
+      # Pulls all summary rating data, finds most recent, and returns formatted date
+      rating_weight_hash = gsdata_data('Summary Rating')
+      last_updated_sr = rating_weight_hash.each_with_object({}) do |(data_type_name, array_of_hashes), output_hash|
+        last_updated_val = array_of_hashes
+                             .map { |hash| GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: data_type_name)) }
+                             .extend(GsdataCaching::GsDataValue::CollectionMethods)
+                             .having_no_breakdown
+                             .most_recent
+        output_hash[data_type_name] = last_updated_val if last_updated_val
       end
-      source_dates.map! {|dt_string| build_time_object(dt_string)}
-      format_date source_dates.compact.max
+      date_object = build_time_object last_updated_sr['Summary Rating'].source_date_valid
+      format_date date_object
     end
 
     def rating_weights
       rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
       return nil if rating_weight_hash.empty?
       rating_weight_hash.values.map  do |weight_data|
-        return nil if (weight_data.first.nil? || weight_data.first['school_value'].nil?)
-        ((weight_data.first['school_value'].to_f)*100).round
+        return nil if (weight_data.all? {|hash| hash.nil? || hash['school_value'].nil?})
+        ((weight_data.max_by {|dh| dh['source_date_valid'].to_date}['school_value'].to_f)*100).round
       end
     end
 

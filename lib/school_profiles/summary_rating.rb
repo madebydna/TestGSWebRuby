@@ -94,7 +94,9 @@ module SchoolProfiles
     end
 
     def last_updated
-      @school_cache_data_reader.find_when_last_updated('Summary Rating')
+      # @school_cache_data_reader.weights_last_updated
+      sdv_timestamp = filter_rating('Summary Rating').source_date_valid
+      @school_cache_data_reader.format_date sdv_timestamp.to_date
     end
 
     def to_percent(decimal)
