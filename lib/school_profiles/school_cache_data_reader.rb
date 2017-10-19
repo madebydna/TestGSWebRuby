@@ -184,7 +184,7 @@ module SchoolProfiles
       return nil if rating_weight_hash.empty?
       rating_weight_hash.values.map  do |weight_data|
         return nil if (weight_data.all? {|hash| hash.nil? || hash['school_value'].nil?})
-        ((weight_data.max_by {|dh| dh['source_date_valid'].to_date}['school_value'].to_f)*100).round
+        ((weight_data.max_by {|dh| dh['source_date_valid']}['school_value'].to_f)*100).round
       end
     end
 
