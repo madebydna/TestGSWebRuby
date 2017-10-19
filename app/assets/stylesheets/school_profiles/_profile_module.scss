@@ -80,6 +80,13 @@
       margin-left: 15px;
       vertical-align: top;
     }
+    .speech-bubble {
+      max-width: 480px;
+      vertical-align: middle;
+      @include media-breakpoint-only(xs) {
+        max-width: 220px;
+      }
+    }
   }
 
   .tab-buttons {
