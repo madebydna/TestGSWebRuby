@@ -64,6 +64,19 @@
         </div>
       </div>
 
+      <div class="mtm">
+        <% @mss_subscriptions.each do |subscription| %>
+          <div class="fl prm mts">
+            <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
+              <input name="subscription_ids_to_remove[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+            </div>
+          </div>
+          <div style="overflow:hidden">
+            <%= t('.school_updates') %> <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
+          </div>
+          <div class="clearfix"></div>
+        <% end %>
+      </div>
 
       <div class="mtm">
         <div class="fl prm mtm">

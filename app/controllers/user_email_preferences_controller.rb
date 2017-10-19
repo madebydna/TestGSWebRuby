@@ -18,12 +18,14 @@ class UserEmailPreferencesController < ApplicationController
     account_meta_tags('My email preferences')
     @current_grades = @current_user.student_grade_levels.map(&:grade)
     @available_grades = available_grades
+    @mss_subscriptions = current_user.subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
     set_tracking_info
   end
 
   def update
     UserSubscriptionManager.new(@current_user).update(param_subscriptions)
     UserGradeManager.new(@current_user).update(param_grades)
+    Subscription.where(id: subscription_ids_to_remove, member_id: current_user.id).destroy_all if subscription_ids_to_remove
     flash_notice t('controllers.user_email_preferences_controller.success')
     redirect_to home_path
   end
@@ -35,6 +37,10 @@ class UserEmailPreferencesController < ApplicationController
 
   def param_subscriptions
     params['subscriptions'] || []
+  end
+
+  def subscription_ids_to_remove
+    params['subscription_ids_to_remove']
   end
 
   private
