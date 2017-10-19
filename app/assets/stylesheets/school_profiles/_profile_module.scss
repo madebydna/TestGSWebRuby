@@ -70,6 +70,18 @@
     }
   }
 
+  .share-your-feedback-cta {
+    .anchor-button {
+      height: 24px;
+      padding: 10px;
+    }
+    .actions > div {
+      display: inline-block;
+      margin-left: 15px;
+      vertical-align: top;
+    }
+  }
+
   .tab-buttons {
     margin-top: 15px;
     @include media-breakpoint-only(xs) {
