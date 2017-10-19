@@ -18,7 +18,9 @@ class UserEmailPreferencesController < ApplicationController
     account_meta_tags('My email preferences')
     @current_grades = @current_user.student_grade_levels.map(&:grade)
     @available_grades = available_grades
-    @mss_subscriptions = current_user.subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
+    @mss_subscriptions = current_user
+      .subscriptions_matching_lists([:mystat, :mystat_private, :mystat_unverified])
+      .extend(SchoolAssociationPreloading).preload_associated_schools!
     set_tracking_info
   end
 
