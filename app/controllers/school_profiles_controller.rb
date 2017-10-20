@@ -297,7 +297,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def add_gon_ad_set_targeting
-    if school.show_ads
+    if advertising_enabled?
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
       page_view_metadata.each do |key, value|
