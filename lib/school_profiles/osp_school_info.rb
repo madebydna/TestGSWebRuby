@@ -124,25 +124,29 @@ module SchoolProfiles
     def tab_config
       return nil if osp_school_cache_data.blank?
       tab_config = [
-          {
-              title: data_label(:overview),
-              data: osp_school_datas(*OVERVIEW_CACHE_KEYS)
-          },
-          {
-              title: data_label(:Enrollment),
-              data: osp_school_datas(*ENROLLMENT_CACHE_KEYS)
-          }
+        {
+          key: :overview,
+          title: data_label(:overview),
+          data: osp_school_datas(*OVERVIEW_CACHE_KEYS)
+        },
+        {
+          key: :enrollment,
+          title: data_label(:Enrollment),
+          data: osp_school_datas(*ENROLLMENT_CACHE_KEYS)
+        }
       ]
       unless @school.level_code == 'p'
         tab_config.push(
-            {
-                title: data_label(:classes),
-                data: osp_school_datas(*CLASSES_CACHE_KEYS)
-            },
-            {
-                title: data_label(:sports_and_clubs),
-                data: osp_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
-            }
+          {
+            key: :classes,
+            title: data_label(:classes),
+            data: osp_school_datas(*CLASSES_CACHE_KEYS)
+          },
+          {
+            key: :sports_and_clubs,
+            title: data_label(:sports_and_clubs),
+            data: osp_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
+          }
         )
       end
       tab_config
