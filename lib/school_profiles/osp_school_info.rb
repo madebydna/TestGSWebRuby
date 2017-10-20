@@ -238,6 +238,10 @@ module SchoolProfiles
 
       "mailto:#{recipient_email}?subject=#{subject}&body=#{body}"
     end
+
+    def claimed?
+      school.claimed?
+    end
   end
 end
 

@@ -3,7 +3,10 @@ import React, { PropTypes } from 'react';
 export default class ResponseData extends React.Component {
 
   static propTypes = {
-    input: PropTypes.array
+    input: PropTypes.arrayOf(PropTypes.shape({
+      response_key: PropTypes.string.isRequired,
+      response_value: PropTypes.arrayOf(PropTypes.string).isRequired
+    })).isRequired
   };
 
   constructor(props) {

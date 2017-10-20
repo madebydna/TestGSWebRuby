@@ -13,7 +13,13 @@ import ModuleTab from 'react_components/school_profiles/module_tab';
 export default class OspSchoolInfo extends React.Component {
 
   static propTypes = {
-    content: PropTypes.array,
+    content: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      data: PropTypes.arrayOf(PropTypes.shape({
+        response_key: PropTypes.string.isRequired,
+        response_value: PropTypes.arrayOf(PropTypes.string).isRequired
+      })).isRequired
+    })).isRequired,
     source_name: PropTypes.string,
     qualaroo_module_link: PropTypes.string
   };
@@ -29,8 +35,8 @@ export default class OspSchoolInfo extends React.Component {
     this.setState({activeTabIndex: index})
   }
 
-  selectSectionContent(items) {
-    let item = items[this.state.activeTabIndex];
+  selectSectionContent() {
+    let item = this.props.content[this.state.activeTabIndex];
     let data = item.data;
 
     return <div className={'tabs-panel tabs-panel_selected'}>
@@ -73,7 +79,7 @@ export default class OspSchoolInfo extends React.Component {
           icon = { <GeneralInfoIcon/> }
           title = { titleElement }
           footer = { this.footer(this.props.source_name, this.props.qualaroo_module_link) }
-          body = { <div>{this.selectSectionContent(this.props.content)}</div> }
+          body = { <div>{this.selectSectionContent()}</div> }
           tabs = { tabs }
         />
       </div>

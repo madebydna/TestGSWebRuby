@@ -1,19 +1,21 @@
 <% osp_link %>
-<% school_profile %>
+<% osp_school_info %>
 <% mailto_start = '' %>
 <% mailto_end = '' %>
-<% if school_profile.mailto %>
-  <% mailto_start = "<a href='#{school_profile.mailto}'>" %>
+<% if osp_school_info.mailto %>
+  <% mailto_start = "<a href='#{osp_school_info.mailto}'>" %>
   <% mailto_end = '</a>' %>
 <% end %>
 
 <div>
-  <% if school_profile.claimed && school_profile.tab_config.present? %>
+  <% if osp_school_info.claimed? && osp_school_info.tab_config.present? %>
     <%= react_component('OspSchoolInfo', props: {
-      content: school_profile.tab_config,
+      content: osp_school_info.tab_config,
       osp_link: osp_link,
-      source_name: school_profile.source_name,
-      qualaroo_module_link: school_profile.qualaroo_module_link}) %>
+      source_name: osp_school_info.source_name,
+      qualaroo_module_link: osp_school_info.qualaroo_module_link,
+      courses_by_subject: osp_school_info.courses_by_subject
+    }) %>
   <% else %>
     <div id="osp-school-info--empty" class="rating-container">
       <a class="anchor-mobile-offset" name="General_info"></a>
