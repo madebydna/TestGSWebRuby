@@ -13,7 +13,6 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     set_seo_meta_tags
     build_gon_object
-    lang_spanish
     if @school.private_school?
       @private_school_profile = private_school_profile
       render 'show_private_school'
@@ -234,10 +233,6 @@ class SchoolProfilesController < ApplicationController
 
   def nearby_schools
     SchoolProfiles::NearbySchools.new(school_cache_data_reader: school_cache_data_reader)
-  end
-
-  def lang_spanish
-    @lang_spanish = params[:lang] == 'es'
   end
 
   def breadcrumbs

@@ -1,6 +1,6 @@
 module RatingSourceConcerns
   def rating_source(year:, label:, description:nil, methodology:nil, more_anchor:nil)
-    ratings_link = (@lang_spanish ? ratings_spanish_path(anchor: more_anchor, trailing_slash: true) : ratings_path(anchor: more_anchor, trailing_slash: true))
+    ratings_link = (I18n.locale == :es ? ratings_spanish_path(anchor: more_anchor, trailing_slash: true) : ratings_path(anchor: more_anchor, trailing_slash: true))
     content = '<div>'
     content << '<h4 >' + label + '</h4>'
 
