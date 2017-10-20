@@ -20,8 +20,8 @@ class HomeController < ApplicationController
                       description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",
                       site_name: 'GreatSchools.org',
                       image: {
-                        url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
-                        secure_url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
+                        url: asset_path('assets/share/logo-ollie-large.png'),
+                        secure_url: asset_path('assets/share/logo-ollie-large.png'),
                         height: 600,
                         width: 1200,
                         type: 'image/png',

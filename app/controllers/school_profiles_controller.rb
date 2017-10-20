@@ -333,8 +333,8 @@ class SchoolProfilesController < ApplicationController
                       description: "We're an independent nonprofit that provides parents with in-depth school quality information.",
                       site_name: 'GreatSchools.org',
                       image: {
-                          url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
-                          secure_url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
+                          url: asset_path('assets/share/logo-ollie-large.png'),
+                          secure_url: asset_path('assets/share/logo-ollie-large.png'),
                           height: 600,
                           width: 1200,
                           type: 'image/png',
