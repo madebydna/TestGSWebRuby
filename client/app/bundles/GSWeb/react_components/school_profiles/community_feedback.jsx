@@ -8,6 +8,7 @@ import modalManager from '../../components/modals/manager';
 import { getCurrentSession } from '../../api_clients/session';
 import { withCurrentSchool } from '../../store/appStore';
 import { postReview } from '../../api_clients/reviews';
+import { forOwn, each, reduce, isEmpty } from 'lodash';
 
 export default class CommunityFeedback extends React.Component {
 
@@ -91,16 +92,20 @@ export default class CommunityFeedback extends React.Component {
         textAreaValue: value
       }
     );
+    this.validateForm();
   }
 
   onSubmit() {
     this.clearErrors();
-    this.submitForm();
-    this.setState(
-      {
-        formSubmittedSuccessfully: true
-      }
-    );
+    let isValid = this.validateForm();
+    if (isValid) {
+      this.submitForm();
+      this.setState(
+        {
+          formSubmittedSuccessfully: true
+        }
+      );
+    }
   }
 
   clearErrors() {
@@ -183,6 +188,83 @@ export default class CommunityFeedback extends React.Component {
                 onClick={this.onSubmit}>Submit</button>
       </div>
     );
+  }
+
+
+  minWordsValidator(string) {
+    if (! string) {
+      return null;
+    }
+    let numberWords = string
+      .replace( /(^\s*)|(\s*$)/gi, "" )
+      .replace( /[ ]{2,}/gi, " " )
+      .replace( /\n /, "\n" )
+      .split(' ').length;
+    if (7 > numberWords) {
+      return t('review_word_min');
+    } else {
+      return null;
+    }
+  }
+
+  requiredCommentValidator(string) {
+    if ( !string || string.length == 0) {
+      return t('review_thank_you');
+    } else {
+      return null;
+    }
+  }
+
+  maxCharactersValidator(string) {
+    if (string && string.legnth != 0 && string.length > 2400) {
+      return t('review_char_limit');
+    } else {
+      return null;
+    }
+  }
+
+  getValidationsForQuestion() {
+    let validationFuncs = [];
+    switch("11") {
+      case "1": validationFuncs.push(this.requiredCommentValidator);
+      default: validationFuncs.push(this.minWordsValidator);
+        validationFuncs.push( this.maxCharactersValidator);
+    }
+    return validationFuncs;
+  }
+
+  errorMessageForQuestion(validationFuncs, comment) {
+    let error;
+    each(validationFuncs, function(func) {
+      let message = func(comment);
+      if (message) {
+        error = message;
+        return false;
+      }
+    });
+    alert("error:" + error);
+    return error;
+  }
+
+  validateResponse(errorMessages, response, questionId) {
+    let comment = response.comment;
+    let validationFuncs = this.getValidationsForQuestion(questionId);
+    let message = this.errorMessageForQuestion(validationFuncs, comment);
+    if (message) {
+      errorMessages[questionId] = message;
+    }
+    return errorMessages;
+  }
+
+  validateForm() {
+    let selectedResponses = this.state.selectedResponses;
+    let errorMessages = reduce(selectedResponses, this.validateResponse, {});
+    let formValid = isEmpty(errorMessages);
+    this.setState ({
+      errorMessages: errorMessages,
+      formErrors: !formValid
+    });
+    return formValid;
   }
 
   renderErrors() {
