@@ -1,7 +1,7 @@
 class Api::NearbySchoolsController < ApplicationController
   DEFAULT_LIMIT = 6
   MAX_LIMIT = 6
-  CACHE_TIME = 12.hours
+  CACHE_TIME = 1.hour
 
   before_filter :require_school
 

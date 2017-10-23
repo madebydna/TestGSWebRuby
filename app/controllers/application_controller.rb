@@ -65,6 +65,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def asset_path(file)
+    ActionController::Base.helpers.asset_path(file)
+  end
+
   def host
     return request.headers['X-Forwarded-Host'] if request.headers['X-Forwarded-Host'].present?
 

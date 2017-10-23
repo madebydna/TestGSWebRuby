@@ -13,7 +13,6 @@ class SchoolProfilesController < ApplicationController
     add_profile_structured_markup
     set_seo_meta_tags
     build_gon_object
-    lang_spanish
     if @school.private_school?
       @private_school_profile = private_school_profile
       render 'show_private_school'
@@ -236,10 +235,6 @@ class SchoolProfilesController < ApplicationController
     SchoolProfiles::NearbySchools.new(school_cache_data_reader: school_cache_data_reader)
   end
 
-  def lang_spanish
-    @lang_spanish = params[:lang] == 'es'
-  end
-
   def breadcrumbs
     {
       StructuredMarkup.state_breadcrumb_text(school.state) => state_path(state_params(school.state)),
@@ -302,7 +297,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def add_gon_ad_set_targeting
-    if school.show_ads
+    if advertising_enabled?
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
       page_view_metadata.each do |key, value|
@@ -338,8 +333,8 @@ class SchoolProfilesController < ApplicationController
                       description: "We're an independent nonprofit that provides parents with in-depth school quality information.",
                       site_name: 'GreatSchools.org',
                       image: {
-                          url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
-                          secure_url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
+                          url: asset_path('assets/share/logo-ollie-large.png'),
+                          secure_url: asset_path('assets/share/logo-ollie-large.png'),
                           height: 600,
                           width: 1200,
                           type: 'image/png',
