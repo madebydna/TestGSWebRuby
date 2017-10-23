@@ -9,6 +9,7 @@ import { getCurrentSession } from '../../api_clients/session';
 import { withCurrentSchool } from '../../store/appStore';
 import { postReview } from '../../api_clients/reviews';
 import { forOwn, each, reduce, isEmpty } from 'lodash';
+import SpinnyWheel from '../spinny_wheel';
 
 export default class CommunityFeedback extends React.Component {
 
@@ -63,7 +64,7 @@ export default class CommunityFeedback extends React.Component {
           answer_value: this.state.selectedResponse
         }])
       })
-      .done(this.setState({errors: [], saved: true}))
+      .done(this.setState({errors: [], saved: true, disabled: false}))
       .fail(this.handleFailSubmit);
     });
   }
@@ -287,18 +288,30 @@ export default class CommunityFeedback extends React.Component {
       showSubmitButton = this.submitButton();
     }
 
-    return (<div className="review-questions review-form-container">
-      {success}
-      {this.moduleQuestion()}
-      {this.renderErrors()}
-      {showSubmitButton}
+    let reviewForm =
 
-      <ConnectedReviewDistributionModal
-        question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
-        questionId={11}
-        gaLabel="Students with disabilities - 11"
-        gaAction="View subtopic responses"
-      />
-    </div>);
+      (<div className="review-questions review-form-container">
+        {success}
+        {this.moduleQuestion()}
+        {this.renderErrors()}
+        {showSubmitButton}
+
+        <ConnectedReviewDistributionModal
+          question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
+          questionId={11}
+          gaLabel="Students with disabilities - 11"
+          gaAction="View subtopic responses"
+        />
+      </div>);
+
+    if(this.state.disabled) {
+      return (<SpinnyWheel
+        backgroundPosition = { 'bottom' }
+        content = { reviewForm }
+      />);
+    } else {
+      return reviewForm;
+    }
+
   }
 }
