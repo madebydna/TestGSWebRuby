@@ -179,6 +179,15 @@ module SchoolProfiles
       end
     end
 
+    def decorated_gsdata_data(key)
+      Array.wrap(decorated_school.gsdata.slice(key)[key])
+        .extend(GsdataCaching::GsDataValue::CollectionMethods)
+    end
+
+    def course_enrollment
+      decorated_gsdata_data('Course Enrollment')
+    end
+
     def fetch_date_from_weight
       # Pulls all of the weight data, selects the associated timestamps, and picks the most recent
       rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}

@@ -30,6 +30,7 @@ const replaceParameters = function(tv, p){
   var tranHash = tv;
   if(p != '') {
     $.each(p, function (k, v) {
+      tranHash = tranHash.replace("%{" + k + "}", v);
       tranHash = tranHash.replace("{" + k + "}", v);
     });
   }

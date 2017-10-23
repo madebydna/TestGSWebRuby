@@ -7,6 +7,10 @@ class SchoolProfilesController < ApplicationController
   layout "application"
   PAGE_NAME = "GS:SchoolProfile:SinglePage"
 
+  set_additional_js_translations(
+    osp_school_info: [:school_profiles, :osp_school_info]
+  )
+
   def show
     @school = school
     set_last_school_visited

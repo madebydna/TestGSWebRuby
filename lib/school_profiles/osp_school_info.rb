@@ -140,7 +140,7 @@ module SchoolProfiles
           {
             key: :classes,
             title: data_label(:classes),
-            data: osp_school_datas(*CLASSES_CACHE_KEYS)
+            data: {}.presence || courses_props
           },
           {
             key: :sports_and_clubs,
@@ -150,6 +150,10 @@ module SchoolProfiles
         )
       end
       tab_config
+    end
+
+    def has_osp_classes?
+      courses_props.present?
     end
 
     def response_label(response_key, response_value)
@@ -245,6 +249,25 @@ module SchoolProfiles
 
     def claimed?
       school.claimed?
+    end
+
+    def courses_by_subject
+      @_courses_by_subject ||= school_cache_data_reader
+        .course_enrollment
+        .expand_on_breakdown_tags
+        .having_breakdown_tag_matching(/_index$/)
+        .group_by_breakdown_tag
+    end
+
+    # Quite a bit easier to just stuff courses data into existing
+    # react component prop structure for the time being
+    def courses_props
+      courses_by_subject.reduce([]) do |array, (subject, courses)|
+        array << {
+          response_key: I18n.t(subject, scope: 'lib.advanced_courses'),
+          response_value: courses.map  { |h| h['breakdowns'] }
+        }
+      end
     end
   end
 end

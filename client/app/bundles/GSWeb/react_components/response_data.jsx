@@ -6,11 +6,28 @@ export default class ResponseData extends React.Component {
     input: PropTypes.arrayOf(PropTypes.shape({
       response_key: PropTypes.string.isRequired,
       response_value: PropTypes.arrayOf(PropTypes.string).isRequired
-    })).isRequired
+    })).isRequired,
+    limit: PropTypes.number
   };
+
+  static defaultProps = {
+    limit: 0
+  }
 
   constructor(props) {
     super(props);
+    this.showMore = this.showMore.bind(this);
+    this.state = {
+      limit: props.limit
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.limit != this.props.limit) {
+      this.setState({
+        limit: nextProps.limit
+      });
+    }
   }
 
   listOfAnswers(response_key, answers) {
@@ -35,8 +52,15 @@ export default class ResponseData extends React.Component {
     });
   }
 
+  showMore() {
+    this.setState({ limit: 0 })
+  }
+
   render() {
     let data = this.props.input;
+    if (this.state.limit > 0) {
+      data = data.slice(0, this.state.limit);
+    }
     let responses = data.map((thing, index) => {
       let response_key = thing.response_key;
       let answers = thing.response_value;
@@ -48,10 +72,17 @@ export default class ResponseData extends React.Component {
       else {
         return (<div className="response clearfix" key={index}>
           <div className="col-xs-12 col-sm-4 sources-text" key={response_key}>{response_key}</div>
-          <div className="col-xs-12 col-sm-6"><ul>{this.listOfAnswers(response_key, answers)}</ul></div>
+          <div className="col-xs-12 col-sm-6">
+            <ul>
+              {this.listOfAnswers(response_key, answers)}
+              { this.state.limit > 0 && index == (this.state.limit - 1) && <a href="javascript:void(0);" onClick={this.showMore}>Show more</a> }
+            </ul>
+          </div>
         </div>);
       }
     });
+
+
     return (<div>
       {responses}
     </div>

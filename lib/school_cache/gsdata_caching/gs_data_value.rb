@@ -14,29 +14,58 @@ class GsdataCaching::GsDataValue
 
     def having_most_recent_date
       max_source_date_valid = map(&:source_date_valid).max
-      select { |dv| dv.source_date_valid == max_source_date_valid }.tap { |a| a.extend(CollectionMethods) }
+      select { |dv| dv.source_date_valid == max_source_date_valid }.extend(CollectionMethods)
     end
 
     def having_no_breakdown
-      select { |dv| dv.breakdowns.nil? }.tap { |a| a.extend(CollectionMethods) }
+      select { |dv| dv.breakdowns.nil? }.extend(CollectionMethods)
     end
 
     def having_one_breakdown
-      select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.tap { |a| a.extend(CollectionMethods) }
+      select { |dv| dv.breakdowns.present? && dv.breakdowns.size == 1}.extend(CollectionMethods)
     end
 
     def having_school_value
-      select { |dv| dv.school_value.present? }.tap { |a| a.extend(CollectionMethods) }
+      select { |dv| dv.school_value.present? }.extend(CollectionMethods)
     end
 
     def having_no_breakdown_or_breakdown_in(breakdowns)
       select { |dv| dv.breakdowns.blank? || Array.wrap(breakdowns).include?(dv.breakdowns) }
-        .tap { |a| a.extend(CollectionMethods) }
+        .extend(CollectionMethods)
     end
 
     def having_breakdown_in(breakdowns)
       select { |dv| Array.wrap(breakdowns).include?(dv.breakdowns) }
-        .tap { |a| a.extend(CollectionMethods) }
+        .extend(CollectionMethods)
+    end
+
+    def having_breakdown_tag_matching(regex)
+      select { |dv| dv['breakdown_tags'] =~ regex }.extend(CollectionMethods)
+    end
+
+    def expand_on_breakdown_tags
+      reduce([]) do |array, dv|
+        array.concat(
+          dv['breakdown_tags'].split(',').map do |tag|
+            dv.merge('breakdown_tags' => tag)
+          end
+        )
+      end.extend(CollectionMethods)
+    end
+
+    def group_by_breakdown_tag
+      group_by do |dv|
+        if dv['breakdown_tags'].include?(',')
+          GSLogger.error(
+            :misc,
+            nil,
+            message: "Tried to group on comma separated breakdowns",
+            vars: dv
+          )
+          return self
+        end
+        dv['breakdown_tags']
+      end
     end
 
     def remove_504_category_breakdown_from_each!
