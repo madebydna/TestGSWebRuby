@@ -34,8 +34,8 @@ es:
         <span class="emphasis">*Esta escuela está clasificada %{rating_string} del promedio</span> basado en cómo sus estudiantes realizan
       Test scores only post more_html: >
         en los exámenes del estado en comparación con otras escuelas en el estado. Sin embargo, los resultados de los
-        exámenes son sólo un aspecto de la calidad de la escuela. En la mayoría de los estados, mostramos una
+        exámenes son sólo un aspecto de la calidad de la escuela. <br/><br/>En la mayoría de los estados, mostramos una
         Calificación General que se basa en varias medidas, incluyendo información como preparación universitaria, el
         progreso del estudiante, cursos avanzados, y cómo la escuela sirve a estudiantes de todos los grupos raciales,
-        étnicos y grupos socioeconómicos. Este estado no tiene información suficiente para generar una Calificación
+        étnicos y grupos socioeconómicos. <br/><br/>Este estado no tiene información suficiente para generar una Calificación
         General, que es la razón por la que mostramos la Calificación de los Resultados de Exámenes de esta escuela.
