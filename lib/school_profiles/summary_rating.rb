@@ -94,7 +94,14 @@ module SchoolProfiles
     end
 
     def last_updated
-      @school_cache_data_reader.fetch_date_from_weight
+      if test_scores_only?
+        # Use date from the Test Score Rating. If that isn't present, fall back on the rating weight date.
+        gsdata_obj = filter_rating('Test Score Rating') || filter_rating(RATING_WEIGHTS['Test Score Rating'][:weight])
+        sdv_timestamp = gsdata_obj.source_date_valid
+      else
+        sdv_timestamp = filter_rating('Summary Rating').source_date_valid
+      end
+      @school_cache_data_reader.format_date sdv_timestamp.to_date
     end
 
     def to_percent(decimal)
@@ -119,7 +126,7 @@ module SchoolProfiles
     end
 
     def filter_rating(key)
-      rating_weight = @school_cache_data_reader.gsdata_data(key)[key].map do |hash|
+      rating_weight = (@school_cache_data_reader.gsdata_data(key)[key] || []).map do |hash|
         GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: key))
       end.extend(GsdataCaching::GsDataValue::CollectionMethods)
       rating_weight

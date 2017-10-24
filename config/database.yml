@@ -172,6 +172,14 @@ test: &test
     <<: *test_db
     database: gscms_pub_test
     legacy: true
+  api_rw:
+      <<: *test_db
+      database: api_test
+      legacy: true
+  api:
+    <<: *test_db
+    database: api_test
+    legacy: true
 
 cucumber:
   <<: *test
