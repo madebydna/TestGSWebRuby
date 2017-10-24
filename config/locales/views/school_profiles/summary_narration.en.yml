@@ -31,7 +31,7 @@ en:
       discipline_and_attendance_html: >
         Large disparities in <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a> rates exist at this school, which is concerning.
       Test scores only pre more_html: >
-        <span class="emphasis">This school is rated %{rating_string} average</span> based on how its students perform
+        <span class="emphasis">*This school is rated %{rating_string} average</span> based on how its students perform
       Test scores only post more_html: >
          on state tests compared with other schools in the state. Test scores are only one aspect of school quality,
          however. In most states, we show a Summary Rating which  is based on multiple measures, including

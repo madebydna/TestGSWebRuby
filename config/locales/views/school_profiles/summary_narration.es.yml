@@ -31,7 +31,7 @@ es:
       'discipline_and_attendance_html': >
         En esta escuela existen grandes desigualdades en los índices de <a href="#Race_ethnicity*Discipline_and_attendance">%{danda}</a>, lo cual es preocupante.
       Test scores only pre more_html: >
-        <span class="emphasis">Esta escuela está clasificada %{rating_string} del promedio</span> basado en cómo sus estudiantes realizan
+        <span class="emphasis">*Esta escuela está clasificada %{rating_string} del promedio</span> basado en cómo sus estudiantes realizan
       Test scores only post more_html: >
         en los exámenes del estado en comparación con otras escuelas en el estado. Sin embargo, los resultados de los
         exámenes son sólo un aspecto de la calidad de la escuela. En la mayoría de los estados, mostramos una
