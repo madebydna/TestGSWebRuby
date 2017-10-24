@@ -1,9 +1,11 @@
 class Subscription < ActiveRecord::Base
+  include BehaviorForModelsWithSchoolAssociation
   self.table_name = 'list_active'
 
   db_magic :connection => :gs_schooldb
 
   belongs_to :user, foreign_key: 'member_id'
+  alias_attribute :school_state, :state
 
   SubscriptionProduct = Struct.new(:name, :long_name, :description, :duration, :isNewsletter)
 
