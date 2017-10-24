@@ -59,7 +59,9 @@ $(function() {
       decodeURIComponent(parts[1].replace(/\+/g, " "));
   });
   Object.keys(location.queryString).forEach(function(key) {
-    paramInputMap[key].val(location.queryString[key])
+    if (paramInputMap[key]) {
+      paramInputMap[key].val(location.queryString[key])
+    }
   });
 
   const allChecked = function() {

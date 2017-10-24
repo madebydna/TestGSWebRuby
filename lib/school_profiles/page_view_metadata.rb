@@ -25,7 +25,6 @@ module SchoolProfiles
         'zipcode'     => school.zipcode,
         'district_id' => school.district.present? ? school.district.id.to_s : "",
         'template'    => SCHOOL_PROFILE_TEMPLATE,
-        'collection_ids'  => school.collection_ids,
         'number_of_reviews_with_comments' =>  school_reviews_count,
       }
     end
