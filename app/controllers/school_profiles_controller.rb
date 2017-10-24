@@ -266,7 +266,8 @@ class SchoolProfilesController < ApplicationController
     if school.present?
       gon.school = {
         :id => school.id,
-        :state => school.state
+        :state => school.state,
+        :test_scores_only => summary_rating.test_scores_only?
       }
     end
   end
