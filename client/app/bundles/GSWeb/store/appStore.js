@@ -35,7 +35,7 @@ const getState = function() {
 const withCurrentSchool = function(callback) {
   let school = getStore().getState().school;
   if(school) {
-    callback(school.state, school.id);
+    callback(school.state, school.id, school);
   }
 }
 

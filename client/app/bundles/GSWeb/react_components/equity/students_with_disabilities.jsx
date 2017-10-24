@@ -4,6 +4,7 @@ import { formatAndJoinAnchors } from '../../components/anchor_router';
 import ModuleTab from 'react_components/school_profiles/module_tab';
 import CommunityFeedback from 'react_components/school_profiles/community_feedback';
 import ShareYourFeedbackCta from 'react_components/school_profiles/share_your_feedback_cta';
+import ModuleSubTab from "../school_profiles/module_sub_tab";
 
 export default class StudentsWithDisabilities extends SchoolProfileComponent {
 
@@ -19,7 +20,12 @@ export default class StudentsWithDisabilities extends SchoolProfileComponent {
         anchorLink = formatAndJoinAnchors(this.props.anchor, item.anchor);
       }
       return <ModuleTab {...item} key={index} anchorLink={anchorLink} />
-    }.bind(this))
+    }.bind(this)).concat([
+      <ModuleTab
+        title="Community feedback"
+        key={this.filteredData().length}
+      />
+    ])
   }
 
   goToLastTab() {

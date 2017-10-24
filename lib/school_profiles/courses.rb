@@ -247,9 +247,10 @@ module SchoolProfiles
       end
       subject_hash = { t(:advanced_courses) => subject_sources }
       rating_hash = if rating.present?
+                      ratings_link = (I18n.locale == :es ? ratings_spanish_path(anchor: 'advancedcoursesrating') : ratings_path(anchor: 'advancedcoursesrating'))
                       source_str = "#{I18n.t(:calculated_in, scope: 'controllers.school_profile_controller')} #{rating_year} | "
                       source_str << "<span class=\"emphasis\">#{I18n.t(:see_more, scope: 'controllers.school_profile_controller')}</span>: "
-                      source_str << "<a href=\"#{ratings_path(anchor: 'advancedcoursesrating')}\"; target=\"_blank\">"
+                      source_str << "<a href=\"#{ratings_link}\"; target=\"_blank\">"
                       source_str << "#{I18n.t(:about_this_rating, scope: 'controllers.school_profile_controller')}</a>"
                       {t(:rating_title) => {['GreatSchools', source_str] => t(:rating_description)}}
                     else

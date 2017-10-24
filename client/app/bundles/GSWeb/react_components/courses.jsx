@@ -94,7 +94,7 @@ export default class Courses extends React.Component {
     }
 
 
-    if (subjects.length > 0)
+    if (this.props.rating !== null)
       return (<div id="AdvancedCourses" className="advanced-courses rating-container" data-ga-click-label="Advanced courses">
         <a className="anchor-mobile-offset" name="Advanced_courses"></a>
         <div className="profile-module">

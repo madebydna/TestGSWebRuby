@@ -1,5 +1,6 @@
 import { introJs } from 'intro.js';
 import { t } from '../util/i18n';
+import { withCurrentSchool } from 'store/appStore';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges,
          maximizeNudges as maximizeQualarooNudges } from 'util/qualaroo';
@@ -71,6 +72,15 @@ let firstTutorial = [
     position: 'top'
   }
 ];
+
+let firstTutorialForTestScoresOnlyRating = [
+  {
+    element: '.rs-gs-rating',
+    intro: t('tour1.step2_test_scores_only_title_html') + t('tour1.step2_test_scores_only'),
+    position: 'below',
+    gaLabel: 'summary-rating'
+  },
+].concat(firstTutorial.slice(1));
 
 let secondTutorial = [
   {
@@ -214,7 +224,13 @@ function exitLastTour(){
 }
 
 export function startFirstTutorial() {
-  startTutorial(firstTutorial, firstTutorialLastStep);
+  withCurrentSchool((state, id, { test_scores_only = false } = {}) => {
+    if(test_scores_only) {
+      startTutorial(firstTutorialForTestScoresOnlyRating, firstTutorialLastStep);
+    } else {
+      startTutorial(firstTutorial, firstTutorialLastStep);
+    }
+  })
 }
 
 export function startSecondTutorial(){

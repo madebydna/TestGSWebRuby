@@ -30,7 +30,6 @@ describe SchoolProfiles::PageViewMetadata do
       'zipcode'     => school.zipcode,
       'district_id' => school.district.present? ? school.district.id.to_s : "",
       'template'    => "SchoolProf",
-      'collection_ids'  => school.collection_ids,
       'number_of_reviews_with_comments' => school_reviews_count,
     }
   end
