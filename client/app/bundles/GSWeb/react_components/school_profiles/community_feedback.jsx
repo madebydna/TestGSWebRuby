@@ -70,7 +70,7 @@ export default class CommunityFeedback extends React.Component {
   }
 
   handleFailSubmit(errors = []) {
-    this.setState({errors: errors})
+    this.setState({errors: errors, saved: false})
   }
 
   handleSuccessfulSubmit({reviews, message, user_reviews} = {}) {
@@ -179,6 +179,26 @@ export default class CommunityFeedback extends React.Component {
     );
   }
 
+  renderFail() {
+    if (this.state.errors) {
+
+      return (
+        <div style={{backgroundColor: 'red', color: 'white', fontFamily: 'opensans-regular', padding: '15px 10px'}}>
+          {this.state.errors['11']}
+        </div>
+      );
+
+    } else {
+      if (this.state.errorMessages[0]) {
+        return (
+          <div style={{backgroundColor: 'red', color: 'white', fontFamily: 'opensans-regular', padding: '15px 10px'}}>
+            {this.state.errorMessages[0]}
+          </div>
+        );
+      }
+    }
+  }
+
   submitButton() {
     return (
       <div className="form-actions clearfix">
@@ -243,7 +263,6 @@ export default class CommunityFeedback extends React.Component {
         return false;
       }
     });
-    alert("error:" + error);
     return error;
   }
 
@@ -268,32 +287,27 @@ export default class CommunityFeedback extends React.Component {
     return formValid;
   }
 
-  renderErrors() {
-    if (this.state.errors) {
-      return (
-        <div style={{color: 'red'}}>
-          {this.state.errors['11']}
-        </div>
-      )
-    }
-  }
 
   render() {
-    let success;
+    let headerMessage;
     let showSubmitButton;
 
     if (this.state.saved === true && this.state.errors.length === 0) {
-      success = this.renderSuccess();
+      headerMessage = this.renderSuccess();
     } else {
       showSubmitButton = this.submitButton();
+    }
+
+    if (this.state.errors || this.state.errorMessages) {
+      headerMessage = this.renderFail();
     }
 
     let reviewForm =
 
       (<div className="review-questions review-form-container">
-        {success}
+        {headerMessage}
         {this.moduleQuestion()}
-        {this.renderErrors()}
+
         {showSubmitButton}
 
         <ConnectedReviewDistributionModal
