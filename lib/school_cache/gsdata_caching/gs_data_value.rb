@@ -40,14 +40,14 @@ class GsdataCaching::GsDataValue
     end
 
     def having_breakdown_tag_matching(regex)
-      select { |dv| dv['breakdown_tags'] =~ regex }.extend(CollectionMethods)
+      select { |dv| dv.breakdown_tags =~ regex }.extend(CollectionMethods)
     end
 
     def expand_on_breakdown_tags
       reduce([]) do |array, dv|
         array.concat(
-          dv['breakdown_tags'].split(',').map do |tag|
-            dv.merge('breakdown_tags' => tag)
+          dv.breakdown_tags.split(',').map do |tag|
+            dv.clone.tap { |_dv| _dv.breakdown_tags = tag }
           end
         )
       end.extend(CollectionMethods)
@@ -55,7 +55,7 @@ class GsdataCaching::GsDataValue
 
     def group_by_breakdown_tag
       group_by do |dv|
-        if dv['breakdown_tags'].include?(',')
+        if dv.breakdown_tags.include?(',')
           GSLogger.error(
             :misc,
             nil,
@@ -64,7 +64,7 @@ class GsdataCaching::GsDataValue
           )
           return self
         end
-        dv['breakdown_tags']
+        dv.breakdown_tags
       end
     end
 

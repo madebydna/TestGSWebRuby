@@ -11,11 +11,12 @@
   <%= react_component('OspSchoolInfo', props: {
     config: osp_school_info.tab_config,
     osp_link: osp_link,
-    source_name: osp_school_info.source_name,
+    sources: osp_school_info.sources,
     qualaroo_module_link: osp_school_info.qualaroo_module_link,
     is_claimed: osp_school_info.claimed?,
     mailto_start: mailto_start.html_safe,
     mailto_end: mailto_end.html_safe,
-    has_osp_classes: osp_school_info.has_osp_classes?
+    has_osp_classes: osp_school_info.has_osp_classes?,
+    has_non_osp_classes: osp_school_info.has_non_osp_classes?
   }) %>
 </div>

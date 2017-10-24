@@ -181,6 +181,7 @@ module SchoolProfiles
 
     def decorated_gsdata_data(key)
       Array.wrap(decorated_school.gsdata.slice(key)[key])
+        .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
         .extend(GsdataCaching::GsDataValue::CollectionMethods)
     end
 

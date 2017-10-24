@@ -161,6 +161,7 @@ en:
     Parent tip: Parent tip
     Continue: Continue
     Not right now: Not right now
+    sources: Sources
     tour1:
       step1: GreatSchools is the leading national nonprofit providing school & parenting information. We collect data from state & federal sources to help you understand school quality and find the best educational opportunities for your child.
       step2_title_html: '<div class="tutorial-header">Summary rating</div><br/>'

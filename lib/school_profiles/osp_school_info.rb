@@ -140,7 +140,7 @@ module SchoolProfiles
           {
             key: :classes,
             title: data_label(:classes),
-            data: {}.presence || courses_props
+            data: has_osp_classes? ? osp_school_datas(*CLASSES_CACHE_KEYS) : courses_props
           },
           {
             key: :sports_and_clubs,
@@ -153,6 +153,10 @@ module SchoolProfiles
     end
 
     def has_osp_classes?
+      osp_school_datas(*CLASSES_CACHE_KEYS).reject { |h| h[:response_value].include?('Data not provided by the school') }.present?
+    end
+
+    def has_non_osp_classes?
       courses_props.present?
     end
 
@@ -186,10 +190,6 @@ module SchoolProfiles
           Array(NO_DATA_TEXT)
         end
       end
-    end
-
-    def source_name
-      data_label(SCHOOL_ADMIN)
     end
 
     def administrators_email_and_name
@@ -259,13 +259,56 @@ module SchoolProfiles
         .group_by_breakdown_tag
     end
 
+    def sources
+      array = [
+        {
+          heading: data_label(:overview),
+          names: [data_label(SCHOOL_ADMIN)],
+          years: [nil]
+        },
+        {
+          heading: data_label(:environment),
+          names: [data_label(SCHOOL_ADMIN)],
+          years: [nil]
+        }
+      ]
+
+      if has_osp_classes?
+        array << {
+          heading: data_label(:classes),
+          names: [data_label(SCHOOL_ADMIN)],
+          years: [nil]
+        }
+      else
+        subjects_and_years = courses_by_subject.values.flatten.map { |o| {name: o.source_name, year: o.source_year} }.uniq
+        array << {
+          heading: data_label(:classes),
+          names: subjects_and_years.map { |h| h[:name] },
+          years: subjects_and_years.map { |h| h[:year] }
+        }
+      end
+
+      array << {
+        heading: data_label(:sports_and_clubs),
+        names: [data_label(SCHOOL_ADMIN)],
+        years: [nil]
+      }
+
+        # data_label(:overview) => [{name: data_label(SCHOOL_ADMIN), year: nil}],
+        # data_label(:environment) => [{name: data_label(SCHOOL_ADMIN), year: nil}],
+        # data_label(:classes) => has_osp_classes? ? [{name: data_label(SCHOOL_ADMIN), year: nil}] : courses_by_subject.values.flatten.map { |o| {name: o.source_name, year: o.source_year} }.uniq,
+        # data_label(:sports_and_clubs) => [{name: data_label(SCHOOL_ADMIN), year: nil}]
+      # ]
+      array
+    end
+
     # Quite a bit easier to just stuff courses data into existing
     # react component prop structure for the time being
     def courses_props
       courses_by_subject.reduce([]) do |array, (subject, courses)|
         array << {
           response_key: I18n.t(subject, scope: 'lib.advanced_courses'),
-          response_value: courses.map  { |h| h['breakdowns'] }
+          response_value: courses.map  { |h| h.breakdowns }
         }
       end
     end

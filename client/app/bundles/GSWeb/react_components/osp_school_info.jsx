@@ -9,6 +9,9 @@ import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_m
 import { GeneralInfoIcon } from 'react_components/school_profiles/circle_icons';
 import QuestionMarkTooltip from 'react_components/school_profiles/question_mark_tooltip';
 import ModuleTab from 'react_components/school_profiles/module_tab';
+import Remodal from 'react_components/remodal';
+import InfoBox from 'react_components/school_profiles/info_box';
+import Sources from 'react_components/school_profiles/sources';
 
 export default class OspSchoolInfo extends React.Component {
 
@@ -21,10 +24,11 @@ export default class OspSchoolInfo extends React.Component {
         response_value: PropTypes.arrayOf(PropTypes.string).isRequired
       })).isRequired
     })).isRequired,
-    source_name: PropTypes.string,
+    sources: Sources.PropTypes.sources,
     qualaroo_module_link: PropTypes.string,
     is_claimed: PropTypes.bool.isRequired,
-    has_osp_classes: PropTypes.bool.isRequired
+    has_osp_classes: PropTypes.bool.isRequired,
+    has_non_osp_classes: PropTypes.bool.isRequired
   };
 
   static defaultProps = {}
@@ -62,21 +66,25 @@ export default class OspSchoolInfo extends React.Component {
       return null;
     }
     return <div className={'tabs-panel tabs-panel_selected'}>
-      <ResponseData input={configForActiveTab.data} limit={1}/>
+      <ResponseData input={configForActiveTab.data} limit={this.props.has_osp_classes ? 0 : 1 } />
       { !this.props.is_claimed && !this.props.has_osp_classes && <div><hr/>{ this.noDataCta() }</div> }
     </div>
   }
 
-  footer(sources, qualaroo_module_link) {
+  footer() {
+    let qualaroo_module_link = this.props.qualaroo_module_link;
+    let sourcesNode = <Sources sources={this.props.sources} />
     return (
       <div>
-        { t('source') }:&nbsp;<span>{sources}</span>
+        <Remodal gaLabel={this.props.gaLabel} gaAction={this.props.gaAction} content={sourcesNode}>
+          <InfoBox>{ t('sources') }</InfoBox>
+        </Remodal>
         <GiveUsFeedback content={qualaroo_module_link} />
       </div>
     )
   }
 
-  noDataCta() {
+  noDataCtaWithDescription() {
     return <div className="ptm">
       <span className="no-data" dangerouslySetInnerHTML={{__html: t('osp_school_info.subtitle')}}></span>
       <ul style={{padding: '20px'}}>
@@ -86,8 +94,17 @@ export default class OspSchoolInfo extends React.Component {
     </div>
   }
 
+  noDataCta() {
+    return <div className="ptm">
+      <ul style={{padding: '20px'}}>
+        <li className="no-data" dangerouslySetInnerHTML={{__html: t('osp_school_info.bullet_1_html')}}></li>
+        <li className="no-data" dangerouslySetInnerHTML={{__html: t('osp_school_info.bullet_2_html', {parameters: { mailto_start: this.props.mailto_start, mailto_end: this.props.mailto_end}})}}></li>
+      </ul>
+    </div>
+  }
+
   hasData() {
-    return (this.props.is_claimed || this.props.has_osp_classes) && this.props.config && this.configsWithData().length > 0;
+    return (this.props.is_claimed || this.props.has_non_osp_classes) && this.props.config && this.configsWithData().length > 0;
   }
 
   r_t(key, replacements = {}) {
@@ -101,7 +118,7 @@ export default class OspSchoolInfo extends React.Component {
   render() {
     let titleElement = <div>
       { t('General Information') }
-      &nbsp;<QuestionMarkTooltip content={t('general_information_tooltip')} />
+      &nbsp;{ this.hasData() && <QuestionMarkTooltip content={t('general_information_tooltip')} /> }
       <AnchorButton href={ this.props.osp_link } >{ t('edit') }</AnchorButton>
     </div>
 
@@ -122,8 +139,8 @@ export default class OspSchoolInfo extends React.Component {
           className='equity-container'
           icon = { <GeneralInfoIcon/> }
           title = { titleElement }
-          no_data_cta={ !this.hasData() && this.noDataCta() }
-          footer = { this.footer(this.props.source_name, this.props.qualaroo_module_link) }
+          no_data_cta={ !this.hasData() && this.noDataCtaWithDescription() }
+          footer = { this.hasData() && this.footer() }
           body = { this.hasData() && <div>{this.selectSectionContent()}</div> }
           tabs = { this.hasData() && tabs }
         />
