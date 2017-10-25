@@ -1,6 +1,11 @@
 #home-page {
-
- .search-btn  {
+  h1.text_fff {
+    margin-bottom: 10.5px;
+    line-height: 1.2;
+  }
+  padding-right: 0;
+  padding-left: 0;
+  .search-btn  {
     height: 46px;
     vertical-align: middle;
     color: white;
@@ -24,36 +29,136 @@
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     -webkit-user-select: none;
-   }
+  }
 
-   .search-btn:hover {
-     background-color: #009edc;
-     border-color: #2880b9;
-   }
+  .search-text {
+    color: #777;
+  }
 
-  .mission-text {
-    text-align: center;
-    font-family: "RobotoSlab-Light", sans-serif;
-    font-weight: 900;
-    font-size: 40px;
-    color: $gray-darker;
-    padding: 30px 0px 0px;
-    @media (max-width: $screen-md-max) {
-      font-size: 32px;
-      color: $gray-darker;
-      padding: 30px 0px 0px;
-    }
-    @media (max-width: $screen-sm-max) {
-      font-size: 24px;
-      color: $gray-darker;
-      padding: 30px 0px 0px;
-    }
-    @media (max-width: $screen-xs-max) {
-      font-size: 20px;
-      color: $gray-darker;
-      padding: 30px 0px 0px;
+  .search-btn:hover {
+    background-color: #009edc;
+    border-color: #2880b9;
+  }
+
+  .parent-content {
+    line-height: 1.5;
+    > a {
+      color: #26abe2;
     }
   }
+
+  .below-hero {
+    font-size: 36px;
+    text-align: center;
+    @media (max-width: $screen-md-max) {
+      font-size: 36px;
+    }
+    @media (max-width: $screen-sm-max) {
+      font-size: 36px;
+    }
+    @media (max-width: $screen-xs-max) {
+      font-size: 28px;
+    }
+  }
+
+  .mission-text {
+    font-family: "RobotoSlab-Bold", sans-serif;
+    font-weight: 900;
+    font-size: 1em;
+    color: $gray-darkest;
+    padding: 30px 0px 0px;
+  }
+
+  .mission-text.subtext {
+    font-family: "RobotoSlab-Light", sans-serif;
+    font-size: .8em;
+    padding: 15px 0;
+  }
+  .gs-offering {
+    margin: 20px 0 30px 0;
+    padding: 0 12%;
+    text-align: left;
+    .gs-offering-col {
+      padding: 0 2%;
+    }
+    .gs-offering-title {
+      font-family: "RobotoSlab-Light", sans-serif;
+      font-size: .65em;
+      color: $gray-darker;
+    }
+    .gs-offering-description {
+      line-height: 1.8em;
+      font-size: .4em;
+    }
+    @media (max-width: $screen-sm-min) {
+      margin-top: 10px;
+    }
+  }
+
+  .row.highlights {
+    background-color: #f8f8f8;
+    padding-top: 30px;
+    .highlight {
+      text-align: left;
+      padding: 60px 5% 0 14%;
+      @media (max-width: 420px) {
+        padding: 0px 5% 0 14%;
+      }
+      .highlight-title {
+        font-size: .65em;
+        line-height: 1.2em;
+        margin: 12px 0 15px 0;
+      }
+      .highlight-text {
+        font-size: .4em;
+        line-height: 1.8em;
+        margin-bottom: 25px;
+      }
+    }
+    img {
+      display: inline-block;
+    }
+    .highlight-img-right {
+      text-align: right;
+      padding-right: 0;
+    }
+    .highlight-img-left {
+      text-align: left;
+      padding-left: 0;
+    }
+  }
+
+
+
+  .learn-more {
+    width: 180px;
+    height: 50px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-size: 14px;
+    margin-bottom: 60px;
+    @media (max-width: 420px) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .blue-background {
+    background-color: #0aa8e4;
+    color: white;
+  }
+
+  .white-background {
+    border-color: #0aa8e4;
+    color: #0aa8e4;
+    background-color: white;
+  }
+
+  .small-upcase {
+    text-transform: uppercase;
+    font-size: .35em;
+    color: #8A90A0;
+  }
+
   .darken {
     overflow: visible;
     background: rgba(0, 0, 0, 0.65);

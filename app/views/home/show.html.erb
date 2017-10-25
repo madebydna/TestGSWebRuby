@@ -30,39 +30,104 @@
 <div id="home-page" class="gs-bootstrap container-fluid">
 
   <%= render layout: 'hero' do %>
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
-      <div class="mtxl hidden-xs"></div>
-      <div class="oa text_fff pal darken brs">
-        <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('home.hero.heading') %></h1>
-        <div class="subtitle uc mtl"><%= t('home.hero.subheading') %></div>
-        <%= render partial: 'home/search_form' %>
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
+        <div class="mtxl hidden-xs"></div>
+        <div class="oa text_fff pal darken brs">
+          <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('home.hero.heading') %></h1>
+          <div class="subtitle uc mtl"><%= t('home.hero.subheading') %></div>
+          <%= render partial: 'home/search_form' %>
 
-        <div class="parent-content uc">
-          <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
-          <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.school_life_html'), school_life_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %>
-          <%= link_to t('home.hero.reading_html'), reading_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.math_html'), math_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url %>
-          <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.back_to_school_html'), back_to_school_url %>
+          <div class="parent-content uc">
+            <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
+            <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.school_life_html'), school_life_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %>
+            <%= link_to t('home.hero.reading_html'), reading_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.math_html'), math_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url %>
+            <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.back_to_school_html'), back_to_school_url %>
 
+          </div>
         </div>
       </div>
+  <% end %>
+  <div class="below-hero">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+        <p class="mission-text"><%= t('.mission-text') %></p>
+      </div>
     </div>
-    <% end %>
 
-  <div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-      <p class="mission-text"><%= t('.mission-text') %></p>
-      <p class="tac pbl uc"><a href="/gk/about/" class="font-size-xl"><%= t('.learn-more') %></a></p>
+    <div style="text-align: center;">
+      <p class="mission-text subtext"><%= t('.more-about-our-work') %>:</p>
     </div>
+
+    <div class="row gs-offering">
+      <div class="col-xs-12 col-md-4 gs-offering-col">
+        <%= image_tag image_path('home/school-quality.png') %>
+        <p class="gs-offering-title"><%= t('.school-quality') %></p>
+        <p class="gs-offering-description"><%= t('.school-quality-text') %></p>
+      </div>
+      <div class="col-xs-12 col-md-4 gs-offering-col">
+        <%= image_tag image_path('home/supporting-advocacy.png') %>
+        <p class="gs-offering-title"><%= t('.supporting-advocacy') %></p>
+        <p class="gs-offering-description"><%= t('.supporting-advocacy-text') %></p>
+      </div>
+      <div class="col-xs-12 col-md-4 gs-offering-col">
+        <%= image_tag image_path('home/parenting-resources.png') %>
+        <p class="gs-offering-title"><%= t('.parenting-information') %></p>
+        <p class="gs-offering-description"><%= t('.parenting-information-text') %></p>
+      </div>
+    </div>
+
+    <div>
+      <a href="<%= about_path %>"><button class="learn-more blue-background"><%= t('.learn-more') %></button></a>
+    </div>
+
+    <div class="row highlights">
+      <div style="text-align: center;">
+        <p class="mission-text subtext"><%= t('.highlights') %></p>
+      </div>
+      <div class="col-xs-12 col-md-6 highlight">
+        <p class="small-upcase"><%= t('.school-quality') %></p>
+        <p class="highlight-title"><%= t('.gs-summary-rating_html') %></p>
+        <p class="highlight-text"><%= t('.gs-summary-rating-text') %></p>
+        <a href="<%= summary_rating_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+      </div>
+      <div class="col-xs-12 col-md-6 highlight-img-right">
+        <%= image_tag image_path('home/summary-rating.png'), class: "hidden-xs" %>
+      </div>
+    </div>
+
+    <div class="row highlights">
+      <div class="col-xs-12 col-md-6 highlight-img-right">
+        <%= image_tag image_path('home/research-reports.png'), class: "hidden-xs" %>
+      </div>
+      <div class="col-xs-12 col-md-6 highlight">
+        <p class="small-upcase"><%= t('.supporting-advocacy') %></p>
+        <p class="highlight-title"><%= t('.supporting-advocacy-title_html') %></p>
+        <p class="highlight-text"><%= t('.supporting-advocacy-text') %></p>
+        <a href="<%= research_reports_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+      </div>
+    </div>
+
+    <div class="row highlights">
+      <div class="col-xs-12 col-md-7 highlight">
+        <p class="small-upcase"><%= t('.parenting-information') %></p>
+        <p class="highlight-title"><%= t('.grade-by-grade-newsletters-title_html') %></p>
+        <p class="highlight-text"><%= t('.grade-by-grade-newsletters-text') %></p>
+        <a href="<%= grade_by_grade_newsletter_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+      </div>
+      <div class="col-xs-12 col-md-5 highlight-img-left">
+        <%= image_tag image_path('home/newsletters.png'), class: "hidden-xs" %>
+      </div>
+    </div>
+
   </div>
 </div>
-
