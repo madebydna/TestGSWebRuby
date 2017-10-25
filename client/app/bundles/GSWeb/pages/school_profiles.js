@@ -277,7 +277,7 @@ $(function() {
   GS.ad.addCompfilterToGlobalAdTargetingGon();
 
   try {
-    $('.neighborhood img[data-src]').unveil(300, function() {
+    $('.neighborhood-module img[data-src]').unveil(300, function() {
       $(this).width('100%')
     });
   } catch (e) {}
