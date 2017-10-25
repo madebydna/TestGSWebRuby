@@ -180,8 +180,7 @@ export default class CommunityFeedback extends React.Component {
   }
 
   renderFail() {
-    if (this.state.errors) {
-
+    if (typeof this.state.errors !== 'undefined') {
       return (
         <div style={{backgroundColor: 'red', color: 'white', fontFamily: 'opensans-regular', padding: '15px 10px'}}>
           {this.state.errors['11']}
@@ -189,7 +188,7 @@ export default class CommunityFeedback extends React.Component {
       );
 
     } else {
-      if (this.state.errorMessages[0]) {
+      if (typeof this.state.errorMessages !== 'undefined') {
         return (
           <div style={{backgroundColor: 'red', color: 'white', fontFamily: 'opensans-regular', padding: '15px 10px'}}>
             {this.state.errorMessages[0]}
@@ -298,7 +297,7 @@ export default class CommunityFeedback extends React.Component {
       showSubmitButton = this.submitButton();
     }
 
-    if (this.state.errors || this.state.errorMessages) {
+    if (!isEmpty(this.state.errors) || !isEmpty(this.state.errorMessages)) {
       headerMessage = this.renderFail();
     }
 
