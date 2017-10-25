@@ -60,11 +60,10 @@ describe RatingsCaching::RatingsCacher do
       it 'handles a race condition in school_metadata by trying again' do
         metadata_class = double('SchoolMetadata')
         metadata = double('SchoolMetadata')
-        expect(SchoolMetadata).to receive(:on_db).exactly(3).times.and_return metadata_class
+        expect(SchoolMetadata).to receive(:on_db).exactly(4).times.and_return metadata_class
         expect(metadata_class).to receive(:find_by).and_return nil
         expect(metadata_class).to receive(:create).and_raise(ActiveRecord::RecordNotUnique, 'foo')
         expect(metadata_class).to receive(:find_by).and_return metadata
-        expect(metadata).to receive(:update)
         subject
       end
 
