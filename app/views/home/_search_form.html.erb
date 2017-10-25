@@ -1,20 +1,21 @@
 <% unless defined?(searchClass) %>
-  <% searchClass = '' %>
+    <% searchClass = '' %>
 <% end %>
 
 <div class="ptm clearfix">
   <form name="schoolResultsSearchForm" class="js-schoolResultsSearchForm" action="/search/search.page" method="get">
-    <div class="input-group">
+    <div style="width: calc(100% - 60px);display: inline-block;">
       <input  type="text"
               name="locationSearchString"
               value="<%= @search_term %>"
               data-prev-search="<%= @search_term || '' %>"
               id=""
-              class='form-control typeahead search-text full-width pam <%= searchClass %>'
+              class='typeahead search-text full-width pam <%= searchClass %>'
               placeholder="<%= t('search.placeholder') %>">
-        <div class="input-group-btn" style="vertical-align:top">
-          <button type='submit' class="btn search-btn" style="height: 46px;"><span class="iconx24-icons i-24-search-white"></span></button>
-        </div>
+    </div>
+    <div class="input-group-btn un" style="vertical-align:top; border-top-right-radius: 4px; border-bottom-right-radius: 4px; display: inline-block; margin-left: -5px;">
+      <button type="submit" class="search_form_button">
+        <span class="search_icon_image_white"></span></button>
     </div>
   </form>
 </div>
