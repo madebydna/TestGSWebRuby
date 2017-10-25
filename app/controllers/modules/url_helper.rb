@@ -15,6 +15,14 @@ module UrlHelper
     end
   end
 
+  def ratings_path_for_lang
+    if I18n.locale == :es
+      ratings_spanish_path
+    else
+      ratings_path
+    end
+  end
+
   # This function should be used when you need to look up a parameter by its name.
   # To revert, use gs_legacy_url_decode
   def gs_legacy_url_encode(param)
