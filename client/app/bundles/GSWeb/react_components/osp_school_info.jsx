@@ -66,8 +66,8 @@ export default class OspSchoolInfo extends React.Component {
       return null;
     }
     return <div className={'tabs-panel tabs-panel_selected'}>
-      <ResponseData input={configForActiveTab.data} limit={this.props.has_osp_classes ? 0 : 1 } />
-      { !this.props.is_claimed && !this.props.has_osp_classes && <div><hr/>{ this.noDataCta() }</div> }
+      <ResponseData input={configForActiveTab.data} limit={(this.props.is_claimed && this.props.has_osp_classes) ? 0 : 1 } />
+      { !this.props.is_claimed && <div><hr/>{ this.noDataCta() }</div> }
     </div>
   }
 
