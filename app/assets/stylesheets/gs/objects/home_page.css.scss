@@ -66,7 +66,7 @@
     font-weight: 900;
     font-size: 1em;
     color: $gray-darkest;
-    padding: 30px 15px;
+    padding: 30px 15px 0 15px;
   }
 
   .mission-text.subtext {
@@ -95,9 +95,15 @@
     }
   }
 
-  .row.highlights {
+  .highlights-module {
     background-color: #f8f8f8;
+    padding-bottom: 25px;
+  }
+
+  .row.highlights {
     padding-top: 30px;
+     &:nth-child(2) {
+    }
     .highlight {
       text-align: left;
       padding: 60px 5% 0 11%;

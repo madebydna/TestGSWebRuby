@@ -90,44 +90,45 @@
       <a href="<%= about_path %>"><button class="learn-more blue-background"><%= t('.learn-more') %></button></a>
     </div>
 
-    <div class="row highlights">
-      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-        <p class="mission-text subtext"><%= t('.highlights') %>:</p>
+    <div class="highlights-module">
+      <div class="row highlights">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+          <p class="mission-text subtext"><%= t('.highlights') %>:</p>
+        </div>
+        <div class="col-xs-12 col-md-6 highlight">
+          <p class="small-upcase"><%= t('.school-quality') %></p>
+          <p class="highlight-title"><%= t('.gs-summary-rating_html') %></p>
+          <p class="highlight-text"><%= t('.gs-summary-rating-text') %></p>
+          <a href="<%= summary_rating_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+        </div>
+        <div class="col-xs-12 col-md-6 highlight-img-right">
+          <%= image_tag image_path('home/summary-rating.png') %>
+        </div>
       </div>
-      <div class="col-xs-12 col-md-6 highlight">
-        <p class="small-upcase"><%= t('.school-quality') %></p>
-        <p class="highlight-title"><%= t('.gs-summary-rating_html') %></p>
-        <p class="highlight-text"><%= t('.gs-summary-rating-text') %></p>
-        <a href="<%= summary_rating_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+
+      <div class="row highlights">
+        <div class="col-xs-12 col-md-6 highlight-img-right">
+          <%= image_tag image_path('home/research-reports.png') %>
+        </div>
+        <div class="col-xs-12 col-md-6 highlight">
+          <p class="small-upcase"><%= t('.supporting-advocacy') %></p>
+          <p class="highlight-title"><%= t('.supporting-advocacy-title_html') %></p>
+          <p class="highlight-text"><%= t('.supporting-advocacy-text') %></p>
+          <a href="<%= research_reports_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+        </div>
       </div>
-      <div class="col-xs-12 col-md-6 highlight-img-right">
-        <%= image_tag image_path('home/summary-rating.png') %>
+
+      <div class="row highlights">
+        <div class="col-xs-12 col-md-7 highlight">
+          <p class="small-upcase"><%= t('.parenting-information') %></p>
+          <p class="highlight-title"><%= t('.grade-by-grade-newsletters-title_html') %></p>
+          <p class="highlight-text"><%= t('.grade-by-grade-newsletters-text') %></p>
+          <a href="<%= grade_by_grade_newsletter_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
+        </div>
+        <div class="col-xs-12 col-md-5 highlight-img-left">
+          <%= image_tag image_path('home/newsletters.png') %>
+        </div>
       </div>
     </div>
-
-    <div class="row highlights">
-      <div class="col-xs-12 col-md-6 highlight-img-right">
-        <%= image_tag image_path('home/research-reports.png') %>
-      </div>
-      <div class="col-xs-12 col-md-6 highlight">
-        <p class="small-upcase"><%= t('.supporting-advocacy') %></p>
-        <p class="highlight-title"><%= t('.supporting-advocacy-title_html') %></p>
-        <p class="highlight-text"><%= t('.supporting-advocacy-text') %></p>
-        <a href="<%= research_reports_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
-      </div>
-    </div>
-
-    <div class="row highlights">
-      <div class="col-xs-12 col-md-7 highlight">
-        <p class="small-upcase"><%= t('.parenting-information') %></p>
-        <p class="highlight-title"><%= t('.grade-by-grade-newsletters-title_html') %></p>
-        <p class="highlight-text"><%= t('.grade-by-grade-newsletters-text') %></p>
-        <a href="<%= grade_by_grade_newsletter_path %>"><button class="learn-more white-background"><%= t('.learn-more') %></button></a>
-      </div>
-      <div class="col-xs-12 col-md-5 highlight-img-left">
-        <%= image_tag image_path('home/newsletters.png') %>
-      </div>
-    </div>
-
   </div>
 </div>
