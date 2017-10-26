@@ -31,10 +31,6 @@
     -webkit-user-select: none;
   }
 
-  .search-text {
-    color: #777;
-  }
-
   .search-btn:hover {
     background-color: #009edc;
     border-color: #2880b9;
@@ -57,86 +53,90 @@
       font-size: 32px;
     }
     @media (max-width: $screen-xs-max) {
-      font-size: 28px;
+      font-size: 30px;
     }
-  }
-
-  .mission-text {
-    font-family: "RobotoSlab-Light", sans-serif;
-    font-weight: 900;
-    font-size: 1em;
-    color: $gray-darkest;
-    padding: 30px 15px 0 15px;
-  }
-
-  .mission-text.subtext {
-    font-family: "RobotoSlab-Light", sans-serif;
-    font-size: .8em;
-    padding: 15px 0;
-  }
-  .gs-offering {
-    margin: 20px 0 30px 0;
-    padding: 0 8%;
-    text-align: left;
-    .gs-offering-col {
-      padding: 0 2%;
-    }
-    .gs-offering-title {
+    .mission-text {
       font-family: "RobotoSlab-Light", sans-serif;
-      font-size: .65em;
-      color: $gray-darker;
+      font-weight: 900;
+      font-size: 1em;
+      color: $gray-darkest;
+      padding: 30px 15px 0 15px;
     }
-    .gs-offering-description {
-      line-height: 1.8em;
-      font-size: .42em;
+    .mission-text.subtext {
+      font-family: "RobotoSlab-Light", sans-serif;
+      font-size: .8em;
+      padding: 15px 0;
     }
-    @media (max-width: $screen-sm-min) {
-      margin-top: 10px;
+    .our-work-module {
+      margin: 20px 0 30px 0;
+      padding: 0 8%;
+      .our-work-block {
+        padding: 0 2%;
+        p:nth-child(2) {
+          font-family: "RobotoSlab-Light", sans-serif;
+          font-size: .65em;
+          color: $gray-darker;
+        }
+        p:nth-child(3) {
+          line-height: 1.8em;
+          font-size: .44em;
+        }
+      }
+      @media (max-width: $screen-sm-min) {
+        margin-top: 10px;
+      }
+      .row { text-align: center; }
+      .row:nth-child(3) {
+        text-align: left;
+      }
     }
   }
 
   .highlights-module {
     background-color: #f8f8f8;
     padding-bottom: 25px;
-  }
-
-  .row.highlights {
-    padding-top: 30px;
-     &:nth-child(2) {
-    }
-    .highlight {
+    .row {
       text-align: left;
-      padding: 60px 5% 0 11%;
-      @media (max-width: 420px) {
-        padding: 0px 5% 0 11%;
+      padding: 60px 0 0 9%;
+      @media (max-width: 990px) {
+        padding: 0 5% 0 11%;
       }
-      .highlight-title {
-        font-size: .65em;
-        line-height: 1.2em;
-        margin: 12px 0 15px 0;
+      div {
+        p:first-child {
+          text-transform: uppercase;
+          font-size: .35em;
+          color: #8A90A0;
+        }
+        p:nth-child(2) {
+          font-size: .65em;
+          line-height: 1.2em;
+          margin: 12px 0 15px 0;
+        }
+        p:nth-child(3) {
+          font-size: .44em;
+          line-height: 1.8em;
+          margin-bottom: 25px;
+        }
+        img {
+          display: inline-block;
+          width: 550px;
+          @media (max-width: 990px) {
+            display: none;
+          }
+        }
       }
-      .highlight-text {
-        font-size: .42em;
-        line-height: 1.8em;
-        margin-bottom: 25px;
+      div.highlights-module-text {
+        padding-top: 30px;
+        @media (max-width: 990px) {
+          padding-top: 0;
+        }
       }
-    }
-    img {
-      display: inline-block;
-      @media (max-width: 769px) {
-        display: none;
+      .pull-right {
+        text-align: right;
+        padding: 0;
       }
-    }
-    .highlight-img-right {
-      text-align: right;
-      padding-right: 0;
-    }
-    .highlight-img-left {
-      text-align: left;
-      padding-left: 0;
     }
   }
-
 
 
   .learn-more {
@@ -147,7 +147,7 @@
     font-size: 14px;
     margin-bottom: 60px;
     @media (max-width: 420px) {
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
   }
 
@@ -160,12 +160,6 @@
     border-color: #0aa8e4;
     color: #0aa8e4;
     background-color: white;
-  }
-
-  .small-upcase {
-    text-transform: uppercase;
-    font-size: .35em;
-    color: #8A90A0;
   }
 
   .darken {
@@ -185,3 +179,6 @@
 }
 
 
+.gs-bootstrap .row {
+  margin-right: 0 !important;
+}
