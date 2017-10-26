@@ -48,13 +48,13 @@
   }
 
   .below-hero {
-    font-size: 36px;
+    font-size: 34px;
     text-align: center;
     @media (max-width: $screen-md-max) {
-      font-size: 36px;
+      font-size: 34px;
     }
     @media (max-width: $screen-sm-max) {
-      font-size: 36px;
+      font-size: 32px;
     }
     @media (max-width: $screen-xs-max) {
       font-size: 28px;
@@ -62,11 +62,11 @@
   }
 
   .mission-text {
-    font-family: "RobotoSlab-Bold", sans-serif;
+    font-family: "RobotoSlab-Light", sans-serif;
     font-weight: 900;
     font-size: 1em;
     color: $gray-darkest;
-    padding: 30px 0px 0px;
+    padding: 30px 15px;
   }
 
   .mission-text.subtext {
@@ -76,7 +76,7 @@
   }
   .gs-offering {
     margin: 20px 0 30px 0;
-    padding: 0 12%;
+    padding: 0 8%;
     text-align: left;
     .gs-offering-col {
       padding: 0 2%;
@@ -88,7 +88,7 @@
     }
     .gs-offering-description {
       line-height: 1.8em;
-      font-size: .4em;
+      font-size: .42em;
     }
     @media (max-width: $screen-sm-min) {
       margin-top: 10px;
@@ -100,9 +100,9 @@
     padding-top: 30px;
     .highlight {
       text-align: left;
-      padding: 60px 5% 0 14%;
+      padding: 60px 5% 0 11%;
       @media (max-width: 420px) {
-        padding: 0px 5% 0 14%;
+        padding: 0px 5% 0 11%;
       }
       .highlight-title {
         font-size: .65em;
@@ -110,13 +110,16 @@
         margin: 12px 0 15px 0;
       }
       .highlight-text {
-        font-size: .4em;
+        font-size: .42em;
         line-height: 1.8em;
         margin-bottom: 25px;
       }
     }
     img {
       display: inline-block;
+      @media (max-width: 769px) {
+        display: none;
+      }
     }
     .highlight-img-right {
       text-align: right;
@@ -174,3 +177,5 @@
     }
   }
 }
+
+
