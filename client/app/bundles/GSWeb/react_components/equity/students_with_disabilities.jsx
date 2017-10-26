@@ -5,6 +5,7 @@ import ModuleTab from 'react_components/school_profiles/module_tab';
 import CommunityFeedback from 'react_components/school_profiles/community_feedback';
 import ShareYourFeedbackCta from 'react_components/school_profiles/share_your_feedback_cta';
 import ModuleSubTab from "../school_profiles/module_sub_tab";
+import { scrollToElement } from '../../util/scrolling';
 
 export default class StudentsWithDisabilities extends SchoolProfileComponent {
 
@@ -32,6 +33,7 @@ export default class StudentsWithDisabilities extends SchoolProfileComponent {
     this.setState({
       active: this.filteredData().length
     });
+    scrollToElement('.icon-disability-2');
   }
 
   activePane() {
