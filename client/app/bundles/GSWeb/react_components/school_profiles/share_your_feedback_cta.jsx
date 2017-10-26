@@ -14,7 +14,7 @@ const ShareYourFeedbackCta = ({questionText, buttonClicked}) => {
         <span className="speech-bubble left">{questionText}</span>
       </p>
       <div className="actions">
-        <AnchorButton href="javascript:void(0)" onClick={buttonClicked}>Answer</AnchorButton>
+        <AnchorButton href="javascript:void(0)" onClick={buttonClicked} style={{display: 'inline-block'}} className="clearfix">Answer</AnchorButton>
         <ConnectedReviewDistributionModal
           question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
           questionId={11}
