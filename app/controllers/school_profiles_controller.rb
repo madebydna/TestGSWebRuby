@@ -7,6 +7,10 @@ class SchoolProfilesController < ApplicationController
   layout "application"
   PAGE_NAME = "GS:SchoolProfile:SinglePage"
 
+  set_additional_js_translations(
+    osp_school_info: [:school_profiles, :osp_school_info]
+  )
+
   def show
     @school = school
     set_last_school_visited
@@ -75,10 +79,7 @@ class SchoolProfilesController < ApplicationController
         sp.teachers_staff = teachers_staff
         sp.show_high_school_data = show_high_school_data?
         sp.courses = courses
-        sp.tab_config = osp_school_info.tab_config
-        sp.qualaroo_module_link = osp_school_info.qualaroo_module_link
-        sp.source_name = osp_school_info.source_name
-        sp.mailto = osp_school_info.mailto
+        sp.osp_school_info = osp_school_info
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
         sp.academic_progress = academic_progress
@@ -98,12 +99,9 @@ class SchoolProfilesController < ApplicationController
       psp.neighborhood = neighborhood
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
-      psp.tab_config = osp_school_info.tab_config
-      psp.qualaroo_module_link = osp_school_info.qualaroo_module_link
+      psp.osp_school_info = osp_school_info
       psp.school = school
-      psp.source_name = osp_school_info.source_name
       psp.claimed = hero.school_claimed?
-      psp.mailto = osp_school_info.mailto
     end
     )
   end
