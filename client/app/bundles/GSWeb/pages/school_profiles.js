@@ -127,6 +127,10 @@ $(function() {
     return false;
   });
 
+  $('body').on('click', '.js-subtopicAnswerButton', function () {
+    analyticsEvent('Profile', 'Answer', '11');
+  });
+
   function popupCenter(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
