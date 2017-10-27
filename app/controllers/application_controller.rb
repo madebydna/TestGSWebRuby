@@ -65,8 +65,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def asset_path(file)
-    ActionController::Base.helpers.asset_path(file)
+  def asset_url(file)
+    ActionController::Base.helpers.asset_url(file)
   end
 
   def host
