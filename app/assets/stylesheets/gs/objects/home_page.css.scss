@@ -132,6 +132,9 @@
           @media (max-width: 990px) {
             display: none;
           }
+          @media (max-width: 1206px) {
+            width: 450px;
+          }
         }
       }
       div.highlights-module-text {
