@@ -116,7 +116,7 @@ module SchoolProfiles
     end
 
     def visible?
-      has_data? && @school.includes_level_code?(%w(e m))
+      has_data? && @school.includes_level_code?(%w(e m h))
     end
 
     protected
