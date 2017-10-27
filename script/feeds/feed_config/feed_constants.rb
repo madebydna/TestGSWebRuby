@@ -15,7 +15,9 @@ module Feeds
           'test_subgroup' => 'local-gs-test-subgroup-feed',
           'test_rating' => 'local-gs-test-rating-feed',
           'official_overall' => 'local-gs-official-overall-rating-feed',
-          'official_overall' => 'local-greatschools-feed'
+          'directory_feed' => 'local-greatschools-feed',
+          'google_feed' => 'local-google-feed'
+
       }
 
       RATINGS_ID_RATING_FEED_MAPPING = {
@@ -34,20 +36,21 @@ module Feeds
           'test_subgroup' => 'http://www.greatschools.org/feeds/greatschools-test-subgroup.xsd',
           'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
           'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
-          'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd'
+          'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
+          'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd'
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
           'test_subgroup' => 'gs-test-subgroup-feed',
           'test_rating' => 'gs-test-rating-feed',
           'official_overall' => 'gs-official-overall-rating-feed',
-          'directory_feed' => 'gs-local-feed'
+          'directory_feed' => 'gs-local-feed',
+          'google_feed' => 'listings'
       }
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
 
       ENTITY_TYPE_SCHOOL = 'school'
-
 
       ENTITY_TYPE_DISTRICT = 'district'
 
@@ -71,21 +74,25 @@ module Feeds
       CHARACTERISTICS_MAPPING = [
           {
               key: 'Student teacher ratio',
-              method: 'student_teacher_ratio'
+              method: 'student_teacher_ratio',
+              google_key: 'Student teacher ratio'
           },
           {
               key: 'Head official name',
               method: 'straight_text_value',
-              data_type: 'head-official-name'
+              data_type: 'head-official-name',
+              google_key: 'Head Official Name'
           },
           {
               key: 'Head official email address',
               method: 'straight_text_value',
-              data_type: 'head-official-email'
+              data_type: 'head-official-email',
+              google_key: 'Head Official Email'
           },
           {
               key: 'Enrollment',
-              method: 'enrollment'
+              method: 'enrollment',
+              google_key: 'Enrollment'
           },
           # {
           #     key: 'Membership',
@@ -117,85 +124,102 @@ module Feeds
           # },
           {
               key: 'Students participating in free or reduced-price lunch program',
-              method: 'free_or_reduced_lunch_program'
+              method: 'free_or_reduced_lunch_program',
+              google_key: 'Percent qualifying for free or reduced lunch'
           },
           {
               key: 'Average years of teacher experience',
               method: 'teacher_data',
-              data_type: 'average teacher experience years'
+              data_type: 'average teacher experience years',
+              google_key: 'Average years of teacher experience'
           },
           {
               key: 'Average years of teaching in district',
               method: 'teacher_data',
-              data_type: 'average years teaching in district'
+              data_type: 'average years teaching in district',
+              google_key: 'Average years of teaching in district'
           },
           {
               key: 'Percent classes taught by highly qualified teachers',
               method: 'teacher_data',
-              data_type: 'percent classes taught by highly qualified teachers'
+              data_type: 'percent classes taught by highly qualified teachers',
+              google_key: 'Percent classes taught by highly qualified teachers'
           },
           {
               key: 'Percent classes taught by non-highly qualified teachers',
               method: 'teacher_data',
-              data_type: 'percent classes taught by non highly qualified teachers'
+              data_type: 'percent classes taught by non highly qualified teachers',
+              google_key: 'Percent classes taught by non-highly qualified teachers'
           },
           {
               key: 'Percentage of teachers in their first year',
               method: 'teacher_data',
-              data_type: 'percent teachers in first year'
+              data_type: 'percent teachers in first year',
+              google_key: 'Percentage of teachers in their first year'
           },
           {
               key: 'Teaching experience 0-3 years',
               method: 'teacher_data',
-              data_type: 'percent teachers with 3 years or less experience'
+              data_type: 'percent teachers with 3 years or less experience',
+              google_key: 'Teaching experience 0-3 years'
           },
           {
               key: 'at least 5 years teaching experience',
               method: 'teacher_data',
-              data_type: 'percent teachers with at least 5 years experience'
+              data_type: 'percent teachers with at least 5 years experience',
+              google_key: 'at least 5 years teaching experience'
           },
           {
               key: "Bachelor's degree",
               method: 'teacher_data',
-              data_type: 'percent teachers with bachelors degree'
+              data_type: 'percent teachers with bachelors degree',
+              google_key: "Bachelor's degree"
           },
           {
               key: "Doctorate's degree",
               method: 'teacher_data',
-              data_type: 'percent teachers with doctorate degree'
+              data_type: 'percent teachers with doctorate degree',
+              google_key: "Doctorate's degree"
           },
           {
               key: "Master's degree",
               method: 'teacher_data',
-              data_type: 'percent teachers with masters degree'
+              data_type: 'percent teachers with masters degree',
+              google_key: "Master's degree"
           },
           {
               key: "Master's degree or higher",
               method: 'teacher_data',
-              data_type: 'percent teachers with masters or higher'
+              data_type: 'percent teachers with masters or higher',
+              google_key: "Master's degree or higher"
           },
           {
               key: 'Teachers with valid license',
               method: 'teacher_data',
-              data_type: 'percent teachers with valid license'
+              data_type: 'percent teachers with valid license',
+              google_key: 'Teachers with valid license'
           },
           {
               key: 'Teachers with no valid license',
               method: 'teacher_data',
-              data_type: 'percent teachers with no valid license'
+              data_type: 'percent teachers with no valid license',
+              google_key: 'Teachers with no valid license'
           },
           {
               key: 'Other degree',
               method: 'teacher_data',
-              data_type: 'percent teachers with other degree'
+              data_type: 'percent teachers with other degree',
+              google_key: 'Other degree'
           },
           {
               key: 'English learners',
-              method: 'students_with_limited_english_proficiency'
+              method: 'students_with_limited_english_proficiency',
+              google_key: 'Percentage of students with limited english proficiency'
           },
           {
               key: 'Students who are economically disadvantaged',
-              method: 'percent_economically_disadvantaged'
+              method: 'percent_economically_disadvantaged',
+              google_key: 'Percentage of students who are economically disadvantaged'
           },
           # {
           #     key: 'Per Pupil Spending',
@@ -219,12 +243,13 @@ module Feeds
           # },
           {
               key: 'Ethnicity',
-              method: 'ethnicity'
+              method: 'ethnicity',
+              google_key: 'Ethnicity'
           }
       ].freeze
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall, directory_feed)
+        %w(test_scores test_subgroup test_rating official_overall directory_feed)
       end
 
       def all_states

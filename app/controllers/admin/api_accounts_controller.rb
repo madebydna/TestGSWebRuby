@@ -2,9 +2,11 @@ class Admin::ApiAccountsController < ApplicationController
   before_action :find_account, only: [:edit, :update, :destroy, :create_api_key]
   layout 'admin'
 
+  OFFSET = 100
+
   def index
-    display_selected_api_accounts
-    @pagination_link_count = api_account_size/100 + 1
+    @api_accounts = selected_api_accounts
+    @pagination_link_count = api_account_size/OFFSET + 1
   end
 
   def new
@@ -51,6 +53,7 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def register
+    build_gon_object
     @api_account = ApiAccount.new
   end
 
@@ -72,6 +75,10 @@ class Admin::ApiAccountsController < ApplicationController
 
   private
 
+  def build_gon_object
+    data_layer_gon_hash.merge!({ 'page_name' => 'GS:API:LandingPage', 'GS User Type' => 'API' })
+  end
+
   def find_account
     @api_account = ApiAccount.find(params[:id])
   end
@@ -91,20 +98,22 @@ class Admin::ApiAccountsController < ApplicationController
   end
 
   def fetch_one_page_of_api_accounts(offset)
-    ApiAccount.offset(offset).limit(100)
+    ApiAccount.offset(offset).limit(OFFSET)
   end
 
   def api_account_size
     @_membership_size ||= ApiAccount.count
   end
 
-  def display_selected_api_accounts
+  def selected_api_accounts
     # This is the main pagination method for this page. It tries to load the right api accounts based on the value of
-    # params[:start].  If that value is out-of-bounds, it defaults to the first 100 accounts.
-    if params[:start] && params[:start].to_i.between?(0, api_account_size)
-      @api_accounts = fetch_one_page_of_api_accounts((params[:start].to_i/100)*100)
+    # params[:start].  If that value is out-of-bounds, it defaults to the first 100 accounts. ?all=true loads everything
+    if params[:all] == 'true'
+      ApiAccount.all
+    elsif params[:start] && params[:start].to_i.between?(0, api_account_size)
+      fetch_one_page_of_api_accounts((params[:start].to_i/OFFSET)*OFFSET)
     else
-      @api_accounts = fetch_one_page_of_api_accounts(0)
+      fetch_one_page_of_api_accounts(0)
     end
   end
 

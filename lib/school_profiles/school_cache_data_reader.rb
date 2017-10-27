@@ -179,21 +179,22 @@ module SchoolProfiles
       end
     end
 
-    def fetch_date_from_weight
-      # Pulls all of the weight data, selects the associated timestamps, and picks the most recent
-      rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
-      return nil if rating_weight_hash.empty?
-      source_dates = rating_weight_hash.values.map {|weight_data| weight_data.first['source_date_valid']}
-      source_dates.map! {|dt_string| build_time_object(dt_string)}
-      format_date source_dates.compact.max
+    def decorated_gsdata_data(key)
+      Array.wrap(decorated_school.gsdata.slice(key)[key])
+        .map { |h| GsdataCaching::GsDataValue.from_hash(h) }
+        .extend(GsdataCaching::GsDataValue::CollectionMethods)
+    end
+
+    def course_enrollment
+      decorated_gsdata_data('Course Enrollment')
     end
 
     def rating_weights
       rating_weight_hash = decorated_school.gsdata.select {|key, val| key.include?('Summary Rating Weight')}
       return nil if rating_weight_hash.empty?
       rating_weight_hash.values.map  do |weight_data|
-        return nil if (weight_data.first.nil? || weight_data.first['school_value'].nil?)
-        ((weight_data.first['school_value'].to_f)*100).round
+        return nil if (weight_data.all? {|hash| hash.nil? || hash['school_value'].nil?})
+        ((weight_data.max_by {|dh| dh['source_date_valid']}['school_value'].to_f)*100).round
       end
     end
 

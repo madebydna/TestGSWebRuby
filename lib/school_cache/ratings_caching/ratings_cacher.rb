@@ -39,7 +39,10 @@ class RatingsCaching::RatingsCacher < Cacher
     begin
       existing_row = SchoolMetadata.on_db("#{state}_rw").find_by(school_id: school_id, meta_key: 'overallRating')
       if existing_row
-        existing_row.update(meta_value: rating.to_s)
+        SchoolMetadata.on_db("#{state}_rw") do
+          query = "UPDATE #{table_name_prefix(state)}school_metadata SET meta_value='#{rating.to_s}' WHERE school_id=#{school_id} AND meta_key='overallRating';"
+          SchoolMetadata.connection.execute(query)
+        end
       else
         SchoolMetadata.on_db("#{state}_rw").create(school_id: school_id, meta_key: 'overallRating', meta_value: rating.to_s)
       end

@@ -2,6 +2,7 @@
 en:
   user_email_preferences:
     email_preferences:
+      school_updates: 'School updates:'
       auto_graduate_label: Next school year, we will automatically move you up a grade.
       email_heading: Email address
       grades_label: You are currently signed up for the following grades. Update anytime.

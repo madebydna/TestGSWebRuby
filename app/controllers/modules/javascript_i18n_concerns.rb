@@ -1,6 +1,16 @@
 module JavascriptI18nConcerns
   extend ActiveSupport::Concern
 
+  class_methods do
+    def set_additional_js_translations(hash)
+      @additional_js_translations = hash
+    end
+
+    def additional_js_translations
+      @additional_js_translations
+    end
+  end
+
   protected
 
   def add_configured_translations_to_js
@@ -26,7 +36,11 @@ module JavascriptI18nConcerns
     # ensure backend initialization for backends that support lazy initialization
     I18n.backend.send(:init_translations) if I18n.backend.respond_to?(:initialized?) && ! I18n.backend.initialized?
     translations = I18n.backend.send(:translations)
-    translations.seek(I18n.locale, :javascript) || {}
+    result = translations.seek(I18n.locale, :javascript)
+    (self.class.additional_js_translations || {}).each do |key, scope|
+      result = result.merge(key => translations.seek(I18n.locale, *scope)) 
+    end
+    result
   end
 
   def add_translation_to_js(key, value)

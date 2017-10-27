@@ -42,7 +42,7 @@ export default class Question extends React.Component {
   }
 
   handleTextBlur() {
-    if (! this.props.textValue || this.props.textValue == '') {
+    if ((! this.props.textValue || this.props.textValue == '') && this.state.textValue) {
       this.setState(
         {
           shouldDisplayTextArea: false,

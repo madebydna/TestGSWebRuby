@@ -7,8 +7,7 @@
     <%= form_tag(user_preferences_update_path, method: :post, class:"rs-preferences-form") do |f| %>
       <h1 class="tac font-size-large">
         <%= t('.heading') %>
-        <%= t('.newsletter_preferences') %> |
-        <%= link_to(t('.email_updates'), manage_account_path, class: 'font-size-large') %></h1>
+        <%= t('.newsletter_preferences') %></h1>
       <h2 class="tac open-sans font-size-large"><strong><%= t('.subheading_pt_1') %> </strong> <%= t('.subheading_pt_2') %></h2>
 
       <p class="tac"><strong> <%= t('.email_heading') %>: </strong><%= @current_user.email if logged_in? %></p>
@@ -64,6 +63,19 @@
         </div>
       </div>
 
+      <div class="mtm">
+        <% @mss_subscriptions.each do |subscription| %>
+          <div class="fl prm mts">
+            <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
+              <input name="subscription_ids_to_remove[]" disabled="true" type="hidden" value="<%= subscription.id %>">
+            </div>
+          </div>
+          <div style="overflow:hidden">
+            <%= t('.school_updates') %> <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
+          </div>
+          <div class="clearfix"></div>
+        <% end %>
+      </div>
 
       <div class="mtm">
         <div class="fl prm mtm">

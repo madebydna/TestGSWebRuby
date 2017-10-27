@@ -122,30 +122,59 @@ module SchoolProfiles
     end
 
     def tab_config
-      return nil if osp_school_cache_data.blank?
-      tab_config = [
-          {
+      @_tab_config ||= (
+        tab_config = []
+        if claimed?
+          tab_config += [
+            {
+              key: :overview,
               title: data_label(:overview),
               data: osp_school_datas(*OVERVIEW_CACHE_KEYS)
-          },
-          {
-              title: data_label(:Enrollment),
-              data: osp_school_datas(*ENROLLMENT_CACHE_KEYS)
-          }
-      ]
-      unless @school.level_code == 'p'
-        tab_config.push(
-            {
-                title: data_label(:classes),
-                data: osp_school_datas(*CLASSES_CACHE_KEYS)
             },
             {
+              key: :enrollment,
+              title: data_label(:Enrollment),
+              data: osp_school_datas(*ENROLLMENT_CACHE_KEYS)
+            }
+          ]
+        end
+        unless @school.preschool?
+          if show_non_osp_classes?
+            tab_config << {
+                key: :classes,
+                title: data_label(:classes),
+                data: courses_props
+            }
+          elsif claimed?
+            tab_config << {
+                key: :classes,
+                title: data_label(:classes),
+                data: osp_school_datas(*CLASSES_CACHE_KEYS)
+            }
+          end
+
+          if claimed?
+            tab_config << {
+                key: :sports_and_clubs,
                 title: data_label(:sports_and_clubs),
                 data: osp_school_datas(*SPORTS_CLUBS_CACHE_KEYS)
             }
-        )
-      end
-      tab_config
+          end
+        end
+        tab_config
+      )
+    end
+
+    def has_osp_classes?
+      osp_school_datas(*CLASSES_CACHE_KEYS).reject { |h| h[:response_value].include?('Data not provided by the school') }.present?
+    end
+
+    def has_non_osp_classes?
+      courses_props.present?
+    end
+
+    def show_non_osp_classes?
+      has_non_osp_classes? && (!claimed? || !has_osp_classes?)
     end
 
     def response_label(response_key, response_value)
@@ -178,10 +207,6 @@ module SchoolProfiles
           Array(NO_DATA_TEXT)
         end
       end
-    end
-
-    def source_name
-      data_label(SCHOOL_ADMIN)
     end
 
     def administrators_email_and_name
@@ -237,6 +262,46 @@ module SchoolProfiles
       end
 
       "mailto:#{recipient_email}?subject=#{subject}&body=#{body}"
+    end
+
+    def claimed?
+      school.claimed?
+    end
+
+    def courses_by_subject
+      @_courses_by_subject ||= school_cache_data_reader
+        .course_enrollment
+        .expand_on_breakdown_tags
+        .having_breakdown_tag_matching(/_index$/)
+        .group_by_breakdown_tag
+    end
+
+    def sources
+      tab_config.map do |h|
+        source = {
+            heading: h[:title]
+        }
+        if h[:key] == :classes && show_non_osp_classes?
+          subjects_and_years = courses_by_subject.values.flatten.map { |o| {name: o.source_name, year: o.source_year} }.uniq
+          source[:names] = subjects_and_years.map { |h| h[:name] }
+          source[:years] = subjects_and_years.map { |h| h[:year] }
+        else
+          source[:names] = [data_label(SCHOOL_ADMIN)]
+          source[:years] = [nil]
+        end
+        source
+      end
+    end
+
+    # Quite a bit easier to just stuff courses data into existing
+    # react component prop structure for the time being
+    def courses_props
+      courses_by_subject.reduce([]) do |array, (subject, courses)|
+        array << {
+          response_key: I18n.t(subject, scope: 'lib.advanced_courses'),
+          response_value: courses.map  { |h| h.breakdowns }
+        }
+      end
     end
   end
 end

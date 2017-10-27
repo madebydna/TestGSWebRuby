@@ -7,6 +7,10 @@ class SchoolProfilesController < ApplicationController
   layout "application"
   PAGE_NAME = "GS:SchoolProfile:SinglePage"
 
+  set_additional_js_translations(
+    osp_school_info: [:school_profiles, :osp_school_info]
+  )
+
   def show
     @school = school
     set_last_school_visited
@@ -75,10 +79,7 @@ class SchoolProfilesController < ApplicationController
         sp.teachers_staff = teachers_staff
         sp.show_high_school_data = show_high_school_data?
         sp.courses = courses
-        sp.tab_config = osp_school_info.tab_config
-        sp.qualaroo_module_link = osp_school_info.qualaroo_module_link
-        sp.source_name = osp_school_info.source_name
-        sp.mailto = osp_school_info.mailto
+        sp.osp_school_info = osp_school_info
         sp.claimed = hero.school_claimed?
         sp.stem_courses = stem_courses
         sp.academic_progress = academic_progress
@@ -98,12 +99,9 @@ class SchoolProfilesController < ApplicationController
       psp.neighborhood = neighborhood
       psp.toc = toc # TODO - do we want something like a toc_private method? probably...
       psp.breadcrumbs = breadcrumbs
-      psp.tab_config = osp_school_info.tab_config
-      psp.qualaroo_module_link = osp_school_info.qualaroo_module_link
+      psp.osp_school_info = osp_school_info
       psp.school = school
-      psp.source_name = osp_school_info.source_name
       psp.claimed = hero.school_claimed?
-      psp.mailto = osp_school_info.mailto
     end
     )
   end
@@ -266,7 +264,8 @@ class SchoolProfilesController < ApplicationController
     if school.present?
       gon.school = {
         :id => school.id,
-        :state => school.state
+        :state => school.state,
+        :test_scores_only => summary_rating.test_scores_only?
       }
     end
   end
@@ -297,7 +296,7 @@ class SchoolProfilesController < ApplicationController
   end
 
   def add_gon_ad_set_targeting
-    if school.show_ads
+    if advertising_enabled?
       # City, compfilter, county, env, gs_rating, level, school_id, State, type, zipcode, district_id, template
       # @school.city.delete(' ').slice(0,10)
       page_view_metadata.each do |key, value|
@@ -333,8 +332,8 @@ class SchoolProfilesController < ApplicationController
                       description: "We're an independent nonprofit that provides parents with in-depth school quality information.",
                       site_name: 'GreatSchools.org',
                       image: {
-                          url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
-                          secure_url: ActionController::Base.helpers.asset_path('assets/share/logo-ollie-large.png'),
+                          url: asset_url('assets/share/logo-ollie-large.png'),
+                          secure_url: asset_url('assets/share/logo-ollie-large.png'),
                           height: 600,
                           width: 1200,
                           type: 'image/png',
@@ -343,6 +342,12 @@ class SchoolProfilesController < ApplicationController
                       },
                       type: 'place',
                       url: school_url(school)
+                  },
+                  twitter: {
+                      image: asset_url('assets/share/logo-ollie-large.png'),
+                      card: 'Summary',
+                      site: '@GreatSchools',
+                      description: "We're an independent nonprofit that provides parents with in-depth school quality information."
                   }
   end
 

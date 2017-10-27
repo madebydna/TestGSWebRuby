@@ -16,12 +16,22 @@ class HomeController < ApplicationController
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
     set_meta_tags title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
                   og: {
-                      title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
-                      type: 'website',
-                      url: home_url,
-                      site_name: 'GreatSchools'
+                      title: "K-12 school quality information and parenting resources.",
+                      description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",
+                      site_name: 'GreatSchools.org',
+                      image: {
+                        url: asset_url('assets/share/logo-ollie-large.png'),
+                        secure_url: asset_url('assets/share/logo-ollie-large.png'),
+                        height: 600,
+                        width: 1200,
+                        type: 'image/png',
+                        alt: 'GreatSchools is a non profit organization providing school quality information'
+                      },
+                      type: 'place',
+                      url: home_url
                   },
                   twitter: {
+                      image: asset_url('assets/share/logo-ollie-large.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
                       description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'
@@ -30,11 +40,6 @@ class HomeController < ApplicationController
     set_omniture_pagename
     gon.pagename = "Homepage"
 
-    begin
-      @greatkids_content = greatkids_content
-    rescue => e
-      GSLogger.error(:external_content_fetcher, e, {message: 'Unexpected exception retrieving greatkids content for homepage'})
-    end
   end
 
   def set_omniture_pagename

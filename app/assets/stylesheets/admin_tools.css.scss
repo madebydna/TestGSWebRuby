@@ -96,6 +96,16 @@
     }
     input[type="submit"] { margin-top: 40px;}
   }
+  .api-account-links {
+    margin: 30px 0 10px 0;
+  }
+  .api-accounts {
+    margin-bottom: 40px;
+    thead {
+      background: #777878;
+      color: white;
+    }
+  }
 }
 
 @media (min-width: 1200px) {

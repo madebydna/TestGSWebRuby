@@ -1,10 +1,13 @@
-
+<% content_for :head do %><title>GS API Account Moderation</title><% end %>
 <h3>Api Accounts</h3>
+<div class="api-account-links">
+  <%= link_to 'Create new account', new_admin_api_account_path %> &nbsp; | &nbsp;
+  <%= link_to 'View all', admin_api_accounts_path(all: true) %> &nbsp; | &nbsp;
+  <%= link_to 'Paginate', admin_api_accounts_path %>
+</div>
 
-<%= link_to 'Create new account', new_admin_api_account_path, style: "margin-top: 30px; display: inline-block;" %>
-
-<table class="table table-striped" style="margin-bottom: 40px;">
-  <thead style="background: #777878; color: white;">
+<table class="api-accounts table table-striped">
+  <thead>
   <tr>
     <th>Name</th>
     <th>Organization</th>
@@ -26,7 +29,9 @@
   </tbody>
 </table>
 
-<%= render 'pagination_links' %>
+<% unless params[:all] == 'true' %>
+  <%= render 'pagination_links' %>
+<% end %>
 
 
 

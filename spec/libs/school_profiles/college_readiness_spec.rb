@@ -208,7 +208,7 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       describe 'In states with new ranges' do
-        [:ca, :mi, :nj, :ct].each do |state|
+        [:ca, :mi, :nj, :ct, :co].each do |state|
           describe "like #{state}" do
             before do
               allow(school).to receive(:state).and_return(state)

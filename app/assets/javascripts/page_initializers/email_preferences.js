@@ -11,6 +11,11 @@ $(function() {
 
       $formContainer.find('form').on('submit', function() {
         var $form = $(this);
+
+        $form.find('.js-inverted-checkbox').each(function() {
+          $(this).toggleClass('active');
+        });
+        
         $form.find('div.active input').each(function() {
           $(this).prop('disabled', false);
         });

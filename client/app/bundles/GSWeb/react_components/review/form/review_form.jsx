@@ -7,7 +7,7 @@ import { t } from '../../../util/i18n';
 import { isSignedIn } from '../../../util/session';
 import { getCurrentSession } from 'api_clients/session';
 import modalManager from '../../../components/modals/manager';
-import { forOwn, each, reduce, isEmpty } from 'lodash';
+import { forOwn, each, isEmpty } from 'lodash';
 import { postReview } from 'api_clients/reviews';
 
 export default class ReviewForm extends React.Component {
@@ -248,7 +248,9 @@ export default class ReviewForm extends React.Component {
 
   validateForm() {
    var selectedResponses = this.state.selectedResponses;
-   var errorMessages = reduce(selectedResponses, this.validateResponse, {});
+   var errorMessages = Object.keys(selectedResponses).reduce((accum, questionId) => {
+     return this.validateResponse(accum, selectedResponses[questionId], questionId)
+   }, {});
    var formValid = isEmpty(errorMessages);
     this.setState ({
       errorMessages: errorMessages,

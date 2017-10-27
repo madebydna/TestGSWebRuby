@@ -172,6 +172,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/levels/high-school/', as: :gk_levels_high_school
     get '/gk/cue-cards/', as: :gk_cue_cards
     get '/gk/levels/high-school-es/', as: :gk_levels_high_school_es
+    get '/gk/summary-rating/', as: :summary_rating
+    get '/gk/grade-by-grade-newsletter/', as: :grade_by_grade_newsletter
+    get '/gk/about/research-reports/', as: :research_reports
 
     get '/gk/articles/imagining-your-ideal-school-set-your-priorities/', as: :ideal_school
     get '/gk/articles/redshirting-kindergarten/', as: :when_to_start_kindergarten
@@ -230,6 +233,7 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/category/academics/math-2/', as: :math
     get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
     get '/gk/ratings/',  as: :ratings
+    get '/gk/como-clasificamos/',  as: :ratings_spanish
     get '/gk/api-terms-use', as: :api_terms_of_use
 
 

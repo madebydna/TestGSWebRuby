@@ -3,21 +3,15 @@ import PropTypes from 'prop-types'; // importing from react is deprecated
 import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 import Question from '../review/form/question';
 import SelectBoxes from '../review/form/select_boxes';
-import { isSignedIn } from 'util/session';
-import modalManager from 'components/modals/manager';
-import { getCurrentSession } from 'api_clients/session';
-import { withCurrentSchool } from 'store/appStore';
-import { postReview } from 'api_clients/reviews';
+import { isSignedIn } from '../../util/session';
+import modalManager from '../../components/modals/manager';
+import { getCurrentSession } from '../../api_clients/session';
+import { withCurrentSchool } from '../../store/appStore';
+import { postReview } from '../../api_clients/reviews';
+import { forOwn, each, reduce, isEmpty } from 'lodash';
+import SpinnyWheel from '../spinny_wheel';
 
 export default class CommunityFeedback extends React.Component {
-
-  static propTypes = {
-
-  };
-
-  static defaultProps = {
-
-  };
 
   constructor(props) {
     super(props)
@@ -70,13 +64,13 @@ export default class CommunityFeedback extends React.Component {
           answer_value: this.state.selectedResponse
         }])
       })
-      .done(this.handleSuccessfulSubmit)
+      .done(this.setState({errors: [], saved: true, disabled: false}))
       .fail(this.handleFailSubmit);
     });
   }
 
   handleFailSubmit(errors = []) {
-    this.setState({errors: errors})
+    this.setState({errors: errors, saved: false})
   }
 
   handleSuccessfulSubmit({reviews, message, user_reviews} = {}) {
@@ -99,16 +93,20 @@ export default class CommunityFeedback extends React.Component {
         textAreaValue: value
       }
     );
+    this.validateForm();
   }
 
   onSubmit() {
     this.clearErrors();
-    this.submitForm();
-    this.setState(
-      {
-        formSubmittedSuccessfully: true
-      }
-    );
+    let isValid = this.validateForm();
+    if (isValid) {
+      this.submitForm();
+      this.setState(
+        {
+          formSubmittedSuccessfully: true
+        }
+      );
+    }
   }
 
   clearErrors() {
@@ -181,6 +179,25 @@ export default class CommunityFeedback extends React.Component {
     );
   }
 
+  renderFail() {
+    if (typeof this.state.errors !== 'undefined') {
+      return (
+        <div style={{backgroundColor: 'red', color: 'white', fontFamily: 'opensans-regular', padding: '15px 10px'}}>
+          {this.state.errors['11']}
+        </div>
+      );
+
+    } else {
+      if (typeof this.state.errorMessages !== 'undefined') {
+        return (
+          <div style={{backgroundColor: 'red', color: 'white', fontFamily: 'opensans-regular', padding: '15px 10px'}}>
+            {this.state.errorMessages[0]}
+          </div>
+        );
+      }
+    }
+  }
+
   submitButton() {
     return (
       <div className="form-actions clearfix">
@@ -193,25 +210,121 @@ export default class CommunityFeedback extends React.Component {
     );
   }
 
+
+  minWordsValidator(string) {
+    if (! string) {
+      return null;
+    }
+    let numberWords = string
+      .replace( /(^\s*)|(\s*$)/gi, "" )
+      .replace( /[ ]{2,}/gi, " " )
+      .replace( /\n /, "\n" )
+      .split(' ').length;
+    if (7 > numberWords) {
+      return t('review_word_min');
+    } else {
+      return null;
+    }
+  }
+
+  requiredCommentValidator(string) {
+    if ( !string || string.length == 0) {
+      return t('review_thank_you');
+    } else {
+      return null;
+    }
+  }
+
+  maxCharactersValidator(string) {
+    if (string && string.legnth != 0 && string.length > 2400) {
+      return t('review_char_limit');
+    } else {
+      return null;
+    }
+  }
+
+  getValidationsForQuestion() {
+    let validationFuncs = [];
+    switch("11") {
+      case "1": validationFuncs.push(this.requiredCommentValidator);
+      default: validationFuncs.push(this.minWordsValidator);
+        validationFuncs.push( this.maxCharactersValidator);
+    }
+    return validationFuncs;
+  }
+
+  errorMessageForQuestion(validationFuncs, comment) {
+    let error;
+    each(validationFuncs, function(func) {
+      let message = func(comment);
+      if (message) {
+        error = message;
+        return false;
+      }
+    });
+    return error;
+  }
+
+  validateResponse(errorMessages, response, questionId) {
+    let comment = response.comment;
+    let validationFuncs = this.getValidationsForQuestion(questionId);
+    let message = this.errorMessageForQuestion(validationFuncs, comment);
+    if (message) {
+      errorMessages[questionId] = message;
+    }
+    return errorMessages;
+  }
+
+  validateForm() {
+    let selectedResponses = this.state.selectedResponses;
+    let errorMessages = reduce(selectedResponses, this.validateResponse, {});
+    let formValid = isEmpty(errorMessages);
+    this.setState ({
+      errorMessages: errorMessages,
+      formErrors: !formValid
+    });
+    return formValid;
+  }
+
+
   render() {
-    let success;
+    let headerMessage;
     let showSubmitButton;
-    if (this.state.formSubmittedSuccessfully) {
-      success = this.renderSuccess();
+
+    if (this.state.saved === true && this.state.errors.length === 0) {
+      headerMessage = this.renderSuccess();
     } else {
       showSubmitButton = this.submitButton();
     }
-    return (<div className="review-questions review-form-container">
-      {success}
-      {this.moduleQuestion()}
-      {showSubmitButton}
 
-      <ConnectedReviewDistributionModal
-        question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
-        questionId={11}
-        gaLabel="Students with disabilities - 11"
-        gaAction="View subtopic responses"
-      />
-    </div>);
+    if (!isEmpty(this.state.errors) || !isEmpty(this.state.errorMessages)) {
+      headerMessage = this.renderFail();
+    }
+
+    let reviewForm =
+
+      (<div className="review-questions review-form-container">
+        {headerMessage}
+        {this.moduleQuestion()}
+
+        {showSubmitButton}
+
+        <ConnectedReviewDistributionModal
+          question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
+          questionId={11}
+          gaLabel="Students with disabilities - 11"
+          gaAction="View subtopic responses"
+        />
+      </div>);
+
+    if(this.state.disabled) {
+      return (<SpinnyWheel
+        backgroundPosition = { 'bottom' }
+        content = { reviewForm }
+      />);
+    } else {
+      return reviewForm;
+    }
+
   }
 }

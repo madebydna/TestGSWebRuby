@@ -9,13 +9,17 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
     end
 
     # need source otherwise reject test
-    data_set_no_blank_sources = data_set.reject { | test, value | value['All'][:test_source].blank? }
+    data_set_no_blank_sources = data_set.reject { | test, value | test_scores_exist_for_dataset(value)}
     if data_set != data_set_no_blank_sources
       GSLogger.error( :school_cache, nil, message: "Missing source state-school #{school.state}-#{school.id}", vars: data_set)
     end
 
     add_lowest_grade_to_hash(data_set_no_blank_sources)
     data_set_no_blank_sources
+  end
+
+  def test_scores_exist_for_dataset(value)
+    value && value['All'] && value['All'][:testscores] && value['All'][:test_source].blank?
   end
 
   def inject_grade_all(data_sets_and_values)

@@ -127,6 +127,10 @@ $(function() {
     return false;
   });
 
+  $('body').on('click', '.js-subtopicAnswerButton', function () {
+    analyticsEvent('Profile', 'Answer', '11');
+  });
+
   function popupCenter(url, title, w, h) {
     // Fixes dual-screen position                         Most browsers      Firefox
     var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
@@ -277,7 +281,7 @@ $(function() {
   GS.ad.addCompfilterToGlobalAdTargetingGon();
 
   try {
-    $('.neighborhood img[data-src]').unveil(300, function() {
+    $('.neighborhood-module img[data-src]').unveil(300, function() {
       $(this).width('100%')
     });
   } catch (e) {}

@@ -23,8 +23,8 @@ class OspModerationController < ApplicationController
       })
       http_status = 422
     end
-    render json: {}, status: http_status
 
+    render json: {}, status: http_status
   end
 
   def osp_search
@@ -33,6 +33,7 @@ class OspModerationController < ApplicationController
     unless search_id_or_state? && params_count < 2
       fetch_osps
     end
+
     render '/osp/osp_moderation/osp_search'
   end
 
@@ -46,7 +47,7 @@ class OspModerationController < ApplicationController
     if osp.update(osp_params.merge(updated: Time.now)) && user.update_attributes(user_params)
       redirect_to :back
     else
-      render 'osp/osp_moderation/edit'
+      render '/osp/osp_moderation/edit'
     end
   end
 
@@ -120,7 +121,6 @@ class OspModerationController < ApplicationController
 
   def search(search_params)
     @osp_memberships = EspMembership.where(search_params)
-                         .joins(:user).where('email_verified = ?', true)
                          .extend(SchoolAssociationPreloading)
                          .preload_associated_schools!
   end

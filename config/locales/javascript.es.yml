@@ -133,9 +133,9 @@ es:
     notify_me: "Mantenganme informado en esta escuela, incluso cuando se publican nuevos datos."
     Advanced courses: Cursos avanzados
     advanced_courses_subheading_html: Cursos riguroso también pueden ayudar a que tu estudiante se prepare y entre a la universidad.
-    advanced_courses_tooltip: La Calificación de Cursos Avanzados refleja el número de cursos tomados por estudiantes de esta escuela en inglés, STEM, ciencias sociales y idiomas extranjeros, en comparación con el promedio estatal. <a href="/gk/ratings/#advancedcoursesrating" target="_blank">Infórmese más sobre esta calificación.</a>
+    advanced_courses_tooltip: La Calificación de Cursos Avanzados refleja el número de cursos tomados por estudiantes de esta escuela en inglés, STEM, ciencias sociales y idiomas extranjeros, en comparación con el promedio estatal. <a href="/gk/como-clasificamos/?lang=es#advancedcoursesrating" target="_blank">Infórmese más sobre esta calificación.</a>
     advanced_courses_rating_tooltip: Esta calificación refleja el número de cursos avanzados tomadas por alumno de esta escuela, en comparación con el promedio estatal.
-    general_information_tooltip: En esta sección, los administradores de la escuela han proporcionado información general sobre esta escuela, como horas, inscripción, clases y actividades extracurriculares.
+    general_information_tooltip: Esto muestra los resultados para los estudiantes con discapacidades en un examen de Ciencia dado a los estudiantes una vez al año.
     General Information: Información general
     profile_data_sources_and_info: 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
     subjects: Materias
@@ -162,10 +162,13 @@ es:
     Parent tip: Consejo para padres
     Continue: Continuar
     Not right now: No en este momento
+    sources: Fuentes
     tour1:
       step1: GreatSchool es la organización nacional sin fines de lucro líder en información de escuelas y padres. Recaudamos información de fuentes estatales y federales para ayudarle a entender lo que es la calidad escolar y encontrar las mejores oportunidades educativas para sus hijos.
       step2_title_html: '<div class="tutorial-header">El Resumen de Calificaciones</div><br/>'
       step2: GreatSchool es la organización nacional sin fines de lucro. El Resumen de Calificaciones ofrece una visión rápida de la calidad de esta escuela en comparación a otras escuelas en el estado.
+      step2_test_scores_only_title_html: '<div class="tutorial-header">Las Calificaciones de los Resultados de Exámenes</div><br/>'
+      step2_test_scores_only: GreatSchools es una organización nacional sin fines de lucro. La Calificación de los Resultados de Exámenes compara los resultados de los exámenes en esta escuela con otras escuelas públicas en el estado. En la mayoría de los estados, la Calificación General de una escuela es una calificación resumida basada en múltiples medidas de la calidad de la escuela. Este estado no proporciona suficientes datos para que podamos calcular una Calificación General, por lo que en su lugar mostramos la La Calificación de los Resultados de Exámenes.
       step3_title_html: '<div class="tutorial-header">ACADÉMICA</div><br/>'
       step3: Esta sección muestra calificaciones e información sobre temas clave para el éxito académico, incluyendo resultados de exámenes y más.
       step4_title_html: '<div class="tutorial-header">Equidad</div><br/>'

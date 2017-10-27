@@ -70,6 +70,25 @@
     }
   }
 
+  .share-your-feedback-cta {
+    .anchor-button {
+      height: 24px;
+      padding: 10px;
+    }
+    .actions > div {
+      display: inline-block;
+      margin-left: 15px;
+      vertical-align: top;
+    }
+    .speech-bubble {
+      max-width: 480px;
+      vertical-align: middle;
+      @include media-breakpoint-only(xs) {
+        max-width: 220px;
+      }
+    }
+  }
+
   .tab-buttons {
     margin-top: 15px;
     @include media-breakpoint-only(xs) {

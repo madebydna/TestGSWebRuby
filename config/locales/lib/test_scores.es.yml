@@ -12,13 +12,13 @@ es:
       'source': 'Fuente'
       note: Note
       Test scores: Resultados de exámenes
-      info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/ratings/#testscorerating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
+      info_text: "<p>La calificación de los exámenes refleja los resultados de los exámenes anuales del estado para esta escuela en comparación con los puntajes a nivel estatal.</p><p><a href='/gk/como-clasificamos/?lang=es#testscorerating' target='_blank'>Infórmese más sobre esta calificación.</a></p>"
       'Math': Matemáticas
       Science: Ciencia
       Source: Fuente
       sources: Fuentes
       was_this_useful: ¿Esto estuvo útil?
-      was_this_useful_test_only: ¿Esto estuvo útil?
+      was_this_useful_test_only: ¿Le gustaría ver más que sólo información de los resultados de exámenes de esta escuela?
       give_us_your_feedback: Danos tu opinion
       Subject: Materias
       percent_proficient: '% a nivel de grado'
@@ -34,7 +34,7 @@ es:
           algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
           <p>¿Ha encontrado la información sobre los resultados de los exámenes útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/1547acf4-6133-4d98-b2e0-5eb28ca1ec04" target="_blank">
           Comparte tus comentarios.</p>
-          <p><a href="/gk/ratings/#testscorerating” target="_blank">Infórmese más sobre esta calificación.</a></p>
+          <p><a href="/gk/como-clasificamos/?lang=es#testscorerating” target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visite nuestra página de
           preguntas frecuentes.</a></p>
       narration:

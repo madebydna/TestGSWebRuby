@@ -1,6 +1,8 @@
 module SchoolProfiles
   class SummaryNarration
     include Qualaroo
+    include Rails.application.routes.url_helpers
+    include UrlHelper
 
     attr_reader :school
 
@@ -95,7 +97,7 @@ module SchoolProfiles
     end
 
     def test_scores_only_after_more
-      I18n.t('school_profiles.summary_narration.Test scores only post more_html')
+      I18n.t('school_profiles.summary_narration.Test scores only post more_html', ratings_path: ratings_path_for_lang)
     end
 
     def test_scores_rating

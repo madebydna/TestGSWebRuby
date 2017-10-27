@@ -30,39 +30,34 @@
 <div id="home-page" class="gs-bootstrap container-fluid">
 
   <%= render layout: 'hero' do %>
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
-      <div class="mtxl hidden-xs"></div>
-      <div class="oa text_fff pal darken brs">
-        <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('home.hero.heading') %></h1>
-        <div class="subtitle uc mtl"><%= t('home.hero.subheading') %></div>
-        <%= render partial: 'home/search_form' %>
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-2 col-lg-4 col-lg-offset-2">
+        <div class="mtxl hidden-xs"></div>
+        <div class="oa text_fff pal darken brs">
+          <h1 class="text_fff mtn" style="font-family: 'RobotoSlab-Light"><%= t('home.hero.heading') %></h1>
+          <div class="subtitle uc mtl"><%= t('home.hero.subheading') %></div>
+          <%= render partial: 'home/search_form' %>
 
-        <div class="parent-content uc">
-          <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
-          <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.school_life_html'), school_life_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %>
-          <%= link_to t('home.hero.reading_html'), reading_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.math_html'), math_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url %>
-          <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url %>
-          <span class="phs">|</span>
-          <%= link_to t('home.hero.back_to_school_html'), back_to_school_url %>
+          <div class="parent-content uc">
+            <div class="subtitle mbm"><%= t('home.hero.subheading_content') %></div>
+            <%= link_to t('home.hero.raising_kids_html'), greatkids_home_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.school_life_html'), school_life_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.worksheets_html'), worksheets_and_activities_url %>
+            <%= link_to t('home.hero.reading_html'), reading_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.math_html'), math_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.emotional_smarts_html'), emotional_smarts_url %>
+            <%= link_to t('home.hero.podcast_for_parents_html'), podcasts_url %>
+            <span class="phs">|</span>
+            <%= link_to t('home.hero.back_to_school_html'), back_to_school_url %>
 
+          </div>
         </div>
       </div>
-    </div>
-    <% end %>
+  <% end %>
 
-  <div class="row">
-    <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
-      <p class="mission-text"><%= t('.mission-text') %></p>
-      <p class="tac pbl uc"><a href="/gk/about/" class="font-size-xl"><%= t('.learn-more') %></a></p>
-    </div>
-  </div>
+  <%= render partial: 'below_hero' %>
+
 </div>
-
