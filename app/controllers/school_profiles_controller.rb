@@ -342,6 +342,12 @@ class SchoolProfilesController < ApplicationController
                       },
                       type: 'place',
                       url: school_url(school)
+                  },
+                  twitter: {
+                      image: asset_url('assets/share/logo-ollie-large.png'),
+                      card: 'Summary',
+                      site: '@GreatSchools',
+                      description: "We're an independent nonprofit that provides parents with in-depth school quality information."
                   }
   end
 
