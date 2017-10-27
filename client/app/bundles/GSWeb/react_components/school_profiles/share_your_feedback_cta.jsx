@@ -22,6 +22,8 @@ const ShareYourFeedbackCta = ({questionText, buttonClicked}) => {
         <ConnectedReviewDistributionModal
           question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
           questionId={11}
+          gaLabel="Students with disabilities - 11"
+          gaAction="View subtopic responses"
         />
       </div>
     </div>
