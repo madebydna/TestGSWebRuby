@@ -121,7 +121,6 @@ class OspModerationController < ApplicationController
 
   def search(search_params)
     @osp_memberships = EspMembership.where(search_params)
-                         .joins(:user).where('email_verified = ?', true)
                          .extend(SchoolAssociationPreloading)
                          .preload_associated_schools!
   end
