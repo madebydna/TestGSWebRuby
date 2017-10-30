@@ -92,7 +92,6 @@ LocalizedProfiles::Application.configure do
     ["#{scheme}://#{host}", port].reject(&:blank?).join(":")
   }
 
-
   config.assets.js_compressor  = ConditionalUglifier.new
   config.assets.css_compressor = :sass
 

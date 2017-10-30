@@ -143,6 +143,11 @@
           padding-top: 0;
         }
       }
+      @media (min-width: 990px) {
+        .pad-right {
+          padding-right: 6%;
+        }
+      }
       .pull-right {
         text-align: right;
         padding: 0;
@@ -196,6 +201,8 @@
   margin-right: 0 !important;
 }
 
-.gs-bootstrap .col-xs-12 {
-  padding-right: 0 !important;
+.absolute-center {
+  .col-xs-12 {
+    padding-right: 0 !important;
+  }
 }
