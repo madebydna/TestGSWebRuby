@@ -80,7 +80,7 @@ LocalizedProfiles::Application.configure do
   # config.cache_store = :null_store
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_controller.asset_host = ('//' + ENV_GLOBAL['app_host']) if ENV_GLOBAL['app_host'].present?
+  config.action_controller.asset_host = "#{request.protocol}//#{ENV_GLOBAL['app_host']}" if ENV_GLOBAL['app_host'].present?
 
   config.assets.js_compressor  = ConditionalUglifier.new
   config.assets.css_compressor = :sass
