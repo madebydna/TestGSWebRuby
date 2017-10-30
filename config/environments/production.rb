@@ -85,7 +85,7 @@ LocalizedProfiles::Application.configure do
 
   config.action_controller.asset_host = Proc.new { |source, request|
 
-    scheme = ENV_GLOBAL['force_ssl'] == true ? 'https' : 'http'
+    scheme = ENV_GLOBAL['force_ssl'] == 'true' ? 'https' : 'http'
     host = ENV_GLOBAL['app_host'].present? ? ENV_GLOBAL['app_host'] : 'www.greatschools.org'
     port = ENV_GLOBAL['app_port'].present? ?  ENV_GLOBAL['app_port'] : nil
 
