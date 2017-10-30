@@ -89,7 +89,7 @@ LocalizedProfiles::Application.configure do
 
     # sometimes request is nil and everything breaks
     scheme = request.try(:scheme).presence || "https"
-    host = request.try(:host).presence || "www.greatschools.org"
+    host = request.try(:host).presence || "#{ENV_GLOBAL['app_host']}"
     port = request.try(:port).presence || nil
 
     ["#{scheme}://#{host}", port].reject(&:blank?).join(":")
