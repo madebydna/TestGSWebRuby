@@ -143,8 +143,8 @@
           padding-top: 0;
         }
       }
-      .pad-right {
-        @media (min-width: 990px) {
+      @media (min-width: 990px) {
+        .pad-right {
           padding-right: 6%;
         }
       }
