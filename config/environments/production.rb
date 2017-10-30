@@ -84,13 +84,10 @@ LocalizedProfiles::Application.configure do
   # config.action_controller.asset_host = "#{ENV_GLOBAL['app_host']}" if ENV_GLOBAL['app_host'].present?
 
   config.action_controller.asset_host = Proc.new { |source, request|
-    # source = "/assets/brands/stockholm_logo_horizontal.png"
-    # request = A full-fledged ActionDispatch::Request instance
 
-    # sometimes request is nil and everything breaks
-    scheme = request.try(:scheme).presence || "https"
-    host = request.try(:host).presence || "#{ENV_GLOBAL['app_host']}"
-    port = request.try(:port).presence || nil
+    scheme = ENV_GLOBAL['force_ssl'] ? 'https' : 'http'
+    host = ENV_GLOBAL['app_host'].present? ? ENV_GLOBAL['app_host'] : 'www.greatschools.org'
+    port = ENV_GLOBAL['app_port'].present? ?  ENV_GLOBAL['app_port'] : nil
 
     ["#{scheme}://#{host}", port].reject(&:blank?).join(":")
   }
