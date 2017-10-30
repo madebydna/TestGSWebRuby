@@ -12,8 +12,8 @@
         <%= arr[0].html_safe %>
         <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
             <span class="js-moreReveal" style="display:none">
-            <%= arr[1].html_safe %>
-              <%= render 'module_feedback', content: qualaroo_link, yml_key: 'was_this_useful_test_only' %>
+              <%= arr[1].html_safe %>
+              <%= render 'module_feedback', content: sn.qualaroo_module_link_test_only , yml_key: 'was_this_useful_test_only' %>
             </span>
       <% else %>
         <% if arr.length > breakpoint_for_more %>
