@@ -81,7 +81,20 @@ LocalizedProfiles::Application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
   # config.action_controller.asset_host = "#{request.protocol}//#{ENV_GLOBAL['app_host']}" if ENV_GLOBAL['app_host'].present?
-  config.action_controller.asset_host = "#{ENV_GLOBAL['app_host']}" if ENV_GLOBAL['app_host'].present?
+  # config.action_controller.asset_host = "#{ENV_GLOBAL['app_host']}" if ENV_GLOBAL['app_host'].present?
+
+  config.action_controller.asset_host = Proc.new { |source, request|
+    # source = "/assets/brands/stockholm_logo_horizontal.png"
+    # request = A full-fledged ActionDispatch::Request instance
+
+    # sometimes request is nil and everything breaks
+    scheme = request.try(:scheme).presence || "https"
+    host = request.try(:host).presence || "www.greatschools.org"
+    port = request.try(:port).presence || nil
+
+    ["#{scheme}://#{host}", port].reject(&:blank?).join(":")
+  }
+
 
   config.assets.js_compressor  = ConditionalUglifier.new
   config.assets.css_compressor = :sass
