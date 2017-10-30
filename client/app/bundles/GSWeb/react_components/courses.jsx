@@ -113,7 +113,7 @@ export default class Courses extends React.Component {
                   <div dangerouslySetInnerHTML={{__html: t('advanced_courses_subheading_html')}}></div>
                 </div>
               </div>
-              <div className="col-xs-12 col-md-2  show-history-button">
+              <div className="col-xs-12 col-md-2  show-share-button">
                 <div>
                   {this.sharingModal()}
                 </div>

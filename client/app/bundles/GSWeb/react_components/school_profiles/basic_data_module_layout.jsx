@@ -20,7 +20,7 @@ const BasicDataModuleLayout = ({
                 </div>
               </div>
               { sharing_modal && 
-                <div className="col-xs-12 col-md-2 show-history-button">
+                <div className="col-xs-12 col-md-2 show-share-button">
                   <div>{sharing_modal}</div>
                 </div>
               }
