@@ -92,9 +92,6 @@ LocalizedProfiles::Application.configure do
     ["#{scheme}://#{host}", port].reject(&:blank?).join(":")
   }
 
-  config.assets.js_compressor  = ConditionalUglifier.new
-  config.assets.css_compressor = :sass
-
   # Precompile additional assets (application.js, application.css, and all
   # non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
