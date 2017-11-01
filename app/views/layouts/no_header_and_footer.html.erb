@@ -49,7 +49,6 @@
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "post_load", :async => true %>
 <%= webpack_javascript_include_tag("commons", defer: true) unless content_for?(:page_javascripts) %>
-<%= webpack_javascript_include_tag("school-profiles", defer: true) unless content_for?(:page_javascripts) %>
 <%= yield :javascript_includes %>
 <%= yield :page_javascripts %>
 </body>
