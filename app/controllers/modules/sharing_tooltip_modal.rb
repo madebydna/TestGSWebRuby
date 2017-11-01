@@ -15,6 +15,11 @@ module SharingTooltipModal
 
   def share_tooltip_modal(anchor, school)
     url = school_url(school)
+    if ENV_GLOBAL['force_ssl'] == 'true'
+      uri = URI.parse(url)
+      uri.scheme = 'https'
+      url = uri.to_s
+    end
     school_name = school.name
     str = '<div class="sharing-modal">'
     SHARE_LINKS.each do | hash |
