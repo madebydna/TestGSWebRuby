@@ -1,5 +1,7 @@
 Rails.application.config.assets.precompile += [
     'widget_map.js',
+    'commons-blocking-bundle.js',
+    'commons-bundle.js',
     'district-boundaries-bundle.js',
     'district-boundaries.css',
     'widget.css',
