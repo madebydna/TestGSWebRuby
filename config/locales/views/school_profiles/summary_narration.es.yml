@@ -11,11 +11,11 @@ es:
       about: a la altura
       below: por debajo
       'Summary Rating_html': >
-        <span class="emphasis">Esta escuela está calificada %{rating_string} del promedio</span> en calidad de la escuela en comparación a otras escuelas en el estado.
+        <span class="emphasis">Esta escuela está calificada %{rating_string} del promedio</span> en calidad de la escuela en comparación a otras escuelas en el estado.  Los estudiantes aquí
       Summary Rating_school_name_html: >
-        <span class="emphasis">%{school_name} está calificada %{rating_string} del promedio</span> en la calidad de la escuela en comparación a otras escuelas en %{state_name}.
+        <span class="emphasis">%{school_name} está calificada %{rating_string} del promedio</span> en la calidad de la escuela en comparación a otras escuelas en %{state_name}. Los estudiantes aquí
       'Test Scores_html': >
-        Los estudiantes aquí se desempeñan <a href="#Test_scores">%{rating_string} del promedio</a> en exámenes estatales,
+        se desempeñan <a href="#Test_scores">%{rating_string} del promedio</a> en exámenes estatales,
       'College Readiness_html': >
         tienen medidas de preparación a la Universidad <a href="#College_readiness">%{rating_string} del promedio</a>,
       'Student Progress_html': >
