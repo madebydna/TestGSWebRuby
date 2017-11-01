@@ -1,6 +1,6 @@
 <% content_for :page_javascripts do %>
-  <%= javascript_include_tag "commons-bundle", defer: true %>
-  <%= javascript_include_tag "widget-bundle", defer: true %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag "widget", defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
   <%= stylesheet_link_tag "widget-form", async: true %>
