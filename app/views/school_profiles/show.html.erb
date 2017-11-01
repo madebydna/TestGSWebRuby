@@ -75,7 +75,7 @@
           </div>
         </div>
 
-        <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+        <%= render 'shared/ad', slot: 'Profiles_Second____________', size_mapping: 'thin_banner',
                    width: 320, height: 50, css_class: 'mbl' %>
         <div>
           <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
@@ -146,6 +146,8 @@
         </span>
       </div>
     <% end %>
+    <%= render 'shared/bottom_mobile_ad' %>
 </div>
 
 <%= render 'tour_button' %>
+
