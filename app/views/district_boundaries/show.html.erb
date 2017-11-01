@@ -1,6 +1,6 @@
 <% content_for :page_javascripts do %>
-  <%= javascript_include_tag "shared_post_load", async: false %>
-  <%= javascript_include_tag "district-boundaries-bundle", async: true %>
+  <%= javascript_include_tag "commons-bundle", defer: true %>
+  <%= javascript_include_tag "district-boundaries-bundle", defer: true %>
 <% end %>
 <% content_for :page_stylesheets do %>
   <%= stylesheet_link_tag "district-boundaries", async: true %>

@@ -1,6 +1,10 @@
 <% content_for :head do %>
   <link rel="preload" href="<%= asset_path('school_profiles/hero_bg.jpg') %>" as="image">
 <% end %>
+<% content_for :page_javascripts do %>
+  <%= javascript_include_tag "commons-bundle", defer: true %>
+  <%= javascript_include_tag "school-profiles-bundle", defer: true %>
+<% end %>
 <div class="overlay" style="display:none"></div>
 <div class="school-profile">
     <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>

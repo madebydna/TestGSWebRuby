@@ -7,7 +7,7 @@
   <%= stylesheet_link_tag    "print",       media: "print" %>
   <%= render 'google_tag_manager/init_data_layer' %>
   <%= include_gon %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "commons-blocking-bundle", "data-turbolinks-track" => true %>
 
   <%= csrf_meta_tags %>
     <meta property="fb:app_id" content="<%= ENV_GLOBAL['facebook_app_id'] %>"/>
@@ -48,7 +48,8 @@
 
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "post_load", :async => true %>
-<%= javascript_include_tag "post_load", :async => true unless content_for?(:page_javascripts) %>
+<%= javascript_include_tag("commons-bundle", defer: true) unless content_for?(:page_javascripts) %>
+<%= javascript_include_tag("school-profiles-bundle", defer: true) unless content_for?(:page_javascripts) %>
 <%= yield :javascript_includes %>
 <%= yield :page_javascripts %>
 </body>
