@@ -322,6 +322,7 @@ $(function() {
   });
 
   validatingInputs.addFilteringEventListener('body');
+  enableAdCloseButtons();
 });
 
 $(window).on('load', function() {
