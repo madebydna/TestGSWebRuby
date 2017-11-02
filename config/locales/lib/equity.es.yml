@@ -21,7 +21,6 @@ es:
             <li>La información del "% de estudiantes" refleja la porción de la población estudiantil en la escuela que cada subgrupo representa. Para obtener más información sobre la demografía del estudiante en esta escuela, visite la sección "estudiantes" a continuación.</li>
             </ul>
             <p><span class="emphasis">¿Cómo decidimos los temas que vamos a mostrar?</span> Temas del examen que mostramos representan los temas más tomadas por la mayoría de los estudiantes en esta escuela.</p>
-            <p>¿Ha encontrado la información de equidad de raza o etnicidad útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/a0e5e5a5-d6d6-45c6-99e4-4e1e06863f89" target="_blank">Comparte tus comentarios.</a></p>
             <p>Todavía tiene preguntas? Visite nuestra <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">página de preguntas frecuentes.</a></p>
         low_income:
           cta: ¿Notas que algo falta o confunde?
@@ -32,7 +31,6 @@ es:
             <li>Para obtener más información sobre definiciones de bajos ingresos, consulte el "?" en la parte superior del módulo.</li>
             <li>Para obtener más información sobre la demografía del estudiante en esta escuela, visite la sección "estudiantes" a continuación.</li>
             </ul>
-            <p>¿Ha encontrado la información de equidad de bajo ingresos útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/6bb9534f-6abf-4feb-b262-db8059ba49ee" target="_blank">Comparte tus comentarios.</a></p>
             <p><a href="/gk/como-clasificamos/?lang=es#lowincomerating" target="_blank">Infórmese más sobre esta calificación.</a></p>
             <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
         disabilities:
@@ -40,7 +38,6 @@ es:
           content_html: >
             <p><span class="emphasis">¿Cómo decidimos los temas que vamos a mostrar?</span> Mostramos los tres exámenes tomadas por la mayoría de estudiantes en esta escuela.</p>
             <p><span class="emphasis">¿Qué muestra los datos del "promedio del estado"?</span> En este gráfico, el promedio del estado muestra el promedio estatal para estudiantes con discapacidades (no para todos los estudiantes) en todo el estado. Esto te permite comparar los resultados de los estudiantes con discapacidades en esta escuela a poblaciones de estudiantes similares en otras escuelas en el estado.</p>
-            <p>¿Ha encontrado la información de estudiantes con discapacidades útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/2cfa01ac-bd57-44a3-abb8-0684737688f1" target="_blank">Comparte tus comentarios.</a></p>
             <p>Todavía tiene preguntas? Visite nuestra página de <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">preguntas frecuentes</a>.</p>
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'

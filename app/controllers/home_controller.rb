@@ -20,8 +20,8 @@ class HomeController < ApplicationController
                       description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",
                       site_name: 'GreatSchools.org',
                       image: {
-                        url: asset_url('assets/share/logo-ollie-large.png'),
-                        secure_url: asset_url('assets/share/logo-ollie-large.png'),
+                        url: asset_full_url('assets/share/logo-ollie-large.png'),
+                        secure_url: asset_full_url('assets/share/logo-ollie-large.png'),
                         height: 600,
                         width: 1200,
                         type: 'image/png',
@@ -31,7 +31,7 @@ class HomeController < ApplicationController
                       url: home_url
                   },
                   twitter: {
-                      image: asset_url('assets/share/logo-ollie-large.png'),
+                      image: asset_full_url('assets/share/logo-ollie-large.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
                       description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'
