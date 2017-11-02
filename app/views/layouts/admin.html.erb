@@ -5,9 +5,9 @@
     <%= include_gon %>
     <%= yield :head %>
     <%= stylesheet_link_tag 'admin_tools'%>
-    <%= javascript_include_tag 'just_jquery' %>
+    <%= webpack_javascript_include_tag 'jquery' %>
     <%= javascript_include_tag 'jquery.cookie' %>
-    <%= javascript_include_tag 'admin_tools' %>
+    <%= webpack_javascript_include_tag 'admin-tools' %>
   </head>
   <body class="open-sans">
   <%= render 'google_tag_manager/push_to_data_layer' %>

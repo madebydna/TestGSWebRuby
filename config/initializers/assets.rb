@@ -1,6 +1,5 @@
 Rails.application.config.assets.precompile += [
     'widget_map.js',
-    'district-boundaries-bundle.js',
     'district-boundaries.css',
     'widget.css',
     'widget-form.css',
@@ -8,11 +7,6 @@ Rails.application.config.assets.precompile += [
     'wordpress-modals.css',
     'header.js',
     'header.css',
-    'post_load.js',
-    'shared_post_load.js',
-    'widget-bundle.js',
-    'interstitial-bundle.js',
-    'school-profiles-bundle.js',
     'post_load.css',
     'deprecated_application.css',
     'deprecated_application.js',
@@ -36,9 +30,7 @@ Rails.application.config.assets.precompile += [
     'picturefill.min.js', #for style-guide
     'highcharts.js',
     'api_documentation.css',
-    'just_jquery.js',
-    'admin_tools.css',
-    'admin_tools.js'
+    'admin_tools.css'
 
 ]
 # Add client/assets/ folders to asset pipeline's search path.
