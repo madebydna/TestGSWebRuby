@@ -65,7 +65,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def asset_url(file)
+  def asset_full_url(file)
     path = file.starts_with?('/') ? file : '/'+file
     scheme = ENV_GLOBAL['force_ssl'] == 'true' ? 'https' : 'http'
     host = ENV_GLOBAL['app_host'].present? ? ENV_GLOBAL['app_host'] : 'www.greatschools.org'
