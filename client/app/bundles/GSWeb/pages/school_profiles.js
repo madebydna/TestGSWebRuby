@@ -190,7 +190,7 @@ $(function() {
 
   $('.js-moreRevealLink').on('click', function () {
     $(this).hide();
-    $(this).siblings('.js-moreReveal').css('display', '');
+    $(this).siblings('.js-moreReveal').removeClass('more-reveal');
     analyticsEvent('Profile', 'Show More', 'Summary Auto-narrative');
   });
 
