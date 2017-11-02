@@ -41,7 +41,7 @@ import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
-import { renderAd as renderMobileOverlayAd } from 'components/ads/mobile_overlay';
+import { enableAdCloseButtons } from 'util/advertising';
 
 window.store = getStore();
 
