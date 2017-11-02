@@ -15,6 +15,7 @@ module Qualaroo
       :students => '2daad497-0079-46c5-822d-5bf15f1aeff3',
       :neighborhood => 'e0d8fc09-ff65-44d3-940f-935b31143df6',
       :equity_overview => 'cdfc875c-df4c-4183-bcf9-f832a9238831',
+      :equity_overview_no_data => '86bf250b-a12f-455c-9a32-5c356fd94da0',
       :academic_progress => 'ddbbd6fd-9ef6-4213-8925-cb342c3c36fe',
       :summary_narration => '97b3505a-16c7-4b57-a737-b090f1880b47',
       :summary_narration_test_only => '738d4a1d-54c3-4b94-80e0-79e355753e42'
