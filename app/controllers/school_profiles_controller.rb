@@ -332,8 +332,8 @@ class SchoolProfilesController < ApplicationController
                       description: "We're an independent nonprofit that provides parents with in-depth school quality information.",
                       site_name: 'GreatSchools.org',
                       image: {
-                          url: asset_full_url('assets/share/logo-ollie-large.png'),
-                          secure_url: asset_full_url('assets/share/logo-ollie-large.png'),
+                          url: asset_url('assets/share/logo-ollie-large.png'),
+                          secure_url: asset_url('assets/share/logo-ollie-large.png'),
                           height: 600,
                           width: 1200,
                           type: 'image/png',
@@ -344,7 +344,7 @@ class SchoolProfilesController < ApplicationController
                       url: school_url(school)
                   },
                   twitter: {
-                      image: asset_full_url('assets/share/logo-ollie-large.png'),
+                      image: asset_url('assets/share/logo-ollie-large.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
                       description: "We're an independent nonprofit that provides parents with in-depth school quality information."
