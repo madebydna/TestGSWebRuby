@@ -18,6 +18,6 @@
   </div>
 </div>
 <% content_for :page_javascripts do %>
-  <%= javascript_include_tag "shared_post_load", async: false %>
-  <%= javascript_include_tag "interstitial-bundle", async: true %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag "interstitial", defer: true %>
 <% end %>
