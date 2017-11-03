@@ -1,5 +1,5 @@
 <% content_for :head do %><title>GS OSP Moderation Tool</title><% end %>
-<%= javascript_include_tag "admin_tools", "data-turbolinks-track" => true %>
+<%= webpack_javascript_include_tag "admin-tools", "data-turbolinks-track" => true %>
 
 <div>
   <%= link_to 'Search OSP requests', osp_search_path %>

@@ -23,7 +23,8 @@ const config = {
   },
 
   output: {
-    filename: '[name]-bundle.js',
+    filename: '[name]-bundle_[chunkhash].js',
+    chunkFilename: '[name]-bundle_[chunkhash].js',
     path: '../app/assets/webpack',
     publicPath: '/assets/'
   },
