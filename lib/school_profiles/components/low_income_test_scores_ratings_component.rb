@@ -6,7 +6,8 @@ module SchoolProfiles
         rating = school_cache_data_reader.equity_ratings_breakdown('Economically disadvantaged')
         narration_rating = narration_key(rating)
         t(narration_rating, scope: 'lib.equity_gsdata.LI Test scores overview narration',
-          subject: t(data_type), more: SchoolProfilesController.show_more, end_more: SchoolProfilesController.show_more_end) # TODO: update scope after moving translations
+          subject: t(data_type), more: SchoolProfilesController.show_more('Low income'),
+          end_more: SchoolProfilesController.show_more_end) # TODO: update scope after moving translations
       end
 
       def narration_key(rating)
