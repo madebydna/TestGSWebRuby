@@ -46,5 +46,5 @@
       <% end %>
     </div>
   <% end %>
-  <%= render partial: 'info_text_and_circle', locals: {cta: college_readiness.faq.cta, content: college_readiness.faq.content } if data_values.present? %>
+  <%= render partial: 'info_text_and_circle', locals: {cta: college_readiness.faq.cta, element_type: 'faq - ', content: college_readiness.faq.content } if data_values.present? %>
 <% end %>

@@ -24,7 +24,9 @@ module SchoolProfiles
     end
 
     def faq
-      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.test_scores.faq'), content: I18n.t(:content_html, scope: 'lib.test_scores.faq'))
+      @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.test_scores.faq'),
+                        content: I18n.t(:content_html, scope: 'lib.test_scores.faq'),
+                        element_type: 'faq - ')
     end
 
     def rating

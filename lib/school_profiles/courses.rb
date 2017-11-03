@@ -21,7 +21,8 @@ module SchoolProfiles
 
     def faq
       @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.advanced_courses.faq'),
-                        content: I18n.t(:content_html, scope: 'lib.advanced_courses.faq'))
+                        content: I18n.t(:content_html, scope: 'lib.advanced_courses.faq'),
+                        element_type: 'faq - ')
     end
 
     def most_recent_rating_hash
