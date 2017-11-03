@@ -756,7 +756,7 @@
       $[PLUGIN_NAME].lookup[$target.data(PLUGIN_NAME)].open();
 
       var $elem = $(elem);
-      var elementType = $elem.data('ga-click-element-type') || 'miss modal - '
+      var elementType = $elem.data('ga-click-element-type') || ''
       var category = $elem.closest('*[data-ga-click-category]').data('ga-click-category') || 'Profile';
       var action = $elem.closest('*[data-ga-click-action]').data('ga-click-action') || 'Infobox';
       var label = elementType + $elem.closest('*[data-ga-click-label]').data('ga-click-label');

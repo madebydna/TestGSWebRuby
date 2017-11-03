@@ -16,7 +16,7 @@ export function initialize() {
         $('.gs-tipso').tipso('update', 'content', content);
       },
       onShow: function(ele, tipso) {
-        var elementType = ele.data('ga-click-element-type') || 'miss tooltip - '
+        var elementType = ele.data('ga-click-element-type') || ''
         var category = ele.closest('*[data-ga-click-category]').data('ga-click-category') || 'Profile';
         var action = ele.closest('*[data-ga-click-action]').data('ga-click-action') || 'Infobox';
         var label = elementType + ele.closest('*[data-ga-click-label]').data('ga-click-label');
