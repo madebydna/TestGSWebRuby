@@ -38,7 +38,7 @@ module SchoolProfiles
     def narration
       return nil unless has_rating?
       key = narration_key_from_rating
-      I18n.t(key, sections: narration_sections).html_safe if key
+      I18n.t(key, sections: narration_sections, more: SchoolProfilesController.show_more, end_more: SchoolProfilesController.show_more_end).html_safe if key
     end
 
     def equity_rating

@@ -188,7 +188,7 @@ $(function() {
     );
   });
 
-  $('.js-moreRevealLink').on('click', function () {
+  $('body').on('click', '.js-moreRevealLink', function () {
     $(this).hide();
     $(this).siblings('.js-moreReveal').removeClass('more-reveal');
     analyticsEvent('Profile', 'Show More', 'Summary Auto-narrative');
