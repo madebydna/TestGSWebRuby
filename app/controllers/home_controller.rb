@@ -31,7 +31,7 @@ class HomeController < ApplicationController
                       url: home_url
                   },
                   twitter: {
-                      image: asset_full_url('assets/share/logo-ollie-large.png'),
+                      image: asset_full_url('assets/share/GreatSchoolsLogo-social-optimized.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
                       description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'

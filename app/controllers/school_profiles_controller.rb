@@ -344,7 +344,7 @@ class SchoolProfilesController < ApplicationController
                       url: school_url(school)
                   },
                   twitter: {
-                      image: asset_full_url('assets/share/logo-ollie-large.png'),
+                      image: asset_full_url('assets/share/GreatSchoolsLogo-social-optimized.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
                       description: "We're an independent nonprofit that provides parents with in-depth school quality information."
