@@ -27,6 +27,15 @@ class SchoolProfilesController < ApplicationController
     expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
   end
 
+  def self.show_more
+    more = I18n.t(:more, scope: 'controllers.school_profile_controller')
+    "<a class=\"js-moreRevealLink more-reveal-link\" href=\"javascript:void(0)\">... #{more}</a> <span class=\"js-moreReveal more-reveal\">"
+  end
+
+  def self.show_more_end
+    '</span>'
+  end
+
   private
 
   def add_profile_structured_markup

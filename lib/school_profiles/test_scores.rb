@@ -42,7 +42,7 @@ module SchoolProfiles
     def narration
       return nil unless rating.present? && (1..10).cover?(rating.to_i)
       key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
-      I18n.t(key, scope: 'lib.test_scores.narration', default: I18n.db_t(key, default: key)).html_safe
+      I18n.t(key, scope: 'lib.test_scores.narration', more: SchoolProfilesController.show_more, end_more: SchoolProfilesController.show_more_end).html_safe
     end
 
     def info_text
