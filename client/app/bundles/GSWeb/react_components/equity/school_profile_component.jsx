@@ -194,7 +194,7 @@ export default class SchoolProfileComponent extends React.Component {
       <div  data-ga-click-label={this.props.title}>
         { this.props.title }&nbsp;
         { this.props.info_text && 
-          <QuestionMarkTooltip content={this.props.info_text} element_type='toptooltip - ' /> }
+          <QuestionMarkTooltip content={this.props.info_text} element_type='toptooltip' /> }
       </div>
     )
   }
@@ -260,7 +260,7 @@ export default class SchoolProfileComponent extends React.Component {
   footer() {
     return (
       <div data-ga-click-label={this.props.title}>
-        <InfoBox content={this.props.sources} element_type="sources - ">{ t('See notes') }</InfoBox>
+        <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={this.props.qualaroo_module_link} />
       </div>
     )

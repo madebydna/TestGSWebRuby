@@ -33,7 +33,7 @@ export default class Courses extends React.Component {
   footer(sources, qualaroo_module_link) {
     return (
       <div className="module-footer">
-        <InfoBox content={sources} element_type="sources - " >{ t('See notes') }</InfoBox>
+        <InfoBox content={sources} element_type="sources" >{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={qualaroo_module_link} />
       </div>
     )
@@ -106,7 +106,7 @@ export default class Courses extends React.Component {
                   <span className="title">{t('Advanced courses')} </span>
                   <a data-remodal-target="modal_info_box"
                      data-content-type="info_box"
-                     data-ga-click-element-type='toptooltip - '
+                     data-ga-click-element-type='toptooltip'
                      data-content-html={t('advanced_courses_tooltip')}
                      className="gs-tipso info-circle tipso_style" href="javascript:void(0)">
                      <span className="icon-question"></span>
@@ -132,7 +132,7 @@ export default class Courses extends React.Component {
               <span dangerouslySetInnerHTML={{__html: t('rating_html')}}></span>
               <a data-remodal-target="modal_info_box"
                 data-content-type="info_box"
-                 data-ga-click-element-type='datatooltip - '
+                 data-ga-click-element-type='datatooltip'
                 data-content-html={t('advanced_courses_rating_tooltip')}
                 className="gs-tipso info-circle tipso_style"
                 href="javascript:void(0)">

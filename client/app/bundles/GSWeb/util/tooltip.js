@@ -16,14 +16,14 @@ export function initialize() {
         $('.gs-tipso').tipso('update', 'content', content);
       },
       onShow: function(ele, tipso) {
-        var elementType = ele.data('ga-click-element-type') || '';
         var category = ele.closest('*[data-ga-click-category]').data('ga-click-category') || 'Profile';
         var action = ele.closest('*[data-ga-click-action]').data('ga-click-action') || 'Infobox';
-        var label = elementType + ele.closest('*[data-ga-click-label]').data('ga-click-label');
+        var label = buildLabel(ele);
 
         if(label && label != '') {
           analyticsEvent(category, action, label);
         }
+
       },
       tooltipHover: true,
       onHide: function (ele, tipso) {
@@ -33,6 +33,12 @@ export function initialize() {
         ele.removeAttr('data-remodal-target-disabled');
       }
     });
+    function buildLabel($elem){
+      var elementDivider = ' - ';
+      var elementType = $elem.data('ga-click-element-type') || '';
+      var label = $elem.closest('*[data-ga-click-label]').data('ga-click-label');
+      return (elementType != '' ? (elementType + elementDivider + label) : label);
+    }
   }
 };
 
