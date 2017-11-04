@@ -18,63 +18,62 @@ module SchoolProfiles
     NEW_SAT_YEAR = 2016
     NEW_SAT_RANGE = (400..1600)
     OLD_SAT_RANGE = (600..2400)
-
     # Order matters - items display in configured order
     CHAR_CACHE_ACCESSORS = [
       {
         :cache => :characteristics,
         :data_key => FOUR_YEAR_GRADE_RATE,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => UC_CSU_ENTRANCE,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => SAT_SCORE,
-        :visualization => :single_bar_viz,
+        :visualization => 'bar',
         :formatting => [:round],
         :range => (600..2400)
       },
       {
         :cache => :characteristics,
         :data_key => SAT_PARTICIPATION,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => ACT_SCORE,
-        :visualization => :single_bar_viz,
+        :visualization => 'bar',
         :formatting => [:round],
         :range => (1..36)
       },
       {
         :cache => :characteristics,
         :data_key => ACT_PARTICIPATION,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => AP_ENROLLED,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => AP_EXAMS_PASSED,
-        :visualization => :single_bar_viz,
+        :visualization => 'bar',
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => ACT_SAT_PARTICIPATION,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       }
     ].freeze
@@ -219,7 +218,7 @@ module SchoolProfiles
     end
 
     def data_values
-      Array.wrap(data_type_hashes).map do |hash|
+      @_data_values ||= Array.wrap(data_type_hashes).map do |hash|
         data_type = hash['data_type']
         formatting = data_type_formatting_map[data_type]
         visualization = data_type_visualization_map[data_type]
@@ -244,6 +243,22 @@ module SchoolProfiles
           item.source = hash['source'] || hash['source_name']
         end
       end
+    end
+
+    def college_readiness_group_hash
+      values = data_values.map do |score_item|
+        {label: score_item.score.to_f.round.to_s,
+         score: score_item.score.value.to_i,
+         breakdown: score_item.label,
+         state_average: score_item.state_average.value.to_i,
+         state_average_label: score_item.state_average.value.to_f.round.to_s,
+         display_type: score_item.visualization,
+         lower_range: score_item.range.first,
+         upper_range: score_item.range.last,
+         tooltip_html: score_item.info_text
+         }
+      end
+      [{narration: 'Sample narration', title: 'College readiness', values: values}]
     end
 
     def sat_score_range(state, year)
@@ -280,6 +295,29 @@ module SchoolProfiles
         string << sources_for_view(hash)
       end
       content << '</div>'
+    end
+
+    def college_readiness_props
+      @_college_readiness_props ||= [
+        {
+          title: I18n.t('title', scope:'school_profiles.college_readiness'),
+          anchor: 'College_readiness',
+          data: college_readiness_group_hash
+        },
+        {
+          title: I18n.t('title', scope:'school_profiles.college_success'),
+          anchor: 'College_success',
+          data: college_readiness_group_hash
+        }
+      ]
+    end
+
+    def college_readiness_group
+      @_college_readiness_group ||= dv_college_readiness
+    end
+
+    def college_success_group
+      # @_college_success_group ||=
     end
 
     def sources_for_view(hash)

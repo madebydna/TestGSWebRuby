@@ -5,6 +5,8 @@ export default class SingleBarViz extends React.Component {
   static propTypes = {
     score: React.PropTypes.number.isRequired,
     state_average: React.PropTypes.number,
+    lower_range: React.PropTypes.number,
+    upper_range: React.PropTypes.number
   }
 
   constructor(props) {
@@ -30,18 +32,28 @@ export default class SingleBarViz extends React.Component {
 
   validStateAverageValue() {
     let state_average = this.props.state_average;
+    let upper_range = this.props.state_average || 100;
     return (
       state_average != null && 
       state_average != undefined && 
       parseInt(state_average) > 0 && 
-      parseInt(state_average) <= 100
+      parseInt(state_average) <= upper_range
     );
+  }
+
+  coloredBandWidth(prop) {
+    if (this.props.lower_range && this.props.upper_range) {
+      let spread = this.props.upper_range - this.props.lower_range;
+      return Math.round(((prop - this.props.lower_range)/spread)*100);
+    } else {
+      return prop;
+    }
   }
 
   renderStateAverageArrow(){
     if(this.validStateAverageValue()) {
       let style_arrow_up = {
-        left: this.props.state_average + "%",
+        left: this.coloredBandWidth(this.props.state_average) + "%",
         top: '11px'
       }
       return <div className="arrow-up">
@@ -51,10 +63,10 @@ export default class SingleBarViz extends React.Component {
   }
 
   render() {
-    let numerical_value = this.props.score;
+    let numerical_value = this.coloredBandWidth(this.props.score);
     let style_score_width = {
       width: numerical_value + "%",
-      backgroundColor: this.mapColor(this.props.score)
+      backgroundColor: this.mapColor(numerical_value)
     };
     let style_grey_width = { width: 100 - numerical_value + "%" };
 
@@ -67,4 +79,3 @@ export default class SingleBarViz extends React.Component {
     )
   }
 }
-
