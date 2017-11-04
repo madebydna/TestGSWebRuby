@@ -42,7 +42,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
   }
 
   createDataComponent(values) {
-    console.log(values);
+    let customScoreRanges = ["Average SAT score", "Calificación media de los SAT", "Average ACT score", "Calificación media de ACT"];
     if (values) {
       // This is for titles in the test scores
       if(!(values instanceof Array)){
@@ -50,7 +50,6 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       }
 
       if (values.length > 0) {
-        let displayType = 'bar';  //default
         let component = values.map(function(value, index) {
           if (value.display_type == "person") {
             return <BasicDataModuleRow {...value} key={index}>
@@ -64,8 +63,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
             return <BasicDataModuleRow {...value} key={index}>
               <RatingWithBar {...value} />
             </BasicDataModuleRow>;
-          } else if (value.breakdown == "Average SAT score" || value.breakdown == "Average ACT score") {
-            console.log('yeah');
+          } else if (customScoreRanges.includes(value.breakdown)) {
             return <BasicDataModuleRow {...value} key={index}>
               <BarGraphCustomRanges {...value} is_percent={false} />
             </BasicDataModuleRow>;

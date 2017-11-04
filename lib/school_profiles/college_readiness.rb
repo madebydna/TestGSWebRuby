@@ -258,7 +258,7 @@ module SchoolProfiles
          tooltip_html: score_item.info_text
          }
       end
-      [{narration: 'Sample narration', title: 'College readiness', values: values}]
+      [{narration: narration, title: 'College readiness', values: values}]
     end
 
     def sat_score_range(state, year)
