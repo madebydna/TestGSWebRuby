@@ -5,6 +5,10 @@ es:
       subtitle_html: >
         ¿Está esta escuela ofreciendo oportunidades a todos sus estudiantes, o está dejando a algunos atrás?
         Las escuelas exitosas están trabajando para eliminar las diferencias en logros académicos.
+      no_data_summary_html: >
+        <p>En esta sección, publicamos una calificación que refleja qué tan bien esta escuela satisface las necesidades de sus estudiantes en desventaja, incluidos los de familias de bajos ingresos y razas/etnias desatendidas, en relación con todos sus estudiantes y en comparación con otras escuelas del estado.</p>
+        <p>Este estado no proporciona suficientes datos para calcular La Calificación General de Equidad de GreatSchools.</p>
+        <p class="module_feedback">¿Le sería útil tener este tipo de información para esta escuela? <span class="links">%{useful_link}%{not_useful_link}</span></p>
       'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'Great schools rating': 'La Calificación General de Equidad de GreatSchools'
       'source': 'Fuente'

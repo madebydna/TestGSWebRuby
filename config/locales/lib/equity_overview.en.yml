@@ -7,6 +7,10 @@ en:
         Successful schools are working to
         <a href="/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/" target="_blank"> close the achievement
         gap</a>.
+      no_data_summary_html: >
+        <p>In this section, we publish a rating that reflects how well this school is meeting the needs of its disadvantaged students, including those from low-income families and underserved races/ethnicities, relative to all its students, compared to other schools in the state.</p>
+        <p>The state does not provide enough information for us to calculate an Equity Overview Rating for this school.</p>
+        <p class="module_feedback">Would you find it helpful to have this kind of information for the school? <span class="links">%{useful_link}%{not_useful_link}</span></p>
       'sources_title': 'GreatSchools profile data sources &amp; information'
       'source': 'Source'
       'Great schools rating': 'GreatSchools Equity Overview Rating'
