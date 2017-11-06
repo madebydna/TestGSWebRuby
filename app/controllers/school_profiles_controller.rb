@@ -27,6 +27,20 @@ class SchoolProfilesController < ApplicationController
     expires_in(cache_time.to_i, public: true, must_revalidate: true) if cache_time.present?
   end
 
+  def self.show_more(module_name)
+    more = I18n.t(:more, scope: 'controllers.school_profile_controller')
+    category = 'Profile'
+    action = 'Show More'
+    label = "Parent Tips :: #{module_name}"
+    "<a class=\"js-gaClick js-moreRevealLink more-reveal-link\" href=\"javascript:void(0)\" " \
+        "data-ga-click-category=\"#{category}\" data-ga-click-action=\"#{action}\" data-ga-click-label=\"#{label}\">" \
+        "... #{more}</a> <span class=\"js-moreReveal more-reveal\">"
+  end
+
+  def self.show_more_end
+    '</span>'
+  end
+
   private
 
   def add_profile_structured_markup

@@ -32,8 +32,8 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          <a href="/gk/milestones/?lang=es">Entienda lo</a>%{more}<a href="/gk/milestones/?lang=es">que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
         _2_html: >
           <p class="title negative">Un signo preocupante:</p>
           <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela está
@@ -41,8 +41,8 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          <a href="/gk/milestones/?lang=es">Entienda lo</a>%{more}<a href="/gk/milestones/?lang=es">que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
         _3_html: >
           <p class="title neutral">Vale la pena una mirada más profunda:</p>
           <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela
@@ -51,8 +51,8 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
-          <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          <a href="/gk/milestones/?lang=es">Entienda lo</a>%{more}<a href="/gk/milestones/?lang=es">que se espera que tu hijo aprenda en cada grado</a>,
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
         _4_html: >
           <p class="title positive">Un signo prometedor:</p>
           <p class="narrative-content">Los resultados de los exámenes de bajos ingresos en esta escuela están por
