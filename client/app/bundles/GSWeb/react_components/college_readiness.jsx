@@ -8,8 +8,8 @@ import BarGraphCustomRanges from 'react_components/equity/graphs/bar_graph_custo
 import TestScores from 'react_components/equity/graphs/test_scores';
 import PersonBar from 'react_components/visualizations/person_bar';
 import BasicDataModuleRow from 'react_components/school_profiles/basic_data_module_row';
-import PlainNumber from 'react_components/equity/graphs/plain_number';
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
+import ShareYourFeedbackCollegeReadiness from 'react_components/school_profiles/share_your_feedback_college_readiness';
 
 
 
@@ -19,9 +19,13 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     super(props);
   }
 
+  goToQualaroo(){
+    window.open('https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6', '_blank');
+  }
+
   activePane() {
     let dataForActiveTab = this.filteredData()[this.state.active];
-
+    let title = dataForActiveTab.title;
     let panes = dataForActiveTab.data.map(({anchor, type, values, narration} = {}) => {
       let explanation = <div dangerouslySetInnerHTML={{__html: narration}} />
       return (
@@ -32,12 +36,22 @@ export default class CollegeReadiness extends SchoolProfileComponent {
         />
       )
     });
+    let paneAndCTA = () => {
+      if (title == 'College readiness' || title == 'Preparación universitaria') {
+        return <div>
+          {panes[0]}
+          <InfoTextAndCircle {...this.props.faq} />
+        </div>;
+      } else if (title == 'College success' || 'Éxito universitario') {
+        return <div>
+          {panes[0]}
+          <ShareYourFeedbackCollegeReadiness buttonText={this.props.feedback.button_text} questionText={this.props.feedback.feedback_cta} buttonClicked={this.goToQualaroo} />
+        </div>;
+      }
+    }
 
     return (
-      <div>
-        {panes[0]}
-        <InfoTextAndCircle {...this.props.faq} />
-      </div>
+      paneAndCTA()
     )
   }
 
@@ -79,6 +93,6 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       }
     }
   }
-
 };
+
 

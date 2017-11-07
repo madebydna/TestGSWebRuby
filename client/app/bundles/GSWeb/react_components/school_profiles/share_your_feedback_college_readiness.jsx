@@ -5,10 +5,9 @@ import AnchorButton from 'react_components/anchor_button';
 import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 import communityAvatar from 'icons/community-avatar.png';
 
-const ShareYourFeedbackCta = ({questionText, buttonClicked, buttonText}) => {
+const ShareYourFeedbackCollegeReadiness = ({questionText, buttonClicked, buttonText}) => {
   return (
-    <div className="share-your-feedback-cta">
-      <hr/>
+    <div className="share-your-feedback-cta" style={{paddingTop: '20px'}}>
       <p className="parent-tip">
         <img src={communityAvatar} />
         <span className="speech-bubble left">{questionText}</span>
@@ -30,10 +29,10 @@ const ShareYourFeedbackCta = ({questionText, buttonClicked, buttonText}) => {
   );
 };
 
-ShareYourFeedbackCta.PropTypes = {
+ShareYourFeedbackCollegeReadiness.PropTypes = {
   questionText: PropTypes.string.isRequired,
   buttonClicked: PropTypes.func.isRequired,
   buttonText: PropTypes.string
 }
 
-export default ShareYourFeedbackCta;
+export default ShareYourFeedbackCollegeReadiness;

@@ -21,6 +21,17 @@ es:
           <p>¿Ha encontrado la información de la preparación universitaria útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/34aea707-ec71-4130-b6bb-2864e0528c64" target="_blank">Comparte tus comentarios.</a></p>
           <p><a href="/gk/como-clasificamos/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
+      'Graduating seniors pursuing 4 year college/university': Estudiantes de último año que buscan una universidad de 4 años
+      'Graduating seniors pursuing 2 year college/university': Estudiantes de último año que buscan una universidad de 2 años
+      'Graduating seniors pursuing other college': Estudiantes de último año matriculados en otra universidad
+      'Percent Enrolled in College Immediately Following High School': Estudiantes de último año matriculados en la universidad
+      'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
+      'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por segundo año
+      'Percent enrolled in any institution of higher learning in the last 0-16 months': Graduados matriculados en programas universitarios o vocacionales
+      'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando estudios universitarios o vocacionales de 2 años
+      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': Graduados explorando estudios universitarios o vocacionales de 4 años
+      'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
+      'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'

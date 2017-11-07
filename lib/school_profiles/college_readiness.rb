@@ -364,7 +364,7 @@ module SchoolProfiles
       values = data_values(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).map do |score_item|
         {label: score_item.score.to_f.round.to_s,
          score: score_item.score.value.to_i,
-         breakdown: BREAKDOWNS_TO_LABELS_MAPPING[score_item.label],
+         breakdown: score_item.label,
          state_average: score_item.state_average.value.to_i,
          state_average_label: score_item.state_average.value.to_f.round.to_s,
          display_type: score_item.visualization,
@@ -374,6 +374,14 @@ module SchoolProfiles
          }
       end
       [{narration: narration(:college_success), title: 'College readiness', values: values}]
+    end
+
+    def feedback_data
+      @_feedback_data ||= {
+        'feedback_cta' => I18n.t('feedback_cta', scope:'school_profiles.college_readiness'),
+        'feedback_link' => 'https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6',
+        'button_text' =>  I18n.t('Answer', scope:'school_profiles.college_readiness')
+      }
     end
 
     def sat_score_range(state, year)

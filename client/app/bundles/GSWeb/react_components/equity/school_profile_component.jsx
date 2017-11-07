@@ -53,6 +53,7 @@ export default class SchoolProfileComponent extends React.Component {
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired
     }),
+    feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string
   };
 
