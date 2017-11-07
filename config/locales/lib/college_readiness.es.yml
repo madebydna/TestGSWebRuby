@@ -37,6 +37,17 @@ es:
                <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtenga más información</a>.
         'Percentage of students passing 1 or more AP exams grades 9-12': 'El índice de aprobación de los exámenes de “AP” (Cursos Avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes.'
         'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+        'Graduating seniors pursuing 4 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 4 años inmediatamente después de la escuela secundaria.'
+        'Graduating seniors pursuing 2 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 2 años inmediatamente después de la escuela secundaria.'
+        'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
+        'Percent Enrolled in College Immediately Following High School': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
+        'Percent Needing Remediation for College': 'Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.'
+        'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
+        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de su graduación.'
+        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de su graduación.'
+        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de su graduación.'
+        'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
+        'Percent of students who will attend in-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades estatales.'
       narration:
         _1_html: >
           <div class="auto-narration">
@@ -89,4 +100,14 @@ es:
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
           avanzadas y ayudar a todos los estudiantes a prepararse para las
           <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          </div>
+        _college_success: >
+          <div class="auto-narration">
+          <p>¿Los graduados de esta escuela están preparados para tener éxito en la universidad? Esta sección analiza los signos importantes de la preparación para la universidad, incluso si los estudiantes se inscriben en la universidad y permanecen después
+          del primer año, y si se les exige que tomen clases de recuperación antes de comenzar los cursos universitarios.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Los estudiantes que no están preparados para el trabajo a nivel universitario pueden encontrarse en
+          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">costosas clases de recuperación</a> y es más probable que abandonen la universidad. Use esta información para comenzar una conversación con alguien
+          en su comunidad sobre que esencial es que las escuelas preparatorias preparen a los estudiantes para el éxito después de la graduación.</p>
           </div>

@@ -1,7 +1,7 @@
 en:
   lib:
     college_readiness:
-      info_text: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
+      info_text: "<p>This rating shows how well students a t this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
       'title': 'GreatSchools profile data sources &amp; information'
       'GreatSchools Rating': 'GreatSchools College Readiness Rating'
       'Rating text': 'The college readiness rating reflects high school graduation rates, SAT or ACT participation/performance, and AP exam participation and performance (where available) for this school compared to the state average.'
@@ -36,6 +36,17 @@ en:
           <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Find out more</a>.
         'Percentage of students passing 1 or more AP exams grades 9-12': 'The AP exam pass rate reflects how many students at this school got a passing score on at least one AP exam.'
         'Percentage AP enrolled grades 9-12': 'Advanced Placement classes are rigorous classes with a final exam. The percentage of students taking AP exams may reflect whether the school culture is focused on college.'
+        'Graduating seniors pursuing 4 year college/university': 'This reflects the percentage of  graduates from this school who enrolled in a 4-year college or university immediately following high school.'
+        'Graduating seniors pursuing 2 year college/university': 'This reflects the percentage of graduates from this school who enrolled in a 2-year college or university immediately following high school.'
+        'Graduating seniors pursuing other college': 'This reflects the percentage of graduates from this high school who enrolled in college programs other than a 2-or-4-year college or university immediately following high school.'
+        'Percent Enrolled in College Immediately Following High School': 'This reflects the percentage of graduates from this school who enrolled in college immediately following high school.'
+        'Percent Needing Remediation for College': 'This reflects the percentage of graduates from this school who needed to take basic - or remedial - classes, which do not count towards a degree, in college.'
+        'Percent Enrolled in College and Returned for a Second Year': 'This reflects the percentage of graduates from this school who completed their first year of college and returned for a second year.'
+        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in any institution of higher learning within 16 months of graduation.'
+        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 2-year institution of higher learning within 16 months of graduation.'
+        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'This reflects the percentage of graduates from this school who enrolled in a 4-year institution of higher learning within 16 months of graduation.'
+        'Percent of students who will attend out-of-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in out-of-state colleges or universities.'
+        'Percent of students who will attend in-state colleges': 'This reflects the percentage of graduates from this school who are enrolled in in-state colleges or universities.'
       narration:
         _1_html: >
           <div class="auto-narration">
@@ -90,4 +101,14 @@ en:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
           <p class="footnote">Ask the school what it’s doing to help all students succeed in advanced classes and prepare for
           <a href="/gk/articles/improving-sat-scores/">college entrance tests</a>.</p>
+          </div>
+        _college_success: >
+          <div class="auto-narration">
+          <p>Are graduates from this school prepared to succeed in college? This section looks at important signs of college readiness, including whether students enroll in college and stay past the first year, and if they are required to take
+          remedial classes before starting college coursework.</p>
+          <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tip</span></p>
+          <p class="footnote">Students who are unprepared for college-level work may find themselves in <a href="/gk/articles/high-achiever-remedial-college/">costly remedial classes</a>
+          and are more <a href="/gk/articles/dropping-out-of-college-record-numbers/">likely to drop out of college</a>.
+          Use this data to start a conversation with someone in your community about how essential it is that high schools prepare students for success after graduation.</p>
           </div>
