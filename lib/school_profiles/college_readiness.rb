@@ -336,24 +336,9 @@ module SchoolProfiles
       end.compact
     end
 
-    def college_readiness_group_array
-      values = data_values(CHAR_CACHE_ACCESSORS).map do |score_item|
-        {label: score_item.score.to_f.round.to_s,
-         score: score_item.score.value.to_i,
-         breakdown: score_item.label,
-         state_average: score_item.state_average.value.to_i,
-         state_average_label: score_item.state_average.value.to_f.round.to_s,
-         display_type: score_item.visualization,
-         lower_range: score_item.range.first,
-         upper_range: score_item.range.last,
-         tooltip_html: score_item.info_text
-         }
-      end
-      [{narration: narration(:college_readiness), title: 'College readiness', values: values}]
-    end
-
-    def college_success_group_array
-      @_college_success_group_array ||= data_values(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).map do |score_item|
+    def college_data_array(pane)
+      cache_accessors = pane == 'college_success' ? CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS : CHAR_CACHE_ACCESSORS
+      data_values = data_values(cache_accessors).map do |score_item|
         {label: score_item.score.to_f.round.to_s,
          score: score_item.score.value.to_i,
          breakdown: score_item.label,
@@ -363,10 +348,9 @@ module SchoolProfiles
          lower_range: (score_item.range.first if score_item.range),
          upper_range: (score_item.range.last if score_item.range),
          tooltip_html: score_item.info_text
-         }
+        }
       end
-      return nil if @_college_success_group_array.empty?
-      [{narration: narration(:college_success), title: 'College success', values: @_college_success_group_array}]
+      [{narration: narration(pane.to_sym), title: pane.humanize, values: data_values}]
     end
 
     def feedback_data
@@ -413,32 +397,22 @@ module SchoolProfiles
       content << '</div>'
     end
 
-    def college_readiness_props
-      return nil unless CS_STATES_WHITELIST.include?(@school_cache_data_reader.school.state.upcase)
-      @_college_readiness_props ||= {
-        title: I18n.t('title', scope:'school_profiles.college_readiness'),
-        anchor: 'College_readiness',
-        data: college_readiness_group_array
+    def get_props(pane)
+      if pane == 'college_success'
+        return [] unless CS_STATES_WHITELIST.include?(@school_cache_data_reader.school.state.upcase)
+      end
+      data_for_pane = college_data_array(pane)
+      scope = 'school_profiles.' + pane
+      return [] if data_for_pane[0][:values].empty?
+      {
+        title: I18n.t('title', scope: scope),
+        anchor: pane.capitalize,
+        data: data_for_pane
       }
     end
 
-    def college_success_props
-      return @_college_success_props if defined? @_college_success_props
-      @_college_success_props ||= (
-        if college_success_group_array.nil?
-          nil
-        else
-          {
-            title: I18n.t('title', scope:'school_profiles.college_success'),
-            anchor: 'College_success',
-            data: college_success_group_array
-          }
-        end
-      )
-    end
-
     def props
-      @_props ||= [college_readiness_props, college_success_props].compact
+      @_props ||= [get_props('college_readiness'), get_props('college_success')].reject {|data_for_pane| data_for_pane.empty?}
     end
 
     def sources_for_view(hash)

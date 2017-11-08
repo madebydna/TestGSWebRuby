@@ -56,6 +56,10 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     )
   }
 
+  hasData() {
+    return this.filteredData().length > 0
+  }
+
   handleTabClick(index) {
     let tabTitle = this.filteredData()[this.state.active].title;
     this.setState({active: index, activeInnerTab: 0});
@@ -71,7 +75,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       }
 
       if (values.length > 0) {
-        let component = values.map(function(value, index) {
+        let dataRows = values.map(function(value, index) {
           if (value.display_type == "person") {
             return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <PersonBar {...value} />
@@ -94,7 +98,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
             </BasicDataModuleRow>;
           }
         }.bind(this))
-        return <div>{component}</div>;
+        return <div>{dataRows}</div>;
       } else {
         return null;
       }
