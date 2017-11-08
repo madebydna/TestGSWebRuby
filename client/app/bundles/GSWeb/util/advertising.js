@@ -1,6 +1,6 @@
 import {
-  revealContainer as revealMobileOverlayContainer,
-  startAutoCloseTimer as startMobileOverlayAutoCloseTimer
+  onAdFilled as onMobileOverlayAdFilled,
+  onAdNotFilled as onMobileOverlayAdNotFilled
 } from 'components/ads/mobile_overlay';
 
 window.GS = window.GS || {};
@@ -19,11 +19,14 @@ if (gon.advertising_enabled) {
     if (event.isEmpty) {
       // Hide the entire containing div (which includes the ad div and the ghost text) as no ad has been rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper').hide();
+      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
+        onMobileOverlayAdNotFilled();
+      }
     } else {
       let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
       if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
-        revealMobileOverlayContainer();
-        startMobileOverlayAutoCloseTimer();
+        onMobileOverlayAdFilled();
       }
       // Show the ghost text as an ad is rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper .advertisement-text').removeClass('dn').show();
