@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { t } from '../../util/i18n';
 import AnchorButton from 'react_components/anchor_button';
-import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 import communityAvatar from 'icons/community-avatar.png';
 
 const ShareYourFeedbackCollegeReadiness = ({questionText, buttonClicked, buttonText}) => {
@@ -18,12 +16,6 @@ const ShareYourFeedbackCollegeReadiness = ({questionText, buttonClicked, buttonT
                       style={{display: 'inline-block'}}
                       className="clearfix js-subtopicAnswerButton">{buttonText}
         </AnchorButton>
-        <ConnectedReviewDistributionModal
-          question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
-          questionId={11}
-          gaLabel="Students with disabilities - 11"
-          gaAction="View subtopic responses"
-        />
       </div>
     </div>
   );
