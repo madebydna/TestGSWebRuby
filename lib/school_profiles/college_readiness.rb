@@ -403,7 +403,7 @@ module SchoolProfiles
                                  description: rating_description, methodology: rating_methodology,
                                  more_anchor: 'collegereadinessrating')
       end
-      content << data_type_hashes(CHAR_CACHE_ACCESSORS).reduce('') do |string, hash|
+      content << data_type_hashes(CHAR_CACHE_ACCESSORS + CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).reduce('') do |string, hash|
         string << sources_for_view(hash)
       end
       content << '</div>'
