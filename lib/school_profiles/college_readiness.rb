@@ -309,7 +309,7 @@ module SchoolProfiles
 
     def data_values(cache_accessors)
       Array.wrap(data_type_hashes(cache_accessors)).map do |hash|
-        # next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < 2015
+        next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < 2015
         data_type = hash['data_type']
         formatting = data_type_formatting_map(cache_accessors)[data_type]
         visualization = data_type_visualization_map(cache_accessors)[data_type]
