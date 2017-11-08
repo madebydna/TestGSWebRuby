@@ -67,6 +67,10 @@
     }
   }
 
+  .donate {
+    color: #35d998;
+  }
+
   .dt-desktop {
     display: table;
     width: 100%;
@@ -81,8 +85,12 @@
   }
 
   .logo {
-    padding: 10px;
+    padding: 10px 10px 10px 10px; //need to add padding-right to this in order to move logo appropriately to the left, but different p-r values for each display port
     display: table-cell;
+  }
+
+  .icon-heart {
+    margin-left: 8px;
   }
 
   .logo_size {
@@ -91,7 +99,7 @@
   }
 
   .search_bar {
-    width: 100%;
+    width: 40%;
     padding: 2px 20px;
     vertical-align: middle;
   }
@@ -205,7 +213,7 @@
       margin: 0;
       list-style: none;
       position: relative;
-      width: 470px;
+      width: auto;
 
       li {
         margin: 0px;
@@ -603,6 +611,10 @@
     left: 0px;
     width: 100%;
   }
+
+  .icon-heart {
+    display: none;
+  }
 }
 
 @media (min-width: 48em) {
@@ -694,6 +706,11 @@
   .un .search_bar_tc {
     display: table-cell;
   }
+
+  .logo {
+      padding: 0px;
+      float: left;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -710,6 +727,13 @@
 @media (min-width: 1200px) {
   .un .hidden-lg {
     display: none !important;
+  }
+
+  .donate {
+    border: 2px solid #35d998;
+    border-radius: 3px;
+    padding: 3px 15px;
+
   }
 }
 

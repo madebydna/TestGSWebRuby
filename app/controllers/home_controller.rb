@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   before_action :set_login_redirect
   before_action :set_no_index
 
-  layout "deprecated_application"
+  layout "home_page_layout"
 
   def show
 

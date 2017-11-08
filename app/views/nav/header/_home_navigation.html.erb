@@ -1,0 +1,98 @@
+<div class="navigation tc">
+  <nav class="tc">
+    <ul class="menu menu_hide_mobile">
+
+      <li class="">
+        <!-- First Tier Drop Down -->
+        <label for="drop-1" class="toggle"><%= t('nav.header.navigation.parenting.title')%> <span style="font-size:10px;"></span></label>
+        <a href="/gk/" onclick="return false;"><%= t('nav.header.navigation.parenting.title')%> <span style="font-size:10px;"></span></a>
+        <input type="checkbox" id="drop-1"/>
+        <ul>
+          <li>
+            <label for="drop-2" class="toggle"><%= t('nav.header.navigation.parenting.raising_kids')%> </label>
+            <a href="/gk/emotional-smarts/" onclick="return false;"><%= t('nav.header.navigation.parenting.raising_kids')%> </a>
+            <input type="checkbox" id="drop-2"/>
+            <ul>
+              <li><a href="/gk/category/dilemmas/"><%= t('nav.header.navigation.parenting.parenting_dilemmas')%></a></li>
+              <li><a href="/gk/emotional-smarts/"><%= t('nav.header.navigation.parenting.emotional_smarts')%></a></li>
+              <li><a href="/gk/category/health/"><%= t('nav.header.navigation.parenting.health_and_development')%></a></li>
+              <li><a href="/gk/category/smart-strategies/"><%= t('nav.header.navigation.parenting.smart_strategies')%></a></li>
+              <li><a href="/gk/category/early-learning/"><%= t('nav.header.navigation.parenting.early_learning')%></a></li>
+            </ul>
+          </li>
+
+          <li>
+            <label for="drop-3" class="toggle"><%= t('nav.header.navigation.parenting.smart_strategies')%> </label>
+            <a href="/gk/category/find-a-school-skills/" onclick="return false;"><%= t('nav.header.navigation.parenting.school_life')%></a>
+            <input type="checkbox" id="drop-3"/>
+            <ul>
+              <li><a href="/gk/category/find-a-school-skills/"><%= t('nav.header.navigation.parenting.finding_the_right_school')%></a></li>
+              <li><a href="/gk/category/education-trends/"><%= t('nav.header.navigation.parenting.education_trends')%></a></li>
+              <li><a href="/gk/road-to-college/"><%= t('nav.header.navigation.parenting.road_to_college')%></a></li>
+            </ul>
+          </li>
+          <li>
+            <label for="drop-4" class="toggle"><%= t('nav.header.navigation.parenting.academics')%> </label>
+            <a href="/gk/category/academics/" onclick="return false;"><%= t('nav.header.navigation.parenting.academics')%> </a>
+            <input type="checkbox" id="drop-4"/>
+            <ul>
+              <li><a href="/gk/category/academics/reading-2/"><%= t('nav.header.navigation.parenting.reading')%></a></li>
+              <li><a href="/gk/category/academics/math-2/"><%= t('nav.header.navigation.parenting.math')%></a></li>
+              <li><a href="/gk/category/academics/writing-2/"><%= t('nav.header.navigation.parenting.writing')%></a></li>
+              <li><a href="/gk/category/academics/science/"><%= t('nav.header.navigation.parenting.science')%></a></li>
+              <li><a href="/gk/category/academics/arts/"><%= t('nav.header.navigation.parenting.arts')%></a></li>
+              <li><a href="/gk/category/academics/stem/"><%= t('nav.header.navigation.parenting.stem')%></a></li>
+              <li><a href="/gk/category/academics/social-studies/"><%= t('nav.header.navigation.parenting.social_studies')%></a></li>
+              <li><a href="/gk/milestones/"><%= t('nav.header.navigation.parenting.milestones')%></a></li>
+              <li><a href="/gk/common-core-test-guide/"><%= t('nav.header.navigation.parenting.state_test_guide')%></a></li>
+            </ul>
+          </li>
+
+          <li>
+            <label for="drop-5" class="toggle"><%= t('nav.header.navigation.parenting.learning_issues')%> </label>
+            <a href="/gk/category/learning-disabilities/" onclick="return false;"><%= t('nav.header.navigation.parenting.learning_issues')%> </a>
+            <input type="checkbox" id="drop-5"/>
+            <ul>
+              <li><a href="/gk/category/learning-disabilities/"><%= t('nav.header.navigation.parenting.learning_disabilities')%></a></li>
+              <li><a href="/gk/category/gifted/"><%= t('nav.header.navigation.parenting.gifted')%></a></li>
+              <li><a href="/gk/category/attention-disorders/"><%= t('nav.header.navigation.parenting.attention_disorders')%></a></li>
+              <li><a href="/gk/category/reading-disorders/"><%= t('nav.header.navigation.parenting.reading_disorders')%></a></li>
+              <li><a href="/gk/category/special-needs/"><%= t('nav.header.navigation.parenting.special_needs')%></a></li>
+            </ul>
+          </li>
+          <li><a href="/gk/book-lists/"><%= t('nav.header.navigation.parenting.book_lists')%></a></li>
+          <li><a href="/gk/worksheets/"><%= t('nav.header.navigation.parenting.worksheets')%></a></li>
+          <li><a href="/gk/articles/like-a-sponge/"><%= t('nav.header.navigation.parenting.podcasts')%></a></li>
+          <li><a href="/gk/back-to-school/"><%= t('nav.header.navigation.parenting.back_to_school')%></a></li>
+        </ul>
+      </li>
+      <li class="">
+        <a class="js-donate-link hidden-sm hidden-md donate" href="https://www.classy.org/checkout/donation?eid=147401" target="_blank"><%= t('nav.header.navigation.donate')%><span class="icon-heart"></span></a>
+      </li>
+      <% if params['controller'] == 'home' %>
+          <li class="hidden-md hidden-sm">
+            <%= link_to t('nav.header.navigation.about_us'), about_path %>
+          </li>
+      <% end %>
+      <li class=""><a class="hidden-sm jsChangeLanguageLink" href="#"><%= t('nav.header.navigation.language')%></a></li>
+      <li class="account_nav_out"><a class="js-no_ad" href="/gsr/login/"><%= t('nav.header.navigation.sign_in') %></a></li>
+      <li class="account_nav_in dn">
+        <label for="drop-7" class="toggle"><%= t('nav.header.navigation.my_account') %> </label>
+        <a href="#"><%= t('nav.header.navigation.my_account') %> </a>
+        <input type="checkbox" id="drop-7"/>
+        <ul>
+          <li><a class="js-no_ad" href="/account/"><%= t('nav.header.navigation.account_settings')%></a></li>
+          <li><a class="js-no_ad" href="/logout/"><%= t('nav.header.navigation.sign_out') %></a></li>
+        </ul>
+      </li>
+      <li class="featured_visible_mobile featured">
+        <label for="drop-6" class="toggle"><span><%= t('nav.header.navigation.featured.title') %></span> </label>
+        <a href="#"><%= t('nav.header.navigation.featured.title') %> </a>
+        <input type="checkbox" id="drop-6"/>
+        <ul>
+          <%= render 'nav/header/featured_links' %>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</div>
