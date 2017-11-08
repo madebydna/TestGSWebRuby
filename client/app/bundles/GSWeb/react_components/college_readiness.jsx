@@ -10,17 +10,18 @@ import PersonBar from 'react_components/visualizations/person_bar';
 import BasicDataModuleRow from 'react_components/school_profiles/basic_data_module_row';
 import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
 import ShareYourFeedbackCollegeReadiness from 'react_components/school_profiles/share_your_feedback_college_readiness';
-
-
+import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
+import SharingModal from 'react_components/school_profiles/sharing_modal';
 
 export default class CollegeReadiness extends SchoolProfileComponent {
 
   constructor(props) {
     super(props);
+    this.goToQualaroo = this.goToQualaroo.bind(this);
   }
 
   goToQualaroo(){
-    window.open('https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6', '_blank');
+    window.open(this.props.feedback.feedback_link, '_blank');
   }
 
   activePane() {
@@ -55,6 +56,13 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     )
   }
 
+
+  handleTabClick(index) {
+    let tabTitle = this.filteredData()[this.state.active].title;
+    this.setState({active: index, activeInnerTab: 0});
+    window.analyticsEvent('Profile', 'College Readiness Tabs', tabTitle);
+  }
+
   createDataComponent(values) {
     let customScoreRanges = ["Average SAT score", "Calificación media de los SAT", "Average ACT score", "Calificación media de ACT"];
     if (values) {
@@ -66,32 +74,63 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       if (values.length > 0) {
         let component = values.map(function(value, index) {
           if (value.display_type == "person") {
-            return <BasicDataModuleRow {...value} key={index}>
+            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <PersonBar {...value} />
             </BasicDataModuleRow>;
           } else if (value.display_type == "person_reversed"){
-            return <BasicDataModuleRow {...value} key={index}>
+            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <PersonBar {...value} invertedRatings={true} />
             </BasicDataModuleRow>;
           } else if (value.display_type == "rating") {
-            return <BasicDataModuleRow {...value} key={index}>
+            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <RatingWithBar {...value} />
             </BasicDataModuleRow>;
           } else if (customScoreRanges.includes(value.breakdown)) {
-            return <BasicDataModuleRow {...value} key={index}>
+            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <BarGraphCustomRanges {...value} is_percent={false} />
             </BasicDataModuleRow>;
           } else {
-            return <BasicDataModuleRow {...value} key={index}>
+            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <BarGraphBase {...value} />
             </BasicDataModuleRow>;
           }
-        })
+        }.bind(this))
         return <div>{component}</div>;
       } else {
         return null;
       }
     }
+  }
+
+  hasCSTab() {
+    let tabs = this.filteredData().map((pane,idx) => {
+      return pane.title
+    });
+    return tabs.includes('College success');
+  }
+
+  render() {
+    let analyticsId = this.props.analytics_id;
+    if (!this.hasData()) {
+      analyticsId += '-empty'; // no data
+    }
+
+    return (
+      <div id={analyticsId}>
+        <BasicDataModuleLayout
+          sharing_modal={ this.hasData() && <SharingModal content={this.props.share_content} /> }
+          id={this.props.anchor}
+          className=''
+          icon={ this.icon() }
+          title={ this.title() }
+          subtitle={ this.props.subtitle }
+          no_data_cta={ !this.hasData() && this.noDataCta() }
+          footer={ this.hasData() && this.footer() }
+          body={ this.hasData() && this.activePane() }
+          tabs={ this.hasData() && this.hasCSTab() && this.tabsContainer() }
+        />
+      </div>
+    )
   }
 };
 

@@ -85,14 +85,14 @@ module SchoolProfiles
       },
       {
         :cache => :characteristics,
-        :data_key => GRADUATES_REMEDIATION,
+        :data_key => GRADUATES_IN_STATE,
         :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
-        :data_key => GRADUATES_IN_STATE,
-        :visualization => 'person',
+        :data_key => GRADUATES_REMEDIATION,
+        :visualization => 'person_reversed',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
@@ -207,8 +207,9 @@ module SchoolProfiles
     end
 
     def narration(pane)
-      return nil unless rating.present? && (1..10).cover?(rating.to_i)
-      if pane == :college_success
+      if !rating.present? && !(1..10).cover?(rating.to_i)
+        key = '_parent_tip_html'
+      elsif pane == :college_success
         key = '_college_success'
       elsif pane == :college_readiness
         key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
@@ -318,6 +319,7 @@ module SchoolProfiles
 
     def data_values(cache_accessors)
       Array.wrap(data_type_hashes(cache_accessors)).map do |hash|
+        # next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < 2015
         data_type = hash['data_type']
         formatting = data_type_formatting_map(cache_accessors)[data_type]
         visualization = data_type_visualization_map(cache_accessors)[data_type]
@@ -341,10 +343,10 @@ module SchoolProfiles
           item.visualization = visualization
           item.source = hash['source'] || hash['source_name']
         end
-      end
+      end.compact
     end
 
-    def college_readiness_group_hash
+    def college_readiness_group_array
       values = data_values(CHAR_CACHE_ACCESSORS).map do |score_item|
         {label: score_item.score.to_f.round.to_s,
          score: score_item.score.value.to_i,
@@ -358,10 +360,10 @@ module SchoolProfiles
          }
       end
       [{narration: narration(:college_readiness), title: 'College readiness', values: values}]
-      end
+    end
 
-    def college_success_group_hash
-      values = data_values(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).map do |score_item|
+    def college_success_group_array
+      @_college_success_group_array ||= data_values(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).map do |score_item|
         {label: score_item.score.to_f.round.to_s,
          score: score_item.score.value.to_i,
          breakdown: score_item.label,
@@ -373,7 +375,8 @@ module SchoolProfiles
          tooltip_html: score_item.info_text
          }
       end
-      [{narration: narration(:college_success), title: 'College readiness', values: values}]
+      return nil if @_college_success_group_array.empty?
+      [{narration: narration(:college_success), title: 'College success', values: @_college_success_group_array}]
     end
 
     def feedback_data
@@ -421,18 +424,30 @@ module SchoolProfiles
     end
 
     def college_readiness_props
-      @_college_readiness_props ||= [
-        {
-          title: I18n.t('title', scope:'school_profiles.college_readiness'),
-          anchor: 'College_readiness',
-          data: college_readiness_group_hash
-        },
-        {
-          title: I18n.t('title', scope:'school_profiles.college_success'),
-          anchor: 'College_success',
-          data: college_success_group_hash
-        }
-      ]
+      @_college_readiness_props ||= {
+        title: I18n.t('title', scope:'school_profiles.college_readiness'),
+        anchor: 'College_readiness',
+        data: college_readiness_group_array
+      }
+    end
+
+    def college_success_props
+      return @_college_success_props if defined? @_college_success_props
+      @_college_success_props ||= (
+        if college_success_group_array.nil?
+          nil
+        else
+          {
+            title: I18n.t('title', scope:'school_profiles.college_success'),
+            anchor: 'College_success',
+            data: college_success_group_array
+          }
+        end
+      )
+    end
+
+    def props
+      @_props ||= [college_readiness_props, college_success_props].compact
     end
 
     def sources_for_view(hash)

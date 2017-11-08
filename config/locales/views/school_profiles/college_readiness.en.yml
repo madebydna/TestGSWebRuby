@@ -5,7 +5,11 @@ en:
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
         <br></br>
       title: College readiness
-      tooltip_html: "<p>This rating shows how well students at this school are prepared for college compared to students at other schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework when available.</p><p><a href='/gk/ratings/#collegereadinessrating' target='_blank'>Learn more about this rating.</a></p>"
+      tooltip_html: >
+        <p>This rating shows how well students at this school are prepared for college compared to students at other
+        schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework
+        when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
+        rating.</a></p>
       subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
       source: Source
       sources: Sources

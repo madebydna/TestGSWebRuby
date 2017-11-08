@@ -3,7 +3,8 @@ import withAnalyticsTracking from 'util/with_analytics_tracking';
 
 class ModalTooltip extends React.Component {
   static propTypes = {
-    content: React.PropTypes.element
+    content: React.PropTypes.element,
+    className: React.PropTypes.string
   }
 
   constructor(props) {
@@ -25,7 +26,7 @@ class ModalTooltip extends React.Component {
   }
 
   render() {
-    return <div>
+    return <div className={this.props.className}>
       {this.trigger()}
       <div style={{display: 'none'}}>
         <div ref={(el) => {this.content = el;}}>

@@ -120,6 +120,10 @@ export default class SchoolProfileComponent extends React.Component {
     return this.filteredData().length > 0
   }
 
+  hasMultipleTabs() {
+    return this.filteredData().length > 1
+  }
+
   createDataComponent(type, values) {
     if (values) {
       // This is for titles in the test scores
@@ -135,7 +139,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else if (displayType == 'person') {
           component = <div>
             {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index}>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} />
               </BasicDataModuleRow>)
             }
@@ -143,7 +147,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else if (displayType == 'person_reversed') {
           component = <div>
             {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index}>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} invertedRatings={true} />
               </BasicDataModuleRow>)
             }
@@ -151,7 +155,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else if (displayType == 'rating') {
           component = <div>
             {values.map((value, index) =>
-                <BasicDataModuleRow {...value} key={index}>
+                <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                   <RatingWithBar {...value} />
                 </BasicDataModuleRow>)
             }
@@ -159,7 +163,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else {
           component = <div>
             {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index}>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <BarGraphBase {...value} />
               </BasicDataModuleRow>)
             }
@@ -172,7 +176,7 @@ export default class SchoolProfileComponent extends React.Component {
   }
 
   handleTabClick(index) {
-    this.setState({active: index, activeInnerTab: 0})
+    this.setState({active: index, activeInnerTab: 0});
   }
 
   icon() {

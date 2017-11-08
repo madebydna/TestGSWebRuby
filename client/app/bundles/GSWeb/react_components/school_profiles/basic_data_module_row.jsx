@@ -37,7 +37,7 @@ const BasicDataModuleRow = ({
     <div className="row bar-graph-display">
       <div className="test-score-container clearfix">
         <div className="col-xs-12 col-sm-5 subject">
-          {breakdown}&nbsp;{ tooltip_html && <QuestionMarkTooltip content={tooltip_html} /> }
+          {breakdown}&nbsp;{ tooltip_html && <QuestionMarkTooltip content={tooltip_html} className="tooltip" /> }
           { (percentage || number_students_tested) && display_percentages && renderStudentPercentage() }
         </div>
         <div className="col-sm-1"></div>
