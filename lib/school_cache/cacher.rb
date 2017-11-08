@@ -66,6 +66,7 @@ class Cacher
         feed_test_scores: FeedTestScoresCacher,
         gsdata:           GsdataCaching::GsdataCacher,
         ratings:          RatingsCaching::RatingsCacher,
+        ratings2:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]

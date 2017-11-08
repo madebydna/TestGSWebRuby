@@ -1,7 +1,7 @@
 had_any_errors = false
 
 def all_cache_keys
-  ['ratings','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance', 'gsdata', 'feed_characteristics', 'directory']
+  ['ratings','ratings2','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance', 'gsdata', 'feed_characteristics', 'directory']
 end
 
 def usage

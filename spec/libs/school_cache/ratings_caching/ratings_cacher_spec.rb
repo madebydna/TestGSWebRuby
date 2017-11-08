@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe RatingsCaching::RatingsCacher do
+describe RatingsCaching::GsdataRatingsCacher do
 
   let(:school) { FactoryGirl.build(:alameda_high_school) }
-  let(:cacher) { RatingsCaching::RatingsCacher.new(school) }
+  let(:cacher) { RatingsCaching::GsdataRatingsCacher.new(school) }
 
   describe '#cache' do
     after(:each) { clean_models :gsdata, DataValue, Source, DataType }
     let(:source) { build(:source).tap { |obj| obj.on_db(:gsdata_rw).save } }
     let(:school_value) { (1..100).to_a.sample }
-    let(:data_type_id) { RatingsCaching::RatingsCacher::DATA_TYPE_IDS.sample }
+    let(:data_type_id) { RatingsCaching::GsdataRatingsCacher::DATA_TYPE_IDS.sample }
     let(:data_type) { create_data_type(id: data_type_id) }
     let!(:data_values) do
       create_data_values(
