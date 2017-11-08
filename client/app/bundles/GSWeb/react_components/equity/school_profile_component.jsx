@@ -120,10 +120,6 @@ export default class SchoolProfileComponent extends React.Component {
     return this.filteredData().length > 0
   }
 
-  hasMultipleTabs() {
-    return this.filteredData().length > 1
-  }
-
   createDataComponent(type, values) {
     if (values) {
       // This is for titles in the test scores

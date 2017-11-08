@@ -1,9 +1,9 @@
 en:
   school_profiles:
     college_readiness:
-      no_data_html: >
+      no_data: >
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
-        <br></br>
+
       title: College readiness
       tooltip_html: >
         <p>This rating shows how well students at this school are prepared for college compared to students at other

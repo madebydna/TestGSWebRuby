@@ -31,6 +31,8 @@ module SchoolProfiles
     GRADUATES_FOUR_YEAR = 'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months'
     GRADUATES_OUT_OF_STATE = 'Percent of students who will attend out-of-state colleges'
     GRADUATES_IN_STATE = 'Percent of students who will attend in-state colleges'
+    # States for which college success data has been loaded
+    CS_STATES_WHITELIST = ['AR', 'CO', 'DE', 'FL', 'GA', 'IL', 'IN', 'MO', 'NJ', 'NY', 'OH', 'OK', 'TX', 'WI', 'PA']
     # Order matters - items display in configured order
 
     # characteristics cache accessors for college success pane
@@ -193,8 +195,10 @@ module SchoolProfiles
     end
 
     def narration(pane)
-      if !rating.present? && !(1..10).cover?(rating.to_i)
+      if !rating.present? && !(1..10).cover?(rating.to_i) && visible?
         key = '_parent_tip_html'
+      elsif !visible?
+        return nil
       elsif pane == :college_success
         key = '_college_success'
       elsif pane == :college_readiness
@@ -410,6 +414,7 @@ module SchoolProfiles
     end
 
     def college_readiness_props
+      return nil unless CS_STATES_WHITELIST.include?(@school_cache_data_reader.school.state.upcase)
       @_college_readiness_props ||= {
         title: I18n.t('title', scope:'school_profiles.college_readiness'),
         anchor: 'College_readiness',
