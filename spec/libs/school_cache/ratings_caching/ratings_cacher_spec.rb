@@ -125,7 +125,7 @@ describe RatingsCaching::GsdataRatingsCacher do
         before do
           allow(cacher).to receive(:school_results).and_return(
             [
-              json_data_value(data_type_id: data_type_id, value: school_value)
+              json_data_value(data_type_id: data_type_id, value: school_value, source_name: 'Foo')
             ]
           )
         end
@@ -133,6 +133,14 @@ describe RatingsCaching::GsdataRatingsCacher do
           results = subject["Rating #{data_type_id}"]
           results.each do |r|
             expect(r[:school_value]).to eq(school_value)
+          end
+        end
+        it "should not add description and methodology to data type #{data_type_id}" do
+          results = subject["Rating #{data_type_id}"]
+          expect(results).to be_present
+          results.each do |r|
+            expect(r).to_not have_key(:description)
+            expect(r).to_not have_key(:methodology)
           end
         end
       end
@@ -143,12 +151,13 @@ describe RatingsCaching::GsdataRatingsCacher do
         before do
           allow(cacher).to receive(:school_results).and_return(
             [
-              json_data_value(data_type_id: data_type_id)
+              json_data_value(data_type_id: data_type_id, value: 10, source_name: 'Foo')
             ]
           )
         end
         it "adds description and methodology to data type #{data_type_id}" do
           results = subject["Rating #{data_type_id}"]
+          expect(results).to be_present
           results.each do |r|
             expect(r).to have_key(:description)
             expect(r).to have_key(:methodology)
