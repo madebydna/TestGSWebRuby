@@ -56,7 +56,6 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     )
   }
 
-
   handleTabClick(index) {
     let tabTitle = this.filteredData()[this.state.active].title;
     this.setState({active: index, activeInnerTab: 0});

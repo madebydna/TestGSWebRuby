@@ -103,20 +103,6 @@ module SchoolProfiles
       }
     ]
 
-    BREAKDOWNS_TO_LABELS_MAPPING = {
-      SENIORS_FOUR_YEAR => 'Graduating seniors pursuing 4-year college',
-      SENIORS_TWO_YEAR => 'Graduating seniors pursuing 2-year college',
-      SENIORS_ENROLLED_OTHER => 'Graduating seniors enrolled in other college',
-      SENIORS_ENROLLED => 'Graduating seniors enrolled in college',
-      GRADUATES_REMEDIATION => 'Graduates needing remediation in college',
-      GRADUATES_PERSISTENCE => 'Graduates who returned to college for a second year',
-      GRADUATES_COLLEGE_VOCATIONAL => 'Graduates enrolled in college or vocational program',
-      GRADUATES_TWO_YEAR => 'Graduates pursuing 2-year college or vocational program',
-      GRADUATES_FOUR_YEAR => 'Graduates pursuing a 4-year college or vocational program',
-      GRADUATES_OUT_OF_STATE => 'Graduates attending out-of-state college',
-      GRADUATES_IN_STATE => 'Graduates attending in-state college'
-    }
-
     # characteristics cache accessors for college readiness pane
     CHAR_CACHE_ACCESSORS = [
       {
