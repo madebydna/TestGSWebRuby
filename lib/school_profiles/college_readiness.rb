@@ -38,6 +38,7 @@ module SchoolProfiles
     GRADUATES_IN_STATE = 'Percent of students who will attend in-state colleges'
     # States for which college success data has been loaded
     CS_STATES_WHITELIST = ['AR', 'CO', 'DE', 'FL', 'GA', 'IL', 'IN', 'MO', 'NJ', 'NY', 'OH', 'OK', 'TX', 'WI', 'PA']
+    REMEDIATION_SUBGROUPS = ['Graduates needing Reading remediation in college', 'Graduates needing English remediation in college', 'Graduates needing Science remediation in college', 'Graduates needing Math remediation in college']
     # Order matters - items display in configured order
 
     # characteristics cache accessors for college success pane
@@ -226,7 +227,7 @@ module SchoolProfiles
 
     def included_data_types(cache_accessors, cache = nil)
       # Required for the sort in data_type_hashes
-      remediation_subgroups = ['Graduates Needing Reading Remediation in College', 'Graduates Needing English Remediation in College', 'Graduates Needing Science Remediation in College', 'Graduates Needing Math Remediation in College']
+      remediation_subgroups = REMEDIATION_SUBGROUPS
       config_for_cache = cache_accessors.select { |c| cache.nil? || c[:cache] == cache }
       config_for_cache.map { |mapping| mapping[:data_key] } + remediation_subgroups
       end
@@ -281,7 +282,7 @@ module SchoolProfiles
       if key == GRADUATES_REMEDIATION
         arr = values.map do |hash|
           if hash.has_key?('subject')
-            hash.merge('data_type' => 'Graduates Needing ' + hash['subject'].capitalize + ' Remediation in College')
+            hash.merge('data_type' => 'Graduates needing ' + hash['subject'].capitalize + ' remediation in college')
           else
             hash.merge('data_type' => key)
           end

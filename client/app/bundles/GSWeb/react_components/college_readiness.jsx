@@ -120,7 +120,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     let tabs = this.filteredData().map((pane,idx) => {
       return pane.title
     });
-    return tabs.includes('College success');
+    return (tabs.includes('College success') || tabs.includes('Éxito universitario'));
   }
 
   render() {
