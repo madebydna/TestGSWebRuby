@@ -30,8 +30,18 @@ $space-between-profile-modules: $spacing-extra-large;
 
   .no-data {
     color: #71787e;
+    .module_feedback {
+      float: none;
+      display: block;
+      .links {
+        white-space: nowrap;
+      }
+    }
   }
 
+  .more-reveal {
+    display: none
+  }
 
   .gs-rating-circle-inline {
     border-radius: 50%;

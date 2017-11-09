@@ -16,7 +16,7 @@ class HomeController < ApplicationController
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
     set_meta_tags title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
                   og: {
-                      title: "K-12 school quality information and parenting resources.",
+                      title: "K-12 school quality information and parenting resources",
                       description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",
                       site_name: 'GreatSchools.org',
                       image: {
@@ -31,7 +31,7 @@ class HomeController < ApplicationController
                       url: home_url
                   },
                   twitter: {
-                      image: asset_full_url('assets/share/logo-ollie-large.png'),
+                      image: asset_full_url('assets/share/GreatSchoolsLogo-social-optimized.png'),
                       card: 'Summary',
                       site: '@GreatSchools',
                       description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'

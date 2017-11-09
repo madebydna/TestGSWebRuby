@@ -51,7 +51,8 @@ export default class SchoolProfileComponent extends React.Component {
     analytics_id: PropTypes.string,
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired
+      content: PropTypes.string.isRequired,
+      element_type: PropTypes.string.isRequired
     }),
     qualaroo_module_link: PropTypes.string
   };
@@ -190,10 +191,10 @@ export default class SchoolProfileComponent extends React.Component {
 
   title() {
     return (
-      <div>
+      <div  data-ga-click-label={this.props.title}>
         { this.props.title }&nbsp;
         { this.props.info_text && 
-          <QuestionMarkTooltip content={this.props.info_text} /> }
+          <QuestionMarkTooltip content={this.props.info_text} element_type='toptooltip' /> }
       </div>
     )
   }
@@ -222,7 +223,7 @@ export default class SchoolProfileComponent extends React.Component {
     })
 
     return (
-      <div>
+      <div data-ga-click-label={this.props.title}>
         <div className={'tabs-panel tabs-panel_selected'}>
           <TabsWithPanes
             key={this.state.active}
@@ -258,8 +259,8 @@ export default class SchoolProfileComponent extends React.Component {
 
   footer() {
     return (
-      <div>
-        <InfoBox content={this.props.sources}>{ t('See notes') }</InfoBox>
+      <div data-ga-click-label={this.props.title}>
+        <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={this.props.qualaroo_module_link} />
       </div>
     )

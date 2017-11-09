@@ -75,9 +75,9 @@ export default class OspSchoolInfo extends React.Component {
     let qualaroo_module_link = this.props.qualaroo_module_link;
     let sourcesNode = <Sources sources={this.props.sources} />
     return (
-      <div>
+      <div  data-ga-click-label='General Information'>
         <Remodal gaLabel={this.props.gaLabel} gaAction={this.props.gaAction} content={sourcesNode}>
-          <InfoBox>{ t('sources') }</InfoBox>
+          <InfoBox element_type="sources">{ t('sources') }</InfoBox>
         </Remodal>
         <GiveUsFeedback content={qualaroo_module_link} />
       </div>
@@ -116,9 +116,9 @@ export default class OspSchoolInfo extends React.Component {
   }
 
   render() {
-    let titleElement = <div>
+    let titleElement = <div data-ga-click-label="General Information">
       { t('General Information') }
-      &nbsp;{ this.hasData() && <QuestionMarkTooltip content={t('general_information_tooltip')} /> }
+      &nbsp;{ this.hasData() && <QuestionMarkTooltip content={t('general_information_tooltip')}  element_type='toptooltip' /> }
       <AnchorButton href={ this.props.osp_link } >{ t('edit') }</AnchorButton>
     </div>
 

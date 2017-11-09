@@ -5,6 +5,10 @@ es:
       subtitle_html: >
         ¿Está esta escuela ofreciendo oportunidades a todos sus estudiantes, o está dejando a algunos atrás?
         Las escuelas exitosas están trabajando para eliminar las diferencias en logros académicos.
+      no_data_summary_html: >
+        <p>En esta sección, publicamos una calificación que refleja qué tan bien esta escuela satisface las necesidades de sus estudiantes en desventaja, incluidos los de familias de bajos ingresos y razas/etnias desatendidas, en relación con todos sus estudiantes y en comparación con otras escuelas del estado.</p>
+        <p>Este estado no proporciona suficientes datos para calcular La Calificación General de Equidad de GreatSchools.</p>
+        <p class="module_feedback">¿Le sería útil tener este tipo de información para esta escuela? <span class="links">%{useful_link}%{not_useful_link}</span></p>
       'sources_title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
       'Great schools rating': 'La Calificación General de Equidad de GreatSchools'
       'source': 'Fuente'
@@ -29,8 +33,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
-        escuela. ¿Hay diferencias grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?</p>
+        escuela. ¿Hay diferencias%{more}grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
+        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?%{end_more}</p>
       narrative_2_html: >
         <h3 class="negative">Un signo preocupante:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas pueden estar quedándose atrás en
@@ -40,8 +44,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
-        escuela. ¿Hay diferencias grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?</p>
+        escuela. ¿Hay diferencias%{more}grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
+        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?%{end_more}</p>
       narrative_3_html: >
         <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando tan bien como
@@ -50,8 +54,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">Vea abajo %{sections} para ver cómo les va a los distintos grupos de estudiantes en esta
-        escuela. ¿Hay diferencias grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
-        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?</p>
+        escuela. ¿Hay diferencias%{more}grandes? Hable con un maestro u otros padres sobre cómo interpretar esta información.
+        ¿Qué está haciendo la escuela para ayudar a que todos los estudiantes tengan éxito? ¿Cómo puede ayudar?%{end_more}</p>
       narrative_4_html: >
         <h3 class="positive">Un signo prometedor:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mejor que otros
@@ -60,8 +64,8 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
-        haciendo algo bien! Explore %{sections} para informarse más. Hable con un maestro u otros padres sobre cómo
-        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.</p>
+        haciendo algo bien! Explore %{sections} para%{more}informarse más. Hable con un maestro u otros padres sobre cómo
+        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.%{end_more}</p>
       narrative_5_html: >
         <h3 class="positive">¡Buenas noticias!:</h3>
         <p>En esta escuela los estudiantes de las comunidades más desfavorecidas se están desempeñando mucho mejor que
@@ -70,5 +74,5 @@ es:
         <p class="parent-tip"><img src='/assets/school_profiles/owl.png' />
         <span class="speech-bubble left">Consejos para padres:</span></p>
         <p class="footnote">¡Las escuelas que eliminan las diferencias entre distintos grupos de estudiantes están
-        haciendo algo bien! Explore %{sections} para informarse más. Hable con un maestro u otros padres sobre cómo
-        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.</p>
+        haciendo algo bien! Explore %{sections} para%{more}informarse más. Hable con un maestro u otros padres sobre cómo
+        esta escuela está ayudando a todos los estudiantes a tener éxito – y cómo puede ayudar.%{end_more}</p>

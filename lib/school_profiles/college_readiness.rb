@@ -93,7 +93,8 @@ module SchoolProfiles
 
     def faq
       @_faq ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.college_readiness.faq'),
-                        content: I18n.t(:content_html, scope: 'lib.college_readiness.faq'))
+                        content: I18n.t(:content_html, scope: 'lib.college_readiness.faq'),
+                        element_type: 'faq')
     end
 
     def rating
