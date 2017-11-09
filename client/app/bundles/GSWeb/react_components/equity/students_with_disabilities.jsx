@@ -40,7 +40,7 @@ export default class StudentsWithDisabilities extends SchoolProfileComponent {
     if(this.state.active < this.filteredData().length) {
       return <div>
         { super.activePane() }
-        <ShareYourFeedbackCta questionText="Do you feel this school effectively supports students with learning differences?" buttonClicked={this.goToLastTab} />
+        <ShareYourFeedbackCta buttonText={this.props.feedback.button_text} questionText={this.props.feedback.feedback_cta} buttonClicked={this.goToLastTab} />
       </div>
     }
     return <CommunityFeedback/>
