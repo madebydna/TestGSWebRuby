@@ -277,6 +277,7 @@ module SchoolProfiles
     end
 
     def add_data_type(key,values)
+      # Special handling for Remediation data, which is organized by subject
       if key == GRADUATES_REMEDIATION
         arr = values.map do |hash|
           if hash.has_key?('subject')
