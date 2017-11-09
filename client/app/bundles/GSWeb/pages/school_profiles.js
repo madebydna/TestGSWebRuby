@@ -361,5 +361,5 @@ $(window).on('load', function() {
   });
 
   registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
-  runInterrupts(['mobileOverlayAd', 'profileTour', 'qualaroo'])
+  runInterrupts(['profileTour', 'mobileOverlayAd', 'qualaroo'])
 });
