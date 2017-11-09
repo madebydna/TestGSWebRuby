@@ -276,11 +276,14 @@ export default class ReviewForm extends React.Component {
     });
   }
 
-  handleReviewJoinModalFailure() {
+  handleReviewJoinModalFailure(error = 'Something went wrong logging you in') {
+    if(error == 'closed') {
+      error = 'You\'re review won\'t be saved until you click the submit button and log in.';
+    }
     this.setState({
       disabled: false,
       errorMessages: {
-        '1': 'Something went wrong logging you in'
+        '1': error
       }
     });
   }

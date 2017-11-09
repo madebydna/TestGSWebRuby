@@ -168,6 +168,13 @@ assign(JoinModal.prototype, {
       this.initializeForm();
       this.initializeFacebookSignIn();
       this.initializeEventHandlersForTabs();
+      this.getDeferred().always(() => {
+        this.$getJoinForm().off('submit');
+        this.$getSigninForm().off('submit');
+        this.$getModal().off('click', 'a[href="#login"]');
+        this.$getModal().off('click', 'a[href="#join"]');
+        this.$getModal().off('click', '.js-facebook-signin');
+      });
     }
 
 });
