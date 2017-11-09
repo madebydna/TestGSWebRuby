@@ -223,8 +223,9 @@ module SchoolProfiles
     end
 
     def included_data_types(cache_accessors, cache = nil)
+      remediation_subgroups = ['Percent Needing Remediation: Reading', 'Percent Needing Remediation: English', 'Percent Needing Remediation: Science', 'Percent Needing Remediation: Math']
       config_for_cache = cache_accessors.select { |c| cache.nil? || c[:cache] == cache }
-      config_for_cache.map { |mapping| mapping[:data_key] }
+      config_for_cache.map { |mapping| mapping[:data_key] } + remediation_subgroups
       end
 
     def data_type_formatting_map(cache_accessors)
@@ -258,17 +259,35 @@ module SchoolProfiles
               h['breakdown'] == 'All students'
         end
         # This is for characteristics
-        values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
+
+        unless key == GRADUATES_REMEDIATION
+          values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
+        end
         GSLogger.error(:misc, nil,
                        message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
                        vars: {school: {state: @school_cache_data_reader.school.state,
                                        id: @school_cache_data_reader.school.id}
                        }) if values.size > 1
+        add_data_type(key,values)
+      end
+      hashes.flatten.compact.select(&with_school_values).sort_by { |o| included_data_types(cache_accessors).index( o['data_type']) }
+    end
+
+    def add_data_type(key,values)
+      if key == GRADUATES_REMEDIATION
+        arr = values.map do |hash|
+          if hash.has_key?('subject')
+            hash.merge('data_type' => 'Percent Needing Remediation: ' + hash['subject'].capitalize)
+          else
+            hash.merge('data_type' => key)
+          end
+        end
+        arr
+      else
         hash = values.first
         hash['data_type'] = key if hash
         hash
       end
-      hashes.compact.select(&with_school_values).sort_by { |o| included_data_types(cache_accessors).index( o['data_type']) }
     end
 
     def school_value_present?(value)
