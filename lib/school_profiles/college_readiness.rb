@@ -336,7 +336,7 @@ module SchoolProfiles
       Array.wrap(data_type_hashes(cache_accessors)).map do |hash|
         next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < DATA_CUTOFF_YEAR
         data_type = hash['data_type']
-        formatting = data_type_formatting_map(cache_accessors)[data_type]
+        formatting = data_type_formatting_map(cache_accessors)[data_type] || [:round_unless_less_than_1, :percent]
         visualization = data_type_visualization_map(cache_accessors)[data_type]
         range = data_type_range_map(cache_accessors)[data_type]
         state = @school_cache_data_reader.school.state
@@ -364,7 +364,7 @@ module SchoolProfiles
     def college_data_array(pane)
       cache_accessors = pane == 'college_success' ? CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS : CHAR_CACHE_ACCESSORS
       data_values = data_values(cache_accessors).map do |score_item|
-        {label: score_item.score.to_f.round.to_s,
+        {label: score_item.score.format.to_s.chomp('%'),
          score: score_item.score.value.to_i,
          breakdown: score_item.label,
          state_average: score_item.state_average.value.to_i,
