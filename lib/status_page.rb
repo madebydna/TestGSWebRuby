@@ -6,9 +6,7 @@ class StatusPage
   end
 
   def call(env)
-    unless env['PATH_INFO'] == '/gsr/admin/status'
-      @app.call(env)
-    else
+    if env['PATH_INFO'] == '/gsr/admin/status'
       db_status_local = db_status
       solr_status_local = solr_status
 
@@ -16,10 +14,13 @@ class StatusPage
       solr_text = "Solr: #{solr_status_local ? 'OK' : 'FAILED'}"
       version_text = version_string
 
-      [ ( (db_status_local && solr_status_local) ? 200 : 503),
-        {'Content-Type' => 'text/plain'},
-        [ [db_text, solr_text, version_text].join("\n\n")]
-      ]
+      response_code = (db_status_local && solr_status_local) ? 200 : 503
+      headers = {'Content-Type' => 'text/plain',
+                 'cache-control' => 'private, must-revalidate, max-age=0'}
+      body = [[db_text, solr_text, version_text].join("\n\n")]
+      [response_code, headers, body]
+    else
+      @app.call(env)
     end
   end
 
