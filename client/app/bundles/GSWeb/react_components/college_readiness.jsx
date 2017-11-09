@@ -12,6 +12,8 @@ import RatingWithBar from 'react_components/equity/graphs/rating_with_bar';
 import ShareYourFeedbackCollegeReadiness from 'react_components/school_profiles/share_your_feedback_college_readiness';
 import BasicDataModuleLayout from 'react_components/school_profiles/basic_data_module_layout';
 import SharingModal from 'react_components/school_profiles/sharing_modal';
+import Drawer from './drawer';
+import { t } from '../util/i18n';
 
 export default class CollegeReadiness extends SchoolProfileComponent {
 
@@ -69,12 +71,8 @@ export default class CollegeReadiness extends SchoolProfileComponent {
   createDataComponent(values) {
     let customScoreRanges = ["Average SAT score", "Calificación media de los SAT", "Average ACT score", "Calificación media de ACT"];
     if (values) {
-      // This is for titles in the test scores
-      if(!(values instanceof Array)){
-        return <TestScores test_scores={values}/>;
-      }
-
       if (values.length > 0) {
+        // Build array of college readiness data rows
         let dataRows = values.map(function(value, index) {
           if (value.display_type == "person") {
             return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
@@ -97,8 +95,21 @@ export default class CollegeReadiness extends SchoolProfileComponent {
               <BarGraphBase {...value} />
             </BasicDataModuleRow>;
           }
-        }.bind(this))
-        return <div>{dataRows}</div>;
+        }.bind(this));
+        // Put rows in drawer if more than three
+        let visibleDataRows = dataRows.slice(0,3);
+        let draweredDataRows = dataRows.slice(3);
+        return <div>
+                  {visibleDataRows}
+                  {draweredDataRows.length > 0 &&
+                    <div className="rating-container__more-items">
+                      <Drawer
+                        content={draweredDataRows}
+                        closedLabel={t('Show more')}
+                        openLabel={t('Show less')}
+                      />
+                    </div>}
+              </div>
       } else {
         return null;
       }
