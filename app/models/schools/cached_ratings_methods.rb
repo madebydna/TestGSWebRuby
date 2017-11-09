@@ -4,8 +4,25 @@ module CachedRatingsMethods
   GREATSCHOOLS_RATINGS_NAMES = ['GreatSchools rating','Test score rating', 'Student growth rating', 'College readiness rating', 'Climate rating']
   HISTORICAL_RATINGS_KEYS = %w(year school_value_float)
 
+  # 151: Advanced Course Rating
+  # 155: Test Score Rating
+  # 156: College Readiness Rating
+  # 157: Student Progress Rating
+  # 158: Equity Rating
+  # 159: Academic Progress Rating
+  # 160: Summary Rating
+
   def ratings
     cache_data['ratings'] || []
+  end
+
+  # this will return true if cached ratings data is old format and not gsdata
+  def ratings_cache_old?
+    @_ratings_cache_old ||= ratings.instance_of?(Array)
+  end
+
+  def ratings_cache_return_arr(key_name)
+    ratings.select { |key, value| value if key == key_name }
   end
 
   # ignore nil criteria
@@ -16,70 +33,199 @@ module CachedRatingsMethods
   end
 
   def ratings_having_max_year(ratings)
-    return ratings unless ratings.present?
-    year = ratings.max_by { |rating| rating['year'] }['year']
-    ratings.select { |rating| rating['year'] == year }
+    if ratings_cache_old?
+      return ratings unless ratings.present?
+      year = ratings.max_by { |rating| rating['year'] }['year']
+      ratings.select { |rating| rating['year'] == year }
+    end
   end
 
   def overall_gs_rating
-    great_schools_rating.to_s.downcase
+    if ratings_cache_old?
+      great_schools_rating.to_s.downcase
+    else
+      rating_for_key('Summary Rating')
+    end
   end
 
   def great_schools_rating
-    school_rating_by_id(174)
+    if ratings_cache_old?
+      school_rating_by_id(174)
+    else
+      rating_for_key('Summary Rating')
+    end
   end
 
   def great_schools_rating_year
-    school_rating_year_by_id(174)
+    if ratings_cache_old?
+      school_rating_year_by_id(174)
+    else
+      rating_year_for_key('Summary Rating')
+    end
   end
 
   def test_scores_rating
-    school_rating_by_id(164)
+    if ratings_cache_old?
+      school_rating_by_id(164)
+    else
+      rating_for_key('Test Score Rating')
+    end
   end
 
   def test_scores_rating_hash
-    school_rating_hash_by_id(164)
+    if ratings_cache_old?
+      school_rating_hash_by_id(164)
+    else
+      test_scores_rating_hash_map_to_old_format(rating_hash_for_key_and_breakdown('Test Score Rating'), 'Test Score Rating')
+    end
   end
 
   def test_scores_all_rating_hash
-    school_rating_all_hash_by_id(164)
+    if ratings_cache_old?
+      school_rating_all_hash_by_id(164)
+    else
+      test_scores_rating_hash_loop_through_and_update(rating_hashes_for_key('Test Score Rating'), 'Test Score Rating')
+    end
   end
 
   def student_growth_rating
-    school_rating_by_id(165)
+    if ratings_cache_old?
+      school_rating_by_id(165)
+    else
+      rating_for_key('Student Progress Rating')
+    end
   end
 
   def student_growth_rating_year
-    school_rating_year_by_id(165)
+    if ratings_cache_old?
+      school_rating_year_by_id(165)
+    else
+      rating_year_for_key('Student Progress Rating')
+    end
   end
 
   def student_growth_rating_hash
-    school_rating_hash_by_id(165)
+    if ratings_cache_old?
+      school_rating_hash_by_id(165)
+    else
+      rating_hash_for_key_and_breakdown('Student Progress Rating')
+    end
   end
 
   def college_readiness_rating_hash
-    school_rating_hash_by_id(166)
+    if ratings_cache_old?
+      school_rating_hash_by_id(166)
+    else
+      rating_hash_for_key_and_breakdown('College Readiness Rating')
+    end
   end
 
   def college_readiness_rating
-    school_rating_by_id(166)
+    if ratings_cache_old?
+      school_rating_by_id(166)
+    else
+      rating_for_key('College Readiness Rating')
+    end
   end
 
   def college_readiness_rating_year
-    school_rating_year_by_id(166)
+    if ratings_cache_old?
+      school_rating_year_by_id(166)
+    else
+      rating_year_for_key('College Readiness Rating')
+    end
   end
 
   def historical_test_scores_ratings
-    school_historical_rating_hashes_by_id(164)
+    if ratings_cache_old?
+      school_historical_rating_hashes_by_id(164)
+    else
+      []
+    end
   end
 
   def historical_college_readiness_ratings
-    school_historical_rating_hashes_by_id(166)
+    if ratings_cache_old?
+      school_historical_rating_hashes_by_id(166)
+    else
+      []
+    end
   end
 
   def historical_student_growth_ratings
-    school_historical_rating_hashes_by_id(165)
+    if ratings_cache_old?
+      school_historical_rating_hashes_by_id(165)
+    else
+      []
+    end
   end
+
+  ####################################################################
+  #
+  # START - use with GSData
+  #
+  ####################################################################
+
+  def rating_year_for_key(key)
+    hash = rating_hash_for_key_and_breakdown(key)
+    if hash.present?
+      year_for_date(hash['source_date_valid'])
+    end
+  end
+
+  def year_for_date(str_date)
+    DateTime.parse(str_date).strftime('%Y').to_i if str_date.present?
+  end
+
+  def rating_for_key_and_breakdown(key, breakdown)
+    hash = rating_hash_for_key_and_breakdown(key, breakdown)
+    hash['school_value'].to_i if hash.present?
+  end
+
+  def rating_for_key(key)
+    hash = rating_hash_for_key_and_breakdown(key)
+    hash['school_value'].to_i if hash.present?
+  end
+
+  def select_by_max_date(array_of_hashes)
+    max_date = array_of_hashes.map{|h| h['source_date_valid']}.max
+    array_of_hashes.select { |dv| dv['source_date_valid'] == max_date }.first
+  end
+
+  # nil breakdown returns overall rating for key
+  # returns ratings hash for most recent year
+  def rating_hash_for_key_and_breakdown(key, breakdown = nil)
+    arr_of_h = ratings[key].select{ |h| h['breakdowns'] == breakdown } if ratings[key].present?
+    if arr_of_h.present?
+      select_by_max_date(arr_of_h)
+    end
+  end
+
+  # return array of ratings hashes for key
+  # TODO - need to figure out the correct format to match code that expects old format
+  #       - options include mapping to old format, change code to use new format.
+  #       - creates hash for react as well as an aside
+  def rating_hashes_for_key(key)
+    ratings[key] if ratings[key].present?
+  end
+
+  def test_scores_rating_hash_loop_through_and_update(array, data_type)
+    array.map { | hash |  test_scores_rating_hash_map_to_old_format(hash, data_type) }
+  end
+
+  def test_scores_rating_hash_map_to_old_format(hash, data_type)
+    hash['school_value_float'] = hash['school_value'].to_i
+    hash['year'] = year_for_date(hash['source_date_valid']).to_i
+    hash['test_data_type_display_name'] = data_type
+    hash['breakdown'] = hash['breakdowns']
+    hash
+  end
+
+  ####################################################################
+  #
+  # END - use with GSData
+  #
+  ####################################################################
 
   def school_rating_hash_by_id(rating_id, level_code=nil)
     raise 'Must provide rating data type ID as first argument' unless rating_id
