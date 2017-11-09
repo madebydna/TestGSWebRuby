@@ -447,7 +447,7 @@ module SchoolProfiles
     end
 
     def props
-      @_props ||= [get_props('college_readiness'), get_props('college_success')].reject {|data_for_pane| data_for_pane.empty?}
+      @_props ||= [get_props('college_readiness'), get_props('college_success')].reject(&:empty?)
     end
 
     def sources_for_view(hash)
