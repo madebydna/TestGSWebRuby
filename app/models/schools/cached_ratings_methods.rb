@@ -40,14 +40,6 @@ module CachedRatingsMethods
     end
   end
 
-  def test_scores_low_income_rating_year
-
-  end
-
-  def test_scores_low_income_rating
-
-  end
-
   def overall_gs_rating
     if ratings_cache_old?
       great_schools_rating.to_s.downcase
@@ -84,7 +76,7 @@ module CachedRatingsMethods
     if ratings_cache_old?
       school_rating_hash_by_id(164)
     else
-      test_scores_rating_hash_map_to_old_format(rating_hash_for_key_and_breakdown('Test Score Rating'))
+      test_scores_rating_hash_map_to_old_format(rating_hash_for_key_and_breakdown('Test Score Rating'), 'Test Score Rating')
     end
   end
 
@@ -92,7 +84,7 @@ module CachedRatingsMethods
     if ratings_cache_old?
       school_rating_all_hash_by_id(164)
     else
-      test_scores_rating_hash_loop_through_and_update(rating_hashes_for_key('Test Score Rating'))
+      test_scores_rating_hash_loop_through_and_update(rating_hashes_for_key('Test Score Rating'), 'Test Score Rating')
     end
   end
 
@@ -182,7 +174,7 @@ module CachedRatingsMethods
   end
 
   def year_for_date(str_date)
-    DateTime.new(str_date).strftime('%Y').to_i if str_date.present?
+    DateTime.parse(str_date).strftime('%Y').to_i if str_date.present?
   end
 
   def rating_for_key_and_breakdown(key, breakdown)
@@ -217,14 +209,15 @@ module CachedRatingsMethods
     ratings[key] if ratings[key].present?
   end
 
-  def test_scores_rating_hash_loop_through_and_update(array)
-    array.map { | hash |  test_scores_rating_hash_map_to_old_format(hash) }
+  def test_scores_rating_hash_loop_through_and_update(array, data_type)
+    array.map { | hash |  test_scores_rating_hash_map_to_old_format(hash, data_type) }
   end
 
-  def test_scores_rating_hash_map_to_old_format(hash)
+  def test_scores_rating_hash_map_to_old_format(hash, data_type)
     hash['school_value_float'] = hash['school_value'].to_i
     hash['year'] = year_for_date(hash['source_date_valid']).to_i
-    hash['test_data_type_display_name'] = 'Test score rating'
+    hash['test_data_type_display_name'] = data_type
+    hash['breakdown'] = hash['breakdowns']
     hash
   end
 
