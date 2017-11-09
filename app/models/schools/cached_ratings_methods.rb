@@ -33,11 +33,9 @@ module CachedRatingsMethods
   end
 
   def ratings_having_max_year(ratings)
-    if ratings_cache_old?
-      return ratings unless ratings.present?
-      year = ratings.max_by { |rating| rating['year'] }['year']
-      ratings.select { |rating| rating['year'] == year }
-    end
+    return ratings unless ratings.present?
+    year = ratings.max_by { |rating| rating['year'] }['year']
+    ratings.select { |rating| rating['year'] == year }
   end
 
   def overall_gs_rating
