@@ -75,7 +75,7 @@
 <%= render 'nav/footer' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
-<%= stylesheet_link_tag("post_load", async: true) unless content_for?(:page_stylesheets) %>
+<%= stylesheet_link_tag "deprecated_post_load", :async => true %>
 <%= javascript_include_tag "deprecated_post_load", :async => true %>
 <%= yield :javascript_includes %>
 </body>
