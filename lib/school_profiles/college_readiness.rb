@@ -5,6 +5,7 @@ module SchoolProfiles
     include SharingTooltipModal
     include RatingSourceConcerns
 
+    DATA_CUTOFF_YEAR = 2015
     # Constants for college readiness pane
     FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
     UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
@@ -309,7 +310,7 @@ module SchoolProfiles
 
     def data_values(cache_accessors)
       Array.wrap(data_type_hashes(cache_accessors)).map do |hash|
-        next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < 2015
+        next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < DATA_CUTOFF_YEAR
         data_type = hash['data_type']
         formatting = data_type_formatting_map(cache_accessors)[data_type]
         visualization = data_type_visualization_map(cache_accessors)[data_type]
@@ -391,7 +392,11 @@ module SchoolProfiles
                                  description: rating_description, methodology: rating_methodology,
                                  more_anchor: 'collegereadinessrating')
       end
-      content << data_type_hashes(CHAR_CACHE_ACCESSORS + CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).reduce('') do |string, hash|
+      data_array_cr = data_type_hashes(CHAR_CACHE_ACCESSORS)
+      # Remove stale college success data from sources
+      data_array_cs = data_type_hashes(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).reject {|hash| hash["year"].to_i < DATA_CUTOFF_YEAR }
+      data_array = data_array_cr + data_array_cs
+      content << data_array.reduce('') do |string, hash|
         string << sources_for_view(hash)
       end
       content << '</div>'
