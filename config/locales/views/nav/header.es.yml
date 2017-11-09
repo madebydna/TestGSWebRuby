@@ -10,7 +10,7 @@ es:
         sign_in: Ingresar
         sign_out: Desconectarse
         language: En Español
-        donate: Donate<span class="icon-heart"></span>
+        donate: Donate
         about_us: Sobre nosotros
         featured:
           title: Featured
