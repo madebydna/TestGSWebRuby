@@ -4,6 +4,8 @@ import {
 } from 'components/ads/mobile_overlay';
 import log from 'util/log';
 
+window.GS_interruptManager_interrupts == window.GS_interruptManager_interrupts || {};
+
 export function mobileOverlayAd(nextInterrupt) {
   log('mobile overlay interrupt');
   setMobileOverlayAdDeferred($.Deferred().fail(function() {
@@ -24,17 +26,13 @@ const interrupts = {
 }
 
 export function registerPredefinedInterrupts(array) {
-  if(window.GS_interruptManager) {
-    array.forEach((name) => {
-      GS_interruptManager.registerInterrupt(name, interrupts[name]);
-    })
-  }
+  array.forEach((name) => {
+    GS_interruptManager_interrupts[name] = interrupts[name];
+  })
 }
 
-export function registerInterrupt(...args) {
-  if(window.GS_interruptManager) {
-    GS_interruptManager.registerInterrupt(...args);
-  }
+export function registerInterrupt(name, callback) {
+  GS_interruptManager_interrupts[name] = callback;
 }
 
 export function runInterrupts(array) {
