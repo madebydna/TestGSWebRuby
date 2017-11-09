@@ -711,6 +711,10 @@
       padding: 0px;
       float: left;
   }
+
+  .buffer {
+    margin: 0 20em;
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
@@ -730,10 +734,12 @@
   }
 
   .donate {
-    border: 2px solid #35d998;
+    border: 1px solid #35d998;
     border-radius: 3px;
-    padding: 3px 15px;
+  }
 
+  .navigation {
+    padding: 0px
   }
 }
 
