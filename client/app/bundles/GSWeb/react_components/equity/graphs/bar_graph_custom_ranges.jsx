@@ -11,8 +11,7 @@ export default class BarGraphCustomRanges extends BarGraphBase {
     state_average: React.PropTypes.number,
     state_average_label: React.PropTypes.string,
     lower_range: React.PropTypes.number,
-    upper_range: React.PropTypes.number,
-    is_percent: React.PropTypes.bool
+    upper_range: React.PropTypes.number
   }
 
   constructor(props) {
@@ -34,13 +33,6 @@ export default class BarGraphCustomRanges extends BarGraphBase {
       return (<div className="state-average">
         {t('State avg')} {this.props.state_average_label || this.props.state_average}
       </div>)
-    }
-  }
-
-  renderStateAverageArrow(){
-    if(this.validStateAverageValue(this.props.state_average)) {
-      let style_arrow_up = {left: this.props.state_average + "%", top:'11px'}
-      return <div className="arrow-up"><span style={style_arrow_up}></span></div>
     }
   }
 

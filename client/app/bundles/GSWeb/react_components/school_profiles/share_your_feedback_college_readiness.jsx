@@ -24,7 +24,7 @@ const ShareYourFeedbackCollegeReadiness = ({questionText, buttonClicked, buttonT
 ShareYourFeedbackCollegeReadiness.PropTypes = {
   questionText: PropTypes.string.isRequired,
   buttonClicked: PropTypes.func.isRequired,
-  buttonText: PropTypes.string
+  buttonText: PropTypes.string.isRequired
 }
 
 export default ShareYourFeedbackCollegeReadiness;
