@@ -354,10 +354,16 @@ module SchoolProfiles
       [{narration: narration(pane.to_sym), title: pane.humanize, values: data_values}]
     end
 
+    def qualaroo_params
+      state = @school_cache_data_reader.school.state.upcase
+      school = @school_cache_data_reader.school.id.to_s
+      '?' + 'school=' + school + '&' + 'state=' + state
+    end
+
     def feedback_data
       @_feedback_data ||= {
         'feedback_cta' => I18n.t('feedback_cta', scope:'school_profiles.college_readiness'),
-        'feedback_link' => 'https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6',
+        'feedback_link' => 'https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6' + qualaroo_params,
         'button_text' =>  I18n.t('Answer', scope:'school_profiles.college_readiness')
       }
     end
