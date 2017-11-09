@@ -1,9 +1,9 @@
 class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
-  CACHE_KEY = 'ratings2'.freeze
+  CACHE_KEY = 'ratings'.freeze
   DATA_TYPE_IDS = [151,155,156,157,158,159,160].freeze
 
   def self.listens_to?(data_type)
-    :ratings2 == data_type
+    :ratings == data_type
   end
 
   def build_hash_for_cache

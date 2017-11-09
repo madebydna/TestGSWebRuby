@@ -65,8 +65,7 @@ class Cacher
         progress_bar:     ProgressBarCaching::ProgressBarCacher,
         feed_test_scores: FeedTestScoresCacher,
         gsdata:           GsdataCaching::GsdataCacher,
-        ratings:          RatingsCaching::RatingsCacher,
-        ratings2:         RatingsCaching::GsdataRatingsCacher,
+        ratings:         RatingsCaching::GsdataRatingsCacher,
         directory:        DirectoryCaching::DirectoryCacher,
         feed_characteristics: FeedCharacteristicsCaching::FeedCharacteristicsCacher
     }[key.to_s.to_sym]
