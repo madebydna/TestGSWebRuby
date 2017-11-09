@@ -92,7 +92,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
             </BasicDataModuleRow>;
           } else {
             return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <BarGraphBase {...value} />
+              <PersonBar {...value} invertedRatings={true} />
             </BasicDataModuleRow>;
           }
         }.bind(this));

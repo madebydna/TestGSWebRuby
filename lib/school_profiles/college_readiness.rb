@@ -26,6 +26,10 @@ module SchoolProfiles
     SENIORS_ENROLLED_OTHER = 'Graduating seniors pursuing other college'
     SENIORS_ENROLLED = 'Percent Enrolled in College Immediately Following High School'
     GRADUATES_REMEDIATION = 'Percent Needing Remediation for College'
+    GRADUATES_REMEDIATION_ENGLISH = 'Graduates Needing English Remediation in College'
+    GRADUATES_REMEDIATION_MATH = 'Graduates Needing Math Remediation in College'
+    GRADUATES_REMEDIATION_SCIENCE = 'Graduates Needing Science Remediation in College'
+    GRADUATES_REMEDIATION_READING = 'Graduates Needing Reading Remediation in College'
     GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year'
     GRADUATES_COLLEGE_VOCATIONAL = 'Percent enrolled in any institution of higher learning in the last 0-16 months'
     GRADUATES_TWO_YEAR = 'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months'
@@ -208,8 +212,6 @@ module SchoolProfiles
       I18n.t(key, scope: 'lib.college_readiness.narration', default: I18n.db_t(key, default: key)).html_safe
     end
 
-    def
-
     def info_text
       I18n.t('lib.college_readiness.info_text')
     end
@@ -223,7 +225,8 @@ module SchoolProfiles
     end
 
     def included_data_types(cache_accessors, cache = nil)
-      remediation_subgroups = ['Percent Needing Remediation: Reading', 'Percent Needing Remediation: English', 'Percent Needing Remediation: Science', 'Percent Needing Remediation: Math']
+      # Required for the sort in data_type_hashes
+      remediation_subgroups = ['Graduates Needing Reading Remediation in College', 'Graduates Needing English Remediation in College', 'Graduates Needing Science Remediation in College', 'Graduates Needing Math Remediation in College']
       config_for_cache = cache_accessors.select { |c| cache.nil? || c[:cache] == cache }
       config_for_cache.map { |mapping| mapping[:data_key] } + remediation_subgroups
       end
@@ -277,7 +280,7 @@ module SchoolProfiles
       if key == GRADUATES_REMEDIATION
         arr = values.map do |hash|
           if hash.has_key?('subject')
-            hash.merge('data_type' => 'Percent Needing Remediation: ' + hash['subject'].capitalize)
+            hash.merge('data_type' => 'Graduates Needing ' + hash['subject'].capitalize + ' Remediation in College')
           else
             hash.merge('data_type' => key)
           end
