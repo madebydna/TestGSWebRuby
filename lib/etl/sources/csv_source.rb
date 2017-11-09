@@ -48,7 +48,8 @@ class CsvSource < GS::ETL::Source
     offset = self.offset || context[:offset] || 0
     input_files(context[:dir]).each do |file|
       CSV.open(file, 'r:ISO-8859-1', @options) do |csv|
-        enum = csv.drop(offset)
+        enum = csv
+        enum = enum.drop(offset) unless offset.zero?
         enum = enum.first(max) if max
         enum.each_with_index do |csv_row, row_num|
           row = GS::ETL::Row.new(csv_row.to_hash, row_num)
