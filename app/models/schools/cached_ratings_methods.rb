@@ -86,6 +86,44 @@ module CachedRatingsMethods
     end
   end
 
+  def equity_overview_rating
+    rating_for_key('Equity Rating')
+  end
+
+  def equity_overview_rating_hash
+    rating_hash_for_key_and_breakdown('Equity Rating')
+  end
+
+  def equity_overview_rating_year
+    rating_year_for_key('Equity Rating')
+  end
+
+  def courses_rating
+    rating_for_key('Advanced Course Rating')
+  end
+
+  def courses_rating_array
+    course_subject_group = rating_hashes_for_key('Advanced Course Rating').select {|h| h['breakdown_tags'] == 'course_subject_group'}
+    course_subject_group.each_with_object({}) do |dv, accum|
+      if dv['breakdowns'].present?
+        subject = dv['breakdowns'].downcase.gsub(' ', '_')
+        accum[subject] = dv['school_value'].to_i if dv['school_value'].present?
+      end
+    end
+  end
+
+  def courses_rating_year
+    rating_year_for_key('Advanced Course Rating')
+  end
+
+  def academic_progress_rating_hash
+    rating_hash_for_key_and_breakdown('Academic Progress Rating')
+  end
+
+  def academic_progress_rating_year
+    rating_year_for_key('Academic Progress Rating')
+  end
+
   def student_growth_rating
     if ratings_cache_old?
       school_rating_by_id(165)
@@ -200,9 +238,6 @@ module CachedRatingsMethods
   end
 
   # return array of ratings hashes for key
-  # TODO - need to figure out the correct format to match code that expects old format
-  #       - options include mapping to old format, change code to use new format.
-  #       - creates hash for react as well as an aside
   def rating_hashes_for_key(key)
     ratings[key] if ratings[key].present?
   end
