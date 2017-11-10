@@ -88,10 +88,12 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
-    registerInterrupt('profileTour', function(nextInterrupt) {
-      // minimizeQualarooNudges();
-      $('.js-school-profile-tour-modal').removeClass('hidden');
-    });
+    if($('.js-school-profile-tour-modal').length > 0) {
+      registerInterrupt('profileTour', function(nextInterrupt) {
+        // minimizeQualarooNudges();
+        $('.js-school-profile-tour-modal').removeClass('hidden');
+      });
+    }
   }
 
   initAnchorHashUpdater();

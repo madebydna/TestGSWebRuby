@@ -25,11 +25,13 @@ export function startAutoCloseTimer(duration = 1000 * 30) {
 }
 
 export function onAdFilled() {
-  revealContainer();
-  startAutoCloseTimer();
-  if(deferred) {
-    deferred.resolve();
-  }
+  setTimeout(function() {
+    revealContainer();
+    startAutoCloseTimer();
+    if(deferred) {
+      deferred.resolve();
+    }
+  }, 1000 * 5);
 }
 
 export function onAdNotFilled() {
