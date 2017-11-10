@@ -105,7 +105,7 @@ assign(BaseModal.prototype, {
 
   rejectIfPending: function rejectIfPending() {
     if(this.deferred.state() == 'pending') {
-      this.deferred.reject();
+      this.deferred.reject('closed');
     }
   },
 
