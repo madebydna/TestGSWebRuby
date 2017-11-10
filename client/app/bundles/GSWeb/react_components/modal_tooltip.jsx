@@ -3,7 +3,8 @@ import withAnalyticsTracking from 'util/with_analytics_tracking';
 
 class ModalTooltip extends React.Component {
   static propTypes = {
-    content: React.PropTypes.element
+    content: React.PropTypes.element,
+    className: React.PropTypes.string
   }
 
   constructor(props) {
@@ -25,16 +26,14 @@ class ModalTooltip extends React.Component {
   }
 
   render() {
-    return <div>
+    return <div className={this.props.className}>
       {this.trigger()}
       <div style={{display: 'none'}}>
-        <div ref={(el) => {this.content = el;}}>
-          {this.props.content}
+        <div dangerouslySetInnerHTML={{__html: this.props.content}} ref={(el) => {this.content = el;}}>
         </div>
         <div className="remodal modal_info_box" ref={(el) => {this.remodal = $(el).remodal()}}>
           <button data-remodal-action="close" className="remodal-close"></button>
-          <div className="remodal-content">
-            {this.props.content}
+          <div dangerouslySetInnerHTML={{__html: this.props.content}} className="remodal-content">
           </div>
         </div>
       </div>

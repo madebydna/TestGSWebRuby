@@ -1,12 +1,12 @@
 import React from 'react';
-import Tooltip from './tooltip';
+import ModalTooltip from '../modal_tooltip';
 
 const QuestionMarkTooltip = ({children, ...rest}) => {
   return (
-    <Tooltip {...rest} >
+    <ModalTooltip {...rest} >
       {children} 
       <span className="info-circle icon-question"></span>
-    </Tooltip>
+    </ModalTooltip>
   );
 };
 

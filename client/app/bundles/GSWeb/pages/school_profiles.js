@@ -9,6 +9,7 @@ import '../vendor/fastclick';
 import '../vendor/remodal';
 import SchoolProfileComponent from '../react_components/equity/school_profile_component';
 import StudentsWithDisabilities from '../react_components/equity/students_with_disabilities';
+import CollegeReadiness from '../react_components/college_readiness';
 import ReviewDistribution from '../react_components/review_distribution';
 import Reviews from '../react_components/review/reviews';
 import NearestHighPerformingSchools from '../react_components/nearest_high_performing_schools';
@@ -41,12 +42,19 @@ import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
+import { enableAdCloseButtons } from 'util/advertising';
+import {
+  registerInterrupt,
+  registerPredefinedInterrupts,
+  runInterrupts
+} from 'util/interrupts';
 
 window.store = getStore();
 
 ReactOnRails.register({
   SchoolProfileComponent,
   StudentsWithDisabilities,
+  CollegeReadiness,
   ReviewDistribution,
   Reviews,
   NearestHighPerformingSchools,
@@ -80,8 +88,10 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
-    minimizeQualarooNudges();
-    $('.js-school-profile-tour-modal').removeClass('hidden');
+    registerInterrupt('profileTour', function(nextInterrupt) {
+      // minimizeQualarooNudges();
+      $('.js-school-profile-tour-modal').removeClass('hidden');
+    });
   }
 
   initAnchorHashUpdater();
@@ -351,4 +361,7 @@ $(window).on('load', function() {
     elements: elementIds,
     threshold: 50
   });
+
+  registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
+  runInterrupts(['profileTour', 'mobileOverlayAd', 'qualaroo'])
 });

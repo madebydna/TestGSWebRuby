@@ -262,6 +262,9 @@ export default class ReviewForm extends React.Component {
   onSubmit() {
     this.clearErrors();
     var formValid = this.validateForm();
+     if(!formValid) {
+       analyticsEvent('Profile', 'Display Error Message', 'Review form validation failed');
+     }
     if (formValid) {
       this.submitForm();
     }

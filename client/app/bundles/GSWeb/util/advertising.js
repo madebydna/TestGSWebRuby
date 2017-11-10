@@ -1,3 +1,8 @@
+import {
+  onAdFilled as onMobileOverlayAdFilled,
+  onAdNotFilled as onMobileOverlayAdNotFilled
+} from 'components/ads/mobile_overlay';
+
 window.GS = window.GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
@@ -14,7 +19,15 @@ if (gon.advertising_enabled) {
     if (event.isEmpty) {
       // Hide the entire containing div (which includes the ad div and the ghost text) as no ad has been rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper').hide();
+      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
+        onMobileOverlayAdNotFilled();
+      }
     } else {
+      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
+        onMobileOverlayAdFilled();
+      }
       // Show the ghost text as an ad is rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper .advertisement-text').removeClass('dn').show();
     }
@@ -89,6 +102,10 @@ if (gon.advertising_enabled) {
       'thin_banner': googletag.sizeMapping().
               addSize([768, 120], [[728, 90]]).
               addSize([0, 0], [[320, 50]]).
+              build(),
+      'mobile_overlay': googletag.sizeMapping().
+              addSize([768, 0], []).
+              addSize([0, 0], [[320, 100], [320, 50]]).
               build(),
       'thin_banner_or_box': googletag.sizeMapping().
               addSize([992, 300], [[728, 90], [970, 250]]).
@@ -212,3 +229,12 @@ if (gon.advertising_enabled) {
 
 
 }
+
+function enableAdCloseButtons() {
+  $('.js-closable-ad').on('click', '.close', function(element) {
+    $(this).closest('.js-closable-ad').remove();
+  });
+}
+
+let showAd = GS.ad.showAd;
+export { showAd, enableAdCloseButtons }
