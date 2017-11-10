@@ -51,8 +51,10 @@ export default class SchoolProfileComponent extends React.Component {
     analytics_id: PropTypes.string,
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired
+      content: PropTypes.string.isRequired,
+      element_type: PropTypes.string.isRequired
     }),
+    feedback: PropTypes.object,
     qualaroo_module_link: PropTypes.string
   };
 
@@ -134,7 +136,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else if (displayType == 'person') {
           component = <div>
             {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index}>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} />
               </BasicDataModuleRow>)
             }
@@ -142,7 +144,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else if (displayType == 'person_reversed') {
           component = <div>
             {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index}>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <PersonBar {...value} invertedRatings={true} />
               </BasicDataModuleRow>)
             }
@@ -150,7 +152,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else if (displayType == 'rating') {
           component = <div>
             {values.map((value, index) =>
-                <BasicDataModuleRow {...value} key={index}>
+                <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                   <RatingWithBar {...value} />
                 </BasicDataModuleRow>)
             }
@@ -158,7 +160,7 @@ export default class SchoolProfileComponent extends React.Component {
         } else {
           component = <div>
             {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index}>
+              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
                 <BarGraphBase {...value} />
               </BasicDataModuleRow>)
             }
@@ -171,7 +173,7 @@ export default class SchoolProfileComponent extends React.Component {
   }
 
   handleTabClick(index) {
-    this.setState({active: index, activeInnerTab: 0})
+    this.setState({active: index, activeInnerTab: 0});
   }
 
   icon() {
@@ -190,10 +192,10 @@ export default class SchoolProfileComponent extends React.Component {
 
   title() {
     return (
-      <div>
+      <div  data-ga-click-label={this.props.title}>
         { this.props.title }&nbsp;
         { this.props.info_text && 
-          <QuestionMarkTooltip content={this.props.info_text} /> }
+          <QuestionMarkTooltip content={this.props.info_text} element_type='toptooltip' /> }
       </div>
     )
   }
@@ -222,7 +224,7 @@ export default class SchoolProfileComponent extends React.Component {
     })
 
     return (
-      <div>
+      <div data-ga-click-label={this.props.title}>
         <div className={'tabs-panel tabs-panel_selected'}>
           <TabsWithPanes
             key={this.state.active}
@@ -258,8 +260,8 @@ export default class SchoolProfileComponent extends React.Component {
 
   footer() {
     return (
-      <div>
-        <InfoBox content={this.props.sources}>{ t('See notes') }</InfoBox>
+      <div data-ga-click-label={this.props.title}>
+        <InfoBox content={this.props.sources} element_type="sources">{ t('See notes') }</InfoBox>
         <GiveUsFeedback content={this.props.qualaroo_module_link} />
       </div>
     )

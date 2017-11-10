@@ -14,7 +14,7 @@ module SharingTooltipModal
   ]
 
   def share_tooltip_modal(anchor, school)
-    url = school_url(school)
+    url = StructuredMarkup.ensure_https(school_url(school))
     school_name = school.name
     str = '<div class="sharing-modal">'
     SHARE_LINKS.each do | hash |

@@ -25,9 +25,9 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <p class="footnote">Test scores are important to look at because they indicate where students are performing
-          compared to grade-level standards. Ask the school what it’s doing to help students who are behind. Understand what
+          compared to grade-level standards. Ask the school what it’s%{more}doing to help students who are behind. Understand what
           <a href="/gk/milestones/">on-track learning looks like</a>, and explore higher-performing schools in your
-          area to find the best opportunities for your child to succeed.</p>
+          area to find the best opportunities for your child to succeed.%{end_more}</p>
         _2_html: >
           <p class="title negative">A worrisome sign:</p>
           <p class="narrative-content">Test scores for low income students at this school fall <span class="emphasis">below</span> the state
@@ -35,8 +35,8 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>, and explore higher-performing schools in your
-          area to find the best opportunities for your child to succeed.</p>
+          <a href="/gk/milestones/">on-track learning looks like</a>, and%{more}explore higher-performing schools in your
+          area to find the best opportunities for your child to succeed.%{end_more}</p>
         _3_html: >
           <p class="title neutral">Worth a deeper look:</p>
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">about the same as</span> the
@@ -44,8 +44,8 @@ en:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Parent tips</span></p>
           <p class="footnote">Ask the school what it’s doing to help students who are behind. Understand what
-          <a href="/gk/milestones/">on-track learning looks like</a>, and ask the school what it’s doing to accelerate
-          progress for students.</p>
+          <a href="/gk/milestones/">on-track learning looks like</a>, and%{more}ask the school what it’s doing to accelerate
+          progress for students.%{end_more}</p>
         _4_html: >
           <p class="title positive">A promising sign:</p>
           <p class="narrative-content">Test scores for low income students at this school are <span class="emphasis">above</span> the state

@@ -18,11 +18,9 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <% if equity_overview.has_rating? %>
-        <div class="profile-section-slot">
-          <%= render('equity_overview', equity_overview: equity_overview) %>
-        </div>
-      <% end %>
+      <div class="profile-section-slot">
+        <%= render('equity_overview', equity_overview: equity_overview) %>
+      </div>
       <div class="profile-section-slot">
         <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Race ethnicity'),
@@ -62,6 +60,7 @@
                           subtitle:  t('.Students with Disabilities subtitle'),
                           info_text: t('.Student with disabilities tooltip'),
                           icon_classes: t('.Student with disabilities icon'),
+                          feedback: equity.feedback_data,
                           sources: equity.students_with_disabilities_sources,
                           share_content: equity.students_with_disabilities_share_content,
                           data: equity.students_with_disabilities_section_props,

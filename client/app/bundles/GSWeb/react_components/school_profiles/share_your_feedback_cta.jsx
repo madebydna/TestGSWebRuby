@@ -5,7 +5,7 @@ import AnchorButton from 'react_components/anchor_button';
 import ConnectedReviewDistributionModal from 'react_components/connected_review_distribution_modal';
 import communityAvatar from 'icons/community-avatar.png';
 
-const ShareYourFeedbackCta = ({questionText, buttonClicked}) => {
+const ShareYourFeedbackCta = ({questionText, buttonClicked, buttonText}) => {
   return (
     <div className="share-your-feedback-cta">
       <hr/>
@@ -17,7 +17,7 @@ const ShareYourFeedbackCta = ({questionText, buttonClicked}) => {
         <AnchorButton href="javascript:void(0)"
                       onClick={buttonClicked}
                       style={{display: 'inline-block'}}
-                      className="clearfix js-subtopicAnswerButton">Answer
+                      className="clearfix js-subtopicAnswerButton">{buttonText}
         </AnchorButton>
         <ConnectedReviewDistributionModal
           question='This school effectively supports students with <span class="blue-highlight">learning differences</span>:'
@@ -32,7 +32,8 @@ const ShareYourFeedbackCta = ({questionText, buttonClicked}) => {
 
 ShareYourFeedbackCta.PropTypes = {
   questionText: PropTypes.string.isRequired,
-  buttonClicked: PropTypes.func.isRequired
+  buttonClicked: PropTypes.func.isRequired,
+  buttonText: PropTypes.string
 }
 
 export default ShareYourFeedbackCta;

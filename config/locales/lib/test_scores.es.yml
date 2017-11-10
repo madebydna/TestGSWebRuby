@@ -32,8 +32,6 @@ es:
           Es muy probable que esto se deba a la supresión. A los estados se les requiere que supriman información de
           grado/materia si el número de estudiantes tomando el examen es demasiado bajo. Esto puede significar que
           algunos resultados de grados que son parte del resultado general no se pueden mostrar individualmente.</p>
-          <p>¿Ha encontrado la información sobre los resultados de los exámenes útil? ¿Qué podemos hacer mejor? <a href="https://s.qualaroo.com/45194/1547acf4-6133-4d98-b2e0-5eb28ca1ec04" target="_blank">
-          Comparte tus comentarios.</p>
           <p><a href="/gk/como-clasificamos/?lang=es#testscorerating” target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p><a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Todavía tiene preguntas? Visite nuestra página de
           preguntas frecuentes.</a></p>
@@ -44,9 +42,9 @@ es:
           del promedio estatal. Esto sugiere que los estudiantes de esta escuela posiblemente no están alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
           <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _2_html: >
           <h3 class="negative">Un signo preocupante:</h3>
@@ -54,18 +52,18 @@ es:
           Esto sugiere que los estudiantes de esta escuela no están alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
           <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _3_html: >
           <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
           <p>Los resultados de los exámenes en esta escuela <span class="emphasis">son comparables</span> con el promedio estatal, aunque todavía por debajo de escuelas de rendimiento superior en el estado. Es posible que los resultados promedio de los exámenes en algunos estados sean tan bajos que muchos estudiantes de esta escuela no estén alcanzando el nivel de grado.</p>
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
-          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos los resultados promedio.
+          <p class="footnote">Pregúntele a la escuela lo que está haciendo para ayudar a los estudiantes que no están logrando por lo menos%{more}los resultados promedio.
           <a href="/gk/milestones/?lang=es">Entienda lo que se espera que tu hijo aprenda en cada grado</a>,
-          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.</p>
+          y explora las escuelas de mejor rendimiento en tu área para encontrar las mejores oportunidades para que tu hijo tenga éxito.%{end_more}</p>
           <hr />
         _4_html: >
           <h3 class="positive">Un signo prometedor:</h3>
@@ -73,8 +71,8 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
-          Para comprender cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+          Para comprender%{more}cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
           <hr />
         _5_html: >
           <h3 class="positive">¡Buenas noticias!:</h3>
@@ -82,8 +80,8 @@ es:
           <hr />
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Incluso las escuelas de alto rendimiento pueden tener diferencias entre grupos de estudiantes.
-          Para comprender cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
-          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.</p>
+          Para comprender%{more}cómo esta escuela educa a todos sus estudiantes, <a href="#Equity">revisa la siguiente información en la sección de Equidad</a>.
+          Entienda lo que se espera <a href="/gk/milestones/?lang=es">que tu hijo aprenda en cada grado</a> y cómo puedes ayudar en el hogar.%{end_more}</p>
           <hr />
       narrative:
         subject:

@@ -26,18 +26,20 @@ describe 'Visitor' do
 
     scenario 'sees college readiness section' do
       visit school_path(school)
-
-      expect(page_object).to have_college_readiness
+      pending
       expect(page_object.college_readiness.title).to have_text('College readiness')
+      expect(page_object).to have_college_readiness
     end
 
     scenario 'sees anchor for data source' do
       visit school_path(school)
+      pending
       expect(page_object.college_readiness).to have_source_link
     end
 
     scenario 'sees graduation rate' do
       visit school_path(school)
+      pending
       expect(page_object.college_readiness).to have_score_items
       expect(page_object.college_readiness.score_items.first.label).to have_text('4-year high school graduation rate')
       expect(page_object.college_readiness.score_items.first.score).to have_text('51%')

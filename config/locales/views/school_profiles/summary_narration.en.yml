@@ -11,11 +11,11 @@ en:
       about: about
       below: below
       Summary Rating_html: >
-        <span class="emphasis">This school is rated %{rating_string} average</span> in school quality compared to other schools in the state.
+        <span class="emphasis">This school is rated %{rating_string} average</span> in school quality compared to other schools in the state. Students here
       Summary Rating_school_name_html: >
-        <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}.
+        <span class="emphasis">%{school_name} is rated %{rating_string} average</span> in school quality compared to other schools in %{state_name}. Students here
       Test Scores_html: >
-        Students here perform <a href="#Test_scores">%{rating_string} average</a> on state tests,
+        perform <a href="#Test_scores">%{rating_string} average</a> on state tests,
       College Readiness_html: >
         have <a href="#College_readiness">%{rating_string} average</a> college readiness measures,
       Student Progress_html: >

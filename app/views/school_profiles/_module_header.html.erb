@@ -24,7 +24,7 @@
              <%= title %>
            </span>
            <% if info_text %>
-             <%= render 'info_circle', content: info_text %>
+             <%= render 'info_circle', content: info_text, element_type: 'toptooltip' %>
            <% end %>
          </div>
          <% if subtitle.present? %>
@@ -35,7 +35,7 @@
          <% end %>
        </div>
      </div>
-     <div class="col-xs-12 col-md-2 show-history-button">
+     <div class="col-xs-12 col-md-2 show-share-button">
        <% if has_data %>
          <div>
            <a data-remodal-target="modal_info_box"

@@ -1,6 +1,5 @@
 <% sn = @school_profile.summary_narration %>
 <% arr = sn.build_content %>
-<% qualaroo_link = sn.qualaroo_module_link %>
 <% breakpoint_for_more = 3 %>
 
 <% if arr.present? %>
@@ -10,7 +9,9 @@
         <% more = t('.more').capitalize %>
         <% arr = sn.build_content_test_score_only %>
         <%= arr[0].html_safe %>
-        <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
+        <a class="js-gaClick js-moreRevealLink" href="javascript:void(0)" data-ga-click-category="Profile"
+           data-ga-click-action="Show More"
+           data-ga-click-label="Summary Auto-narrative">... <%= more %></a>
             <span class="js-moreReveal" style="display:none">
               <%= arr[1].html_safe %>
               <%= render 'module_feedback', content: sn.qualaroo_module_link_test_only , yml_key: 'was_this_useful_test_only' %>
@@ -19,14 +20,14 @@
         <% if arr.length > breakpoint_for_more %>
             <% more = t('.more').capitalize %>
             <%= arr[0..1].join(' ').html_safe %>
-            <a class="js-moreRevealLink" href="javascript:void(0)">... <%= more %></a>
-            <span class="js-moreReveal" style="display:none">
-            <%= arr[2..arr.length].join(' ').html_safe %>
-            <%= render 'module_feedback', content: qualaroo_link %>
+            <a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)" data-ga-click-category="Profile"
+               data-ga-click-action="Show More"
+               data-ga-click-label="Summary Auto-narrative">... <%= more %></a>
+            <span class="js-moreReveal  more-reveal">
+             <%= arr[2..arr.length].join(' ').html_safe %>
             </span>
         <% else %>
             <%= arr.join(' ').html_safe %>
-            <%= render 'module_feedback', content: qualaroo_link %>
         <% end %>
       <% end %>
     </span>

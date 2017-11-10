@@ -1,3 +1,7 @@
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag "school-profiles", defer: true %>
+<% end %>
 <div class="school-profile">
   <%= render 'breadcrumbs', breadcrumbs: @private_school_profile.breadcrumbs %>
   <%= render 'hero', hero: @private_school_profile.hero %>
@@ -66,6 +70,7 @@
     <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
              width: 320, height: 50, css_class: 'mbl' %>
   </div>
+  <a name="Neighborhood" id="Neighborhood"></a>
   <div class="profile-section">
     <%= render 'homes_and_rentals', school: @school %>
   </div>
@@ -76,5 +81,6 @@
   <div class="profile-section">
     <%= render 'nearby_schools', nearby_schools: @private_school_profile.nearby_schools %>
   </div>
+  <%= render 'shared/bottom_mobile_ad' %>
 
 </div>

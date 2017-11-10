@@ -258,6 +258,13 @@ module SchoolProfiles
       content
     end
 
+    def feedback_data
+      @_feedback_data ||= {
+        'feedback_cta' => I18n.t('feedback_cta', scope: 'school_profiles.equity'),
+        'button_text' => I18n.t('Answer', scope: 'school_profiles.equity')
+      }
+    end
+
     def discipline_attendance_flag_sources
       content = ''
       # There are two data types for the discipline & attendance flags, but they want to display only a single source
@@ -371,17 +378,20 @@ module SchoolProfiles
 
     def faq_race_ethnicity
       @_faq_race_ethnicity ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.race_ethnicity'),
-                                       content: I18n.t(:content_html, scope: 'lib.equity.faq.race_ethnicity'))
+                                       content: I18n.t(:content_html, scope: 'lib.equity.faq.race_ethnicity'),
+                                       element_type: 'faq')
     end
 
     def faq_low_income
       @_faq_low_income ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.low_income'),
-                                   content: I18n.t(:content_html, scope: 'lib.equity.faq.low_income'))
+                                   content: I18n.t(:content_html, scope: 'lib.equity.faq.low_income'),
+                                   element_type: 'faq')
     end
 
     def faq_disabilities
       @_faq_disabilities ||= Faq.new(cta: I18n.t(:cta, scope: 'lib.equity.faq.disabilities'),
-                                     content: I18n.t(:content_html, scope: 'lib.equity.faq.disabilities'))
+                                     content: I18n.t(:content_html, scope: 'lib.equity.faq.disabilities'),
+                                     element_type: 'faq')
     end
 
     def race_ethnicity_discipline_and_attendance_visible?

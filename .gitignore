@@ -55,7 +55,8 @@ log/queue_daemon_pid
 npm-debug.log*
 node_modules
 
-Generated js bundles
+# Generated js bundles
+app/assets/webpack
 app/assets/webpack/*
 
 # tmp output from mocha-webpack library

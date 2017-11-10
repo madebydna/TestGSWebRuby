@@ -53,7 +53,7 @@
   }
 
   input {
-    padding: 20px;
+    padding: 0 20px;
     width: 100%;
     height: $form-field-large-height;
     border: 1px solid $form-field-border-color;
@@ -76,6 +76,7 @@
     }
     input, label {
       display: table-cell;
+      vertical-align: middle;
     }
     label {
       padding: 0 0 0 5px;

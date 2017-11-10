@@ -21,7 +21,7 @@ formatted_state_average = score_data.formatted_state_average
       <div class="col-xs-12 col-sm-5 subject">
         <%= score_label %>
         <% if info_text %>
-          <%= render 'info_circle', content: info_text %>
+          <%= render 'info_circle', content: info_text, element_type: 'datatooltip' %>
         <% end %>
       </div>
       <div class="col-sm-1"></div>

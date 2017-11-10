@@ -33,12 +33,16 @@
   .info-circle {
     vertical-align: text-top;
   }
-  .show-history-button {
+  .show-share-button {
     text-align: right;
     > div {
       padding-right:10px;
       color: #2ba3dc;
+      @include media-breakpoint-down(xs) {
+        padding: 10px 0 0 60px;
+      }
     }
+
     button {
       color: #2ba3dc;
       cursor: pointer;

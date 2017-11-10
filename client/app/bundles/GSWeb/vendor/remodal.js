@@ -758,9 +758,17 @@
       var $elem = $(elem);
       var category = $elem.closest('*[data-ga-click-category]').data('ga-click-category') || 'Profile';
       var action = $elem.closest('*[data-ga-click-action]').data('ga-click-action') || 'Infobox';
-      var label = $elem.closest('*[data-ga-click-label]').data('ga-click-label');
+      var label = buildLabel($elem);
+
       if(label && label != '') {
         analyticsEvent(category, action, label);
+      }
+
+      function buildLabel($elem){
+        var elementDivider = ' - ';
+        var elementType = $elem.data('ga-click-element-type') || '';
+        var label = $elem.closest('*[data-ga-click-label]').data('ga-click-label');
+        return (elementType != '' ? (elementType + elementDivider + label) : label);
       }
     });
 
