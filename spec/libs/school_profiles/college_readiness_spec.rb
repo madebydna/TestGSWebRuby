@@ -11,6 +11,8 @@ describe SchoolProfiles::CollegeReadiness do
   it { is_expected.to respond_to(:rating) }
   it { is_expected.to respond_to(:data_values) }
 
+  let(:cca) { SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS }
+
   describe '#data_values' do
     before do
       allow(school_cache_data_reader).to receive(:school).and_return(school)
@@ -100,7 +102,7 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'should return chosen data types if data present' do
-        data_values = subject.data_values
+        data_values = subject.data_values(cca)
         expect(data_values.size).to eq(4)
         data_points = data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to be_present
@@ -110,29 +112,29 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'should pull from the "All students" breakdown for characteristics' do
-        data_points = subject.data_values.find {|item| item.label == '4-year high school graduation rate' }
+        data_points = subject.data_values(cca).find {|item| item.label == '4-year high school graduation rate' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(50)
         expect(data_points.state_average).to eq(51)
       end
 
       it 'should pull from the null breakdown for gsdata' do
-        data_points = subject.data_values.find {|item| item.label == 'Percentage of students passing 1 or more AP exams grades 9-12' }
+        data_points = subject.data_values(cca).find {|item| item.label == 'Percentage of students passing 1 or more AP exams grades 9-12' }
         expect(data_points).to be_present
         expect(data_points.score).to eq('61')
         expect(data_points.state_average).to eq('60.32')
       end
 
       it 'should pull from the "All subjects" subject' do
-        data_points = subject.data_values.find {|item| item.label == 'Average ACT score' }
+        data_points = subject.data_values(cca).find {|item| item.label == 'Average ACT score' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(25)
         expect(data_points.state_average).to eq(24)
       end
 
       it 'should return chosen data types in configured order' do
-        ordered_data_types = subject.included_data_types
-        data_value_labels = subject.data_values.map(&:label)
+        ordered_data_types = subject.included_data_types(cca)
+        data_value_labels = subject.data_values(cca).map(&:label)
 
         # start with full set of ordered data types, then remove items
         # that are not in the resulting data_value_labels. Expression should
@@ -173,7 +175,7 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'should set school SAT score to nil' do
-        data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
+        data_points = subject.data_values(cca).find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
       
@@ -182,7 +184,7 @@ describe SchoolProfiles::CollegeReadiness do
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
       expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
-      expect(subject.data_values).to be_empty
+      expect(subject.data_values(cca)).to be_empty
     end
 
     describe 'SAT ranges' do
@@ -214,7 +216,7 @@ describe SchoolProfiles::CollegeReadiness do
               allow(school).to receive(:state).and_return(state)
             end
 
-            subject { college_readiness.data_values.find { |item| item.label == 'Average SAT score' }.range }
+            subject { college_readiness.data_values(cca).find { |item| item.label == 'Average SAT score' }.range }
 
             it { is_expected.to eq(SchoolProfiles::CollegeReadiness::NEW_SAT_RANGE) }
           end
@@ -228,7 +230,7 @@ describe SchoolProfiles::CollegeReadiness do
               allow(school).to receive(:state).and_return(state)
             end
 
-            subject { college_readiness.data_values.find { |item| item.label == 'Average SAT score' }.range }
+            subject { college_readiness.data_values(cca).find { |item| item.label == 'Average SAT score' }.range }
 
             it { is_expected.to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE) }
           end
@@ -267,7 +269,8 @@ describe SchoolProfiles::CollegeReadiness do
         { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
       ].shuffle
       stub_const('SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS', config)
-      expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } )
+      remediation_subgroups = SchoolProfiles::CollegeReadiness::REMEDIATION_SUBGROUPS
+      expect(subject.included_data_types(cca)).to eq(config.map { |o| o[:data_key] } + remediation_subgroups)
     end
   end
 
