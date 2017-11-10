@@ -58,7 +58,11 @@
 <div class="js-modal-container"></div>
 <%= render 'google_tag_manager/install' %>
 
-<%= render partial: 'nav/topnav_universal_html' %>
+<% if params['controller'] == 'home' %>
+  <%= render partial: 'nav/topnav_home' %>
+<% else %>
+  <%= render partial: 'nav/topnav_universal_html' %>
+<% end %>
 
 <%= render :partial => 'layouts/top_notification_bar' %>
 

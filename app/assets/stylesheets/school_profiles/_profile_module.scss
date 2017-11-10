@@ -7,6 +7,21 @@
     margin-right: -10px;
   }
 
+  .title > div > div {
+    display: inline-block;
+    .tipso_style {
+      height: 16px;
+      width: 16px;
+      display: inline-block;
+      vertical-align: sub;
+    }
+  }
+
+  .tooltip {
+    display: inline-block;
+    vertical-align: text-top;
+  }
+
   .tabs-panel {
     display: none;
   }
