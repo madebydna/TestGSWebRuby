@@ -26,19 +26,17 @@ module SchoolProfiles
     SENIORS_ENROLLED_OTHER = 'Graduating seniors pursuing other college'
     SENIORS_ENROLLED = 'Percent Enrolled in College Immediately Following High School'
     GRADUATES_REMEDIATION = 'Percent Needing Remediation for College'
-    GRADUATES_REMEDIATION_ENGLISH = 'Graduates Needing English Remediation in College'
-    GRADUATES_REMEDIATION_MATH = 'Graduates Needing Math Remediation in College'
-    GRADUATES_REMEDIATION_SCIENCE = 'Graduates Needing Science Remediation in College'
-    GRADUATES_REMEDIATION_READING = 'Graduates Needing Reading Remediation in College'
     GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year'
     GRADUATES_COLLEGE_VOCATIONAL = 'Percent enrolled in any institution of higher learning in the last 0-16 months'
     GRADUATES_TWO_YEAR = 'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months'
     GRADUATES_FOUR_YEAR = 'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months'
     GRADUATES_OUT_OF_STATE = 'Percent of students who will attend out-of-state colleges'
     GRADUATES_IN_STATE = 'Percent of students who will attend in-state colleges'
-    # States for which college success data has been loaded
-    CS_STATES_WHITELIST = ['AR', 'CO', 'DE', 'FL', 'GA', 'IL', 'IN', 'MO', 'NJ', 'NY', 'OH', 'OK', 'TX', 'WI', 'PA']
-    REMEDIATION_SUBGROUPS = ['Graduates needing Reading remediation in college', 'Graduates needing English remediation in college', 'Graduates needing Science remediation in college', 'Graduates needing Math remediation in college']
+    REMEDIATION_SUBGROUPS = ['Graduates needing Reading remediation in college',
+                             'Graduates needing Writing remediation in college',
+                             'Graduates needing English remediation in college',
+                             'Graduates needing Science remediation in college',
+                             'Graduates needing Math remediation in college']
     # Order matters - items display in configured order
 
     # characteristics cache accessors for college success pane
@@ -275,7 +273,9 @@ module SchoolProfiles
                        }) if values.size > 1
         add_data_type(key,values)
       end
-      hashes.flatten.compact.select(&with_school_values).sort_by { |o| included_data_types(cache_accessors).index( o['data_type']) }
+      data_values = hashes.flatten.compact.select(&with_school_values)
+      data_values.select! { |dv| included_data_types(cache_accessors).include?(dv['data_type']) }
+      data_values.sort_by { |o| included_data_types(cache_accessors).index( o['data_type']) }
     end
 
     def add_data_type(key,values)
@@ -434,9 +434,6 @@ module SchoolProfiles
     end
 
     def get_props(pane)
-      if pane == 'college_success'
-        return [] unless CS_STATES_WHITELIST.include?(@school_cache_data_reader.school.state.upcase)
-      end
       data_for_pane = college_data_array(pane)
       scope = 'school_profiles.' + pane
       return [] if data_for_pane[0][:values].empty?
