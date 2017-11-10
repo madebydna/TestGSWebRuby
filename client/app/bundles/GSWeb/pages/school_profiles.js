@@ -42,6 +42,12 @@ import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
+import { enableAdCloseButtons } from 'util/advertising';
+import {
+  registerInterrupt,
+  registerPredefinedInterrupts,
+  runInterrupts
+} from 'util/interrupts';
 
 window.store = getStore();
 
@@ -82,8 +88,10 @@ $(function() {
     $('.tour-teaser').addClass('gs-tipso');
     $('.tour-teaser').attr('data-remodal-target', 'modal_info_box')
   } else {
-    minimizeQualarooNudges();
-    $('.js-school-profile-tour-modal').removeClass('hidden');
+    registerInterrupt('profileTour', function(nextInterrupt) {
+      // minimizeQualarooNudges();
+      $('.js-school-profile-tour-modal').removeClass('hidden');
+    });
   }
 
   initAnchorHashUpdater();
@@ -353,4 +361,7 @@ $(window).on('load', function() {
     elements: elementIds,
     threshold: 50
   });
+
+  registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
+  runInterrupts(['profileTour', 'mobileOverlayAd', 'qualaroo'])
 });
