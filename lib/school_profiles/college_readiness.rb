@@ -265,12 +265,12 @@ module SchoolProfiles
 
         unless key == GRADUATES_REMEDIATION
           values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
+          GSLogger.error(:misc, nil,
+                         message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
+                         vars: {school: {state: @school_cache_data_reader.school.state,
+                                         id: @school_cache_data_reader.school.id}
+                         }) if values.size > 1
         end
-        GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
-                       vars: {school: {state: @school_cache_data_reader.school.state,
-                                       id: @school_cache_data_reader.school.id}
-                       }) if values.size > 1
         add_data_type(key,values)
       end
       data_values = hashes.flatten.compact.select(&with_school_values)
