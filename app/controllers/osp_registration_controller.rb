@@ -65,7 +65,7 @@ class OspRegistrationController < ApplicationController
       user.save!
     rescue => error
       flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
-      GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
+      GSLogger.warn(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
       return render 'osp/registration/new'
     end
 
