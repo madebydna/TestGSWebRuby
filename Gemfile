@@ -2,9 +2,9 @@ source "https://rubygems.org"
 
 # WARNING: Before upgrading rails version check the following extension to the
 # Rails ActionDispatch::HTTP::URL.url_for 
-gem 'rails', '4.2.7'
+gem 'rails', '4.2.8'
 
-gem 'mysql2', '0.3.13'
+gem 'mysql2', '0.4.10'
 
 # This gem provides jQuery and the jQuery-ujs driver for your Rails 3+ application.
 gem 'jquery-rails'
