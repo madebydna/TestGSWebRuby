@@ -12,13 +12,15 @@ class RatingsCaching::GsdataRatingsCacher < GsdataCaching::GsdataCacher
       r = school_results
 
       # filter out some data values
-      r = r.group_by(&:data_type_id).reduce([]) do |accum, (_, data_values)|
+      r = r.group_by(&:data_type_id).reduce([]) do |accum, (data_type_id, data_values)|
         most_recent_date = data_values.map(&:date_valid).max
         # remove all data values except those with most recent date
         data_values.select! { |dv| dv.date_valid == most_recent_date }
         # select correct advanced coursework data values
-        data_values.select! do |dv|
-          dv.breakdown_tags.blank? || dv.breakdown_tags == 'course_subject_group'
+        if data_type_id == 151
+          data_values.select! do |dv|
+            dv.breakdown_tags.blank? || dv.breakdown_tags == 'course_subject_group'
+          end
         end
         accum.concat(data_values)
       end

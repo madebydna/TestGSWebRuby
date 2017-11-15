@@ -156,11 +156,33 @@ describe RatingsCaching::GsdataRatingsCacher do
           )
         end
         it "adds description and methodology to data type #{data_type_id}" do
+        end
+      end
+    end
+
+    context "with data for several data types that include tags" do
+      before do
+        allow(cacher).to receive(:school_results).and_return(
+          [
+            json_data_value(data_type_id: 151, value: 10, source_name: 'Foo', breakdown_tags: ['foo']),
+            json_data_value(data_type_id: 152, value: 10, source_name: 'Foo', breakdown_tags: ['bar']),
+            json_data_value(data_type_id: 153, value: 10, source_name: 'Foo', breakdown_tags: ['baz'])
+          ]
+        )
+      end
+
+      it 'should keep only course_subject_groups for advanced coursework rating' do
+        results = subject["Rating 151"]
+        expect(results).to be_empty
+      end
+
+      it 'should not remove valid values just because they have tags' do
+        [152,153].each do |data_type_id|
           results = subject["Rating #{data_type_id}"]
           expect(results).to be_present
           results.each do |r|
-            expect(r).to have_key(:description)
-            expect(r).to have_key(:methodology)
+            expect(r).to have_key(:breakdown_tags)
+            expect(r[:breakdown_tags]).to_not be_empty
           end
         end
       end
