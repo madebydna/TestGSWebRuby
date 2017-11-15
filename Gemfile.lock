@@ -256,7 +256,7 @@ GEM
       hashie
       httpclient
     mini_mime (1.0.0)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.3.0)
     mini_racer (0.1.7)
       libv8 (~> 5.3)
     minitest (5.10.3)
@@ -267,8 +267,8 @@ GEM
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     netrc (0.11.0)
-    nokogiri (1.6.7)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     nori (2.4.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -547,7 +547,7 @@ DEPENDENCIES
   mini_fb
   mini_racer
   mysql2 (= 0.4.10)
-  nokogiri (= 1.6.7)
+  nokogiri (= 1.8.1)
   oj
   pdf-reader
   prawn
