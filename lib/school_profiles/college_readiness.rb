@@ -5,6 +5,8 @@ module SchoolProfiles
     include SharingTooltipModal
     include RatingSourceConcerns
 
+    DATA_CUTOFF_YEAR = 2015
+    # Constants for college readiness pane
     FOUR_YEAR_GRADE_RATE = '4-year high school graduation rate'
     UC_CSU_ENTRANCE = 'Percent of students who meet UC/CSU entrance requirements'
     SAT_SCORE = 'Average SAT score'
@@ -18,63 +20,151 @@ module SchoolProfiles
     NEW_SAT_YEAR = 2016
     NEW_SAT_RANGE = (400..1600)
     OLD_SAT_RANGE = (600..2400)
-
+    # Constants for college success pane
+    SENIORS_FOUR_YEAR = 'Graduating seniors pursuing 4 year college/university'
+    SENIORS_TWO_YEAR = 'Graduating seniors pursuing 2 year college/university'
+    SENIORS_ENROLLED_OTHER = 'Graduating seniors pursuing other college'
+    SENIORS_ENROLLED = 'Percent Enrolled in College Immediately Following High School'
+    GRADUATES_REMEDIATION = 'Percent Needing Remediation for College'
+    GRADUATES_PERSISTENCE = 'Percent Enrolled in College and Returned for a Second Year'
+    GRADUATES_COLLEGE_VOCATIONAL = 'Percent enrolled in any institution of higher learning in the last 0-16 months'
+    GRADUATES_TWO_YEAR = 'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months'
+    GRADUATES_FOUR_YEAR = 'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months'
+    GRADUATES_OUT_OF_STATE = 'Percent of students who will attend out-of-state colleges'
+    GRADUATES_IN_STATE = 'Percent of students who will attend in-state colleges'
+    REMEDIATION_SUBGROUPS = ['Graduates needing Reading remediation in college',
+                             'Graduates needing Writing remediation in college',
+                             'Graduates needing English remediation in college',
+                             'Graduates needing Science remediation in college',
+                             'Graduates needing Math remediation in college']
     # Order matters - items display in configured order
+
+    # characteristics cache accessors for college success pane
+    CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS = [
+      {
+        :cache => :characteristics,
+        :data_key => SENIORS_FOUR_YEAR,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => SENIORS_TWO_YEAR,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => SENIORS_ENROLLED_OTHER,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => SENIORS_ENROLLED,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_COLLEGE_VOCATIONAL,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_TWO_YEAR,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_FOUR_YEAR,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_OUT_OF_STATE,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_IN_STATE,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_REMEDIATION,
+        :visualization => 'person_reversed',
+        :formatting => [:round_unless_less_than_1, :percent]
+      },
+      {
+        :cache => :characteristics,
+        :data_key => GRADUATES_PERSISTENCE,
+        :visualization => 'person',
+        :formatting => [:round_unless_less_than_1, :percent]
+      }
+    ]
+
+    # characteristics cache accessors for college readiness pane
     CHAR_CACHE_ACCESSORS = [
       {
         :cache => :characteristics,
         :data_key => FOUR_YEAR_GRADE_RATE,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => UC_CSU_ENTRANCE,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => SAT_SCORE,
-        :visualization => :single_bar_viz,
+        :visualization => 'bar',
         :formatting => [:round],
         :range => (600..2400)
       },
       {
         :cache => :characteristics,
         :data_key => SAT_PARTICIPATION,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :characteristics,
         :data_key => ACT_SCORE,
-        :visualization => :single_bar_viz,
+        :visualization => 'bar',
         :formatting => [:round],
         :range => (1..36)
       },
       {
         :cache => :characteristics,
         :data_key => ACT_PARTICIPATION,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => AP_ENROLLED,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => AP_EXAMS_PASSED,
-        :visualization => :single_bar_viz,
+        :visualization => 'bar',
         :formatting => [:to_f, :round_unless_less_than_1, :percent]
       },
       {
         :cache => :gsdata,
         :data_key => ACT_SAT_PARTICIPATION,
-        :visualization => :person_bar_viz,
+        :visualization => 'person',
         :formatting => [:round_unless_less_than_1, :percent]
       }
     ].freeze
@@ -109,9 +199,16 @@ module SchoolProfiles
       historical_ratings.present? && historical_ratings.length > 1
     end
 
-    def narration
-      return nil unless rating.present? && (1..10).cover?(rating.to_i)
-      key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
+    def narration(pane)
+      if !rating.present? && !(1..10).cover?(rating.to_i) && visible?
+        key = '_parent_tip_html'
+      elsif !visible?
+        return nil
+      elsif pane == :college_success
+        key = '_college_success'
+      elsif pane == :college_readiness
+        key = '_' + ((rating / 2) + (rating % 2)).to_s + '_html'
+      end
       I18n.t(key, scope: 'lib.college_readiness.narration', default: I18n.db_t(key, default: key)).html_safe
     end
 
@@ -127,38 +224,34 @@ module SchoolProfiles
       I18n.t(key.to_sym, scope: 'lib.college_readiness.data_point_info_texts')
     end
 
-    def included_data_types(cache = nil)
-      config_for_cache = CHAR_CACHE_ACCESSORS.select { |c| cache.nil? || c[:cache] == cache }
-      config_for_cache.map { |mapping| mapping[:data_key] }
+    def included_data_types(cache_accessors, cache = nil)
+      # Required for the sort in data_type_hashes
+      remediation_subgroups = REMEDIATION_SUBGROUPS
+      config_for_cache = cache_accessors.select { |c| cache.nil? || c[:cache] == cache }
+      config_for_cache.map { |mapping| mapping[:data_key] } + remediation_subgroups
+      end
+
+    def data_type_formatting_map(cache_accessors)
+      cache_accessors.each_with_object({}) do |mapping, hash|
+        hash[mapping[:data_key]] = mapping[:formatting]
+      end
     end
 
-    def data_type_formatting_map
-      @_data_type_to_value_type_map ||= (
-        CHAR_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
-          hash[mapping[:data_key]] = mapping[:formatting]
-        end
-      )
+    def data_type_visualization_map(cache_accessors)
+      cache_accessors.each_with_object({}) do |mapping, hash|
+        hash[mapping[:data_key]] = mapping[:visualization]
+      end
     end
 
-    def data_type_visualization_map
-      @_data_type_visualization_map ||= (
-        CHAR_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
-          hash[mapping[:data_key]] = mapping[:visualization]
-        end
-      )
-    end
-
-    def data_type_range_map
-      @_data_type_range_map ||= (
-      CHAR_CACHE_ACCESSORS.each_with_object({}) do |mapping, hash|
+    def data_type_range_map(cache_accessors)
+      cache_accessors.each_with_object({}) do |mapping, hash|
         hash[mapping[:data_key]] = mapping[:range] || (0..100)
       end
-      )
     end
 
-    def data_type_hashes
-      hashes = school_cache_data_reader.characteristics_data(*included_data_types(:characteristics))
-      hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(:gsdata)))
+    def data_type_hashes(cache_accessors)
+      hashes = school_cache_data_reader.characteristics_data(*included_data_types(cache_accessors, :characteristics ))
+      hashes.merge!(school_cache_data_reader.gsdata_data(*included_data_types(cache_accessors,:gsdata )))
       return [] if hashes.blank?
       handle_ACT_SAT_to_display!(hashes)
       hashes = hashes.map do |key, array|
@@ -169,17 +262,38 @@ module SchoolProfiles
               h['breakdown'] == 'All students'
         end
         # This is for characteristics
-        values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
-        GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
-                       vars: {school: {state: @school_cache_data_reader.school.state,
-                                       id: @school_cache_data_reader.school.id}
-                       }) if values.size > 1
+
+        unless key == GRADUATES_REMEDIATION
+          values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
+          GSLogger.error(:misc, nil,
+                         message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
+                         vars: {school: {state: @school_cache_data_reader.school.state,
+                                         id: @school_cache_data_reader.school.id}
+                         }) if values.size > 1
+        end
+        add_data_type(key,values)
+      end
+      data_values = hashes.flatten.compact.select(&with_school_values)
+      data_values.select! { |dv| included_data_types(cache_accessors).include?(dv['data_type']) }
+      data_values.sort_by { |o| included_data_types(cache_accessors).index( o['data_type']) }
+    end
+
+    def add_data_type(key,values)
+      # Special handling for Remediation data, which is organized by subject
+      if key == GRADUATES_REMEDIATION
+        arr = values.map do |hash|
+          if hash.has_key?('subject')
+            hash.merge('data_type' => 'Graduates needing ' + hash['subject'].capitalize + ' remediation in college')
+          else
+            hash.merge('data_type' => key)
+          end
+        end
+        arr
+      else
         hash = values.first
         hash['data_type'] = key if hash
         hash
       end
-      hashes.compact.select(&with_school_values).sort_by { |o| included_data_types.index( o['data_type']) }
     end
 
     def school_value_present?(value)
@@ -219,12 +333,13 @@ module SchoolProfiles
       return_value
     end
 
-    def data_values
-      Array.wrap(data_type_hashes).map do |hash|
+    def data_values(cache_accessors)
+      Array.wrap(data_type_hashes(cache_accessors)).map do |hash|
+        next if cache_accessors == CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS && hash['year'].to_i < DATA_CUTOFF_YEAR
         data_type = hash['data_type']
-        formatting = data_type_formatting_map[data_type]
-        visualization = data_type_visualization_map[data_type]
-        range = data_type_range_map[data_type]
+        formatting = data_type_formatting_map(cache_accessors)[data_type] || [:round_unless_less_than_1, :percent]
+        visualization = data_type_visualization_map(cache_accessors)[data_type]
+        range = data_type_range_map(cache_accessors)[data_type]
         state = @school_cache_data_reader.school.state
         RatingScoreItem.new.tap do |item|
           item.label = data_label(data_type)
@@ -244,7 +359,38 @@ module SchoolProfiles
           item.visualization = visualization
           item.source = hash['source'] || hash['source_name']
         end
+      end.compact
+    end
+
+    def college_data_array(pane)
+      cache_accessors = pane == 'college_success' ? CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS : CHAR_CACHE_ACCESSORS
+      data_values = data_values(cache_accessors).map do |score_item|
+        {label: score_item.score.format.to_s.chomp('%'),
+         score: score_item.score.value.to_i,
+         breakdown: score_item.label,
+         state_average: score_item.state_average.value.to_i,
+         state_average_label: score_item.state_average.value.to_f.round.to_s,
+         display_type: score_item.visualization,
+         lower_range: (score_item.range.first if score_item.range),
+         upper_range: (score_item.range.last if score_item.range),
+         tooltip_html: score_item.info_text
+        }
       end
+      [{narration: narration(pane.to_sym), title: pane.humanize, values: data_values}]
+    end
+
+    def qualaroo_params
+      state = @school_cache_data_reader.school.state.upcase
+      school = @school_cache_data_reader.school.id.to_s
+      '?' + 'school=' + school + '&' + 'state=' + state
+    end
+
+    def feedback_data
+      @_feedback_data ||= {
+        'feedback_cta' => I18n.t('feedback_cta', scope:'school_profiles.college_readiness'),
+        'feedback_link' => 'https://s.qualaroo.com/45194/cb0e676f-324a-4a74-bc02-72ddf1a2ddd6' + qualaroo_params,
+        'button_text' =>  I18n.t('Answer', scope:'school_profiles.college_readiness')
+      }
     end
 
     def sat_score_range(state, year)
@@ -277,10 +423,29 @@ module SchoolProfiles
                                  description: rating_description, methodology: rating_methodology,
                                  more_anchor: 'collegereadinessrating')
       end
-      content << data_type_hashes.reduce('') do |string, hash|
+      data_array_cr = data_type_hashes(CHAR_CACHE_ACCESSORS)
+      # Remove stale college success data from sources
+      data_array_cs = data_type_hashes(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).reject {|hash| hash["year"].to_i < DATA_CUTOFF_YEAR }
+      data_array = data_array_cr + data_array_cs
+      content << data_array.reduce('') do |string, hash|
         string << sources_for_view(hash)
       end
       content << '</div>'
+    end
+
+    def get_props(pane)
+      data_for_pane = college_data_array(pane)
+      scope = 'school_profiles.' + pane
+      return [] if data_for_pane[0][:values].empty?
+      {
+        title: I18n.t('title', scope: scope),
+        anchor: pane.capitalize,
+        data: data_for_pane
+      }
+    end
+
+    def props
+      @_props ||= [get_props('college_readiness'), get_props('college_success')].reject(&:empty?)
     end
 
     def sources_for_view(hash)
@@ -303,7 +468,7 @@ module SchoolProfiles
     end
 
     def visible?
-      data_values.present?
+      data_values(CHAR_CACHE_ACCESSORS).present? || data_values(CHAR_CACHE_ACCESSORS_COLLEGE_SUCCESS).present?
     end
 
     private

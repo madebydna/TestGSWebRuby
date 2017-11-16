@@ -1,14 +1,21 @@
 en:
   school_profiles:
     college_readiness:
-      no_data_html: >
+      no_data: >
         This section includes information about this school’s graduation rates, SAT/ACT tests, and AP coursework.
-        <br></br>
       title: College readiness
+      tooltip_html: >
+        <p>This rating shows how well students at this school are prepared for college compared to students at other
+        schools in this state, based on key measures, like graduation rates, college entrance tests and AP coursework
+        when available.</p><p><a href="/gk/ratings/#collegereadinessrating" target="_blank">Learn more about this
+        rating.</a></p>
       subtitle_html: Learn more about how to help your child graduate ready for college. <a href="/gk/articles/jump-start-college-planning/" target="_blank">See how.</a>
       source: Source
       sources: Sources
+      feedback_cta: Did you find the information about College success useful? What can we do better?
+      Answer: Answer
       historical:
         title: Past GreatSchools College Readiness Ratings
         subtitle: This chart shows how this school's GreatSchools College Readiness Rating has changed over time.
-
+    college_success:
+      title: College success

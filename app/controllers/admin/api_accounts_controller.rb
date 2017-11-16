@@ -15,7 +15,7 @@ class Admin::ApiAccountsController < ApplicationController
 
   # Handles admin-initiated api account creation
   def create
-    @api_account = ApiAccount.new(api_account_params)
+    @api_account = ApiAccount.new(api_account_params.merge(api_key: nil))
     if @api_account.save
       handle_api_options
       redirect_to edit_admin_api_account_path(@api_account)

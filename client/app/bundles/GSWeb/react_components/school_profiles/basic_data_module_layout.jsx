@@ -2,7 +2,7 @@ import React from 'react';
 import { t } from '../../util/i18n';
 
 const BasicDataModuleLayout = ({
-  id, className, icon, title, subtitle, body, footer, tabs, no_data_cta, sharing_modal
+  id, className, icon, title, subtitle, body, feedback, footer, tabs, no_data_cta, sharing_modal
 }) => {
   return (
     <div>
@@ -53,6 +53,7 @@ BasicDataModuleLayout.PropTypes = {
   titleTooltip: React.PropTypes.object,
   subtitle: React.PropTypes.object,
   body: React.PropTypes.object,
+  feedback: React.PropTypes.object,
   footer: React.PropTypes.object
 }
 

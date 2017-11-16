@@ -20,6 +20,22 @@ es:
           <p>Cuando falta información en nuestros perfiles, probablemente es porque esta escuela no ofreció un curso AP o participó en uno de los dos exámenes de preparación universitaria, el ACT o SAT (algunos estados determinan que exámenes de preparación universitaria las escuelas pueden utilizar). También es posible que los datos que faltan no estaban incluidos en los datos que recibimos del estado.</p>
           <p><a href="/gk/como-clasificamos/?lang=es#collegereadinessrating" target="_blank">Infórmese más sobre esta calificación.</a></p>
           <p>Todavía tiene preguntas? <a href="https://greatschools.zendesk.com/hc/en-us" target="_blank">Visite nuestra página de preguntas frecuentes.</a></p>
+      'Graduating seniors pursuing 4 year college/university': Estudiantes de último año que buscan una universidad de 4 años
+      'Graduating seniors pursuing 2 year college/university': Estudiantes de último año que buscan una universidad de 2 años
+      'Graduating seniors pursuing other college': Estudiantes de último año matriculados en otra universidad
+      'Percent Enrolled in College Immediately Following High School': Estudiantes de último año matriculados en la universidad
+      'Percent Needing Remediation for College': Graduados que necesitan remediación en la universidad
+      'Graduates needing English remediation in college': Graduados que necesitan remediación en inglés en la universidad
+      'Graduates needing Math remediation in college': Graduados que necesitan remediación en matemáticas en la universidad
+      'Graduates needing Science remediation in college': Graduados que necesitan remediación en ciencia en la universidad
+      'Graduates needing Reading remediation in college': Graduados que necesitan remediación en lectura en la universidad
+      'Graduates needing Writing remediation in college': Graduados que necesitan remediación de escritura en la universidad
+      'Percent Enrolled in College and Returned for a Second Year': Graduados que regresaron a la universidad por segundo año
+      'Percent enrolled in any institution of higher learning in the last 0-16 months': Graduados matriculados en programas universitarios o vocacionales
+      'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': Graduados explorando estudios universitarios o vocacionales de 2 años
+      'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': Graduados explorando estudios universitarios o vocacionales de 4 años
+      'Percent of students who will attend out-of-state colleges': Graduados asistiendo la universidad fuera del estado
+      'Percent of students who will attend in-state colleges': Graduados asistiendo la universidad estatal
       data_point_info_texts:
         '4-year high school graduation rate': 'Los índices de graduación reflejan cuántos estudiantes se gradúan de esta escuela a tiempo.'
         'Average SAT score': 'El SAT es una prueba de admisión universitaria, que en 2015 tenía un total de 2400 puntos posibles. Esta calificación refleja el puntaje promedio en el SAT entre los estudiantes de esta escuela. En 2016, el SAT cambió a una escala de 1600 puntos. Regrese pronto para obtener información actualizada para esta escuela.'
@@ -36,8 +52,25 @@ es:
                <a href="/gk/articles/dont-miss-these-requirements-to-get-into-college/">Obtenga más información</a>.
         'Percentage of students passing 1 or more AP exams grades 9-12': 'El índice de aprobación de los exámenes de “AP” (Cursos Avanzados) refleja cuántos estudiantes obtuvieron un puntaje mínimo en al menos uno de estos exámenes.'
         'Percentage AP enrolled grades 9-12': 'Los cursos “AP” (Cursos Avanzados) son clases más rigurosas con un exámen final. El porcentaje de estudiantes que toman los exámenes AP puede reflejar si la cultura escolar se centra en la preparación universitaria.'
+        'Graduating seniors pursuing 4 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 4 años inmediatamente después de la escuela secundaria.'
+        'Graduating seniors pursuing 2 year college/university': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en un colegio o universidad de 2 años inmediatamente después de la escuela secundaria.'
+        'Graduating seniors pursuing other college': 'Esto refleja el porcentaje de graduados de esta escuela secundaria que se inscribieron en programas universitarios distintos de una universidad de 2 o 4 años inmediatamente después de la escuela secundaria.'
+        'Percent Enrolled in College Immediately Following High School': Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en la universidad inmediatamente después de la escuela secundaria.'
+        'Percent Needing Remediation for College': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing English remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de inglés básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Math remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de matemáticas básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Science remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de ciencia básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Reading remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de lectura básicas o correctivas, que no cuentan para un título universitario.
+        'Graduates needing Writing remediation in college': Esto refleja el porcentaje de graduados de esta escuela que necesitaron tomar clases de escritura básicas o correctivas, que no cuentan para un título universitario.
+        'Percent Enrolled in College and Returned for a Second Year': 'Esto refleja el porcentaje de graduados de esta escuela que completaron su primer año de universidad y regresaron por segundo año consecutivo.'
+        'Percent enrolled in any institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en cualquier institución de educación superior dentro de los 16 meses de su graduación.'
+        'Percent enrolled in a 2-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de dos años de educación superior dentro de los 16 meses de su graduación.'
+        'Percent enrolled in a 4-year institution of higher learning in the last 0-16 months': 'Esto refleja el porcentaje de graduados de esta escuela que se inscribieron en una institución de 4 años de educación superior dentro de los 16 meses de su graduación.'
+        'Percent of students who will attend out-of-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades fuera del estado.'
+        'Percent of students who will attend in-state colleges': 'Esto refleja el porcentaje de graduados de esta escuela que están inscritos en colegios o universidades estatales.'
       narration:
         _1_html: >
+          <div class="auto-narration">
           <h3 class="negative">Muy preocupante:</h3>
           <p>Esta escuela está muy por debajo del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
@@ -45,8 +78,9 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases avanzadas y ayudar a los estudiantes a prepararse para las
           <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
-          <hr />
+          </div>
         _2_html: >
+          <div class="auto-narration">
           <h3 class="negative">Un signo preocupante:</h3>
           <p>Esta escuela está <span class="emphasis">por debajo</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
@@ -54,8 +88,9 @@ es:
           <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases avanzadas y ayudar a los estudiantes a prepararse para las
           <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
-          <hr />
+          </div>
         _3_html: >
+          <div class="auto-narration">
           <h3 class="neutral">Vale la pena una mirada más profunda:</h3>
           <p>Esta escuela está <span class="emphasis">comparable</span> al promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional, pero dependiendo del estado, promedio puede significar que sólo una minoría de los estudiantes están preparados para la universidad y la carrera.</p>
           <p>(Recuerde: <span class="emphasis">altas índices de graduación no significan mucho</span> si los estudiantes se gradúan sin los cursos y las calificaciones de los exámenes que necesitan para tener éxito.)</p>
@@ -64,8 +99,9 @@ es:
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
           avanzadas y ayudar a todos los estudiantes a prepararse para las
           <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
-          <hr />
+          </div>
         _4_html: >
+          <div class="auto-narration">
           <h3 class="positive">Un signo prometedor:</h3>
           <p>Esta escuela está <span class="emphasis">por encima</span> del promedio estatal en medidas de preparación universitario y de la preparación (o carrera) profesional</p>
           <hr />
@@ -73,8 +109,9 @@ es:
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
           avanzadas y ayudar a todos los estudiantes a prepararse para las
           <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
-          <hr />
+          </div>
         _5_html: >
+          <div class="auto-narration">
           <h3 class="positive">¡Buenas noticias!:</h3>
           <p>Esta escuela está <span class="emphasis">muy por encima</span> del promedio estatal en medidas de
           preparación universitario y de la preparación (o carrera) profesional</p>
@@ -83,4 +120,19 @@ es:
           <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
           avanzadas y ayudar a todos los estudiantes a prepararse para las
           <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
+          </div>
+        _college_success: >
+          <div class="auto-narration">
+          <p>¿Los graduados de esta escuela están preparados para tener éxito en la universidad? Esta sección analiza los signos importantes de la preparación para la universidad, incluso si los estudiantes se inscriben en la universidad y permanecen después
+          del primer año, y si se les exige que tomen clases de recuperación antes de comenzar los cursos universitarios.</p>
           <hr />
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Los estudiantes que no están preparados para el trabajo a nivel universitario pueden encontrarse en
+          <a href="/gk/articles/por-que-tantos-estudiantes-destacados-terminan-en-clases-de-recuperacion/?lang=es">costosas clases de recuperación</a> y es más probable que abandonen la universidad. Use esta información para comenzar una conversación con alguien
+          en su comunidad sobre que esencial es que las escuelas preparatorias preparen a los estudiantes para el éxito después de la graduación.</p>
+          </div>
+        _parent_tip_html: >
+          <p class="parent-tip"><img src='/assets/school_profiles/owl.png' /><span class="speech-bubble left">Consejos para padres</span></p>
+          <p class="footnote">Pregúntele a la escuela lo que están haciendo para mejorar el acceso a las clases
+          avanzadas y ayudar a todos los estudiantes a prepararse para las
+          <a href="/gk/articles/improving-sat-scores/">pruebas de ingreso a la universidad</a>.</p>
