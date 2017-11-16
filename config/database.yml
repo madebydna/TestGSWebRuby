@@ -180,6 +180,14 @@ test: &test
     <<: *test_db
     database: api_test
     legacy: true
+  gsdata:
+    <<: *test_db
+    database: gsdata_test
+    legacy: false
+  gsdata_rw:
+    <<: *test_db
+    database: gsdata_test
+    legacy: false
 
 cucumber:
   <<: *test
