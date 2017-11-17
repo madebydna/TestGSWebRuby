@@ -105,6 +105,9 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     text-align: center;
     padding-top: 10px;
     border-left: 1px solid $cta_button_border;
+    @include media-breakpoint-down(sm) {
+      &:last-child { border-left: none; }
+    }
 
     a {
       color: white;

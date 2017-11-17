@@ -6,6 +6,7 @@ var ctaMobileProfileOffset;
 var ctaMobile;
 var header_un;
 var transitionToMobile = 991;
+var oldCTATop = 0;
 
 var init = function () {
   ctaMobile = $('.js-profile-sticky-mobile');
@@ -69,8 +70,18 @@ var setCTAMobileWidth= function () {
 
 
 var alignFixedTop = function () {
-  header_un.addClass('dn');
-  ctaMobile.removeClass('non-fixed-top').removeClass('align-bottom').removeClass('dn').addClass('fixed-top');
+  // console.log("oldCTATop < $(window).scrollTop(): " +oldCTATop+" :  "+ $(window).scrollTop());
+  // if (oldCTATop < $(window).scrollTop()) {
+  //   console.log("oldCTATop < $(window).scrollTop(): true");
+    header_un.addClass('dn');
+    ctaMobile.removeClass('non-fixed-top').removeClass('align-bottom').removeClass('dn').addClass('fixed-top');
+  // }
+  // else{
+  //   console.log("oldCTATop < $(window).scrollTop(): false");
+  //   header_un.removeClass('dn');
+  //   ctaMobile.addClass('dn');
+  // }
+  // oldCTATop = $(window).scrollTop();
 };
 
 var alignMobileDefault = function () {
