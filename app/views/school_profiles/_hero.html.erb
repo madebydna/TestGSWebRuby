@@ -61,12 +61,14 @@
                 </div>
             <% end %>
             <div class="school-contact__item school-contact__more">
-              <%= link_to(t('.more_contact'), '#Neighborhood',
+              <%= link_to('#Neighborhood',
                           :class => 'js-gaClick',
                           :data => { 'ga-click-category'=>'Profile',
                                      'ga-click-action'=>'Hero links',
                                      'ga-click-label'=>'More Contact'}
-                  ) %>
+                  ) do %>
+                      <% render 'icon_and_content', icon: :phone, content: t('.contact_info') %>
+                    <% end %>
             </div>
           </div>
           <div class="vertical-items">

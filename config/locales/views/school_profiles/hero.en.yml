@@ -23,7 +23,7 @@ en:
         <a href='%{osp_path}' class='js-gaClick' data-ga-click-category='Profile' data-ga-click-action='Claim school' data-ga-click-label='Private'>claim your school's profile</a>
         to edit general information and share what makes your school unique.
         <a href='/gk/schools/'>Learn more</a>.
-      more_contact: More contact
+      contact_info: Contact info
       reviews: Reviews
       school_type: Type
       school_website: School website
