@@ -6,6 +6,7 @@ $cta_icon_hover_color: #55b5e3; // Light GS Blue
 $cta_icon_active_color: #2282b0; // Medium GS Blue
 
 #profile-sticky-container {
+
   &.fixed-top {
     position: fixed;
     top: 0;
@@ -22,34 +23,40 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     bottom: 0px;
     z-index: 10;
   }
+
   &.blue-background {
     //opacity: 0.95;
     background-image: image_url('school_profiles/hero_bg.jpg');
     border-radius: 0 0 2px 2px;
   }
 
-
-
   &.dn {
     display: none;
   }
+
   &.desktop_dn {
     display:none;
   }
+
   @include media-breakpoint-down(sm) {
+
     &.blue-background {
       width:100%;
       border-top: solid 1px $cta_button_border;
     }
+
     &.mobile_dn{
       display:none;
     }
+
     &.desktop_dn {
       display:block;
     }
   }
 }
+
 #hero {
+
   .blue-background-hero {
     border-top: solid 1px $cta_button_border;
     border-bottom: solid 1px $cta_button_border;
@@ -57,8 +64,10 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     @include media-breakpoint-down(md) {
       display: none;
     }
+
     .cta {
       .cta-button {
+        width: 99px;
         a {
           font-size: 12px;
         }
@@ -66,7 +75,6 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     }
   }
 }
-
 
 .cta {
 
@@ -111,6 +119,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         }
       }
     }
+
     .owly_size {
       width: 53px;
       height: 32px;
@@ -119,12 +128,15 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   }
 
   @include media-breakpoint-down(sm) {
+
     .cta-four-buttons{
       width: 25%;
     }
+
     .cta-three-buttons{
       width: 33%;
     }
+
     .cta-button {
       height: 50px;
       text-align: center;
@@ -136,6 +148,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         vertical-align: top;
         display:inline-block;
       }
+
       .owly_size {
         margin-top: 0px;
       }
@@ -150,6 +163,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
       left:0px;
       z-index : 10;
     }
+
     .cta-rating {
       display:none;
     }
