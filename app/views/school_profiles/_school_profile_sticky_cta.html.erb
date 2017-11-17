@@ -1,48 +1,19 @@
 <%= render 'tour_modal' %>
-<div id="profile-sticky-container" class="js-profile-sticky dn  blue-background">
+
+<div id="profile-sticky-container" class="js-profile-sticky dn blue-background mobile_dn">
   <div id="cta" class="non-fixed-top cta-container ">
-    <div
-      class='tour-teaser cta-button'
-      class="js-gaClick"
-      data-ga-click-category='Profile'
-      data-ga-click-action='Compare CTA Clicked'
-      data-ga-click-label='StickyCTA'
-      data-content-type="info_box"
-      data-remodal-target="modal_info_box"
-      data-content-html='<div><div><h3><%= image_tag('school_profiles/owl.png') %> <%= t('school_profiles.Welcome')%></h3><%= t('school_profiles.tour_tooltip_content')%></div><br/><button class="tour-cta js-start-tour active"><%= t('school_profiles.Take_a_quick_tour')%></button></div>' >
-      <%= webpack_image_tag('school_profiles/owl.png', alt: 'Owl') %>
-    </div>
-    <div class="cta-button">
-      <a href="#NearbySchools" class="js-gaClick"
-         data-ga-click-category='Profile'
-         data-ga-click-action='Compare CTA Clicked'
-         data-ga-click-label='StickyCTA'>
-        <div class="icon-nearby_1"></div>
-        <div><%= t('.Nearby schools_html') %></div>
-      </a>
-    </div>
-    <div class="cta-button">
-      <a class="js-followThisSchool js-gaClick" href="#" onclick="return false;"
-         data-ga-click-category='Profile'
-         data-ga-click-action='Save CTA Clicked'
-         data-ga-click-label='StickyCTA'>
-        <div class="icon-heart"></div>
-        <div><%= t('.Save') %></div>
-      </a>
-    </div>
-    <div class="cta-button">
-      <a href="#Reviews" class="js-gaClick"
-         data-ga-click-category='Profile'
-         data-ga-click-action='Review CTA Clicked'
-         data-ga-click-label='StickyCTA'>
-        <div class="icon-pencil"></div>
-        <div><%= t('.Review') %></div>
-      </a>
-    </div>
+    <%= render 'cta_buttons' %>
+
     <div class="cta-rating">
+      <% if rating != '' %>
       <div class="circle-rating--<%= rating %> circle-rating--medium">
-      <%= rating %><span class="rating-circle-small">/10</span>
-    </div></div>
+        <%= rating %><span class="rating-circle-small">/10</span>
+      </div>
+      <% else %>
+        <%= image_tag('school_profiles/owl_in_light_blue_circle.png', style: 'width:50px;height:50px') %>
+      <% end %>
+    </div>
+
     <div class="cta-title"><%= @school.name %></div>
   </div>
 </div>

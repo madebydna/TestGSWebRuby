@@ -5,13 +5,14 @@
 <div class="school-profile">
   <%= render 'breadcrumbs', breadcrumbs: @private_school_profile.breadcrumbs %>
   <%= render 'hero', hero: @private_school_profile.hero %>
+  <%= render 'school_profile_sticky_cta_mobile', rating: ''  %>
   <!-- main content -->
   <div class="static-container">
     <div class="right_rail">
       <%= render 'sticky_right_rail' %>
     </div>
     <div class="content">
-
+      <%= render 'school_profile_sticky_cta', rating: '' %>
       <div>
         <%= render 'toc_private',
           mailto: @private_school_profile.mailto,

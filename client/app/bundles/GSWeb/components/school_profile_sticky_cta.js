@@ -3,12 +3,14 @@ import { throttle, debounce } from 'lodash';
 
 var ctaProfileOffset;
 var cta;
+var header_un;
 var transitionToMobile = 991;
 var ctaParentHeight = 0;
 var ctaParentWidth = 0;
 
 var init = function () {
   cta = $('.js-profile-sticky');
+  header_un = $('.header_un');
   // only init when cta is on the page. :)
   if (isCTADefined()) {
     $(window).on('scroll', throttle(recalculateCTAResize, 50));
@@ -19,18 +21,17 @@ var init = function () {
 };
 
 var recalculateCTAResize = function () {
-  setCTAProfileOffset();
   if (isDesktopWidth()) {
+    setCTAProfileOffset();
     setCTARowHeightToParent();
     setCTARowWidthToParent();
-  } else {
-    setCTARowToDefault();
+    manageFixedPositions();
   }
-  manageFixedPositions();
 };
 
 var manageFixedPositions = function () {
   if (isDesktopWidth()) {
+    header_un.removeClass('dn');
     if (isScrollAboveTop()) {
       if (scrollBelowBottom()) {
         alignToBottom();
@@ -40,8 +41,6 @@ var manageFixedPositions = function () {
     } else {
       alignDefault();
     }
-  } else {
-    alignMobile();
   }
 };
 
@@ -62,10 +61,6 @@ var setCTARowHeightToParent = function () {
 var setCTARowWidthToParent = function () {
   ctaParentWidth = cta.parent().width();
   cta.width(ctaParentWidth);
-};
-
-var setCTARowToDefault = function () {
-  cta.parent().height('auto');
 };
 
 // branching
@@ -93,10 +88,6 @@ var alignFixedTop = function () {
 
 var alignDefault = function () {
   cta.removeClass('fixed-top').removeClass('align-bottom').addClass('non-fixed-top').addClass('dn');
-};
-
-var alignMobile = function () {
-  cta.removeClass('fixed-top').removeClass('align-bottom').removeClass('non-fixed-top');
 };
 
 export { init };
