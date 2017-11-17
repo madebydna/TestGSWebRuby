@@ -19,7 +19,8 @@ import { generateEthnicityChart } from '../components/ethnicity_pie_chart';
 import { fixToTopWhenBelowY } from '../util/fix_to_top_when_below_y';
 import * as tooltips from '../util/tooltip';
 import { generateSubgroupPieCharts } from '../components/subgroup_charts';
-import * as stickyCTA from '../components/school_profile_sticky_cta';
+import * as stickyRightRail from '../components/sticky_right_rail';
+import * as schoolProfileStikcyCTA from '../components/school_profile_sticky_cta';
 import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
 import OspSchoolInfo from '../react_components/osp_school_info';
@@ -116,7 +117,8 @@ $(function() {
   tooltips.initialize();
   remodal.init();
   generateSubgroupPieCharts();
-  stickyCTA.init();
+  stickyRightRail.init();
+  schoolProfileStikcyCTA.init();
   footer.setupNewsletterLink();
   backToTop.init();
 

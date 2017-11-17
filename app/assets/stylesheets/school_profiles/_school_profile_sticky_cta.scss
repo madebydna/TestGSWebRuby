@@ -1,7 +1,7 @@
 $cta_background: #FFFFFF;
 $cta_shadow: #CCCCCC;
-$cta_button_border: #dbe6eb;
-$cta_icon_color: #2ba3dc; // Regular GS Blue
+$cta_button_border: #2282b0;
+$cta_icon_color: #ffffff; // Regular GS Blue
 $cta_icon_hover_color: #55b5e3; // Light GS Blue
 $cta_icon_active_color: #2282b0; // Medium GS Blue
 
@@ -9,6 +9,8 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   &.fixed-top {
     position: fixed;
     top: 0;
+    margin-top: 0;
+    z-index: 10;
   }
 
   &.non-fixed-top {
@@ -18,48 +20,58 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   &.align-bottom {
     position: absolute;
     bottom: 0px;
+    z-index: 10;
+  }
+  &.blue-background {
+    background-image: image_url('school_profiles/hero_bg.jpg');
+    border-radius: 0 0 2px 2px;
+  }
+  &.dn {
+    display: none;
   }
 }
 
 #cta {
 
   &.cta-container {
-    width: 299px;
-    height: 84px;
-    background-color: $cta_background;
-    box-shadow: 0px 2px 5px 3px $cta_shadow;
+    height: 65px;
+  }
 
-    > div:first-child,
-    > div:nth-child(2) {
-      border-right: 1px solid $cta_button_border;
-    }
+  .cta-rating {
+    float:left;
+    padding: 7px 0 0 10px;
+  }
+
+  .cta-title {
+    float:left;
+    padding: 18px 20px 15px 10px;
+    font-size: 20px;
+    color: #ffffff;
+    width: 45%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .cta-button {
-    width: 99px;
-    height: 84px;
-    float: left;
+    width: 70px;
+    height: 65px;
+    float: right;
     text-align: center;
-    padding-top: 19px;
+    padding-top: 10px;
+    border-left: 1px solid $cta_button_border;
 
     a {
-      color: inherit;
+      color: white;
       font: inherit;
+      font-size: $font-size-small;
 
       &:hover {
         text-decoration: none;
-      }
-
-      > div:first-child{
-        color: $cta_icon_color;
-      }
-
-      > div:first-child:hover {
         color: $cta_icon_hover_color;
-      }
-
-      > div:first-child:active {
-        color: $cta_icon_active_color;
+        > div:first-child {
+          color: $cta_icon_hover_color;
+        }
       }
     }
   }

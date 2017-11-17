@@ -1,10 +1,11 @@
 import { viewport } from '../util/viewport';
 import { throttle, debounce } from 'lodash';
-//TODO: import jQuery
 
 var ctaProfileOffset;
 var cta;
 var transitionToMobile = 991;
+var ctaParentHeight = 0;
+var ctaParentWidth = 0;
 
 var init = function () {
   cta = $('.js-profile-sticky');
@@ -21,6 +22,7 @@ var recalculateCTAResize = function () {
   setCTAProfileOffset();
   if (isDesktopWidth()) {
     setCTARowHeightToParent();
+    setCTARowWidthToParent();
   } else {
     setCTARowToDefault();
   }
@@ -50,11 +52,16 @@ var isCTADefined = function () {
 
 // setters
 var setCTAProfileOffset = function () {
-  ctaProfileOffset = cta.parent().offset().top + 30;
+  ctaProfileOffset = cta.parent().offset().top;
 };
 
 var setCTARowHeightToParent = function () {
-  cta.parent().height(cta.parent().parent().height());
+  ctaParentHeight = cta.parent().parent().height();
+};
+
+var setCTARowWidthToParent = function () {
+  ctaParentWidth = cta.parent().width();
+  cta.width(ctaParentWidth);
 };
 
 var setCTARowToDefault = function () {
@@ -71,21 +78,21 @@ var isDesktopWidth = function () {
 };
 
 var scrollBelowBottom = function () {
-  var ctaBottomOffset = cta.parent().height() - cta.height() + ctaProfileOffset - 30;
+  var ctaBottomOffset = ctaParentHeight - cta.height() + ctaProfileOffset - 30;
   return (ctaBottomOffset <= $(window).scrollTop());
 };
 
 // align cta for each case
 var alignToBottom = function () {
-  cta.removeClass('fixed-top').removeClass('non-fixed-top').addClass('align-bottom');
+  cta.removeClass('fixed-top').removeClass('non-fixed-top').removeClass('dn').addClass('align-bottom');
 };
 
 var alignFixedTop = function () {
-  cta.removeClass('non-fixed-top').removeClass('align-bottom').addClass('fixed-top');
+  cta.removeClass('non-fixed-top').removeClass('align-bottom').removeClass('dn').addClass('fixed-top');
 };
 
 var alignDefault = function () {
-  cta.removeClass('fixed-top').removeClass('align-bottom').addClass('non-fixed-top');
+  cta.removeClass('fixed-top').removeClass('align-bottom').addClass('non-fixed-top').addClass('dn');
 };
 
 var alignMobile = function () {

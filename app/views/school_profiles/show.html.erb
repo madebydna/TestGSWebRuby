@@ -12,9 +12,10 @@
     <!-- main content -->
     <div class="static-container">
       <div class="right_rail">
-        <%= render 'school_profile_sticky_cta' %>
+        <%= render 'sticky_right_rail' %>
       </div>
       <div class="content">
+        <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
         <div class="profile-section">
           <%= render 'summary_narration' if @school_profile.summary_narration.present? %>
         </div>
@@ -152,6 +153,3 @@
     <% end %>
     <%= render 'shared/bottom_mobile_ad' %>
 </div>
-
-<%= render 'tour_button' %>
-
