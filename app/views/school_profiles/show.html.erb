@@ -16,12 +16,15 @@
         <%= render 'sticky_right_rail' %>
       </div>
       <div class="content">
-        <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
         <div class="profile-section">
           <%= render 'summary_narration' if @school_profile.summary_narration.present? %>
         </div>
         <div class="profile-section">
           <%= render 'toc' %>
+
+        </div>
+        <div>
+          <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
         </div>
         <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                    width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>

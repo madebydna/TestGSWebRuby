@@ -12,11 +12,14 @@
       <%= render 'sticky_right_rail' %>
     </div>
     <div class="content">
-      <%= render 'school_profile_sticky_cta', rating: '' %>
+
       <div>
         <%= render 'toc_private',
           mailto: @private_school_profile.mailto,
           claimed: @private_school_profile.claimed %>
+      </div>
+      <div>
+        <%= render 'school_profile_sticky_cta', rating: '' %>
       </div>
       <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                  width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>

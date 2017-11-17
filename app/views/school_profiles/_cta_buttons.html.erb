@@ -1,7 +1,8 @@
 <% owly_hide = '' %>
+<% hide_owl ||= false %>
 <% cta_columns = ' cta-four-buttons' %>
-<% if @school.private_school? %>
-  <% owly_hide = '' %>
+<% if @school.private_school? || hide_owl%>
+  <% owly_hide = ' dn' %>
   <% cta_columns = ' cta-three-buttons' %>
 <% end %>
 

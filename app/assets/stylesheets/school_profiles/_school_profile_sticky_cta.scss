@@ -1,6 +1,6 @@
 $cta_background: #FFFFFF;
 $cta_shadow: #CCCCCC;
-$cta_button_border: #2282b0;
+$cta_button_border: rgba(255,255,255,0.17);
 $cta_icon_color: #ffffff; // Regular GS Blue
 $cta_icon_hover_color: #55b5e3; // Light GS Blue
 $cta_icon_active_color: #2282b0; // Medium GS Blue
@@ -27,13 +27,16 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     background-image: image_url('school_profiles/hero_bg.jpg');
     border-radius: 0 0 2px 2px;
   }
+
+
+
   &.dn {
     display: none;
   }
   &.desktop_dn {
     display:none;
   }
-  @media (max-width: 991px) {
+  @include media-breakpoint-down(sm) {
     &.blue-background {
       width:100%;
       border-top: solid 1px $cta_button_border;
@@ -46,8 +49,26 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     }
   }
 }
+#hero {
+  .blue-background-hero {
+    border-top: solid 1px $cta_button_border;
+    border-bottom: solid 1px $cta_button_border;
+    border-right: solid 1px $cta_button_border;
+    @include media-breakpoint-down(md) {
+      display: none;
+    }
+    .cta {
+      .cta-button {
+        a {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
 
-#cta {
+
+.cta {
 
   &.cta-container {
     height: 65px;
@@ -97,7 +118,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
     }
   }
 
-  @media (max-width: 991px) {
+  @include media-breakpoint-down(sm) {
     .cta-four-buttons{
       width: 25%;
     }
