@@ -14,7 +14,15 @@ if (gon.advertising_enabled) {
     if (event.isEmpty) {
       // Hide the entire containing div (which includes the ad div and the ghost text) as no ad has been rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper').hide();
+      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
+        GS_onMobileOverlayAdNotFilled();
+      }
     } else {
+      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
+        GS_onMobileOverlayAdFilled();
+      }
       // Show the ghost text as an ad is rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper .advertisement-text').removeClass('dn').show();
     }
@@ -109,6 +117,7 @@ if (gon.advertising_enabled) {
       GS.ad.getDimensions($adSlot),
       GS.ad.getDivId($adSlot)
     );
+    if(!slot) return;
     var sizeMapping = sizeMappingMap[$adSlot.attr("data-ad-setting")];
     if (sizeMapping) {
       slot = slot.defineSizeMapping(sizeMapping);

@@ -15,6 +15,7 @@ const config = {
     'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
     'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
     'widget': ['./app/bundles/GSWeb/widget'],
+    'mobile-overlay-ad': ['./app/bundles/GSWeb/components/ads/mobile_overlay'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
