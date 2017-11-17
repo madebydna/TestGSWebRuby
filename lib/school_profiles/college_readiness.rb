@@ -98,7 +98,7 @@ module SchoolProfiles
       {
         :cache => :characteristics,
         :data_key => GRADUATES_REMEDIATION,
-        :visualization => 'person_reversed',
+        :visualization => 'person_gray',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
@@ -356,7 +356,8 @@ module SchoolProfiles
           state_average = hash['state_average'] || hash['state_value']
           item.state_average = SchoolProfiles::DataPoint.new(state_average).
             apply_formatting(*formatting)
-          item.visualization = visualization
+          #if visualization is not set in cache_accessor (aka remediation), set to gray
+          item.visualization = visualization || 'person_gray'
           item.source = hash['source'] || hash['source_name']
         end
       end.compact

@@ -12,7 +12,7 @@ module SchoolProfiles
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = 'Percentage of students suspended out of school'
             component.title = 'Percentage of students suspended out of school'
-            component.type = 'person_reversed'
+            component.type = 'person_gray'
             component.narration = t("narration.ER.#{suspension_scope}.Percentage of students suspended out of school")
             component.flagged = school_cache_data_reader.discipline_flag?
           end,
@@ -20,7 +20,7 @@ module SchoolProfiles
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = 'Percentage of students chronically absent (15+ days)'
             component.title = 'Percentage of students chronically absent (15+ days)'
-            component.type = 'person_reversed'
+            component.type = 'person_gray'
             component.narration = t("narration.ER.#{attendance_scope}.Percentage of students chronically absent (15+ days)")
             component.flagged = school_cache_data_reader.attendance_flag?
           end

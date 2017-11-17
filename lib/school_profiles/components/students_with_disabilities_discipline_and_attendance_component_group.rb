@@ -10,7 +10,7 @@ module SchoolProfiles
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = 'Percentage of students suspended out of school'
             component.title = 'Percentage of students suspended out of school'
-            component.type = 'person_reversed'
+            component.type = 'person_gray'
             component.narration = t('narration.SD.Percentage of students suspended out of school')
             component.valid_breakdowns = ['All students','Students with disabilities']
           end,
@@ -18,7 +18,7 @@ module SchoolProfiles
             component.school_cache_data_reader = school_cache_data_reader
             component.data_type = 'Percentage of students chronically absent (15+ days)'
             component.title = 'Percentage of students chronically absent (15+ days)'
-            component.type = 'person_reversed'
+            component.type = 'person_gray'
             component.narration = t('narration.SD.Percentage of students chronically absent (15+ days)')
             component.valid_breakdowns = ['All students','Students with IDEA catagory disabilities']
           end
