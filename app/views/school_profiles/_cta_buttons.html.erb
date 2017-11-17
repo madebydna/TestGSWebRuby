@@ -14,7 +14,7 @@
   data-content-type="info_box"
   data-remodal-target="modal_info_box"
   data-content-html='<div><div><h3><%= image_tag('school_profiles/owl.png') %> <%= t('school_profiles.Welcome')%></h3><%= t('school_profiles.tour_tooltip_content')%></div><br/><button class="tour-cta js-start-tour active"><%= t('school_profiles.Take_a_quick_tour')%></button></div>' >
-    <%= webpack_image_tag('school_profiles/owl.png', alt: 'Owl', class: 'owly_size') %>
+    <%= image_tag('school_profiles/owl_tutorial_prompt.png', class: 'owly_size') %>
   </div>
   <div class="cta-button<%= cta_columns %>">
     <a href="#NearbySchools" class="js-gaClick"
@@ -22,7 +22,7 @@
        data-ga-click-action='Compare CTA Clicked'
        data-ga-click-label='StickyCTA'>
       <div class="icon-nearby_1"></div>
-      <div><%= t('school_profiles.school_profile_sticky_cta.Nearby schools_html') %></div>
+      <div><%= t('.Nearby schools_html') %></div>
     </a>
   </div>
   <div class="cta-button<%= cta_columns %>">
@@ -31,7 +31,7 @@
        data-ga-click-action='Save CTA Clicked'
        data-ga-click-label='StickyCTA'>
       <div class="icon-heart"></div>
-      <div><%= t('school_profiles.school_profile_sticky_cta.Save') %></div>
+      <div><%= t('.Save') %></div>
     </a>
   </div>
   <div class="cta-button<%= cta_columns %>">
@@ -40,6 +40,6 @@
        data-ga-click-action='Review CTA Clicked'
        data-ga-click-label='StickyCTA'>
       <div class="icon-pencil"></div>
-      <div><%= t('school_profiles.school_profile_sticky_cta.Review') %></div>
+      <div><%= t('.Review') %></div>
     </a>
   </div>

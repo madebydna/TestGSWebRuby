@@ -91,8 +91,9 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
       }
     }
     .owly_size {
-      width: 39px;
-      height: 43px;
+      width: 53px;
+      height: 32px;
+      margin-top: 5px;
     }
   }
 
@@ -115,8 +116,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         display:inline-block;
       }
       .owly_size {
-        width: 33px;
-        height: 36px;
+        margin-top: 0px;
       }
     }
 
