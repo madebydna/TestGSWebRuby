@@ -5,6 +5,13 @@ const containerSelector = '.mobile-ad-sticky-bottom';
 let deferred;
 
 export function renderAd() {
+  /*
+   * The ad container must be completely hidden on all screen sizes
+   * prior to knowing if it will show and before asking ad server to fill it.
+   * But the container needs to be visible (yet still offscreen) when
+   * we ask the ad server to fill.
+   */
+  $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
   if($('#' + adDomId).is(":visible")) {
     showAd(adDomId);

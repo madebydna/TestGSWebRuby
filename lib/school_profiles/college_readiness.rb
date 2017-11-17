@@ -98,7 +98,7 @@ module SchoolProfiles
       {
         :cache => :characteristics,
         :data_key => GRADUATES_REMEDIATION,
-        :visualization => 'person_reversed',
+        :visualization => 'person_gray',
         :formatting => [:round_unless_less_than_1, :percent]
       },
       {
@@ -265,12 +265,12 @@ module SchoolProfiles
 
         unless key == GRADUATES_REMEDIATION
           values = values.select { |h| !h.has_key?('subject') || h['subject'] == 'All subjects'}
+          GSLogger.error(:misc, nil,
+                         message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
+                         vars: {school: {state: @school_cache_data_reader.school.state,
+                                         id: @school_cache_data_reader.school.id}
+                         }) if values.size > 1
         end
-        GSLogger.error(:misc, nil,
-                       message:"Failed to find unique data point for data type #{key} in the characteristics/gsdata cache",
-                       vars: {school: {state: @school_cache_data_reader.school.state,
-                                       id: @school_cache_data_reader.school.id}
-                       }) if values.size > 1
         add_data_type(key,values)
       end
       data_values = hashes.flatten.compact.select(&with_school_values)
@@ -356,7 +356,8 @@ module SchoolProfiles
           state_average = hash['state_average'] || hash['state_value']
           item.state_average = SchoolProfiles::DataPoint.new(state_average).
             apply_formatting(*formatting)
-          item.visualization = visualization
+          #if visualization is not set in cache_accessor (aka remediation), set to gray
+          item.visualization = visualization || 'person_gray'
           item.source = hash['source'] || hash['source_name']
         end
       end.compact

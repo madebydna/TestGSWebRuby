@@ -18,9 +18,11 @@
       </div>
     </div>
     <div class="col-xs-12 col-lg-9">
-      <div class="profile-section-slot">
-        <%= render('equity_overview', equity_overview: equity_overview) %>
-      </div>
+      <% if equity_overview.has_rating? %>
+        <div class="profile-section-slot">
+          <%= render('equity_overview', equity_overview: equity_overview) %>
+        </div>
+      <% end %>
       <div class="profile-section-slot">
         <%= react_component('SchoolProfileComponent', props: {
                           title: t('.Race ethnicity'),
