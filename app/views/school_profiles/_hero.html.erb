@@ -149,6 +149,11 @@
           <div class="label"><%= t('.school_type') %></div>
           <div><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></div>
         </div>
+        <div class="blue-background-hero" style="float: right">
+          <div class="cta non-fixed-top cta-container cta-hero">
+            <%= render 'cta_buttons', hide_owl: true %>
+          </div>
+        </div>
       </div>
       <% if hero.has_school_address? %>
         <div class="mobile-address school-contact__item school-contact__address">
@@ -161,6 +166,7 @@
           </a>
         </div>
       <% end %>
+
     </div>
   </div>
 </div>
