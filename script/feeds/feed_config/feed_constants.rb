@@ -37,7 +37,8 @@ module Feeds
           'test_rating' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
           'official_overall' => 'http://www.greatschools.org/feeds/greatschools-test-rating.xsd',
           'directory_feed' => 'https://www.greatschools.org/feeds/local-greatschools.xsd',
-          'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd'
+          'google_feed' => 'https://www.gstatic.com/localfeed/local_feed.xsd',
+          'city' => 'https://www.greatschools.org/feeds/greatschools-city2.xsd'
       }
       FEED_TO_ROOT_ELEMENT_MAPPING = {
           'test_scores' => 'gs-test-feed',
@@ -45,7 +46,8 @@ module Feeds
           'test_rating' => 'gs-test-rating-feed',
           'official_overall' => 'gs-official-overall-rating-feed',
           'directory_feed' => 'gs-local-feed',
-          'google_feed' => 'listings'
+          'google_feed' => 'listings',
+          'city' => 'greatschools-city-feed',
       }
 
       PROFICIENT_AND_ABOVE_BAND = 'proficient and above'
@@ -249,7 +251,7 @@ module Feeds
       ].freeze
 
       def all_feeds
-        %w(test_scores test_subgroup test_rating official_overall directory_feed)
+        %w(test_scores test_subgroup test_rating official_overall directory_feed city)
       end
 
       def all_states

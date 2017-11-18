@@ -9,6 +9,7 @@ require_relative '../feed_config/feed_constants'
 require_relative '../feed_builders/test_score/test_score_feed'
 require_relative '../feed_builders/rating/test_rating_feed'
 require_relative '../feed_builders/directory/directory_feed'
+require_relative '../feed_builders/city/feed_generator'
 
 
 
@@ -66,7 +67,8 @@ module Feeds
           test_subgroup:     Feeds::TestScoreFeed,
           test_rating:       Feeds::TestRatingFeed,
           official_overall:  Feeds::TestRatingFeed,
-          directory_feed:    Feeds::DirectoryFeed
+          directory_feed:    Feeds::DirectoryFeed,
+          city:              Feeds::City::FeedGenerator,
       }[key.to_s.to_sym]
     end
   end
