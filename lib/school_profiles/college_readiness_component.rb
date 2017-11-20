@@ -1,5 +1,5 @@
 module SchoolProfiles
-  module Components
+
     class CollegeReadinessComponent < CollegeReadiness
       attr_reader :tab
 
@@ -163,5 +163,4 @@ module SchoolProfiles
         ->(h) { h.has_key?('school_value') && h['school_value'].present? }
       end
     end
-  end
 end

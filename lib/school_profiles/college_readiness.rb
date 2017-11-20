@@ -178,7 +178,7 @@ module SchoolProfiles
 
     def components
       @_components ||= (
-      tabs.map {|tab| ::SchoolProfiles::Components::CollegeReadinessComponent.new(tab, @school_cache_data_reader) }
+      tabs.map {|tab| SchoolProfiles::CollegeReadinessComponent.new(tab, @school_cache_data_reader) }
       )
     end
 
@@ -191,6 +191,5 @@ module SchoolProfiles
     def with_school_values
       ->(h) { h.has_key?('school_value') && h['school_value'].present? }
     end
-
   end
 end
