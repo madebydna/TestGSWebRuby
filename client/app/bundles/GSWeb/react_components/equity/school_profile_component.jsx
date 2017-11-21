@@ -49,6 +49,7 @@ export default class SchoolProfileComponent extends React.Component {
       flagged: PropTypes.bool
     })),
     analytics_id: PropTypes.string,
+    showTabs: PropTypes.bool,
     faq: PropTypes.shape({
       cta: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,

@@ -182,6 +182,10 @@ module SchoolProfiles
       )
     end
 
+    def has_college_success?
+      props.any? {|component| component[:title].downcase == 'college success' if component[:title]}
+    end
+
     def props
       @_props ||= components.map {|component| get_props(component)}.reject(&:empty?)
     end

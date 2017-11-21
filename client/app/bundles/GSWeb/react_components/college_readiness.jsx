@@ -113,13 +113,6 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     }
   }
 
-  hasCSTab() {
-    let tabs = this.filteredData().map((pane,idx) => {
-      return pane.title
-    });
-    return (tabs.includes('College success') || tabs.includes('Éxito universitario'));
-  }
-
   render() {
     let analyticsId = this.props.analytics_id;
     if (!this.hasData()) {
@@ -138,7 +131,7 @@ export default class CollegeReadiness extends SchoolProfileComponent {
           no_data_cta={ !this.hasData() && this.noDataCta() }
           footer={ this.hasData() && this.footer() }
           body={ this.hasData() && this.activePane() }
-          tabs={ this.hasData() && this.hasCSTab() && this.tabsContainer() }
+          tabs={ this.hasData() && this.props.showTabs && this.tabsContainer() }
         />
       </div>
     )
