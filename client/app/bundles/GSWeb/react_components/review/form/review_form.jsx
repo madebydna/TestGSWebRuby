@@ -55,7 +55,8 @@ export default class ReviewForm extends React.Component {
       errorMessages: {},
       selectedFiveStarResponse: null,
       unsavedChanges: false,
-      disabled: false
+      disabled: false,
+      submittingForm: false
     };
   }
 
@@ -200,7 +201,7 @@ export default class ReviewForm extends React.Component {
   }
 
   maxCharactersValidator(string) {
-    if (string && string.legnth != 0 && string.length > 2400) {
+    if (string && string.length != 0 && string.length > 2400) {
       return t('review_char_limit');;
     } else {
       return null;
@@ -217,7 +218,7 @@ export default class ReviewForm extends React.Component {
   getValidationsForQuestion(questionId) {
     let validationFuncs = [];
     switch(questionId) {
-      case "1": validationFuncs.push(this.requiredCommentValidator);
+      case "1": if (this.state.submittingForm == true) {validationFuncs.push(this.requiredCommentValidator);}
       default: validationFuncs.push(this.minWordsValidator);
               validationFuncs.push( this.maxCharactersValidator);
     }
@@ -247,9 +248,10 @@ export default class ReviewForm extends React.Component {
   }
 
   validateForm() {
+   var that = this;
    var selectedResponses = this.state.selectedResponses;
    var errorMessages = Object.keys(selectedResponses).reduce((accum, questionId) => {
-     return this.validateResponse(accum, selectedResponses[questionId], questionId)
+     return that.validateResponse(accum, selectedResponses[questionId], questionId)
    }, {});
    var formValid = isEmpty(errorMessages);
     this.setState ({
@@ -259,15 +261,20 @@ export default class ReviewForm extends React.Component {
     return formValid;
   }
 
-  onSubmit() {
-    this.clearErrors();
-    var formValid = this.validateForm();
-     if(!formValid) {
-       analyticsEvent('Profile', 'Display Error Message', 'Review form validation failed');
-     }
+  validateAndSubmit(){
+    var formValid = this.validateForm(true);
+    if(!formValid) {
+      analyticsEvent('Profile', 'Display Error Message', 'Review form validation failed');
+    }
     if (formValid) {
       this.submitForm();
     }
+    this.setState({submittingForm: false})
+  }
+
+  onSubmit() {
+    this.clearErrors();
+    this.setState({submittingForm: true}, () => this.validateAndSubmit());
   }
 
   handleGetCurrentSessionFailure(errorsArray = []) {
