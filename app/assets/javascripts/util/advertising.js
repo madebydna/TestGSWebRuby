@@ -14,12 +14,12 @@ if (gon.advertising_enabled) {
     if (event.isEmpty) {
       // Hide the entire containing div (which includes the ad div and the ghost text) as no ad has been rendered
       jQuery('.js-' + event.slot.getSlotElementId() + '-wrapper').hide();
-      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      var $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
       if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
         GS_onMobileOverlayAdNotFilled();
       }
     } else {
-      let $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
+      var $wrapper = $('.js-' + event.slot.getSlotElementId() + '-wrapper');
       if($wrapper.hasClass('mobile-ad-sticky-bottom')) {
         GS_onMobileOverlayAdFilled();
       }
