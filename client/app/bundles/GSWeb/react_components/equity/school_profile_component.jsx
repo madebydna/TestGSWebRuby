@@ -145,10 +145,12 @@ export default class SchoolProfileComponent extends React.Component {
               component = <PlainNumber values={values}/>;
             case 'person':
               component = this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
-            case 'person reversed':
+            case 'person_reversed':
               component = this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
             case 'rating':
               component = this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
+            case 'person_gray':
+              component = this.wrapGraphComponent(<PersonBar {...value} use_gray={true}/>, value, index);
             default:
               component = this.wrapGraphComponent(<BarGraphBase {...value} />, value, index)
           }
