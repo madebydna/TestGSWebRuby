@@ -248,10 +248,9 @@ export default class ReviewForm extends React.Component {
   }
 
   validateForm() {
-   var that = this;
    var selectedResponses = this.state.selectedResponses;
    var errorMessages = Object.keys(selectedResponses).reduce((accum, questionId) => {
-     return that.validateResponse(accum, selectedResponses[questionId], questionId)
+     return this.validateResponse(accum, selectedResponses[questionId], questionId)
    }, {});
    var formValid = isEmpty(errorMessages);
     this.setState ({
