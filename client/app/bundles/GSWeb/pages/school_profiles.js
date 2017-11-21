@@ -36,7 +36,7 @@ import { t } from '../util/i18n';
 import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
-import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
+import { enableAutoAnchoring, initAnchorHashUpdater, scrollToAnchor } from '../components/anchor_router';
 import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
@@ -110,7 +110,8 @@ $(function() {
     'Teachers_staff': '#TeachersStaff',
     'Reviews': '#Reviews',
     'Neighborhood': '#Neighborhood',
-    'Academic_progress': '#AcademicProgress .rating-container__rating'
+    'Academic_progress': '#AcademicProgress .rating-container__rating',
+    'Equity_overview': '#EquityOverview'
   });
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
@@ -369,4 +370,17 @@ $(window).on('load', function() {
 
   registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
   runInterrupts(['profileTour', 'mobileOverlayAd', 'qualaroo'])
+
+  $('#toc').on('click', 'a', function(e) {
+    const ANCHOR_REGEX = /^#[^ ]+$/;
+    let elem = e.currentTarget;
+    if(elem.nodeName === 'A') {
+      let href = elem.getAttribute('href');
+      if(href != window.location.hash) {
+        window.location.hash = href;
+      } else {
+        scrollToAnchor(href.slice(1));
+      }
+    }
+  });
 });

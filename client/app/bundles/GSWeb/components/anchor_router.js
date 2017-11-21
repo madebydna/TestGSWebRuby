@@ -22,7 +22,7 @@ function anchorTokens() {
 }
 
 export function enableAutoAnchoring(map) {
-  addAnchorChangeCallback(scrollToAnchor);
+  addAnchorChangeCallback(() => scrollToAnchor());
   addAnchorChangeCallback(disableAutoAnchoring);
   autoAnchoring = true;
   anchorMap = map;
@@ -56,9 +56,9 @@ function scrollWithoutHighlight(selector) {
   scrollToElement(selector);
 }
 
-export function scrollToAnchor() {
+export function scrollToAnchor(anchor) {
   disableAutoAnchoring();
-  let firstToken = anchorTokens()[0];
+  let firstToken = anchor || anchorTokens()[0];
   let selector = anchorMap[firstToken];
   if(selector && $(selector).length > 0) {
     scrollWithoutHighlight(selector);
