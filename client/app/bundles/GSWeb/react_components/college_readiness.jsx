@@ -68,32 +68,29 @@ export default class CollegeReadiness extends SchoolProfileComponent {
     window.analyticsEvent('Profile', 'College Readiness Tabs', tabTitle);
   }
 
+  wrapGraphComponent(graphComponent, value, index) {
+    return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+      {graphComponent}
+    </BasicDataModuleRow>;
+  }
+
   createDataComponent(values) {
     let customScoreRanges = ["Average SAT score", "Calificación media de los SAT", "Average ACT score", "Calificación media de ACT"];
     if (values) {
       if (values.length > 0) {
         // Build array of college readiness data rows
         let dataRows = values.map(function(value, index) {
-          if (value.display_type == "person") {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} />
-            </BasicDataModuleRow>;
-          } else if (value.display_type == "person_reversed"){
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} invertedRatings={true} />
-            </BasicDataModuleRow>;
-          } else if (value.display_type == "rating") {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <RatingWithBar {...value} />
-            </BasicDataModuleRow>;
-          } else if (customScoreRanges.includes(value.breakdown)) {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <BarGraphCustomRanges {...value} is_percent={false} />
-            </BasicDataModuleRow>;
-          } else {
-            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} invertedRatings={true} />
-            </BasicDataModuleRow>;
+          switch (value.displayType) {
+            case 'plain':
+              return <PlainNumber values={values}/>;
+            case 'person':
+              return this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
+            case 'person reversed':
+              return this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
+            case 'rating':
+              return this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
+            default:
+              return this.wrapGraphComponent(<BarGraphBase {...value} />, value, index)
           }
         }.bind(this));
         // Put rows in drawer if more than three

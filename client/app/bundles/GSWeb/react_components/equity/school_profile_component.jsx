@@ -121,6 +121,13 @@ export default class SchoolProfileComponent extends React.Component {
     return this.filteredData().length > 0
   }
 
+  wrapGraphComponent(graphComponent, value, index) {
+    return <div><BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+      {graphComponent}
+    </BasicDataModuleRow></div>;
+  }
+
+
   createDataComponent(type, values) {
     if (values) {
       // This is for titles in the test scores
@@ -131,41 +138,21 @@ export default class SchoolProfileComponent extends React.Component {
       if (values.length > 0) {
         let displayType = type || 'bar';
         let component = null;
-        if (displayType == 'plain') {
-          component = <PlainNumber values={values}/>
-        } else if (displayType == 'person') {
-          component = <div>
-            {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                <PersonBar {...value} />
-              </BasicDataModuleRow>)
-            }
-          </div>
-        } else if (displayType == 'person_reversed') {
-          component = <div>
-            {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                <PersonBar {...value} invertedRatings={true} />
-              </BasicDataModuleRow>)
-            }
-          </div>
-        } else if (displayType == 'rating') {
-          component = <div>
-            {values.map((value, index) =>
-                <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                  <RatingWithBar {...value} />
-                </BasicDataModuleRow>)
-            }
-          </div>
-        } else {
-          component = <div>
-            {values.map((value, index) => 
-              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                <BarGraphBase {...value} />
-              </BasicDataModuleRow>)
-            }
-          </div>
-        }
+        values.map((value, index) => {
+          switch (displayType) {
+            case 'plain':
+              component = <PlainNumber values={values}/>;
+            case 'person':
+              component = this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
+            case 'person reversed':
+              component = this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
+            case 'rating':
+              component = this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
+            default:
+              component = this.wrapGraphComponent(<BarGraphBase {...value} />, value, index)
+          }
+        });
+
         return component;
       }
     }
