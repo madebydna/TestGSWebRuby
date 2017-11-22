@@ -326,6 +326,11 @@ $(function() {
     window.open(surveyUrl);
   });
 
+  $body.on('click', '.js-swd-modal', function(){
+    scrollToElement('#Reviews');
+    $('.remodal').remodal().close();
+  });
+
   $body.on('click', '.js-start-second-tour', function(){
       introJs.startSecondTutorial();
       return false;
