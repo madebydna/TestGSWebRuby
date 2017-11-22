@@ -46,7 +46,13 @@ module CachedRatingsMethods
     if ratings_cache_old?
       school_rating_by_id(174)
     else
-      rating_for_key('Summary Rating')
+      summary_rating = rating_for_key('Summary Rating')
+      test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
+      if summary_rating.nil? && test_score_weight == '1'
+        test_scores_rating
+      else
+        summary_rating
+      end
     end
   end
 
@@ -227,6 +233,7 @@ module CachedRatingsMethods
   # nil breakdown returns overall rating for key
   # returns ratings hash for most recent year
   def rating_hash_for_key_and_breakdown(key, breakdown = nil)
+    return nil unless ratings.present? && ratings.is_a?(Hash)
     arr_of_h = ratings[key].select{ |h| h['breakdowns'] == breakdown } if ratings[key].present?
     if arr_of_h.present?
       select_by_max_date(arr_of_h)
@@ -401,18 +408,29 @@ module CachedRatingsMethods
     ratings.select { |rating| !GREATSCHOOLS_RATINGS_NAMES.include?(rating['name']) }
   end
 
+  # {"gs_rating"=>{174=>"GreatSchools rating", 164=>"Test score rating",
+  # 165=>"Student progress rating", 166=>"College readiness rating",
+  # 173=>"Climate rating"}}
   def formatted_ratings(rating_type=nil)
-    formatted_ratings = {}
-    ratings_labels = displayed_ratings
-    ratings_labels = rating_type ? ratings_labels[rating_type] : displayed_ratings
-    ratings_labels.each do |rating_id , rating_label|
-      # "rating_id" was previously just data_type_id, but now it might
-      # be a data_type_id / level code pair.
-      # Send what we've got to school_rating_by_id which will get the
-      # rating value that matches data type and level code if we've got it
-      school_rating = school_rating_by_id(*Array.wrap(rating_id))
-      formatted_ratings[rating_label] = school_rating
+    if rating_type.nil? || rating_type == 'gs_rating'
+      {
+       :'GreatSchools rating' => :great_schools_rating,
+       :'Test score rating' => :test_scores_rating,
+       :'Student progress rating' => :student_growth_rating,
+       :'College readiness rating' => :college_readiness_rating,
+       :'Equity rating' => :equity_overview_rating
+      }.each_with_object({}) do |(name, method), accum|
+        result = send(method)
+        accum[name.to_s] = result if result
+      end
+    else
+      {}
     end
-    formatted_ratings
+  end
+
+  def rating_weights
+    cache_data['gsdata'].select do |key, val|
+      key.include?('Summary Rating Weight')
+    end
   end
 end
