@@ -203,6 +203,6 @@ RSpec.configure do |config|
   DatabaseCleaner.strategy = :truncation
   # This needs to be done after we've loaded an ActiveRecord strategy above
   monkey_patch_database_cleaner
-  YAML::ENGINE.yamler = 'syck'
+  # YAML::ENGINE.yamler = 'psych'
 
 end

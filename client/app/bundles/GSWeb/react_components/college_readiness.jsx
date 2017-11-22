@@ -90,9 +90,13 @@ export default class CollegeReadiness extends SchoolProfileComponent {
             return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
               <BarGraphCustomRanges {...value} is_percent={false} />
             </BasicDataModuleRow>;
+          } else if (value.display_type == "person_gray") {
+            return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
+              <PersonBar {...value} use_gray={true} />
+            </BasicDataModuleRow>;
           } else {
             return <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-              <PersonBar {...value} invertedRatings={true} />
+              <PersonBar {...value} />
             </BasicDataModuleRow>;
           }
         }.bind(this));

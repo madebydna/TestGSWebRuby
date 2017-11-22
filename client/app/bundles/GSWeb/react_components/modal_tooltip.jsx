@@ -25,19 +25,11 @@ class ModalTooltip extends React.Component {
     }
   }
 
-  tooltipContent() {
+  tooltipAndModalContent(cssClass) {
     if (typeof this.props.content === 'object') {
-      return <div ref={(el) => {this.content = el;}}>{this.props.content}</div>;
+      return <div className={cssClass} ref={(el) => {this.content = el;}}>{this.props.content}</div>;
     } else {
-      return <div dangerouslySetInnerHTML={{__html: this.props.content}} ref={(el) => {this.content = el;}}></div>;
-    }
-  }
-
-  modalContent() {
-    if (typeof this.props.content === 'object') {
-      return <div className="remodal-content" ref={(el) => {this.content = el;}}>{this.props.content}</div>;
-    } else {
-      return <div dangerouslySetInnerHTML={{__html: this.props.content}} className="remodal-content" ref={(el) => {this.content = el;}}></div>;
+      return <div className={cssClass} dangerouslySetInnerHTML={{__html: this.props.content}} ref={(el) => {this.content = el;}}></div>;
     }
   }
 
@@ -45,10 +37,10 @@ class ModalTooltip extends React.Component {
     return <div className={this.props.className}>
       {this.trigger()}
       <div style={{display: 'none'}}>
-        {this.tooltipContent()}
+        {this.tooltipAndModalContent('')}
         <div className="remodal modal_info_box" ref={(el) => {this.remodal = $(el).remodal()}}>
           <button data-remodal-action="close" className="remodal-close"></button>
-          {this.modalContent()}
+          {this.tooltipAndModalContent("remodal-content")}
         </div>
       </div>
     </div>

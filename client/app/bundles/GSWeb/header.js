@@ -6,11 +6,13 @@ import { init as searchAutocompleteInit } from './components/autocomplete/search
 
 import './vendor/typeahead_modified.bundle';
 
-const init = function() {
+const init = function({includeFeatured = true} = {}) {
   if ( document.getElementsByClassName("header_un").length > 0 ) {
     menuInit();
     searchBarInit();
-    featuredInit();
+    if(includeFeatured) {
+      featuredInit();
+    }
     languageInit();
     searchAutocompleteInit();
   }

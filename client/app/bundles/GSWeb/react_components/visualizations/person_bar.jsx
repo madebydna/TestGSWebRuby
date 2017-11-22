@@ -11,7 +11,8 @@ export default class PersonBar extends React.Component {
     number_students_tested: React.PropTypes.string,
     state_average: React.PropTypes.number,
     state_average_label: React.PropTypes.string,
-    invertedRatings:  React.PropTypes.bool
+    invertedRatings:  React.PropTypes.bool,
+    use_gray: React.PropTypes.bool
   };
 
   constructor(props) {
@@ -84,7 +85,7 @@ export default class PersonBar extends React.Component {
         score_rating = 11 - score_rating;
       }
 
-      let class_score_rating = 'foreground rating_color_' + score_rating;
+      let class_score_rating = this.props.use_gray === true ? 'foreground rating_color_NR' : 'foreground rating_color_' + score_rating;
       return (
         <div className="bar-graph-container">
           <div className="score">{this.props.label}%</div>

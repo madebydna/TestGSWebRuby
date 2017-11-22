@@ -1,21 +1,21 @@
 $blue-border: #159bd8;
 
-.tour-teaser {
-  position: fixed;
-  bottom: 50px;
-  right: 10px;
-  @include media-breakpoint-up(md) {
-    bottom: 10px;
-  }
-  img {
-    float: left;
-  }
-  button {
-    @include button;
-    float: left;
-    border-radius: 50%;
-  }
-}
+//.tour-teaser {
+//  position: fixed;
+//  bottom: 50px;
+//  right: 10px;
+//  @include media-breakpoint-up(md) {
+//    bottom: 10px;
+//  }
+//  img {
+//    float: left;
+//  }
+//  button {
+//    @include button;
+//    float: left;
+//    border-radius: 50%;
+//  }
+//}
 
 button.tour-cta {
   @include button;
@@ -35,6 +35,7 @@ button.tour-cta {
   border: 3px solid $blue-border;
   border-radius: 3px;
   box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
+  z-index: 1;
   h3 {
     margin-top: 0px;
   }

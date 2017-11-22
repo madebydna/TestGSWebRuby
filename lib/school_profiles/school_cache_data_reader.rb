@@ -91,6 +91,42 @@ module SchoolProfiles
       decorated_school.test_scores_all_rating_hash
     end
 
+    def ratings_cache_old?
+      decorated_school.ratings_cache_old?
+    end
+
+    def equity_overview_rating
+      decorated_school.equity_overview_rating
+    end
+
+    def equity_overview_rating_hash
+      decorated_school.equity_overview_rating_hash
+    end
+
+    def equity_overview_rating_year
+      decorated_school.equity_overview_rating_year
+    end
+
+    def courses_rating
+      decorated_school.courses_rating
+    end
+
+    def courses_rating_array
+      decorated_school.courses_rating_array
+    end
+
+    def courses_rating_year
+      decorated_school.courses_rating_year
+    end
+
+    def academic_progress_rating_hash
+      decorated_school.academic_progress_rating_hash
+    end
+
+    def academic_progress_rating_year
+      decorated_school.academic_progress_rating_year
+    end
+
     def historical_student_progress_ratings
       decorated_school.historical_student_growth_ratings
     end

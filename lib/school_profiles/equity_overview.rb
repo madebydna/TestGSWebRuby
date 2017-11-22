@@ -105,31 +105,41 @@ module SchoolProfiles
     def equity_overview_struct
       @_equity_overview_struct ||= (
       equity_overview_data = nil
-      if @school_cache_data_reader.gsdata_data('Equity Rating').present?
-        equity_overview_data = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating']
-
-        equity_overview_data = equity_overview_data.map do |hash|
-          GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: 'Equity Rating'))
-        end.extend(GsdataCaching::GsDataValue::CollectionMethods)
-
-        equity_overview_data = equity_overview_data
-          .having_school_value
-          .having_no_breakdown
-          .having_most_recent_date
-          .expect_only_one(
-            'Equity rating',
-            school: {
-              state: @school_cache_data_reader.school.state,
-              id: @school_cache_data_reader.school.id
-            }
-          )
-      end
-      OpenStruct.new.tap do |eo|
-        eo.rating = equity_overview_data.try(:school_value)
-        eo.description = equity_overview_data.try(:description)
-        eo.methodology = equity_overview_data.try(:methodology)
-        eo.year = equity_overview_data.try(:source_year)
-        eo.source_name = equity_overview_data.try(:source_name)
+      if @school_cache_data_reader.ratings_cache_old?
+        if @school_cache_data_reader.gsdata_data('Equity Rating').present?
+          equity_overview_data = @school_cache_data_reader.gsdata_data('Equity Rating')['Equity Rating']
+          equity_overview_data = equity_overview_data.map do |hash|
+            GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: 'Equity Rating'))
+          end.extend(GsdataCaching::GsDataValue::CollectionMethods)
+          equity_overview_data = equity_overview_data
+            .having_school_value
+            .having_no_breakdown
+            .having_most_recent_date
+            .expect_only_one(
+              'Equity rating',
+              school: {
+                state: @school_cache_data_reader.school.state,
+                id: @school_cache_data_reader.school.id
+              }
+            )
+        end
+        OpenStruct.new.tap do |eo|
+          eo.rating = equity_overview_data.try(:school_value)
+          eo.description = equity_overview_data.try(:description)
+          eo.methodology = equity_overview_data.try(:methodology)
+          eo.year = equity_overview_data.try(:source_year)
+          eo.source_name = equity_overview_data.try(:source_name)
+        end
+      else
+        # reads from new ratings cache
+        equity_rating_hash = @school_cache_data_reader.equity_overview_rating_hash || {}
+        OpenStruct.new.tap do |eo|
+          eo.rating = equity_rating_hash['school_value']
+          eo.description = equity_rating_hash['description']
+          eo.methodology = equity_rating_hash['methodology']
+          eo.year = @school_cache_data_reader.equity_overview_rating_year
+          eo.source_name = equity_rating_hash['source_name']
+        end
       end
       )
     end
