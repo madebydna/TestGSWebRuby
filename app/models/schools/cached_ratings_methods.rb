@@ -235,14 +235,20 @@ module CachedRatingsMethods
 
   # return array of ratings hashes for key
   def rating_hashes_for_key(key)
-    ratings[key] if ratings.present?
+    if ratings.present?
+      ratings[key] || []
+    else
+      []
+    end
   end
 
   def test_scores_rating_hash_loop_through_and_update(array, data_type)
+    return [] if array.nil? || data_type.nil?
     array.map { | hash |  test_scores_rating_hash_map_to_old_format(hash, data_type) }
   end
 
   def test_scores_rating_hash_map_to_old_format(hash, data_type)
+    return nil if hash.nil?
     hash['school_value_float'] = hash['school_value'].to_i
     hash['year'] = year_for_date(hash['source_date_valid']).to_i
     hash['test_data_type_display_name'] = data_type
