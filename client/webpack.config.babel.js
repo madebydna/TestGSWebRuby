@@ -18,7 +18,6 @@ const config = {
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
     'school-profiles': [ './app/bundles/GSWeb/school_profiles' ],
-    'home': [ './app/bundles/GSWeb/home' ],
     'jquery': ['jquery'],
     'admin-tools': ['./app/bundles/GSWeb/admin_tools']
   },

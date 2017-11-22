@@ -4,18 +4,26 @@
     <meta name="google-site-verification" content="zOi8EZHiVs8q_pVV2RM11ic3q0hnJXTIphoISsEyUUw" />
 <% end %>
 
-<% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "home", defer: true %>
-<% end %>
-
-<% content_for :page_stylesheets do %>
-  <%= stylesheet_link_tag "post_load", media: "all", "data-turbolinks-track" => true %>
-  <%= stylesheet_link_tag "home_page", media: "all", "data-turbolinks-track" => true %>
-<% end %>
-
 <% content_for :javascript_includes do %>
     <script>
+        $(function() {
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled',
+              desktopImage: '<%= image_path('home/slideshow/home_1600_6.jpg')%>',
+              mobileImage: '<%= image_path('home/slideshow/home_480_6.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+          GS.util.setupImages(
+            {
+              selector: '.is-scaled-banner',
+              desktopImage: '<%= image_path('home/milestone_background-sm.jpg')%>',
+              mobileImage: '<%= image_path('home/milestone_background_mobile.jpg')%>',
+              classes: 'scaling'
+            }
+          );
+        });
     </script>
 <% end %>
 
