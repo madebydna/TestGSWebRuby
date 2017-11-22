@@ -389,7 +389,7 @@ describe 'CollegeSuccessComponent' do
   describe 'With remediation data' do
     it 'should return RatingScoreItems for each remediation data point' do
       expect(data_points).to be_present
-      expect(data_points.first).to be_an_instance_of(SchoolProfiles::RatingScoreItem)
+      expect(data_points.all?{|dp| dp.is_a?(SchoolProfiles::RatingScoreItem)}).to be_truthy
     end
 
     it 'should include info text' do
