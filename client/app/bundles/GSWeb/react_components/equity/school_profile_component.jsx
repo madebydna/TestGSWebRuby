@@ -137,10 +137,10 @@ export default class SchoolProfileComponent extends React.Component {
       }
 
       if (values.length > 0) {
-        let displayType = type || 'bar';
+        let display_type = type || 'bar';
         let component = null;
         values.map((value, index) => {
-          switch (displayType) {
+          switch (display_type) {
             case 'plain':
               component = <PlainNumber values={values}/>;
             case 'person':

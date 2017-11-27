@@ -80,17 +80,21 @@ export default class CollegeReadiness extends SchoolProfileComponent {
       if (values.length > 0) {
         // Build array of college readiness data rows
         let dataRows = values.map(function(value, index) {
-          switch (value.displayType) {
-            case 'plain':
-              return <PlainNumber values={values}/>;
-            case 'person':
-              return this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
-            case 'person reversed':
-              return this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
-            case 'rating':
-              return this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
-            default:
-              return this.wrapGraphComponent(<BarGraphBase {...value} />, value, index)
+          if (customScoreRanges.includes(value.breakdown)) {
+            return this.wrapGraphComponent(<BarGraphCustomRanges {...value} />, value, index);
+          } else {
+            switch (value.display_type) {
+              case 'plain':
+                return <PlainNumber values={values}/>;
+              case 'person':
+                return this.wrapGraphComponent(<PersonBar {...value}/>, value, index);
+              case 'person reversed':
+                return this.wrapGraphComponent(<PersonBar {...value} invertedRatings={true}/>, value, index);
+              case 'rating':
+                return this.wrapGraphComponent(<RatingWithBar {...value} />, value, index);
+              default:
+                return this.wrapGraphComponent(<BarGraphBase {...value} />, value, index)
+            }
           }
         }.bind(this));
         // Put rows in drawer if more than three
