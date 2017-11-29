@@ -429,7 +429,7 @@ module CachedRatingsMethods
   end
 
   def rating_weights
-    cache_data['gsdata'].select do |key, val|
+    cache_data.fetch('gsdata', {}).select do |key, val|
       key.include?('Summary Rating Weight')
     end
   end
