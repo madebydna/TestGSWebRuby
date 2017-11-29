@@ -5,7 +5,7 @@ class UserSubscriptions
   end
 
   def get
-    sub_whitelist = ['greatnews', 'greatkidsnews', 'sponsor', 'mystat']
+    sub_whitelist = ['greatnews', 'greatkidsnews', 'sponsor', 'mystat', 'mystat_private', 'mystat_unverified']
     @user.subscriptions.map {|subscription| subscription.list.to_sym if subscription.list && sub_whitelist.include?(subscription.list) }
   end
 end
