@@ -5,25 +5,8 @@ class UserSubscriptions
   end
 
   def get
-    subscriptions = []
-
-    if @user.subscriptions.present?
-
-      if @user.has_signedup?('greatnews')
-        subscriptions << :greatnews
-      end
-
-      if @user.has_signedup?('greatkidsnews')
-        subscriptions << :greatkidsnews
-      end
-
-      if @user.has_signedup?('sponsor')
-        subscriptions << :sponsor
-      end
-
-    end
-
-    subscriptions
+    sub_whitelist = ['greatnews', 'greatkidsnews', 'sponsor', 'mystat']
+    @user.subscriptions.map {|subscription| subscription.list.to_sym if subscription.list && sub_whitelist.include?(subscription.list) }
   end
 end
 
