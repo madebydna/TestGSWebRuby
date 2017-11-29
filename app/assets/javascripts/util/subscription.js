@@ -36,6 +36,18 @@ GS.subscription = GS.subscription || (function() {
       return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
     };
 
+    var gradeByGradeSignUp = function(options) {
+      options = options || {};
+      var subscriptionParams = _.merge(
+        {
+          list: 'greatkidsnews'
+        },
+        _.pick(options, 'email')
+      );
+
+      return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
+    };
+
     var showFlashMessages = function(jqXHR) {
       var data = jqXHR;
       if(jqXHR.hasOwnProperty('responseJSON')) {
@@ -102,6 +114,7 @@ GS.subscription = GS.subscription || (function() {
     return {
       sponsorsSignUp: sponsorsSignUp,
       greatNewsSignUp: greatNewsSignUp,
+      gradeByGradeSignUp: gradeByGradeSignUp,
       schools: schools
     }
 
