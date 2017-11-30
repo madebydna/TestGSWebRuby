@@ -1,0 +1,113 @@
+/*@charset "UTF-8";*/
+/* CSS Document */
+
+/*
+Theme Name: Spacing
+Description: Specific styles for the GreatSchools website
+Author: Randall Cox
+Version: 1.0
+.
+General comments:
+
+ * Spacing classes
+ * Should be used to modify the default spacing between objects (not between nodes of the same object)
+ * Please use judiciously.
+ * You want to be using defaults most of the time, these are exceptions!
+
+ * Spacing read me
+ * p,m = padding,margin
+ * a,t,r,b,l,h,v = all,top,right,bottom,left,horizontal,vertical
+ * s,m,l,n = small(5px),medium(10px),large(20px),none(0px)
+
+.
+*/
+
+.ptn,.pvn,.pan{padding-top: $spacing-none;}
+.pts,.pvs,.pas{padding-top: $spacing-small;}
+.ptm,.pvm,.pam{padding-top: $spacing-medium;}
+.ptl,.pvl,.pal{padding-top: $spacing-large;}
+.prn,.phn,.pan{padding-right: $spacing-none;}
+.prs,.phs,.pas{padding-right: $spacing-small;}
+.prm,.phm,.pam{padding-right: $spacing-medium;}
+.prl,.phl,.pal{padding-right: $spacing-large;}
+.pbn,.pvn,.pan{padding-bottom: $spacing-none;}
+.pbs,.pvs,.pas{padding-bottom: $spacing-small;}
+.pbm,.pvm,.pam{padding-bottom: $spacing-medium;}
+.pbl,.pvl,.pal{padding-bottom: $spacing-large;}
+.pln,.phn,.pan{padding-left: $spacing-none;}
+.pls,.phs,.pas{padding-left: $spacing-small;}
+.plm,.phm,.pam{padding-left: $spacing-medium;}
+.pll,.phl,.pal{padding-left: $spacing-large;}
+.plxl,.phxl,.paxl{padding-left: $spacing-extra-large;}
+.pbxl,.pvxl,.paxl{padding-bottom: $spacing-extra-large;}
+.prxl,.phxl,.paxl{padding-right: $spacing-extra-large;}
+.ptxl,.pvxl,.paxl{padding-top: $spacing-extra-large;}
+.mtn,.mvn,.man{margin-top: $spacing-none;}
+.mts,.mvs,.mas{margin-top: $spacing-small;}
+.mtm,.mvm,.mam{margin-top: $spacing-medium;}
+.mtl,.mvl,.mal{margin-top: $spacing-large;}
+.mrn,.mhn,.man{margin-right: $spacing-none;}
+.mrs,.mhs,.mas{margin-right: $spacing-small;}
+.mrm,.mhm,.mam{margin-right: $spacing-medium;}
+.mrl,.mhl,.mal{margin-right: $spacing-large;}
+.mbn,.mvn,.man{margin-bottom: $spacing-none;}
+.mbs,.mvs,.mas{margin-bottom: $spacing-small;}
+.mbm,.mvm,.mam{margin-bottom: $spacing-medium;}
+.mbl,.mvl,.mal{margin-bottom: $spacing-large;}
+.mln,.mhn,.man{margin-left: $spacing-none;}
+.mls,.mhs,.mas{margin-left: $spacing-small;}
+.mlm,.mhm,.mam{margin-left: $spacing-medium;}
+.mll,.mhl,.mal{margin-left: $spacing-large;}
+.mlxl,.mhxl,.maxl{margin-left: $spacing-extra-large;}
+.mbxl,.mvxl,.maxl{margin-bottom: $spacing-extra-large;}
+.mrxl,.mhxl,.maxl{margin-right: $spacing-extra-large;}
+.mtxl,.mvxl,.maxl{margin-top: $spacing-extra-large;}
+
+.pt-1 { padding-top: 1% } // TODO: remove from nav search bar and delete
+
+.fl { float: left; }
+.fr { float: right; }
+.fn { float: none; }
+
+/* the clearfloat class should be placed on a <div> or <br> element and */
+/* should be the final element before the close of a container */
+/* that should fully contain a float */
+.clearfloat { clear: both; height: 0; font-size: 1px; line-height: 0; } // used by profile sticky CTA
+
+.db { display: block; }
+.di { display: inline; }
+.dib { display: inline-block; }
+.dn { display: none; }
+
+.tal { text-align: left; }
+.tac { text-align: center; }
+.tar { text-align: right; }
+
+.vat { vertical-align: top; }
+.vam { vertical-align: middle; }
+.vab { vertical-align: bottom; }
+
+.pa { position: absolute; }
+.pf { position: fixed; }
+.pr { position: relative; }
+.ps { position: static; }
+
+/* z-index resets */
+.zir-1 { position: relative; z-index: 1; } // TODO: remove from nav and delete. (Also used on hubs)
+
+.ma { margin: auto; }
+
+.oh { overflow: hidden; }
+.oa { overflow: auto; }
+.ov { overflow: visible; }
+
+.full-width {
+  width: 100%; // used in a lot of places including nav, but not profile body
+}
+
+// support for previous bootstrap version  TODO: research, remove, and test
+@media (min-width: $screen-sm-min) {
+  .hidden-xs {
+    display: block;
+  }
+}

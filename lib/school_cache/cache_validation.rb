@@ -31,6 +31,7 @@ module CacheValidation
 
   def validate_ethnicities!
     if @cache['Ethnicity']
+      @cache['Ethnicity'].compact!
       use_best_ethnicity_source!
       assert_reasonable_ethnicity_sum!
     end
@@ -51,6 +52,7 @@ module CacheValidation
 
   def use_best_ethnicity_source!
     sources = Hash.new { |h,k| h[k] = 0 }
+
     @cache['Ethnicity'].each do |ethnicity|
       sources[ethnicity[:source]] += ethnicity[:school_value].to_i
     end

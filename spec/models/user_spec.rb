@@ -204,7 +204,138 @@ describe User do
         expect(existing_reviews[1]).to be_inactive
         expect(existing_reviews[2]).to be_active
       end
+
+      context 'when an older review is already published' do
+        let!(:existing_reviews) do
+          reviews = [
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryGirl.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+          ]
+          reviews.each do
+          |review| review.moderated = true
+            review.save
+          end
+          reviews
+        end
+        it 'should not publish most recent inactive review' do
+          user.verify_email!
+          user.save
+          subject.publish_reviews!
+          existing_reviews.each(&:reload)
+          expect(existing_reviews[0]).to be_inactive
+          expect(existing_reviews[1]).to be_active
+          expect(existing_reviews[2]).to be_inactive
+        end
+      end
+
+      context 'when the newest review is active and has been flagged' do
+        let!(:existing_reviews) do
+          reviews = [
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryGirl.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2012-01-01'),
+          ]
+          reviews.each do
+          |review| review.moderated = true
+            review.save
+          end
+          flag_builder = Review::ReviewFlagBuilder.new(reviews.last)
+          flag_builder.reasons << 'auto-flagged' 
+          flag_builder.build.save
+          reviews
+        end
+        it 'should not publish any reviews' do
+          user.verify_email!
+          user.save
+          subject.publish_reviews!
+          existing_reviews.each(&:reload)
+          expect(existing_reviews[0]).to be_inactive
+          expect(existing_reviews[1]).to be_inactive
+          expect(existing_reviews[2]).to be_active
+        end
+      end
+      context 'when the newest review is inactive and has been flagged' do
+        let!(:existing_reviews) do
+          reviews = [
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+          ]
+          reviews.each do
+          |review| review.moderated = true
+            review.save
+          end
+          flag_builder = Review::ReviewFlagBuilder.new(reviews.last)
+          flag_builder.reasons << 'auto-flagged' 
+          flag_builder.build.save
+          reviews
+        end
+        it 'should publish the most recent inactive non-flagged review' do
+          user.verify_email!
+          user.save
+          subject.publish_reviews!
+          existing_reviews.each(&:reload)
+          expect(existing_reviews[0]).to be_inactive
+          expect(existing_reviews[1]).to be_active
+          expect(existing_reviews[2]).to be_inactive
+        end
+      end
+      context 'when an older review is inactive and has been flagged' do
+        let!(:existing_reviews) do
+          reviews = [
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+          ]
+          reviews.each do
+          |review| review.moderated = true
+            review.save
+          end
+          flag_builder = Review::ReviewFlagBuilder.new(reviews[1])
+          flag_builder.reasons << 'auto-flagged' 
+          flag_builder.build.save
+          reviews
+        end
+        it 'should publish the most recent inactive non-flagged review' do
+          user.verify_email!
+          user.save
+          subject.publish_reviews!
+          existing_reviews.each(&:reload)
+          expect(existing_reviews[0]).to be_inactive
+          expect(existing_reviews[1]).to be_inactive
+          expect(existing_reviews[2]).to be_active
+        end
+      end
+
+      context 'when an older review is active and has been flagged' do
+        let!(:existing_reviews) do
+          reviews = [
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2010-01-01'),
+            FactoryGirl.build(:five_star_review, active: true, school: school, question:question, user: user, created: '2011-01-01'),
+            FactoryGirl.build(:five_star_review, active: false, school: school, question:question, user: user, created: '2012-01-01'),
+          ]
+          reviews.each do
+          |review| review.moderated = true
+            review.save
+          end
+          flag_builder = Review::ReviewFlagBuilder.new(reviews[1])
+          flag_builder.reasons << 'auto-flagged' 
+          flag_builder.build.save
+          reviews
+        end
+        it 'should not publish the most recent inactive non-flagged review' do
+          user.verify_email!
+          user.save
+          subject.publish_reviews!
+          existing_reviews.each(&:reload)
+          expect(existing_reviews[0]).to be_inactive
+          expect(existing_reviews[1]).to be_active
+          expect(existing_reviews[2]).to be_inactive
+        end
+      end
+
+
     end
   end
-
 end

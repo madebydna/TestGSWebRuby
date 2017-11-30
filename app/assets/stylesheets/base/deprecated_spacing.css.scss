@@ -1,0 +1,395 @@
+
+
+
+/*@charset "UTF-8";*/
+/* CSS Document */
+
+/*
+Theme Name: Spacing
+Description: Specific styles for the GreatSchools website
+Author: Randall Cox
+Version: 1.0
+.
+General comments:
+
+ * Spacing classes
+ * Should be used to modify the default spacing between objects (not between nodes of the same object)
+ * Please use judiciously.
+ * You want to be using defaults most of the time, these are exceptions!
+
+ * Spacing read me
+ * p,m = padding,margin
+ * a,t,r,b,l,h,v = all,top,right,bottom,left,horizontal,vertical
+ * s,m,l,n = small(5px),medium(10px),large(20px),none(0px)
+
+.
+*/
+
+.ptn,.pvn,.pan{padding-top: $spacing-none;}
+.pts,.pvs,.pas{padding-top: $spacing-small;}
+.ptm,.pvm,.pam{padding-top: $spacing-medium;}
+.ptl,.pvl,.pal{padding-top: $spacing-large;}
+.prn,.phn,.pan{padding-right: $spacing-none;}
+.prs,.phs,.pas{padding-right: $spacing-small;}
+.prm,.phm,.pam{padding-right: $spacing-medium;}
+.prl,.phl,.pal{padding-right: $spacing-large;}
+.pbn,.pvn,.pan{padding-bottom: $spacing-none;}
+.pbs,.pvs,.pas{padding-bottom: $spacing-small;}
+.pbm,.pvm,.pam{padding-bottom: $spacing-medium;}
+.pbl,.pvl,.pal{padding-bottom: $spacing-large;}
+.pln,.phn,.pan{padding-left: $spacing-none;}
+.pls,.phs,.pas{padding-left: $spacing-small;}
+.plm,.phm,.pam{padding-left: $spacing-medium;}
+.pll,.phl,.pal{padding-left: $spacing-large;}
+.plxl,.phxl,.paxl{padding-left: $spacing-extra-large;}
+.pbxl,.pvxl,.paxl{padding-bottom: $spacing-extra-large;}
+.prxl,.phxl,.paxl{padding-right: $spacing-extra-large;}
+.ptxl,.pvxl,.paxl{padding-top: $spacing-extra-large;}
+.mtn,.mvn,.man{margin-top: $spacing-none;}
+.mts,.mvs,.mas{margin-top: $spacing-small;}
+.mtm,.mvm,.mam{margin-top: $spacing-medium;}
+.mtl,.mvl,.mal{margin-top: $spacing-large;}
+.mrn,.mhn,.man{margin-right: $spacing-none;}
+.mrs,.mhs,.mas{margin-right: $spacing-small;}
+.mrm,.mhm,.mam{margin-right: $spacing-medium;}
+.mrl,.mhl,.mal{margin-right: $spacing-large;}
+.mbn,.mvn,.man{margin-bottom: $spacing-none;}
+.mbs,.mvs,.mas{margin-bottom: $spacing-small;}
+.mbm,.mvm,.mam{margin-bottom: $spacing-medium;}
+.mbl,.mvl,.mal{margin-bottom: $spacing-large;}
+.mln,.mhn,.man{margin-left: $spacing-none;}
+.mls,.mhs,.mas{margin-left: $spacing-small;}
+.mlm,.mhm,.mam{margin-left: $spacing-medium;}
+.mll,.mhl,.mal{margin-left: $spacing-large;}
+.mlxl,.mhxl,.maxl{margin-left: $spacing-extra-large;}
+.mbxl,.mvxl,.maxl{margin-bottom: $spacing-extra-large;}
+.mrxl,.mhxl,.maxl{margin-right: $spacing-extra-large;}
+.mtxl,.mvxl,.maxl{margin-top: $spacing-extra-large;}
+
+
+
+.pt1 {padding-top:1px}
+.pt2 {padding-top:2px}
+.pt3 {padding-top:3px}
+.pt4 {padding-top:4px}
+.pt6 {padding-top:6px}
+.pt7 {padding-top:7px}
+.pt8 {padding-top:8px}
+.pt9 {padding-top:9px}
+.pt45 {padding-top:45px}
+.pb1 {padding-top:1px}
+.pb2 {padding-top:2px}
+
+.pb35 {padding-bottom:  35px}
+//use in media query for less that 480
+.pl35 {padding-left: 35px}
+.pl25 {padding-left: 25px}
+.pl60 {padding-left: 60px}
+.pt-1 { padding-top: 1% }
+
+.mt3 {margin-top: 3px;}
+
+.mb2 {margin-bottom: 2px;}
+
+.mv6 {margin-top: 6px;
+      margin-bottom: 6px;
+}
+
+//default module padding
+.dvp {padding-top: 60px; padding-bottom: 60px}
+
+.mha { margin-right: auto; margin-left: auto; }
+
+.bottom { margin-bottom: 0; padding-bottom: 0; }
+
+.fl { float: left; }
+.fr { float: right; }
+.fn { float: none; }
+
+.lg-pr-sm-pl {
+  float: right;
+}
+
+@media only screen and (max-width: 768px) {
+  .lg-pr-sm-pl {
+    float: left;
+    clear: left;
+  }
+}
+
+@media only screen and (min-width: 480px) {
+  .lg-fr {
+    float: right;
+  }
+}
+
+/* the clearfloat class should be placed on a <div> or <br> element and */
+/* should be the final element before the close of a container */
+/* that should fully contain a float */
+.clearfloat { clear: both; height: 0; font-size: 1px; line-height: 0; }
+
+/* height shims */
+.shim-1 { clear: both; height: 1px; font-size: 1px; line-height: 1px; }
+.shim-2 { clear: both; height: 2px; font-size: 1px; line-height: 2px; }
+.shim-5 { clear: both; height: 5px; font-size: 1px; line-height: 5px; }
+.shim-10 { clear: both; height: 10px; font-size: 1px; line-height: 10px; }
+.shim-20 { clear: both; height: 20px; font-size: 1px; line-height: 20px; }
+.shim-25 { clear: both; height: 25px; font-size: 1px; line-height: 25px; }
+.shim-50 { clear: both; height: 50px; font-size: 1px; line-height: 50px; }
+.shim-100 { clear: both; height: 100px; font-size: 1px; line-height: 100px; }
+.shim-170 { clear: both; height: 170px; font-size: 1px; line-height: 170px; }
+
+.db { display: block; }
+.di { display: inline; }
+.dib { display: inline-block; }
+.dn { display: none; }
+
+.tal { text-align: left; }
+.tac { text-align: center; }
+.tar { text-align: right; }
+
+.vat { vertical-align: top; }
+.vam { vertical-align: middle; }
+.vab { vertical-align: bottom; }
+
+.wsnw { white-space: nowrap; }
+
+.b-none {bottom: 0;}
+.l-none {left: 0}
+
+.pa { position: absolute; }
+.pf { position: fixed; }
+.pr { position: relative; }
+.ps { position: static; }
+
+/* z-index resets */
+.zir-1 { position: relative; z-index: 1; }
+.zir-2 { position: relative; z-index: 2; }
+.zir-3 { position: relative; z-index: 3; }
+.zir-4 { position: relative; z-index: 4; }
+
+.ma { margin: auto; }
+
+.hvs { border-right: 1px #CCCCCC solid; }
+.hbs { border-bottom: 1px #CCCCCC solid; }
+.h24 { height:24px }
+.h30 {height:30px}
+
+.green-hbs { border-bottom: 2px $blue-green solid; }
+
+.oh { overflow: hidden; }
+.oa { overflow: auto; }
+.ov { overflow: visible; }
+
+.wb-n {
+  word-break: normal;
+}
+
+.wb-ba {
+  word-break: break-all;
+}
+.wb-ka {
+  word-break: keep-all;
+}
+
+
+.content-centered {
+  position: relative;
+  margin-top: 58px;
+  width: 100%;
+}
+.content-centered-short {
+  position: relative;
+  margin-top: 25px;
+  width: 100%;
+}
+.home-banner-content-container{
+  width:780px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  width: 50%;
+}
+
+.fifth-width {
+  width: 20%;
+}
+
+.full-max-width {
+  max-width: 100%;
+}
+
+.mh-500 {
+  min-height: 500px;
+}
+
+.maxw-400 {
+  max-width: 400px;
+}
+
+.brm { border-radius: 10px; }
+
+.brs { border-radius: $border-radius-small; }
+
+.h500 {
+  height: 500px;
+}
+
+@media only screen and (max-width: 990px) {
+  .content-centered {
+    margin-top: 0;
+  }
+//remove bottom padding from browse schools module
+  .pb35 {padding-bottom: 0}
+}
+
+@media only screen and (max-width: 768px) {
+  //default  mobile module padding
+  .dvp {padding-top: 40px; padding-bottom: 40px}
+}
+
+@media only screen and (max-width: 480px) {
+  .xs-nav-stacked li { width: 100%; margin-top: 5px; }
+  .mobile-clearfix {
+    @include clearfix();
+  }
+  .prn-mobile {padding-right: 0}
+//  .pl35-or-25 {padding-left: 25px}
+}
+
+@media only screen and (min-width:480px) {
+  .rating-header-h24 { height:24px; }
+}
+
+@media (max-width:1200px){
+  .plm-mobile {padding-left: 10px;}
+  .mobile_img {width: 300px; height: 178px;}
+}
+
+// Hub or City Hub Upcoming Event Mobile Spacing
+
+@media only screen and (max-width: 650px) {
+  .upcoming-event {
+    clear: left;
+    margin-left: 5px;
+    margin-bottom: 10px;
+  }
+
+  .community-partner-row div {
+    clear: left;
+  }
+}
+
+//Lines and Borders
+
+.search-result-border {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.search-result-border.emphasis-border {
+  border-color: $neutral-color;
+}
+.search-result-border:hover{
+  border: 1px solid $brand-primary;
+}
+
+.gray-border {
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+}
+
+.gray-box-border {
+  border: 1px solid #e6e6e6;
+}
+
+.gray-box-border-tlr {
+  border-top: 1px solid #e6e6e6;
+  border-left: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
+}
+
+.gray-box-border-v {
+  border-top: 1px solid #e6e6e6;
+  border-bottom: 1px solid #e6e6e6;
+}
+hr.brand-bar {
+  height: 2px;
+  background: $brand-secondary;
+}
+
+hr.thick {
+  border-bottom: 4px solid $module-gray-stroke;
+}
+
+// vertical divider - used on overview
+.vdl{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-left: 1px solid #DDDDDD;
+}
+
+.vdr{
+  padding-bottom: -10px;
+  margin-bottom: -10px;
+  border-right: 1px solid #DDDDDD;
+}
+
+
+@media (max-width:990px){
+  .vdr{
+    border-right: none;
+  }
+}
+@media (max-width:820px){
+  .home-banner-content-container{
+    width: 740px;
+  }
+}
+@media (max-width:767px){
+  .vdl{
+    border-left: none;
+  }
+  .hdp{
+    border-top: 1px solid #DDDDDD;
+    padding-top: 30px;
+    margin-top: 20px;
+  }
+  .home-banner-content-container{
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.profile-image{
+  width: 130px;
+  height: 130px;
+}
+
+.reviews-topic-filter {
+  float: left;
+}
+
+@media only screen and (max-width: $screen-xs-max) {
+  .reviews-topic-filter {
+    float: right;
+    clear: right;
+  }
+}
+
+// support for previous bootstrap version
+@media (min-width: $screen-sm-min) {
+  .hidden-xs {
+    display: block;
+  }
+}
+
+.flex-wrap {
+  @include display-flex;
+  @include flex-wrap;
+}

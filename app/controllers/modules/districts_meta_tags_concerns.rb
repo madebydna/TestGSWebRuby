@@ -11,10 +11,4 @@ module DistrictsMetaTagsConcerns
     district = @district.name
     "Information to help parents choose the right public school for their children in the #{district}."
   end
-
-  def districts_show_keywords
-    district = @district.name
-    "#{district} Schools, #{district} Public Schools, #{district} School Ratings, Best #{district} Schools"
-  end
-
-  end
+end

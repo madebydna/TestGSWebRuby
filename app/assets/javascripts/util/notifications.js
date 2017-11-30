@@ -4,16 +4,20 @@ GS.notifications = GS.notifications || (function($) {
     return $('#js-top-notification-bar');
   };
 
-  var closeNotificationMessage = function(wait){
-      $getNotificationContainer().children().each(function () {
-          var $this = $(this);
-              setTimeout(function () {
-                  if ($this.hasClass("alert")) {
-                      $this.alert('close');
-                  }
-              }, wait);
-      });
-  }
+  $getNotificationContainer().on('click', '.close', function () {
+    $(this).closest('.alert').remove();
+  });
+
+  var closeNotificationMessage = function (wait) {
+    $getNotificationContainer().children().each(function () {
+      var $this = $(this);
+      setTimeout(function () {
+        if ($this.hasClass("alert")) {
+          $this.remove();
+        }
+      }, wait);
+    });
+  };
 
   var error = function(message) {
 
@@ -29,28 +33,16 @@ GS.notifications = GS.notifications || (function($) {
   };
 
   var notice = function(message) {
-    $getNotificationContainer().append(
-      GS.handlebars.partialContent(
-        'notification_bar_message',{
-          message: message,
-          bootstrapType: 'info'
-        }
-      )
-    );
-    closeNotificationMessage(10000);
+    GS.modal.manager.showModal(GS.modal.SuccessModal, {
+      subheading: message
+    });
   };
 
-  var success = function(message) {
-    $getNotificationContainer().append(
-      GS.handlebars.partialContent(
-        'notification_bar_message',{
-          message: message,
-          bootstrapType: 'success'
-        }
-      )
-    );
-    closeNotificationMessage(10000);
-  };
+  var success = function(message) { 
+    GS.modal.manager.showModal(GS.modal.SuccessModal, {
+      subheading: message
+    });
+  }
 
   var warning = function(message) {
     $getNotificationContainer().append(

@@ -1,3 +1,5 @@
+var GS = GS || {};
+
 GS.uri = GS.uri || {};
 
 GS.uri.Uri = function() {
@@ -44,14 +46,7 @@ GS.uri.Uri.copyParam = function(param, sourceUrl, targetUrl) {
  * Return string in format:  http://pk.greatschools.org
  */
 GS.uri.Uri.getBaseHostname = function() {
-    var baseHostname = "";
-
-    if (window.location.hostname.indexOf("pk.") > -1) {
-        //"override" any base tag, and point at the current domain
-        baseHostname = window.location.protocol + "//" + window.location.host;
-    }
-
-    return baseHostname;
+    return '';
 };
 
 GS.uri.Uri.putParamObjectIntoQueryString = function(queryString, obj) {

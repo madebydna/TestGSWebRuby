@@ -57,13 +57,7 @@ module Feeds
       state_name= States.state_name(state).titleize
       # How we calculate test_description  can change based on decision from Product team
       if data_type_id == RATINGS_ID_RATING_FEED_MAPPING['official_overall']
-        "The GreatSchools rating is a simple tool for parents to compare schools based on test scores,\
-student academic growth, and college readiness. It compares schools across the state, \
-where the highest rated schools in the state are designated as 'Above Average' and the lowest 'Below Average'.\
-It is designed to be a starting point to help parents make baseline comparisons. We always advise parents to visit \
-the school and consider other information on school performance and programs, as well as consider their child's and \
-family's needs as part of the school selection process."
-
+        "The GreatSchools Rating helps parents compare schools within a state based on a variety of school quality indicators and provides a helpful picture of how effectively each school serves all of its students. Ratings are on a scale of 1 (below average) to 10 (above average) and can include test scores, college readiness, academic progress, advanced courses, equity, discipline and attendance data. We also advise parents to visit schools, consider other information on school performance and programs, and consider family needs as part of the school selection process."
       elsif data_type_id == RATINGS_ID_RATING_FEED_MAPPING['test_rating']
 
         "GreatSchools compared the test results for each grade and subject across all #{state_name} schools and divided them into 1 through 10 ratings (10 is the best).\

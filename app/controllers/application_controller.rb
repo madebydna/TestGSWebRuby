@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   include TrailingSlashConcerns
   include CityParamsConcerns
   include StateParamsConcerns
+  include StructuredMarkup::ControllerConcerns
 
   prepend_before_action :set_global_ad_targeting_through_gon
 
@@ -28,44 +29,48 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :add_configured_translations_to_js
   before_action :add_language_to_gtm_data_layer
+  before_action :add_fb_appid_to_gon
 
   after_filter :disconnect_connection_pools
+
+  layout "deprecated_application"
+
+  def url_options
+    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
+    super
+  end
 
   protected
 
   rescue_from Exception, :with => :exception_handler
 
   # helper :all
-  helper_method :logged_in?, :current_user, :url_for, :state_param_safe
-
-  # methods for getting request URL / path info
-
-  def url_for(*args, &block)
-    url = super(*args, &block)
-    url.sub! /\.gs\/(\?|$)/, '.gs\1'
-    url.sub! /\.topic\/(\?|$)/, '.topic\1'
-    url.sub! /\.page\/(\?|$)/, '.page\1'
-    url
-  end
-  ApplicationController.send :public, :url_for
+  helper_method :logged_in?, :current_user, :state_param_safe
+  helper_method :json_ld_hash
 
   def disconnect_connection_pools
     # This used to be done with the rack_after_reply gem.
     # Because it was out of date, we removed it and switched this to a
     # regular after_filter. See PT-1616 for more information.
-    return unless @school.present?
+    #return unless @school.present?
     return if ENV_GLOBAL['connection_pooling_enabled']
     begin
       ActiveRecord::Base.connection_handler.connection_pool_list.each do |pool|
-        if pool.connected? && pool.connections.present?
-          if pool.connections.any? { |conn| conn.active? && conn.current_database == "_#{@school.state.downcase}"}
-            pool.disconnect!
-          end
+        if pool.connected?
+          pool.disconnect!
         end
       end
     rescue => e
-      GSLogger.error(e, :misc, message:'Failed to explicitly close connections')
+      GSLogger.error(:misc, e, message:'Failed to explicitly close connections')
     end
+  end
+
+  def asset_full_url(file)
+    path = file.starts_with?('/') ? file : '/'+file
+    scheme = ENV_GLOBAL['force_ssl'] == 'true' ? 'https' : 'http'
+    host = ENV_GLOBAL['app_host'].presence || 'www.greatschools.org'
+    port = ENV_GLOBAL['app_port'].presence
+    ["#{scheme}://#{host}", port].reject(&:blank?).join(':') + path
   end
 
   def host
@@ -90,11 +95,6 @@ class ApplicationController < ActionController::Base
     rescue
       I18n.locale = I18n.default_locale
     end
-  end
-
-  def url_options
-    return { lang: I18n.locale }.merge super unless I18n.locale == I18n.default_locale
-    super
   end
 
   def path_w_query_string (do_not_append, page_name)
@@ -185,5 +185,16 @@ class ApplicationController < ActionController::Base
 
   def set_uuid_cookie
     write_cookie_value(:gs_aid, SecureRandom.uuid) unless read_cookie_value(:gs_aid).present?
+  end
+
+  def add_fb_appid_to_gon
+    gon.facebook_app_id = ENV_GLOBAL['facebook_app_id']
+  end
+
+  def set_no_index
+    @no_index = ''
+    if params['s_cid'].present? && params['s_cid'] == 'wsbay93'
+      @no_index = '<meta name="robots" content="noindex"><meta name="googlebot" content="noindex">'.html_safe
+    end
   end
 end

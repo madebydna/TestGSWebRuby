@@ -10,11 +10,15 @@ describe CitiesMetaTagsConcerns do
 
   context 'with a city instance var set' do
     city = 'Oakland'
-    before { subject.instance_variable_set(:@city, city) }
+    state = {long: 'California', short: 'ca' }
+    before do
+      subject.instance_variable_set(:@city, city)
+      subject.instance_variable_set(:@state, state)
+    end
 
     [ # method                  asserted_text
       ['cities_programs_title',       "#{city} programs"],
-      ['cities_programs_keywords',    "#{city} programs, child care"],
+      ['cities_show_title',   "#{city} Schools - #{city} California School Ratings - Public and Private"],
       ['cities_programs_description', "Resources and providers of programs in #{city}"],
     ].each do | (method, asserted_text) |
       it "should return '#{asserted_text}'" do

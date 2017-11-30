@@ -1,0 +1,9 @@
+es:
+  osp:
+    dashboard:
+      header: Your Official School Profile
+      superuser_intro: Please input a school to view the form
+      state_label: State abbreviation
+      school_label: School ID
+      submit_button: Go
+      demigod_intro: You have access to the following schools' official school profiles. Please click on a school name to edit its profile.

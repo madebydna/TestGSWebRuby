@@ -1,0 +1,30 @@
+@mixin checkbox($height: $form-field-medium-height) {
+  $checkmark-color: #07c568;
+  display: none;
+
+  + label {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px 0 0px;
+    height: $height;
+
+    &:before {
+      margin: 0 5px 0 0px;
+      display: inline-block;
+      content: '\00a0 ';
+      font-size: $height * .4;
+      width: ($height / 2) + 2;
+      height: ($height / 2) + 2;
+      border: 1px solid $form-field-border-color;
+      border-radius: $form-field-border-radius;
+    }
+  }
+  &:checked + label {
+    &:before {
+      padding-left: 3px;
+      content: '\2713';
+      font-size: $height * .4;
+      color: $checkmark-color;
+    }
+  }
+}

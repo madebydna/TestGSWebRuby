@@ -1,5 +1,15 @@
 module DbCharmer
   module ActiveRecord
+    module Relation
+      module ConnectionRouting
+        def connection
+          @klass.db_charmer_connection_level += 1
+          c = @klass.on_db(db_charmer_connection).connection
+          @klass.db_charmer_connection_level -= 1
+          c
+        end
+      end
+    end
     module MultiDbProxy
       # Simple proxy class that switches connections and then proxies all the calls
       # This class is used to implement chained on_db calls

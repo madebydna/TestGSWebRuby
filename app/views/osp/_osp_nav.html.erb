@@ -1,6 +1,6 @@
 <% osp_page = [] %>
 <% osp_page[page] = 'active' %>
-<% nav_label_hash = {1 => 'Basic Information', 2 => 'Academics', 3 => 'Extracurriculars & Culture', 4 => 'Facilities & Staff'} %>
+<% nav_label_hash = {1 => 'Basic Information', 2 => 'Academics', 3 => 'Extracurriculars & Culture'} %>
 
 <div class="bg-medium-gray tac clearfix pvm mbl js-ospNav">
 
@@ -8,7 +8,7 @@
   <div class="nav-osp hidden-xs">
     <div class="limit-width-1200">
       <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="phs">
             <div class="nav_button full-width <%= osp_page[1] %> pointer js-submitTrigger" data-page-number="1">
               <h3 class="absolute-center brand-primary pt45"> Basic Information </h3>
@@ -16,7 +16,7 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="phs">
             <div class="nav_button full-width <%= osp_page[2] %> pointer js-submitTrigger" data-page-number="2">
               <h3 class="absolute-center brand-primary pt45"> Academics </h3>
@@ -24,19 +24,11 @@
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-4">
           <div class="phs">
             <div class="nav_button full-width <%= osp_page[3] %> pointer js-submitTrigger" data-page-number="3">
               <h3 class="absolute-center brand-primary pt45"> Extracurriculars <br/> & Culture </h3>
               <span class="iconx96 i-96-trophy"></span>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="phs">
-            <div class="nav_button full-width <%= osp_page[4] %> pointer js-submitTrigger" data-page-number="4">
-              <h3 class="absolute-center brand-primary pt45"> Facilities <br/> & Staff </h3>
-              <span class="iconx96 i-96-person"></span>
             </div>
           </div>
         </div>

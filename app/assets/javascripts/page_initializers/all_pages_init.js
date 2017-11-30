@@ -32,8 +32,9 @@ $(function() {
   $.getScript(googleMapsScriptURL + '&callback=' + callbackFunction);
 
   $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+    var appId = gon.facebook_app_id;
     FB.init({
-      appId: '178930405559082',
+      appId: appId,
       version    : 'v2.2',
       status     : true, // check login status
       cookie     : true, // enable cookies to allow the server to access the session
@@ -52,6 +53,9 @@ $(function() {
     }
   });
 
+  $(function() {
+    $('body').on('click', '.multi-select-button-group label', GS.multiSelectButtonGroup);
+  });
 
   $('.js-clear-local-cookies-link').each(function() {
     $(this).click(GS.hubs.clearLocalUserCookies);
@@ -109,6 +113,7 @@ $(function() {
   // State specific pages have gon.state_abbr state and will initialize autocomplete with state
   // if state abbreviation is NOT set will init autocomplete without state.
   // All page specific initializing of autocomplete was removed
+  GS.ad.addCompfilterToGlobalAdTargetingGon();
 
   if (gon.state_abbr) {
     GS.search.autocomplete.searchAutocomplete.init(gon.state_abbr);
@@ -117,3 +122,4 @@ $(function() {
     GS.search.autocomplete.searchAutocomplete.init();
   }
 });
+

@@ -1,9 +1,11 @@
+window.GS = window.GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 GS.ad.shownArray = [];
 GS.ad.functionSlotDefinitionArray = [];
 GS.ad.functionAdShowArray = [];
 GS.ad.googleId = '/1002894/';
+GS.ad.slotTimers = {};
 
 if (gon.advertising_enabled) {
 //adobe audience manager code - copied and pasted
@@ -39,7 +41,7 @@ if (gon.advertising_enabled) {
 //   Uses Adobe Audience Manager for setTargeting and gon.ad_set_targeting for setTargeting - both page level
 //
 /////////////////////////////////////////////////////////////////////////////
-  $(function () {
+  $(window).on('load', function () {
     var dfp_slots = $(".gs_ad_slot").filter(":visible,[data-ad-defer-render]");
     if (dfp_slots.length > 0 || gon.pagename == "Reviews") {
 
@@ -79,6 +81,24 @@ if (gon.advertising_enabled) {
               addSize([300, 600], [[300, 600], [300, 250]]).
               addSize([0, 0], [[300, 250]]).
               build(),
+      'box_or_tall': googletag.sizeMapping().
+              addSize([992, 300], [[300, 600], [300, 250]]).
+              addSize([768, 120], [[728, 90]]).
+              addSize([0, 0], [[300, 250]]).
+              build(),
+      'thin_banner': googletag.sizeMapping().
+              addSize([768, 120], [[728, 90]]).
+              addSize([0, 0], [[320, 50]]).
+              build(),
+      'thin_banner_or_box': googletag.sizeMapping().
+              addSize([992, 300], [[728, 90], [970, 250]]).
+              addSize([768, 120], [[728, 90]]).
+              addSize([0, 0], [[320, 50], [300, 250]]).
+              build(),
+        'interstitial': googletag.sizeMapping().
+              addSize([640, 480], [[640, 800], [300, 137]]).
+              addSize([0, 0], [[300, 137]]).
+              build()
     };
   };
 
@@ -140,7 +160,11 @@ if (gon.advertising_enabled) {
       });
     }
     else {
-      googletag.pubads().refresh([GS.ad.slot[divId]]);
+      var lastRefreshedTime = GS.ad.slotTimers[divId];
+      if (lastRefreshedTime === undefined || (new Date().getTime() - lastRefreshedTime >= 1000)) {
+        GS.ad.slotTimers[divId] = new Date().getTime();
+        googletag.pubads().refresh([GS.ad.slot[divId]]);
+      }
     }
   };
 
@@ -168,6 +192,14 @@ if (gon.advertising_enabled) {
       });
     }
   };
+
+  GS.ad.addCompfilterToGlobalAdTargetingGon = function () {
+    var randomCompFilterValue = (Math.floor(Math.random()*4)+1).toString();
+    if (!gon.ad_set_targeting) {
+      gon.ad_set_targeting = {};
+    }
+    gon.ad_set_targeting['compfilter'] = randomCompFilterValue;
+  }
 
   window.addEventListener('message', GS.ad.handleGhostTextMessages, false);
 

@@ -146,7 +146,7 @@ GS.topicalReview.form = (function () {
 
       var showError = function(errorMessage) {
         errorMessage = errorMessage || "There was an error saving your review.";
-        var errorMessageContainer = $(this).find('.js-topicalReviewErrorMessage');
+        var errorMessageContainer = $form.find('.js-topicalReviewErrorMessage');
         errorMessageContainer.html(errorMessage);
       };
 
@@ -169,7 +169,7 @@ GS.topicalReview.form = (function () {
           if (responseJSON.length > 1) {
             errorMessage = responseJSON.join(' ');
           } else {
-            errorMessage = responseJSON[0];
+            errorMessage = responseJSON.responseText;
           }
         }
         showError(errorMessage);

@@ -21,7 +21,7 @@
         %>
 
         <% if @normalized_address %>
-        <%=  @normalized_address  %>
+        <%=  t('.near_address', address: @normalized_address)  %>
         <% elsif @district %>
           <%= t('.in_district', district: @district.name) %>
         <% elsif @city %>

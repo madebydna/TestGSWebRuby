@@ -53,3 +53,13 @@ log/queue_daemon_pid
 # byebug history
 
 .byebug_history
+# React on Rails
+npm-debug.log*
+node_modules
+
+# Generated js bundles
+app/assets/webpack
+app/assets/webpack/*
+
+# tmp output from mocha-webpack library
+client/.tmp/

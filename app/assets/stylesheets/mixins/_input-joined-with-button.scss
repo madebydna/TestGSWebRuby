@@ -1,0 +1,19 @@
+@mixin input-joined-with-button($height: $form-field-medium-height, $border-color: $form-field-border-color) {
+  input {
+    height: $height;
+    border: solid $border-color;
+    border-width: 1px 0 1px 1px;
+    border-radius: $form-field-border-radius 0 0 $form-field-border-radius;
+    font-size: 13px;
+    background-color: #f5f9fa;
+  }
+  button {
+    height: $height;
+    border: none;
+    border-radius: 0 $form-field-border-radius $form-field-border-radius 0;
+    background-color: #2ba3dc;
+    color: white;
+    background-image: none;
+    display: inline-block;
+  }
+}

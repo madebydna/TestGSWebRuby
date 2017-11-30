@@ -102,4 +102,5 @@ describe StatesController do
   describe 'GET community' do
     it_behaves_like 'a default state controller action', :community, 'GS:State:EducationCommunity'
   end
+
 end

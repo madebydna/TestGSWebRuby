@@ -115,15 +115,17 @@ class SchoolSearchService
 
   def self.parse_school_results(solr_results)
     normalized_results = []
-    solr_results['response']['docs'].each do |school_search_result|
-      normalized_results << parse_school_document(school_search_result)
+    if solr_results.present? && solr_results['response'].present?
+      solr_results['response']['docs'].each do |school_search_result|
+        normalized_results << parse_school_document(school_search_result)
+      end
+      {
+          num_found: solr_results['response']['numFound'],
+          start: solr_results['response']['start'],
+          results: normalized_results,
+          spellcheck: parse_spellcheck_results(solr_results)
+      }
     end
-    {
-        num_found: solr_results['response']['numFound'],
-        start: solr_results['response']['start'],
-        results: normalized_results,
-        spellcheck: parse_spellcheck_results(solr_results)
-    }
   end
 
   def self.parse_spellcheck_results(solr_results)

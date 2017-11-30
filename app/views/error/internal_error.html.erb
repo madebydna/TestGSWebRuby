@@ -1,3 +1,17 @@
-<p>
-    Sorry, but an unexpected error has occured.
-</p>
+<div class="internal-error-container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 image clearfix">
+      <img src="<%= image_path('500_sm.jpg') %>"/>
+    </div>
+    <div class="col-xs-12 col-md-6 text">
+      <h1>
+        <span>Whoops!</span>
+        <span>Something went wrong.</span>
+      </h1>
+      <ul>
+        <li><span>You might try refreshing your page, or check back with us later</span></li>
+        <li><span>Need help? Feel free to <%= link_to 'contact us', contact_us_path %></span></li>
+      </ul>
+    </div>
+  </div>
+</div>

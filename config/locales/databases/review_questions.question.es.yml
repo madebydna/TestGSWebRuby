@@ -1,10 +1,17 @@
 ---
 es:
-  'Do you feel this school develops compassion, caring, and empathy in its students?': '¿Siente que esta escuela les inculca compasión, solidaridad y empatía a los estudiantes?'
-  'Do you feel this school develops honesty, integrity, and fairness in its students?': ' ¿Siente que esta escuela les inculca honestidad, integridad e imparcialidad a los estudiantes?'
-  'Do you feel this school develops persistence, grit, and determination in its students?': '¿Siente que esta escuela les inculca perseverancia, valor y determinación a los estudiantes?'
-  'Do you feel this school develops respect in its students?': '¿Siente que esta escuela les inculca respeto a los estudiantes?'
-  'How do you feel about the amount of homework given at this school?': '¿Qué opina sobre la cantidad de tarea dada en esta escuela?'
-  'How effective do you feel the teachers are at this school?': '¿Cómo evaluaría a los maestros de esta escuela?'
-  'How would you rate your experience at this school?': '¿Cómo evaluaría su experiencia en esta escuela?'
-  'Is there someone at this school who you want to say "thanks" to?': '¿Hay alguien en la escuela a quien quiera agradecer?'
+  Do you feel this school develops compassion, caring, and empathy in its students?: "¿Siente que esta escuela les inculca compasión, solidaridad y empatía a los estudiantes?"
+  Do you feel this school develops honesty, integrity, and fairness in its students?: " ¿Siente que esta escuela les inculca honestidad, integridad e imparcialidad a los estudiantes?"
+  Do you feel this school develops persistence, grit, and determination in its students?: "¿Siente que esta escuela les inculca perseverancia, valor y determinación a los estudiantes?"
+  Do you feel this school develops respect in its students?: "¿Siente que esta escuela les inculca respeto a los estudiantes?"
+  How do you feel about the amount of homework given at this school?: "¿Qué opina sobre la cantidad de tarea dada en esta escuela?"
+  How effective do you feel the teachers are at this school?: "¿Cómo evaluaría a los maestros de esta escuela?"
+  How would you rate your experience at this school?: "¿Cómo evaluaría su experiencia en esta escuela?"
+  Is there someone at this school who you want to say "thanks" to?: "¿Hay alguien en la escuela a quien quiera agradecer?"
+  'This school has an effective approach to homework:': 'Esta escuela tiene un enfoque eficaz para la tarea:'
+  'Teachers at this school are effective:': 'Los maestros en esta escuela son eficaces:'
+  'Leadership at this school is effective:': 'El liderazgo en esta escuela es eficaz:'
+  'This school develops strong character in its students, like integrity, compassion and respect:': 'Esta escuela desarrolla carácter fuerte en sus estudiantes, como la integridad, la compasión y el respeto:'
+  'This school effectively supports students with learning differences:': 'Esta escuela apoya efectivamente a los estudiantes con diferencias de aprendizaje:'
+  'This school effectively deals with bullying:': 'Esta escuela efectivamente se ocupa de la intimidación:'
+  'Tell us more:': 'Cuentanos más:'

@@ -1,0 +1,159 @@
+<% content_for :head do %>
+  <link rel="preload" href="<%= asset_path('school_profiles/hero_bg.jpg') %>" as="image">
+<% end %>
+<% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "commons", defer: true %>
+  <%= webpack_javascript_include_tag "school-profiles", defer: true %>
+<% end %>
+<div class="overlay" style="display:none"></div>
+<div class="school-profile">
+    <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
+    <%= render 'hero', hero: @school_profile.hero %>
+    <%= render 'school_profile_sticky_cta_mobile', rating: @school_profile.hero.gs_rating %>
+    <!-- main content -->
+    <div class="static-container">
+      <div class="right_rail">
+        <%= render 'sticky_right_rail' %>
+      </div>
+      <div class="content">
+        <div class="profile-section">
+          <%= render 'summary_narration' if @school_profile.summary_narration.present? %>
+        </div>
+        <div class="profile-section">
+          <%= render 'toc' %>
+
+        </div>
+        <div>
+          <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
+        </div>
+        <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
+                   width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
+
+        <a class="anchor-mobile-offset" name="Academics"></a>
+        <div class="profile-section">
+          <div class="row">
+            <div class="col-xs-12 col-lg-3">
+              <div class="section-title">
+                <%= t('.academics') %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-lg-9">
+              <div class="profile-section-slot">
+                <%= render 'test_scores', test_scores: @school_profile.test_scores %>
+              </div>
+              <% if @school_profile.show_high_school_data %>
+                <div class="profile-section-slot">
+                  <%= render 'college_readiness', college_readiness: @school_profile.college_readiness %>
+                </div>
+              <% end %>
+
+              <%# NOTE LOGIC FOR STUDENT PROGRESS (SP) vs. ACADEMIC PROGRESS (AP):
+                The SP module has a no-data state, while The AP module DOES NOT have a no-data state.
+                AP.visible? checks to see if the school has AP data AND if the school is (e,m)
+                SP.visible? checks to see if the school has SP data OR if the school is (e,m)
+                We only show the AP module if the school has data for AP AND the school is (e,m) AND the school DOES NOT have data for SP
+                Else, if the school is (e,m), we show SP, whether SP has data, or not (no-data state)
+              %>
+              <% if @school_profile.academic_progress.visible? && !@school_profile.student_progress.has_data? %>
+                <div class="profile-section-slot">
+                  <%= render 'academic_progress', academic_progress: @school_profile.academic_progress %>
+                </div>
+              <% elsif @school_profile.student_progress.visible? %>
+                <div class="profile-section-slot">
+                  <%= render 'student_progress', student_progress: @school_profile.student_progress %>
+                </div>
+              <% end %>
+
+              <% if @school.includes_level_code?(%w[m h]) %>
+                <div class="profile-section-slot">
+                  <% if !@school.middle_school? && @school_profile.courses.visible? %>
+                    <% # for multi level and high schools, show advanced courses data if we can %>
+                    <%= render 'courses', courses: @school_profile.courses %>
+                  <% elsif @school_profile.stem_courses.visible? %>
+                    <% # if multi level / high school didnt have advanced courses, or for middle schools, show stem data if we can %>
+                    <%= render(
+                      'stem_courses',
+                      stem_courses: @school_profile.stem_courses
+                    ) %>
+                  <% else %>
+                    <%= render 'courses', courses: @school_profile.courses %>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <%= render 'shared/ad', slot: 'Profiles_Second', size_mapping: 'thin_banner',
+                   width: 320, height: 50, css_class: 'mbl' %>
+        <div>
+          <%= render 'equity', equity: @school_profile.equity, equity_overview: @school_profile.equity_overview %>
+        </div>
+
+        <div class="profile-section">
+          <div class="row">
+            <div class="col-xs-12 col-lg-3">
+              <div class="section-title">
+                <%= t('.environment') %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-lg-9">
+              <% osp_link = osp_register_path(city: @school.city, school_id: @school.id.to_s, state: @school.state).gsub(/\/$/, '') %>
+
+              <div class="profile-section-slot">
+                <%= render 'osp_school_info', osp_link: osp_link, osp_school_info: @school_profile.osp_school_info %>
+              </div>
+              <div class="profile-section-slot">
+                <%= render 'students', students: @school_profile.students %>
+              </div>
+              <div class="profile-section-slot">
+                <%= render 'teachers_staff', teachers_staff: @school_profile.teachers_staff %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <%= render 'shared/ad', slot: 'Profiles_Third', size_mapping: 'thin_banner',
+                   width: 320, height: 50, css_class: 'mbl' %>
+
+        <div class="profile-section">
+          <%= render 'review_summary', reviews: @school_profile.reviews %>
+        </div>
+
+        <div>
+          <%= render 'reviews',
+            review_questions: @school_profile.review_questions,
+            reviews: @school_profile.reviews
+          %>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <%= render 'shared/ad', slot: 'Profiles_Fourth', size_mapping: 'thin_banner_or_box',
+               width: 320, height: 50, css_class: 'mbl' %>
+    </div>
+    <a name="Neighborhood" id="Neighborhood"></a>
+    <div class="profile-section">
+
+      <%= render 'homes_and_rentals', school: @school %>
+
+    </div>
+
+    <div class="profile-section">
+      <%= render 'neighborhood', neighborhood: @school_profile.neighborhood %>
+    </div>
+
+    <div class="profile-section">
+      <%= render 'nearby_schools', nearby_schools: @school_profile.nearby_schools %>
+    </div>
+
+    <% if @school_profile.last_modified_date.present? %>
+      <div class="pll ptl" style="color:#999999">
+        <span>
+          <%= t('.last_modified') %>: <%= l(@school_profile.last_modified_date, format: '%B %e, %Y') %>
+        </span>
+      </div>
+    <% end %>
+    <%= render 'shared/bottom_mobile_ad' %>
+</div>

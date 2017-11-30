@@ -1,0 +1,29 @@
+<% modal_css_class = params[:modal_css_class] %>
+<%
+  member_roles = {
+    'parent' => t('.parent'),
+    'student' => t('.current_student'),
+    'teacher' => t('.teacher'),
+    'principal' => t('.school_official'),
+    'community member' => t('.community_member')
+  }
+%>
+
+<%= render layout: 'modal_layout', locals: {
+  heading: t('.heading'),
+  modal_css_class: "school-user-modal #{modal_css_class}"
+} do %>
+  <%= form_for SchoolUser.new, remote: true, url: school_user_path(@school) do |f| %>
+    <%= f.hidden_field(:user_type, class: 'js-schoolUserValue') %>
+    <div class="select-button-container">
+      <% member_roles.each do |value, display_value| %>
+        <div data-school-user="<%= value %>" class="js-schoolUserSelect select-button">
+          <div class="avatar icon-33-avatar-<%= value.gsub(' ','-') %>"></div>
+          <div class="user-type"><%= display_value %></div>
+          <div class="icon-checkmark"></div>
+        </div>
+      <% end %>
+    </div>
+    <button type="submit" class="submit-button"><%= t('submit review', scope: 'forms') %></button>
+  <% end %>
+<% end %>

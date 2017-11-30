@@ -2,26 +2,28 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
 
   CACHE_KEY = 'test_scores'
 
-  def query_results
-    @query_results ||= (
-      results = TestDataSet.fetch_test_scores(school, breakdown_id: 1).select do |result|
-        data_type_id = result.data_type_id
-        # skip this if no corresponding test data type
-        test_data_types && test_data_types[data_type_id].present?
-      end
-      results.map { |obj| TestScoresCaching::QueryResultDecorator.new(school.state, obj) }
-    )
-  end
-
   def build_hash_for_cache
-    hash = {}
+    data_set = {}
     query_results.map do |data_set_and_value|
-      hash.deep_merge!(build_hash_for_data_set(data_set_and_value))
+      data_set.deep_merge!(build_hash_for_data_set(data_set_and_value)) # impl in subclass
     end
 
-    add_lowest_grade_to_hash(hash)
+    # need source otherwise reject test
+    data_set_no_blank_sources = data_set.reject { | test, value | test_scores_exist_for_dataset(value)}
+    if data_set != data_set_no_blank_sources
+      GSLogger.error( :school_cache, nil, message: "Missing source state-school #{school.state}-#{school.id}", vars: data_set)
+    end
 
-    hash
+    add_lowest_grade_to_hash(data_set_no_blank_sources)
+    data_set_no_blank_sources
+  end
+
+  def test_scores_exist_for_dataset(value)
+    value && value['All'] && value['All'][:testscores] && value['All'][:test_source].blank?
+  end
+
+  def inject_grade_all(data_sets_and_values)
+    TestScoresCaching::GradeAllCalculator.new(data_sets_and_values).inject_grade_all
   end
 
   def add_lowest_grade_to_hash(data_type_hash)
@@ -34,8 +36,10 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
   def innermost_hash(test)
     hash = {
         number_students_tested: test.number_students_tested,
+        state_number_tested: test.state_number_tested,
         score: test.school_value,
-        state_average: test.state_value
+        state_average: test.state_value,
+        flags: test.flags
     }
     if test.proficiency_band_id.present?
       hash.merge!(band_id: test.proficiency_band_id)
@@ -49,27 +53,4 @@ class TestScoresCaching::TestScoresCacher < TestScoresCaching::Base
     end
     hash
   end
-
-  def build_hash_for_data_set(test)
-    {
-      test.data_type_id => {
-        test_label: test.test_label,
-        test_source: test.test_source,
-        test_description: test.test_description,
-        grades: {
-          test.grade.value => {
-            label: test.grade_label,
-            level_code: {
-              test.level_code.to_s => {
-                test.subject => {
-                  test.year => innermost_hash(test)
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  end
-
 end

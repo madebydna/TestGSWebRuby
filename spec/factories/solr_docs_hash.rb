@@ -21,7 +21,7 @@ FactoryGirl.define do
     school_physical_state "de"
     school_size 201
     school_latitude 39.11915969848633
-    school_longitude -75.48863220214844
+    school_longitude (-75.48863220214844)
     school_name "Dover Air Force Base Middle School"
     school_name_untokenized "Dover Air Force Base Middle School"
     school_profile_path '/delaware/dover/25-Dover-Air-Force-Base-Middle-School/'
@@ -78,7 +78,7 @@ FactoryGirl.define do
     school_physical_state "de"
     school_grade_range "PK, 1-5"
     school_latitude 38.7060546875
-    school_longitude -75.39826202392578
+    school_longitude (-75.39826202392578)
     school_county "Sussex"
     school_type "public"
     is_school_for_new_profile true
@@ -111,7 +111,7 @@ FactoryGirl.define do
     school_physical_state "de"
     school_grade_range "PK-K"
     school_latitude 39.07052993774414
-    school_longitude -75.47657775878906
+    school_longitude (-75.47657775878906)
     school_county "Kent"
     school_type "public"
     school_database_state ["de", "Delaware"]
@@ -146,7 +146,7 @@ FactoryGirl.define do
     school_physical_state "ca"
     school_grade_range "9-12"
     school_latitude 37.76426696777344
-    school_longitude -122.24809265136719
+    school_longitude (-122.24809265136719)
     school_county "Alameda"
     school_type "public"
     is_school_for_new_profile true

@@ -73,6 +73,11 @@ module States
     return state_hash[str]
   end
 
+  def self.state_path(name)
+    path = States.state_name(name)
+    path.gsub(' ', '-') if path
+  end
+
   def self.state_name(str)
     return nil unless str.present?
     str = str.downcase
@@ -98,7 +103,7 @@ module States
   end
 
   def self.abbr_to_label(state_abbr)
-    labels_hash[state_abbr]
+    labels_hash[state_abbr.downcase] if state_abbr.present?
   end
 
   def self.labels_hash

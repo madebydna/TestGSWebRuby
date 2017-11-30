@@ -117,4 +117,29 @@ describe CitiesController do
   describe 'GET programs' do
     it_behaves_like 'a default cities controller action', :programs, 'GS:City:Programs'
   end
+
+  describe '#set_city_home_meta_data' do
+    context 'Given Oakland, California' do
+      before do
+        subject.instance_variable_set(:@city, 'Oakland')
+        subject.instance_variable_set(:@state, {:short => 'ca', :long => 'california'})
+      end
+      it "should call set_meta_tags with title" do
+        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "Oakland Schools - Oakland California School Ratings - Public and Private"))
+        controller.send(:set_city_home_metadata)
+      end
+    end
+
+    context 'Given Pennsylvania' do
+      before do
+        subject.instance_variable_set(:@city, 'Philadelphia')
+        subject.instance_variable_set(:@state, {:short => 'pa', :long => 'pennsylvania'})
+      end
+      it "should call set_meta_tags with title with new title" do
+        expect(controller).to receive(:set_meta_tags).with(hash_including(:title => "View The Best Schools in Philadelphia, PA | School Ratings for Public & Private"))
+        controller.send(:set_city_home_metadata)
+      end
+    end
+
+  end
 end

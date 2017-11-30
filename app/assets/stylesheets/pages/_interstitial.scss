@@ -1,0 +1,45 @@
+.interstitial {
+  $med-blue: #79bedc;
+  $light-blue: #D2E9F3;
+
+  .header {
+    padding-top: $spacing-large;
+    .logo_size {
+      width: 112px;
+      height: 47px;
+    }
+    .logo-container {
+      float: left;
+    }
+    text-align: right;
+    max-width: 960px;
+    margin: auto;
+    p,a {
+      font-size: $font-size-s1;
+    }
+    p {
+      margin-bottom: $spacing-small;
+    }
+    a {
+      font-family: opensans-semibold;
+      cursor: pointer;
+    }
+  }
+
+  .ad-container {
+    background-color: $light-blue;
+    text-align: center;
+    max-width: 900px;
+    margin: $spacing-extra-large auto;
+    p {
+      font-size: $font-size-s1;
+      margin-bottom: $spacing-small;
+    }
+  }
+  .ad-inner-container {
+    color: $white;
+    background-color: $med-blue;
+    max-width: 680px;
+    margin: auto;
+  }
+}

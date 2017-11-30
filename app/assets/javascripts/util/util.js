@@ -1,6 +1,8 @@
 var GS = GS || {}
 GS.util = GS.util || {};
 
+var _kiq = _kiq || [];
+
 GS.util.log = function (msg) {
     if (window.console) {
         console.log(msg);
@@ -16,6 +18,7 @@ GS.util.wrapFunction = function(fn, context, params) {
     fn.apply(context, params);
   };
 };
+
 
 GS.util.deleteAjaxCall = function(obj, hash) {
   var $self = obj;

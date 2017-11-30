@@ -3,21 +3,22 @@ class LevelCode
 
   Level = Struct.new(:abbreviation, :long_name)
 
-  LEVEL_LOOKUP = {'p' => Level.new('p', 'Preschool'),
-                  'e' => Level.new('e', 'Elementary'),
-                  'm' => Level.new('m', 'Middle'),
-                  'h' => Level.new('h', 'High')
-  }
+  LEVEL_LOOKUP = {
+    'p' => Level.new('p', 'Preschool'),
+    'e' => Level.new('e', 'Elementary'),
+    'm' => Level.new('m', 'Middle'),
+    'h' => Level.new('h', 'High')
+  }.freeze
 
-  SORT_ORDER = %w(p e m h)
+  SORT_ORDER = %w(p e m h).freeze
 
   def initialize(level_codes_string)
-    @level_codes = level_codes_string.split(',').sort_by{|level| SORT_ORDER.index(level)}
-    @levels = @level_codes.map{|code| LEVEL_LOOKUP[code]}
+    @level_codes = level_codes_string.split(',').sort_by { |level| SORT_ORDER.index(level) }
+    @levels = @level_codes.map { |code| LEVEL_LOOKUP[code] }
   end
 
-  def eql? (level_code)
-    (self.level_codes - level_code.level_codes).empty?
+  def eql?(other)
+    (level_codes - other.level_codes).empty?
   end
 
   alias_method :==, :eql?
@@ -33,16 +34,16 @@ class LevelCode
   def self.from_grade(grade)
     level_code =
       case grade.downcase
-        when 'pk','p'
-          'p'
-        when 'kg','k','1','2','3','4','5'
-          'e'
-        when '6','7','8'
-          'm'
-        when '9','10','11','12','13'
-          'h'
-        else
-          nil
+      when 'pk', 'p'
+        'p'
+      when 'kg', 'k', '1', '2', '3', '4', '5'
+        'e'
+      when '6', '7', '8'
+        'm'
+      when '9', '10', '11', '12', '13'
+        'h'
+      else
+        nil
       end
     LevelCode.new(level_code) if level_code
   end
@@ -51,5 +52,4 @@ class LevelCode
     grade_levels = from_grade(grade.to_s) if grade.try(:to_s).is_a? String
     grade_levels.levels.first.long_name if grade_levels
   end
-
 end

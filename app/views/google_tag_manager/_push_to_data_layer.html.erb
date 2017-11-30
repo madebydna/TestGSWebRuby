@@ -5,7 +5,7 @@
   (function() {
     var gaCookie = {};
     var cval = $.cookie('GATracking');
-    if (!(_.isEmpty(cval))) {
+    if (cval && cval != '') {
       try {
         gaCookie = JSON.parse(cval);
       } catch (e) {

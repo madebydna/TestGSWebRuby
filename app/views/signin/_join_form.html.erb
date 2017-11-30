@@ -1,65 +1,29 @@
 <% ajax %>
-<div class='bg-white brs pal tac'>
-  <fieldset>
-    <%= form_tag authenticate_user_path, method: :post, remote: ajax,
-                id: '',
-                class: 'js-join-form',
-                'data-parsley-namespace' => "data-parsley-" do %>
 
-        <p class="<%= 'active' if @active_tab == 'login' %> header"><%= t('.have_an_account_label') %>
-          <a href="#login" data-toggle="tab" id="js_login_tab"><%= t('.login_tab') %></a></p>
+<div>
+  <%= form_tag(
+    authenticate_user_path,
+    method: :post,
+    remote: ajax,
+    id: '',
+    class: 'js-join-form',
+    'data-parsley-namespace' => "data-parsley-"
+  ) do %>
 
-        <div class="form-group">
+    <%= token_tag form_authenticity_token %>
 
-          <button type="button" data-link-value="<%= facebook_connect_url %>" class="btn btn-facebook js-facebook-signin js-button-link full-width">
-            <%= t('.facebook_signup_button') %>
-          </button>
-          <p class="js-facebook-signin-errors help-block"></p>
-        </div>
+    <p class="<%= 'active' if @active_tab == 'login' %>"><%= t('already have an account', scope: 'forms') %>
+      <a href="#login" data-toggle="tab" class="js_login_tab"><%= t('log in', scope: 'forms') %></a>
+    </p>
 
-        <p class="">- <%= t('.or') %> -</p>
+    <%= render 'forms/facebook_button', text: t('sign up with Facebook', scope: 'forms') %>
 
-        <p class=""><%= t('.signin_intro_text') %></p>
-        <div class="form-group tal">
-          <!-- Email -->
-          <label class="control-label" for="email"><%= t('.email_label') %></label>
-            <%= email_field_tag(
-                        :email,
-                        nil,
-                        {
-                                id: "join-email",
-                                placeholder: "",
-                                class: 'form-control js-join-email',
-                                'data-parsley-required' => "true",
-                                'data-parsley-type' => "email",
-                                'data-parsley-trigger' => "change",
-                                'data-parsley-required-message' => t('.parsley_required_message'),
-                                'data-parsley-error-container' => ".js-join-email-errors",
-                                'data-parsley-remote' => '/gsr/validations/need_to_signin',
-                                'data-parsley-remote-options' => '{ "type": "GET"}',
-                                'data-parsley-remote-message' => t('.parsley_remote_message_html')                       }
-                ) %>
-            <p class="js-join-email-errors help-block"></p>
-        </div>
-        <div class="form-group tal">
-            <label>
-              <%= check_box 'terms', 'terms', class: 'fl', 'data-parsley-required' => 'true',
-                            'data-parsley-error-message' => t('.parsley_terms_message'),
-                            'data-parsley-error-container' => '.js-join-terms-errors' %>
-              <div class="pll"> <%= t('.terms_of_use_html',
-                                      terms_of_use_link: link_to(
-                                              t('.greatschools_terms_of_use'),
-                                              terms_of_use_url
-                                      )
-                                    ) %>
-              </div>
-            </label>
-            <p class="js-join-terms-errors help-block"></p>
-        </div>
-        <!-- Button -->
-        <button class="btn btn-primary js-join-login-submit-button"><%= t('.signup_button') %></button>
-        <div class="pal"><%= link_to t('.privacy_policy'), privacy_url %></div>
+    <div class="divider">
+      <p class="line"><span><%= t('or', scope: 'forms') %></span></p>
+      <p><%= t('sign up with your email', scope: 'forms') %></p>
+    </div>
 
+    <%= render 'forms/join_email_fieldset' %>
+    <%= render 'forms/join_button_and_tou_fieldset' %>
   <% end %>
-  </fieldset>
 </div>

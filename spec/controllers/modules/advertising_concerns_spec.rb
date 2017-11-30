@@ -41,7 +41,6 @@ describe AdvertisingConcerns do
             stub_const('ENV_GLOBAL', env_global)
             subject
             expect(gon.advertising_enabled).to be_truthy
-            expect(ad_targeting_gon_hash['compfilter'].to_i).to be_between(1,4)
             expect(ad_targeting_gon_hash['env']).to eq('blah')
           end
         end
@@ -54,7 +53,6 @@ describe AdvertisingConcerns do
           it 'should not set ad values for gon hash' do
             subject
             expect(gon.advertising_enabled).to be_falsey
-            expect(ad_targeting_gon_hash['compfilter']).to eq(nil)
             expect(ad_targeting_gon_hash['env']).to eq(nil)
           end
         end

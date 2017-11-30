@@ -1,7 +1,9 @@
-class SchoolUserController < SchoolProfileController
+class SchoolUserController < ApplicationController
+  skip_before_filter :verify_authenticity_token
 
   def create
-    json_message = {}
+    @school = school
+    errors = []
     status = :ok
     school_user = nil
     user_type = school_user_params[:user_type]
@@ -11,17 +13,21 @@ class SchoolUserController < SchoolProfileController
       school_user.user_type = user_type if user_type
       unless school_user.save
         status = :unprocessable_entity
+        errors << 'There was a problem saving your relationship to this school'
         Rails.logger.error("Error occurred while attempting to save school_user. school_user.errors: #{school_user.errors.full_messages}")
       end
       school_user.handle_saved_reviews_for_students_and_principals
       current_user.send_thank_you_email_for_school(@school)
     rescue Exception => e
+      errors << 'There was a problem saving your relationship to this school'
       Rails.logger.error("Error occurred while attempting to build school member: #{e}. params: #{params}")
       status = :unprocessable_entity
     end
 
+    errors.uniq!
+
     respond_to do |format|
-      format.json { render json: json_message, status: status }
+      format.json { render json: { errors: errors }, status: status }
     end
   end
 
@@ -39,6 +45,18 @@ class SchoolUserController < SchoolProfileController
   end
 
   private
+
+  def school
+    return @_school if defined?(@_school)
+    @_school = School.find_by_state_and_id(get_school_params[:state_abbr], get_school_params[:id])
+  end
+
+  def get_school_params
+    params.permit(:schoolId, :school_id, :state)
+    params[:id] = params[:schoolId] || params[:school_id]
+    params[:state_abbr] = States.abbreviation(params[:state].gsub('-', ' '))
+    params
+  end
 
   def school_user_params
     params.

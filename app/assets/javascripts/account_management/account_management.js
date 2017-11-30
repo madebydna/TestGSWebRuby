@@ -292,7 +292,7 @@ GS.accountManagement.addGradeLevel= (function(){
             if (gradeValue !== undefined) {
 
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: "/gsr/user/save_grade_selection",
                     data: {grade: gradeValue},
                     dataType: 'json',
@@ -328,7 +328,7 @@ GS.accountManagement.deleteGradeLevel= (function(){
             if (gradeValue !== undefined) {
 
                 $.ajax({
-                    type: 'GET',
+                    type: 'POST',
                     url: "/gsr/user/delete_grade_selection",
                     data: {grade: gradeValue},
                     dataType: 'json',

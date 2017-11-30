@@ -1,0 +1,37 @@
+<% content_for :head do %><title>GS API Account Moderation</title><% end %>
+<h3>Api Accounts</h3>
+<div class="api-account-links">
+  <%= link_to 'Create new account', new_admin_api_account_path %> &nbsp; | &nbsp;
+  <%= link_to 'View all', admin_api_accounts_path(all: true) %> &nbsp; | &nbsp;
+  <%= link_to 'Paginate', admin_api_accounts_path %>
+</div>
+
+<table class="api-accounts table table-striped">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Organization</th>
+    <th>Email</th>
+    <th>Active</th>
+    <th>Added</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @api_accounts.each do |account| %>
+      <tr>
+        <td><%= link_to account.name, edit_admin_api_account_path(account.id) %></td>
+        <td><%= account.organization %></td>
+        <td><%= account.email %></td>
+        <td><%= account.api_key ? 'yes' : 'no' %></td>
+        <td><%= account.account_added.strftime('%m/%d/%Y') %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% unless params[:all] == 'true' %>
+  <%= render 'pagination_links' %>
+<% end %>
+
+
+

@@ -37,6 +37,7 @@ class SchoolDataSortBuilder
     2013 => '_2013',
     2014 => '_2014',
     2015 => '_2015',
+    2016 => '_2016'
   }).with_indifferent_access
 
   SORT_ASC_OR_DESC = Hash.new('_sortable_asc asc').merge!({

@@ -11,6 +11,7 @@ class StatesController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
+  before_action :set_no_index
 
   def show
     write_meta_tags
@@ -84,10 +85,7 @@ class StatesController < ApplicationController
 
       gon.pagename = 'GS:State:ChoosingSchools'
       set_meta_tags title:       "Choosing a school in #{@state[:long].titleize}",
-                    description: " Five simple steps to help parents choose a school in #{@state[:long].titleize}",
-                    keywords:    "choose a #{@state[:long].titleize} school, choosing #{@state[:long].titleize} schools,
-                                  school choice #{@state[:long].titleize}, #{@state[:long].titleize} school choice tips,
-                                  #{@state[:long].titleize} school choice steps"
+                    description: " Five simple steps to help parents choose a school in #{@state[:long].titleize}"
       data_layer_through_gon
       render 'hubs/choosing_schools'
     end
@@ -112,11 +110,7 @@ class StatesController < ApplicationController
 
       gon.pagename = 'GS:State:Events'
       set_meta_tags title:       "Education Events in  #{@state[:long].titleize}",
-                    description: "Key #{@state[:long].titleize} dates and events to mark on your calendar",
-                    keywords:    "#{@state[:long].titleize} school system events, #{@state[:long].titleize}
-                                  public schools events, #{@state[:long].titleize} school system dates,
-                                  #{@state[:long].titleize} public schools dates, #{@state[:long].titleize} school
-                                  system calendar, #{@state[:long].titleize} public schools calendar"
+                    description: "Key #{@state[:long].titleize} dates and events to mark on your calendar"
       data_layer_through_gon
       render 'hubs/events'
 
@@ -159,11 +153,7 @@ class StatesController < ApplicationController
       gon.pagename = 'GS:State:Enrollment'
       set_meta_tags title:       "#{@state[:long].titleize} Schools Enrollment Information",
                     description: " Practical information including rules, deadlines and tips, for enrolling your child
-                                   in #{@state[:long].titleize}  schools",
-                    keywords:    "#{@state[:long].titleize}  school enrollment, #{@state[:long].titleize}  school
-                                  enrollment information, #{@state[:long].titleize} school enrollment info,
-                                  #{@state[:long].titleize} school enrollment process, #{@state[:long].titleize} school
-                                   enrollment deadlines"
+                                   in #{@state[:long].titleize}  schools"
 
       data_layer_through_gon
 
@@ -233,8 +223,7 @@ class StatesController < ApplicationController
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
     description_method = "#{method_base}_description".to_sym
-    keywords_method = "#{method_base}_keywords".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+    set_meta_tags title: send(title_method), description: send(description_method)
   end
 
   def set_community_gon_pagename

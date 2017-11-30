@@ -1,9 +1,11 @@
 class Subscription < ActiveRecord::Base
+  include BehaviorForModelsWithSchoolAssociation
   self.table_name = 'list_active'
 
   db_magic :connection => :gs_schooldb
 
   belongs_to :user, foreign_key: 'member_id'
+  alias_attribute :school_state, :state
 
   SubscriptionProduct = Struct.new(:name, :long_name, :description, :duration, :isNewsletter)
 
@@ -16,6 +18,8 @@ class Subscription < ActiveRecord::Base
                                             "Track your child's school stats - from test scores to teacher quality.", nil, true),
     greatnews: SubscriptionProduct.new('greatnews', 'Weekly newsletter',
                                        "The tips and tools you need to make smart choices about your child's education.", nil, true),
+    greatkidsnews: SubscriptionProduct.new('greatkidsnews', 'Grade-by-grade newsletter',
+                                       'Weekly essentials about your child\'s grade.', nil, true),
     sponsor: SubscriptionProduct.new('sponsor', 'Partner offers',
                                      'Receive valuable offers and information from GreatSchools partners.', nil, true),
     osp_partner_promos: SubscriptionProduct.new('osp_partner_promos', 'Partner offers for school officials',

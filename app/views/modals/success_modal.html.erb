@@ -1,0 +1,13 @@
+<% modal_css_class = params[:modal_css_class] %>
+<% heading = params[:heading].presence || t('.heading') %>
+<% subheading = params[:subheading].presence || t('.subheading', default: '') %>
+
+<%= render layout: 'modal_layout', locals: {
+  heading: heading,
+  subheading: subheading,
+  modal_css_class: "join-and-login #{modal_css_class}"
+} do %>
+  <fieldset>
+    <button type="submit" class="submit"><%= t('done', scope: 'forms') %></button>
+  </fieldset>
+<% end %>

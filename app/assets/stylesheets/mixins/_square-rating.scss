@@ -1,0 +1,16 @@
+@mixin square-rating($size, $font-size: $size*.50, $color: #FFFFFF) {
+  font-family: 'robotoslab-bold';
+  width:$size;
+  height:$size;
+  color: $color;
+  font-size: $font-size;
+  line-height: $size;
+  text-align: center;
+  margin: 0px 5px;
+  border-radius: 3px;
+
+  span {
+    font-size: .4em;
+    opacity: 0.7;
+  }
+}

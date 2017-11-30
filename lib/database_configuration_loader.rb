@@ -33,7 +33,61 @@ class DatabaseConfigurationLoader
       end
     end
 
+    self.overwrite_connection_credentials_if_available(config['development'])
+
     return config
+  end
+
+  # Note this does not distinguish between rw/ro connections
+  def self.overwrite_connection_credentials_if_available(config)
+    db_host = ENV['db_host'] || ENV_GLOBAL['db_host']
+    db_username = ENV['db_username'] || ENV_GLOBAL['db_username']
+    db_password = ENV['db_password'] || ENV_GLOBAL['db_password']
+    db_read_timeout = (ENV['db_read_timeout'] || ENV_GLOBAL['db_read_timeout'] || 20).to_i
+    db_write_timeout = (ENV['db_write_timeout'] || ENV_GLOBAL['db_write_timeout'] || 20).to_i
+    db_connect_timeout = (ENV['db_connect_timeout'] || ENV_GLOBAL['db_connect_timeout'] || 5).to_i
+
+    if db_host.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_host if key == 'host' && hash['database'] != 'gsdata'
+      end
+    end
+    if db_username.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_username if key == 'username' && hash['database'] != 'gsdata'
+      end
+    end
+    if db_password.present?
+      config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = db_password if key == 'password' && hash['database'] != 'gsdata'
+      end
+    end
+    config.gs_recursive_each_with_clone do |hash, key, _|
+      hash[key] = db_read_timeout    if key == 'read_timeout'    && db_read_timeout    > 0
+      hash[key] = db_write_timeout   if key == 'write_timeout'   && db_write_timeout   > 0
+      hash[key] = db_connect_timeout if key == 'connect_timeout' && db_connect_timeout > 0
+    end
+
+    gsdata_db_host = ENV['gsdata_db_host'] || ENV_GLOBAL['gsdata_db_host']
+    gsdata_db_username = ENV['gsdata_db_username'] || ENV_GLOBAL['gsdata_db_username']
+    gsdata_db_password = ENV['gsdata_db_password'] || ENV_GLOBAL['gsdata_db_password']
+    gsdata_config = config['gsdata']
+
+    if gsdata_db_host.present?
+      gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_host if key == 'host'
+      end
+    end
+    if gsdata_db_username.present?
+      gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_username if key == 'username'
+      end
+    end
+    if gsdata_db_password.present?
+      gsdata_config.gs_recursive_each_with_clone do |hash, key, value|
+        hash[key] = gsdata_db_password if key == 'password'
+      end
+    end
   end
 
   def self.expand_state_template_in_config(config)

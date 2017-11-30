@@ -1,0 +1,25 @@
+<% hero %>
+<%
+  if hero.school_claimed?
+    legend = t('school_profiles.hero.claimed')
+    tooltip = t('school_profiles.hero.claimed_tooltip_html')
+  else
+    legend = t('school_profiles.hero.unclaimed')
+    tooltip = t('school_profiles.hero.unclaimed_tooltip_html',
+                osp_path: osp_registration_path(city: hero.school.city, state: hero.school.state, schoolId: hero.school.id))
+  end
+%>
+
+<span>
+  <% if hero.school_claimed? %>
+    <span class="osp-badge"></span>
+  <% end %>
+  <span class="osp-label"><%= legend %></span>
+  <a data-content-type="info_box"
+     data-content-html="<%= tooltip %>"
+     class="gs-tipso info-circle tipso_style"
+     data-ga-click-label="Unclaimed badge"
+     href="javascript:void(0)"
+     data-remodal-target="modal_info_box"><span class="icon-question"></span>
+  </a>
+</span>

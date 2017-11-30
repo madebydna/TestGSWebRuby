@@ -1,12 +1,13 @@
 <% greatnews = @current_preferences.include? :greatnews %>
 <% greatkidsnews = @current_preferences.include? :greatkidsnews %>
 <% sponsor = @current_preferences.include? :sponsor %>
-<% decline_auto_graduate = @current_preferences.include? :decline_auto_graduate %>
 
 <section class="row">
   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 js-user-preferences-form-container phl">
-    <%= form_tag(user_preferences_update_path, method: :post) do |f| %>
-      <h1 class="tac"><%= t('.heading') %></h1>
+    <%= form_tag(user_preferences_update_path, method: :post, class:"rs-preferences-form") do |f| %>
+      <h1 class="tac font-size-large">
+        <%= t('.heading') %>
+        <%= t('.newsletter_preferences') %></h1>
       <h2 class="tac open-sans font-size-large"><strong><%= t('.subheading_pt_1') %> </strong> <%= t('.subheading_pt_2') %></h2>
 
       <p class="tac"><strong> <%= t('.email_heading') %>: </strong><%= @current_user.email if logged_in? %></p>
@@ -62,24 +63,19 @@
         </div>
       </div>
 
-
-      <div class="well pam mtm">
-        <em><%= t('.auto_graduate_label') %></em>
-        <div class="mtm">
-          <div class="fl prm mts mbm">
-            <div class="js-checkbox iconx16 js-icon <%= decline_auto_graduate ? 'i-16-blue-check-box active' : 'i-grey-unchecked-box'  %>" 
-                 data-toggle="button" readonly="">
-              <input name="decline_auto_graduate"
-                 disabled="true"
-                 type="hidden"
-                 value="true">
+      <div class="mtm">
+        <% @mss_subscriptions.each do |subscription| %>
+          <div class="fl prm mts">
+            <div class="js-checkbox js-inverted-checkbox iconx16 js-icon i-16-blue-check-box active" data-toggle="button" readonly="">
+              <input name="subscription_ids_to_remove[]" disabled="true" type="hidden" value="<%= subscription.id %>">
             </div>
           </div>
-          <%= t('.keep_following_same_grade') %>
+          <div style="overflow:hidden">
+            <%= t('.school_updates') %> <%= subscription.school.name %>, <%= subscription.school.city %>, <%= subscription.school.state %>
+          </div>
           <div class="clearfix"></div>
-        </div>
+        <% end %>
       </div>
-
 
       <div class="mtm">
         <div class="fl prm mtm">

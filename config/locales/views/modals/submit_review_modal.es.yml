@@ -2,5 +2,5 @@
 es:
   modals:
     submit_review_modal:
-      header: 'Envíe su opinión'
+      heading: 'Envíe su opinión'
       subheading: 'Gracias por compartir tus experiencias. Para enviar su opinión, por favor conectarse o crear una cuenta.'

@@ -1,0 +1,25 @@
+<% user_reviews %>
+<% five_star_review = user_reviews.five_star_review %>
+<% topical_reviews = user_reviews.topical_reviews %>
+<% user_type_label = user_reviews.user_type_label %>
+<% most_recent_date = user_reviews.most_recent_date %>
+<% avatar = user_reviews.avatar %>
+
+<div class="user-reviews-container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-2 user-info-column">
+      <div class="avatar icon-avatar-<%= avatar %>"></div>
+      <div class="user-type"><%= user_type_label %></div>
+    </div>
+    <div class="col-xs-12 col-sm-10 review-list-column">
+      <% if five_star_review %>
+        <%= render 'five_star_review', review: five_star_review %>
+      <% end %>
+      <%= render partial: 'topical_review', collection: topical_reviews, as: :review %>
+
+      <div class="date">
+        <%= most_recent_date %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,7 @@
+had_any_errors = false
+
 def all_cache_keys
-  ['ratings','feed_test_scores']
+  ['ratings','feed_test_scores', 'district_schools_summary', 'directory_census', 'district_directory', 'feed_district_characteristics']
 end
 
 def all_states
@@ -14,8 +16,6 @@ Ex: rails runner script/populate_district_cache_table al:feed_test_scores de:all
 
 Possible cache keys: #{all_cache_keys.join(', ')}\n\n"
 end
-
-
 
 def parse_arguments
   # Returns false or parsed arguments
@@ -59,16 +59,31 @@ parsed_arguments.each do |args|
   cache_keys = args[:cache_keys]
   districts_where = args[:districts_where]
   states.each do |state|
+    puts
+    puts "Working on: #{state}"
     cache_keys.each do |cache_key|
+      puts "     doing #{cache_key}"
       if districts_where
         District.on_db(state.downcase.to_sym).where(districts_where).each do |district|
-          DistrictCacher.create_cache(district, cache_key)
+          begin
+            DistrictCacher.create_cache(district, cache_key)
+          rescue => error
+            had_any_errors = true
+            puts "District #{district.state}-#{district.id} : #{error}"
+          end
         end
       else
         District.on_db(state.downcase.to_sym).all.each do |district|
-          DistrictCacher.create_cache(district, cache_key)
+          begin
+            DistrictCacher.create_cache(district, cache_key)
+          rescue => error
+            had_any_errors = true
+            puts "District #{district.state}-#{district.id} : #{error}"
+          end
         end
       end
     end
   end
 end
+
+exit had_any_errors ? 1 : 0

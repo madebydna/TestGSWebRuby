@@ -24,7 +24,8 @@ class TestScoresCaching::QueryResultDecorator
       state_average: state_average,
       proficiency_band_id: self['proficiency_band_id'],
       proficiency_band_name: proficiency_band_name,
-      breakdown_name: breakdown_name
+      breakdown_name: breakdown_name,
+      flags: flags
     }.merge(test_description_hash)
   end
 
@@ -124,4 +125,11 @@ class TestScoresCaching::QueryResultDecorator
     self['number_students_tested']
   end
 
+  def state_number_tested
+    self['state_number_tested']
+  end
+
+  def flags
+    self[:flags]
+  end
 end

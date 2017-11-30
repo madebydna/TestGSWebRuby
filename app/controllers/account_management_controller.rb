@@ -3,7 +3,7 @@ class AccountManagementController < ApplicationController
 
   include AccountHelper
 
-  layout 'application'
+  layout 'deprecated_application'
 
   before_action :login_required
 

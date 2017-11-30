@@ -16,8 +16,6 @@ class OspRegistrationController < ApplicationController
 
     if @school.blank?
       render_no_school_template
-    elsif is_delaware_public_or_charter_user?
-      render 'osp/registration/delaware'
     elsif @current_user.present? && @current_user.is_active_esp_member?
       redirect_to osp_dashboard_path
     else
@@ -55,13 +53,8 @@ class OspRegistrationController < ApplicationController
     gon.pagename = 'GS:OSP:Register'
     set_meta_tags title: page_title,
                   description:' Register for a school account to edit your school\'s profile on GreatSchools.',
-                  keywords:'School accounts, register, registration, edit profile',
                   robots: 'noindex, nofollow, noarchive'
 
-  end
-
-  def is_delaware_public_or_charter_user?
-    @state[:short] == 'de' && (school.type == 'public' || school.type == 'charter')
   end
 
   def save_new_osp_user
@@ -72,7 +65,7 @@ class OspRegistrationController < ApplicationController
       user.save!
     rescue => error
       flash_notice t('controllers.osp_registration_controller.invalid_esp_params')
-      GSLogger.error(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
+      GSLogger.warn(:osp, error, vars: params.except(:password, :password_verify), message: 'Failed to save new user in esp registration controller')
       return render 'osp/registration/new'
     end
 

@@ -46,14 +46,14 @@ describe SearchSuggestSchool do
     end
 
     context 'PK subdomains' do
-      it 'prepends for preschools' do
+      it 'does not prepend for preschools' do
         sample_prek_result = sample_result.merge('school_grade_level' => %w(p preschool))
         result = subject.process_result(sample_prek_result)
-        expect(result[:url]).to eq("http://#{ENV_GLOBAL['app_pk_host']}/path")
+        expect(result[:url]).to eq('/path')
       end
       it 'does not prepend for non-preschools' do
         result = subject.process_result(sample_result)
-        expect(result[:url]).to_not eq("http://#{ENV_GLOBAL['app_pk_host']}/path")
+        expect(result[:url]).to eq('/path')
       end
     end
   end

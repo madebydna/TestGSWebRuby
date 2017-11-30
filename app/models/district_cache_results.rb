@@ -11,6 +11,10 @@ class DistrictCacheResults
     @district_data
   end
 
+  def data_hash
+    @district_data
+  end
+
   def decorate_districts(districts)
     [*districts].map do |district|
       decorated = DistrictCacheDecorator.new(district, @district_data[[district.state, district.id]] || {})
@@ -51,7 +55,7 @@ class DistrictCacheResults
       district_id = result[:district_id]
       state = result[:state]
       cache_key = result[:name]
-      cache_value = begin JSON.parse(result.value) rescue {} end
+      cache_value = begin Oj.load(result.value) rescue {} end
 
       @district_data[[state, district_id]] ||= {}
       @district_data[[state, district_id]][result.name] = cache_value
@@ -63,6 +67,14 @@ class DistrictCacheResults
     case cache_key
       when 'feed_test_scores'
         DistrictCachedFeedTestScoresMethods
+      when 'ratings'
+        DistrictCachedRatingsMethods
+      when 'district_schools_summary'
+        DistrictCachedDistrictSchoolsSummaryMethods
+      when 'feed_district_characteristics'
+        FeedDistrictCachedCharacteristicsMethods
+      when 'district_directory'
+
     end
   end
 

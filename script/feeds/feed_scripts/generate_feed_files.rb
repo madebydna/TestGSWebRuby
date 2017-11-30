@@ -8,6 +8,7 @@ require_relative '../feed_config/feed_constants'
 
 require_relative '../feed_builders/test_score/test_score_feed'
 require_relative '../feed_builders/rating/test_rating_feed'
+require_relative '../feed_builders/directory/directory_feed'
 
 
 
@@ -21,26 +22,27 @@ module Feeds
     end
 
     def generate
-      arguments = Feeds::Arguments.new
+      arguments = Feeds::Arguments.new(ARGV[0])
       arguments.states.each do |state|
         begin
           Feeds::FeedLog.log.debug "Starting Feed Generation for state #{state}"
           generate_all_feeds(arguments.district_ids, arguments.school_ids, arguments.batch_size,state,arguments.feed_names,
-                             arguments.locations,arguments.names)
+                             arguments.location,arguments.names)
           Feeds::FeedLog.log.debug "Ending Feed Generation for state #{state}"
         rescue => e
           Feeds::FeedLog.log.error e
+          raise e
         end
       end
     end
 
-    def generate_all_feeds(district_ids,school_ids,batch_size,state,feed_names,locations,names)
+    def generate_all_feeds(district_ids,school_ids,batch_size,state,feed_names,location,names)
       feed_names.each_with_index do |feed, index|
             begin
             feed_opts = {state: state,
                          school_ids: school_ids,
                          district_ids: district_ids,
-                         feed_file: get_feed_name(feed, index,locations,names,state),
+                         feed_file: get_feed_name(feed, index,location,names,state),
                          batch_size: batch_size,
                          schema: FEED_TO_SCHEMA_MAPPING[feed],
                          root_element: FEED_TO_ROOT_ELEMENT_MAPPING[feed],
@@ -53,6 +55,7 @@ module Feeds
               Feeds::FeedLog.log.debug "--- Time taken to generate feed : FeedType: #{feed}  for state #{state} --- #{Time.at((Time.now-start_time).to_i.abs).utc.strftime '%H:%M:%S:%L'}"
             rescue => e
               Feeds::FeedLog.log.error e
+              raise e
             end
      end
     end
@@ -62,7 +65,8 @@ module Feeds
           test_scores:       Feeds::TestScoreFeed,
           test_subgroup:     Feeds::TestScoreFeed,
           test_rating:       Feeds::TestRatingFeed,
-          official_overall:  Feeds::TestRatingFeed
+          official_overall:  Feeds::TestRatingFeed,
+          directory_feed:    Feeds::DirectoryFeed
       }[key.to_s.to_sym]
     end
   end

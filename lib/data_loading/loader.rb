@@ -24,31 +24,33 @@ class Loader
     OspData::ESP_KEY_TO_SCHOOL_KEY.values.include?(data_type)
   end
 
-  def self.determine_loading_class(source ,data_type)
-    if  source == 'osp_form'
-        if census_data_type?(data_type)
-          CensusLoading::Loader
-        elsif school_data_type?(data_type)
-          SchoolLoading::Loader
-        else
-          EspResponseLoading::Loader
-        end
-    elsif source !='osp_form'
-    if census_data_type?(data_type)
-      CensusLoading::Loader
-    elsif data_type == 'newsletter'
-      # ... just an example of how to extend
-    elsif data_type == 'school_reviews'
-      ReviewLoading::Loader
-    elsif data_type == 'school_media'
-      SchoolMediaLoading::Loader
-    elsif esp_data_type?(data_type)
-      EspResponseLoading::Loader
-    elsif data_type == 'school_location'
-      SchoolLocationLoading::Loader
-    else
-      EspResponseLoading::Loader
-    end
+  def self.determine_loading_class(source, data_type)
+    if source == 'osp_form'
+      if census_data_type?(data_type)
+        CensusLoading::Loader
+      elsif school_data_type?(data_type)
+        SchoolLoading::Loader
+      else
+        EspResponseLoading::Loader
       end
+    elsif source != 'osp_form'
+      if census_data_type?(data_type)
+        CensusLoading::Loader
+      elsif data_type == 'newsletter'
+        # ... just an example of how to extend
+      elsif data_type == 'school_reviews'
+        ReviewLoading::Loader
+      elsif data_type == 'school_media'
+        SchoolMediaLoading::Loader
+      elsif esp_data_type?(data_type)
+        EspResponseLoading::Loader
+      elsif data_type == 'school_location'
+        SchoolLocationLoading::Loader
+      elsif data_type == 'gsdata'
+        GsdataLoading::Loader
+      else
+        EspResponseLoading::Loader
+      end
+    end
   end
 end

@@ -1,0 +1,172 @@
+<% hero %>
+
+<div id="hero">
+  <div class="container">
+    <div class="school-name-container">
+      <h1 class="school-name"><%= hero.school_name %></h1>
+      <%= render 'osp_badge', hero: hero %>
+    </div>
+
+    <div class="mobile-reverse">
+      <div class="school-contact">
+        <div class="js-toggle-target">
+          <div> <%# This wrapper div is required so the .school-contact__item:last-of-type works %>
+            <% if hero.has_school_address? %>
+                <div class="school-contact__item school-contact__address">
+                  <a href="#Neighborhood"
+                     class="js-gaClick"
+                     data-ga-click-category='Profile'
+                     data-ga-click-action='Hero links'
+                     data-ga-click-label='Neighborhood'>
+                    <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
+                  </a>
+                </div>
+            <% end %>
+            <% if hero.has_district? %>
+                <div class="school-contact__item school-contact__district-name">
+                  <%= link_to(hero.district_name, city_district_path(district_params_from_district(hero.district)),
+                              :class => 'js-gaClick',
+                              :data => { 'ga-click-category'=>'Profile',
+                                         'ga-click-action'=>'Hero links',
+                                         'ga-click-label'=>'District'}
+                      ) %>
+                </div>
+            <% end %>
+            <% if hero.has_school_phone? %>
+                <div class="school-contact__item school-contact__phone">
+                  <% content = capture do %>
+                      <%= hero.school_phone %>
+                  <% end %>
+                  <a href="tel:<%= hero.school_phone %>"
+                     class="js-gaClick"
+                     data-ga-click-category='Profile'
+                     data-ga-click-action='Hero links'
+                     data-ga-click-label='Phone'>
+                    <%= render 'icon_and_content', icon: :phone, content: content %>
+                  </a>
+                </div>
+            <% end %>
+            <% if hero.has_school_home_page_url? %>
+                <div class="school-contact__item school-contact__home-page-url">
+                  <% content = t('.school_website') %>
+                  <%= link_to(prepend_http(hero.school_home_page_url),
+                              :target => '_blank',
+                              :class => 'js-gaClick',
+                              :data => { 'ga-click-category'=>'Profile',
+                                         'ga-click-action'=>'Hero links',
+                                         'ga-click-label'=>'Website'}
+                      ) do %>
+                      <% render 'icon_and_content', icon: :link, content: content %>
+                  <% end %>
+                </div>
+            <% end %>
+            <div class="school-contact__item school-contact__more">
+              <%= link_to('#Neighborhood',
+                          :class => 'js-gaClick',
+                          :data => { 'ga-click-category'=>'Profile',
+                                     'ga-click-action'=>'Hero links',
+                                     'ga-click-label'=>'More Contact'}
+                  ) do %>
+                      <% render 'icon_and_content', icon: :phone, content: t('.contact_info') %>
+                    <% end %>
+            </div>
+          </div>
+          <div class="vertical-items">
+            <div class="school-contact__item-mobile">
+              <span class="label"><%= hero.grade_range_label %></span>
+              <span><%= hero.grade_range %></span>
+            </div>
+            <div class="school-contact__item-mobile">
+              <span class="label"><%= t('.students_enrolled') %></span>
+              <span><%= hero.students_enrolled_or_default %></span>
+            </div>
+            <div class="school-contact__item-mobile">
+              <span class="label"><%= t('.school_type') %></span>
+              <span><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a href="javascript:void(0);" class="see-more js-toggle-button js-gaClick" data-ga-click-category="Profile"
+             data-ga-click-action="Show More" data-ga-click-label="Mobile Header"><%= t('javascript.see_more_contact') %></a>
+        </div>
+      </div>
+
+      <div class="school-info">
+        <div class="school-info__item school-info__gs-rating">
+          <div class="gs-rating-with-label">
+            <% new_rating_key = 'new_' %>
+            <% if hero.gs_rating && @school_profile.present? && @school_profile.summary_rating.weights_within_range?%>
+              <% tooltip_partial = 'summary_rating' %>
+              <% greatschools_rating_label = t('.greatschools_rating') %>
+              <% coming_soon = t(".#{new_rating_key}coming_soon") %>
+              <% if @school_profile.summary_rating.test_scores_only? %>
+                <% tooltip_partial = 'hero_rating_test_scores_only_tooltip' %>
+                <% greatschools_rating_label = t('.greatschools_rating_with_star') %>
+                <% coming_soon = t('.update') %>
+              <% end %>
+              <%= render 'hero_rating_summary',
+                         gs_rating: hero.gs_rating,
+                         greatschools_rating_label: greatschools_rating_label,
+                         coming_soon: coming_soon,
+                         tooltip_partial: tooltip_partial
+              %>
+            <% elsif hero.gs_rating %>
+              <%= render 'hero_rating_base',
+                         gs_rating: hero.gs_rating,
+                         tooltip_content: t(".#{new_rating_key}summary_rating_info.rated"),
+                         coming_soon: t(".#{new_rating_key}coming_soon"),
+                         greatschools_rating: t('.greatschools_rating')
+              %>
+            <% else %>
+              <% type_key = @school.private_school? ? 'private' : 'public' %>
+              <%= render 'hero_no_rating',
+                         tooltip_content: t(".#{new_rating_key}summary_rating_info.unrated_#{type_key}"),
+                         type_key: type_key,
+                         greatschools_no_rating: t(".greatschools_no_rating_#{type_key}")
+              %>
+            <% end %>
+          </div>
+        </div>
+        <div class="school-info__item school-info__five-star-rating school-info-reviews-mobile"
+             onclick="analyticsEvent('Profile', 'Review CTA Clicked','Hero stars'); window.location.href='#Reviews';">
+          <div class="label"><%= t('.reviews') %></div>
+          <%= render 'five_star_rating',
+                     rating: hero.five_star_rating,
+                     number_of_reviews: hero.number_of_active_reviews,
+                     number_of_ratings: hero.num_ratings
+          %>
+        </div>
+        <div class="school-info__item">
+          <div class="label"><%= hero.grade_range_label %></div>
+          <div><%= hero.grade_range %></div>
+        </div>
+        <div class="school-info__item">
+          <div class="label"><%= t('.students_enrolled') %></div>
+          <div><%= hero.students_enrolled_or_default  %></div>
+        </div>
+        <div class="school-info__item">
+          <div class="label"><%= t('.school_type') %></div>
+          <div><%= t(hero.school_type.downcase, scope: 'school_profiles.hero', default: t(hero.school_type.downcase, default: hero.school_type)).capitalize %></div>
+        </div>
+        <div class="blue-background-hero" style="float: right">
+          <div class="cta non-fixed-top cta-container cta-hero">
+            <%= render 'cta_buttons', hide_owl: true %>
+          </div>
+        </div>
+      </div>
+      <% if hero.has_school_address? %>
+        <div class="mobile-address school-contact__item school-contact__address">
+          <a href="#Neighborhood"
+             class="js-gaClick"
+             data-ga-click-category='Profile'
+             data-ga-click-action='Hero links'
+             data-ga-click-label='Neighborhood'>
+            <%= render 'icon_and_content', icon: :location, content: hero.school_address %>
+          </a>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</div>

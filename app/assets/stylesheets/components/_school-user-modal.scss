@@ -1,0 +1,92 @@
+$user-type-padding: 15px;
+$color-gs-blue: #2ba3dc;
+$white: #ffffff;
+$color-button-border: #c1d2d9;
+$color-gradient-button-dark: #f4f5f6;
+$gs-active-green: #08c569;
+$title-font-size: 22px;
+
+.school-user-modal {
+
+  .title {
+    font-family: 'RobotoSlab-Bold';
+    font-size: $title-font-size;
+    text-align: center;
+    margin-bottom: $spacing-extra-large;
+  }
+
+  form {
+    margin: $spacing-medium auto;
+    max-width: 422px;
+  }
+
+  .avatar {
+    margin-left: $spacing-large;
+    margin-top: $spacing-medium;
+    float: left;
+  }
+
+  .user-type {
+    float: left;
+    padding-left: $spacing-large;
+    padding-top: $user-type-padding;
+    height: 22px;
+
+    font-family: "opensans-regular";
+    font-size: $font-size-l3;
+    line-height: 1.38;
+    text-transform: capitalize;
+    cursor: default;
+  }
+
+  .icon-checkmark {
+    display: none;
+  }
+
+  .select-button {
+    text-align: left;
+    margin: auto;
+    width: 100%;
+    height: 54px;
+    border-radius: 2px;
+    background-image: linear-gradient(to bottom, $white, $color-gradient-button-dark);
+    border: solid 1px $color-button-border;
+    border-bottom: none;
+  }
+
+  .select-button:last-child {
+    border-bottom: solid 1px $color-button-border;
+  }
+
+  .active {
+    background-image: linear-gradient($gs-active-green, $gs-active-green), linear-gradient(to bottom, $white, $color-gradient-button-dark);
+    .user-type {
+      color: $white;
+    }
+    .icon-checkmark {
+      padding-top: $user-type-padding;
+      padding-right: $spacing-large;
+      font-size: $font-size-l3;
+      float: right;
+      display: block;
+      color: $white;
+    }
+  }
+
+  .submit-button {
+    margin: auto;
+    width: 100%;
+    margin-top: $spacing-extra-large;
+    border-radius: 3px;
+    height: 65px;
+    background-color: $color-gs-blue;
+    border: none;
+
+    font-family: 'opensans-semibold';
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: $white;
+    font-size: $font-size-l2;
+  }
+
+}

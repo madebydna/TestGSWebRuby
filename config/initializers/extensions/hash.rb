@@ -94,6 +94,12 @@ class Hash
       seed
     end
   end
+
+  def gs_dig(*path)
+    path.inject(self) do |location, key|
+      location.respond_to?(:keys) ? location[key] : nil
+    end
+  end
 end
 
 #can use HashWithSetterCallback class below or just mixin this module into your hash

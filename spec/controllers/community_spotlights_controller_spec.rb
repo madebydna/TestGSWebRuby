@@ -101,6 +101,12 @@ describe CommunitySpotlightsController do
   end
 
   describe '#redirect_to_canonical_url' do
+    before do
+      @old_locale = I18n.locale
+    end
+    after do
+      I18n.locale = @old_locale
+    end
     [{lang: 'es'}, {}].each do |param|
       context "with params: #{param}" do
         it 'should redirect to the canonical url' do

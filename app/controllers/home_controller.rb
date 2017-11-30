@@ -4,25 +4,42 @@ class HomeController < ApplicationController
   before_action :ad_setTargeting_through_gon
   before_action :data_layer_through_gon
   before_action :set_login_redirect
+  before_action :set_no_index
 
-  layout 'application'
+  layout "deprecated_application"
 
   def show
+
     @show_ads = PropertyConfig.advertising_enabled?
 
     @canonical_url = home_url
     # Description lives in view because the meta-tags gem truncates description at 200 chars. See https://github.com/kpumuk/meta-tags
-    set_meta_tags title: 'GreatSchools - Public and Private School Ratings, Reviews and Parent Community',
-      keywords: 'school ratings, public schools, public school ratings, private schools, private school ratings, charter schools, charter school ratings, school reviews, school rankings, test scores, preschool, elementary school, middle school, high school, parent community, education resource, find school, great schools, greatschools'
+    set_meta_tags title: 'GreatSchools: School Ratings and Reviews for Public and Private Schools',
+                  og: {
+                      title: "K-12 school quality information and parenting resources",
+                      description: "We're an independent nonprofit that provides parenting resources and in-depth school quality information families can use to choose the right school and support their child's learning and development.",
+                      site_name: 'GreatSchools.org',
+                      image: {
+                        url: asset_full_url('assets/share/logo-ollie-large.png'),
+                        secure_url: asset_full_url('assets/share/logo-ollie-large.png'),
+                        height: 600,
+                        width: 1200,
+                        type: 'image/png',
+                        alt: 'GreatSchools is a non profit organization providing school quality information'
+                      },
+                      type: 'place',
+                      url: home_url
+                  },
+                  twitter: {
+                      image: asset_full_url('assets/share/GreatSchoolsLogo-social-optimized.png'),
+                      card: 'Summary',
+                      site: '@GreatSchools',
+                      description: 'View parent ratings, reviews and test scores and choose the right preschool, elementary, middle or high school for public or private education.'
+                  }
     @homepage_banner_prop = PropertyConfig.get_property('homePageGreatKidsMilestoneBannerActive', 'false')
     set_omniture_pagename
     gon.pagename = "Homepage"
 
-    begin
-      @greatkids_content = greatkids_content
-    rescue => e
-      GSLogger.error(:external_content_fetcher, e, {message: 'Unexpected exception retrieving greatkids content for homepage'})
-    end
   end
 
   def set_omniture_pagename

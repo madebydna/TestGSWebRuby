@@ -331,12 +331,9 @@ GS.search.schoolSearchForm = GS.search.schoolSearchForm || (function($) {
         var geocoder = new google.maps.Geocoder();
         if (geocoder && searchInput) {
             var geocodeOptions = { 'address': searchInput};
-            if (GS.search.stateAbbreviation != null) {
-                geocodeOptions['componentRestrictions'] = {'administrativeArea':  GS.search.stateAbbreviation.toUpperCase()};
-            } else {
-                geocodeOptions['componentRestrictions'] = {'country':  'US'};
-            }
+            geocodeOptions['componentRestrictions'] = {'country':  'US'};
             geocoder.geocode(geocodeOptions, function (results, status) {
+              console.log('results: ' + JSON.stringify(results));
                 var GS_geocodeResults = new Array();
                 if (status == google.maps.GeocoderStatus.OK && results.length > 0) {
                     for (var x = 0; x < results.length; x++) {

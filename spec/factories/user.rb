@@ -14,6 +14,8 @@ FactoryGirl.define do
     factory :verified_user do
       password 'password'
       email_verified true
+      first_name 'Holographic'
+      last_name 'Universe'
     end
 
     trait :with_approved_esp_membership do

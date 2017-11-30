@@ -1,0 +1,39 @@
+$light-gray: #f6f9fa;
+$border-color: #dbe6eb;
+
+.rating-container,
+%rating-container {
+  // padding: 0 0 20px 0;
+  .item-heading {
+    padding: 30px 10px 10px;
+    font-family: opensans-semibold;
+    font-size: 16px;
+  }
+}
+
+.rating-container {
+  // this needs to be changed to immediate descendent when
+  // .rating-container__rating is removed from surrounding div
+  .module-footer {
+    padding-right: 10px;
+    @include clearfix;
+    @include media-breakpoint-only(xs) {
+      padding-left: 10px;
+    }
+  }
+}
+.equity-section {
+  // this needs to be changed to immediate descendent when
+  // .rating-container__rating is removed from surrounding div
+  .module-footer {
+    @include clearfix;
+  }
+}
+
+.rating-container__score-item {
+  margin: 10px 10px 0px;
+  padding-bottom: 5px;
+}
+.rating-container__score-item {
+  border-bottom: 1px solid $border-color;
+}

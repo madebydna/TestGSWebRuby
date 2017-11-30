@@ -21,8 +21,8 @@ module Feeds
     end
 
 
-    def get_feed_name(feed, index,locations,names,state)
-      feed_location = locations.present? && locations[index].present?  ? locations[index] : ''
+    def get_feed_name(feed, index,location,names,state)
+      feed_location = location || ''
       feed_name = names.present? && names[index].present? ? names[index] : FEED_NAME_MAPPING[feed]
       #generated_feed_file_name = feed_name.present? ? feed_name+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml" : feed+"-#{@state.upcase}_#{Time.now.strftime("%Y-%m-%d_%H.%M.%S.%L")}.xml"
       generated_feed_file_name = feed_name.present? ? feed_name+"-#{state.upcase}.xml" : feed+"-#{state.upcase}.xml"

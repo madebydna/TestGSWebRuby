@@ -85,19 +85,6 @@ shared_context 'Visit School Profile Details' do |s = nil|
   end
 end
 
-shared_context 'Visit School Profile Reviews' do |s = nil|
-  let(:page_object) do
-    visit school_reviews_path(s || school)
-    SchoolProfileReviewsPage.new
-  end
-  before do
-    visit school_reviews_path(s || school)
-  end
-  subject do
-    page_object
-  end
-end
-
 shared_context 'Given school profile page with school test guide module' do |page_name| nil
   let!(:profile_page) do
     SchoolProfilePageFactory.new(page_name).
@@ -105,6 +92,12 @@ shared_context 'Given school profile page with school test guide module' do |pag
   end
 end
 
+shared_context 'with Cesar Chavez Academy Denver' do
+  let!(:school) { FactoryGirl.create(:cesar_chavez_academy_denver) }
+  after do
+    clean_models School
+  end
+end
 shared_context 'with Alameda High School' do
   let!(:school) { FactoryGirl.create(:alameda_high_school) }
   after do

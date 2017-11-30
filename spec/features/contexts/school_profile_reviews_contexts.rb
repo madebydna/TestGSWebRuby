@@ -8,11 +8,11 @@ require 'features/contexts/shared_contexts_for_signed_in_users'
 shared_context 'with 2 questions: first an overall star topic question; second a radio button question' do
   # create topics- requires that a school was set by previous context
   let(:overall_topic) { FactoryGirl.create(:overall_topic, school_level: school.level_code, school_type: school.type, id: 1) }
-  let(:teachers_topic) { FactoryGirl.create(:teachers_topic, school_level: school.level_code, school_type: school.type, id: 2) }
+  let(:teachers_topic) { FactoryGirl.create(:teachers_topic, school_level: school.level_code, school_type: school.type) }
   # create questions for topic
   # Execute immediately
   let!(:overall_rating_question) { FactoryGirl.create(:overall_rating_question, review_topic: overall_topic ) }
-  let!(:teacher_question) { FactoryGirl.create(:teacher_question, review_topic: teachers_topic) }
+  let!(:teacher_question) { FactoryGirl.create(:teacher_question) }
 
   after do
     clean_models ReviewTopic, ReviewQuestion
@@ -57,6 +57,7 @@ shared_context 'with signing into a verified account' do
     current_url
   end
   after do
+    log_out_user
     clean_models User
   end
 end
@@ -74,6 +75,7 @@ shared_context 'with signing into a verified account without role for school' do
     current_url
   end
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end
@@ -97,6 +99,7 @@ shared_context 'with signing into a verified account with role for school' do
     current_url
   end
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end
@@ -114,6 +117,7 @@ shared_context 'signed in verified user with role for school' do
   end
 
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end
@@ -131,6 +135,7 @@ shared_context 'with signed in as principal for school' do
   end
 
   after do
+    log_out_user
     clean_models User, SchoolUser
   end
 end

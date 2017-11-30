@@ -1,0 +1,62 @@
+.rating-score-item__label {
+	padding-top: 5px; // push label down to align with score/state avg
+	font-size: $font-size-l3;
+}
+
+.rating-score-item__score {
+	text-align: right;
+	font-size: 18px;
+	font-family: opensans-semibold;
+  @include media-breakpoint-only(sm) {
+		float: right;
+		padding-left: 7px;
+	}
+  @include media-breakpoint-up(md) {
+		display: inline;
+	}
+}
+.rating-score-item__state-average {
+	text-align: right;
+	font-size: $font-size-s1;
+	color: #71787e;
+  @include media-breakpoint-only(sm) {
+		padding-top: 15px;
+	}
+  @include media-breakpoint-up(md) {
+		padding-right: 7px;
+		display: inline;
+	}
+}
+.equity-test-scores {
+  .state-average {
+    font-size: $font-size-s1;
+    color: #71787e;
+  }
+  .score {
+    font-size: $font-size-l4;
+    font-family: opensans-semibold;
+  }
+  .item-bar {
+    padding: 0 0 10px;
+  }
+  .subject {
+    padding-top: 5px; // push label down to align with score/state avg
+    font-size: 16px;
+  }
+  .subject-subtext{
+    color: #999999;
+    font-size: $font-size-s2;
+  }
+  .horizontal {
+    text-align: right;
+    > div {
+      display: inline;
+      padding-right: 5px;
+    }
+  }
+}
+
+.rating-score-item__bar {
+	padding: 10px 0;
+}
+

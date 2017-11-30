@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 shared_examples_for 'page with ads' do |options|
 
   it "should have #{options[:number_of_ads]} ad slots" do

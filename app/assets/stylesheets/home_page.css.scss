@@ -1,0 +1,23 @@
+@import "variables/variables";
+@import "mixins/*";
+@import "gs/mixins";
+@import "resources/bootstrap/bootstrap";
+@import "gs/twitter-typeahead";
+@import "gs/tooltip";
+@import "gs/objects/scaling_image_layout";
+@import "gs/objects/spinny_wheel";
+@import "base/spacing";
+@import "gs/navigation";
+@import "base/deprecated_typography";
+@import "gs/objects/search_area_layout";
+@import "gs/objects/search_page";
+@import "gs/objects/home_page";
+@import "header";
+@import "gs/objects/footer";
+@import "sprites/footer_icons_16x16";
+
+#home-page {
+  h1 {
+    font-size: 32px;
+  }
+}

@@ -1,0 +1,53 @@
+<% rating_table_rows = @school_profile.summary_rating.content %>
+<% summary_rating = @school_profile.summary_rating.gs_rating %>
+<% last_updated = @school_profile.summary_rating.last_updated %>
+<% ratings_link = params[:lang] == 'es' ? ratings_spanish_path : ratings_path %>
+
+<div class="summary_rating_tooltip">
+  <%# tooltip header %>
+  <div>
+    <div class="ib pull_right">
+      <span class="gs-rating circle-rating--<%= summary_rating %> circle-rating--small">
+          <%= summary_rating %><span class="denominator">/10</span>
+      </span>
+    </div>
+    <div class="header-text">
+      <div><%= t('.header.title')%></div>
+      <div><%= t('.header.subtext_html')%><a href="<%= ratings_link %>"><%= t('.header.Learn more')%></a></div>
+    </div>
+  </div>
+
+  <%# tooltip table %>
+  <div class="table-header gray">
+    <span class="summary-rating-title ib"><%= t('.table_content.Rating components')%></span>
+    <span class="summary-rating-weight ib"><%= t('.table_content.Weight')%></span>
+    <span class="value-column ib"><%= t('.table_content.rating_flag')%></span>
+  </div>
+  <% rating_table_rows.each do |row| %>
+    <% if row[:title] == 'Equity Adjustment Factor' %>
+      <% circle_color = 'gray' %>
+    <% else %>
+      <% circle_color = row[:rating] %>
+    <% end %>
+    <div class="rating-table-row pad-row">
+      <div>
+        <span class="summary-rating-title ib js-rating-details"><%= t(".table_content.#{row[:title]}") %>
+          <span class="icon-caret-down rotate-text-270 move-icon"></span>
+        </span>
+        <span class="summary-rating-weight ib"><%= @school_profile.summary_rating.to_percent(row[:weight])%></span>
+        <% if row[:rating] == :flag %>
+            <span class="summary-rating-value ib"><span class="icon-flag"></span></span>
+        <% else %>
+          <span class="summary-rating-value ib"><span class="gs-rating circle-rating--<%= circle_color %> circle-rating--xtra-small">
+            <%= row[:rating] %><span class="denominator">/10</span></span></span>
+        <% end %>
+      </div>
+      <div class="rating-table-description">
+        <%= t(".table_content.#{row[:title]} Description")%>
+      </div>
+    </div>
+  <% end %>
+  <% if last_updated %>
+      <div class="last-updated gray pad-row"><%= t('.header.Last updated') + ':  ' + last_updated %></div>
+  <% end %>
+</div>

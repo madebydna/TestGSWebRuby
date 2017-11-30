@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Admin::ReportedEntityController do
   after do
     clean_models ReportedEntity
+    clean_dbs :surveys
   end
 
   it { is_expected.to respond_to(:deactivate) }

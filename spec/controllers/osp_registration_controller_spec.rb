@@ -20,16 +20,16 @@ describe OspRegistrationController do
     end
 
     with_shared_context 'Delaware public school' do
-      it ' should render correct error page' do
+      it ' should render correct registration page' do
         get :new, state: school.state, schoolId: school.id
-        expect(response).to render_template('osp/registration/delaware')
+        expect(response).to render_template('osp/registration/new')
       end
     end
 
     with_shared_context 'Delaware charter school' do
-      it ' should render correct error page' do
+      it ' should render correct registration page' do
         get :new, state: school.state, schoolId: school.id
-        expect(response).to render_template('osp/registration/delaware')
+        expect(response).to render_template('osp/registration/new')
       end
     end
 
@@ -303,79 +303,87 @@ describe OspRegistrationController do
   describe '#sign_up_user_for_subscriptions!' do
     after(:all) do
       clean_models :ca, School
+    end
+
+    after(:each) do
       clean_models :gs_schooldb, Subscription, User
     end
 
-    school = FactoryGirl.create(:school)
-    user_with_subscriptions = FactoryGirl.create(
-      :user,
-      :with_school_subscriptions,
-      lists: ['mystat', 'osp', 'osp_partner_promos'],
-      lists_schools: [school, school, school],
-      email: 'km@gs.org'
-    )
-    user_without_subscriptions = FactoryGirl.create(:user, email: 'km2@gs.org')
+    shared_examples_for 'a robust osp subscription signup process' do
+      let(:current_subscriptions) { user.subscriptions }
+      let(:school) { FactoryGirl.create(:school) }
 
-    {
-      'user who has already signed up' => user_with_subscriptions,
-      'user who has not signed up' => user_without_subscriptions,
-    }.each do |user_type, user|
-      context "with a #{user_type}" do
-        let!(:current_subscriptions) { user.subscriptions }
+      context 'with both opt-ins selected' do
+        let(:subscription_params) { ['mystat_osp', 'osp_partner_promos'] }
 
-        context 'with both opt-ins selected' do
-          let(:subscription_params) { ['mystat_osp', 'osp_partner_promos'] }
-
-          before do
-            controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
-          end
-
-          %w(mystat osp osp_partner_promos).each do |list|
-            it "should sign up the user for #{list}" do
-              expect(user.has_subscription?(list, school)).to be true
-            end
-          end
+        before do
+          controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
         end
 
-        context 'with the osp_parter_promos opt-in selected' do
-          let(:subscription_params) { ['osp_partner_promos'] }
-
-          before do
-            controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
-          end
-
-          %w(osp_partner_promos).each do |list|
-            it "should sign up the user for #{list}" do
-              expect(user.has_subscription?(list, school)).to be true
-            end
+        %w(mystat osp osp_partner_promos).each do |list|
+          it "should sign up the user for #{list}" do
+            expect(user.has_subscription?(list, school)).to be true
           end
         end
+      end
 
-        context 'with the mystat_osp opt-in selected' do
-          let(:subscription_params) { ['mystat_osp'] }
+      context 'with the osp_parter_promos opt-in selected' do
+        let(:subscription_params) { ['osp_partner_promos'] }
 
-          before do
-            controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
-          end
-
-          %w(mystat osp).each do |list|
-            it "should sign up the user for #{list}" do
-              expect(user.has_subscription?(list, school)).to be true
-            end
-          end
+        before do
+          controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
         end
 
-        context 'with no opt-in selected' do
-          let(:subscription_params) { [] }
-
-          before do
-            controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
-          end
-
-          it "should sign up the user for no lists" do
-            expect(user.subscriptions).to eq(current_subscriptions)
+        %w(osp_partner_promos).each do |list|
+          it "should sign up the user for #{list}" do
+            expect(user.has_subscription?(list, school)).to be true
           end
         end
+      end
+
+      context 'with the mystat_osp opt-in selected' do
+        let(:subscription_params) { ['mystat_osp'] }
+
+        before do
+          controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
+        end
+
+        %w(mystat osp).each do |list|
+          it "should sign up the user for #{list}" do
+            expect(user.has_subscription?(list, school)).to be true
+          end
+        end
+      end
+
+      context 'with no opt-in selected' do
+        let(:subscription_params) { [] }
+
+        before do
+          controller.send(:sign_up_user_for_subscriptions!, user, school, subscription_params)
+        end
+
+        it "should sign up the user for no lists" do
+          expect(user.subscriptions).to eq(current_subscriptions)
+        end
+      end
+    end
+
+    context "with a user who has already signed up" do
+      it_behaves_like 'a robust osp subscription signup process' do
+        let(:user) { FactoryGirl.create(
+            :user,
+            :with_school_subscriptions,
+            lists: ['mystat', 'osp', 'osp_partner_promos'],
+            lists_schools: [school, school, school],
+            email: 'km@gs.org'
+          )
+        }
+      end
+    end
+
+    context "with a user who has not signed up" do
+      it_behaves_like 'a robust osp subscription signup process' do
+        let(:user) { FactoryGirl.create(:user, email: 'km2@gs.org') }
       end
     end
   end

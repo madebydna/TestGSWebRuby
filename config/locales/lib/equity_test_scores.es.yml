@@ -1,0 +1,12 @@
+es:
+  lib:
+    equity_test_scores:
+      Economically disadvantaged: De bajos ingresos
+      Not economically disadvantaged: Sin ingresos bajos
+      English Language Arts: Inglés
+      African American: Afroamericanos
+      Black: Afroamericanos
+      White: Blancos
+      All: Todos
+      Multiracial: Dos o más razas
+      Two or more races: Dos o más razas

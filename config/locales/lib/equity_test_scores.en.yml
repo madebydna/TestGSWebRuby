@@ -1,0 +1,12 @@
+en:
+  lib:
+    equity_test_scores:
+      Economically disadvantaged: Low-income
+      Not economically disadvantaged: Not low-income
+      English Language Arts: English
+      African American: Black
+      Black: Black
+      White: White
+      All: All students
+      Multiracial: Two or more races
+      Two or more races: Two or more races

@@ -1,0 +1,28 @@
+<% academic_progress %>
+<% title = t('lib.academic_progress.title') %>
+<% rating = academic_progress.academic_progress_rating %>
+<% info_text = academic_progress.info_text  %>
+<% narration = academic_progress.narration %>
+<% sources = academic_progress.academic_progress_sources %>
+<% subtitle = t('lib.academic_progress.subtitle') %>
+
+<% content_for(:profile_module_header, flush: true) do %>
+    <%= render 'module_header',
+               rating: rating,
+               title: title,
+               subtitle: subtitle,
+               share_content: academic_progress.share_content,
+               info_text: info_text,
+               has_data: academic_progress.has_data?,
+               show_historical_ratings: false
+    %>
+<% end %>
+
+<%= render layout: 'basic_data_module_layout', locals: {
+    has_data: academic_progress.has_data?,
+    name: 'Academic progress',
+    sources_link: sources,
+    qualaroo_link: academic_progress.qualaroo_module_link(:academic_progress),
+    narration: narration
+} do %>
+<% end %>

@@ -106,36 +106,6 @@ describe ReviewControllerConcerns::ReviewParams do
     end
   end
 
-  describe '#existing_review' do
-    let(:user) { FactoryGirl.create(:verified_user) }
-    let(:school) { FactoryGirl.create(:a_high_school) }
-    let(:reviews) { FactoryGirl.create_list(:review, 5) }
-    let(:review_questions) { FactoryGirl.create_list(:review_question, 5) }
-    let(:review_params) do
-      {
-        state: school.state,
-        school_id: school.id,
-        review_question_id: review_questions[3].id
-      }
-    end
-    before do
-      (0..4).to_a.each do |n|
-        reviews[n].question = review_questions[n]
-        reviews[n].user = user
-        reviews[n].school = school
-        reviews[n].save
-      end
-    end
-    after do
-      clean_models User, School, Review, ReviewQuestion, ReviewTopic
-    end
-
-    it 'should return only the review for current user, given school, matching review question' do
-      expect(subject.existing_review).to eq(reviews[3])
-    end
-  end
-
-
   describe '#save_review' do
     let(:controller) { (Class.new { include ReviewControllerConcerns }).new }
     let(:review_params) { double }
@@ -204,6 +174,24 @@ describe ReviewControllerConcerns::ReviewParams do
         expect(controller).to receive(:flash_error).with('error message')
         subject
       end
+    end
+  end
+
+  describe '#review_attributes' do
+    let(:user) { FactoryGirl.build(:verified_user) }
+    let(:review_params) do
+      {
+        state: 'ca',
+        school_id: 1,
+        review_question_id: 1,
+        comment: ("test \r\n" * 15)
+      }
+    end
+    subject do
+      ReviewControllerConcerns::ReviewParams.new(review_params, user).review_attributes
+    end
+    it "should remove carriage returns and leave newlines" do
+      expect(subject[:comment]).to eq("test \n" * 15)
     end
   end
 

@@ -1,4 +1,5 @@
 LocalizedProfiles::Application.configure do
+  require_relative '../../lib/conditional_uglifier'
   require 'socket'
   hostname = "#{Socket.gethostname}"
 
@@ -39,10 +40,11 @@ LocalizedProfiles::Application.configure do
   }
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  #config.serve_static_assets = false	# Old, deprecated option
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
-  config.assets.js_compressor  = :uglifier
+  config.assets.js_compressor  = ConditionalUglifier.new
   config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
@@ -62,8 +64,8 @@ LocalizedProfiles::Application.configure do
   # and use secure cookies.
   # config.force_ssl = true
 
-  # See everything in the log (default is :info)
-  # config.log_level = :debug
+  # Set logging level
+  config.log_level = :info
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -78,10 +80,8 @@ LocalizedProfiles::Application.configure do
   # config.cache_store = :null_store
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
-  config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
 
-  config.assets.js_compressor  = :uglifier
-  config.assets.css_compressor = :sass
+  config.action_controller.asset_host = ENV_GLOBAL['media_server'] if ENV_GLOBAL['media_server'].present?
 
   # Precompile additional assets (application.js, application.css, and all
   # non-JS/CSS are already added)

@@ -1,0 +1,24 @@
+<% five_star_review_question %>
+<% response_labels = five_star_review_question.five_star_label_array  %>
+
+<div class="five-star-question">
+  <div class="row">
+    <div class="col-xs-12 col-sm-2">
+      <div class="five-star-question__avatar icon-avatar-1"></div>
+      <div class="five-star-question__user-type">You</div>
+    </div>
+    <div class="col-xs-12 col-sm-10 five-star-question__container">
+      <div class="five-star-question__title">
+        <%= five_star_review_question.question %>
+      </div>
+      <% response_labels.each_with_index do |label, index|  %>
+      <div class="five-star-question__response-container">
+        <a>
+            <div class="icon-star five-star-question__star"></div>
+            <div class="five-star-question__response-label"><%= label %></div>
+        </a>
+      </div>
+    <% end  %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+en:
+  widget:
+    show:
+      heading: GreatSchools School Finder Widget
+      subheading: Create Your Customized Widget
+      address_label: Pick the location you'd like your widget to feature
+      size_label: Choose the width and height of the widget

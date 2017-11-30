@@ -1,6 +1,0 @@
-<h3 class="uc"><%= t('.title') %></h3> 
-<hr class="gray-stoke mts">
-<% reviews.each do |review| %>
-  <%= render 'school_profile/overview/compact_review_module', review: review %>
-<% end %>
-<%= link_to('See all reviews', school_reviews_url(@school)) if @school_reviews.having_comments.count > @max_number_of_reviews_on_overview %>

@@ -1,6 +1,6 @@
 class Admin::HeldSchoolController < ApplicationController
 
-  layout 'application'
+  layout 'deprecated_application'
 
   def create
     held_school = HeldSchool.new params[:held_school]

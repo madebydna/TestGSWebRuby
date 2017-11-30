@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-def expect_redirect_to(path)
-  expect(response.status).to eq(301)
-  expect(response.headers['Location']).to eq("http://www.example.com#{path}")
-end
-
 describe 'Old prefiltered browse URLs' do
+  def expect_redirect_to(path)
+    expect(response.status).to eq(301)
+    expect(response.headers['Location']).to eq("http://www.example.com#{path}")
+  end
+
   {
       :'one-word state' => 'minnesota',
       :'two-word state' => 'new-jersey'

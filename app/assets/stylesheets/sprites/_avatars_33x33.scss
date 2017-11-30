@@ -1,0 +1,35 @@
+.icon-sprite, .icon-33-avatar-1, .icon-33-avatar-2, .icon-33-avatar-3, .icon-33-avatar-4, .icon-33-avatar-5, .icon-33-avatar-parent, .icon-33-avatar-student, .icon-33-avatar-principal, .icon-33-avatar-teacher, .icon-33-avatar-community-member {
+  background: image-url('icons/avatars_33x33.png') no-repeat;
+}
+
+.icon-33-avatar-1, .icon-33-avatar-parent {
+  background-position: 0 0;
+  height: 33px;
+  width: 33px;
+}
+
+.icon-33-avatar-2, .icon-33-avatar-student {
+  background-position: 0 -33px;
+  height: 33px;
+  width: 33px;
+}
+
+.icon-33-avatar-3, .icon-33-avatar-principal {
+  background-position: 0 -132px;
+  height: 33px;
+  width: 33px;
+}
+
+.icon-33-avatar-4, .icon-33-avatar-teacher {
+  background-position: 0 -99px;
+  height: 33px;
+  width: 33px;
+}
+
+.icon-33-avatar-5, .icon-33-avatar-community-member {
+  background-position: 0 -66px;
+  height: 33px;
+  width: 33px;
+}
+
+

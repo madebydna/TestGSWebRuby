@@ -1,0 +1,6 @@
+@mixin input-with-search-icon {
+  padding: 10px 10px 10px 40px;
+  background-image:image_url('icons/search_icon_small.png');
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+}

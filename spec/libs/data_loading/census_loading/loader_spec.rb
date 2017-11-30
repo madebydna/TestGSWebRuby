@@ -97,19 +97,24 @@ describe CensusLoading::Loader do
       it 'should be for the correct attributes' do
         data_set = FactoryGirl.create(:census_data_set)
         allow(CensusDataSet).to receive(:find_or_create_and_activate).and_return(data_set)
-        census_description = FactoryGirl.create(:census_description)
-        allow(CensusDescription).to receive(:where).and_return(CensusDescription)
-        allow(CensusDescription).to receive(:first_or_create!).and_return(census_description)
-        census_description_attributes = {
-            census_data_set_id: data_set.id,
-            state: census_update.entity_state,
-            school_type: school.type,
-            source: census_update.source,
-            type: census_update.entity_type
-        }
-        expect(CensusDescription).to receive(:where).with(census_description_attributes)
+        census_description = FactoryGirl.create(
+          :census_description,
+          census_data_set_id: data_set.id,
+          state: update[:entity_state],
+          school_type: school.type,
+          source: 'foo',
+          type: :school
+        )
         loader.insert_into!(census_update, school)
+        expect(CensusDescription.count).to eq(1)
+        description = CensusDescription.first
+        expect(description.source).to eq(update[:source])
+        expect(description.census_data_set_id).to eq(data_set.id)
+        expect(description.state).to eq(update[:entity_state])
+        expect(description.school_type).to eq(school.type)
+        expect(description.type).to eq('school')
       end
+
     end
 
     context 'the created value row' do

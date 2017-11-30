@@ -11,7 +11,7 @@ class SavedSearch < ActiveRecord::Base
 
   before_save :process_name!
 
-  scope :searches_named, ->(name) { where("name = '#{name}' or name like '#{name}%(%)'") }
+  scope :searches_named, ->(name) { where('name = ? or name like ?', name, "#{name}%(%)") }
 
   def process_name!
     searches_with_same_name = user.saved_searches.searches_named(self.name)

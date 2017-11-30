@@ -108,9 +108,6 @@ class SchoolUser < ActiveRecord::Base
   def user_type
     type = read_attribute(:user_type).try(:to_sym)
     type = Affiliation::UNKNOWN unless VALID_AFFILIATIONS.include?(type)
-    if type == Affiliation::UNKNOWN
-      type = Affiliation::PRINCIPAL if approved_osp_user?
-    end
     type
   end
 
@@ -133,7 +130,24 @@ class SchoolUser < ActiveRecord::Base
 
   # Does not consider active vs inactive reviews
   def first_unanswered_topic
-    (ReviewTopic.all.to_a - reviews.map(&:topic)).first
+    (ReviewTopic.active.to_a - reviews.map(&:topic)).first
+  end
+
+  def self.make_from_esp_membership(esp_membership)
+    if esp_membership
+      criteria = {
+        member_id: esp_membership.member_id,
+        state: esp_membership.state,
+        school_id: esp_membership.school_id
+      }
+      school_user = SchoolUser.find_by(criteria) || SchoolUser.new(criteria, without_protection: true)
+      if school_user.new_record?
+        school_user.user_type = 'principal'
+        school_user.save!
+      end
+    else
+      raise 'given esp_membership cannot be nil'
+    end
   end
 
 end

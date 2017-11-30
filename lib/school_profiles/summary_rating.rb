@@ -1,0 +1,146 @@
+module SchoolProfiles
+  class SummaryRating
+
+    attr_reader :school
+
+    # The methods below rely on this mapping to pass along the correct title and weight to the summary tooltip.
+    # NB: The 'weight' strings correspond to matching keys is the gsdata cache. Only change if the cache keys are also changing!
+    # The titles are passed to the tooltip as is.
+    RATING_WEIGHTS = {
+      'Test Score Rating' => {title: 'Test Scores', weight: 'Summary Rating Weight: Test Score Rating' },
+      'Academic Progress Rating' => {title: 'Academic Progress', weight: 'Summary Rating Weight: Academic Progress Rating'},
+      'Student Progress Rating' => {title: 'Student Progress', weight: 'Summary Rating Weight: Student Progress Rating'},
+      'College Readiness Rating' => {title: 'College Readiness', weight: 'Summary Rating Weight: College Readiness Rating'},
+      'Equity Rating' => {title: 'Equity Overview', weight: 'Summary Rating Weight: Equity Rating'},
+      'Equity Adjustment Factor' => {title: 'Equity Adjustment Factor', weight: 'Summary Rating Weight: Equity Adjustment Factor'},
+      'Advanced Course Rating' => {title: 'Advanced Courses', weight: 'Summary Rating Weight: Advanced Course Rating'},
+      'Discipline Flag' => {title: 'Discipline Flag', weight: 'Summary Rating Weight: Discipline Flag'},
+      'Attendance Flag' => {title: 'Attendance Flag', weight: 'Summary Rating Weight: Absence Flag'}
+    }
+
+    def initialize(test_scores, college_readiness, student_progress, academic_progress, equity_overview, courses, stem_courses, school, school_cache_data_reader:)
+      @test_scores = test_scores
+      @student_progress = student_progress
+      @academic_progress = academic_progress
+      @college_readiness = college_readiness
+      @equity_overview = equity_overview
+      @courses = courses
+      @stem_courses = stem_courses
+      @school = school
+      @school_cache_data_reader = school_cache_data_reader
+    end
+
+    def content
+      # each row is a hash in format: {title: Some Title, rating: 8, weight: .67}
+      @_content ||= build_content_for_summary_rating_table
+    end
+
+    def test_scores_only?
+      content.present? && content.length == 1 && content[0][:title] == RATING_WEIGHTS['Test Score Rating'][:title]
+    end
+
+    def build_content_for_summary_rating_table
+      rating_array = [test_scores, student_progress, college_readiness, equity, courses, discipline, attendance]
+      rating_array.reject! {|row| row.nil? || row.empty? || row[:weight].nil? || row[:rating].nil?}
+      rating_array.sort_by {|row| row[:weight]}.reverse
+    end
+
+    def test_scores
+      {title: RATING_WEIGHTS['Test Score Rating'][:title], rating: @test_scores.rating, weight: get_school_value_for(RATING_WEIGHTS['Test Score Rating'][:weight])} if @test_scores.visible?
+    end
+
+    def student_progress
+      if @academic_progress.visible? && !@student_progress.has_data?
+        {title: RATING_WEIGHTS['Academic Progress Rating'][:title], rating: @academic_progress.academic_progress_rating, weight: get_school_value_for(RATING_WEIGHTS['Academic Progress Rating'][:weight])}
+      elsif @student_progress.visible?
+        {title: RATING_WEIGHTS['Student Progress Rating'][:title], rating: @student_progress.rating, weight: get_school_value_for(RATING_WEIGHTS['Student Progress Rating'][:weight])}
+      end
+    end
+
+    def college_readiness
+      {title: RATING_WEIGHTS['College Readiness Rating'][:title], rating: @college_readiness.rating, weight: get_school_value_for(RATING_WEIGHTS['College Readiness Rating'][:weight])} if @school.level_code =~ /h/
+    end
+
+    def equity
+      if @equity_overview.has_rating?
+        {title: RATING_WEIGHTS['Equity Rating'][:title], rating: @equity_overview.equity_rating, weight: get_school_value_for(RATING_WEIGHTS['Equity Rating'][:weight])}
+      elsif @school_cache_data_reader.equity_adjustment_factor?
+        {title: RATING_WEIGHTS['Equity Adjustment Factor'][:title], rating: get_school_value_for('Equity Adjustment Factor').round, weight: get_school_value_for(RATING_WEIGHTS['Equity Adjustment Factor'][:weight])}
+      end
+    end
+
+    def equity_overview
+      if @equity_overview.has_rating?
+        {title: RATING_WEIGHTS['Equity Rating'][:title], rating: @equity_overview.equity_rating, weight: get_school_value_for(RATING_WEIGHTS['Equity Rating'][:weight])}
+      end
+    end
+
+    def courses
+      if @school.includes_level_code?(%w[m h]) || @courses.visible? || @stem_courses.visible?
+        {title: RATING_WEIGHTS['Advanced Course Rating'][:title], rating: @courses.rating, weight: get_school_value_for(RATING_WEIGHTS['Advanced Course Rating'][:weight])}
+      end
+    end
+
+    def discipline
+      if @school_cache_data_reader.discipline_flag?
+        {title: RATING_WEIGHTS['Discipline Flag'][:title], rating: :flag, weight: get_school_value_for(RATING_WEIGHTS['Discipline Flag'][:weight])}
+      end
+    end
+
+    def attendance
+      if @school_cache_data_reader.attendance_flag?
+        {title: RATING_WEIGHTS['Attendance Flag'][:title], rating: :flag, weight: get_school_value_for(RATING_WEIGHTS['Attendance Flag'][:weight])}
+      end
+    end
+
+    def last_updated
+      if test_scores_only?
+        # Use date from the Test Score Rating. If that isn't present, fall back on the rating weight date.
+        gsdata_obj = filter_rating('Test Score Rating') || filter_rating(RATING_WEIGHTS['Test Score Rating'][:weight])
+        sdv_timestamp = gsdata_obj.source_date_valid
+      else
+        sdv_timestamp = filter_rating('Summary Rating').source_date_valid
+      end
+      @school_cache_data_reader.format_date sdv_timestamp.to_date
+    end
+
+    def to_percent(decimal)
+      (decimal*100).round.to_s + '%' if decimal
+    end
+
+    def weights_within_range?
+      return false unless @school_cache_data_reader.rating_weight_values_array
+      @school_cache_data_reader.rating_weight_values_array.reduce(:+).between?(90, 110)
+    end
+
+    def gs_rating
+      @school_cache_data_reader.gs_rating
+    end
+
+    private
+
+    def get_school_value_for(key)
+      if @school_cache_data_reader.gsdata_data(key).present?
+        filter_rating(key).school_value.to_f
+      end
+    end
+
+    def filter_rating(key)
+      rating_weight = (@school_cache_data_reader.gsdata_data(key)[key] || []).map do |hash|
+        GsdataCaching::GsDataValue.from_hash(hash.merge(data_type: key))
+      end.extend(GsdataCaching::GsDataValue::CollectionMethods)
+      rating_weight
+        .having_school_value
+        .having_no_breakdown
+        .having_most_recent_date
+        .expect_only_one(
+          key,
+          school: {
+            state: @school_cache_data_reader.school.state,
+            id: @school_cache_data_reader.school.id
+          }
+        )
+    end
+
+  end
+end

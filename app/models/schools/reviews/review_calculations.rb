@@ -57,7 +57,7 @@ module ReviewCalculations
     # score distribution is only for reviews from the same topic question
     return nil if map(&:topic).map(&:name).uniq.count > 1
 
-    response_hash = first.question.response_label_array.each_with_object({}) do |(response_label), hash|
+    response_hash = first.question.chart_response_label_array.each_with_object({}) do |(response_label), hash|
       hash[response_label] = {count: 0, percentage: '0', label: response_label } 
     end
     group_by_labels = group_by(&:answer_label)
@@ -72,4 +72,33 @@ module ReviewCalculations
     score_distribution.values.reverse
   end
 
+  ## Topic 'Overall' is skipped in the topical review summary
+  TOPIC_TO_SKIP = 'Overall'
+
+  ## Topics answers are assigned numeric values to calculate average response
+  def topic_answers_to_numeric
+    {
+        'Strongly disagree' => 1,
+        'Disagree' => 2,
+        'Neutral' => 3,
+        'Agree' => 4,
+        'Strongly agree' => 5
+    }
+  end
+
+  def topical_review_summary
+    hash = Hash.new { |h, key| h[key] = Hash.new(&h.default_proc) }
+    by_topic.each do |topic, reviews|
+      next if topic == TOPIC_TO_SKIP || reviews.empty?
+      topic_answer_values = []
+      reviews.each do |review|
+        topic_answer_values << topic_answers_to_numeric[review.answer] unless topic_answers_to_numeric[review.answer].nil?
+      end
+      topic_label = I18n.db_t(topic)
+      hash[topic_label][:average] = topic_answers_to_numeric.invert[(topic_answer_values.sum.to_f / topic_answer_values.length).round.to_i] unless topic_answer_values.empty?
+      hash[topic_label][:count] = reviews.length
+    end
+    # Topics without a computed average contain only invalid answers, so remove them
+    hash.select { |_,v| v.has_key?(:average) }
+  end
 end

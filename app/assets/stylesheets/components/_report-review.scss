@@ -1,0 +1,48 @@
+.report-review {
+  $color-gray-text: #71787e;
+  $color-dark-gray-text: #2e3438;
+  $color-button-border: #c1d2d9;
+  $color-button-hover-border: rgba(113, 120, 126, 0.5);
+  $color-button-active-border: rgba(113, 120, 126, 0.8);
+  $color-gs-blue: #2ba3dc;
+  $color-gs-blue-hover: #55b5e3;
+  $color-gs-blue-active: #2282b0;
+  $color-error: #d94373;
+  $color-notice: #36C767;
+
+  margin-top: $spacing-large;
+  padding-bottom: $spacing-small;
+
+  p {
+    font-size: $font-size-l2;
+    color: $color-gray-text;
+  }
+
+  p.error {
+    color: $color-error;
+  }
+
+  p.notice {
+    color: $color-notice;
+  }
+
+  .header {
+    font-family: opensans-semibold;
+    color: $color-dark-gray-text;
+  }
+
+  textarea {
+    width: 100%;
+    margin-bottom: $spacing-small;
+  }
+
+  .form-actions {
+    @include review-form-buttons;
+    padding: $spacing-medium 0;
+    text-align: right;
+  }
+}
+
+.spinny-wheel-container > .report-review {
+  opacity: 0.2;
+}

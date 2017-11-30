@@ -19,7 +19,7 @@ module SearchMetaTagsConcerns
 
     value = st_array.each { |st| break st if [*@params_hash['st']].include?(st)}
     value = nil unless st_array.include?(value)
-    text = text_map[value] if [*@params_hash['st']].count == 1
+    text = text_map[value] if [*@params_hash['st']].size == 1
     param = value.present? ? {'st' => value} : {}
 
     Struct.new(:param, :text).new(param, text)
@@ -36,7 +36,7 @@ module SearchMetaTagsConcerns
 
     value = lc_array.each { |lc| break lc if [*@params_hash['gradeLevels']].include?(lc)}
     value = nil unless lc_array.include?(value)
-    text = text_map[value] if [*@params_hash['gradeLevels']].count == 1
+    text = text_map[value] if [*@params_hash['gradeLevels']].size == 1
     school = value == 'p' ? 'Preschools ' : 'Schools '
     param = value.present? ? {'gradeLevels' => value} : {}
 
@@ -116,7 +116,6 @@ module SearchMetaTagsConcerns
     {
       title: "#{school_type.text}#{level_code.text}#{level_code.school}in #{@district.name}#{pagination_text(false)} - #{@city.name}, #{@city.state} | GreatSchools",
       description: "Ratings and parent reviews for all elementary, middle and high schools in the #{@district.name}, #{@city.state}",
-      keywords: "#{@district.name} Schools, #{@city.name} School District, #{@city.name} #{@state[:long]} School District, School District #{@city.name}, #{@district.name} Public Schools, #{@district.name} Charter Schools",
       canonical: (canonical_url),
       prev: (prev_url ||= nil),
       next: (next_url ||= nil)

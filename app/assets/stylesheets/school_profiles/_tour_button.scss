@@ -1,0 +1,54 @@
+$blue-border: #159bd8;
+
+//.tour-teaser {
+//  position: fixed;
+//  bottom: 50px;
+//  right: 10px;
+//  @include media-breakpoint-up(md) {
+//    bottom: 10px;
+//  }
+//  img {
+//    float: left;
+//  }
+//  button {
+//    @include button;
+//    float: left;
+//    border-radius: 50%;
+//  }
+//}
+
+button.tour-cta {
+  @include button;
+}
+
+.school-profile-tour-modal {
+  display: inline-block;
+  text-align: center;
+  width: 300px;
+  padding: 30px 40px;
+  position: fixed;
+  background: $gray-light-blue;
+  left: 0;
+  right: 0;
+  top: 30%;
+  margin: 0 auto;
+  border: 3px solid $blue-border;
+  border-radius: 3px;
+  box-shadow: 4px 17px 20px 0 rgba(46, 52, 56, 0.14);
+  z-index: 11;
+  h3 {
+    margin-top: 0px;
+  }
+  button {
+    margin-bottom: 15px;
+  }
+  #close-school-tour {
+    font-size: 11px;
+    color: $dark-steel-gray;
+    cursor: pointer;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}

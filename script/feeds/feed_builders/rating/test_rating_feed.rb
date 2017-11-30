@@ -10,6 +10,7 @@ module Feeds
     include Feeds::FeedDataHelper
     include Feeds::TestRatingFeedDataReader
     include Feeds::TestRatingFeedTransformer
+    include Feeds::FeedConstants
 
 
     def initialize(attributes = {})
@@ -81,6 +82,7 @@ module Feeds
     end
 
     def process_school_data_for_feed(school, ratings_id_for_feed)
+      Feeds::FeedLog.log.debug "School (from test_rating_feed#process_school_data_for_feed): #{school}"
       school_rating_id_cache_data = get_school_data_for_ratings(school, ratings_id_for_feed)
       transpose_data_for_xml(@state, school_rating_id_cache_data, school, ENTITY_TYPE_SCHOOL)
     end

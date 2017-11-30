@@ -1,0 +1,71 @@
+
+
+
+// DEPRECATED please dont add to file without communicating with team first
+
+// Tables
+// -------------------------
+$table-bg-accent:    $module-gray;
+$table-border-color: $module-gray-stroke;
+
+
+// Forms
+// -------------------------
+$input-color-placeholder:         $gray-dark;
+
+// Buttons
+// -------------------------
+$btn-font-weight:                normal !default;
+
+$btn-default-color:              #4788be !default;
+$btn-default-bg:                 #FFFFFF !default;
+$btn-default-hover:              #1e608b !default;
+$btn-default-border:             #6797c7 !default;
+$btn-default-active-border:      #195074 !default;
+
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-border:             $brand-primary-dark !default;
+
+$btn-gk-primary-color:           $white !default;
+$btn-gk-primary-bg:              #343434 !default;
+$btn-gk-primary-shadow:          #131f28;
+$btn-gk-primary-selected-bg:     #131f28;
+$btn-gk-primary-hover-color:     $white;
+$btn-gk-primary-hover-bg:        #495056;
+$btn-gk-primary-hover-shadow:    #383838;
+
+$btn-hover:                      #195074 !default;
+
+$btn-toggle-color:               #4788be !default;
+$btn-toggle-bg:                  #fff !default;
+$btn-toggle-border:              #4788be !default;
+$btn-toggle-hover:               #195074 !default;
+$btn-toggle-color-active:        #fff !default;
+$btn-toggle-bg-active:           #35485d !default;
+
+$btn-link-disabled-color:        $gray-light !default;
+$padding-base-vertical:                 8px;
+$padding-base-button-horizontal:        20px;
+$padding-large-button-horizontal:       30px;
+$padding-small-button-horizontal:       15px;
+
+// Components
+// -------------------------
+$table-cell-padding:                 10px;
+$border-light-grey:               1px #cccccc solid;
+$navbar-height:                    58px;
+$navbar-margin-bottom:             0px;
+$navbar-default-color:             #777777;
+$navbar-default-bg:                #FFFFFF;
+$navbar-default-link-color:                #777777;
+$navbar-default-link-hover-color:          #000000;
+$navbar-default-border: transparent;
+$navbar-default-toggle-border-color: transparent;
+$navbar-default-toggle-hover-bg: transparent;
+$navbar-default-toggle-icon-bar-bg: $brand-primary;
+
+$grid-float-breakpoint:     950px;
+
+$cursor-pointer: pointer;
+

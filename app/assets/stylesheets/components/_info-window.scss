@@ -1,0 +1,28 @@
+.info-window {
+  .rating {
+    float: left;
+  }
+  .school-info {
+    float: left;
+    font-size: 12px;
+    width: 170px;
+    margin-left: 10px;
+  }
+  hr {
+    margin: 10px 0;
+  }
+  .other-links {
+    font-size: 12px;
+    a {
+      font-size: 12px;
+    }
+    .school-details {
+      padding-left: 7px;
+      border-left: 1px solid #c1d2d9;
+      margin-left: 5px;
+    }
+    .icon-house {
+      color: #2ba3dc;
+    }
+  }
+}

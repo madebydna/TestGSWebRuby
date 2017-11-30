@@ -1,0 +1,10 @@
+<% text %>
+<% length %>
+
+<% shortened_text= text.truncate(length, separator: /\s/, omission: '') %>
+<% rest_of_text = text[(shortened_text.length)..-1] %>
+
+<span class="js-shortened-text" data-shortened-text-rest=" <%= rest_of_text %>">
+  <%= shortened_text %><% if rest_of_text.present? %><span>... <a href="javascript:void(0);">More</a></span>
+  <% end %>
+</span>

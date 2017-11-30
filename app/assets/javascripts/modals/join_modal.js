@@ -26,7 +26,7 @@ GS.modal.JoinModal.prototype = _.create(GS.modal.BaseModal.prototype, {
 _.assign(GS.modal.JoinModal.prototype, {
 
     $getJoinSubmitButton: function $getJoinSubmitButton() {
-        return this.$getJoinForm().find('button');
+        return this.$getJoinForm().find('button[type="submit"]');
     },
 
     $getSigninSubmitButton: function $getSigninSubmitButton() {
@@ -62,8 +62,8 @@ _.assign(GS.modal.JoinModal.prototype, {
     },
 
     facebookSignInFailHandler: function facebookSignInSuccessHandle(data) {
-        var defaultMessage = 'Oops there was an error signing into your facebook account.';
-        jQuery('.js-facebook-signin-errors').html(defaultMessage);
+        var defaultMessage = 'Oops! There was an error signing into your facebook account.';
+        jQuery('.js-facebook-signin-errors').html(data || defaultMessage);
         this.allowInteractions();
     },
 
@@ -112,16 +112,20 @@ _.assign(GS.modal.JoinModal.prototype, {
     },
 
     showJoinTab: function showJoinTab() {
-      this.$getModal().find('a[href="#join"]').first().tab('show');
+      this.$getModal().find('a[href="#login"]').closest('.tab-pane').addClass('active');
+      this.$getModal().find('a[href="#join"]').closest('.tab-pane').removeClass('active');
     },
 
-    showSigninTab: function showJoinTab() {
-      this.$getModal().find('a[href="#login"]').first().tab('show');
+    showSigninTab: function showSigninTab() {
+      this.$getModal().find('a[href="#login"]').closest('.tab-pane').removeClass('active');
+      this.$getModal().find('a[href="#join"]').closest('.tab-pane').addClass('active');
     },
 
     initializeEventHandlersForTabs: function initializeEventHandlersForTabs() {
       // See description of why this is needed here: https://jira.greatschools.org/browse/JT-106
-      this.$getModal().on('click', '.parsley-errors-list a[href="#login"]', this.showSigninTab.gs_bind(this));
+      this.$getModal().on('click', 'a[href="#login"]', this.showSigninTab.gs_bind(this));
+      this.$getModal().on('click', 'a[href="#join"]', this.showJoinTab.gs_bind(this));
+
     },
 
     initialize: function initialize() {

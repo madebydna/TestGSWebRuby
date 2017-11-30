@@ -1,0 +1,33 @@
+<% summary = reviews.summary %>
+<% distribution = summary.distribution %>
+<% number_of_five_star_rating_reviews = summary.number_of_five_star_rating_reviews %>
+
+<% if number_of_five_star_rating_reviews > 0 %>
+  <div id="ReviewSummary" class="review-summary rs-review-summary">
+    <div class="review-sumary__info">
+      <div class="number-of-reviews">
+        <span class="count"><%= summary.number_of_reviews %></span>
+        <span class="label"><%= summary.number_of_reviews_label %></span>
+      </div>
+      <%= render 'five_stars', filled: summary.average_five_star_rating %>
+      <div class="n-out-of-5-stars"><%= summary.average_five_star_rating %> <%= I18n.t('out_of', scope: 'lib.reviews') %> 5 <%= I18n.t('lib.reviews.stars') %></div>
+    </div>
+    <div class="review-summary__distribution" style="color:grey">
+      <% ['5','4','3','2','1'].each do |number_of_stars| %>
+        <% answer_count = distribution[number_of_stars] || 0 %>
+        <% percentage_of_total = ((answer_count / number_of_five_star_rating_reviews.to_f) * 85).round %>
+
+        <div class="star-rating-bar-viz">
+          <span class="icon-star"></span>
+          <span class="number-of-stars"><%= number_of_stars %></span>
+          <% if percentage_of_total > 0 %>
+            <span class="bar rating_scale-5_<%= number_of_stars %>" style="<%= "width: #{percentage_of_total}%" %>"></span>
+          <% end %>
+          <!-- number of people who chose that many stars -->
+          <span class="answer-count"><%= answer_count %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= render 'school_profiles/topical_review_summary', reviews: reviews %>
+<% end %>

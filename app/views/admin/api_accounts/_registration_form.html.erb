@@ -1,0 +1,61 @@
+
+<% select_options = [['Education', 'education'], ['Finance', 'finance'], ['Government', 'government'],
+                     ['Media - Journalism', 'media'], ['Real Estate', 'real estate'], ['Technology', 'technology'],
+                     ['Other', 'other']]%>
+
+<div class="api_account_form">
+  <%= form_for @api_account, url: post_request_api_key_path, method: :post do |f| %>
+    <%= render 'error_messages' %>
+    <div>
+      <%= f.label :name, 'Contact name' %>
+      <%= f.text_field :name, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :organization %>
+      <%= f.text_field :organization, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :email %>
+      <%= f.text_field :email, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :email, 'Confirm email' %>
+      <%= f.text_field :email_confirmation, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :website, 'Company website' %>
+      <%= f.text_field :website, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :phone %>
+      <%= f.text_field :phone, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :industry %>
+      <%= f.select :industry, options_for_select(select_options, selected: @api_account.industry), include_blank: true, required: true %>
+    </div>
+
+    <div>
+      <%= f.label :intended_use %>
+      <%= f.text_area :intended_use, required: true %>
+    </div>
+      <%= f.hidden_field :registration, value: true %>
+    <br>
+    <div>
+      <label><input type="checkbox" id="tou" class="api_tou">I agree to the GreatSchools <a>Terms of Use</a></label>
+      <label><input type="checkbox" id="payment" class="api_tou">I agree to pay for all overage fees that range between $0.08/call to $0.01/call once I exceed the 3,000 daily call limit.</label>
+    </div>
+    <div class="api_submit">
+      <%= f.submit "Submit request", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+
+

@@ -21,17 +21,17 @@ en:
         one: preschool
         other: preschools
       number_of_schools_found:
-        one: 1 school found near
-        other: "%{count} schools found near"
+        one: 1 school found
+        other: "%{count} schools found"
       number_of_schools_found_with_level_code:
-        one: "1 %{level_code} found near"
-        other: "%{count} %{level_code} found near"
+        one: "1 %{level_code} found"
+        other: "%{count} %{level_code} found"
       number_of_schools_found_with_school_type:
-        one: "1 %{school_type} school found near"
-        other: "%{count} %{school_type} schools found near"
+        one: "1 %{school_type} school found"
+        other: "%{count} %{school_type} schools found"
       number_of_schools_found_with_level_code_and_school_type:
-        one: "1 %{school_type} %{level_code} found near"
-        other: "%{count} %{school_type} %{level_code} found near"
+        one: "1 %{school_type} %{level_code} found"
+        other: "%{count} %{school_type} %{level_code} found"
       within_radius:
         one: within 1 mile of %{address}
         other: within %{count} miles of %{address}

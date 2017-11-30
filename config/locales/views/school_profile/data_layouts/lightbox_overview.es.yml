@@ -1,7 +1,0 @@
----
-es:
-  school_profile:
-    data_layouts:
-      lightbox_overview:
-        no_photos: UH oh! No hay ninguna foto.  Este marco se verá mucho mejor
-        upload_photos_html: al cargar fotos&nbsp;&raquo;

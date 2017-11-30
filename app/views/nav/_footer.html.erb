@@ -5,7 +5,7 @@
         <div class="heading"><%= t('.about_gs.heading') %></div>
         <p><%= t('.about_gs.body') %></p>
         <br/>
-        <p><%= t('.support_greatschools') %> <%= link_to(t('.donate_now'), 'https://greatschools.networkforgood.com/', target: "_blank") %></p>
+        <p><%= t('.support_greatschools') %> <%= link_to(t('.donate_now'), 'https://www.classy.org/checkout/donation?eid=147615', target: "_blank") %></p>
       </div>
       <div class="col-xs-12 col-sm-6 col-md-7">
         <div class="row">
@@ -14,7 +14,7 @@
             <ul>
               <% t('.link_list_1')[:links].each do |link| %>
                 <li>
-                  <%= link_to(link['text'], link['url'] || send(link['route'] + '_path')) %>
+                  <%= link_to(link[:text], link[:url] || send(link[:route] + '_path', lang: nil)) %>
                 </li>
               <% end %>
             </ul>
@@ -25,7 +25,7 @@
               <li><a href="javascript:void(0)" class="js-send-me-updates-button-footer"><%= t('.newsletter') %></a></li>
               <% t('.link_list_2')[:links].each do |link| %>
                 <li>
-                  <%= link_to(link['text'], link['url'] || send(link['route'] + '_path')) %>
+                  <%= link_to(link[:text], link[:url] || send(link[:route] + '_path', lang: nil)) %>
                 </li>
               <% end %>
             </ul>
@@ -35,8 +35,8 @@
             <ul>
               <% t('.connect_links')[:links].each do |link| %>
                 <li>
-                  <%= link_to(link['url']) do %>
-                    <span class="i-16-f-<%= link['icon'] %>"></span><span class="pls"><%= link['text'] %></span>
+                  <%= link_to(link[:url]) do %>
+                    <span class="i-16-f-<%= link[:icon] %>"></span><span class="pls"><%= link[:text] %></span>
                   <% end %>
                 </li>
               <% end %>

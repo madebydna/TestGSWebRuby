@@ -13,8 +13,9 @@ class AjaxFlashMessagesMiddleware
         begin
           hash = JSON.parse(body_content)
           hash['flash'] = flash
-          body.body = hash.to_json
-          headers['Content-Length'] = Rack::Utils.bytesize(body.body.to_s).to_s
+          body_content = hash.to_json
+          body = [hash.to_json]
+          headers['Content-Length'] = Rack::Utils.bytesize(body_content).to_s
           env['action_dispatch.request.flash_hash'] = nil
         rescue => e
           GSLogger.error(:misc, e)

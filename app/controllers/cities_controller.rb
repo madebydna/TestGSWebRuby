@@ -12,9 +12,10 @@ class CitiesController < ApplicationController
   before_action :set_hub
   before_action :add_collection_id_to_gtm_data_layer
   before_action :set_login_redirect
+  before_action :set_no_index
 
   def show
-    write_meta_tags
+    # write_meta_tags
     @cities = popular_cities
     @city_object = City.where(name: @city, state: @state[:short], active: 1).first
 
@@ -40,7 +41,6 @@ class CitiesController < ApplicationController
         @show_ads = CollectionConfig.show_ads(collection_configs)
       end
 
-      @city_rating = CityRating.get_rating(@state[:short], @city)
       @top_schools = all_schools_by_rating_desc(@city_object,4)
       @districts = District.by_number_of_schools_desc(@city_object.state,@city_object).take(5)
       @show_ads = @show_ads && PropertyConfig.advertising_enabled?
@@ -48,6 +48,7 @@ class CitiesController < ApplicationController
       ad_setTargeting_through_gon
       gon.pagename = 'GS:City:Home'
       data_layer_through_gon
+      #overwrites tags set by write_meta_tags above
       set_city_home_metadata
     end
   end
@@ -151,8 +152,7 @@ class CitiesController < ApplicationController
         t('partner', scope: 'controllers.cities_controller') => nil
       }
       @canonical_url = city_education_community_partner_url(params[:state], params[:city])
-      set_meta_tags keywords: partner_page_meta_keywords(@partner[:page_name], @partner[:acro_name]),
-                    description: partner_page_description(@partner[:page_name]),
+      set_meta_tags description: partner_page_description(@partner[:page_name]),
                     title: @partner[:page_name]
       gon.pagename = 'GS:City:Partner'
       data_layer_through_gon
@@ -256,8 +256,7 @@ class CitiesController < ApplicationController
     method_base = "#{controller_name}_#{action_name}"
     title_method = "#{method_base}_title".to_sym
     description_method = "#{method_base}_description".to_sym
-    keywords_method = "#{method_base}_keywords".to_sym
-    set_meta_tags title: send(title_method), description: send(description_method), keywords: send(keywords_method)
+    set_meta_tags title: send(title_method), description: send(description_method)
   end
 
   def all_schools_by_rating_desc(city, count=0)
@@ -269,17 +268,17 @@ class CitiesController < ApplicationController
     description = "Find top-rated #{@city.titleize} schools, read recent parent reviews, "+
       "and browse private and public schools by grade level in #{@city.titleize}, #{(@state[:long]).titleize} (#{(@state[:short]).upcase})."
 
-    keywords = "#{@city.titleize} Schools, #{@city.titleize} #{@state[:short].upcase} Schools, #{@city.titleize} Public Schools, "+
-      "#{@city.titleize} School Ratings, Best #{@city.titleize} Schools, #{@city.titleize} #{@state[:long].titleize} Schools, "+
-      "#{@city.titleize} Private Schools"
-
       state_text = @state[:short].downcase == 'dc' ? '' : "#{@city.titleize} #{@state[:long].titleize} "
       additional_city_text = @state[:short].downcase == 'dc' ? ', DC' : ''
 
-      title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
 
-      set_meta_tags keywords: keywords,
-        description: description,
+      if %w(pa nj co in).include?(@state[:short].downcase)
+        title = "View The Best Schools in #{@city.titleize}, #{@state[:short].upcase} | School Ratings for Public & Private"
+      else
+        title = "#{@city.titleize}#{additional_city_text} Schools - #{state_text}School Ratings - Public and Private"
+      end
+
+      set_meta_tags description: description,
         title: title
   end
 

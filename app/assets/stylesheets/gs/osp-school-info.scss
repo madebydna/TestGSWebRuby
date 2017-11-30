@@ -1,0 +1,45 @@
+#osp-school-info {
+  .response {
+    padding-bottom: 10px;
+    margin-top: 10px;
+    border-bottom: 1px solid #e0e4e8;
+    font-size: 14px;
+
+    &:last-child {
+      padding-bottom: 0px;
+      border-bottom: none;
+    }
+    div:last-child {
+      font-family: opensans-regular;
+    }
+    li {
+      color: #000000;
+      @include media-breakpoint-up(sm) {
+        list-style: none;
+      }
+    }
+  }
+
+  .panel {
+    margin-top: 0px;
+  }
+
+  .response:first-child {
+    p:before, p:after {
+      content: '"';
+    }
+  }
+
+  .sources-text {
+    font-family: opensans-semibold;
+    font-size: 14px;
+  }
+
+  .module-header {
+    .anchor-button {
+      float: right;
+      height: 28px;
+      font-size: $font-size-s1;
+    }
+  }
+}

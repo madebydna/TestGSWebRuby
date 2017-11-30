@@ -1,0 +1,12 @@
+en:
+  school_profiles:
+    student_progress:
+      title: Student progress
+      subtitle: 'This rating measures how much students at this school improved from one year to the next, compared to students with similar proficiency levels at other schools in the state.'
+      no_data_html: >
+        This section shows how much academic progress (also called “growth”) students at this school are making given where they were last year, compared to similar students in the state.
+        <br></br>
+      sources: Sources
+      historical:
+        title: Past GreatSchools Student Progress Ratings
+        subtitle: This chart shows how this school's GreatSchools Student Progress Rating has changed over time.

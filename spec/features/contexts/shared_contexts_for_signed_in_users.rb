@@ -1,12 +1,12 @@
-require 'spec_helper'
-
 def log_in_user(user)
-  host = Capybara.app_host ? URI(Capybara.app_host).host : '127.0.0.1'
   auth_token = UserAuthenticationToken.new(user).generate
+  set_cookie('auth_token', auth_token)
+  set_cookie('MEMID', user.id)
+  set_cookie('community_www', auth_token.gsub('=', '~'))
+end
 
-  page.driver.browser.set_cookie("auth_token=#{auth_token}; domain=#{host}")
-  page.driver.browser.set_cookie("MEMID=#{user.id}; domain=#{host}")
-  page.driver.browser.set_cookie("community_www=#{auth_token.gsub('=', '~')}; domain=#{host}")
+def log_out_user
+  clear_cookies
 end
 
 shared_context 'signed in verified user' do
@@ -20,6 +20,7 @@ shared_context 'signed in verified user' do
   end
 
   after do
+    log_out_user
     clean_models User
   end
 end
@@ -35,6 +36,7 @@ shared_context 'signed in provisional user' do
   end
 
   after do
+    log_out_user
     clean_models User
   end
 end

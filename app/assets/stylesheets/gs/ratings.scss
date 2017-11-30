@@ -1,0 +1,49 @@
+// Ratings Colors
+// --------------------------
+$ratingNR: #777777;
+$rating1: #F26B16;
+$rating2: #E78818;
+$rating3: #DCA21A;
+$rating4: #D2B81B;
+$rating5: #BDC01E;
+$rating6: #A3BE1F;
+$rating7: #86B320;
+$rating8: #6BA822;
+$rating9: #559F24;
+$rating10: #439326;
+
+.rating_scale-5_1 {
+  background-color: $color-5-scale-strongly-disagree;
+}
+.rating_scale-5_2 {
+  background-color: $color-5-scale-disagree;
+}
+.rating_scale-5_3 {
+  background-color: $color-5-scale-neutral;
+}
+.rating_scale-5_4 {
+  background-color: $color-5-scale-agree;
+}
+.rating_scale-5_5 {
+  background-color: $color-5-scale-strongly-agree;
+}
+
+$counter: '',1,2,3,4,5,6,7,8,9,10;
+$color-list: #777777,#F26B16, #E78818, #DCA21A, #D2B81B, #BDC01E, #A3BE1F, #86B320, #6BA822, #559F24, #439326;
+
+$list-with-id: zip($counter, $color-list);
+
+@each $value in $list-with-id {
+  .rating_color_#{nth($value, 1)} {
+    color: #{nth($value, 2)};
+  }
+  .rating_#{nth($value, 1)} {
+    background-color: #{nth($value, 2)};
+  }
+}
+.rating_color_NR {
+  color: #777777;
+};
+.rating_NR {
+  background-color: #777777;
+};

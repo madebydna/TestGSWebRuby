@@ -1,0 +1,58 @@
+<% cities = @dcl.city_names %>
+<% state_names = @dcl.state_names %>
+<% dropdown_info = @dcl.dropdown_info %>
+
+<div class="districts-cities-list">
+  <div class="top">
+    <ul>
+      <li><%= link_to t('.All schools in') + " #{state_names[:full]}", state_url(state_params(state_names[:abbr])) %></li>
+      <li><%= t('.All cities in') %> <%= state_names[:full] %></li>
+      <li><%= link_to "#{state_names[:full]} " + t('.School Districts'), districts_list_path(state_names[:routing],state_names[:abbr])%></li>
+    </ul>
+    <div class="page-heading">
+      <%= state_names[:full] %> <%= t('.School Information by City') %>
+    </div>
+    <%= t('.Show me cities in a different state') %>:
+
+    <select id="dropdown_menu">
+      <% dropdown_info.each do |st, st_name| %>
+        <% if st == state_names[:abbr] %>
+          <option selected><%= st %></option>
+        <% else %>
+          <option value="<%= cities_list_path(st_name,st) %>"> <%= st %></option>
+        <% end %>
+      <% end %>
+    </select>
+
+  </div>
+  <div>
+    <div class="table-column">
+      <table cellspacing="0" cellpadding="0">
+        <tbody>
+        <tr class="table-top-row">
+          <th style="width: 50%"><%= state_names[:full] %> <%= t('.Cities') %></th>
+        </tr>
+        <% cities.each do |city| %>
+          <tr>
+            <td class="city-district-link">
+              <%= link_to "#{city} " + t('.Schools'), city_url(city_params(state_names[:abbr], city.downcase)) %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function(){
+    $('#dropdown_menu').on('change', function () {
+      var url = $(this).val();
+      if (url) {
+        window.location = url;
+      }
+      return false;
+    });
+  });
+</script>

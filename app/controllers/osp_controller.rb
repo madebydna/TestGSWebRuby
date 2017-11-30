@@ -8,7 +8,6 @@ class OspController < ApplicationController
   before_action :set_city_state
   before_action :login_required_for_osp, except: [:approve_provisional_osp_user_data]
   before_action :set_osp_school_instance_vars, except: [:approve_provisional_osp_user_data]
-  before_action :validate_delaware_users, except: [:approve_provisional_osp_user_data]
   before_action :set_esp_membership_instance_vars, except: [:approve_provisional_osp_user_data]
   after_action :success_or_error_flash, only: [:submit]
 
@@ -47,6 +46,9 @@ class OspController < ApplicationController
     end
     approve_all_images_for_member(params[:membership_id])
     # only java is receiving this html, does not matter that it renders blank page
+    EspMembership.find_by(id: params[:membership_id], status: 'approved', active: true).tap do |em|
+      SchoolUser.make_from_esp_membership(em) if em
+    end
     render text: ''
   end
 
@@ -284,30 +286,7 @@ class OspController < ApplicationController
   end
 
   def login_required_for_osp
-    if @state[:short] == 'de'
-      delaware_error_and_redirect_to(signin_path) unless logged_in?
-    else
-      login_required
-    end
-  end
-
-  def validate_delaware_users
-    if should_check_for_sso_token
-      auth_cookie = get_auth_cookie
-      return delaware_error_and_redirect_to(my_account_url) unless auth_cookie.present?
-
-      auth_token = generate_auth_token(AUTH_SALT + current_user.email)
-      unless auth_cookie == auth_token
-        logger_vars = params.merge({gs_localAuth: cookies[AUTH_COOKIE_NAME], current_user_id: current_user.id, current_user_email: current_user.email})
-        GSLogger.warn(:osp, nil, vars: logger_vars, message: 'gs_localAuth cookie failed authentication')
-        return delaware_error_and_redirect_to(my_account_url)
-      end
-    end
-  end
-
-  def delaware_error_and_redirect_to(url)
-    flash_notice t('forms.osp.delaware_error').html_safe
-    redirect_to(url)
+    login_required
   end
 
   def get_auth_cookie
@@ -317,10 +296,6 @@ class OspController < ApplicationController
 
   def generate_auth_token(string)
     Digest::MD5.base64digest(string)
-  end
-
-  def should_check_for_sso_token
-    @state[:short] == 'de' && @school.public_or_charter? && !current_user.is_esp_superuser?
   end
 
   def notify_provisional_user!

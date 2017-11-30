@@ -17,3 +17,9 @@ RSpec::Matchers.define :memoize do |call|
     "Expected #{call} to be memoized. Subsequent calls to #{call} returned different objects, but it should always return same object."
   end
 end
+
+RSpec::Matchers.define :round_to do |expected, decimal_places|
+  match do |actual|
+    expect(actual).to satisfy { |f| f.round(decimal_places || 0) == expected }
+  end
+end

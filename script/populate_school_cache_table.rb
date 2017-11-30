@@ -1,9 +1,7 @@
-def all_cache_keys
-  ['ratings','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance']
-end
+had_any_errors = false
 
-def nightly_states
-  ['de','in']
+def all_cache_keys
+  ['ratings','test_scores','feed_test_scores','characteristics', 'esp_responses', 'reviews_snapshot','progress_bar', 'nearby_schools', 'performance', 'gsdata', 'feed_characteristics', 'directory']
 end
 
 def usage
@@ -26,7 +24,6 @@ def parse_arguments
          states: all_states,
          cache_keys: all_cache_keys
      }]
-    # TODO Limit nightly cache keys
   else
     args = []
     ARGV.each_with_index do |arg, i|
@@ -62,18 +59,31 @@ parsed_arguments.each do |args|
   cache_keys = args[:cache_keys]
   schools_where = args[:schools_where]
   states.each do |state|
-    # Remove the next line to have all mean all states again
-    next if ARGV[0] == 'all' && !nightly_states.include?(state)
+    puts
+    puts "Working on: #{state}"
     cache_keys.each do |cache_key|
+      puts "     doing #{cache_key}"
       if schools_where
         School.on_db(state.downcase.to_sym).where(schools_where).each do |school|
-          Cacher.create_cache(school, cache_key)
+          begin
+            Cacher.create_cache(school, cache_key)
+          rescue => error
+            had_any_errors = true
+            puts "School #{school.state}-#{school.id} : #{error}"
+          end
         end
       else
         School.on_db(state.downcase.to_sym).all.each do |school|
-          Cacher.create_cache(school, cache_key)
+          begin
+            Cacher.create_cache(school, cache_key)
+          rescue => error
+            had_any_errors = true
+            puts "School #{school.state}-#{school.id} : #{error}"
+          end
         end
       end
     end
   end
 end
+
+exit had_any_errors ? 1 : 0

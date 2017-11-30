@@ -20,7 +20,9 @@ describe EmailVerificationToken do
     end
 
     context 'with a user_id' do
-      subject(:token) { EmailVerificationToken.new(user_id: 1) }
+      let(:user) { FactoryGirl.create(:user) }
+      after { clean_dbs :gs_schooldb }
+      subject(:token) { EmailVerificationToken.new(user_id: user.id) }
 
       it 'should set the current time' do
         expect(subject.instance_variable_get :@time).to be_a Time
@@ -66,14 +68,16 @@ describe EmailVerificationToken do
   end
 
   describe '#expired?' do
+    let(:user) { FactoryGirl.create(:user) }
+    after { clean_dbs :gs_schooldb }
     it 'should be expired when more than 5 days old' do
-      token = EmailVerificationToken.new(user_id: 1)
+      token = EmailVerificationToken.new(user_id: user.id)
       token.instance_variable_set(:@time, 5.days.ago - 1.second)
       expect(token).to be_expired
     end
 
     it 'should not be expired if less than 5 days old' do
-      token = EmailVerificationToken.new(user_id: 1)
+      token = EmailVerificationToken.new(user_id: user.id)
       token.instance_variable_set(:@time, 5.days.ago + 1.second)
       expect(token).to_not be_expired
     end

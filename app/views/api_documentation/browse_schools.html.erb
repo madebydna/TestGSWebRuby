@@ -1,0 +1,142 @@
+<div class="content">
+  <div class="callfirst">
+    <h3>Browse Schools</h3> Returns a list of schools in a city. All calls for a Browse Schools are in this format:
+    <div class="sample_url">https://api.greatschools.org/schools/[components]?[parameters]</div>
+  </div>
+  <div class="call">
+    <h3>Components</h3> Components of the url describe what type of data you would like. They are separated by forward slashes.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>state*</td>
+          <td>Two letter state abbreviation</td>
+          <td>ak
+            <br>CA</td>
+        </tr>
+        <tr>
+          <td>city*</td>
+          <td>Name of city, with spaces replaced with hyphens. If the city name has hyphens, replace those with underscores.</td>
+          <td>San Francisco becomes "San-Francisco"
+            <br>Cardiff-By-The-Sea becomes "Cardiff_By_The_Sea"
+          </td>
+        </tr>
+        <tr>
+          <td>school type</td>
+          <td>Type of school you wish to appear in the list</td>
+          <td>Valid values: "public", "charter", "private", or any combination separated by hyphens, like "public-charter"</td>
+        </tr>
+        <tr>
+          <td>level</td>
+          <td>Level of school you wish to appear in the list</td>
+          <td>Valid values: "elementary-schools", "middle-schools", "high-schools" </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+  </div>
+  <div class="call">
+    <h3>Parameters</h3> The "key" parameter is what you use to send us your API key. Other parameters are optional and used to describe how you would like to receive the data.
+    <table class="call_params">
+      <thead>
+        <tr class="fields">
+          <td class="fieldname">Name</td>
+          <td class="fielddescription">Description</td>
+          <td class="fieldsample">Sample Values</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="required">
+          <td>key*</td>
+          <td>Your API key</td>
+          <td>myAPIkey</td>
+        </tr>
+        <tr>
+          <td>sort</td>
+          <td>How to sort the results, either by name (ascending), by GS rating (descending), or by overall parent rating (descending). The default sort is name (ascending). When sorted by rating, schools without a rating will appear last.
+          </td>
+          <td>Valid values: "name", "gs_rating", "parent_rating"</td>
+        </tr>
+        <tr>
+          <td>limit</td>
+          <td>Maximum number of schools to return. This defaults to 200.
+            <br>To get all results, use -1.
+          </td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="footnote">*required</div>
+    Examples of usage:
+    <div class="example_url">https://api.greatschools.org/schools/CA/Alameda?key=[yourAPIkey]</div>
+    Returns up to 200 schools in the city of Alameda, CA
+    <div class="example_url">https://api.greatschools.org/schools/CA/Alameda?key=[yourAPIkey]&amp;limit=-1</div>
+    Returns all schools in the city of Alameda, CA
+    <div class="example_url">https://api.greatschools.org/schools/CA/San-Francisco/private/middle-schools?key=[yourAPIkey]&amp;sort=parent_rating&amp;limit=5</div>
+    Returns 5 private middle schools in San Francisco, CA, sorting by parent rating
+  </div>
+  <div class="call">
+    <h3>Sample Request</h3>
+    <div class="sample_url">https://api.greatschools.org/schools/CA/Truckee?key=[yourAPIkey]&amp;limit=2</div>
+    Returns 2 schools in Truckee, CA
+  </div>
+  <div class="call">
+    <h3>Sample Response</h3>
+    <textarea cols="" rows="" readonly="readonly" wrap="off" class="sampleTextArea">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+        &lt;schools&gt;
+        &lt;school&gt;
+        &lt;gsId&gt;13978&lt;/gsId&gt;
+        &lt;name&gt;Alder Creek Middle School&lt;/name&gt;
+        &lt;type&gt;public&lt;/type&gt;
+        &lt;gradeRange&gt;6-8&lt;/gradeRange&gt;
+        &lt;enrollment&gt;598&lt;/enrollment&gt;
+        &lt;city&gt;Truckee&lt;/city&gt;
+        &lt;state&gt;CA&lt;/state&gt;
+        &lt;districtId&gt;509&lt;/districtId&gt;
+        &lt;district&gt;Tahoe-Truckee Joint Unified School District&lt;/district&gt;
+        &lt;districtNCESId&gt;0638770&lt;/districtNCESId&gt;
+        &lt;address&gt;10931 Alder Dr.,
+        Truckee, CA  96161&lt;/address&gt;
+        &lt;phone&gt;(530) 582-2750&lt;/phone&gt;
+        &lt;fax&gt;(530) 582-7640&lt;/fax&gt;
+        &lt;website&gt;https://www.ttusd.org&lt;/website&gt;
+        &lt;ncesId&gt;063877011005&lt;/ncesId&gt;
+        &lt;lat&gt;39.3454&lt;/lat&gt;
+        &lt;lon&gt;-120.1735&lt;/lon&gt;
+        &lt;overviewLink&gt;https://www.greatschools.org/modperl/browse_school/ca/13978?s_cid=gsapi&lt;/overviewLink&gt;
+        &lt;ratingsLink&gt;https://www.greatschools.org/school/rating.page?state=CA&amp;id=13978&amp;s_cid=gsapi&lt;/ratingsLink&gt;
+        &lt;reviewsLink&gt;https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=13978&amp;s_cid=gsapi&lt;/reviewsLink&gt;
+        &lt;/school&gt;
+        &lt;school&gt;
+        &lt;gsId&gt;11039&lt;/gsId&gt;
+        &lt;name&gt;Cold Stream Alternative School&lt;/name&gt;
+        &lt;type&gt;public&lt;/type&gt;
+        &lt;gradeRange&gt;9-12&lt;/gradeRange&gt;
+        &lt;enrollment&gt;47&lt;/enrollment&gt;
+        &lt;city&gt;Truckee&lt;/city&gt;
+        &lt;state&gt;CA&lt;/state&gt;
+        &lt;districtId&gt;509&lt;/districtId&gt;
+        &lt;district&gt;Tahoe-Truckee Joint Unified School District&lt;/district&gt;
+        &lt;districtNCESId&gt;0638770&lt;/districtNCESId&gt;
+        &lt;address&gt;11661 Donner Pass Rd.,
+        Truckee, CA  96161&lt;/address&gt;
+        &lt;phone&gt;(530) 582-2640&lt;/phone&gt;
+        &lt;fax&gt;(530) 582-7640&lt;/fax&gt;
+        &lt;ncesId&gt;063877006175&lt;/ncesId&gt;
+        &lt;lat&gt;39.3259&lt;/lat&gt;
+        &lt;lon&gt;-120.2147&lt;/lon&gt;
+        &lt;overviewLink&gt;https://www.greatschools.org/modperl/browse_school/ca/11039?s_cid=gsapi&lt;/overviewLink&gt;
+        &lt;ratingsLink&gt;https://www.greatschools.org/school/rating.page?state=CA&amp;id=11039&amp;s_cid=gsapi&lt;/ratingsLink&gt;
+        &lt;reviewsLink&gt;https://www.greatschools.org/school/parentReviews.page?state=CA&amp;id=11039&amp;s_cid=gsapi&lt;/reviewsLink&gt;
+        &lt;/school&gt;
+        &lt;/schools&gt;
+
+      </textarea>
+  </div>
+</div>

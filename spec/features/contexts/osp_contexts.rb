@@ -12,6 +12,7 @@ shared_context 'signed in approved osp user for school' do |state, school_id|
   end
 
   after do
+    log_out_user
     clean_models :gs_schooldb, User, EspMembership
   end
 end
@@ -24,6 +25,7 @@ shared_context 'signed in approved superuser for school' do |state, school_id|
   end
 
   after do
+    log_out_user
     clean_models :gs_schooldb, User, UserProfile, EspMembership, MemberRole, Role
   end
 end
@@ -36,18 +38,24 @@ shared_context 'Basic High School' do
   end
 
 shared_context 'Delaware public school' do
-  let!(:school) { School.on_db(:de).create!(id: 1, type: 'public', state: 'de', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry') }
-  after { clean_models :de, School }
+  let (:school) { School.new(id: 1, type: 'public', state: 'de', city: 'Scotland', name: 'Hogwarts School of Witchcraft and Wizardry') }
+  before do
+    allow(controller).to receive(:school).and_return(school)
   end
+end
 
 shared_context 'Delaware charter school' do
-  let!(:school) { School.on_db(:de).create(id: 1, type: 'charter', state: 'de', city: 'Pyrenees', name: 'Beauxbatons Academy of Magic') }
-  after { clean_models :de, School }
+  let (:school) { School.new(id: 1, type: 'charter', state: 'de', city: 'Pyrenees', name: 'Beauxbatons Academy of Magic') }
+  before do
+    allow(controller).to receive(:school).and_return(school)
   end
+end
 
 shared_context 'Delaware private school' do
-  let!(:school) { School.on_db(:de).create(id: 1, type: 'private', state: 'de', city: 'Sweden', name: 'Durmstrang Institute') }
-  after { clean_models :de, School }
+  let (:school) { School.new(id: 1, type: 'private', state: 'de', city: 'Sweden', name: 'Durmstrang Institute') }
+  before do
+    allow(controller).to receive(:school).and_return(school)
+  end
 end
 
 ### Navigation ###
@@ -129,6 +137,7 @@ shared_context 'click osp nav link element with text:' do |text|
     button = osp_page.osp_nav.nav_buttons(text: text).first
     button.click
   end
+  after { clean_models :gs_schooldb, UpdateQueue, OspFormResponse }
 end
 
 shared_context 'fill in OSP Registration with valid values' do |email|
@@ -554,5 +563,6 @@ shared_context 'click OSP mobile nav' do |form|
   before do
     click_button 'Basic Information'
   end
+  after { clean_models :gs_schooldb, UpdateQueue, OspFormResponse }
   subject { find('.js-submitTrigger', text: form) }
 end

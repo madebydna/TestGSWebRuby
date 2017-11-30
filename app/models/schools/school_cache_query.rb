@@ -5,6 +5,22 @@ class SchoolCacheQuery
     @school_ids_per_state = {}
   end
 
+  def self.for_school(school)
+    raise ArgumentError.new('School must not be nil') if school.nil?
+    new.tap do |cache_query|
+      cache_query.include_schools(school.state, school.id)
+    end
+  end
+
+  def include_objects(objects)
+    objects = Array.wrap(objects)
+    objects_by_state = objects.group_by(&:state)
+    objects_by_state.each_pair do |state, objects_for_state|
+      include_schools(state, objects_for_state.map(&:id))
+    end
+    self
+  end
+
   def include_cache_keys(cache_keys)
     @cache_keys += Array.wrap(cache_keys)
     @cache_keys.uniq
@@ -21,8 +37,9 @@ class SchoolCacheQuery
 
   def matching_schools_clause
     arel = SchoolCache.arel_table
-    q ||= arel.grouping(false: true) # false = true in query prevents needing to special-case code below
+    q ||= Arel::Nodes::Grouping.new(Arel::Nodes::SqlLiteral.new('false = true')) # false = true prevents needing to special-case code below
     @school_ids_per_state.each_pair do |state, school_ids_for_state|
+      next if school_ids_for_state.blank?
       q = q.or(
         q.grouping(
           arel[:state].eq(state).

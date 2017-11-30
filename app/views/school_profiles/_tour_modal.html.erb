@@ -1,0 +1,17 @@
+<div class="js-school-profile-tour-modal school-profile-tour-modal hidden">
+  <div>
+    <div>
+      <h3><%= webpack_image_tag('school_profiles/owl.png') %> <%= t('school_profiles.Welcome')%></h3>
+      <%= t('school_profiles.tour_tooltip_content')%>
+    </div>
+    <br/>
+    <button class="tour-cta js-start-tour active">
+      <%= t('school_profiles.Take_a_quick_tour')%>
+    </button>
+    <div>
+      <a id="close-school-tour">
+        <%= t('school_profiles.Not_right_now')%>
+      </a>
+    </div>
+  </div>
+</div>

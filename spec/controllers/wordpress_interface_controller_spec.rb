@@ -159,6 +159,52 @@ describe WordpressInterfaceController do
       end
     end
 
+
+    describe 'wp_action: newsletter_page_signup' do
+      after { clean_dbs :gs_schooldb }
+      let(:post_params) { { wp_action: 'newsletter_page_signup', format: :json } }
+      let(:user_session_key) { 'my_session_key' }
+      let(:state) { 'CA' }
+      let(:email) { 'test@greatschools.org' }
+      let(:grade) { ['12'] }
+      let(:lists) { ['foo'] }
+
+      context 'with valid params' do
+        it 'return a valid response' do
+          post_params.merge!({
+            wp_params: {
+              user_session_key: user_session_key,
+              state: state,
+              email: email,
+              grade: grade,
+              lists: lists
+            }
+          })
+
+          post :call_from_wordpress, post_params
+          json_response = JSON.parse(response.body)
+          expect(json_response).to have_key("member_id")
+        end
+      end
+
+      context 'with missing lists param' do
+        it 'return a valid response' do
+          post_params.merge!({
+            wp_params: {
+              user_session_key: user_session_key,
+              state: state,
+              email: email,
+              grade: grade
+            }
+          })
+
+          post :call_from_wordpress, post_params
+          json_response = JSON.parse(response.body)
+          expect(json_response).to have_key("member_id")
+        end
+      end
+    end
+
   end
 
 end

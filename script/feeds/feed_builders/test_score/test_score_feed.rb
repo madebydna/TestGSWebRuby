@@ -1,100 +1,99 @@
-require_relative '../../feed_helpers/feed_helper'
-require_relative '../../feed_helpers/feed_data_helper'
+require_relative '../../feed_config/feed_constants'
 
-require_relative 'test_score_feed_data_reader'
-require_relative 'test_score_feed_transformer'
+require_relative 'data_builder'
+require_relative 'district_data_builder'
+require_relative 'school_data_builder'
+require_relative 'state_feed'
+require_relative 'state_info_feed'
+require_relative 'entity_feed'
+require_relative 'feed_entity_reader'
+require_relative 'test_calculations'
+require_relative 'feed_test_scores_cache_hash'
+require_relative 'entity_test_data_reader'
+require_relative 'state_test_data_reader'
+require_relative 'test_data_set_decorator'
+require_relative 'test_data_set_hash_decorator'
 
 
 module Feeds
+  # Uses other objects to get data for state, district and school feeds and writes it to an XML file
   class TestScoreFeed
-    include Feeds::FeedHelper
-    include Feeds::FeedDataHelper
-    include Feeds::TestScoreFeedDataReader
-    include Feeds::TestScoreFeedTransformer
+    include Feeds::FeedConstants
+
+    attr_accessor :state, :data_type, :school_ids, :district_ids, :state_feed, :school_feed, :district_feed, :state_info_feed
 
     def initialize(attributes = {})
       @state = attributes[:state]
-      @district_batches = get_district_batches(@state,attributes[:district_ids],attributes[:batch_size])
-      @school_batches = get_school_batches(@state,attributes[:school_ids],attributes[:batch_size])
-      @feed_file = attributes[:feed_file]
+      @district_ids = attributes[:district_ids]
+      @school_ids = attributes[:school_ids]
+      @feed_file_path = attributes[:feed_file]
       @root_element = attributes[:root_element]
       @schema = attributes[:schema]
       @data_type = attributes[:data_type]
+      @batch_size = attributes[:batch_size]
+      self.school_feed = EntityFeed.for_schools(state, @school_ids, @data_type, @batch_size)
+      self.district_feed = EntityFeed.for_districts(state, @district_ids, @data_type, @batch_size)
+      self.state_feed = EntityFeed.for_states(state, @data_type)
+      self.state_info_feed = Feeds::StateInfoFeed.new(state, data_type)
     end
 
     def generate_feed
       # xsd_schema ='greatschools-test.xsd'
-      #Generate State Test Master Data
-      @state_test_infos_for_feed = get_test_score_state_master_data(@state)
-      # Generate District Test Data From Test Tables
-      state_test_results = get_state_test_score_data(@state,@data_type)
-      # Translating State Test  data to XML for State
-      @state_data_for_feed = transpose_state_data_for_feed(@state,state_test_results,@data_type)
-      # Write to XML File
-      generate_xml_test_score_feed
+      within_root_node do
+        # Generate State Test Master Data
+        # Generates test info tag
+        write_xml_tag(state_info_feed.to_hashes, 'test')
+
+        # Generate state test data tag
+        state_feed.each_result { |data| write_xml_tag(data, 'test-result') }
+        # Generate School Info
+        school_feed.each_result { |data| write_xml_tag(data, 'test-result') }
+        # Generate District Info
+        district_feed.each_result { |data| write_xml_tag(data, 'test-result') }
+      end
+
+      close_file
       # system("xmllint --noout --schema #{xsd_schema} #{xmlFile}")
     end
 
-    def generate_xml_test_score_feed
-      File.open(@feed_file, 'w') { |f|
-        xml = Builder::XmlMarkup.new(:target => f, :indent => 1)
+    def file
+      @_file ||= File.open(@feed_file_path, 'w')
+    end
+
+    def xml_builder
+      @_xml_builder ||= (
+        xml = Builder::XmlMarkup.new(:target => file, :indent => 1)
         xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-        xml.tag!(@root_element,
-                 {'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-                  :'xsi:noNamespaceSchemaLocation' => @schema}) do
-                            # Generates test info tag
-                            write_xml_tag(@state_test_infos_for_feed, 'test', xml)
-                            # Generate state test data tag
-                            write_xml_tag(@state_data_for_feed, 'test-result', xml)
-                            #Generate School Info
-                            write_school_info(xml)
-                            #Generate District Info
-                            write_district_info(xml)
-
-                          end
-                  }
+        xml
+      )
     end
 
-    def write_district_info(xml)
-      @district_batches.each_with_index do |district_batch, index|
-        Feeds::FeedLog.log.debug "District batch Start #{Time.now} for Batch Number #{index+1}"
-        districts_decorated_with_cache_results = get_districts_batch_cache_data(district_batch)
-        district_data_for_feed = process_district_batch_data_for_feed(districts_decorated_with_cache_results)
-        write_xml_tag(district_data_for_feed, 'test-result', xml)
-        Feeds::FeedLog.log.debug "District Batch end #{Time.now} for Batch Number #{index+1}"
+    def within_root_node
+      xml_builder.tag!(
+        @root_element,
+        'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+        :'xsi:noNamespaceSchemaLocation' => @schema,
+      ) do
+        yield(xml_builder)
       end
     end
 
-    def write_school_info(xml)
-      @school_batches.each_with_index do |school_batch, index|
-        Feeds::FeedLog.log.debug "School batch Start #{Time.now} for Batch Number #{index+1}"
-        schools_decorated_with_cache_results = get_schools_batch_cache_data(school_batch)
-        school_data_for_feed = process_school_batch_data_for_feed(schools_decorated_with_cache_results)
-        write_xml_tag(school_data_for_feed, 'test-result', xml)
-        Feeds::FeedLog.log.debug "School Batch end #{Time.now} for Batch Number #{index+1}"
-      end
+    def close_file
+      file.close
     end
 
-    def process_school_batch_data_for_feed(schools_cache_data)
-      schools_cache_data.try(:map) { |school| process_school_data_for_feed(school) }.flatten
-    end
-
-    def process_district_batch_data_for_feed(districts_cache_data)
-      districts_cache_data.try(:map) { |district| process_district_data_for_feed(district) }.flatten
-    end
-
-    def process_school_data_for_feed(school)
-      school_test_data = get_school_test_score_data(school)
-      school_test_data.try(:map)do |test_id, data|
-       transpose_data_for_xml(@state,data, school, test_id, ENTITY_TYPE_SCHOOL,@data_type)
-      end
-    end
-
-    def process_district_data_for_feed(district)
-      district_test_data = get_district_test_score_data(district)
-        district_test_data.try(:map) do |test_id, data|
-           transpose_data_for_xml(@state,data, district, test_id, ENTITY_TYPE_DISTRICT,@data_type)
+    def write_xml_tag(data, tag_name)
+      if data.present?
+        data.reject(&:blank?).each do |tag_data|
+          xml_builder.tag! tag_name do
+            tag_data.compact.each do |key, value|
+              xml_builder.tag! key.to_s.gsub('_', '-'), value
+            end
+          end
         end
+      end
     end
+
   end
+
 end

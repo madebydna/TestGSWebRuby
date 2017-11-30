@@ -1,0 +1,9 @@
+<% school %>
+
+<% Gon.set_variable('homes_and_rentals_service_url', ENV_GLOBAL['homes_and_rentals_service_url']) %>
+<%= react_component('HomesAndRentals', props: {
+  schoolName: @school.name,
+  city: @school.city,
+  state: @school.state,
+  zip: @school.zipcode
+}) %>

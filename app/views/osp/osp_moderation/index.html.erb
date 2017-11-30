@@ -1,0 +1,10 @@
+<% content_for :head do %><title>GS OSP Moderation Tool</title><% end %>
+<%= webpack_javascript_include_tag "admin-tools", "data-turbolinks-track" => true %>
+
+<div>
+  <%= link_to 'Search OSP requests', osp_search_path %>
+  <%= render partial: 'osp/osp_moderation/reviewer_actions_buttons' %>
+  <%= render partial: 'osp/osp_moderation/osp_table' %>
+  <%= render(partial: 'osp/osp_moderation/pagination_links') unless @pagination_link_count <= 1 %>
+</div>
+

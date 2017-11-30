@@ -66,7 +66,7 @@ describe 'School moderate page' do
 
     with_shared_context 'visit page', SchoolModerationPage, state: state_name, school_id: school_id do
       when_I 'search for school', 'CA', 99999 do
-        it { is_expected.to have_content 'School not found' }
+        it { is_expected.to have_content 'California Schools' }
       end
     end
 

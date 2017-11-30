@@ -12,7 +12,7 @@ describe 'User visits Home Page' do
   describe 'user can search for school', js: true do
     context 'succesfully' do
       it { is_expected.to have_school_search_button }
-      it { is_expected.to have_school_search_field }
+      it { is_expected.to have_search_field }
 
       it 'should should display search page' do
         pending('failing potentially because of javascript')

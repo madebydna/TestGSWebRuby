@@ -7,10 +7,12 @@ LocalizedProfiles::Application.configure do
   # and recreated between test runs. Don't rely on the data there!
   config.cache_classes = false
 
-  config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
+  # to upgrade to rails 4.2 required to comment out precompile of these fonts
+  # TODO: find better solution
+  # config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = true
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
   # Do not eager load code on boot.
@@ -58,5 +60,10 @@ LocalizedProfiles::Application.configure do
   config.hub_mapping_cache_time = 60 * 24
   config.hub_config_cache_time = 10
 
-  config.logger = ActiveSupport::Logger.new(ENV_GLOBAL['log_file']) if ENV_GLOBAL['log_file']
+  if ENV_GLOBAL['log_file']
+    log_dir = File.dirname(ENV_GLOBAL['log_file'])
+    FileUtils.mkdir_p(log_dir)
+    config.logger = ActiveSupport::Logger.new(ENV_GLOBAL['log_file'])
+  end
+
 end

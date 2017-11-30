@@ -2,5 +2,5 @@
 es:
   modals:
     save_search_modal:
-      header: Guarda tu búsqueda.
+      heading: Guarda tu búsqueda.
       subheading: Antes de que podamos salvar a su búsqueda , tendrás que iniciar sesión o crear una cuenta .

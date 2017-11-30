@@ -15,6 +15,14 @@ module UrlHelper
     end
   end
 
+  def ratings_path_for_lang
+    if I18n.locale == :es
+      ratings_spanish_path
+    else
+      ratings_path
+    end
+  end
+
   # This function should be used when you need to look up a parameter by its name.
   # To revert, use gs_legacy_url_decode
   def gs_legacy_url_encode(param)
@@ -120,34 +128,30 @@ module UrlHelper
     "#{ENV_GLOBAL['catalog_server']}/#{path}".gsub('//','/').gsub('//','/').sub(':/', '://')
   end
 
-  %w(school school_details school_quality school_reviews school_user).each do |helper_name|
+  %w(school school_user).each do |helper_name|
     define_method "#{helper_name}_path" do |school, params_hash = {}|
-      if school == nil
+      if school.nil?
         params = school_params_hash params_hash
-        is_preschool = params_hash[:preschool]
       else
         params = school_params school
         params.merge! params_hash
-        is_preschool = school.preschool?
       end
 
-      if is_preschool
-        send "pre#{helper_name}_path", params
-      else
-        super params
-      end
+      super params
     end
     define_method "#{helper_name}_url" do |school, params_hash = {}|
       params = school_params school
       params.merge! params_hash
-      if school.preschool?
-        # If we dont add the pk subdomain here, the url's subdomain will default to non-pk subdomain
-        # and although the user will get to the right page when they click the link,
-        # it will happen via a 301 redirect, which we dont want
-        send "pre#{helper_name}_url", (params.merge(host: ENV_GLOBAL['app_pk_host']))
-      else
-        super params
-      end
+      super params
+    end
+  end
+
+  %w(school_details school_quality school_reviews).each do |helper_name|
+    define_method "#{helper_name}_path" do |school, params_hash = {}|
+      school_path school, params_hash
+    end
+    define_method "#{helper_name}_url" do |school, params_hash = {}|
+      school_url school, params_hash
     end
   end
 
@@ -167,6 +171,14 @@ module UrlHelper
       s_cid: tracking_code
     )
     path = verify_email_url(verification_link_params)
+  end
+
+  # remove hash/anchor if it exists - write anchor to current url.
+  # @param  s [String] a full URL or URL path
+  def set_anchor(s, anchor)
+    uri = Addressable::URI.parse(s)
+    uri.fragment = anchor.present? ? anchor : ''
+    uri.to_s
   end
 
   #
@@ -292,14 +304,14 @@ module UrlHelper
   # Input: hash for a school with id, state, city, name
   # Output: returns a string of the url to the profile
   def school_hash_to_url_for_profile(school_hash)
-   normalized_name =  encode_school_name(school_hash['name'])
-   city_name = gs_legacy_url_encode(school_hash['city'])
-   state_name = gs_legacy_url_encode(States.state_name(school_hash['state']))
-   school_id = school_hash['id']
-   return nil unless normalized_name && city_name && state_name && school_id
-   school_url = "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
-   school_url += "?lang=#{params[:lang]}" if params[:lang]
-   school_url
+    normalized_name =  encode_school_name(school_hash['name'])
+    city_name = gs_legacy_url_encode(school_hash['city'])
+    state_name = gs_legacy_url_encode(States.state_name(school_hash['state']))
+    school_id = school_hash['id']
+    return nil unless normalized_name && city_name && state_name && school_id
+    school_url = "/#{state_name}/#{city_name}/#{school_id}-#{normalized_name}/"
+    school_url += "?lang=#{params[:lang]}" if params[:lang]
+    school_url
   end
 
 end

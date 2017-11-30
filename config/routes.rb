@@ -1,11 +1,6 @@
 
 LocalizedProfiles::Application.routes.draw do
   require 'states'
-  require 'regular_subdomain'
-  require 'preschool_subdomain'
-  require 'path_with_period'
-
-  devise_for :admins, path: '/admin/gsr/school-profiles'
 
   root 'home#show'
   get ENV_GLOBAL['home_path'], as: :home, to: 'home#show'
@@ -22,6 +17,9 @@ LocalizedProfiles::Application.routes.draw do
   get '/reviews/', as: :review_choose_school, to: 'review_school_chooser#show'
   get '/morgan-stanley/', as: :morgan_stanley, to: 'review_school_chooser#morgan_stanley'
 
+
+
+  
 
   #get '/gsr/pyoc', to: 'pyoc#print_pdf' , as: :print_pdf
 
@@ -70,6 +68,8 @@ LocalizedProfiles::Application.routes.draw do
 
   get '/search/search.page', as: :search, to: 'search#search'
 
+  get '/search/nearbySearch.page', as: :search_by_zip, to: 'search#by_zip'
+
   get '/find-schools/', as: :default_search, to: 'search#default_search'
   # get '/find-schools/', as: :default_search, to: 'home#show'
 
@@ -91,6 +91,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/official-school-profile/', to: 'osp_landing#show',as: :osp_landing
   match '/official-school-profile/register.page', to: 'osp_registration#new', as: :osp_registration, via: [:get]
   match '/official-school-profile/register.page', to: 'osp_registration#submit',as: :osp_registration_submit, via: [:post]
+  get '/official-school-profile/dashboard/', to: 'osp_landing#dashboard', as: :osp_dashboard
 
    get '/official-school-profile/registration-confirmation', to: 'osp_confirmation#show',as: :osp_confirmation
 
@@ -105,6 +106,14 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/user/account_subscriptions', to: 'subscriptions#create_subscription_from_account_page', as: 'create_subscription_from_account_page'
   get '/gsr/ajax/community-scorecard/get-school-data', to: 'community_scorecards_ajax#get_school_data'
   get '/gsr/footer', to: 'footer#show'
+  get '/gsr/header', to: 'header#show'
+
+  get '/widget/', :to => 'widget#show', as: :widget
+  post '/widget/', :to => 'widget#create'
+  match '/widget/map' => 'widget#map_and_links', via: [:get, :post]
+  match '/widget/schoolSearch.page' => 'widget#map', via: [:get, :post]
+
+  get "/interstitial/", to: "interstitial_ad#show", as: "interstitial_ad"
 
   # todo delete this when java is gone
   get '/approve_provisional_osp_user_data', as: :approve_provisional_osp_user_data, to: 'approve_provisional_osp_user_data#approve_provisional_osp_user_data'
@@ -117,17 +126,17 @@ LocalizedProfiles::Application.routes.draw do
     get '/about/aboutUs.page', as: :our_mission
     get '/about/senior-management.page', as: :our_people
     get '/jobs/', as: :jobs
-    get '/about/feedback.page', as: :contact_us
+    get '/gk/contact/', as: :contact_us
     get '/about/advertiserOpportunities.page', as: :advertise
     get '/about/partnerOpportunities.page', as: :partners
     get '/about/pressRoom.page', as: :media_room
     get '/about/linkToUs.page', as: :widgets_and_tools
     get '/about/licensing.page', as: :licensing
     get '/about/ratings.page', as: :how_we_rate_schools
-    get '/terms/', as: :terms_of_use
-    get '/about/guidelines.page', as: :school_review_guidelines
-    get '/privacy/', as: :privacy
-    get '/about/gsFaq.page', as: :faq
+    get '/gk/terms/', as: :terms_of_use
+    get '/gk/review-guidelines', as: :school_review_guidelines
+    get '/gk/privacy/', as: :privacy
+    get '/gk/faq/', as: :faq
     get '/gk/back-to-school/', as: :back_to_school
     get '/gk/worksheets/', as: :worksheets_and_activities
     get '/gk/category/dilemmas/', as: :parenting_dilemmas
@@ -141,7 +150,6 @@ LocalizedProfiles::Application.routes.draw do
     get '/account/', as: :my_account
     get '/official-school-profile/register.page?city=:city&schoolId=:school_id&state=:state', as: :osp_register
     get '/school/QandA/form.page?schoolId=:school_id&state=:state', as: :osp_form
-    get '/official-school-profile/dashboard/', as: :osp_dashboard
     get '/gk/videos/choose-elementary-school-video/', as: :help_me_e_video
     get '/gk/videos/choose-middle-school-video/', as: :help_me_m_video
     get '/gk/videos/choose-high-school-video/', as: :help_me_h_video
@@ -150,10 +158,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/healthy-kids.topic?content=2504', as: :health_and_wellness_article
     get '/gk/road-to-college/', as: :college_articles
     get '/STEM.topic?content=8021', as: :stem_article
-    get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
-    get '/schools/cities/:state_long/:state_short', as: :city_list
-    get '/schools/districts/:state_long/:state_short', as: :district_list
-    get '/school-district-boundaries-map/', as: :district_boundary
+    # get '/schools/cities/:state_long/:state_short/:letter', as: :city_alphabet
+    # get '/schools/cities/:state_long/:state_short', as: :city_list
+    # get '/schools/districts/:state_long/:state_short', as: :district_list
     get '/about/guidelines.page', as: :review_guidelines
     get '/gk/moving-with-kids/', as: :moving
     get '/gifted-and-advanced-learners.topic?content=8038', as: :advanced_learners
@@ -165,6 +172,9 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/levels/high-school/', as: :gk_levels_high_school
     get '/gk/cue-cards/', as: :gk_cue_cards
     get '/gk/levels/high-school-es/', as: :gk_levels_high_school_es
+    get '/gk/summary-rating/', as: :summary_rating
+    get '/gk/grade-by-grade-newsletter/', as: :grade_by_grade_newsletter
+    get '/gk/about/research-reports/', as: :research_reports
 
     get '/gk/articles/imagining-your-ideal-school-set-your-priorities/', as: :ideal_school
     get '/gk/articles/redshirting-kindergarten/', as: :when_to_start_kindergarten
@@ -210,29 +220,54 @@ LocalizedProfiles::Application.routes.draw do
     get '/gk/videos/choose-high-school-video/', as: :choose_high_video
     get '/find-a-school/slideshows/3446-choosing-a-high-school.gs', as: :choose_high_slideshow
     get '/gk/articles/insider-tricks-for-assessing-high-schools/', as: :assessing_high
+    get '/gk/articles/like-a-sponge/', as: :podcasts
     get '/gk/partners', as: :gk_partners
     get '/gk/licensing', as: :gk_licensing
     get '/gk/sponsorship', as: :sponsorship
     get '/gk/advertising', as: :advertising
     get '/gk/careers', as: :careers
-    get '/gk/funders', as: :funders
+    get '/gk/supporters', as: :supporters
     get '/gk/about', as: :about
     get '/gk/category/school-life/', as: :school_life
     get '/gk/category/academics/reading-2/', as: :reading
     get '/gk/category/academics/math-2/', as: :math
+    get '/gk/articles/the-achievement-gap-is-your-school-helping-all-students-succeed/', as: :article_achievement_gap
+    get '/gk/ratings/',  as: :ratings
+    get '/gk/como-clasificamos/',  as: :ratings_spanish
+    get '/gk/api-terms-use', as: :api_terms_of_use
 
 
     get '/status/error404.page'
   end
 
+  get '/api/request-api-key/', to: 'admin/api_accounts#register', as: :request_api_key
+  get '/api/request-api-key/success/', to: 'admin/api_accounts#success', as: :request_api_key_success
+  post '/api/request-api-key/', to: 'admin/api_accounts#create_api_account', as: :post_request_api_key
+
+
+  namespace :api, controller: 'api', path:'/gsr/api' do
+    resource :session
+    resource :school_user_digest
+    resource :nearby_schools
+    resources :schools
+    resources :reviews do
+      get 'count', on: :collection
+    end
+    resources :districts
+    resource :widget_logs, only: [:create]
+    resources :students
+  end
+
+  match '/api/docs/:page', to: 'api_documentation#show', via: [:get], as: :api_docs
+
   namespace :admin, controller: 'admin', path: '/admin/gsr' do
-    get '/omniture-test', to: :omniture_test, as: :omniture_test
-    get '/info', to: :info
-    get '/examples-and-gotchas', to: :examples_and_gotchas
+    resources :api_accounts, except: [:show, :destroy]
+    post '/api_accounts/create_api_key', to: 'api_accounts#create_api_key', as: :create_api_key
+    get '/omniture-test', action: :omniture_test, as: :omniture_test
+    get '/info', action: :info
+    get '/examples-and-gotchas', action: :examples_and_gotchas
 
     scope '/school-profiles', as: :school_profiles do
-      get '/help', to: 'admin#help'
-      mount RailsAdmin::Engine => '', :as => 'rails_admin'
     end
 
     get '/style-guide/', to: 'style_guide#index'
@@ -242,6 +277,7 @@ LocalizedProfiles::Application.routes.draw do
 
 
     post '/reviews/ban_ip' , to:'reviews#ban_ip', as: :ban_ip
+    get '/first-active-school-url-per-state', to: 'first_active_school_url_per_state#show'
 
     scope ':state', constraints: { state: States.any_state_name_regex } do
       resources :schools do
@@ -277,12 +313,15 @@ LocalizedProfiles::Application.routes.draw do
     end
 
     resources :data_load_schedules, path: '/data-planning'
+
+    get '/duplicate-membership', to: 'osp_demigod#show'
+    post '/duplicate-membership', to: 'osp_demigod#create'
   end
   post '/gsr/ajax/wordpress_submit', to: 'wordpress_interface#call_from_wordpress', as: :call_from_wordpress
   post '/gsr/reviews/:id/flag', to: 'reviews#flag', as: :flag_review
+  post '/gsr/reviews/', to: 'reviews#create', as: :create_reviews
   post '/gsr/reviews/:id/vote', :to => 'review_votes#create'
   post '/gsr/reviews/:id/unvote', :to => 'review_votes#destroy'
-  get '/gsr/ajax/reviews_pagination', :to => 'localized_profile_ajax#reviews_pagination'
   get '/gsr/ajax/get_cities', :to => 'simple_ajax#get_cities'
   get '/gsr/ajax/get_schools', :to => 'simple_ajax#get_schools'
   get '/gsr/ajax/get_school_and_forward', to: 'simple_ajax#get_school_and_forward', as: :get_school_and_forward
@@ -291,27 +330,28 @@ LocalizedProfiles::Application.routes.draw do
   # Route to handle ajax "email available" validation
   get '/gsr/validations/email_available', :to => 'user#email_available'
   get '/gsr/validations/need_to_signin', :to => 'user#need_to_signin'
-  get '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
-  get '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
-  get '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
+  post '/gsr/user/save_city_state', :to => 'user#update_user_city_state'
+  post '/gsr/user/save_grade_selection', :to => 'user#update_user_grade_selection'
+  post '/gsr/user/delete_grade_selection', :to => 'user#delete_user_grade_selection'
 
   resources :subscriptions, except: [:index], path: '/gsr/user/subscriptions'
   get '/gsr/user/subscriptions', to: 'subscriptions#subscription_from_link', as: 'create_subscription_from_link'
   resources :favorite_schools, except: [:index], path: '/gsr/user/favorites'
 
   get '/gsr/modals/signup_and_follow_school_modal',:to=> 'modals#signup_and_follow_school_modal', as: :signup_and_follow_school_modal
+  get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
+  get '/gsr/modals/dependencies', to: 'modals#dependencies'
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
   match '/logout', :to => 'signin#destroy', :as => :logout, via: [:get, :post, :delete]
-  match '/gsr/session/facebook_connect' => 'signin#facebook_connect', :as => :facebook_connect, via: [:get, :post]
-  match '/gsr/session/facebook_callback' => 'signin#facebook_callback', :as => :facebook_callback, via: [:get, :post]
   match '/gsr/session/facebook_auth' => 'signin#facebook_auth', :as => :facebook_auth, via: [:get, :post]
   match '/gsr/session/post_registration_confirmation' => 'signin#post_registration_confirmation', :as => :post_registration_confirmation, via: [:get, :post]
   # This route needs to be either merged with authenticate_token, or renamed to be more consistent with that one
   # JIRA: JT-385
   get '/gsr/user/verify', as: :verify_email, to: 'signin#verify_email'
+  get '/school-district-boundaries-map', as: :district_boundary, to: 'district_boundaries#show'
 
   # post '/gsr/:state/:city/:schoolId-:school_name/reviews/create', to: 'reviews#create', as: :school_ratings, constraints: {
   #     state: States.any_state_name_regex,
@@ -340,6 +380,12 @@ LocalizedProfiles::Application.routes.draw do
   get '/account/password', to: 'password#show'
 
 
+  get '/admin/gsr/osp-moderation', to: 'osp_moderation#index', as: :osp_moderation_index
+  post '/admin/gsr/osp-moderation', to: 'osp_moderation#update', as: :osp_moderation_update
+  get '/admin/gsr/osp-search', to: 'osp_moderation#osp_search', as: :osp_search
+  get '/admin/gsr/osp/:id', to: 'osp_moderation#edit', as: :osp_edit
+  post '/admin/gsr/osp/:id', to: 'osp_moderation#update_osp_list_member', as: :osp_update_list_member
+
   scope '/community/:collection_id-:collection_name',
     as: :community,
     constraints: {
@@ -350,115 +396,130 @@ LocalizedProfiles::Application.routes.draw do
       get '', to: 'community#home', as: :home
     end
 
-  constraints(RegularSubdomain) do
-    get '/join', :to => 'signin#new_join', :as => :join
-    get '/gsr/login', :to => 'signin#new', :as => :signin
+  get '/join', :to => 'signin#new_join', :as => :join
+  get '/gsr/login', :to => 'signin#new', :as => :signin
 
-    scope '/:state', as: :state, constraints: {
-        state: States.any_state_name_regex,
-    } do
-      get '', to: 'states#show'
-      get 'browse', to: 'states#foobar', as: :browse
-      get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
-      get 'guided-search', to: 'guided_search#show', as: :guided_search
-      get 'events', to: 'states#events', as: :events
-
+  scope '/:state', as: :state, constraints: {
+      state: States.any_state_name_regex,
+  } do
+    get '', to: 'states#show'
+    get 'browse', to: 'states#foobar', as: :browse
+    get 'choosing-schools', to: 'states#choosing_schools', as: :choosing_schools
+    get 'guided-search', to: 'guided_search#show', as: :guided_search
+    get 'events', to: 'states#events', as: :events
 
 
-      get 'enrollment', to: 'states#enrollment', as: :enrollment
-      scope '/enrollment', as: :enrollment do
-        get '/:tab', to: 'states#enrollment'
-      end
 
-      scope '/education-community', as: :education_community do
-        get '', to: 'states#community'
-        get '/education', to: 'states#community'
-        get '/funders', to: 'states#community'
-        get '/partner', to: 'states#community', as: :partner
-      end
+    get 'enrollment', to: 'states#enrollment', as: :enrollment
+    scope '/enrollment', as: :enrollment do
+      get '/:tab', to: 'states#enrollment'
     end
 
-    # Routes for school profile pages
-    # This needs to go before the city routes because we want to capture the
-    # ID-school_name pattern first and be looser about district names
-    scope '/:state/:city/:schoolId-:school_name', as: :school, constraints: {
-        format: false,
-        state: States.any_state_name_regex,
-        schoolId: /\d+/,
-        school_name: /.+/,
-        # This city regex allows for all characters except /
-        # http://guides.rubyonrails.org/routing.html#specifying-constraints
-        city: /[^\/]+/,
-    } do
-      get 'quality', to: 'school_profile_quality#quality', as: :quality
-      get 'details', to: 'school_profile_details#details', as: :details
-      # TODO: The reviews index action should use method on controller called 'index' rather than 'reviews'
-      resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
-      resources :reviews, only: [:create], controller: 'school_profile_reviews'
-      # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
-      resource :user, only: [:create], controller: 'school_user', action: 'create'
-      get '', to: 'school_profile_overview#overview'
+    scope '/education-community', as: :education_community do
+      get '', to: 'states#community'
+      get '/education', to: 'states#community'
+      get '/funders', to: 'states#community'
+      get '/partner', to: 'states#community', as: :partner
     end
+  end
 
-    # Routes for city page
-    scope '/:state/:city', as: :city, constraints: {
-      # Format: false allows periods to be in path segments.
-      # This then needs to be paired with a regex constraint for each path component.
-      # So in this hash there needs to be state and city and down below there's a constraint 
-      # with the district segment's contrainst.
+  # Routes for school profile pages
+  # This needs to go before the city routes because we want to capture the
+  # ID-school_name pattern first and be looser about district names
+  scope '/:state/:city/:schoolId-:school_name/', as: :school, constraints: {
       format: false,
       state: States.any_state_name_regex,
+      schoolId: /\d+/,
+      school_name: /[^\/]+/,
       # This city regex allows for all characters except /
       # http://guides.rubyonrails.org/routing.html#specifying-constraints
       city: /[^\/]+/,
     } do
+    get "(:path)", to: "school_profiles#show"
 
-      get '', to: 'cities#show'
-      get 'events', to: 'cities#events', as: :events
-      get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
-      get 'enrollment', to: 'cities#enrollment', as: :enrollment
-      get 'schools', to: 'error#page_not_found', as: :browse
-      get 'guided-search', to: 'guided_search#show', as: :guided_search
+#     Old Profile Route
+    resources :reviews, only: [:create], controller: 'school_profile_reviews'
+    # e.g. POST /california/alameda/1-alameda-high-school/members to create a school_user association
+    resource :user, only: [:create], controller: 'school_user', action: 'create'
+  end
 
-      scope '/enrollment', as: :enrollment do
-        get '/:tab', to: 'cities#enrollment'
-      end
-      get 'programs', to: 'cities#programs', as: :programs
 
-      scope '/education-community', as: :education_community do
-        get '', to: 'cities#community'
-        get '/education', to: 'cities#community'
-        get '/funders', to: 'cities#community'
-        get '/partner', to: 'cities#partner', as: :partner
-      end
+  # Routes for city page
+  scope '/:state/:city', as: :city, constraints: {
+    # Format: false allows periods to be in path segments.
+    # This then needs to be paired with a regex constraint for each path component.
+    # So in this hash there needs to be state and city and down below there's a constraint
+    # with the district segment's contrainst.
+    format: false,
+    state: States.any_state_name_regex,
+    # This city regex allows for all characters except /
+    # http://guides.rubyonrails.org/routing.html#specifying-constraints
+    city: /[^\/]+/,
+  } do
 
-      # NOTE: this must come last in the city scope, because it will match
-      # anything after the cty name
-      get '/:district', to: 'districts#show', as: :district, constraints: {
-        # This city regex allows for all characters except / and the word preschools
-        # http://guides.rubyonrails.org/routing.html#specifying-constraints
-        district: /(?!preschools)[^\/]+/
-      }
+    get '', to: 'cities#show'
+    get 'events', to: 'cities#events', as: :events
+    get 'choosing-schools', to: 'cities#choosing_schools', as: :choosing_schools
+    get 'enrollment', to: 'cities#enrollment', as: :enrollment
+    get 'schools', to: 'error#page_not_found', as: :browse
+    get 'guided-search', to: 'guided_search#show', as: :guided_search
+
+    scope '/enrollment', as: :enrollment do
+      get '/:tab', to: 'cities#enrollment'
+    end
+    get 'programs', to: 'cities#programs', as: :programs
+
+    scope '/education-community', as: :education_community do
+      get '', to: 'cities#community'
+      get '/education', to: 'cities#community'
+      get '/funders', to: 'cities#community'
+      get '/partner', to: 'cities#partner', as: :partner
     end
 
-    # NOTE: this must come after the city scope, because it will match anything after the city name
-    # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*
-    get '/:state/:city/:district', to: 'districts#show', as: :district, constraints: {
-        format: false,
-        state: States.any_state_name_regex,
-        city: /[^\/]+/,
-        district: /(?!preschools)[^\/]+/
+    # NOTE: this must come last in the city scope, because it will match
+    # anything after the cty name
+    get '/:district', to: 'districts#show', as: :district, constraints: {
+      # This city regex allows for all characters except / and the word preschools
+      # http://guides.rubyonrails.org/routing.html#specifying-constraints
+      district: /(?!preschools)[^\/]+/
     }
-
-    # Handle legacy school overview URL. Will cause a 301 redirect. Another redirect (302) will occur since the URL we're redirecting to isn't the canonical URL
-    get '/school/overview.page', to: redirect { |params, request|
-          if request && request.query_parameters.present? && request.query_parameters[:state] && request.query_parameters[:id]
-            "/#{States.state_name(request.query_parameters[:state])}/city/#{request.query_parameters[:id]}-school-name/"
-          else
-            '/status/error404.page'
-          end
-        }
   end
+
+  # NOTE: this must come after the city scope, because it will match anything after the city name
+  # TODO: DRY this up. Or delete the above version and rename all city_district_* helpers to district_*
+  get '/:state/:city/:district', to: 'districts#show', as: :district, constraints: {
+      format: false,
+      state: States.any_state_name_regex,
+      city: /[^\/]+/,
+      district: /(?!preschools)[^\/]+/
+  }
+
+  get '/ads/leadGen.page', to: 'lead_gen#show'
+  post '/ads/leadGen.page', to: 'lead_gen#save'
+
+  get '/school/overview.page', to: 'legacy_profile_redirect#show'
+  get '/school/parentReviews.page', to: 'legacy_profile_redirect#show'
+  get '/school/rating.page', to: 'legacy_profile_redirect#show'
+  get '/school/mapSchool.page', to: 'legacy_profile_redirect#show'
+  get '/school/testScores.page', to: 'legacy_profile_redirect#show'
+  get '/school/teachersStudents.page', to: 'legacy_profile_redirect#show'
+  get '/school/research.page', to: 'legacy_profile_redirect#show'
+  get '/survey/form.page', to: 'legacy_profile_redirect#show'
+  get '/survey/results.page', to: 'legacy_profile_redirect#show'
+  get '/survey/start.page', to: 'legacy_profile_redirect#show'
+  get '/survey/startResults.page', to: 'legacy_profile_redirect#show'
+
+  # Handle legacy cities.page
+  get '/cities.page', to: redirect { |_, request|
+    state = (request && request.query_parameters.present? && request.query_parameters[:state].present?) ? States.state_path(request.query_parameters[:state].downcase) : nil
+    if state && request.query_parameters[:city].present?
+      "/#{state}/#{request.query_parameters[:city].downcase.gsub(' ', '-')}/"
+    elsif state
+      "/#{state}/"
+    else
+      '/'
+    end
+  }
 
   # Handle preschool URLs
   scope '/:state/:city/preschools/:school_name/:schoolId/(/*other)', as: :preschool, constraints: {
@@ -470,22 +531,36 @@ LocalizedProfiles::Application.routes.draw do
       city: /[^\/]+/,
   } do
 
-    get 'quality', to: 'school_profile_quality#quality', as: :quality
-    get 'details', to: 'school_profile_details#details', as: :details
-    resources :reviews, only: [:index], controller: 'school_profile_reviews', action: 'reviews'
     resources :reviews, only: [:create], controller: 'school_profile_reviews'
     resource :user, only: [:create], controller: 'school_user', action: 'create'
-    get '', to: 'school_profile_overview#overview'
+    get '', to: 'school_profiles#show'
   end
 
-  constraints(PathWithPeriod) do
-    match '*path', to: redirect(PathWithPeriod.method(:url_without_period_in_path)), via: [:get, :post]
+  #Handle old city homepage structure
+  get '/city/:city/:state_abbr(/*other)', to: 'cities_list#old_homepage', constraints: {
+      city: /[^\/]+/
+  }
+
+  #Handle City SEO pages
+  get '/schools/cities/:state_name/:state_abbr/', to: 'cities_list#show', as: 'cities_list'
+
+  scope '/schools/cities/:state_name/:state_abbr/:letter', as: 'cities_list_paginated' do
+    get '', to: redirect { |params, _|
+      "/schools/cities/#{params[:state_name]}/#{params[:state_abbr]}/"
+    }
   end
 
-  constraints(PreschoolSubdomain) do
-    # If a url is on pk subdomain and matches no other routes, remove the pk subdomain and redirect
-    match '*path', to: redirect(PreschoolSubdomain.method(:current_url_without_pk_subdomain)), via: [:get, :post]
+  #Handle District SEO pages
+  get '/schools/districts/:state_name/:state_abbr/', to: 'districts_list#show', as: 'districts_list'
+
+  scope '/schools/districts/:state_name/:state_abbr/:letter', as: 'districts_list_paginated' do
+    get '', to: redirect { |params, _|
+      "/schools/districts/#{params[:state_name]}/#{params[:state_abbr]}/"
+    }
   end
+
+  #Handle old School list SEO pages (has to come below cities_list and districts_list routes)
+  get '/schools/:state_name/:state_abbr/', to: 'schools_list#show', as: :schools_list
 
   # error handlers
   match '/error/page_not_found' => 'error#page_not_found', :as => :page_not_found, via: [:get, :post]

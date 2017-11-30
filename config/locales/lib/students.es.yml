@@ -1,0 +1,8 @@
+es:
+  lib:
+    students:
+      'title': 'Las fuentes de datos y informacion de los perfiles de GreatSchools'
+      'source': 'Fuente'
+      'ethnicity': 'Ethnicity'
+      'gender': 'El Sexo'
+      'subgroups': 'Subgroups'

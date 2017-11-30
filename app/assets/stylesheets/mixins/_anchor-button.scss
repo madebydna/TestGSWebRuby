@@ -1,0 +1,21 @@
+@mixin anchor-button {
+  height: $form-field-medium-height;
+  display: inline-block;
+  border: 1px solid $form-field-border-color;
+  border-radius: $form-field-border-radius;
+  background-image: linear-gradient(to bottom, #ffffff, #f4f5f7);
+  padding-left: 15px;
+  padding-right: 15px;
+  text-decoration: none;
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+  > div {
+    vertical-align: middle;
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+}

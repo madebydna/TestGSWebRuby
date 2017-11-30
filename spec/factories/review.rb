@@ -33,13 +33,14 @@ FactoryGirl.define do
             review.id = nil
           end
           strategy = :build_stubbed if strategy == :stub
-          answer_value = evaluator.answer_value
+          answer_value = evaluator.answer_value.to_s
+
           answer = evaluator[:answer] || send(strategy, :review_answer, review: review, answer_value: answer_value )
-          review.answers << answer
           answer.review = review
 
           # Add back the ID that the factory generated
           unless strategy == :create
+            review.answers << answer
             review.id = id
           end
         end
@@ -52,6 +53,35 @@ FactoryGirl.define do
           split(',').sample
       end
       association :question, factory: :teacher_question, strategy: :build
+      [:build, :stub, :create].each do |strategy|
+        after(strategy) do |review, evaluator|
+          # http://stackoverflow.com/questions/17754770/factorygirl-build-stubbed-strategy-with-a-has-many-association
+          unless strategy == :create
+            id = review.id
+            review.id = nil
+          end
+          strategy = :build_stubbed if strategy == :stub
+          answer_value = evaluator.answer_value
+          answer = evaluator[:answer] || send(
+            strategy,
+            :review_answer,
+            review: review,
+            answer_value: answer_value
+          )
+          review.answers << answer
+          unless strategy == :create
+            review.id = id
+          end
+        end
+      end
+    end
+
+    factory :homework_review do
+      ignore do
+        answer_value 'Very ineffective,Ineffective,Moderately effective,Effective,Very effective'.
+          split(',').sample
+      end
+      association :question, factory: :homework_question, strategy: :build
       [:build, :stub, :create].each do |strategy|
         after(strategy) do |review, evaluator|
           # http://stackoverflow.com/questions/17754770/factorygirl-build-stubbed-strategy-with-a-has-many-association

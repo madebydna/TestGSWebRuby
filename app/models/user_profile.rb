@@ -1,17 +1,10 @@
 class UserProfile < ActiveRecord::Base
   self.table_name = 'user_profile'
   db_magic :connection => :gs_schooldb
-
   belongs_to :user, foreign_key: 'member_id'
 
   before_save :update_timestamps
 
-  def active
-    read_attribute(:active) == "\x01" ? true : false
-  end
-  def active?
-    active == true
-  end
   def inactive?
     ! active?
   end

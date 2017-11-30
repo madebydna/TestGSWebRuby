@@ -1,8 +1,0 @@
----
-es:
-  school_profile:
-    data_layouts:
-      enrollment:
-        applications_due: Fecha límite de aplicaciones
-        applications_due_choice_admission_text: Aplicaciones debidas para la mayoría de las escuelas. Consulte la política de admisión opción para obtener más detalles.
-        students_accepted_text: Los estudiantes aceptados para el %{year} año escolar
