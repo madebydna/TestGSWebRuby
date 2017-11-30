@@ -5,8 +5,8 @@ class UserSubscriptions
   end
 
   def get
-    sub_whitelist = ['greatnews', 'greatkidsnews', 'sponsor', 'mystat', 'mystat_private', 'mystat_unverified']
-    @user.subscriptions.map {|subscription| subscription.list.to_sym if subscription.list && sub_whitelist.include?(subscription.list) }
+    # Subscription#have_available? checks against a whitelist of subscription list values
+    @user.subscriptions.map { |sub| sub.list.to_sym if sub.list }.compact.select { |list| Subscription.have_available?(list) }
   end
 end
 
