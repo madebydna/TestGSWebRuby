@@ -7,8 +7,11 @@ import log from 'util/log';
 let $ = window.jQuery;
 window.gon = window.gon || {};
 let advertising_enabled = gon.advertising_enabled;
+window.GS = window.GS || {};
+GS.ad = GS.ad || {};
+GS.ad.slot = GS.ad.slot || {};
 
-let slot = {};
+let slot = GS.ad.slot;
 let shownArray = [];
 let functionSlotDefinitionArray = [];
 let functionAdShowArray = [];
@@ -226,8 +229,6 @@ function enableAdCloseButtons() {
   });
 }
 
-window.GS = window.GS || {};
-GS.ad = GS.ad || {};
-GS.ad.showAd = showAd
+GS.ad.showAd = showAd;
 export { showAd, enableAdCloseButtons }
 
