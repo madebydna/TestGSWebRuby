@@ -342,6 +342,7 @@ LocalizedProfiles::Application.routes.draw do
   get '/gsr/modals/school_user_modal',:to=> 'modals#school_user_modal', as: :school_user_modal
   get '/gsr/modals/dependencies', to: 'modals#dependencies'
   get '/gsr/modals/:modal', to: 'modals#show', as: :modal
+  get '/gsr/assets', to: 'assets#show'
 
   post '/gsr/session/auth', :to => 'signin#create', :as => :authenticate_user
   match '/gsr/session/register_email', to: 'signin#register_email_unless_exists', :as => :register_email, via: [:post]
