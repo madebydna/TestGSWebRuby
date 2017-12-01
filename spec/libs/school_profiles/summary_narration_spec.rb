@@ -28,7 +28,6 @@ describe SchoolProfiles::SummaryNarration do
     end
 
     it 'Should return two fragments' do
-      puts subject
       expect(subject).to eq([before_fragment, after_fragment])
     end
   end
