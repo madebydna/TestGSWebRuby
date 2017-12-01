@@ -83,12 +83,23 @@ _.assign(GS.modal.EmailJoinModal.prototype, {
     }
   },
 
+  signUpForGradeByGrade: function signUpForGradeByGrade() {
+    var grades = this.getGrades();
+
+    if (grades.length > 0) {
+      return GS.subscription.gradeByGradeSignUp(this.getModalData());
+    } else {
+      return $.when();
+    }
+  },
+
   submitSuccessHandler: function submitSuccessHandler(event, jqXHR, options, data) {
     var _this = this;
 
     $.when(
       this.signUpForSponsorsList(),
-      this.createStudents()
+      this.createStudents(),
+      this.signUpForGradeByGrade()
     ).done(function(data1, data2) {
       _this.getDeferred().resolve(_.merge({}, jqXHR, data1, data2, _this.getModalData()));
     }).fail(function(data1, data2) {

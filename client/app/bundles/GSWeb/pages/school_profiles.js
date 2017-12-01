@@ -33,6 +33,7 @@ import { signupAndFollowSchool } from '../util/newsletters';
 import * as backToTop from '../components/back_to_top';
 import { impressionTracker } from '../util/impression_tracker';
 import { t } from '../util/i18n';
+import * as facebook from '../components/facebook_auth';
 import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
@@ -226,7 +227,7 @@ $(function() {
   // The tour modal will appear by default unless the user clicks 'Not right now'
   // When clicked we update the cookie to reflect the user's preference and make
   // sure the modal isn't displayed again.
-  $('#close-school-tour').click(function(){
+  $('body').on('click', '#close-school-tour', function() {
     $('.school-profile-tour-modal').remove();
     $('.tour-teaser').tipso({content: '<div><div><h3><img src="' + owlPng + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
     setCookie(PROFILE_TOUR_COOKIE, true);
@@ -326,12 +327,17 @@ $(function() {
     window.open(surveyUrl);
   });
 
+  $body.on('click', '.js-swd-modal', function(){
+    scrollToElement('#Reviews');
+    $('.remodal').remodal().close();
+  });
+
   $body.on('click', '.js-start-second-tour', function(){
       introJs.startSecondTutorial();
       return false;
   }).show();
 
-  $body.on('click', '#close-school-tour, .js-close-school-tour', function() {
+  $body.on('click', '.js-close-school-tour', function() {
     introJs.exit();
   });
 

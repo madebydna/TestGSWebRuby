@@ -81,6 +81,18 @@ export const greatNewsSignUp = function(options) {
   return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
 };
 
+export const gradeByGradeSignUp = function(options) {
+  options = options || {};
+  var subscriptionParams = merge(
+    {
+      list: 'greatkidsnews'
+    },
+    pick(options, ['email'])
+  );
+
+  return postSubscriptionViaAjax(subscriptionParams).always(showFlashMessages);
+};
+
 const showFlashMessages = function(jqXHR) {
   var data = jqXHR;
   if(jqXHR.hasOwnProperty('responseJSON')) {
