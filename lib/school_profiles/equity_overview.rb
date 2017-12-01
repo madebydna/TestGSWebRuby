@@ -132,14 +132,14 @@ module SchoolProfiles
         end
       else
         # reads from new ratings cache
-        equity_rating_hash = @school_cache_data_reader.equity_overview_rating_hash
+        equity_rating_hash = @school_cache_data_reader.equity_overview_rating_hash || {}
         OpenStruct.new.tap do |eo|
           eo.rating = equity_rating_hash['school_value']
           eo.description = equity_rating_hash['description']
           eo.methodology = equity_rating_hash['methodology']
           eo.year = @school_cache_data_reader.equity_overview_rating_year
           eo.source_name = equity_rating_hash['source_name']
-        end if equity_rating_hash.present?
+        end
       end
       )
     end

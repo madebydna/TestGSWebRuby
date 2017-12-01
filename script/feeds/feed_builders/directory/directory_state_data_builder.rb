@@ -22,7 +22,7 @@ module Feeds
     end
 
     def self.state_name
-      single_data_object('state-name',States.state_name(@state).capitalize)
+      single_data_object('state-name',States.labels_hash[@state.downcase])
     end
 
     def self.state

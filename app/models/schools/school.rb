@@ -18,12 +18,14 @@ class School < ActiveRecord::Base
   self.table_name='school'
   include StateSharding
 
-  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_school
+  attr_accessible :name, :state, :school_collections, :district_id, :city, :street, :fax, :home_page_url, :phone,:modified, :modifiedBy, :level, :type, :active, :new_profile_schoolnil
   attr_writer :collections
   has_many :school_metadatas
   belongs_to :district
 
   scope :held, -> { joins("INNER JOIN gs_schooldb.held_school ON held_school.school_id = school.id and held_school.state = school.state") }
+
+  scope :not_preschool_only, -> { where.not(level_code: 'p') }
 
   scope :active, -> { where(active: true) }
 
@@ -34,7 +36,7 @@ class School < ActiveRecord::Base
   end
 
   def self.ids_by_state(state)
-    School.on_db(state.downcase.to_sym).active.order(:id).select(:id).map(&:id)
+    School.on_db(state.downcase.to_sym).active.not_preschool_only.order(:id).select(:id).map(&:id)
   end
 
   def self.within_district(district)
