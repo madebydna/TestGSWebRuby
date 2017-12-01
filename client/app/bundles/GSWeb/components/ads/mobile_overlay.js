@@ -3,6 +3,7 @@ import { showAd, enableAdCloseButtons } from 'util/advertising';
 const adDomId = 'Mobile_overlay_Ad';
 const containerSelector = '.mobile-ad-sticky-bottom';
 let deferred;
+let $ = window.jQuery;
 
 export function renderAd() {
   /*
