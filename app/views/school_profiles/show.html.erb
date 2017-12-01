@@ -9,7 +9,9 @@
 <div class="school-profile">
     <%= render 'breadcrumbs', breadcrumbs: @school_profile.breadcrumbs %>
     <%= render 'hero', hero: @school_profile.hero %>
-    <%= render 'school_profile_sticky_cta_mobile', rating: @school_profile.hero.gs_rating %>
+    <% #render 'school_profile_sticky_cta_mobile', rating: @school_profile.hero.gs_rating %>
+    <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
+
     <!-- main content -->
     <div class="static-container">
       <div class="right_rail">
@@ -21,16 +23,16 @@
         </div>
         <div class="profile-section">
           <%= render 'toc' %>
-
         </div>
         <div>
-          <%= render 'school_profile_sticky_cta', rating: @school_profile.hero.gs_rating %>
+          <div id="cta_show"></div>
         </div>
         <%= render 'shared/ad', slot: 'Profiles_First', size_mapping: 'box_or_tall',
                    width: 300, height: 250, css_class: 'visible-xs visible-sm', id_counter: 2 %>
 
         <a class="anchor-mobile-offset" name="Academics"></a>
         <div class="profile-section">
+
           <div class="row">
             <div class="col-xs-12 col-lg-3">
               <div class="section-title">

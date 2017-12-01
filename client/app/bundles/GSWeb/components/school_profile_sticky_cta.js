@@ -51,7 +51,8 @@ var isCTADefined = function () {
 
 // setters
 var setCTAProfileOffset = function () {
-  ctaProfileOffset = cta.parent().offset().top;
+  ctaProfileOffset = $("#cta_show").parent().offset().top;
+  // ctaProfileOffset = cta.parent().offset().top;
 };
 
 var setCTARowHeightToParent = function () {
