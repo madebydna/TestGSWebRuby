@@ -6,7 +6,7 @@ describe RatingsCaching::GsdataRatingsCacher do
   let(:cacher) { RatingsCaching::GsdataRatingsCacher.new(school) }
 
   describe '#cache' do
-    after(:each) { clean_models :gsdata, DataValue, Source, DataType }
+    after(:each) { clean_models :gsdata, DataValue, Gsdata::Source, DataType }
     let(:source) { build(:source).tap { |obj| obj.on_db(:gsdata_rw).save } }
     let(:school_value) { (1..100).to_a.sample }
     let(:data_type_id) { RatingsCaching::GsdataRatingsCacher::DATA_TYPE_IDS.sample }
