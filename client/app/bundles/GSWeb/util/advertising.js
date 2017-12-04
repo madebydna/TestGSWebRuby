@@ -189,7 +189,7 @@ const showAd = function (divId) {
     var lastRefreshedTime = slotTimers[divId];
     if (lastRefreshedTime === undefined || (new Date().getTime() - lastRefreshedTime >= 1000)) {
       slotTimers[divId] = new Date().getTime();
-      googletag.pubads().refresh([slot[divId]]);
+      googletag.pubads().refresh([slots[divId]]);
     }
   }
 };
