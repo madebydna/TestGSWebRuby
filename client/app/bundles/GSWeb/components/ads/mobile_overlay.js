@@ -12,10 +12,8 @@ export function renderAd() {
    * But the container needs to be visible (yet still offscreen) when
    * we ask the ad server to fill.
    */
-  debugger;
   $(containerSelector).css('display', 'block');
   enableAdCloseButtons();
-  debugger;
   if($('#' + adDomId).is(":visible")) {
     showAd(adDomId);
   } else {

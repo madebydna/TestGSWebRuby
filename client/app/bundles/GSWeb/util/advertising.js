@@ -5,6 +5,8 @@ import {
 import log from 'util/log';
 
 let $ = window.jQuery;
+window.googletag = window.googletag || {};
+googletag.cmd = googletag.cmd || [];
 window.gon = window.gon || {};
 let advertising_enabled = gon.advertising_enabled;
 window.GS = window.GS || {};
@@ -44,7 +46,8 @@ const slotRenderedHandler = function(event) {
 //   Uses Adobe Audience Manager for setTargeting and gon.ad_set_targeting for setTargeting - both page level
 //
 /////////////////////////////////////////////////////////////////////////////
-$(window).on('load', function () {
+
+const init = function() {
   var dfp_slots = $(".gs_ad_slot").filter(":visible,[data-ad-defer-render]");
   if (gon.advertising_enabled && dfp_slots.length > 0) {
     googletag.cmd.push(function () {
@@ -75,7 +78,7 @@ $(window).on('load', function () {
       }
     });
   }
-});
+};
 
 const getSizeMappings = function() {
   return {
@@ -212,6 +215,7 @@ const addCompfilterToGlobalAdTargetingGon = function () {
   gon.ad_set_targeting['compfilter'] = randomCompFilterValue;
 }
 
+
 window.addEventListener('message', handleGhostTextMessages, false);
 
 ///// examples
@@ -229,6 +233,9 @@ function enableAdCloseButtons() {
   });
 }
 
+GS.ad.addCompfilterToGlobalAdTargetingGon = addCompfilterToGlobalAdTargetingGon;
 GS.ad.showAd = showAd;
-export { showAd, enableAdCloseButtons }
+GS.ad.slotRenderedHandler = slotRenderedHandler;
+GS.ad.init = init;
+export { init, showAd, enableAdCloseButtons }
 
