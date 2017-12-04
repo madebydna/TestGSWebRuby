@@ -127,6 +127,7 @@ const getSizeMappings = function() {
 };
 
 const defineSlot = function($adSlot) {
+  debugger;
   var sizeMappingMap = getSizeMappings();
   var slot = googletag.defineSlot(
     getSlotName($adSlot),
@@ -177,6 +178,7 @@ const showOrDefer = function($adSlot) {
 };
 
 const showAd = function (divId) {
+  debugger;
   if ($.inArray(divId, shownArray) == -1) {
     googletag.cmd.push(function () {
       shownArray.push(divId);
