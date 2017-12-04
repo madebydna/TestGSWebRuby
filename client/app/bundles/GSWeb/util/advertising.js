@@ -13,7 +13,7 @@ window.GS = window.GS || {};
 GS.ad = GS.ad || {};
 GS.ad.slot = GS.ad.slot || {};
 
-let slot = GS.ad.slot;
+let slots = GS.ad.slot;
 let shownArray = [];
 let functionSlotDefinitionArray = [];
 let functionAdShowArray = [];
@@ -129,7 +129,7 @@ const getSizeMappings = function() {
 const defineSlot = function($adSlot) {
   debugger;
   var sizeMappingMap = getSizeMappings();
-  var slot = googletag.defineSlot(
+  let slot = googletag.defineSlot(
     getSlotName($adSlot),
     getDimensions($adSlot),
     getDivId($adSlot)
@@ -138,7 +138,7 @@ const defineSlot = function($adSlot) {
   if (sizeMapping) {
     slot = slot.defineSizeMapping(sizeMapping);
   }
-  slot[getDivId($adSlot)] = slot.addService(googletag.pubads());
+  slots[getDivId($adSlot)] = slot.addService(googletag.pubads());
 };
 
 const getDivId = function (obj) {
