@@ -20,6 +20,8 @@ let functionAdShowArray = [];
 let googleId = '/1002894/';
 let slotTimers = {};
 
+
+
 const slotRenderedHandler = function(event) {
   if (event.isEmpty) {
     // Hide the entire containing div (which includes the ad div and the ghost text) as no ad has been rendered
@@ -47,7 +49,20 @@ const slotRenderedHandler = function(event) {
 //
 /////////////////////////////////////////////////////////////////////////////
 
+const loadGpt = function() {
+  (function () {
+    var gads = document.createElement('script');
+    gads.async = true;
+    gads.type = 'text/javascript';
+    var useSSL = "https:" == document.location.protocol;
+    gads.src = (useSSL ? "https:" : "http:") + "//www.googletagservices.com/tag/js/gpt.js";
+    var node = document.getElementsByTagName('script')[0];
+    node.parentNode.insertBefore(gads, node);
+  })();
+}
+
 const init = function() {
+  loadGpt();
   var dfp_slots = $(".gs_ad_slot").filter(":visible,[data-ad-defer-render]");
   if (gon.advertising_enabled && dfp_slots.length > 0) {
     googletag.cmd.push(function () {
