@@ -46,7 +46,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   .rr-nearby-school {
     width: 300px;
     border: solid 1px #AAAAAA;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     @include media-breakpoint-down(sm) {
       display:none;
     }
@@ -60,7 +60,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         width: 30px;
         display: inline-block;
         vertical-align: top;
-        padding-top: 7px;
+        padding-top: 5px;
       }
       .text {
         width: 240px;
@@ -68,6 +68,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
         padding-left: 10px;
 
         >a {
+          font-family: $font-family-base-bold;
           color:#26abe2;
         }
       }
@@ -75,7 +76,7 @@ $cta_icon_active_color: #2282b0; // Medium GS Blue
   }
 
   .rr-add-spacer-between-ads {
-    padding-bottom: 30px;
+    padding-bottom: 40px;
   }
 
   @include media-breakpoint-down(sm) {
