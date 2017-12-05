@@ -124,7 +124,7 @@ const getSizeMappings = function() {
           addSize([1200, 208], [[728,90], [630,250]]).
           addSize([1080, 290], [[630, 250], [300,250]]).
           addSize([0, 0], [300, 250]).
-          build()
+          build(),
     'thin_banner': googletag.sizeMapping().
             addSize([768, 120], [[728, 90]]).
             addSize([0, 0], [[320, 50]]).
