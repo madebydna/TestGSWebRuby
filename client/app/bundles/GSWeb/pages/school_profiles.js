@@ -40,11 +40,10 @@ import { scrollToElement } from '../util/scrolling';
 import { enableAutoAnchoring, initAnchorHashUpdater, scrollToAnchor } from '../components/anchor_router';
 import { assign } from 'lodash';
 import { init as initHeader } from '../header';
-import '../util/advertising';
 import * as validatingInputs from 'components/validating_inputs';
 import owlPng from 'school_profiles/owl.png';
 import { minimizeNudges as minimizeQualarooNudges } from 'util/qualaroo';
-import { enableAdCloseButtons } from 'util/advertising';
+import { init as initAdvertising, enableAdCloseButtons } from 'util/advertising';
 import {
   registerInterrupt,
   registerPredefinedInterrupts,
@@ -346,6 +345,8 @@ $(function() {
 });
 
 $(window).on('load', function() {
+  initAdvertising();
+
   var moduleIds = [
     '#TestScores',
     '#CollegeReadiness',

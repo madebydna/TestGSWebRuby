@@ -85,6 +85,7 @@
 <%= webpack_javascript_include_tag "mobile-overlay-ad", async: false %>
 <script type="text/javascript">
   $(window).on('load', function () {
+    GS.ad.init();
     if(window.googletag && googletag.cmd) {
       googletag.cmd.push(function () {
         GS_renderMobileOverlayAd()
