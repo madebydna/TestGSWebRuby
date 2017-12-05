@@ -174,17 +174,7 @@ export default class SchoolProfileComponent extends React.Component {
               </BasicDataModuleRow>)
             }
           </div>
-        }
-        else {
-          component = <div>
-            {values.map((value, index) =>
-              <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
-                <PersonBar {...value} use_gray={true}/>
-              </BasicDataModuleRow>)
-            }
-          </div>
-        }
-        else {
+        } else {
           component = <div>
             {values.map((value, index) =>
               <BasicDataModuleRow {...value} key={index.toString() + this.state.active}>
