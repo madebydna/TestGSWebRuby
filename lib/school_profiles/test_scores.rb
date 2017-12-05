@@ -33,12 +33,8 @@ module SchoolProfiles
       @school_cache_data_reader.test_scores_rating
     end
 
-    def historical_ratings
-      @school_cache_data_reader.historical_test_scores_ratings
-    end
-
     def show_historical_ratings?
-      historical_ratings.present? && historical_ratings.length > 1
+      false
     end
 
     def narration

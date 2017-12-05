@@ -221,32 +221,10 @@ describe SchoolCompareDecorator do
 
       context '#school_rating_by_name' do
 
-        it 'should return NO_RATING_TEXT with no argument' do
-          expect(decorated_school.school_cache.school_rating_by_id).to eq(CachedRatingsMethods::NO_RATING_TEXT)
-        end
 
-        it 'should return NO_RATING_TEXT with nil' do
-          expect(decorated_school.school_cache.school_rating_by_id(nil)).to eq(CachedRatingsMethods::NO_RATING_TEXT)
-        end
 
-        it 'should return the rating as an integer if there is one' do
-          expect(decorated_school.school_cache.school_rating_by_id(174)).to eq(10)
-          expect(decorated_school.school_cache.school_rating_by_id(174).class).to eq(Fixnum)
-        end
       end
 
-      context '#great_schools_rating_icon' do
-
-        it 'should default to the NR symbol' do
-          allow(decorated_school.school_cache).to receive(:ratings).and_return({})
-          expect(decorated_school.great_schools_rating_icon).to eq("<i class='iconx24-icons i-24-new-ratings-nr'></i>")
-        end
-
-        it 'should return the correct symbol when there is a rating' do
-          allow(decorated_school.school_cache).to receive(:great_schools_rating).and_return(10)
-          expect(decorated_school.great_schools_rating_icon).to eq("<i class='iconx24-icons i-24-new-ratings-10'></i>")
-        end
-      end
 
     end
   end

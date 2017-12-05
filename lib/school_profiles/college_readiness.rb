@@ -191,12 +191,8 @@ module SchoolProfiles
       ((1..10).to_a & [@school_cache_data_reader.college_readiness_rating]).first
     end
 
-    def historical_ratings
-      @school_cache_data_reader.historical_college_readiness_ratings
-    end
-
     def show_historical_ratings?
-      historical_ratings.present? && historical_ratings.length > 1
+      false
     end
 
     def narration(pane)
