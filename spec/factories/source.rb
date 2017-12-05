@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :source, class: Source do
+  factory :source, class: Gsdata::Source do
     sequence :id do |n|
       n
     end

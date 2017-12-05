@@ -7,7 +7,7 @@
   <%= form_for @api_account, url: post_request_api_key_path, method: :post do |f| %>
     <%= render 'error_messages' %>
     <div>
-      <%= f.label :name, 'Company name' %>
+      <%= f.label :name, 'Contact name' %>
       <%= f.text_field :name, required: true %>
     </div>
 

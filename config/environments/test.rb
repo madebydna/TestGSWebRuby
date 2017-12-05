@@ -34,7 +34,7 @@ LocalizedProfiles::Application.configure do
   config.action_mailer.delivery_method = :test
 
   # Print deprecation notices to the stderr
-  config.active_support.deprecation = :stderr
+  config.active_support.deprecation = :log
 
   # Don't cache when running tests
   config.cache_store = :memory_store, { size: 128.megabytes }

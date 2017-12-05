@@ -77,10 +77,22 @@
 <a href="#" class="back-to-top"><span class="iconx16 i-16-back-to-top" style="margin-top: 14px;"></span><span class="top-text"><%= t('.top') %></span></a>
 
 <%= render 'nav/footer' %>
+<%= render 'shared/bottom_mobile_ad' %>
 
 <div class="visible-xs js-disableInterstitial"></div>
 <%= stylesheet_link_tag "deprecated_post_load", :async => true %>
-<%= javascript_include_tag "deprecated_post_load", :async => true %>
+<%= javascript_include_tag "deprecated_post_load", defer: true %>
+<%= webpack_javascript_include_tag "mobile-overlay-ad", async: false %>
+<script type="text/javascript">
+  $(window).on('load', function () {
+    GS.ad.init();
+    if(window.googletag && googletag.cmd) {
+      googletag.cmd.push(function () {
+        GS_renderMobileOverlayAd()
+      });
+    }
+  });
+</script>
 <%= yield :javascript_includes %>
 </body>
 </html>
