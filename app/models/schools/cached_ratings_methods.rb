@@ -18,11 +18,7 @@ module CachedRatingsMethods
 
   # this will return true if cached ratings data is old format and not gsdata
   def ratings_cache_old?
-    @_ratings_cache_old ||= ratings.instance_of?(Array)
-  end
-
-  def ratings_cache_return_arr(key_name)
-    ratings.select { |key, value| value if key == key_name }
+    ratings.instance_of?(Array)
   end
 
   # ignore nil criteria
@@ -215,12 +211,12 @@ module CachedRatingsMethods
 
   def rating_for_key_and_breakdown(key, breakdown)
     hash = rating_hash_for_key_and_breakdown(key, breakdown)
-    hash['school_value'].to_i if hash.present?
+    hash['school_value'].to_i if hash.present? && hash['school_value'].present?
   end
 
   def rating_for_key(key)
     hash = rating_hash_for_key_and_breakdown(key)
-    hash['school_value'].to_i if hash.present?
+    hash['school_value'].to_i if hash.present? && hash['school_value'].present?
   end
 
   def select_by_max_date(array_of_hashes)
@@ -239,14 +235,20 @@ module CachedRatingsMethods
 
   # return array of ratings hashes for key
   def rating_hashes_for_key(key)
-    ratings[key] if ratings[key].present?
+    if ratings.present?
+      ratings[key] || []
+    else
+      []
+    end
   end
 
   def test_scores_rating_hash_loop_through_and_update(array, data_type)
+    return [] if array.nil? || data_type.nil?
     array.map { | hash |  test_scores_rating_hash_map_to_old_format(hash, data_type) }
   end
 
   def test_scores_rating_hash_map_to_old_format(hash, data_type)
+    return nil if hash.nil?
     hash['school_value_float'] = hash['school_value'].to_i
     hash['year'] = year_for_date(hash['source_date_valid']).to_i
     hash['test_data_type_display_name'] = data_type

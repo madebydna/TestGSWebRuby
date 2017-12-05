@@ -6,8 +6,8 @@ const BasicDataModuleLayout = ({
 }) => {
   return (
     <div>
-      <a className="anchor-mobile-offset" name={id}></a>
       <div id={id} className={'rating-container ' + className } data-ga-click-label={title}>
+        <a className="anchor-mobile-offset" name={id}></a>
         <div className="profile-module">
           <div className="module-header">
             <div className="row">

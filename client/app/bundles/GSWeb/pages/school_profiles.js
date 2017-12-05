@@ -19,7 +19,9 @@ import { generateEthnicityChart } from '../components/ethnicity_pie_chart';
 import { fixToTopWhenBelowY } from '../util/fix_to_top_when_below_y';
 import * as tooltips from '../util/tooltip';
 import { generateSubgroupPieCharts } from '../components/subgroup_charts';
-import * as stickyCTA from '../components/school_profile_sticky_cta';
+import * as stickyRightRail from '../components/sticky_right_rail';
+import * as schoolProfileStickyCTA from '../components/school_profile_sticky_cta';
+import * as schoolProfileStickyCTAMobile from '../components/school_profile_sticky_cta_mobile';
 import { viewport } from '../util/viewport';
 import * as remodal from '../util/remodal';
 import OspSchoolInfo from '../react_components/osp_school_info';
@@ -35,7 +37,7 @@ import * as facebook from '../components/facebook_auth';
 import refreshAdOnScroll from '../util/refresh_ad_on_scroll';
 import * as introJs from '../components/introJs';
 import { scrollToElement } from '../util/scrolling';
-import { enableAutoAnchoring, initAnchorHashUpdater } from '../components/anchor_router';
+import { enableAutoAnchoring, initAnchorHashUpdater, scrollToAnchor } from '../components/anchor_router';
 import { assign } from 'lodash';
 import { init as initHeader } from '../header';
 import '../util/advertising';
@@ -109,14 +111,17 @@ $(function() {
     'Teachers_staff': '#TeachersStaff',
     'Reviews': '#Reviews',
     'Neighborhood': '#Neighborhood',
-    'Academic_progress': '#AcademicProgress .rating-container__rating'
+    'Academic_progress': '#AcademicProgress .rating-container__rating',
+    'Equity_overview': '#EquityOverview'
   });
   generateEthnicityChart(gon.ethnicity);
   makeDrawersWithSelector($('.js-drawer'));
   tooltips.initialize();
   remodal.init();
   generateSubgroupPieCharts();
-  stickyCTA.init();
+  stickyRightRail.init();
+  schoolProfileStickyCTA.init();
+  schoolProfileStickyCTAMobile.init();
   footer.setupNewsletterLink();
   backToTop.init();
 
@@ -222,7 +227,7 @@ $(function() {
   // The tour modal will appear by default unless the user clicks 'Not right now'
   // When clicked we update the cookie to reflect the user's preference and make
   // sure the modal isn't displayed again.
-  $('#close-school-tour').click(function(){
+  $('body').on('click', '#close-school-tour', function() {
     $('.school-profile-tour-modal').remove();
     $('.tour-teaser').tipso({content: '<div><div><h3><img src="' + owlPng + '"/> Welcome!</h3>You&apos;re seeing our new, improved GreatSchools School Profile.</div><br/><button class="tour-cta js-start-tour active">Start tour</button></div>', width: 300, tooltipHover: true});
     setCookie(PROFILE_TOUR_COOKIE, true);
@@ -322,12 +327,17 @@ $(function() {
     window.open(surveyUrl);
   });
 
+  $body.on('click', '.js-swd-modal', function(){
+    scrollToElement('#Reviews');
+    $('.remodal').remodal().close();
+  });
+
   $body.on('click', '.js-start-second-tour', function(){
       introJs.startSecondTutorial();
       return false;
   }).show();
 
-  $body.on('click', '#close-school-tour, .js-close-school-tour', function() {
+  $body.on('click', '.js-close-school-tour', function() {
     introJs.exit();
   });
 
@@ -366,4 +376,17 @@ $(window).on('load', function() {
 
   registerPredefinedInterrupts(['mobileOverlayAd', 'qualaroo'])
   runInterrupts(['profileTour', 'mobileOverlayAd', 'qualaroo'])
+
+  $('#toc').on('click', 'a', function(e) {
+    const ANCHOR_REGEX = /^#[^ ]+$/;
+    let elem = e.currentTarget;
+    if(elem.nodeName === 'A') {
+      let href = elem.getAttribute('href');
+      if(href != window.location.hash) {
+        window.location.hash = href;
+      } else {
+        scrollToAnchor(href.slice(1));
+      }
+    }
+  });
 });

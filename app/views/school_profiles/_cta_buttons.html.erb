@@ -1,0 +1,46 @@
+<% owly_hide = '' %>
+<% hide_owl ||= false %>
+<% cta_columns = ' cta-four-buttons' %>
+<% if @school.private_school? || hide_owl%>
+  <% owly_hide = ' dn' %>
+  <% cta_columns = ' cta-three-buttons' %>
+<% end %>
+
+<div
+  class='tour-teaser cta-button<%= owly_hide %><%= cta_columns %>'
+  class="js-gaClick"
+  data-ga-click-category='Profile'
+  data-ga-click-action='Compare CTA Clicked'
+  data-ga-click-label='StickyCTA'
+  data-content-type="info_box"
+  data-remodal-target="modal_info_box"
+  data-content-html='<div><div><h3><%= image_tag('school_profiles/owl.png') %> <%= t('school_profiles.Welcome')%></h3><%= t('school_profiles.tour_tooltip_content')%></div><br/><button class="tour-cta js-start-tour active"><%= t('school_profiles.Take_a_quick_tour')%></button></div>' >
+    <%= image_tag('school_profiles/owl_tutorial_prompt.png', class: 'owly_size') %>
+  </div>
+  <div class="cta-button<%= cta_columns %>">
+    <a href="#NearbySchools" class="js-gaClick"
+       data-ga-click-category='Profile'
+       data-ga-click-action='Compare CTA Clicked'
+       data-ga-click-label='StickyCTA'>
+      <div class="icon-nearby_1"></div>
+      <div><%= t('.Nearby schools_html') %></div>
+    </a>
+  </div>
+  <div class="cta-button<%= cta_columns %>">
+    <a class="js-followThisSchool js-gaClick" href="#" onclick="return false;"
+       data-ga-click-category='Profile'
+       data-ga-click-action='Save CTA Clicked'
+       data-ga-click-label='StickyCTA'>
+      <div class="icon-heart"></div>
+      <div><%= t('.Save') %></div>
+    </a>
+  </div>
+  <div class="cta-button<%= cta_columns %>">
+    <a href="#Reviews" class="js-gaClick"
+       data-ga-click-category='Profile'
+       data-ga-click-action='Review CTA Clicked'
+       data-ga-click-label='StickyCTA'>
+      <div class="icon-pencil"></div>
+      <div><%= t('.Review') %></div>
+    </a>
+  </div>
