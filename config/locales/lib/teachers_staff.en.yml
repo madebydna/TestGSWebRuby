@@ -6,7 +6,7 @@ en:
       'Percentage of full time teachers who are certified': '% of full time teachers who are certified'
       'Ratio of students to full time counselors': 'Students per counselor'
       'Ratio of students to full time teachers': 'Students per teacher'
-      'Percentage of teachers with less than three years experience': 'Percent of teachers with 3 or more years experience'
+      'Percentage of teachers with less than three years experience': 'Percentage of teachers with 3 or more years experience'
       'source': 'Source'
       data_point_info_texts:
         'Ratio of students to full time teachers': 'The average number of students per full-time teacher at this school; please note that this is not a reflection of average class size.'

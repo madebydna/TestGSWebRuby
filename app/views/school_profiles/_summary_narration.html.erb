@@ -9,10 +9,10 @@
         <% more = t('.more').capitalize %>
         <% arr = sn.build_content_test_score_only %>
         <%= arr[0].html_safe %>
-        <a class="js-gaClick js-moreRevealLink" href="javascript:void(0)" data-ga-click-category="Profile"
+        <a class="js-gaClick js-moreRevealLink more-reveal-link" href="javascript:void(0)" data-ga-click-category="Profile"
            data-ga-click-action="Show More"
            data-ga-click-label="Summary Auto-narrative">... <%= more %></a>
-            <span class="js-moreReveal" style="display:none">
+            <span class="js-moreReveal more-reveal">
               <%= arr[1].html_safe %>
               <%= render 'module_feedback', content: sn.qualaroo_module_link_test_only , yml_key: 'was_this_useful_test_only' %>
             </span>
