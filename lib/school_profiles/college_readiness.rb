@@ -168,7 +168,7 @@ module SchoolProfiles
     end
 
     def get_props(component)
-      return [] if component.empty_data?
+      return {} if component.empty_data?
       {
         title: I18n.t('title', scope: component.scope),
         anchor: component.tab.capitalize,
