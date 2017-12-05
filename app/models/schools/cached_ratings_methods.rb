@@ -35,57 +35,33 @@ module CachedRatingsMethods
   end
 
   def overall_gs_rating
-    if ratings_cache_old?
-      great_schools_rating.to_s.downcase
-    else
-      rating_for_key('Summary Rating')
-    end
+    rating_for_key('Summary Rating')
   end
 
   def great_schools_rating
-    if ratings_cache_old?
-      school_rating_by_id(174)
+    summary_rating = rating_for_key('Summary Rating')
+    test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
+    if summary_rating.nil? && test_score_weight == '1'
+      test_scores_rating
     else
-      summary_rating = rating_for_key('Summary Rating')
-      test_score_weight = (rating_weights.fetch('Summary Rating Weight: Test Score Rating', []).first || {})['school_value']
-      if summary_rating.nil? && test_score_weight == '1'
-        test_scores_rating
-      else
-        summary_rating
-      end
+      summary_rating
     end
   end
 
   def great_schools_rating_year
-    if ratings_cache_old?
-      school_rating_year_by_id(174)
-    else
-      rating_year_for_key('Summary Rating')
-    end
+    rating_year_for_key('Summary Rating')
   end
 
   def test_scores_rating
-    if ratings_cache_old?
-      school_rating_by_id(164)
-    else
-      rating_for_key('Test Score Rating')
-    end
+    rating_for_key('Test Score Rating')
   end
 
   def test_scores_rating_hash
-    if ratings_cache_old?
-      school_rating_hash_by_id(164)
-    else
-      test_scores_rating_hash_map_to_old_format(rating_hash_for_key_and_breakdown('Test Score Rating'), 'Test Score Rating')
-    end
+    test_scores_rating_hash_map_to_old_format(rating_hash_for_key_and_breakdown('Test Score Rating'), 'Test Score Rating')
   end
 
   def test_scores_all_rating_hash
-    if ratings_cache_old?
-      school_rating_all_hash_by_id(164)
-    else
-      test_scores_rating_hash_loop_through_and_update(rating_hashes_for_key('Test Score Rating'), 'Test Score Rating')
-    end
+    test_scores_rating_hash_loop_through_and_update(rating_hashes_for_key('Test Score Rating'), 'Test Score Rating')
   end
 
   def equity_overview_rating
@@ -127,75 +103,39 @@ module CachedRatingsMethods
   end
 
   def student_growth_rating
-    if ratings_cache_old?
-      school_rating_by_id(165)
-    else
-      rating_for_key('Student Progress Rating')
-    end
+    rating_for_key('Student Progress Rating')
   end
 
   def student_growth_rating_year
-    if ratings_cache_old?
-      school_rating_year_by_id(165)
-    else
-      rating_year_for_key('Student Progress Rating')
-    end
+    rating_year_for_key('Student Progress Rating')
   end
 
   def student_growth_rating_hash
-    if ratings_cache_old?
-      school_rating_hash_by_id(165)
-    else
-      rating_hash_for_key_and_breakdown('Student Progress Rating')
-    end
+    rating_hash_for_key_and_breakdown('Student Progress Rating')
   end
 
   def college_readiness_rating_hash
-    if ratings_cache_old?
-      school_rating_hash_by_id(166)
-    else
-      rating_hash_for_key_and_breakdown('College Readiness Rating')
-    end
+    rating_hash_for_key_and_breakdown('College Readiness Rating')
   end
 
   def college_readiness_rating
-    if ratings_cache_old?
-      school_rating_by_id(166)
-    else
-      rating_for_key('College Readiness Rating')
-    end
+    rating_for_key('College Readiness Rating')
   end
 
   def college_readiness_rating_year
-    if ratings_cache_old?
-      school_rating_year_by_id(166)
-    else
-      rating_year_for_key('College Readiness Rating')
-    end
+    rating_year_for_key('College Readiness Rating')
   end
 
   def historical_test_scores_ratings
-    if ratings_cache_old?
-      school_historical_rating_hashes_by_id(164)
-    else
-      []
-    end
+    []
   end
 
   def historical_college_readiness_ratings
-    if ratings_cache_old?
-      school_historical_rating_hashes_by_id(166)
-    else
-      []
-    end
+    []
   end
 
   def historical_student_growth_ratings
-    if ratings_cache_old?
-      school_historical_rating_hashes_by_id(165)
-    else
-      []
-    end
+    []
   end
 
   ####################################################################
