@@ -90,6 +90,9 @@ if (gon.advertising_enabled) {
 
   GS.ad.getSizeMappings = function() {
     return {
+      'box_desktop_not_tall':  googletag.sizeMapping().
+              addSize([992, 300], [[300, 250]]).
+              build(),
       'box':  googletag.sizeMapping().
               addSize([300, 600], [[300, 600], [300, 250]]).
               addSize([0, 0], [[300, 250]]).
