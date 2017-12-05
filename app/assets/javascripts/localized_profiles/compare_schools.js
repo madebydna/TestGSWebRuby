@@ -229,7 +229,7 @@ GS.compare.compareSchoolsPage = GS.compare.compareSchoolsPage || (function () {
     };
 
     var colorPieChartLabels = function() {
-        var colors = GS.visualchart.colors;
+        var colors = GS.visualchart.pieChartColors;
         $('.js-comparePieChartTable').each( function() {
             $(this).children('tbody').children('tr').children('td').children('.js-comparePieChartSquare').each(function (index) {
                 $(this).css({ background: colors[index] });
