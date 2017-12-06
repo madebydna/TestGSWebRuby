@@ -1,18 +1,16 @@
 require 'spec_helper'
 
 describe UserSubscriptions do
-
   describe '#get' do
-    user = FactoryGirl.create(:verified_user)
-    subscriptions = Subscription::SUBSCRIPTIONS.map(&:first)
-    subscriptions.each {|list_type| FactoryGirl.create(:subscription, user: user , list: list_type)}
+    let(:user) {FactoryGirl.create(:verified_user)}
+    let(:subscriptions) {Subscription::SUBSCRIPTIONS.keys}
+    before {subscriptions.each {|list_type| FactoryGirl.create(:subscription, user: user , list: list_type)}}
 
-    after do
-      clean_dbs :gs_schooldb
-    end
+    after {clean_dbs :gs_schooldb}
+
 
     context 'when external code changes data from underneath class' do
-      let!(:subscription) do
+      let(:subscription) do
         FactoryGirl.create(:subscription, user: user , list: 'greatnews')
       end
 
@@ -30,7 +28,7 @@ describe UserSubscriptions do
     end
 
     context 'with a disallowed subscription type' do
-      FactoryGirl.create(:subscription, user: user , list: 'DeafPig')
+      before {FactoryGirl.create(:subscription, user: user , list: 'DeafPig')}
       it 'does not retrieve subscriptions not included in whitelist' do
         expect(UserSubscriptions.new(user).get.any? {|list_type| list_type == 'DeafPig'}).to be_falsey
       end
