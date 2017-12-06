@@ -5,25 +5,8 @@ class UserSubscriptions
   end
 
   def get
-    subscriptions = []
-
-    if @user.subscriptions.present?
-
-      if @user.has_signedup?('greatnews')
-        subscriptions << :greatnews
-      end
-
-      if @user.has_signedup?('greatkidsnews')
-        subscriptions << :greatkidsnews
-      end
-
-      if @user.has_signedup?('sponsor')
-        subscriptions << :sponsor
-      end
-
-    end
-
-    subscriptions
+    # Subscription#have_available? checks against a whitelist of subscription list values
+    @user.subscriptions.map { |sub| sub.list.to_sym if sub.list }.compact.select { |list| Subscription.have_available?(list) }
   end
 end
 
