@@ -18,7 +18,7 @@ export default class EquityContentPane extends React.Component {
   }
 
   getGraphColumnHeader(){
-    if (this.props.showGraphColumnHeader) {
+    if (this.props.showGraphColumnHeader && ['Math', 'English'].includes(this.props.anchor)) {
       return <div className="row bar-graph-display">
         <div className="test-score-container clearfix">
           <div className="col-sm-5 header-text">{ capitalize(t('students')) }</div>
