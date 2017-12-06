@@ -10,7 +10,7 @@ module GradeLevelConcerns
   end
 
   # extra processing to remove ungraded or replace it with n/a if alone
-  def process_level_feeds
+  def process_level_remove_ungraded
     level_human = GradeLevelConcerns.human_readable_level(level)
     return 'n/a' if level_human == 'Ungraded'
     level_human.slice! ' & Ungraded'

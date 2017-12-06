@@ -29,7 +29,7 @@ class DirectoryCaching::DirectoryCacher < Cacher
 
     special_cache_hash = school_special_keys.each_with_object({}) do |key, hash|
       if key == 'level'
-        hash[key] = [{ school_value: school.process_level_feeds}]
+        hash[key] = [{ school_value: school.process_level_remove_ungraded}]
       elsif key == 'url'
         hash[key] = [{ school_value: school_build_url }]
       elsif key == 'district_name'
