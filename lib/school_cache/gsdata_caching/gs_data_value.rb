@@ -100,7 +100,7 @@ class GsdataCaching::GsDataValue
     :description,
     :methodology
 
-  def self.decorate_array_of_hashes(array)
+  def self.from_array_of_hashes(array)
     array ||= []
     array.map { |h| GsdataCaching::GsDataValue.from_hash(h) }
       .extend(GsdataCaching::GsDataValue::CollectionMethods)

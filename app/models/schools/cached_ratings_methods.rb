@@ -19,7 +19,7 @@ module CachedRatingsMethods
   def ratings_by_type
     @_ratings_by_type ||= (
       (cache_data['ratings'] || {}).each_with_object({}) do |(type, array), hash|
-        hash[type] = GsdataCaching::GsDataValue.decorate_array_of_hashes(array)
+        hash[type] = GsdataCaching::GsDataValue.from_array_of_hashes(array)
       end
     )
   end
