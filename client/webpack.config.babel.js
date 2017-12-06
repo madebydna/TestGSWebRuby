@@ -13,7 +13,8 @@ import AssetMapPlugin from 'asset-map-webpack-plugin';
 const config = {
   entry: {
     'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
-    'commons': ['react', 'react-dom', 'redux', 'react-redux', './app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
+    'commons': ['./app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
+    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
@@ -51,6 +52,11 @@ const config = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
+      chunks: ['school-profiles', 'district-boundaries', 'widget'],
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'react-redux',
       chunks: ['school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),

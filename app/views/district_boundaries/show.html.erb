@@ -1,4 +1,5 @@
 <% content_for :page_javascripts do %>
+  <%= webpack_javascript_include_tag "react-redux", defer: false %>
   <%= webpack_javascript_include_tag "commons", defer: true %>
   <%= webpack_javascript_include_tag "district-boundaries", defer: true %>
 <% end %>
