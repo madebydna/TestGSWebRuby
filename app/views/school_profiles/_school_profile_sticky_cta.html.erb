@@ -7,7 +7,7 @@
         <%= render 'cta_buttons' %>
 
         <div class="cta-rating">
-          <% if rating.present? %>
+          <% if rating.present? && ((1..10).cover? rating) %>
             <div class="circle-rating--<%= rating %> circle-rating--medium">
               <%= rating %><span class="rating-circle-small">/10</span>
             </div>
