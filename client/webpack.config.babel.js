@@ -14,7 +14,7 @@ const config = {
   entry: {
     'commons-blocking': ['jquery', 'jquery-ujs', 'jquery.cookie'],
     'commons': ['./app/bundles/GSWeb/vendor/tipso', './app/bundles/GSWeb/vendor/remodal', './app/bundles/GSWeb/header'],
-    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux'],
+    'react-redux' : ['react', 'react-dom', 'redux', 'react-redux', 'react-addons-css-transition-group'],
     'widget': ['./app/bundles/GSWeb/widget'],
     'interstitial': ['./app/bundles/GSWeb/interstitial'],
     'district-boundaries': ['./app/bundles/GSWeb/district_boundaries'],
@@ -47,12 +47,12 @@ const config = {
 
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons-blocking',
-      chunks: ['commons', 'school-profiles', 'district-boundaries', 'widget'],
+      chunks: ['commons', 'react-redux', 'school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
-      chunks: ['school-profiles', 'district-boundaries', 'widget'],
+      chunks: ['react-redux', 'school-profiles', 'district-boundaries', 'widget'],
       minChunks: Infinity,
     }),
     new webpack.optimize.CommonsChunkPlugin({
