@@ -1,7 +1,7 @@
 <% content_for :page_javascripts do %>
-  <%= webpack_javascript_include_tag "react-redux", defer: false %>
-  <%= webpack_javascript_include_tag "commons", defer: true %>
-  <%= webpack_javascript_include_tag "school-profiles", defer: true %>
+  <%= webpack_javascript_include_tag 'react-redux', defer: true %>
+  <%= webpack_javascript_include_tag 'commons', defer: true %>
+  <%= webpack_javascript_include_tag 'school-profiles', defer: true %>
 <% end %>
 <div class="school-profile">
   <%= render 'breadcrumbs', breadcrumbs: @private_school_profile.breadcrumbs %>
