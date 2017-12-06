@@ -47,8 +47,7 @@ module Feeds
     end
 
     def self.level
-      level = cache_value(@directory_hash,'level')
-      level_value = level
+      level_value = cache_value(@directory_hash,'level')
       if level_value == 'Ungraded'
         level_value =  'n/a'
       elsif level.present?
