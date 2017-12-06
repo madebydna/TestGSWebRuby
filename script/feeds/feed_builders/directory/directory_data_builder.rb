@@ -46,6 +46,17 @@ module Feeds
       single_data_object('web-site',cache_value(@directory_hash,'home_page_url'))
     end
 
+    def self.level
+      level = cache_value(@directory_hash,'level')
+      level_value = level
+      if level_value == 'Ungraded'
+        level_value =  'n/a'
+      elsif level.present?
+        level_value.slice! ' & Ungraded'
+      end
+      single_data_object('level',level_value)
+    end
+
     def self.zipcode
       single_data_object('zip',cache_value(@directory_hash,'zipcode'))
     end

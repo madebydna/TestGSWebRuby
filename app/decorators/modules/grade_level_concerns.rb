@@ -9,14 +9,6 @@ module GradeLevelConcerns
     GradeLevelConcerns.human_readable_level(level)
   end
 
-  # extra processing to remove ungraded or replace it with n/a if alone
-  def process_level_remove_ungraded
-    level_human = GradeLevelConcerns.human_readable_level(level)
-    return 'n/a' if level_human == 'Ungraded'
-    level_human.slice! ' & Ungraded' if level_human.present?
-    return level_human
-  end
-
   def self.human_readable_level(level)
     level.is_a?(String) ? level_array = level.split(',') : level_array = level
     if level_array.blank?
