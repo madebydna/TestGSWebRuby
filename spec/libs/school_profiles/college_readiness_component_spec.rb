@@ -1,17 +1,37 @@
 require "spec_helper"
 
-describe SchoolProfiles::CollegeReadiness do
+describe 'CollegeReadinessComponent' do
   let(:school) { double("school") }
   let(:school_cache_data_reader) { double("school_cache_data_reader") }
   subject(:college_readiness) do
-    SchoolProfiles::CollegeReadiness.new(
-      school_cache_data_reader: school_cache_data_reader
+    ::SchoolProfiles::CollegeReadinessComponent.new(
+      'college_readiness', school_cache_data_reader
     )
   end
   it { is_expected.to respond_to(:rating) }
   it { is_expected.to respond_to(:data_values) }
 
   let(:cca) { SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS }
+
+  context '#cache_accessor' do
+    let(:school) { double("school") }
+    let(:school_cache_data_reader) { double("school_cache_data_reader") }
+    subject(:college_readiness) do
+      ::SchoolProfiles::CollegeReadinessComponent.new(
+        'college_readiness', school_cache_data_reader
+      )
+    end
+    it 'should return an array' do
+      expect(subject.cache_accessor).to be_an_instance_of(Array)
+    end
+
+    it 'should select different arrays when tab is different' do
+      college_success_component = ::SchoolProfiles::CollegeReadinessComponent.new(
+        'college_success', school_cache_data_reader
+      )
+      expect(subject.cache_accessor).not_to eq(college_success_component.cache_accessor)
+    end
+  end
 
   describe '#data_values' do
     before do
@@ -102,7 +122,7 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'should return chosen data types if data present' do
-        data_values = subject.data_values(cca)
+        data_values = subject.data_values
         expect(data_values.size).to eq(4)
         data_points = data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to be_present
@@ -112,29 +132,29 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'should pull from the "All students" breakdown for characteristics' do
-        data_points = subject.data_values(cca).find {|item| item.label == '4-year high school graduation rate' }
+        data_points = subject.data_values.find {|item| item.label == '4-year high school graduation rate' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(50)
         expect(data_points.state_average).to eq(51)
       end
 
       it 'should pull from the null breakdown for gsdata' do
-        data_points = subject.data_values(cca).find {|item| item.label == 'Percentage of students passing 1 or more AP exams grades 9-12' }
+        data_points = subject.data_values.find {|item| item.label == 'Percentage of students passing 1 or more AP exams grades 9-12' }
         expect(data_points).to be_present
         expect(data_points.score).to eq('61')
         expect(data_points.state_average).to eq('60.32')
       end
 
       it 'should pull from the "All subjects" subject' do
-        data_points = subject.data_values(cca).find {|item| item.label == 'Average ACT score' }
+        data_points = subject.data_values.find {|item| item.label == 'Average ACT score' }
         expect(data_points).to be_present
         expect(data_points.score).to eq(25)
         expect(data_points.state_average).to eq(24)
       end
 
       it 'should return chosen data types in configured order' do
-        ordered_data_types = subject.included_data_types(cca)
-        data_value_labels = subject.data_values(cca).map(&:label)
+        ordered_data_types = subject.included_data_types
+        data_value_labels = subject.data_values.map(&:label)
 
         # start with full set of ordered data types, then remove items
         # that are not in the resulting data_value_labels. Expression should
@@ -175,7 +195,7 @@ describe SchoolProfiles::CollegeReadiness do
       end
 
       it 'should set school SAT score to nil' do
-        data_points = subject.data_values(cca).find {|item| item.label == 'Average SAT score' }
+        data_points = subject.data_values.find {|item| item.label == 'Average SAT score' }
         expect(data_points).to_not be_present
       end
       
@@ -184,7 +204,7 @@ describe SchoolProfiles::CollegeReadiness do
     it 'should return empty array if no data' do
       expect(school_cache_data_reader).to receive(:characteristics_data).and_return({})
       expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
-      expect(subject.data_values(cca)).to be_empty
+      expect(subject.data_values).to be_empty
     end
 
     describe 'SAT ranges' do
@@ -216,7 +236,7 @@ describe SchoolProfiles::CollegeReadiness do
               allow(school).to receive(:state).and_return(state)
             end
 
-            subject { college_readiness.data_values(cca).find { |item| item.label == 'Average SAT score' }.range }
+            subject { college_readiness.data_values.find { |item| item.label == 'Average SAT score' }.range }
 
             it { is_expected.to eq(SchoolProfiles::CollegeReadiness::NEW_SAT_RANGE) }
           end
@@ -230,7 +250,7 @@ describe SchoolProfiles::CollegeReadiness do
               allow(school).to receive(:state).and_return(state)
             end
 
-            subject { college_readiness.data_values(cca).find { |item| item.label == 'Average SAT score' }.range }
+            subject { college_readiness.data_values.find { |item| item.label == 'Average SAT score' }.range }
 
             it { is_expected.to eq(SchoolProfiles::CollegeReadiness::OLD_SAT_RANGE) }
           end
@@ -268,9 +288,10 @@ describe SchoolProfiles::CollegeReadiness do
       config = [
         { :data_key => 'a' }, { :data_key => 'b' }, { :data_key => 'c' }
       ].shuffle
-      stub_const('SchoolProfiles::CollegeReadiness::CHAR_CACHE_ACCESSORS', config)
-      remediation_subgroups = SchoolProfiles::CollegeReadiness::REMEDIATION_SUBGROUPS
-      expect(subject.included_data_types(cca)).to eq(config.map { |o| o[:data_key] } + remediation_subgroups)
+      allow(subject).to receive(:cache_accessor).and_return config
+      # stub_const('cache_accessor', config)
+      remediation_subgroups = SchoolProfiles::CollegeReadinessConfig::REMEDIATION_SUBGROUPS
+      expect(subject.included_data_types).to eq(config.map { |o| o[:data_key] } + remediation_subgroups)
     end
   end
 
@@ -294,6 +315,99 @@ describe SchoolProfiles::CollegeReadiness do
 
     it 'includes only hashes with the key school_value set to a non-nil value' do
       expect(sample_data.select(&subject.send(:with_school_values))).to contain_exactly(*expected_outcome)
+    end
+  end
+end
+
+describe 'CollegeSuccessComponent' do
+  let(:school) { double("school") }
+  let(:school_cache_data_reader) { double("school_cache_data_reader") }
+  subject(:college_readiness) do
+    ::SchoolProfiles::CollegeReadinessComponent.new(
+      'college_success', school_cache_data_reader
+    )
+  end
+  let (:remediation_sample_data) do
+    {
+      "Percent Needing Remediation for College" => [
+        {
+          "breakdown"=>"All students",
+          "original_breakdown"=>"All students",
+          "created"=>"2017-04-19T23:20:49-07:00",
+          "school_value"=>16.0,
+          "source"=>"Oklahoma State Regents for Higher Education",
+          "state_average"=>35.7,
+          "subject"=>"Math",
+          "year"=>2015,
+          "school_value_2015"=>16.0,
+          "state_average_2015"=>35.7
+        }, {
+          "breakdown"=>"All students",
+          "original_breakdown"=>"All students",
+          "created"=>"2017-04-19T23:20:49-07:00",
+          "school_value"=>5.3,
+          "source"=>"Oklahoma State Regents for Higher Education",
+          "state_average"=>8.3,
+          "subject"=>"Reading",
+          "year"=>2015,
+          "school_value_2015"=>5.3,
+          "state_average_2015"=>8.3
+        }, {"breakdown"=>"All students",
+            "original_breakdown"=>"All students",
+            "created"=>"2017-04-19T23:20:49-07:00",
+            "school_value"=>1.8,
+            "source"=>"Oklahoma State Regents for Higher Education",
+            "state_average"=>15.7,
+            "subject"=>"English",
+            "year"=>2015,
+            "school_value_2015"=>1.8,
+            "state_average_2015"=>15.7
+        }, {"breakdown"=>"All students",
+            "original_breakdown"=>"All students",
+            "created"=>"2017-04-19T23:20:48-07:00",
+            "school_value"=>0.0,
+            "source"=>"Oklahoma State Regents for Higher Education",
+            "state_average"=>1.1,
+            "subject"=>"Science",
+            "year"=>2014,
+            "school_value_2015"=>0.0,
+            "state_average_2015"=>1.1
+        }
+      ]
+    }
+  end
+
+  before do
+    allow(school_cache_data_reader).to receive(:school).and_return(school)
+    allow(school).to receive(:state).and_return(:ca)
+    allow(school).to receive(:id).and_return(1)
+    expect(school_cache_data_reader).to receive(:characteristics_data).and_return(remediation_sample_data)
+    expect(school_cache_data_reader).to receive(:gsdata_data).and_return({})
+  end
+
+  let(:data_points) {subject.data_values}
+  describe 'With remediation data' do
+    it 'should return RatingScoreItems for each remediation data point' do
+      expect(data_points).to be_present
+      expect(data_points.all?{|dp| dp.is_a?(SchoolProfiles::RatingScoreItem)}).to be_truthy
+    end
+
+    it 'should include info text' do
+      info_text_blank = data_points.any? {|dp| dp.info_text.blank?}
+      expect(info_text_blank).to be_falsey
+    end
+
+    it 'should not include data from before the cutoff year' do
+      # remediation_sample_data includes a data point from 2014, which is before the current cutoff.  That data point
+      # should be filtered out of data_values
+      cutoff = SchoolProfiles::CollegeReadiness::DATA_CUTOFF_YEAR
+      before_cutoff_year = data_points.any? {|dp| dp.year.to_i < cutoff}
+      expect(before_cutoff_year).to be_falsey
+    end
+
+    it 'should have a well-formatted label' do
+      all_formatted = data_points.none? {|dp| dp.label.match(/Graduates needing (Math|English|Science|Reading) remediation in college/).nil?}
+      expect(all_formatted).to be_truthy
     end
   end
 end

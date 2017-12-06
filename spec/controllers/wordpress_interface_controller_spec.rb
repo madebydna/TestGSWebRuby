@@ -205,6 +205,40 @@ describe WordpressInterfaceController do
       end
     end
 
-  end
+    describe '#newsletter_page_signup' do
+      let(:lists) { %w(greatnews sponsor) }
+      let(:params) { {
+          user_session_key: 'session_key',
+          email: 'aroy@greatschools.org',
+          grade: grades,
+          lists: lists
+      }.stringify_keys }
 
+      before do
+        expect(controller).to receive(:create_member).with('aroy@greatschools.org', 'wp_newsletter_page').and_return(1)
+        expect(controller).to receive(:create_students).with(1, grades, nil)
+        allow(controller).to receive(:create_subscriptions)
+        subject.newsletter_page_signup(params)
+      end
+
+      context 'with grades selected but no list greatkidsnews' do
+        let(:grades) { %w(1 2) }
+
+        it { is_expected.to have_received(:create_subscriptions).with(1, %w(greatnews sponsor greatkidsnews), nil) }
+      end
+
+      context 'with grades selected and list greatkidsnews' do
+        let(:grades) { %w(1 2) }
+        let(:lists) { %w(greatnews greatkidsnews sponsor) }
+
+        it { is_expected.to have_received(:create_subscriptions).with(1, %w(greatnews greatkidsnews sponsor), nil) }
+      end
+
+      context 'with no grades selected and no list greatkidsnews' do
+        let(:grades) { [] }
+
+        it { is_expected.to have_received(:create_subscriptions).with(1, %w(greatnews sponsor), nil) }
+      end
+    end
+  end
 end
